@@ -1,0 +1,470 @@
+<html>
+<head>
+<title>CommerceEntry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CommerceEntry</td></tr>
+</thead>
+<tbody>
+	<tr>
+	<td>ANY_MENU_ITEM</td>
+	<td>//div[contains(@class,'show')]//a[contains(.,'${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVE_CHECKBOX</td>
+	<td>//input[contains(@id,'active') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANNEL_CHECKBOX</td>
+	<td>//input[contains(@id,'Channel') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_TAG_BUTTON</td>
+	<td>//div/button[@title='Add Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASE_INFORMATION_TITLE_BAR</td>
+	<td>//div[contains (@id, 'baseInformationTitle')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CODE_FIELD</td>
+	<td>//div/input[contains(@id,'code')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[contains (@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_FIELD</td>
+	<td>//span/input[contains(@id,'displayDate') and (@placeholder='mm/dd/yyyy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_TIME_FIELD</td>
+	<td>//span/input[contains(@id,'displayDateTime') and (@placeholder='h:mm am/pm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_TAB</td>
+	<td>xpath=(//li)[contains(@class,'nav-item')]//a[normalize-space(text())='${key_menuTab}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE_FIELD</td>
+	<td>//span/input[contains(@id,'expirationDate') and (@placeholder='mm/dd/yyyy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_TIME_FIELD</td>
+	<td>//span/input[contains(@id,'expirationDateTime') and (@placeholder='h:mm am/pm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACETABLE_CHECKBOX</td>
+	<td>//input[contains(@id,'facetable') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_TYPE_SELECT</td>
+	<td>//div/select[contains(@id,'FieldTypeName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FULL_DESCRIPTION_FIELD</td>
+	<td>//div[contains(@id,'descriptionMap') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEY_FIELD</td>
+	<td>//div/input[contains(@id,'key')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAXIMUM_DISCOUNT_AMOUNT_FIELD</td>
+	<td>//div/input[contains(@id,'maximumDiscountAmount')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISCOUNT_LEVEL_1_FIELD</td>
+	<td>//div/input[contains(@id,'level1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//div/input[contains(@id,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATE_FROM_NAME_FIELD</td>
+	<td>//label[contains(.,'From Name')]//..//input[contains(@id,'from')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATE_FROM_ADDRESS_FIELD</td>
+	<td>//label[contains(.,'From Address')]//..//input[contains(@id,'from')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TWO_LETTERS_ISO_CODE_FIELD</td>
+	<td>//div/input[contains(@id,'twoLettersISOCode')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREE_LETTERS_ISO_CODE_FIELD</td>
+	<td>//div/input[contains(@id,'threeLettersISOCode')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMERIC_ISO_CODE_FIELD</td>
+	<td>//div/input[contains(@id,'numericISOCode')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//div/input[contains(@id,'title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEVER_EXPIRE_CHECKBOX</td>
+	<td>//input[contains(@name,'neverExpire') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BILLING_ALLOWED_CHECKBOX</td>
+	<td>//input[contains(@id,'billingAllowed') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHIPPING_ALLOWED_CHECKBOX</td>
+	<td>//input[contains(@id,'shippingAllowed') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBJECT_TO_VAT_CHECKBOX</td>
+	<td>//input[contains(@id,'subjectToVAT') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTION_VALUE</td>
+	<td>//div[contains (@class, '${key_optionType}')]//span [contains (., '${key_optionValue}')]/../input | //div[contains (@class, '${key_optionType}')]//label[contains (., '${key_optionValue}')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTION_SELECT</td>
+	<td>//div[contains (@class, 'select-field-trigger')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_SELECT_LIST</td>
+	<td>//div[@class='dropdown-menu']//..//a[contains(., '${key_selectValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENCY_SELECT</td>
+	<td>//div[label[contains(.,'Store Currency')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISCOUNT_TARGET_SELECT</td>
+	<td>//div[label[contains(.,'Target')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BUTTON</td>
+	<td>//*[@data-qa-id='addButton'] | //a[contains(@class,'btn') and span[contains(@class,'icon-plus')]] | //button/span[contains(@class,'icon-plus')] | //button[@type='button']/*[contains(@class,'icon-plus')] | //h4[contains(@class,'section-header') and contains (.,'Options')]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLUS_MENU</td>
+	<td>//div[contains (@class, 'dropdown')]//li/a[contains (.,'${key_plusMenu}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIMARY_CHECKBOX</td>
+	<td>//input[contains(@id,'primary') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIORITY_FIELD</td>
+	<td>//div/label[contains (@for,'priority')]/../input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_IMAGE_SELECT_FILE</td>
+	<td>//div[contains(@class,'image-selector')]//a[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_TYPE_SELECT</td>
+	<td>//div/select[contains(@id,'entryType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISHED_CHECKBOX</td>
+	<td>//input[contains(@id,'published') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_CHECKBOX</td>
+	<td>//input[contains(@id,'required') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//div[contains(@class,'button-holder')]/button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_TAG_BUTTON</td>
+	<td>//div/button[@title='Select Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHORT_DESCRIPTION_FIELD</td>
+	<td>//textarea[contains (@id,'shortDescription')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKU_FIELD</td>
+	<td>//div/input[contains(@id,'sku')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKU_GLOBAL_TRADE_ITEM_NUMBER_FIELD</td>
+	<td>//div/input[contains(@id,'gtin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKU_MANUFACTURER_PART_NUMBER_FIELD</td>
+	<td>//div/input[contains(@id,'manufacturerPartNumber')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKU_CONTRIBUTOR_CHECKBOX</td>
+	<td>//input[contains(@id,'skuContributor') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_FIELD</td>
+	<td>//div/ul/li/span/span/input[contains(@id,'assetTagName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_NAME_FIELD</td>
+	<td>//div/input[contains(@id,'Name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_NAME_FIELD_SMALL</td>
+	<td>//input[contains(@name,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//span[@class='workflow-status']//*[contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIX_ISSUE_BUTTON</td>
+	<td>//tr/td[contains(.,'${key_fixIssueButtonName}')]/..//td[@class='dataset-item-actions-wrapper']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEO_FRIENDLYURL</td>
+	<td>//div/span/input[@value='${key_productName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRONT_STORE_PRODUCT_LINK</td>
+	<td>//span//span[contains (.,'Go to Page')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_SAVE</td>
+	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'primary') and contains (.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_CANCEL</td>
+	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'link') and contains (.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_CLOSE</td>
+	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_PLUS</td>
+	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'nav-btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_DELETE</td>
+	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'secondary') and contains (.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMBS</td>
+	<td>//div//ul[contains (@class,'breadcrumb-horizontal')]//li/a[contains (.,'${key_breadcrumb}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NESTED_MENU</td>
+	<td>//div/ul[contains (@class,'nav-nested')]//li/a[contains (.,'${key_nestedMenu}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRICE_FIELD</td>
+	<td>//div/input[contains(@id,'price')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COST_FIELD</td>
+	<td>//div/input[contains(@id,'cost')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCORDION</td>
+	<td>//fieldset//div/a[contains(@aria-expanded,'true')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_SELECT_BUTTON</td>
+	<td>//div/h3[contains(.,'${key_roleType}')]//..//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCORDION_TITLE</td>
+	<td>//fieldset//div/a[contains(.,'${key_accordionTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IGNORE_SKU_COMBINATIONS_FLAG</td>
+	<td>//div/label[contains (@for,'ignoreSKUCombinations')]//span[contains (@class,'switch-bar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_GROUPS_RELS_SELECT</td>
+	<td>//button[contains(@id,'selectCommercePriceListCommerceAccountGroupRel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARENT_PRICE_LIST_SELECT</td>
+	<td>//button[contains(@id,'setParentCommercePriceList')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_VERTICAL_ELLIPSIS</td>
+	<td>//button[contains(@class,'dropdown-toggle')]//*[contains(@class,'lexicon-icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANNEL_TYPE_VALUE</td>
+	<td>//header[contains(., 'Type')]/../div[@class='description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_RESULTS</td>
+	<td>//div[@class='pagination-results']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_ROW_NUMBER</td>
+	<td>//table[@class='table table-autofit']/tbody/tr[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_VERTICAL_ELLIPSIS_NUMBER</td>
+	<td>xpath=(//button[contains(@class,'dropdown-toggle')]//*[contains(@class,'lexicon-icon-ellipsis')])[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_NAME_BODY_VERTICAL_ELLIPSIS</td>
+	<td>//div[@class='dataset-display-wrapper' or @class='searchcontainer-content']//a[text()='${key_entryName}']/../../following-sibling::td//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROW_VERTICAL_ELLIPSIS</td>
+	<td>//td//span[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>CHANNEL_PAYMENT_METHOD_NAME</td>
+	<td>//div/h4[contains(.,'Payment Methods')]/..//button[contains(.,'${key_paymentMethod}')]</td>
+	<td></td>
+</tr>
+<!--CATALOGS-->
+<tr>
+	<td>CATALOGS_FORM</td>
+	<td>//label[contains(.,'${key_title}')]/../select[contains(@class,'form-control')]</td>
+	<td></td>
+</tr>
+<!--OPTION-->
+<tr>
+	<td>ADD_RELATION_FIELD</td>
+	<td>//div[h4[contains(.,'${key_title}')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTION_FIELD</td>
+	<td>//fieldset//div[contains(.,'Option')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_OPTION</td>
+	<td>//fieldset//div[contains(.,'Option')]//a[contains (.,'${key_optionvalue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_RELATION_FIELD_SELECT</td>
+	<td>//div[h4[contains(.,'${key_title}')]]//input[@type='text']/../../../..//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<!--IFRAME-->
+<tr>
+	<td>IFRAME_SIDE_PANEL</td>
+	<td>//div[contains(@class,'side-panel') and contains(@class,'is-visible')]//iframe</td>
+	<td></td>
+</tr>
+<!--PRICE-->
+<tr>
+	<td>INPUT_PRICE</td>
+	<td>//div[label[(text() = ' Price ' )]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<!--IMAGES-->
+<tr>
+	<td>IMAGES_PLUS_BUTTON</td>
+	<td>//div[(@class = 'card d-flex')]/h4[contains(.,'Images')]//..//button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<!--PRODUCT-->
+<tr>
+	<td>CREATE_NEW_PRODUCT_CATALOG_FIELD</td>
+	<td>//label[text()='Catalog']/following::div//input[@placeholder='Type Here']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAIL_VIEW_OPTION</td>
+	<td>//div[contains(@class,'card d-flex')]//h4[contains(.,'Option')]/..//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_FULL_DESCRIPTION</td>
+	<td>//div/label[@class='control-label' and contains(.,'${key_customFieldName}')]/..//p</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,52 @@
+#wrapper .modal {
+	left: $frame-size;
+	top: 0;
+
+	body.signed-in & {
+		top: $liferay-topbar-size;
+	}
+
+	body.open & {
+		left: 320px + $frame-size;
+	}
+}
+
+.commerce-modal-wrapper {
+	.modal {
+		display: none;
+
+		&.show .modal-dialog {
+			top: 50%;
+			transform: translate(0, -50%);
+		}
+	}
+
+	.modal-dialog {
+		border-radius: 8px;
+		margin: auto;
+		max-height: calc(100% - 50px);
+		max-width: 540px;
+		overflow: auto;
+		pointer-events: unset;
+		position: relative;
+	}
+}
+
+#minium {
+	.modal-content {
+		border: none;
+		box-shadow: 0 17px 84px 0 rgba(52, 55, 62, 0.2);
+	}
+
+	.modal-body {
+		padding: 30px;
+	}
+}
+
+.modal-backdrop {
+	background-color: rgb(52, 55, 62);
+
+	&.show {
+		opacity: 0.6;
+	}
+}

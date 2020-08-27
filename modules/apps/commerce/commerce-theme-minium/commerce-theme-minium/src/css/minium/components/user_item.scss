@@ -1,0 +1,67 @@
+.user-item {
+	display: flex;
+	margin-bottom: 20px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&[class*='commerce-bdc'] {
+		border-style: solid;
+		border-width: 0 0 0 5px;
+		padding-left: 15px;
+		transition: all 0.1s ease-in-out;
+
+		&:hover {
+			border-width: 0 0 0 6px;
+			padding-left: 18px;
+		}
+	}
+
+	&__action {
+		flex-grow: 0;
+		margin-left: 20px;
+		padding: 0;
+	}
+
+	&__content {
+		align-self: center;
+		display: flex;
+		flex-grow: 1;
+	}
+
+	&__info {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		justify-content: center;
+	}
+
+	&__primary {
+		color: $color-fg;
+		display: block;
+		line-height: 1.1;
+	}
+
+	&__secondary {
+		color: $color-fg-alt;
+		display: block;
+		font-size: 12px;
+		letter-spacing: 1.1px;
+	}
+
+	&__thumbnail {
+		border-radius: 50%;
+		flex-grow: 0;
+		height: 50px;
+		margin-right: 20px;
+		overflow: hidden;
+		width: 50px;
+
+		img {
+			height: 100%;
+			width: 100%;
+		}
+	}
+}

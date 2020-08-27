@@ -1,0 +1,19 @@
+.minium-content {
+	color: $color-fg;
+	font-size: 14px;
+	line-height: 1.58;
+	margin: auto;
+	max-width: $content-max-width;
+	padding: $lg-gutter;
+	padding-bottom: 104px;
+	width: 100%;
+
+	&--wide {
+		margin: 0 auto;
+		max-width: 100%;
+		min-width: 100%;
+		overflow-x: hidden;
+		padding: 0;
+		width: 100%;
+	}
+}

@@ -1,0 +1,162 @@
+[
+	{
+		"code": "AGU",
+		"name": "Aguascalientes",
+		"priority": 1
+	},
+	{
+		"code": "BCN",
+		"name": "Baja California",
+		"priority": 2
+	},
+	{
+		"code": "BCS",
+		"name": "Baja California Sur",
+		"priority": 3
+	},
+	{
+		"code": "CAM",
+		"name": "Campeche",
+		"priority": 4
+	},
+	{
+		"code": "CHP",
+		"name": "Chiapas",
+		"priority": 5
+	},
+	{
+		"code": "CHH",
+		"name": "Chihuahua",
+		"priority": 6
+	},
+	{
+		"code": "DIF",
+		"name": "Ciudad de México",
+		"priority": 7
+	},
+	{
+		"code": "COA",
+		"name": "Coahuila de Zaragoza",
+		"priority": 8
+	},
+	{
+		"code": "COL",
+		"name": "Colima",
+		"priority": 9
+	},
+	{
+		"code": "DUR",
+		"name": "Durango",
+		"priority": 10
+	},
+	{
+		"code": "GUA",
+		"name": "Guanajuato",
+		"priority": 11
+	},
+	{
+		"code": "GRO",
+		"name": "Guerrero",
+		"priority": 12
+	},
+	{
+		"code": "HID",
+		"name": "Hidalgo",
+		"priority": 13
+	},
+	{
+		"code": "JAL",
+		"name": "Jalisco",
+		"priority": 14
+	},
+	{
+		"code": "MIC",
+		"name": "Michoacán de Ocampo",
+		"priority": 15
+	},
+	{
+		"code": "MOR",
+		"name": "Morelos",
+		"priority": 16
+	},
+	{
+		"code": "MEX",
+		"name": "México",
+		"priority": 17
+	},
+	{
+		"code": "NAY",
+		"name": "Nayarit",
+		"priority": 18
+	},
+	{
+		"code": "NLE",
+		"name": "Nuevo León",
+		"priority": 19
+	},
+	{
+		"code": "OAX",
+		"name": "Oaxaca",
+		"priority": 20
+	},
+	{
+		"code": "PUE",
+		"name": "Puebla",
+		"priority": 21
+	},
+	{
+		"code": "QUE",
+		"name": "Querétaro",
+		"priority": 22
+	},
+	{
+		"code": "ROO",
+		"name": "Quintana Roo",
+		"priority": 23
+	},
+	{
+		"code": "SLP",
+		"name": "San Luis Potosí",
+		"priority": 24
+	},
+	{
+		"code": "SIN",
+		"name": "Sinaloa",
+		"priority": 25
+	},
+	{
+		"code": "SON",
+		"name": "Sonora",
+		"priority": 26
+	},
+	{
+		"code": "TAB",
+		"name": "Tabasco",
+		"priority": 27
+	},
+	{
+		"code": "TAM",
+		"name": "Tamaulipas",
+		"priority": 28
+	},
+	{
+		"code": "TLA",
+		"name": "Tlaxcala",
+		"priority": 29
+	},
+	{
+		"code": "VER",
+		"name": "Veracruz de Ignacio de la Llave",
+		"priority": 30
+	},
+	{
+		"code": "YUC",
+		"name": "Yucatán",
+		"priority": 31
+	},
+	{
+		"code": "ZAC",
+		"name": "Zacatecas",
+		"priority": 32
+	}
+]

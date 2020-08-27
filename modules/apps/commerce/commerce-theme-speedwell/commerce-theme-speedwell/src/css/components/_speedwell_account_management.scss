@@ -1,0 +1,49 @@
+.account-management {
+	div {
+		display: block;
+	}
+
+	.col-lg-4 {
+		max-width: 600px;
+	}
+
+	.form-control {
+		max-width: 600px;
+		width: 100%;
+	}
+
+	.commerce-cta {
+		display: flex;
+		justify-content: flex-end;
+
+		@media screen and (max-width: $bp-small) {
+			justify-content: center;
+		}
+
+		.btn {
+			font-size: 12px;
+			font-weight: bold;
+			height: 50px;
+			line-height: 50px;
+			padding: 0;
+			transform: translateX(-132%);
+
+			@media screen and (max-width: $bp-small) {
+				transform: translateX(0);
+			}
+		}
+	}
+
+	.taglib-logo-selector .avatar {
+		border-radius: 50%;
+	}
+
+	.edit-logo {
+		border-radius: 50%;
+		height: 100px;
+		opacity: 0;
+		position: absolute;
+		top: -120px;
+		width: 100px;
+	}
+}

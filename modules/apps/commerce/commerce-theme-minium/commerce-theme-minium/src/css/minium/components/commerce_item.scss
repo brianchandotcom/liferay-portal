@@ -1,0 +1,147 @@
+.commerce-item {
+	$item-image-size: 60px;
+	$item-image-size-sm: 50px;
+
+	display: flex;
+	font-size: 12px;
+	max-height: 130px;
+	overflow: hidden;
+	position: relative;
+	transition: max-height 0.2s ease-in, padding 0.1s ease-in;
+
+	&--search {
+		font-size: 14px;
+		width: 100%;
+
+		&__image {
+			flex-basis: $item-image-size-sm;
+		}
+	}
+
+	.commerce-item.is-not-valid & {
+		opacity: 0.3;
+	}
+
+	&__icon {
+		align-items: center;
+		background-color: nth($placeholder-colors, 3);
+		border-radius: 4px;
+		color: white;
+		display: flex;
+		flex: 0 0 $item-image-size;
+		font-size: 20px;
+		justify-content: center;
+		line-height: 0;
+		margin-right: 10px;
+		text-align: center;
+		vertical-align: middle;
+	}
+
+	&__image {
+		align-self: center;
+		border-radius: 4px;
+		flex: 0 0 $item-image-size;
+		margin: auto 10px auto 0;
+		max-height: $item-image-size;
+		max-width: 100%;
+	}
+
+	&--search &__image {
+		max-height: $item-image-size-sm;
+	}
+
+	&__content {
+		align-self: center;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__error {
+		color: $color-mood-bad;
+		font-weight: 600;
+		grid-column: 1 / 3;
+	}
+
+	&__delete {
+		align-items: center;
+		border: 2px solid currentColor;
+		border-radius: 50%;
+		color: $color-mood-bad;
+		cursor: pointer;
+		display: flex;
+		height: 16px;
+		justify-content: center;
+		margin: 8px auto 0;
+		padding: 0;
+		position: relative;
+		width: 16px;
+
+		&:hover {
+			color: $color-mood-bad;
+		}
+
+		.commerce-cart__item:not(:hover) &:not(:focus) {
+			opacity: 0;
+
+			@media (hover: none) {
+				opacity: 1;
+			}
+		}
+
+		&::after {
+			transform: translate(-50%, -50%) rotate(-45deg);
+		}
+
+		&::before {
+			transform: translate(-50%, -50%) rotate(45deg);
+		}
+
+		&::after,
+		&::before {
+			background-color: currentColor;
+			content: '';
+			display: block;
+			height: 8px;
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			width: 2px;
+		}
+
+		&.is-disabled {
+			cursor: wait;
+			opacity: 0.5;
+		}
+	}
+
+	&__cancel-delete {
+		align-items: center;
+		background-color: $color-bg-alt;
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		transform: translateX(100%);
+		transition: transform 0.2s ease-in;
+		z-index: 999;
+
+		.commerce-item.is-deleting & {
+			transform: translateX(0%);
+		}
+	}
+
+	&.is-collapsed {
+		border-width: 0;
+		max-height: 0;
+		padding: 0 10px;
+	}
+
+	&.is-not-valid {
+		background-color: $color-mood-bad-bg;
+	}
+}

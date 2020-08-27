@@ -1,0 +1,48 @@
+.commerce-multi-step-nav {
+	margin: 40px 20px;
+}
+
+.portlet-commerce-checkout {
+	.input-container > .form-group-autofit,
+	.input-container > .address-fields,
+	.commerce-checkout-summary-footer,
+	.shipping-address {
+		@include panel-body;
+	}
+
+	.input-container > .form-group-autofit,
+	.input-container > .address-fields {
+		padding-top: 30px;
+	}
+
+	.input-container > .form-group-autofit > .form-group {
+		margin-bottom: 1rem;
+		margin-right: 0;
+	}
+
+	.commerce-checkout-summary-header {
+		display: none;
+	}
+
+	.btn {
+		@extend .commerce-button;
+	}
+
+	.btn:not(.btn-primary) {
+		@extend .commerce-button--outline;
+	}
+
+	.shipping-as-billing > .form-inline.input-checkbox-wrapper {
+		grid-auto-columns: auto;
+	}
+}
+
+body .multi-step-item.active .multi-step-divider,
+body .multi-step-item.success-page.complete .multi-step-divider,
+.multi-step-item.active .multi-step-icon {
+	background-color: $color-theme;
+}
+
+body .multi-step-indicator-label {
+	max-width: 130px !important;
+}

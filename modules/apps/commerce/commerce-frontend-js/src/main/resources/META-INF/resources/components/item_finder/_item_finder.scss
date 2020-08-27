@@ -1,0 +1,71 @@
+.add-or-create {
+	.list-group {
+		margin-bottom: 0;
+	}
+
+	.list-group-header,
+	.list-group-item {
+		background-color: transparent;
+		border: 0;
+	}
+
+	.table-responsive {
+		tr:first-child td {
+			border-top: none;
+		}
+	}
+
+	&.has-focus .list-group-item {
+		&.is-selected::before {
+			background-color: var(--primary);
+			border-radius: 50%;
+			content: '';
+			height: 6px;
+			left: 0;
+			position: absolute;
+			top: calc(50% - 3px);
+			width: 6px;
+		}
+	}
+}
+
+.expose {
+	--transition-time: 200ms;
+
+	&__content {
+		--transition-delay: var(--transition-time);
+
+		position: relative;
+		transition: box-shadow var(--transition-time) ease,
+			z-index 0s ease var(--transition-delay);
+		z-index: 0;
+
+		.expose.is-open & {
+			--transition-delay: 0s;
+
+			box-shadow: 0 40px 40px -40px rgba(0, 0, 0, 0.3);
+			width: 100%;
+			z-index: 801;
+		}
+	}
+
+	&__backdrop {
+		background-color: #e5e5e5;
+		bottom: 0;
+		content: '';
+		display: block;
+		left: 0;
+		opacity: 0;
+		pointer-events: none;
+		position: fixed;
+		right: 0;
+		top: 0;
+		transition: all ease var(--transition-time);
+		z-index: 800;
+
+		.expose.is-open & {
+			opacity: 0.7;
+			pointer-events: all;
+		}
+	}
+}

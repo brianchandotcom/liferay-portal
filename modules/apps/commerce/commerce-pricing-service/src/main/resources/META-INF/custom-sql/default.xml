@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder.findByC_C_C_P">
+		<![CDATA[
+			SELECT
+				DISTINCT CommercePriceModifier.*
+			FROM
+				CommercePriceModifier
+			LEFT JOIN
+				CommercePriceModifierRel ON
+					CommercePriceModifier.commercePriceModifierId = CommercePriceModifierRel.commercePriceModifierId
+			WHERE
+				(CommercePriceModifier.active_ = [$TRUE$]) AND
+				(CommercePriceModifier.commercePriceListId = ?) AND
+				(
+					(
+						(CommercePriceModifierRel.classPK = ?) AND
+						(CommercePriceModifierRel.classNameId = ?)
+					) OR
+					(
+						(CommercePriceModifierRel.classPK IN ([$CLASS_PK_CATEGORIES$])) AND
+						(CommercePriceModifierRel.classNameId = ?)
+					) OR
+					(
+						(CommercePriceModifierRel.classPK IN ([$CLASS_PK_PRICING_CLASSES$])) AND
+						(CommercePriceModifierRel.classNameId = ?)
+					) OR
+					((CommercePriceModifier.target = ?))
+				)
+			ORDER BY
+				CommercePriceModifier.priority DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder.countCategoriesByCommercePriceModifierId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommercePriceModifierRel.commercePriceModifierRelId) AS COUNT_VALUE
+			FROM
+				CommercePriceModifierRel
+			JOIN
+				CommercePriceModifier ON
+					CommercePriceModifier.commercePriceModifierId = CommercePriceModifierRel.commercePriceModifierId
+			JOIN
+				AssetCategory ON
+					CommercePriceModifierRel.classPK = AssetCategory.categoryId
+			WHERE
+				(CommercePriceModifierRel.commercePriceModifierId = ?) AND
+				(CommercePriceModifierRel.classNameId = ?) AND
+				(LOWER(AssetCategory.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder.countCPDefinitionsByCommercePriceModifierId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommercePriceModifierRel.commercePriceModifierRelId) AS COUNT_VALUE
+			FROM
+				CommercePriceModifierRel
+			JOIN
+				CommercePriceModifier ON
+					CommercePriceModifier.commercePriceModifierId = CommercePriceModifierRel.commercePriceModifierId
+			INNER JOIN
+				CPDefinition ON
+					CPDefinition.CPDefinitionId = CommercePriceModifierRel.classPK
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
+				(CPDefinitionLocalization.languageId = ?)
+			WHERE
+				(CommercePriceModifierRel.commercePriceModifierId = ?) AND
+				(CommercePriceModifierRel.classNameId = ?) AND
+				(LOWER(CPDefinitionLocalization.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder.countPricingClassesByCommercePriceModifierId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommercePriceModifierRel.commercePriceModifierRelId) AS COUNT_VALUE
+			FROM
+				CommercePriceModifierRel
+			JOIN
+				CommercePriceModifier ON
+					CommercePriceModifier.commercePriceModifierId = CommercePriceModifierRel.commercePriceModifierId
+			JOIN
+				CommercePricingClass ON
+					CommercePriceModifierRel.classPK = CommercePricingClass.commercePricingClassId
+			WHERE
+				(CommercePriceModifierRel.commercePriceModifierId = ?) AND
+				(CommercePriceModifierRel.classNameId = ?) AND
+				(LOWER(CommercePricingClass.title) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder.findCategoriesByCommercePriceModifierId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommercePriceModifierRel.*
+			FROM
+				CommercePriceModifierRel
+			JOIN
+				CommercePriceModifier ON
+					CommercePriceModifier.commercePriceModifierId = CommercePriceModifierRel.commercePriceModifierId
+			JOIN
+				AssetCategory ON
+					CommercePriceModifierRel.classPK = AssetCategory.categoryId
+			WHERE
+				(CommercePriceModifierRel.commercePriceModifierId = ?) AND
+				(CommercePriceModifierRel.classNameId = ?) AND
+				(LOWER(AssetCategory.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder.findCPDefinitionsByCommercePriceModifierId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommercePriceModifierRel.*
+			FROM
+				CommercePriceModifierRel
+			JOIN
+				CommercePriceModifier ON
+					CommercePriceModifier.commercePriceModifierId = CommercePriceModifierRel.commercePriceModifierId
+			INNER JOIN
+				CPDefinition ON
+					CPDefinition.CPDefinitionId = CommercePriceModifierRel.classPK
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
+				(CPDefinitionLocalization.languageId = ?)
+			WHERE
+				(CommercePriceModifierRel.commercePriceModifierId = ?) AND
+				(CommercePriceModifierRel.classNameId = ?) AND
+				(LOWER(CPDefinitionLocalization.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder.findPricingClassesByCommercePriceModifierId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommercePriceModifierRel.*
+			FROM
+				CommercePriceModifierRel
+			JOIN
+				CommercePriceModifier ON
+					CommercePriceModifier.commercePriceModifierId = CommercePriceModifierRel.commercePriceModifierId
+			JOIN
+				CommercePricingClass ON
+					CommercePriceModifierRel.classPK = CommercePricingClass.commercePricingClassId
+			WHERE
+				(CommercePriceModifierRel.commercePriceModifierId = ?) AND
+				(CommercePriceModifierRel.classNameId = ?) AND
+				(LOWER(CommercePricingClass.title) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder.countByCommercePricingClassId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CPricingClassCPDefinitionRel.CPricingClassCPDefinitionRelId) AS COUNT_VALUE
+			FROM
+				CPricingClassCPDefinitionRel
+			INNER JOIN
+				CPDefinition ON
+					CPDefinition.CPDefinitionId = CPricingClassCPDefinitionRel.CPDefinitionId
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
+				(CPDefinitionLocalization.languageId = ?)
+			WHERE
+				(CPricingClassCPDefinitionRel.commercePricingClassId = ?) AND
+				(LOWER(CPDefinitionLocalization.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder.findByCommercePricingClassId">
+		<![CDATA[
+			SELECT
+				DISTINCT CPricingClassCPDefinitionRel.*
+			FROM
+				CPricingClassCPDefinitionRel
+			INNER JOIN
+				CPDefinition ON
+					CPDefinition.CPDefinitionId = CPricingClassCPDefinitionRel.CPDefinitionId
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
+				(CPDefinitionLocalization.languageId = ?)
+			WHERE
+				(CPricingClassCPDefinitionRel.commercePricingClassId = ?) AND
+				(LOWER(CPDefinitionLocalization.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder.countByCPDefinitionId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommercePricingClass.commercePricingClassId) AS COUNT_VALUE
+			FROM
+				CommercePricingClass
+			INNER JOIN
+				CPricingClassCPDefinitionRel ON
+					CommercePricingClass.commercePricingClassId = CPricingClassCPDefinitionRel.commercePricingClassId
+			WHERE
+				(CPricingClassCPDefinitionRel.CPDefinitionId = ?) AND
+				(LOWER(CommercePricingClass.title) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder.findByCPDefinitionId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommercePricingClass.*
+			FROM
+				CommercePricingClass
+			INNER JOIN
+				CPricingClassCPDefinitionRel ON
+					CommercePricingClass.commercePricingClassId = CPricingClassCPDefinitionRel.commercePricingClassId
+			WHERE
+				(CPricingClassCPDefinitionRel.CPDefinitionId = ?) AND
+				(LOWER(CommercePricingClass.title) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+</custom-sql>

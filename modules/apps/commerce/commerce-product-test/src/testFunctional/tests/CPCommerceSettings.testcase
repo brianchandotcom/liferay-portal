@@ -1,0 +1,152 @@
+@component-name = "portal-commerce"
+definition {
+
+	property osgi.app.includes = "commerce";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-commerce-license-li");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+		}
+	}
+
+	@ignore = "true"
+	test CreateNewAvailabilityEstimate {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewAvailabilityEstimate";
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Settings");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Availability Estimates");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewAvailabilityEstimatesEntry(entryName = "New Availability Estimate");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	@ignore = "true"
+	test CreateNewCountry {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewCountry";
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Settings");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Countries");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCountriesEntry(entryName = "New Country");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Regions");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewRegionsEntry(
+			code = "NRE",
+			entryName = "New Region");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	@ignore = "true"
+	test CreateNewMeasurementUnits {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewMeasurementUnits";
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Settings");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Measurement Units");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewDimensionUnit(entryName = "New Dimension Unit");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Weight");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewWeightUnit(entryName = "New Weight Unit");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	@ignore = "true"
+	test CreateNewNotificationTemplate {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewNotificationTemplate";
+
+		CommerceEntry.createNewAccountGroup(
+			criteriaType = "Users",
+			criterionEntryName = "Commerce User",
+			entryName = "Account groups");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Notificatios");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewNotificationTemplate(
+			accountGroup = "Account groups",
+			entryName = "New Notification Template",
+			fromAddress = "test@liferay.com",
+			fromName = "Test Test",
+			notificationType = "Order Placed");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+}

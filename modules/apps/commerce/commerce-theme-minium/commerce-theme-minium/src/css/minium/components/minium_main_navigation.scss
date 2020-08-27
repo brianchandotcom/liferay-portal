@@ -1,0 +1,9 @@
+.minium-main-navigation {
+	@media screen and (hover: none) {
+		display: flex;
+	}
+
+	&__submenu:not(.is-open) {
+		display: none;
+	}
+}

@@ -1,0 +1,82 @@
+[
+	{
+		"code": "02",
+		"name": "Dolnośląskie",
+		"priority": 1
+	},
+	{
+		"code": "04",
+		"name": "Kujawsko-pomorskie",
+		"priority": 2
+	},
+	{
+		"code": "06",
+		"name": "Lubelskie",
+		"priority": 3
+	},
+	{
+		"code": "08",
+		"name": "Lubuskie",
+		"priority": 4
+	},
+	{
+		"code": "12",
+		"name": "Malopolskie",
+		"priority": 5
+	},
+	{
+		"code": "14",
+		"name": "Mazowieckie",
+		"priority": 6
+	},
+	{
+		"code": "16",
+		"name": "Opolskie",
+		"priority": 7
+	},
+	{
+		"code": "18",
+		"name": "Podkarpackie",
+		"priority": 8
+	},
+	{
+		"code": "20",
+		"name": "Podlaskie",
+		"priority": 9
+	},
+	{
+		"code": "22",
+		"name": "Pomorskie",
+		"priority": 10
+	},
+	{
+		"code": "28",
+		"name": "Warmińsko-mazurskie",
+		"priority": 11
+	},
+	{
+		"code": "30",
+		"name": "Wielkopolskie",
+		"priority": 12
+	},
+	{
+		"code": "32",
+		"name": "Zachodniopomorskie",
+		"priority": 13
+	},
+	{
+		"code": "10",
+		"name": "Łódzkie",
+		"priority": 14
+	},
+	{
+		"code": "24",
+		"name": "Śląskie",
+		"priority": 15
+	},
+	{
+		"code": "26",
+		"name": "Świętokrzyskie",
+		"priority": 16
+	}
+]

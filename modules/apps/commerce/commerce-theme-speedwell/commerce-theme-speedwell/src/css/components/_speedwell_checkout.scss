@@ -1,0 +1,53 @@
+.commerce-checkout {
+	@media only screen and (max-width: $bp-small) {
+		.commerce-multi-step-nav {
+			display: none;
+		}
+
+		.button-holder {
+			display: flex;
+			flex-direction: column-reverse;
+
+			.btn-primary,
+			.btn-default {
+				font-weight: 600;
+				height: 60px;
+				line-height: 60px;
+				margin: 10px 0;
+				padding: 0;
+			}
+		}
+
+		&-summary-header {
+			display: none;
+		}
+
+		&-summary-body .table thead {
+			font-weight: 600;
+		}
+
+		&-summary-footer {
+			margin-bottom: 40px;
+			padding: 0;
+
+			.commerce {
+				&-description {
+					font-weight: 400;
+				}
+
+				&-value {
+					font-weight: 600;
+				}
+
+				&-total {
+					font-size: 18px;
+					margin-top: 16px;
+
+					.commerce-description {
+						font-weight: 600;
+					}
+				}
+			}
+		}
+	}
+}

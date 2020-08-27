@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry">
+		<field name="uuid" type="String" />
+		<field name="commerceMLForecastAlertEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceAccountId" type="long" />
+		<field name="actual" type="double" />
+		<field name="forecast" type="double" />
+		<field name="timestamp" type="Date" />
+		<field name="relativeChange" type="double" />
+		<field name="status" type="int" />
+	</model>
+</model-hints>

@@ -1,0 +1,206 @@
+definition {
+
+	macro addPortlet {
+		if ("${portletName}" == "Where are the Liferay members?") {
+			var portletName = "Map";
+		}
+
+		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
+			var browserType = PropsUtil.get("browser.type");
+
+			if ("${browserType}" == "safari") {
+				Click.clickNoMouseOver(locator1 = "ControlMenu#ADD");
+			}
+			else {
+				Click.clickAt(locator1 = "ControlMenu#ADD");
+			}
+		}
+
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
+
+		Navigator.gotoNavTab(navTab = "Widgets");
+
+		Pause(locator1 = "5000");
+
+		Type(
+			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+			value1 = "${portletName}");
+
+		Portlet._clickAddPortlet(portletName = "${portletName}");
+
+		var key_portletName = "${portletName}";
+
+		AssertElementPresent(
+			key_portletName = "${portletName}",
+			locator1 = "CommerceAccelerators#PORTLET_LOADED");
+
+		Refresh();
+	}
+
+	macro changeProductsSorting {
+		Click(locator1 = "CommerceAccelerators#SORT_BY_DROPDOWN");
+
+		Click(
+			key_menuItem = "${sortingType}",
+			locator1 = "CommerceEntry#ANY_MENU_ITEM");
+	}
+
+	macro createNewAccountViaFront {
+		Click.clickNoMouseOver(
+			key_text = "Add Account",
+			locator1 = "Button#ANY");
+
+		Pause(locator1 = "2000");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${accountName}");
+
+		Click(
+			key_userEmailAddress = "${adminEmailAddress}",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADD_MODAL_PLUS_BUTTON");
+
+		Click(
+			key_button = "Create Account",
+			locator1 = "CommerceAccelerators#ANY_BUTTON");
+	}
+
+	macro createNewOrderFromAccountSelectorDropdown {
+		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		Click(
+			key_button = "Create New Order",
+			locator1 = "CommerceAccelerators#ANY_BUTTON");
+	}
+
+	macro deactivateCommerceAccountViaFront {
+		Click(
+			key_entryName = "${accountName}",
+			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
+
+		CommerceEntry.clickNoError(menuItem = "Deactivate");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro inviteNewMemberWithRoleToAccount {
+		Click(
+			key_text = "Invite User",
+			locator1 = "Button#ANY");
+
+		Type(
+			key_fieldLabel = "Name or Email",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${emailAddress}");
+
+		Click(
+			key_userEmailAddress = "${emailAddress}",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADD_MODAL_PLUS_BUTTON");
+
+		Click(
+			key_button = "Invite user",
+			locator1 = "CommerceAccelerators#ANY_BUTTON");
+
+		Click(
+			key_memberEmailAddress = "${emailAddress}",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_MEMBER_ACTIONS_DROPDOWN");
+
+		CommerceEntry.clickNoError(menuItem = "View");
+
+		Click(locator1 = "CommerceAccelerators#ROLES_BUTTON");
+
+		Click(
+			key_role = "${role}",
+			locator1 = "CommerceAccelerators#ROLES_MODAL_ROLE_CHECKBOX");
+
+		Click(
+			key_button = "Done",
+			locator1 = "CommerceAccelerators#ANY_BUTTON");
+	}
+
+	macro reviewOrder {
+		Click(
+			key_orderAuthor = "${orderAuthor}",
+			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",
+			value1 = "${productSKU}");
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#ORDER_DETAILS_NAME",
+			value1 = "${productName}");
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#ORDER_DETAILS_UNIT_PRICE",
+			value1 = "$ ${productUnitPrice}");
+
+		if (isSet(productDiscount)) {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_DISCOUNT",
+				value1 = "$ ${productDiscount}");
+		}
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#ORDER_DETAILS_QUANTITY",
+			value1 = "${productQuantity}");
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
+			value1 = "$ ${productPrice}");
+	}
+
+	macro viewAllAccountsFromAccountSelector {
+		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		Click(
+			key_button = "View All Accounts",
+			locator1 = "CommerceAccelerators#ANY_BUTTON");
+	}
+
+	macro viewDisabledAddToCartButton {
+		AssertElementPresent(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
+	}
+
+	macro viewEnabledAddToCartButton {
+		AssertElementPresent(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_ENABLED");
+	}
+
+	macro viewMiniumCardName {
+		AssertTextEquals(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#MINIUM_CARD_NAME",
+			value1 = "${productName}");
+	}
+
+	macro viewMiniumSelectedAccount {
+		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_SELECTED_ACCOUNT",
+			value1 = "${selectedAccount}");
+	}
+
+	macro viewSpeedwellAccount {
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+			value1 = "${userScreenName}");
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+			value1 = "${userEmailAddress}");
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+			value1 = "${userFirstName}");
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+			value1 = "${userLastName}");
+	}
+
+}

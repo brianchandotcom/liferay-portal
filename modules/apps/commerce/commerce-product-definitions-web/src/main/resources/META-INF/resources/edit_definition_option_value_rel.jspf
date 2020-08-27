@@ -1,0 +1,162 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+long cpDefinitionId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionId();
+CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRel();
+long cpDefinitionOptionRelId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRelId();
+long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionValueRelId();
+%>
+
+<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinitionOptionValueRel == null) ? Constants.ADD : Constants.UPDATE %>" />
+<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:input name="cpDefinitionId" type="hidden" value="<%= String.valueOf(cpDefinitionId) %>" />
+<aui:input name="cpDefinitionOptionRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
+<aui:input name="cpDefinitionOptionValueRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionValueRelId) %>" />
+
+<aui:model-context bean="<%= cpDefinitionOptionValueRel %>" model="<%= CPDefinitionOptionValueRel.class %>" />
+
+<liferay-ui:error exception="<%= CPDefinitionOptionValueRelCPInstanceException.class %>" message="please-select-a-valid-sku" />
+<liferay-ui:error exception="<%= CPDefinitionOptionValueRelKeyException.class %>" message="that-key-is-already-being-used" />
+<liferay-ui:error exception="<%= CPDefinitionOptionValueRelPriceException.class %>" message="please-enter-a-valid-price" />
+<liferay-ui:error exception="<%= CPDefinitionOptionValueRelQuantityException.class %>" message="please-enter-a-valid-quantity" />
+
+<aui:input defaultLanguageId="<%= cpDefinitionOptionValueRelDisplayContext.getCatalogDefaultLanguageId() %>" id="optionValueName" name="name" />
+
+<aui:input label="position" name="priority" />
+
+<aui:input helpMessage="key-help" name="key" />
+
+<c:if test="<%= cpDefinitionOptionValueRel != null %>">
+	<aui:input checked="<%= cpDefinitionOptionValueRel.isPreselected() %>" inlineField="<%= true %>" label="default" name="preselected" type="toggle-switch" />
+
+	<%
+	CommerceCurrency commerceCurrency = cpDefinitionOptionValueRelDisplayContext.getCommerceCurrency();
+
+	BigDecimal price = cpDefinitionOptionValueRel.getPrice();
+
+	if (price == null) {
+		price = BigDecimal.ZERO;
+	}
+	%>
+
+	<c:if test="<%= cpDefinitionOptionRel.isPriceTypeStatic() %>">
+		<aui:input ignoreRequestValue="<%= true %>" label="delta-price" name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(price) %>">
+			<aui:validator name="min">0</aui:validator>
+			<aui:validator name="number" />
+		</aui:input>
+	</c:if>
+
+	<c:if test="<%= cpDefinitionOptionRel.isPriceContributor() %>">
+		<div class="sheet-section">
+			<h3 class="sheet-subtitle"><%= LanguageUtil.get(request, "product") %></h3>
+
+			<div class="row">
+				<div class="col">
+					<label class="control-label" for="skuId"><%= LanguageUtil.get(request, "sku") %></label>
+
+					<div id="autocomplete-root"></div>
+				</div>
+
+				<div class="col-4">
+					<aui:input min="1" name="quantity" type="number" wrapperCssClass="mb-0" />
+				</div>
+
+				<div class="align-items-end col-auto d-flex">
+					<button class="btn btn-monospaced btn-secondary form-submitter" id="remove-sku-button" onclick="<%= liferayPortletResponse.getNamespace() + "removeSku();" %>" type="button">
+						<clay:icon
+							symbol="trash"
+						/>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<%
+		String cpInstanceId = StringPool.BLANK;
+		String cpInstanceLabel = StringPool.BLANK;
+
+		CPInstance cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
+
+		if (cpInstance != null) {
+			cpInstanceId = String.valueOf(cpInstance.getCPInstanceId());
+			cpInstanceLabel = cpInstance.getSku();
+		}
+		%>
+
+		<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events">
+			var deleteButton = document.getElementById('remove-sku-button');
+			var quantityInput = document.getElementById(
+				'<%= liferayPortletResponse.getNamespace() %>quantity'
+			);
+
+			if (!quantityInput.value || quantityInput.value === '0') {
+				quantityInput.value = 1;
+			}
+
+			autocomplete.default('autocomplete', 'autocomplete-root', {
+				apiUrl:
+					'/o/headless-commerce-admin-catalog/v1.0/skus?filter=hasChildCPDefinitions eq false',
+				initialLabel: '<%= cpInstanceLabel %>',
+				initialValue: '<%= cpInstanceId %>',
+				inputId: 'skuId',
+				inputName: '<%= liferayPortletResponse.getNamespace() %>cpInstanceId',
+				itemsKey: 'id',
+				itemsLabel: 'sku',
+				onValueUpdated: function (value) {
+					if (value) {
+						quantityInput.disabled = false;
+						deleteButton.disabled = false;
+					}
+					else {
+						quantityInput.disabled = true;
+						deleteButton.disabled = true;
+					}
+				},
+			});
+
+			Liferay.provide(window, '<portlet:namespace />removeSku', function () {
+				var url = new URL(
+					'<%= cpDefinitionOptionValueRelDisplayContext.getRemoveSkuUrl(currentURL) %>'
+				);
+
+				if (Liferay.SPA) {
+					Liferay.SPA.app.navigate(url.toString());
+				}
+				else {
+					window.location.href = url.toString();
+				}
+			});
+		</aui:script>
+	</c:if>
+</c:if>
+
+<c:if test="<%= cpDefinitionOptionValueRel == null %>">
+	<aui:script require="commerce-frontend-js/utilities/debounce as debounce, commerce-frontend-js/utilities/slugify as slugify">
+		var form = document.getElementById(
+			'<portlet:namespace />cpDefinitionOptionValueRelfm'
+		);
+
+		var keyInput = form.querySelector('#<portlet:namespace />key');
+		var nameInput = form.querySelector('#<portlet:namespace />optionValueName');
+
+		var handleOnNameInput = function () {
+			keyInput.value = slugify.default(nameInput.value);
+		};
+
+		nameInput.addEventListener('input', debounce.default(handleOnNameInput, 200));
+	</aui:script>
+</c:if>

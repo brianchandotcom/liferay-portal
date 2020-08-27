@@ -1,0 +1,42 @@
+definition {
+
+	macro addPriceToSKU {
+		Type(
+			locator1 = "CommerceEntry#INPUT_PRICE",
+			value1 = "${price}");
+	}
+
+	macro addSKU {
+		for (var optionValues : list "${optionValuesList}") {
+			var optionValue = StringUtil.extractFirst("${optionValues}", ":");
+			var price = StringUtil.extractLast("${optionValues}", ":");
+			var optionValueUppercase = StringUtil.upperCase("${optionValue}");
+
+			Refresh();
+
+			Click(locator1 = "Button#PLUS");
+
+			AssertClick(
+				key_menuItem = "Add SKU",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM",
+				value1 = "${key_menuItem}");
+
+			SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.addSKUsEntry(
+				optionValue = "${optionValue}",
+				productSKU = "${optionValueUppercase}SKU");
+
+			CommerceSKUs.addPriceToSKU(price = "${price}");
+
+			CommerceEntry.publishEntry();
+
+			AssertVisible(locator1 = "Message#SUCCESS");
+
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		Refresh();
+	}
+
+}

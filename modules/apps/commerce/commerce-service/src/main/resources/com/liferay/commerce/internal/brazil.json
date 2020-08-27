@@ -1,0 +1,137 @@
+[
+	{
+		"code": "AC",
+		"name": "Acre",
+		"priority": 1
+	},
+	{
+		"code": "AL",
+		"name": "Alagoas",
+		"priority": 2
+	},
+	{
+		"code": "AP",
+		"name": "Amapá",
+		"priority": 3
+	},
+	{
+		"code": "AM",
+		"name": "Amazonas",
+		"priority": 4
+	},
+	{
+		"code": "BA",
+		"name": "Bahia",
+		"priority": 5
+	},
+	{
+		"code": "CE",
+		"name": "Ceará",
+		"priority": 6
+	},
+	{
+		"code": "DF",
+		"name": "Distrito Federal",
+		"priority": 7
+	},
+	{
+		"code": "ES",
+		"name": "Espírito Santo",
+		"priority": 8
+	},
+	{
+		"code": "GO",
+		"name": "Goiás",
+		"priority": 9
+	},
+	{
+		"code": "MA",
+		"name": "Maranhão",
+		"priority": 10
+	},
+	{
+		"code": "MT",
+		"name": "Mato Grosso",
+		"priority": 11
+	},
+	{
+		"code": "MS",
+		"name": "Mato Grosso do Sul",
+		"priority": 12
+	},
+	{
+		"code": "MG",
+		"name": "Minas Gerais",
+		"priority": 13
+	},
+	{
+		"code": "PR",
+		"name": "Paraná",
+		"priority": 14
+	},
+	{
+		"code": "PB",
+		"name": "Paraíba",
+		"priority": 15
+	},
+	{
+		"code": "PA",
+		"name": "Pará",
+		"priority": 16
+	},
+	{
+		"code": "PE",
+		"name": "Pernambuco",
+		"priority": 17
+	},
+	{
+		"code": "PI",
+		"name": "Piauí",
+		"priority": 18
+	},
+	{
+		"code": "RJ",
+		"name": "Rio de Janeiro",
+		"priority": 19
+	},
+	{
+		"code": "RN",
+		"name": "Rio Grande do Norte",
+		"priority": 20
+	},
+	{
+		"code": "RS",
+		"name": "Rio Grande do Sul",
+		"priority": 21
+	},
+	{
+		"code": "RO",
+		"name": "Rondônia",
+		"priority": 22
+	},
+	{
+		"code": "RR",
+		"name": "Roraima",
+		"priority": 23
+	},
+	{
+		"code": "SC",
+		"name": "Santa Catarina",
+		"priority": 24
+	},
+	{
+		"code": "SE",
+		"name": "Sergipe",
+		"priority": 25
+	},
+	{
+		"code": "SP",
+		"name": "São Paulo",
+		"priority": 26
+	},
+	{
+		"code": "TO",
+		"name": "Tocantins",
+		"priority": 27
+	}
+]

@@ -1,0 +1,80 @@
+.commerce-topbar-button {
+	align-items: center;
+	color: currentColor;
+	cursor: pointer;
+	display: flex;
+	font-size: 1rem;
+	height: $frame-size;
+	justify-content: center;
+	margin: 0;
+	min-width: $frame-size;
+	padding: 14px;
+	text-align: left;
+
+	@media screen and (max-width: $bp-small) {
+		height: $frame-size-small;
+		min-width: $frame-size-small;
+		padding: 0;
+	}
+
+	&:hover {
+		color: currentColor;
+		text-decoration: none;
+	}
+
+	&__label {
+		@media screen and (max-width: $bp-small) {
+			display: none;
+		}
+	}
+
+	svg,
+	&__icon {
+		display: inline-block;
+		margin: 10px;
+	}
+
+	&:not(.is-active) &__icon--active {
+		display: none;
+	}
+
+	&.is-active &__icon--not-active {
+		display: none;
+	}
+
+	&[disabled],
+	&.is-disabled {
+		opacity: 0.5;
+	}
+
+	&.is-active {
+		background-color: $color-bg-alt;
+	}
+
+	&::before {
+		align-items: center;
+		background-color: $color-theme;
+		border-radius: 50%;
+		color: white;
+		content: attr(data-badge-count);
+		display: flex;
+		font-size: 10px;
+		font-weight: bold;
+		height: 18px;
+		justify-content: center;
+		left: 50%;
+		line-height: 1;
+		margin-left: -9px;
+		margin-top: -9px;
+		position: absolute;
+		top: 50%;
+		transform: translate(17px, -7px);
+		transition: all ease 200ms;
+		width: 18px;
+	}
+
+	&:not(.has-badge)::before {
+		opacity: 0;
+		transform: scale(0.1) translate(17px, -7px);
+	}
+}

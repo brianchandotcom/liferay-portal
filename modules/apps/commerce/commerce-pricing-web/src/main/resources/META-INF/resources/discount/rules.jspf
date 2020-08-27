@@ -1,0 +1,51 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:if test="<%= hasPermission %>">
+	<div class="row">
+		<div class="col-12">
+			<commerce-ui:panel
+				bodyClasses="p-0"
+				title='<%= LanguageUtil.get(request, "rules") %>'
+			>
+				<aui:fieldset helpMessage="select-whether-rules-should-be-evaluated-in-and-or-or">
+					<div class="align-items-center d-flex justify-content-end px-3">
+						<div class="mr-3"><%= LanguageUtil.get(request, "rules-connector") %></div>
+						<div class="mr-3">
+							<aui:input checked="<%= commerceDiscount.isRulesConjunction() %>" label="And" name="rulesConjunction" type="radio" value="<%= true %>" />
+						</div>
+
+						<div>
+							<aui:input checked="<%= !commerceDiscount.isRulesConjunction() %>" label="Or" name="rulesConjunction" type="radio" value="<%= false %>" />
+						</div>
+					</div>
+				</aui:fieldset>
+
+				<clay:headless-data-set-display
+					apiURL="<%= commerceDiscountDisplayContext.getDiscountRulesApiURL() %>"
+					clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountRulesClayDataSetActionDropdownItem() %>"
+					creationMenu="<%= commerceDiscountDisplayContext.getDiscountRuleCreationMenu() %>"
+					formId="fm"
+					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULES %>"
+					itemsPerPage="<%= 10 %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
+					pageNumber="<%= 1 %>"
+					portletURL="<%= portletDiscountRuleURL %>"
+				/>
+			</commerce-ui:panel>
+		</div>
+	</div>
+</c:if>

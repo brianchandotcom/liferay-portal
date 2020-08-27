@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess">
+		<field name="commerceDataIntegrationProcessId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="type" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="system" type="boolean" />
+		<field name="active" type="boolean" />
+		<field name="cronExpression" type="String" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog">
+		<field name="commerceDataIntegrationProcessLogId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CDataIntegrationProcessId" type="long" />
+		<field name="error" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="output" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+		<field name="status" type="int" />
+	</model>
+</model-hints>

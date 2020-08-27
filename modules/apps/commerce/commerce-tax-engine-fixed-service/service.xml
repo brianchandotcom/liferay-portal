@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="false" package-path="com.liferay.commerce.tax.engine.fixed">
+	<author>Alessio Antonio Rendina</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceTaxFixedRate" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceTaxFixedRateId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPTaxCategoryId" type="long" />
+		<column name="commerceTaxMethodId" type="long" />
+		<column name="rate" type="double" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CPTaxCategoryId" return-type="Collection">
+			<finder-column name="CPTaxCategoryId" />
+		</finder>
+		<finder name="CommerceTaxMethodId" return-type="Collection">
+			<finder-column name="commerceTaxMethodId" />
+		</finder>
+		<finder name="C_C" return-type="CommerceTaxFixedRate" unique="true">
+			<finder-column name="CPTaxCategoryId" />
+			<finder-column name="commerceTaxMethodId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceTaxFixedRateAddressRel" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column db-name="CTaxFixedRateAddressRelId" name="commerceTaxFixedRateAddressRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceTaxMethodId" type="long" />
+		<column name="CPTaxCategoryId" type="long" />
+		<column name="commerceCountryId" type="long" />
+		<column name="commerceRegionId" type="long" />
+		<column name="zip" type="String" />
+		<column name="rate" type="double" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceTaxMethodId" return-type="Collection">
+			<finder-column name="commerceTaxMethodId" />
+		</finder>
+		<finder name="CPTaxCategoryId" return-type="Collection">
+			<finder-column name="CPTaxCategoryId" />
+		</finder>
+		<finder name="CommerceCountryId" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>DuplicateCommerceTaxFixedRate</exception>
+	</exceptions>
+</service-builder>

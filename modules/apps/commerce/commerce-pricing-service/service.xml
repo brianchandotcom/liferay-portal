@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="false" package-path="com.liferay.commerce.pricing">
+	<author>Riccardo Alberti</author>
+	<namespace>Commerce</namespace>
+	<entity external-reference-code="true" local-service="true" name="CommercePriceModifier" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commercePriceModifierId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commercePriceListId" type="long" />
+		<column name="title" type="String" />
+		<column name="target" type="String" />
+		<column name="modifierAmount" type="BigDecimal" />
+		<column name="modifierType" type="String" />
+		<column name="priority" type="double" />
+		<column name="active" type="boolean" />
+		<column name="displayDate" type="Date" />
+		<column name="expirationDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="displayDate" />
+			<order-column name="createDate" />
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="CommercePriceListId" return-type="Collection">
+			<finder-column name="commercePriceListId" />
+		</finder>
+		<finder name="C_T" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="target" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtE_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_C_S" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_C_NotS" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CommercePriceModifierRel" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commercePriceModifierRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commercePriceModifierId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommercePriceModifierId" return-type="Collection">
+			<finder-column name="commercePriceModifierId" />
+		</finder>
+		<finder name="CPM_CN" return-type="Collection">
+			<finder-column name="commercePriceModifierId" />
+			<finder-column name="classNameId" />
+		</finder>
+		<finder name="CN_CPK" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="CPM_CN_CPK" return-type="CommercePriceModifierRel" unique="true">
+			<finder-column name="commercePriceModifierId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+	</entity>
+	<entity external-reference-code="true" local-service="true" name="CommercePricingClass" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commercePricingClassId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="title" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CommercePricingClassCPDefinitionRel" remote-service="true" table="CPricingClassCPDefinitionRel">
+
+		<!-- PK fields -->
+
+		<column db-name="CPricingClassCPDefinitionRelId" name="CommercePricingClassCPDefinitionRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commercePricingClassId" type="long" />
+		<column name="CPDefinitionId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommercePricingClassId" return-type="Collection">
+			<finder-column name="commercePricingClassId" />
+		</finder>
+		<finder name="CPDefinitionId" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+		</finder>
+		<finder name="C_C" return-type="CommercePricingClassCPDefinitionRel" unique="true">
+			<finder-column name="commercePricingClassId" />
+			<finder-column name="CPDefinitionId" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>CommercePriceModifierAmount</exception>
+		<exception>CommercePriceModifierDisplayDate</exception>
+		<exception>CommercePriceModifierExpirationDate</exception>
+		<exception>CommercePriceModifierTarget</exception>
+		<exception>CommercePriceModifierTitle</exception>
+		<exception>CommercePriceModifierType</exception>
+		<exception>CommercePricingClassDisplayDate</exception>
+		<exception>CommercePricingClassExpirationDate</exception>
+		<exception>CommercePricingClassTitle</exception>
+		<exception>CommerceUndefinedBasePriceList</exception>
+		<exception>DuplicateCommercePriceModifier</exception>
+		<exception>DuplicateCommercePricingClassCPDefinitionRel</exception>
+	</exceptions>
+</service-builder>

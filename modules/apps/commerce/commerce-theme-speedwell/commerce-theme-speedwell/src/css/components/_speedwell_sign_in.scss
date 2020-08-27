@@ -1,0 +1,120 @@
+.login-container,
+#signinmodal {
+	animation: popUp 0.2s ease-out 1 forwards;
+	animation-delay: 0.5s;
+	margin: 0 auto;
+	max-width: 31em;
+	opacity: 0;
+	padding: 20px 30px;
+
+	@media screen and (max-width: $bp-small) {
+		margin-top: 35px;
+		padding: 20px 0 0;
+	}
+
+	.btn,
+	.navigation li {
+		font-size: 12px;
+		font-weight: bold;
+		height: 50px;
+		line-height: 50px;
+		padding: 0;
+		width: 100%;
+	}
+
+	.sign-in-form {
+		.input-container {
+			margin-top: 20px;
+		}
+
+		&::before {
+			content: '';
+			display: block;
+			font-size: 1.4em;
+			font-weight: 300;
+			margin: 20px 0;
+			position: relative;
+
+			@media screen and (max-width: $bp-small) {
+				margin-bottom: 30px;
+				margin-top: -25px;
+			}
+		}
+	}
+
+	.navigation {
+		margin-top: 50px;
+		position: relative;
+
+		&::before {
+			border-top: 1px solid rgba(0, 0, 0, 0.05);
+			content: '';
+			position: absolute;
+			text-align: center;
+			top: -35px;
+			width: 100%;
+		}
+
+		&::after {
+			background-color: white;
+			content: '';
+			display: block;
+			font-size: 12px;
+			font-weight: 200;
+			left: 50%;
+			margin: 0 auto;
+			padding: 0 10px;
+			position: absolute;
+			text-align: center;
+			top: -45px;
+			transform: translateX(-50%);
+		}
+
+		li {
+			display: block;
+			font-size: 12px !important;
+			margin: 0;
+			padding: 0;
+			text-align: center;
+
+			&:nth-child(1) {
+				border: 1px solid $stroke-variant;
+				border-radius: 4px;
+				color: $stroke-variant;
+				font-weight: bold;
+				margin-bottom: 20px;
+			}
+
+			a {
+				color: $stroke-variant !important;
+
+				&:hover {
+					color: $stroke-variant !important;
+				}
+			}
+		}
+
+		a i {
+			display: none;
+		}
+
+		a[href*='create_account'] {
+			color: $stroke-variant;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	@keyframes popUp {
+		from {
+			opacity: 0;
+			transform: translate3d(0, 2%, 0);
+		}
+		to {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+		}
+	}
+}

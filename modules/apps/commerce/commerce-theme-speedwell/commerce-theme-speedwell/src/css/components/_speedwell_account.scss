@@ -1,0 +1,171 @@
+.speedwell-account {
+	perspective: 1000px;
+	position: relative;
+
+	&__dropdown {
+		background-color: #fff;
+		box-shadow: 0 15px 15px rgba(53, 53, 53, 0.15);
+		max-width: 350px;
+		position: absolute;
+		right: 0;
+		top: 100%;
+		width: 100vw;
+	}
+
+	&:not(.is-open) &__dropdown {
+		display: none;
+	}
+
+	&.is-open &__dropdown {
+		animation: openDropdown 0.2s $easeOutQuart 1 forwards;
+		transform-origin: top center;
+
+		@keyframes openDropdown {
+			to {
+				opacity: 1;
+			}
+		}
+	}
+
+	&.is-open .speedwell-topbar__button {
+		background: $stroke;
+		color: $color-bg;
+
+		&::before {
+			mix-blend-mode: color;
+		}
+	}
+
+	&__title {
+		align-items: center;
+		background-color: $stroke;
+		color: #fff;
+		display: flex;
+		font-size: 16px;
+		height: 60px;
+		padding: 10px 30px;
+	}
+
+	&__content {
+		.speedwell-user-nav {
+			&__sign-in {
+				padding: 0 20px 0 35px;
+			}
+
+			&__header {
+				background-color: $stroke;
+				box-sizing: border-box;
+				color: white;
+				display: grid;
+				grid-auto-flow: column;
+				line-height: 40px;
+				padding: 10px 20px;
+
+				p {
+					margin: 0;
+				}
+			}
+
+			&__avatar {
+				display: flex;
+				margin: 10px 20px 0;
+				padding: 4px;
+				position: relative;
+
+				img {
+					border-radius: 50%;
+					display: block;
+					height: 40px;
+					width: 40px;
+				}
+
+				&.has-notification::before {
+					background-color: $color-theme;
+					border-radius: 50%;
+					content: '';
+					height: 6px;
+					position: absolute;
+					right: 2px;
+					top: 2px;
+					width: 6px;
+				}
+			}
+
+			&__name {
+				color: $color-fg;
+				font-size: 14px;
+				font-weight: bold;
+				padding: 5px 10px;
+				position: relative;
+				transition: opacity $transition, transform $transition;
+				white-space: nowrap;
+
+				.minium-sidebar:not(:hover) & {
+					opacity: 0;
+					transform: translateX(20px);
+				}
+			}
+
+			&__menu {
+				display: block;
+				grid-auto-flow: column;
+				padding: 10px 30px;
+
+				a {
+					line-height: 14px;
+					list-style-type: none;
+
+					.speedwell-notification-badge {
+						align-items: center;
+						background-color: $color-theme;
+						border-radius: 50%;
+						color: $color-bg;
+						display: inline-flex;
+						font-size: 12px;
+						height: 21px;
+						justify-content: center;
+						margin-left: 15px;
+						width: 21px;
+					}
+				}
+			}
+
+			.main-link {
+				display: block;
+				font-weight: normal;
+				height: 60px;
+				line-height: 60px;
+				margin: 0;
+				position: relative;
+				width: 100%;
+
+				&:hover {
+					font-weight: 600;
+					text-decoration: none;
+				}
+
+				&:hover::after,
+				&.is-active::after {
+					-webkit-transform: rotateZ(0deg) scale(0.4, 0.9);
+					color: $color-theme;
+					content: '>>';
+					font-size: 20px;
+					font-weight: bolder;
+					height: 60px;
+					left: -15px;
+					letter-spacing: -14px;
+					margin-top: -7px;
+					position: absolute;
+					text-shadow: 0 0 0 #30cfa1;
+					top: 50%;
+					transform: rotateZ(0deg) scale(0.4, 0.9);
+					width: 25px;
+				}
+
+				&__icon {
+					display: none;
+				}
+			}
+		}
+	}
+}

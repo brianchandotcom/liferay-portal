@@ -1,0 +1,102 @@
+.minium-products-compare {
+	background: white;
+	border-radius: $gutter $gutter 0 0;
+	box-shadow: 0 17px 84px 0 rgba(52, 55, 62, 0.2);
+	display: flex;
+	padding: $gutter;
+
+	@media screen and (hover: none) {
+		border-radius: $sm-gutter $sm-gutter 0 0;
+		padding: $sm-gutter;
+	}
+
+	&__item {
+		border: 2px dotted #d8d8d8;
+		border-radius: $sm-gutter;
+		height: 54px;
+		margin-right: $gutter;
+		position: relative;
+		transition: border 0.3s ease-in;
+		width: 54px;
+
+		@media screen and (hover: none) {
+			margin-right: $sm-gutter;
+		}
+
+		&--showing,
+		&--visible {
+			border: 0 dotted #d8d8d8;
+		}
+
+		&--hiding,
+		&--hidden {
+			border: 2px dotted #d8d8d8;
+		}
+	}
+
+	&__thumbnail {
+		background-position: 50% 50%;
+		background-size: cover;
+		border-radius: $sm-gutter;
+		display: block;
+		height: 100%;
+		left: 0;
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		transform: scale(0.6);
+		transition: all 0.1s ease-in;
+		width: 100%;
+
+		&--showing,
+		&--visible {
+			opacity: 1;
+			transform: scale(1);
+		}
+
+		&--hiding,
+		&--hidden {
+			opacity: 0;
+			transform: scale(0.6);
+		}
+	}
+
+	&__delete {
+		background: #f1676a;
+		border-radius: 50%;
+		color: white;
+		cursor: pointer;
+		font-size: 1rem;
+		height: 18px;
+		left: -9px;
+		line-height: 1.1;
+		position: absolute;
+		top: 9px;
+		transform: scale(0);
+		transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		transition-delay: 0.2s;
+		width: 18px;
+		z-index: 10;
+
+		&--showing,
+		&--visible {
+			transform: scale(1);
+		}
+
+		&--hiding,
+		&--hidden {
+			transform: scale(0);
+			transition-delay: 0s;
+		}
+
+		[class*='-icon'] {
+			left: 1px;
+			position: relative;
+			top: 1px;
+		}
+
+		path {
+			fill: rgba(255, 255, 255, 0.9);
+		}
+	}
+}

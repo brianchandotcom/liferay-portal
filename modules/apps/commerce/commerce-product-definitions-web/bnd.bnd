@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Commerce Product Definitions Web
+Bundle-SymbolicName: com.liferay.commerce.product.definitions.web
+Bundle-Version: 5.0.0
+Export-Package:\
+	com.liferay.commerce.product.definitions.web.display.context,\
+	com.liferay.commerce.product.definitions.web.portlet.action,\
+	com.liferay.commerce.product.definitions.web.servlet.taglib.ui
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-product-definitions-web
+-dsannotations-options: inherit

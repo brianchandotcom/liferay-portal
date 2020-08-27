@@ -1,0 +1,122 @@
+[
+	{
+		"code": "B",
+		"name": "Buenos Aires",
+		"priority": 1
+	},
+	{
+		"code": "K",
+		"name": "Catamarca",
+		"priority": 2
+	},
+	{
+		"code": "H",
+		"name": "Chaco",
+		"priority": 3
+	},
+	{
+		"code": "U",
+		"name": "Chubut",
+		"priority": 4
+	},
+	{
+		"code": "C",
+		"name": "Ciudad Autonoma de Buenos Aires",
+		"priority": 5
+	},
+	{
+		"code": "W",
+		"name": "Corrientes",
+		"priority": 6
+	},
+	{
+		"code": "X",
+		"name": "Córdoba",
+		"priority": 7
+	},
+	{
+		"code": "E",
+		"name": "Entre Ríos",
+		"priority": 8
+	},
+	{
+		"code": "P",
+		"name": "Formosa",
+		"priority": 9
+	},
+	{
+		"code": "Y",
+		"name": "Jujuy",
+		"priority": 10
+	},
+	{
+		"code": "L",
+		"name": "La Pampa",
+		"priority": 11
+	},
+	{
+		"code": "F",
+		"name": "La Rioja",
+		"priority": 12
+	},
+	{
+		"code": "M",
+		"name": "Mendoza",
+		"priority": 13
+	},
+	{
+		"code": "N",
+		"name": "Misiones",
+		"priority": 14
+	},
+	{
+		"code": "Q",
+		"name": "Neuquén",
+		"priority": 15
+	},
+	{
+		"code": "R",
+		"name": "Río Negro",
+		"priority": 16
+	},
+	{
+		"code": "A",
+		"name": "Salta",
+		"priority": 17
+	},
+	{
+		"code": "J",
+		"name": "San Juan",
+		"priority": 18
+	},
+	{
+		"code": "D",
+		"name": "San Luis",
+		"priority": 19
+	},
+	{
+		"code": "Z",
+		"name": "Santa Cruz",
+		"priority": 20
+	},
+	{
+		"code": "S",
+		"name": "Santa Fe",
+		"priority": 21
+	},
+	{
+		"code": "G",
+		"name": "Santiago del Estero",
+		"priority": 22
+	},
+	{
+		"code": "V",
+		"name": "Tierra del Fuego",
+		"priority": 23
+	},
+	{
+		"code": "T",
+		"name": "Tucumán",
+		"priority": 24
+	}
+]

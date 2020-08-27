@@ -1,0 +1,116 @@
+[
+	{
+		"accounts": [
+			{
+				"name": "S Auto Service",
+				"roles": [
+					"Buyer"
+				]
+			}
+		],
+		"comments": "Mike is an employee of one of S Auto Service's service centers. He is responsible for consulting S Auto Service's clients on parts replacements and services for their vehicles.",
+		"emailAddress": "mike@sauto.demo",
+		"firstName": "Mike",
+		"jobTitle": "Parts Consultant",
+		"lastName": "Smith",
+		"male": true,
+		"password": "test",
+		"portrait": "purple_5.png",
+		"screenName": "mike.smith"
+	},
+	{
+		"accounts": [
+			{
+				"name": "S Auto Service",
+				"roles": [
+					"Account Administrator",
+					"Order Manager",
+					"Buyer"
+				]
+			}
+		],
+		"comments": "Brenda is an employee at S Auto Service's head office. Her main responsibility is purchasing and managing suppliers like Minium.",
+		"emailAddress": "brenda@sauto.demo",
+		"firstName": "Brenda",
+		"jobTitle": "Purchasing Manager",
+		"lastName": "Collins",
+		"male": false,
+		"password": "test",
+		"portrait": "purple_6.png",
+		"screenName": "brenda.collins"
+	},
+	{
+		"accounts": [
+			{
+				"name": "Leo Auto Parts Distributor",
+				"roles": [
+					"Account Administrator",
+					"Order Manager",
+					"Buyer"
+				]
+			}
+		],
+		"comments": "Roberto is an employee at Leo Auto Parts. His main responsibility is purchasing and managing suppliers like Minium.",
+		"emailAddress": "roberto@leoauto.demo",
+		"firstName": "Roberto",
+		"jobTitle": "Purchasing Manager",
+		"lastName": "Moretti",
+		"male": true,
+		"password": "test",
+		"portrait": "green_4.png",
+		"screenName": "roberto.moretti"
+	},
+	{
+		"comments": "Gloria is a member of the Minium sales team who manages accounts like Speedy Auto Service.",
+		"emailAddress": "gloria@minium.demo",
+		"firstName": "Gloria",
+		"jobTitle": "Account Manager",
+		"lastName": "Davis",
+		"male": false,
+		"organizations": [
+			"United States"
+		],
+		"password": "test",
+		"portrait": "blue_7.png",
+		"roles": [
+			"Buyer",
+			"Sales Agent",
+			"Order Manager"
+		],
+		"screenName": "gloria.davis"
+	},
+	{
+		"comments": "Jason is responsible for managing Minium’s B2B commerce site content. He works with a team of designers and content writers to build engaging site pages and content using the content and asset management features of the commerce platform.",
+		"emailAddress": "jason@minium.demo",
+		"firstName": "Jason",
+		"groupRoles": [
+			"Site Administrator"
+		],
+		"jobTitle": "Marketing Manager",
+		"lastName": "Lee",
+		"male": true,
+		"organizations": [
+			"Minium"
+		],
+		"password": "test",
+		"portrait": "blue_1.png",
+		"screenName": "jason.lee"
+	},
+	{
+		"comments": "Chris is a member of Minium’s IS Operations team. His role is to keep the B2B commerce site updated with the latest product offerings and finding solutions to business requirement as Minium grows and request more capabilities from the platform.",
+		"emailAddress": "chris@minium.demo",
+		"firstName": "Chris",
+		"jobTitle": "Operations Manager",
+		"lastName": "Robbins",
+		"male": true,
+		"organizations": [
+			"Minium"
+		],
+		"password": "test",
+		"portrait": "blue_2.png",
+		"roles": [
+			"Administrator"
+		],
+		"screenName": "chris.robbins"
+	}
+]

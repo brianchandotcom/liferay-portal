@@ -1,0 +1,10 @@
+apiDir: "../headless-commerce-admin-account-api/src/main/java"
+apiPackagePath: "com.liferay.headless.commerce.admin.account"
+application:
+    baseURI: "/headless-commerce-admin-account"
+    className: "HeadlessCommerceAdminAccountApplication"
+    name: "Liferay.Headless.Commerce.Admin.Account"
+author: "Alessio Antonio Rendina"
+clientDir: "../headless-commerce-admin-account-client/src/main/java"
+forcePredictableOperationId: false
+testDir: "../headless-commerce-admin-account-test/src/testIntegration/java"

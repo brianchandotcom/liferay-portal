@@ -1,0 +1,6 @@
+// stylelint-disable at-rule-no-unknown
+$minicart-width: 600px;
+
+@function get-opening-translation($direction, $size) {
+	@return translate3d((if($direction == left, -1, 1) * $size), 0, 0);
+}

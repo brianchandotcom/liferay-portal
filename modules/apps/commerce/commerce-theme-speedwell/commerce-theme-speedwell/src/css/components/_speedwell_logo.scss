@@ -1,0 +1,12 @@
+.speedwell-logo {
+	.logo {
+		height: auto;
+		width: 130px;
+	}
+
+	@media screen and (max-width: 375px) {
+		a {
+			height: 60px;
+		}
+	}
+}

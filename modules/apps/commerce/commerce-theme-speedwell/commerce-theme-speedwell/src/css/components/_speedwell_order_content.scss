@@ -1,0 +1,40 @@
+.portlet-commerce-order-content {
+	.portlet-body > .commerce-panel {
+		&__content > .row {
+			.col-md-3:nth-child(1),
+			.col-md-3:nth-child(3) {
+				display: none;
+			}
+		}
+	}
+
+	.commerce-panel__title {
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 25px;
+		margin: 15px 0;
+	}
+
+	#commercePlacedOrderItemsTable {
+		th:nth-child(7),
+		th:nth-child(8),
+		td:nth-child(7),
+		td:nth-child(8),
+		td:nth-child(1) .image-name-cell__value {
+			display: none;
+		}
+
+		th:nth-child(1) {
+			visibility: hidden;
+		}
+
+		.table-list th,
+		.table-list td {
+			border: 0;
+		}
+	}
+
+	.commerce-button {
+		margin: 30px 0;
+	}
+}

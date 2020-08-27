@@ -1,0 +1,157 @@
+definition {
+
+	macro initializersCheckout {
+		if (isSet(newAddressName)) {
+			Type(
+				key_fieldName = "Name",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressName}");
+
+			Type(
+				key_fieldName = "Address",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressAddress}");
+
+			Select(
+				key_fieldName = "Country",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+				value1 = "${newAddressCountry}");
+
+			Type(
+				key_fieldName = "Zip",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressZipCode}");
+
+			Type(
+				key_fieldName = "City",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressCity}");
+
+			if (isSet(guestEmail)) {
+				Type(
+					locator1 = "CommerceAccelerators#GUEST_CHECKOUT_EMAIL",
+					value1 = "${guestEmail}");
+			}
+		}
+
+		Click(locator1 = "Button#CONTINUE");
+
+		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
+			Click(
+				key_radioOption = "${shippingMethod}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SHIPPING_OPTION_RADIO");
+
+			if ("${shippingMethod}" == "Standard") {
+				deliveryValue = "15";
+			}
+			else {
+				if ("${shippingMethod}" == "Expedited") {
+					deliveryValue = "25";
+				}
+			}
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		subtotal = MathUtil.product("${productUnitPrice}", "${productQuantity}");
+
+		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
+			total = MathUtil.sum("${subtotal}", "${deliveryValue}");
+		}
+		else {
+			total = "${subtotal}";
+		}
+
+		CommerceCheckout.viewCheckoutOrderSummary(
+			addressAddress = "${newAddressAddress}",
+			addressCity = "${newAddressCity}",
+			addressCountry = "${newAddressCountry}",
+			addressName = "${newAddressName}",
+			deliveryValue = "${deliveryValue}",
+			paymentMethod = "${paymentMethod}",
+			productName = "${productName}",
+			productPrice = "${productUnitPrice}",
+			productQuantity = "${productQuantity}",
+			subtotalValue = "${subtotal}",
+			totalValue = "${total}");
+
+		Click(locator1 = "Button#CONTINUE");
+	}
+
+	macro viewCheckoutOrderSummary {
+		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressName}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
+				value1 = "${addressName}");
+		}
+
+		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressAddress}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
+				value1 = "${addressAddress}");
+		}
+
+		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressCity}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
+				value1 = "${addressCity}");
+		}
+
+		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressCountry}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
+				value1 = "${addressCountry}");
+		}
+
+		AssertTextEquals(
+			key_paymentMethod = "${paymentMethod}",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+			value1 = "${paymentMethod}");
+
+		AssertTextEquals(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRODUCT",
+			value1 = "${productName}");
+
+		AssertTextEquals(
+			key_productQuantity = "${productQuantity}",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_QUANTITY",
+			value1 = "${productQuantity}");
+
+		AssertTextEquals.assertPartialText(
+			key_productPrice = "${productPrice}",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRICE",
+			value1 = "${productPrice}");
+
+		AssertTextEquals.assertPartialText(
+			key_subtotalValue = "${subtotalValue}",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL",
+			value1 = "${subtotalValue}");
+
+		if (isSet(deliveryValue)) {
+			if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
+				AssertTextEquals.assertPartialText(
+					key_deliveryValue = "${deliveryValue}",
+					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY",
+					value1 = "${deliveryValue}");
+			}
+		}
+
+		if (isSet(taxValue)) {
+			AssertTextEquals(
+				key_taxValue = "${taxValue}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_TAX",
+				value1 = "${taxValue}");
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_totalValue = "${totalValue}",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_TOTAL",
+			value1 = "${totalValue}");
+	}
+
+}

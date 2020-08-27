@@ -1,0 +1,15 @@
+{
+	"commerce-frontend-js": {
+		"dest-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "bridge/commerce-frontend-js/$1"
+		},
+		"file-globs": "**/*.js,**/*.soy.js",
+		"input": "build/node/packageRunBuild/resources",
+		"output": "build/node/packageRunBuild/resources/bridge/commerce-frontend-js",
+		"src-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "commerce-frontend-js/$1"
+		}
+	}
+}

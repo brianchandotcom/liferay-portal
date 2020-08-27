@@ -1,0 +1,153 @@
+#minium .mini-cart {
+	right: -#{$frame-size};
+	top: $frame-size;
+
+	.signed-in &.is-open {
+		height: calc(100vh - #{$frame-size-small});
+	}
+
+	&-header {
+		background-color: transparent;
+
+		&-actions .btn-outline {
+			&-success {
+				color: $color-theme;
+
+				&:hover {
+					background: $color-theme;
+					color: $color-bg;
+				}
+			}
+
+			&-danger {
+				color: $color-mood-bad;
+
+				&:hover {
+					background-color: $color-mood-bad;
+					color: $color-bg;
+				}
+			}
+		}
+
+		&-title {
+			visibility: hidden;
+		}
+	}
+
+	&-items-list {
+		.mini-cart-header-block {
+			background-color: $color-bg-alt;
+
+			.action {
+				color: $color-theme;
+				font-size: 0.8em;
+				font-weight: 500;
+				letter-spacing: normal;
+				text-transform: capitalize;
+			}
+		}
+
+		.summary-table {
+			background-color: $color-bg-dark;
+			color: $color-bg-medium;
+			margin: 0;
+			padding: 16px;
+
+			&-loader {
+				background-color: $color-bg-dark;
+			}
+		}
+	}
+
+	&-item {
+		&-errors,
+		.price-value-discount,
+		.price-value-final,
+		.price-value-promo {
+			color: $color-mood-bad;
+		}
+
+		.price-value {
+			font-size: 0.9rem;
+
+			&-percentages::after {
+				color: $color-mood-bad;
+			}
+		}
+
+		&-delete {
+			font-size: 0.9rem;
+			margin: 25px 0;
+		}
+
+		&-quantity {
+			.btn {
+				border: 0;
+				border-radius: 8px;
+				font-size: 16px;
+				height: 40px;
+				width: auto;
+			}
+
+			input,
+			select {
+				background-color: transparent;
+				border: 2px solid $color-border;
+				border-radius: 8px;
+				height: 40px;
+				margin: 0 3px;
+			}
+		}
+
+		.item-sku {
+			font-size: 0.9em;
+		}
+	}
+
+	&-opener {
+		background-color: $color-bg;
+		height: $frame-size;
+		width: $frame-size;
+	}
+
+	&-opener,
+	&-wrapper {
+		top: -#{$frame-size};
+	}
+
+	&-wrapper {
+		box-shadow: -10px $frame-size 20px -10px rgba(0, 0, 0, 0.3);
+	}
+
+	&-opener::before {
+		background-color: $color-theme;
+	}
+
+	&-close {
+		background-color: $color-bg-alt;
+		height: 70px;
+		position: absolute;
+		right: 0;
+		width: 70px;
+	}
+
+	&-submit {
+		padding: 0;
+
+		.btn {
+			background-color: $color-theme;
+			border-radius: 0;
+			box-sizing: border-box;
+			color: $color-bg-alt;
+			font-weight: 600;
+			padding: 16px;
+			text-transform: uppercase;
+		}
+	}
+
+	.rtl & {
+		&-wrapper {
+			box-shadow: 10px $frame-size 20px -10px rgba(0, 0, 0, 0.3);
+		}
+	}
+}

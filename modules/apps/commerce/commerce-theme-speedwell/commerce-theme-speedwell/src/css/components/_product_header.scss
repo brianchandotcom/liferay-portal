@@ -1,0 +1,29 @@
+.product-header {
+	margin-top: 40px;
+
+	&-tagline,
+	&-subtitle {
+		display: none;
+	}
+
+	&-title {
+		font-size: 36px;
+		font-weight: 300;
+		line-height: 60px;
+
+		@media only screen and (max-width: $bp-small) {
+			font-size: 32px !important;
+			font-weight: 600 !important;
+			line-height: 52px !important;
+		}
+	}
+
+	@media only screen and (max-width: $bp-small) {
+		.availability {
+			font-size: 14px;
+			line-height: 12px;
+			position: absolute;
+			top: 6%;
+		}
+	}
+}

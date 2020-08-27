@@ -1,0 +1,269 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.internal.upgrade;
+
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService;
+import com.liferay.commerce.internal.upgrade.v1_1_0.CommerceOrderItemUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v1_1_0.CommerceOrderNoteUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v1_1_0.CommerceOrderUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v1_2_0.CommerceSubscriptionUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v2_0_0.CommercePaymentMethodUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v2_1_0.CPDAvailabilityEstimateUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v2_1_0.CommerceSubscriptionEntryUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v3_2_0.CommerceAvailabilityEstimateUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v3_2_0.CommerceCountryUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v3_2_0.CommerceRegionUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_0_0.CommerceShipmentItemUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_1_0.CommerceAddressUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_2_1.PrintedNoteUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_3_0.CommerceOrderDateUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_4_0.CommerceOrderManuallyAdjustedUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_5_1.CommerceShippingMethodUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_6_0.ShipmentUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_6_0.SubscriptionUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v4_8_1.CommerceOrderStatusesUpgradeProcess;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Rodrigo Guedes de Souza
+ * @author Alec Sloan
+ * @author Alessio Antonio Rendina
+ */
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		if (_log.isInfoEnabled()) {
+			_log.info("COMMERCE UPGRADE STEP REGISTRATOR STARTED");
+		}
+
+		registry.register(
+			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
+			new CommerceOrderUpgradeProcess(),
+			new CommerceOrderItemUpgradeProcess(),
+			new CommerceOrderNoteUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_1_1_0, _SCHEMA_VERSION_1_2_0,
+			new CommerceSubscriptionUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_1_2_0, _SCHEMA_VERSION_2_0_0,
+			new CommercePaymentMethodUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_1_0,
+			new com.liferay.commerce.internal.upgrade.v2_1_0.
+				CommerceOrderItemUpgradeProcess(
+					_cpDefinitionLocalService, _cpInstanceLocalService),
+			new CommerceSubscriptionEntryUpgradeProcess(
+				_cpDefinitionLocalService, _cpInstanceLocalService),
+			new CPDAvailabilityEstimateUpgradeProcess(
+				_cpDefinitionLocalService));
+
+		registry.register(
+			_SCHEMA_VERSION_2_1_0, _SCHEMA_VERSION_2_2_0,
+			new com.liferay.commerce.internal.upgrade.v2_2_0.
+				CommerceAccountUpgradeProcess(
+					_commerceAccountLocalService,
+					_commerceAccountOrganizationRelLocalService,
+					_emailAddressLocalService, _organizationLocalService),
+			new com.liferay.commerce.internal.upgrade.v2_2_0.
+				CommerceOrderUpgradeProcess(
+					_commerceAccountLocalService, _userLocalService));
+
+		registry.register(
+			_SCHEMA_VERSION_2_2_0, _SCHEMA_VERSION_3_0_0,
+			new com.liferay.commerce.internal.upgrade.v3_0_0.
+				CommerceSubscriptionCycleEntryUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_3_0_0, _SCHEMA_VERSION_3_1_0,
+			new com.liferay.commerce.internal.upgrade.v3_1_0.
+				CommerceOrderUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_3_1_0, _SCHEMA_VERSION_3_2_0,
+			new com.liferay.commerce.internal.upgrade.v3_2_0.
+				CommerceOrderUpgradeProcess(),
+			new com.liferay.commerce.internal.upgrade.v3_2_0.
+				CommerceOrderItemUpgradeProcess(),
+			new CommerceAvailabilityEstimateUpgradeProcess(),
+			new CommerceCountryUpgradeProcess(),
+			new CommerceRegionUpgradeProcess(),
+			new com.liferay.commerce.internal.upgrade.v3_2_0.
+				CPDAvailabilityEstimateUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_3_2_0, _SCHEMA_VERSION_4_0_0,
+			new com.liferay.commerce.internal.upgrade.v4_0_0.
+				CommerceOrderItemUpgradeProcess(),
+			new CommerceShipmentItemUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_0_0, _SCHEMA_VERSION_4_1_0,
+			new CommerceAddressUpgradeProcess(_classNameLocalService),
+			new com.liferay.commerce.internal.upgrade.v4_1_0.
+				CommerceOrderItemUpgradeProcess(),
+			new com.liferay.commerce.internal.upgrade.v4_1_0.
+				CommerceCountryUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_1_0, _SCHEMA_VERSION_4_1_1,
+			new com.liferay.commerce.internal.upgrade.v4_1_1.
+				CommerceAddressUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_1_1, _SCHEMA_VERSION_4_2_0,
+			new DummyUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_2_0, _SCHEMA_VERSION_4_2_1,
+			new PrintedNoteUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_2_1, _SCHEMA_VERSION_4_3_0,
+			new CommerceOrderDateUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_3_0, _SCHEMA_VERSION_4_4_0,
+			new CommerceOrderManuallyAdjustedUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_4_0, _SCHEMA_VERSION_4_5_0,
+			new com.liferay.commerce.internal.upgrade.v4_5_0.
+				CommerceAddressUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_5_0, _SCHEMA_VERSION_4_5_1,
+			new CommerceShippingMethodUpgradeProcess(
+				_classNameLocalService, _groupLocalService));
+
+		registry.register(
+			_SCHEMA_VERSION_4_5_1, _SCHEMA_VERSION_4_6_0,
+			new DummyUpgradeProcess(), new ShipmentUpgradeProcess(),
+			new SubscriptionUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_6_0, _SCHEMA_VERSION_4_7_0,
+			new DummyUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_7_0, _SCHEMA_VERSION_4_8_1,
+			new CommerceOrderStatusesUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_4_8_1, _SCHEMA_VERSION_4_9_0,
+			new com.liferay.commerce.internal.upgrade.v4_9_0.
+				CommerceOrderUpgradeProcess(),
+			new com.liferay.commerce.internal.upgrade.v4_9_0.
+				CommerceOrderItemUpgradeProcess());
+
+		if (_log.isInfoEnabled()) {
+			_log.info("COMMERCE UPGRADE STEP REGISTRATOR FINISHED");
+		}
+	}
+
+	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
+
+	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
+
+	private static final String _SCHEMA_VERSION_1_2_0 = "1.2.0";
+
+	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
+
+	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
+
+	private static final String _SCHEMA_VERSION_2_2_0 = "2.2.0";
+
+	private static final String _SCHEMA_VERSION_3_0_0 = "3.0.0";
+
+	private static final String _SCHEMA_VERSION_3_1_0 = "3.1.0";
+
+	private static final String _SCHEMA_VERSION_3_2_0 = "3.2.0";
+
+	private static final String _SCHEMA_VERSION_4_0_0 = "4.0.0";
+
+	private static final String _SCHEMA_VERSION_4_1_0 = "4.1.0";
+
+	private static final String _SCHEMA_VERSION_4_1_1 = "4.1.1";
+
+	private static final String _SCHEMA_VERSION_4_2_0 = "4.2.0";
+
+	private static final String _SCHEMA_VERSION_4_2_1 = "4.2.1";
+
+	private static final String _SCHEMA_VERSION_4_3_0 = "4.3.0";
+
+	private static final String _SCHEMA_VERSION_4_4_0 = "4.4.0";
+
+	private static final String _SCHEMA_VERSION_4_5_0 = "4.5.0";
+
+	private static final String _SCHEMA_VERSION_4_5_1 = "4.5.1";
+
+	private static final String _SCHEMA_VERSION_4_6_0 = "4.6.0";
+
+	private static final String _SCHEMA_VERSION_4_7_0 = "4.7.0";
+
+	private static final String _SCHEMA_VERSION_4_8_1 = "4.8.1";
+
+	private static final String _SCHEMA_VERSION_4_9_0 = "4.9.0";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceUpgradeStepRegistrator.class);
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CommerceAccountLocalService _commerceAccountLocalService;
+
+	@Reference
+	private CommerceAccountOrganizationRelLocalService
+		_commerceAccountOrganizationRelLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private EmailAddressLocalService _emailAddressLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+}

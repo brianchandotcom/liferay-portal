@@ -1,0 +1,79 @@
+definition {
+
+	macro gotoCommercePortletNavItem {
+		AssertClick(
+			key_navItem = "${navItem}",
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "${navItem}");
+	}
+
+	macro gotoEntry {
+		AssertClickNoError(
+			key_entryName = "${entryName}",
+			locator1 = "CommerceNavigation#ENTRY_NAME",
+			value1 = "${entryName}");
+	}
+
+	macro gotoFrontStoreProductPage {
+		var productName = StringUtil.replace("${productName}", " ", "-");
+		var productName = StringUtil.lowerCase("${productName}");
+
+		Navigator.openSpecificURL(url = "localhost:8080/web/guest/p/${productName}");
+	}
+
+	macro gotoMiniCart {
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#MINI_CART_BUTTON");
+	}
+
+	macro gotoMiniumSidebarItem {
+		Click(
+			key_menuItem = "${menuItem}",
+			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+	}
+
+	macro gotoOptionValues {
+		Click(
+			key_optionEntryName = "${optionEntryName}",
+			locator1 = "CommerceNavigation#OPTION_VALUES_LINK",
+			value1 = "${optionEntryName}");
+
+		WaitForSPARefresh();
+
+		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
+	}
+
+	macro gotoSpeedwellAccountDropdownItem {
+		Click(locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN");
+
+		Click(
+			key_dropdownItem = "${dropdownItem}",
+			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN_ITEM");
+	}
+
+	macro gotoSpeedwellDashboardItem {
+		Click(
+			key_dashboardItem = "${dashboardItem}",
+			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DASHBOARD_ITEM");
+	}
+
+	macro gotoSpeedwellTopbarItem {
+		Click(locator1 = "CommerceAccelerators#SPEEDWELL_TOPBAR_BUTTON");
+
+		Click(
+			key_menuItem = "${menuItem}",
+			locator1 = "CommerceAccelerators#SPEEDWELL_TOPBAR_MENU_ITEM");
+	}
+
+	macro searchEntry {
+		AssertElementPresent(locator1 = "CommerceNavigation#SEARCH_FIELD");
+
+		Type(
+			locator1 = "CommerceNavigation#SEARCH_FIELD",
+			value1 = "${entryName}");
+
+		KeyPress(
+			locator1 = "CommerceNavigation#SEARCH_FIELD",
+			value1 = "\RETURN");
+	}
+
+}

@@ -1,0 +1,27 @@
+.commerce-orders-container {
+	#commercePlacedOrdersTable {
+		thead th {
+			font-weight: 600;
+
+			&:nth-child(4) {
+				display: none;
+			}
+		}
+
+		tbody td {
+			&:nth-child(1) {
+				padding-left: 22px;
+				padding-top: 20px;
+				vertical-align: top;
+
+				h1 {
+					font-weight: 600;
+				}
+			}
+
+			&:nth-child(4) {
+				display: none;
+			}
+		}
+	}
+}

@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Commerce Notification Service
+Bundle-SymbolicName: com.liferay.commerce.notification.service
+Bundle-Version: 2.0.0
+Liferay-Require-SchemaVersion: 2.2.1
+Liferay-Service: true
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

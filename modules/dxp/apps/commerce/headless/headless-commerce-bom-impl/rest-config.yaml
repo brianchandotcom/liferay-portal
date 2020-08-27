@@ -1,0 +1,7 @@
+apiDir: "../headless-commerce-bom-api/src/main/java"
+apiPackagePath: "com.liferay.headless.commerce.bom"
+application:
+    baseURI: "/commerce-bom"
+    className: "CommerceBOMApplication"
+    name: "Liferay.Commerce.BOM"
+author: "Alessio Antonio Rendina"

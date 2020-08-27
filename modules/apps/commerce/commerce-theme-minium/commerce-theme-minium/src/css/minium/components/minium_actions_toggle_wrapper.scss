@@ -1,0 +1,8 @@
+.minium-actions-toggle-wrapper {
+	html.ie &,
+	html.edge & {
+		align-items: center;
+		display: flex;
+		height: 100%;
+	}
+}

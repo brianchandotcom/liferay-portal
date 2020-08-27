@@ -1,0 +1,94 @@
+@component-name = "portal-commerce"
+definition {
+
+	property osgi.app.includes = "commerce";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-commerce-license-li");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Commerce",
+				panel = "Control Panel",
+				portlet = "Discounts");
+
+			if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected discounts?");
+			}
+		}
+	}
+
+	@ignore = "true"
+	test CreateNewDiscount {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceDiscounts#CreateNewDiscount";
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Channels");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewChannelsEntry(
+			channelCurrency = "US Dollar",
+			channelName = "Test Channel",
+			channelType = "Site",
+			siteName = "Guest");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Discounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewDiscountsEntry(
+			channelsEntryName = "Liferay",
+			discountLevel = "15",
+			discountTarget = "Apply to Product",
+			entryTitle = "New Discount",
+			maximumDiscountAmount = "10");
+
+		Button.clickPublish();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Discounts");
+
+		CommerceNavigator.gotoEntry(entryName = "New Discount");
+
+		CommerceEntry.viewDiscountsEntry(
+			channelsEntryName = "Liferay",
+			discountLevel = "15.00",
+			discountTarget = "Apply to Product",
+			entryTitle = "New Discount",
+			maximumDiscountAmount = "10.00");
+	}
+
+}

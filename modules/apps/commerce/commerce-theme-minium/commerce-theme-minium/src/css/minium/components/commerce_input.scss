@@ -1,0 +1,63 @@
+.commerce-input.commerce-input {
+	&--checkbox {
+		display: flex;
+
+		&__input {
+			margin-right: 10px;
+		}
+
+		&__label {
+			color: $color-fg-alt;
+			font-weight: normal;
+			margin-bottom: 0;
+		}
+
+		&--checked {
+			.commerce-input--checkbox__label {
+				color: $color-fg;
+			}
+		}
+	}
+
+	&--select {
+		background: white;
+		border: 2px solid $color-shadow;
+		border-radius: 8px;
+		color: $color-fg;
+		font-size: inherit;
+		height: 56px;
+		margin-bottom: 15px;
+		min-height: 56px;
+		outline: none;
+		width: 100%;
+
+		&--with-margin {
+			margin-bottom: 30px;
+		}
+	}
+
+	&--text {
+		background: white;
+		border: 2px solid $color-shadow;
+		border-radius: 8px;
+		color: $color-fg;
+		font-size: inherit;
+		margin-bottom: 15px;
+		min-height: 56px;
+		outline: none;
+		padding: 10px;
+		width: 100%;
+
+		&--with-margin {
+			margin-bottom: 30px;
+		}
+	}
+}
+
+.required-mark {
+	color: $color-mood-bad;
+
+	&::after {
+		content: '*';
+	}
+}

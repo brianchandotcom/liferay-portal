@@ -1,0 +1,130 @@
+.speedwell-search {
+	display: flex;
+	width: 80px;
+
+	@media screen and (max-width: $bp-small) {
+		width: unset;
+	}
+
+	&.is-open &__bar-wrapper .speedwell-topbar__button {
+		background-color: $stroke;
+		color: $color-bg;
+	}
+
+	&__bar-wrapper {
+		bottom: 0;
+		left: 0;
+		overflow: hidden;
+		pointer-events: none;
+		position: absolute;
+		right: 160px;
+		z-index: 3;
+
+		@media screen and (max-width: $bp-small) {
+			right: 0;
+		}
+	}
+
+	input {
+		caret-color: $color-theme;
+	}
+
+	&__bar {
+		align-items: center;
+		animation: search-bar-enter ease-in 300ms forwards;
+		background-color: $stroke;
+		color: #fff;
+		display: flex;
+		opacity: 0;
+		pointer-events: all;
+		transform-origin: center bottom;
+
+		.commerce-topbar-button {
+			background-color: inherit;
+
+			&:hover {
+				color: inherit;
+			}
+
+			&::before {
+				mix-blend-mode: color;
+			}
+		}
+
+		& * {
+			animation: search-bar-other-elements $easeInQuart 0.1s forwards;
+			animation-delay: 300ms;
+			opacity: 0;
+		}
+	}
+
+	&:not(.is-open) &__bar {
+		display: none;
+		transition-delay: 0ms;
+		transition-duration: 100ms;
+	}
+
+	&__results {
+		background: rgba(42, 42, 42, 0.7);
+		bottom: 0;
+		left: 0;
+		opacity: 1;
+		position: fixed;
+		right: 0;
+		top: calc(#{$liferay-topbar-height} + #{$topbar-height});
+		transition: opacity 200ms ease-in;
+		transition-delay: 500ms !important;
+
+		@media screen and (min-width: $bp-xxsmall) and (max-width: $bp-small) {
+			top: calc(
+				#{$liferay-topbar-height-small} + #{$topbar-height-small}
+			);
+
+			.commerce-suggestions {
+				&__wrapper {
+					padding: 20px;
+				}
+			}
+		}
+
+		@media screen and (max-width: 375px) {
+			top: calc(
+				#{$liferay-topbar-height-small} + #{$topbar-height-small} - 11px
+			);
+
+			.commerce-suggestions {
+				&__wrapper {
+					padding: 20px;
+				}
+			}
+		}
+	}
+
+	&:not(.is-open) &__results {
+		opacity: 0;
+		pointer-events: none;
+		transition: background 0.1s ease-out;
+		transition-delay: 0ms !important;
+	}
+}
+
+@keyframes search-bar-enter {
+	from {
+		opacity: 0;
+		transform: scale3d(1, 0, 1);
+	}
+
+	to {
+		opacity: 1;
+		transform: scale3d(1, 1, 1);
+	}
+}
+
+@keyframes search-bar-other-elements {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Commerce Data Integration API
+Bundle-SymbolicName: com.liferay.commerce.data.integration.api
+Bundle-Version: 3.0.0
+Export-Package:\
+	com.liferay.commerce.data.integration.advisor,\
+	com.liferay.commerce.data.integration.constants,\
+	com.liferay.commerce.data.integration.exception,\
+	com.liferay.commerce.data.integration.model,\
+	com.liferay.commerce.data.integration.permission,\
+	com.liferay.commerce.data.integration.process.type,\
+	com.liferay.commerce.data.integration.service,\
+	com.liferay.commerce.data.integration.service.persistence,\
+	com.liferay.commerce.data.integration.trigger

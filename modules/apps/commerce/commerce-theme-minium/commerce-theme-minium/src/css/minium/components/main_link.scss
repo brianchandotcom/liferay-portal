@@ -1,0 +1,115 @@
+.main-link {
+	align-items: center;
+	color: currentColor;
+	display: grid;
+	font-size: 14px;
+	grid-template-areas: 'icon label';
+	grid-template-columns: $frame-size 1fr;
+	grid-template-rows: $frame-size;
+	position: relative;
+	text-decoration: none;
+
+	@media screen and (max-width: $bp-small) {
+		grid-template-columns: $frame-size-small 1fr;
+		grid-template-rows: $frame-size-small;
+	}
+
+	@media screen and (hover: none) {
+		.minium-main-navigation & {
+			grid-template-columns: $frame-size 0;
+
+			@media screen and (max-width: $bp-small) {
+				grid-template-columns: $frame-size-small 0;
+			}
+		}
+	}
+
+	&:hover {
+		background-color: $color-theme-transparent;
+		color: currentColor;
+		text-decoration: none;
+	}
+
+	&.is-active {
+		color: $color-fg;
+		font-weight: bold;
+
+		&::before {
+			background-color: $color-theme;
+			content: '';
+			display: block;
+			height: 70%;
+			left: 0;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 4px;
+
+			@media screen and (hover: none) {
+				height: 4px;
+				left: 50%;
+				top: 0;
+				transform: translateX(-50%);
+				width: 70%;
+			}
+		}
+	}
+
+	&--sub {
+		grid-template-columns: calc(10px + #{$frame-size}) 1fr;
+		grid-template-rows: 36px;
+
+		&.is-active::before {
+			height: 10px;
+			left: 35px;
+			width: 2px;
+		}
+	}
+
+	&__icon {
+		align-items: center;
+		display: flex;
+		font-size: 21px;
+		grid-area: icon;
+		height: $frame-size;
+		justify-content: center;
+		position: relative;
+
+		&.has-notification::before {
+			background-color: $color-theme;
+			border-radius: 50%;
+			content: '';
+			height: 6px;
+			position: absolute;
+			right: 22px;
+			top: 22px;
+			width: 6px;
+		}
+
+		.main-link.is-active & {
+			color: $color-theme;
+		}
+	}
+
+	&__label {
+		align-self: center;
+		grid-area: label;
+		overflow: hidden;
+		padding-right: 15px;
+		text-overflow: ellipsis;
+		transform: translateX(-15px);
+		transition: opacity $transition, transform $transition;
+		white-space: nowrap;
+
+		.minium-sidebar:not(:hover) & {
+			opacity: 0;
+			transform: translateX(20px);
+		}
+
+		@media screen and (hover: none) {
+			.minium-main-navigation & {
+				display: none;
+			}
+		}
+	}
+}

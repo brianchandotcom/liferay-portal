@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel">
+		<field name="commercePaymentMethodGroupRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="imageId" type="long" />
+		<field name="engineKey" type="String" />
+		<field name="priority" type="double" />
+		<field name="active" type="boolean" />
+	</model>
+</model-hints>

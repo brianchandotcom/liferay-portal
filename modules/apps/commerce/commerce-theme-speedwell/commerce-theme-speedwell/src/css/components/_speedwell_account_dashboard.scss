@@ -1,0 +1,71 @@
+.account-dashboard {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 20px auto;
+	width: 100%;
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	&__title {
+		flex-grow: 1;
+		font-size: 1.5em;
+		font-weight: 300;
+		margin-bottom: 50px;
+		width: 100%;
+
+		@media only screen and (max-width: $bp-small) {
+			margin-bottom: 25px;
+		}
+	}
+
+	&__pill {
+		align-items: center;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		box-sizing: border-box;
+		display: grid;
+		flex-grow: 1;
+		grid-template-columns: 100px 1fr;
+		margin: 20px 10px;
+		padding: 25px;
+		transition: border-color 0.2s ease-out;
+		width: 30%;
+
+		@media screen and (max-width: $bp-small) {
+			grid-template-columns: 85px 1fr;
+			width: 100%;
+		}
+
+		&:hover {
+			border-color: $stroke-variant;
+			transition: border-color 0.2s ease-out;
+		}
+
+		.pill {
+			&__icon {
+				justify-self: center;
+			}
+
+			&__text {
+				h3,
+				p {
+					color: $stroke-variant !important;
+					margin: 0;
+				}
+
+				h3 {
+					font-size: 1em;
+					font-weight: 600;
+					margin-bottom: 3px;
+				}
+
+				p {
+					font-size: 0.8em;
+				}
+			}
+		}
+	}
+}

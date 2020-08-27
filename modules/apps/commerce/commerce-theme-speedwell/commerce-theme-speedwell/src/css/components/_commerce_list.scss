@@ -1,0 +1,25 @@
+.commerce-list {
+	align-items: center;
+	display: grid;
+	grid-gap: 5px 20px;
+	grid-template-columns: auto auto;
+	line-height: 1;
+	margin-bottom: 5px;
+
+	dt {
+		align-self: center;
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 1.1px;
+		text-transform: uppercase;
+	}
+
+	dd {
+		align-self: center;
+		margin-bottom: 0;
+	}
+
+	& + & {
+		margin-top: 10px;
+	}
+}

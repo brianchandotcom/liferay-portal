@@ -1,0 +1,7 @@
+.speedwell-main-navigation {
+	@media (max-width: $bp-small) {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+	}
+}

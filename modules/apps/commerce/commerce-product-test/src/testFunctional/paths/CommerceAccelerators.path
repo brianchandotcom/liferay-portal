@@ -1,0 +1,283 @@
+<html>
+<head>
+<title>CommerceAccelerators</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CommerceAccelerators</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ACCOUNT_MANAGEMENT_ADD_MODAL_PLUS_BUTTON</td>
+	<td>//span[text()='${key_userEmailAddress}']//following::button[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_MANAGEMENT_MEMBER_ACTIONS_DROPDOWN</td>
+	<td>//tr/td[contains(.,'${key_memberEmailAddress}')]/..//following-sibling::td//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_SELECTOR_DROPDOWN</td>
+	<td>//button[@data-onclick='toggleAccountSelector']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_SELECTOR_SELECTED_ACCOUNT</td>
+	<td>//div[contains(@class,'commerce-account-switcher__section--header')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_SWITCHER_EMPTY_TABLE</td>
+	<td>//div[@class='commerce-account-switcher__empty-table']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_TO_CART_BUTTON</td>
+	<td>//a[contains(.,'${key_productName}')]//..//button[contains(@class,'add-to-cart')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_TO_CART_BUTTON_DISABLED</td>
+	<td>//a[contains(.,'${key_productName}')]//..//button[contains(@class,'add-to-cart') and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_TO_CART_BUTTON_ENABLED</td>
+	<td>//a[contains(.,'${key_productName}')]//..//button[contains(@class,'add-to-cart') and not(@disabled)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_BUTTON</td>
+	<td>//div/*[contains(@class,'commerce-button') and contains (.,'${key_button}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMERCE_QUANTITY_SELECTOR_INPUT</td>
+	<td>//a[contains(.,'${key_productName}')]//..//form[(@class='quantity-selector')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_BUTTON</td>
+	<td>//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINIUM_CARD_NAME</td>
+	<td>//a[@class='minium-card__name' and contains(.,'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINIUM_SIDEBAR_USER_AVATAR</td>
+	<td>//div[contains(@class,'minium-user-nav__avatar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINIUM_SIDEBAR_MENU_ITEM</td>
+	<td>//div[@class='minium-sidebar']//..//a[contains (.,'${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_LOADED</td>
+	<td>//div[contains(@class,'portlet-title-default') and contains(.,'${key_portletName}')]/../../../div[@data-qa-id='app-loaded']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLES_BUTTON</td>
+	<td>//button[contains(.,'Roles')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLES_MODAL_ROLE_CHECKBOX</td>
+	<td>//div/input[@type='checkbox' and @name='${key_role}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_BY_DROPDOWN</td>
+	<td>//div/button[contains(.,'Sort By')]</td>
+	<td></td>
+</tr>
+<!--SPEEDWELL-->
+<tr>
+	<td>SPEEDWELL_ACCOUNT_DASHBOARD_ITEM</td>
+	<td>//div[contains(@class,'account-dashboard')]//h3[contains(.,'${key_dashboardItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPEEDWELL_ACCOUNT_DROPDOWN</td>
+	<td>//div[@class='speedwell-account']/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPEEDWELL_ACCOUNT_DROPDOWN_ITEM</td>
+	<td>//div[contains(@class,'speedwell-user-nav__')]//div[contains(.,'${key_dropdownItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPEEDWELL_MY_ORDERS_ORDER_ACCOUNT</td>
+	<td>//tbody/tr//td[3][contains(.,'${key_accountName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPEEDWELL_TOPBAR_BUTTON</td>
+	<td>//div[contains(@class,'speedwell-main-menu')]/../button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPEEDWELL_TOPBAR_MENU_ITEM</td>
+	<td>//div[contains(@class,'speedwell-main-menu__links')]//a/div[contains(.,'${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<!--CHECKOUT-->
+<tr>
+	<td>CHECKOUT_GENERIC_SELECT</td>
+	<td>//div[contains(@class,'form-group')]//select[contains(@title,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_GENERIC_TEXT_INPUT</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@placeholder,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SHIPPING_OPTION_RADIO</td>
+	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_DELIVERY</td>
+	<td>//li[contains(@class,'commerce-delivery')]//div[contains(@class,'commerce-value') and contains (.,'${key_deliveryValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_PAYMENT_METHOD</td>
+	<td>//div[contains(@class,'payment-method')]/div[contains(.,'${key_paymentMethod}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_PRODUCT_TABLE_PRICE</td>
+	<td>//td[contains(@class,'lfr-price-column')]//*/*[contains(.,'${key_productPrice}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_PRODUCT_TABLE_PRODUCT</td>
+	<td>//td[contains(@class,'product-column')]//*/*[contains(.,'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_PRODUCT_TABLE_QUANTITY</td>
+	<td>//td[contains(@class,'quantity-column')]//*/*[contains(.,'${key_productQuantity}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_SHIPPING_ADDRESS</td>
+	<td>//address[@class='shipping-address' and contains(.,'${key_addressInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_SUBTOTAL</td>
+	<td>//li[contains(@class,'commerce-subtotal')]//div[contains(@class,'commerce-value') and contains (.,'${key_subtotalValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_TAX</td>
+	<td>//li[contains(@class,'commerce-tax')]//div[contains(@class,'commerce-value') and contains (.,'${key_taxValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_TOTAL</td>
+	<td>//li[contains(@class,'commerce-total')]//div[contains(@class,'commerce-value') and contains (.,'${key_totalValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_CHECKOUT_EMAIL</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@name,'email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_CHECKOUT_CHECK_EMAIL_LABEL</td>
+	<td>//div[contains(@class,'form-group')]//label[normalize-space(text()) = 'Email']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL</td>
+	<td>//div[@class='multi-step-indicator-label' and contains(.,'Shipping Address')]</td>
+	<td></td>
+</tr>
+<!--MINICART-->
+<tr>
+	<td>MINI_CART_CLOSE</td>
+	<td>//button[@class='mini-cart-close']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_NAME</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../h5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_SKU</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_QUANTITY</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../../div[@class='mini-cart-item-quantity']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_PRICE_VALUE</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../..//span[@class='price-value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_SUMMARY_TABLE_ITEM</td>
+	<td>//div[contains(@class,'summary-table')]//span[contains(.,'${key_summaryTableItem}')]/following::span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_SUMMARY_TABLE_TOTAL</td>
+	<td>//div[contains(@class,'summary-table')]//*[contains(.,'Total')]/following::h4</td>
+	<td></td>
+</tr>
+<!--ORDERS-->
+<tr>
+	<td>ORDER_DETAILS_DISCOUNT</td>
+	<td>//tbody//td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_NAME</td>
+	<td>//tbody//td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_PRICE</td>
+	<td>//tbody//td[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_QUANTITY</td>
+	<td>//tbody//td[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_SKU</td>
+	<td>//tbody//td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_UNIT_PRICE</td>
+	<td>//tbody//td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDERS_ENTRY_VIEW_BUTTON</td>
+	<td>//td[contains(.,'${key_orderAuthor}')]/..//following-sibling::td[contains(.,'View')]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

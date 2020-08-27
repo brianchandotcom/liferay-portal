@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Commerce Inventory Service
+Bundle-SymbolicName: com.liferay.commerce.inventory.service
+Bundle-Version: 2.0.0
+Liferay-Require-SchemaVersion: 2.1.0
+Liferay-Service: true
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

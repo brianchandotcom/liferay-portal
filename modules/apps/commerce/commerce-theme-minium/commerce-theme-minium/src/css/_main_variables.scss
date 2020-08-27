@@ -1,0 +1,25 @@
+// This file is for defining and overwriting theme variables contained in main.scss
+// which also imports _custom.scss.
+
+$footer-height: 120px !default;
+
+$gsdc-primary: #4c84ff !default;
+
+$gsdc-btn-primary: () !default;
+$gsdc-btn-primary: map-merge(
+	(
+		bg: $gsdc-primary,
+		border-color: $gsdc-primary,
+		color: $white,
+		hover-bg: darken($gsdc-primary, 5.1),
+		hover-border-color: transparent,
+		focus-box-shadow: 0 0 0 2px rgba(darken($primary, 5.1), 0.5),
+		active-bg: darken($gsdc-primary, 10),
+		active-border-color: transparent,
+		active-box-shadow: none,
+		disabled-bg: $gsdc-primary,
+	),
+	$gsdc-btn-primary
+);
+
+$portlet-decorate-bg: #fff;

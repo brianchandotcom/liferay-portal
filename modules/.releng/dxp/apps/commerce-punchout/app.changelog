@@ -1,0 +1,17 @@
+#
+# Liferay App Version 1.0.0
+#
+
+app.artifacts-1.0.0=\
+	com.liferay.commerce.punchout.api-1.1.2.jar,\
+	com.liferay.commerce.punchout.oauth2.provider.api-1.0.2.jar,\
+	com.liferay.commerce.punchout.oauth2.provider.rest-1.0.2.jar,\
+	com.liferay.commerce.punchout.portal.security.auto.login-1.0.4.jar,\
+	com.liferay.commerce.punchout.service-1.0.2.jar,\
+	com.liferay.commerce.punchout.web-1.0.2.jar,\
+	com.liferay.headless.commerce.punchout.api-1.0.2.jar,\
+	com.liferay.headless.commerce.punchout.impl-1.0.3.jar
+
+app.change.log-1.0.0=COMMERCE-3731 COMMERCE-4113 COMMERCE-4341 COMMERCE-4396 LPS-117377
+
+app.git.id-1.0.0=5c088f41a7be5a4e142b5a75ba773c779bab515c

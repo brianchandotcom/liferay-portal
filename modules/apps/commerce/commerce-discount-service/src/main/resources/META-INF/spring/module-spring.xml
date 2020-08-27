@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountLocalService" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountService" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountPersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountFinderImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountAccountRelLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountAccountRelLocalService" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountAccountRelServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountAccountRelService" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountAccountRelPersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelPersistence" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountAccountRelFinderImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelFinder" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountCommerceAccountGroupRelLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelLocalService" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountCommerceAccountGroupRelServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelService" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountCommerceAccountGroupRelPersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelPersistence" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountCommerceAccountGroupRelFinderImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelFinder" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountRelLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountRelLocalService" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountRelServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountRelService" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRelPersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPersistence" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRelFinderImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountRuleLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountRuleServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountRuleService" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRulePersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRuleFinderImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRuleFinder" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountUsageEntryLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountUsageEntryPersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountUsageEntryPersistence" />
+</beans>

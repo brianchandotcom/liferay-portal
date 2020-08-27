@@ -1,0 +1,41 @@
+[
+	{
+		"CategoryKey": "quantity",
+		"Key": "quantity"
+	},
+	{
+		"CategoryKey": "material",
+		"Facetable": true,
+		"Key": "material"
+	},
+	{
+		"CategoryKey": "fit",
+		"Facetable": true,
+		"Key": "fit"
+	},
+	{
+		"CategoryKey": "dimensions",
+		"Key": "dimensions"
+	},
+	{
+		"CategoryKey": "dimensions",
+		"Key": "weight"
+	},
+	{
+		"CategoryKey": "dimensions",
+		"Key": "width"
+	},
+	{
+		"CategoryKey": "warranty",
+		"Facetable": true,
+		"Key": "warranty"
+	},
+	{
+		"CategoryKey": "dimensions",
+		"Key": "length"
+	},
+	{
+		"CategoryKey": "dimensions",
+		"Key": "height"
+	}
+]

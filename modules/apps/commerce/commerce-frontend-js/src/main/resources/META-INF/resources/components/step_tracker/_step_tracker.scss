@@ -1,0 +1,105 @@
+.step-tracker {
+	display: flex;
+	overflow: hidden;
+	width: 100%;
+
+	.step {
+		align-items: center;
+		background: currentColor;
+		clip-path: polygon(
+			calc(100% - 10px) 0%,
+			calc(100% + 8px) 50%,
+			calc(100% - 10px) 100%,
+			-8px 100%,
+			11px 50%,
+			-8px 0
+		);
+		display: flex;
+		flex-basis: 100%;
+		font-size: 14px;
+		font-weight: 600;
+		justify-content: center;
+		padding: 8px 12px;
+		position: relative;
+		text-align: center;
+
+		&:first-child {
+			clip-path: polygon(
+				calc(100% - 10px) 0%,
+				calc(100% + 8px) 50%,
+				calc(100% - 10px) 100%,
+				0 100%,
+				0 0
+			);
+		}
+
+		&:last-child {
+			clip-path: polygon(100% 0%, 100% 100%, -8px 100%, 11px 50%, -8px 0);
+		}
+
+		&:not(:first-child) {
+			&::before {
+				background: currentColor;
+				content: '';
+				height: 100%;
+				position: absolute;
+				right: 100%;
+				top: 0;
+				width: 11px;
+			}
+		}
+
+		&:not(:last-child) {
+			&::after {
+				background: currentColor;
+				content: '';
+				height: 100%;
+				left: 100%;
+				position: absolute;
+				top: 0;
+				width: 11px;
+			}
+		}
+
+		&.active {
+			color: $step-tracker-active;
+		}
+
+		&.completed {
+			color: $step-tracker-completed;
+		}
+
+		&.inactive {
+			color: $step-tracker-inactive;
+		}
+
+		.step-label {
+			color: white;
+		}
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.step-tracker {
+		flex-wrap: wrap;
+
+		.step {
+			clip-path: none !important;
+
+			&::before {
+				display: none;
+			}
+
+			&::after {
+				background: none !important;
+				border-left: 6px solid transparent;
+				border-right: 6px solid transparent;
+				border-top: 6px solid currentColor;
+				height: 0 !important;
+				left: calc(50% - 6px) !important;
+				top: 100% !important;
+				z-index: 1;
+			}
+		}
+	}
+}

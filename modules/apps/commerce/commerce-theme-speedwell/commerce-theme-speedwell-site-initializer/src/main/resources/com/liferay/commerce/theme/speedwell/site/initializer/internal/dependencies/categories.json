@@ -1,0 +1,80 @@
+[
+	{
+		"Image": "Brake_System.jpg",
+		"Permissions": [
+			{
+				"ActionIds": [
+					"VIEW"
+				],
+				"RoleName": "Guest",
+				"Scope": 4
+			}
+		],
+		"Title": "Brake System"
+	},
+	{
+		"Image": "Engine.jpg",
+		"Permissions": [
+			{
+				"ActionIds": [
+					"VIEW"
+				],
+				"RoleName": "Guest",
+				"Scope": 4
+			}
+		],
+		"Title": "Engine"
+	},
+	{
+		"Image": "Exhaust_System.jpg",
+		"Permissions": [
+			{
+				"ActionIds": [
+					"VIEW"
+				],
+				"RoleName": "Guest",
+				"Scope": 4
+			}
+		],
+		"Title": "Exhaust System"
+	},
+	{
+		"Image": "Suspension.jpg",
+		"Permissions": [
+			{
+				"ActionIds": [
+					"VIEW"
+				],
+				"RoleName": "Guest",
+				"Scope": 4
+			}
+		],
+		"Title": "Suspension"
+	},
+	{
+		"Image": "Transmission.jpg",
+		"Permissions": [
+			{
+				"ActionIds": [
+					"VIEW"
+				],
+				"RoleName": "Guest",
+				"Scope": 4
+			}
+		],
+		"Title": "Transmission"
+	},
+	{
+		"Image": "Turbocharger.jpg",
+		"Permissions": [
+			{
+				"ActionIds": [
+					"VIEW"
+				],
+				"RoleName": "Guest",
+				"Scope": 4
+			}
+		],
+		"Title": "Turbocharger"
+	}
+]

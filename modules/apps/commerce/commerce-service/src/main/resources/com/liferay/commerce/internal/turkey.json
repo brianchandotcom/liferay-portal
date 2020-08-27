@@ -1,0 +1,407 @@
+[
+	{
+		"code": "01",
+		"name": "Adana",
+		"priority": 1
+	},
+	{
+		"code": "02",
+		"name": "Adiyaman",
+		"priority": 2
+	},
+	{
+		"code": "03",
+		"name": "Afyonkarahisar",
+		"priority": 3
+	},
+	{
+		"code": "68",
+		"name": "Aksaray",
+		"priority": 4
+	},
+	{
+		"code": "05",
+		"name": "Amasya",
+		"priority": 5
+	},
+	{
+		"code": "06",
+		"name": "Ankara",
+		"priority": 6
+	},
+	{
+		"code": "07",
+		"name": "Antalya",
+		"priority": 7
+	},
+	{
+		"code": "75",
+		"name": "Ardahan",
+		"priority": 8
+	},
+	{
+		"code": "08",
+		"name": "Artvin",
+		"priority": 9
+	},
+	{
+		"code": "09",
+		"name": "Aydin",
+		"priority": 10
+	},
+	{
+		"code": "04",
+		"name": "Ağrı",
+		"priority": 11
+	},
+	{
+		"code": "10",
+		"name": "Balikesir",
+		"priority": 12
+	},
+	{
+		"code": "74",
+		"name": "Bartin",
+		"priority": 13
+	},
+	{
+		"code": "72",
+		"name": "Batman",
+		"priority": 14
+	},
+	{
+		"code": "69",
+		"name": "Bayburt",
+		"priority": 15
+	},
+	{
+		"code": "11",
+		"name": "Bilecik",
+		"priority": 16
+	},
+	{
+		"code": "12",
+		"name": "Bingöl",
+		"priority": 17
+	},
+	{
+		"code": "13",
+		"name": "Bitlis",
+		"priority": 18
+	},
+	{
+		"code": "14",
+		"name": "Bolu",
+		"priority": 19
+	},
+	{
+		"code": "15",
+		"name": "Burdur",
+		"priority": 20
+	},
+	{
+		"code": "16",
+		"name": "Bursa",
+		"priority": 21
+	},
+	{
+		"code": "20",
+		"name": "Denizli",
+		"priority": 22
+	},
+	{
+		"code": "21",
+		"name": "Diyarbakir",
+		"priority": 23
+	},
+	{
+		"code": "81",
+		"name": "Duzce",
+		"priority": 24
+	},
+	{
+		"code": "22",
+		"name": "Edirne",
+		"priority": 25
+	},
+	{
+		"code": "23",
+		"name": "Elazığ",
+		"priority": 26
+	},
+	{
+		"code": "24",
+		"name": "Erzincan",
+		"priority": 27
+	},
+	{
+		"code": "25",
+		"name": "Erzurum",
+		"priority": 28
+	},
+	{
+		"code": "26",
+		"name": "Eskişehir",
+		"priority": 29
+	},
+	{
+		"code": "27",
+		"name": "Gaziantep",
+		"priority": 30
+	},
+	{
+		"code": "28",
+		"name": "Giresun",
+		"priority": 31
+	},
+	{
+		"code": "29",
+		"name": "Gümüşhane",
+		"priority": 32
+	},
+	{
+		"code": "30",
+		"name": "Hakkâri",
+		"priority": 33
+	},
+	{
+		"code": "31",
+		"name": "Hatay",
+		"priority": 34
+	},
+	{
+		"code": "32",
+		"name": "Isparta",
+		"priority": 35
+	},
+	{
+		"code": "76",
+		"name": "Iğdır",
+		"priority": 36
+	},
+	{
+		"code": "34",
+		"name": "Istanbul",
+		"priority": 37
+	},
+	{
+		"code": "35",
+		"name": "Izmir",
+		"priority": 38
+	},
+	{
+		"code": "46",
+		"name": "Kahramanmaras",
+		"priority": 39
+	},
+	{
+		"code": "78",
+		"name": "Karabük",
+		"priority": 40
+	},
+	{
+		"code": "70",
+		"name": "Karaman",
+		"priority": 41
+	},
+	{
+		"code": "36",
+		"name": "Kars",
+		"priority": 42
+	},
+	{
+		"code": "37",
+		"name": "Kastamonu",
+		"priority": 43
+	},
+	{
+		"code": "38",
+		"name": "Kayseri",
+		"priority": 44
+	},
+	{
+		"code": "79",
+		"name": "Kilis",
+		"priority": 45
+	},
+	{
+		"code": "71",
+		"name": "Kirikkale",
+		"priority": 46
+	},
+	{
+		"code": "39",
+		"name": "Kirklareli",
+		"priority": 47
+	},
+	{
+		"code": "40",
+		"name": "Kirsehir",
+		"priority": 48
+	},
+	{
+		"code": "41",
+		"name": "Kocaeli",
+		"priority": 49
+	},
+	{
+		"code": "42",
+		"name": "Konya",
+		"priority": 50
+	},
+	{
+		"code": "43",
+		"name": "Kütahya",
+		"priority": 51
+	},
+	{
+		"code": "44",
+		"name": "Malatya",
+		"priority": 52
+	},
+	{
+		"code": "45",
+		"name": "Manisa",
+		"priority": 53
+	},
+	{
+		"code": "47",
+		"name": "Mardin",
+		"priority": 54
+	},
+	{
+		"code": "33",
+		"name": "Mersin",
+		"priority": 55
+	},
+	{
+		"code": "48",
+		"name": "Muğla",
+		"priority": 56
+	},
+	{
+		"code": "49",
+		"name": "Muş",
+		"priority": 57
+	},
+	{
+		"code": "50",
+		"name": "Nevşehir",
+		"priority": 58
+	},
+	{
+		"code": "51",
+		"name": "Niğde",
+		"priority": 59
+	},
+	{
+		"code": "52",
+		"name": "Ordu",
+		"priority": 60
+	},
+	{
+		"code": "80",
+		"name": "Osmaniye",
+		"priority": 61
+	},
+	{
+		"code": "53",
+		"name": "Rize",
+		"priority": 62
+	},
+	{
+		"code": "54",
+		"name": "Sakarya",
+		"priority": 63
+	},
+	{
+		"code": "55",
+		"name": "Samsun",
+		"priority": 64
+	},
+	{
+		"code": "57",
+		"name": "Sinop",
+		"priority": 65
+	},
+	{
+		"code": "73",
+		"name": "Sirnak",
+		"priority": 66
+	},
+	{
+		"code": "58",
+		"name": "Sivas",
+		"priority": 67
+	},
+	{
+		"code": "59",
+		"name": "Tekirdağ",
+		"priority": 68
+	},
+	{
+		"code": "60",
+		"name": "Tokat",
+		"priority": 69
+	},
+	{
+		"code": "61",
+		"name": "Trabzon",
+		"priority": 70
+	},
+	{
+		"code": "62",
+		"name": "Tunceli",
+		"priority": 71
+	},
+	{
+		"code": "64",
+		"name": "Uşak",
+		"priority": 72
+	},
+	{
+		"code": "65",
+		"name": "Van",
+		"priority": 73
+	},
+	{
+		"code": "77",
+		"name": "Yalova",
+		"priority": 74
+	},
+	{
+		"code": "66",
+		"name": "Yozgat",
+		"priority": 75
+	},
+	{
+		"code": "67",
+		"name": "Zonguldak",
+		"priority": 76
+	},
+	{
+		"code": "17",
+		"name": "Çanakkale",
+		"priority": 77
+	},
+	{
+		"code": "18",
+		"name": "Çankiri",
+		"priority": 78
+	},
+	{
+		"code": "19",
+		"name": "Çorum",
+		"priority": 79
+	},
+	{
+		"code": "63",
+		"name": "Şanlıurfa",
+		"priority": 80
+	},
+	{
+		"code": "56",
+		"name": "Şiirt",
+		"priority": 81
+	}
+]

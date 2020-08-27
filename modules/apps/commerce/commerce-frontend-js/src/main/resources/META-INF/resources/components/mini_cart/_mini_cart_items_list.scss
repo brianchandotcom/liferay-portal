@@ -1,0 +1,47 @@
+.mini-cart-items-list {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+
+	.summary-table {
+		border-top: 1px solid $gray-200;
+		box-sizing: border-box;
+		margin: 0 auto;
+		padding: 12px 12px 0;
+		position: relative;
+
+		div:nth-child(2n + 1) .summary-table-item {
+			font-size: 12px;
+		}
+
+		&-loader {
+			align-items: center;
+			background-color: #fff;
+			display: flex;
+			height: 100%;
+			justify-content: center;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+	}
+}
+
+.mini-cart-cart-items {
+	flex: 1;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 5px;
+
+		&-track {
+			background: transparent;
+		}
+
+		&-thumb {
+			background: $gray-400;
+		}
+	}
+}

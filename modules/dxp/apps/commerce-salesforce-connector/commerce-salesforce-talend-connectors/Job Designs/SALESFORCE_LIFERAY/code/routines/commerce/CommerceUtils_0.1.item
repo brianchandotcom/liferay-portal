@@ -1,0 +1,110 @@
+package routines;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+/*
+ * user specification: the function's comment should contain keys as follows: 1. write about the function's comment.but
+ * it must be before the "{talendTypes}" key.
+ * 
+ * 2. {talendTypes} 's value must be talend Type, it is required . its value should be one of: String, char | Character,
+ * long | Long, int | Integer, boolean | Boolean, byte | Byte, Date, double | Double, float | Float, Object, short |
+ * Short
+ * 
+ * 3. {Category} define a category for the Function. it is required. its value is user-defined .
+ * 
+ * 4. {param} 's format is: {param} <type>[(<default value or closed list values>)] <name>[ : <comment>]
+ * 
+ * <type> 's value should be one of: string, int, list, double, object, boolean, long, char, date. <name>'s value is the
+ * Function's parameter name. the {param} is optional. so if you the Function without the parameters. the {param} don't
+ * added. you can have many parameters for the Function.
+ * 
+ * 5. {example} gives a example for the Function. it is optional.
+ */
+public class CommerceUtils {
+
+	private static String pattern = "yyyy-MM-dd'T'HH:mm:ss'.000Z'";
+	
+	private static String extension = ".dat";
+	
+	public static String concat(String... params) {
+		
+		StringBuffer sb = new StringBuffer();
+		for (String param : params) {
+			sb.append(param);
+		}
+		
+		//System.out.println(sb.toString());
+		
+		return sb.toString();
+	}
+
+	public static Date saveDateTimeLastImport(String key, Date date) {
+		
+		try {
+			File directory = new File(".");
+			
+			String file = directory.getCanonicalPath() + File.separator + key + extension;
+			
+			FileOutputStream fileOut = new FileOutputStream(file);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			
+			if (date == null) {
+				date = new Date();
+			}
+			
+			out.writeObject(date);
+			out.close();
+			
+			return date;
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		
+		return null;		
+	}	
+	
+	public static String loadDateTimeLastImport(String key) {
+		
+		try {
+			File directory = new File(".");
+			
+			String file = directory.getCanonicalPath() + File.separator + key + extension;
+			
+			FileInputStream fileIn = new FileInputStream(file);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			Date date = (Date)in.readObject();
+
+	         in.close();
+	         fileIn.close();
+			
+			return new SimpleDateFormat(pattern).format(date);
+		}
+		catch (FileNotFoundException fnfe) {
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.YEAR, 1980);
+			cal.set(Calendar.MONTH, 1);
+			cal.set(Calendar.DAY_OF_MONTH, 0);
+			
+			Date bootstrapDate = saveDateTimeLastImport(key, cal.getTime());
+			return new SimpleDateFormat(pattern).format(bootstrapDate); 
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (ClassNotFoundException cnf) {
+			cnf.printStackTrace();
+		}
+		
+		return null;
+	}
+
+}

@@ -1,0 +1,58 @@
+.product-compare-checkbox {
+	border-radius: 50%;
+	cursor: pointer;
+	margin-left: -10px;
+	margin-top: -10px;
+	min-height: 35px;
+	min-width: 35px;
+	padding: 10px;
+	position: relative;
+	transition: background $micro-transition;
+
+	&__disabled {
+		opacity: 0.5;
+
+		.product-compare-checkbox__input {
+			&::before,
+			&::after {
+				display: none;
+			}
+		}
+	}
+
+	&__input {
+		position: relative;
+		vertical-align: middle;
+
+		.minium-card &::before {
+			background-color: rgba(157, 158, 158, 0.5);
+			border-radius: 50%;
+			bottom: 0;
+			content: '';
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			transform: scale(0);
+			transition: all $micro-transition;
+			z-index: -1;
+		}
+
+		.minium-card &:checked::before {
+			background-color: $color-theme;
+		}
+
+		.minium-card &:hover {
+			&::before {
+				transform: scale(3);
+			}
+		}
+	}
+
+	&__label {
+		color: inherit;
+		font-size: 14px;
+		font-weight: normal;
+		margin-left: 10px;
+	}
+}

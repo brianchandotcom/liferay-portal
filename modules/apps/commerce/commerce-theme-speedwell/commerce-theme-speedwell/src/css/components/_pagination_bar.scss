@@ -1,0 +1,67 @@
+.pagination-bar {
+	display: grid;
+	grid-template-columns: 20% 60% 20%;
+	justify-content: center;
+
+	.dropdown-toggle {
+		border: 0;
+		color: $stroke;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 12px;
+
+		@media only screen and (max-width: $bp-small) {
+			display: none;
+		}
+	}
+
+	.pagination-results {
+		display: none;
+	}
+
+	.pagination {
+		justify-content: center;
+
+		.page-item {
+			.page-link {
+				background: transparent;
+				border: 0;
+				color: $stroke;
+				font-size: 12px;
+				line-height: normal;
+				margin: 0 4px;
+				padding: 8px 12px;
+				position: relative;
+				transition: all ease 150ms;
+
+				@include speedwellButtonEffect($color-bg, $stroke);
+			}
+
+			&:not(.active):not(:hover) a {
+				opacity: 0.5;
+			}
+
+			&.active .page-link {
+				border-bottom: 2px solid currentColor;
+			}
+
+			@media only screen and (max-width: $bp-small) {
+				&:first-child,
+				&:last-child {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+.btn.commerce-order-by.dropdown-toggle {
+	background-color: #fff;
+	border: 2px solid $color-border;
+	color: $stroke;
+	font-size: 14px;
+	font-weight: normal;
+	letter-spacing: normal;
+	line-height: 18px;
+	text-transform: none;
+}

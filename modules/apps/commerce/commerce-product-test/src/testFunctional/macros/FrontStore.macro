@@ -1,0 +1,145 @@
+definition {
+
+	macro addInitializerProductToCart {
+		Type(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#COMMERCE_QUANTITY_SELECTOR_INPUT",
+			value1 = "${productQuantity}");
+
+		Click(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+	}
+
+	macro selectAssociatedFSOptionsValue {
+		Click(locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+		Click(
+			key_optionValue = "${FSOptionValue}",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+	}
+
+	macro viewMiniCart {
+		FrontStore.viewMiniCartItems(
+			cartItemNames = "${cartItemNames}",
+			cartItemPriceValues = "${cartItemPriceValues}",
+			cartItemQuantities = "${cartItemQuantities}",
+			cartItemSKUs = "${cartItemSKUs}");
+
+		if (isSet(cartSummaryQuantity)) {
+			AssertTextEquals(
+				key_summaryTableItem = "Quantity",
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+				value1 = "${cartSummaryQuantity}");
+		}
+
+		if (isSet(cartSummarySubtotal)) {
+			AssertTextEquals.assertPartialText(
+				key_summaryTableItem = "Subtotal",
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+				value1 = "$ ${cartSummarySubtotal}");
+		}
+
+		if (isSet(cartSummaryOrderDiscount)) {
+			AssertTextEquals.assertPartialText(
+				key_summaryTableItem = "Order Discount",
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+				value1 = "$ ${cartSummaryOrderDiscount}");
+		}
+
+		if (isSet(cartSummaryTotal)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_TOTAL",
+				value1 = "$ ${cartSummaryTotal}");
+		}
+	}
+
+	macro viewMiniCartItem {
+		AssertTextEquals(
+			key_cartItemSKU = "${cartItemSKU}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			value1 = "${cartItemName}");
+
+		AssertTextEquals(
+			key_cartItemSKU = "${cartItemSKU}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU",
+			value1 = "${cartItemSKU}");
+
+		AssertTextEquals(
+			key_cartItemSKU = "${cartItemSKU}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+			value1 = "${cartItemQuantity}");
+
+		AssertTextEquals.assertPartialText(
+			key_cartItemSKU = "${cartItemSKU}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+			value1 = "$ ${cartItemPriceValue}");
+	}
+
+	macro viewMiniCartItems {
+		var count = StringUtil.count("${cartItemSKUs}", ",");
+
+		while ("${count}" != "0") {
+			var cartItemName = StringUtil.extractFirst("${cartItemNames}", ",");
+			var cartItemPriceValue = StringUtil.extractFirst("${cartItemPriceValues}", ",");
+			var cartItemQuantity = StringUtil.extractFirst("${cartItemQuantities}", ",");
+			var cartItemSKU = StringUtil.extractFirst("${cartItemSKUs}", ",");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "${cartItemName}",
+				cartItemPriceValue = "${cartItemPriceValue}",
+				cartItemQuantity = "${cartItemQuantity}",
+				cartItemSKU = "${cartItemSKU}");
+
+			var count = ${count} - 1;
+
+			var cartItemNames = StringUtil.replaceFirst("${cartItemNames}", "${cartItemName},", "");
+			var cartItemPriceValues = StringUtil.replaceFirst("${cartItemPriceValues}", "${cartItemPriceValue},", "");
+			var cartItemQuantities = StringUtil.replaceFirst("${cartItemQuantities}", "${cartItemQuantity},", "");
+			var cartItemSKUs = StringUtil.replaceFirst("${cartItemSKUs}", "${cartItemSKU},", "");
+		}
+	}
+
+	macro viewProductDetail {
+		AssertElementPresent(
+			key_FSProductName = "${FSProductName}",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_NAME");
+
+		if (IsElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT")) {
+			for (var FSOptionValues : list "${FSOptionValuesList}") {
+				var FSOptionValue = StringUtil.extractFirst("${FSOptionValues}", ":");
+				var FSPrice = StringUtil.extractLast("${FSOptionValues}", ":");
+				var FSOptionValueUppercase = StringUtil.upperCase("${FSOptionValue}");
+
+				FrontStore.selectAssociatedFSOptionsValue(FSOptionValue = "${FSOptionValue}");
+
+				echo("Checking ${FSOptionValue} ${FSProductName} SKU is correct...");
+
+				AssertElementPresent(
+					key_FSProductSKU = "${FSOptionValueUppercase}SKU",
+					locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+
+				echo("Checking ${FSOptionValue} ${FSProductName} price is correct...");
+
+				AssertElementPresent(
+					key_FSProductPrice = "${FSPrice}",
+					locator1 = "CommerceFrontStore#FS_PRODUCT_PRICE");
+
+				echo("Checking ${FSOptionValue} ${FSProductName} image is correct...");
+
+				AssertElementPresent(
+					key_FSProductImage = "${FSOptionValue}",
+					locator1 = "CommerceFrontStore#FS_PRODUCT_FULL_IMAGE",
+					value1 = "${FSOptionValue}");
+
+				echo("Checking ${FSOptionValue} ${FSProductName} thumbnail is correct...");
+
+				AssertElementPresent(
+					key_FSProductImageThumb = "${FSOptionValue}",
+					locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE_THUMBNAIL",
+					value1 = "${FSOptionValue}");
+			}
+		}
+	}
+
+}

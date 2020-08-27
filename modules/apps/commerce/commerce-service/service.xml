@@ -1,0 +1,923 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="false" package-path="com.liferay.commerce">
+	<author>Alessio Antonio Rendina</author>
+	<namespace>Commerce</namespace>
+	<entity external-reference-code="true" local-service="true" name="CommerceAddress" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceAddressId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="street1" type="String" />
+		<column name="street2" type="String" />
+		<column name="street3" type="String" />
+		<column name="city" type="String" />
+		<column name="zip" type="String" />
+		<column name="commerceRegionId" type="long" />
+		<column name="commerceCountryId" type="long" />
+		<column name="latitude" type="double" />
+		<column name="longitude" type="double" />
+		<column name="phoneNumber" type="String" />
+		<column name="defaultBilling" type="boolean" />
+		<column name="defaultShipping" type="boolean" />
+		<column name="type" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceRegionId" return-type="Collection">
+			<finder-column name="commerceRegionId" />
+		</finder>
+		<finder name="CommerceCountryId" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_C_C_DB" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="defaultBilling" />
+		</finder>
+		<finder name="G_C_C_DS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="defaultShipping" />
+		</finder>
+		<finder name="C_C_C_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="type" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceAddressRestriction" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceAddressRestrictionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="commerceCountryId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceCountryId" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_C" return-type="CommerceAddressRestriction" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="commerceCountryId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceAvailabilityEstimate" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceAvailabilityEstimateId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="title" type="String" />
+		<column name="priority" type="double" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="title" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceCountry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceCountryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="name" type="String" />
+		<column name="billingAllowed" type="boolean" />
+		<column name="shippingAllowed" type="boolean" />
+		<column name="twoLettersISOCode" type="String" />
+		<column name="threeLettersISOCode" type="String" />
+		<column name="numericISOCode" type="int" />
+		<column name="subjectToVAT" type="boolean" />
+		<column name="priority" type="double" />
+		<column name="active" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="channelFilterEnabled" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_Tw" return-type="CommerceCountry" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="twoLettersISOCode" />
+		</finder>
+		<finder name="C_N" return-type="CommerceCountry" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="numericISOCode" />
+		</finder>
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="C_B_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="billingAllowed" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="C_S_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="shippingAllowed" />
+			<finder-column name="active" />
+		</finder>
+	</entity>
+	<entity external-reference-code="true" local-service="true" name="CommerceOrder" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceOrderId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceAccountId" type="long" />
+		<column name="commerceCurrencyId" type="long" />
+		<column name="billingAddressId" type="long" />
+		<column name="shippingAddressId" type="long" />
+		<column name="commercePaymentMethodKey" type="String" />
+		<column name="transactionId" type="String" />
+		<column name="commerceShippingMethodId" type="long" />
+		<column name="shippingOptionName" type="String" />
+		<column name="purchaseOrderNumber" type="String" />
+		<column name="couponCode" type="String" />
+		<column name="lastPriceUpdateDate" type="Date" />
+		<column name="subtotal" type="BigDecimal" />
+		<column name="subtotalDiscountAmount" type="BigDecimal" />
+		<column db-name="subtotalDiscountPercentLevel1" name="subtotalDiscountPercentageLevel1" type="BigDecimal" />
+		<column db-name="subtotalDiscountPercentLevel2" name="subtotalDiscountPercentageLevel2" type="BigDecimal" />
+		<column db-name="subtotalDiscountPercentLevel3" name="subtotalDiscountPercentageLevel3" type="BigDecimal" />
+		<column db-name="subtotalDiscountPercentLevel4" name="subtotalDiscountPercentageLevel4" type="BigDecimal" />
+		<column name="shippingAmount" type="BigDecimal" />
+		<column name="shippingDiscountAmount" type="BigDecimal" />
+		<column db-name="shippingDiscountPercentLevel1" name="shippingDiscountPercentageLevel1" type="BigDecimal" />
+		<column db-name="shippingDiscountPercentLevel2" name="shippingDiscountPercentageLevel2" type="BigDecimal" />
+		<column db-name="shippingDiscountPercentLevel3" name="shippingDiscountPercentageLevel3" type="BigDecimal" />
+		<column db-name="shippingDiscountPercentLevel4" name="shippingDiscountPercentageLevel4" type="BigDecimal" />
+		<column name="taxAmount" type="BigDecimal" />
+		<column name="total" type="BigDecimal" />
+		<column name="totalDiscountAmount" type="BigDecimal" />
+		<column name="totalDiscountPercentageLevel1" type="BigDecimal" />
+		<column name="totalDiscountPercentageLevel2" type="BigDecimal" />
+		<column name="totalDiscountPercentageLevel3" type="BigDecimal" />
+		<column name="totalDiscountPercentageLevel4" type="BigDecimal" />
+		<column name="subtotalWithTaxAmount" type="BigDecimal" />
+		<column name="subtotalDiscountWithTaxAmount" type="BigDecimal" />
+		<column db-name="subtotalDiscountPctLev1WithTax" name="subtotalDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<column db-name="subtotalDiscountPctLev2WithTax" name="subtotalDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<column db-name="subtotalDiscountPctLev3WithTax" name="subtotalDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<column db-name="subtotalDiscountPctLev4WithTax" name="subtotalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
+		<column name="shippingWithTaxAmount" type="BigDecimal" />
+		<column name="shippingDiscountWithTaxAmount" type="BigDecimal" />
+		<column db-name="shippingDiscountPctLev1WithTax" name="shippingDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<column db-name="shippingDiscountPctLev2WithTax" name="shippingDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<column db-name="shippingDiscountPctLev3WithTax" name="shippingDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<column db-name="shippingDiscountPctLev4WithTax" name="shippingDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
+		<column name="totalWithTaxAmount" type="BigDecimal" />
+		<column name="totalDiscountWithTaxAmount" type="BigDecimal" />
+		<column db-name="totalDiscountPctLev1WithTax" name="totalDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<column db-name="totalDiscountPctLev2WithTax" name="totalDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<column db-name="totalDiscountPctLev3WithTax" name="totalDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<column db-name="totalDiscountPctLev4WithTax" name="totalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
+		<column name="advanceStatus" type="String" />
+		<column name="paymentStatus" type="int" />
+		<column name="orderDate" type="Date" />
+		<column name="orderStatus" type="int" />
+		<column name="printedNote" type="String" />
+		<column name="requestedDeliveryDate" type="Date" />
+		<column name="manuallyAdjusted" type="boolean" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="CommerceAccountId" return-type="Collection">
+			<finder-column name="commerceAccountId" />
+		</finder>
+		<finder name="BillingAddressId" return-type="Collection">
+			<finder-column name="billingAddressId" />
+		</finder>
+		<finder name="ShippingAddressId" return-type="Collection">
+			<finder-column name="shippingAddressId" />
+		</finder>
+		<finder name="G_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="commerceAccountId" />
+		</finder>
+		<finder name="G_CP" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="commercePaymentMethodKey" />
+		</finder>
+		<finder name="G_U_O" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="orderStatus" />
+		</finder>
+		<finder name="G_C_O" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="commerceAccountId" />
+			<finder-column name="orderStatus" />
+		</finder>
+		<finder name="U_LtC_O" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column comparator="&lt;" name="createDate" />
+			<finder-column name="orderStatus" />
+		</finder>
+		<finder name="C_LtC_O" return-type="Collection">
+			<finder-column comparator="&lt;" name="createDate" />
+			<finder-column name="commerceAccountId" />
+			<finder-column name="orderStatus" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity external-reference-code="true" local-service="true" name="CommerceOrderItem" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceOrderItemId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceOrderId" type="long" />
+		<column name="commercePriceListId" type="long" />
+		<column name="CProductId" type="long" />
+		<column name="CPInstanceId" type="long" />
+		<column name="parentCommerceOrderItemId" type="long" />
+		<column name="quantity" type="int" />
+		<column name="shippedQuantity" type="int" />
+		<column name="json" type="String" />
+		<column localized="true" name="name" type="String" />
+		<column name="sku" type="String" />
+		<column name="unitPrice" type="BigDecimal" />
+		<column name="promoPrice" type="BigDecimal" />
+		<column name="discountAmount" type="BigDecimal" />
+		<column name="finalPrice" type="BigDecimal" />
+		<column name="discountPercentageLevel1" type="BigDecimal" />
+		<column name="discountPercentageLevel2" type="BigDecimal" />
+		<column name="discountPercentageLevel3" type="BigDecimal" />
+		<column name="discountPercentageLevel4" type="BigDecimal" />
+		<column name="unitPriceWithTaxAmount" type="BigDecimal" />
+		<column name="promoPriceWithTaxAmount" type="BigDecimal" />
+		<column name="discountWithTaxAmount" type="BigDecimal" />
+		<column name="finalPriceWithTaxAmount" type="BigDecimal" />
+		<column db-name="discountPctLevel1WithTaxAmount" name="discountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<column db-name="discountPctLevel2WithTaxAmount" name="discountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<column db-name="discountPctLevel3WithTaxAmount" name="discountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<column db-name="discountPctLevel4WithTaxAmount" name="discountPercentageLevel4WithTaxAmount" type="BigDecimal" />
+		<column name="subscription" type="boolean" />
+		<column name="deliveryGroup" type="String" />
+		<column name="shippingAddressId" type="long" />
+		<column name="printedNote" type="String" />
+		<column name="requestedDeliveryDate" type="Date" />
+		<column name="bookedQuantityId" type="long" />
+		<column name="manuallyAdjusted" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceOrderId" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+		</finder>
+		<finder name="CProductId" return-type="Collection">
+			<finder-column name="CProductId" />
+		</finder>
+		<finder name="CPInstanceId" return-type="Collection">
+			<finder-column name="CPInstanceId" />
+		</finder>
+		<finder name="ParentCommerceOrderItemId" return-type="Collection">
+			<finder-column name="parentCommerceOrderItemId" />
+		</finder>
+		<finder name="BookedQuantityId" return-type="CommerceOrderItem">
+			<finder-column name="bookedQuantityId" />
+		</finder>
+		<finder name="C_I" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+			<finder-column name="CPInstanceId" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+			<finder-column name="subscription" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity external-reference-code="true" local-service="true" name="CommerceOrderNote" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceOrderNoteId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceOrderId" type="long" />
+		<column name="content" type="String" />
+		<column name="restricted" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceOrderId" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+		</finder>
+		<finder name="C_R" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+			<finder-column name="restricted" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceOrderPayment" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="commerceOrderPaymentId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceOrderId" type="long" />
+		<column name="commercePaymentMethodKey" type="String" />
+		<column name="content" type="String" />
+		<column name="status" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceOrderId" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceRegion" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceRegionId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceCountryId" type="long" />
+		<column name="name" type="String" />
+		<column name="code" type="String" />
+		<column name="priority" type="double" />
+		<column name="active" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceCountryId" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+		</finder>
+		<finder name="C_C" return-type="CommerceRegion" unique="true">
+			<finder-column name="commerceCountryId" />
+			<finder-column name="code" />
+		</finder>
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+			<finder-column name="active" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceShipment" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceShipmentId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceAccountId" type="long" />
+		<column name="commerceAddressId" type="long" />
+		<column name="commerceShippingMethodId" type="long" />
+		<column name="shippingOptionName" type="String" />
+		<column name="carrier" type="String" />
+		<column name="trackingNumber" type="String" />
+		<column name="shippingDate" type="Date" />
+		<column name="expectedDate" type="Date" />
+		<column name="status" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupIds" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+		</finder>
+		<finder name="G_C" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="commerceAddressId" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="status" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceShipmentItem" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceShipmentItemId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceShipmentId" type="long" />
+		<column name="commerceOrderItemId" type="long" />
+		<column name="commerceInventoryWarehouseId" type="long" />
+		<column name="quantity" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CommerceShipment" return-type="Collection">
+			<finder-column name="commerceShipmentId" />
+		</finder>
+		<finder name="CommerceOrderItemId" return-type="Collection">
+			<finder-column name="commerceOrderItemId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="commerceShipmentId" />
+			<finder-column name="commerceOrderItemId" />
+		</finder>
+		<finder name="C_C_C" return-type="CommerceShipmentItem" unique="true">
+			<finder-column name="commerceShipmentId" />
+			<finder-column name="commerceOrderItemId" />
+			<finder-column name="commerceInventoryWarehouseId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceShippingMethod" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceShippingMethodId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="imageId" type="long" />
+		<column name="engineKey" type="String" />
+		<column name="priority" type="double" />
+		<column name="active" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_E" return-type="CommerceShippingMethod" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="engineKey" />
+		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="active" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Image" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="CommerceSubscriptionEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceSubscriptionEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPInstanceUuid" type="String" />
+		<column name="CProductId" type="long" />
+		<column name="commerceOrderItemId" type="long" />
+		<column name="subscriptionLength" type="int" />
+		<column name="subscriptionType" type="String" />
+		<column name="subscriptionTypeSettings" type="String" />
+		<column name="currentCycle" type="long" />
+		<column name="maxSubscriptionCycles" type="long" />
+		<column name="subscriptionStatus" type="int" />
+		<column name="lastIterationDate" type="Date" />
+		<column name="nextIterationDate" type="Date" />
+		<column name="startDate" type="Date" />
+		<column name="deliverySubscriptionLength" type="int" />
+		<column name="deliverySubscriptionType" type="String" />
+		<column db-name="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="String" />
+		<column name="deliveryCurrentCycle" type="long" />
+		<column name="deliveryMaxSubscriptionCycles" type="long" />
+		<column name="deliverySubscriptionStatus" type="int" />
+		<column name="deliveryLastIterationDate" type="Date" />
+		<column name="deliveryNextIterationDate" type="Date" />
+		<column name="deliveryStartDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="CommerceOrderItemId" return-type="CommerceSubscriptionEntry" unique="true">
+			<finder-column name="commerceOrderItemId" />
+		</finder>
+		<finder name="SubscriptionStatus" return-type="Collection">
+			<finder-column name="subscriptionStatus" />
+		</finder>
+		<finder name="C_U" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+		</finder>
+		<finder name="G_C_U" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+		</finder>
+		<finder name="C_C_C" return-type="CommerceSubscriptionEntry" unique="true">
+			<finder-column name="CPInstanceUuid" />
+			<finder-column name="CProductId" />
+			<finder-column name="commerceOrderItemId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CPDAvailabilityEstimate" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDAvailabilityEstimateId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceAvailabilityEstimateId" type="long" />
+		<column name="CProductId" type="long" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceAvailabilityEstimateId" return-type="Collection">
+			<finder-column name="commerceAvailabilityEstimateId" />
+		</finder>
+		<finder name="CProductId" return-type="CPDAvailabilityEstimate" unique="true">
+			<finder-column name="CProductId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CPDefinitionInventory" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDefinitionInventoryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId" type="long" />
+		<column name="CPDefinitionInventoryEngine" type="String" />
+		<column name="lowStockActivity" type="String" />
+		<column name="displayAvailability" type="boolean" />
+		<column name="displayStockQuantity" type="boolean" />
+		<column name="minStockQuantity" type="int" />
+		<column name="backOrders" type="boolean" />
+		<column name="minOrderQuantity" type="int" />
+		<column name="maxOrderQuantity" type="int" />
+		<column name="allowedOrderQuantities" type="String" />
+		<column name="multipleOrderQuantity" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="CPDefinitionId" return-type="CPDefinitionInventory" unique="true">
+			<finder-column name="CPDefinitionId" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>CommerceAddressCity</exception>
+		<exception>CommerceAddressCountry</exception>
+		<exception>CommerceAddressName</exception>
+		<exception>CommerceAddressStreet</exception>
+		<exception>CommerceAddressType</exception>
+		<exception>CommerceAddressZip</exception>
+		<exception>CommerceCountryAlreadyExists</exception>
+		<exception>CommerceCountryName</exception>
+		<exception>CommerceCountryThreeLettersISOCode</exception>
+		<exception>CommerceCountryTwoLettersISOCode</exception>
+		<exception>CommerceGeocoder</exception>
+		<exception>CommerceOrderAccountLimit</exception>
+		<exception>CommerceOrderBillingAddress</exception>
+		<exception>CommerceOrderDate</exception>
+		<exception>CommerceOrderGuestCheckout</exception>
+		<exception>CommerceOrderItemRequestedDeliveryDate</exception>
+		<exception>CommerceOrderNoteContent</exception>
+		<exception>CommerceOrderPaymentMethod</exception>
+		<exception>CommerceOrderPrice</exception>
+		<exception>CommerceOrderPurchaseOrderNumber</exception>
+		<exception>CommerceOrderRequestedDeliveryDate</exception>
+		<exception>CommerceOrderShippingAddress</exception>
+		<exception>CommerceOrderShippingMethod</exception>
+		<exception>CommerceOrderStatus</exception>
+		<exception>CommerceOrderValidator</exception>
+		<exception>CommercePaymentEngine</exception>
+		<exception>CommerceRegionName</exception>
+		<exception>CommerceShipmentExpectedDate</exception>
+		<exception>CommerceShipmentItemQuantity</exception>
+		<exception>CommerceShipmentShippingDate</exception>
+		<exception>CommerceShipmentStatus</exception>
+		<exception>CommerceShippingEngine</exception>
+		<exception>CommerceShippingMethodEngineKey</exception>
+		<exception>CommerceShippingMethodName</exception>
+		<exception>CommerceSubscriptionCPInstanceId</exception>
+		<exception>CommerceSubscriptionEntryNextIterationDate</exception>
+		<exception>CommerceSubscriptionEntryStartDate</exception>
+		<exception>CommerceSubscriptionEntrySubscriptionStatus</exception>
+		<exception>CommerceSubscriptionType</exception>
+		<exception>DuplicateCommerceOrderNote</exception>
+		<exception>GuestCartItemMaxAllowed</exception>
+		<exception>GuestCartMaxAllowed</exception>
+		<exception>ProductBundle</exception>
+	</exceptions>
+</service-builder>

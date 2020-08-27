@@ -1,0 +1,1092 @@
+[
+	{
+		"code": "ABE",
+		"name": "Aberdeen City",
+		"priority": 1
+	},
+	{
+		"code": "ABD",
+		"name": "Aberdeenshire",
+		"priority": 2
+	},
+	{
+		"code": "ANS",
+		"name": "Angus",
+		"priority": 3
+	},
+	{
+		"code": "ANN",
+		"name": "Antrim and Newtownabbey",
+		"priority": 4
+	},
+	{
+		"code": "AND",
+		"name": "Ards and North Down",
+		"priority": 5
+	},
+	{
+		"code": "AGB",
+		"name": "Argyll and Bute",
+		"priority": 6
+	},
+	{
+		"code": "ABC",
+		"name": "Armagh, Banbridge and Craigavon",
+		"priority": 7
+	},
+	{
+		"code": "BDG",
+		"name": "Barking and Dagenham",
+		"priority": 8
+	},
+	{
+		"code": "BNE",
+		"name": "Barnet",
+		"priority": 9
+	},
+	{
+		"code": "BNS",
+		"name": "Barnsley",
+		"priority": 10
+	},
+	{
+		"code": "BAS",
+		"name": "Bath and North East Somerset",
+		"priority": 11
+	},
+	{
+		"code": "BDF",
+		"name": "Bedford",
+		"priority": 12
+	},
+	{
+		"code": "BFS",
+		"name": "Belfast",
+		"priority": 13
+	},
+	{
+		"code": "BEX",
+		"name": "Bexley",
+		"priority": 14
+	},
+	{
+		"code": "BIR",
+		"name": "Birmingham",
+		"priority": 15
+	},
+	{
+		"code": "BBD",
+		"name": "Blackburn with Darwen",
+		"priority": 16
+	},
+	{
+		"code": "BPL",
+		"name": "Blackpool",
+		"priority": 17
+	},
+	{
+		"code": "BGW",
+		"name": "Blaenau Gwent",
+		"priority": 18
+	},
+	{
+		"code": "BOL",
+		"name": "Bolton",
+		"priority": 19
+	},
+	{
+		"code": "BMH",
+		"name": "Bournemouth",
+		"priority": 20
+	},
+	{
+		"code": "BRC",
+		"name": "Bracknell Forest",
+		"priority": 21
+	},
+	{
+		"code": "BRD",
+		"name": "Bradford",
+		"priority": 22
+	},
+	{
+		"code": "BEN",
+		"name": "Brent",
+		"priority": 23
+	},
+	{
+		"code": "BGE",
+		"name": "Bridgend",
+		"priority": 24
+	},
+	{
+		"code": "BNH",
+		"name": "Brighton and Hove",
+		"priority": 25
+	},
+	{
+		"code": "BST",
+		"name": "Bristol, City of",
+		"priority": 26
+	},
+	{
+		"code": "BRY",
+		"name": "Bromley",
+		"priority": 27
+	},
+	{
+		"code": "BKM",
+		"name": "Buckinghamshire",
+		"priority": 28
+	},
+	{
+		"code": "BUR",
+		"name": "Bury",
+		"priority": 29
+	},
+	{
+		"code": "CAY",
+		"name": "Caerphilly",
+		"priority": 30
+	},
+	{
+		"code": "CLD",
+		"name": "Calderdale",
+		"priority": 31
+	},
+	{
+		"code": "CAM",
+		"name": "Cambridgeshire",
+		"priority": 32
+	},
+	{
+		"code": "CMD",
+		"name": "Camden",
+		"priority": 33
+	},
+	{
+		"code": "CRF",
+		"name": "Cardiff",
+		"priority": 34
+	},
+	{
+		"code": "CMN",
+		"name": "Carmarthenshire",
+		"priority": 35
+	},
+	{
+		"code": "CCG",
+		"name": "Causeway Coast and Glens",
+		"priority": 36
+	},
+	{
+		"code": "CBF",
+		"name": "Central Bedfordshire",
+		"priority": 37
+	},
+	{
+		"code": "CGN",
+		"name": "Ceredigion",
+		"priority": 38
+	},
+	{
+		"code": "CHE",
+		"name": "Cheshire East",
+		"priority": 39
+	},
+	{
+		"code": "CHW",
+		"name": "Cheshire West and Chester",
+		"priority": 40
+	},
+	{
+		"code": "CLK",
+		"name": "Clackmannanshire",
+		"priority": 41
+	},
+	{
+		"code": "CWY",
+		"name": "Conwy",
+		"priority": 42
+	},
+	{
+		"code": "CON",
+		"name": "Cornwall",
+		"priority": 43
+	},
+	{
+		"code": "COV",
+		"name": "Coventry",
+		"priority": 44
+	},
+	{
+		"code": "CRY",
+		"name": "Croydon",
+		"priority": 45
+	},
+	{
+		"code": "CMA",
+		"name": "Cumbria",
+		"priority": 46
+	},
+	{
+		"code": "DAL",
+		"name": "Darlington",
+		"priority": 47
+	},
+	{
+		"code": "DEN",
+		"name": "Denbighshire",
+		"priority": 48
+	},
+	{
+		"code": "DER",
+		"name": "Derby",
+		"priority": 49
+	},
+	{
+		"code": "DBY",
+		"name": "Derbyshire",
+		"priority": 50
+	},
+	{
+		"code": "DRS",
+		"name": "Derry and Strabane",
+		"priority": 51
+	},
+	{
+		"code": "DEV",
+		"name": "Devon",
+		"priority": 52
+	},
+	{
+		"code": "DNC",
+		"name": "Doncaster",
+		"priority": 53
+	},
+	{
+		"code": "DOR",
+		"name": "Dorset",
+		"priority": 54
+	},
+	{
+		"code": "DUD",
+		"name": "Dudley",
+		"priority": 55
+	},
+	{
+		"code": "DGY",
+		"name": "Dumfries and Galloway",
+		"priority": 56
+	},
+	{
+		"code": "DND",
+		"name": "Dundee City",
+		"priority": 57
+	},
+	{
+		"code": "DUR",
+		"name": "Durham County",
+		"priority": 58
+	},
+	{
+		"code": "EAL",
+		"name": "Ealing",
+		"priority": 59
+	},
+	{
+		"code": "EAY",
+		"name": "East Ayrshire",
+		"priority": 60
+	},
+	{
+		"code": "EDU",
+		"name": "East Dunbartonshire",
+		"priority": 61
+	},
+	{
+		"code": "ELN",
+		"name": "East Lothian",
+		"priority": 62
+	},
+	{
+		"code": "ERW",
+		"name": "East Renfrewshire",
+		"priority": 63
+	},
+	{
+		"code": "ERY",
+		"name": "East Riding of Yorkshire",
+		"priority": 64
+	},
+	{
+		"code": "ESX",
+		"name": "East Sussex",
+		"priority": 65
+	},
+	{
+		"code": "EDH",
+		"name": "Edinburgh, City of",
+		"priority": 66
+	},
+	{
+		"code": "ELS",
+		"name": "Eilean Siar",
+		"priority": 67
+	},
+	{
+		"code": "ENF",
+		"name": "Enfield",
+		"priority": 68
+	},
+	{
+		"code": "ESS",
+		"name": "Essex",
+		"priority": 69
+	},
+	{
+		"code": "FAL",
+		"name": "Falkirk",
+		"priority": 70
+	},
+	{
+		"code": "FMO",
+		"name": "Fermanagh and Omagh",
+		"priority": 71
+	},
+	{
+		"code": "FIF",
+		"name": "Fife",
+		"priority": 72
+	},
+	{
+		"code": "FLN",
+		"name": "Flintshire",
+		"priority": 73
+	},
+	{
+		"code": "GAT",
+		"name": "Gateshead",
+		"priority": 74
+	},
+	{
+		"code": "GLG",
+		"name": "Glasgow City",
+		"priority": 75
+	},
+	{
+		"code": "GLS",
+		"name": "Gloucestershire",
+		"priority": 76
+	},
+	{
+		"code": "GRE",
+		"name": "Greenwich",
+		"priority": 77
+	},
+	{
+		"code": "GWN",
+		"name": "Gwynedd",
+		"priority": 78
+	},
+	{
+		"code": "HCK",
+		"name": "Hackney",
+		"priority": 79
+	},
+	{
+		"code": "HAL",
+		"name": "Halton",
+		"priority": 80
+	},
+	{
+		"code": "HMF",
+		"name": "Hammersmith and Fulham",
+		"priority": 81
+	},
+	{
+		"code": "HAM",
+		"name": "Hampshire",
+		"priority": 82
+	},
+	{
+		"code": "HRY",
+		"name": "Haringey",
+		"priority": 83
+	},
+	{
+		"code": "HRW",
+		"name": "Harrow",
+		"priority": 84
+	},
+	{
+		"code": "HPL",
+		"name": "Hartlepool",
+		"priority": 85
+	},
+	{
+		"code": "HAV",
+		"name": "Havering",
+		"priority": 86
+	},
+	{
+		"code": "HEF",
+		"name": "Herefordshire",
+		"priority": 87
+	},
+	{
+		"code": "HRT",
+		"name": "Hertfordshire",
+		"priority": 88
+	},
+	{
+		"code": "HLD",
+		"name": "Highland",
+		"priority": 89
+	},
+	{
+		"code": "HIL",
+		"name": "Hillingdon",
+		"priority": 90
+	},
+	{
+		"code": "HNS",
+		"name": "Hounslow",
+		"priority": 91
+	},
+	{
+		"code": "IVC",
+		"name": "Inverclyde",
+		"priority": 92
+	},
+	{
+		"code": "AGY",
+		"name": "Isle of Anglesey",
+		"priority": 93
+	},
+	{
+		"code": "IOW",
+		"name": "Isle of Wight",
+		"priority": 94
+	},
+	{
+		"code": "IOS",
+		"name": "Isles of Scilly",
+		"priority": 95
+	},
+	{
+		"code": "ISL",
+		"name": "Islington",
+		"priority": 96
+	},
+	{
+		"code": "KEC",
+		"name": "Kensington and Chelsea",
+		"priority": 97
+	},
+	{
+		"code": "KEN",
+		"name": "Kent",
+		"priority": 98
+	},
+	{
+		"code": "KHL",
+		"name": "Kingston upon Hull",
+		"priority": 99
+	},
+	{
+		"code": "KTT",
+		"name": "Kingston upon Thames",
+		"priority": 100
+	},
+	{
+		"code": "KIR",
+		"name": "Kirklees",
+		"priority": 101
+	},
+	{
+		"code": "KWL",
+		"name": "Knowsley",
+		"priority": 102
+	},
+	{
+		"code": "LBH",
+		"name": "Lambeth",
+		"priority": 103
+	},
+	{
+		"code": "LAN",
+		"name": "Lancashire",
+		"priority": 104
+	},
+	{
+		"code": "LDS",
+		"name": "Leeds",
+		"priority": 105
+	},
+	{
+		"code": "LCE",
+		"name": "Leicester",
+		"priority": 106
+	},
+	{
+		"code": "LEC",
+		"name": "Leicestershire",
+		"priority": 107
+	},
+	{
+		"code": "LEW",
+		"name": "Lewisham",
+		"priority": 108
+	},
+	{
+		"code": "LIN",
+		"name": "Lincolnshire",
+		"priority": 109
+	},
+	{
+		"code": "LBC",
+		"name": "Lisburn and Castlereagh",
+		"priority": 110
+	},
+	{
+		"code": "LIV",
+		"name": "Liverpool",
+		"priority": 111
+	},
+	{
+		"code": "LND",
+		"name": "London, City of",
+		"priority": 112
+	},
+	{
+		"code": "LUT",
+		"name": "Luton",
+		"priority": 113
+	},
+	{
+		"code": "MAN",
+		"name": "Manchester",
+		"priority": 114
+	},
+	{
+		"code": "MDW",
+		"name": "Medway",
+		"priority": 115
+	},
+	{
+		"code": "MTY",
+		"name": "Merthyr Tydfil",
+		"priority": 116
+	},
+	{
+		"code": "MRT",
+		"name": "Merton",
+		"priority": 117
+	},
+	{
+		"code": "MUL",
+		"name": "Mid Ulster",
+		"priority": 118
+	},
+	{
+		"code": "MEA",
+		"name": "Mid and East Antrim",
+		"priority": 119
+	},
+	{
+		"code": "MDB",
+		"name": "Middlesbrough",
+		"priority": 120
+	},
+	{
+		"code": "MLN",
+		"name": "Midlothian",
+		"priority": 121
+	},
+	{
+		"code": "MIK",
+		"name": "Milton Keynes",
+		"priority": 122
+	},
+	{
+		"code": "MON",
+		"name": "Monmouthshire",
+		"priority": 123
+	},
+	{
+		"code": "MRY",
+		"name": "Moray",
+		"priority": 124
+	},
+	{
+		"code": "NTL",
+		"name": "Neath Port Talbot",
+		"priority": 125
+	},
+	{
+		"code": "NET",
+		"name": "Newcastle upon Tyne",
+		"priority": 126
+	},
+	{
+		"code": "NWM",
+		"name": "Newham",
+		"priority": 127
+	},
+	{
+		"code": "NWP",
+		"name": "Newport",
+		"priority": 128
+	},
+	{
+		"code": "NMD",
+		"name": "Newry, Mourne and Down",
+		"priority": 129
+	},
+	{
+		"code": "NFK",
+		"name": "Norfolk",
+		"priority": 130
+	},
+	{
+		"code": "NAY",
+		"name": "North Ayrshire",
+		"priority": 131
+	},
+	{
+		"code": "NEL",
+		"name": "North East Lincolnshire",
+		"priority": 132
+	},
+	{
+		"code": "NLK",
+		"name": "North Lanarkshire",
+		"priority": 133
+	},
+	{
+		"code": "NLN",
+		"name": "North Lincolnshire",
+		"priority": 134
+	},
+	{
+		"code": "NSM",
+		"name": "North Somerset",
+		"priority": 135
+	},
+	{
+		"code": "NTY",
+		"name": "North Tyneside",
+		"priority": 136
+	},
+	{
+		"code": "NYK",
+		"name": "North Yorkshire",
+		"priority": 137
+	},
+	{
+		"code": "NTH",
+		"name": "Northamptonshire",
+		"priority": 138
+	},
+	{
+		"code": "NIR",
+		"name": "Northern Ireland",
+		"priority": 139
+	},
+	{
+		"code": "NBL",
+		"name": "Northumberland",
+		"priority": 140
+	},
+	{
+		"code": "NGM",
+		"name": "Nottingham",
+		"priority": 141
+	},
+	{
+		"code": "NTT",
+		"name": "Nottinghamshire",
+		"priority": 142
+	},
+	{
+		"code": "OLD",
+		"name": "Oldham",
+		"priority": 143
+	},
+	{
+		"code": "ORK",
+		"name": "Orkney Islands",
+		"priority": 144
+	},
+	{
+		"code": "OXF",
+		"name": "Oxfordshire",
+		"priority": 145
+	},
+	{
+		"code": "PEM",
+		"name": "Pembrokeshire",
+		"priority": 146
+	},
+	{
+		"code": "PKN",
+		"name": "Perth and Kinross",
+		"priority": 147
+	},
+	{
+		"code": "PTE",
+		"name": "Peterborough",
+		"priority": 148
+	},
+	{
+		"code": "PLY",
+		"name": "Plymouth",
+		"priority": 149
+	},
+	{
+		"code": "POL",
+		"name": "Poole",
+		"priority": 150
+	},
+	{
+		"code": "POR",
+		"name": "Portsmouth",
+		"priority": 151
+	},
+	{
+		"code": "POW",
+		"name": "Powys",
+		"priority": 152
+	},
+	{
+		"code": "RDG",
+		"name": "Reading",
+		"priority": 153
+	},
+	{
+		"code": "RDB",
+		"name": "Redbridge",
+		"priority": 154
+	},
+	{
+		"code": "RCC",
+		"name": "Redcar and Cleveland",
+		"priority": 155
+	},
+	{
+		"code": "RFW",
+		"name": "Renfrewshire",
+		"priority": 156
+	},
+	{
+		"code": "RCT",
+		"name": "Rhondda, Cynon, Taff",
+		"priority": 157
+	},
+	{
+		"code": "RIC",
+		"name": "Richmond upon Thames",
+		"priority": 158
+	},
+	{
+		"code": "RCH",
+		"name": "Rochdale",
+		"priority": 159
+	},
+	{
+		"code": "ROT",
+		"name": "Rotherham",
+		"priority": 160
+	},
+	{
+		"code": "RUT",
+		"name": "Rutland",
+		"priority": 161
+	},
+	{
+		"code": "SLF",
+		"name": "Salford",
+		"priority": 162
+	},
+	{
+		"code": "SAW",
+		"name": "Sandwell",
+		"priority": 163
+	},
+	{
+		"code": "SCB",
+		"name": "Scottish Borders, The",
+		"priority": 164
+	},
+	{
+		"code": "SFT",
+		"name": "Sefton",
+		"priority": 165
+	},
+	{
+		"code": "SHF",
+		"name": "Sheffield",
+		"priority": 166
+	},
+	{
+		"code": "ZET",
+		"name": "Shetland Islands",
+		"priority": 167
+	},
+	{
+		"code": "SHR",
+		"name": "Shropshire",
+		"priority": 168
+	},
+	{
+		"code": "SLG",
+		"name": "Slough",
+		"priority": 169
+	},
+	{
+		"code": "SOL",
+		"name": "Solihull",
+		"priority": 170
+	},
+	{
+		"code": "SOM",
+		"name": "Somerset",
+		"priority": 171
+	},
+	{
+		"code": "SAY",
+		"name": "South Ayrshire",
+		"priority": 172
+	},
+	{
+		"code": "SGC",
+		"name": "South Gloucestershire",
+		"priority": 173
+	},
+	{
+		"code": "SLK",
+		"name": "South Lanarkshire",
+		"priority": 174
+	},
+	{
+		"code": "STY",
+		"name": "South Tyneside",
+		"priority": 175
+	},
+	{
+		"code": "STH",
+		"name": "Southampton",
+		"priority": 176
+	},
+	{
+		"code": "SOS",
+		"name": "Southend-on-Sea",
+		"priority": 177
+	},
+	{
+		"code": "SWK",
+		"name": "Southwark",
+		"priority": 178
+	},
+	{
+		"code": "SHN",
+		"name": "St. Helens",
+		"priority": 179
+	},
+	{
+		"code": "STS",
+		"name": "Staffordshire",
+		"priority": 180
+	},
+	{
+		"code": "STG",
+		"name": "Stirling",
+		"priority": 181
+	},
+	{
+		"code": "SKP",
+		"name": "Stockport",
+		"priority": 182
+	},
+	{
+		"code": "STT",
+		"name": "Stockton-on-Tees",
+		"priority": 183
+	},
+	{
+		"code": "STE",
+		"name": "Stoke-on-Trent",
+		"priority": 184
+	},
+	{
+		"code": "SFK",
+		"name": "Suffolk",
+		"priority": 185
+	},
+	{
+		"code": "SND",
+		"name": "Sunderland",
+		"priority": 186
+	},
+	{
+		"code": "SRY",
+		"name": "Surrey",
+		"priority": 187
+	},
+	{
+		"code": "STN",
+		"name": "Sutton",
+		"priority": 188
+	},
+	{
+		"code": "SWA",
+		"name": "Swansea",
+		"priority": 189
+	},
+	{
+		"code": "SWD",
+		"name": "Swindon",
+		"priority": 190
+	},
+	{
+		"code": "TAM",
+		"name": "Tameside",
+		"priority": 191
+	},
+	{
+		"code": "TFW",
+		"name": "Telford and Wrekin",
+		"priority": 192
+	},
+	{
+		"code": "THR",
+		"name": "Thurrock",
+		"priority": 193
+	},
+	{
+		"code": "TOB",
+		"name": "Torbay",
+		"priority": 194
+	},
+	{
+		"code": "TOF",
+		"name": "Torfaen [Tor-faen]",
+		"priority": 195
+	},
+	{
+		"code": "TWH",
+		"name": "Tower Hamlets",
+		"priority": 196
+	},
+	{
+		"code": "TRF",
+		"name": "Trafford",
+		"priority": 197
+	},
+	{
+		"code": "VGL",
+		"name": "Vale of Glamorgan, The",
+		"priority": 198
+	},
+	{
+		"code": "WKF",
+		"name": "Wakefield",
+		"priority": 199
+	},
+	{
+		"code": "WLL",
+		"name": "Walsall",
+		"priority": 200
+	},
+	{
+		"code": "WFT",
+		"name": "Waltham Forest",
+		"priority": 201
+	},
+	{
+		"code": "WND",
+		"name": "Wandsworth",
+		"priority": 202
+	},
+	{
+		"code": "WRT",
+		"name": "Warrington",
+		"priority": 203
+	},
+	{
+		"code": "WAR",
+		"name": "Warwickshire",
+		"priority": 204
+	},
+	{
+		"code": "WBK",
+		"name": "West Berkshire",
+		"priority": 205
+	},
+	{
+		"code": "WDU",
+		"name": "West Dunbartonshire",
+		"priority": 206
+	},
+	{
+		"code": "WLN",
+		"name": "West Lothian",
+		"priority": 207
+	},
+	{
+		"code": "WSX",
+		"name": "West Sussex",
+		"priority": 208
+	},
+	{
+		"code": "WSM",
+		"name": "Westminster",
+		"priority": 209
+	},
+	{
+		"code": "WGN",
+		"name": "Wigan",
+		"priority": 210
+	},
+	{
+		"code": "WIL",
+		"name": "Wiltshire",
+		"priority": 211
+	},
+	{
+		"code": "WNM",
+		"name": "Windsor and Maidenhead",
+		"priority": 212
+	},
+	{
+		"code": "WRL",
+		"name": "Wirral",
+		"priority": 213
+	},
+	{
+		"code": "WOK",
+		"name": "Wokingham",
+		"priority": 214
+	},
+	{
+		"code": "WLV",
+		"name": "Wolverhampton",
+		"priority": 215
+	},
+	{
+		"code": "WOR",
+		"name": "Worcestershire",
+		"priority": 216
+	},
+	{
+		"code": "WRX",
+		"name": "Wrexham",
+		"priority": 217
+	},
+	{
+		"code": "YOR",
+		"name": "York",
+		"priority": 218
+	}
+]

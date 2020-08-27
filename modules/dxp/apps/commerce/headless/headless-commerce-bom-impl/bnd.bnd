@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Headless Commerce BOM Implementation
+Bundle-SymbolicName: com.liferay.headless.commerce.bom.impl
+Bundle-Version: 3.0.0

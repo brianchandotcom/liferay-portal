@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="CopyrightCheck" files="\.*" />
+		<suppress checks="JavaClassNameCheck" files=".*" />
+		<suppress checks="JavaHelperUtilCheck" files="commerce-organization-web/src/main/java/com/liferay/commerce/organization/web/internal/organization/resource/CommerceOrganizationResourceUtil\.java" />
+		<suppress checks="JavaModuleInternalImportsCheck" files="commerce-organization-web/src/main/java/com/liferay/commerce/organization/web/internal/frontend/OrganizationFilterImpl\.java" />
+		<suppress checks="JavaPackagePathCheck" files="commerce-dashboard-web/src/main/java/com/liferay/commerce/dashboard/web/internal/configuration/definition/CommerceDashboardForecastPortletInstanceConfigurationBeanDeclaration\.java" />
+		<suppress checks="JSONPackageJSONCheck" files="commerce-bom-admin-web/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="commerce-bom-web/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="commerce-organization-web/package\.json" />
+	</source-check>
+</suppressions>

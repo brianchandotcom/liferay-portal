@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="false" package-path="com.liferay.commerce.inventory">
+	<author>Luca Pellizzon</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceInventoryAudit" remote-service="true" table="CIAudit">
+
+		<!-- PK fields -->
+
+		<column db-name="CIAuditId" name="commerceInventoryAuditId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="sku" type="String" />
+		<column name="logType" type="String" />
+		<column name="logTypeSettings" type="String" />
+		<column name="quantity" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="LtCreateDate" return-type="Collection">
+			<finder-column comparator="&lt;" name="createDate" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="sku" />
+		</finder>
+	</entity>
+	<entity local-service="true" mvcc-enabled="true" name="CommerceInventoryBookedQuantity" remote-service="true" table="CIBookedQuantity">
+
+		<!-- PK fields -->
+
+		<column db-name="CIBookedQuantityId" name="commerceInventoryBookedQuantityId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="sku" type="String" />
+		<column name="quantity" type="int" />
+		<column name="expirationDate" type="Date" />
+		<column name="bookedNote" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="Sku" return-type="Collection">
+			<finder-column name="sku" />
+		</finder>
+		<finder name="LtExpirationDate" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="sku" />
+		</finder>
+	</entity>
+	<entity local-service="true" mvcc-enabled="true" name="CommerceInventoryReplenishmentItem" remote-service="true" table="CIReplenishmentItem">
+
+		<!-- PK fields -->
+
+		<column db-name="CIReplenishmentItemId" name="commerceInventoryReplenishmentItemId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceInventoryWarehouseId" type="long" />
+		<column name="sku" type="String" />
+		<column name="availabilityDate" type="Date" />
+		<column name="quantity" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceInventoryWarehouseId" return-type="Collection">
+			<finder-column name="commerceInventoryWarehouseId" />
+		</finder>
+		<finder name="Sku" return-type="Collection">
+			<finder-column name="sku" />
+		</finder>
+		<finder name="AvailabilityDate" return-type="Collection">
+			<finder-column name="availabilityDate" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="sku" />
+		</finder>
+		<finder name="S_AD" return-type="Collection">
+			<finder-column name="sku" />
+			<finder-column name="availabilityDate" />
+		</finder>
+	</entity>
+	<entity external-reference-code="true" local-service="true" mvcc-enabled="true" name="CommerceInventoryWarehouse" remote-service="true" table="CIWarehouse">
+
+		<!-- PK fields -->
+
+		<column db-name="CIWarehouseId" name="commerceInventoryWarehouseId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="active" type="boolean" />
+		<column name="street1" type="String" />
+		<column name="street2" type="String" />
+		<column name="street3" type="String" />
+		<column name="city" type="String" />
+		<column name="zip" type="String" />
+		<column name="commerceRegionCode" type="String" />
+		<column name="countryTwoLettersISOCode" type="String" />
+		<column name="latitude" type="double" />
+		<column name="longitude" type="double" />
+		<column name="type" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="countryTwoLettersISOCode" />
+		</finder>
+		<finder name="C_A_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+			<finder-column name="countryTwoLettersISOCode" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity external-reference-code="true" local-service="true" mvcc-enabled="true" name="CommerceInventoryWarehouseItem" remote-service="true" table="CIWarehouseItem">
+
+		<!-- PK fields -->
+
+		<column db-name="CIWarehouseItemId" name="commerceInventoryWarehouseItemId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceInventoryWarehouseId" type="long" />
+		<column name="sku" type="String" />
+		<column name="quantity" type="int" />
+		<column name="reservedQuantity" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="CommerceInventoryWarehouseId" return-type="Collection">
+			<finder-column name="commerceInventoryWarehouseId" />
+		</finder>
+		<finder name="CompanyId_Sku" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="sku" />
+		</finder>
+		<finder name="C_S" return-type="CommerceInventoryWarehouseItem" unique="true">
+			<finder-column name="commerceInventoryWarehouseId" />
+			<finder-column name="sku" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>CommerceInventoryWarehouseActive</exception>
+		<exception>CommerceInventoryWarehouseItemQuantity</exception>
+		<exception>CommerceInventoryWarehouseName</exception>
+		<exception>DuplicateCommerceInventoryWarehouseItem</exception>
+		<exception>MVCC</exception>
+	</exceptions>
+</service-builder>

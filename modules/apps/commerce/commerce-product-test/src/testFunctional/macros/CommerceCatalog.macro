@@ -1,0 +1,17 @@
+definition {
+
+	macro addEntry {
+		Click(locator1 = "Button#PLUS");
+
+		AssertClick(
+			key_plusMenu = "${plusMenu}",
+			locator1 = "CommerceEntry#PLUS_MENU",
+			value1 = "${plusMenu}");
+
+		CommerceEntry.addProductsEntry(
+			productFullDescription = "${productFullDescription}",
+			productShortDescription = "${productShortDescription}",
+			productTitle = "${productTitle}");
+	}
+
+}

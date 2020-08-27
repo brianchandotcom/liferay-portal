@@ -1,0 +1,178 @@
+definition {
+
+	macro createAccount {
+		Type(
+			locator1 = "TextInput#FIRST_NAME",
+			value1 = "${userFirstName}");
+
+		Type(
+			locator1 = "TextInput#LAST_NAME",
+			value1 = "${userLastName}");
+
+		Type(
+			locator1 = "TextInput#SCREEN_NAME",
+			value1 = "${userScreenName}");
+
+		Type(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = "${userEmailAddress}");
+
+		Type(
+			locator1 = "TextInput#PASSWORD",
+			value1 = "${newPassword}");
+
+		Type(
+			locator1 = "TextInput#ENTER_AGAIN",
+			value1 = "${newPassword}");
+
+		Button.clickSave();
+	}
+
+	macro editPasswordCP {
+		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+
+		if (!(isSet(newPassword))) {
+			var newPassword = "password";
+		}
+
+		UserNavigator.gotoPassword();
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#PASSWORD_NEW_PASSWORD_FIELD",
+			value1 = "${newPassword}");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#PASSWORD_ENTER_AGAIN_FIELD",
+			value1 = "${newPassword}");
+
+		if ("${requirePasswordReset}" == "true") {
+			Check(
+				checkboxName = "Require Password Reset",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		PortletEntry.save();
+	}
+
+	macro loginPG {
+		if ("${samlEnabled}" != "true") {
+			User.loginLocalizationPG(localization = "${localization}");
+		}
+
+		if ((isSet(authenticationMethod)) && ("${authenticationMethod}" == "By Screen Name")) {
+			Type(
+				locator1 = "TextInput#SCREEN_NAME",
+				value1 = "${userScreenName}");
+		}
+		else {
+			Type(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "${userEmailAddress}");
+		}
+
+		Type(
+			locator1 = "TextInput#PASSWORD",
+			value1 = "${password}");
+
+		if ((isSet(rememberMeChecked)) && ("${rememberMeChecked}" == "true")) {
+			Check(locator1 = "Checkbox#REMEMBER_ME");
+		}
+
+		if (isSet(localization)) {
+			var localizedSignIn = User._signInLocalization(localization = "${localization}");
+
+			Button.click(button = "${localizedSignIn}");
+		}
+		else {
+			Button.click(button = "Sign In");
+		}
+
+		if (IsElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED")) {
+			echo("Sign in failed due to empty required field. Retrying...");
+
+			if ((isSet(authenticationMethod)) && ("${authenticationMethod}" == "By Screen Name")) {
+				Type(
+					locator1 = "TextInput#SCREEN_NAME",
+					value1 = "${userScreenName}");
+			}
+			else {
+				Type(
+					locator1 = "TextInput#EMAIL_ADDRESS",
+					value1 = "${userEmailAddress}");
+			}
+
+			Type(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "${password}");
+
+			Click.mouseDownMouseUp(
+				key_text = "Sign In",
+				locator1 = "Button#ANY");
+		}
+
+		Button.viewNotPresent(button = "Sign In");
+
+		User.acceptEndUserLicenseAgreement();
+
+		User.resetPassword(
+			resetPassword = "${resetPassword}",
+			setupWizardEnabled = "${setupWizardEnabled}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}");
+
+		User.answerPasswordReminder();
+	}
+
+	macro miniumLogin {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var specificURL = "${baseURL}/${urlAppend}";
+
+		Navigator.openSpecificURL(url = "${specificURL}");
+
+		CommerceLogin.loginPG(
+			password = "${password}",
+			samlEnabled = "true",
+			specificURL = "${baseURL}/${urlAppend}",
+			userEmailAddress = "${userEmailAddress}");
+	}
+
+	macro miniumLogoutPG {
+		ClickNoError(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
+
+		Click(
+			key_menuItem = "Sign Out",
+			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+	}
+
+	macro speedwellLogin {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var specificURL = "${baseURL}/${urlAppend}";
+
+		Navigator.openSpecificURL(url = "${specificURL}");
+
+		CommerceNavigator.gotoSpeedwellAccountDropdownItem(dropdownItem = "Sign In");
+
+		CommerceLogin.loginPG(
+			password = "${password}",
+			samlEnabled = "true",
+			userEmailAddress = "${userEmailAddress}");
+	}
+
+	macro speedwellLogout {
+		Click(locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN");
+
+		Click(
+			key_dropdownItem = "Sign Out",
+			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN_ITEM");
+	}
+
+}

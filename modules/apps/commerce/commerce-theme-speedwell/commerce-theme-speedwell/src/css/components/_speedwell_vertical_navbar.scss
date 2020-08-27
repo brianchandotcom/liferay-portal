@@ -1,0 +1,39 @@
+.navbar-nav {
+	li {
+		box-sizing: border-box;
+		line-height: 35px;
+		padding-left: 20px;
+
+		&.active,
+		&:hover {
+			span {
+				font-weight: 600;
+			}
+		}
+
+		&.active::before,
+		&:hover::before {
+			color: $color-theme;
+			content: '>>';
+			font-size: 17px;
+			font-weight: bold;
+			height: 16px;
+			left: 7px;
+			letter-spacing: -18px;
+			position: absolute;
+			top: 7px;
+			transform: scaleX(0.4);
+			width: 16px;
+		}
+
+		a {
+			color: $stroke-variant;
+			font-size: 12px;
+			font-weight: 400;
+
+			img {
+				display: none;
+			}
+		}
+	}
+}

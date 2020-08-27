@@ -1,0 +1,42 @@
+definition {
+
+	macro addEntry {
+		Pause(locator1 = "3000");
+
+		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
+
+		if (IsElementPresent(locator1 = "Button#DELETE")) {
+			Click(locator1 = "CommerceEntry#ADD_BUTTON");
+		}
+
+		CommerceEntry.addOptionsEntry(
+			optionDescription = "${optionDescription}",
+			optionFieldType = "${optionFieldType}",
+			optionName = "${optionName}");
+	}
+
+	macro addOptionValueEntry {
+		if (IsElementPresent(locator1 = "Button#DELETE")) {
+			Click(locator1 = "CommerceEntry#ADD_BUTTON");
+		}
+
+		CommerceEntry.addOptionValue(
+			valueName = "${optionValueName}",
+			valuePriority = "${optionValuePriority}");
+
+		CommerceEntry.saveEntry();
+	}
+
+	macro deleteOptionsEntries {
+		while (IsElementPresent(locator1 = "Button#DELETE")) {
+			CommerceOptions.deleteOptionsEntry();
+		}
+	}
+
+	macro deleteOptionsEntry {
+		ClickNoError.clickNoMouseOver(locator1 = "Button#DELETE");
+
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete the selected option?");
+	}
+
+}

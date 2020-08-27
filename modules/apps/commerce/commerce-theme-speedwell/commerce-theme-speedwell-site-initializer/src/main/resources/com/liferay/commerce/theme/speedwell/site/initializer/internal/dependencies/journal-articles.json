@@ -1,0 +1,62 @@
+[
+	{
+		"articleId": "SPEEDWELL_BUMPER_SLIDER",
+		"ddmStructureKey": "speedwell-bumper-slider-structure",
+		"ddmTemplateKey": "SPEEDWELL_BUMPER_SLIDER",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"title": "SPEEDWELL_BUMPER_SLIDER"
+	},
+	{
+		"articleId": "SPEEDWELL_HIGHLIGHT_SLIDER",
+		"ddmStructureKey": "speedwell-highlight-slider-structure",
+		"ddmTemplateKey": "SPEEDWELL_HIGHLIGHT_SLIDER",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"title": "SPEEDWELL_HIGHLIGHT_SLIDER"
+	},
+	{
+		"articleId": "SPEEDWELL_NEWSLETTER",
+		"ddmStructureKey": "speedwell-newsletter-structure",
+		"ddmTemplateKey": "SPEEDWELL_NEWSLETTER",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"title": "SPEEDWELL_NEWSLETTER"
+	},
+	{
+		"articleId": "SPEEDWELL_ACCOUNT",
+		"ddmStructureKey": "speedwell-account-dashboard-structure",
+		"ddmTemplateKey": "SPEEDWELL_ACCOUNT",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"title": "SPEEDWELL_ACCOUNT"
+	}
+]

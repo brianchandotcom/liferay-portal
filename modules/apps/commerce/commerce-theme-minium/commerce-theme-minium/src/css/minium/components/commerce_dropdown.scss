@@ -1,0 +1,72 @@
+.commerce-dropdown {
+	position: relative;
+
+	&__curtain {
+		background: white;
+		border-radius: 8px;
+		box-shadow: $shadow;
+		display: none;
+		height: 530px;
+		max-height: calc(
+			100vh - #{$frame-size * 2 + $liferay-topbar-size + 60px}
+		);
+		opacity: 0;
+		position: absolute;
+		right: 0;
+		top: calc(100% + 10px);
+		transform: scale(0.4);
+		transform-origin: 100% 0%;
+		transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		width: 450px;
+		z-index: 999;
+
+		@media screen and (max-width: $bp-small) {
+			left: $sm-gutter;
+			position: fixed;
+			right: $sm-gutter;
+			top: 120px;
+			width: calc(100% - #{$sm-gutter * 2});
+		}
+
+		&::before {
+			border: 10px solid transparent;
+			border-bottom-color: $color-bg;
+			border-top-width: 0;
+			bottom: 100%;
+			content: '';
+			position: absolute;
+			right: 24px;
+			transition: max-height 0.2s ease-in, opacity 0.2s ease-in;
+			z-index: 999;
+
+			@media screen and (max-width: $bp-small) {
+				right: 64px;
+			}
+		}
+
+		&.is-closing {
+			display: block;
+			transition: all 0.1s ease-in;
+		}
+
+		&.is-open {
+			display: block;
+			opacity: 1;
+			transform: scale(1);
+		}
+
+		&.is-opening {
+			display: block;
+		}
+	}
+
+	&__absolute-content {
+		bottom: 0;
+		display: block;
+		left: 0;
+		overflow: hidden;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+}

@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="false" package-path="com.liferay.commerce.discount">
+	<author>Marco Leo</author>
+	<namespace>Commerce</namespace>
+	<entity external-reference-code="true" local-service="true" name="CommerceDiscount" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceDiscountId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="title" type="String" />
+		<column name="target" type="String" />
+		<column name="useCouponCode" type="boolean" />
+		<column name="couponCode" type="String" />
+		<column name="usePercentage" type="boolean" />
+		<column name="maximumDiscountAmount" type="BigDecimal" />
+		<column db-name="levelType" name="level" type="String" />
+		<column name="level1" type="BigDecimal" />
+		<column name="level2" type="BigDecimal" />
+		<column name="level3" type="BigDecimal" />
+		<column name="level4" type="BigDecimal" />
+		<column name="limitationType" type="String" />
+		<column name="limitationTimes" type="int" />
+		<column name="limitationTimesPerAccount" type="int" />
+		<column name="numberOfUse" type="int" />
+		<column name="rulesConjunction" type="boolean" />
+		<column name="active" type="boolean" />
+		<column name="displayDate" type="Date" />
+		<column name="expirationDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="couponCode" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtE_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_C_A" return-type="CommerceDiscount" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="couponCode" />
+			<finder-column name="active" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CommerceDiscountAccountRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceDiscountAccountRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceAccountId" type="long" />
+		<column name="commerceDiscountId" type="long" />
+		<column name="order" type="int" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="order" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceAccountId" return-type="Collection">
+			<finder-column name="commerceAccountId" />
+		</finder>
+		<finder name="CommerceDiscountId" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="C_C" return-type="CommercePriceListAccountRel" unique="true">
+			<finder-column name="commerceAccountId" />
+			<finder-column name="commerceDiscountId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceDiscountCommerceAccountGroupRel" remote-service="true" table="CDiscountCAccountGroupRel">
+
+		<!-- PK fields -->
+
+		<column db-name="CDiscountCAccountGroupRelId" name="commerceDiscountCommerceAccountGroupRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceDiscountId" type="long" />
+		<column name="commerceAccountGroupId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceDiscountId" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="CommerceAccountGroupId" return-type="Collection">
+			<finder-column name="commerceAccountGroupId" />
+		</finder>
+		<finder name="C_C" return-type="CommerceDiscountCommerceAccountGroupRel" unique="true">
+			<finder-column name="commerceDiscountId" />
+			<finder-column name="commerceAccountGroupId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceDiscountRel" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceDiscountRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceDiscountId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceDiscountId" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="CD_CN" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+			<finder-column name="classNameId" />
+		</finder>
+		<finder name="CN_CPK" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceDiscountRule" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceDiscountRuleId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="commerceDiscountId" type="long" />
+		<column name="type" type="String" />
+		<column name="typeSettings" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceDiscountId" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceDiscountUsageEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="commerceDiscountUsageEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceAccountId" type="long" />
+		<column name="commerceOrderId" type="long" />
+		<column name="commerceDiscountId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceDiscountId" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="A_D" return-type="Collection">
+			<finder-column name="commerceAccountId" />
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="O_D" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="A_O_D" return-type="Collection">
+			<finder-column name="commerceAccountId" />
+			<finder-column name="commerceOrderId" />
+			<finder-column name="commerceDiscountId" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>CommerceDiscountCouponCode</exception>
+		<exception>CommerceDiscountDisplayDate</exception>
+		<exception>CommerceDiscountExpirationDate</exception>
+		<exception>CommerceDiscountLimitationTimes</exception>
+		<exception>CommerceDiscountLimitationType</exception>
+		<exception>CommerceDiscountRuleType</exception>
+		<exception>CommerceDiscountTarget</exception>
+		<exception>CommerceDiscountTitle</exception>
+		<exception>DuplicateCommerceDiscount</exception>
+	</exceptions>
+</service-builder>

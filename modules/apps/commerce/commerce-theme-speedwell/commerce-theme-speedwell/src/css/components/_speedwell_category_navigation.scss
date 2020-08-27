@@ -1,0 +1,156 @@
+.speedwell-category-nav {
+	background-color: white;
+	color: $stroke;
+	left: 0;
+	position: absolute;
+	top: $topbar-height;
+	width: 100%;
+
+	a {
+		color: $stroke;
+		text-decoration: none;
+		text-transform: capitalize;
+	}
+
+	&__category {
+		box-sizing: border-box;
+		font-size: 12px;
+		letter-spacing: 1px;
+		padding: 20px 0;
+		width: 25%;
+
+		.category {
+			&__title h3 {
+				font-size: 14px;
+				font-weight: 600;
+				letter-spacing: 3px;
+
+				a {
+					text-transform: uppercase;
+				}
+			}
+
+			&__products {
+				ul {
+					list-style-type: none;
+					margin: 0;
+					padding: 0;
+				}
+
+				.product-item:hover {
+					font-weight: 700;
+
+					&::before {
+						color: $color-theme;
+						content: '>>';
+						font-size: 17px;
+						font-weight: 700;
+						height: 16px;
+						letter-spacing: -8px;
+						line-height: 16px;
+						margin-left: -18px;
+						position: absolute;
+						transform: scaleX(0.4);
+						width: 16px;
+					}
+				}
+			}
+		}
+	}
+
+	.row {
+		margin: 0;
+		padding: 0;
+	}
+
+	@media screen and (max-width: 1440px) {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	&__side {
+		background-position: center;
+		background-size: auto 100%;
+		color: $color-bg;
+		min-height: 100%;
+		padding: 40px 25px 25px;
+		position: relative;
+
+		&::before {
+			background: linear-gradient(
+				180deg,
+				rgba(53, 53, 53, 0.2) 0%,
+				$stroke-variant 100%
+			);
+			content: '';
+			height: 100%;
+			left: 0;
+			mix-blend-mode: multiply;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+
+		h2 {
+			font-size: 24px;
+			font-weight: 600;
+			text-transform: capitalize;
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		min-height: 100%;
+
+		.wrapper {
+			display: flex;
+			flex: 5;
+			flex-direction: row;
+			flex-wrap: wrap;
+			padding: 20px 40px;
+		}
+
+		.show-more {
+			text-align: center;
+
+			a {
+				font-weight: 600;
+				padding-bottom: 5px;
+				position: relative;
+
+				&::before {
+					border-bottom: 2px solid transparent;
+					content: '';
+					height: 100%;
+					position: absolute;
+					transform: scale3d(0, 1, 1);
+					transform-origin: 0 50%;
+					transition: transform 0.1s ease-out;
+					width: 100%;
+				}
+
+				&:hover::before {
+					border-bottom: 2px solid $color-theme;
+					transform: scale3d(1, 1, 1);
+					transition: transform 0.1s ease-out;
+				}
+			}
+		}
+	}
+
+	&:not(.is-open) {
+		display: none;
+	}
+
+	&.is-open {
+		animation: category-nav-enter 0.2s ease-in forwards;
+		opacity: 0;
+	}
+
+	@keyframes category-nav-enter {
+		to {
+			opacity: 1;
+		}
+	}
+}

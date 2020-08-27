@@ -1,0 +1,199 @@
+{
+	"availableLanguageIds": [
+		"[£LOCALE£]"
+	],
+	"defaultLanguageId": "[£LOCALE£]",
+	"fields": [
+		{
+			"dataType": "image",
+			"fieldNamespace": "ddm",
+			"indexType": "text",
+			"label": {
+				"[£LOCALE£]": "Image"
+			},
+			"localizable": true,
+			"name": "Image2x9w",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "captionCategory"
+					},
+					"localizable": true,
+					"name": "captionCategory",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": true,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "captionText"
+					},
+					"localizable": true,
+					"name": "captionText",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": true,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "captionButtonLabel"
+					},
+					"localizable": true,
+					"name": "captionButtonLabel",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": true,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "link-to-page",
+					"fieldNamespace": "ddm",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "captionButtonUrl"
+					},
+					"localizable": true,
+					"name": "captionButtonUrl",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": true,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "ddm-link-to-page"
+				}
+			],
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "ddm-image"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"[£LOCALE£]": "Static Highlight"
+			},
+			"localizable": true,
+			"name": "StaticHighlight",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Highlight Description"
+					},
+					"localizable": true,
+					"name": "HighlightDesc",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": true,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "image",
+					"fieldNamespace": "ddm",
+					"indexType": "text",
+					"label": {
+						"[£LOCALE£]": "Highlight Icon"
+					},
+					"localizable": true,
+					"name": "HighlightIcon",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "ddm-image"
+				}
+			],
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "text"
+		}
+	]
+}

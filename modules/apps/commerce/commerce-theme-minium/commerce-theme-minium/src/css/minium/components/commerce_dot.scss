@@ -1,0 +1,36 @@
+.commerce-dot {
+	$dot-size: 14px;
+	$dot-size-big: 20px;
+
+	align-items: center;
+	display: grid;
+	grid-gap: 5px;
+	grid-template-columns: auto 1fr;
+
+	&::before {
+		align-self: center;
+		background-color: $color-theme;
+		border-radius: 50%;
+		content: '';
+		display: inline-block;
+		height: $dot-size;
+		width: $dot-size;
+	}
+
+	&--big::before {
+		height: $dot-size-big;
+		width: $dot-size-big;
+	}
+
+	&--good::before {
+		background-color: $color-mood-good;
+	}
+
+	&--neutral::before {
+		background-color: $color-mood-neutral;
+	}
+
+	&--bad::before {
+		background-color: $color-mood-bad;
+	}
+}

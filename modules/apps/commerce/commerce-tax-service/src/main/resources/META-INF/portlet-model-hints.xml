@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.tax.model.CommerceTaxMethod">
+		<field name="commerceTaxMethodId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String" />
+		<field name="engineKey" type="String" />
+		<field name="percentage" type="boolean" />
+		<field name="active" type="boolean" />
+	</model>
+</model-hints>

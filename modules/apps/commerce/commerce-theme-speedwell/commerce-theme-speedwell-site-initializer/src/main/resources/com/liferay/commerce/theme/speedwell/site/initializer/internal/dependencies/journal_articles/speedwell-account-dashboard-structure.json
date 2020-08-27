@@ -1,0 +1,463 @@
+{
+	"availableLanguageIds": [
+		"[£LOCALE£]"
+	],
+	"defaultLanguageId": "[£LOCALE£]",
+	"fields": [
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"[£LOCALE£]": "Page title"
+			},
+			"localizable": true,
+			"name": "PageTitle",
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "link-to-page",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"[£LOCALE£]": "Navigation Item Link"
+			},
+			"localizable": true,
+			"name": "NavigationItemLinkOrders",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Title"
+					},
+					"localizable": true,
+					"name": "NavigationItemTitleOrders",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Description"
+					},
+					"localizable": true,
+					"name": "NavigationItemDescriptionOrders",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				}
+			],
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "ddm-link-to-page"
+		},
+		{
+			"dataType": "link-to-page",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"[£LOCALE£]": "Navigation Item Link"
+			},
+			"localizable": true,
+			"name": "NavigationItemLinkLogin",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Title"
+					},
+					"localizable": true,
+					"name": "NavigationItemTitleLogin",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Description"
+					},
+					"localizable": true,
+					"name": "NavigationItemDescriptionLogin",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				}
+			],
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "ddm-link-to-page"
+		},
+		{
+			"dataType": "link-to-page",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"[£LOCALE£]": "Navigation Item Link"
+			},
+			"localizable": true,
+			"name": "NavigationItemLinkAddresses",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Title"
+					},
+					"localizable": true,
+					"name": "NavigationItemTitleAddresses",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Description"
+					},
+					"localizable": true,
+					"name": "NavigationItemDescriptionAddresses",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				}
+			],
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "ddm-link-to-page"
+		},
+		{
+			"dataType": "link-to-page",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"[£LOCALE£]": "Navigation Item Link"
+			},
+			"localizable": true,
+			"name": "NavigationItemLinkPaymentMethods",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Title"
+					},
+					"localizable": true,
+					"name": "NavigationItemTitlePaymentMethods",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Description"
+					},
+					"localizable": true,
+					"name": "NavigationItemDescriptionPaymentMethods",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				}
+			],
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "ddm-link-to-page"
+		},
+		{
+			"dataType": "link-to-page",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"[£LOCALE£]": "Navigation Item Link"
+			},
+			"localizable": true,
+			"name": "NavigationItemLinkSubscriptions",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Title"
+					},
+					"localizable": true,
+					"name": "NavigationItemTitleSubscriptions",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Description"
+					},
+					"localizable": true,
+					"name": "NavigationItemDescriptionSubscriptions",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				}
+			],
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "ddm-link-to-page"
+		},
+		{
+			"dataType": "link-to-page",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"[£LOCALE£]": "Navigation Item Link"
+			},
+			"localizable": true,
+			"name": "NavigationItemLinkDownloads",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Title"
+					},
+					"localizable": true,
+					"name": "NavigationItemTitleDownloads",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"[£LOCALE£]": "Navigation Item Description"
+					},
+					"localizable": true,
+					"name": "NavigationItemDescriptionDownloads",
+					"predefinedValue": {
+						"[£LOCALE£]": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"[£LOCALE£]": ""
+					},
+					"tip": {
+						"[£LOCALE£]": ""
+					},
+					"type": "text"
+				}
+			],
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[£LOCALE£]": ""
+			},
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "ddm-link-to-page"
+		}
+	]
+}

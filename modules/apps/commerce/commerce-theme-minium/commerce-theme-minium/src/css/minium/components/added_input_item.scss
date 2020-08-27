@@ -1,0 +1,28 @@
+.added-input-item {
+	background: $color-disabled;
+	border-radius: 18px;
+	display: inline-block;
+	margin-bottom: 3px;
+	margin-left: 10px;
+	padding: 0 2px 0 4px;
+
+	&__thumbnail {
+		border-radius: 50%;
+		display: inline-block;
+		height: 18px;
+		line-height: 0;
+		margin: 4px 4px 4px 0;
+		overflow: hidden;
+		vertical-align: middle;
+		width: 18px;
+
+		img {
+			height: auto;
+			max-width: 100%;
+		}
+	}
+
+	&__text {
+		margin-left: 4px;
+	}
+}

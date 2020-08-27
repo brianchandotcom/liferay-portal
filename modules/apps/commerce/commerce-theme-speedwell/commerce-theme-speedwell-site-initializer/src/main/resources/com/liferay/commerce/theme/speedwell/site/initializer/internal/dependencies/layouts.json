@@ -1,0 +1,600 @@
+[
+	{
+		"layoutTemplateId": "1_column",
+		"lookAndFeel": {
+			"lfr-theme:regular:translucent-topbar": "true",
+			"lfr-theme:regular:wide-layout": "true"
+		},
+		"name": "Home",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"portletPreferences": {
+					"articleId": "SPEEDWELL_BUMPER_SLIDER",
+					"assetEntryId": "",
+					"ddmStructureKey": "speedwell-bumper-slider-structure",
+					"ddmTemplateKey": "SPEEDWELL_BUMPER_SLIDER",
+					"groupId": ""
+				}
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 1,
+				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"portletPreferences": {
+					"articleId": "SPEEDWELL_HIGHLIGHT_SLIDER",
+					"assetEntryId": "",
+					"ddmStructureKey": "speedwell-highlight-slider-structure",
+					"ddmTemplateKey": "SPEEDWELL_HIGHLIGHT_SLIDER",
+					"groupId": ""
+				}
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 2,
+				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"portletPreferences": {
+					"articleId": "SPEEDWELL_NEWSLETTER",
+					"assetEntryId": "",
+					"ddmStructureKey": "speedwell-newsletter-structure",
+					"ddmTemplateKey": "SPEEDWELL_NEWSLETTER",
+					"groupId": ""
+				}
+			}
+		]
+	},
+	{
+		"icon": "icon_catalog.png",
+		"layoutTemplateId": "speedwell_sidebar",
+		"name": "Catalog",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet_INSTANCE_speedwell"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 1,
+				"portletName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet_INSTANCE_speedwell"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 2,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 3,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 4,
+				"portletName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet_INSTANCE_speedwell"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 5,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPPriceRangeFacetsPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 1,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_speedwell"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 2,
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet_INSTANCE_speedwell"
+			}
+		],
+		"privateLayout": false,
+		"subLayouts": [
+			{
+				"layoutTemplateId": "speedwell_category_navigation",
+				"lookAndFeel": {
+					"lfr-theme:regular:translucent-topbar": "true",
+					"lfr-theme:regular:wide-layout": "true"
+				},
+				"name": "Category",
+				"portlets": [
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet"
+					},
+					{
+						"layoutColumnId": "column-3",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_portal__search_web_category_facet_portlet_CategoryFacetPortlet_INSTANCE_speedwell",
+						"portletPreferences": {
+							"preferenceDisplayStyle": "list"
+						}
+					},
+					{
+						"layoutColumnId": "column-3",
+						"layoutColumnPos": 1,
+						"portletName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet",
+						"portletPreferences": {
+							"allowEmptySearches": "true"
+						}
+					},
+					{
+						"layoutColumnId": "column-4",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_speedwell",
+						"portletPreferences": {
+							"cpContentListRendererKey": "list-minium",
+							"grouped--cpTypeListEntryRendererKey": "list-entry-minium",
+							"simple--cpTypeListEntryRendererKey": "list-entry-minium",
+							"virtual--cpTypeListEntryRendererKey": "list-entry-minium"
+						}
+					},
+					{
+						"layoutColumnId": "column-4",
+						"layoutColumnPos": 1,
+						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet",
+						"portletPreferences": {
+							"cpContentListRendererKey": "compare-list-minium"
+						}
+					}
+				]
+			}
+		]
+	},
+	{
+		"layoutTemplateId": "1_column",
+		"name": "My Account",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			},
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "User",
+				"scope": 4
+			}
+		],
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"portletPreferences": {
+					"articleId": "SPEEDWELL_ACCOUNT",
+					"assetEntryId": "",
+					"ddmStructureKey": "speedwell-account-dashboard-structure",
+					"ddmTemplateKey": "SPEEDWELL_ACCOUNT",
+					"groupId": ""
+				}
+			}
+		],
+		"subLayouts": [
+			{
+				"layoutTemplateId": "speedwell_account",
+				"name": "My Orders",
+				"permissions": [
+					{
+						"actionIds": [
+						],
+						"roleName": "Guest",
+						"scope": 4
+					},
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "User",
+						"scope": 4
+					}
+				],
+				"portlets": [
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+					},
+					{
+						"layoutColumnId": "column-2",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_speedwell"
+					},
+					{
+						"layoutColumnId": "column-3",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet"
+					}
+				],
+				"privateLayout": false
+			},
+			{
+				"layoutTemplateId": "speedwell_account",
+				"name": "Login & Security",
+				"permissions": [
+					{
+						"actionIds": [
+						],
+						"roleName": "Guest",
+						"scope": 4
+					},
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "User",
+						"scope": 4
+					}
+				],
+				"portlets": [
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+					},
+					{
+						"layoutColumnId": "column-2",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_speedwell"
+					},
+					{
+						"layoutColumnId": "column-3",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_commerce_account_web_internal_portlet_CommerceAccountPortlet"
+					}
+				],
+				"privateLayout": false
+			},
+			{
+				"layoutTemplateId": "speedwell_account",
+				"name": "My Addresses",
+				"permissions": [
+					{
+						"actionIds": [
+						],
+						"roleName": "Guest",
+						"scope": 4
+					},
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "User",
+						"scope": 4
+					}
+				],
+				"portlets": [
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+					},
+					{
+						"layoutColumnId": "column-2",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_speedwell"
+					},
+					{
+						"layoutColumnId": "column-3",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_commerce_address_content_web_internal_portlet_CommerceAddressContentPortlet"
+					}
+				],
+				"privateLayout": false
+			},
+			{
+				"layoutTemplateId": "speedwell_account",
+				"name": "My Subscriptions",
+				"permissions": [
+					{
+						"actionIds": [
+						],
+						"roleName": "Guest",
+						"scope": 4
+					},
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "User",
+						"scope": 4
+					}
+				],
+				"portlets": [
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+					},
+					{
+						"layoutColumnId": "column-2",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_speedwell"
+					},
+					{
+						"layoutColumnId": "column-3",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionContentPortlet"
+					}
+				],
+				"privateLayout": false
+			},
+			{
+				"layoutTemplateId": "speedwell_account",
+				"name": "My Downloads",
+				"permissions": [
+					{
+						"actionIds": [
+						],
+						"roleName": "Guest",
+						"scope": 4
+					},
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "User",
+						"scope": 4
+					}
+				],
+				"portlets": [
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+					},
+					{
+						"layoutColumnId": "column-2",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_speedwell"
+					},
+					{
+						"layoutColumnId": "column-3",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_commerce_product_type_virtual_order_content_web_internal_portlet_CommerceVirtualOrderItemContentPortlet"
+					}
+				],
+				"privateLayout": false
+			},
+			{
+				"layoutTemplateId": "speedwell_account",
+				"name": "My Lists",
+				"permissions": [
+					{
+						"actionIds": [
+						],
+						"roleName": "Guest",
+						"scope": 4
+					},
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "User",
+						"scope": 4
+					}
+				],
+				"portlets": [
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+					},
+					{
+						"layoutColumnId": "column-2",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_speedwell"
+					},
+					{
+						"layoutColumnId": "column-3",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_commerce_wish_list_web_internal_portlet_MyCommerceWishListsPortlet"
+					},
+					{
+						"layoutColumnId": "column-3",
+						"layoutColumnPos": 1,
+						"portletName": "com_liferay_commerce_wish_list_web_internal_portlet_CommerceWishListContentPortlet"
+					}
+				],
+				"privateLayout": false
+			},
+			{
+				"hidden": true,
+				"layoutTemplateId": "speedwell_account",
+				"name": "My Payment Methods",
+				"permissions": [
+					{
+						"actionIds": [
+						],
+						"roleName": "Guest",
+						"scope": 4
+					},
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "User",
+						"scope": 4
+					}
+				],
+				"portlets": [
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+					},
+					{
+						"layoutColumnId": "column-2",
+						"layoutColumnPos": 0,
+						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_speedwell"
+					}
+				],
+				"privateLayout": false
+			}
+		]
+	},
+	{
+		"icon": "icon_orders.png",
+		"layoutTemplateId": "1_column",
+		"name": "My Cart",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentPortlet"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 1,
+				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet"
+			}
+		],
+		"privateLayout": false
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "1_column",
+		"name": "Product Detail",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet_INSTANCE_speedwell"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 1,
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet_INSTANCE_speedwell",
+				"portletPreferences": {
+					"cpContentListRendererKey": "list-minium",
+					"dataSource": "assetCategoriesAndTagsDataSource",
+					"grouped--cpTypeListEntryRendererKey": "list-entry-minium",
+					"renderSelection": "custom",
+					"selectionStyle": "dataSource",
+					"simple--cpTypeListEntryRendererKey": "list-entry-minium",
+					"virtual--cpTypeListEntryRendererKey": "list-entry-minium"
+				}
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 2,
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet_INSTANCE_product_detail"
+			}
+		],
+		"privateLayout": false
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "1_column",
+		"name": "Checkout",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
+			}
+		],
+		"privateLayout": false
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "1_column",
+		"name": "Compare",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet_INSTANCE_speedwell"
+			}
+		],
+		"privateLayout": false
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "1_2_columns_i",
+		"name": "Search",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet_INSTANCE_speedwell"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 1,
+				"portletName": "com_liferay_portal_search_web_suggestions_portlet_SuggestionsPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 1,
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 2,
+				"portletName": "com_liferay_portal_search_web_site_facet_portlet_SiteFacetPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 3,
+				"portletName": "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 4,
+				"portletName": "com_liferay_portal_search_web_tag_facet_portlet_TagFacetPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 5,
+				"portletName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 6,
+				"portletName": "com_liferay_portal_search_web_folder_facet_portlet_FolderFacetPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 7,
+				"portletName": "com_liferay_portal_search_web_user_facet_portlet_UserFacetPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 8,
+				"portletName": "com_liferay_portal_search_web_modified_facet_portlet_ModifiedFacetPortlet"
+			},
+			{
+				"layoutColumnId": "column-3",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+			},
+			{
+				"layoutColumnId": "column-3",
+				"layoutColumnPos": 1,
+				"portletName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet",
+				"portletPreferences": {
+					"allowEmptySearches": "true"
+				}
+			}
+		],
+		"privateLayout": false
+	}
+]

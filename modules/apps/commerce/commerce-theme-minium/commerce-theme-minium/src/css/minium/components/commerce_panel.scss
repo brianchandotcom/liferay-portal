@@ -1,0 +1,45 @@
+.commerce-panel {
+	color: $color-fg;
+	margin-bottom: $lg-gutter;
+
+	&__title {
+		@include panel-title;
+	}
+
+	&__content {
+		@include panel-body;
+
+		& + & {
+			margin-top: 5px;
+		}
+	}
+
+	&__tabs {
+		background-color: $color-bg;
+		border-radius: 8px;
+		height: $frame-size;
+
+		.nav {
+			height: 100%;
+		}
+	}
+
+	.specification-list {
+		display: grid;
+		grid-gap: 0 20px;
+		grid-template-columns: auto 1fr;
+		grid-template-rows: 1fr;
+
+		.specification-desc {
+			margin-bottom: 0;
+
+			.lexicon-icon-shortcut {
+				display: none;
+			}
+		}
+
+		@media all and (-ms-high-contrast: none) {
+			display: block;
+		}
+	}
+}

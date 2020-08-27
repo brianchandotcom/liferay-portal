@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.account.service.persistence.CommerceAccountFinder.countByU_P">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceAccount.commerceAccountId) AS COUNT_VALUE
+			FROM
+				User_
+			LEFT JOIN
+				CommerceAccountUserRel ON
+					CommerceAccountUserRel.commerceAccountUserId = User_.userId
+			LEFT JOIN
+				CommerceAccountOrganizationRel ON
+					CommerceAccountOrganizationRel.organizationId IN ([$ORGANIZATION_IDS$])
+			LEFT JOIN
+				CommerceAccount ON
+					(CommerceAccount.commerceAccountId = CommerceAccountUserRel.commerceAccountId) OR
+					(CommerceAccount.commerceAccountId = CommerceAccountOrganizationRel.commerceAccountId)
+			WHERE
+				[$PARENT_ACCOUNT_ID$]
+				(User_.userId = [$USER_ID$]) AND
+				(CommerceAccount.type_ != 0) AND
+				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.account.service.persistence.CommerceAccountFinder.findByU_P">
+		<![CDATA[
+			SELECT
+				DISTINCT {CommerceAccount.*}
+			FROM
+				User_
+			LEFT JOIN
+				CommerceAccountUserRel ON
+					CommerceAccountUserRel.commerceAccountUserId = User_.userId
+			LEFT JOIN
+				CommerceAccountOrganizationRel ON
+					CommerceAccountOrganizationRel.organizationId IN ([$ORGANIZATION_IDS$])
+			LEFT JOIN
+				CommerceAccount ON
+					(CommerceAccount.commerceAccountId = CommerceAccountUserRel.commerceAccountId) OR
+					(CommerceAccount.commerceAccountId = CommerceAccountOrganizationRel.commerceAccountId)
+			WHERE
+				[$PARENT_ACCOUNT_ID$]
+				(User_.userId = [$USER_ID$]) AND
+				(CommerceAccount.type_ != 0) AND
+				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.account.service.persistence.CommerceAccountFinder.findByU_C">
+		<![CDATA[
+			SELECT
+				DISTINCT {CommerceAccount.*}
+			FROM
+				User_
+			LEFT JOIN
+				CommerceAccountUserRel ON
+					CommerceAccountUserRel.commerceAccountUserId = User_.userId
+			LEFT JOIN
+				CommerceAccountOrganizationRel ON
+					CommerceAccountOrganizationRel.organizationId IN ([$ORGANIZATION_IDS$])
+			LEFT JOIN
+				CommerceAccount ON
+					(CommerceAccount.commerceAccountId = CommerceAccountUserRel.commerceAccountId) OR
+					(CommerceAccount.commerceAccountId = CommerceAccountOrganizationRel.commerceAccountId)
+			WHERE
+				(User_.userId = [$USER_ID$]) AND
+				(CommerceAccount.type_ != 0) AND
+				(CommerceAccount.commerceAccountId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupFinder.findAccountUserIdsFromAccountGroupIds">
+		<![CDATA[
+			SELECT
+				CommerceAccountUserRel.commerceAccountUserId
+			FROM
+				CommerceAccountUserRel
+			INNER JOIN
+				CAccountGroupCAccountRel ON
+					CAccountGroupCAccountRel.commerceAccountId = CommerceAccountUserRel.commerceAccountId
+			WHERE
+				CAccountGroupCAccountRel.commerceAccountGroupId IN ([$ACCOUNT_GROUP_IDS$])
+		]]>
+	</sql>
+</custom-sql>

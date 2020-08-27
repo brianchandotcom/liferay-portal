@@ -1,0 +1,108 @@
+.category-page {
+	&__head {
+		background-position: center;
+		background-size: 100% auto;
+		box-sizing: border-box;
+		color: $color-bg;
+		height: 300px;
+		margin-bottom: 35px;
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+
+		.portlet-commerce-category-content {
+			.category-detail {
+				height: 300px !important;
+
+				.category-image {
+					height: 100%;
+					position: relative;
+
+					&::after {
+						background: linear-gradient(
+							180deg,
+							rgba(53, 53, 53, 0.2) 0%,
+							$stroke 100%
+						);
+						content: '';
+						height: 100%;
+						position: absolute;
+						width: 100%;
+					}
+
+					img {
+						height: auto;
+						position: absolute;
+						top: 50%;
+						transform: translateY(-25%);
+						width: 100%;
+					}
+				}
+
+				.container-fluid {
+					align-items: center;
+					display: flex;
+					height: 100%;
+					left: 0;
+					padding: 115px 100px 100px;
+					position: absolute;
+					top: 0;
+					width: 100%;
+
+					.category {
+						&-title {
+							font-size: 36px;
+							font-weight: 400;
+						}
+
+						&-description {
+							font-size: 20px;
+							font-weight: 300;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.panel {
+		&-title {
+			font-weight: bold !important;
+			text-transform: uppercase;
+
+			.collapse-icon {
+				svg path {
+					fill: $stroke;
+					stroke: $stroke;
+					stroke-width: 24px;
+					transform: scale(0.7, 0.7);
+				}
+			}
+		}
+
+		&-collapse {
+			$panelClearButton: '.panel-body form > a.text-default';
+
+			#{$panelClearButton} {
+				color: $color-fg-alt;
+				display: none;
+				font-size: 12px;
+				font-weight: bold;
+				position: absolute;
+				right: 35px;
+				text-decoration: none;
+				top: 8px;
+
+				small {
+					font-size: 90%;
+				}
+			}
+
+			&.show {
+				#{$panelClearButton} {
+					display: inline;
+				}
+			}
+		}
+	}
+}

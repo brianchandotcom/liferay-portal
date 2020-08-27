@@ -1,0 +1,27 @@
+.commerce-search {
+	align-items: center;
+	display: flex;
+
+	&__input {
+		width: 100%;
+
+		input {
+			background: transparent;
+			border: 0;
+			color: currentColor;
+			width: 100%;
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+
+	&__button {
+		display: none;
+	}
+}
+
+#search-bar {
+	flex-grow: 1;
+}

@@ -1,0 +1,29 @@
+[
+	{
+		"name": "All Products",
+		"type": "all-products",
+		"userSegments": [
+			"user"
+		]
+	},
+	{
+		"assetCategories": [
+			"Transmission",
+			"Suspension",
+			"Exhaust System",
+			"Engine",
+			"Brake System"
+		],
+		"name": "All Except Turbochargers",
+		"type": "category",
+		"typeSettings": [
+			{
+				"name": "orSearch",
+				"value": "true"
+			}
+		],
+		"userSegments": [
+			"Geography - Italy"
+		]
+	}
+]

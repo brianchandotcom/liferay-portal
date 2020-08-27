@@ -1,0 +1,47 @@
+#minium {
+	.panel {
+		background-color: transparent;
+		border: 0;
+
+		.list-unstyled {
+			margin-bottom: 0;
+		}
+	}
+
+	.panel-heading,
+	.panel-body {
+		background-color: white;
+		border-radius: 8px;
+	}
+
+	.panel-group + .panel-group {
+		margin-top: $lg-gutter;
+	}
+
+	.panel-heading .panel-title {
+		@include panel-title;
+
+		.collapse-icon {
+			padding: 0;
+		}
+	}
+
+	.panel-body {
+		@include panel-body;
+	}
+
+	.asset-type .facet-checkbox-label {
+		color: #7f848d;
+		font-size: 13px;
+		font-weight: 400;
+		line-height: 1.6;
+		padding-left: 25px;
+		position: relative;
+
+		input[type='checkbox'] {
+			left: 0;
+			position: absolute;
+			top: 2px;
+		}
+	}
+}

@@ -1,0 +1,53 @@
+definition {
+
+	macro selectAlleEntries {
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
+
+		SelectFrameTop(value1 = "relative=top");
+	}
+
+	macro selectEntry {
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		Click(
+			key_entryName = "${entryName}",
+			locator1 = "CommerceNavigation#SINGLE_ENTRY_CHECKBOX");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
+
+		SelectFrameTop(value1 = "relative=top");
+	}
+
+	macro uploadSingleFile {
+		var key_uploadFileName = "${uploadFileName}";
+
+		SelectFrameTop(value1 = "relative=top");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		AssertClick(
+			locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE",
+			value1 = "Select File");
+
+		SikuliUploadCommonFile(
+			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+			value1 = "${uploadFileName}");
+
+		AssertTextEquals(
+			locator1 = "ItemSelector#FILE_UPLOAD_CAPTION",
+			value1 = "${uploadFileName}");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
+
+		AssertClick(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
+
+		SelectFrameTop(value1 = "relative=top");
+	}
+
+}

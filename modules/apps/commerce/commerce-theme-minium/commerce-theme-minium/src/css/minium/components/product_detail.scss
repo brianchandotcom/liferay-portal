@@ -1,0 +1,10 @@
+.product-detail {
+	p {
+		line-height: 22px;
+		margin-bottom: 20px;
+	}
+
+	&__actions {
+		margin: $gutter 0 $lg-gutter;
+	}
+}

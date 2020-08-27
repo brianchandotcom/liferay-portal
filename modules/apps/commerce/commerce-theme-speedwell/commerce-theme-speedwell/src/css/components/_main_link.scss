@@ -1,0 +1,34 @@
+.main-link {
+	color: currentColor;
+	font-size: 14px;
+	font-weight: 600;
+	margin: 0 20px;
+	position: relative;
+
+	&:hover {
+		color: currentColor;
+		text-decoration: none;
+	}
+
+	&:hover::after,
+	&.is-active::after {
+		color: $color-theme;
+		content: '>>';
+		font-size: 20px;
+		font-weight: bolder;
+		height: 10px;
+		left: 50%;
+		letter-spacing: -14px;
+		line-height: 10px;
+		margin-left: -5px;
+		position: absolute;
+		text-shadow: 0 0 0 #30cfa1;
+		top: 100%;
+		transform: rotateZ(90deg) scale(0.4, 0.9);
+		width: 10px;
+	}
+
+	@media (max-width: $bp-small) {
+		margin: 20px 0;
+	}
+}

@@ -1,0 +1,116 @@
+@import './minium/minium';
+
+// inject:imports
+
+// ---------- endinject ----------
+
+html {
+	background-color: $color-bg-alt;
+	height: 100%;
+
+	.dropdown-menu {
+		z-index: 999;
+	}
+}
+
+#minium {
+	transition: padding ease 500ms;
+
+	body.has-control-menu.signed-in & {
+		.minium-frame__sidebar,
+		.minium-frame__topbar {
+			top: $liferay-topbar-size;
+
+			@media screen and (hover: none) {
+				top: auto;
+			}
+
+			@media screen and (max-width: $bp-xsmall) {
+				top: $liferay-topbar-size-small;
+			}
+		}
+
+		.minium-frame__toolbar {
+			margin-top: $liferay-topbar-size;
+			@media screen and (max-width: $bp-xsmall) {
+				margin-top: $liferay-topbar-size-small;
+			}
+		}
+	}
+
+	body.has-control-menu.signed-in.has-edit-mode-menu & {
+		.minium-frame__sidebar,
+		.minium-frame__toolbar,
+		.minium-frame__topbar {
+			display: none;
+		}
+	}
+
+	body.open & {
+		.minium-frame__overlay,
+		.minium-frame__sidebar,
+		.minium-frame__toolbar,
+		.minium-frame__topbar {
+			left: 320px;
+		}
+	}
+
+	body.open-admin-panel & {
+		.minium-frame__overlay,
+		.minium-frame__toolbar,
+		.minium-frame__topbar {
+			right: 320px;
+		}
+	}
+
+	input[type='checkbox'] {
+		-webkit-appearance: none;
+		background: #fff;
+		border: 2px solid rgba(157, 158, 158, 0.5);
+		border-radius: 4px;
+		height: 16px;
+		position: relative;
+		width: 16px;
+
+		&::after {
+			border-bottom: 2px solid $color-theme;
+			border-left: 2px solid $color-theme;
+			content: '';
+			height: 5px;
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -63%) rotate(-45deg) scale(0);
+			transition: all $micro-transition;
+			width: 8px;
+		}
+
+		&:checked {
+			border-color: $color-theme;
+
+			&::after {
+				transform: translate(-50%, -63%) rotate(-45deg) scale(1);
+			}
+		}
+	}
+
+	.card.fragments-editor__drag-source {
+		position: relative;
+	}
+
+	.container-fluid-max-xl {
+		max-width: initial;
+	}
+
+	.form-group-inline {
+		margin-bottom: 0;
+	}
+
+	.page-header {
+		border-radius: 8px;
+	}
+}
+
+#wrapper {
+	padding-top: 0;
+}

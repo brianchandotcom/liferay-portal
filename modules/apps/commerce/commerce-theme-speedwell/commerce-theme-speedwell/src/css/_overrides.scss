@@ -1,0 +1,50 @@
+#speedwell .panel-group {
+	border: 0;
+	border-radius: 0;
+
+	.panel {
+		border: 0;
+	}
+
+	.panel-title {
+		font-size: 14px;
+		font-style: normal;
+		font-weight: normal;
+	}
+
+	.panel-body {
+		font-size: 12px;
+	}
+}
+
+.search-bar-keywords-input-wrapper {
+	margin-left: 0;
+}
+
+.btn-primary.btn-default,
+.btn-primary.btn-default:hover,
+.btn-primary.btn-default:active {
+	background-color: $color-theme;
+	border: 0;
+}
+
+.multi-step-item.active .multi-step-icon,
+body .multi-step-item.active .multi-step-divider,
+body .multi-step-item.success-page.complete .multi-step-divider {
+	background-color: $color-theme;
+}
+
+.image-name-cell-label {
+	align-items: center;
+	display: flex;
+
+	img {
+		margin-right: 10px;
+		width: 80px;
+	}
+}
+
+.control-menu .btn.btn-monospaced {
+	height: 2rem !important;
+	width: 2rem !important;
+}

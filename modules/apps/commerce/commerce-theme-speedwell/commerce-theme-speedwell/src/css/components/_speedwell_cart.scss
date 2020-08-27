@@ -1,0 +1,153 @@
+#speedwell .mini-cart {
+	top: $topbar-height;
+
+	&:not(.is-open) {
+		height: $topbar-height;
+		width: $topbar-height;
+	}
+
+	.signed-in &.is-open {
+		height: calc(100vh - #{$liferay-topbar-height});
+	}
+
+	&-header {
+		background-color: transparent;
+
+		&-actions .btn-outline {
+			&-success {
+				color: $color-theme;
+
+				&:hover {
+					background: $color-theme;
+					color: $color-bg;
+				}
+			}
+
+			&-danger {
+				color: $color-mood-bad;
+
+				&:hover {
+					background-color: $color-mood-bad;
+					color: $color-bg;
+				}
+			}
+		}
+
+		&-title {
+			visibility: hidden;
+		}
+	}
+
+	&-items-list {
+		.mini-cart-header-block {
+			background-color: $stroke;
+			color: $stroke-alt;
+
+			.action {
+				color: $stroke-alt;
+				font-weight: 600;
+				text-transform: capitalize;
+			}
+		}
+
+		.summary-table {
+			color: $stroke;
+			margin: 0;
+			padding: 16px;
+		}
+	}
+
+	&-item {
+		&-errors,
+		.price-value-discount,
+		.price-value-final,
+		.price-value-promo {
+			color: $color-mood-bad;
+		}
+
+		&-delete {
+			margin: 25px 0;
+		}
+
+		&-quantity {
+			.btn {
+				border: 0;
+				border-radius: 4px;
+				font-size: 16px;
+				height: 40px;
+				width: auto;
+			}
+
+			input,
+			select {
+				background-color: transparent;
+				border: 2px solid $color-border;
+				border-radius: 4px;
+				height: 40px;
+				margin: 0 auto;
+			}
+		}
+
+		.item-name {
+			font-size: 14px;
+			font-weight: 600;
+		}
+
+		.item-sku {
+			font-size: 0.9em;
+		}
+
+		.options {
+			font-size: 12px;
+			font-weight: 600;
+		}
+	}
+
+	&-opener {
+		height: $topbar-height;
+		width: $topbar-height;
+	}
+
+	&-opener,
+	&-wrapper {
+		top: -#{$topbar-height};
+	}
+
+	&-wrapper {
+		box-shadow: -10px $topbar-height 20px -10px rgba(0, 0, 0, 0.3);
+	}
+
+	&-opener::before {
+		background-color: $color-theme;
+	}
+
+	&-close {
+		background-color: $stroke;
+		color: $stroke-alt;
+		height: 80px;
+		outline: 1px solid $stroke;
+		position: absolute;
+		right: 0;
+		width: 80px;
+	}
+
+	&-submit {
+		padding: 0;
+
+		.btn {
+			background-color: $color-theme;
+			border: 0;
+			border-radius: 0;
+			box-sizing: border-box;
+			color: $color-bg-alt;
+			font-size: 12px;
+			font-weight: 600;
+			padding: 15px;
+			text-transform: capitalize;
+
+			&:disabled {
+				border-color: transparent;
+			}
+		}
+	}
+}

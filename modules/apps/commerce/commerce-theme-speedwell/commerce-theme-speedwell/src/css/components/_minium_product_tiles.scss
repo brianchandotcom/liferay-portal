@@ -1,0 +1,33 @@
+.minium-product-tiles {
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	margin-bottom: 20px;
+
+	@media only screen and (max-width: $bp-small) {
+		grid-gap: 15px;
+		grid-template-columns: repeat(auto-fill, minmax(150px, 0.5fr));
+	}
+
+	@media only screen and (min-width: 768px) and (max-width: 1024px) {
+		grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+	}
+
+	@media all and (-ms-high-contrast: none) {
+		display: flex;
+		flex-wrap: wrap;
+
+		&::before,
+		&::after {
+			content: '';
+			order: 100;
+		}
+
+		&::before,
+		&::after,
+		&__item {
+			flex: 1 1 250px;
+			margin: 0 20px 20px 0;
+		}
+	}
+}

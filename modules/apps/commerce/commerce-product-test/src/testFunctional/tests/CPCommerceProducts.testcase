@@ -1,0 +1,183 @@
+@component-name = "portal-commerce"
+definition {
+
+	property osgi.app.includes = "commerce";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-commerce-license-li");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Pause(locator1 = "5000");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown(userScreenName = "buyer");
+
+			CommerceConfiguration.commerceInitializersTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+	test ProductPublishing {
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceProducts#ProductPublishing";
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Options");
+
+		Pause(locator1 = "2000");
+
+		CPCommerceCatalog.newOptionsEntry(
+			optionDescription = "Option Description",
+			optionFieldType = "Select from List",
+			optionName = "Color",
+			optionValuesList = "Black,Blue,White",
+			valuePriority = "1");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "Color",
+			title = "Add Option");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceSKUs.addSKU(optionValuesList = "Black:10.0,Blue:20.0,White:30.0");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+		CommerceProductImages.addProductImages(optionValuesList = "Black,Blue,White");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
+
+		CommerceEntry.createNewSpecificationGroups(
+			specificationDescription = "SpecificationGroups",
+			specificationTitle = "SpecificationGroups");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+
+		CommerceEntry.createNewSpecificationLabels(
+			specificationDescription = "SpecificationLabel",
+			specificationGroupTitle = "SpecificationGroups",
+			specificationTitle = "SpecificationLabel");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "SpecificationLabel",
+			title = "Specifications");
+
+		Refresh();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+		CommerceEntry.viewProductOptions(
+			optionList = "Black,Blue,White",
+			optionName = "Color");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceEntry.viewProductSkus(skusList = "WHITESKU:30.00,BLUESKU:20.00,BLACKSKU:10.00");
+	}
+
+	test TranslateProductName {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceProducts#TranslateProductName";
+
+		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
+
+		ProductMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Control Panel",
+			portlet = "Products");
+
+		CommerceNavigator.searchEntry(entryName = "Shock Absorber");
+
+		CommerceNavigator.gotoEntry(entryName = "Shock Absorber");
+
+		PortletEntry.changeLocale(
+			fieldName = "Name",
+			locale = "es-ES");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "Amortiguador");
+
+		Button.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		CommerceAcceleratorsInitializer.addPortlet(portletName = "Language Selector");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "es_ES",
+			textIcon = "español-España");
+
+		CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Amortiguador");
+
+		CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "U-Joint");
+
+		CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Transmission Cooler Line Assembly");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "en_US",
+			textIcon = "English-United States");
+	}
+
+}

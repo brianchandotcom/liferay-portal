@@ -1,0 +1,82 @@
+.product-gallery {
+	.arrow {
+		background-image: linear-gradient(
+			to right,
+			rgba(0, 0, 0, 0.4),
+			transparent 50%
+		);
+		background-position: 99%;
+		background-size: 200%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		transition: all ease 100ms;
+		width: 20%;
+
+		&:hover {
+			background-position: 0%;
+		}
+
+		&.next {
+			cursor: e-resize;
+			right: 0;
+			transform: rotate(180deg);
+		}
+
+		&.prev {
+			cursor: w-resize;
+			left: 0;
+		}
+	}
+
+	.card {
+		position: relative;
+	}
+
+	.gallery-overlay {
+		background: #fff;
+		cursor: zoom-out;
+		height: 100vh;
+		left: 0;
+		position: fixed;
+		top: 0;
+		width: 100vw;
+		z-index: 10000;
+
+		img {
+			left: 50%;
+			max-height: 100%;
+			max-width: 100%;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	.gallery-thumbnails {
+		display: grid;
+		grid-gap: 10px;
+		grid-template-columns: repeat(100, 75px);
+		overflow-x: auto;
+	}
+
+	.loading-animation {
+		background-color: rgba(255, 255, 255, 0.75);
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+
+		&::after {
+			left: 50%;
+			margin: -0.5em 0 0 -0.5em;
+			top: 50%;
+		}
+	}
+
+	.main-image {
+		cursor: zoom-in;
+		position: relative;
+	}
+}

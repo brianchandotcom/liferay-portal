@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder.countByC_C">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceChannelRel.commerceChannelRelId) AS COUNT_VALUE
+			FROM
+				CommerceChannelRel
+			JOIN
+				CommerceChannel ON
+					CommerceChannelRel.commerceChannelId = CommerceChannel.commerceChannelId
+			WHERE
+				(CommerceChannelRel.classNameId = ?) AND
+				(CommerceChannelRel.classPK = ?) AND
+				(LOWER(CommerceChannel.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder.findByC_C">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceChannelRel.*
+			FROM
+				CommerceChannelRel
+			JOIN
+				CommerceChannel ON
+					CommerceChannelRel.commerceChannelId = CommerceChannel.commerceChannelId
+			WHERE
+				(CommerceChannelRel.classNameId = ?) AND
+				(CommerceChannelRel.classPK = ?) AND
+				(LOWER(CommerceChannel.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder.findByExpirationDate">
+		<![CDATA[
+			SELECT
+				CPAttachmentFileEntry.*
+			FROM
+				CPAttachmentFileEntry
+			WHERE
+				(CPAttachmentFileEntry.expirationDate < ?) AND
+				(CPAttachmentFileEntry.expirationDate IS NOT NULL) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.countByG_P_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CPDefinition.CPDefinitionId) AS COUNT_VALUE
+			FROM
+				CPDefinition
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
+				(CPDefinitionLocalization.languageId = ?)
+			WHERE
+				(CPDefinition.groupId = ?) AND
+				(CPDefinition.productTypeName = ?) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.findByExpirationDate">
+		<![CDATA[
+			SELECT
+				CPDefinition.*
+			FROM
+				CPDefinition
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
+				CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId
+			WHERE
+				(CPDefinition.expirationDate < ?) AND
+				(CPDefinition.expirationDate IS NOT NULL) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.findByG_P_S">
+		<![CDATA[
+			SELECT
+				CPDefinition.*
+			FROM
+				CPDefinition
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
+				(CPDefinitionLocalization.languageId = ?)
+			WHERE
+				(CPDefinition.groupId = ?) AND
+				(CPDefinition.productTypeName = ?) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPInstanceFinder.findByExpirationDate">
+		<![CDATA[
+			SELECT
+				CPInstance.*
+			FROM
+				CPInstance
+			WHERE
+				(CPInstance.expirationDate < ?) AND
+				(CPInstance.expirationDate IS NOT NULL) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelFinder.findByCPDefinitionId">
+		<![CDATA[
+			SELECT
+				CPInstanceOptionValueRel.*
+			FROM
+				CPInstanceOptionValueRel
+			INNER JOIN
+				CPInstance
+			ON
+				(CPInstanceOptionValueRel.cpInstanceId = CPInstance.cpInstanceId) AND
+				(CPInstance.cpDefinitionId = ?) AND
+				(CPInstance.status = ?)
+			ORDER BY
+				CPInstanceOptionValueRel.cpInstanceId
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPTaxCategoryFinder.countCPTaxCategoriesByCompanyId">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				CPTaxCategory
+			WHERE
+				(CPTaxCategory.companyId = [$COMPANY_ID$]) AND
+				(LOWER(CPTaxCategory.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPTaxCategoryFinder.findCPTaxCategoriesByCompanyId">
+		<![CDATA[
+			SELECT
+				CPTaxCategory.*
+			FROM
+				CPTaxCategory
+			WHERE
+				(CPTaxCategory.companyId = [$COMPANY_ID$]) AND
+				(LOWER(CPTaxCategory.name) LIKE ? [$AND_OR_NULL_CHECK$])
+			ORDER BY
+				CPTaxCategory.name
+		]]>
+	</sql>
+</custom-sql>

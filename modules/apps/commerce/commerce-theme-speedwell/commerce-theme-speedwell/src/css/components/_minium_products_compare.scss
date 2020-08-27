@@ -1,0 +1,100 @@
+.minium-products-compare {
+	background: white;
+	border-top: 1px solid #e7e7e7;
+	display: flex;
+	justify-content: center;
+	padding: 15px;
+	width: 100%;
+
+	&__item {
+		border: 2px dotted #d8d8d8;
+		height: 50px;
+		margin-right: 20px;
+		position: relative;
+		transition: border 0.3s ease-in;
+		width: 50px;
+
+		@media screen and (hover: none) {
+			margin-right: 10px;
+		}
+
+		&--showing,
+		&--visible {
+			border: 0 dotted #d8d8d8;
+		}
+
+		&--hiding,
+		&--hidden {
+			border: 2px dotted #d8d8d8;
+		}
+	}
+
+	&__button {
+		background-color: $stroke;
+	}
+
+	&__thumbnail {
+		background-position: 50% 50%;
+		background-size: cover;
+		display: block;
+		height: 100%;
+		left: 0;
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		transform: scale(0.6);
+		transition: all 0.1s ease-in;
+		width: 100%;
+
+		&--showing,
+		&--visible {
+			opacity: 1;
+			transform: scale(1);
+		}
+
+		&--hiding,
+		&--hidden {
+			opacity: 0;
+			transform: scale(0.6);
+		}
+	}
+
+	&__delete {
+		background: #f1676a;
+		border-radius: 50%;
+		color: white;
+		cursor: pointer;
+		font-size: 0.75rem;
+		height: 18px;
+		left: -9px;
+		line-height: 1.1;
+		position: absolute;
+		top: 9px;
+		transform: scale(0);
+		transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		transition-delay: 0.2s;
+		width: 18px;
+		z-index: 10;
+
+		&--showing,
+		&--visible {
+			transform: scale(1);
+		}
+
+		&--hiding,
+		&--hidden {
+			transform: scale(0);
+			transition-delay: 0s;
+		}
+
+		[class*='-icon'] {
+			left: 2px;
+			position: relative;
+			top: 3px;
+		}
+
+		path {
+			fill: rgba(255, 255, 255, 0.9);
+		}
+	}
+}

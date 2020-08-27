@@ -1,0 +1,113 @@
+.commerce-catalog {
+	@media only screen and (max-width: $bp-small) {
+		#column-1 {
+			background-color: white;
+			height: 100vh;
+			left: 0;
+			opacity: 0;
+			overflow: hidden;
+			overflow-y: auto;
+			padding: $topbar-height-small 24px 24px;
+			position: fixed;
+			top: 0;
+			transform: translateX(100%);
+			transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+			transition-delay: 300ms;
+			width: 100%;
+			z-index: 998;
+
+			.portlet {
+				margin: 20px 0;
+			}
+		}
+
+		#column-2 {
+			padding: 15px 0 0;
+		}
+
+		.mobile-filters {
+			&-header {
+				background-color: white;
+				border-bottom: 1px solid $color-mood-bad-bg;
+				height: $topbar-height-small;
+				left: 0;
+				line-height: $topbar-height-small;
+				position: absolute;
+				text-align: center;
+				top: 0;
+				width: 100%;
+
+				.title {
+					font-size: 20px;
+					line-height: $topbar-height-small;
+				}
+
+				.close-button {
+					color: black;
+					font-weight: bolder;
+					height: 70px;
+					line-height: 70px;
+					pointer-events: all;
+					position: absolute;
+					right: 0;
+					text-align: center;
+					top: 0;
+					width: 70px;
+					z-index: 999;
+				}
+			}
+
+			&-button {
+				background-color: #2a2a2a;
+				border-radius: 50%;
+				bottom: 3%;
+				box-shadow: 5px 5px 20px 4px rgba(0, 0, 0, 0.3);
+				height: 65px;
+				position: fixed;
+				right: 5%;
+				transform: scale3d(1, 1, 1);
+				transition: transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+				width: 65px;
+				z-index: 988;
+
+				&.is-behind {
+					z-index: 987;
+				}
+
+				.filters-icon {
+					animation: backInPlace 0.2s ease-out 1 forwards;
+					animation-delay: 0.2s;
+					line-height: 72px;
+					opacity: 0;
+					text-align: center;
+
+					@keyframes backInPlace {
+						to {
+							opacity: 1;
+						}
+					}
+				}
+
+				&.is-open {
+					background-color: white;
+					transform: scale3d(25, 25, 1);
+					transition: transform 0.4s ease-out,
+						background-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+					box-shadow: none;
+
+					.filters-icon {
+						display: none;
+					}
+
+					& ~ .row #column-1 {
+						opacity: 1;
+						transform: translateX(0);
+						transition: opacity 0.3s
+							cubic-bezier(0.165, 0.84, 0.44, 1);
+						transition-delay: 300ms;
+					}
+				}
+			}
+		}
+	}
+}

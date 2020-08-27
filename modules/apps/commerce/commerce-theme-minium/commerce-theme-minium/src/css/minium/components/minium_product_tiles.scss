@@ -1,0 +1,28 @@
+.minium-product-tiles {
+	display: grid;
+	grid-gap: $gutter;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	margin-bottom: $gutter;
+
+	@media (max-width: 1024px) {
+		grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+	}
+
+	@media all and (-ms-high-contrast: none) {
+		display: flex;
+		flex-wrap: wrap;
+
+		&::before,
+		&::after {
+			content: '';
+			order: 100;
+		}
+
+		&::before,
+		&::after,
+		&__item {
+			flex: 1 1 250px;
+			margin: 0 20px 20px 0;
+		}
+	}
+}

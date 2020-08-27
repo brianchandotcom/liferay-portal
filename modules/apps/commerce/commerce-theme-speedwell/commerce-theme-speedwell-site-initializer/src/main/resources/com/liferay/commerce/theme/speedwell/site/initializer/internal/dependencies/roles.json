@@ -1,0 +1,21 @@
+[
+	{
+		"actions": [
+			{
+				"actionIds": [
+					"MANAGE_AVAILABLE_ACCOUNTS"
+				],
+				"resource": "90"
+			},
+			{
+				"actionIds": [
+					"MANAGE_ORGANIZATIONS"
+				],
+				"resource": "com.liferay.commerce.account.model.CommerceAccount"
+			}
+		],
+		"name": "Sales Agent",
+		"scope": 1,
+		"type": 1
+	}
+]

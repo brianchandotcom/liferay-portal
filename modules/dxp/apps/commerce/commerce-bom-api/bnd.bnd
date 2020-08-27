@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Commerce BOM API
+Bundle-SymbolicName: com.liferay.commerce.bom.api
+Bundle-Version: 3.0.0
+Export-Package:\
+	com.liferay.commerce.bom.constants,\
+	com.liferay.commerce.bom.exception,\
+	com.liferay.commerce.bom.model,\
+	com.liferay.commerce.bom.permission,\
+	com.liferay.commerce.bom.search,\
+	com.liferay.commerce.bom.service,\
+	com.liferay.commerce.bom.service.persistence

@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.discount.model.CommerceDiscount">
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="commerceDiscountId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="title" type="String">
+			<validator name="required" />
+		</field>
+		<field name="target" type="String" />
+		<field name="useCouponCode" type="boolean" />
+		<field name="couponCode" type="String" />
+		<field name="usePercentage" type="boolean" />
+		<field name="maximumDiscountAmount" type="BigDecimal" />
+		<field name="level" type="String" />
+		<field name="level1" type="BigDecimal" />
+		<field name="level2" type="BigDecimal" />
+		<field name="level3" type="BigDecimal" />
+		<field name="level4" type="BigDecimal" />
+		<field name="limitationType" type="String" />
+		<field name="limitationTimes" type="int" />
+		<field name="limitationTimesPerAccount" type="int" />
+		<field name="numberOfUse" type="int" />
+		<field name="rulesConjunction" type="boolean" />
+		<field name="active" type="boolean" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.discount.model.CommerceDiscountAccountRel">
+		<field name="uuid" type="String" />
+		<field name="commerceDiscountAccountRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceAccountId" type="long" />
+		<field name="commerceDiscountId" type="long" />
+		<field name="order" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel">
+		<field name="commerceDiscountCommerceAccountGroupRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceDiscountId" type="long" />
+		<field name="commerceAccountGroupId" type="long" />
+	</model>
+	<model name="com.liferay.commerce.discount.model.CommerceDiscountRel">
+		<field name="commerceDiscountRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceDiscountId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+	</model>
+	<model name="com.liferay.commerce.discount.model.CommerceDiscountRule">
+		<field name="commerceDiscountRuleId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="commerceDiscountId" type="long" />
+		<field name="type" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.commerce.discount.model.CommerceDiscountUsageEntry">
+		<field name="commerceDiscountUsageEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceAccountId" type="long" />
+		<field name="commerceOrderId" type="long" />
+		<field name="commerceDiscountId" type="long" />
+	</model>
+</model-hints>

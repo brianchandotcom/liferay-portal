@@ -1,0 +1,58 @@
+definition {
+
+	macro addEntry {
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Products");
+
+		Click(locator1 = "Button#PLUS");
+
+		Click(
+			key_menuItem = "${productType}",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM",
+			value1 = "${key_menuItem}");
+
+		if (!(isSet(productCatalog))) {
+			var productCatalog = "Master";
+		}
+
+		CommerceEntry.addProductsEntry(
+			productCatalog = "${productCatalog}",
+			productFullDescription = "${productFullDescription}",
+			productName = "${productName}",
+			productShortDescription = "${productShortDescription}");
+	}
+
+	macro deleteEntries {
+		ClickNoError.clickNoMouseOver(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+
+		ClickNoError(locator1 = "Button#DELETE");
+
+		Confirm(value1 = "${deleteMessage}");
+	}
+
+	macro deleteProductsEntry {
+		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		CommerceEntry.clickNoError(menuItem = "Delete");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	macro moveCatalogEntriesToRecycleBin {
+		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+
+		Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
+	}
+
+	macro searchProduct {
+		Type(
+			locator1 = "CommerceNavigation#SEARCH_FIELD",
+			value1 = "${search}");
+
+		KeyPress(
+			locator1 = "CommerceNavigation#SEARCH_FIELD",
+			value1 = "\RETURN");
+	}
+
+}

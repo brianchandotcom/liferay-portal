@@ -1,0 +1,182 @@
+[
+	{
+		"code": "AN",
+		"name": "Andaman and Nicobar Islands",
+		"priority": 1
+	},
+	{
+		"code": "AP",
+		"name": "Andhra Pradesh",
+		"priority": 2
+	},
+	{
+		"code": "AR",
+		"name": "Arunachal Pradesh",
+		"priority": 3
+	},
+	{
+		"code": "AS",
+		"name": "Assam",
+		"priority": 4
+	},
+	{
+		"code": "BR",
+		"name": "Bihar",
+		"priority": 5
+	},
+	{
+		"code": "CH",
+		"name": "Chandigarh",
+		"priority": 6
+	},
+	{
+		"code": "CT",
+		"name": "Chhattisgarh",
+		"priority": 7
+	},
+	{
+		"code": "DN",
+		"name": "Dadra and Nagar Haveli",
+		"priority": 8
+	},
+	{
+		"code": "DD",
+		"name": "Daman and Diu",
+		"priority": 9
+	},
+	{
+		"code": "DL",
+		"name": "Delhi",
+		"priority": 10
+	},
+	{
+		"code": "GA",
+		"name": "Goa",
+		"priority": 11
+	},
+	{
+		"code": "GJ",
+		"name": "Gujarat",
+		"priority": 12
+	},
+	{
+		"code": "HR",
+		"name": "Haryana",
+		"priority": 13
+	},
+	{
+		"code": "HP",
+		"name": "Himachal Pradesh",
+		"priority": 14
+	},
+	{
+		"code": "JK",
+		"name": "Jammu and Kashmir",
+		"priority": 15
+	},
+	{
+		"code": "JH",
+		"name": "Jharkhand",
+		"priority": 16
+	},
+	{
+		"code": "KA",
+		"name": "Karnataka",
+		"priority": 17
+	},
+	{
+		"code": "KL",
+		"name": "Kerala",
+		"priority": 18
+	},
+	{
+		"code": "LD",
+		"name": "Lakshadweep",
+		"priority": 19
+	},
+	{
+		"code": "MP",
+		"name": "Madhya Pradesh",
+		"priority": 20
+	},
+	{
+		"code": "MH",
+		"name": "Maharashtra",
+		"priority": 21
+	},
+	{
+		"code": "MN",
+		"name": "Manipur",
+		"priority": 22
+	},
+	{
+		"code": "ML",
+		"name": "Meghalaya",
+		"priority": 23
+	},
+	{
+		"code": "MZ",
+		"name": "Mizoram",
+		"priority": 24
+	},
+	{
+		"code": "NL",
+		"name": "Nagaland",
+		"priority": 25
+	},
+	{
+		"code": "OR",
+		"name": "Odisha",
+		"priority": 26
+	},
+	{
+		"code": "PY",
+		"name": "Puducherry",
+		"priority": 27
+	},
+	{
+		"code": "PB",
+		"name": "Punjab",
+		"priority": 28
+	},
+	{
+		"code": "RJ",
+		"name": "Rajasthan",
+		"priority": 29
+	},
+	{
+		"code": "WK",
+		"name": "Sikkim",
+		"priority": 30
+	},
+	{
+		"code": "TN",
+		"name": "Tamil Nadu",
+		"priority": 31
+	},
+	{
+		"code": "TG",
+		"name": "Telangana",
+		"priority": 32
+	},
+	{
+		"code": "TR",
+		"name": "Tripura",
+		"priority": 33
+	},
+	{
+		"code": "UT",
+		"name": "Uttarakhand",
+		"priority": 34
+	},
+	{
+		"code": "UP",
+		"name": "Uttar Pradesh",
+		"priority": 35
+	},
+	{
+		"code": "WB",
+		"name": "West Bengal",
+		"priority": 36
+	}
+]

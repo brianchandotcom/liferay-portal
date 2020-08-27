@@ -1,0 +1,43 @@
+.quantity-selector {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+
+	.btn {
+		background: none;
+		border: none;
+		border-radius: 4px !important;
+		color: $color-fg-alt !important;
+		font-size: 24px;
+		font-weight: normal;
+		height: auto;
+		line-height: 1;
+		padding: 4px;
+		width: auto;
+
+		&::before {
+			background-color: transparent !important;
+		}
+
+		&:focus {
+			box-shadow: none;
+		}
+
+		&[disabled] {
+			background: none;
+			cursor: not-allowed;
+			opacity: 0.5;
+		}
+	}
+
+	.form-control {
+		appearance: none;
+		border: 2px solid $color-border;
+		border-radius: 8px;
+		margin: 0 4px;
+	}
+
+	.input-group-item {
+		align-content: center;
+	}
+}

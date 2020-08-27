@@ -19,6 +19,7 @@ import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue;
+import com.liferay.headless.delivery.dto.v1_0.FragmentStyle;
 import com.liferay.headless.delivery.dto.v1_0.Mapping;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -34,12 +35,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Reference;
@@ -251,6 +246,62 @@ public abstract class BaseStyledLayoutStructureItemExporter
 		};
 	}
 
+	protected FragmentStyle toFragmentStyle(
+		JSONObject jsonObject, boolean saveMappingConfiguration) {
+
+		if ((jsonObject == null) || (jsonObject.length() == 0)) {
+			return null;
+		}
+
+		return new FragmentStyle() {
+			{
+				backgroundColor = jsonObject.getString("backgroundColor", null);
+				borderColor = jsonObject.getString("borderColor", null);
+				borderRadius = jsonObject.getString("borderRadius", null);
+				borderWidth = jsonObject.getString("borderWidth", null);
+				fontFamily = jsonObject.getString("fontFamily", null);
+				fontSize = jsonObject.getString("fontSize", null);
+				fontWeight = jsonObject.getString("fontWeight", null);
+				height = jsonObject.getString("height", null);
+				marginBottom = jsonObject.getString("marginBottom", null);
+				marginLeft = jsonObject.getString("marginLeft", null);
+				marginRight = jsonObject.getString("marginRight", null);
+				marginTop = jsonObject.getString("marginTop", null);
+				maxHeight = jsonObject.getString("maxHeight", null);
+				maxWidth = jsonObject.getString("maxWidth", null);
+				minHeight = jsonObject.getString("minHeight", null);
+				minWidth = jsonObject.getString("minWidth", null);
+				opacity = jsonObject.getString("opacity", null);
+				overflow = jsonObject.getString("overflow", null);
+				paddingBottom = jsonObject.getString("paddingBottom", null);
+				paddingLeft = jsonObject.getString("paddingLeft", null);
+				paddingRight = jsonObject.getString("paddingRight", null);
+				paddingTop = jsonObject.getString("paddingTop", null);
+				shadow = jsonObject.getString("shadow", null);
+				textAlign = jsonObject.getString("textAlign", null);
+				textColor = jsonObject.getString("textColor", null);
+				width = jsonObject.getString("width", null);
+
+				setBackgroundFragmentImage(
+					() -> {
+						Object backgroundImage = jsonObject.get(
+							"backgroundImage");
+
+						if (backgroundImage == null) {
+							return null;
+						}
+
+						JSONObject backgroundImageJSONObject =
+							(JSONObject)backgroundImage;
+
+						return toBackgroundFragmentImage(
+							backgroundImageJSONObject,
+							saveMappingConfiguration);
+					});
+			}
+		};
+	}
+
 	protected String toItemClassName(JSONObject jsonObject) {
 		String classNameIdString = jsonObject.getString("classNameId");
 
@@ -354,64 +405,6 @@ public abstract class BaseStyledLayoutStructureItemExporter
 			{
 				className = toItemClassName(jsonObject);
 				classPK = toitemClassPK(jsonObject);
-			}
-		};
-	}
-
-	protected Map<String, Object> toMap(JSONObject jsonObject) {
-		Map<String, Object> map = new HashMap<>();
-
-		Set<String> keys = jsonObject.keySet();
-
-		Iterator<String> iterator = keys.iterator();
-
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-
-			Object value = jsonObject.get(key);
-
-			if (value instanceof JSONObject) {
-				value = toMap((JSONObject)value);
-			}
-
-			map.put(key, value);
-		}
-
-		return map;
-	}
-
-	protected Map<String, Object> toStyles(
-		JSONObject jsonObject, boolean saveMappingConfiguration) {
-
-		if (jsonObject == null) {
-			return Collections.emptyMap();
-		}
-
-		return new HashMap<String, Object>() {
-			{
-				Set<String> keys = jsonObject.keySet();
-
-				Iterator<String> iterator = keys.iterator();
-
-				while (iterator.hasNext()) {
-					String key = iterator.next();
-
-					Object value = jsonObject.get(key);
-
-					if (Objects.equals(key, "backgroundImage")) {
-						JSONObject backgroundImageJSONObject =
-							(JSONObject)value;
-
-						value = toBackgroundFragmentImage(
-							backgroundImageJSONObject,
-							saveMappingConfiguration);
-					}
-					else if (value instanceof JSONObject) {
-						value = toMap((JSONObject)value);
-					}
-
-					put(key, value);
-				}
 			}
 		};
 	}

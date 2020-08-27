@@ -79,10 +79,10 @@ public class FragmentLayoutStructureItemExporter
 					definition =
 						_pageFragmentInstanceDefinitionDTOConverter.toDTO(
 							fragmentStyledLayoutStructureItem,
-							saveInlineContent, saveMappingConfiguration,
-							toStyles(
+							toFragmentStyle(
 								itemConfigJSONObject.getJSONObject("styles"),
-								saveMappingConfiguration));
+								saveMappingConfiguration),
+							saveInlineContent, saveMappingConfiguration);
 					type = PageElement.Type.FRAGMENT;
 				}
 			};
@@ -94,10 +94,10 @@ public class FragmentLayoutStructureItemExporter
 			{
 				definition = _pageWidgetInstanceDefinitionDTOConverter.toDTO(
 					fragmentEntryLink,
-					PortletIdCodec.encode(portletId, instanceId),
-					toStyles(
+					toFragmentStyle(
 						itemConfigJSONObject.getJSONObject("styles"),
-						saveMappingConfiguration));
+						saveMappingConfiguration),
+					PortletIdCodec.encode(portletId, instanceId));
 				type = PageElement.Type.WIDGET;
 			}
 		};

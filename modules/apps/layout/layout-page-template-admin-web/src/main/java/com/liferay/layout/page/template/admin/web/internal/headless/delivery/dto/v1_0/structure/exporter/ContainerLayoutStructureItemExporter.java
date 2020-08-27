@@ -72,13 +72,13 @@ public class ContainerLayoutStructureItemExporter
 							saveMappingConfiguration);
 						layout = _toLayout(containerStyledLayoutStructureItem);
 
-						setStyles(
+						setFragmentStyle(
 							() -> {
 								JSONObject itemConfigJSONObject =
 									containerStyledLayoutStructureItem.
 										getItemConfigJSONObject();
 
-								return toStyles(
+								return toFragmentStyle(
 									itemConfigJSONObject.getJSONObject(
 										"styles"),
 									saveMappingConfiguration);

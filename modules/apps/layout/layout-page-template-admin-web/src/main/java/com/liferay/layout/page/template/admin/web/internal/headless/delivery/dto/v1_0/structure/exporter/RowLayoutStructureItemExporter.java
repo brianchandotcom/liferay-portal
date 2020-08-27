@@ -98,13 +98,13 @@ public class RowLayoutStructureItemExporter
 								return rowViewports.toArray(new RowViewport[0]);
 							});
 
-						setStyles(
+						setFragmentStyle(
 							() -> {
 								JSONObject itemConfigJSONObject =
 									rowStyledLayoutStructureItem.
 										getItemConfigJSONObject();
 
-								return toStyles(
+								return toFragmentStyle(
 									itemConfigJSONObject.getJSONObject(
 										"styles"),
 									saveMappingConfiguration);

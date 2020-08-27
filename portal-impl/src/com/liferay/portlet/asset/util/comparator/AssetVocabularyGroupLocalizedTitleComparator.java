@@ -16,7 +16,6 @@ package com.liferay.portlet.asset.util.comparator;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.portal.kernel.util.CollatorUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
 import java.text.Collator;
 
@@ -28,10 +27,6 @@ import java.util.Locale;
  */
 public class AssetVocabularyGroupLocalizedTitleComparator
 	implements Comparator<AssetVocabulary> {
-
-	public AssetVocabularyGroupLocalizedTitleComparator(boolean ascending) {
-		this(0L, LocaleThreadLocal.getThemeDisplayLocale(), ascending);
-	}
 
 	public AssetVocabularyGroupLocalizedTitleComparator(
 		long groupId, Locale locale, boolean ascending) {

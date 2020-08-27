@@ -20,6 +20,7 @@ import {getLocalizedValue} from '../../utils/lang.es';
 
 const getValue = (item, key) => {
 	const value = item[key];
+
 	if (typeof value === 'object') {
 		return getLocalizedValue(item.defaultLanguageId, value);
 	}
@@ -28,15 +29,15 @@ const getValue = (item, key) => {
 };
 
 export default ({Cell, columns, editMode, item: {originalItem}}) => {
-	const {onCancel = () => {}, onSave = () => {}} = editMode;
+	const [state, setState] = useState({});
 	const [lastColumn] = columns.map(({key}) => key).slice(-1);
 	const {key: editableColumn} = columns.find(({editable}) => editable);
-
-	const [state, setState] = useState({});
+	const {onCancel = () => {}, onSave = () => {}} = editMode;
 	const value = state[editableColumn]?.trim();
 
 	const onSubmit = (event) => {
 		event.preventDefault();
+
 		if (value) {
 			onSave(value);
 		}
@@ -67,13 +68,15 @@ export default ({Cell, columns, editMode, item: {originalItem}}) => {
 						disabled={!value}
 						displayType="primary"
 						onClick={onSubmit}
+						small
 					>
 						{Liferay.Language.get('save')}
 					</ClayButton>
 					<ClayButton
-						className="ml-4"
+						className="ml-3"
 						displayType="secondary"
 						onClick={onCancel}
+						small
 					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>

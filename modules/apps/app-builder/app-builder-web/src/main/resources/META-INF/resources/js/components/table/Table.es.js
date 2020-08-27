@@ -17,7 +17,7 @@ import ClayTable from '@clayui/table';
 import React from 'react';
 
 import DropDown from './DropDown.es';
-import EditableCells from './EditableCells.es';
+import EditableCell from './EditableCell.es';
 
 const {Body, Cell, Head, Row} = ClayTable;
 
@@ -68,8 +68,7 @@ const Table = ({
 				</Head>
 				<Body>
 					{items.map((item, index) => {
-						const id = item.id;
-						const isEditMode = editMode && editMode.id === id;
+						const isEditMode = editMode && editMode.id === item.id;
 
 						return (
 							<Row key={index}>
@@ -84,7 +83,7 @@ const Table = ({
 									</Cell>
 								)}
 								{isEditMode ? (
-									<EditableCells
+									<EditableCell
 										Cell={CellWrapper}
 										columns={columns}
 										editMode={editMode}

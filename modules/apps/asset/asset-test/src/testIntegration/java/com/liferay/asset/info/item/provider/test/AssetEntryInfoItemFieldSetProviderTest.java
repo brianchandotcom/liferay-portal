@@ -88,7 +88,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		AssetVocabulary vocabulary =
+		AssetVocabulary assetVocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 				RandomTestUtil.randomString(), serviceContext);
@@ -100,9 +100,9 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
 
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
-			vocabulary.getName());
+			assetVocabulary.getName());
 
-		Assert.assertEquals(vocabulary.getName(), infoFieldSetEntry.getName());
+		Assert.assertEquals(assetVocabulary.getName(), infoFieldSetEntry.getName());
 	}
 
 	@Test
@@ -112,14 +112,14 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		AssetVocabulary vocabulary =
+		AssetVocabulary assetVocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 				RandomTestUtil.randomString(), serviceContext);
 
 		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			RandomTestUtil.randomString(), vocabulary.getVocabularyId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
 
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
@@ -132,9 +132,9 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
 
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
-			vocabulary.getName());
+			assetVocabulary.getName());
 
-		Assert.assertEquals(vocabulary.getName(), infoFieldSetEntry.getName());
+		Assert.assertEquals(assetVocabulary.getName(), infoFieldSetEntry.getName());
 	}
 
 	@Test
@@ -144,7 +144,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
+		AssetVocabulary assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(),
 			HashMapBuilder.put(
@@ -160,7 +160,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
 
 		Assert.assertNull(
-			infoFieldSet.getInfoFieldSetEntry(vocabulary.getName()));
+			infoFieldSet.getInfoFieldSetEntry(assetVocabulary.getName()));
 	}
 
 	@Test
@@ -178,7 +178,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		long classTypeId = ddmStructure.getStructureId();
 
-		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId(), classNameId, classTypeId, false);
 
 		InfoFieldSet infoFieldSet =
@@ -187,25 +187,25 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				_group.getGroupId());
 
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
-			vocabulary.getName());
+			assetVocabulary.getName());
 
-		Assert.assertEquals(vocabulary.getName(), infoFieldSetEntry.getName());
+		Assert.assertEquals(assetVocabulary.getName(), infoFieldSetEntry.getName());
 	}
 
 	@Test
 	public void testGetInfoFieldValuesJournalArticleAllCategories()
 		throws Exception {
 
-		AssetVocabulary internalVocabulary = _addVocabulary(
+		AssetVocabulary internalAssetVocabulary = _addAssetVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
 
 		AssetCategory internalAssetCategory = _addAssetCategory(
-			internalVocabulary);
+			internalAssetVocabulary);
 
-		AssetVocabulary publicVocabulary = _addVocabulary(
+		AssetVocabulary publicAssetVocabulary = _addAssetVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
-		AssetCategory publicAssetCategory = _addAssetCategory(publicVocabulary);
+		AssetCategory publicAssetCategory = _addAssetCategory(publicAssetVocabulary);
 
 		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {
@@ -231,16 +231,16 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldValuesJournalArticleInternalVocabularyWithCategory()
 		throws Exception {
 
-		AssetVocabulary vocabulary = _addVocabulary(
+		AssetVocabulary assetVocabulary = _addAssetVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
 
-		AssetCategory assetCategory = _addAssetCategory(vocabulary);
+		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
 
 		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {assetCategory.getCategoryId()});
 
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
-			_getInfoFieldValues(assetEntry, vocabulary.getName());
+			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
 
 		Assert.assertEquals(
 			filteredInfoFieldValues.toString(), 0,
@@ -251,16 +251,16 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldValuesJournalArticlePublicVocabularyWithCategory()
 		throws Exception {
 
-		AssetVocabulary vocabulary = _addVocabulary(
+		AssetVocabulary assetVocabulary = _addAssetVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
-		AssetCategory assetCategory = _addAssetCategory(vocabulary);
+		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
 
 		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {assetCategory.getCategoryId()});
 
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
-			_getInfoFieldValues(assetEntry, vocabulary.getName());
+			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
 
 		Assert.assertEquals(
 			filteredInfoFieldValues.toString(), 1,
@@ -273,7 +273,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			assetCategory.getTitle(LocaleUtil.ENGLISH));
 	}
 
-	private AssetCategory _addAssetCategory(AssetVocabulary vocabulary)
+	private AssetCategory _addAssetCategory(AssetVocabulary assetVocabulary)
 		throws Exception {
 
 		return _assetCategoryLocalService.addCategory(
@@ -282,7 +282,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			HashMapBuilder.put(
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
-			null, vocabulary.getVocabularyId(), null, new ServiceContext());
+			null, assetVocabulary.getVocabularyId(), null, new ServiceContext());
 	}
 
 	private AssetEntry _addAssetEntry(long[] assetCategoryIds)
@@ -311,7 +311,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			journalArticle.getResourcePrimKey());
 	}
 
-	private AssetVocabulary _addVocabulary(int visibilityTypePublic)
+	private AssetVocabulary _addAssetVocabulary(int visibilityTypePublic)
 		throws Exception {
 
 		return _assetVocabularyLocalService.addVocabulary(

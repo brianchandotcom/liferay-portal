@@ -379,6 +379,176 @@
 			"title": "The FragmentSettingsUnallowed Schema",
 			"type": "object"
 		},
+		"FragmentStyle": {
+			"additionalProperties": false,
+			"properties": {
+				"backgroundColor": {
+					"title": "The backgroundColor Schema",
+					"type": "string"
+				},
+				"backgroundFragmentImage": {
+					"$ref": "#/definitions/FragmentImage",
+					"title": "The backgroundFragmentImage Schema",
+					"type": "object"
+				},
+				"borderColor": {
+					"title": "The borderColor Schema",
+					"type": "string"
+				},
+				"borderRadius": {
+					"title": "The borderRadius Schema",
+					"type": "string"
+				},
+				"borderWidth": {
+					"title": "The borderWidth Schema",
+					"type": "string"
+				},
+				"fontFamily": {
+					"title": "The fontFamily Schema",
+					"type": "string"
+				},
+				"fontSize": {
+					"title": "The fontSize Schema",
+					"type": "string"
+				},
+				"fontWeight": {
+					"title": "The fontWeight Schema",
+					"type": "string"
+				},
+				"height": {
+					"title": "The height Schema",
+					"type": "string"
+				},
+				"marginBottom": {
+					"title": "The marginBottom Schema",
+					"type": "string"
+				},
+				"marginLeft": {
+					"title": "The marginLeft Schema",
+					"type": "string"
+				},
+				"marginRight": {
+					"title": "The marginRight Schema",
+					"type": "string"
+				},
+				"marginTop": {
+					"title": "The marginTop Schema",
+					"type": "string"
+				},
+				"maxHeight": {
+					"title": "The maxHeight Schema",
+					"type": "string"
+				},
+				"maxWidth": {
+					"title": "The maxWidth Schema",
+					"type": "string"
+				},
+				"minHeight": {
+					"title": "The minHeight Schema",
+					"type": "string"
+				},
+				"minWidth": {
+					"title": "The minWidth Schema",
+					"type": "string"
+				},
+				"opacity": {
+					"title": "The opacity Schema",
+					"type": "string"
+				},
+				"overflow": {
+					"title": "The overflow Schema",
+					"type": "string"
+				},
+				"paddingBottom": {
+					"title": "The paddingBottom Schema",
+					"type": "string"
+				},
+				"paddingLeft": {
+					"title": "The paddingLeft Schema",
+					"type": "string"
+				},
+				"paddingRight": {
+					"title": "The paddingRight Schema",
+					"type": "string"
+				},
+				"paddingTop": {
+					"title": "The paddingTop Schema",
+					"type": "string"
+				},
+				"shadow": {
+					"title": "The shadow Schema",
+					"type": "string"
+				},
+				"textAlign": {
+					"title": "The textAlign Schema",
+					"type": "string"
+				},
+				"textColor": {
+					"title": "The textColor Schema",
+					"type": "string"
+				},
+				"width": {
+					"title": "The width Schema",
+					"type": "string"
+				}
+			},
+			"title": "The FragmentStyle Schema",
+			"type": "object"
+		},
+		"FragmentViewport": {
+			"additionalProperties": false,
+			"properties": {
+				"fragmentViewportStyle": {
+					"additionalProperties": false,
+					"properties": {
+						"marginBottom": {
+							"title": "The marginBottom Schema",
+							"type": "string"
+						},
+						"marginLeft": {
+							"title": "The marginLeft Schema",
+							"type": "string"
+						},
+						"marginRight": {
+							"title": "The marginRight Schema",
+							"type": "string"
+						},
+						"marginTop": {
+							"title": "The marginTop Schema",
+							"type": "string"
+						},
+						"paddingBottom": {
+							"title": "The paddingBottom Schema",
+							"type": "string"
+						},
+						"paddingLeft": {
+							"title": "The paddingLeft Schema",
+							"type": "string"
+						},
+						"paddingRight": {
+							"title": "The paddingRight Schema",
+							"type": "string"
+						},
+						"paddingTop": {
+							"title": "The paddingTop Schema",
+							"type": "string"
+						}
+					},
+					"title": "The fragmentViewportStyle Schema",
+					"type": "object"
+				},
+				"id": {
+					"title": "The id Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"fragmentViewportStyle",
+				"id"
+			],
+			"title": "The FragmentViewport Schema",
+			"type": "object"
+		},
 		"PageCollectionDefinition": {
 			"additionalProperties": false,
 			"properties": {
@@ -447,6 +617,16 @@
 					"title": "The collectionConfig Schema",
 					"type": "object"
 				},
+				"fragmentStyle": {
+					"$ref": "#/definitions/FragmentStyle"
+				},
+				"fragmentViewports": {
+					"items": {
+						"$ref": "#/definitions/FragmentViewport"
+					},
+					"title": "The fragmentViewports Schema",
+					"type": "array"
+				},
 				"listItemStyle": {
 					"title": "The listItemStyle Schema",
 					"type": "string"
@@ -464,10 +644,6 @@
 					"minimum": 0,
 					"title": "The numberOfItems Schema",
 					"type": "integer"
-				},
-				"styles": {
-					"title": "The Styles Schema",
-					"type": "object"
 				},
 				"templateKey": {
 					"title": "The templateKey Schema",
@@ -800,9 +976,15 @@
 					"title": "The fragmentFields Schema",
 					"type": "array"
 				},
-				"styles": {
-					"title": "The Styles Schema",
-					"type": "object"
+				"fragmentStyle": {
+					"$ref": "#/definitions/FragmentStyle"
+				},
+				"fragmentViewports": {
+					"items": {
+						"$ref": "#/definitions/FragmentViewport"
+					},
+					"title": "The fragmentViewports Schema",
+					"type": "array"
 				},
 				"widgetInstances": {
 					"items": {
@@ -823,6 +1005,16 @@
 		"PageRowDefinition": {
 			"additionalProperties": false,
 			"properties": {
+				"fragmentStyle": {
+					"$ref": "#/definitions/FragmentStyle"
+				},
+				"fragmentViewports": {
+					"items": {
+						"$ref": "#/definitions/FragmentViewport"
+					},
+					"title": "The fragmentViewports Schema",
+					"type": "array"
+				},
 				"gutters": {
 					"title": "The gutters Schema",
 					"type": "boolean"
@@ -907,10 +1099,6 @@
 					"title": "The rowViewports Schema",
 					"type": "array"
 				},
-				"styles": {
-					"title": "The Styles Schema",
-					"type": "object"
-				},
 				"verticalAlignment": {
 					"title": "The verticalAlignment Schema",
 					"type": "string"
@@ -967,6 +1155,16 @@
 					"$ref": "#/definitions/FragmentLink",
 					"title": "The fragmentLink Schema",
 					"type": "object"
+				},
+				"fragmentStyle": {
+					"$ref": "#/definitions/FragmentStyle"
+				},
+				"fragmentViewports": {
+					"items": {
+						"$ref": "#/definitions/FragmentViewport"
+					},
+					"title": "The fragmentViewports Schema",
+					"type": "array"
 				},
 				"layout": {
 					"additionalProperties": false,
@@ -1184,10 +1382,6 @@
 					},
 					"title": "The layout Schema",
 					"type": "object"
-				},
-				"styles": {
-					"title": "The Styles Schema",
-					"type": "object"
 				}
 			},
 			"title": "The PageSectionDefinition Schema",
@@ -1196,9 +1390,15 @@
 		"PageWidgetInstanceDefinition": {
 			"additionalProperties": false,
 			"properties": {
-				"styles": {
-					"title": "The Styles Schema",
-					"type": "object"
+				"fragmentStyle": {
+					"$ref": "#/definitions/FragmentStyle"
+				},
+				"fragmentViewports": {
+					"items": {
+						"$ref": "#/definitions/FragmentViewport"
+					},
+					"title": "The fragmentViewports Schema",
+					"type": "array"
 				},
 				"widgetInstance": {
 					"$ref": "#/definitions/WidgetInstance",

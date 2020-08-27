@@ -72,7 +72,7 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest
 							"pt_BR", "Valor 2"
 						).build()
 					).build(),
-					ddmFormField, null);
+					ddmFormField, null, null);
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
@@ -106,7 +106,7 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest
 							).build()
 						).build()
 					).build(),
-					ddmFormField, null);
+					ddmFormField, null, null);
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
@@ -150,7 +150,7 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest
 							"pt_BR", "Valor 1"
 						).build()
 					).build(),
-					ddmFormField, null);
+					ddmFormField, null, null);
 
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 

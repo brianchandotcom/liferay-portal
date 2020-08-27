@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -51,7 +52,8 @@ public class DefaultMapToDDMFormValuesConverterStrategy
 			if (dataRecordValues.containsKey(entry.getKey())) {
 				List<DDMFormFieldValue> ddmFormFieldValues =
 					createDDMFormFieldValues(
-						dataRecordValues, entry.getValue(), locale);
+						dataRecordValues, entry.getValue(),
+						ddmForm.getDefaultLocale(), locale);
 
 				Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
 
@@ -62,7 +64,7 @@ public class DefaultMapToDDMFormValuesConverterStrategy
 
 	protected List<DDMFormFieldValue> createDDMFormFieldValues(
 		Map<String, Object> dataRecordValues, DDMFormField ddmFormField,
-		Locale locale) {
+		Locale defaultLocale, Locale locale) {
 
 		if ((dataRecordValues == null) ||
 			!dataRecordValues.containsKey(ddmFormField.getName())) {
@@ -109,7 +111,7 @@ public class DefaultMapToDDMFormValuesConverterStrategy
 						createDDMFormFieldValues(
 							(Map<String, Object>)fieldSetInstanceValues.get(
 								ddmFormFieldValue.getInstanceId()),
-							nestedDDMFormField, locale);
+							nestedDDMFormField, defaultLocale, locale);
 
 					Stream<DDMFormFieldValue> stream =
 						nestedDDMFormFieldValues.stream();
@@ -146,7 +148,8 @@ public class DefaultMapToDDMFormValuesConverterStrategy
 					(Map<String, Object>)value;
 
 				list = (List<Object>)localizedValues.get(
-					LanguageUtil.getLanguageId(locale));
+					LanguageUtil.getLanguageId(
+						(Locale)GetterUtil.getObject(locale, defaultLocale)));
 			}
 			else {
 				list = (List<Object>)dataRecordValues.get(
@@ -167,7 +170,9 @@ public class DefaultMapToDDMFormValuesConverterStrategy
 
 				LocalizedValue localizedValue = new LocalizedValue();
 
-				localizedValue.addString(locale, String.valueOf(object));
+				localizedValue.addString(
+					(Locale)GetterUtil.getObject(locale, defaultLocale),
+					String.valueOf(object));
 
 				ddmFormFieldValue.setValue(localizedValue);
 

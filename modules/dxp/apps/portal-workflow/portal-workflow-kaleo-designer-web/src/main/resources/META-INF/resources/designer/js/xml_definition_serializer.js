@@ -326,7 +326,7 @@ AUI.add(
 									XMLUtil.create('emailAddress', item)
 								);
 							}
-							if (isValue(dataAssignments.screenName[index])) {
+							else if (isValue(dataAssignments.screenName[index])) {
 								buffer.push(
 									XMLUtil.create(
 										'screenName',
@@ -334,7 +334,7 @@ AUI.add(
 									)
 								);
 							}
-							if (isValue(dataAssignments.userId[index])) {
+							else if (isValue(dataAssignments.userId[index])) {
 								buffer.push(
 									XMLUtil.create(
 										'userId',
@@ -359,7 +359,7 @@ AUI.add(
 								buffer.push(XMLUtil.create('screenName', item));
 							}
 
-							if (isValue(dataAssignments.emailAddress[index])) {
+							else if (isValue(dataAssignments.emailAddress[index])) {
 								buffer.push(
 									XMLUtil.create(
 										'emailAddress',
@@ -368,7 +368,7 @@ AUI.add(
 								);
 							}
 
-							if (isValue(dataAssignments.userId[index])) {
+							else if (isValue(dataAssignments.userId[index])) {
 								buffer.push(
 									XMLUtil.create(
 										'userId',
@@ -392,7 +392,7 @@ AUI.add(
 							if (isValue(item)) {
 								buffer.push(XMLUtil.create('userId', item));
 							}
-							if (isValue(dataAssignments.emailAddress[index])) {
+							else if (isValue(dataAssignments.emailAddress[index])) {
 								buffer.push(
 									XMLUtil.create(
 										'emailAddress',
@@ -400,7 +400,7 @@ AUI.add(
 									)
 								);
 							}
-							if (isValue(dataAssignments.screenName[index])) {
+							else if (isValue(dataAssignments.screenName[index])) {
 								buffer.push(
 									XMLUtil.create(
 										'screenName',

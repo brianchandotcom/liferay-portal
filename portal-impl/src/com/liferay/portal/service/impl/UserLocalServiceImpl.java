@@ -5977,14 +5977,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		if (params != null) {
-			attributes.put(
-				Field.GROUP_ID, (Long)params.getOrDefault(Field.GROUP_ID, 0L));
+			Long groupId = (Long)params.remove(Field.GROUP_ID);
 
-			if (params.containsKey("accountEntryIds")) {
-				attributes.put(
-					"accountEntryIds",
-					GetterUtil.getLongValues(params.get("accountEntryIds")));
+			if (groupId == null) {
+				groupId = 0L;
 			}
+
+			attributes.put(Field.GROUP_ID, groupId);
 		}
 
 		attributes.put("city", city);
@@ -6011,6 +6010,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			if (Validator.isNotNull(keywords)) {
 				searchContext.setKeywords(keywords);
+			}
+
+			for (Map.Entry<String, Object> entry : params.entrySet()) {
+				try {
+					attributes.putIfAbsent(
+						entry.getKey(), (Serializable)entry.getValue());
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(exception, exception);
+					}
+				}
 			}
 		}
 

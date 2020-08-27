@@ -36,11 +36,21 @@ public class StyleBookEntryUtil {
 			long styleBookEntryId)
 		throws Exception {
 
+		return getFrontendTokensValuesJSONArray(
+			frontendTokenDefinition, locale,
+			_getStyleBookEntry(styleBookEntryId));
+	}
+
+	public static JSONArray getFrontendTokensValuesJSONArray(
+			FrontendTokenDefinition frontendTokenDefinition, Locale locale,
+			StyleBookEntry styleBookEntry)
+		throws Exception {
+
 		JSONArray frontendTokensValuesJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
 		JSONObject frontendTokenValuesJSONObject =
-			_getFrontendTokenValuesJSONObject(styleBookEntryId);
+			_getFrontendTokenValuesJSONObject(styleBookEntry);
 
 		JSONObject frontendTokenDefinitionJSONObject =
 			JSONFactoryUtil.createJSONObject(
@@ -81,10 +91,8 @@ public class StyleBookEntryUtil {
 	}
 
 	private static JSONObject _getFrontendTokenValuesJSONObject(
-			long styleBookEntryId)
+			StyleBookEntry styleBookEntry)
 		throws Exception {
-
-		StyleBookEntry styleBookEntry = _getStyleBookEntry(styleBookEntryId);
 
 		if (styleBookEntry != null) {
 			return JSONFactoryUtil.createJSONObject(

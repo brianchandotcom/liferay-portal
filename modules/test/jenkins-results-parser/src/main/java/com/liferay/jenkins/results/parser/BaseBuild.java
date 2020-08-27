@@ -1127,6 +1127,39 @@ public abstract class BaseBuild implements Build {
 		return getTempMap("stop.properties");
 	}
 
+	public List<TestClassResult> getTestClassResults() {
+		if (_testClassResults != null) {
+			return _testClassResults;
+		}
+
+		List<TestResult> buildTestResults = getTestResults(null);
+
+		if (buildTestResults.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		Map<String, List<TestResult>> testClassResultsMap = new HashMap<>();
+
+		for (TestResult testResult : buildTestResults) {
+			String testClassName = testResult.getClassName();
+
+			List<TestResult> testResults = testClassResultsMap.getOrDefault(
+				testClassName, new ArrayList());
+
+			testResults.add(testResult);
+
+			testClassResultsMap.put(testClassName, testResults);
+		}
+
+		_testClassResults = new ArrayList<>();
+
+		for (List<TestResult> testResults : testClassResultsMap.values()) {
+			_testClassResults.add(new DefaultTestClassResult(testResults));
+		}
+
+		return _testClassResults;
+	}
+
 	@Override
 	public JSONObject getTestReportJSONObject(boolean checkCache) {
 		try {
@@ -3784,5 +3817,6 @@ public abstract class BaseBuild implements Build {
 	private String _previousStatus;
 	private String _result;
 	private String _status;
+	private List<TestClassResult> _testClassResults;
 
 }

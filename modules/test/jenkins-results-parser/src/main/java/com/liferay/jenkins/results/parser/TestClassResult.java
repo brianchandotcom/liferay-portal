@@ -14,26 +14,18 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.dom4j.Element;
+import java.util.List;
 
 /**
- * @author Kenji Heigel
+ * @author Michael Hashimoto
  */
-public interface TestResult {
+public interface TestClassResult {
 
 	public Build getBuild();
 
 	public String getClassName();
 
-	public String getDisplayName();
-
 	public long getDuration();
-
-	public String getErrorDetails();
-
-	public String getErrorStackTrace();
-
-	public Element getGitHubElement();
 
 	public String getPackageName();
 
@@ -41,14 +33,8 @@ public interface TestResult {
 
 	public String getStatus();
 
-	public TestClassResult getTestClassResult();
-
-	public String getTestName();
-
-	public String getTestReportURL();
+	public List<TestResult> getTestResults();
 
 	public boolean isFailing();
-
-	public boolean isUniqueFailure();
 
 }

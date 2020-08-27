@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -28,6 +29,29 @@ public abstract class BaseTestResult implements TestResult {
 	@Override
 	public Build getBuild() {
 		return _build;
+	}
+
+	@Override
+	public TestClassResult getTestClassResult() {
+		List<TestClassResult> testClassResults = _build.getTestClassResults();
+
+		if ((testClassResults == null) || testClassResults.isEmpty()) {
+			return null;
+		}
+
+		String testClassName = getClassName();
+
+		for (TestClassResult testClassResult : _build.getTestClassResults()) {
+			if (!testClassName.equals(testClassResult.getClassName())) {
+				continue;
+			}
+
+			_testClassResult = testClassResult;
+
+			break;
+		}
+
+		return _testClassResult;
 	}
 
 	@Override
@@ -143,5 +167,6 @@ public abstract class BaseTestResult implements TestResult {
 		"https://testray.liferay.com/reports/production/logs";
 
 	private final Build _build;
+	private TestClassResult _testClassResult;
 
 }

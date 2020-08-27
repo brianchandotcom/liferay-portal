@@ -14,41 +14,15 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.dom4j.Element;
+import java.util.List;
 
 /**
- * @author Kenji Heigel
+ * @author Michael Hashimoto
  */
-public interface TestResult {
+public class DefaultTestClassResult extends BaseTestClassResult {
 
-	public Build getBuild();
-
-	public String getClassName();
-
-	public String getDisplayName();
-
-	public long getDuration();
-
-	public String getErrorDetails();
-
-	public String getErrorStackTrace();
-
-	public Element getGitHubElement();
-
-	public String getPackageName();
-
-	public String getSimpleClassName();
-
-	public String getStatus();
-
-	public TestClassResult getTestClassResult();
-
-	public String getTestName();
-
-	public String getTestReportURL();
-
-	public boolean isFailing();
-
-	public boolean isUniqueFailure();
+	protected DefaultTestClassResult(List<TestResult> testResults) {
+		super(testResults);
+	}
 
 }

@@ -155,6 +155,8 @@ public interface Build {
 
 	public Map<String, String> getStopPropertiesTempMap();
 
+	public List<TestClassResult> getTestClassResults();
+
 	public JSONObject getTestReportJSONObject(boolean checkCache);
 
 	public List<TestResult> getTestResults(String testStatus);

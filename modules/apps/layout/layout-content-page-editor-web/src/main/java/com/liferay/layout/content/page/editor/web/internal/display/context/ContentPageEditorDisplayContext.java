@@ -60,6 +60,7 @@ import com.liferay.layout.content.page.editor.web.internal.constants.ContentPage
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -331,7 +332,24 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/edit_fragment_entry_link")
 			).put(
-				"frontendTokens", _getFrontendTokens()
+				"frontendTokens",
+				() -> {
+					LayoutSet layoutSet =
+						LayoutSetLocalServiceUtil.fetchLayoutSet(
+							themeDisplay.getSiteGroupId(), false);
+
+					FrontendTokenDefinition frontendTokenDefinition =
+						_frontendTokenDefinitionRegistry.
+							getFrontendTokenDefinition(layoutSet.getThemeId());
+
+					if (frontendTokenDefinition == null) {
+						return JSONFactoryUtil.getJSONFactory();
+					}
+
+					return StyleBookEntryUtil.getFrontendTokensValuesJSONArray(
+						frontendTokenDefinition, themeDisplay.getLocale(),
+						_getDefaultStyleBookEntry());
+				}
 			).put(
 				"getAvailableListItemRenderersURL",
 				getResourceURL(

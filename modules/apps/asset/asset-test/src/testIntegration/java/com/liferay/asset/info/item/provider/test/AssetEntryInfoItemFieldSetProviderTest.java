@@ -210,31 +210,11 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetCategory publicAssetCategory = _addAssetCategory(
 			publicVocabulary, publicCategoryTitle);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setAssetCategoryIds(
+		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {
 				internalAssetCategory.getCategoryId(),
 				publicAssetCategory.getCategoryId()
 			});
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0,
-			PortalUtil.getClassNameId(JournalArticle.class),
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			null,
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			LocaleUtil.getSiteDefault(), false, true, serviceContext);
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
 
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry);
@@ -273,28 +253,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetCategory assetCategory = _addAssetCategory(
 			vocabulary, RandomTestUtil.randomString());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setAssetCategoryIds(
+		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {assetCategory.getCategoryId()});
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0,
-			PortalUtil.getClassNameId(JournalArticle.class),
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			null,
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			LocaleUtil.getSiteDefault(), false, true, serviceContext);
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
 
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry);
@@ -325,28 +285,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetCategory assetCategory = _addAssetCategory(
 			vocabulary, categoryTitle);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setAssetCategoryIds(
+		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {assetCategory.getCategoryId()});
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0,
-			PortalUtil.getClassNameId(JournalArticle.class),
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			null,
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			LocaleUtil.getSiteDefault(), false, true, serviceContext);
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
 
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry);
@@ -387,6 +327,32 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				LocaleUtil.US, categoryTitle
 			).build(),
 			null, vocabulary.getVocabularyId(), null, new ServiceContext());
+	}
+
+	private AssetEntry _addAssetEntry(long[] assetCategoryIds)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, serviceContext);
+
+		return _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
 	}
 
 	private AssetVocabulary _addVocabulary(int visibilityTypePublic)

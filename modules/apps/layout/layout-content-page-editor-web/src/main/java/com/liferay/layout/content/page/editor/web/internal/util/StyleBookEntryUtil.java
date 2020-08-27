@@ -37,20 +37,11 @@ public class StyleBookEntryUtil {
 			long styleBookEntryId)
 		throws Exception {
 
-		StyleBookEntry styleBookEntry =
-			StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-				styleBookEntryId);
-
 		JSONArray frontendTokensValuesJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
 		JSONObject frontendTokenValuesJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		if (styleBookEntry != null) {
-			frontendTokenValuesJSONObject = JSONFactoryUtil.createJSONObject(
-				styleBookEntry.getFrontendTokensValues());
-		}
+			_getFrontendTokenValuesJSONObject(styleBookEntryId);
 
 		JSONObject frontendTokenDefinitionJSONObject =
 			JSONFactoryUtil.createJSONObject(
@@ -79,52 +70,77 @@ public class StyleBookEntryUtil {
 					JSONObject frontendTokenJSONObject =
 						frontendTokensJSONArray.getJSONObject(k);
 
-					String name = frontendTokenJSONObject.getString("name");
-
-					JSONObject valueJSONObject =
-						frontendTokenValuesJSONObject.getJSONObject(name);
-
-					String value = StringPool.BLANK;
-
-					if (valueJSONObject != null) {
-						value = valueJSONObject.getString("value");
-					}
-					else {
-						value = frontendTokenJSONObject.getString(
-							"defaultValue");
-					}
-
-					JSONArray mappingsJSONArray =
-						frontendTokenJSONObject.getJSONArray("mappings");
-					String cssVariable = StringPool.BLANK;
-
-					Iterator<?> iterator = mappingsJSONArray.iterator();
-
-					while (iterator.hasNext()) {
-						JSONObject mappingJSONObject =
-							(JSONObject)iterator.next();
-
-						if (Objects.equals(
-								mappingJSONObject.getString("type"),
-								"cssVariable")) {
-
-							cssVariable = mappingJSONObject.getString("value");
-
-							break;
-						}
-					}
-
 					frontendTokensValuesJSONArray.put(
-						JSONUtil.put(
-							"cssVariable", cssVariable
-						).put(
-							"value", value
-						));
+						_getProcessedFrontendTokenJSONObject(
+							frontendTokenJSONObject,
+							frontendTokenValuesJSONObject));
 				}
 			}
 		}
 
 		return frontendTokensValuesJSONArray;
+	}
+
+	private static JSONObject _getFrontendTokenValuesJSONObject(
+			long styleBookEntryId)
+		throws Exception {
+
+		StyleBookEntry styleBookEntry = _getStyleBookEntry(styleBookEntryId);
+
+		if (styleBookEntry != null) {
+			return JSONFactoryUtil.createJSONObject(
+				styleBookEntry.getFrontendTokensValues());
+		}
+
+		return JSONFactoryUtil.createJSONObject();
+	}
+
+	private static JSONObject _getProcessedFrontendTokenJSONObject(
+		JSONObject frontendTokenJSONObject,
+		JSONObject frontendTokenValuesJSONObject) {
+
+		String name = frontendTokenJSONObject.getString("name");
+
+		JSONObject valueJSONObject =
+			frontendTokenValuesJSONObject.getJSONObject(name);
+
+		String value = StringPool.BLANK;
+
+		if (valueJSONObject != null) {
+			value = valueJSONObject.getString("value");
+		}
+		else {
+			value = frontendTokenJSONObject.getString("defaultValue");
+		}
+
+		JSONArray mappingsJSONArray = frontendTokenJSONObject.getJSONArray(
+			"mappings");
+		String cssVariable = StringPool.BLANK;
+
+		Iterator<?> iterator = mappingsJSONArray.iterator();
+
+		while (iterator.hasNext()) {
+			JSONObject mappingJSONObject = (JSONObject)iterator.next();
+
+			if (Objects.equals(
+					mappingJSONObject.getString("type"), "cssVariable")) {
+
+				cssVariable = mappingJSONObject.getString("value");
+
+				break;
+			}
+		}
+
+		return JSONUtil.put(
+			"cssVariable", cssVariable
+		).put(
+			"value", value
+		);
+	}
+
+	private static StyleBookEntry _getStyleBookEntry(long styleBookEntryId) {
+		return StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+			styleBookEntryId);
 	}
 
 }

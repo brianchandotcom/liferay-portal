@@ -141,12 +141,12 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptDragAndDropObjectToBottomOfNestedObject {
+	function javaScriptDragAndDropObjectBelowTallNestedObject {
 		WaitForSPARefresh();
 
 		var javaScript = '''
 Simulate = {
-	dragAndDrop: async function(source, target, offset = 44) {
+	dragAndDrop: async function(source, target) {
 		const dataTransfer = new DataTransfer();
 
 		const dispatchEvent = async(type, element) => {
@@ -156,7 +156,7 @@ Simulate = {
 				type,{
 					bubbles: true,
 					clientX: rect.left + (rect.width / 2),
-					clientY: rect.top + rect.height - offset,
+					clientY: rect.top + (rect.height / (5 / 4)),
 					dataTransfer: dataTransfer,
 					relatedTarget: element
 				});

@@ -43,35 +43,21 @@ public class CucumberFeatureFile implements Serializable {
 	}
 
 	public String getCategoryName() {
-		StringBuilder sb = new StringBuilder();
-
 		Matcher matcher = _relativePathPattern.matcher(getRelativePath());
 
-		if (matcher.matches()) {
-			String folderNames = matcher.group(1);
-
-			for (String folderName : folderNames.split("/")) {
-				if (folderName.contains(".")) {
-					for (String folderNameWord : folderName.split("\\.")) {
-						sb.append(StringUtils.capitalize(folderNameWord));
-						sb.append(" ");
-					}
-
-					sb.setLength(sb.length() - 1);
-				}
-				else {
-					sb.append(StringUtils.capitalize(folderName));
-				}
-
-				sb.append("/");
-			}
+		if (!matcher.matches()) {
+			return "";
 		}
 
-		if (sb.length() >= 1) {
-			sb.setLength(sb.length() - 1);
-		}
+		String folderNames = matcher.group(1);
 
-		return sb.toString();
+		folderNames = folderNames.replaceAll("\\.", " ");
+
+		folderNames = StringUtils.capitalize(folderNames);
+
+		folderNames = folderNames.replaceAll("\\s*(.+?)[/\\s]*", "$1");
+
+		return folderNames;
 	}
 
 	public File getFile() {

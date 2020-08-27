@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_VIEW</td>
-	<td>//span[@class='icon-monospaced']/*[name()='svg'][contains(@class,'lexicon-icon-view')]</td>
+	<td>//*[@data-title='View']//*[name()='svg'][contains(@class,'lexicon-icon-view')]</td>
 	<td></td>
 </tr>
 <tr>

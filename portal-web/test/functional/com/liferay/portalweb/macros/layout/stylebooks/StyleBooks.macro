@@ -56,12 +56,6 @@ definition {
 			key_card = "${styleBookName}",
 			locator1 = "Card#CARD_TYPE_ASSET");
 
-		PageEditor.assertFragmentSidebarLoaded();
-
-		PageEditor.gotoTab(tabName = "Page Design Options");
-
-		Navigator.gotoNavTab(navTab = "Style Book");
-
 		AssertElementPresent(
 			key_card = "${styleBookName}",
 			locator1 = "Card#CARD_SELECTED");

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
 import com.liferay.portlet.sites.search.UserGroupRoleRoleChecker;
+import com.liferay.site.memberships.web.internal.util.DepotRolesUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.List;
@@ -110,7 +111,7 @@ public class UserRolesDisplayContext {
 			QueryUtil.ALL_POS, roleSearch.getOrderByComparator());
 
 		if (group.getType() == GroupConstants.TYPE_DEPOT) {
-			roles = _filterGroupRoles(
+			roles = DepotRolesUtil.filterGroupRoles(
 				themeDisplay.getPermissionChecker(), _getGroupId(), roles);
 		}
 		else {
@@ -130,61 +131,6 @@ public class UserRolesDisplayContext {
 		_roleSearch = roleSearch;
 
 		return _roleSearch;
-	}
-
-	/**
-	 * @see com.liferay.depot.web.internal.display.context.DepotAdminMembershipsDisplayContext.Step2#_filterGroupRoles(
-	 *      List)
-	 */
-	private List<Role> _filterGroupRoles(
-			PermissionChecker permissionChecker, long groupId, List<Role> roles)
-		throws PortalException {
-
-		if (permissionChecker.isCompanyAdmin() ||
-			permissionChecker.isGroupOwner(groupId)) {
-
-			Stream<Role> stream = roles.stream();
-
-			return stream.filter(
-				role ->
-					!Objects.equals(
-						role.getName(),
-						DepotRolesConstants.
-							ASSET_LIBRARY_CONNECTED_SITE_MEMBER) &&
-					!Objects.equals(
-						role.getName(),
-						DepotRolesConstants.ASSET_LIBRARY_MEMBER)
-			).collect(
-				Collectors.toList()
-			);
-		}
-
-		if (!GroupPermissionUtil.contains(
-				permissionChecker, groupId, ActionKeys.ASSIGN_USER_ROLES)) {
-
-			return Collections.emptyList();
-		}
-
-		Stream<Role> stream = roles.stream();
-
-		return stream.filter(
-			role ->
-				!Objects.equals(
-					role.getName(),
-					DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER) &&
-				!Objects.equals(
-					role.getName(), DepotRolesConstants.ASSET_LIBRARY_MEMBER) &&
-				!Objects.equals(
-					role.getName(),
-					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR) &&
-				!Objects.equals(
-					role.getName(), DepotRolesConstants.ASSET_LIBRARY_OWNER) &&
-				RolePermissionUtil.contains(
-					permissionChecker, groupId, role.getRoleId(),
-					ActionKeys.ASSIGN_MEMBERS)
-		).collect(
-			Collectors.toList()
-		);
 	}
 
 	private long _getGroupId() {

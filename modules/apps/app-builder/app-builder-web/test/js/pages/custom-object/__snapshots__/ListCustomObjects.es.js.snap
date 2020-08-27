@@ -218,6 +218,7 @@ exports[`ListCustomObjects renders 1`] = `
             >
               <td
                 class="table-cell-expand text-left"
+                colspan="1"
               >
                 <p
                   class="table-list-title"
@@ -231,11 +232,13 @@ exports[`ListCustomObjects renders 1`] = `
               </td>
               <td
                 class="table-cell-expand-smaller text-left"
+                colspan="1"
               >
                 months ago
               </td>
               <td
                 class="table-cell-expand-smaller text-left"
+                colspan="1"
               >
                 months ago
               </td>

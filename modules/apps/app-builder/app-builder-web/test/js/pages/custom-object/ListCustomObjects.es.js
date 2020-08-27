@@ -219,7 +219,7 @@ describe('ListCustomObjects', () => {
 		expect(
 			document.querySelectorAll('.dropdown-menu.show .dropdown-item')
 				.length
-		).toBe(5);
+		).toBe(6);
 
 		await act(async () => {
 			fireEvent.click(deleteButton);
@@ -349,7 +349,7 @@ describe('ListCustomObjects', () => {
 		const dropDownMenu = baseElement.querySelectorAll('.dropdown-menu');
 		const actions = dropDownMenu[1].querySelectorAll('.dropdown-item');
 
-		expect(actions.length).toBe(5);
+		expect(actions.length).toBe(6);
 		expect(history.length).toBe(1);
 		expect(history.location.pathname).toBe('/');
 

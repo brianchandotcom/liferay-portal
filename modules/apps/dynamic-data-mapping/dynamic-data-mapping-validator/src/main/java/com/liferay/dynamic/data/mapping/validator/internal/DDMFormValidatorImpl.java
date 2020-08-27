@@ -42,7 +42,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidFormRuleExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidTypeForFieldType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidValidationExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
@@ -306,7 +306,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		}
 
 		if (!validType) {
-			throw new MustSetValidTypeForFieldType(ddmFormField.getType());
+			throw new MustSetValidType(ddmFormField.getType());
 		}
 
 		Matcher matcher = _ddmFormFieldTypePattern.matcher(

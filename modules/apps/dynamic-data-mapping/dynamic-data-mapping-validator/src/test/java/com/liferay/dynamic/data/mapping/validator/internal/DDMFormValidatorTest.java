@@ -37,7 +37,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidFormRuleExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidTypeForFieldType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidValidationExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.portal.bean.BeanPropertiesImpl;
@@ -199,7 +199,7 @@ public class DDMFormValidatorTest {
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
-	@Test(expected = MustSetValidTypeForFieldType.class)
+	@Test(expected = MustSetValidType.class)
 	public void testInvalidFieldType() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);

@@ -193,6 +193,103 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	@Test
+	public void testGetInfoFieldValuesJournalArticleAllCategories()
+		throws Exception {
+
+		AssetVocabulary internalVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(), null,
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, null, AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL,
+				new ServiceContext());
+
+		AssetCategory internalAssetCategory =
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, internalVocabulary.getVocabularyId(), null,
+				new ServiceContext());
+
+		AssetVocabulary publicVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(), null,
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+				new ServiceContext());
+
+		String publicCategoryTitle = RandomTestUtil.randomString();
+
+		AssetCategory publicAssetCategory =
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				HashMapBuilder.put(
+					LocaleUtil.US, publicCategoryTitle
+				).build(),
+				null, publicVocabulary.getVocabularyId(), null,
+				new ServiceContext());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {
+				internalAssetCategory.getCategoryId(),
+				publicAssetCategory.getCategoryId()
+			});
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, serviceContext);
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		List<InfoFieldValue<Object>> infoFieldValues =
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry);
+
+		List<InfoFieldValue<Object>> filteredInfoFieldValues = ListUtil.filter(
+			infoFieldValues,
+			infoFieldValue -> {
+				InfoField infoField = infoFieldValue.getInfoField();
+
+				return Objects.equals("categories", infoField.getName());
+			});
+
+		Assert.assertEquals(
+			filteredInfoFieldValues.toString(), 1,
+			filteredInfoFieldValues.size());
+
+		InfoFieldValue<Object> infoFieldValue = filteredInfoFieldValues.get(0);
+
+		Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
+
+		List<Category> categories = (List<Category>)value;
+
+		Category category = categories.get(0);
+
+		Assert.assertEquals(
+			category.getLabel(LocaleUtil.ENGLISH), publicCategoryTitle);
+	}
+
+	@Test
 	public void testGetInfoFieldValuesJournalArticleInternalVocabularyWithCategory()
 		throws Exception {
 

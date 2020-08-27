@@ -563,7 +563,12 @@ definition {
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
 			site = "false",
-			title = "WC WebContent Title");
+			title = "WC WebContent From Depot");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Site",
+			groupName = "Site Name",
+			title = "WC WebContent From Site");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -579,7 +584,15 @@ definition {
 
 		ItemSelector.viewLocationInfoViaWCD(
 			locationName = "Test Depot Name",
-			titleList = "WC WebContent Title");
+			titleList = "WC WebContent From Depot");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		ItemSelector.viewLocationInfoViaWCD(
+			locationName = "Site Name",
+			titleList = "WC WebContent From Site");
 	}
 
 }

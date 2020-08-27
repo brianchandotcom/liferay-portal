@@ -9,13 +9,18 @@
 </thead>
 <tbody>
 <tr>
-	<td>DATA_LIST_UNORDERED</td>
-	<td>xpath=(//div[@class='showcase-example']//ul//li)[${key_item}]</td>
+	<td>ALLOY_DATA_LIST_ITEM_DESCRIPTION</td>
+	<td>xpath=(//dl[@class='alloy-data-list']//dd)[${key_item}]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DATA_LIST_ORDERED</td>
-	<td>xpath=(//div[@class='showcase-example']//ol//li)[${key_item}]</td>
+	<td>ALLOY_DATA_LIST_ITEM_ICON</td>
+	<td>//img[contains(@src,'${key_icon}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALLOY_DATA_LIST_ITEM_TERM</td>
+	<td>xpath=(//dl[@class='alloy-data-list']//dt)[${key_item}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -24,13 +29,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIRST_NAME_CELL</td>
-	<td>//tbody//td[1]//span[contains(@class,'alloy-output-text')]</td>
+	<td>DATA_LIST_ORDERED</td>
+	<td>xpath=(//div[@class='showcase-example']//ol//li)[${key_item}]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECTION_FIRST_NAME_CELL</td>
-	<td>//tbody//td[2]//span[contains(@class,'alloy-output-text')]</td>
+	<td>DATA_LIST_UNORDERED</td>
+	<td>xpath=(//div[@class='showcase-example']//ul//li)[${key_item}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN_CARET_BUTTON</td>
+	<td>//span[@role='menuitem']//span[contains(@class,'caret')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN_BUTTON</td>
+	<td>//span[contains(@class,'menu-label')]//span[contains(.,'Dropdown')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_TABLE</td>
+	<td>//td[contains(text(),'${key_eventText}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIRST_NAME_CELL</td>
+	<td>//tbody//td[1]//span[contains(@class,'alloy-output-text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,6 +71,26 @@
 <tr>
 	<td>GENERAL_BUTTON_3</td>
 	<td>//label[contains(.,'Example')][contains(.,'value')]/ancestor::div[@class='showcase-example']//button[@type='button' or @value='1234']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_BUTTON</td>
+	<td>//span[contains(@class,'menu-label')]//span[contains(@class,'alloy-output-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_BUTTON_2</td>
+	<td>xpath=(//span[contains(@class,'menu-label')]//span[contains(@class,'alloy-output-text')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_ITEM</td>
+	<td>//label[contains(.,'Example')][contains(.,'${key_exampleType}')]/ancestor::div[@class='showcase-example']//span[contains(text(),'${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_OUTPUT</td>
+	<td>//label[contains(.,'${key_exampleType}')]/parent::div[@class='showcase-example']//ul[contains(@class,'feedback')]/li[contains(@class,'text-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,32 +124,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ALLOY_DATA_LIST_ITEM_TERM</td>
-	<td>xpath=(//dl[@class='alloy-data-list']//dt)[${key_item}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALLOY_DATA_LIST_ITEM_DESCRIPTION</td>
-	<td>xpath=(//dl[@class='alloy-data-list']//dd)[${key_item}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALLOY_DATA_LIST_ITEM_ICON</td>
-	<td>//img[contains(@src,'${key_icon}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH_ICON</td>
 	<td>xpath=(//*[contains(@class,'icon-search')])[${key_item}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECTION_MODAL_LINK</td>
-	<td>//div[@class='showcase-example']//ul//li[${key_item}]//a</td>
-	<td></td>
-</tr><tr>
-	<td>SELECTION_MODAL_TEXT</td>
-	<td>//div[@class='yui3-widget-bd modal-body']//div//div//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,18 +139,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EVENT_TABLE</td>
-	<td>//td[contains(text(),'${key_eventText}')]</td>
+	<td>SELECTION_FIRST_NAME_CELL</td>
+	<td>//tbody//td[2]//span[contains(@class,'alloy-output-text')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TABLE_LAST_NAME</td>
-	<td>//a[contains(text(),'Last Name')]</td>
+	<td>SELECTION_MODAL_LINK</td>
+	<td>//div[@class='showcase-example']//ul//li[${key_item}]//a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TABLE_LAST_NAME_ARROW</td>
-	<td>//a[contains(text(),'Last Name')]//span[@class='table-sort-indicator']</td>
+	<td>SELECTION_MODAL_TEXT</td>
+	<td>//div[@class='yui3-widget-bd modal-body']//div//div//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,6 +161,16 @@
 <tr>
 	<td>TABLE_DATE_OF_BIRTH_ARROW</td>
 	<td>//a[contains(text(),'Date of Birth')]//span[@class='table-sort-indicator']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_LAST_NAME</td>
+	<td>//a[contains(text(),'Last Name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_LAST_NAME_ARROW</td>
+	<td>//a[contains(text(),'Last Name')]//span[@class='table-sort-indicator']</td>
 	<td></td>
 </tr>
 </tbody>

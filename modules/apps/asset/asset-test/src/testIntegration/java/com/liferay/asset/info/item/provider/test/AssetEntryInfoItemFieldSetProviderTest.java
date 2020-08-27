@@ -216,16 +216,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				publicAssetCategory.getCategoryId()
 			});
 
-		List<InfoFieldValue<Object>> infoFieldValues =
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry);
-
-		List<InfoFieldValue<Object>> filteredInfoFieldValues = ListUtil.filter(
-			infoFieldValues,
-			infoFieldValue -> {
-				InfoField infoField = infoFieldValue.getInfoField();
-
-				return Objects.equals("categories", infoField.getName());
-			});
+		List<InfoFieldValue<Object>> filteredInfoFieldValues =
+			_getInfoFieldValues(assetEntry, "categories");
 
 		Assert.assertEquals(
 			filteredInfoFieldValues.toString(), 1,
@@ -256,17 +248,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {assetCategory.getCategoryId()});
 
-		List<InfoFieldValue<Object>> infoFieldValues =
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry);
-
-		List<InfoFieldValue<Object>> filteredInfoFieldValues = ListUtil.filter(
-			infoFieldValues,
-			infoFieldValue -> {
-				InfoField infoField = infoFieldValue.getInfoField();
-
-				return Objects.equals(
-					vocabulary.getName(), infoField.getName());
-			});
+		List<InfoFieldValue<Object>> filteredInfoFieldValues =
+			_getInfoFieldValues(assetEntry, vocabulary.getName());
 
 		Assert.assertEquals(
 			filteredInfoFieldValues.toString(), 0,
@@ -288,17 +271,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {assetCategory.getCategoryId()});
 
-		List<InfoFieldValue<Object>> infoFieldValues =
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry);
-
-		List<InfoFieldValue<Object>> filteredInfoFieldValues = ListUtil.filter(
-			infoFieldValues,
-			infoFieldValue -> {
-				InfoField infoField = infoFieldValue.getInfoField();
-
-				return Objects.equals(
-					vocabulary.getName(), infoField.getName());
-			});
+		List<InfoFieldValue<Object>> filteredInfoFieldValues =
+			_getInfoFieldValues(assetEntry, vocabulary.getName());
 
 		Assert.assertEquals(
 			filteredInfoFieldValues.toString(), 1,
@@ -364,6 +338,21 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			null, null, visibilityTypePublic, new ServiceContext());
+	}
+
+	private List<InfoFieldValue<Object>> _getInfoFieldValues(
+		AssetEntry assetEntry, String fieldName) {
+
+		List<InfoFieldValue<Object>> infoFieldValues =
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry);
+
+		return ListUtil.filter(
+			infoFieldValues,
+			infoFieldValue -> {
+				InfoField infoField = infoFieldValue.getInfoField();
+
+				return Objects.equals(fieldName, infoField.getName());
+			});
 	}
 
 	@Inject

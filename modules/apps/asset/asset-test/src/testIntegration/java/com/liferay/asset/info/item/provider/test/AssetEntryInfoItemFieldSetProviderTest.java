@@ -196,14 +196,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldValuesJournalArticleAllCategories()
 		throws Exception {
 
-		AssetVocabulary internalVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(), null,
-				HashMapBuilder.put(
-					LocaleUtil.US, RandomTestUtil.randomString()
-				).build(),
-				null, null, AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL,
-				new ServiceContext());
+		AssetVocabulary internalVocabulary = _addVocabulary(
+			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
 
 		AssetCategory internalAssetCategory =
 			_assetCategoryLocalService.addCategory(
@@ -215,14 +209,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				null, internalVocabulary.getVocabularyId(), null,
 				new ServiceContext());
 
-		AssetVocabulary publicVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(), null,
-				HashMapBuilder.put(
-					LocaleUtil.US, RandomTestUtil.randomString()
-				).build(),
-				null, null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
-				new ServiceContext());
+		AssetVocabulary publicVocabulary = _addVocabulary(
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
 		String publicCategoryTitle = RandomTestUtil.randomString();
 
@@ -293,13 +281,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldValuesJournalArticleInternalVocabularyWithCategory()
 		throws Exception {
 
-		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
-			TestPropsValues.getUserId(), _group.getGroupId(), null,
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			null, null, AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL,
-			new ServiceContext());
+		AssetVocabulary vocabulary = _addVocabulary(
+			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
@@ -353,13 +336,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldValuesJournalArticlePublicVocabularyWithCategory()
 		throws Exception {
 
-		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
-			TestPropsValues.getUserId(), _group.getGroupId(), null,
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			null, null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
-			new ServiceContext());
+		AssetVocabulary vocabulary = _addVocabulary(
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
 		String categoryTitle = RandomTestUtil.randomString();
 
@@ -420,6 +398,17 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		Assert.assertEquals(
 			category.getLabel(LocaleUtil.ENGLISH), categoryTitle);
+	}
+
+	private AssetVocabulary _addVocabulary(int visibilityTypePublic)
+		throws Exception {
+
+		return _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), _group.getGroupId(), null,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null, null, visibilityTypePublic, new ServiceContext());
 	}
 
 	@Inject

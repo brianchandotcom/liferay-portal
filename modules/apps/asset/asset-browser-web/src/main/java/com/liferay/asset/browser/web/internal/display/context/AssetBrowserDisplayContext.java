@@ -494,8 +494,7 @@ public class AssetBrowserDisplayContext {
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(getGroupId()),
 				ListUtil.toLongArray(
 					DepotEntryServiceUtil.getGroupConnectedDepotEntries(
-						getGroupId(), true, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS),
+						getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					DepotEntry::getGroupId));
 		}
 

@@ -19,14 +19,14 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
-public class FastURLToCORSSupportMapperTest
+public class StaticSizeTrieURLToCORSSupportMapperTest
 	extends SimpleURLToCORSSupportMapperTest {
 
 	@Override
 	protected URLToCORSSupportMapper createURLToCORSSupportMapper(
 		Map<String, CORSSupport> corsSupports) {
 
-		return new FastURLToCORSSupportMapper(corsSupports);
+		return new StaticSizeTrieURLToCORSSupportMapper(corsSupports);
 	}
 
 }

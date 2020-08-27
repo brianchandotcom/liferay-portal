@@ -628,7 +628,7 @@ definition {
 		MenuItem.click(menuItem = "Update Container Configuration");
 
 		PageEditor.viewContainerStyle(
-			backgroundColor = "rgb(40, 125, 60)",
+			backgroundColor = "success",
 			position = "1");
 
 		for (var menuItem : list "Add Container,Add Heading,Update Heading Editable Values,Update Container Configuration") {

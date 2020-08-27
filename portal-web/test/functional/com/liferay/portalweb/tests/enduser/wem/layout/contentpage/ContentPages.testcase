@@ -513,7 +513,7 @@ definition {
 
 		task ("Assert the Container has Fixed Width, padding bottom 4 and padding top 2") {
 			PageEditor.viewContainerStyle(
-				backgroundColor = "rgb(40, 125, 60)",
+				backgroundColor = "success",
 				containerWidth = "Fixed Width",
 				paddingBottom = "4",
 				paddingTop = "2",
@@ -1502,7 +1502,7 @@ definition {
 				panel = "Styles");
 
 			PageEditor.viewContainerStyle(
-				backgroundColor = "rgb(40, 125, 60)",
+				backgroundColor = "success",
 				position = "1");
 		}
 
@@ -1513,18 +1513,18 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "heading",
-				textColor = "rgb(255, 255, 255)");
+				textColor = "white");
 		}
 
 		task ("Assert configuration duplicated with Container and Heading") {
 			PageEditor.gotoDuplicate(fragmentName = "Container");
 
 			PageEditor.viewContainerStyle(
-				backgroundColor = "rgb(40, 125, 60)",
+				backgroundColor = "success",
 				position = "2");
 
 			AssertElementPresent(
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Heading')]/parent::div[contains(@style,'color: rgb(255, 255, 255)')]",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Heading')]/parent::div[contains(@style,'color: var(--white)')]",
 				key_position = "2",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}

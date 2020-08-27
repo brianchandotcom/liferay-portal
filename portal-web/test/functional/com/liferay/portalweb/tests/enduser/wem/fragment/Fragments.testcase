@@ -387,7 +387,7 @@ definition {
 				alignment = "right",
 				fragmentName = "heading",
 				headingLevel = "h2",
-				textColor = "rgb(108, 117, 125)");
+				textColor = "blockquote-small-color");
 		}
 
 		task ("Assert the fragment styles are shown in view mode") {
@@ -518,7 +518,7 @@ definition {
 			PageEditor.viewFragmentStyle(
 				alignment = "right",
 				fragmentName = "paragraph",
-				textColor = "rgb(185, 80, 0)");
+				textColor = "warning");
 		}
 
 		task ("Remove the fragment") {
@@ -572,7 +572,7 @@ definition {
 
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
-				borderColor = "rgb(247, 248, 249)",
+				borderColor = "gray-100",
 				bottomSpacing = "1",
 				fragmentName = "separator");
 		}
@@ -742,8 +742,8 @@ definition {
 
 		task ("View the Container styles") {
 			PageEditor.viewContainerStyle(
-				backgroundColor = "rgb(185, 80, 0)",
-				borderColor = "rgb(218, 20, 20)",
+				backgroundColor = "warning",
+				borderColor = "danger",
 				borderRadius = "lg",
 				borderWidth = "5",
 				contentDisplay = "flex",

@@ -235,7 +235,7 @@ definition {
 				fragmentName = "heading",
 				headingLevel = "h2",
 				marginBottom = "1",
-				textColor = "rgb(218, 20, 20)");
+				textColor = "danger");
 
 			Button.click(button = "Publish Master");
 		}
@@ -272,7 +272,7 @@ definition {
 				fragmentName = "heading",
 				headingLevel = "h2",
 				marginBottom = "1",
-				textColor = "rgb(218, 20, 20)");
+				textColor = "danger");
 		}
 	}
 

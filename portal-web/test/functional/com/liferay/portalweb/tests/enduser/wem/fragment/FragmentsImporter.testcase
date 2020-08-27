@@ -488,7 +488,7 @@ definition {
 				fragmentName = "heading",
 				headingLevel = "H2",
 				marginBottom = "1",
-				textColor = "rgb(218, 20, 20)");
+				textColor = "danger");
 		}
 	}
 

@@ -20,14 +20,16 @@ export default function changeMasterLayout({masterLayoutPlid}) {
 		return LayoutService.changeMasterLayout({
 			masterLayoutPlid,
 			onNetworkStatus: dispatch,
-		}).then(({fragmentEntryLinks, masterLayoutData}) => {
+		}).then((data = {}) => {
 			dispatch(
 				changeMasterLayoutAction({
-					fragmentEntryLinks,
-					masterLayoutData,
+					fragmentEntryLinks: data.fragmentEntryLinks,
+					masterLayoutData: data.masterLayoutData,
 					masterLayoutPlid,
 				})
 			);
+
+			return data;
 		});
 	};
 }

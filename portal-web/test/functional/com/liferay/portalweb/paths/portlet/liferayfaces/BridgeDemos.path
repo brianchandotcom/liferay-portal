@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>EXPORT_LINK</td>
-	<td>//tr[contains(.,'${key_lastName}')]//a[contains(.,'Export')]</td>
+	<td>//tr[contains(.,'${key_lastName}')]//a[contains(.,'Export')] | //button[contains(@type,'submit')]/span[contains(.,'${key_lastName}')]</td>
 	<td></td>
 </tr>
 <tr>

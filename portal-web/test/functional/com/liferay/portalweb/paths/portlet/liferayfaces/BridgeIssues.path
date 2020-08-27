@@ -9,8 +9,103 @@
 </thead>
 <tbody>
 <tr>
-	<td>ADD_ATTACHMENT</td>
-	<td>//input[@value='Add Attachment']</td>
+	<td>ACTION_BUTTON</td>
+	<td>//*[contains(@class,'testAction')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDA_DATEPICKER</td>
+	<td>//table[contains(@class, 'ui-datepicker-calendar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDA_TABLE</td>
+	<td>//table[contains(@class, 'ui-datepicker-calendar')]//a[contains(text(), '14')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDA_TRIGGER_BUTTON</td>
+	<td>//button[contains(@class, 'ui-datepicker-trigger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_FILE_BUTTON</td>
+	<td>//span[contains(text(),'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_FILE_BUTTON_2</td>
+	<td>//input[contains(@id,'simpleModeFileUpload')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_FILE_BUTTON_3</td>
+	<td>xpath=(//span[contains(text(),'Choose')])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_VALUE</td>
+	<td>//div[@class='liferay-faces-bridge-body']//p[contains(.,'Detail: ')]/span[contains(text(),'${key_attribute}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_NAME</td>
+	<td>//span[contains(text(),'Document_2.jpeg')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_NAME_2</td>
+	<td>xpth=(//span[contains(text(),'Document_2.jpeg')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_NAME_3</td>
+	<td>xpath=(//span[contains(text(),'Document_2.jpeg')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HTML_BASIC</td>
+	<td>//div[@class='liferay-faces-bridge-body']/code[contains(text(),'${key_attribute}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_BUTTON</td>
+	<td>//input[@value='result.xhtml']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RENDER_KITID</td>
+	<td>//code[@id='renderKitId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_MENU_OPTION</td>
+	<td>//div[@class='ui-selectonemenu-items-wrapper']//li[contains(text(),'${key_opt}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_MENU_VALUE</td>
+	<td>//label[contains(text(),'${key_attribute}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ONE_MENU</td>
+	<td>//*[contains(@id,'p_selectOneMenu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_VALUE</td>
+	<td>//div[@class='liferay-faces-bridge-body']//p[contains(.,'Status: ')]/span[contains(text(),'${key_attribute}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMIT_FILE_BUTTON</td>
+	<td>//span[contains(text(),'${key_attribute}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_VALUE</td>
+	<td>//div[@class='liferay-faces-bridge-body']//p[contains(.,'Test:')]/span[contains(text(),'${key_attribute}')]</td>
 	<td></td>
 </tr>
 </tbody>

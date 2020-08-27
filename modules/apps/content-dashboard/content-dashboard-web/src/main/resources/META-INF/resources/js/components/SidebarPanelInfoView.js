@@ -123,7 +123,7 @@ const SidebarPanelInfoView = ({
 					>
 						{user.url ? (
 							<img
-								alt={`${user.alt}.`}
+								alt={`${user.name}.`}
 								className="sticker-img"
 								src={user.url}
 							/>
@@ -131,7 +131,7 @@ const SidebarPanelInfoView = ({
 							<ClayIcon symbol="user" />
 						)}
 					</ClaySticker>
-					<span className="c-ml-2 h5">{user.alt}</span>
+					<span className="c-ml-2 h5">{user.name}</span>
 				</div>
 
 				{!!sortedViewURLS.length && (

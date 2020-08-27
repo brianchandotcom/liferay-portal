@@ -23,9 +23,9 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -248,28 +249,25 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private JSONObject _getUserJSONObject(
 		ContentDashboardItem contentDashboardItem, Locale locale) {
 
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				String.valueOf(
-					contentDashboardItem.getDisplayFieldValue(
-						"authorProfileImage", locale)));
+		String authorProfileImage = null;
 
-			long portraitId = GetterUtil.getLong(
-				_http.getParameter(jsonObject.getString("url"), "img_id"));
+		WebImage webImage = (WebImage)contentDashboardItem.getDisplayFieldValue(
+			"authorProfileImage", locale);
 
-			if (portraitId <= 0) {
-				jsonObject.put("url", (String)null);
-			}
+		long portraitId = GetterUtil.getLong(
+			_http.getParameter(HtmlUtil.escape(webImage.getUrl()), "img_id"));
 
-			jsonObject.put("userId", contentDashboardItem.getUserId());
-
-			return jsonObject;
+		if (portraitId > 0) {
+			authorProfileImage = webImage.getUrl();
 		}
-		catch (JSONException jsonException) {
-			_log.error(jsonException, jsonException);
 
-			return JSONFactoryUtil.createJSONObject();
-		}
+		return JSONUtil.put(
+			"name", webImage.getAlt()
+		).put(
+			"url", authorProfileImage
+		).put(
+			"userId", contentDashboardItem.getUserId()
+		);
 	}
 
 	private JSONArray _getVersionsJSONArray(

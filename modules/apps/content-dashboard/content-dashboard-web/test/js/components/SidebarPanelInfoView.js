@@ -59,7 +59,7 @@ const mockTags = ['tag1', 'tag2'];
 const mockTitle = 'Basic Web Content Title';
 
 const mockUser = {
-	alt: 'Kate Williams',
+	name: 'Kate Williams',
 	url: '',
 	userId: 20126,
 };

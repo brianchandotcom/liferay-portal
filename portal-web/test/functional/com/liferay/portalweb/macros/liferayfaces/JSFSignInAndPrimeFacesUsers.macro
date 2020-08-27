@@ -134,6 +134,10 @@ definition {
 	}
 
 	macro uploadPortrait {
+		var imageSrc = selenium.getAttribute("//img[contains(@id,'portrait')]@src");
+
+		AssertElementPresent(locator1 = "//img[contains(@src,'${imageSrc}')]");
+
 		Click(locator1 = "JSFSignInAndPrimeFacesUsers#CHOOSE_BUTTON");
 
 		UploadCommonFile.uploadCommonFileHidden(
@@ -153,7 +157,7 @@ definition {
 
 		JSFSignInAndPrimeFacesUsers.goToEditUsers(screenName = "${screenName1}");
 
-		SikuliAssertElementPresent(locator1 = "JSFSignInAndPrimeFacesUsers#PORTRAINT");
+		AssertElementNotPresent(locator1 = "//img[contains(@src,'${imageSrc}')]");
 	}
 
 	macro validateUserField {

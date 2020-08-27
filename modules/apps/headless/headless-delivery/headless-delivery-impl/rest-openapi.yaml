@@ -1331,6 +1331,94 @@ components:
                         $ref: "#/components/schemas/Fragment"
                     type: array
             type: object
+        FragmentStyle:
+            description:
+                ""
+            properties:
+                backgroundColor:
+                    type: string
+                backgroundFragmentImage:
+                    $ref: "#/components/schemas/FragmentImage"
+                borderColor:
+                    type: string
+                borderRadius:
+                    type: string
+                borderWidth:
+                    type: string
+                fontFamily:
+                    type: string
+                fontSize:
+                    type: string
+                fontWeight:
+                    type: string
+                height:
+                    type: string
+                marginBottom:
+                    type: string
+                marginLeft:
+                    type: string
+                marginRight:
+                    type: string
+                marginTop:
+                    type: string
+                maxHeight:
+                    type: string
+                maxWidth:
+                    type: string
+                minHeight:
+                    type: string
+                minWidth:
+                    type: string
+                opacity:
+                    type: string
+                overflow:
+                    type: string
+                paddingBottom:
+                    type: string
+                paddingLeft:
+                    type: string
+                paddingRight:
+                    type: string
+                paddingTop:
+                    type: string
+                shadow:
+                    type: string
+                textAlign:
+                    type: string
+                textColor:
+                    type: string
+                width:
+                    type: string
+            type: object
+        FragmentViewport:
+            additionalProperties: false
+            properties:
+                fragmentViewportStyle:
+                    additionalProperties: false
+                    properties:
+                        marginBottom:
+                            type: string
+                        marginLeft:
+                            type: string
+                        marginRight:
+                            type: string
+                        marginTop:
+                            type: string
+                        paddingBottom:
+                            type: string
+                        paddingLeft:
+                            type: string
+                        paddingRight:
+                            type: string
+                        paddingTop:
+                            type: string
+                    type: object
+                id:
+                    type: string
+            required:
+                - fragmentViewportStyle
+                - id
+            type: object
         KnowledgeBaseArticle:
             description:
                 Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.
@@ -2103,6 +2191,12 @@ components:
                         - collectionReference
                         - collectionType
                     type: object
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                fragmentViewports:
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
                 listItemStyle:
                     type: string
                 listStyle:
@@ -2111,10 +2205,6 @@ components:
                     type: integer
                 numberOfItems:
                     type: integer
-                styles:
-                    additionalProperties:
-                        type: object
-                    type: object
                 templateKey:
                     type: string
             type: object
@@ -2225,10 +2315,12 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentField"
                     type: array
-                styles:
-                    additionalProperties:
-                        type: object
-                    type: object
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                fragmentViewports:
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
                 widgetInstances:
                     items:
                         $ref: "#/components/schemas/WidgetInstance"
@@ -2238,6 +2330,12 @@ components:
             type: object
         PageRowDefinition:
             properties:
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                fragmentViewports:
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
                 gutters:
                     type: boolean
                 modulesPerRow:
@@ -2283,10 +2381,6 @@ components:
                     items:
                         $ref: "#/components/schemas/RowViewport"
                     type: array
-                styles:
-                    additionalProperties:
-                        type: object
-                    type: object
                 verticalAlignment:
                     type: string
             type: object
@@ -2316,6 +2410,12 @@ components:
                     type: object
                 fragmentLink:
                     $ref: "#/components/schemas/FragmentLink"
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                fragmentViewports:
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
                 layout:
                     properties:
                         align:
@@ -2380,10 +2480,6 @@ components:
                         widthType:
                             enum: [Fixed, Fluid]
                             type: string
-                    type: object
-                styles:
-                    additionalProperties:
-                        type: object
                     type: object
             type: object
         PageTemplate:
@@ -2469,10 +2565,12 @@ components:
             type: object
         PageWidgetInstanceDefinition:
             properties:
-                styles:
-                    additionalProperties:
-                        type: object
-                    type: object
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                fragmentViewports:
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
                 widgetInstance:
                     $ref: "#/components/schemas/WidgetInstance"
             type: object

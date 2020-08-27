@@ -60,7 +60,7 @@ const initialState = {
 };
 
 export default function ({context}) {
-	const {getAnalyticsReportsData} = context.endpoints;
+	const {analyticsReportsDataURL} = context;
 
 	const isMounted = useIsMounted();
 
@@ -101,9 +101,9 @@ export default function ({context}) {
 	};
 
 	useEffect(() => {
-		getData(getAnalyticsReportsData);
+		getData(analyticsReportsDataURL);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [getAnalyticsReportsData]);
+	}, [analyticsReportsDataURL]);
 
 	const handleSelectedLanguageClick = useCallback(
 		(url, timeSpanOffset, timeSpanOption) => {

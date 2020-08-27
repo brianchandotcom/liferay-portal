@@ -19,13 +19,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,14 +41,13 @@ import java.util.regex.Pattern;
 public class TypedProperties {
 
 	public Object get(String key) {
-		ObjectValuePair<String, List<String>> objectValuePair = _storage.get(
-			key);
+		Map.Entry<String, List<String>> entry = _storage.get(key);
 
-		if (objectValuePair == null) {
+		if (entry == null) {
 			return null;
 		}
 
-		String string = objectValuePair.getKey();
+		String string = entry.getKey();
 
 		if (string != null) {
 			return _convertFromString(string);
@@ -67,7 +66,7 @@ public class TypedProperties {
 		while (propertiesReader.nextProperty()) {
 			_storage.put(
 				propertiesReader.getPropertyName(),
-				new ObjectValuePair<>(
+				new AbstractMap.SimpleImmutableEntry<>(
 					propertiesReader.getPropertyValue(),
 					propertiesReader.getValues()));
 		}
@@ -76,27 +75,29 @@ public class TypedProperties {
 	}
 
 	public void put(String key, Object value) {
-		ObjectValuePair<String, List<String>> old = _storage.get(key);
+		Map.Entry<String, List<String>> oldEntry = _storage.get(key);
 
-		ObjectValuePair<String, List<String>> objectValuePair =
-			new ObjectValuePair<>(_convertToString(value), null);
+		List<String> values = null;
 
-		if (old != null) {
-			Object oldObject = _convertFromString(old.getKey());
+		if (oldEntry != null) {
+			Object oldObject = _convertFromString(oldEntry.getKey());
 
 			if (Objects.equals(oldObject, value)) {
-				objectValuePair.setValue(old.getValue());
+				values = oldEntry.getValue();
 			}
 			else {
 				Class<?> clazz = value.getClass();
 
 				if (clazz.isArray() && Objects.deepEquals(oldObject, value)) {
-					objectValuePair.setValue(old.getValue());
+					values = oldEntry.getValue();
 				}
 			}
 		}
 
-		_storage.put(key, objectValuePair);
+		_storage.put(
+			key,
+			new AbstractMap.SimpleImmutableEntry<>(
+				_convertToString(value), values));
 	}
 
 	public void remove(String key) {
@@ -111,18 +112,17 @@ public class TypedProperties {
 			sb.append(_LINE_SEPARATOR);
 		}
 
-		for (Map.Entry<String, ObjectValuePair<String, List<String>>> entry :
+		for (Map.Entry<String, Map.Entry<String, List<String>>> entry :
 				_storage.entrySet()) {
 
-			ObjectValuePair<String, List<String>> objectValuePair =
-				entry.getValue();
+			Map.Entry<String, List<String>> valuesEntry = entry.getValue();
 
-			List<String> layout = objectValuePair.getValue();
+			List<String> layout = valuesEntry.getValue();
 
 			if ((layout == null) || layout.isEmpty()) {
 				sb.append(entry.getKey());
 				sb.append(_EQUALS_WITH_SPACES);
-				sb.append(objectValuePair.getKey());
+				sb.append(valuesEntry.getKey());
 				sb.append(_LINE_SEPARATOR);
 
 				continue;
@@ -313,7 +313,7 @@ public class TypedProperties {
 		TypedProperties.class);
 
 	private String _header;
-	private final Map<String, ObjectValuePair<String, List<String>>> _storage =
+	private final Map<String, Map.Entry<String, List<String>>> _storage =
 		new LinkedHashMap<>();
 
 }

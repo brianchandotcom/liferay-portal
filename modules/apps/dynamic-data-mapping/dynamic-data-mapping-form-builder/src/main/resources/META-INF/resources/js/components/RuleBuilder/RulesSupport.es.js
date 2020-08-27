@@ -82,6 +82,24 @@ const formatRules = (pages, rules) => {
 				true
 			);
 
+			if (
+				condition.operands.length < 2 &&
+				condition.operands[0].type === 'list'
+			) {
+				condition.operands = [
+					{
+						label: 'user',
+						repeatable: false,
+						type: 'user',
+						value: 'user',
+					},
+					{
+						...condition.operands[0],
+						label: condition.operands[0].value,
+					},
+				];
+			}
+
 			if (condition.operands[0].value === 'user') {
 				firstOperandFieldExists = true;
 			}

@@ -107,24 +107,6 @@ class RuleList extends Component {
 						return newAction;
 					}),
 					conditions: rule.conditions.map((condition) => {
-						if (
-							condition.operands.length < 2 &&
-							condition.operands[0].type === 'list'
-						) {
-							condition.operands = [
-								{
-									label: 'user',
-									repeatable: false,
-									type: 'user',
-									value: 'user',
-								},
-								{
-									...condition.operands[0],
-									label: condition.operands[0].value,
-								},
-							];
-						}
-
 						return {
 							...condition,
 							operands: condition.operands.map(

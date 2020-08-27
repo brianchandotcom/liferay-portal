@@ -43,7 +43,8 @@ public interface QuestionsConfiguration {
 	public boolean showCardsForTopicNavigation();
 
 	@Meta.AD(
-		deflt = "0", description = "the-root-mbcategory-identifier-description",
+		deflt = "0",
+		description = "specify-the-mbcategory-identifier-of-the-category-that-acts-as-the-root-topic",
 		name = "root-topic-id", required = false
 	)
 	public long rootTopicId();

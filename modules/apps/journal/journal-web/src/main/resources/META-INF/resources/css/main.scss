@@ -1,7 +1,7 @@
 @import 'atlas-variables';
 
 $toolbarDesktopHeight: 64px;
-$toolbarHeight: 96px;
+$toolbarHeight: 6.875rem;
 $toolbarZIndex: 971;
 
 $controlMenuHeight: 56px;
@@ -183,8 +183,7 @@ $productMenuWidth: 320px;
 
 			> .container-fluid {
 				max-height: calc(
-					100vh - #{$controlMenuHeight + $portletLayoutMargin +
-						$toolbarHeight}
+					100vh - #{$controlMenuHeight + $portletLayoutMargin} - #{$toolbarHeight}
 				);
 				overflow: auto;
 
@@ -210,7 +209,7 @@ $productMenuWidth: 320px;
 			.sidebar-body {
 				@include media-breakpoint-down(lg) {
 					height: calc(
-						100vh - #{$toolbarHeight + $controlMenuHeight +$sidebarHeaderHeight}
+						100vh - #{$controlMenuHeight +$sidebarHeaderHeight} - #{$toolbarHeight}
 					);
 				}
 			}

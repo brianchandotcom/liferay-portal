@@ -59,7 +59,7 @@ public class ChangeStyleBookEntryMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = _layoutLocalService.fetchLayout(themeDisplay.getPlid());
+		Layout layout = themeDisplay.getLayout();
 
 		LayoutPermissionUtil.check(
 			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);

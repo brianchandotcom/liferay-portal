@@ -129,6 +129,12 @@ public class StyleBookEntryUtil {
 		return JSONUtil.put(
 			"cssVariable", cssVariable
 		).put(
+			"editorType", frontendTokenJSONObject.get("editorType")
+		).put(
+			"label", frontendTokenJSONObject.get("label")
+		).put(
+			"name", name
+		).put(
 			"value", value
 		);
 	}

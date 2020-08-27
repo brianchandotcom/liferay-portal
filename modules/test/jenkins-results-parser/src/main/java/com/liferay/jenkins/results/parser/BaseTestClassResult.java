@@ -102,7 +102,7 @@ public abstract class BaseTestClassResult implements TestClassResult {
 
 	protected BaseTestClassResult(List<TestResult> testResults) {
 		if ((testResults == null) || testResults.isEmpty()) {
-			throw new RuntimeException("Please set a test results");
+			throw new RuntimeException("Please set the test results");
 		}
 
 		_testResults = testResults;

@@ -313,8 +313,7 @@ public class DDMFormValidationException extends PortalException {
 
 	}
 
-	public static class MustSetValidType
-		extends DDMFormValidationException {
+	public static class MustSetValidType extends DDMFormValidationException {
 
 		public MustSetValidType(String fieldType) {
 			super(

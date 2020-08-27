@@ -102,14 +102,28 @@ public class FragmentLayoutStructureItemImporter
 			pageElement.getDefinition());
 
 		if (definitionMap != null) {
-			Map<String, Object> styles = (Map<String, Object>)definitionMap.get(
-				"styles");
+			Map<String, Object> fragmentStyleMap =
+				(Map<String, Object>)definitionMap.get("fragmentStyle");
 
-			if (styles != null) {
+			if (fragmentStyleMap != null) {
 				JSONObject jsonObject = JSONUtil.put(
-					"styles", toStylesJSONObject(styles));
+					"styles", toStylesJSONObject(fragmentStyleMap));
 
 				layoutStructureItem.updateItemConfig(jsonObject);
+			}
+
+			if (definitionMap.containsKey("fragmentViewports")) {
+				List<Map<String, Object>> fragmentViewports =
+					(List<Map<String, Object>>)definitionMap.get(
+						"fragmentViewports");
+
+				for (Map<String, Object> fragmentViewport : fragmentViewports) {
+					JSONObject jsonObject = JSONUtil.put(
+						(String)fragmentViewport.get("id"),
+						toFragmentViewportStylesJSONObject(fragmentViewport));
+
+					layoutStructureItem.updateItemConfig(jsonObject);
+				}
 			}
 		}
 

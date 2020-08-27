@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -221,16 +222,6 @@ public class ContainerLayoutStructureItemImporter
 				}
 			}
 
-			Map<String, Object> styles = (Map<String, Object>)definitionMap.get(
-				"styles");
-
-			if (styles != null) {
-				JSONObject jsonObject = JSONUtil.put(
-					"styles", toStylesJSONObject(styles));
-
-				containerStyledLayoutStructureItem.updateItemConfig(jsonObject);
-			}
-
 			Map<String, Object> fragmentLinkMap =
 				(Map<String, Object>)definitionMap.get("fragmentLink");
 
@@ -262,6 +253,31 @@ public class ContainerLayoutStructureItemImporter
 
 				containerStyledLayoutStructureItem.setLinkJSONObject(
 					jsonObject);
+			}
+
+			Map<String, Object> fragmentStyleMap =
+				(Map<String, Object>)definitionMap.get("fragmentStyle");
+
+			if (fragmentStyleMap != null) {
+				JSONObject jsonObject = JSONUtil.put(
+					"styles", toStylesJSONObject(fragmentStyleMap));
+
+				containerStyledLayoutStructureItem.updateItemConfig(jsonObject);
+			}
+
+			if (definitionMap.containsKey("fragmentViewports")) {
+				List<Map<String, Object>> fragmentViewports =
+					(List<Map<String, Object>>)definitionMap.get(
+						"fragmentViewports");
+
+				for (Map<String, Object> fragmentViewport : fragmentViewports) {
+					JSONObject jsonObject = JSONUtil.put(
+						(String)fragmentViewport.get("id"),
+						toFragmentViewportStylesJSONObject(fragmentViewport));
+
+					containerStyledLayoutStructureItem.updateItemConfig(
+						jsonObject);
+				}
 			}
 		}
 

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -86,15 +87,30 @@ public class CollectionLayoutStructureItemImporter
 			collectionStyledLayoutStructureItem.setTemplateKey(
 				(String)definitionMap.get("templateKey"));
 
-			Map<String, Object> styles = (Map<String, Object>)definitionMap.get(
-				"styles");
+			Map<String, Object> fragmentStyleMap =
+				(Map<String, Object>)definitionMap.get("fragmentStyle");
 
-			if (styles != null) {
+			if (fragmentStyleMap != null) {
 				JSONObject jsonObject = JSONUtil.put(
-					"styles", toStylesJSONObject(styles));
+					"styles", toStylesJSONObject(fragmentStyleMap));
 
 				collectionStyledLayoutStructureItem.updateItemConfig(
 					jsonObject);
+			}
+
+			if (definitionMap.containsKey("fragmentViewports")) {
+				List<Map<String, Object>> fragmentViewports =
+					(List<Map<String, Object>>)definitionMap.get(
+						"fragmentViewports");
+
+				for (Map<String, Object> fragmentViewport : fragmentViewports) {
+					JSONObject jsonObject = JSONUtil.put(
+						(String)fragmentViewport.get("id"),
+						toFragmentViewportStylesJSONObject(fragmentViewport));
+
+					collectionStyledLayoutStructureItem.updateItemConfig(
+						jsonObject);
+				}
 			}
 		}
 

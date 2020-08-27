@@ -19,12 +19,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -141,51 +142,134 @@ public abstract class BaseLayoutStructureItemImporter {
 		}
 	}
 
+	protected JSONObject toFragmentViewportStylesJSONObject(
+		Map<String, Object> fragmentViewport) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (MapUtil.isEmpty(fragmentViewport)) {
+			return jsonObject;
+		}
+
+		Map<String, Object> fragmentViewportStyle =
+			(Map<String, Object>)fragmentViewport.get("fragmentViewportStyle");
+
+		if (MapUtil.isEmpty(fragmentViewportStyle)) {
+			return jsonObject;
+		}
+
+		return JSONUtil.put(
+			"styles",
+			jsonObject.put(
+				"marginBottom", fragmentViewportStyle.get("marginBottom")
+			).put(
+				"marginLeft", fragmentViewportStyle.get("marginLeft")
+			).put(
+				"marginRight", fragmentViewportStyle.get("marginRight")
+			).put(
+				"marginTop", fragmentViewportStyle.get("marginTop")
+			).put(
+				"maxHeight", fragmentViewportStyle.get("maxHeight")
+			).put(
+				"paddingBottom", fragmentViewportStyle.get("paddingBottom")
+			).put(
+				"paddingLeft", fragmentViewportStyle.get("paddingLeft")
+			).put(
+				"paddingRight", fragmentViewportStyle.get("paddingRight")
+			).put(
+				"paddingTop", fragmentViewportStyle.get("paddingTop")
+			));
+	}
+
 	protected JSONObject toStylesJSONObject(Map<String, Object> styles) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		for (Map.Entry<String, Object> entry : styles.entrySet()) {
-			if (entry.getValue() instanceof HashMap) {
-				Map<String, Object> childStyleMap =
-					(Map<String, Object>)entry.getValue();
-
-				if (Objects.equals(entry.getKey(), "backgroundImage")) {
-					JSONObject backgroundImageJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					Map<String, Object> titleMap =
-						(Map<String, Object>)childStyleMap.get("title");
-
-					if (titleMap != null) {
-						backgroundImageJSONObject.put(
-							"title", getLocalizedValue(titleMap));
-					}
-
-					Map<String, Object> urlMap =
-						(Map<String, Object>)childStyleMap.get("url");
-
-					if (urlMap != null) {
-						backgroundImageJSONObject.put(
-							"url", getLocalizedValue(urlMap));
-
-						processMapping(
-							backgroundImageJSONObject,
-							(Map<String, Object>)urlMap.get("mapping"));
-					}
-
-					jsonObject.put(entry.getKey(), backgroundImageJSONObject);
-				}
-				else {
-					jsonObject.put(
-						entry.getKey(), toStylesJSONObject(childStyleMap));
-				}
-			}
-			else {
-				jsonObject.put(entry.getKey(), entry.getValue());
-			}
+		if (MapUtil.isEmpty(styles)) {
+			return jsonObject;
 		}
 
-		return jsonObject;
+		jsonObject.put("backgroundColor", styles.get("backgroundColor"));
+
+		if (styles.containsKey("backgroundFragmentImage")) {
+			JSONObject backgroundImageJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			Map<String, Object> childStyleMap = (Map<String, Object>)styles.get(
+				"backgroundFragmentImage");
+
+			Map<String, Object> titleMap =
+				(Map<String, Object>)childStyleMap.get("title");
+
+			if (titleMap != null) {
+				backgroundImageJSONObject.put(
+					"title", getLocalizedValue(titleMap));
+			}
+
+			Map<String, Object> urlMap = (Map<String, Object>)childStyleMap.get(
+				"url");
+
+			if (urlMap != null) {
+				backgroundImageJSONObject.put("url", getLocalizedValue(urlMap));
+
+				processMapping(
+					backgroundImageJSONObject,
+					(Map<String, Object>)urlMap.get("mapping"));
+			}
+
+			jsonObject.put("backgroundImage", backgroundImageJSONObject);
+		}
+
+		return jsonObject.put(
+			"borderColor", styles.get("borderColor")
+		).put(
+			"borderRadius", styles.get("borderRadius")
+		).put(
+			"borderWidth", styles.get("borderWidth")
+		).put(
+			"fontFamily", styles.get("fontFamily")
+		).put(
+			"fontSize", styles.get("fontSize")
+		).put(
+			"fontWeight", styles.get("fontWeight")
+		).put(
+			"height", styles.get("height")
+		).put(
+			"marginBottom", styles.get("marginBottom")
+		).put(
+			"marginLeft", styles.get("marginLeft")
+		).put(
+			"marginRight", styles.get("marginRight")
+		).put(
+			"marginTop", styles.get("marginTop")
+		).put(
+			"maxHeight", styles.get("maxHeight")
+		).put(
+			"maxWidth", styles.get("maxWidth")
+		).put(
+			"minHeight", styles.get("minHeight")
+		).put(
+			"minWidth", styles.get("minWidth")
+		).put(
+			"opacity", styles.get("opacity")
+		).put(
+			"overflow", styles.get("overflow")
+		).put(
+			"paddingBottom", styles.get("paddingBottom")
+		).put(
+			"paddingLeft", styles.get("paddingLeft")
+		).put(
+			"paddingRight", styles.get("paddingRight")
+		).put(
+			"paddingTop", styles.get("paddingTop")
+		).put(
+			"shadow", styles.get("shadow")
+		).put(
+			"textAlign", styles.get("textAlign")
+		).put(
+			"textColor", styles.get("textColor")
+		).put(
+			"width", styles.get("width")
+		);
 	}
 
 	@Reference

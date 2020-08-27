@@ -79,7 +79,6 @@ public class FormFieldProjectTemplateCustomizer
 
 				fileNames.add(
 					"src/main/resources/META-INF/resources/" + name + ".soy");
-
 				fileNames.add(
 					"src/main/resources/META-INF/resources/" + name +
 						"Register.soy");

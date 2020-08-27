@@ -194,7 +194,7 @@ $productMenuWidth: 320px;
 					);
 				}
 
-				@include media-breakpoint-up(md) {
+				@include media-breakpoint-down(md) {
 					margin: 0 auto;
 					padding: 0;
 

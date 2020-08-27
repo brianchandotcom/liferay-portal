@@ -83,6 +83,16 @@ public class CollectionLayoutStructureItemExporter
 										"styles"),
 									saveMappingConfiguration);
 							});
+
+						setFragmentViewports(
+							() -> {
+								JSONObject itemConfigJSONObject =
+									collectionStyledLayoutStructureItem.
+										getItemConfigJSONObject();
+
+								return getFragmentViewPorts(
+									itemConfigJSONObject);
+							});
 					}
 				};
 				type = PageElement.Type.COLLECTION;

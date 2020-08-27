@@ -20,21 +20,27 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.delivery.dto.v1_0.FragmentStyle;
+import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
+import com.liferay.headless.delivery.dto.v1_0.FragmentViewportStyle;
 import com.liferay.headless.delivery.dto.v1_0.Mapping;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Reference;
@@ -44,6 +50,41 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseStyledLayoutStructureItemExporter
 	implements LayoutStructureItemExporter {
+
+	protected FragmentViewport[] getFragmentViewPorts(JSONObject jsonObject) {
+		if ((jsonObject == null) || (jsonObject.length() == 0)) {
+			return null;
+		}
+
+		List<FragmentViewport> fragmentViewports = new ArrayList<>();
+
+		FragmentViewport mobileLandscapeFragmentViewportStyle =
+			_toFragmentViewportStyle(jsonObject, ViewportSize.MOBILE_LANDSCAPE);
+
+		if (mobileLandscapeFragmentViewportStyle != null) {
+			fragmentViewports.add(mobileLandscapeFragmentViewportStyle);
+		}
+
+		FragmentViewport portraitMobileFragmentViewportStyle =
+			_toFragmentViewportStyle(jsonObject, ViewportSize.PORTRAIT_MOBILE);
+
+		if (portraitMobileFragmentViewportStyle != null) {
+			fragmentViewports.add(portraitMobileFragmentViewportStyle);
+		}
+
+		FragmentViewport tabletFragmentViewportStyle = _toFragmentViewportStyle(
+			jsonObject, ViewportSize.TABLET);
+
+		if (tabletFragmentViewportStyle != null) {
+			fragmentViewports.add(tabletFragmentViewportStyle);
+		}
+
+		if (ListUtil.isEmpty(fragmentViewports)) {
+			return null;
+		}
+
+		return fragmentViewports.toArray(new FragmentViewport[0]);
+	}
 
 	protected Function<Object, String> getImageURLTransformerFunction() {
 		return object -> {
@@ -430,6 +471,52 @@ public abstract class BaseStyledLayoutStructureItemExporter
 
 	@Reference
 	protected Portal portal;
+
+	private FragmentViewport _toFragmentViewportStyle(
+		JSONObject jsonObject, ViewportSize viewportSize) {
+
+		JSONObject viewportJSONObject = jsonObject.getJSONObject(
+			viewportSize.getViewportSizeId());
+
+		if ((viewportJSONObject == null) ||
+			(viewportJSONObject.length() == 0)) {
+
+			return null;
+		}
+
+		JSONObject styleJSONObject = viewportJSONObject.getJSONObject("styles");
+
+		if ((styleJSONObject == null) || (styleJSONObject.length() == 0)) {
+			return null;
+		}
+
+		return new FragmentViewport() {
+			{
+				setId(viewportSize.getViewportSizeId());
+				setFragmentViewportStyle(
+					() -> new FragmentViewportStyle() {
+						{
+							marginBottom = styleJSONObject.getString(
+								"marginBottom", null);
+							marginLeft = styleJSONObject.getString(
+								"marginLeft", null);
+							marginRight = styleJSONObject.getString(
+								"marginRight", null);
+							marginTop = styleJSONObject.getString(
+								"marginTop", null);
+							paddingBottom = styleJSONObject.getString(
+								"paddingBottom", null);
+							paddingLeft = styleJSONObject.getString(
+								"paddingLeft", null);
+							paddingRight = styleJSONObject.getString(
+								"paddingRight", null);
+							paddingTop = styleJSONObject.getString(
+								"paddingTop", null);
+						}
+					});
+			}
+		};
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseStyledLayoutStructureItemExporter.class);

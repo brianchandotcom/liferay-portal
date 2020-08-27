@@ -109,6 +109,16 @@ public class RowLayoutStructureItemExporter
 										"styles"),
 									saveMappingConfiguration);
 							});
+
+						setFragmentViewports(
+							() -> {
+								JSONObject itemConfigJSONObject =
+									rowStyledLayoutStructureItem.
+										getItemConfigJSONObject();
+
+								return getFragmentViewPorts(
+									itemConfigJSONObject);
+							});
 					}
 				};
 				type = PageElement.Type.ROW;

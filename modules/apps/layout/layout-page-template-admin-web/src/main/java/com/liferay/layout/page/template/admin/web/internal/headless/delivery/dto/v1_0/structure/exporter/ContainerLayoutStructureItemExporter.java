@@ -83,6 +83,16 @@ public class ContainerLayoutStructureItemExporter
 										"styles"),
 									saveMappingConfiguration);
 							});
+
+						setFragmentViewports(
+							() -> {
+								JSONObject itemConfigJSONObject =
+									containerStyledLayoutStructureItem.
+										getItemConfigJSONObject();
+
+								return getFragmentViewPorts(
+									itemConfigJSONObject);
+							});
 					}
 				};
 				type = PageElement.Type.SECTION;

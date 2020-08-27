@@ -158,7 +158,7 @@ definition {
 		Portlet.viewTitle(portletName = "Tags Navigation");
 
 		Navigator.openPrivateSitePageURL(
-			pageName = "Global Private Private",
+			pageName = "Global Private Page",
 			siteName = "${siteName}");
 
 		Portlet.viewTitle(portletName = "Wiki");
@@ -178,7 +178,7 @@ definition {
 		Portlet.viewTitle(portletName = "Message Boards");
 
 		Navigator.gotoSitePage(
-			pageName = "Test Template Content Page",
+			pageName = "Public Custom Content Page",
 			siteName = "${siteName}");
 
 		AssertVisible(
@@ -348,7 +348,7 @@ definition {
 		Portlet.viewTitle(portletName = "Tags Navigation");
 
 		Navigator.openPrivateSitePageURL(
-			pageName = "Global Private Private",
+			pageName = "Global Private Page",
 			siteName = "${siteName}");
 
 		Portlet.viewTitle(portletName = "Wiki");
@@ -368,7 +368,7 @@ definition {
 		Portlet.viewTitle(portletName = "Message Boards");
 
 		Navigator.gotoSitePage(
-			pageName = "Test Template Content Page",
+			pageName = "Public Custom Content Page",
 			siteName = "${siteName}");
 
 		AssertVisible(

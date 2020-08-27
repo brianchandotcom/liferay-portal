@@ -1033,7 +1033,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsAggregation taskNameTermsAggregation = _aggregations.terms(
 			"name", "name");
 
-		taskNameTermsAggregation.setSize(instances.size());
+		taskNameTermsAggregation.setSize(10000);
 
 		termsAggregation.addChildrenAggregations(
 			tasksIndexFilterAggregation, taskNameTermsAggregation);

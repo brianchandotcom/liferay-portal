@@ -15,9 +15,11 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.users.admin.constants.UsersAdminManagementToolbarKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.user.action.contributor.UserActionContributor;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
+import com.liferay.users.admin.web.internal.users.admin.management.toolbar.FilterContributorTracker;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -50,6 +52,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		renderRequest.setAttribute(
+			UsersAdminWebKeys.FILTER_CONTRIBUTORS,
+			_filterContributorTracker.getFilterContributors(
+				UsersAdminManagementToolbarKeys.VIEW_FLAT_USERS));
+
+		renderRequest.setAttribute(
 			UsersAdminWebKeys.USER_ACTION_CONTRIBUTORS,
 			_userActionContributors.toArray(new UserActionContributor[0]));
 
@@ -72,6 +79,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		_userActionContributors.remove(userActionContributor);
 	}
+
+	@Reference
+	private FilterContributorTracker _filterContributorTracker;
 
 	private final List<UserActionContributor> _userActionContributors =
 		new CopyOnWriteArrayList<>();

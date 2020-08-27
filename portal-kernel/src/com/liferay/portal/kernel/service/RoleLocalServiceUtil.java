@@ -1052,7 +1052,10 @@ public class RoleLocalServiceUtil {
 	 * @param name the role's name (optionally <code>null</code>)
 	 * @return the role with the name, or <code>null</code> if a role with the
 	 name could not be found in the company
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #fetchRole(long, String)}
 	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.Role loadFetchRole(
 		long companyId, String name) {
 
@@ -1065,7 +1068,10 @@ public class RoleLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @param name the role's name
 	 * @return the role with the name in the company
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getRole(long, String)}
 	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.Role loadGetRole(
 			long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

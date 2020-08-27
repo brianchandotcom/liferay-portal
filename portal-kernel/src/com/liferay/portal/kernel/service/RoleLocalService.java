@@ -335,7 +335,7 @@ public interface RoleLocalService
 	 * @return Returns the role with the name or <code>null</code> if a role
 	 with the name could not be found in the company
 	 */
-	@Transactional(enabled = false)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Role fetchRole(long companyId, String name);
 
 	/**
@@ -487,7 +487,7 @@ public interface RoleLocalService
 	 * @param name the role's name
 	 * @return the role with the name
 	 */
-	@Transactional(enabled = false)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Role getRole(long companyId, String name) throws PortalException;
 
 	/**
@@ -812,7 +812,10 @@ public interface RoleLocalService
 	 * @param name the role's name (optionally <code>null</code>)
 	 * @return the role with the name, or <code>null</code> if a role with the
 	 name could not be found in the company
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #fetchRole(long, String)}
 	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Role loadFetchRole(long companyId, String name);
 
@@ -822,7 +825,10 @@ public interface RoleLocalService
 	 * @param companyId the primary key of the company
 	 * @param name the role's name
 	 * @return the role with the name in the company
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getRole(long, String)}
 	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Role loadGetRole(long companyId, String name) throws PortalException;
 

@@ -47,6 +47,7 @@ const LAYOUT_DATA_ITEM_TYPE_ICONS = {
 	[LAYOUT_DATA_ITEM_TYPES.container]: 'container',
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: 'box-container',
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: 'code',
+	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: 'box-container',
 	[LAYOUT_DATA_ITEM_TYPES.root]: 'page',
 	[LAYOUT_DATA_ITEM_TYPES.row]: 'table',
 };
@@ -271,10 +272,11 @@ function visit(
 		activable:
 			item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
 			item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
+			item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
 			canUpdateItemConfiguration,
 		children,
 		disabled: !isMasterPage && itemInMasterLayout,
-		draggable: item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone,
+		draggable: true,
 		expanded:
 			item.itemId === activeItemId ||
 			dragAndDropHoveredItemId === item.itemId,

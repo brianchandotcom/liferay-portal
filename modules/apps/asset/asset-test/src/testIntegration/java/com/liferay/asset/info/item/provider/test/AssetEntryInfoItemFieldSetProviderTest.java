@@ -117,7 +117,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 				RandomTestUtil.randomString(), serviceContext);
 
-		AssetCategory category = AssetCategoryLocalServiceUtil.addCategory(
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			RandomTestUtil.randomString(), vocabulary.getVocabularyId(),
 			serviceContext);
@@ -126,7 +126,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			_group.getGroupId());
 
 		_assetEntryLocalService.addAssetCategoryAssetEntry(
-			category.getCategoryId(), assetEntry);
+			assetCategory.getCategoryId(), assetEntry);
 
 		InfoFieldSet infoFieldSet =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);

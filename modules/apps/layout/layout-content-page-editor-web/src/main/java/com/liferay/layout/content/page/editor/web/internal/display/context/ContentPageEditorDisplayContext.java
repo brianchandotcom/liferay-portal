@@ -2246,10 +2246,12 @@ public class ContentPageEditorDisplayContext {
 		String cssVariable = StringPool.BLANK;
 
 		for (int l = 0; l < mappingsJSONArray.length(); l++) {
-			JSONObject mapping = mappingsJSONArray.getJSONObject(l);
+			JSONObject mappingJSONObject = mappingsJSONArray.getJSONObject(l);
 
-			if (Objects.equals(mapping.getString("type"), "cssVariable")) {
-				cssVariable = mapping.getString("value");
+			if (Objects.equals(
+					mappingJSONObject.getString("type"), "cssVariable")) {
+
+				cssVariable = mappingJSONObject.getString("value");
 			}
 		}
 

@@ -20,6 +20,7 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -3963,8 +3964,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 			}
 		}
-		catch (PortalException portalException) {
-			throw portalException;
+		catch (CTTransactionException | PortalException exception) {
+			throw exception;
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

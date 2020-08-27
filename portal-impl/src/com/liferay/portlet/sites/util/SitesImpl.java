@@ -30,6 +30,7 @@ import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
@@ -1787,6 +1788,9 @@ public class SitesImpl implements Sites {
 			}
 
 			applyLayoutPrototype(layoutPrototype, layout, true);
+		}
+		catch (CTTransactionException ctTransactionException) {
+			throw ctTransactionException;
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

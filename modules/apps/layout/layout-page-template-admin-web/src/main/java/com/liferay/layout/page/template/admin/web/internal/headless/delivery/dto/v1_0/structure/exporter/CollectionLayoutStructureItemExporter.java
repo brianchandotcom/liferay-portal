@@ -24,20 +24,18 @@ import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
 @Component(service = LayoutStructureItemExporter.class)
 public class CollectionLayoutStructureItemExporter
-	implements LayoutStructureItemExporter {
+	extends BaseStyledLayoutStructureItemExporter {
 
 	@Override
 	public String getClassName() {
@@ -73,6 +71,18 @@ public class CollectionLayoutStructureItemExporter
 						templateKey =
 							collectionStyledLayoutStructureItem.
 								getTemplateKey();
+
+						setStyles(
+							() -> {
+								JSONObject itemConfigJSONObject =
+									collectionStyledLayoutStructureItem.
+										getItemConfigJSONObject();
+
+								return toStyles(
+									itemConfigJSONObject.getJSONObject(
+										"styles"),
+									saveMappingConfiguration);
+							});
 					}
 				};
 				type = PageElement.Type.COLLECTION;
@@ -104,7 +114,7 @@ public class CollectionLayoutStructureItemExporter
 				{
 					collectionReference = new ClassPKReference() {
 						{
-							className = _portal.getClassName(
+							className = portal.getClassName(
 								jsonObject.getInt("classNameId"));
 							classPK = jsonObject.getLong("classPK");
 						}
@@ -132,8 +142,5 @@ public class CollectionLayoutStructureItemExporter
 
 		return null;
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

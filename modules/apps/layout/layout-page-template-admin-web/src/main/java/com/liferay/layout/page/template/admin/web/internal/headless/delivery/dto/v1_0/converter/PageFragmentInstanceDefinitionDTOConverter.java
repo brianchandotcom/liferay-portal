@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -89,6 +90,16 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
 		boolean saveInlineContent, boolean saveMapping) {
 
+		return toDTO(
+			fragmentStyledLayoutStructureItem, true, true,
+			Collections.emptyMap());
+	}
+
+	public PageFragmentInstanceDefinition toDTO(
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
+		boolean saveInlineContent, boolean saveMapping,
+		Map<String, Object> stylesMap) {
+
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
@@ -114,6 +125,10 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 				fragmentFields = _getFragmentFields(
 					fragmentEntryLink, saveInlineContent, saveMapping);
 				widgetInstances = _getWidgetInstances(fragmentEntryLink);
+
+				if (MapUtil.isNotEmpty(stylesMap)) {
+					setStyles(stylesMap);
+				}
 			}
 		};
 	}

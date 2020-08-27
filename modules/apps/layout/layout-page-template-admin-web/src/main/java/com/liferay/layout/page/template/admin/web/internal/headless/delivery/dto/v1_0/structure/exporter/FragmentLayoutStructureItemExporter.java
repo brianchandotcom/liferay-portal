@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutStructureItemExporter.class)
 public class FragmentLayoutStructureItemExporter
-	implements LayoutStructureItemExporter {
+	extends BaseStyledLayoutStructureItemExporter {
 
 	@Override
 	public String getClassName() {
@@ -70,13 +70,19 @@ public class FragmentLayoutStructureItemExporter
 
 		String portletId = editableValuesJSONObject.getString("portletId");
 
+		JSONObject itemConfigJSONObject =
+			fragmentStyledLayoutStructureItem.getItemConfigJSONObject();
+
 		if (Validator.isNull(portletId)) {
 			return new PageElement() {
 				{
 					definition =
 						_pageFragmentInstanceDefinitionDTOConverter.toDTO(
 							fragmentStyledLayoutStructureItem,
-							saveInlineContent, saveMappingConfiguration);
+							saveInlineContent, saveMappingConfiguration,
+							toStyles(
+								itemConfigJSONObject.getJSONObject("styles"),
+								saveMappingConfiguration));
 					type = PageElement.Type.FRAGMENT;
 				}
 			};
@@ -88,7 +94,10 @@ public class FragmentLayoutStructureItemExporter
 			{
 				definition = _pageWidgetInstanceDefinitionDTOConverter.toDTO(
 					fragmentEntryLink,
-					PortletIdCodec.encode(portletId, instanceId));
+					PortletIdCodec.encode(portletId, instanceId),
+					toStyles(
+						itemConfigJSONObject.getJSONObject("styles"),
+						saveMappingConfiguration));
 				type = PageElement.Type.WIDGET;
 			}
 		};

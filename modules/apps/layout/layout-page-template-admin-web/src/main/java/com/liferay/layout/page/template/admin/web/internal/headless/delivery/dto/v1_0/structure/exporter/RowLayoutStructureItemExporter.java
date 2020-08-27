@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = LayoutStructureItemExporter.class)
 public class RowLayoutStructureItemExporter
-	implements LayoutStructureItemExporter {
+	extends BaseStyledLayoutStructureItemExporter {
 
 	@Override
 	public String getClassName() {
@@ -96,6 +96,18 @@ public class RowLayoutStructureItemExporter
 									};
 
 								return rowViewports.toArray(new RowViewport[0]);
+							});
+
+						setStyles(
+							() -> {
+								JSONObject itemConfigJSONObject =
+									rowStyledLayoutStructureItem.
+										getItemConfigJSONObject();
+
+								return toStyles(
+									itemConfigJSONObject.getJSONObject(
+										"styles"),
+									saveMappingConfiguration);
 							});
 					}
 				};

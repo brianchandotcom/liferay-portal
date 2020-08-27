@@ -185,7 +185,7 @@ export default withRouter(({history}) => {
 					)}
 
 					<NewTopicModal
-						currentSectionId={0}
+						currentSectionId={+context.rootTopic}
 						onClose={() => setTopicModalVisibility(false)}
 						onCreateNavigateTo={() => {
 							historyPushParser(`/tmp`);

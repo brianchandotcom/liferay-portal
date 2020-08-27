@@ -199,30 +199,16 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetVocabulary internalVocabulary = _addVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
 
-		AssetCategory internalAssetCategory =
-			_assetCategoryLocalService.addCategory(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				HashMapBuilder.put(
-					LocaleUtil.US, RandomTestUtil.randomString()
-				).build(),
-				null, internalVocabulary.getVocabularyId(), null,
-				new ServiceContext());
+		AssetCategory internalAssetCategory = _addAssetCategory(
+			internalVocabulary, RandomTestUtil.randomString());
 
 		AssetVocabulary publicVocabulary = _addVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
 		String publicCategoryTitle = RandomTestUtil.randomString();
 
-		AssetCategory publicAssetCategory =
-			_assetCategoryLocalService.addCategory(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				HashMapBuilder.put(
-					LocaleUtil.US, publicCategoryTitle
-				).build(),
-				null, publicVocabulary.getVocabularyId(), null,
-				new ServiceContext());
+		AssetCategory publicAssetCategory = _addAssetCategory(
+			publicVocabulary, publicCategoryTitle);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -284,13 +270,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetVocabulary vocabulary = _addVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
 
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			null, vocabulary.getVocabularyId(), null, new ServiceContext());
+		AssetCategory assetCategory = _addAssetCategory(
+			vocabulary, RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -341,13 +322,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		String categoryTitle = RandomTestUtil.randomString();
 
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			HashMapBuilder.put(
-				LocaleUtil.US, categoryTitle
-			).build(),
-			null, vocabulary.getVocabularyId(), null, new ServiceContext());
+		AssetCategory assetCategory = _addAssetCategory(
+			vocabulary, categoryTitle);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -398,6 +374,19 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		Assert.assertEquals(
 			category.getLabel(LocaleUtil.ENGLISH), categoryTitle);
+	}
+
+	private AssetCategory _addAssetCategory(
+			AssetVocabulary vocabulary, String categoryTitle)
+		throws Exception {
+
+		return _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			HashMapBuilder.put(
+				LocaleUtil.US, categoryTitle
+			).build(),
+			null, vocabulary.getVocabularyId(), null, new ServiceContext());
 	}
 
 	private AssetVocabulary _addVocabulary(int visibilityTypePublic)

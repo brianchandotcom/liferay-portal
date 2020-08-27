@@ -41,6 +41,85 @@ definition {
 			locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED");
 	}
 
+	macro testMenu {
+		AssertClick(
+			locator1 = "AlloyShowcase#MENU_BUTTON",
+			value1 = "User");
+
+		if ("${command}" == "true") {
+			AssertTextEquals(
+				key_exampleType = "menu",
+				locator1 = "AlloyShowcase#MENU_OUTPUT",
+				value1 = "You selected the 'User' menu item.");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "JSFShowcase#MODEL_RESULT",
+				value1 = "User");
+		}
+
+		for (var menuItems : list "Edit,Enable,Disable,Delete") {
+			Click(locator1 = "AlloyShowcase#DROPDOWN_CARET_BUTTON");
+
+			AssertClick(
+				key_exampleType = "menu",
+				key_menuItem = "${menuItems}",
+				locator1 = "AlloyShowcase#MENU_ITEM",
+				value1 = "${menuItems}");
+
+			if ("${command}" == "true") {
+				AssertTextEquals(
+					key_exampleType = "menu",
+					locator1 = "AlloyShowcase#MENU_OUTPUT",
+					value1 = "You selected the '${menuItems}' menu item.");
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "JSFShowcase#MODEL_RESULT",
+					value1 = "${menuItems}");
+			}
+
+		}
+
+		AssertClick(
+			locator1 = "AlloyShowcase#MENU_BUTTON_2",
+			value1 = "User");
+
+		if ("${command}" == "true") {
+			AssertTextEquals(
+				key_exampleType = "facet",
+				locator1 = "AlloyShowcase#MENU_OUTPUT",
+				value1 = "You selected the 'User' menu item.");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "JSFShowcase#MODEL_RESULT",
+				value1 = "User");
+		}
+
+		for (var menuItems : list "Edit,Enable,Disable,Delete") {
+			Click(locator1 = "AlloyShowcase#DROPDOWN_BUTTON");
+
+			AssertClick(
+				key_exampleType = "facet",
+				key_menuItem = "${menuItems}",
+				locator1 = "AlloyShowcase#MENU_ITEM",
+				value1 = "${menuItems}");
+
+			if ("${command}" == "true") {
+				AssertTextEquals(
+					key_exampleType = "facet",
+					locator1 = "AlloyShowcase#MENU_OUTPUT",
+					value1 = "You selected the '${menuItems}' menu item.");
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "JSFShowcase#MODEL_RESULT",
+					value1 = "${menuItems}");
+			}
+		}
+	}
+
 	macro viewDataList {
 		var dataListItem1 = "${description1}";
 		var dataListItem2 = "${description2}";

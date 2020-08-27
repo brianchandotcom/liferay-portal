@@ -200,15 +200,12 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
 
 		AssetCategory internalAssetCategory = _addAssetCategory(
-			internalVocabulary, RandomTestUtil.randomString());
+			internalVocabulary);
 
 		AssetVocabulary publicVocabulary = _addVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
-		String publicCategoryTitle = RandomTestUtil.randomString();
-
-		AssetCategory publicAssetCategory = _addAssetCategory(
-			publicVocabulary, publicCategoryTitle);
+		AssetCategory publicAssetCategory = _addAssetCategory(publicVocabulary);
 
 		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {
@@ -226,7 +223,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		Category category = _getCategory(filteredInfoFieldValues);
 
 		Assert.assertEquals(
-			category.getLabel(LocaleUtil.ENGLISH), publicCategoryTitle);
+			category.getLabel(LocaleUtil.ENGLISH),
+			publicAssetCategory.getTitle(LocaleUtil.ENGLISH));
 	}
 
 	@Test
@@ -236,8 +234,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetVocabulary vocabulary = _addVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
 
-		AssetCategory assetCategory = _addAssetCategory(
-			vocabulary, RandomTestUtil.randomString());
+		AssetCategory assetCategory = _addAssetCategory(vocabulary);
 
 		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {assetCategory.getCategoryId()});
@@ -257,10 +254,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetVocabulary vocabulary = _addVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
-		String categoryTitle = RandomTestUtil.randomString();
-
-		AssetCategory assetCategory = _addAssetCategory(
-			vocabulary, categoryTitle);
+		AssetCategory assetCategory = _addAssetCategory(vocabulary);
 
 		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {assetCategory.getCategoryId()});
@@ -275,18 +269,18 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		Category category = _getCategory(filteredInfoFieldValues);
 
 		Assert.assertEquals(
-			category.getLabel(LocaleUtil.ENGLISH), categoryTitle);
+			category.getLabel(LocaleUtil.ENGLISH),
+			assetCategory.getTitle(LocaleUtil.ENGLISH));
 	}
 
-	private AssetCategory _addAssetCategory(
-			AssetVocabulary vocabulary, String categoryTitle)
+	private AssetCategory _addAssetCategory(AssetVocabulary vocabulary)
 		throws Exception {
 
 		return _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			HashMapBuilder.put(
-				LocaleUtil.US, categoryTitle
+				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			null, vocabulary.getVocabularyId(), null, new ServiceContext());
 	}

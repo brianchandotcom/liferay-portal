@@ -148,6 +148,8 @@ public class SynchronousDestinationTestRule
 				DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR);
 			Filter rawMetaDataProcessorFilter = _registerDestinationFilter(
 				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
+			Filter segmentsEntryReindexFilter = _registerDestinationFilter(
+				"liferay/segments_entry_reindex");
 			Filter subscrpitionSenderFilter = _registerDestinationFilter(
 				DestinationNames.SUBSCRIPTION_SENDER);
 
@@ -155,7 +157,8 @@ public class SynchronousDestinationTestRule
 				auditFilter, asyncFilter, backgroundTaskFilter,
 				backgroundTaskStatusFilter, ddmStructureReindexFilter,
 				kaleoGraphWalkerFilter, mailFilter, pdfProcessorFilter,
-				rawMetaDataProcessorFilter, subscrpitionSenderFilter);
+				rawMetaDataProcessorFilter, segmentsEntryReindexFilter,
+				subscrpitionSenderFilter);
 
 			serviceDependencyManager.waitForDependencies();
 
@@ -183,6 +186,7 @@ public class SynchronousDestinationTestRule
 			replaceDestination("liferay/kaleo_graph_walker");
 			replaceDestination("liferay/report_request");
 			replaceDestination("liferay/reports_admin");
+			replaceDestination("liferay/segments_entry_reindex");
 
 			if (_sync != null) {
 				for (String name : _sync.destinationNames()) {

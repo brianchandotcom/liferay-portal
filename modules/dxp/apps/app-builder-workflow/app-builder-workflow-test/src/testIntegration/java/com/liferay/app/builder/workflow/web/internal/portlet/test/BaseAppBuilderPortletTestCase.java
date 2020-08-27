@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.app.builder.workflow.web.internal.portlet.util;
+package com.liferay.app.builder.workflow.web.internal.portlet.test;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.constants.AppBuilderPortletKeys;
@@ -84,7 +84,7 @@ import org.junit.Rule;
 /**
  * @author Rafael Praxedes
  */
-public abstract class BaseAppBuilderAppTestCase {
+public abstract class BaseAppBuilderPortletTestCase {
 
 	@ClassRule
 	@Rule
@@ -405,7 +405,7 @@ public abstract class BaseAppBuilderAppTestCase {
 
 	private String _read(String fileName) throws Exception {
 		return StringUtil.read(
-			BaseAppBuilderAppTestCase.class, "dependencies/" + fileName);
+			BaseAppBuilderPortletTestCase.class, "dependencies/" + fileName);
 	}
 
 	private MockLiferayResourceResponse _serveResource(

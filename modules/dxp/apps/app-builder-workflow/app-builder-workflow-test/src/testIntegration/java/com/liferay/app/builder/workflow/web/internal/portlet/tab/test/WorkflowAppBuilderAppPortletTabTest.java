@@ -18,7 +18,7 @@ import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTabContext;
 import com.liferay.app.builder.rest.dto.v1_0.App;
-import com.liferay.app.builder.workflow.web.internal.portlet.util.BaseAppBuilderAppTestCase;
+import com.liferay.app.builder.workflow.web.internal.portlet.test.BaseAppBuilderPortletTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class WorkflowAppBuilderAppPortletTabTest
-	extends BaseAppBuilderAppTestCase {
+	extends BaseAppBuilderPortletTestCase {
 
 	@Test
 	public void testGetAppBuilderAppPortletTabContext() throws Exception {

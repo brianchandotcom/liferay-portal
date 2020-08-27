@@ -45,13 +45,10 @@ public class CucumberFeatureFile implements Serializable {
 	public String getCategoryName() {
 		StringBuilder sb = new StringBuilder();
 
-		String relativePath = getRelativePath();
+		Matcher matcher = _relativePathPattern.matcher(getRelativePath());
 
-		String relativePathRegex = ".*/features/(.*)/[^/]+";
-
-		if (relativePath.matches(relativePathRegex)) {
-			String folderNames = relativePath.replaceAll(
-				relativePathRegex, "$1");
+		if (matcher.matches()) {
+			String folderNames = matcher.group(1);
 
 			for (String folderName : folderNames.split("/")) {
 				if (folderName.contains(".")) {
@@ -151,6 +148,8 @@ public class CucumberFeatureFile implements Serializable {
 
 	private static final Pattern _pattern = Pattern.compile(
 		"(.+\\.feature)\\:.*");
+	private static final Pattern _relativePathPattern = Pattern.compile(
+		".*/features/(.*)/[^/]+");
 
 	private final CucumberFeatureResult _cucumberFeatureResult;
 	private final CucumberScenarioResult _cucumberScenarioResult;

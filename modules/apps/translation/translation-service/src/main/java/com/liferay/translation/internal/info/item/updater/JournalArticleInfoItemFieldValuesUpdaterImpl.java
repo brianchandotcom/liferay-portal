@@ -17,26 +17,18 @@ package com.liferay.translation.internal.info.item.updater;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.Serializable;
-
-import java.text.NumberFormat;
-import java.text.ParseException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -67,10 +59,10 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 		Map<Locale, String> importedLocaleTitleMap = new HashMap<>();
 		Map<Locale, String> importedLocaleDescriptionMap = new HashMap<>();
-		Map<Locale, Map<String, Serializable>> importedLocaleContentMap =
+		Map<Locale, Map<String, String>> importedLocaleContentMap =
 			new HashMap<>();
 		Set<Locale> translatedLocales = new HashSet<>();
-		Map<String, Serializable> fieldNameContentMap = new HashMap<>();
+		Map<String, String> fieldNameContentMap = new HashMap<>();
 
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {
@@ -103,10 +95,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 								importedLocaleTitleMap.put(locale, valueString);
 							}
 							else {
-								fieldNameContentMap.put(
-									fieldName,
-									_getSerializable(
-										infoField, valueString, locale));
+								fieldNameContentMap.put(fieldName, valueString);
 
 								importedLocaleContentMap.put(
 									locale, fieldNameContentMap);
@@ -175,33 +164,14 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		return Optional.empty();
 	}
 
-	private Serializable _getSerializable(
-		InfoField infoField, String value, Locale locale) {
-
-		if (Objects.equals(
-				NumberInfoFieldType.INSTANCE, infoField.getInfoFieldType())) {
-
-			NumberFormat numberFormat = NumberFormat.getInstance(locale);
-
-			try {
-				return numberFormat.parse(GetterUtil.getString(value));
-			}
-			catch (ParseException parseException) {
-				_log.error(parseException, parseException);
-			}
-		}
-
-		return value;
-	}
-
 	private String _getTranslatedContent(
 			String content, DDMStructure ddmStructure,
-			Map<Locale, Map<String, Serializable>> importedLocaleContentMap,
+			Map<Locale, Map<String, String>> importedLocaleContentMap,
 			Locale targetLocale)
 		throws Exception {
 
-		Map<String, Serializable> contentFieldMap =
-			importedLocaleContentMap.get(targetLocale);
+		Map<String, String> contentFieldMap = importedLocaleContentMap.get(
+			targetLocale);
 
 		if ((contentFieldMap == null) || contentFieldMap.isEmpty()) {
 			return content;
@@ -210,13 +180,15 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		Fields ddmFields = _journalConverter.getDDMFields(
 			ddmStructure, content);
 
-		for (Map.Entry<String, Serializable> entry :
-				contentFieldMap.entrySet()) {
-
+		for (Map.Entry<String, String> entry : contentFieldMap.entrySet()) {
 			Field field = ddmFields.get(entry.getKey());
 
 			if (field != null) {
-				field.setValue(targetLocale, entry.getValue());
+				field.setValue(
+					targetLocale,
+					FieldConstants.getSerializable(
+						targetLocale, targetLocale, field.getDataType(),
+						entry.getValue()));
 			}
 		}
 
@@ -236,9 +208,6 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 		return defaultString;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleInfoItemFieldValuesUpdaterImpl.class);
 
 	@Reference
 	private JournalArticleService _journalArticleService;

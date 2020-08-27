@@ -75,7 +75,9 @@ segmentsContextVocabularyConfigurationDisplayContext.addPortletBreadcrumbEntries
 		<clay:col
 			md="9"
 		>
-			<clay:sheet>
+			<clay:sheet
+				size="full"
+			>
 				<aui:form action="<%= segmentsContextVocabularyConfigurationDisplayContext.getActionURL() %>" method="post" name="fm">
 					<aui:input name="factoryPid" type="hidden" value="<%= segmentsContextVocabularyConfigurationDisplayContext.getFactoryPid() %>" />
 					<aui:input name="pid" type="hidden" value="<%= segmentsContextVocabularyConfigurationDisplayContext.getPid() %>" />

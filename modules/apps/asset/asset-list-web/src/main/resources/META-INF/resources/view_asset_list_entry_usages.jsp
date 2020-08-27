@@ -105,7 +105,9 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 		<clay:col
 			lg="9"
 		>
-			<clay:sheet>
+			<clay:sheet
+				size="full"
+			>
 				<h3 class="sheet-title">
 					<c:choose>
 						<c:when test='<%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "pages") %>'>

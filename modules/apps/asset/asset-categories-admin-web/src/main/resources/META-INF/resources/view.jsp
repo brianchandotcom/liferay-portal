@@ -201,7 +201,9 @@
 			%>
 
 			<c:if test="<%= vocabulary != null %>">
-				<clay:sheet>
+				<clay:sheet
+					size="full"
+				>
 					<h2 class="sheet-title">
 						<clay:content-row
 							verticalAlign="center"

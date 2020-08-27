@@ -74,7 +74,9 @@ renderResponse.setTitle(categoryDisplayName);
 		<clay:col
 			md="9"
 		>
-			<clay:sheet>
+			<clay:sheet
+				size="full"
+			>
 				<clay:content-row>
 					<clay:content-col>
 						<h2><%= factoryConfigurationModelName %></h2>

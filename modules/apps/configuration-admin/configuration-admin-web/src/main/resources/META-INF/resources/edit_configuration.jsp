@@ -105,7 +105,9 @@ renderResponse.setTitle(categoryDisplayName);
 		<clay:col
 			md="9"
 		>
-			<clay:sheet>
+			<clay:sheet
+				size="full"
+			>
 				<aui:form action="<%= bindConfigurationActionURL %>" method="post" name="fm">
 					<aui:input name="redirect" type="hidden" value="<%= bindRedirectURL %>" />
 					<aui:input name="factoryPid" type="hidden" value="<%= configurationModel.getFactoryPid() %>" />

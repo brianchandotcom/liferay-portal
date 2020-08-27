@@ -154,7 +154,9 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 			%>
 
 			<c:if test="<%= layoutPageTemplateCollection != null %>">
-				<clay:sheet>
+				<clay:sheet
+					size="full"
+				>
 					<h2 class="sheet-title">
 						<clay:content-row
 							verticalAlign="center"

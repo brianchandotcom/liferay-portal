@@ -239,7 +239,9 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 			lg="9"
 		>
 			<c:if test="<%= (fragmentDisplayContext.getFragmentCollection() != null) || (fragmentDisplayContext.getFragmentCollectionContributor() != null) %>">
-				<clay:sheet>
+				<clay:sheet
+					size="full"
+				>
 					<h2 class="sheet-title">
 						<clay:content-row
 							verticalAlign="center"

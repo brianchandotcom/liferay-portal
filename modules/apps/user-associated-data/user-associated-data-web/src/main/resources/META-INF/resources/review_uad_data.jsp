@@ -185,7 +185,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		<clay:col
 			lg="9"
 		>
-			<clay:sheet>
+			<clay:sheet
+				size="full"
+			>
 				<clay:sheet-header>
 					<h2 class="sheet-title"><liferay-ui:message key="review-data" /></h2>
 				</clay:sheet-header>

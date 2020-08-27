@@ -88,7 +88,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		<clay:col
 			lg="9"
 		>
-			<clay:sheet>
+			<clay:sheet
+				size="full"
+			>
 				<h2 class="sheet-title">
 					<clay:content-row
 						verticalAlign="center"

@@ -127,17 +127,17 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_ALIGNMENT</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@class,'text-${key_alignment}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'text-${key_alignment}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_BORDER_COLOR</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@style,'border-color: var(--${key_paletteItem})')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'border-color: var(--${key_paletteItem})')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_BORDER_RADIUS</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@style,'border-radius: ${key_borderRadius}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'border-radius: ${key_borderRadius}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,12 +147,12 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_BOX_SHADOW</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@style,'box-shadow: ${key_boxShadow}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'box-shadow: ${key_boxShadow}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_MARGIN_BOTTOM</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@class,'mb-${key_marginBottom}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'mb-${key_marginBottom}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -177,7 +177,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_TEXT_COLOR</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@style,'color: var(--${key_textColor})')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'color: var(--${key_textColor})')]</td>
 	<td></td>
 </tr>
 <tr>

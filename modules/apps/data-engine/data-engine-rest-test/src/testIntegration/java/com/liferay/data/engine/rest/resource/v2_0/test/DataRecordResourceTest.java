@@ -162,6 +162,157 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetDataRecordCollectionDataRecordsPageWithSortString()
+		throws Exception {
+
+		super.testGetDataRecordCollectionDataRecordsPageWithSortString();
+
+		Long dataRecordCollectionId =
+			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
+
+		DataRecord dataRecord1 =
+			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
+				dataRecordCollectionId,
+				new DataRecord() {
+					{
+						dataRecordCollectionId = _dataRecordCollection.getId();
+						dataRecordValues = HashMapBuilder.<String, Object>put(
+							"MultipleSelection",
+							HashMapBuilder.put(
+								"en_US", new String[] {"Apartment"}
+							).build()
+						).put(
+							"SelectFromList",
+							HashMapBuilder.put(
+								"en_US", new String[] {"Magazine"}
+							).build()
+						).put(
+							"SingleSelection",
+							HashMapBuilder.put(
+								"en_US", new String[] {"Car"}
+							).build()
+						).put(
+							"Text",
+							HashMapBuilder.put(
+								"en_US", new String[] {"aaa"}
+							).build()
+						).build();
+					}
+				});
+
+		DataRecord dataRecord2 =
+			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
+				dataRecordCollectionId,
+				new DataRecord() {
+					{
+						dataRecordCollectionId = _dataRecordCollection.getId();
+						dataRecordValues = HashMapBuilder.<String, Object>put(
+							"MultipleSelection",
+							HashMapBuilder.put(
+								"en_US", new String[] {"House"}
+							).build()
+						).put(
+							"SelectFromList",
+							HashMapBuilder.put(
+								"en_US", new String[] {"Book"}
+							).build()
+						).put(
+							"SingleSelection",
+							HashMapBuilder.put(
+								"en_US", new String[] {"Boat"}
+							).build()
+						).put(
+							"Text",
+							HashMapBuilder.put(
+								"en_US", new String[] {"bbb"}
+							).build()
+						).build();
+					}
+				});
+
+		//Sort Data Record by Multiple Selection field
+
+		Page<DataRecord> ascPageMultipleSelection =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, null, Pagination.of(1, 2),
+				"dataRecordValues/MultipleSelection:asc");
+
+		assertEquals(
+			Arrays.asList(dataRecord1, dataRecord2),
+			(List<DataRecord>)ascPageMultipleSelection.getItems());
+
+		Page<DataRecord> descPageMultipleSelection =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, null, Pagination.of(1, 2),
+				"dataRecordValues/MultipleSelection:desc");
+
+		assertEquals(
+			Arrays.asList(dataRecord2, dataRecord1),
+			(List<DataRecord>)descPageMultipleSelection.getItems());
+
+		//Sort Data Record by Select From List field
+
+		Page<DataRecord> ascPageSelectFromList =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, null, Pagination.of(1, 2),
+				"dataRecordValues/SelectFromList:asc");
+
+		assertEquals(
+			Arrays.asList(dataRecord2, dataRecord1),
+			(List<DataRecord>)ascPageSelectFromList.getItems());
+
+		Page<DataRecord> descPageSelectFromList =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, null, Pagination.of(1, 2),
+				"dataRecordValues/SelectFromList:desc");
+
+		assertEquals(
+			Arrays.asList(dataRecord1, dataRecord2),
+			(List<DataRecord>)descPageSelectFromList.getItems());
+
+		//Sort Data Record by Single Selection field
+
+		Page<DataRecord> ascPageSingleSelection =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, null, Pagination.of(1, 2),
+				"dataRecordValues/SingleSelection:asc");
+
+		assertEquals(
+			Arrays.asList(dataRecord2, dataRecord1),
+			(List<DataRecord>)ascPageSingleSelection.getItems());
+
+		Page<DataRecord> descPageSingleSelection =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, null, Pagination.of(1, 2),
+				"dataRecordValues/SingleSelection:desc");
+
+		assertEquals(
+			Arrays.asList(dataRecord1, dataRecord2),
+			(List<DataRecord>)descPageSingleSelection.getItems());
+
+		//Sort Data Record by Text field
+
+		Page<DataRecord> ascPageText =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, null, Pagination.of(1, 2),
+				"dataRecordValues/Text:asc");
+
+		assertEquals(
+			Arrays.asList(dataRecord1, dataRecord2),
+			(List<DataRecord>)ascPageText.getItems());
+
+		Page<DataRecord> descPageText =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, null, Pagination.of(1, 2),
+				"dataRecordValues/Text:desc");
+
+		assertEquals(
+			Arrays.asList(dataRecord2, dataRecord1),
+			(List<DataRecord>)descPageText.getItems());
+	}
+
+	@Override
+	@Test
 	public void testPostDataRecordCollectionDataRecord() throws Exception {
 		super.testPostDataRecordCollectionDataRecord();
 

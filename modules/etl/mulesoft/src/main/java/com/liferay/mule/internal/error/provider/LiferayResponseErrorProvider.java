@@ -29,7 +29,7 @@ public class LiferayResponseErrorProvider implements ErrorTypeProvider {
 
 	@Override
 	public Set<ErrorTypeDefinition> getErrorTypes() {
-		Set<ErrorTypeDefinition<?>> errors = new HashSet<>();
+		Set<ErrorTypeDefinition> errors = new HashSet<>();
 
 		errors.add(LiferayError.BAD_REQUEST);
 		errors.add(LiferayError.CONNECTION_TIMEOUT);

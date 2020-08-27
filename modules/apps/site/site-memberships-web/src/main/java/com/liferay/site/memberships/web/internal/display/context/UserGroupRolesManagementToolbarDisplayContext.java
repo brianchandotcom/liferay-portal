@@ -69,6 +69,11 @@ public class UserGroupRolesManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDefaultDisplayStyle() {
+		return "icon";
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive", "icon"};
 	}

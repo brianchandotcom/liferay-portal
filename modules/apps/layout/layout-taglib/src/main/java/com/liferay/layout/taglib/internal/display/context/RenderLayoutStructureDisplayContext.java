@@ -47,6 +47,7 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
@@ -97,7 +98,7 @@ public class RenderLayoutStructureDisplayContext {
 		LayoutListRetrieverTracker layoutListRetrieverTracker,
 		LayoutStructure layoutStructure,
 		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker,
-		String mode, boolean showPreview) {
+		String mainItemId, String mode, boolean showPreview) {
 
 		_fieldValues = fieldValues;
 		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
@@ -109,6 +110,7 @@ public class RenderLayoutStructureDisplayContext {
 		_layoutListRetrieverTracker = layoutListRetrieverTracker;
 		_layoutStructure = layoutStructure;
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
+		_mainItemId = mainItemId;
 		_mode = mode;
 		_showPreview = showPreview;
 
@@ -528,6 +530,15 @@ public class RenderLayoutStructureDisplayContext {
 		return _layoutStructure;
 	}
 
+	public List<String> getMainChildrenItemIds() {
+		LayoutStructure layoutStructure = getLayoutStructure();
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(_getMainItemId());
+
+		return layoutStructureItem.getChildrenItemIds();
+	}
+
 	public String getStyle(StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 
@@ -883,6 +894,14 @@ public class RenderLayoutStructureDisplayContext {
 			collectionJSONObject);
 	}
 
+	private String _getMainItemId() {
+		if (Validator.isNotNull(_mainItemId)) {
+			return _mainItemId;
+		}
+
+		return _layoutStructure.getMainItemId();
+	}
+
 	private String _getMappedCollectionValue(
 		String collectionFieldId, Object displayObject) {
 
@@ -1025,6 +1044,7 @@ public class RenderLayoutStructureDisplayContext {
 	private final LayoutStructure _layoutStructure;
 	private final ListObjectReferenceFactoryTracker
 		_listObjectReferenceFactoryTracker;
+	private final String _mainItemId;
 	private final String _mode;
 	private Long _previewClassNameId;
 	private Long _previewClassPK;

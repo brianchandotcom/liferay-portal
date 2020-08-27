@@ -130,8 +130,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			"liferay-layout:render-fragment-layout:layoutStructure",
 			_getLayoutStructure(httpServletRequest));
 		httpServletRequest.setAttribute(
-			"liferay-layout:render-fragment-layout:mainItemId",
-			_getMainItemId(httpServletRequest));
+			"liferay-layout:render-fragment-layout:mainItemId", _mainItemId);
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:mode", _mode);
 		httpServletRequest.setAttribute(
@@ -195,17 +194,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 			return null;
 		}
-	}
-
-	private String _getMainItemId(HttpServletRequest httpServletRequest) {
-		if (Validator.isNotNull(_mainItemId)) {
-			return _mainItemId;
-		}
-
-		LayoutStructure layoutStructure = _getLayoutStructure(
-			httpServletRequest);
-
-		return layoutStructure.getMainItemId();
 	}
 
 	private String _getMasterLayoutData(HttpServletRequest httpServletRequest) {

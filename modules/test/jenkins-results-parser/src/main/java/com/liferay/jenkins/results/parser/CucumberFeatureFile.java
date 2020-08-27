@@ -97,7 +97,8 @@ public class CucumberFeatureFile implements Serializable {
 						process.getInputStream());
 
 				for (String gitGrepResult : gitGrepResults.split("\n")) {
-					Matcher matcher = _pattern.matcher(gitGrepResult);
+					Matcher matcher = _gitGrepResultsPattern.matcher(
+						gitGrepResult);
 
 					if (!matcher.find()) {
 						continue;
@@ -132,7 +133,7 @@ public class CucumberFeatureFile implements Serializable {
 		return _getFeaturePaths(scenarioName.trim());
 	}
 
-	private static final Pattern _pattern = Pattern.compile(
+	private static final Pattern _gitGrepResultsPattern = Pattern.compile(
 		"(.+\\.feature)\\:.*");
 	private static final Pattern _relativePathPattern = Pattern.compile(
 		".*/features/(.*)/[^/]+");

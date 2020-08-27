@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.validator.internal;
 
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -36,11 +37,13 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidFormRuleExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidTypeForFieldType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidValidationExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -51,6 +54,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.Mockito;
+
 /**
  * @author Marcellus Tavares
  */
@@ -59,6 +64,7 @@ public class DDMFormValidatorTest {
 	@Before
 	public void setUp() {
 		setUpBeanPropertiesUtil();
+		setUpDDMFormFieldTypeServicesTracker();
 		setUpDDMFormValidator();
 	}
 
@@ -153,6 +159,18 @@ public class DDMFormValidatorTest {
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
+	@Test(expected = MustSetValidCharactersForFieldType.class)
+	public void testInvalidCharacterFieldType() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField("Name", "html-text_*");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		_ddmFormValidatorImpl.validate(ddmForm);
+	}
+
 	@Test(expected = MustSetValidIndexType.class)
 	public void testInvalidFieldIndexType() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
@@ -181,12 +199,12 @@ public class DDMFormValidatorTest {
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
-	@Test(expected = MustSetValidCharactersForFieldType.class)
+	@Test(expected = MustSetValidTypeForFieldType.class)
 	public void testInvalidFieldType() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
-		DDMFormField ddmFormField = new DDMFormField("Name", "html-text_*");
+		DDMFormField ddmFormField = new DDMFormField("Name", "string");
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -393,18 +411,6 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test
-	public void testValidFieldType() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
-
-		DDMFormField ddmFormField = new DDMFormField("Name", "html-text_1");
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		_ddmFormValidatorImpl.validate(ddmForm);
-	}
-
-	@Test
 	public void testValidFieldValidationExpression() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
@@ -532,6 +538,21 @@ public class DDMFormValidatorTest {
 		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
 
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
+	}
+
+	protected void setUpDDMFormFieldTypeServicesTracker() {
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
+			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
+
+		Mockito.when(
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeNames()
+		).thenReturn(
+			SetUtil.fromArray(
+				new String[] {"html-çê的Ü", "html-text_*", "html-text_@"})
+		);
+
+		_ddmFormValidatorImpl.setDDMFormFieldTypeServicesTracker(
+			ddmFormFieldTypeServicesTracker);
 	}
 
 	protected void setUpDDMFormValidator() {

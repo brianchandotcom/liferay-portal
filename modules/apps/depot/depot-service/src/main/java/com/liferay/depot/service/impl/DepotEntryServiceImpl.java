@@ -75,8 +75,15 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 
 	@Override
 	public DepotEntry getDepotEntry(long depotEntryId) throws PortalException {
-		_depotEntryModelResourcePermission.check(
-			getPermissionChecker(), depotEntryId, ActionKeys.VIEW);
+		if (!_depotEntryModelResourcePermission.contains(
+				getPermissionChecker(), depotEntryId, ActionKeys.VIEW) &&
+			!_depotEntryModelResourcePermission.contains(
+				getPermissionChecker(), depotEntryId,
+				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
+
+			_depotEntryModelResourcePermission.check(
+				getPermissionChecker(), depotEntryId, ActionKeys.VIEW);
+		}
 
 		return depotEntryLocalService.getDepotEntry(depotEntryId);
 	}

@@ -2111,6 +2111,10 @@ components:
                     type: integer
                 numberOfItems:
                     type: integer
+                styles:
+                    additionalProperties:
+                        type: object
+                    type: object
                 templateKey:
                     type: string
             type: object
@@ -2221,6 +2225,10 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentField"
                     type: array
+                styles:
+                    additionalProperties:
+                        type: object
+                    type: object
                 widgetInstances:
                     items:
                         $ref: "#/components/schemas/WidgetInstance"
@@ -2275,6 +2283,10 @@ components:
                     items:
                         $ref: "#/components/schemas/RowViewport"
                     type: array
+                styles:
+                    additionalProperties:
+                        type: object
+                    type: object
                 verticalAlignment:
                     type: string
             type: object
@@ -2457,6 +2469,10 @@ components:
             type: object
         PageWidgetInstanceDefinition:
             properties:
+                styles:
+                    additionalProperties:
+                        type: object
+                    type: object
                 widgetInstance:
                     $ref: "#/components/schemas/WidgetInstance"
             type: object

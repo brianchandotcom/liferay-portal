@@ -274,12 +274,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkSystemRoles(long companyId) throws PortalException {
-		List<Role> roles = roleFinder.findBySystem(companyId);
+		Map<String, Role> companyRolesMap = new HashMap<>();
 
-		Map<String, Role> systemRolesMap = new HashMap<>();
-
-		for (Role role : roles) {
-			systemRolesMap.put(role.getName(), role);
+		for (Role role : rolePersistence.findByCompanyId(companyId)) {
+			companyRolesMap.put(role.getName(), role);
 		}
 
 		// Regular roles
@@ -300,7 +298,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			int type = RoleConstants.TYPE_REGULAR;
 
 			checkSystemRole(
-				systemRolesMap, companyId, name, descriptionMap, type);
+				companyRolesMap, companyId, name, descriptionMap, type);
 		}
 
 		// Organization roles
@@ -322,7 +320,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			int type = RoleConstants.TYPE_ORGANIZATION;
 
 			checkSystemRole(
-				systemRolesMap, companyId, name, descriptionMap, type);
+				companyRolesMap, companyId, name, descriptionMap, type);
 		}
 
 		// Site roles
@@ -343,7 +341,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			int type = RoleConstants.TYPE_SITE;
 
 			checkSystemRole(
-				systemRolesMap, companyId, name, descriptionMap, type);
+				companyRolesMap, companyId, name, descriptionMap, type);
 		}
 
 		String[] allSystemRoles = ArrayUtil.append(
@@ -1545,11 +1543,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	protected void checkSystemRole(
-			Map<String, Role> systemRolesMap, long companyId, String name,
+			Map<String, Role> companyRolesMap, long companyId, String name,
 			Map<Locale, String> descriptionMap, int type)
 		throws PortalException {
 
-		Role role = systemRolesMap.get(name);
+		Role role = companyRolesMap.get(name);
 
 		try {
 			if (role == null) {

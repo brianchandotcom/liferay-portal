@@ -438,6 +438,10 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<Role> findBySystem(long companyId) {
 		Session session = null;

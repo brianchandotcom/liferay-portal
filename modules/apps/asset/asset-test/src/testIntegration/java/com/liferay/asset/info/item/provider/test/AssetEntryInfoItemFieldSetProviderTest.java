@@ -82,31 +82,6 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	@Test
-	public void testGetInfoFieldSetAssetEntryPublicEmptyAssetVocabulary()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		AssetVocabulary assetVocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				RandomTestUtil.randomString(), serviceContext);
-
-		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
-			_group.getGroupId());
-
-		InfoFieldSet infoFieldSet =
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
-
-		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
-			assetVocabulary.getName());
-
-		Assert.assertEquals(
-			assetVocabulary.getName(), infoFieldSetEntry.getName());
-	}
-
-	@Test
 	public void testGetInfoFieldSetAssetEntryPublicAssetVocabularyWithAssetCategory()
 		throws Exception {
 
@@ -128,6 +103,31 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		_assetEntryLocalService.addAssetCategoryAssetEntry(
 			assetCategory.getCategoryId(), assetEntry);
+
+		InfoFieldSet infoFieldSet =
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
+
+		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
+			assetVocabulary.getName());
+
+		Assert.assertEquals(
+			assetVocabulary.getName(), infoFieldSetEntry.getName());
+	}
+
+	@Test
+	public void testGetInfoFieldSetAssetEntryPublicEmptyAssetVocabulary()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
 
 		InfoFieldSet infoFieldSet =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);

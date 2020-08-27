@@ -239,6 +239,7 @@ const mockGetItem = jest
 	.mockResolvedValueOnce(customObjectItems)
 	.mockResolvedValueOnce(formViewItems)
 	.mockResolvedValueOnce(tableViewItems)
+	.mockResolvedValueOnce(customObjectItems)
 	.mockResolvedValueOnce(roleItems)
 	.mockResolvedValueOnce(customObjectItems)
 	.mockResolvedValueOnce(app(false))
@@ -382,22 +383,17 @@ describe('EditApp', () => {
 				document.querySelector('span.loading-animation')
 			);
 
-			await fireEvent.click(getByText('Form 01'));
-
 			await fireEvent.click(getByText('Table 01'));
 
-			expect(getByLabelText('form-view')).toHaveTextContent('Form 01');
 			expect(getByLabelText('table-view')).toHaveTextContent('Table 01');
 
 			await fireEvent.change(nameInput, {target: {value: 'Test'}});
 
 			const deployButton = getByText('deploy');
 
-			expect(deployButton).toBeEnabled();
+			expect(deployButton).toBeDisabled();
 
 			await fireEvent.click(getByTitle('create-new-step'));
-
-			expect(deployButton).toBeDisabled();
 
 			stepNameInput = container.querySelector(
 				'.form-group-outlined input'
@@ -410,6 +406,22 @@ describe('EditApp', () => {
 			expect(
 				container.querySelector('.label-dismissible span')
 			).toHaveTextContent('Account Manager');
+
+			await fireEvent.click(getByText('initial-step'));
+
+			await fireEvent.click(getByText('data-and-views'));
+
+			await waitForElementToBeRemoved(() =>
+				document.querySelector('span.loading-animation')
+			);
+
+			await fireEvent.click(getByText('Form 01'));
+
+			expect(getByLabelText('form-view')).toHaveTextContent('Form 01');
+
+			expect(deployButton).toBeEnabled();
+
+			await fireEvent.click(getByText('step-x'));
 
 			await fireEvent.click(getByText('data-and-views'));
 
@@ -434,6 +446,16 @@ describe('EditApp', () => {
 			});
 
 			await fireEvent.click(getByText('add-new-action'));
+
+			await fireEvent.click(getAllByText('step-x')[0]);
+
+			await fireEvent.click(getByTitle('create-new-step'));
+
+			await fireEvent.click(getAllByText('delete-step')[1]);
+
+			await fireEvent.click(getAllByText('step-x')[1]);
+
+			await fireEvent.click(getByText('actions'));
 
 			await fireEvent.click(getByText('remove'));
 

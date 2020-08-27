@@ -37,6 +37,27 @@ const OPEN_MENU_TITLE_TPL =
 	'<kbd class="c-kbd">M</kbd>' +
 	'</kbd>';
 
+const EnvironmentsPanel = ({portletNamespace, sites}) => {
+	return (
+		<div className="applications-menu-environments c-p-3 c-px-md-4">
+			<h2 className="applications-menu-environments-label c-mt-2 c-mt-md-0">
+				{Liferay.Language.get('environments')}
+			</h2>
+
+			<ul className="c-my-2 list-unstyled">
+				{sites && (
+					<Sites
+						mySites={sites.mySites}
+						portletNamespace={portletNamespace}
+						recentSites={sites.recentSites}
+						viewAllURL={sites.viewAllURL}
+					/>
+				)}
+			</ul>
+		</div>
+	)
+};
+
 const Site = ({current, label, logoURL, url}) => {
 	return (
 		<li className="c-mt-3">
@@ -65,9 +86,15 @@ const Site = ({current, label, logoURL, url}) => {
 	);
 };
 
-const SitesPanel = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
+const Sites = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 	return (
 		<>
+			<li className="c-my-3">
+				<h2 className="applications-menu-nav-header">
+					{Liferay.Language.get('sites')}
+				</h2>
+			</li>
+
 			{recentSites?.length > 0 &&
 				recentSites.map(({current, key, label, logoURL, url}) => (
 					<Site
@@ -269,22 +296,10 @@ const AppsPanel = ({
 							lg="3"
 							md="4"
 						>
-							<div className="applications-menu-sites c-p-3 c-px-md-4">
-								<h2 className="applications-menu-sites-label c-mt-2 c-mt-md-0">
-									{Liferay.Language.get('sites')}
-								</h2>
-
-								<ul className="c-mb-2 list-unstyled">
-									{sites && (
-										<SitesPanel
-											mySites={sites.mySites}
-											portletNamespace={portletNamespace}
-											recentSites={sites.recentSites}
-											viewAllURL={sites.viewAllURL}
-										/>
-									)}
-								</ul>
-							</div>
+							<EnvironmentsPanel
+								portletNamespace={portletNamespace}
+								sites={sites}
+							/>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>

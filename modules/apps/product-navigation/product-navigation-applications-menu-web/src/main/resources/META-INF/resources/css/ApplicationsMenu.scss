@@ -112,13 +112,12 @@
 	}
 }
 
-.applications-menu-sites-label {
+.applications-menu-environments-label {
 	background-color: $light-l1;
 	color: $secondary;
 	font-size: 0.875rem;
 	font-weight: 600;
 	margin-bottom: 0;
-	text-transform: uppercase;
 
 	@include media-breakpoint-up(md) {
 		bottom: 100%;
@@ -128,7 +127,7 @@
 	}
 }
 
-.applications-menu-sites {
+.applications-menu-environments {
 	background-color: $light-l1;
 	height: 100%;
 }

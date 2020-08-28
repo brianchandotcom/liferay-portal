@@ -37,6 +37,7 @@ export default function PageDesignOptionsSidebar() {
 	const dispatch = useDispatch();
 
 	const [selectedStyleBook, setSelectedStyleBook] = useState({
+		defaultStyleBookEntryName: config.defaultStyleBookEntryName,
 		frontendTokens: config.frontendTokens,
 		styleBookEntryId: config.styleBookEntryId,
 	});
@@ -54,6 +55,8 @@ export default function PageDesignOptionsSidebar() {
 			).then(({styleBook}) => {
 				if (styleBook) {
 					setSelectedStyleBook({
+						defaultStyleBookEntryName:
+							styleBook.defaultStyleBookEntryName,
 						frontendTokens: styleBook.tokenValues,
 						styleBookEntryId: styleBook.styleBookEntryId,
 					});
@@ -68,10 +71,12 @@ export default function PageDesignOptionsSidebar() {
 			onNetworkStatus: () => {},
 			styleBookEntryId: styleBook.styleBookEntryId,
 		}).then((styleBookWithTokens) => {
-			setSelectedStyleBook({
+			setSelectedStyleBook((selectedStyleBook) => ({
+				defaultStyleBookEntryName:
+					selectedStyleBook.defaultStyleBookEntryName,
 				frontendTokens: styleBookWithTokens.tokenValues,
 				styleBookEntryId: styleBook.styleBookEntryId,
-			});
+			}));
 		});
 	}, []);
 
@@ -92,7 +97,7 @@ export default function PageDesignOptionsSidebar() {
 		() =>
 			getTabs(
 				masterLayoutPlid,
-				selectedStyleBook.styleBookEntryId,
+				selectedStyleBook,
 				onSelectMasterLayout,
 				onSelectStyleBook
 			),
@@ -222,7 +227,7 @@ const OptionList = ({options = [], icon}) => (
 
 function getTabs(
 	masterLayoutPlid,
-	styleBookEntryId,
+	selectedStyleBook,
 	onSelectMasterLayout,
 	onSelectStyleBook
 ) {
@@ -234,7 +239,7 @@ function getTabs(
 					: Liferay.Language.get('inherited-from-master'),
 			styleBookEntryId: '0',
 			subtitle:
-				config.defaultStyleBookEntryName ||
+				selectedStyleBook.defaultStyleBookEntryName ||
 				Liferay.Language.get('provided-by-theme'),
 		},
 		...config.styleBooks,
@@ -246,7 +251,9 @@ function getTabs(
 			label: Liferay.Language.get('style-book'),
 			options: styleBooks.map((styleBook) => ({
 				...styleBook,
-				isActive: styleBookEntryId === styleBook.styleBookEntryId,
+				isActive:
+					selectedStyleBook.styleBookEntryId ===
+					styleBook.styleBookEntryId,
 				onClick: () => onSelectStyleBook(styleBook),
 			})),
 			type: OPTIONS_TYPES.styleBook,

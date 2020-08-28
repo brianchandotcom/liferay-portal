@@ -125,7 +125,7 @@ public class AssetListManagementToolbarDisplayContext
 						AssetListEntryTypeConstants.TYPE_MANUAL_LABEL, true));
 				dropdownItem.setHref("#");
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "manual-selection"));
+					LanguageUtil.get(request, "manual-collection"));
 			}
 		).addPrimaryDropdownItem(
 			dropdownItem -> {
@@ -150,7 +150,7 @@ public class AssetListManagementToolbarDisplayContext
 						AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL, true));
 				dropdownItem.setHref("#");
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "dynamic-selection"));
+					LanguageUtil.get(request, "dynamic-collection"));
 			}
 		).build();
 	}

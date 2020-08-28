@@ -54,7 +54,8 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 	@Override
 	public JournalArticle updateFromInfoItemFieldValues(
-			JournalArticle article, InfoItemFieldValues infoItemFieldValues)
+			JournalArticle journalArticle,
+			InfoItemFieldValues infoItemFieldValues)
 		throws Exception {
 
 		Map<Locale, String> importedLocaleTitleMap = new HashMap<>();
@@ -107,7 +108,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		}
 
 		JournalArticle latestArticle = _journalArticleService.getLatestArticle(
-			article.getGroupId(), article.getArticleId(),
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
 			WorkflowConstants.STATUS_ANY);
 
 		Map<Locale, String> titleMap = latestArticle.getTitleMap();

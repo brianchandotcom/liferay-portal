@@ -541,6 +541,81 @@ definition {
 			navTab = "Documents and Media");
 	}
 
+	@description = "This test covers LPS-119707. It ensures that the web content in the depot folder can be viewed through everywhere filter on a connected site."
+	@priority = "4"
+	test ViewFolderWCViaFilterResults {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONWebcontent.addFolder(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
+
+		JSONWebcontent.addWebContent(
+			content = "Webcontent Content",
+			folderName = "WC Folder Name",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC WebContent From Depot");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Site",
+			groupName = "Site Name",
+			title = "WC WebContent From Site");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Web Content",
+			fieldFieldLabel = "Web Content",
+			fieldName = "WebContent");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		AssertClick(
+			key_fieldName = "WebContent",
+			locator1 = "Button#SELECT_CONTENT",
+			value1 = "Select");
+
+		ItemSelector.viewWCEverywhereFilterResults(
+			folderWebContentTitle = "WC WebContent From Depot",
+			viewFolderWC = "true",
+			wcFolderName = "WC Folder Name",
+			webContentTitle = "WC WebContent From Site");
+	}
+
 	@description = "This ensures that the location info of depot web content can be viewed through WCD on a connected site."
 	@priority = "5"
 	test ViewWCLocationInfo {

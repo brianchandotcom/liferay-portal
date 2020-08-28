@@ -75,7 +75,7 @@ public class UserModelPreFilterContributor
 
 			Class<?> clazz = value.getClass();
 
-			if (clazz.isArray()) {
+			if (clazz.isArray() && (value instanceof Object[])) {
 				Object[] values = (Object[])value;
 
 				if (values.length == 0) {

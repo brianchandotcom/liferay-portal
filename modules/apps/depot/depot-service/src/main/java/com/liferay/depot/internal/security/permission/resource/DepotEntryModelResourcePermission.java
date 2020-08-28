@@ -19,6 +19,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -100,6 +101,12 @@ public class DepotEntryModelResourcePermission
 				depotEntry.getCompanyId(), DepotEntry.class.getName(),
 				depotEntry.getDepotEntryId(), depotEntry.getUserId(),
 				actionId)) {
+
+			return true;
+		}
+
+		if (permissionChecker.isGroupMember(depotEntry.getGroupId()) &&
+			actionId.equals(ActionKeys.VIEW)) {
 
 			return true;
 		}

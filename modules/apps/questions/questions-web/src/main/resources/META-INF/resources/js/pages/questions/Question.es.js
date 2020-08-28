@@ -200,7 +200,11 @@ export default withRouter(
 
 		return (
 			<section className="questions-section questions-section-single">
-				<Breadcrumb section={question.messageBoardSection} />
+				<Breadcrumb
+					section={
+						question.messageBoardSection || context.rootTopicId
+					}
+				/>
 
 				<div className="c-mt-5 questions-container">
 					{!loading && (

@@ -87,7 +87,7 @@ export default withRouter(
 				context.siteKey,
 				slugToText(sectionTitle)
 			).then((section) => {
-				setSectionId((section && section.id) || +context.rootTopic);
+				setSectionId((section && section.id) || +context.rootTopicId);
 				if (section.parentMessageBoardSection) {
 					setSections([
 						{
@@ -109,7 +109,7 @@ export default withRouter(
 					]);
 				}
 			});
-		}, [context.rootTopic, context.siteKey, sectionTitle]);
+		}, [context.rootTopicId, context.siteKey, sectionTitle]);
 
 		const processError = (error) => {
 			if (error.message && error.message.includes('AssetTagException')) {
@@ -128,7 +128,7 @@ export default withRouter(
 		};
 
 		const createQuestion = () => {
-			if (sectionTitle === context.rootTopic) {
+			if (sectionTitle === context.rootTopicId) {
 				createQuestionInRoot({
 					variables: {
 						articleBody,

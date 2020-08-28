@@ -303,7 +303,47 @@ class ChangeTrackingChangesView extends React.Component {
 	_filterDisplayNodes(nodes) {
 		const ascending = this.state.ascending;
 
-		if (this._getColumn() === 'site') {
+		if (this._getColumn() === 'changeType') {
+			nodes.sort((a, b) => {
+				if (a.changeType < b.changeType) {
+					if (ascending) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (a.changeType > b.changeType) {
+					if (ascending) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				const typeNameA = a.typeName.toUpperCase();
+				const typeNameB = b.typeName.toUpperCase();
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				if (a.title < b.title) {
+					return -1;
+				}
+
+				if (a.title > b.title) {
+					return 1;
+				}
+
+				return 0;
+			});
+		}
+		else if (this._getColumn() === 'site') {
 			nodes.sort((a, b) => {
 				if (
 					a.siteName < b.siteName ||
@@ -1260,20 +1300,31 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_renderManagementToolbar() {
-		const items = [];
+		let items = [];
 
 		if (this.state.viewType === 'changes') {
-			items.push({
-				active: this._getColumn() === 'modifiedDate',
-				label: Liferay.Language.get('modified-date'),
-				onClick: () => this._handleSortColumnChange('modifiedDate'),
-			});
-
-			items.push({
-				active: this._getColumn() === 'site',
-				label: Liferay.Language.get('site'),
-				onClick: () => this._handleSortColumnChange('site'),
-			});
+			items = [
+				{
+					active: this._getColumn() === 'changeType',
+					label: Liferay.Language.get('change-type'),
+					onClick: () => this._handleSortColumnChange('changeType'),
+				},
+				{
+					active: this._getColumn() === 'modifiedDate',
+					label: Liferay.Language.get('modified-date'),
+					onClick: () => this._handleSortColumnChange('modifiedDate'),
+				},
+				{
+					active: this._getColumn() === 'site',
+					label: Liferay.Language.get('site'),
+					onClick: () => this._handleSortColumnChange('site'),
+				},
+				{
+					active: this._getColumn() === 'user',
+					label: Liferay.Language.get('user'),
+					onClick: () => this._handleSortColumnChange('user'),
+				},
+			];
 		}
 
 		items.push({
@@ -1282,13 +1333,13 @@ class ChangeTrackingChangesView extends React.Component {
 			onClick: () => this._handleSortColumnChange('title'),
 		});
 
-		if (this.state.viewType === 'changes') {
-			items.push({
-				active: this._getColumn() === 'user',
-				label: Liferay.Language.get('user'),
-				onClick: () => this._handleSortColumnChange('user'),
-			});
-		}
+		items.sort((a, b) => {
+			if (a.label < b.label) {
+				return -1;
+			}
+
+			return 1;
+		});
 
 		const dropdownItems = [
 			{

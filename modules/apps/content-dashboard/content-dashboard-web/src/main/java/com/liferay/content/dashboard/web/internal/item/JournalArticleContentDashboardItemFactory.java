@@ -22,6 +22,7 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -51,9 +52,20 @@ public class JournalArticleContentDashboardItemFactory
 			_journalArticleLocalService.getLatestArticle(
 				classPK, WorkflowConstants.STATUS_ANY, false);
 
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
+		AssetEntry assetEntry = null;
+
+		if (!journalArticle.isApproved() &&
+			(journalArticle.getVersion() !=
+				JournalArticleConstants.VERSION_DEFAULT)) {
+
+			assetEntry = _assetEntryLocalService.fetchEntry(
+				JournalArticle.class.getName(), journalArticle.getPrimaryKey());
+		}
+		else {
+			assetEntry = _assetEntryLocalService.fetchEntry(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey());
+		}
 
 		Optional<ContentDashboardItemTypeFactory>
 			contentDashboardItemTypeFactoryOptional =

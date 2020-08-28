@@ -37,7 +37,7 @@
 	</header>
 
 	<div class="container" id="content">
-		<div class="sheet sheet-lg" id="main-content">
+		<div class="pl-4 position-relative pr-4 pt-4 sheet sheet-lg" id="main-content">
 			<h2 class="sheet-title" title="<liferay-ui:message key="basic-configuration" />">
 				<liferay-ui:message key="basic-configuration" />
 			</h2>
@@ -337,7 +337,7 @@
 						var loadingMask = new A.LoadingMask(
 							{
 								'strings.loading': '<%= UnicodeLanguageUtil.get(request, "liferay-is-being-installed") %>',
-								target: A.getBody()
+								target: A.one('#main-content')
 							}
 						);
 

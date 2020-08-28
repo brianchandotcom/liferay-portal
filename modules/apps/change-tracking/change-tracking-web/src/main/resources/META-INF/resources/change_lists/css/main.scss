@@ -23,6 +23,17 @@
 		border-right: solid 1px #e7e7ed;
 		vertical-align: top;
 	}
+
+	.change-lists-diff-key-td {
+		font-weight: 600;
+		white-space: nowrap;
+		width: 25%;
+	}
+
+	.change-lists-diff-value-td {
+		white-space: nowrap;
+		width: 75%;
+	}
 }
 
 .change-lists-discard-container {

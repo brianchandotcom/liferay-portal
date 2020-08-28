@@ -159,9 +159,9 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 			try {
 				Writer writer = httpServletResponse.getWriter();
 
-				writer.write("<tr><td>");
+				writer.write("<tr><td class=\"change-lists-diff-key-td\">");
 				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
-				writer.write("</td><td style=\"white-space: pre-line;\">");
+				writer.write("</td><td class=\"change-lists-diff-value-td\">");
 
 				if (value instanceof Blob) {
 					String downloadURL = _displayContext.getDownloadURL(
@@ -210,9 +210,9 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 			try {
 				Writer writer = httpServletResponse.getWriter();
 
-				writer.write("<tr><td>");
+				writer.write("<tr><td class=\"change-lists-diff-key-td\">");
 				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
-				writer.write("</td><td style=\"white-space: pre-line;\">");
+				writer.write("</td><td class=\"change-lists-diff-value-td\">");
 
 				if (escape) {
 					value = HtmlUtil.escape(value);

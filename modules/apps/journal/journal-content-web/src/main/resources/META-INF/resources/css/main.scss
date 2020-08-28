@@ -76,9 +76,9 @@
 		}
 	}
 
-	&:hover .portlet,
-	&:focus .portlet,
-	& .portlet.open {
+	body:not(.controls-hidden) &:hover .portlet,
+	body:not(.controls-hidden) &:focus .portlet,
+	body:not(.controls-hidden) & .portlet.open {
 		.portlet-header .visible-interaction {
 			visibility: visible;
 		}

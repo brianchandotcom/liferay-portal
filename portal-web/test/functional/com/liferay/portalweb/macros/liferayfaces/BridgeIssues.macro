@@ -24,9 +24,33 @@ definition {
 		}
 	}
 
+	macro urlParameters {
+		Click(
+			key_buttonName = "${buttonName}",
+			locator1 = "BridgeIssues#URL_BUTTON");
+
+		AssertLocation.assertPartialLocation(value1 = "${urlEnd}");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#PARAMETER_ALPHA",
+			value1 = "${alpha}");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#PARAMETER_BETA",
+			value1 = "${beta}");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#PARAMETER_GAMMA",
+			value1 = "${gamma}");
+	}
+
 	macro verifyValue {
 
 		if ("${restorestate}" == "true") {
+			Click(
+				key_PageLink = "${link}",
+				locator1 = "BridgeIssues#PAGE_LINK");
+
 			AssertElementPresent(
 				key_attribute = "${textValue}",
 				locator1 = "BridgeIssues#TEXT_VALUE");
@@ -38,6 +62,54 @@ definition {
 			AssertElementPresent(
 				key_attribute = "${detailValue}",
 				locator1 = "BridgeIssues#DETAIL_VALUE");
+		}
+
+		if (isSet(toPageLink)) {
+			Click(
+				key_PageLink = "${link}",
+				locator1 = "BridgeIssues#PAGE_LINK");
+
+			Click(
+				key_toPageLink = "${toPageLink}",
+				locator1 = "BridgeIssues#TO_PAGE_LINK");
+
+			AssertElementPresent(
+				key_attribute = "${textValue}",
+				locator1 = "BridgeIssues#TEXT_VALUE");
+
+			AssertElementPresent(
+				key_attribute = "${statusValue}",
+				locator1 = "BridgeIssues#STATUS_VALUE");
+
+			AssertElementPresent(
+				key_attribute = "${detailValue}",
+				locator1 = "BridgeIssues#DETAIL_VALUE");
+		}
+
+		if (isSet(validURL)) {
+			Click(
+				key_validURL = "${validURL}",
+				locator1 = "BridgeIssues#VALID_URL");
+
+			AssertElementPresent(
+				key_attribute = "${textValue}",
+				locator1 = "BridgeIssues#TEXT_VALUE");
+
+			AssertElementPresent(
+				key_attribute = "${statusValue}",
+				locator1 = "BridgeIssues#STATUS_VALUE");
+
+			AssertElementPresent(
+				key_attribute = "${detailValue}",
+				locator1 = "BridgeIssues#DETAIL_VALUE");
+		}
+
+		if (isSet(inValidURL)) {
+			Click(
+				key_inValidURL = "${inValidURL}",
+				locator1 = "BridgeIssues#INVALID_URL");
+
+			AssertElementPresent(locator1 = "BridgeIssues#ERROR_MESSAGE");
 		}
 	}
 

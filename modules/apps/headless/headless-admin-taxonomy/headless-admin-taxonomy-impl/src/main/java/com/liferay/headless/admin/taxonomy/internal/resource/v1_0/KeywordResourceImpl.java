@@ -126,7 +126,7 @@ public class KeywordResourceImpl
 						pagination.getEndPosition()),
 					this::_toAssetTag),
 				this::_toKeyword),
-			pagination, _getTotalCount(siteId));
+			pagination, _getTotalCount(search, siteId));
 	}
 
 	@Override
@@ -208,12 +208,18 @@ public class KeywordResourceImpl
 		return projectionList;
 	}
 
-	private long _getTotalCount(Long siteId) {
+	private long _getTotalCount(String search, Long siteId) {
 		DynamicQuery dynamicQuery = _assetTagLocalService.dynamicQuery();
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
 				"companyId", contextCompany.getCompanyId()));
+
+		if (!Validator.isBlank(search)) {
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.ilike(
+					"name", StringUtil.quote(search, StringPool.PERCENT)));
+		}
 
 		if (siteId != null) {
 			dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", siteId));

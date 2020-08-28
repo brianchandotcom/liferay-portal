@@ -1691,7 +1691,7 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 		<attribute name="dxp.app.version" />
 
 		<sequential>
-			<basename property="dxp.app.base.dir.name" file="@{dxp.app.dir.name}"/>
+			<basename file="@{dxp.app.dir.name}" property="dxp.app.base.dir.name" />
 
 			<propertyregex
 				defaultValue="${dxp.app.base.dir.name}"

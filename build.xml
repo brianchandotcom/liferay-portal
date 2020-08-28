@@ -892,7 +892,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			</condition>
 		</fail>
 
-		<basename property="dxp.app.base.dir.name" file="${dxp.app.dir.name}"/>
+		<basename file="${dxp.app.dir.name}" property="dxp.app.base.dir.name" />
 
 		<propertyregex
 			defaultValue="${dxp.app.base.dir.name}"

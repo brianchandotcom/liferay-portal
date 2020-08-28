@@ -1,0 +1,44 @@
+definition {
+
+	macro select {
+		Click(locator1 = "BridgeIssues#SELECT_ONE_MENU");
+
+		Click(
+			key_opt = "${textValue}",
+			locator1 = "BridgeIssues#SELECT_MENU_OPTION");
+
+		AssertElementPresent(
+			key_attribute = "${textValue}",
+			locator1 = "BridgeIssues#SELECT_MENU_VALUE");
+	}
+
+	macro upload3250File {
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "${fileName}");
+
+		if ("${instantAjax}" == "true") {
+			Click(
+				key_attribute = "${submit}",
+				locator1 = "BridgeIssues#SUBMIT_FILE_BUTTON");
+		}
+	}
+
+	macro verifyValue {
+
+		if ("${restorestate}" == "true") {
+			AssertElementPresent(
+				key_attribute = "${textValue}",
+				locator1 = "BridgeIssues#TEXT_VALUE");
+
+			AssertElementPresent(
+				key_attribute = "${statusValue}",
+				locator1 = "BridgeIssues#STATUS_VALUE");
+
+			AssertElementPresent(
+				key_attribute = "${detailValue}",
+				locator1 = "BridgeIssues#DETAIL_VALUE");
+		}
+	}
+
+}

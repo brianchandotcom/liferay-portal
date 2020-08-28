@@ -1,0 +1,40 @@
+@component-name = "core-infrastructure"
+definition {
+
+	property liferay.faces = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Liferay Faces";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		// JSONGroup.addGroup(groupName = "Bridge Issues");
+
+		// SitePages.openPagesAdmin(siteURLKey = "Bridge Issues");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@priority = "5"
+	test ButtonSmoke {
+
+		// ButtonGeneral
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/button/general");
+
+		AlloyShowcase.clickButton(buttonNum = "1,2,3");
+	}
+
+}

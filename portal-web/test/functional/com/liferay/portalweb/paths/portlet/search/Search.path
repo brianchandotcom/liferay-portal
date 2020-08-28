@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADD_PORTLET_LINK</td>
+	<td>//button[contains(.,'Search')]/following-sibling::div//div[contains(@class,'item-body')]//*[normalize-space(text())='${key_portletName}']/../../..//button[contains(@class,'item-add')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_FACET_CLOUD_LAYOUT</td>
 	<td>//ul[contains(@class,'tag-cloud')]//button[contains(.,'${categoryName}')]</td>
 	<td></td>

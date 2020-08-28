@@ -4,6 +4,21 @@ definition {
 		For searches that do not use the search portlet (e.g. searches within the product menu), use the macros within Search.macro instead.'Embedded' refers to the search bar in the page header whereas 'Widget' refers to the search bar within the page.
 	 */
 
+	macro _clickAddPortlet {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "internetexplorer") {
+			Click.javaScriptClick(
+				key_portletName = "${portletName}",
+				locator1 = "Search#ADD_PORTLET_LINK");
+		}
+		else {
+			Click.clickNoWaitForVisible(
+				key_portletName = "${portletName}",
+				locator1 = "Search#ADD_PORTLET_LINK");
+		}
+	}
+
 	macro addWidgets {
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
@@ -20,7 +35,7 @@ definition {
 			value1 = "search");
 
 		for (var portletName : list "${searchPortletList}") {
-			Portlet._clickAddPortlet(portletName = "${portletName}");
+			SearchPortlets._clickAddPortlet(portletName = "${portletName}");
 
 			var key_portletName = "${portletName}";
 

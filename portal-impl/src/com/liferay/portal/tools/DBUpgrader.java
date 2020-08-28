@@ -326,8 +326,14 @@ public class DBUpgrader {
 	private static void _upgradePortal() throws Exception {
 		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
 
+		int buildNumber = _getReleaseColumnValue("buildNumber");
+
 		try (Connection connection = DataAccess.getConnection()) {
-			if (PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
+			if (PortalUpgradeProcess.isInLatestSchemaVersion(connection) &&
+				(buildNumber == ReleaseInfo.getParentBuildNumber())) {
+
+				_checkClassNamesAndResourceActions();
+
 				return;
 			}
 		}
@@ -337,8 +343,6 @@ public class DBUpgrader {
 		}
 
 		CacheRegistryUtil.setActive(false);
-
-		int buildNumber = _getReleaseColumnValue("buildNumber");
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Update build " + buildNumber);

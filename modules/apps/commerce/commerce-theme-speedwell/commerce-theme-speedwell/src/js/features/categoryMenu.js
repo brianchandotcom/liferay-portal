@@ -42,7 +42,7 @@ Liferay.component(
 		}
 
 		function attachListeners() {
-			if (!Liferay.Browser.isMobile) {
+			if (!Liferay.Browser.isMobile()) {
 				linkElements.forEach((link) => {
 					link.addEventListener(
 						'mouseover',

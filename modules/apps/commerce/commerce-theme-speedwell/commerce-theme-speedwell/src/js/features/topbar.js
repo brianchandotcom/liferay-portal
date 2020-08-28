@@ -64,7 +64,7 @@
 						);
 						categoryEl.classList.remove(IS_OPEN);
 
-						if (Liferay.Browser.isMobile) {
+						if (Liferay.Browser.isMobile()) {
 							hideFiltersButtonOnMenuOpen();
 						}
 					}

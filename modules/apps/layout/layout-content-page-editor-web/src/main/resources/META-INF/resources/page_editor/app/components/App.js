@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 
 import useAutoExtendSession from '../../core/hooks/useAutoExtendSession';
+import {StyleBookContextProvider} from '../../plugins/page-design-options/hooks/useStyleBook';
 import {INIT} from '../actions/types';
 import {config} from '../config/index';
 import {reducer} from '../reducers/index';
@@ -44,7 +45,10 @@ export default function App({state}) {
 						<DragPreview />
 						<Toolbar />
 						<LayoutViewport />
-						<Sidebar />
+
+						<StyleBookContextProvider>
+							<Sidebar />
+						</StyleBookContextProvider>
 					</DragAndDropContextProvider>
 				</CollectionActiveItemContextProvider>
 			</ControlsProvider>

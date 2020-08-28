@@ -27,6 +27,7 @@ import changeMasterLayout from '../../../app/thunks/changeMasterLayout';
 import {useId} from '../../../app/utils/useId';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+import {useSetStyleBook, useStyleBook} from '../hooks/useStyleBook';
 
 const OPTIONS_TYPES = {
 	master: 'master',
@@ -35,12 +36,8 @@ const OPTIONS_TYPES = {
 
 export default function PageDesignOptionsSidebar() {
 	const dispatch = useDispatch();
-
-	const [selectedStyleBook, setSelectedStyleBook] = useState({
-		defaultStyleBookEntryName: config.defaultStyleBookEntryName,
-		frontendTokens: config.frontendTokens,
-		styleBookEntryId: config.styleBookEntryId,
-	});
+	const selectedStyleBook = useStyleBook();
+	const setSelectedStyleBook = useSetStyleBook();
 
 	const masterLayoutPlid = useSelector(
 		(state) => state.masterLayout?.masterLayoutPlid
@@ -54,37 +51,35 @@ export default function PageDesignOptionsSidebar() {
 				})
 			).then(({styleBook}) => {
 				if (styleBook) {
-					setSelectedStyleBook({
-						defaultStyleBookEntryName:
-							styleBook.defaultStyleBookEntryName,
-						frontendTokens: styleBook.tokenValues,
-						styleBookEntryId: styleBook.styleBookEntryId,
-					});
+					setSelectedStyleBook(styleBook);
 				}
 			});
 		},
-		[dispatch]
+		[dispatch, setSelectedStyleBook]
 	);
 
-	const onSelectStyleBook = useCallback((styleBook) => {
-		LayoutService.changeStyleBookEntry({
-			onNetworkStatus: () => {},
-			styleBookEntryId: styleBook.styleBookEntryId,
-		}).then((styleBookWithTokens) => {
-			setSelectedStyleBook((selectedStyleBook) => ({
-				defaultStyleBookEntryName:
-					selectedStyleBook.defaultStyleBookEntryName,
-				frontendTokens: styleBookWithTokens.tokenValues,
+	const onSelectStyleBook = useCallback(
+		(styleBook) => {
+			LayoutService.changeStyleBookEntry({
+				onNetworkStatus: () => {},
 				styleBookEntryId: styleBook.styleBookEntryId,
-			}));
-		});
-	}, []);
+			}).then((styleBookWithTokens) => {
+				setSelectedStyleBook((selectedStyleBook) => ({
+					defaultStyleBookEntryName:
+						selectedStyleBook.defaultStyleBookEntryName,
+					styleBookEntryId: styleBook.styleBookEntryId,
+					tokenValues: styleBookWithTokens.tokenValues,
+				}));
+			});
+		},
+		[setSelectedStyleBook]
+	);
 
 	useEffect(() => {
 		const wrapper = document.getElementById('wrapper');
 
 		if (selectedStyleBook && wrapper) {
-			selectedStyleBook.frontendTokens.forEach((token) => {
+			selectedStyleBook.tokenValues.forEach((token) => {
 				wrapper.style.setProperty(
 					`--${token.cssVariable}`,
 					token.value

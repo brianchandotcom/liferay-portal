@@ -1066,10 +1066,6 @@
 		},
 		{
 			"genericTypeCount": 1,
-			"name": "com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor"
-		},
-		{
-			"genericTypeCount": 1,
 			"name": "com.liferay.portal.search.elasticsearch7.internal.facet.FacetProcessor"
 		},
 		{

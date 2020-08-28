@@ -21,7 +21,6 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
-import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import {useSelector} from '../../store/index';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -32,9 +31,6 @@ const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
 		const canUpdateItemConfiguration = useSelector(
 			selectCanUpdateItemConfiguration
-		);
-		const canUpdatePageStructure = useSelector(
-			selectCanUpdatePageStructure
 		);
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize

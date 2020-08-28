@@ -627,12 +627,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 		</#list>
 
-		<#if entity.isChangeTrackingEnabled()>
-			if (!${ctPersistenceHelper}.isRemove(${entity.varName})) {
-				return ${entity.varName};
-			}
-		</#if>
-
 		Session session = null;
 
 		try {
@@ -656,7 +650,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				${entity.varName} = (${entity.name})session.get(${entity.name}Impl.class, ${entity.varName}.getPrimaryKeyObj());
 			}
 
-			if (${entity.varName} != null) {
+			<#if entity.isChangeTrackingEnabled()>
+				if ((${entity.varName} != null) && ${ctPersistenceHelper}.isRemove(${entity.varName})) {
+			<#else>
+				if (${entity.varName} != null) {
+			</#if>
+
 				session.delete(${entity.varName});
 			}
 		}

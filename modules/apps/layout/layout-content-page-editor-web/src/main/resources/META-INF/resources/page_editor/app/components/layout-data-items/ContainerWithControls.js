@@ -82,9 +82,7 @@ const ContainerWithControls = React.forwardRef(
 				<Container
 					className={classNames({
 						empty: !item.children.length && !height,
-						'page-editor__container':
-							canUpdatePageStructure ||
-							canUpdateItemConfiguration,
+						'page-editor__container': canUpdateItemConfiguration,
 					})}
 					item={item}
 					ref={setRef}

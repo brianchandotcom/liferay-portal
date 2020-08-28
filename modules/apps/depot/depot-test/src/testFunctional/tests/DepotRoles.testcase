@@ -29,14 +29,24 @@ definition {
 	@description = "This test covers LPS-113731. It ensures that roles and permissions from a library are removed after membership is revoked."
 	@priority = "5"
 	test AccessALAfterRevokingMembership {
-		Permissions.setUpRegRoleLoginUserCP(
-			roleTitle = "Depot Regrole Name",
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Depot Regrole Name",
+			userEmailAddress = "userea@liferay.com");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
@@ -105,14 +115,9 @@ definition {
 			key_card = "Test Depot Name",
 			locator1 = "Card#CARD_ELLIPSIS");
 
-		Click(
-			key_card = "Test Depot Name",
-			locator1 = "Card#CARD_TITLE",
-			value1 = "Test Depot Name");
-
-		AssertVisible(
-			key_card = "Test Depot Name",
-			locator1 = "Card#CARD");
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			noViewApplicationPermission = "true");
 	}
 
 	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even after it is automatically assigned to a connected site member. This test also covers permissions and makes sure the library asset can be updated by the role."

@@ -2,26 +2,26 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 --%>
 
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceDataIntegrationProcessLogDisplayContext commerceDataIntegrationProcessLogDisplayContext = (CommerceDataIntegrationProcessLogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+DispatchLogDisplayContext dispatchLogDisplayContext = (DispatchLogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceDataIntegrationProcessLog commerceDataIntegrationProcessLog = (CommerceDataIntegrationProcessLog)row.getObject();
+DispatchLog dispatchLog = (DispatchLog)row.getObject();
 %>
 
 <liferay-ui:icon-menu
@@ -31,11 +31,11 @@ CommerceDataIntegrationProcessLog commerceDataIntegrationProcessLog = (CommerceD
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommerceDataintegrationProcessPermission.contains(permissionChecker, commerceDataIntegrationProcessLogDisplayContext.getCommerceDataIntegrationProcess(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= DispatchPermission.contains(permissionChecker, dispatchLogDisplayContext.getDispatchTrigger(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="viewURL">
-			<portlet:param name="mvcRenderCommandName" value="viewCommerceDataIntegrationProcessLog" />
+			<portlet:param name="mvcRenderCommandName" value="viewDispatchLog" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="cDataIntegrationProcessLogId" value="<%= String.valueOf(commerceDataIntegrationProcessLog.getCommerceDataIntegrationProcessLogId()) %>" />
+			<portlet:param name="dispatchLogId" value="<%= String.valueOf(dispatchLog.getDispatchLogId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -43,10 +43,10 @@ CommerceDataIntegrationProcessLog commerceDataIntegrationProcessLog = (CommerceD
 			url="<%= viewURL %>"
 		/>
 
-		<portlet:actionURL name="editCommerceDataIntegrationProcessLog" var="deleteURL">
+		<portlet:actionURL name="editDispatchLog" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="cDataIntegrationProcessLogId" value="<%= String.valueOf(commerceDataIntegrationProcessLog.getCommerceDataIntegrationProcessLogId()) %>" />
+			<portlet:param name="dispatchLogId" value="<%= String.valueOf(dispatchLog.getDispatchLogId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

@@ -2,59 +2,59 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 --%>
 
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceDataIntegrationProcessDisplayContext commerceDataIntegrationProcessDisplayContext = (CommerceDataIntegrationProcessDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-long commerceDataIntegrationProcessId = 0;
+long dispatchTriggerId = 0;
 
-CommerceDataIntegrationProcess commerceDataIntegrationProcess = commerceDataIntegrationProcessDisplayContext.getCommerceDataIntegrationProcess();
+DispatchTrigger dispatchTrigger = dispatchTriggerDisplayContext.getDispatchTrigger();
 
 String processType = ParamUtil.getString(request, "processType");
 
 String typeSettings = StringPool.BLANK;
 
-if (commerceDataIntegrationProcess != null) {
-	commerceDataIntegrationProcessId = commerceDataIntegrationProcess.getCommerceDataIntegrationProcessId();
-	processType = commerceDataIntegrationProcess.getType();
-	typeSettings = commerceDataIntegrationProcess.getTypeSettings();
+if (dispatchTrigger != null) {
+	dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
+	processType = dispatchTrigger.getType();
+	typeSettings = dispatchTrigger.getTypeSettings();
 }
 %>
 
-<portlet:actionURL name="editCommerceDataIntegrationProcess" var="editCommerceDataIntegrationProcessActionURL" />
+<portlet:actionURL name="editDispatchTrigger" var="editDispatchTriggerActionURL" />
 
-<div class="closed container-fluid-1280" id="<portlet:namespace />editCommerceDataIntegrationProcessId">
+<div class="closed container-fluid-1280" id="<portlet:namespace />editDispatchTriggerId">
 	<div class="container main-content-body sheet">
-		<liferay-ui:error exception="<%= NoSuchDataIntegrationProcessException.class %>" message="the-process-could-not-be-found" />
-		<liferay-ui:error exception="<%= NoSuchDataIntegrationProcessLogException.class %>" message="the-log-could-not-be-found" />
+		<liferay-ui:error exception="<%= NoSuchLogException.class %>" message="the-log-could-not-be-found" />
+		<liferay-ui:error exception="<%= NoSuchTriggerException.class %>" message="the-process-could-not-be-found" />
 
 		<liferay-ui:error-principal />
 
-		<aui:form action="<%= editCommerceDataIntegrationProcessActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+		<aui:form action="<%= editDispatchTriggerActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-			<aui:input name="commerceDataIntegrationProcessId" type="hidden" value="<%= String.valueOf(commerceDataIntegrationProcessId) %>" />
+			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTriggerId) %>" />
 			<aui:input name="processType" type="hidden" value="<%= processType %>" />
 			<aui:input name="typeSettings" type="hidden" />
 
 			<div class="lfr-form-content">
-				<aui:model-context bean="<%= commerceDataIntegrationProcess %>" model="<%= CommerceDataIntegrationProcess.class %>" />
+				<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
 
 				<aui:fieldset>
-					<aui:input disabled="<%= (commerceDataIntegrationProcess != null) && commerceDataIntegrationProcess.isSystem() %>" name="name" required="<%= true %>" />
+					<aui:input disabled="<%= (dispatchTrigger != null) && dispatchTrigger.isSystem() %>" name="name" required="<%= true %>" />
 				</aui:fieldset>
 
 				<div id="<portlet:namespace />typeSettingsEditor"></div>
@@ -78,14 +78,16 @@ if (commerceDataIntegrationProcess != null) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectType',
-		function() {
+		function () {
 			var A = AUI();
 
 			var processType = A.one(<portlet:namespace />type).val();
 
-			var portletURL = new Liferay.PortletURL.createURL('<%= currentURLObj %>');
+			var portletURL = new Liferay.PortletURL.createURL(
+				'<%= currentURLObj %>'
+			);
 
-			portletURL.setParameter("type", processType);
+			portletURL.setParameter('type', processType);
 
 			window.location.replace(portletURL.toString());
 		},
@@ -96,15 +98,13 @@ if (commerceDataIntegrationProcess != null) {
 <aui:script use="aui-ace-editor,liferay-xml-formatter">
 	var STR_VALUE = 'value';
 
-	var contentEditor = new A.AceEditor(
-		{
-			boundingBox: '#<portlet:namespace />typeSettingsEditor',
-			height: 600,
-			mode: 'xml',
-			tabSize: 4,
-			width: '100%'
-		}
-	).render();
+	var contentEditor = new A.AceEditor({
+		boundingBox: '#<portlet:namespace />typeSettingsEditor',
+		height: 600,
+		mode: 'xml',
+		tabSize: 4,
+		width: '100%',
+	}).render();
 
 	var xmlFormatter = new Liferay.XMLFormatter();
 
@@ -116,14 +116,11 @@ if (commerceDataIntegrationProcess != null) {
 
 	contentEditor.set(STR_VALUE, content);
 
-	Liferay.on(
-		'<portlet:namespace />saveProcess',
-		function(event) {
-			var form = AUI.$('#<portlet:namespace />fm');
+	Liferay.on('<portlet:namespace />saveProcess', function (event) {
+		var form = AUI.$('#<portlet:namespace />fm');
 
-			form.fm('typeSettings').val(contentEditor.get(STR_VALUE));
+		form.fm('typeSettings').val(contentEditor.get(STR_VALUE));
 
-			submitForm(form);
-		}
-	);
+		submitForm(form);
+	});
 </aui:script>

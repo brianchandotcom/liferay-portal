@@ -74,10 +74,6 @@ public class CTConflictChecker<T extends CTModel<T>> {
 	}
 
 	public void addCTEntry(CTEntry ctEntry) {
-		if (ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_ADDITION) {
-			_ignorablePrimaryKeys.add(ctEntry.getModelClassPK());
-		}
-
 		if (ctEntry.getChangeType() ==
 				CTConstants.CT_CHANGE_TYPE_MODIFICATION) {
 
@@ -288,6 +284,19 @@ public class CTConflictChecker<T extends CTModel<T>> {
 	private List<Map.Entry<Long, Long>> _getConflictingPrimaryKeys(
 		Connection connection, String constraintConflictsSQL) {
 
+		Set<Long> ignorablePrimaryKeys = new HashSet<>();
+
+		for (CTEntry ctEntry :
+				_ctEntryLocalService.getCTEntries(
+					_sourceCTCollectionId, _modelClassNameId)) {
+
+			if (ctEntry.getChangeType() !=
+					CTConstants.CT_CHANGE_TYPE_ADDITION) {
+
+				ignorablePrimaryKeys.add(ctEntry.getModelClassPK());
+			}
+		}
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				constraintConflictsSQL);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -298,8 +307,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				long sourcePK = resultSet.getLong(1);
 				long targetPK = resultSet.getLong(2);
 
-				if (_ignorablePrimaryKeys.contains(sourcePK) ||
-					_ignorablePrimaryKeys.contains(targetPK)) {
+				if (ignorablePrimaryKeys.contains(sourcePK) ||
+					ignorablePrimaryKeys.contains(targetPK)) {
 
 					continue;
 				}
@@ -585,7 +594,6 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTService<T> _ctService;
-	private final Set<Long> _ignorablePrimaryKeys = new HashSet<>();
 	private final long _modelClassNameId;
 	private Map<Serializable, CTEntry> _modificationCTEntries;
 	private final ServiceTrackerMap

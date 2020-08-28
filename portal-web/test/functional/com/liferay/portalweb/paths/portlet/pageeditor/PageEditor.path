@@ -502,7 +502,7 @@
 </tr>
 <tr>
 	<td>CONTAINER_CONFIGURATION_BORDER_RADIUS</td>
-	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'rounded-${key_borderRadius}')]</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@style,'border-radius: var(--${key_borderRadius})')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -511,13 +511,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTAINER_CONFIGURATION_CONTENT_DISPLAY</td>
-	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'d-${key_contentDisplay}')]</td>
+	<td>CONTAINER_CONFIGURATION_BOX_SHADOW</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')])[${key_position}]/parent::div[contains(@style,'box-shadow: var(--${key_boxShadow})')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTAINER_CONFIGURATION_DROP_SHADOW</td>
-	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'shadow-${key_dropShadow}')]</td>
+	<td>CONTAINER_CONFIGURATION_CONTENT_DISPLAY</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'d-${key_contentDisplay}')]</td>
 	<td></td>
 </tr>
 <tr>

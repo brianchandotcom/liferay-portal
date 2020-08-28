@@ -41,11 +41,18 @@ definition {
 			locator1 = "ControlMenu#HEADING",
 			value1 = "Asset Libraries");
 
-		for (var portletName : list "Web Content,Documents and Media,Collections,Categories,Tags,Recycle Bin,Memberships,Settings,Workflow") {
+		if (isSet(noViewApplicationPermission)) {
 			AssertTextEquals(
-				key_card = "${portletName}",
-				locator1 = "Card#CARD",
-				value1 = "${portletName}");
+				locator1 = "Message#INFO",
+				value1 = "Info:You do not have access to any applications in this asset library.");
+		}
+		else {
+			for (var portletName : list "Web Content,Documents and Media,Collections,Categories,Tags,Recycle Bin,Memberships,Settings,Workflow") {
+				AssertTextEquals(
+					key_card = "${portletName}",
+					locator1 = "Card#CARD",
+					value1 = "${portletName}");
+			}
 		}
 	}
 

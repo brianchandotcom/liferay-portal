@@ -18,6 +18,7 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PropsValues;
@@ -40,11 +41,16 @@ public class AddResourceActionsPortalInstanceLifecycleListener
 			"/com/liferay/translation/internal/instance/lifecycle" +
 				"/dependencies/resource-actions.xml.tpl");
 
-		for (String languageId : PropsValues.LOCALES) {
+		String[] languageIds = ArrayUtil.sortedUnique(PropsValues.LOCALES);
+
+		for (int i = 0; i < languageIds.length; i++) {
 			_resourceActions.read(
 				null,
 				SAXReaderUtil.read(
-					StringUtil.replace(xml, "[$LANGUAGE_ID$]", languageId)),
+					StringUtil.replace(
+						StringUtil.replace(
+							xml, "[$LANGUAGE_ID$]", languageIds[i]),
+						"[$WEIGHT$]", String.valueOf(i))),
 				null);
 		}
 	}

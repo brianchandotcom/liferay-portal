@@ -17,14 +17,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
+import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {config} from '../../config/index';
 import {useId} from '../../utils/useId';
 
 export const SelectField = ({disabled, field, onValueSelect, value}) => {
 	const inputId = useId();
-
-	const frontendTokens = config.frontendTokens;
+	const {tokenValues} = useStyleBook();
 
 	const validValues = field.typeOptions
 		? field.typeOptions.validValues
@@ -37,7 +36,7 @@ export const SelectField = ({disabled, field, onValueSelect, value}) => {
 	);
 
 	const getFrontendTokenOption = (option) => {
-		const token = frontendTokens[option.frontendTokenName];
+		const token = tokenValues[option.frontendTokenName];
 
 		if (!token) {
 			return option;

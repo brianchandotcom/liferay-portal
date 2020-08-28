@@ -19,18 +19,17 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
+import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {config} from '../../config/index';
 import {ColorPaletteField} from './ColorPaletteField';
 
 const COLOR_PICKER_TYPE = 'ColorPicker';
 
 export const ColorPickerField = ({field, onValueSelect, value}) => {
-	const frontendTokens = config.frontendTokens;
+	const {tokenValues} = useStyleBook();
+	const [color, setColor] = useControlledState(tokenValues[value]?.value);
 
-	const [color, setColor] = useControlledState(frontendTokens[value]?.value);
-
-	const colorTokens = Object.values(frontendTokens).filter(
+	const colorTokens = Object.values(tokenValues).filter(
 		(token) => token.editorType === COLOR_PICKER_TYPE
 	);
 
@@ -75,8 +74,8 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 					<ClayInput
 						readOnly
 						value={
-							frontendTokens[value]
-								? frontendTokens[value].label
+							tokenValues[value]
+								? tokenValues[value].label
 								: Liferay.Language.get('default')
 						}
 					/>

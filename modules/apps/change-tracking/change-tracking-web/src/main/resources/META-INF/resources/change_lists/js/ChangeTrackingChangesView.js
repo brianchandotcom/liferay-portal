@@ -870,27 +870,21 @@ class ChangeTrackingChangesView extends React.Component {
 		return (
 			<ClayTable.Head>
 				<ClayTable.Row>
-					<ClayTable.Cell
-						headingCell
-						style={{minWidth: '5%', whiteSpace: 'nowrap'}}
-					>
+					<ClayTable.Cell headingCell>
 						{Liferay.Language.get('user')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell
-						headingCell
-						style={{minWidth: '5%', whiteSpace: 'nowrap'}}
-					>
+					<ClayTable.Cell headingCell>
 						{Liferay.Language.get('site')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell style={{width: '65%'}}>
+					<ClayTable.Cell className="table-cell-expand" headingCell>
 						{Liferay.Language.get('change')}
 					</ClayTable.Cell>
 
 					<ClayTable.Cell
+						className="table-cell-expand-smallest"
 						headingCell
-						style={{minWidth: '5%', whiteSpace: 'nowrap'}}
 					>
 						{Liferay.Language.get('last-modified')}
 					</ClayTable.Cell>
@@ -990,7 +984,7 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 
 			cells.push(
-				<ClayTable.Cell>
+				<ClayTable.Cell className="table-cell-expand">
 					<button
 						className="change-row-button"
 						onClick={() =>
@@ -1008,7 +1002,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 			if (this.state.viewType === 'changes') {
 				cells.push(
-					<ClayTable.Cell>
+					<ClayTable.Cell className="table-cell-expand-smallest">
 						{this._format(Liferay.Language.get('x-ago'), [
 							node.timeDescription,
 						])}
@@ -1422,7 +1416,12 @@ class ChangeTrackingChangesView extends React.Component {
 
 		return (
 			<>
-				<ClayTable className="change-lists-table" hover={false}>
+				<ClayTable
+					className="change-lists-table"
+					headingNoWrap
+					hover={false}
+					noWrap
+				>
 					{this._getTableHead()}
 
 					<ClayTable.Body>

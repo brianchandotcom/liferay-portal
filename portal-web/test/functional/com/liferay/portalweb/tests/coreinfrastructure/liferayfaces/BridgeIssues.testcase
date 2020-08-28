@@ -57,12 +57,10 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3031");
 
-		Click(locator1 = "BridgeIssues#ACTION_BUTTON");
-
 		BridgeIssues.verifyValue(
 			detailValue = "State successfully saved and restored.",
-			restorestate = "SUCCESS",
-			statusValue = "true",
+			restorestate = "true",
+			statusValue = "SUCCESS",
 			textValue = "FACES-3031");
 
 		// FACES_3250
@@ -95,12 +93,10 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3327");
 
-		Click(locator1 = "BridgeIssues#RESULT_BUTTON");
-
 		BridgeIssues.verifyValue(
 			detailValue = "Successfully navigated after exporting/downloading data from a PrimeFaces component.",
-			restorestate = "SUCCESS",
-			statusValue = "true",
+			restorestate = "true",
+			statusValue = "SUCCESS",
 			textValue = "FACES-3327");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3327");
@@ -132,6 +128,190 @@ definition {
 		BridgeIssues.select(textValue = "Item 2");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3328-end");
+	}
+
+	@priority = "5"
+	test FacesPortletSmokeInt {
+
+		// FACES_224
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-224");
+
+		AssertElementPresent.assertVisible(
+			locator1 = "BridgeIssues#FACE_VIEW1_XHTML",
+			value1 = "This is view1.xhtml");
+
+		Click(locator1 = "BridgeIssues#FACE_VIEW2_BUTTON");
+
+		AssertElementPresent.assertVisible(
+			locator1 = "BridgeIssues#FACE_VIEW1_XHTML",
+			value1 = "This is view2.xhtml");
+
+		AssertElementPresent.assertVisible(
+			locator1 = "BridgeIssues#VIEW_PARAM_VALUE1",
+			value1 = "abc");
+
+		AssertElementPresent.assertVisible(
+			locator1 = "BridgeIssues#VIEW_PARAM_VALUE1",
+			value1 = "viewParam1=abc");
+
+		AssertElementPresent.assertVisible(
+			locator1 = "BridgeIssues#VIEW_PARAM_VALUE2",
+			value1 = "xyz");
+
+		AssertElementPresent.assertVisible(
+			locator1 = "BridgeIssues#VIEW_PARAM_VALUE2",
+			value1 = "viewParam2=xyz");
+
+		// FACES_257
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-257");
+
+		AssertElementPresent(locator1 = "BridgeIssues#REQUESTED_URL");
+
+		BridgeIssues.urlParameters(
+			alpha = "1",
+			beta = "2",
+			buttonName = "alpha=1 beta=2 gamma=0",
+			gamma = "0",
+			urlEnd = "/-/FACES-257/1/my-friendly-action/2");
+
+		BridgeIssues.urlParameters(
+			alpha = "1",
+			beta = "2",
+			buttonName = "alpha=1 beta=2 gamma=3",
+			gamma = "3",
+			urlEnd = "/-/FACES-257/1/my-friendly-action/2/3");
+
+		BridgeIssues.urlParameters(
+			alpha = "4",
+			beta = "5",
+			buttonName = "alpha=4 beta=5 gamma=0",
+			gamma = "0",
+			urlEnd = "/-/FACES-257/4/my-friendly-action/5");
+
+		BridgeIssues.urlParameters(
+			alpha = "4",
+			beta = "5",
+			buttonName = "alpha=4 beta=5 gamma=6",
+			gamma = "6",
+			urlEnd = "/-/FACES-257/4/my-friendly-action/5/6");
+
+		// FACES_2958
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2958");
+
+		for (var resourceActionIndex : list "link.xhtml,commandLinkAjax.xhtml,commandLinkNonAjax.xhtml,link.xhtml via Ajax,commandLinkAjax.xhtml via Ajax,commandLinkNonAjax.xhtml via Ajax") {
+			BridgeIssues.verifyValue(
+				detailValue = "All special URL characters were correctly encoded.",
+				link = "${resourceActionIndex}",
+				statusValue = "SUCCESS",
+				textValue = "FACES-2958",
+				toPageLink = "success.xhtml");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2958");
+		}
+
+		for (var resourceActionIndex : list "resource.xhtml,resource.xhtml") {
+			BridgeIssues.verifyValue(
+				detailValue = "All special URL characters were correctly encoded.",
+				link = "${resourceActionIndex}",
+				restorestate = "true",
+				statusValue = "SUCCESS",
+				textValue = "FACES-2958");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2958");
+		}
+
+		// FACES_3175
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3175");
+
+		BridgeIssues.verifyValue(
+			detailValue = "Successfully avoided reloading FACES-3175:reproducer.js resource.",
+			link = "result.xhtml",
+			restorestate = "true",
+			statusValue = "SUCCESS",
+			textValue = "FACES-3175");
+
+		// FACES_3231
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3231");
+
+		BridgeIssues.verifyValue(
+			detailValue = "Successfully load html from head section template.",
+			link = "Load html from head section template.",
+			restorestate = "true",
+			statusValue = "SUCCESS",
+			textValue = "FACES-3231");
+
+		// FACES_3300
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3300");
+
+		for (var resourceActionIndex : list "1,2,3,4,5,6") {
+			BridgeIssues.verifyValue(
+				detailValue = "Successfully navigated to",
+				statusValue = "SUCCESS",
+				textValue = "FACES-3300",
+				validURL = "${resourceActionIndex}");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3300");
+		}
+
+		for (var resourceActionIndex : list "1,2,3,4,5,6") {
+			BridgeIssues.verifyValue(inValidURL = "${resourceActionIndex}");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3300");
+		}
+
+		// FACES_3356
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3356");
+
+		BridgeIssues.verifyValue(
+			detailValue = "Successfully handled",
+			link = "To nonExistentView.xhtml",
+			restorestate = "true",
+			statusValue = "SUCCESS",
+			textValue = "FACES-3356");
+
+		// FACES_3404
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3404");
+
+		for (var resourceActionIndex : list "result.xhtml via GET,result.xhtml via Ajax") {
+			BridgeIssues.verifyValue(
+				detailValue = "Liferay parameter was properly encoded in Render",
+				link = "${resourceActionIndex}",
+				restorestate = "true",
+				statusValue = "SUCCESS",
+				textValue = "FACES-3404");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3404");
+		}
+
+		// FACES_4340-workaround
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/mojarra-4340-workaround");
+
+		BridgeIssues.verifyValue(
+			detailValue = "Successfully loaded body script in Ajax request.",
+			link = "result.xhtml",
+			restorestate = "true",
+			statusValue = "SUCCESS",
+			textValue = "MOJARRA-4340-workaround");
+
+		// FACES_4345-workaround
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/mojarra-4345-workaround");
+
+		BridgeIssues.verifyValue(
+			detailValue = "Resource URLs loaded via Ajax were not double escaped.",
+			link = "result.xhtml",
+			restorestate = "true",
+			statusValue = "SUCCESS",
+			textValue = "MOJARRA-4340-workaround");
 	}
 
 }

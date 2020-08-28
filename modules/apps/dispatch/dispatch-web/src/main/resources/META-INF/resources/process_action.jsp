@@ -2,15 +2,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 --%>
 
@@ -19,7 +19,7 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceDataIntegrationProcess commerceDataIntegrationProcess = (CommerceDataIntegrationProcess)row.getObject();
+DispatchTrigger dispatchTrigger = (DispatchTrigger)row.getObject();
 %>
 
 <liferay-ui:icon-menu
@@ -29,11 +29,11 @@ CommerceDataIntegrationProcess commerceDataIntegrationProcess = (CommerceDataInt
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommerceDataintegrationProcessPermission.contains(permissionChecker, commerceDataIntegrationProcess, ActionKeys.UPDATE) %>">
+	<c:if test="<%= DispatchPermission.contains(permissionChecker, dispatchTrigger, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcRenderCommandName" value="editCommerceDataIntegrationProcess" />
+			<portlet:param name="mvcRenderCommandName" value="editDispatchTrigger" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="commerceDataIntegrationProcessId" value="<%= String.valueOf(commerceDataIntegrationProcess.getCommerceDataIntegrationProcessId()) %>" />
+			<portlet:param name="dispatchTriggerId" value="<%= String.valueOf(dispatchTrigger.getDispatchTriggerId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -42,11 +42,11 @@ CommerceDataIntegrationProcess commerceDataIntegrationProcess = (CommerceDataInt
 		/>
 	</c:if>
 
-	<c:if test="<%= CommerceDataintegrationProcessPermission.contains(permissionChecker, commerceDataIntegrationProcess, ActionKeys.DELETE) && !commerceDataIntegrationProcess.isSystem() %>">
-		<portlet:actionURL name="editCommerceDataIntegrationProcess" var="deleteURL">
+	<c:if test="<%= DispatchPermission.contains(permissionChecker, dispatchTrigger, ActionKeys.DELETE) && !dispatchTrigger.isSystem() %>">
+		<portlet:actionURL name="editDispatchTrigger" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="commerceDataIntegrationProcessId" value="<%= String.valueOf(commerceDataIntegrationProcess.getCommerceDataIntegrationProcessId()) %>" />
+			<portlet:param name="dispatchTriggerId" value="<%= String.valueOf(dispatchTrigger.getDispatchTriggerId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

@@ -76,6 +76,13 @@
 		<available file=".lfrbuild-deploy-wsdd" />
 	</condition>
 
+	<condition property="download.artifact.sources.skip">
+		<or>
+			<available file=".lfrbuild-private-src" />
+			<istrue value="${artifact.exclude}" />
+		</or>
+	</condition>
+
 	<target if="artifact.hotfix" name="copy-hotfix-artifact">
 		<copy
 			todir="${dist.dir}"
@@ -153,7 +160,7 @@
 		</exec>
 	</target>
 
-	<target depends="get-artifact-properties" if="${download.artifact.sources}" name="download-artifact-sources" unless="artifact.exclude">
+	<target depends="get-artifact-properties" if="${download.artifact.sources}" name="download-artifact-sources" unless="download.artifact.sources.skip">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
 			<condition>
 				<not>

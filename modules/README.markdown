@@ -128,6 +128,7 @@ File Name | Description
 --------- | -----------
 `.lfrbuild-app-portal-build-ignore` | Prevents the `syncAppProperties` task from updating the `app.portal.build` property in the `app.properties` file.
 `.lfrbuild-master-only` | Marks a module that should not be forked and deleted for release branches. If a `.lfrbuild-master-only` file is added to a parent directory, the whole subtree should not be forked.
+`.lfrbuild-private-src` | Excludes an artifact's source code from being published even if it resides within a public app.
 `.lfrbuild-release-src` | Includes the app's source code in the DXP release, when added to the root of an app.
 `.lfrbuild-releng-ignore` | Ignores checking the module for stale artifacts. An artifact is *stale* when the module has code that is different from the latest published release. This module can never be published. If a `.lfrbuild-releng-ignore` file is added to a parent directory, the whole subtree is ignored.
 `.lfrbuild-releng-skip-update-file-versions` | Prevents the `updateFileVersions` task from converting project dependencies into module dependencies. If a `.lfrbuild-releng-skip-update-file-versions` file is added to a parent directory, the whole subtree is skipped.

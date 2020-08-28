@@ -1258,6 +1258,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Method method = configurationFileInstallerClass.getDeclaredMethod(
 			"transformURL", File.class);
 
+		Method canTransformURLMethod =
+			configurationFileInstallerClass.getDeclaredMethod(
+				"canTransformURL", File.class);
+
 		Constructor<?> constructor =
 			configurationFileInstallerClass.getDeclaredConstructor(
 				classLoader.loadClass("org.osgi.service.cm.ConfigurationAdmin"),
@@ -1283,7 +1287,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		dir = dir.getCanonicalFile();
 
 		for (File file : _listConfigs(dir)) {
-			method.invoke(configurationFileInstaller, file);
+			if ((boolean)canTransformURLMethod.invoke(
+					configurationFileInstaller, file)) {
+
+				method.invoke(configurationFileInstaller, file);
+			}
 		}
 	}
 

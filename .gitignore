@@ -45,7 +45,9 @@
 /intellij
 /jacoco
 /modules/.releng/dxp/apps/lcs
+/modules/.releng/dxp/apps/static/portal-license
 /modules/dxp/apps/lcs
+/modules/dxp/apps/static/portal-license
 /modules/node_modules_cache
 /modules/private/node_modules_cache
 /nbproject/private

@@ -460,7 +460,8 @@ export default withRouter(
 									(context.redirectToLogin ||
 										(section &&
 											section.actions &&
-											section.actions['add-thread'])) && (
+											section.actions['add-thread']) ||
+										context.canCreateThread) && (
 										<ClayInput.GroupItem shrink>
 											<ClayButton
 												className="c-ml-3 d-none d-sm-block text-nowrap"

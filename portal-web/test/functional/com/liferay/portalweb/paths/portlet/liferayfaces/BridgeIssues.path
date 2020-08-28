@@ -45,7 +45,22 @@
 </tr>
 <tr>
 	<td>DETAIL_VALUE</td>
-	<td>//div[@class='liferay-faces-bridge-body']//p[contains(.,'Detail: ')]/span[contains(text(),'${key_attribute}')]</td>
+	<td>//div[@class='liferay-faces-bridge-body']//p[contains(.,'Detail: ')]/span[contains(text(),'${key_attribute}')] | //div[@id='FACES-3404-result']//p[contains(.,'Detail: ')]/span[contains(text(),'${key_attribute}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert')][contains(@class,'alert-danger') or contains(@class,'alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACE_VIEW1_XHTML</td>
+	<td>//div[contains(@class, 'liferay-faces-bridge')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACE_VIEW2_BUTTON</td>
+	<td>//input[contains(@value,'view2.xhtml')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -69,6 +84,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INVALID_URL</td>
+	<td>//ol[@id='invalidTestURLs']/li[${key_inValidURL}]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_LINK</td>
+	<td>//a[contains(text(),'${key_PageLink}')] | //*[contains(@class,'testAction')] | //button[contains(text(),'${key_PageLink}')] | //input[@value='${key_PageLink}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAMETER_ALPHA</td>
+	<td>//span[contains(@id, ':alpha')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAMETER_BETA</td>
+	<td>//span[contains(@id, ':beta')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAMETER_GAMMA</td>
+	<td>//span[contains(@id, ':gamma')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_BUTTON</td>
 	<td>//input[@value='result.xhtml']</td>
 	<td></td>
@@ -76,6 +116,11 @@
 <tr>
 	<td>RENDER_KITID</td>
 	<td>//code[@id='renderKitId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTED_URL</td>
+	<td>//span[contains(@id, ':requestedURL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,6 +151,41 @@
 <tr>
 	<td>TEXT_VALUE</td>
 	<td>//div[@class='liferay-faces-bridge-body']//p[contains(.,'Test:')]/span[contains(text(),'${key_attribute}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TO_PAGE_LINK</td>
+	<td>//a[contains(text(),'${key_toPageLink}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_BUTTON</td>
+	<td>//input[@type='button' and contains(@value, '${key_buttonName}')] </td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALID_URL</td>
+	<td>//ol[@id='validTestURLs']/li[${key_validURL}]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_PARAM_VALUE1</td>
+	<td>//span[contains(@id,':viewParamValue1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_PARAM1</td>
+	<td>//span[contains(@id,':viewParam1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_PARAM_VALUE2</td>
+	<td>//span[contains(@id,':viewParamValue2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_PARAM2</td>
+	<td>//span[contains(@id,':viewParam2')]</td>
 	<td></td>
 </tr>
 </tbody>

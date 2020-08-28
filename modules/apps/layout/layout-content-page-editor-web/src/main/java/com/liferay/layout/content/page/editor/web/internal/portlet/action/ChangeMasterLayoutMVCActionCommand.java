@@ -85,7 +85,7 @@ public class ChangeMasterLayoutMVCActionCommand
 		LayoutPermissionUtil.check(
 			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 
-		_layoutLocalService.updateMasterLayoutPlid(
+		Layout updatedLayout = _layoutLocalService.updateMasterLayoutPlid(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			masterLayoutPlid);
 
@@ -132,7 +132,7 @@ public class ChangeMasterLayoutMVCActionCommand
 			"masterLayoutData", layoutStructure.toJSONObject()
 		).put(
 			"styleBook",
-			_getStyleBookJSONObject(layout, themeDisplay.getLocale())
+			_getStyleBookJSONObject(updatedLayout, themeDisplay.getLocale())
 		);
 	}
 

@@ -616,6 +616,30 @@ message.
 		</if>
 	</target>
 
+	<target name="deploy-portal-license-enterprise-app">
+		<property name="artifact.name" value="com.liferay.portal.license.enterprise.app" />
+
+		<gradle-execute outputproperty="jar.file" setupbinariescache="false" task="printDependencyPath">
+			<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			<arg value="--quiet" />
+			<arg value="-Dorg.gradle.internal.launcher.welcomeMessageEnabled=false" />
+			<arg value="-PdependencyNotation=com.liferay:${artifact.name}:${build.portal.license.enterprise.app.version}" />
+		</gradle-execute>
+
+		<copy
+			file="${jar.file}"
+			preservelastmodified="true"
+			todir="${liferay.home}/osgi/static"
+		/>
+
+		<basename file="${jar.file}" property="file.name" />
+
+		<move
+			file="${liferay.home}/osgi/static/${file.name}"
+			tofile="${liferay.home}/osgi/static/${artifact.name}.jar"
+		/>
+	</target>
+
 	<target name="dist">
 		<ant antfile="build-dist.xml" inheritAll="false" target="dist" />
 	</target>

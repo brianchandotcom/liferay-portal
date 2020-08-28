@@ -118,7 +118,14 @@ public class PortletPreferencesCTDisplayRenderer
 			Layout layout = _layoutLocalService.getLayout(
 				portletPreferences.getPlid());
 
-			return layout.isSystem();
+			if (layout.isSystem() || layout.isTypeControlPanel() ||
+				layout.isPortletEmbedded(
+					portletPreferences.getPortletId(), layout.getGroupId())) {
+
+				return true;
+			}
+
+			return false;
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

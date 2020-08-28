@@ -110,15 +110,12 @@ public class DepotBreadcrumbEntryContributorImpl
 					DepotPortletKeys.DEPOT_ADMIN,
 					portletDisplay.getPortletName())) {
 
-				String title = portletDisplay.getPortletDisplayName();
-
-				if (Validator.isBlank(title)) {
-					title = _language.get(httpServletRequest, "home");
-				}
-
 				breadcrumbEntries.add(
 					_getPortletBreadcrumbEntry(
-						httpServletRequest, scopeGroup, title));
+						httpServletRequest, scopeGroup,
+						_getTitle(
+							httpServletRequest, themeDisplay.getLanguageId(),
+							portletDisplay)));
 			}
 			else if (!originalBreadcrumbEntries.isEmpty()) {
 				BreadcrumbEntry breadcrumbEntry = originalBreadcrumbEntries.get(
@@ -198,6 +195,27 @@ public class DepotBreadcrumbEntryContributorImpl
 					JavaConstants.JAVAX_PORTLET_REQUEST)));
 
 		return breadcrumbEntry;
+	}
+
+	private String _getTitle(
+		HttpServletRequest httpServletRequest, String languageId,
+		PortletDisplay portletDisplay) {
+
+		String title = portletDisplay.getPortletDisplayName();
+
+		if (Validator.isNotNull(title)) {
+			return title;
+		}
+
+		if (Validator.isNotNull(portletDisplay.getId())) {
+			title = _portal.getPortletTitle(portletDisplay.getId(), languageId);
+
+			if (Validator.isNotNull(title)) {
+				return title;
+			}
+		}
+
+		return _language.get(httpServletRequest, "home");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

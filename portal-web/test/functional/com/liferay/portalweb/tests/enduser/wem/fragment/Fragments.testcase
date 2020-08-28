@@ -313,7 +313,7 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Center",
-				borderRadius = "None",
+				borderRadius = "Border Radius Small",
 				boxShadow = "Box Shadow Large",
 				imageSize = "Fit",
 				marginBottom = "5");
@@ -322,8 +322,8 @@ definition {
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				borderRadius = "0px",
-				boxShadow = "rgba(0, 0, 0, 0.176) 0px 1rem 3rem",
+				borderRadius = "border-radius-sm",
+				boxShadow = "box-shadow-lg",
 				fragmentName = "card",
 				imageSize = "100",
 				marginBottom = "5");
@@ -722,10 +722,10 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundColor = "B95000",
 				borderColor = "DA1414",
-				borderRadius = "Large",
+				borderRadius = "Border Radius Large",
 				borderWidth = "5",
+				boxShadow = "Box Shadow Large",
 				contentDisplay = "Flex",
-				dropShadow = "Large",
 				horizontalAlign = "Center",
 				marginBottom = "2",
 				marginLeft = "2",
@@ -744,8 +744,9 @@ definition {
 			PageEditor.viewContainerStyle(
 				backgroundColor = "warning",
 				borderColor = "danger",
-				borderRadius = "lg",
+				borderRadius = "border-radius-lg",
 				borderWidth = "5",
+				boxShadow = "box-shadow-lg",
 				contentDisplay = "flex",
 				dropShadow = "lg",
 				horizontalAlign = "center",

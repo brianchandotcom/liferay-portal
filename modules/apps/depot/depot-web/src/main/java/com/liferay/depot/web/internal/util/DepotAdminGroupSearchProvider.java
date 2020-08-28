@@ -58,6 +58,64 @@ public class DepotAdminGroupSearchProvider {
 				portletRequest, portletURL);
 		}
 
+		return _getGroupSearch(portletRequest, portletURL);
+	}
+
+	public GroupSearch getGroupSearch(
+			PortletRequest portletRequest, PortletURL portletURL)
+		throws PortalException {
+
+		return _getGroupSearch(portletRequest, portletURL);
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+
+		_classNameIds = new long[] {
+			PortalUtil.getClassNameId(DepotEntry.class.getName())
+		};
+	}
+
+	private GroupSearch _getGroupConnectedDepotGroupsGroupSearch(
+			PortletRequest portletRequest, PortletURL portletURL)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
+
+		groupSearch.setTotal(
+			_depotEntryService.getGroupConnectedDepotEntriesCount(
+				themeDisplay.getScopeGroupId()));
+
+		List<DepotEntry> depotEntries =
+			_depotEntryService.getGroupConnectedDepotEntries(
+				themeDisplay.getScopeGroupId(), groupSearch.getStart(),
+				groupSearch.getEnd());
+
+		List<Group> groups = new ArrayList<>();
+
+		for (DepotEntry depotEntry : depotEntries) {
+			groups.add(depotEntry.getGroup());
+		}
+
+		groupSearch.setResults(groups);
+
+		groupSearch.setEmptyResultsMessage(
+			LanguageUtil.get(
+				ResourceBundleUtil.getBundle(
+					portletRequest.getLocale(), getClass()),
+				"no-asset-libraries-were-found"));
+
+		return groupSearch;
+	}
+
+	private GroupSearch _getGroupSearch(
+			PortletRequest portletRequest, PortletURL portletURL)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -107,50 +165,6 @@ public class DepotAdminGroupSearchProvider {
 				"no-asset-libraries-were-found"));
 
 		groupSearch.setResults(results);
-
-		return groupSearch;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-
-		_classNameIds = new long[] {
-			PortalUtil.getClassNameId(DepotEntry.class.getName())
-		};
-	}
-
-	private GroupSearch _getGroupConnectedDepotGroupsGroupSearch(
-			PortletRequest portletRequest, PortletURL portletURL)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
-
-		groupSearch.setTotal(
-			_depotEntryService.getGroupConnectedDepotEntriesCount(
-				themeDisplay.getScopeGroupId()));
-
-		List<DepotEntry> depotEntries =
-			_depotEntryService.getGroupConnectedDepotEntries(
-				themeDisplay.getScopeGroupId(), groupSearch.getStart(),
-				groupSearch.getEnd());
-
-		List<Group> groups = new ArrayList<>();
-
-		for (DepotEntry depotEntry : depotEntries) {
-			groups.add(depotEntry.getGroup());
-		}
-
-		groupSearch.setResults(groups);
-
-		groupSearch.setEmptyResultsMessage(
-			LanguageUtil.get(
-				ResourceBundleUtil.getBundle(
-					portletRequest.getLocale(), getClass()),
-				"no-asset-libraries-were-found"));
 
 		return groupSearch;
 	}

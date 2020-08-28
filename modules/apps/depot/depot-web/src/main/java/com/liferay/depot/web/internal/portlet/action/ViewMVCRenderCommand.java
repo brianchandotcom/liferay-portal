@@ -16,6 +16,7 @@ package com.liferay.depot.web.internal.portlet.action;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
@@ -41,10 +42,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		renderRequest.setAttribute(
+			DepotAdminGroupSearchProvider.class.getName(),
+			_depotAdminGroupSearchProvider);
+		renderRequest.setAttribute(
 			DepotEntryLocalService.class.getName(), _depotEntryLocalService);
 
 		return "/view.jsp";
 	}
+
+	@Reference
+	private DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

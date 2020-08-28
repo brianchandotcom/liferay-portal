@@ -143,7 +143,7 @@ public class GradlePluginsDefaultsUtil {
 	}
 
 	public static Set<String> getBuildProfileFileNames(
-		String buildProfile, boolean publicBranch) {
+		String buildProfile, boolean publicBranch, boolean release) {
 
 		if (Validator.isNull(buildProfile)) {
 			return null;
@@ -168,6 +168,10 @@ public class GradlePluginsDefaultsUtil {
 		if (buildProfile.equals("portal-deprecated")) {
 			fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + "portal");
 			fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + "portal-" + suffix);
+		}
+
+		if (release) {
+			fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + "portal-release");
 		}
 
 		return fileNames;

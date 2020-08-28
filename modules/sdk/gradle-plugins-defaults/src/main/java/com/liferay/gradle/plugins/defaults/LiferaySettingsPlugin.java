@@ -198,8 +198,9 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		final Set<String> buildProfileFileNames =
 			GradlePluginsDefaultsUtil.getBuildProfileFileNames(
 				buildProfile,
+				GradleUtil.getProperty(settings, "liferay.releng.public", true),
 				GradleUtil.getProperty(
-					settings, "liferay.releng.public", true));
+					settings, "liferay.releng.release", false));
 
 		final Set<Path> excludedDirPaths = _getDirPaths(
 			"build.exclude.dirs", projectPathRootDirPath);

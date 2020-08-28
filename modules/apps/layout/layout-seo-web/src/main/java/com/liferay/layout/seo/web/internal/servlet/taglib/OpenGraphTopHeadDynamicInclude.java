@@ -36,7 +36,6 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
-import com.liferay.layout.seo.web.internal.util.FriendlyURLMapperProvider;
 import com.liferay.layout.seo.web.internal.util.OpenGraphImageProvider;
 import com.liferay.layout.seo.web.internal.util.TitleProvider;
 import com.liferay.petra.string.StringBundler;
@@ -96,17 +95,11 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				return;
 			}
 
-			FriendlyURLMapperProvider.FriendlyURLMapper friendlyURLMapper =
-				_friendlyURLMapperProvider.getFriendlyURLMapper(
-					httpServletRequest);
-
 			String completeURL = _portal.getCurrentCompleteURL(
 				httpServletRequest);
 
-			String canonicalURL = friendlyURLMapper.getMappedFriendlyURL(
-				_portal.getCanonicalURL(
-					completeURL, themeDisplay, layout, false, false),
-				_portal.getLocale(httpServletRequest));
+			String canonicalURL = _portal.getCanonicalURL(
+				completeURL, themeDisplay, layout, false, false);
 
 			Map<Locale, String> alternateURLs = Collections.emptyMap();
 
@@ -114,9 +107,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				themeDisplay.getSiteGroupId());
 
 			if (availableLocales.size() > 1) {
-				alternateURLs = friendlyURLMapper.getMappedFriendlyURLs(
-					_portal.getAlternateURLs(
-						canonicalURL, themeDisplay, layout));
+				alternateURLs = _portal.getAlternateURLs(
+					canonicalURL, themeDisplay, layout);
 			}
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
@@ -277,8 +269,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Activate
 	protected void activate() {
-		_friendlyURLMapperProvider = new FriendlyURLMapperProvider(
-			_assetDisplayPageFriendlyURLProvider, _classNameLocalService);
 		_openGraphImageProvider = new OpenGraphImageProvider(
 			_ddmStructureLocalService, _dlAppLocalService,
 			_dlFileEntryMetadataLocalService, _dlurlHelper,
@@ -447,8 +437,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private DLURLHelper _dlurlHelper;
-
-	private FriendlyURLMapperProvider _friendlyURLMapperProvider;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

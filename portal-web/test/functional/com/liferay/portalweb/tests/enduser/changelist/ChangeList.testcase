@@ -230,6 +230,68 @@ definition {
 	}
 
 	@priority = "4"
+	test PublishDocumentFolderWithEditedDocument {
+		property test.name.skip.portal.instance = "ChangeList#PublishDocumentFolderWithEditedDocument";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMDocument.moveToFolderCP(
+			dmDocumentTitle = "DM Document Title Edit",
+			dmFolderName = "DM Folder Name");
+
+		DMDocument.viewMovedToFolderCP(
+			dmDocumentTitle = "DM Document Title Edit",
+			dmFolderName = "DM Folder Name");
+
+		ChangeList.prepareToPublish(publicationName = "Publication Name");
+
+		ChangeList.publishPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit");
+	}
+
+	@priority = "4"
 	test PublishDocumentWithNewDocumentType {
 		property test.name.skip.portal.instance = "ChangeList#PublishDocumentWithNewDocumentType";
 

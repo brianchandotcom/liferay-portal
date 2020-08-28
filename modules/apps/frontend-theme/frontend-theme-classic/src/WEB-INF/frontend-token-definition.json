@@ -514,8 +514,8 @@
 					"name": "transitions"
 				}
 			],
-			"label": "global",
-			"name": "global"
+			"label": "general",
+			"name": "general"
 		},
 		{
 			"frontendTokenSets": [

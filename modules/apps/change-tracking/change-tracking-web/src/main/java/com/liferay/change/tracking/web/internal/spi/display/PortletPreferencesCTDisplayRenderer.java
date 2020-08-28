@@ -17,7 +17,6 @@ package com.liferay.change.tracking.web.internal.spi.display;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -74,18 +73,14 @@ public class PortletPreferencesCTDisplayRenderer
 			arguments.add(portlet.getPortletName());
 		}
 
-		try {
-			Layout layout = _layoutLocalService.getLayout(
-				portletPreferences.getPlid());
+		Layout layout = _layoutLocalService.fetchLayout(
+			portletPreferences.getPlid());
 
-			arguments.add(layout.getName(locale));
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
-
+		if (layout == null) {
 			arguments.add(_language.get(locale, "control-panel"));
+		}
+		else {
+			arguments.add(layout.getName(locale));
 		}
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -114,26 +109,18 @@ public class PortletPreferencesCTDisplayRenderer
 			return true;
 		}
 
-		try {
-			Layout layout = _layoutLocalService.getLayout(
-				portletPreferences.getPlid());
+		Layout layout = _layoutLocalService.fetchLayout(
+			portletPreferences.getPlid());
 
-			if (layout.isSystem() || layout.isTypeControlPanel() ||
-				layout.isPortletEmbedded(
-					portletPreferences.getPortletId(), layout.getGroupId())) {
+		if ((layout == null) || layout.isSystem() ||
+			layout.isTypeControlPanel() ||
+			layout.isPortletEmbedded(
+				portletPreferences.getPortletId(), layout.getGroupId())) {
 
-				return true;
-			}
-
-			return false;
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Depot
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Asset Libraries
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Productivity
 Liferay-Releng-Demo-Url:

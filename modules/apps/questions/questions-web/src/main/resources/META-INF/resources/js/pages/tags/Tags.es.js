@@ -83,16 +83,33 @@ export default withRouter(({history, location}) => {
 		setPageSize(+queryParams.get('pagesize') || 20);
 	}, [queryParams]);
 
+	useEffect(() => {
+		setSearch(queryParams.get('search') || '');
+	}, [queryParams]);
+
 	const historyPushParser = historyPushWithSlug(history.push);
 
+	function buildURL(search, page, pageSize) {
+		let url = '/tags?';
+
+		if (search) {
+			url += `search=${search}&`;
+		}
+
+		url += `page=${page}&pagesize=${pageSize}`;
+
+		return url;
+	}
+
 	const changePage = (page, pageSize) => {
-		historyPushParser(`/tags?page=${page}&pagesize=${pageSize}`);
+		historyPushParser(buildURL(search, page, pageSize));
 	};
 
 	const orderByOptions = getOrderByOptions();
 
 	const [debounceCallback] = useDebounceCallback((search) => {
-		setSearch(search);
+		setLoading(true);
+		historyPushParser(buildURL(search, 1, pageSize));
 	}, 500);
 
 	return (

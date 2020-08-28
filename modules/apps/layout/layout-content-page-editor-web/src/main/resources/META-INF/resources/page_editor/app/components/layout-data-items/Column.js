@@ -13,6 +13,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -50,7 +51,13 @@ const Column = React.forwardRef(({children, className, item}, ref) => {
 		);
 
 	return (
-		<ClayLayout.Col className={className} ref={ref} size={columnSize}>
+		<ClayLayout.Col
+			className={classNames(className, {
+				empty: !item.children.length,
+			})}
+			ref={ref}
+			size={columnSize}
+		>
 			{columnContent}
 		</ClayLayout.Col>
 	);

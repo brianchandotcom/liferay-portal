@@ -53,7 +53,10 @@ export default function PageDesignOptionsSidebar() {
 				})
 			).then(({styleBook}) => {
 				if (styleBook) {
-					setSelectedStyleBook(styleBook);
+					setSelectedStyleBook({
+						frontendTokens: styleBook.tokenValues,
+						styleBookEntryId: styleBook.styleBookEntryId,
+					});
 				}
 			});
 		},

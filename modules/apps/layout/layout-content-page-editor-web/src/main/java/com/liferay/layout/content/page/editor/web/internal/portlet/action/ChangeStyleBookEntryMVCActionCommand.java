@@ -30,6 +30,9 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -67,7 +70,7 @@ public class ChangeStyleBookEntryMVCActionCommand
 		long styleBookEntryId = ParamUtil.getLong(
 			actionRequest, "styleBookEntryId");
 
-		_layoutLocalService.updateStyleBookEntryId(
+		Layout updatedLayout = _layoutLocalService.updateStyleBookEntryId(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			styleBookEntryId);
 
@@ -78,11 +81,22 @@ public class ChangeStyleBookEntryMVCActionCommand
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				layoutSet.getThemeId());
 
+		StyleBookEntry styleBookEntry = null;
+
+		if (styleBookEntryId == 0) {
+			styleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+				updatedLayout);
+		}
+		else {
+			styleBookEntry = _styleBookEntryLocalService.fetchStyleBookEntry(
+				styleBookEntryId);
+		}
+
 		return JSONUtil.put(
 			"tokenValues",
 			StyleBookEntryUtil.getFrontendTokensValuesJSONArray(
 				frontendTokenDefinition, themeDisplay.getLocale(),
-				styleBookEntryId));
+				styleBookEntry));
 	}
 
 	@Reference
@@ -93,5 +107,8 @@ public class ChangeStyleBookEntryMVCActionCommand
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

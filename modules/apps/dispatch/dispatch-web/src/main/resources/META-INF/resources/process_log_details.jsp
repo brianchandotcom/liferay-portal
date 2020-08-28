@@ -2,49 +2,53 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 --%>
 
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceDataIntegrationProcessLogDisplayContext commerceDataIntegrationProcessLogDisplayContext = (CommerceDataIntegrationProcessLogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+DispatchLogDisplayContext dispatchLogDisplayContext = (DispatchLogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceDataIntegrationProcessLog commerceDataIntegrationProcessLog = commerceDataIntegrationProcessLogDisplayContext.getCommerceDataIntegrationProcessLog();
+DispatchLog dispatchLog = dispatchLogDisplayContext.getDispatchLog();
 
-long timeMillis = commerceDataIntegrationProcessLog.getEndDate().getTime() - commerceDataIntegrationProcessLog.getStartDate().getTime();
+Date endDate = dispatchLog.getEndDate();
 
-String startDate = commerceDataIntegrationProcessLogDisplayContext.getFormattedDate(commerceDataIntegrationProcessLog.getStartDate());
+Date startDate = dispatchLog.getStartDate();
+
+long timeMillis = endDate.getTime() - startDate.getTime();
+
+String formattedStartDate = dispatchLogDisplayContext.getFormattedDate(dispatchLog.getStartDate());
 %>
 
-<portlet:actionURL name="editCommerceDataIntegrationProcessLog" var="editCommerceDataIntegrationProcessLogActionURL" />
+<portlet:actionURL name="editDispatchLog" var="editDispatchLogActionURL" />
 
 <div class="container-fluid-1280 sheet">
-	<aui:form action="<%= editCommerceDataIntegrationProcessLogActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:form action="<%= editDispatchLogActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="cDataIntegrationProcessLogId" type="hidden" value="<%= String.valueOf(commerceDataIntegrationProcessLog.getCommerceDataIntegrationProcessLogId()) %>" />
+		<aui:input name="dispatchLogId" type="hidden" value="<%= String.valueOf(dispatchLog.getDispatchLogId()) %>" />
 
 		<div class="lfr-form-content">
 			<aui:fieldset>
-				<aui:input disabled="<%= true %>" label="start-date" name="startDate" value="<%= startDate %>" />
+				<aui:input disabled="<%= true %>" label="start-date" name="startDate" value="<%= formattedStartDate %>" />
 
-				<aui:input disabled="<%= true %>" name="status" value="<%= LanguageUtil.get(request, BackgroundTaskConstants.getStatusLabel(commerceDataIntegrationProcessLog.getStatus())) %>" />
+				<aui:input disabled="<%= true %>" name="status" value="<%= LanguageUtil.get(request, BackgroundTaskConstants.getStatusLabel(dispatchLog.getStatus())) %>" />
 
 				<aui:input disabled="<%= true %>" label="runtime" name="runTime" value='<%= timeMillis + " ms" %>' />
 
-				<aui:input disabled="<%= true %>" label="error" name="error" type="textarea" value="<%= commerceDataIntegrationProcessLog.getError() %>" />
+				<aui:input disabled="<%= true %>" label="error" name="error" type="textarea" value="<%= dispatchLog.getError() %>" />
 
-				<aui:input disabled="<%= true %>" label="output" name="output" type="textarea" value="<%= commerceDataIntegrationProcessLog.getOutput() %>" />
+				<aui:input disabled="<%= true %>" label="output" name="output" type="textarea" value="<%= dispatchLog.getOutput() %>" />
 			</aui:fieldset>
 
 			<aui:button-row>

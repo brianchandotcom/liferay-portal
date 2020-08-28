@@ -2,15 +2,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 --%>
 
@@ -25,16 +25,15 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.data.integration.constants.CommerceDataIntegrationConstants" %><%@
-page import="com.liferay.commerce.data.integration.constants.CommerceDataIntegrationWebKeys" %><%@
-page import="com.liferay.commerce.data.integration.exception.NoSuchDataIntegrationProcessException" %><%@
-page import="com.liferay.commerce.data.integration.exception.NoSuchDataIntegrationProcessLogException" %><%@
-page import="com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess" %><%@
-page import="com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog" %><%@
-page import="com.liferay.commerce.data.integration.process.type.ProcessType" %><%@
-page import="com.liferay.commerce.data.integration.web.internal.display.context.CommerceDataIntegrationProcessDisplayContext" %><%@
-page import="com.liferay.commerce.data.integration.web.internal.display.context.CommerceDataIntegrationProcessLogDisplayContext" %><%@
-page import="com.liferay.commerce.data.integration.web.internal.security.permisison.resource.CommerceDataintegrationProcessPermission" %><%@
+<%@ page import="com.liferay.dispatch.constants.DispatchConstants" %><%@
+page import="com.liferay.dispatch.constants.DispatchWebKeys" %><%@
+page import="com.liferay.dispatch.exception.NoSuchLogException" %><%@
+page import="com.liferay.dispatch.exception.NoSuchTriggerException" %><%@
+page import="com.liferay.dispatch.model.DispatchLog" %><%@
+page import="com.liferay.dispatch.model.DispatchTrigger" %><%@
+page import="com.liferay.dispatch.web.internal.display.context.DispatchLogDisplayContext" %><%@
+page import="com.liferay.dispatch.web.internal.display.context.DispatchTriggerDisplayContext" %><%@
+page import="com.liferay.dispatch.web.internal.security.permisison.resource.DispatchPermission" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -44,6 +43,8 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+<%@ page import="java.util.Date" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

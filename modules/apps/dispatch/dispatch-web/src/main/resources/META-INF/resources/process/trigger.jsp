@@ -2,39 +2,40 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 --%>
 
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceDataIntegrationProcess commerceDataIntegrationProcess = (CommerceDataIntegrationProcess)request.getAttribute(CommerceDataIntegrationWebKeys.COMMERCE_DATA_INTEGRATION_PROCESS);
+DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(DispatchWebKeys.DISPATCH_TRIGGER);
 
 boolean neverEnd = ParamUtil.getBoolean(request, "neverEnd", true);
 
-if ((commerceDataIntegrationProcess != null) && (commerceDataIntegrationProcess.getEndDate() != null)) {
+if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 	neverEnd = false;
 }
 %>
 
-<portlet:actionURL name="editCommerceDataIntegrationProcessTrigger" var="editCommerceDataIntegrationProcessTriggerActionURL" />
+<portlet:actionURL name="editDispatchTrigger" var="editDispatchTriggerActionURL" />
 
-<aui:form action="<%= editCommerceDataIntegrationProcessTriggerActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editDispatchTriggerActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commerceDataIntegrationProcessId" type="hidden" value="<%= String.valueOf(commerceDataIntegrationProcess.getCommerceDataIntegrationProcessId()) %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="schedule" />
+	<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTrigger.getDispatchTriggerId()) %>" />
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:model-context bean="<%= commerceDataIntegrationProcess %>" model="<%= CommerceDataIntegrationProcess.class %>" />
+			<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
 
 			<div class="lfr-form-content">
 				<aui:fieldset>

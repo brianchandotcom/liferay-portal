@@ -2,24 +2,24 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 --%>
 
 <%@ include file="/init.jsp" %>
 
 <%
-String searchContainerId = ParamUtil.getString(request, "searchContainerId", "commerceDataIntegrationProcessLogs");
+String searchContainerId = ParamUtil.getString(request, "searchContainerId", "dispatchLogs");
 
-CommerceDataIntegrationProcessLogDisplayContext commerceDataIntegrationProcessLogDisplayContext = (CommerceDataIntegrationProcessLogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+DispatchLogDisplayContext dispatchLogDisplayContext = (DispatchLogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <liferay-frontend:management-bar
@@ -29,7 +29,7 @@ CommerceDataIntegrationProcessLogDisplayContext commerceDataIntegrationProcessLo
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= commerceDataIntegrationProcessLogDisplayContext.getPortletURL() %>"
+			portletURL="<%= dispatchLogDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -37,14 +37,14 @@ CommerceDataIntegrationProcessLogDisplayContext commerceDataIntegrationProcessLo
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= commerceDataIntegrationProcessLogDisplayContext.getPortletURL() %>"
+			portletURL="<%= dispatchLogDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<c:if test="<%= CommerceDataintegrationProcessPermission.contains(permissionChecker, commerceDataIntegrationProcessLogDisplayContext.getCommerceDataIntegrationProcess(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= DispatchPermission.contains(permissionChecker, dispatchLogDisplayContext.getDispatchTrigger(), ActionKeys.UPDATE) %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceDataIntegrationProcessLogs();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteDispatchLogs();" %>'
 				icon="times"
 				label="delete"
 			/>
@@ -53,17 +53,26 @@ CommerceDataIntegrationProcessLogDisplayContext commerceDataIntegrationProcessLo
 </liferay-frontend:management-bar>
 
 <aui:script>
-	function <portlet:namespace />deleteCommerceDataIntegrationProcessLogs() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-logs" />')) {
+	function <portlet:namespace />deleteDispatchLogs() {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-logs" />'
+			)
+		) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
 
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('redirect').val('<%= currentURL %>');
-			form.fm('deleteCDataIntegrationProcessLogIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteDispatchLogIds').val(
+				Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			);
 
-			submitForm(form, '<portlet:actionURL name="editCommerceDataIntegrationProcessLog" />');
+			submitForm(form, '<portlet:actionURL name="editDispatchLog" />');
 		}
 	}
 </aui:script>

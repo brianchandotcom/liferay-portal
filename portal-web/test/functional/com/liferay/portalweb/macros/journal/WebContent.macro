@@ -20,10 +20,13 @@ definition {
 		}
 
 		if (isSet(webContentContent)) {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "content",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+			Type(
+				locator1 = "CKEditor#BODY",
 				value1 = "${webContentContent}");
+
+			SelectFrame(value1 = "relative=top");
 		}
 
 		if (isSet(viewableBy)) {

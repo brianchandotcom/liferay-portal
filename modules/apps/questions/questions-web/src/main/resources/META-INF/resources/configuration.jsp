@@ -31,6 +31,9 @@ try {
 	mbCategoryName = mbCategory.getName();
 }
 catch (Exception exception) {
+	if (_log.isDebugEnabled()) {
+		_log.debug(exception, exception);
+	}
 }
 %>
 
@@ -118,3 +121,7 @@ catch (Exception exception) {
 		});
 	}
 </script>
+
+<%!
+	private static Log _log = LogFactoryUtil.getLog("com_liferay_questions_web.configuarion_jsp");
+%>

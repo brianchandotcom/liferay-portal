@@ -155,7 +155,7 @@ public class ChangeMasterLayoutMVCActionCommand
 		return JSONUtil.put(
 			"defaultStyleBookEntryName", styleBookEntry.getName()
 		).put(
-			"styleBookEntryId", styleBookEntry.getStyleBookEntryId()
+			"styleBookEntryId", layout.getStyleBookEntryId()
 		).put(
 			"tokenValues",
 			StyleBookEntryUtil.getFrontendTokensValuesJSONArray(

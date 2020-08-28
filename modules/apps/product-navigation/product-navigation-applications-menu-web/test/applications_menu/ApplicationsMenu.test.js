@@ -13,11 +13,16 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {configure} from '@testing-library/dom';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
 import ApplicationsMenu from '../../src/main/resources/META-INF/resources/js/ApplicationsMenu';
+
+configure({
+	testIdAttribute: 'data-qa-id',
+});
 
 const panelAppsURL = '/fetchUrl';
 
@@ -104,14 +109,14 @@ describe('ApplicationsMenu', () => {
 	});
 
 	it('renders Applications Menu button', () => {
-		const {getByTitle} = renderApplicationsMenu({});
+		const {getByTestId} = renderApplicationsMenu({});
 
-		expect(getByTitle('applications-menu')).toBeInTheDocument();
+		expect(getByTestId('applicationsMenu')).toBeInTheDocument();
 	});
 
 	it('fetches Applications Menu data when trigger button is focused', async () => {
-		const {getByTitle} = renderApplicationsMenu();
-		const trigger = getByTitle('applications-menu');
+		const {getByTestId} = renderApplicationsMenu();
+		const trigger = getByTestId('applicationsMenu');
 
 		await act(async () => {
 			fireEvent.focus(trigger);
@@ -128,8 +133,8 @@ describe('ApplicationsMenu', () => {
 	});
 
 	it('fetches Applications Menu data when trigger button is hovered', async () => {
-		const {getByTitle} = renderApplicationsMenu();
-		const trigger = getByTitle('applications-menu');
+		const {getByTestId} = renderApplicationsMenu();
+		const trigger = getByTestId('applicationsMenu');
 
 		await act(async () => {
 			fireEvent.mouseOver(trigger);
@@ -146,8 +151,8 @@ describe('ApplicationsMenu', () => {
 	});
 
 	it('fetches Applications Menu data when trigger button is clicked', async () => {
-		const {getByTitle} = renderApplicationsMenu();
-		const trigger = getByTitle('applications-menu');
+		const {getByTestId} = renderApplicationsMenu();
+		const trigger = getByTestId('applicationsMenu');
 
 		await act(async () => {
 			fireEvent.click(trigger);
@@ -164,8 +169,13 @@ describe('ApplicationsMenu', () => {
 	});
 
 	it('renders Applications Menu modal with a close button when trigger button is clicked', async () => {
-		const {getByTitle, queryByTitle} = renderApplicationsMenu();
-		const trigger = getByTitle('applications-menu');
+		const {
+			getByTestId,
+			getByTitle,
+			queryByTitle,
+		} = renderApplicationsMenu();
+
+		const trigger = getByTestId('applicationsMenu');
 
 		expect(queryByTitle('close')).not.toBeInTheDocument();
 
@@ -181,8 +191,8 @@ describe('ApplicationsMenu', () => {
 	});
 
 	it('closes Applications Menu modal when close button is clicked', async () => {
-		const {getByTitle} = renderApplicationsMenu();
-		const trigger = getByTitle('applications-menu');
+		const {getByTestId, getByTitle} = renderApplicationsMenu();
+		const trigger = getByTestId('applicationsMenu');
 
 		await act(async () => {
 			fireEvent.click(trigger);
@@ -206,8 +216,8 @@ describe('ApplicationsMenu', () => {
 	});
 
 	it('closes Applications Menu modal when clicking outside', async () => {
-		const {getByTitle} = renderApplicationsMenu();
-		const trigger = getByTitle('applications-menu');
+		const {getByTestId, getByTitle} = renderApplicationsMenu();
+		const trigger = getByTestId('applicationsMenu');
 
 		await act(async () => {
 			fireEvent.click(trigger);

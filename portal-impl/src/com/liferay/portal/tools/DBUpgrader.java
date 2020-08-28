@@ -27,11 +27,9 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -49,7 +47,6 @@ import com.liferay.portal.verify.VerifyProperties;
 import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistrar;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
@@ -249,26 +246,6 @@ public class DBUpgrader {
 			).build());
 	}
 
-	private static void _registerReleaseService() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistrar<Release> serviceRegistrar =
-			registry.getServiceRegistrar(Release.class);
-
-		Release release = ReleaseLocalServiceUtil.fetchRelease(
-			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
-		serviceRegistrar.registerService(
-			Release.class, release,
-			HashMapBuilder.<String, Object>put(
-				"build.date", release.getBuildDate()
-			).put(
-				"build.number", release.getBuildNumber()
-			).put(
-				"servlet.context.name", release.getServletContextName()
-			).build());
-	}
-
 	private static void _updateCompanyKey() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
@@ -387,8 +364,6 @@ public class DBUpgrader {
 			PortalCacheManagerNames.MULTI_VM);
 
 		CacheRegistryUtil.setActive(true);
-
-		_registerReleaseService();
 
 		_checkClassNamesAndResourceActions();
 

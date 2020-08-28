@@ -19,6 +19,7 @@ import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow;
 import com.liferay.app.builder.workflow.web.internal.portlet.test.BaseAppBuilderPortletTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,6 +44,18 @@ public class AddAppBuilderAppMVCResourceCommandTest
 
 		Assert.assertNotNull(appWorkflow);
 		Assert.assertEquals("1.0", appWorkflow.getAppVersion());
+	}
+
+	@Test
+	public void testAddAppWorkflowWithDuplicateTasks() throws Exception {
+		AppWorkflow appWorkflow = createAppWorkflow();
+
+		appWorkflow.setAppWorkflowTasks(
+			ArrayUtil.append(
+				appWorkflow.getAppWorkflowTasks(),
+				appWorkflow.getAppWorkflowTasks()));
+
+		Assert.assertNull(addApp(appWorkflow));
 	}
 
 }

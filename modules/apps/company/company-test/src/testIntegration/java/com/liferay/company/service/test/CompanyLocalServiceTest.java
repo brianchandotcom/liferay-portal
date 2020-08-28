@@ -287,16 +287,6 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testAddAndDeleteCompanyWithIPv6Host() throws Exception {
-		String hostname = "::1";
-
-		Company company = CompanyLocalServiceUtil.addCompany(
-			null, hostname, hostname, "test.com", false, 0, true);
-
-		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
-	}
-
-	@Test
 	public void testAddAndDeleteCompanyWithLayoutSetPrototype()
 		throws Throwable {
 
@@ -870,7 +860,7 @@ public class CompanyLocalServiceTest {
 	public void testUpdateValidVirtualHostnames() throws Exception {
 		testUpdateVirtualHostnames(
 			new String[] {
-				"abc.com", "255.0.0.0",
+				"abc.com", "255.0.0.0", "0:0:0:0:0:0:0:1", "::1",
 				"0000:0000:0000:0000:0000:0000:0000:0001"
 			},
 			false);

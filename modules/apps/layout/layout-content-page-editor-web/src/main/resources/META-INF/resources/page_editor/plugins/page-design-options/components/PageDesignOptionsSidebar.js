@@ -79,7 +79,7 @@ export default function PageDesignOptionsSidebar() {
 		const wrapper = document.getElementById('wrapper');
 
 		if (selectedStyleBook && wrapper) {
-			selectedStyleBook.tokenValues.forEach((token) => {
+			Object.values(selectedStyleBook.tokenValues).forEach((token) => {
 				wrapper.style.setProperty(
 					`--${token.cssVariable}`,
 					token.value

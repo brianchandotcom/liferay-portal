@@ -20,7 +20,7 @@ const StyleBookDispatchContext = React.createContext(() => {});
 const StyleBookStateContext = React.createContext({
 	defaultStyleBookEntryName: '',
 	styleBookEntryId: '',
-	tokenValues: [],
+	tokenValues: {},
 });
 
 export const StyleBookContextProvider = ({children}) => {

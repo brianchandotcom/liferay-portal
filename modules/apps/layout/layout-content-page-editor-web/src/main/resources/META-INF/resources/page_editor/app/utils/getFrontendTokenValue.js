@@ -18,9 +18,7 @@ import {config} from '../config/index';
  * Get widget path from the widgets tree by portletId
  */
 export function getFrontendTokenValue(styleValue) {
-	const frontendToken = Array.isArray(config.frontendTokens)
-		? config.frontendTokens.find((token) => token.name === styleValue)
-		: config.frontendTokens[styleValue];
+	const frontendToken = config.frontendTokens[styleValue];
 
 	if (frontendToken) {
 		if (Liferay.Browser.isIe()) {

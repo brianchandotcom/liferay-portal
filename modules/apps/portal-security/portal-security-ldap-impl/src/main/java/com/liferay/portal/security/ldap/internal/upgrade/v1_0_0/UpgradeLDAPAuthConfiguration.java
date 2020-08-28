@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.ldap.internal.upgrade.v1_0_0;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,8 +30,12 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 public class UpgradeLDAPAuthConfiguration extends UpgradeProcess {
 
-	public UpgradeLDAPAuthConfiguration(ConfigurationAdmin configurationAdmin) {
+	public UpgradeLDAPAuthConfiguration(
+		ConfigurationAdmin configurationAdmin,
+		ConfigurationProvider configurationProvider) {
+
 		_configurationAdmin = configurationAdmin;
+		_configurationProvider = configurationProvider;
 	}
 
 	@Override
@@ -66,5 +71,6 @@ public class UpgradeLDAPAuthConfiguration extends UpgradeProcess {
 	private static final String _PROPERTY_VALUE_COMPANY_ID_DEFAULT = "0";
 
 	private final ConfigurationAdmin _configurationAdmin;
+	private final ConfigurationProvider _configurationProvider;
 
 }

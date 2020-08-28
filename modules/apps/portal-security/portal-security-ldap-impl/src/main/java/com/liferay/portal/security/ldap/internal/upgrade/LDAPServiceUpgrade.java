@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.ldap.internal.upgrade;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.internal.upgrade.v1_0_0.UpgradeLDAPAuthConfiguration;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -31,10 +32,14 @@ public class LDAPServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"0.0.0", "1.0.0",
-			new UpgradeLDAPAuthConfiguration(_configurationAdmin));
+			new UpgradeLDAPAuthConfiguration(
+				_configurationAdmin, _configurationProvider));
 	}
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

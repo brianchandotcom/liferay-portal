@@ -23,7 +23,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 %>
 
 <clay:container-fluid
-	cssClass="pt-2"
+	cssClass="pb-9 pt-2"
 >
 	<liferay-frontend:edit-form
 		action="<%= (sourcePlid <= 0) ? layoutsAdminDisplayContext.getAddLayoutURL() : layoutsAdminDisplayContext.getCopyLayoutURL(sourcePlid) %>"

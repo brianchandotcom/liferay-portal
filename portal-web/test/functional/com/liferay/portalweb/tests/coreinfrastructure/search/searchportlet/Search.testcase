@@ -359,7 +359,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-90078."
-	@ignore
 	@priority = "4"
 	test ModifyPaginationPortalProperties {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";

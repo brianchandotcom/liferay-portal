@@ -63,10 +63,10 @@ public class DataLayoutUtilTest extends PowerMockito {
 
 	@Test
 	public void testToDDMFormLayoutEquals() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(new Locale[] {LocaleUtil.US}), LocaleUtil.US);
+		Locale locale = LocaleUtil.US;
 
-		Locale ddmFormDefaultLocale = ddmForm.getDefaultLocale();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(new Locale[] {locale}), locale);
 
 		ddmForm.addDDMFormField(
 			new DDMFormField() {
@@ -77,7 +77,7 @@ public class DataLayoutUtilTest extends PowerMockito {
 							HashMapBuilder.<String, Object>put(
 								"en_US", "label1"
 							).build(),
-							ddmFormDefaultLocale));
+							locale));
 					setLocalizable(true);
 					setName("textName");
 					setPredefinedValue(
@@ -85,7 +85,7 @@ public class DataLayoutUtilTest extends PowerMockito {
 							HashMapBuilder.<String, Object>put(
 								"en_US", "enter a text"
 							).build(),
-							ddmFormDefaultLocale));
+							locale));
 					setReadOnly(true);
 					setRepeatable(true);
 					setRequired(true);
@@ -95,7 +95,7 @@ public class DataLayoutUtilTest extends PowerMockito {
 							HashMapBuilder.<String, Object>put(
 								"en_US", "tip1"
 							).build(),
-							ddmFormDefaultLocale));
+							locale));
 					setType("text");
 				}
 			});

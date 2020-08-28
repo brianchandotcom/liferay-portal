@@ -555,13 +555,11 @@ public class DataLayoutResourceImpl
 			String content, String definitionSchemaVersion)
 		throws Exception {
 
-		JSONObject contentJSONObject = JSONFactoryUtil.createJSONObject(
-			content);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
 
-		contentJSONObject.put(
-			"definitionSchemaVersion", definitionSchemaVersion);
+		jsonObject.put("definitionSchemaVersion", definitionSchemaVersion);
 
-		return contentJSONObject.toString();
+		return jsonObject.toString();
 	}
 
 	private DataLayout _updateDataLayout(

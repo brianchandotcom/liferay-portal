@@ -64,6 +64,13 @@ public class DDMFormLayoutJSONDeserializer
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				ddmFormLayoutDeserializerDeserializeRequest.getContent());
 
+			if (Validator.isNotNull(
+					jsonObject.getString("definitionSchemaVersion"))) {
+
+				ddmFormLayout.setDefinitionSchemaVersion(
+					jsonObject.getString("definitionSchemaVersion"));
+			}
+
 			setDDMFormLayoutDefaultLocale(
 				jsonObject.getString("defaultLanguageId"), ddmFormLayout);
 			setDDMFormLayoutPages(
@@ -79,13 +86,6 @@ public class DDMFormLayoutJSONDeserializer
 			else {
 				setDDMFormLayoutPaginationMode(
 					DDMFormLayout.WIZARD_MODE, ddmFormLayout);
-			}
-
-			if (Validator.isNotNull(
-					jsonObject.getString("definitionSchemaVersion"))) {
-
-				ddmFormLayout.setDefinitionSchemaVersion(
-					jsonObject.getString("definitionSchemaVersion"));
 			}
 
 			setDDMFormRules(jsonObject.getJSONArray("rules"), ddmFormLayout);

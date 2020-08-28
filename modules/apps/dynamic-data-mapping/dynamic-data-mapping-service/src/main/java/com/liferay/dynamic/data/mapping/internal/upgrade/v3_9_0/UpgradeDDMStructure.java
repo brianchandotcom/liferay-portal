@@ -143,9 +143,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		DDMFormLayout ddmFormLayout = DDMFormLayoutDeserializeUtil.deserialize(
 			_ddmFormLayoutDeserializer, content);
 
-		ddmFormLayout.setPaginationMode(DDMFormLayout.SINGLE_PAGE_MODE);
-
 		ddmFormLayout.setDefinitionSchemaVersion("2.0");
+		ddmFormLayout.setPaginationMode(DDMFormLayout.SINGLE_PAGE_MODE);
 
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout.getDDMFormLayoutPages()) {

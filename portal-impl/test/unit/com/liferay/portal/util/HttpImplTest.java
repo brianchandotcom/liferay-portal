@@ -195,6 +195,13 @@ public class HttpImplTest {
 	}
 
 	@Test
+	public void testEncodePathWikiFriendlyURL() {
+		Assert.assertEquals(
+			"/web/guest/wiki/-/wiki/Main/test+test",
+			_httpImpl.encodePath("/web/guest/wiki/-/wiki/Main/test+test"));
+	}
+
+	@Test
 	public void testGetDomainWithInvalidURLs() {
 		Assert.assertEquals("", _httpImpl.getDomain("foo.foo.1"));
 		Assert.assertEquals("", _httpImpl.getDomain("test:test@/a/b"));

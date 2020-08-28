@@ -303,6 +303,8 @@ public class DBUpgrader {
 	private static void _upgradePortal() throws Exception {
 		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
 
+		checkReleaseState();
+
 		int buildNumber = _getReleaseColumnValue("buildNumber");
 
 		try (Connection connection = DataAccess.getConnection()) {
@@ -324,8 +326,6 @@ public class DBUpgrader {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Update build " + buildNumber);
 		}
-
-		checkReleaseState();
 
 		if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
 			TransactionsUtil.disableTransactions();

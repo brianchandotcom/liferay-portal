@@ -69,7 +69,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		}
 
 		if (!AssetDisplayPageUtil.hasAssetDisplayPage(
-				themeDisplay.getScopeGroupId(),
+				layoutDisplayPageObjectProvider.getGroupId(),
 				layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK(),
 				layoutDisplayPageObjectProvider.getClassTypeId())) {

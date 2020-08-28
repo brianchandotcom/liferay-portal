@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.seo.web.internal.util;
+package com.liferay.layout.seo.internal.util;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
@@ -61,7 +61,7 @@ public class FriendlyURLMapperProvider {
 			layoutDisplayPageObjectProvider -> {
 				try {
 					return AssetDisplayPageUtil.hasAssetDisplayPage(
-						themeDisplay.getScopeGroupId(),
+						layoutDisplayPageObjectProvider.getGroupId(),
 						layoutDisplayPageObjectProvider.getClassNameId(),
 						layoutDisplayPageObjectProvider.getClassPK(),
 						layoutDisplayPageObjectProvider.getClassTypeId());

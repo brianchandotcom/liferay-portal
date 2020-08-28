@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
@@ -52,13 +52,6 @@ export const EditEntry = ({
 		errorToast();
 		setSubmitting(false);
 	};
-
-	const ddmReactForm = ddmForm.reactComponentRef.current;
-
-	ddmReactForm.updateEditingLanguageId({
-		editingLanguageId: userLanguageId,
-		preserveValue: true,
-	});
 
 	const validateForm = useDDMFormValidation(
 		ddmForm,
@@ -107,6 +100,15 @@ export const EditEntry = ({
 	);
 
 	useDDMFormSubmit(ddmForm, onSubmit);
+
+	useEffect(() => {
+		const ddmReactForm = ddmForm.reactComponentRef.current;
+
+		ddmReactForm.updateEditingLanguageId({
+			editingLanguageId: userLanguageId,
+			preserveValue: true,
+		});
+	}, [ddmForm, userLanguageId]);
 
 	return (
 		<>

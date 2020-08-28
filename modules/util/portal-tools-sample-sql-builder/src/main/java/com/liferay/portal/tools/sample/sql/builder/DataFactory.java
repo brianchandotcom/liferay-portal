@@ -17,7 +17,6 @@ package com.liferay.portal.tools.sample.sql.builder;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryModel;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -258,9 +257,6 @@ import com.liferay.subscription.constants.SubscriptionConstants;
 import com.liferay.subscription.model.SubscriptionModel;
 import com.liferay.subscription.model.impl.SubscriptionModelImpl;
 import com.liferay.util.SimpleCounter;
-import com.liferay.view.count.model.ViewCountEntryModel;
-import com.liferay.view.count.model.impl.ViewCountEntryModelImpl;
-import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 import com.liferay.wiki.constants.WikiPageConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
@@ -676,9 +672,6 @@ public class DataFactory {
 	}
 
 	public void initAssetCategoryModels() {
-		_assetCategoryModelsArray =
-			(List<AssetCategoryModel>[])
-				new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
 		_assetCategoryModelsMaps =
 			(Map<Long, List<AssetCategoryModel>>[])
 				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
@@ -731,7 +724,6 @@ public class DataFactory {
 				}
 			}
 
-			_assetCategoryModelsArray[i - 1] = assetCategoryModels;
 			_assetVocabularyModelsArray[i - 1] = assetVocabularyModels;
 
 			Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
@@ -3354,14 +3346,6 @@ public class DataFactory {
 			_defaultUserId, GroupConstants.USER_PERSONAL_SITE, false);
 	}
 
-	public ViewCountEntryModel newViewCountEntryModel(
-		AssetEntryModel assetEntryModel) {
-
-		return newViewCountEntryModel(
-			assetEntryModel.getCompanyId(), getClassNameId(AssetEntry.class),
-			assetEntryModel.getPrimaryKey(), 0);
-	}
-
 	public VirtualHostModel newVirtualHostModel() {
 		VirtualHostModel virtualHostModel = new VirtualHostModelImpl();
 
@@ -4198,20 +4182,6 @@ public class DataFactory {
 		return userModel;
 	}
 
-	protected ViewCountEntryModel newViewCountEntryModel(
-		long companyId, long classNameId, long classPK, long viewCount) {
-
-		ViewCountEntryModel viewCountEntryModel = new ViewCountEntryModelImpl();
-
-		viewCountEntryModel.setPrimaryKey(new ViewCountEntryPK());
-		viewCountEntryModel.setCompanyId(companyId);
-		viewCountEntryModel.setClassNameId(classNameId);
-		viewCountEntryModel.setClassPK(classPK);
-		viewCountEntryModel.setViewCount(viewCount);
-
-		return viewCountEntryModel;
-	}
-
 	protected WikiNodeModel newWikiNodeModel(long groupId, int index) {
 		WikiNodeModel wikiNodeModel = new WikiNodeModelImpl();
 
@@ -4401,7 +4371,6 @@ public class DataFactory {
 	private final long _accountId;
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
-	private List<AssetCategoryModel>[] _assetCategoryModelsArray;
 	private Map<Long, List<AssetCategoryModel>>[] _assetCategoryModelsMaps;
 	private final long[] _assetClassNameIds;
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =

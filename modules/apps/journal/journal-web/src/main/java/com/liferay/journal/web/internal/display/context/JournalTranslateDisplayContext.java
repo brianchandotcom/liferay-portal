@@ -176,7 +176,16 @@ public class JournalTranslateDisplayContext {
 	}
 
 	public String getSaveButtonLabel() {
-		return _journalEditArticleDisplayContext.getSaveButtonLabel();
+		TranslationEntry translationEntry = _getTranslationEntry();
+
+		if ((translationEntry == null) || translationEntry.isApproved() ||
+			translationEntry.isDraft() || translationEntry.isExpired() ||
+			translationEntry.isScheduled()) {
+
+			return "save-as-draft";
+		}
+
+		return "save";
 	}
 
 	public String getSourceLanguageId() {
@@ -266,10 +275,7 @@ public class JournalTranslateDisplayContext {
 			return true;
 		}
 
-		TranslationEntry translationEntry =
-			TranslationEntryLocalServiceUtil.fetchTranslationEntry(
-				JournalArticle.class.getName(), _article.getResourcePrimKey(),
-				_targetLanguageId);
+		TranslationEntry translationEntry = _getTranslationEntry();
 
 		if ((translationEntry != null) &&
 			(translationEntry.getStatus() !=
@@ -284,6 +290,19 @@ public class JournalTranslateDisplayContext {
 
 	public boolean isSaveButtonDisabled() throws PortalException {
 		return _isAvailableTargetLanguageIdsEmpty();
+	}
+
+	private TranslationEntry _getTranslationEntry() {
+		if (_translationEntry != null) {
+			return _translationEntry;
+		}
+
+		_translationEntry =
+			TranslationEntryLocalServiceUtil.fetchTranslationEntry(
+				JournalArticle.class.getName(), _article.getResourcePrimKey(),
+				_targetLanguageId);
+
+		return _translationEntry;
 	}
 
 	private boolean _isAvailableTargetLanguageIdsEmpty() {
@@ -311,6 +330,7 @@ public class JournalTranslateDisplayContext {
 	private final String _targetLanguageId;
 	private final Locale _targetLocale;
 	private final ThemeDisplay _themeDisplay;
+	private TranslationEntry _translationEntry;
 	private final TranslationInfoFieldChecker _translationInfoFieldChecker;
 
 }

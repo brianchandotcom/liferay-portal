@@ -1335,7 +1335,7 @@ definition {
 
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
-			title = "Topic");
+			title = "Vocabulary Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1354,7 +1354,7 @@ definition {
 		Category.addCP(
 			categoryDescription = "Category Description",
 			categoryName = "Category Name",
-			vocabularyName = "Topic");
+			vocabularyName = "Vocabulary Name");
 
 		Navigator.openSiteURL(siteName = "Guest");
 
@@ -1386,7 +1386,7 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document Title",
 			tagNameList = "tag1,tag2",
-			vocabularyName = "Topic");
+			vocabularyName = "Vocabulary Name");
 
 		Click(
 			key_dmDocumentTitle = "Document Title",

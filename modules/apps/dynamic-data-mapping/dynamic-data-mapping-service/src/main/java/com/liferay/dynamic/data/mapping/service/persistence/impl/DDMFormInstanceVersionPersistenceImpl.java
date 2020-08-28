@@ -1669,10 +1669,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 	protected DDMFormInstanceVersion removeImpl(
 		DDMFormInstanceVersion ddmFormInstanceVersion) {
 
-		if (!ctPersistenceHelper.isRemove(ddmFormInstanceVersion)) {
-			return ddmFormInstanceVersion;
-		}
-
 		Session session = null;
 
 		try {
@@ -1684,7 +1680,9 @@ public class DDMFormInstanceVersionPersistenceImpl
 					ddmFormInstanceVersion.getPrimaryKeyObj());
 			}
 
-			if (ddmFormInstanceVersion != null) {
+			if ((ddmFormInstanceVersion != null) &&
+				ctPersistenceHelper.isRemove(ddmFormInstanceVersion)) {
+
 				session.delete(ddmFormInstanceVersion);
 			}
 		}

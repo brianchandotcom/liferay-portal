@@ -542,10 +542,6 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	protected FriendlyURLEntryMapping removeImpl(
 		FriendlyURLEntryMapping friendlyURLEntryMapping) {
 
-		if (!ctPersistenceHelper.isRemove(friendlyURLEntryMapping)) {
-			return friendlyURLEntryMapping;
-		}
-
 		Session session = null;
 
 		try {
@@ -557,7 +553,9 @@ public class FriendlyURLEntryMappingPersistenceImpl
 					friendlyURLEntryMapping.getPrimaryKeyObj());
 			}
 
-			if (friendlyURLEntryMapping != null) {
+			if ((friendlyURLEntryMapping != null) &&
+				ctPersistenceHelper.isRemove(friendlyURLEntryMapping)) {
+
 				session.delete(friendlyURLEntryMapping);
 			}
 		}

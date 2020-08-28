@@ -2860,10 +2860,6 @@ public class JournalFeedPersistenceImpl
 
 	@Override
 	protected JournalFeed removeImpl(JournalFeed journalFeed) {
-		if (!ctPersistenceHelper.isRemove(journalFeed)) {
-			return journalFeed;
-		}
-
 		Session session = null;
 
 		try {
@@ -2874,7 +2870,9 @@ public class JournalFeedPersistenceImpl
 					JournalFeedImpl.class, journalFeed.getPrimaryKeyObj());
 			}
 
-			if (journalFeed != null) {
+			if ((journalFeed != null) &&
+				ctPersistenceHelper.isRemove(journalFeed)) {
+
 				session.delete(journalFeed);
 			}
 		}

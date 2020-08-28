@@ -2965,10 +2965,6 @@ public class MBThreadFlagPersistenceImpl
 
 	@Override
 	protected MBThreadFlag removeImpl(MBThreadFlag mbThreadFlag) {
-		if (!ctPersistenceHelper.isRemove(mbThreadFlag)) {
-			return mbThreadFlag;
-		}
-
 		Session session = null;
 
 		try {
@@ -2979,7 +2975,9 @@ public class MBThreadFlagPersistenceImpl
 					MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKeyObj());
 			}
 
-			if (mbThreadFlag != null) {
+			if ((mbThreadFlag != null) &&
+				ctPersistenceHelper.isRemove(mbThreadFlag)) {
+
 				session.delete(mbThreadFlag);
 			}
 		}

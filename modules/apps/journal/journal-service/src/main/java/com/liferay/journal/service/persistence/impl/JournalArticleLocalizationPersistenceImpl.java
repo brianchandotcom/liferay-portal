@@ -1790,10 +1790,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	protected JournalArticleLocalization removeImpl(
 		JournalArticleLocalization journalArticleLocalization) {
 
-		if (!ctPersistenceHelper.isRemove(journalArticleLocalization)) {
-			return journalArticleLocalization;
-		}
-
 		Session session = null;
 
 		try {
@@ -1806,7 +1802,9 @@ public class JournalArticleLocalizationPersistenceImpl
 						journalArticleLocalization.getPrimaryKeyObj());
 			}
 
-			if (journalArticleLocalization != null) {
+			if ((journalArticleLocalization != null) &&
+				ctPersistenceHelper.isRemove(journalArticleLocalization)) {
+
 				session.delete(journalArticleLocalization);
 			}
 		}

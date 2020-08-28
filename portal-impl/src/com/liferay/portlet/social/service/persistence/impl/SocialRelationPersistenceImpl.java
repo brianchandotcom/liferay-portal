@@ -5957,10 +5957,6 @@ public class SocialRelationPersistenceImpl
 
 	@Override
 	protected SocialRelation removeImpl(SocialRelation socialRelation) {
-		if (!CTPersistenceHelperUtil.isRemove(socialRelation)) {
-			return socialRelation;
-		}
-
 		Session session = null;
 
 		try {
@@ -5972,7 +5968,9 @@ public class SocialRelationPersistenceImpl
 					socialRelation.getPrimaryKeyObj());
 			}
 
-			if (socialRelation != null) {
+			if ((socialRelation != null) &&
+				CTPersistenceHelperUtil.isRemove(socialRelation)) {
+
 				session.delete(socialRelation);
 			}
 		}

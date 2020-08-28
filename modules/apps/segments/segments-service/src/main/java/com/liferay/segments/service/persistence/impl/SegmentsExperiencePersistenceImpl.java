@@ -9816,10 +9816,6 @@ public class SegmentsExperiencePersistenceImpl
 	protected SegmentsExperience removeImpl(
 		SegmentsExperience segmentsExperience) {
 
-		if (!ctPersistenceHelper.isRemove(segmentsExperience)) {
-			return segmentsExperience;
-		}
-
 		Session session = null;
 
 		try {
@@ -9831,7 +9827,9 @@ public class SegmentsExperiencePersistenceImpl
 					segmentsExperience.getPrimaryKeyObj());
 			}
 
-			if (segmentsExperience != null) {
+			if ((segmentsExperience != null) &&
+				ctPersistenceHelper.isRemove(segmentsExperience)) {
+
 				session.delete(segmentsExperience);
 			}
 		}

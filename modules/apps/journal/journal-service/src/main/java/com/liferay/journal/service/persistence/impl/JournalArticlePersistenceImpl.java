@@ -32846,10 +32846,6 @@ public class JournalArticlePersistenceImpl
 
 	@Override
 	protected JournalArticle removeImpl(JournalArticle journalArticle) {
-		if (!ctPersistenceHelper.isRemove(journalArticle)) {
-			return journalArticle;
-		}
-
 		Session session = null;
 
 		try {
@@ -32861,7 +32857,9 @@ public class JournalArticlePersistenceImpl
 					journalArticle.getPrimaryKeyObj());
 			}
 
-			if (journalArticle != null) {
+			if ((journalArticle != null) &&
+				ctPersistenceHelper.isRemove(journalArticle)) {
+
 				session.delete(journalArticle);
 			}
 		}

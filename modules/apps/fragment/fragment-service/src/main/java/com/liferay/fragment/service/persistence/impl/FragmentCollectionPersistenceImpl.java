@@ -3699,10 +3699,6 @@ public class FragmentCollectionPersistenceImpl
 	protected FragmentCollection removeImpl(
 		FragmentCollection fragmentCollection) {
 
-		if (!ctPersistenceHelper.isRemove(fragmentCollection)) {
-			return fragmentCollection;
-		}
-
 		Session session = null;
 
 		try {
@@ -3714,7 +3710,9 @@ public class FragmentCollectionPersistenceImpl
 					fragmentCollection.getPrimaryKeyObj());
 			}
 
-			if (fragmentCollection != null) {
+			if ((fragmentCollection != null) &&
+				ctPersistenceHelper.isRemove(fragmentCollection)) {
+
 				session.delete(fragmentCollection);
 			}
 		}

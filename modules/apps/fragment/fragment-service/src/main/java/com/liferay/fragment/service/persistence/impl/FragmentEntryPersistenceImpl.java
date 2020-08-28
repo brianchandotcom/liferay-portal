@@ -14522,10 +14522,6 @@ public class FragmentEntryPersistenceImpl
 
 	@Override
 	protected FragmentEntry removeImpl(FragmentEntry fragmentEntry) {
-		if (!ctPersistenceHelper.isRemove(fragmentEntry)) {
-			return fragmentEntry;
-		}
-
 		Session session = null;
 
 		try {
@@ -14536,7 +14532,9 @@ public class FragmentEntryPersistenceImpl
 					FragmentEntryImpl.class, fragmentEntry.getPrimaryKeyObj());
 			}
 
-			if (fragmentEntry != null) {
+			if ((fragmentEntry != null) &&
+				ctPersistenceHelper.isRemove(fragmentEntry)) {
+
 				session.delete(fragmentEntry);
 			}
 		}

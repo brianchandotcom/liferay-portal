@@ -540,10 +540,6 @@ public class DDMFormInstanceReportPersistenceImpl
 	protected DDMFormInstanceReport removeImpl(
 		DDMFormInstanceReport ddmFormInstanceReport) {
 
-		if (!ctPersistenceHelper.isRemove(ddmFormInstanceReport)) {
-			return ddmFormInstanceReport;
-		}
-
 		Session session = null;
 
 		try {
@@ -555,7 +551,9 @@ public class DDMFormInstanceReportPersistenceImpl
 					ddmFormInstanceReport.getPrimaryKeyObj());
 			}
 
-			if (ddmFormInstanceReport != null) {
+			if ((ddmFormInstanceReport != null) &&
+				ctPersistenceHelper.isRemove(ddmFormInstanceReport)) {
+
 				session.delete(ddmFormInstanceReport);
 			}
 		}

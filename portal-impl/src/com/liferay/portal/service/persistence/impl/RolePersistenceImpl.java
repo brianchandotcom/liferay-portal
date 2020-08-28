@@ -10156,10 +10156,6 @@ public class RolePersistenceImpl
 		roleToUserTableMapper.deleteLeftPrimaryKeyTableMappings(
 			role.getPrimaryKey());
 
-		if (!CTPersistenceHelperUtil.isRemove(role)) {
-			return role;
-		}
-
 		Session session = null;
 
 		try {
@@ -10170,7 +10166,7 @@ public class RolePersistenceImpl
 					RoleImpl.class, role.getPrimaryKeyObj());
 			}
 
-			if (role != null) {
+			if ((role != null) && CTPersistenceHelperUtil.isRemove(role)) {
 				session.delete(role);
 			}
 		}

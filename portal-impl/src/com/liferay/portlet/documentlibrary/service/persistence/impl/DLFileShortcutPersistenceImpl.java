@@ -6337,10 +6337,6 @@ public class DLFileShortcutPersistenceImpl
 
 	@Override
 	protected DLFileShortcut removeImpl(DLFileShortcut dlFileShortcut) {
-		if (!CTPersistenceHelperUtil.isRemove(dlFileShortcut)) {
-			return dlFileShortcut;
-		}
-
 		Session session = null;
 
 		try {
@@ -6352,7 +6348,9 @@ public class DLFileShortcutPersistenceImpl
 					dlFileShortcut.getPrimaryKeyObj());
 			}
 
-			if (dlFileShortcut != null) {
+			if ((dlFileShortcut != null) &&
+				CTPersistenceHelperUtil.isRemove(dlFileShortcut)) {
+
 				session.delete(dlFileShortcut);
 			}
 		}

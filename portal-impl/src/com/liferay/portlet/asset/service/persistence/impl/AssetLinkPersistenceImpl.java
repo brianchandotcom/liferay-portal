@@ -3200,10 +3200,6 @@ public class AssetLinkPersistenceImpl
 
 	@Override
 	protected AssetLink removeImpl(AssetLink assetLink) {
-		if (!CTPersistenceHelperUtil.isRemove(assetLink)) {
-			return assetLink;
-		}
-
 		Session session = null;
 
 		try {
@@ -3214,7 +3210,9 @@ public class AssetLinkPersistenceImpl
 					AssetLinkImpl.class, assetLink.getPrimaryKeyObj());
 			}
 
-			if (assetLink != null) {
+			if ((assetLink != null) &&
+				CTPersistenceHelperUtil.isRemove(assetLink)) {
+
 				session.delete(assetLink);
 			}
 		}

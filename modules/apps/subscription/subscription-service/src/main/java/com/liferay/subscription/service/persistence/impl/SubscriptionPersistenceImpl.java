@@ -3625,10 +3625,6 @@ public class SubscriptionPersistenceImpl
 
 	@Override
 	protected Subscription removeImpl(Subscription subscription) {
-		if (!ctPersistenceHelper.isRemove(subscription)) {
-			return subscription;
-		}
-
 		Session session = null;
 
 		try {
@@ -3639,7 +3635,9 @@ public class SubscriptionPersistenceImpl
 					SubscriptionImpl.class, subscription.getPrimaryKeyObj());
 			}
 
-			if (subscription != null) {
+			if ((subscription != null) &&
+				ctPersistenceHelper.isRemove(subscription)) {
+
 				session.delete(subscription);
 			}
 		}

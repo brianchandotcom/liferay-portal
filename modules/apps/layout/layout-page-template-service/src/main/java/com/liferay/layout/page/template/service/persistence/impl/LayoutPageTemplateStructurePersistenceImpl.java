@@ -2575,10 +2575,6 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	protected LayoutPageTemplateStructure removeImpl(
 		LayoutPageTemplateStructure layoutPageTemplateStructure) {
 
-		if (!ctPersistenceHelper.isRemove(layoutPageTemplateStructure)) {
-			return layoutPageTemplateStructure;
-		}
-
 		Session session = null;
 
 		try {
@@ -2591,7 +2587,9 @@ public class LayoutPageTemplateStructurePersistenceImpl
 						layoutPageTemplateStructure.getPrimaryKeyObj());
 			}
 
-			if (layoutPageTemplateStructure != null) {
+			if ((layoutPageTemplateStructure != null) &&
+				ctPersistenceHelper.isRemove(layoutPageTemplateStructure)) {
+
 				session.delete(layoutPageTemplateStructure);
 			}
 		}

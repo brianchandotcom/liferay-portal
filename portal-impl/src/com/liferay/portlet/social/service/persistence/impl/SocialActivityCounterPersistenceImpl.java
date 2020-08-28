@@ -2785,10 +2785,6 @@ public class SocialActivityCounterPersistenceImpl
 	protected SocialActivityCounter removeImpl(
 		SocialActivityCounter socialActivityCounter) {
 
-		if (!CTPersistenceHelperUtil.isRemove(socialActivityCounter)) {
-			return socialActivityCounter;
-		}
-
 		Session session = null;
 
 		try {
@@ -2800,7 +2796,9 @@ public class SocialActivityCounterPersistenceImpl
 					socialActivityCounter.getPrimaryKeyObj());
 			}
 
-			if (socialActivityCounter != null) {
+			if ((socialActivityCounter != null) &&
+				CTPersistenceHelperUtil.isRemove(socialActivityCounter)) {
+
 				session.delete(socialActivityCounter);
 			}
 		}

@@ -1626,10 +1626,6 @@ public class DDMStructureLinkPersistenceImpl
 
 	@Override
 	protected DDMStructureLink removeImpl(DDMStructureLink ddmStructureLink) {
-		if (!ctPersistenceHelper.isRemove(ddmStructureLink)) {
-			return ddmStructureLink;
-		}
-
 		Session session = null;
 
 		try {
@@ -1641,7 +1637,9 @@ public class DDMStructureLinkPersistenceImpl
 					ddmStructureLink.getPrimaryKeyObj());
 			}
 
-			if (ddmStructureLink != null) {
+			if ((ddmStructureLink != null) &&
+				ctPersistenceHelper.isRemove(ddmStructureLink)) {
+
 				session.delete(ddmStructureLink);
 			}
 		}

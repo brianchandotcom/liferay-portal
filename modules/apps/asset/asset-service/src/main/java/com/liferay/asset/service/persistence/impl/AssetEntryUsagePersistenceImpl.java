@@ -4281,10 +4281,6 @@ public class AssetEntryUsagePersistenceImpl
 
 	@Override
 	protected AssetEntryUsage removeImpl(AssetEntryUsage assetEntryUsage) {
-		if (!ctPersistenceHelper.isRemove(assetEntryUsage)) {
-			return assetEntryUsage;
-		}
-
 		Session session = null;
 
 		try {
@@ -4296,7 +4292,9 @@ public class AssetEntryUsagePersistenceImpl
 					assetEntryUsage.getPrimaryKeyObj());
 			}
 
-			if (assetEntryUsage != null) {
+			if ((assetEntryUsage != null) &&
+				ctPersistenceHelper.isRemove(assetEntryUsage)) {
+
 				session.delete(assetEntryUsage);
 			}
 		}

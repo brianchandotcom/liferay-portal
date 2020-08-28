@@ -3213,10 +3213,6 @@ public class UserGroupGroupRolePersistenceImpl
 	protected UserGroupGroupRole removeImpl(
 		UserGroupGroupRole userGroupGroupRole) {
 
-		if (!CTPersistenceHelperUtil.isRemove(userGroupGroupRole)) {
-			return userGroupGroupRole;
-		}
-
 		Session session = null;
 
 		try {
@@ -3228,7 +3224,9 @@ public class UserGroupGroupRolePersistenceImpl
 					userGroupGroupRole.getPrimaryKeyObj());
 			}
 
-			if (userGroupGroupRole != null) {
+			if ((userGroupGroupRole != null) &&
+				CTPersistenceHelperUtil.isRemove(userGroupGroupRole)) {
+
 				session.delete(userGroupGroupRole);
 			}
 		}

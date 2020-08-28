@@ -9425,10 +9425,6 @@ public class OrganizationPersistenceImpl
 		organizationToUserTableMapper.deleteLeftPrimaryKeyTableMappings(
 			organization.getPrimaryKey());
 
-		if (!CTPersistenceHelperUtil.isRemove(organization)) {
-			return organization;
-		}
-
 		Session session = null;
 
 		try {
@@ -9439,7 +9435,9 @@ public class OrganizationPersistenceImpl
 					OrganizationImpl.class, organization.getPrimaryKeyObj());
 			}
 
-			if (organization != null) {
+			if ((organization != null) &&
+				CTPersistenceHelperUtil.isRemove(organization)) {
+
 				session.delete(organization);
 			}
 		}

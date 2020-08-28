@@ -5934,10 +5934,6 @@ public class PortletPreferencesPersistenceImpl
 	protected PortletPreferences removeImpl(
 		PortletPreferences portletPreferences) {
 
-		if (!CTPersistenceHelperUtil.isRemove(portletPreferences)) {
-			return portletPreferences;
-		}
-
 		Session session = null;
 
 		try {
@@ -5949,7 +5945,9 @@ public class PortletPreferencesPersistenceImpl
 					portletPreferences.getPrimaryKeyObj());
 			}
 
-			if (portletPreferences != null) {
+			if ((portletPreferences != null) &&
+				CTPersistenceHelperUtil.isRemove(portletPreferences)) {
+
 				session.delete(portletPreferences);
 			}
 		}

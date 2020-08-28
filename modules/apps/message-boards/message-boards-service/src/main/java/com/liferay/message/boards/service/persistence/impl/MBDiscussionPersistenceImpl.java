@@ -2175,10 +2175,6 @@ public class MBDiscussionPersistenceImpl
 
 	@Override
 	protected MBDiscussion removeImpl(MBDiscussion mbDiscussion) {
-		if (!ctPersistenceHelper.isRemove(mbDiscussion)) {
-			return mbDiscussion;
-		}
-
 		Session session = null;
 
 		try {
@@ -2189,7 +2185,9 @@ public class MBDiscussionPersistenceImpl
 					MBDiscussionImpl.class, mbDiscussion.getPrimaryKeyObj());
 			}
 
-			if (mbDiscussion != null) {
+			if ((mbDiscussion != null) &&
+				ctPersistenceHelper.isRemove(mbDiscussion)) {
+
 				session.delete(mbDiscussion);
 			}
 		}

@@ -13760,10 +13760,6 @@ public class AssetListEntryPersistenceImpl
 
 	@Override
 	protected AssetListEntry removeImpl(AssetListEntry assetListEntry) {
-		if (!ctPersistenceHelper.isRemove(assetListEntry)) {
-			return assetListEntry;
-		}
-
 		Session session = null;
 
 		try {
@@ -13775,7 +13771,9 @@ public class AssetListEntryPersistenceImpl
 					assetListEntry.getPrimaryKeyObj());
 			}
 
-			if (assetListEntry != null) {
+			if ((assetListEntry != null) &&
+				ctPersistenceHelper.isRemove(assetListEntry)) {
+
 				session.delete(assetListEntry);
 			}
 		}

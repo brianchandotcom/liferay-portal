@@ -2713,10 +2713,6 @@ public class DDMContentPersistenceImpl
 
 	@Override
 	protected DDMContent removeImpl(DDMContent ddmContent) {
-		if (!ctPersistenceHelper.isRemove(ddmContent)) {
-			return ddmContent;
-		}
-
 		Session session = null;
 
 		try {
@@ -2727,7 +2723,9 @@ public class DDMContentPersistenceImpl
 					DDMContentImpl.class, ddmContent.getPrimaryKeyObj());
 			}
 
-			if (ddmContent != null) {
+			if ((ddmContent != null) &&
+				ctPersistenceHelper.isRemove(ddmContent)) {
+
 				session.delete(ddmContent);
 			}
 		}

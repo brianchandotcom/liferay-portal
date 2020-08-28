@@ -2970,10 +2970,6 @@ public class DDMStorageLinkPersistenceImpl
 
 	@Override
 	protected DDMStorageLink removeImpl(DDMStorageLink ddmStorageLink) {
-		if (!ctPersistenceHelper.isRemove(ddmStorageLink)) {
-			return ddmStorageLink;
-		}
-
 		Session session = null;
 
 		try {
@@ -2985,7 +2981,9 @@ public class DDMStorageLinkPersistenceImpl
 					ddmStorageLink.getPrimaryKeyObj());
 			}
 
-			if (ddmStorageLink != null) {
+			if ((ddmStorageLink != null) &&
+				ctPersistenceHelper.isRemove(ddmStorageLink)) {
+
 				session.delete(ddmStorageLink);
 			}
 		}

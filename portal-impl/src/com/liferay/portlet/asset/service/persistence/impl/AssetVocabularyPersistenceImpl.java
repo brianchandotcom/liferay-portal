@@ -6169,10 +6169,6 @@ public class AssetVocabularyPersistenceImpl
 
 	@Override
 	protected AssetVocabulary removeImpl(AssetVocabulary assetVocabulary) {
-		if (!CTPersistenceHelperUtil.isRemove(assetVocabulary)) {
-			return assetVocabulary;
-		}
-
 		Session session = null;
 
 		try {
@@ -6184,7 +6180,9 @@ public class AssetVocabularyPersistenceImpl
 					assetVocabulary.getPrimaryKeyObj());
 			}
 
-			if (assetVocabulary != null) {
+			if ((assetVocabulary != null) &&
+				CTPersistenceHelperUtil.isRemove(assetVocabulary)) {
+
 				session.delete(assetVocabulary);
 			}
 		}

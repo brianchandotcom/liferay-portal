@@ -3652,10 +3652,6 @@ public class DDMDataProviderInstancePersistenceImpl
 	protected DDMDataProviderInstance removeImpl(
 		DDMDataProviderInstance ddmDataProviderInstance) {
 
-		if (!ctPersistenceHelper.isRemove(ddmDataProviderInstance)) {
-			return ddmDataProviderInstance;
-		}
-
 		Session session = null;
 
 		try {
@@ -3667,7 +3663,9 @@ public class DDMDataProviderInstancePersistenceImpl
 					ddmDataProviderInstance.getPrimaryKeyObj());
 			}
 
-			if (ddmDataProviderInstance != null) {
+			if ((ddmDataProviderInstance != null) &&
+				ctPersistenceHelper.isRemove(ddmDataProviderInstance)) {
+
 				session.delete(ddmDataProviderInstance);
 			}
 		}

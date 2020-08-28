@@ -12875,10 +12875,6 @@ public class GroupPersistenceImpl
 		groupToUserTableMapper.deleteLeftPrimaryKeyTableMappings(
 			group.getPrimaryKey());
 
-		if (!CTPersistenceHelperUtil.isRemove(group)) {
-			return group;
-		}
-
 		Session session = null;
 
 		try {
@@ -12889,7 +12885,7 @@ public class GroupPersistenceImpl
 					GroupImpl.class, group.getPrimaryKeyObj());
 			}
 
-			if (group != null) {
+			if ((group != null) && CTPersistenceHelperUtil.isRemove(group)) {
 				session.delete(group);
 			}
 		}

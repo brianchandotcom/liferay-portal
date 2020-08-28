@@ -2469,10 +2469,6 @@ public class MBMailingListPersistenceImpl
 
 	@Override
 	protected MBMailingList removeImpl(MBMailingList mbMailingList) {
-		if (!ctPersistenceHelper.isRemove(mbMailingList)) {
-			return mbMailingList;
-		}
-
 		Session session = null;
 
 		try {
@@ -2483,7 +2479,9 @@ public class MBMailingListPersistenceImpl
 					MBMailingListImpl.class, mbMailingList.getPrimaryKeyObj());
 			}
 
-			if (mbMailingList != null) {
+			if ((mbMailingList != null) &&
+				ctPersistenceHelper.isRemove(mbMailingList)) {
+
 				session.delete(mbMailingList);
 			}
 		}

@@ -15283,10 +15283,6 @@ public class FragmentEntryVersionPersistenceImpl
 	protected FragmentEntryVersion removeImpl(
 		FragmentEntryVersion fragmentEntryVersion) {
 
-		if (!ctPersistenceHelper.isRemove(fragmentEntryVersion)) {
-			return fragmentEntryVersion;
-		}
-
 		Session session = null;
 
 		try {
@@ -15298,7 +15294,9 @@ public class FragmentEntryVersionPersistenceImpl
 					fragmentEntryVersion.getPrimaryKeyObj());
 			}
 
-			if (fragmentEntryVersion != null) {
+			if ((fragmentEntryVersion != null) &&
+				ctPersistenceHelper.isRemove(fragmentEntryVersion)) {
+
 				session.delete(fragmentEntryVersion);
 			}
 		}

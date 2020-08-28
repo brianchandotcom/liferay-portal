@@ -3363,10 +3363,6 @@ public class DLFileEntryTypePersistenceImpl
 		dlFileEntryTypeToDLFolderTableMapper.deleteLeftPrimaryKeyTableMappings(
 			dlFileEntryType.getPrimaryKey());
 
-		if (!CTPersistenceHelperUtil.isRemove(dlFileEntryType)) {
-			return dlFileEntryType;
-		}
-
 		Session session = null;
 
 		try {
@@ -3378,7 +3374,9 @@ public class DLFileEntryTypePersistenceImpl
 					dlFileEntryType.getPrimaryKeyObj());
 			}
 
-			if (dlFileEntryType != null) {
+			if ((dlFileEntryType != null) &&
+				CTPersistenceHelperUtil.isRemove(dlFileEntryType)) {
+
 				session.delete(dlFileEntryType);
 			}
 		}

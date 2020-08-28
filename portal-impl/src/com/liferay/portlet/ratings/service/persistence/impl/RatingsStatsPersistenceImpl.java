@@ -876,10 +876,6 @@ public class RatingsStatsPersistenceImpl
 
 	@Override
 	protected RatingsStats removeImpl(RatingsStats ratingsStats) {
-		if (!CTPersistenceHelperUtil.isRemove(ratingsStats)) {
-			return ratingsStats;
-		}
-
 		Session session = null;
 
 		try {
@@ -890,7 +886,9 @@ public class RatingsStatsPersistenceImpl
 					RatingsStatsImpl.class, ratingsStats.getPrimaryKeyObj());
 			}
 
-			if (ratingsStats != null) {
+			if ((ratingsStats != null) &&
+				CTPersistenceHelperUtil.isRemove(ratingsStats)) {
+
 				session.delete(ratingsStats);
 			}
 		}

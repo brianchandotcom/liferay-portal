@@ -3128,10 +3128,6 @@ public class AssetListEntryUsagePersistenceImpl
 	protected AssetListEntryUsage removeImpl(
 		AssetListEntryUsage assetListEntryUsage) {
 
-		if (!ctPersistenceHelper.isRemove(assetListEntryUsage)) {
-			return assetListEntryUsage;
-		}
-
 		Session session = null;
 
 		try {
@@ -3143,7 +3139,9 @@ public class AssetListEntryUsagePersistenceImpl
 					assetListEntryUsage.getPrimaryKeyObj());
 			}
 
-			if (assetListEntryUsage != null) {
+			if ((assetListEntryUsage != null) &&
+				ctPersistenceHelper.isRemove(assetListEntryUsage)) {
+
 				session.delete(assetListEntryUsage);
 			}
 		}

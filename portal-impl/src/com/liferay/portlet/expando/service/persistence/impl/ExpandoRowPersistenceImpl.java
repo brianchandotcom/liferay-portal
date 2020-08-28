@@ -1524,10 +1524,6 @@ public class ExpandoRowPersistenceImpl
 
 	@Override
 	protected ExpandoRow removeImpl(ExpandoRow expandoRow) {
-		if (!CTPersistenceHelperUtil.isRemove(expandoRow)) {
-			return expandoRow;
-		}
-
 		Session session = null;
 
 		try {
@@ -1538,7 +1534,9 @@ public class ExpandoRowPersistenceImpl
 					ExpandoRowImpl.class, expandoRow.getPrimaryKeyObj());
 			}
 
-			if (expandoRow != null) {
+			if ((expandoRow != null) &&
+				CTPersistenceHelperUtil.isRemove(expandoRow)) {
+
 				session.delete(expandoRow);
 			}
 		}

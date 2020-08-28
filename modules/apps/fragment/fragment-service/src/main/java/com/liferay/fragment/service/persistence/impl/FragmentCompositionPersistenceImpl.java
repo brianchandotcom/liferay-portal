@@ -5551,10 +5551,6 @@ public class FragmentCompositionPersistenceImpl
 	protected FragmentComposition removeImpl(
 		FragmentComposition fragmentComposition) {
 
-		if (!ctPersistenceHelper.isRemove(fragmentComposition)) {
-			return fragmentComposition;
-		}
-
 		Session session = null;
 
 		try {
@@ -5566,7 +5562,9 @@ public class FragmentCompositionPersistenceImpl
 					fragmentComposition.getPrimaryKeyObj());
 			}
 
-			if (fragmentComposition != null) {
+			if ((fragmentComposition != null) &&
+				ctPersistenceHelper.isRemove(fragmentComposition)) {
+
 				session.delete(fragmentComposition);
 			}
 		}

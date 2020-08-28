@@ -11772,10 +11772,6 @@ public class MBCategoryPersistenceImpl
 
 	@Override
 	protected MBCategory removeImpl(MBCategory mbCategory) {
-		if (!ctPersistenceHelper.isRemove(mbCategory)) {
-			return mbCategory;
-		}
-
 		Session session = null;
 
 		try {
@@ -11786,7 +11782,9 @@ public class MBCategoryPersistenceImpl
 					MBCategoryImpl.class, mbCategory.getPrimaryKeyObj());
 			}
 
-			if (mbCategory != null) {
+			if ((mbCategory != null) &&
+				ctPersistenceHelper.isRemove(mbCategory)) {
+
 				session.delete(mbCategory);
 			}
 		}

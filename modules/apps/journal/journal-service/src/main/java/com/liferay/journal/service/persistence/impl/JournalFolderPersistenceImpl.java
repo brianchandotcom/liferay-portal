@@ -7695,10 +7695,6 @@ public class JournalFolderPersistenceImpl
 
 	@Override
 	protected JournalFolder removeImpl(JournalFolder journalFolder) {
-		if (!ctPersistenceHelper.isRemove(journalFolder)) {
-			return journalFolder;
-		}
-
 		Session session = null;
 
 		try {
@@ -7709,7 +7705,9 @@ public class JournalFolderPersistenceImpl
 					JournalFolderImpl.class, journalFolder.getPrimaryKeyObj());
 			}
 
-			if (journalFolder != null) {
+			if ((journalFolder != null) &&
+				ctPersistenceHelper.isRemove(journalFolder)) {
+
 				session.delete(journalFolder);
 			}
 		}

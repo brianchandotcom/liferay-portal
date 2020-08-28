@@ -2879,10 +2879,6 @@ public class SocialActivitySettingPersistenceImpl
 	protected SocialActivitySetting removeImpl(
 		SocialActivitySetting socialActivitySetting) {
 
-		if (!CTPersistenceHelperUtil.isRemove(socialActivitySetting)) {
-			return socialActivitySetting;
-		}
-
 		Session session = null;
 
 		try {
@@ -2894,7 +2890,9 @@ public class SocialActivitySettingPersistenceImpl
 					socialActivitySetting.getPrimaryKeyObj());
 			}
 
-			if (socialActivitySetting != null) {
+			if ((socialActivitySetting != null) &&
+				CTPersistenceHelperUtil.isRemove(socialActivitySetting)) {
+
 				session.delete(socialActivitySetting);
 			}
 		}

@@ -1585,10 +1585,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	protected AssetAutoTaggerEntry removeImpl(
 		AssetAutoTaggerEntry assetAutoTaggerEntry) {
 
-		if (!ctPersistenceHelper.isRemove(assetAutoTaggerEntry)) {
-			return assetAutoTaggerEntry;
-		}
-
 		Session session = null;
 
 		try {
@@ -1600,7 +1596,9 @@ public class AssetAutoTaggerEntryPersistenceImpl
 					assetAutoTaggerEntry.getPrimaryKeyObj());
 			}
 
-			if (assetAutoTaggerEntry != null) {
+			if ((assetAutoTaggerEntry != null) &&
+				ctPersistenceHelper.isRemove(assetAutoTaggerEntry)) {
+
 				session.delete(assetAutoTaggerEntry);
 			}
 		}

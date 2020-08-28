@@ -2308,10 +2308,6 @@ public class FriendlyURLEntryPersistenceImpl
 
 	@Override
 	protected FriendlyURLEntry removeImpl(FriendlyURLEntry friendlyURLEntry) {
-		if (!ctPersistenceHelper.isRemove(friendlyURLEntry)) {
-			return friendlyURLEntry;
-		}
-
 		Session session = null;
 
 		try {
@@ -2323,7 +2319,9 @@ public class FriendlyURLEntryPersistenceImpl
 					friendlyURLEntry.getPrimaryKeyObj());
 			}
 
-			if (friendlyURLEntry != null) {
+			if ((friendlyURLEntry != null) &&
+				ctPersistenceHelper.isRemove(friendlyURLEntry)) {
+
 				session.delete(friendlyURLEntry);
 			}
 		}

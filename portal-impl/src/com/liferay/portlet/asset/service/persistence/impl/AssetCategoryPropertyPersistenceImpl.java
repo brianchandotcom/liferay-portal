@@ -2219,10 +2219,6 @@ public class AssetCategoryPropertyPersistenceImpl
 	protected AssetCategoryProperty removeImpl(
 		AssetCategoryProperty assetCategoryProperty) {
 
-		if (!CTPersistenceHelperUtil.isRemove(assetCategoryProperty)) {
-			return assetCategoryProperty;
-		}
-
 		Session session = null;
 
 		try {
@@ -2234,7 +2230,9 @@ public class AssetCategoryPropertyPersistenceImpl
 					assetCategoryProperty.getPrimaryKeyObj());
 			}
 
-			if (assetCategoryProperty != null) {
+			if ((assetCategoryProperty != null) &&
+				CTPersistenceHelperUtil.isRemove(assetCategoryProperty)) {
+
 				session.delete(assetCategoryProperty);
 			}
 		}

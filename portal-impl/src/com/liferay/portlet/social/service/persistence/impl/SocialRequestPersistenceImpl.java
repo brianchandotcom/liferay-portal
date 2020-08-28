@@ -6599,10 +6599,6 @@ public class SocialRequestPersistenceImpl
 
 	@Override
 	protected SocialRequest removeImpl(SocialRequest socialRequest) {
-		if (!CTPersistenceHelperUtil.isRemove(socialRequest)) {
-			return socialRequest;
-		}
-
 		Session session = null;
 
 		try {
@@ -6613,7 +6609,9 @@ public class SocialRequestPersistenceImpl
 					SocialRequestImpl.class, socialRequest.getPrimaryKeyObj());
 			}
 
-			if (socialRequest != null) {
+			if ((socialRequest != null) &&
+				CTPersistenceHelperUtil.isRemove(socialRequest)) {
+
 				session.delete(socialRequest);
 			}
 		}

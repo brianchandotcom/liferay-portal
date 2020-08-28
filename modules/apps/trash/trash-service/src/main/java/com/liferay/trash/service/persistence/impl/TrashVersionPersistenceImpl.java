@@ -1579,10 +1579,6 @@ public class TrashVersionPersistenceImpl
 
 	@Override
 	protected TrashVersion removeImpl(TrashVersion trashVersion) {
-		if (!ctPersistenceHelper.isRemove(trashVersion)) {
-			return trashVersion;
-		}
-
 		Session session = null;
 
 		try {
@@ -1593,7 +1589,9 @@ public class TrashVersionPersistenceImpl
 					TrashVersionImpl.class, trashVersion.getPrimaryKeyObj());
 			}
 
-			if (trashVersion != null) {
+			if ((trashVersion != null) &&
+				ctPersistenceHelper.isRemove(trashVersion)) {
+
 				session.delete(trashVersion);
 			}
 		}

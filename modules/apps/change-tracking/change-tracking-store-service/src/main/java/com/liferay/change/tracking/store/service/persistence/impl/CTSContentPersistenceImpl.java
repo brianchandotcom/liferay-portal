@@ -2756,10 +2756,6 @@ public class CTSContentPersistenceImpl
 
 	@Override
 	protected CTSContent removeImpl(CTSContent ctsContent) {
-		if (!ctPersistenceHelper.isRemove(ctsContent)) {
-			return ctsContent;
-		}
-
 		Session session = null;
 
 		try {
@@ -2770,7 +2766,9 @@ public class CTSContentPersistenceImpl
 					CTSContentImpl.class, ctsContent.getPrimaryKeyObj());
 			}
 
-			if (ctsContent != null) {
+			if ((ctsContent != null) &&
+				ctPersistenceHelper.isRemove(ctsContent)) {
+
 				session.delete(ctsContent);
 			}
 		}

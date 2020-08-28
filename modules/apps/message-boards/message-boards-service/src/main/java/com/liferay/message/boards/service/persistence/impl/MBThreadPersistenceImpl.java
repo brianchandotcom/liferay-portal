@@ -13439,10 +13439,6 @@ public class MBThreadPersistenceImpl
 
 	@Override
 	protected MBThread removeImpl(MBThread mbThread) {
-		if (!ctPersistenceHelper.isRemove(mbThread)) {
-			return mbThread;
-		}
-
 		Session session = null;
 
 		try {
@@ -13453,7 +13449,7 @@ public class MBThreadPersistenceImpl
 					MBThreadImpl.class, mbThread.getPrimaryKeyObj());
 			}
 
-			if (mbThread != null) {
+			if ((mbThread != null) && ctPersistenceHelper.isRemove(mbThread)) {
 				session.delete(mbThread);
 			}
 		}

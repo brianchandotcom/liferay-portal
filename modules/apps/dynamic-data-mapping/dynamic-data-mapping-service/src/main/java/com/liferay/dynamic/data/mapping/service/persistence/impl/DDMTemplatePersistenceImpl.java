@@ -12359,10 +12359,6 @@ public class DDMTemplatePersistenceImpl
 
 	@Override
 	protected DDMTemplate removeImpl(DDMTemplate ddmTemplate) {
-		if (!ctPersistenceHelper.isRemove(ddmTemplate)) {
-			return ddmTemplate;
-		}
-
 		Session session = null;
 
 		try {
@@ -12373,7 +12369,9 @@ public class DDMTemplatePersistenceImpl
 					DDMTemplateImpl.class, ddmTemplate.getPrimaryKeyObj());
 			}
 
-			if (ddmTemplate != null) {
+			if ((ddmTemplate != null) &&
+				ctPersistenceHelper.isRemove(ddmTemplate)) {
+
 				session.delete(ddmTemplate);
 			}
 		}

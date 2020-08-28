@@ -14969,10 +14969,6 @@ public class DLFileEntryPersistenceImpl
 
 	@Override
 	protected DLFileEntry removeImpl(DLFileEntry dlFileEntry) {
-		if (!CTPersistenceHelperUtil.isRemove(dlFileEntry)) {
-			return dlFileEntry;
-		}
-
 		Session session = null;
 
 		try {
@@ -14983,7 +14979,9 @@ public class DLFileEntryPersistenceImpl
 					DLFileEntryImpl.class, dlFileEntry.getPrimaryKeyObj());
 			}
 
-			if (dlFileEntry != null) {
+			if ((dlFileEntry != null) &&
+				CTPersistenceHelperUtil.isRemove(dlFileEntry)) {
+
 				session.delete(dlFileEntry);
 			}
 		}

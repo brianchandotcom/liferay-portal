@@ -4072,10 +4072,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	protected AssetListEntryAssetEntryRel removeImpl(
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
 
-		if (!ctPersistenceHelper.isRemove(assetListEntryAssetEntryRel)) {
-			return assetListEntryAssetEntryRel;
-		}
-
 		Session session = null;
 
 		try {
@@ -4088,7 +4084,9 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 						assetListEntryAssetEntryRel.getPrimaryKeyObj());
 			}
 
-			if (assetListEntryAssetEntryRel != null) {
+			if ((assetListEntryAssetEntryRel != null) &&
+				ctPersistenceHelper.isRemove(assetListEntryAssetEntryRel)) {
+
 				session.delete(assetListEntryAssetEntryRel);
 			}
 		}

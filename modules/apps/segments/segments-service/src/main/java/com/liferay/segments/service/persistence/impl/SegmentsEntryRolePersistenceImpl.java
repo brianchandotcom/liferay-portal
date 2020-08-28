@@ -1569,10 +1569,6 @@ public class SegmentsEntryRolePersistenceImpl
 	protected SegmentsEntryRole removeImpl(
 		SegmentsEntryRole segmentsEntryRole) {
 
-		if (!ctPersistenceHelper.isRemove(segmentsEntryRole)) {
-			return segmentsEntryRole;
-		}
-
 		Session session = null;
 
 		try {
@@ -1584,7 +1580,9 @@ public class SegmentsEntryRolePersistenceImpl
 					segmentsEntryRole.getPrimaryKeyObj());
 			}
 
-			if (segmentsEntryRole != null) {
+			if ((segmentsEntryRole != null) &&
+				ctPersistenceHelper.isRemove(segmentsEntryRole)) {
+
 				session.delete(segmentsEntryRole);
 			}
 		}

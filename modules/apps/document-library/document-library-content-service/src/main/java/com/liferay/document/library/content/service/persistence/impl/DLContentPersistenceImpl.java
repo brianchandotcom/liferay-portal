@@ -2446,10 +2446,6 @@ public class DLContentPersistenceImpl
 
 	@Override
 	protected DLContent removeImpl(DLContent dlContent) {
-		if (!ctPersistenceHelper.isRemove(dlContent)) {
-			return dlContent;
-		}
-
 		Session session = null;
 
 		try {
@@ -2460,7 +2456,9 @@ public class DLContentPersistenceImpl
 					DLContentImpl.class, dlContent.getPrimaryKeyObj());
 			}
 
-			if (dlContent != null) {
+			if ((dlContent != null) &&
+				ctPersistenceHelper.isRemove(dlContent)) {
+
 				session.delete(dlContent);
 			}
 		}

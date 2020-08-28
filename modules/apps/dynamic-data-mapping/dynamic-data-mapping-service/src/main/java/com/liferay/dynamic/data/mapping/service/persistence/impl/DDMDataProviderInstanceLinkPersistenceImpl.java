@@ -1628,10 +1628,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	protected DDMDataProviderInstanceLink removeImpl(
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
 
-		if (!ctPersistenceHelper.isRemove(ddmDataProviderInstanceLink)) {
-			return ddmDataProviderInstanceLink;
-		}
-
 		Session session = null;
 
 		try {
@@ -1644,7 +1640,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 						ddmDataProviderInstanceLink.getPrimaryKeyObj());
 			}
 
-			if (ddmDataProviderInstanceLink != null) {
+			if ((ddmDataProviderInstanceLink != null) &&
+				ctPersistenceHelper.isRemove(ddmDataProviderInstanceLink)) {
+
 				session.delete(ddmDataProviderInstanceLink);
 			}
 		}

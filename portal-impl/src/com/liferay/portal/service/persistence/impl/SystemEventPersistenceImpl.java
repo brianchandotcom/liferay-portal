@@ -2551,10 +2551,6 @@ public class SystemEventPersistenceImpl
 
 	@Override
 	protected SystemEvent removeImpl(SystemEvent systemEvent) {
-		if (!CTPersistenceHelperUtil.isRemove(systemEvent)) {
-			return systemEvent;
-		}
-
 		Session session = null;
 
 		try {
@@ -2565,7 +2561,9 @@ public class SystemEventPersistenceImpl
 					SystemEventImpl.class, systemEvent.getPrimaryKeyObj());
 			}
 
-			if (systemEvent != null) {
+			if ((systemEvent != null) &&
+				CTPersistenceHelperUtil.isRemove(systemEvent)) {
+
 				session.delete(systemEvent);
 			}
 		}

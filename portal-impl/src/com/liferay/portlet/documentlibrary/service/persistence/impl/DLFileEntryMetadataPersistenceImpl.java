@@ -2745,10 +2745,6 @@ public class DLFileEntryMetadataPersistenceImpl
 	protected DLFileEntryMetadata removeImpl(
 		DLFileEntryMetadata dlFileEntryMetadata) {
 
-		if (!CTPersistenceHelperUtil.isRemove(dlFileEntryMetadata)) {
-			return dlFileEntryMetadata;
-		}
-
 		Session session = null;
 
 		try {
@@ -2760,7 +2756,9 @@ public class DLFileEntryMetadataPersistenceImpl
 					dlFileEntryMetadata.getPrimaryKeyObj());
 			}
 
-			if (dlFileEntryMetadata != null) {
+			if ((dlFileEntryMetadata != null) &&
+				CTPersistenceHelperUtil.isRemove(dlFileEntryMetadata)) {
+
 				session.delete(dlFileEntryMetadata);
 			}
 		}

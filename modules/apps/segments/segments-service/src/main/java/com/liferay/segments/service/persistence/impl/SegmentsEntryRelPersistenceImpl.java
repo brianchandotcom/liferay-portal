@@ -2231,10 +2231,6 @@ public class SegmentsEntryRelPersistenceImpl
 
 	@Override
 	protected SegmentsEntryRel removeImpl(SegmentsEntryRel segmentsEntryRel) {
-		if (!ctPersistenceHelper.isRemove(segmentsEntryRel)) {
-			return segmentsEntryRel;
-		}
-
 		Session session = null;
 
 		try {
@@ -2246,7 +2242,9 @@ public class SegmentsEntryRelPersistenceImpl
 					segmentsEntryRel.getPrimaryKeyObj());
 			}
 
-			if (segmentsEntryRel != null) {
+			if ((segmentsEntryRel != null) &&
+				ctPersistenceHelper.isRemove(segmentsEntryRel)) {
+
 				session.delete(segmentsEntryRel);
 			}
 		}

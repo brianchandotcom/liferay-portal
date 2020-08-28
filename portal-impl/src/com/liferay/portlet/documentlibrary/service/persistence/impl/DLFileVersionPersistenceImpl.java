@@ -5974,10 +5974,6 @@ public class DLFileVersionPersistenceImpl
 
 	@Override
 	protected DLFileVersion removeImpl(DLFileVersion dlFileVersion) {
-		if (!CTPersistenceHelperUtil.isRemove(dlFileVersion)) {
-			return dlFileVersion;
-		}
-
 		Session session = null;
 
 		try {
@@ -5988,7 +5984,9 @@ public class DLFileVersionPersistenceImpl
 					DLFileVersionImpl.class, dlFileVersion.getPrimaryKeyObj());
 			}
 
-			if (dlFileVersion != null) {
+			if ((dlFileVersion != null) &&
+				CTPersistenceHelperUtil.isRemove(dlFileVersion)) {
+
 				session.delete(dlFileVersion);
 			}
 		}

@@ -1038,10 +1038,6 @@ public class DDMTemplateLinkPersistenceImpl
 
 	@Override
 	protected DDMTemplateLink removeImpl(DDMTemplateLink ddmTemplateLink) {
-		if (!ctPersistenceHelper.isRemove(ddmTemplateLink)) {
-			return ddmTemplateLink;
-		}
-
 		Session session = null;
 
 		try {
@@ -1053,7 +1049,9 @@ public class DDMTemplateLinkPersistenceImpl
 					ddmTemplateLink.getPrimaryKeyObj());
 			}
 
-			if (ddmTemplateLink != null) {
+			if ((ddmTemplateLink != null) &&
+				ctPersistenceHelper.isRemove(ddmTemplateLink)) {
+
 				session.delete(ddmTemplateLink);
 			}
 		}

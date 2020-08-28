@@ -4550,10 +4550,6 @@ public class DDMStructureLayoutPersistenceImpl
 	protected DDMStructureLayout removeImpl(
 		DDMStructureLayout ddmStructureLayout) {
 
-		if (!ctPersistenceHelper.isRemove(ddmStructureLayout)) {
-			return ddmStructureLayout;
-		}
-
 		Session session = null;
 
 		try {
@@ -4565,7 +4561,9 @@ public class DDMStructureLayoutPersistenceImpl
 					ddmStructureLayout.getPrimaryKeyObj());
 			}
 
-			if (ddmStructureLayout != null) {
+			if ((ddmStructureLayout != null) &&
+				ctPersistenceHelper.isRemove(ddmStructureLayout)) {
+
 				session.delete(ddmStructureLayout);
 			}
 		}

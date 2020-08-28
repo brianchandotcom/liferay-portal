@@ -6149,10 +6149,6 @@ public class SegmentsExperimentPersistenceImpl
 	protected SegmentsExperiment removeImpl(
 		SegmentsExperiment segmentsExperiment) {
 
-		if (!ctPersistenceHelper.isRemove(segmentsExperiment)) {
-			return segmentsExperiment;
-		}
-
 		Session session = null;
 
 		try {
@@ -6164,7 +6160,9 @@ public class SegmentsExperimentPersistenceImpl
 					segmentsExperiment.getPrimaryKeyObj());
 			}
 
-			if (segmentsExperiment != null) {
+			if ((segmentsExperiment != null) &&
+				ctPersistenceHelper.isRemove(segmentsExperiment)) {
+
 				session.delete(segmentsExperiment);
 			}
 		}

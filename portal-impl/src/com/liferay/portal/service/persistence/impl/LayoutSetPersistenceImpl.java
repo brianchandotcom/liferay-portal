@@ -2468,10 +2468,6 @@ public class LayoutSetPersistenceImpl
 
 	@Override
 	protected LayoutSet removeImpl(LayoutSet layoutSet) {
-		if (!CTPersistenceHelperUtil.isRemove(layoutSet)) {
-			return layoutSet;
-		}
-
 		Session session = null;
 
 		try {
@@ -2482,7 +2478,9 @@ public class LayoutSetPersistenceImpl
 					LayoutSetImpl.class, layoutSet.getPrimaryKeyObj());
 			}
 
-			if (layoutSet != null) {
+			if ((layoutSet != null) &&
+				CTPersistenceHelperUtil.isRemove(layoutSet)) {
+
 				session.delete(layoutSet);
 			}
 		}

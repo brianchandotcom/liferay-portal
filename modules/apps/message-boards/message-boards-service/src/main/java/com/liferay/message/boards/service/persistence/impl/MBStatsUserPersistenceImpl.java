@@ -2109,10 +2109,6 @@ public class MBStatsUserPersistenceImpl
 
 	@Override
 	protected MBStatsUser removeImpl(MBStatsUser mbStatsUser) {
-		if (!ctPersistenceHelper.isRemove(mbStatsUser)) {
-			return mbStatsUser;
-		}
-
 		Session session = null;
 
 		try {
@@ -2123,7 +2119,9 @@ public class MBStatsUserPersistenceImpl
 					MBStatsUserImpl.class, mbStatsUser.getPrimaryKeyObj());
 			}
 
-			if (mbStatsUser != null) {
+			if ((mbStatsUser != null) &&
+				ctPersistenceHelper.isRemove(mbStatsUser)) {
+
 				session.delete(mbStatsUser);
 			}
 		}

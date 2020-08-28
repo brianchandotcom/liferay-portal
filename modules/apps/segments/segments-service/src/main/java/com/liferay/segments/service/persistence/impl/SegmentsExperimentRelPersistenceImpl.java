@@ -1088,10 +1088,6 @@ public class SegmentsExperimentRelPersistenceImpl
 	protected SegmentsExperimentRel removeImpl(
 		SegmentsExperimentRel segmentsExperimentRel) {
 
-		if (!ctPersistenceHelper.isRemove(segmentsExperimentRel)) {
-			return segmentsExperimentRel;
-		}
-
 		Session session = null;
 
 		try {
@@ -1103,7 +1099,9 @@ public class SegmentsExperimentRelPersistenceImpl
 					segmentsExperimentRel.getPrimaryKeyObj());
 			}
 
-			if (segmentsExperimentRel != null) {
+			if ((segmentsExperimentRel != null) &&
+				ctPersistenceHelper.isRemove(segmentsExperimentRel)) {
+
 				session.delete(segmentsExperimentRel);
 			}
 		}

@@ -15604,10 +15604,6 @@ public class LayoutPersistenceImpl
 
 	@Override
 	protected Layout removeImpl(Layout layout) {
-		if (!CTPersistenceHelperUtil.isRemove(layout)) {
-			return layout;
-		}
-
 		Session session = null;
 
 		try {
@@ -15618,7 +15614,7 @@ public class LayoutPersistenceImpl
 					LayoutImpl.class, layout.getPrimaryKeyObj());
 			}
 
-			if (layout != null) {
+			if ((layout != null) && CTPersistenceHelperUtil.isRemove(layout)) {
 				session.delete(layout);
 			}
 		}

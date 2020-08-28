@@ -10127,10 +10127,6 @@ public class SegmentsEntryPersistenceImpl
 
 	@Override
 	protected SegmentsEntry removeImpl(SegmentsEntry segmentsEntry) {
-		if (!ctPersistenceHelper.isRemove(segmentsEntry)) {
-			return segmentsEntry;
-		}
-
 		Session session = null;
 
 		try {
@@ -10141,7 +10137,9 @@ public class SegmentsEntryPersistenceImpl
 					SegmentsEntryImpl.class, segmentsEntry.getPrimaryKeyObj());
 			}
 
-			if (segmentsEntry != null) {
+			if ((segmentsEntry != null) &&
+				ctPersistenceHelper.isRemove(segmentsEntry)) {
+
 				session.delete(segmentsEntry);
 			}
 		}

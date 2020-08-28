@@ -2665,10 +2665,6 @@ public class TrashEntryPersistenceImpl
 
 	@Override
 	protected TrashEntry removeImpl(TrashEntry trashEntry) {
-		if (!ctPersistenceHelper.isRemove(trashEntry)) {
-			return trashEntry;
-		}
-
 		Session session = null;
 
 		try {
@@ -2679,7 +2675,9 @@ public class TrashEntryPersistenceImpl
 					TrashEntryImpl.class, trashEntry.getPrimaryKeyObj());
 			}
 
-			if (trashEntry != null) {
+			if ((trashEntry != null) &&
+				ctPersistenceHelper.isRemove(trashEntry)) {
+
 				session.delete(trashEntry);
 			}
 		}

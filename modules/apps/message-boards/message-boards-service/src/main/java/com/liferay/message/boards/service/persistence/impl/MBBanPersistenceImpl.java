@@ -3439,10 +3439,6 @@ public class MBBanPersistenceImpl
 
 	@Override
 	protected MBBan removeImpl(MBBan mbBan) {
-		if (!ctPersistenceHelper.isRemove(mbBan)) {
-			return mbBan;
-		}
-
 		Session session = null;
 
 		try {
@@ -3453,7 +3449,7 @@ public class MBBanPersistenceImpl
 					MBBanImpl.class, mbBan.getPrimaryKeyObj());
 			}
 
-			if (mbBan != null) {
+			if ((mbBan != null) && ctPersistenceHelper.isRemove(mbBan)) {
 				session.delete(mbBan);
 			}
 		}

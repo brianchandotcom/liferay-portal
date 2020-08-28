@@ -3172,10 +3172,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	protected LayoutPageTemplateStructureRel removeImpl(
 		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
 
-		if (!ctPersistenceHelper.isRemove(layoutPageTemplateStructureRel)) {
-			return layoutPageTemplateStructureRel;
-		}
-
 		Session session = null;
 
 		try {
@@ -3188,7 +3184,9 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 						layoutPageTemplateStructureRel.getPrimaryKeyObj());
 			}
 
-			if (layoutPageTemplateStructureRel != null) {
+			if ((layoutPageTemplateStructureRel != null) &&
+				ctPersistenceHelper.isRemove(layoutPageTemplateStructureRel)) {
+
 				session.delete(layoutPageTemplateStructureRel);
 			}
 		}

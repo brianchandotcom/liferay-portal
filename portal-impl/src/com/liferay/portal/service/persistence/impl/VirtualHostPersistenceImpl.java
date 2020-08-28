@@ -1374,10 +1374,6 @@ public class VirtualHostPersistenceImpl
 
 	@Override
 	protected VirtualHost removeImpl(VirtualHost virtualHost) {
-		if (!CTPersistenceHelperUtil.isRemove(virtualHost)) {
-			return virtualHost;
-		}
-
 		Session session = null;
 
 		try {
@@ -1388,7 +1384,9 @@ public class VirtualHostPersistenceImpl
 					VirtualHostImpl.class, virtualHost.getPrimaryKeyObj());
 			}
 
-			if (virtualHost != null) {
+			if ((virtualHost != null) &&
+				CTPersistenceHelperUtil.isRemove(virtualHost)) {
+
 				session.delete(virtualHost);
 			}
 		}

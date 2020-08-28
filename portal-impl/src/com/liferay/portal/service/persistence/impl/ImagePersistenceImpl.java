@@ -744,10 +744,6 @@ public class ImagePersistenceImpl
 
 	@Override
 	protected Image removeImpl(Image image) {
-		if (!CTPersistenceHelperUtil.isRemove(image)) {
-			return image;
-		}
-
 		Session session = null;
 
 		try {
@@ -758,7 +754,7 @@ public class ImagePersistenceImpl
 					ImageImpl.class, image.getPrimaryKeyObj());
 			}
 
-			if (image != null) {
+			if ((image != null) && CTPersistenceHelperUtil.isRemove(image)) {
 				session.delete(image);
 			}
 		}

@@ -5949,10 +5949,6 @@ public class SocialActivityPersistenceImpl
 
 	@Override
 	protected SocialActivity removeImpl(SocialActivity socialActivity) {
-		if (!CTPersistenceHelperUtil.isRemove(socialActivity)) {
-			return socialActivity;
-		}
-
 		Session session = null;
 
 		try {
@@ -5964,7 +5960,9 @@ public class SocialActivityPersistenceImpl
 					socialActivity.getPrimaryKeyObj());
 			}
 
-			if (socialActivity != null) {
+			if ((socialActivity != null) &&
+				CTPersistenceHelperUtil.isRemove(socialActivity)) {
+
 				session.delete(socialActivity);
 			}
 		}

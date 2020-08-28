@@ -2257,10 +2257,6 @@ public class SocialActivityLimitPersistenceImpl
 	protected SocialActivityLimit removeImpl(
 		SocialActivityLimit socialActivityLimit) {
 
-		if (!CTPersistenceHelperUtil.isRemove(socialActivityLimit)) {
-			return socialActivityLimit;
-		}
-
 		Session session = null;
 
 		try {
@@ -2272,7 +2268,9 @@ public class SocialActivityLimitPersistenceImpl
 					socialActivityLimit.getPrimaryKeyObj());
 			}
 
-			if (socialActivityLimit != null) {
+			if ((socialActivityLimit != null) &&
+				CTPersistenceHelperUtil.isRemove(socialActivityLimit)) {
+
 				session.delete(socialActivityLimit);
 			}
 		}

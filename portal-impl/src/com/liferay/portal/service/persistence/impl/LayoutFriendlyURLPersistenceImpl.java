@@ -5555,10 +5555,6 @@ public class LayoutFriendlyURLPersistenceImpl
 	protected LayoutFriendlyURL removeImpl(
 		LayoutFriendlyURL layoutFriendlyURL) {
 
-		if (!CTPersistenceHelperUtil.isRemove(layoutFriendlyURL)) {
-			return layoutFriendlyURL;
-		}
-
 		Session session = null;
 
 		try {
@@ -5570,7 +5566,9 @@ public class LayoutFriendlyURLPersistenceImpl
 					layoutFriendlyURL.getPrimaryKeyObj());
 			}
 
-			if (layoutFriendlyURL != null) {
+			if ((layoutFriendlyURL != null) &&
+				CTPersistenceHelperUtil.isRemove(layoutFriendlyURL)) {
+
 				session.delete(layoutFriendlyURL);
 			}
 		}

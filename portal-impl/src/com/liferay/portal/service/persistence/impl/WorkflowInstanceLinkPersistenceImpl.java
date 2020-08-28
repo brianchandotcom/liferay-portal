@@ -1511,10 +1511,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 	protected WorkflowInstanceLink removeImpl(
 		WorkflowInstanceLink workflowInstanceLink) {
 
-		if (!CTPersistenceHelperUtil.isRemove(workflowInstanceLink)) {
-			return workflowInstanceLink;
-		}
-
 		Session session = null;
 
 		try {
@@ -1526,7 +1522,9 @@ public class WorkflowInstanceLinkPersistenceImpl
 					workflowInstanceLink.getPrimaryKeyObj());
 			}
 
-			if (workflowInstanceLink != null) {
+			if ((workflowInstanceLink != null) &&
+				CTPersistenceHelperUtil.isRemove(workflowInstanceLink)) {
+
 				session.delete(workflowInstanceLink);
 			}
 		}

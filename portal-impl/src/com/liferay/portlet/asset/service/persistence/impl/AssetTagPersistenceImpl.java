@@ -4469,10 +4469,6 @@ public class AssetTagPersistenceImpl
 		assetTagToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(
 			assetTag.getPrimaryKey());
 
-		if (!CTPersistenceHelperUtil.isRemove(assetTag)) {
-			return assetTag;
-		}
-
 		Session session = null;
 
 		try {
@@ -4483,7 +4479,9 @@ public class AssetTagPersistenceImpl
 					AssetTagImpl.class, assetTag.getPrimaryKeyObj());
 			}
 
-			if (assetTag != null) {
+			if ((assetTag != null) &&
+				CTPersistenceHelperUtil.isRemove(assetTag)) {
+
 				session.delete(assetTag);
 			}
 		}

@@ -10521,10 +10521,6 @@ public class DDMStructurePersistenceImpl
 
 	@Override
 	protected DDMStructure removeImpl(DDMStructure ddmStructure) {
-		if (!ctPersistenceHelper.isRemove(ddmStructure)) {
-			return ddmStructure;
-		}
-
 		Session session = null;
 
 		try {
@@ -10535,7 +10531,9 @@ public class DDMStructurePersistenceImpl
 					DDMStructureImpl.class, ddmStructure.getPrimaryKeyObj());
 			}
 
-			if (ddmStructure != null) {
+			if ((ddmStructure != null) &&
+				ctPersistenceHelper.isRemove(ddmStructure)) {
+
 				session.delete(ddmStructure);
 			}
 		}

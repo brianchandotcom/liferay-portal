@@ -5427,10 +5427,6 @@ public class JournalContentSearchPersistenceImpl
 	protected JournalContentSearch removeImpl(
 		JournalContentSearch journalContentSearch) {
 
-		if (!ctPersistenceHelper.isRemove(journalContentSearch)) {
-			return journalContentSearch;
-		}
-
 		Session session = null;
 
 		try {
@@ -5442,7 +5438,9 @@ public class JournalContentSearchPersistenceImpl
 					journalContentSearch.getPrimaryKeyObj());
 			}
 
-			if (journalContentSearch != null) {
+			if ((journalContentSearch != null) &&
+				ctPersistenceHelper.isRemove(journalContentSearch)) {
+
 				session.delete(journalContentSearch);
 			}
 		}

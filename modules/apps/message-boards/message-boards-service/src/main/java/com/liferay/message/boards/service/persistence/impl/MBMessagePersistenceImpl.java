@@ -21333,10 +21333,6 @@ public class MBMessagePersistenceImpl
 
 	@Override
 	protected MBMessage removeImpl(MBMessage mbMessage) {
-		if (!ctPersistenceHelper.isRemove(mbMessage)) {
-			return mbMessage;
-		}
-
 		Session session = null;
 
 		try {
@@ -21347,7 +21343,9 @@ public class MBMessagePersistenceImpl
 					MBMessageImpl.class, mbMessage.getPrimaryKeyObj());
 			}
 
-			if (mbMessage != null) {
+			if ((mbMessage != null) &&
+				ctPersistenceHelper.isRemove(mbMessage)) {
+
 				session.delete(mbMessage);
 			}
 		}

@@ -4441,10 +4441,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 	protected LayoutClassedModelUsage removeImpl(
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
-		if (!ctPersistenceHelper.isRemove(layoutClassedModelUsage)) {
-			return layoutClassedModelUsage;
-		}
-
 		Session session = null;
 
 		try {
@@ -4456,7 +4452,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 					layoutClassedModelUsage.getPrimaryKeyObj());
 			}
 
-			if (layoutClassedModelUsage != null) {
+			if ((layoutClassedModelUsage != null) &&
+				ctPersistenceHelper.isRemove(layoutClassedModelUsage)) {
+
 				session.delete(layoutClassedModelUsage);
 			}
 		}

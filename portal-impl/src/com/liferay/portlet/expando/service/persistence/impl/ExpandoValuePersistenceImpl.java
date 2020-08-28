@@ -5164,10 +5164,6 @@ public class ExpandoValuePersistenceImpl
 
 	@Override
 	protected ExpandoValue removeImpl(ExpandoValue expandoValue) {
-		if (!CTPersistenceHelperUtil.isRemove(expandoValue)) {
-			return expandoValue;
-		}
-
 		Session session = null;
 
 		try {
@@ -5178,7 +5174,9 @@ public class ExpandoValuePersistenceImpl
 					ExpandoValueImpl.class, expandoValue.getPrimaryKeyObj());
 			}
 
-			if (expandoValue != null) {
+			if ((expandoValue != null) &&
+				CTPersistenceHelperUtil.isRemove(expandoValue)) {
+
 				session.delete(expandoValue);
 			}
 		}

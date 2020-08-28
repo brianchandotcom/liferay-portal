@@ -1121,10 +1121,6 @@ public class ExpandoTablePersistenceImpl
 
 	@Override
 	protected ExpandoTable removeImpl(ExpandoTable expandoTable) {
-		if (!CTPersistenceHelperUtil.isRemove(expandoTable)) {
-			return expandoTable;
-		}
-
 		Session session = null;
 
 		try {
@@ -1135,7 +1131,9 @@ public class ExpandoTablePersistenceImpl
 					ExpandoTableImpl.class, expandoTable.getPrimaryKeyObj());
 			}
 
-			if (expandoTable != null) {
+			if ((expandoTable != null) &&
+				CTPersistenceHelperUtil.isRemove(expandoTable)) {
+
 				session.delete(expandoTable);
 			}
 		}

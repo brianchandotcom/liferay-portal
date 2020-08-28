@@ -8139,10 +8139,6 @@ public class FragmentEntryLinkPersistenceImpl
 	protected FragmentEntryLink removeImpl(
 		FragmentEntryLink fragmentEntryLink) {
 
-		if (!ctPersistenceHelper.isRemove(fragmentEntryLink)) {
-			return fragmentEntryLink;
-		}
-
 		Session session = null;
 
 		try {
@@ -8154,7 +8150,9 @@ public class FragmentEntryLinkPersistenceImpl
 					fragmentEntryLink.getPrimaryKeyObj());
 			}
 
-			if (fragmentEntryLink != null) {
+			if ((fragmentEntryLink != null) &&
+				ctPersistenceHelper.isRemove(fragmentEntryLink)) {
+
 				session.delete(fragmentEntryLink);
 			}
 		}

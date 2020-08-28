@@ -2156,10 +2156,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	protected FriendlyURLEntryLocalization removeImpl(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
 
-		if (!ctPersistenceHelper.isRemove(friendlyURLEntryLocalization)) {
-			return friendlyURLEntryLocalization;
-		}
-
 		Session session = null;
 
 		try {
@@ -2172,7 +2168,9 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 						friendlyURLEntryLocalization.getPrimaryKeyObj());
 			}
 
-			if (friendlyURLEntryLocalization != null) {
+			if ((friendlyURLEntryLocalization != null) &&
+				ctPersistenceHelper.isRemove(friendlyURLEntryLocalization)) {
+
 				session.delete(friendlyURLEntryLocalization);
 			}
 		}

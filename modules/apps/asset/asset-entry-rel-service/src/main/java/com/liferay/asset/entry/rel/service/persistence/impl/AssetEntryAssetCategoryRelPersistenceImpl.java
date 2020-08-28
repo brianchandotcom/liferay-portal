@@ -1636,10 +1636,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	protected AssetEntryAssetCategoryRel removeImpl(
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
 
-		if (!ctPersistenceHelper.isRemove(assetEntryAssetCategoryRel)) {
-			return assetEntryAssetCategoryRel;
-		}
-
 		Session session = null;
 
 		try {
@@ -1652,7 +1648,9 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 						assetEntryAssetCategoryRel.getPrimaryKeyObj());
 			}
 
-			if (assetEntryAssetCategoryRel != null) {
+			if ((assetEntryAssetCategoryRel != null) &&
+				ctPersistenceHelper.isRemove(assetEntryAssetCategoryRel)) {
+
 				session.delete(assetEntryAssetCategoryRel);
 			}
 		}

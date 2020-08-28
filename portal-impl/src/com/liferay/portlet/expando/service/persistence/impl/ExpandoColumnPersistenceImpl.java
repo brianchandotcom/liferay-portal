@@ -1922,10 +1922,6 @@ public class ExpandoColumnPersistenceImpl
 
 	@Override
 	protected ExpandoColumn removeImpl(ExpandoColumn expandoColumn) {
-		if (!CTPersistenceHelperUtil.isRemove(expandoColumn)) {
-			return expandoColumn;
-		}
-
 		Session session = null;
 
 		try {
@@ -1936,7 +1932,9 @@ public class ExpandoColumnPersistenceImpl
 					ExpandoColumnImpl.class, expandoColumn.getPrimaryKeyObj());
 			}
 
-			if (expandoColumn != null) {
+			if ((expandoColumn != null) &&
+				CTPersistenceHelperUtil.isRemove(expandoColumn)) {
+
 				session.delete(expandoColumn);
 			}
 		}

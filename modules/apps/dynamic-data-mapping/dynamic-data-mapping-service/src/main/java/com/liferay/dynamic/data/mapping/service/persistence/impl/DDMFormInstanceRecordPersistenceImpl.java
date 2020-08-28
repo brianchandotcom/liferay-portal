@@ -3958,10 +3958,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 	protected DDMFormInstanceRecord removeImpl(
 		DDMFormInstanceRecord ddmFormInstanceRecord) {
 
-		if (!ctPersistenceHelper.isRemove(ddmFormInstanceRecord)) {
-			return ddmFormInstanceRecord;
-		}
-
 		Session session = null;
 
 		try {
@@ -3973,7 +3969,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 					ddmFormInstanceRecord.getPrimaryKeyObj());
 			}
 
-			if (ddmFormInstanceRecord != null) {
+			if ((ddmFormInstanceRecord != null) &&
+				ctPersistenceHelper.isRemove(ddmFormInstanceRecord)) {
+
 				session.delete(ddmFormInstanceRecord);
 			}
 		}

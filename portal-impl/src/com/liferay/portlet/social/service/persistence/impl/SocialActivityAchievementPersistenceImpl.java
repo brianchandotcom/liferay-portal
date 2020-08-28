@@ -3449,10 +3449,6 @@ public class SocialActivityAchievementPersistenceImpl
 	protected SocialActivityAchievement removeImpl(
 		SocialActivityAchievement socialActivityAchievement) {
 
-		if (!CTPersistenceHelperUtil.isRemove(socialActivityAchievement)) {
-			return socialActivityAchievement;
-		}
-
 		Session session = null;
 
 		try {
@@ -3465,7 +3461,9 @@ public class SocialActivityAchievementPersistenceImpl
 						socialActivityAchievement.getPrimaryKeyObj());
 			}
 
-			if (socialActivityAchievement != null) {
+			if ((socialActivityAchievement != null) &&
+				CTPersistenceHelperUtil.isRemove(socialActivityAchievement)) {
+
 				session.delete(socialActivityAchievement);
 			}
 		}

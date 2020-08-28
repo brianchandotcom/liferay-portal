@@ -12265,10 +12265,6 @@ public class AssetCategoryPersistenceImpl
 		assetCategoryToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(
 			assetCategory.getPrimaryKey());
 
-		if (!CTPersistenceHelperUtil.isRemove(assetCategory)) {
-			return assetCategory;
-		}
-
 		Session session = null;
 
 		try {
@@ -12279,7 +12275,9 @@ public class AssetCategoryPersistenceImpl
 					AssetCategoryImpl.class, assetCategory.getPrimaryKeyObj());
 			}
 
-			if (assetCategory != null) {
+			if ((assetCategory != null) &&
+				CTPersistenceHelperUtil.isRemove(assetCategory)) {
+
 				session.delete(assetCategory);
 			}
 		}

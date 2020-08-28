@@ -6827,10 +6827,6 @@ public class ResourcePermissionPersistenceImpl
 	protected ResourcePermission removeImpl(
 		ResourcePermission resourcePermission) {
 
-		if (!CTPersistenceHelperUtil.isRemove(resourcePermission)) {
-			return resourcePermission;
-		}
-
 		Session session = null;
 
 		try {
@@ -6842,7 +6838,9 @@ public class ResourcePermissionPersistenceImpl
 					resourcePermission.getPrimaryKeyObj());
 			}
 
-			if (resourcePermission != null) {
+			if ((resourcePermission != null) &&
+				CTPersistenceHelperUtil.isRemove(resourcePermission)) {
+
 				session.delete(resourcePermission);
 			}
 		}

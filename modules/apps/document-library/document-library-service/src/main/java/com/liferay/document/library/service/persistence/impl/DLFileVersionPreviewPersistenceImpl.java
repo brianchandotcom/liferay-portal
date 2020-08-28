@@ -1875,10 +1875,6 @@ public class DLFileVersionPreviewPersistenceImpl
 	protected DLFileVersionPreview removeImpl(
 		DLFileVersionPreview dlFileVersionPreview) {
 
-		if (!ctPersistenceHelper.isRemove(dlFileVersionPreview)) {
-			return dlFileVersionPreview;
-		}
-
 		Session session = null;
 
 		try {
@@ -1890,7 +1886,9 @@ public class DLFileVersionPreviewPersistenceImpl
 					dlFileVersionPreview.getPrimaryKeyObj());
 			}
 
-			if (dlFileVersionPreview != null) {
+			if ((dlFileVersionPreview != null) &&
+				ctPersistenceHelper.isRemove(dlFileVersionPreview)) {
+
 				session.delete(dlFileVersionPreview);
 			}
 		}

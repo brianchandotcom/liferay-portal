@@ -3077,10 +3077,6 @@ public class DDMFormInstancePersistenceImpl
 
 	@Override
 	protected DDMFormInstance removeImpl(DDMFormInstance ddmFormInstance) {
-		if (!ctPersistenceHelper.isRemove(ddmFormInstance)) {
-			return ddmFormInstance;
-		}
-
 		Session session = null;
 
 		try {
@@ -3092,7 +3088,9 @@ public class DDMFormInstancePersistenceImpl
 					ddmFormInstance.getPrimaryKeyObj());
 			}
 
-			if (ddmFormInstance != null) {
+			if ((ddmFormInstance != null) &&
+				ctPersistenceHelper.isRemove(ddmFormInstance)) {
+
 				session.delete(ddmFormInstance);
 			}
 		}

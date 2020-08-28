@@ -2839,10 +2839,6 @@ public class TeamPersistenceImpl
 		teamToUserGroupTableMapper.deleteLeftPrimaryKeyTableMappings(
 			team.getPrimaryKey());
 
-		if (!CTPersistenceHelperUtil.isRemove(team)) {
-			return team;
-		}
-
 		Session session = null;
 
 		try {
@@ -2853,7 +2849,7 @@ public class TeamPersistenceImpl
 					TeamImpl.class, team.getPrimaryKeyObj());
 			}
 
-			if (team != null) {
+			if ((team != null) && CTPersistenceHelperUtil.isRemove(team)) {
 				session.delete(team);
 			}
 		}

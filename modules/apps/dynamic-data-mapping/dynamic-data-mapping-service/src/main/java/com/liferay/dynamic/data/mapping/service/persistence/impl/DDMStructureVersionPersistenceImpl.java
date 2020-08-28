@@ -1646,10 +1646,6 @@ public class DDMStructureVersionPersistenceImpl
 	protected DDMStructureVersion removeImpl(
 		DDMStructureVersion ddmStructureVersion) {
 
-		if (!ctPersistenceHelper.isRemove(ddmStructureVersion)) {
-			return ddmStructureVersion;
-		}
-
 		Session session = null;
 
 		try {
@@ -1661,7 +1657,9 @@ public class DDMStructureVersionPersistenceImpl
 					ddmStructureVersion.getPrimaryKeyObj());
 			}
 
-			if (ddmStructureVersion != null) {
+			if ((ddmStructureVersion != null) &&
+				ctPersistenceHelper.isRemove(ddmStructureVersion)) {
+
 				session.delete(ddmStructureVersion);
 			}
 		}

@@ -12722,10 +12722,6 @@ public class DLFolderPersistenceImpl
 		dlFolderToDLFileEntryTypeTableMapper.deleteLeftPrimaryKeyTableMappings(
 			dlFolder.getPrimaryKey());
 
-		if (!CTPersistenceHelperUtil.isRemove(dlFolder)) {
-			return dlFolder;
-		}
-
 		Session session = null;
 
 		try {
@@ -12736,7 +12732,9 @@ public class DLFolderPersistenceImpl
 					DLFolderImpl.class, dlFolder.getPrimaryKeyObj());
 			}
 
-			if (dlFolder != null) {
+			if ((dlFolder != null) &&
+				CTPersistenceHelperUtil.isRemove(dlFolder)) {
+
 				session.delete(dlFolder);
 			}
 		}

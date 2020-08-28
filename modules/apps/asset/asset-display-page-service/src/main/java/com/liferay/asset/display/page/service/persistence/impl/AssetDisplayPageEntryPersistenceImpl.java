@@ -3089,10 +3089,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 	protected AssetDisplayPageEntry removeImpl(
 		AssetDisplayPageEntry assetDisplayPageEntry) {
 
-		if (!ctPersistenceHelper.isRemove(assetDisplayPageEntry)) {
-			return assetDisplayPageEntry;
-		}
-
 		Session session = null;
 
 		try {
@@ -3104,7 +3100,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 					assetDisplayPageEntry.getPrimaryKeyObj());
 			}
 
-			if (assetDisplayPageEntry != null) {
+			if ((assetDisplayPageEntry != null) &&
+				ctPersistenceHelper.isRemove(assetDisplayPageEntry)) {
+
 				session.delete(assetDisplayPageEntry);
 			}
 		}

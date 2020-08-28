@@ -3073,10 +3073,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	protected WorkflowDefinitionLink removeImpl(
 		WorkflowDefinitionLink workflowDefinitionLink) {
 
-		if (!CTPersistenceHelperUtil.isRemove(workflowDefinitionLink)) {
-			return workflowDefinitionLink;
-		}
-
 		Session session = null;
 
 		try {
@@ -3088,7 +3084,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 					workflowDefinitionLink.getPrimaryKeyObj());
 			}
 
-			if (workflowDefinitionLink != null) {
+			if ((workflowDefinitionLink != null) &&
+				CTPersistenceHelperUtil.isRemove(workflowDefinitionLink)) {
+
 				session.delete(workflowDefinitionLink);
 			}
 		}

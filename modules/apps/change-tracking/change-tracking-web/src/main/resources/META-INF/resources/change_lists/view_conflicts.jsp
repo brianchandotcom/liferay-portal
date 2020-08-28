@@ -145,7 +145,7 @@ portletDisplay.setURLBack(backURL);
 												<clay:content-col>
 													<clay:content-section>
 														<a class="btn btn-secondary btn-sm" href="<%= dismissURL %>" type="button">
-															<liferay-ui:message key="dismiss" />
+															<liferay-ui:message key="ok" />
 														</a>
 													</clay:content-section>
 												</clay:content-col>

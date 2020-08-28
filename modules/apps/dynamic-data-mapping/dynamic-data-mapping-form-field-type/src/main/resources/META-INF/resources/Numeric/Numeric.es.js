@@ -13,12 +13,11 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import vanillaTextMask from 'vanilla-text-mask';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
-import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const getMaskConfig = (dataType, symbols) => {
 	let config = {
@@ -47,27 +46,21 @@ const Numeric = ({
 		decimalSymbol: '.',
 		thousandsSeparator: ',',
 	},
-	value: initialValue,
+	value,
 	...otherProps
 }) => {
-	const [value, setValue] = useSyncValue(initialValue);
+	const [currentValue, setCurrentValue] = useState(value);
 	const inputRef = useRef(null);
-
-	useEffect(() => {
-		if (initialValue) {
-			setValue(initialValue);
-		}
-	}, [initialValue, setValue]);
 
 	useEffect(() => {
 		let maskInstance = null;
 
-		if (inputRef.current) {
-			let {value} = inputRef.current;
+		if (inputRef.current && value) {
+			let newValue = value;
 
-			if (dataType === 'integer' && value) {
-				value = String(
-					Math.round(value.replace(symbols.decimalSymbol, '.'))
+			if (dataType === 'integer') {
+				newValue = String(
+					Math.round(newValue.replace(symbols.decimalSymbol, '.'))
 				);
 			}
 
@@ -78,9 +71,8 @@ const Numeric = ({
 				mask,
 			});
 
-			if (value !== '') {
-				setValue(value);
-				onChange({target: {value}});
+			if (newValue !== '') {
+				setCurrentValue(newValue);
 			}
 		}
 
@@ -90,7 +82,7 @@ const Numeric = ({
 			}
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dataType, inputRef, setValue]);
+	}, [dataType, inputRef, setCurrentValue, value]);
 
 	return (
 		<ClayInput
@@ -106,12 +98,12 @@ const Numeric = ({
 					return;
 				}
 
-				setValue(newValue);
+				setCurrentValue(newValue);
 				onChange(event);
 			}}
 			ref={inputRef}
 			type="text"
-			value={value}
+			value={currentValue}
 		/>
 	);
 };

@@ -324,9 +324,6 @@ public class DBUpgrader {
 	}
 
 	private static void _upgradePortal() throws Exception {
-
-		// Check required build number
-
 		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
 
 		try (Connection connection = DataAccess.getConnection()) {
@@ -335,15 +332,11 @@ public class DBUpgrader {
 			}
 		}
 
-		// Disable database caching before upgrade
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Disable cache registry");
 		}
 
 		CacheRegistryUtil.setActive(false);
-
-		// Upgrade
 
 		int buildNumber = _getReleaseColumnValue("buildNumber");
 
@@ -373,20 +366,12 @@ public class DBUpgrader {
 			}
 		}
 
-		// Update indexes
-
 		StartupHelperUtil.updateIndexes(true);
-
-		// Update release build info
 
 		_updateReleaseBuildInfo();
 
-		// Reload SQL
-
 		CustomSQLUtil.reloadCustomSQL();
 		SQLTransformer.reloadSQLTransformer();
-
-		// Update company key
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Update company key");
@@ -397,11 +382,7 @@ public class DBUpgrader {
 		PortalCacheHelperUtil.clearPortalCaches(
 			PortalCacheManagerNames.MULTI_VM);
 
-		// Enable database caching after upgrade
-
 		CacheRegistryUtil.setActive(true);
-
-		// Register release service
 
 		_registerReleaseService();
 

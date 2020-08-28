@@ -84,6 +84,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
+			this::_isShowScopeFilter,
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
@@ -123,7 +124,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	public List<LabelItem> getFilterLabelItems() {
 		String scope = ParamUtil.getString(_httpServletRequest, "scope");
 
-		if (Validator.isNull(scope)) {
+		if (Validator.isNull(scope) || !_isShowScopeFilter()) {
 			return null;
 		}
 
@@ -308,6 +309,19 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 		return _getCurrentScopeLabel();
 	}
 
+	private boolean _isShowScopeFilter() {
+		if (_showScopeFilter != null) {
+			return _showScopeFilter;
+		}
+
+		_showScopeFilter = GetterUtil.getBoolean(
+			_httpServletRequest.getAttribute(
+				"liferay-item-selector:repository-entry-browser:" +
+					"showBreadcrumb"));
+
+		return _showScopeFilter;
+	}
+
 	private final PortletURL _currentURLObj;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -317,5 +331,6 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	private final PortalPreferences _portalPreferences;
 	private final RepositoryEntryBrowserDisplayContext
 		_repositoryEntryBrowserDisplayContext;
+	private Boolean _showScopeFilter;
 
 }

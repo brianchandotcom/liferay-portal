@@ -55,49 +55,57 @@ const EnvironmentsPanel = ({portletNamespace, sites, virtualInstance}) => {
 				{Liferay.Language.get('environments')}
 			</h2>
 
-			<ul className="c-my-2 list-unstyled">
-				{virtualInstance && (
-					<Environment
-						name={Liferay.Language.get('virtual-instance')}
-					>
-						<li className="applications-menu-virtual-instance c-mb-4 c-mt-3">
-							<a
-								className="applications-menu-nav-link"
-								href={virtualInstance.url}
-							>
-								<ClayLayout.ContentRow verticalAlign="center">
-									<ClayLayout.ContentCol>
-										<ClaySticker>
-											<img
-												alt=""
-												height="32px"
-												src={virtualInstance.logoURL}
-											/>
-										</ClaySticker>
-									</ClayLayout.ContentCol>
+			<div className="c-my-2">
+				<ul className="list-unstyled">
+					{virtualInstance && (
+						<Environment
+							name={Liferay.Language.get('virtual-instance')}
+						>
+							<li className="applications-menu-virtual-instance c-mb-4 c-mt-3">
+								<a
+									className="applications-menu-nav-link"
+									href={virtualInstance.url}
+								>
+									<ClayLayout.ContentRow verticalAlign="center">
+										<ClayLayout.ContentCol>
+											<ClaySticker>
+												<img
+													alt=""
+													height="32px"
+													src={
+														virtualInstance.logoURL
+													}
+												/>
+											</ClaySticker>
+										</ClayLayout.ContentCol>
 
-									<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
-										<span className="text-truncate">
-											{virtualInstance.label}
-										</span>
-									</ClayLayout.ContentCol>
-								</ClayLayout.ContentRow>
-							</a>
-						</li>
-					</Environment>
-				)}
+										<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
+											<span className="text-truncate">
+												{virtualInstance.label}
+											</span>
+										</ClayLayout.ContentCol>
+									</ClayLayout.ContentRow>
+								</a>
+							</li>
+						</Environment>
+					)}
+				</ul>
+			</div>
 
-				{sites && (
-					<Environment name={Liferay.Language.get('sites')}>
-						<Sites
-							mySites={sites.mySites}
-							portletNamespace={portletNamespace}
-							recentSites={sites.recentSites}
-							viewAllURL={sites.viewAllURL}
-						/>
-					</Environment>
-				)}
-			</ul>
+			<div className="applications-menu-sites c-my-2">
+				<ul className="list-unstyled">
+					{sites && (
+						<Environment name={Liferay.Language.get('sites')}>
+							<Sites
+								mySites={sites.mySites}
+								portletNamespace={portletNamespace}
+								recentSites={sites.recentSites}
+								viewAllURL={sites.viewAllURL}
+							/>
+						</Environment>
+					)}
+				</ul>
+			</div>
 		</div>
 	);
 };

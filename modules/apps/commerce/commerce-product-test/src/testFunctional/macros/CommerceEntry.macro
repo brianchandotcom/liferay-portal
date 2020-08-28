@@ -379,7 +379,7 @@ definition {
 	}
 
 	macro createNewCurrenciesEntry {
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Settings");

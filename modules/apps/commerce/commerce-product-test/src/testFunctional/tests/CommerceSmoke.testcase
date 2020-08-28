@@ -24,7 +24,7 @@ definition {
 
 			CommerceConfiguration.commerceInitializersTearDown();
 
-			ProductMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Commerce",
 				panel = "Control Panel",
 				portlet = "Products");
@@ -49,7 +49,7 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Products");
@@ -64,7 +64,7 @@ definition {
 			specificationDescription = "Specification-1 Description",
 			specificationTitle = "specification-1");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Products");
@@ -87,7 +87,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommerceSmoke#PublishSimpleProduct";
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Products");
@@ -96,7 +96,7 @@ definition {
 			productName = "Simple T-Shirt",
 			productType = "Simple");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Products");

@@ -20,7 +20,7 @@ definition {
 		else {
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Commerce",
 				panel = "Control Panel",
 				portlet = "Catalogs");
@@ -35,7 +35,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceCatalogs#CreateNewCatalog";
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Catalogs");
@@ -53,7 +53,7 @@ definition {
 
 		Refresh();
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Catalogs");

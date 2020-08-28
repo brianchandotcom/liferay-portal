@@ -28,7 +28,7 @@ definition {
 	test ViewStoreFrontSimpleProduct {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Products");

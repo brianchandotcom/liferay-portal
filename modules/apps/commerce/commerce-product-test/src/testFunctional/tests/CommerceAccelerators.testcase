@@ -50,7 +50,7 @@ definition {
 			emailAddress = "buyer@liferay.com",
 			role = "Buyer");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -112,7 +112,7 @@ definition {
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Channels");
@@ -126,7 +126,7 @@ definition {
 			channelType = "Site",
 			commerceSiteType = "B2B");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Catalogs");
@@ -138,7 +138,7 @@ definition {
 			catalogLanguage = "English (United States)",
 			catalogName = "Minium");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Products");
@@ -165,7 +165,7 @@ definition {
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Channels");
@@ -179,7 +179,7 @@ definition {
 			channelType = "Site",
 			commerceSiteType = "B2C");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Catalogs");
@@ -191,7 +191,7 @@ definition {
 			catalogLanguage = "English (United States)",
 			catalogName = "Speedwell");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Products");
@@ -217,7 +217,7 @@ definition {
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Channels");
@@ -242,7 +242,7 @@ definition {
 			emailAddress = "buyer@liferay.com",
 			role = "Buyer");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -325,7 +325,7 @@ definition {
 			productSKU = "MIN93015",
 			productUnitPrice = "50.00");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Orders");
@@ -343,7 +343,7 @@ definition {
 			productSKU = "MIN93015",
 			productUnitPrice = "50.00");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Orders");
@@ -372,7 +372,7 @@ definition {
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Channels");
@@ -383,7 +383,7 @@ definition {
 
 		Refresh();
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -474,7 +474,7 @@ definition {
 
 		Refresh();
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Orders");
@@ -492,7 +492,7 @@ definition {
 			productSKU = "SPEED93015",
 			productUnitPrice = "50.00");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Orders");

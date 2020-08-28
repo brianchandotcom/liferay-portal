@@ -20,7 +20,7 @@ definition {
 		else {
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
+			ApplicationsMenu.gotoPortlet(
 				category = "Commerce",
 				panel = "Control Panel",
 				portlet = "Price Lists");
@@ -36,7 +36,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#CreateNewPriceList";
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Price Lists");
@@ -51,7 +51,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Price Lists");

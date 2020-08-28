@@ -34,7 +34,7 @@ definition {
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Channels");
@@ -79,7 +79,7 @@ definition {
 			productUnitPrice = "50",
 			shippingMethod = "Standard");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Orders");
@@ -94,7 +94,7 @@ definition {
 			orderItemQuantity = "4",
 			orderItemSKU = "MIN93015");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
 			portlet = "Orders");

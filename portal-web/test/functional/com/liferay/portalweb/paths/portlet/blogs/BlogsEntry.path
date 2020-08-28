@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>TITLE_CARD</td>
-	<td>//div[contains(@class,'card-row')]//h3[contains(.,'${key_entryTitle}')]</td>
+	<td>//div[contains(@class,'card')]//h3[contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

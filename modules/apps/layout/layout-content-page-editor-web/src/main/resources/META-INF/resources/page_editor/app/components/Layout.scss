@@ -103,11 +103,6 @@ $emptyItemMinHeight: 180px;
 		}
 	}
 
-	&__col.empty {
-		flex-basis: unset;
-		min-height: $emptyItemMinHeight;
-	}
-
 	&__row.align-bottom,
 	&__row.align-middle {
 		.page-editor__col .page-editor__col__border {

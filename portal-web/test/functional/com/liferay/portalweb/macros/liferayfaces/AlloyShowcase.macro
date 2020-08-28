@@ -31,6 +31,145 @@ definition {
 		}
 	}
 
+	macro clickRadioAndVerifyRowSelection {
+		Click(
+			key_num = "${num}",
+			locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+
+		AssertElementPresent(
+			key_firstName = "${firstName}",
+			key_lastName = "${lastName}",
+			locator1 = "AlloyShowcase#SELECTED_ROW");
+
+		Click(
+			key_type = "Feedback",
+			locator1 = "AlloyShowcase#SHOW_RESULT_TYPE_BUTTON");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#FEED_BACK_MESSAGE",
+			value1 = "${feedBackResult}");
+
+		Click(
+			key_type = "Modal Dialog",
+			locator1 = "AlloyShowcase#SHOW_RESULT_TYPE_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AlloyShowcase#MODAL_DIALOG",
+			value1 = "${modalDialogResult}");
+
+		Button.clickCancel();
+	}
+
+	macro selectAndVerifySelection {
+		if (isSet(checkAll)) {
+			Check(locator1 = "AlloyShowcase#SELECTION_CHECKBOX_ALL");
+		}
+
+		else if (isSet(uncheckAll)) {
+			Uncheck(locator1 = "AlloyShowcase#SELECTION_CHECKBOX_ALL");
+		}
+
+		else {
+			Check(
+				key_num = "${num}",
+				locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+		}
+
+		Click(
+			key_type = "Feedback",
+			locator1 = "AlloyShowcase#SHOW_RESULT_TYPE_BUTTON");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#FEED_BACK_MESSAGE",
+			value1 = "${feedBackResult}");
+
+		Click(
+			key_type = "Modal Dialog",
+			locator1 = "AlloyShowcase#SHOW_RESULT_TYPE_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AlloyShowcase#MODAL_DIALOG",
+			value1 = "${modalDialogResult}");
+
+		Button.clickCancel();
+	}
+
+	macro selectDataTable {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/selection");
+
+		AssertElementPresent(
+			key_opt = "checkbox",
+			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT");
+
+		for (var checkboxList : list "2,3") {
+			Check(
+				key_num = "${checkboxList}",
+				locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+
+			AssertChecked(
+				key_num = "${checkboxList}",
+				locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+
+			Uncheck(
+				key_num = "${checkboxList}",
+				locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+
+			AssertNotChecked(
+				key_num = "${checkboxList}",
+				locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+		}
+
+		AlloyShowcase.selectAndVerifySelection(
+			feedBackResult = "John Adams",
+			modalDialogResult = "John Adams",
+			num = "0");
+
+		AlloyShowcase.selectAndVerifySelection(
+			feedBackResult = "John Adams, Samuel Adams",
+			modalDialogResult = "John Adams Samuel Adams",
+			num = "1");
+
+		AlloyShowcase.selectAndVerifySelection(
+			checkAll = "true",
+			feedBackResult = "John Adams, Samuel Adams, Josiah Bartlett, Carter Braxton, Charles Carroll, Benjamin Franklin, Elbridge Gerry, John Hancock, Thomas Jefferson, Francis Lewis",
+			modalDialogResult = "John Adams Samuel Adams Josiah Bartlett Carter Braxton Charles Carroll Benjamin Franklin Elbridge Gerry John Hancock Thomas Jefferson Francis Lewis Cancel");
+
+		AlloyShowcase.selectAndVerifySelection(
+			feedBackResult = "No Customers Selected",
+			modalDialogResult = "No Customers Selected",
+			uncheckAll = "true");
+
+		Click(
+			key_opt = "checkbox",
+			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT");
+
+		Click(
+			key_opt = "radio",
+			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT",
+			value1 = "radio");
+
+		AssertElementPresent(locator1 = "//input[contains(@type,'radio')]");
+
+		AlloyShowcase.clickRadioAndVerifyRowSelection(
+			feedBackResult = "John Adams",
+			firstName = "John",
+			lastName = "Adams",
+			modalDialogResult = "John Adams",
+			num = "0");
+
+		AlloyShowcase.clickRadioAndVerifyRowSelection(
+			feedBackResult = "Carter Braxton",
+			firstName = "Carter",
+			lastName = "Braxton",
+			modalDialogResult = "Carter Braxton",
+			num = "3");
+
+		AssertElementNotPresent(
+			key_firstName = "John",
+			key_lastName = "Adams",
+			locator1 = "AlloyShowcase#SELECTED_ROW");
+	}
+
 	macro selectRowsPerPage {
 		Click(
 			key_opt = "100",
@@ -372,33 +511,59 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/server-events");
 
-		Click(locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+		Check(
+			key_num = "0",
+			locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
 
-		AssertChecked(locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+		AssertChecked(
+			key_num = "0",
+			locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
 
 		AssertElementPresent(
 			key_eventText = "Received RowSelectEvent for rowIndex=[0] customer=[John Adams] in the APPLY_REQUEST_VALUES 2 phase.",
 			locator1 = "AlloyShowcase#EVENT_TABLE");
 
-		Click(locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+		Uncheck(
+			key_num = "0",
+			locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
 
-		AssertNotChecked(locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+		AssertNotChecked(
+			key_num = "0",
+			locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
 
 		AssertElementPresent(
 			key_eventText = "Received RowDeselectEvent for rowIndex=[0] customer=[John Adams] in the APPLY_REQUEST_VALUES 2 phase.",
 			locator1 = "AlloyShowcase#EVENT_TABLE");
 
-		Click(locator1 = "AlloyShowcase#SELECTION_CHECKBOX_ALL");
+		Check(locator1 = "AlloyShowcase#SELECTION_CHECKBOX_ALL");
 
 		AssertElementPresent(
 			key_eventText = "Received RowSelectRangeEvent for rowIndexes=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9] Customers=[John Adams, Samuel Adams, Josiah Bartlett, Carter Braxton, Charles Carroll, Benjamin Franklin, Elbridge Gerry, John Hancock, Thomas Jefferson, Francis Lewis] in the APPLY_REQUEST_VALUES 2 phase.",
 			locator1 = "AlloyShowcase#EVENT_TABLE");
 
-		Click(locator1 = "AlloyShowcase#SELECTION_CHECKBOX_ALL");
+		Uncheck(locator1 = "AlloyShowcase#SELECTION_CHECKBOX_ALL");
 
 		AssertElementPresent(
 			key_eventText = "Received RowDeselectRangeEvent for rowIndexes=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9] Customers=[John Adams, Samuel Adams, Josiah Bartlett, Carter Braxton, Charles Carroll, Benjamin Franklin, Elbridge Gerry, John Hancock, Thomas Jefferson, Francis Lewis] in the APPLY_REQUEST_VALUES 2 phase.",
 			locator1 = "AlloyShowcase#EVENT_TABLE");
+
+		Click(
+			key_opt = "checkbox",
+			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT");
+
+		Click(
+			key_opt = "radio",
+			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT",
+			value1 = "radio");
+
+		AssertElementPresent(locator1 = "//input[contains(@type,'radio')]");
+
+		AlloyShowcase.clickRadioAndVerifyRowSelection(
+			feedBackResult = "John Adams",
+			firstName = "John",
+			lastName = "Adams",
+			modalDialogResult = "John Adams",
+			num = "0");
 	}
 
 	macro viewMultipleColumnSortPaginator {
@@ -530,25 +695,6 @@ definition {
 				locator1 = "AlloyShowcase#FIRST_NAME_CELL",
 				value1 = "${screenName1}");
 		}
-	}
-
-	macro viewSelectionPaginator {
-		AlloyShowcase.viewEventPaginator(
-			screenName1 = "${screenName1}",
-			screenName2 = "${screenName2}",
-			screenName3 = "${screenName3}",
-			screenName4 = "${screenName4}",
-			useCase = "${useCase}");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/selection");
-
-		Click(locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
-
-		AssertChecked(locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
-
-		Click(locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
-
-		AssertNotChecked(locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
 	}
 
 	macro viewSingleColumnSortPaginator {

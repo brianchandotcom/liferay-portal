@@ -11,25 +11,26 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Alloy Showcase");
+		//JSONLayout.addPublicLayout(
+		//	groupName = "Guest",
+		//	layoutName = "Alloy Showcase");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		//ProductMenu.gotoPortlet(
+		//	category = "Site Builder",
+		//	portlet = "Pages");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Alloy Showcase",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		//SitePages.configurePage(
+		//	columnName = "1 Column",
+		//	pageName = "Alloy Showcase",
+		//	privacy = "Public Pages",
+		//	sitePageType = "Widget Page");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase");
+		//Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase");
 
-		Portlet.addPG(portletName = "Alloy Showcase");
+		//Portlet.addPG(portletName = "Alloy Showcase");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase");
+		//Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase");
+
 	}
 
 	tearDown {
@@ -106,12 +107,14 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/selection");
 
-		AlloyShowcase.viewSelectionPaginator(
+		AlloyShowcase.viewPaginator(
 			screenName1 = "John",
 			screenName2 = "Philip",
 			screenName3 = "George",
 			screenName4 = "William",
 			useCase = "selection");
+
+		AlloyShowcase.selectDataTable();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/server-events");
 

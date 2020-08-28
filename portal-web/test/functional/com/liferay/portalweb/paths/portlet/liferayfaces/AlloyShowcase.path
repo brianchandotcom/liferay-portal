@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FEED_BACK_MESSAGE</td>
+	<td>//table[contains(@class,'alloy-messages')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIRST_NAME_CELL</td>
 	<td>//tbody//td[1]//span[contains(@class,'alloy-output-text')]</td>
 	<td></td>
@@ -94,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_DIALOG</td>
+	<td>//div[contains(@class,'yui3-widget-modal')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_BUTTON_ACTIVE</td>
 	<td>//div[contains(@class,'alloy-paginator')]//*[contains(@class,'pagination')]//*[contains(.,'${key_pageNum}')]/parent::li[@class='active']</td>
 	<td></td>
@@ -129,8 +139,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECTED_ROW</td>
+	<td>//table[contains(@id,':customers')]//tr[contains(@class,'info')][contains(.,'${key_firstName}')][contains(.,'${key_lastName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTION_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_comliferayfacesdemoalloyshowcaseportlet_:exampleForm:customers:0']</td>
+	<td>//input[@id='_1_WAR_comliferayfacesdemoalloyshowcaseportlet_:exampleForm:customers:${key_num}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,8 +164,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECTION_MODAL_SELECT</td>
+	<td>//div[contains(.,'Selection Mode')]//option[@value='${key_opt}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTION_MODAL_TEXT</td>
 	<td>//div[@class='yui3-widget-bd modal-body']//div//div//span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_RESULT_TYPE_BUTTON</td>
+	<td>//button[contains(.,'${key_type}')]</td>
 	<td></td>
 </tr>
 <tr>

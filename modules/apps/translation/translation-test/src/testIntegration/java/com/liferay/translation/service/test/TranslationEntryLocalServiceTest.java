@@ -59,7 +59,7 @@ public class TranslationEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddOrUpdateTranslationEntryDoesNotWriteToTheArticleOnDraft()
+	public void testAddOrUpdateTranslationEntryDoesNotWriteToTheJournalArticleOnDraft()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -76,7 +76,7 @@ public class TranslationEntryLocalServiceTest {
 			StringUtil.replace(
 				TranslationTestUtil.readFileToString(
 					"test-journal-article-simple.xlf"),
-				"$ARTICLE_ID",
+				"$JOURNAL_ARTICLE_ID",
 				String.valueOf(journalArticle.getResourcePrimKey())),
 			"application/xliff+xml", LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			serviceContext);
@@ -95,7 +95,7 @@ public class TranslationEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddOrUpdateTranslationEntryWritesToTheArticleOnPublish()
+	public void testAddOrUpdateTranslationEntryWritesToTheJournalArticleOnPublish()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -107,7 +107,7 @@ public class TranslationEntryLocalServiceTest {
 			StringUtil.replace(
 				TranslationTestUtil.readFileToString(
 					"test-journal-article-simple.xlf"),
-				"$ARTICLE_ID",
+				"$JOURNAL_ARTICLE_ID",
 				String.valueOf(journalArticle.getResourcePrimKey())),
 			"application/xliff+xml", LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

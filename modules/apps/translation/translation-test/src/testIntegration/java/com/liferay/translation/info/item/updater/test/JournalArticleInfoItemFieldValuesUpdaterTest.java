@@ -84,7 +84,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoItemFieldValuesAddsTranslatedContent()
+	public void testUpdateJournalArticleFromInfoItemFieldValuesAddsTranslatedContent()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -127,7 +127,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoItemFieldValuesDoesNotModifyOtherTranslations()
+	public void testUpdateJournalArticleFromInfoItemFieldValuesDoesNotModifyOtherTranslations()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -185,7 +185,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoItemFieldValuesUpdatesOnlyTheTitle()
+	public void testUpdateJournalArticleFromInfoItemFieldValuesUpdatesOnlyTheTitle()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -229,7 +229,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoItemFieldValuesUpdatesTranslations()
+	public void testUpdateJournalArticleFromInfoItemFieldValuesUpdatesTranslations()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -289,7 +289,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoItemFieldValuesXLIFFv12File()
+	public void testUpdateJournalArticleFromInfoItemFieldValuesXLIFFv12File()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(

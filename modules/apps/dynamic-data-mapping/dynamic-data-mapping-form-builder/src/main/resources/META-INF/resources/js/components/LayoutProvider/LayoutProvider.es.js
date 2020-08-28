@@ -183,7 +183,7 @@ class LayoutProvider extends Component {
 					pages: this.getLocalizedPages(settingsContext.pages),
 				};
 
-				return {
+				const newField = {
 					...getFieldProperties(
 						newSettingsContext,
 						defaultLanguageId,
@@ -196,6 +196,19 @@ class LayoutProvider extends Component {
 					selected: focusedField.fieldName === field.fieldName,
 					settingsContext: newSettingsContext,
 				};
+
+				if (
+					field.type === 'select' &&
+					field.dataSourceType &&
+					field.dataSourceType.includes('data-provider')
+				) {
+					return {
+						...newField,
+						options: field.options,
+					};
+				}
+
+				return newField;
 			},
 			true,
 			true

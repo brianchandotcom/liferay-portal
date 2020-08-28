@@ -1,7 +1,7 @@
 // Spacers map copy
 
-$spacers-cp: ();
-$spacers-cp: map-deep-merge(
+$custom-properties-spacers: ();
+$custom-properties-spacers: map-merge(
 	(
 		0: var(--spacer-0),
 		1: var(--spacer-1),
@@ -15,7 +15,7 @@ $spacers-cp: map-deep-merge(
 		9: var(--spacer-9),
 		10: var(--spacer-10),
 	),
-	$spacers-cp
+	$custom-properties-spacers
 );
 
 // Theme colors
@@ -181,9 +181,13 @@ $theme-colors-cp: map-deep-merge(
 
 	// Spacers
 
-	--spacer: 1;
+	--spacer: #{$spacer};
 	@each $key, $value in $spacers {
-		--spacer-#{$key}: #{$value};
+		$multiplier: nth($value, 1) / $spacer;
+		@if ($value == 0) {
+			$multiplier: 0;
+		}
+		--spacer-#{$key}: calc(var(--spacer) * #{$multiplier});
 	}
 
 	// Text muted

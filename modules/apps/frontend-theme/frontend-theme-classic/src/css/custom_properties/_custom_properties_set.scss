@@ -285,53 +285,58 @@ hr {
 // Spacers
 
 @each $breakpoint in map-keys($grid-breakpoints) {
+	$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
 	@include media-breakpoint-up($breakpoint) {
-		$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+		@each $size, $length in $custom-properties-spacers {
+			@each $library in ('bs', 'clay') {
+				$important: '';
+				$prefix: '';
 
-		@each $prop, $abbrev in (margin: m, padding: p) {
-			@each $size, $length in $spacers-cp {
-				.#{$abbrev}#{$infix}-#{$size} {
-					#{$prop}: $length !important;
+				@if ($library == 'bs') {
+					$important: '!important';
+				} @else {
+					$prefix: 'c-';
 				}
-				.#{$abbrev}t#{$infix}-#{$size},
-				.#{$abbrev}y#{$infix}-#{$size} {
-					#{$prop}-top: $length !important;
-				}
-				.#{$abbrev}r#{$infix}-#{$size},
-				.#{$abbrev}x#{$infix}-#{$size} {
-					#{$prop}-right: $length !important;
-				}
-				.#{$abbrev}b#{$infix}-#{$size},
-				.#{$abbrev}y#{$infix}-#{$size} {
-					#{$prop}-bottom: $length !important;
-				}
-				.#{$abbrev}l#{$infix}-#{$size},
-				.#{$abbrev}x#{$infix}-#{$size} {
-					#{$prop}-left: $length !important;
-				}
-			}
-		}
 
-		@each $size, $length in $spacers-cp {
-			@if $size != 0 {
-				.m#{$infix}-n#{$size} {
-					margin: calc(#{$length} * -1) !important;
-				}
-				.mt#{$infix}-n#{$size},
-				.my#{$infix}-n#{$size} {
-					margin-top: calc(#{$length} * -1) !important;
-				}
-				.mr#{$infix}-n#{$size},
-				.mx#{$infix}-n#{$size} {
-					margin-right: calc(#{$length} * -1) !important;
-				}
-				.mb#{$infix}-n#{$size},
-				.my#{$infix}-n#{$size} {
-					margin-bottom: calc(#{$length} * -1) !important;
-				}
-				.ml#{$infix}-n#{$size},
-				.mx#{$infix}-n#{$size} {
-					margin-left: calc(#{$length} * -1) !important;
+				@each $prop, $abbrev in (margin: m, padding: p) {
+					$variants: ('positive');
+
+					@if ($prop == 'margin') {
+						$variants: ('positive', 'negative');
+					}
+
+					@each $variant in $variants {
+						$variation: '';
+						$value: $length;
+
+						@if ($variant != 'negative' or $size != 0) {
+							@if ($variant == 'negative') {
+								$value: calc(#{$length} * -1);
+								$variation: 'n';
+							}
+
+							.#{$prefix}#{$abbrev}#{$infix}-#{$variation}#{$size} {
+								#{$prop}: #{$value} #{$important};
+							}
+							.#{$prefix}#{$abbrev}t#{$infix}-#{$variation}#{$size},
+							.#{$prefix}#{$abbrev}y#{$infix}-#{$variation}#{$size} {
+								#{$prop}-top: #{$value} #{$important};
+							}
+							.#{$prefix}#{$abbrev}r#{$infix}-#{$variation}#{$size},
+							.#{$prefix}#{$abbrev}x#{$infix}-#{$variation}#{$size} {
+								#{$prop}-right: #{$value} #{$important};
+							}
+							.#{$prefix}#{$abbrev}b#{$infix}-#{$variation}#{$size},
+							.#{$prefix}#{$abbrev}y#{$infix}-#{$variation}#{$size} {
+								#{$prop}-bottom: #{$value} #{$important};
+							}
+							.#{$prefix}#{$abbrev}l#{$infix}-#{$variation}#{$size},
+							.#{$prefix}#{$abbrev}x#{$infix}-#{$variation}#{$size} {
+								#{$prop}-left: #{$value} #{$important};
+							}
+						}
+					}
 				}
 			}
 		}

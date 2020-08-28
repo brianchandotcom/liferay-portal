@@ -280,8 +280,142 @@
 							],
 							"name": "spacer",
 							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "spacer-0",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-0"
+								}
+							],
+							"name": "spacer0",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(var(--spacer) * 0.25)",
+							"label": "spacer-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-1"
+								}
+							],
+							"name": "spacer1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(var(--spacer) * 0.5)",
+							"label": "spacer-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-2"
+								}
+							],
+							"name": "spacer2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(var(--spacer) * 1)",
+							"label": "spacer-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-3"
+								}
+							],
+							"name": "spacer3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(var(--spacer) * 1.5)",
+							"label": "spacer-4",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-4"
+								}
+							],
+							"name": "spacer4",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(var(--spacer) * 3)",
+							"label": "spacer-5",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-5"
+								}
+							],
+							"name": "spacer5",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(var(--spacer) * 4.5)",
+							"label": "spacer-6",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-6"
+								}
+							],
+							"name": "spacer6",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(var(--spacer) * 6)",
+							"label": "spacer-7",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-7"
+								}
+							],
+							"name": "spacer7",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(var(--spacer) * 7.5)",
+							"label": "spacer-8",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-8"
+								}
+							],
+							"name": "spacer8",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(var(--spacer) * 9)",
+							"label": "spacer-9",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-9"
+								}
+							],
+							"name": "spacer9",
+							"type": "String"
+						},
+						{
+							"defaultValue": "calc(var(--spacer) * 10)",
+							"label": "spacer-10",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "spacer-10"
+								}
+							],
+							"name": "spacer10",
+							"type": "String"
 						}
-					]
+					],
+					"label": "spacing",
+					"name": "spacing"
 				}
 			],
 			"label": "spacing",

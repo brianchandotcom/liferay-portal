@@ -30,6 +30,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLin
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -142,18 +143,20 @@ public class ChangeMasterLayoutMVCActionCommand
 		StyleBookEntry styleBookEntry =
 			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(layout);
 
-		if (styleBookEntry == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
 		LayoutSet layoutSet = layout.getLayoutSet();
 
 		FrontendTokenDefinition frontendTokenDefinition =
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				layoutSet.getThemeId());
 
+		String defaultStyleBookEntryName = StringPool.BLANK;
+
+		if (styleBookEntry != null) {
+			defaultStyleBookEntryName = styleBookEntry.getName();
+		}
+
 		return JSONUtil.put(
-			"defaultStyleBookEntryName", styleBookEntry.getName()
+			"defaultStyleBookEntryName", defaultStyleBookEntryName
 		).put(
 			"styleBookEntryId", layout.getStyleBookEntryId()
 		).put(

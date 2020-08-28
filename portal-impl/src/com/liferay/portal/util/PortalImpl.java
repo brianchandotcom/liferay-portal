@@ -2586,7 +2586,7 @@ public class PortalImpl implements Portal {
 
 			int pos = host.indexOf(']');
 
-			if (pos >= 0) {
+			if ((pos > 0) && host.startsWith("[")) {
 				return host.substring(1, pos);
 			}
 

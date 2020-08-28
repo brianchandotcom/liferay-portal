@@ -226,6 +226,22 @@ public abstract class BaseAppBuilderPortletTestCase {
 		};
 	}
 
+	protected boolean deleteApp(App app) throws Exception {
+		HttpServletResponse httpServletResponse =
+			PortalUtil.getHttpServletResponse(
+				_serveResource(
+					_deleteAppBuilderAppMVCResourceCommand,
+					HashMapBuilder.<String, Object>put(
+						"appBuilderAppId", app.getId()
+					).build()));
+
+		if (httpServletResponse.getStatus() == HttpServletResponse.SC_OK) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected AppWorkflow getAppWorkflow(App app) throws Exception {
 		AppWorkflowResource appWorkflowResource = AppWorkflowResource.builder(
 		).user(
@@ -473,6 +489,9 @@ public abstract class BaseAppBuilderPortletTestCase {
 
 	@Inject
 	private DEDataListViewLocalService _deDataListViewLocalService;
+
+	@Inject(filter = "mvc.command.name=/app_builder/delete_workflow_app")
+	private MVCResourceCommand _deleteAppBuilderAppMVCResourceCommand;
 
 	private Group _group;
 

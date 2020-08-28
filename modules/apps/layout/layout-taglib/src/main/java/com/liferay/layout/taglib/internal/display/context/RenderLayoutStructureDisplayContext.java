@@ -804,8 +804,11 @@ public class RenderLayoutStructureDisplayContext {
 	}
 
 	private JSONObject _getFrontendTokensJSONObject() throws Exception {
-		JSONObject frontendTokensJSONObject =
-			JSONFactoryUtil.createJSONObject();
+		if (_frontendTokensJSONObject != null) {
+			return _frontendTokensJSONObject;
+		}
+
+		_frontendTokensJSONObject = JSONFactoryUtil.createJSONObject();
 
 		StyleBookEntry styleBookEntry =
 			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
@@ -872,12 +875,12 @@ public class RenderLayoutStructureDisplayContext {
 							"defaultValue");
 					}
 
-					frontendTokensJSONObject.put(name, value);
+					_frontendTokensJSONObject.put(name, value);
 				}
 			}
 		}
 
-		return frontendTokensJSONObject;
+		return _frontendTokensJSONObject;
 	}
 
 	private ListObjectReference _getListObjectReference(
@@ -1057,6 +1060,7 @@ public class RenderLayoutStructureDisplayContext {
 	private final String _mode;
 	private Long _previewClassNameId;
 	private Long _previewClassPK;
+	private JSONObject _frontendTokensJSONObject;
 	private Integer _previewType;
 	private String _previewVersion;
 	private long[] _segmentsExperienceIds;

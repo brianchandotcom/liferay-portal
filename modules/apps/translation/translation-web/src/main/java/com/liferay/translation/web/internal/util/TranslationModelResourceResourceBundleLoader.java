@@ -14,6 +14,7 @@
 
 package com.liferay.translation.web.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -65,10 +66,14 @@ public class TranslationModelResourceResourceBundleLoader
 
 				@Override
 				protected Object handleGetObject(String key) {
-					Locale curLocale = LocaleUtil.fromLanguageId(
-						StringUtil.removeSubstring(key, _PREFIX));
+					String languageId = StringUtil.removeSubstring(
+						key, _PREFIX);
 
-					return curLocale.getDisplayName(locale);
+					Locale curLocale = LocaleUtil.fromLanguageId(languageId);
+
+					return StringBundler.concat(
+						languageId, StringPool.SPACE, StringPool.DASH,
+						StringPool.SPACE, curLocale.getDisplayName(locale));
 				}
 
 			});

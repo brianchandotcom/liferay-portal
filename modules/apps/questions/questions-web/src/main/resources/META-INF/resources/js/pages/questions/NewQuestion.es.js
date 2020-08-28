@@ -27,7 +27,8 @@ import TagSelector from '../../components/TagSelector.es';
 import TextLengthValidation from '../../components/TextLengthValidation.es';
 import {
 	client,
-	createQuestionQuery,
+	createQuestionInASectionQuery,
+	createQuestionInRootQuery,
 	getSectionBySectionTitle,
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
@@ -62,7 +63,18 @@ export default withRouter(
 			500
 		);
 
-		const [createQuestion] = useMutation(createQuestionQuery, {
+		const [createQuestionInASection] = useMutation(
+			createQuestionInASectionQuery,
+			{
+				context: getContextLink(sectionTitle),
+				onCompleted() {
+					client.resetStore();
+					debounceCallback();
+				},
+			}
+		);
+
+		const [createQuestionInRoot] = useMutation(createQuestionInRootQuery, {
 			context: getContextLink(sectionTitle),
 			onCompleted() {
 				client.resetStore();
@@ -75,7 +87,7 @@ export default withRouter(
 				context.siteKey,
 				slugToText(sectionTitle)
 			).then((section) => {
-				setSectionId(section.id);
+				setSectionId((section && section.id) || +context.rootTopic);
 				if (section.parentMessageBoardSection) {
 					setSections([
 						{
@@ -97,7 +109,7 @@ export default withRouter(
 					]);
 				}
 			});
-		}, [context.siteKey, sectionTitle]);
+		}, [context.rootTopic, context.siteKey, sectionTitle]);
 
 		const processError = (error) => {
 			if (error.message && error.message.includes('AssetTagException')) {
@@ -113,6 +125,29 @@ export default withRouter(
 			}
 
 			setError(error);
+		};
+
+		const createQuestion = () => {
+			if (sectionTitle === context.rootTopic) {
+				createQuestionInRoot({
+					variables: {
+						articleBody,
+						headline,
+						keywords: tags.map((tag) => tag.label),
+						siteKey: context.siteKey,
+					},
+				}).catch(processError);
+			}
+			else {
+				createQuestionInASection({
+					variables: {
+						articleBody,
+						headline,
+						keywords: tags.map((tag) => tag.label),
+						messageBoardSectionId: sectionId,
+					},
+				}).catch(processError);
+			}
 		};
 
 		return (
@@ -228,16 +263,7 @@ export default withRouter(
 									}
 									displayType="primary"
 									onClick={() => {
-										createQuestion({
-											variables: {
-												articleBody,
-												headline,
-												keywords: tags.map(
-													(tag) => tag.label
-												),
-												messageBoardSectionId: sectionId,
-											},
-										}).catch(processError);
+										createQuestion();
 									}}
 								>
 									{Liferay.Language.get('post-your-question')}

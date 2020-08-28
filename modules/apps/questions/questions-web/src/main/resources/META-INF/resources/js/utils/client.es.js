@@ -77,7 +77,34 @@ export const createCommentQuery = gql`
 	}
 `;
 
-export const createQuestionQuery = gql`
+export const createQuestionInRootQuery = gql`
+	mutation createSiteMessageBoardThread(
+		$articleBody: String!
+		$headline: String!
+		$keywords: [String]
+		$siteKey: String!
+	) {
+		createSiteMessageBoardThread(
+			siteKey: $siteKey
+			messageBoardThread: {
+				articleBody: $articleBody
+				encodingFormat: "html"
+				headline: $headline
+				keywords: $keywords
+				showAsQuestion: true
+				subscribed: true
+				viewableBy: ANYONE
+			}
+		) {
+			articleBody
+			headline
+			keywords
+			showAsQuestion
+		}
+	}
+`;
+
+export const createQuestionInASectionQuery = gql`
 	mutation createMessageBoardSectionMessageBoardThread(
 		$messageBoardSectionId: Long!
 		$articleBody: String!

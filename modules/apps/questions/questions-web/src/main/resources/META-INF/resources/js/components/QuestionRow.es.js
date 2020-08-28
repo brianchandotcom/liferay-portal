@@ -103,7 +103,11 @@ export default ({currentSection, items, question, showSectionLabel}) => {
 
 			<Link
 				className="questions-title stretched-link"
-				to={`/questions/${sectionTitle}/${question.friendlyUrlPath}`}
+				to={`/questions/${
+					(question.messageBoardSection &&
+						question.messageBoardSection.title) ||
+					currentSection
+				}/${question.friendlyUrlPath}`}
 			>
 				<h2
 					className={classNames(

@@ -19,16 +19,16 @@
 <%
 QuestionsConfiguration questionsConfiguration = portletDisplay.getPortletInstanceConfiguration(QuestionsConfiguration.class);
 
-long categoryId = questionsConfiguration.rootTopicId();
+long mbCategoryId = questionsConfiguration.rootTopicId();
 
-MBCategory category = null;
+MBCategory mbCategory = null;
 
-String categoryName = StringPool.BLANK;
+String mbCategoryName = StringPool.BLANK;
 
 try {
-	category = MBCategoryLocalServiceUtil.getCategory(categoryId);
+	mbCategory = MBCategoryLocalServiceUtil.getCategory(mbCategoryId);
 
-	categoryName = category.getName();
+	mbCategoryName = mbCategory.getName();
 }
 catch (Exception exception) {
 }
@@ -44,7 +44,7 @@ catch (Exception exception) {
 	name="fm"
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="preferences--rootTopicId--" type="hidden" value="<%= categoryId %>" />
+	<aui:input name="preferences--rootTopicId--" type="hidden" value="<%= mbCategoryId %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
@@ -56,15 +56,15 @@ catch (Exception exception) {
 				<aui:input name="preferences--showCardsForTopicNavigation--" type="checkbox" value="<%= questionsConfiguration.showCardsForTopicNavigation() %>" />
 
 				<div class="form-group">
-					<aui:input label="root-topic-id" name="categoryName" type="resource" value="<%= categoryName %>" />
+					<aui:input label="root-topic-id" name="categoryName" type="resource" value="<%= mbCategoryName %>" />
 
 					<aui:button name="selectCategoryButton" value="select" />
 
 					<%
-					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootTopicId', 'categoryName', this, '" + liferayPortletResponse.getNamespace() + "');";
+					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootTopicId', 'mbCategoryName', this, '" + liferayPortletResponse.getNamespace() + "');";
 					%>
 
-					<aui:button disabled="<%= categoryId <= 0 %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					<aui:button disabled="<%= mbCategoryId <= 0 %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 				</div>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
@@ -108,7 +108,7 @@ catch (Exception exception) {
 				PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(request, MBCategory.class.getName(), PortletProvider.Action.EDIT);
 
 				selectCategoryURL.setParameter("mvcRenderCommandName", "/message_boards/select_category");
-				selectCategoryURL.setParameter("mbCategoryId", String.valueOf(categoryId));
+				selectCategoryURL.setParameter("mbCategoryId", String.valueOf(mbCategoryId));
 
 				selectCategoryURL.setWindowState(LiferayWindowState.POP_UP);
 				%>

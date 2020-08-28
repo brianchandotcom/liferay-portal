@@ -73,7 +73,8 @@ public class CKEditorCreoleConfigContributor
 			"disableObjectResizing", Boolean.TRUE
 		).put(
 			"extraPlugins",
-			"a11yhelpbtn,creole,itemselector,lfrpopup,showborders,wikilink"
+			"a11yhelpbtn,creole,itemselector,lfrpopup,showborders," +
+				"sourcearea,wikilink"
 		).put(
 			"filebrowserWindowFeatures",
 			"title=" + LanguageUtil.get(themeDisplay.getLocale(), "browse")
@@ -81,11 +82,12 @@ public class CKEditorCreoleConfigContributor
 			"format_tags", "p;h1;h2;h3;h4;h5;h6;pre"
 		);
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append("bidi,colorbutton,colordialog,div,elementspath,flash,font,");
-		sb.append("forms,indentblock,justify,keystrokes,link,maximize,");
-		sb.append("newpage,pagebreak,preview,print,save,showblocks,smiley,");
+		sb.append("bidi,codemirror,colorbutton,colordialog,div,");
+		sb.append("elementspath,flash,font,forms,indentblock,");
+		sb.append("justify,keystrokes,link,maximize,newpage,");
+		sb.append("pagebreak,preview,print,save,showblocks,smiley,");
 		sb.append("stylescombo,templates,video");
 
 		jsonObject.put(

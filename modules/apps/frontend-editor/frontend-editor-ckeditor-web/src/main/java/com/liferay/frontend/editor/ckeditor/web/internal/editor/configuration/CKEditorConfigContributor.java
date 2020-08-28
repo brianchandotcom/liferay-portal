@@ -213,7 +213,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		}
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
-			jsonArray.put(toJSONArray("['Source']"));
+			jsonArray.put(toJSONArray("['Source', 'Expand']"));
 		}
 
 		return jsonArray;
@@ -233,7 +233,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			toJSONArray("['Link', Unlink]"));
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
-			jsonArray.put(toJSONArray("['Source']"));
+			jsonArray.put(toJSONArray("['Source', 'Expand']"));
 		}
 
 		return jsonArray;
@@ -249,7 +249,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			toJSONArray("['Link', Unlink]"));
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
-			jsonArray.put(toJSONArray("['Source']"));
+			jsonArray.put(toJSONArray("['Source', 'Expand']"));
 		}
 
 		return jsonArray;

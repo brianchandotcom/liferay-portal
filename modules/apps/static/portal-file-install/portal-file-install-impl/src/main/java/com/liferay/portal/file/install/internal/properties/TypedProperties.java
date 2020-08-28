@@ -148,11 +148,49 @@ public class TypedProperties {
 		writer.write(sb.toString());
 	}
 
-	public class PropertiesReader extends BufferedReader {
-
-		public PropertiesReader(Reader reader) {
-			super(reader);
+	private Object _convertFromString(String value) {
+		try {
+			return ConfigurationHandler.read(value);
 		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private String _convertToString(Object value) {
+		try {
+			return ConfigurationHandler.write(value);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private boolean _isCommentLine(String line) {
+		String string = line.trim();
+
+		if ((string.length() < 1) || (CharPool.POUND == string.charAt(0))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final String _EQUALS_WITH_SPACES = " = ";
+
+	private static final String _LINE_SEPARATOR = System.getProperty(
+		"line.separator");
+
+	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TypedProperties.class);
+
+	private String _header;
+	private final Map<String, Map.Entry<String, List<String>>> _storage =
+		new LinkedHashMap<>();
+
+	private class PropertiesReader extends BufferedReader {
 
 		public String getComment() {
 			return _comment;
@@ -196,6 +234,10 @@ public class TypedProperties {
 			_propertyValue = InterpolationUtil.substVars(value);
 
 			return true;
+		}
+
+		private PropertiesReader(Reader reader) {
+			super(reader);
 		}
 
 		private boolean _checkCombineLines(String line) {
@@ -273,47 +315,5 @@ public class TypedProperties {
 		private final List<String> _values = new ArrayList<>();
 
 	}
-
-	private Object _convertFromString(String value) {
-		try {
-			return ConfigurationHandler.read(value);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	private String _convertToString(Object value) {
-		try {
-			return ConfigurationHandler.write(value);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	private boolean _isCommentLine(String line) {
-		String string = line.trim();
-
-		if ((string.length() < 1) || (CharPool.POUND == string.charAt(0))) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private static final String _EQUALS_WITH_SPACES = " = ";
-
-	private static final String _LINE_SEPARATOR = System.getProperty(
-		"line.separator");
-
-	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TypedProperties.class);
-
-	private String _header;
-	private final Map<String, Map.Entry<String, List<String>>> _storage =
-		new LinkedHashMap<>();
 
 }

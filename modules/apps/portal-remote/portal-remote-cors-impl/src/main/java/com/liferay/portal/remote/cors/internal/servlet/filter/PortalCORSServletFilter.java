@@ -329,9 +329,14 @@ public class PortalCORSServletFilter
 
 		_mergeCORSConfiguration(corsSupports, CompanyConstants.SYSTEM);
 
-		_urlToCORSSupportMappers.put(
-			CompanyConstants.SYSTEM,
-			new SimpleURLToCORSSupportMapper(corsSupports));
+		if (corsSupports.isEmpty()) {
+			_urlToCORSSupportMappers.remove(CompanyConstants.SYSTEM);
+		}
+		else {
+			_urlToCORSSupportMappers.put(
+				CompanyConstants.SYSTEM,
+				new SimpleURLToCORSSupportMapper(corsSupports));
+		}
 
 		for (long companyId : _urlToCORSSupportMappers.keySet()) {
 			if (companyId != CompanyConstants.SYSTEM) {

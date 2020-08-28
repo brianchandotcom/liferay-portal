@@ -75,16 +75,17 @@
 	height: auto;
 	left: 100%;
 	position: fixed;
+	transition: transform 0.5s ease;
 	width: $sidebarWidth;
 	z-index: $zindex-dropdown - 1;
-}
 
-.sidebar-body {
-	padding-top: 0;
-}
+	.sidebar-body {
+		padding-top: 0;
 
-.sidebar-body > .sidebar-section {
-	margin-bottom: 16px;
+		& > .sidebar-section {
+			margin-bottom: 16px;
+		}
+	}
 }
 
 .sidebar-open {
@@ -100,10 +101,6 @@
 
 .sidebar-wrapper {
 	transition: padding-right 0.5s ease;
-}
-
-.content-dashboard.sidebar {
-	transition: transform 0.5s ease;
 }
 
 .text-truncate-reverse {

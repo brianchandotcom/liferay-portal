@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -64,6 +65,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -681,7 +683,18 @@ public class RenderLayoutStructureDisplayContext {
 		JSONObject frontendTokensValuesJSONObject =
 			_getFrontendTokensJSONObject();
 
-		return frontendTokensValuesJSONObject.getString(styleValue, styleValue);
+		JSONObject styleValueJSONObject =
+			frontendTokensValuesJSONObject.getJSONObject(styleValue);
+
+		if (styleValueJSONObject == null) {
+			return styleValue;
+		}
+
+		if (BrowserSnifferUtil.isIe(_httpServletRequest)) {
+			return styleValue;
+		}
+
+		return "var(--" + styleValueJSONObject.getString("cssVariable") + ")";
 	}
 
 	private String _getBackgroundImage(JSONObject rowConfigJSONObject)
@@ -860,6 +873,21 @@ public class RenderLayoutStructureDisplayContext {
 					JSONObject frontendTokenJSONObject =
 						frontendTokensJSONArray.getJSONObject(k);
 
+					String cssVariable = StringPool.BLANK;
+
+					JSONArray mappingsJSONArray =
+						frontendTokenJSONObject.getJSONArray("mappings");
+
+					for (int l = 0; l < mappingsJSONArray.length(); l++) {
+						JSONObject mapping = mappingsJSONArray.getJSONObject(l);
+
+						if (Objects.equals(
+								mapping.getString("type"), "cssVariable")) {
+
+							cssVariable = mapping.getString("value");
+						}
+					}
+
 					String name = frontendTokenJSONObject.getString("name");
 
 					JSONObject valueJSONObject =
@@ -875,7 +903,13 @@ public class RenderLayoutStructureDisplayContext {
 							"defaultValue");
 					}
 
-					_frontendTokensJSONObject.put(name, value);
+					_frontendTokensJSONObject.put(
+						name,
+						JSONUtil.put(
+							"cssVariable", cssVariable
+						).put(
+							"value", value
+						));
 				}
 			}
 		}
@@ -1046,6 +1080,7 @@ public class RenderLayoutStructureDisplayContext {
 	private final Map<String, Object> _fieldValues;
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
+	private JSONObject _frontendTokensJSONObject;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
@@ -1060,7 +1095,6 @@ public class RenderLayoutStructureDisplayContext {
 	private final String _mode;
 	private Long _previewClassNameId;
 	private Long _previewClassPK;
-	private JSONObject _frontendTokensJSONObject;
 	private Integer _previewType;
 	private String _previewVersion;
 	private long[] _segmentsExperienceIds;

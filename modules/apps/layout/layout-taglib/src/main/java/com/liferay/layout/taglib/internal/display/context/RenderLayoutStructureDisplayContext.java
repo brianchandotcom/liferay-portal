@@ -888,12 +888,12 @@ public class RenderLayoutStructureDisplayContext {
 						}
 					}
 
+					String value = StringPool.BLANK;
+
 					String name = frontendTokenJSONObject.getString("name");
 
 					JSONObject valueJSONObject =
 						frontendTokenValuesJSONObject.getJSONObject(name);
-
-					String value = StringPool.BLANK;
 
 					if (valueJSONObject != null) {
 						value = valueJSONObject.getString("value");

@@ -44,7 +44,7 @@ public interface QuestionsConfiguration {
 
 	@Meta.AD(
 		deflt = "0",
-		description = "specify-the-mbcategory-identifier-of-the-category-that-acts-as-the-root-topic",
+		description = "specify-the-message-boards-category-id-that-acts-as-the-root-topic",
 		name = "root-topic-id", required = false
 	)
 	public long rootTopicId();

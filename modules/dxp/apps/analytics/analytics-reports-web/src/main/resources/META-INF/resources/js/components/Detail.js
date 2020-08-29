@@ -27,7 +27,7 @@ export default function Detail({
 }) {
 	return (
 		<>
-			<div className="d-flex pb-3 pt-1">
+			<div className="c-pt-3 c-px-3 d-flex">
 				<ClayButton
 					displayType="unstyled"
 					onClick={() => {
@@ -44,7 +44,7 @@ export default function Detail({
 				</div>
 			</div>
 
-			<div className="traffic-source-detail">
+			<div className="c-p-3 traffic-source-detail">
 				<TotalCount
 					className="mb-2"
 					dataProvider={trafficVolumeDataProvider}

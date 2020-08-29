@@ -19,16 +19,24 @@ import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -44,6 +52,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+
 /**
  * @author Cristina González
  */
@@ -58,6 +68,22 @@ public class LayoutSEOLinkManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		_layout = _layoutLocalService.getLayout(TestPropsValues.getPlid());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		themeDisplay.setRequest(mockHttpServletRequest);
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
 
 	@Test
@@ -251,6 +277,29 @@ public class LayoutSEOLinkManagerTest {
 		return null;
 	}
 
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = _companyLocalService.fetchCompany(
+			TestPropsValues.getCompanyId());
+
+		company.setVirtualHostname(RandomTestUtil.randomString());
+
+		themeDisplay.setCompany(company);
+
+		themeDisplay.setLayoutSet(_layout.getLayoutSet());
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setPlid(_layout.getPlid());
+		themeDisplay.setSecure(false);
+		themeDisplay.setServerName(company.getVirtualHostname());
+		themeDisplay.setServerPort(8080);
+		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+
+		return themeDisplay;
+	}
+
 	private LayoutSEOLink _getXDefaultAlternateLayoutSEOLink(
 		List<LayoutSEOLink> layoutSEOLinks) {
 
@@ -323,6 +372,10 @@ public class LayoutSEOLinkManagerTest {
 	).put(
 		LocaleUtil.US, _CANONICAL_URL
 	).build();
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	private Layout _layout;
 
 	@Inject

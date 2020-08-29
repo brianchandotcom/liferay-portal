@@ -47,8 +47,8 @@ catch (Exception exception) {
 	name="fm"
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="preferences--rootTopicId--" type="hidden" value="<%= mbCategoryId %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input name="preferences--rootTopicId--" type="hidden" value="<%= mbCategoryId %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>

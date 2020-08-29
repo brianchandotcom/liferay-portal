@@ -78,6 +78,17 @@
 	</target>
 
 	<target depends="build-common-java.init-jar" name="init-jar">
+
+		<!-- LPS-119991 -->
+
+		<replaceregexp
+			file="classes/META-INF/liferay-ui.tld"
+			flags="gs"
+		>
+			<regexp pattern="&lt;tag-extension.*&lt;/tag-extension>" />
+			<substitution expression="" />
+		</replaceregexp>
+
 		<for param="file">
 			<path>
 				<fileset

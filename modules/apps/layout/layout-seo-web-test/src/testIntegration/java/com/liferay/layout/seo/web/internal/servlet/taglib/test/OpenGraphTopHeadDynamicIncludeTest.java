@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -149,9 +150,15 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
-				_getHttpServletRequest(), mockHttpServletResponse,
+				serviceContext.getRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
 			true);
 
@@ -163,9 +170,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeCustomDescription() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			_layout.getLayoutId(), true,
@@ -174,9 +178,18 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Collections.emptyMap(), 0, false, Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
-				_getHttpServletRequest(), mockHttpServletResponse,
+				serviceContext.getRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
 			true);
 
@@ -205,6 +218,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Collections.emptyMap(), false, Collections.emptyMap(),
 			Collections.emptyMap(), 0, false, Collections.emptyMap(),
 			serviceContext);
+
+		serviceContext = new ServiceContext();
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -254,13 +273,17 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_layoutLocalService.updateLayout(_layout);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		_testWithMockInfoItem(
-			httpServletRequest,
+			serviceContext.getRequest(),
 			() -> _testWithLayoutSEOCompanyConfiguration(
 				() -> _dynamicInclude.include(
-					httpServletRequest, mockHttpServletResponse,
+					serviceContext.getRequest(), mockHttpServletResponse,
 					RandomTestUtil.randomString()),
 				true));
 
@@ -276,9 +299,15 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
-				_getHttpServletRequest(), mockHttpServletResponse,
+				serviceContext.getRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
 			true);
 
@@ -1080,6 +1109,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				new InfoItemReference(className, classPK)));
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setRequest(httpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		return httpServletRequest;
 	}
 
@@ -1106,8 +1141,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		themeDisplay.setRequest(mockHttpServletRequest);
+
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
 		mockHttpServletRequest.setRequestURI(
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 				_group.getFriendlyURL() + _layout.getFriendlyURL());
@@ -1144,8 +1184,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setCompany(company);
 
 		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
 		themeDisplay.setLocale(

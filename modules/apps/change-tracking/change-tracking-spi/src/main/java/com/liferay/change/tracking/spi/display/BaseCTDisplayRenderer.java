@@ -89,7 +89,9 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 
 		Writer writer = httpServletResponse.getWriter();
 
-		writer.write("<div class=\"table-responsive\"><table class=\"table\">");
+		writer.write(
+			"<div class=\"table-responsive\"><table class=\"table " +
+				"table-autofit table-nowrap\">");
 
 		HttpServletRequest httpServletRequest =
 			displayContext.getHttpServletRequest();
@@ -159,9 +161,11 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 			try {
 				Writer writer = httpServletResponse.getWriter();
 
-				writer.write("<tr><td class=\"change-lists-diff-key-td\">");
+				writer.write(
+					"<tr><td class=\"change-lists-diff-key-td " +
+						"table-cell-expand-small\">");
 				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
-				writer.write("</td><td class=\"change-lists-diff-value-td\">");
+				writer.write("</td><td class=\"table-cell-expand\">");
 
 				if (value instanceof Blob) {
 					String downloadURL = _displayContext.getDownloadURL(
@@ -210,9 +214,11 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 			try {
 				Writer writer = httpServletResponse.getWriter();
 
-				writer.write("<tr><td class=\"change-lists-diff-key-td\">");
+				writer.write(
+					"<tr><td class=\"change-lists-diff-key-td " +
+						"table-cell-expand-small\">");
 				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
-				writer.write("</td><td class=\"change-lists-diff-value-td\">");
+				writer.write("</td><td class=\"table-cell-expand\">");
 
 				if (escape) {
 					value = HtmlUtil.escape(value);

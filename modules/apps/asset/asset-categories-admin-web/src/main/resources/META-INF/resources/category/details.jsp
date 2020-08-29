@@ -177,7 +177,7 @@ renderResponse.setTitle(title);
 
 				<aui:button cssClass="btn-secondary" onClick='<%= liferayPortletResponse.getNamespace() + "saveAndAddNew();" %>' value="save-and-add-a-new-one" />
 
-				<aui:button cssClass="btn-link" href="<%= redirect %>" type="cancel" />
+				<aui:button cssClass="btn-secondary" href="<%= redirect %>" type="cancel" />
 			</liferay-frontend:edit-form-footer>
 		</c:when>
 		<c:otherwise>

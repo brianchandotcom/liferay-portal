@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -445,12 +446,18 @@ public class RenderLayoutStructureDisplayContext {
 			cssClassSB.append(styledLayoutStructureItem.getShadow());
 		}
 
-		if (Validator.isNotNull(
-				styledLayoutStructureItem.getTextAlignCssClass()) &&
-			!Objects.equals(
-				styledLayoutStructureItem.getTextAlignCssClass(), "none")) {
+		String textAlign = styledLayoutStructureItem.getTextAlignCssClass();
 
-			cssClassSB.append(StringPool.SPACE);
+		if (Validator.isNotNull(textAlign) &&
+			!Objects.equals(textAlign, "none")) {
+
+			if (!StringUtil.startsWith(textAlign, "text-")) {
+				cssClassSB.append(" text-");
+			}
+			else {
+				cssClassSB.append(StringPool.SPACE);
+			}
+
 			cssClassSB.append(styledLayoutStructureItem.getTextAlignCssClass());
 		}
 

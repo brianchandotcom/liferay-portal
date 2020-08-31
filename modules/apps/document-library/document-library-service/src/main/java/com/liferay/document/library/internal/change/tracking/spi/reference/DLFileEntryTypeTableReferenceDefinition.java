@@ -17,11 +17,17 @@ package com.liferay.document.library.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePersistence;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,6 +50,34 @@ public class DLFileEntryTypeTableReferenceDefinition
 			DDMStructureLinkTable.INSTANCE.classPK, DLFileEntryType.class
 		).resourcePermissionReference(
 			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId, DLFileEntryType.class
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				DDMStructureTable.INSTANCE
+			).innerJoinON(
+				DLFileEntryTypeTable.INSTANCE,
+				DLFileEntryTypeTable.INSTANCE.groupId.eq(
+					DDMStructureTable.INSTANCE.groupId
+				).and(
+					DSLFunctionFactoryUtil.lower(
+						DDMStructureTable.INSTANCE.structureKey
+					).eq(
+						DSLFunctionFactoryUtil.lower(
+							DSLFunctionFactoryUtil.concat(
+								new Scalar<>(
+									DLUtil.getDDMStructureKey(
+										StringPool.BLANK)),
+								DLFileEntryTypeTable.INSTANCE.uuid))
+					)
+				)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					DDMStructureTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(
+						DLFileEntryMetadata.class.getName())
+				)
+			)
 		);
 	}
 

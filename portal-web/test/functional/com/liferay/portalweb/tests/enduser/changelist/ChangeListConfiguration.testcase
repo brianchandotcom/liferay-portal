@@ -51,7 +51,7 @@ definition {
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enableChangeList(gotoOverview = "true");
+		ChangeList.enablePublications(gotoOverview = "true");
 
 		AssertTextEquals(
 			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
@@ -83,7 +83,7 @@ definition {
 			portlet = "Settings",
 			site = "Guest");
 
-		ChangeList.disableChangeList();
+		ChangeList.disablePublications();
 
 		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
 
@@ -92,22 +92,22 @@ definition {
 
 	@description = "Enable and Disable Change List"
 	@priority = "5"
-	test EnableDisableChangeList {
-		property test.name.skip.portal.instance = "ChangeListConfiguration#EnableDisableChangeList";
+	test EnableDisablePublications {
+		property test.name.skip.portal.instance = "ChangeListConfiguration#EnableDisablePublications";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enableChangeList();
+		ChangeList.enablePublications();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.disableChangeList();
+		ChangeList.disablePublications();
 
 		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
 	}

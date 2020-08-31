@@ -63,7 +63,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro disableChangeList {
+	macro disablePublications {
 		Uncheck.uncheckToggleSwitch(locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH");
 
 		Click(locator1 = "Button#SAVE");
@@ -71,7 +71,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro enableChangeList {
+	macro enablePublications {
 		Pause(locator1 = "2000");
 
 		Check.checkToggleSwitch(locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH");

@@ -15,7 +15,7 @@ definition {
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enableChangeList();
+		ChangeList.enablePublications();
 	}
 
 	tearDown {
@@ -30,7 +30,7 @@ definition {
 				panel = "Applications",
 				portlet = "Settings");
 
-			ChangeList.disableChangeList();
+			ChangeList.disablePublications();
 		}
 	}
 

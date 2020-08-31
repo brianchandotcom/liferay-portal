@@ -91,7 +91,10 @@ public class ChangeMasterLayoutMVCActionCommand
 			masterLayoutPlid);
 
 		if (masterLayoutPlid == 0) {
-			return JSONFactoryUtil.createJSONObject();
+			return JSONUtil.put(
+				"styleBook",
+				_getStyleBookJSONObject(
+					updatedLayout, themeDisplay.getLocale()));
 		}
 
 		LayoutStructure layoutStructure =

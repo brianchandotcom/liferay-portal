@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>BODY_FIELD_SOURCE_ON</td>
-	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td>//div[contains(@class,'cke_contents')]/div[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>
 </tr>
 <tr>

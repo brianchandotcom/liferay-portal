@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesSerializeUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -104,7 +105,13 @@ public class UpgradeDDMDataProviderInstance extends UpgradeProcess {
 				String outputPathValue = valueStringParts[0];
 
 				if (outputPathType.equals("List")) {
-					outputPathValue = "$.." + outputPathValue;
+					StringBundler sb = new StringBundler(3);
+
+					sb.append(StringPool.DOLLAR);
+					sb.append(StringPool.DOUBLE_PERIOD);
+					sb.append(outputPathValue);
+
+					outputPathValue = sb.toString();
 				}
 
 				valuesMap.put(valueEntry.getKey(), outputPathValue);

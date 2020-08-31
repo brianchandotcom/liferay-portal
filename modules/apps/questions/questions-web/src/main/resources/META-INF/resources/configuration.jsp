@@ -19,16 +19,16 @@
 <%
 QuestionsConfiguration questionsConfiguration = portletDisplay.getPortletInstanceConfiguration(QuestionsConfiguration.class);
 
-long mbCategoryId = questionsConfiguration.rootTopicId();
+long rootTopicId = questionsConfiguration.rootTopicId();
 
-MBCategory mbCategory = null;
+MBCategory rootTopic = null;
 
-String mbCategoryName = StringPool.BLANK;
+String rootTopicName = StringPool.BLANK;
 
 try {
-	mbCategory = MBCategoryLocalServiceUtil.getCategory(mbCategoryId);
+	rootTopic = MBCategoryLocalServiceUtil.getCategory(rootTopicId);
 
-	mbCategoryName = mbCategory.getName();
+	rootTopicName = rootTopic.getName();
 }
 catch (Exception exception) {
 	if (_log.isDebugEnabled()) {
@@ -48,7 +48,7 @@ catch (Exception exception) {
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-	<aui:input name="preferences--rootTopicId--" type="hidden" value="<%= mbCategoryId %>" />
+	<aui:input name="preferences--rootTopicId--" type="hidden" value="<%= rootTopicId %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
@@ -59,15 +59,15 @@ catch (Exception exception) {
 				<aui:input name="preferences--showCardsForTopicNavigation--" type="checkbox" value="<%= questionsConfiguration.showCardsForTopicNavigation() %>" />
 
 				<div class="form-group">
-					<aui:input label="root-topic-id" name="categoryName" type="resource" value="<%= mbCategoryName %>" />
+					<aui:input label="root-topic-id" name="rootTopicName" type="resource" value="<%= rootTopicName %>" />
 
-					<aui:button name="selectCategoryButton" value="select" />
+					<aui:button name="selectRootTopicButton" value="select" />
 
 					<%
-					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootTopicId', 'mbCategoryName', this, '" + liferayPortletResponse.getNamespace() + "');";
+					String taglibRemoveRootTopic = "Liferay.Util.removeEntitySelection('rootTopicId', 'rootTopicName', this, '" + liferayPortletResponse.getNamespace() + "');";
 					%>
 
-					<aui:button disabled="<%= mbCategoryId <= 0 %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					<aui:button disabled="<%= rootTopicId <= 0 %>" name="removeRootTopicButton" onClick="<%= taglibRemoveRootTopic %>" value="remove" />
 				</div>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
@@ -81,12 +81,12 @@ catch (Exception exception) {
 </liferay-frontend:edit-form>
 
 <script>
-	var selectCategoryButton = document.getElementById(
-		'<portlet:namespace />selectCategoryButton'
+	var selectRootTopicButton = document.getElementById(
+		'<portlet:namespace />selectRootTopicButton'
 	);
 
-	if (selectCategoryButton) {
-		selectCategoryButton.addEventListener('click', function (event) {
+	if (selectRootTopicButton) {
+		selectRootTopicButton.addEventListener('click', function (event) {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (event) {
 					var form = document.<portlet:namespace />fm;
@@ -96,12 +96,12 @@ catch (Exception exception) {
 						rootTopicId: event.categoryid,
 					});
 
-					var removeCategoryButton = document.getElementById(
-						'<portlet:namespace />removeCategoryButton'
+					var removeRootTopicButton = document.getElementById(
+						'<portlet:namespace />removeRootTopicButton'
 					);
 
-					if (removeCategoryButton) {
-						Liferay.Util.toggleDisabled(removeCategoryButton, false);
+					if (removeRootTopicButton) {
+						Liferay.Util.toggleDisabled(removeRootTopicButton, false);
 					}
 				},
 				selectEventName: '<portlet:namespace />selectCategory',
@@ -111,7 +111,7 @@ catch (Exception exception) {
 				PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(request, MBCategory.class.getName(), PortletProvider.Action.EDIT);
 
 				selectCategoryURL.setParameter("mvcRenderCommandName", "/message_boards/select_category");
-				selectCategoryURL.setParameter("mbCategoryId", String.valueOf(mbCategoryId));
+				selectCategoryURL.setParameter("mbCategoryId", String.valueOf(rootTopicId));
 
 				selectCategoryURL.setWindowState(LiferayWindowState.POP_UP);
 				%>

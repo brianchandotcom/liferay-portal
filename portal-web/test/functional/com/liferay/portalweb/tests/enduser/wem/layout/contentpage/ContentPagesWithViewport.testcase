@@ -35,6 +35,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-110723. When change to other viewports, there are only limited common fragment style categories available."
+	@priority = "4"
+	test PropagateCommonFragmentStyleDefinedInDesktopToOtherViewports {
+		task ("Add a Paragraph to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+		}
+
+		task ("Configure the Margin and Padding styles of Paragraph") {
+			PageEditor.gotoStyle(fragmentName = "Paragraph");
+
+			PageEditor.configureFragment(
+				marginBottom = "2",
+				marginLeft = "2",
+				marginRight = "2",
+				marginTop = "2",
+				paddingBottom = "2",
+				paddingLeft = "2",
+				paddingRight = "2",
+				paddingTop = "2");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Paragraph",
+				marginBottom = "2",
+				marginLeft = "2",
+				marginRight = "2",
+				marginTop = "2",
+				paddingBottom = "2",
+				paddingLeft = "2",
+				paddingRight = "2",
+				paddingTop = "2");
+		}
+
+		task ("Assert the common styles are propagated to other viewports") {
+			for (var deviceType : list "Tablet,Landscape Phone,Portrait Phone") {
+				Click(
+					key_deviceType = "${deviceType}",
+					locator1 = "PageEditor#DEVICE_TYPE");
+
+				Pause(locator1 = "3000");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+				PageEditor.viewFragmentStyle(
+					fragmentName = "Paragraph",
+					marginBottom = "2",
+					marginLeft = "2",
+					marginRight = "2",
+					marginTop = "2",
+					paddingBottom = "2",
+					paddingLeft = "2",
+					paddingRight = "2",
+					paddingTop = "2");
+
+				SelectFrame(value1 = "relative=top");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-110707. Can resize the width of device viewport when edit content page."
 	@priority = "5"
 	test ResizeDeviceViewport {

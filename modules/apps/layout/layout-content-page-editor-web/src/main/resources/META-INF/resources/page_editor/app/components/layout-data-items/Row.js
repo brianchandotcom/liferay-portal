@@ -133,7 +133,11 @@ const Row = React.forwardRef(
 						[`ml-${marginLeft}`]: marginLeft !== '0',
 						[`mr-${marginRight}`]: marginRight !== '0',
 						'no-gutters': !item.config.gutters,
-						[textAlign]: textAlign,
+						[textAlign
+							? textAlign.startsWith('text-')
+								? textAlign
+								: `text-${textAlign}`
+							: '']: textAlign,
 					}
 				)}
 				ref={ref}

@@ -147,7 +147,11 @@ const Container = React.forwardRef(
 							widthType !== 'fixed' && !withinTopper,
 						[`mr-${marginRight}`]:
 							widthType !== 'fixed' && !withinTopper,
-						[textAlign]: textAlign,
+						[textAlign
+							? textAlign.startsWith('text-')
+								? textAlign
+								: `text-${textAlign}`
+							: '']: textAlign,
 					}
 				)}
 				ref={ref}

@@ -235,7 +235,11 @@ const FragmentContent = ({
 				'page-editor__fragment-content',
 				{
 					'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
-					[textAlign]: textAlign,
+					[textAlign
+						? textAlign.startsWith('text-')
+							? textAlign
+							: `text-${textAlign}`
+						: '']: textAlign,
 				}
 			)}
 			contentRef={elementRef}

@@ -106,22 +106,6 @@
 	<target depends="move-artifact,move-artifact-dependencies,move-artifact-wsdd" name="dist-module-artifact-lpkg" />
 
 	<target depends="get-artifact-properties" name="download-artifact" unless="artifact.exclude">
-		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
-			<condition>
-				<not>
-					<available file="${releng.module.dir}/artifact.properties" />
-				</not>
-			</condition>
-		</fail>
-
-		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
-			<filterchain>
-				<linecontains>
-					<contains value="artifact.url=" />
-				</linecontains>
-			</filterchain>
-		</loadproperties>
-
 		<if>
 			<or>
 				<contains string="${basedir}" substring="dxp${file.separator}" />
@@ -154,22 +138,6 @@
 	</target>
 
 	<target depends="get-artifact-properties" if="${download.artifact.sources}" name="download-artifact-sources" unless="artifact.exclude">
-		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
-			<condition>
-				<not>
-					<available file="${releng.module.dir}/artifact.properties" />
-				</not>
-			</condition>
-		</fail>
-
-		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
-			<filterchain>
-				<linecontains>
-					<contains value="artifact.sources.url=" />
-				</linecontains>
-			</filterchain>
-		</loadproperties>
-
 		<mkdir dir="${dist.dir}/sources" />
 
 		<if>
@@ -208,22 +176,6 @@
 	</target>
 
 	<target depends="get-artifact-properties" if="download.artifact.wsdd" name="download-artifact-wsdd" unless="artifact.exclude">
-		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
-			<condition>
-				<not>
-					<available file="${releng.module.dir}/artifact.properties" />
-				</not>
-			</condition>
-		</fail>
-
-		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
-			<filterchain>
-				<linecontains>
-					<contains value="artifact.wsdd.url=" />
-				</linecontains>
-			</filterchain>
-		</loadproperties>
-
 		<if>
 			<or>
 				<contains string="${basedir}" substring="private${file.separator}" />
@@ -306,7 +258,17 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" />
+	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties">
+		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
+			<condition>
+				<not>
+					<available file="${releng.module.dir}/artifact.properties" />
+				</not>
+			</condition>
+		</fail>
+
+		<loadproperties srcFile="${releng.module.dir}/artifact.properties" />
+	</target>
 
 	<target depends="get-artifact-version-from-releng" if="artifact.bnd" name="get-artifact-properties-bnd">
 		<property file="bnd.bnd" />

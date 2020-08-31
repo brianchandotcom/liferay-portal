@@ -114,13 +114,13 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		Click.clickNoMouseOver(
+		Click(
 			key_deviceType = "Desktop",
 			locator1 = "PageEditor#DEVICE_TYPE");
 
 		AssertElementNotPresent(locator1 = "PageEditor#VIEWPORT_HANDLE");
 
-		Click.clickNoMouseOver(
+		Click(
 			key_deviceType = "Tablet",
 			locator1 = "PageEditor#DEVICE_TYPE");
 

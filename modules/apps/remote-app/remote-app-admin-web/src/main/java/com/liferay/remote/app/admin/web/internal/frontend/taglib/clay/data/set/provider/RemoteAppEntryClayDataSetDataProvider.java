@@ -57,8 +57,10 @@ public class RemoteAppEntryClayDataSetDataProvider
 				WebKeys.THEME_DISPLAY);
 
 		List<RemoteAppEntry> remoteAppEntries =
-			_remoteAppEntryLocalService.getRemoteAppEntries(
-				pagination.getStartPosition(), pagination.getEndPosition());
+			_remoteAppEntryLocalService.searchRemoteAppEntries(
+				themeDisplay.getCompanyId(), filter.getKeywords(),
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				sort);
 
 		Stream<RemoteAppEntry> stream = remoteAppEntries.stream();
 
@@ -75,7 +77,12 @@ public class RemoteAppEntryClayDataSetDataProvider
 			HttpServletRequest httpServletRequest, Filter filter)
 		throws PortalException {
 
-		return _remoteAppEntryLocalService.getRemoteAppEntriesCount();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _remoteAppEntryLocalService.searchRemoteAppEntriesCount(
+			themeDisplay.getCompanyId(), filter.getKeywords());
 	}
 
 	@Reference

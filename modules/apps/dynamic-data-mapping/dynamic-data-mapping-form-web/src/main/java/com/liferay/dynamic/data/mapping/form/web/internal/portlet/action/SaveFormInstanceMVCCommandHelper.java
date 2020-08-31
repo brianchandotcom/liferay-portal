@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -41,6 +43,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.net.URI;
 
 import java.util.HashMap;
 import java.util.List;
@@ -313,6 +317,22 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	private URI _getURI(String uriString) {
+		try {
+			return new URI(uriString.trim());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return null;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SaveFormInstanceMVCCommandHelper.class);
 
 	@Reference
 	private Portal _portal;

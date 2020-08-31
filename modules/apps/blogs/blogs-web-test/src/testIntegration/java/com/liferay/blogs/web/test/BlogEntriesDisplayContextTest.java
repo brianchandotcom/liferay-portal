@@ -157,6 +157,33 @@ public class BlogEntriesDisplayContextTest {
 	}
 
 	@Test
+	public void testGetSearchContainerByInternalAssetCategory()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = _addAssetVocabulary(
+			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);
+
+		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
+
+		BlogsEntry blogsEntry = _addBlogEntry(
+			new long[] {assetCategory.getCategoryId()});
+
+		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
+			_getMockHttpServletRequestWithSearch(assetCategory.getName()));
+
+		Assert.assertEquals(1, searchContainer.getTotal());
+
+		List<BlogsEntry> blogsEntries = searchContainer.getResults();
+
+		Assert.assertEquals(blogsEntries.toString(), 1, blogsEntries.size());
+
+		BlogsEntry returnedBlogsEntry = blogsEntries.get(0);
+
+		Assert.assertEquals(
+			returnedBlogsEntry.getTitle(), blogsEntry.getTitle());
+	}
+
+	@Test
 	public void testGetSearchContainerByPublicAssetCategory() throws Exception {
 		AssetVocabulary assetVocabulary = _addAssetVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);

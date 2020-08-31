@@ -28,7 +28,7 @@ String buildType = properties.get("buildType");
 
 String liferayVersion = properties.get("liferayVersion")
 
-if (buildType.equals("maven") && (!liferayVersion.startsWith("7.0") || !liferayVersion.startsWith("7.1"))) {
+if (buildType.equals("maven") && !liferayVersion.startsWith("7.0") && !liferayVersion.startsWith("7.1")) {
 	throw new IllegalArgumentException(
 		"Form Field project in Maven is only supported in 7.0 and 7.1")
 }

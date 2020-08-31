@@ -539,7 +539,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				/>
 
 				<copy
-					file="classes/log4j.properties"
+					file="classes/log4j2.properties"
 					preservelastmodified="true"
 					todir="${app.server.classes.portal.dir}"
 				/>
@@ -853,7 +853,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</copy>
 
 		<copy
-			file="${project.dir}/classes/log4j.properties"
+			file="${project.dir}/classes/log4j2.properties"
 			preservelastmodified="true"
 			todir="${portal-impl.classes.dir}"
 		/>

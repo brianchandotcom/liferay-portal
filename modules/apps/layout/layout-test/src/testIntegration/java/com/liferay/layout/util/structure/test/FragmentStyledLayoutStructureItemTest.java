@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -203,6 +204,10 @@ public class FragmentStyledLayoutStructureItemTest {
 		for (String styleName : styleNames) {
 			Object expectedValue = CommonStylesUtil.getDefaultStyleValue(
 				styleName);
+
+			if (Validator.isNull(expectedValue)) {
+				continue;
+			}
 
 			Object currentValue = stylesJSONObject.get(styleName);
 

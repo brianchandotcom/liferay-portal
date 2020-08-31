@@ -49,7 +49,6 @@ import com.liferay.translation.service.TranslationEntryService;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
 import java.io.ByteArrayInputStream;
-import java.io.Serializable;
 
 import java.nio.charset.StandardCharsets;
 
@@ -90,54 +89,7 @@ public class TranslationEntryServiceTest {
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
-		TranslationTestUtil.withRegularUser(
-			(user, role) -> {
-				RoleTestUtil.addResourcePermission(
-					role,
-					TranslationConstants.RESOURCE_NAME + "." +
-						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-					ResourceConstants.SCOPE_GROUP,
-					String.valueOf(_group.getGroupId()),
-					TranslationActionKeys.TRANSLATE);
-
-				RoleTestUtil.addResourcePermission(
-					role, JournalArticle.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(TestPropsValues.getCompanyId()),
-					ActionKeys.UPDATE);
-
-				InfoItemReference infoItemReference = new InfoItemReference(
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey());
-
-				String stringFile = StringUtil.replace(
-					TranslationTestUtil.readFileToString(
-						"test-journal-article-only-title.xlf"),
-					"$ARTICLE_ID",
-					String.valueOf(journalArticle.getResourcePrimKey()));
-
-				InfoItemFieldValues infoItemFieldValues =
-					_xliffTranslationInfoItemFieldValuesImporter.
-						importInfoItemFieldValues(
-							_group.getGroupId(),
-							new InfoItemReference(
-								JournalArticle.class.getName(),
-								journalArticle.getResourcePrimKey()),
-							new ByteArrayInputStream(
-								stringFile.getBytes(StandardCharsets.UTF_8)));
-
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext();
-
-				serviceContext.setWorkflowAction(
-					WorkflowConstants.ACTION_SAVE_DRAFT);
-
-				_translationEntry =
-					_translationEntryService.addOrUpdateTranslationEntry(
-						_group.getGroupId(),
-						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-						infoItemReference, infoItemFieldValues, serviceContext);
-			});
+		_addDraftTranslation(journalArticle, LocaleUtil.SPAIN);
 
 		Map<Locale, String> titleMap = journalArticle.getTitleMap();
 
@@ -179,54 +131,7 @@ public class TranslationEntryServiceTest {
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
-		TranslationTestUtil.withRegularUser(
-			(user, role) -> {
-				RoleTestUtil.addResourcePermission(
-					role,
-					TranslationConstants.RESOURCE_NAME + "." +
-						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-					ResourceConstants.SCOPE_GROUP,
-					String.valueOf(_group.getGroupId()),
-					TranslationActionKeys.TRANSLATE);
-
-				RoleTestUtil.addResourcePermission(
-					role, JournalArticle.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(TestPropsValues.getCompanyId()),
-					ActionKeys.UPDATE);
-
-				InfoItemReference infoItemReference = new InfoItemReference(
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey());
-
-				String stringFile = StringUtil.replace(
-					TranslationTestUtil.readFileToString(
-						"test-journal-article-only-title.xlf"),
-					"$ARTICLE_ID",
-					String.valueOf(journalArticle.getResourcePrimKey()));
-
-				InfoItemFieldValues infoItemFieldValues =
-					_xliffTranslationInfoItemFieldValuesImporter.
-						importInfoItemFieldValues(
-							_group.getGroupId(),
-							new InfoItemReference(
-								JournalArticle.class.getName(),
-								journalArticle.getResourcePrimKey()),
-							new ByteArrayInputStream(
-								stringFile.getBytes(StandardCharsets.UTF_8)));
-
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext();
-
-				serviceContext.setWorkflowAction(
-					WorkflowConstants.ACTION_SAVE_DRAFT);
-
-				_translationEntry =
-					_translationEntryService.addOrUpdateTranslationEntry(
-						_group.getGroupId(),
-						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-						infoItemReference, infoItemFieldValues, serviceContext);
-			});
+		_addDraftTranslation(journalArticle, LocaleUtil.SPAIN);
 
 		Map<Locale, String> titleMap = journalArticle.getTitleMap();
 
@@ -315,8 +220,6 @@ public class TranslationEntryServiceTest {
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
-		double version = journalArticle.getVersion();
-
 		TranslationTestUtil.withRegularUser(
 			(user, role) -> {
 				RoleTestUtil.addResourcePermission(
@@ -367,7 +270,9 @@ public class TranslationEntryServiceTest {
 						journalArticle.getArticleId(),
 						WorkflowConstants.STATUS_ANY);
 
-				Assert.assertTrue(version < latestJournalArticle.getVersion());
+				Assert.assertTrue(
+					journalArticle.getVersion() <
+						latestJournalArticle.getVersion());
 			});
 	}
 
@@ -379,54 +284,7 @@ public class TranslationEntryServiceTest {
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
-		TranslationTestUtil.withRegularUser(
-			(user, role) -> {
-				RoleTestUtil.addResourcePermission(
-					role,
-					TranslationConstants.RESOURCE_NAME + "." +
-						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-					ResourceConstants.SCOPE_GROUP,
-					String.valueOf(_group.getGroupId()),
-					TranslationActionKeys.TRANSLATE);
-
-				RoleTestUtil.addResourcePermission(
-					role, JournalArticle.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(TestPropsValues.getCompanyId()),
-					ActionKeys.UPDATE);
-
-				InfoItemReference infoItemReference = new InfoItemReference(
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey());
-
-				String stringFile = StringUtil.replace(
-					TranslationTestUtil.readFileToString(
-						"test-journal-article-only-title.xlf"),
-					"$ARTICLE_ID",
-					String.valueOf(journalArticle.getResourcePrimKey()));
-
-				InfoItemFieldValues infoItemFieldValues =
-					_xliffTranslationInfoItemFieldValuesImporter.
-						importInfoItemFieldValues(
-							_group.getGroupId(),
-							new InfoItemReference(
-								JournalArticle.class.getName(),
-								journalArticle.getResourcePrimKey()),
-							new ByteArrayInputStream(
-								stringFile.getBytes(StandardCharsets.UTF_8)));
-
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext();
-
-				serviceContext.setWorkflowAction(
-					WorkflowConstants.ACTION_SAVE_DRAFT);
-
-				_translationEntry =
-					_translationEntryService.addOrUpdateTranslationEntry(
-						_group.getGroupId(),
-						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-						infoItemReference, infoItemFieldValues, serviceContext);
-			});
+		_addDraftTranslation(journalArticle, LocaleUtil.SPAIN);
 
 		JournalTestUtil.updateArticle(journalArticle, "newTitle");
 
@@ -442,8 +300,7 @@ public class TranslationEntryServiceTest {
 			TestPropsValues.getUserId(),
 			_translationEntry.getTranslationEntryId(),
 			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(),
-			new HashMap<String, Serializable>());
+			ServiceContextTestUtil.getServiceContext(), new HashMap<>());
 
 		latestJournalArticle = _journalArticleService.getLatestArticle(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),
@@ -462,54 +319,7 @@ public class TranslationEntryServiceTest {
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
-		TranslationTestUtil.withRegularUser(
-			(user, role) -> {
-				RoleTestUtil.addResourcePermission(
-					role,
-					TranslationConstants.RESOURCE_NAME + "." +
-						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-					ResourceConstants.SCOPE_GROUP,
-					String.valueOf(_group.getGroupId()),
-					TranslationActionKeys.TRANSLATE);
-
-				RoleTestUtil.addResourcePermission(
-					role, JournalArticle.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(TestPropsValues.getCompanyId()),
-					ActionKeys.UPDATE);
-
-				InfoItemReference infoItemReference = new InfoItemReference(
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey());
-
-				String stringFile = StringUtil.replace(
-					TranslationTestUtil.readFileToString(
-						"test-journal-article-only-title.xlf"),
-					"$ARTICLE_ID",
-					String.valueOf(journalArticle.getResourcePrimKey()));
-
-				InfoItemFieldValues infoItemFieldValues =
-					_xliffTranslationInfoItemFieldValuesImporter.
-						importInfoItemFieldValues(
-							_group.getGroupId(),
-							new InfoItemReference(
-								JournalArticle.class.getName(),
-								journalArticle.getResourcePrimKey()),
-							new ByteArrayInputStream(
-								stringFile.getBytes(StandardCharsets.UTF_8)));
-
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext();
-
-				serviceContext.setWorkflowAction(
-					WorkflowConstants.ACTION_SAVE_DRAFT);
-
-				_translationEntry =
-					_translationEntryService.addOrUpdateTranslationEntry(
-						_group.getGroupId(),
-						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-						infoItemReference, infoItemFieldValues, serviceContext);
-			});
+		_addDraftTranslation(journalArticle, LocaleUtil.SPAIN);
 
 		JournalTestUtil.updateArticle(journalArticle, "newTitle");
 
@@ -525,8 +335,7 @@ public class TranslationEntryServiceTest {
 			TestPropsValues.getUserId(),
 			_translationEntry.getTranslationEntryId(),
 			WorkflowConstants.STATUS_DENIED,
-			ServiceContextTestUtil.getServiceContext(),
-			new HashMap<String, Serializable>());
+			ServiceContextTestUtil.getServiceContext(), new HashMap<>());
 
 		latestJournalArticle = _journalArticleService.getLatestArticle(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),
@@ -575,6 +384,53 @@ public class TranslationEntryServiceTest {
 						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 						infoItemReference, infoItemFieldValues,
 						ServiceContextTestUtil.getServiceContext());
+			});
+	}
+
+	private void _addDraftTranslation(
+			JournalArticle journalArticle, Locale locale)
+		throws Exception {
+
+		TranslationTestUtil.withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role,
+					TranslationConstants.RESOURCE_NAME + "." +
+						LocaleUtil.toLanguageId(locale),
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(_group.getGroupId()),
+					TranslationActionKeys.TRANSLATE);
+
+				InfoItemReference infoItemReference = new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
+
+				String stringFile = StringUtil.replace(
+					TranslationTestUtil.readFileToString(
+						"test-journal-article-only-title.xlf"),
+					"$ARTICLE_ID",
+					String.valueOf(journalArticle.getResourcePrimKey()));
+
+				InfoItemFieldValues infoItemFieldValues =
+					_xliffTranslationInfoItemFieldValuesImporter.
+						importInfoItemFieldValues(
+							_group.getGroupId(),
+							new InfoItemReference(
+								JournalArticle.class.getName(),
+								journalArticle.getResourcePrimKey()),
+							new ByteArrayInputStream(
+								stringFile.getBytes(StandardCharsets.UTF_8)));
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext();
+
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+
+				_translationEntry =
+					_translationEntryService.addOrUpdateTranslationEntry(
+						_group.getGroupId(), LocaleUtil.toLanguageId(locale),
+						infoItemReference, infoItemFieldValues, serviceContext);
 			});
 	}
 

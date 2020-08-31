@@ -66,14 +66,26 @@ public class FragmentStyledLayoutStructureItem
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
+		JSONObject stylesJSONObject = jsonObject.getJSONObject("styles");
+
+		if (stylesJSONObject == null) {
+			stylesJSONObject = JSONFactoryUtil.createJSONObject();
+		}
+
 		if (_fragmentConfigurationJSONObject != null) {
 			for (String key : _fragmentConfigurationJSONObject.keySet()) {
 				jsonObject.put(key, _fragmentConfigurationJSONObject.get(key));
+
+				stylesJSONObject.put(
+					key, _fragmentConfigurationJSONObject.get(key));
 			}
 		}
 
 		return jsonObject.put(
-			"fragmentEntryLinkId", String.valueOf(_fragmentEntryLinkId));
+			"fragmentEntryLinkId", String.valueOf(_fragmentEntryLinkId)
+		).put(
+			"styles", stylesJSONObject
+		);
 	}
 
 	@Override

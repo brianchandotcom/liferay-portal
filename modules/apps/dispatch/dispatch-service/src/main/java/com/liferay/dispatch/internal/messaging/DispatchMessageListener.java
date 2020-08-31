@@ -96,24 +96,11 @@ public class DispatchMessageListener implements MessageListener {
 			long dispatchTriggerId)
 		throws PortalException {
 
-		ScheduledTaskExecutorService scheduledTaskExecutorService = null;
-
 		DispatchTrigger dispatchTrigger =
-			_dispatchTriggerLocalService.getDispatchTrigger(
-				dispatchTriggerId);
+			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
 
-		for (String key :
-				_scheduledTaskExecutorServiceTrackerMap.keySet()) {
-
-			if (key.equals(dispatchTrigger.getType())) {
-				scheduledTaskExecutorService =
-					_scheduledTaskExecutorServiceTrackerMap.getService(key);
-
-				break;
-			}
-		}
-
-		return scheduledTaskExecutorService;
+		return _scheduledTaskExecutorServiceTrackerMap.getService(
+			dispatchTrigger.getType());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

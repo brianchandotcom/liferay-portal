@@ -371,7 +371,5 @@ function receiveMessage(event) {
 }
 
 export default function init() {
-	log('init');
-
 	window.addEventListener('message', receiveMessage);
 }

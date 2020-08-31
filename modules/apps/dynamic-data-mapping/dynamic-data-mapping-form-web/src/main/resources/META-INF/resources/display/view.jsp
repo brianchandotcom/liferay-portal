@@ -83,17 +83,6 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 				DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
 				%>
 
-				<c:if test="<%= !ddmFormDisplayContext.hasValidStorageType(formInstance) %>">
-					<div class="ddm-form-basic-info">
-						<clay:container-fluid>
-							<clay:alert
-								displayType="danger"
-								message='<%= LanguageUtil.format(request, "this-form-was-created-using-a-storage-type-x-that-is-not-available-for-this-liferay-dxp-installation.-install-x-to-make-it-available-for-editing", formInstance.getStorageType()) %>'
-							/>
-						</clay:container-fluid>
-					</div>
-				</c:if>
-
 				<div class="portlet-forms">
 					<aui:form action="<%= addFormInstanceRecordActionURL %>" data-DDMFormInstanceId="<%= formInstanceId %>" data-senna-off="true" method="post" name="fm">
 						<aui:input name="currentURL" type="hidden" value="<%= currentURL %>" />
@@ -159,6 +148,17 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 									<clay:alert
 										displayType="warning"
 										message="you-do-not-have-the-permission-to-submit-this-form"
+									/>
+								</clay:container-fluid>
+							</div>
+						</c:if>
+
+						<c:if test="<%= !ddmFormDisplayContext.hasValidStorageType(formInstance) %>">
+							<div class="ddm-form-basic-info">
+								<clay:container-fluid>
+									<clay:alert
+										displayType="danger"
+										message='<%= LanguageUtil.format(request, "this-form-was-created-using-a-storage-type-x-that-is-not-available-for-this-liferay-dxp-installation.-install-x-to-make-it-available-for-editing", formInstance.getStorageType()) %>'
 									/>
 								</clay:container-fluid>
 							</div>

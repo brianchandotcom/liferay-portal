@@ -68,7 +68,6 @@ definition {
 	@priority = "5"
 	test AddAndRemoveUser {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

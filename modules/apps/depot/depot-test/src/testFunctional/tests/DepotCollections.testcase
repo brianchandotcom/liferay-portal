@@ -995,7 +995,6 @@ definition {
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Asset Lists";
 
 		DepotNavigator.openDepotAdmin();

@@ -217,6 +217,12 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "${webContentTitle}");
 
+		if (isSet(viewAllContent)) {
+			Click(
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "${webContentTitle}");
+		}
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
 			value1 = "${webContentContent}");

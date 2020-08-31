@@ -100,7 +100,8 @@ export const getFieldLabel = (dataDefinition, fieldName) => {
 export const getOptionLabel = (
 	options = {},
 	value,
-	defaultLanguageId = themeDisplay.getDefaultLanguageId()
+	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
+	languageId = themeDisplay.getLanguageId()
 ) => {
 	const getLabel = (languageId) => {
 		if (options[languageId]) {
@@ -109,7 +110,5 @@ export const getOptionLabel = (
 		}
 	};
 
-	return (
-		getLabel(themeDisplay.getLanguageId()) || getLabel(defaultLanguageId)
-	);
+	return getLabel(languageId) || getLabel(defaultLanguageId) || value;
 };

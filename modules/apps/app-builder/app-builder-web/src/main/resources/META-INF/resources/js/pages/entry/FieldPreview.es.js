@@ -128,21 +128,37 @@ const DocumentRenderer = ({displayType, value = {}}) => {
 	);
 };
 
+const getRepeatableOptionValues = (value = '') => {
+	if (Array.isArray(value)) {
+		return value;
+	}
+
+	return value
+		.substring(1, value.length - 1)
+		.split(',')
+		.map((v) => v.trim());
+};
+
 const OptionsRenderer = ({
-	defaultLanguageId,
+	dataDefinitionField,
 	displayType,
-	options,
+	getOptionValue,
 	values = [],
 }) => {
-	const labels = values
-		.map((value) =>
-			DataDefinitionUtils.getOptionLabel(
-				options,
-				value,
-				defaultLanguageId
-			)
-		)
-		.filter(Boolean);
+	const {repeatable} = dataDefinitionField;
+
+	const labels = values.map((value) => {
+		if (repeatable) {
+			let newValue = value;
+			newValue = getRepeatableOptionValues(newValue)
+				.map(getOptionValue)
+				.join(', ');
+
+			return newValue;
+		}
+
+		return getOptionValue(value);
+	});
 
 	if (displayType === 'list' || labels.length === 0) {
 		return <StringRenderer value={labels.join(', ')} />;
@@ -206,21 +222,35 @@ export const SectionRenderer = ({
 const getFieldValueRenderer = (
 	dataDefinitionField,
 	displayType,
-	defaultLanguageId
+	userLanguageId
 ) => {
-	const {customProperties, fieldType} = dataDefinitionField;
+	const {
+		customProperties,
+		defaultLanguageId,
+		fieldType,
+		repeatable,
+	} = dataDefinitionField;
+	const {multiple, options} = customProperties;
+
+	const getOptionValue = (value) =>
+		DataDefinitionUtils.getOptionLabel(
+			options,
+			value,
+			defaultLanguageId,
+			userLanguageId
+		);
+
+	const OptionsRendererWrapper = ({value}) => (
+		<OptionsRenderer
+			dataDefinitionField={dataDefinitionField}
+			displayType={displayType}
+			getOptionValue={getOptionValue}
+			values={value}
+		/>
+	);
 
 	if (fieldType === 'checkbox_multiple') {
-		const {options} = customProperties;
-
-		return ({value}) => (
-			<OptionsRenderer
-				defaultLanguageId={defaultLanguageId}
-				displayType={displayType}
-				options={options}
-				values={value}
-			/>
-		);
+		return OptionsRendererWrapper;
 	}
 
 	if (fieldType === 'document_library') {
@@ -230,42 +260,32 @@ const getFieldValueRenderer = (
 	}
 
 	if (fieldType === 'radio') {
-		const {options} = customProperties;
+		return ({value}) => {
+			let newValue = getOptionValue(value);
 
-		return ({value}) => (
-			<StringRenderer
-				value={DataDefinitionUtils.getOptionLabel(
-					options,
-					value,
-					defaultLanguageId
-				)}
-			/>
-		);
+			if (repeatable) {
+				newValue = getRepeatableOptionValues(value).map(getOptionValue);
+			}
+
+			return <StringRenderer value={newValue} />;
+		};
 	}
 
 	if (fieldType === 'select') {
-		const {multiple, options} = customProperties;
-
 		if (multiple) {
-			return ({value}) => (
-				<OptionsRenderer
-					defaultLanguageId={defaultLanguageId}
-					displayType={displayType}
-					options={options}
-					values={value}
-				/>
-			);
+			return OptionsRendererWrapper;
 		}
 
-		return ({value = []}) => (
-			<StringRenderer
-				value={DataDefinitionUtils.getOptionLabel(
-					options,
-					value[0],
-					defaultLanguageId
-				)}
-			/>
-		);
+		return ({value = []}) => {
+			let newValue = getOptionValue(value[0]);
+			if (repeatable) {
+				newValue = value
+					.map(getRepeatableOptionValues)
+					.map((value) => getOptionValue(value[0]));
+			}
+
+			return <StringRenderer value={newValue} />;
+		};
 	}
 
 	return ({value}) => <StringRenderer value={value} />;
@@ -277,6 +297,7 @@ export const FieldValuePreview = ({
 	displayType = 'form',
 	fieldName,
 }) => {
+	const {userLanguageId} = useContext(AppContext);
 	const {defaultLanguageId} = dataDefinition;
 	const dataDefinitionField = DataDefinitionUtils.getDataDefinitionField(
 		dataDefinition,
@@ -285,7 +306,7 @@ export const FieldValuePreview = ({
 	const Renderer = getFieldValueRenderer(
 		dataDefinitionField,
 		displayType,
-		defaultLanguageId
+		userLanguageId
 	);
 	const value = dataRecordValues[fieldName];
 

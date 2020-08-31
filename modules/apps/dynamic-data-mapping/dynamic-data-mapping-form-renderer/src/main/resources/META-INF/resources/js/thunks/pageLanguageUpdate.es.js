@@ -17,7 +17,7 @@ import {fetch} from 'frontend-js-web';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 
-const formatDataRecord = (languageId, pages) => {
+const formatDataRecord = (languageId, pages, preserveValue) => {
 	const dataRecordValues = {};
 
 	const visitor = new PagesVisitor(pages);
@@ -27,9 +27,14 @@ const formatDataRecord = (languageId, pages) => {
 		localizable,
 		localizedValue,
 		repeatable,
+		type,
 		value,
 		visible,
 	}) => {
+		if (type === 'fieldset') {
+			return;
+		}
+
 		let _value = value;
 
 		if (!visible) {
@@ -38,12 +43,18 @@ const formatDataRecord = (languageId, pages) => {
 
 		if (localizable) {
 			if (!dataRecordValues[fieldName]) {
-				dataRecordValues[fieldName] = {
-					...{
+				if (preserveValue) {
+					dataRecordValues[fieldName] = {
+						...localizedValue,
 						[languageId]: [],
-					},
-					...localizedValue,
-				};
+					};
+				}
+				else {
+					dataRecordValues[fieldName] = {
+						[languageId]: [],
+						...localizedValue,
+					};
+				}
 			}
 
 			if (repeatable) {
@@ -54,6 +65,13 @@ const formatDataRecord = (languageId, pages) => {
 					...localizedValue,
 					[languageId]: _value,
 				};
+			}
+
+			if (preserveValue) {
+				Object.keys(dataRecordValues[fieldName]).forEach((key) => {
+					dataRecordValues[fieldName][key] =
+						dataRecordValues[fieldName][languageId];
+				});
 			}
 		}
 		else {
@@ -80,7 +98,7 @@ const getDataRecordValues = ({
 	prevEditingLanguageId,
 }) => {
 	if (preserveValue) {
-		return formatDataRecord(nextEditingLanguageId, pages);
+		return formatDataRecord(nextEditingLanguageId, pages, true);
 	}
 
 	const dataRecordValues = formatDataRecord(prevEditingLanguageId, pages);
@@ -137,11 +155,27 @@ export default function pageLanguageUpdate({
 			.then(({pages}) => {
 				const visitor = new PagesVisitor(pages);
 				const newPages = visitor.mapFields(
-					(field) => {
+					(field, index) => {
 						if (!field.localizedValue) {
 							field.localizedValue = {};
 						}
-						if (newDataRecordValues[field.fieldName]) {
+
+						if (field.repeatable) {
+							let values = {};
+							Object.keys(
+								newDataRecordValues[field.fieldName]
+							).forEach((key) => {
+								values = {
+									...values,
+									[key]:
+										newDataRecordValues[field.fieldName][
+											key
+										][index],
+								};
+							});
+							field.localizedValue = values;
+						}
+						else if (newDataRecordValues[field.fieldName]) {
 							field.localizedValue = {
 								...newDataRecordValues[field.fieldName],
 							};

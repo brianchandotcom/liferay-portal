@@ -56,22 +56,6 @@ function has(object, property) {
 
 const LOG_PREFIX = `[HOST: remote-app-support]`;
 
-function log(message, ...rest) {
-	if (process.env.NODE_ENV === 'development') {
-		const messages = [...rest];
-
-		if (typeof message === 'string') {
-			messages.unshift(`${LOG_PREFIX}: ${message}`);
-		}
-		else {
-			messages.unshift(LOG_PREFIX, message);
-		}
-
-		// eslint-disable-next-line no-console
-		console.log(...messages);
-	}
-}
-
 function warning(message, ...rest) {
 	if (process.env.NODE_ENV === 'development') {
 		const messages = [...rest];

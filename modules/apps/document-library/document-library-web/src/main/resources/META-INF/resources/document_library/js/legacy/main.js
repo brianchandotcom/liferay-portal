@@ -528,7 +528,7 @@ AUI.add(
 							}
 						},
 						selectEventName: namespace + 'selectFolder',
-						size: 'md',
+						size: 'lg',
 						title: Lang.sub(dialogTitle, [selectedItems]),
 						url: instance.get('selectFolderURL'),
 					});

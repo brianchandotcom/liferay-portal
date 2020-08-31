@@ -124,12 +124,17 @@
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT CONCAT(CAST_TEXT(FragmentEntryLink.classNameId), '-', CAST_TEXT(FragmentEntryLink.classPK))) AS COUNT_VALUE
+				COUNT(*) AS COUNT_VALUE
 			FROM
-				FragmentEntryLink
-			WHERE
-				(FragmentEntryLink.groupId = ?) AND
-				(FragmentEntryLink.fragmentEntryId = ?)
+				(
+					SELECT
+						DISTINCT FragmentEntryLink.classNameId, FragmentEntryLink.classPK
+					FROM
+						FragmentEntryLink
+					WHERE
+						(FragmentEntryLink.groupId = ?) AND
+						(FragmentEntryLink.fragmentEntryId = ?)
+				) TEMP_TABLE
 		]]>
 	</sql>
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F_C">

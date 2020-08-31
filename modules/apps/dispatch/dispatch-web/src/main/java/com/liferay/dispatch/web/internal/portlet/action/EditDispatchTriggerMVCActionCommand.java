@@ -128,8 +128,6 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			_sendMessage(dispatchTriggerId);
-
-			Thread.sleep(2000);
 		}
 		catch (Exception exception) {
 			hideDefaultErrorMessage(actionRequest);

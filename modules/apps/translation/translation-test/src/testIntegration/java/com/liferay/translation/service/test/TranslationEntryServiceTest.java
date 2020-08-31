@@ -20,10 +20,12 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -31,7 +33,9 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -39,6 +43,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.constants.TranslationConstants;
 import com.liferay.translation.model.TranslationEntry;
+import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.service.TranslationEntryService;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
@@ -114,8 +119,72 @@ public class TranslationEntryServiceTest {
 			});
 	}
 
+	@Test
+	public void testAddOrUpdateTranslationEntryUpdateJournalArticle()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		double version = journalArticle.getVersion();
+
+		TranslationTestUtil.withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role,
+					TranslationConstants.RESOURCE_NAME + "." +
+						LocaleUtil.toLanguageId(LocaleUtil.US),
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(_group.getGroupId()),
+					TranslationActionKeys.TRANSLATE);
+
+				RoleTestUtil.addResourcePermission(
+					role, JournalArticle.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.UPDATE);
+
+				InfoItemReference infoItemReference = new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
+
+				InfoItemFieldValuesProvider<JournalArticle>
+					infoItemFieldValuesProvider =
+						(InfoItemFieldValuesProvider<JournalArticle>)
+							_infoItemServiceTracker.getFirstInfoItemService(
+								InfoItemFieldValuesProvider.class,
+								JournalArticle.class.getName());
+
+				InfoItemFieldValues infoItemFieldValues =
+					infoItemFieldValuesProvider.getInfoItemFieldValues(
+						journalArticle);
+
+				StringUtil.replace(
+					TranslationTestUtil.readFileToString(
+						"test-journal-article.xlf"),
+					"$ARTICLE_ID",
+					String.valueOf(journalArticle.getResourcePrimKey()));
+
+				_translationEntry =
+					_translationEntryLocalService.addOrUpdateTranslationEntry(
+						_group.getGroupId(),
+						LocaleUtil.toLanguageId(LocaleUtil.US),
+						infoItemReference, infoItemFieldValues,
+						ServiceContextTestUtil.getServiceContext());
+
+				JournalArticle latestJournalArticle =
+					_journalArticleService.getLatestArticle(
+						journalArticle.getGroupId(),
+						journalArticle.getArticleId(),
+						WorkflowConstants.STATUS_ANY);
+
+				Assert.assertTrue(version < latestJournalArticle.getVersion());
+			});
+	}
+
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddOrUpdateTranslationEntryWithoutTranlationPermission()
+	public void testAddOrUpdateTranslationEntryWithoutTranslationPermission()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -162,8 +231,14 @@ public class TranslationEntryServiceTest {
 	@Inject
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
+	@Inject
+	private JournalArticleService _journalArticleService;
+
 	@DeleteAfterTestRun
 	private TranslationEntry _translationEntry;
+
+	@Inject
+	private TranslationEntryLocalService _translationEntryLocalService;
 
 	@Inject
 	private TranslationEntryService _translationEntryService;

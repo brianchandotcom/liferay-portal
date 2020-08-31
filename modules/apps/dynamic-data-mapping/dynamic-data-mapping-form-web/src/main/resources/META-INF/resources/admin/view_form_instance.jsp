@@ -96,7 +96,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 											cssClass="table-cell-expand table-title"
 											name="name"
 										>
-											<span style="color: #da1414; margin-right: 5px;">
+											<span class="error-icon">
 												<liferay-ui:icon
 													icon="exclamation-full"
 													markupView="lexicon"
@@ -104,7 +104,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 													toolTip="<%= true %>"
 												/>
 											</span>
-											<span style="font-weight: normal;">
+											<span class="invalid-form-instance">
 												<%= HtmlUtil.escape(formInstance.getName(locale)) %>
 											</span>
 										</liferay-ui:search-container-column-text>

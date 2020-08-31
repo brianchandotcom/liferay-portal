@@ -42,7 +42,7 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 				</aui:a>
 			</c:when>
 			<c:otherwise>
-				<span style="color: #da1414; margin-right: 5px;">
+				<span class="error-icon">
 					<liferay-ui:icon
 						icon="exclamation-full"
 						markupView="lexicon"
@@ -50,7 +50,7 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 						toolTip="<%= true %>"
 					/>
 				</span>
-				<span style="font-weight: normal;">
+				<span class="invalid-form-instance">
 					<%= HtmlUtil.escape(ddmFormInstance.getName(locale)) %>
 				</span>
 			</c:otherwise>

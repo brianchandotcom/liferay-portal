@@ -8,6 +8,11 @@
 	}
 }
 
+.error-icon {
+	color: #da1414;
+	margin-right: 5px;
+}
+
 .form-builder-publish-popover {
 	max-width: 500px;
 }
@@ -62,6 +67,10 @@
 .form-builder-publish-popover-content {
 	display: table;
 	width: 500px;
+}
+
+.invalid-form-instance {
+	font-weight: normal;
 }
 
 .publish-popover-content {

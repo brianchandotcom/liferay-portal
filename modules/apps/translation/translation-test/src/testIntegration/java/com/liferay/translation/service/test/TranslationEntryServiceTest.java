@@ -42,10 +42,18 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.constants.TranslationConstants;
+import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.service.TranslationEntryService;
 import com.liferay.translation.test.util.TranslationTestUtil;
+
+import java.io.ByteArrayInputStream;
+import java.io.Serializable;
+
+import java.nio.charset.StandardCharsets;
+
+import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -183,6 +191,89 @@ public class TranslationEntryServiceTest {
 			});
 	}
 
+	@Test
+	public void testAddOrUpdateTranslationEntryUpdateJournalArticleApprovedTranslation()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		TranslationTestUtil.withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role,
+					TranslationConstants.RESOURCE_NAME + "." +
+						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(_group.getGroupId()),
+					TranslationActionKeys.TRANSLATE);
+
+				RoleTestUtil.addResourcePermission(
+					role, JournalArticle.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.UPDATE);
+
+				InfoItemReference infoItemReference = new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
+
+				String stringFile = StringUtil.replace(
+					TranslationTestUtil.readFileToString(
+						"test-journal-article-only-title.xlf"),
+					"$ARTICLE_ID",
+					String.valueOf(journalArticle.getResourcePrimKey()));
+
+				InfoItemFieldValues infoItemFieldValues =
+					_xliffTranslationInfoItemFieldValuesImporter.
+						importInfoItemFieldValues(
+							_group.getGroupId(),
+							new InfoItemReference(
+								JournalArticle.class.getName(),
+								journalArticle.getResourcePrimKey()),
+							new ByteArrayInputStream(
+								stringFile.getBytes(StandardCharsets.UTF_8)));
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext();
+
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+
+				_translationEntry =
+					_translationEntryService.addOrUpdateTranslationEntry(
+						_group.getGroupId(),
+						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+						infoItemReference, infoItemFieldValues, serviceContext);
+			});
+
+		JournalTestUtil.updateArticle(journalArticle, "newTitle");
+
+		JournalArticle latestJournalArticle =
+			_journalArticleService.getLatestArticle(
+				journalArticle.getGroupId(), journalArticle.getArticleId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			"newTitle", latestJournalArticle.getTitle(LocaleUtil.SPAIN));
+
+		_translationEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(),
+			_translationEntry.getTranslationEntryId(),
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(),
+			new HashMap<String, Serializable>());
+
+		latestJournalArticle = _journalArticleService.getLatestArticle(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			"Este es el titulo",
+			latestJournalArticle.getTitle(LocaleUtil.SPAIN));
+	}
+
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddOrUpdateTranslationEntryWithoutTranslationPermission()
 		throws Exception {
@@ -242,5 +333,9 @@ public class TranslationEntryServiceTest {
 
 	@Inject
 	private TranslationEntryService _translationEntryService;
+
+	@Inject(filter = "content.type=application/xliff+xml")
+	private TranslationInfoItemFieldValuesImporter
+		_xliffTranslationInfoItemFieldValuesImporter;
 
 }

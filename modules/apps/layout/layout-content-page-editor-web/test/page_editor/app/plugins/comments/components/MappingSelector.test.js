@@ -34,7 +34,7 @@ import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META
 import MappingSelector from '../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/MappingSelector';
 
 const infoItem = {
-	className: 'infoItemClassName',
+	className: 'InfoItemClassName',
 	classNameId: 'InfoItemClassNameId',
 	classPK: 'infoItemClassPK',
 	title: 'Info Item',
@@ -222,6 +222,7 @@ describe('MappingSelector', () => {
 		});
 
 		expect(onMappingSelect).toBeCalledWith({
+			className: 'InfoItemClassName',
 			classNameId: 'InfoItemClassNameId',
 			classPK: 'infoItemClassPK',
 			fieldId: 'text-field-1',
@@ -279,6 +280,7 @@ describe('MappingSelector', () => {
 		});
 
 		expect(onMappingSelect).toBeCalledWith({
+			className: '',
 			classNameId: '',
 			classPK: '',
 			fieldId: '',

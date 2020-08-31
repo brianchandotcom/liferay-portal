@@ -154,7 +154,7 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> importExportTranslationEnabled,
 			_getImportTranslationActionUnsafeConsumer()
 		).add(
-			() -> hasViewPermission && (availableLanguageIds.length > 1),
+			() -> hasUpdatePermission && (availableLanguageIds.length > 1),
 			_getDeleteArticleTranslationsActionUnsafeConsumer()
 		).add(
 			() -> hasViewPermission && hasUpdatePermission,

@@ -192,6 +192,10 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 	}
 
 	public static boolean hasSourceFiles(Task task, Spec<File> spec) {
+		if (exists(task.getProject(), ".lfrbuild-releng-ignore-source")) {
+			return false;
+		}
+
 		TaskInputs taskInputs = task.getInputs();
 
 		return hasFiles(taskInputs.getSourceFiles(), spec);

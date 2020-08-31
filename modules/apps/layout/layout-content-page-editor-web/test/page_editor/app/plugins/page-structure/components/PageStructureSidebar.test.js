@@ -237,7 +237,7 @@ describe('PageStructureSidebar', () => {
 	it('disables items that are in masterLayout', () => {
 		const {getByLabelText} = renderComponent();
 		const button = getByLabelText('select-x-container');
-		expect(button).toBeDisabled();
+		expect(button.parentElement).toHaveAttribute('aria-disabled', 'true');
 	});
 
 	it('allows removing items of certain types', () => {

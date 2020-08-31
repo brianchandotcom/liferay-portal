@@ -338,6 +338,23 @@ public class RemoteAppEntryLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static java.util.List<com.liferay.remote.app.model.RemoteAppEntry>
+			searchRemoteAppEntries(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchRemoteAppEntries(
+			companyId, keywords, start, end, sort);
+	}
+
+	public static int searchRemoteAppEntriesCount(
+			long companyId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchRemoteAppEntriesCount(companyId, keywords);
+	}
+
 	public static com.liferay.remote.app.model.RemoteAppEntry
 			updateRemoteAppEntry(
 				long remoteAppEntryId,

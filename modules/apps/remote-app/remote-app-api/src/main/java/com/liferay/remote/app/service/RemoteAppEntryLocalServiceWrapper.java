@@ -359,6 +359,25 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.remote.app.model.RemoteAppEntry>
+			searchRemoteAppEntries(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteAppEntryLocalService.searchRemoteAppEntries(
+			companyId, keywords, start, end, sort);
+	}
+
+	@Override
+	public int searchRemoteAppEntriesCount(long companyId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteAppEntryLocalService.searchRemoteAppEntriesCount(
+			companyId, keywords);
+	}
+
+	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry updateRemoteAppEntry(
 			long remoteAppEntryId,
 			java.util.Map<java.util.Locale, String> nameMap, String url,

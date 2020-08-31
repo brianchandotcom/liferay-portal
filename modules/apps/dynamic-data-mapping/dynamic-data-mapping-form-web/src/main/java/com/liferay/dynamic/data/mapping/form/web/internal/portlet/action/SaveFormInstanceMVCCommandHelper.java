@@ -37,15 +37,21 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 
+import java.net.InetAddress;
 import java.net.URI;
+import java.net.UnknownHostException;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -55,6 +61,8 @@ import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -121,7 +129,9 @@ public class SaveFormInstanceMVCCommandHelper {
 		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
 			portletRequest);
 
-		validateRedirectURL(settingsDDMFormValues);
+		validateRedirectURL(
+			settingsDDMFormValues,
+			_portal.getHttpServletRequest(portletRequest));
 
 		return formInstanceService.addFormInstance(
 			groupId, nameMap, descriptionMap, ddmForm, ddmFormLayout,
@@ -253,14 +263,18 @@ public class SaveFormInstanceMVCCommandHelper {
 		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
 			portletRequest);
 
-		validateRedirectURL(settingsDDMFormValues);
+		validateRedirectURL(
+			settingsDDMFormValues,
+			_portal.getHttpServletRequest(portletRequest));
 
 		return formInstanceService.updateFormInstance(
 			formInstanceId, nameMap, descriptionMap, ddmForm, ddmFormLayout,
 			settingsDDMFormValues, serviceContext);
 	}
 
-	protected void validateRedirectURL(DDMFormValues settingsDDMFormValues)
+	protected void validateRedirectURL(
+			DDMFormValues settingsDDMFormValues,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
@@ -284,7 +298,69 @@ public class SaveFormInstanceMVCCommandHelper {
 				String escapedRedirect = _portal.escapeRedirect(valueString);
 
 				if (Validator.isNull(escapedRedirect)) {
-					throw new FormInstanceSettingsRedirectURLException();
+					URI uri = _getURI(valueString);
+
+					if (uri != null) {
+						StringBundler sb = new StringBundler(4);
+
+						sb.append("the-specified-redirect-url-is-not-allowed-");
+						sb.append("due-to-installation-settings.-add-x-into-");
+						sb.append("the-property-x-in-the-file-portal-");
+						sb.append("ext.properties-to-fix-it");
+
+						String securityMode =
+							PropsValues.REDIRECT_URL_SECURITY_MODE;
+
+						String host = uri.getHost();
+
+						if (securityMode.equals("domain")) {
+							List<String> allowedDomains = Arrays.asList(
+								PropsValues.REDIRECT_URL_DOMAINS_ALLOWED);
+
+							if (!allowedDomains.contains(host)) {
+								throw new FormInstanceSettingsRedirectURLException(
+									LanguageUtil.format(
+										httpServletRequest, sb.toString(),
+										new String[] {
+											host, "redirect.url.domains.allowed"
+										}));
+							}
+						}
+						else if (securityMode.equals("ip")) {
+							try {
+								List<String> allowedIps = Arrays.asList(
+									PropsValues.REDIRECT_URL_IPS_ALLOWED);
+
+								InetAddress inetAddress =
+									InetAddressUtil.getInetAddressByName(host);
+
+								String hostAddress =
+									inetAddress.getHostAddress();
+
+								if (!allowedIps.contains(hostAddress)) {
+									throw new FormInstanceSettingsRedirectURLException(
+										LanguageUtil.format(
+											httpServletRequest, sb.toString(),
+											new String[] {
+												hostAddress,
+												"redirect.url.ips.allowed"
+											}));
+								}
+							}
+							catch (UnknownHostException unknownHostException) {
+								if (_log.isDebugEnabled()) {
+									_log.debug(
+										unknownHostException,
+										unknownHostException);
+								}
+							}
+						}
+					}
+
+					throw new FormInstanceSettingsRedirectURLException(
+						LanguageUtil.get(
+							httpServletRequest,
+							"the-specified-redirect-url-is-not-allowed"));
 				}
 			}
 		}

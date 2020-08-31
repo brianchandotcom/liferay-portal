@@ -275,6 +275,31 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			assetCategory.getTitle(LocaleUtil.ENGLISH));
 	}
 
+	@Test
+	public void testGetInfoFieldValuesPublicVocabularyWithCategory()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = _addAssetVocabulary(
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
+
+		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		_assetEntryLocalService.addAssetCategoryAssetEntry(
+			assetCategory.getCategoryId(), assetEntry);
+
+		List<InfoFieldValue<Object>> filteredInfoFieldValues =
+			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
+
+		Category category = _getCategory(filteredInfoFieldValues);
+
+		Assert.assertEquals(
+			category.getLabel(LocaleUtil.ENGLISH),
+			assetCategory.getTitle(LocaleUtil.ENGLISH));
+	}
+
 	private AssetCategory _addAssetCategory(AssetVocabulary assetVocabulary)
 		throws Exception {
 

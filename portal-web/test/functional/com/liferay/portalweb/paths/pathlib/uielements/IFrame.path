@@ -134,6 +134,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME</td>
+	<td>//iframe[contains(@class,'page-editor__global-context-iframe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_VARIATION_IFRAME</td>
 	<td>//iframe[contains(@id,'pagesVariationsDialog_iframe_')]</td>
 	<td></td>

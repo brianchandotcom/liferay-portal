@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.change.tracking.spi.reference;
 
+import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
@@ -22,8 +23,10 @@ import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
+import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.model.RepositoryTable;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,6 +56,25 @@ public class DLFileEntryTableReferenceDefinition
 			ImageTable.INSTANCE.imageId
 		).assetEntryReference(
 			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntry.class
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				AssetDisplayPageEntryTable.INSTANCE
+			).innerJoinON(
+				DLFileEntryTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.groupId.eq(
+					AssetDisplayPageEntryTable.INSTANCE.groupId
+				).and(
+					DLFileEntryTable.INSTANCE.fileEntryId.eq(
+						AssetDisplayPageEntryTable.INSTANCE.classPK)
+				)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					AssetDisplayPageEntryTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(FileEntry.class.getName())
+				)
+			)
 		).resourcePermissionReference(
 			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntry.class
 		);

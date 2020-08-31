@@ -475,7 +475,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		}
 
 		if (PropsValues.AUTO_DEPLOY_COPY_LOG4J) {
-			copyDependencyXml("log4j.properties", srcFile + "/WEB-INF/classes");
+			copyDependencyXml(
+				"log4j2.properties", srcFile + "/WEB-INF/classes");
 		}
 
 		File servicePropertiesFile = new File(

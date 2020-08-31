@@ -484,7 +484,7 @@ definition {
 
 		task ("View the Heading fragment style") {
 			PageEditor.viewFragmentStyle(
-				alignment = "Center",
+				alignment = "center",
 				fragmentName = "heading",
 				headingLevel = "H2",
 				marginBottom = "1",

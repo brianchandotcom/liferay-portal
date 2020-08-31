@@ -400,7 +400,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			return commerceOrder;
 		}
 
-		String domain = CookieKeys.getDomain(themeDisplay.getRequest());
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
+		HttpSession session = httpServletRequest.getSession();
 
 		String commerceOrderUuidWebKey = getCookieName(
 			commerceOrder.getGroupId());
@@ -413,9 +415,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		if ((threadLocalCommerceOrder != null) &&
 			threadLocalCommerceOrder.isGuestOrder()) {
 
-			CookieKeys.deleteCookies(
-				themeDisplay.getRequest(), themeDisplay.getResponse(), domain,
-				commerceOrderUuidWebKey);
+			session.removeAttribute(commerceOrderUuidWebKey);
 
 			_commerceOrderUuidThreadLocal.remove();
 		}
@@ -431,9 +431,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				CommerceOrderConstants.ORDER_STATUS_OPEN);
 
 		if (userCommerceOrder == null) {
-			CookieKeys.deleteCookies(
-				themeDisplay.getRequest(), themeDisplay.getResponse(), domain,
-				commerceOrderUuidWebKey);
+			session.removeAttribute(commerceOrderUuidWebKey);
 
 			return _commerceOrderLocalService.updateAccount(
 				commerceOrder.getCommerceOrderId(), user.getUserId(),
@@ -441,16 +439,14 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			themeDisplay.getRequest());
+			httpServletRequest);
 
 		_commerceOrderService.mergeGuestCommerceOrder(
 			commerceOrder.getCommerceOrderId(),
 			userCommerceOrder.getCommerceOrderId(),
-			_getCommerceContext(themeDisplay.getRequest()), serviceContext);
+			_getCommerceContext(httpServletRequest), serviceContext);
 
-		CookieKeys.deleteCookies(
-			themeDisplay.getRequest(), themeDisplay.getResponse(), domain,
-			commerceOrderUuidWebKey);
+		session.removeAttribute(commerceOrderUuidWebKey);
 
 		return userCommerceOrder;
 	}
@@ -480,12 +476,15 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			return null;
 		}
 
+		String cookieName = getCookieName(commerceChannel.getGroupId());
+
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
+		HttpSession session = httpServletRequest.getSession();
+
+		String commerceOrderUuid = (String)session.getAttribute(cookieName);
+
 		if (commerceAccountId != CommerceAccountConstants.ACCOUNT_ID_GUEST) {
-			String cookieName = getCookieName(commerceChannel.getGroupId());
-
-			String commerceOrderUuid = CookieKeys.getCookie(
-				themeDisplay.getRequest(), cookieName, true);
-
 			commerceOrder =
 				_commerceOrderLocalService.fetchCommerceOrderByUuidAndGroupId(
 					commerceOrderUuid, commerceChannel.getGroupId());
@@ -505,11 +504,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				return commerceOrder;
 			}
 		}
-
-		String cookieName = getCookieName(commerceChannel.getGroupId());
-
-		String commerceOrderUuid = CookieKeys.getCookie(
-			themeDisplay.getRequest(), cookieName, true);
 
 		if (Validator.isNotNull(commerceOrderUuid)) {
 			commerceOrder =

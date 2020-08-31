@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.messaging.MessageListenerException;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -83,6 +84,11 @@ public class DispatchMessageListener implements MessageListener {
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ScheduledTaskExecutorService.class,
 				"scheduled.task.executor.service.type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_scheduledTaskExecutorServiceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

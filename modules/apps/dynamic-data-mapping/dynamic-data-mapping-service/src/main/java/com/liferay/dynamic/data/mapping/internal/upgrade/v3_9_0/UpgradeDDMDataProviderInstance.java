@@ -143,7 +143,7 @@ public class UpgradeDDMDataProviderInstance extends UpgradeProcess {
 				ddmFormField.getNestedDDMFormFieldsMap();
 
 			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-				List<DDMFormFieldValue> newNestedDDMFormFieldValue =
+				List<DDMFormFieldValue> newNestedDDMFormFieldValues =
 					new ArrayList<>();
 
 				for (DDMFormFieldValue nestedDDMFormFieldValue :
@@ -163,12 +163,13 @@ public class UpgradeDDMDataProviderInstance extends UpgradeProcess {
 								nestedDDMFormFieldValue);
 						}
 
-						newNestedDDMFormFieldValue.add(nestedDDMFormFieldValue);
+						newNestedDDMFormFieldValues.add(
+							nestedDDMFormFieldValue);
 					}
 				}
 
 				ddmFormFieldValue.setNestedDDMFormFields(
-					newNestedDDMFormFieldValue);
+					newNestedDDMFormFieldValues);
 			}
 		}
 

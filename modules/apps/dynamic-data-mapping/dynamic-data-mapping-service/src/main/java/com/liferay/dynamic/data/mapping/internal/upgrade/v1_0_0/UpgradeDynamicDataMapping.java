@@ -37,8 +37,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
@@ -58,6 +56,7 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustNotDuplicateFieldName;
 import com.liferay.expando.kernel.model.ExpandoColumn;
@@ -267,27 +266,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				throw portalException;
 			}
 		}
-	}
-
-	protected DDMFormValues deserialize(String content, DDMForm ddmForm)
-		throws Exception {
-
-		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
-			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
-				content, ddmForm);
-
-		DDMFormValuesDeserializerDeserializeResponse
-			ddmFormValuesDeserializerDeserializeResponse =
-				_ddmFormValuesDeserializer.deserialize(builder.build());
-
-		Exception exception =
-			ddmFormValuesDeserializerDeserializeResponse.getException();
-
-		if (exception != null) {
-			throw new UpgradeException(exception);
-		}
-
-		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
 	protected DDMForm deserialize(String content, String type)
@@ -1027,7 +1005,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getFullHierarchyDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues = deserialize(data_, ddmForm);
+				DDMFormValues ddmFormValues =
+					DDMFormValuesDeserializeUtil.deserialize(
+						data_, ddmForm, _ddmFormValuesDeserializer);
 
 				transformFieldTypeDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
@@ -1080,7 +1060,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getFullHierarchyDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues = deserialize(data_, ddmForm);
+				DDMFormValues ddmFormValues =
+					DDMFormValuesDeserializeUtil.deserialize(
+						data_, ddmForm, _ddmFormValuesDeserializer);
 
 				transformFieldTypeDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,

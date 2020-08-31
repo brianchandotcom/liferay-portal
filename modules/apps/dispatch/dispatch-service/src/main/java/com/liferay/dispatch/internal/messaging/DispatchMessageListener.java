@@ -55,8 +55,6 @@ public class DispatchMessageListener implements MessageListener {
 			jsonObject = JSONFactoryUtil.createJSONObject(payload);
 		}
 		catch (JSONException jsonException) {
-			_log.error(jsonException, jsonException);
-
 			throw new MessageListenerException(jsonException);
 		}
 

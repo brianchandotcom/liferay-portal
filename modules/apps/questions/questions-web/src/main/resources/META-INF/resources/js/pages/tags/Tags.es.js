@@ -181,7 +181,13 @@ export default withRouter(({history, location}) => {
 											<ClayButtonWithIcon
 												displayType="unstyled"
 												onClick={() => {
-													setSearch('');
+													historyPushParser(
+														buildURL(
+															'',
+															1,
+															pageSize
+														)
+													);
 												}}
 												symbol="times-circle"
 												type="submit"

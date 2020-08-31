@@ -98,20 +98,18 @@ public class DispatchMessageListener implements MessageListener {
 
 		ScheduledTaskExecutorService scheduledTaskExecutorService = null;
 
-		if (_scheduledTaskExecutorServiceTrackerMap != null) {
-			DispatchTrigger dispatchTrigger =
-				_dispatchTriggerLocalService.getDispatchTrigger(
-					dispatchTriggerId);
+		DispatchTrigger dispatchTrigger =
+			_dispatchTriggerLocalService.getDispatchTrigger(
+				dispatchTriggerId);
 
-			for (String key :
-					_scheduledTaskExecutorServiceTrackerMap.keySet()) {
+		for (String key :
+				_scheduledTaskExecutorServiceTrackerMap.keySet()) {
 
-				if (key.equals(dispatchTrigger.getType())) {
-					scheduledTaskExecutorService =
-						_scheduledTaskExecutorServiceTrackerMap.getService(key);
+			if (key.equals(dispatchTrigger.getType())) {
+				scheduledTaskExecutorService =
+					_scheduledTaskExecutorServiceTrackerMap.getService(key);
 
-					break;
-				}
+				break;
 			}
 		}
 

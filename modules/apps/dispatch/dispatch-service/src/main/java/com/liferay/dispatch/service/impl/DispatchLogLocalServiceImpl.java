@@ -72,11 +72,13 @@ public class DispatchLogLocalServiceImpl
 			dispatchTriggerId, start, end);
 	}
 
+	@Override
 	public int getDispatchLogsCount(long dispatchTriggerId) {
 		return dispatchLogPersistence.countByDispatchTriggerId(
 			dispatchTriggerId);
 	}
 
+	@Override
 	public DispatchLog updateDispatchLog(
 			long dispatchLogId, String error, String output, int status,
 			Date endDate)

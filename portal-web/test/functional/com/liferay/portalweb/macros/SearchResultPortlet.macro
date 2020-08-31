@@ -1,5 +1,35 @@
 definition {
 
+	macro addToContentPage {
+		Pause(locator1 = "10000");
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Widgets");
+
+		Type.sendKeysApplicationSearch(
+			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+			value1 = "${portletName}");
+
+		var key_portletName = "${portletName}";
+
+		DragAndDrop.javaScriptDragAndDropToBottom(
+			key_targetFragmentName = "${targetFragmentName}",
+			locator1 = "//li[contains(@class,'page-editor__fragments-widgets__tab-item')][normalize-space()='${key_portletName}'][2]",
+			locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
+			value1 = "${portletName}");
+
+		AssertElementPresent(
+			key_fragmentName = "${portletName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		PageEditor.gotoTab(tabName = "Contents");
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		PageEditor.closeSidebar(tabName = "Fragments and Widgets");
+	}
+
 	macro configureSearchResults {
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",

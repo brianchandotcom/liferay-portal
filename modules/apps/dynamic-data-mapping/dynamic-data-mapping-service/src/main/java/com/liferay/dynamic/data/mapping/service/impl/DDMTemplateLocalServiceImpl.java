@@ -85,6 +85,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * Provides the local service for accessing, adding, copying, deleting, and
@@ -1832,6 +1834,10 @@ public class DDMTemplateLocalServiceImpl
 
 	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
 		try {
+			if (_depotEntryLocalService == null) {
+				return _portal.getAncestorSiteGroupIds(groupId);
+			}
+
 			return ArrayUtil.append(
 				_portal.getAncestorSiteGroupIds(groupId),
 				ListUtil.toLongArray(
@@ -1864,7 +1870,10 @@ public class DDMTemplateLocalServiceImpl
 	@Reference
 	private DDMXML _ddmXML;
 
-	@Reference
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference

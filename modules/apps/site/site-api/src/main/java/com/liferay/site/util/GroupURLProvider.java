@@ -38,6 +38,8 @@ import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Julio Camarero
@@ -159,6 +161,10 @@ public class GroupURLProvider {
 		Group group, PortletRequest portletRequest) {
 
 		try {
+			if (_depotEntryLocalService == null) {
+				return null;
+			}
+
 			PortletURL portletURL = _portal.getControlPanelPortletURL(
 				portletRequest, group, _DEPOT_ADMIN_PORTLET_ID, 0, 0,
 				PortletRequest.RENDER_PHASE);
@@ -187,7 +193,10 @@ public class GroupURLProvider {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupURLProvider.class);
 
-	@Reference
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference

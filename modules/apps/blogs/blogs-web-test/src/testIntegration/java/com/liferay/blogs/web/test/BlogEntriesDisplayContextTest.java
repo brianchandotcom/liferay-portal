@@ -168,6 +168,8 @@ public class BlogEntriesDisplayContextTest {
 		BlogsEntry blogsEntry = _addBlogEntry(
 			new long[] {assetCategory.getCategoryId()});
 
+		_addBlogEntry(RandomTestUtil.randomString());
+
 		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
 			_getMockHttpServletRequestWithSearch(assetCategory.getName()));
 
@@ -192,6 +194,8 @@ public class BlogEntriesDisplayContextTest {
 
 		BlogsEntry blogsEntry = _addBlogEntry(
 			new long[] {assetCategory.getCategoryId()});
+
+		_addBlogEntry(RandomTestUtil.randomString());
 
 		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
 			_getMockHttpServletRequestWithSearch(assetCategory.getName()));

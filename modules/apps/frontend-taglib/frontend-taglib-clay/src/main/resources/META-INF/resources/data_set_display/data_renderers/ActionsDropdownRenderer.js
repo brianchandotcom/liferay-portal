@@ -176,14 +176,13 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		return null;
 	}
 
-	if (actions.length === 1) {
-		const action = formattedActions[0];
+	if (formattedActions.length === 1) {
+		const [action] = formattedActions;
+		const {data: actionData} = action;
 
-		if (action.id && !action.href) {
+		if (actionData?.id && !actionData?.href) {
 			return null;
 		}
-
-		const formattedHref = formatActionURL(action.href, itemData);
 
 		if (loading) {
 			return (
@@ -202,7 +201,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		return isLink(action.target, action.onClick) ? (
 			<ClayLink
 				className="btn btn-secondary btn-sm"
-				href={formattedHref}
+				href={formatActionURL(actionData.href, itemData)}
 				monospaced={Boolean(action.icon)}
 			>
 				{content}
@@ -218,7 +217,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 						{
 							event,
 							itemId,
-							method: action.data?.method,
+							method: actionData?.method,
 							setLoading,
 							url: action.href,
 							...action,

@@ -107,10 +107,6 @@ const Row = React.forwardRef(
 			style.backgroundSize = 'cover';
 		}
 
-		const hasChildren = item.children.some(
-			(childId) => layoutData.items[childId].children.length
-		);
-
 		const rowContent = (
 			<ClayLayout.Row
 				className={classNames(
@@ -124,7 +120,10 @@ const Row = React.forwardRef(
 					{
 						empty:
 							!height &&
-							(!hasChildren ||
+							(!item.children.some(
+								(childId) =>
+									layoutData.items[childId].children.length
+							) ||
 								item.config.numberOfColumns !== modulesPerRow),
 						'flex-column': customRow && modulesPerRow === 1,
 						'flex-column-reverse':

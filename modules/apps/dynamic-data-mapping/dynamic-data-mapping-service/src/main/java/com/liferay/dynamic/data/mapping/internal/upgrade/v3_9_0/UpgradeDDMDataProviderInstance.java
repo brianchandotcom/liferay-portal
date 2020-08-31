@@ -155,17 +155,17 @@ public class UpgradeDDMDataProviderInstance extends UpgradeProcess {
 					DDMFormField nestedDDMFormField =
 						nestedDDMFormFieldsMap.get(nestedDDMFormFieldValueName);
 
-					if (nestedDDMFormField != null) {
-						if (nestedDDMFormFieldValueName.equals(
-								"outputParameterPath")) {
-
-							_updateNestedDDMFormFieldValue(
-								nestedDDMFormFieldValue);
-						}
-
-						newNestedDDMFormFieldValues.add(
-							nestedDDMFormFieldValue);
+					if (nestedDDMFormField == null) {
+						continue;
 					}
+
+					if (nestedDDMFormFieldValueName.equals(
+							"outputParameterPath")) {
+
+						_updateNestedDDMFormFieldValue(nestedDDMFormFieldValue);
+					}
+
+					newNestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
 				}
 
 				ddmFormFieldValue.setNestedDDMFormFields(

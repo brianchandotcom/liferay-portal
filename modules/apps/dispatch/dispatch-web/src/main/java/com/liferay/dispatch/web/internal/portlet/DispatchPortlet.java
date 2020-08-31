@@ -67,19 +67,18 @@ public class DispatchPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		DispatchTrigger dispatchTrigger = null;
-
 		long dispatchTriggerId = ParamUtil.getLong(
 			renderRequest, "dispatchTriggerId");
 
 		if (dispatchTriggerId > 0) {
-			dispatchTrigger = _dispatchTriggerLocalService.fetchDispatchTrigger(
-				dispatchTriggerId);
-		}
+			DispatchTrigger dispatchTrigger =
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					dispatchTriggerId);
 
-		if (dispatchTrigger != null) {
-			renderRequest.setAttribute(
-				DispatchWebKeys.DISPATCH_TRIGGER, dispatchTrigger);
+			if (dispatchTrigger != null) {
+				renderRequest.setAttribute(
+					DispatchWebKeys.DISPATCH_TRIGGER, dispatchTrigger);
+			}
 		}
 
 		DispatchTriggerDisplayContext dispatchTriggerDisplayContext =

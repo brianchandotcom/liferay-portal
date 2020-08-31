@@ -23,10 +23,6 @@
 		border-right: solid 1px #e7e7ed;
 		vertical-align: top;
 	}
-
-	.change-lists-diff-key-td {
-		font-weight: 600;
-	}
 }
 
 .change-lists-discard-container {
@@ -60,6 +56,12 @@
 		.change-lists-radio-label {
 			font-weight: 600;
 		}
+	}
+}
+
+.change-lists-render-table {
+	.change-lists-key-td {
+		font-weight: 600;
 	}
 }
 

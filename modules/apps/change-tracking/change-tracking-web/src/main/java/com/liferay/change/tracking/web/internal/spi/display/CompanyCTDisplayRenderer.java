@@ -14,21 +14,17 @@
 
 package com.liferay.change.tracking.web.internal.spi.display;
 
+import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-
-import java.io.Writer;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,14 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Samuel Trong Tran
  */
 @Component(immediate = true, service = CTDisplayRenderer.class)
-public class CompanyCTDisplayRenderer implements CTDisplayRenderer<Company> {
-
-	@Override
-	public String getEditURL(
-		HttpServletRequest httpServletRequest, Company company) {
-
-		return null;
-	}
+public class CompanyCTDisplayRenderer extends BaseCTDisplayRenderer<Company> {
 
 	@Override
 	public Class<Company> getModelClass() {
@@ -63,39 +52,53 @@ public class CompanyCTDisplayRenderer implements CTDisplayRenderer<Company> {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return _language.get(resourceBundle, "company");
+		return LanguageUtil.get(resourceBundle, "company");
 	}
 
 	@Override
-	public void render(DisplayContext<Company> displayContext)
-		throws Exception {
+	protected void buildDisplay(DisplayBuilder<Company> displayBuilder)
+		throws PortalException {
 
-		HttpServletResponse httpServletResponse =
-			displayContext.getHttpServletResponse();
+		Company company = displayBuilder.getModel();
 
-		Writer writer = httpServletResponse.getWriter();
+		displayBuilder.display(
+			"company-id", company.getCompanyId()
+		).display(
+			"name", company.getName()
+		).display(
+			"virtual-host", company.getVirtualHostname()
+		).display(
+			"mail-domain", company.getMx()
+		).display(
+			"num-of-users",
+			_userLocalService.searchCount(
+				company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+				null)
+		).display(
+			"max-num-of-users",
+			() -> {
+				int maxUsers = company.getMaxUsers();
 
-		writer.write("<p><b>");
+				if (maxUsers > 0) {
+					return maxUsers;
+				}
 
-		HttpServletRequest httpServletRequest =
-			displayContext.getHttpServletRequest();
+				return LanguageUtil.get(
+					displayBuilder.getLocale(), "unlimited");
+			}
+		).display(
+			"active",
+			() -> {
+				if (company.isActive()) {
+					return LanguageUtil.get(displayBuilder.getLocale(), "yes");
+				}
 
-		writer.write(_language.get(httpServletRequest, "company-id"));
-
-		writer.write("</b>: ");
-
-		Company company = displayContext.getModel();
-
-		writer.write(String.valueOf(company.getCompanyId()));
-
-		writer.write("</p><p><b>");
-		writer.write(_language.get(httpServletRequest, "name"));
-		writer.write("</b>: ");
-		writer.write(HtmlUtil.escape(company.getName()));
-		writer.write("</p>");
+				return LanguageUtil.get(displayBuilder.getLocale(), "no");
+			}
+		);
 	}
 
 	@Reference
-	private Language _language;
+	private UserLocalService _userLocalService;
 
 }

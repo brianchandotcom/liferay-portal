@@ -14,11 +14,11 @@
 
 package com.liferay.roles.admin.web.internal.change.tracking.spi.display;
 
+import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -37,11 +37,8 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-
-import java.io.Writer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +46,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,15 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTDisplayRenderer.class)
 public class ResourcePermissionCTDisplayRenderer
-	implements CTDisplayRenderer<ResourcePermission> {
-
-	@Override
-	public String getEditURL(
-		HttpServletRequest httpServletRequest,
-		ResourcePermission resourcePermission) {
-
-		return null;
-	}
+	extends BaseCTDisplayRenderer<ResourcePermission> {
 
 	@Override
 	public Class<ResourcePermission> getModelClass() {
@@ -129,7 +115,7 @@ public class ResourcePermissionCTDisplayRenderer
 
 			if (scope == ResourceConstants.SCOPE_COMPANY) {
 				arguments.add(
-					_language.get(locale, "all-sites-and-asset-libraries"));
+					LanguageUtil.get(locale, "all-sites-and-asset-libraries"));
 			}
 			else if (scope == ResourceConstants.SCOPE_GROUP) {
 				try {
@@ -150,36 +136,25 @@ public class ResourcePermissionCTDisplayRenderer
 			locale, ResourcePermissionCTDisplayRenderer.class);
 
 		if (arguments.size() == 1) {
-			return _language.format(
+			return LanguageUtil.format(
 				resourceBundle, "x-permissions",
 				arguments.toArray(new String[0]), false);
 		}
 		else if (arguments.size() == 2) {
-			return _language.format(
+			return LanguageUtil.format(
 				resourceBundle, "x-permissions-for-x",
 				arguments.toArray(new String[0]), false);
 		}
 		else if (arguments.size() == 3) {
-			return _language.format(
+			return LanguageUtil.format(
 				resourceBundle, "x-permissions-for-x-x",
 				arguments.toArray(new String[0]), false);
 		}
 		else {
-			return _language.format(
+			return LanguageUtil.format(
 				resourceBundle, "x-permissions-for-x-x-x",
 				arguments.toArray(new String[0]), false);
 		}
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, ResourcePermissionCTDisplayRenderer.class);
-
-		return _language.get(
-			resourceBundle,
-			"model.resource.com.liferay.portal.kernel.model." +
-				"ResourcePermission");
 	}
 
 	@Override
@@ -188,14 +163,14 @@ public class ResourcePermissionCTDisplayRenderer
 	}
 
 	@Override
-	public void render(DisplayContext<ResourcePermission> displayContext)
-		throws Exception {
+	protected void buildDisplay(
+		DisplayBuilder<ResourcePermission> displayBuilder) {
+
+		ResourcePermission resourcePermission = displayBuilder.getModel();
+
+		Locale locale = displayBuilder.getLocale();
 
 		Map<String, ResourceAction> resourceActionMap = new TreeMap<>();
-
-		Locale locale = _portal.getLocale(
-			displayContext.getHttpServletRequest());
-		ResourcePermission resourcePermission = displayContext.getModel();
 
 		for (ResourceAction resourceAction :
 				_resourceActionLocalService.getResourceActions(
@@ -207,32 +182,24 @@ public class ResourcePermissionCTDisplayRenderer
 			resourceActionMap.put(actionLabel, resourceAction);
 		}
 
-		HttpServletResponse httpServletResponse =
-			displayContext.getHttpServletResponse();
-
-		Writer writer = httpServletResponse.getWriter();
-
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, ResourcePermissionCTDisplayRenderer.class);
 
-		String granted = _language.get(resourceBundle, "granted");
-		String notGranted = _language.get(resourceBundle, "not-granted");
+		String granted = LanguageUtil.get(resourceBundle, "granted");
+		String notGranted = LanguageUtil.get(resourceBundle, "not-granted");
 
 		for (Map.Entry<String, ResourceAction> entry :
 				resourceActionMap.entrySet()) {
 
-			writer.write("<p><b>");
-			writer.write(entry.getKey());
-			writer.write("</b>: ");
+			displayBuilder.display(
+				entry.getKey(),
+				() -> {
+					if (resourcePermission.hasAction(entry.getValue())) {
+						return granted;
+					}
 
-			if (resourcePermission.hasAction(entry.getValue())) {
-				writer.write(granted);
-			}
-			else {
-				writer.write(notGranted);
-			}
-
-			writer.write("</p>");
+					return notGranted;
+				});
 		}
 	}
 
@@ -241,12 +208,6 @@ public class ResourcePermissionCTDisplayRenderer
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Html _html;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

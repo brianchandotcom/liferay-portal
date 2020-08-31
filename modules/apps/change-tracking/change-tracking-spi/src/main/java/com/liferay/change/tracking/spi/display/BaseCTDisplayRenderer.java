@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -48,7 +48,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Preston Crary
  */
-public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
+public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 	implements CTDisplayRenderer<T> {
 
 	@Override
@@ -89,8 +89,9 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 
 		Writer writer = httpServletResponse.getWriter();
 
-		writer.write("<div class=\"table-responsive\"><table class=\"table ");
-		writer.write("table-autofit table-nowrap\">");
+		writer.write("<div class=\"table-responsive\"><table ");
+		writer.write("class=\"change-lists-render-table table table-autofit ");
+		writer.write("table-nowrap\">");
 
 		HttpServletRequest httpServletRequest =
 			displayContext.getHttpServletRequest();
@@ -160,7 +161,7 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 			try {
 				Writer writer = httpServletResponse.getWriter();
 
-				writer.write("<tr><td class=\"change-lists-diff-key-td ");
+				writer.write("<tr><td class=\"change-lists-key-td ");
 				writer.write("table-cell-expand-small\">");
 				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
 				writer.write("</td><td class=\"table-cell-expand\">");
@@ -212,7 +213,7 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 			try {
 				Writer writer = httpServletResponse.getWriter();
 
-				writer.write("<tr><td class=\"change-lists-diff-key-td ");
+				writer.write("<tr><td class=\"change-lists-key-td ");
 				writer.write("table-cell-expand-small\">");
 				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
 				writer.write("</td><td class=\"table-cell-expand\">");

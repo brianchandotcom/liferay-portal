@@ -11,26 +11,25 @@ definition {
 
 		User.firstLoginPG();
 
-		//JSONLayout.addPublicLayout(
-		//	groupName = "Guest",
-		//	layoutName = "Alloy Showcase");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Alloy Showcase");
 
-		//ProductMenu.gotoPortlet(
-		//	category = "Site Builder",
-		//	portlet = "Pages");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
 
-		//SitePages.configurePage(
-		//	columnName = "1 Column",
-		//	pageName = "Alloy Showcase",
-		//	privacy = "Public Pages",
-		//	sitePageType = "Widget Page");
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Alloy Showcase",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
 
-		//Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase");
 
-		//Portlet.addPG(portletName = "Alloy Showcase");
+		Portlet.addPG(portletName = "Alloy Showcase");
 
-		//Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase");
-
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase");
 	}
 
 	tearDown {

@@ -28,9 +28,9 @@ String buildType = properties.get("buildType");
 
 String liferayVersion = properties.get("liferayVersion")
 
-if (liferayVersion.startsWith("7.2") && buildType.equals("maven")) {
+if (buildType.equals("maven") && (!liferayVersion.startsWith("7.0") || !liferayVersion.startsWith("7.1"))) {
 	throw new IllegalArgumentException(
-		"Form Field project is not supported 7.2 for Maven")
+		"Form Field project in Maven is only supported in 7.0 and 7.1")
 }
 
 List<String> fileNames = []

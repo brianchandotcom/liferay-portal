@@ -448,7 +448,8 @@ public class ProjectTemplatesFormFieldTest
 		Assert.assertTrue(
 			mavenOutput,
 			mavenOutput.contains(
-				"Form Field project is not supported 7.2 for Maven"));
+				"Form Field project in Maven is only supported in 7.0 and " +
+					"7.1"));
 	}
 
 	@Test

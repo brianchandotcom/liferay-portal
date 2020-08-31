@@ -351,6 +351,9 @@ public class DLFileEntryLocalServiceImpl
 		String version = getNextVersion(
 			dlFileEntry, computedDLVersionNumberIncrease);
 
+		latestDLFileVersion = dlFileVersionPersistence.fetchByPrimaryKey(
+			latestDLFileVersion.getFileVersionId());
+
 		latestDLFileVersion.setVersion(version);
 
 		latestDLFileVersion.setChangeLog(changeLog);

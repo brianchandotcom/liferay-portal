@@ -11,10 +11,9 @@ definition {
 
 		User.firstLoginPG();
 
-		//JSONGroup.addGroup(groupName = "Bridge Issues");
+		JSONGroup.addGroup(groupName = "Bridge Issues");
 
-		//SitePages.openPagesAdmin(siteURLKey = "Bridge Issues");
-
+		SitePages.openPagesAdmin(siteURLKey = "Bridge Issues");
 	}
 
 	tearDown {
@@ -33,6 +32,10 @@ definition {
 
 		// FACES_1513_2185
 
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-1513-2185",
+			portletName = "FACES-1513-2185");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1513-2185");
 
 		BridgeDemos.exportFile(lastName = "Export via p:dataExporter");
@@ -45,6 +48,10 @@ definition {
 
 		// FACES_2921
 
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-2921",
+			portletName = "FACES-2921");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2921");
 
 		AssertElementPresent(locator1 = "BridgeIssues#RENDER_KITID");
@@ -55,6 +62,10 @@ definition {
 
 		// FACES_3031
 
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3031",
+			portletName = "FACES-3031");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3031");
 
 		BridgeIssues.verifyValue(
@@ -64,6 +75,10 @@ definition {
 			textValue = "FACES-3031");
 
 		// FACES_3250
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3250",
+			portletName = "FACES-3250");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3250");
 
@@ -91,6 +106,10 @@ definition {
 
 		// FACES_3327
 
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3327",
+			portletName = "FACES-3327");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3327");
 
 		BridgeIssues.verifyValue(
@@ -110,6 +129,18 @@ definition {
 		BridgeDemos.exportFile(lastName = "Download via p:fileDownload");
 
 		// FACES_3328
+
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Issues",
+			layoutName = "FACES-3328-start");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Issues",
+			layoutName = "FACES-3328-end");
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3328",
+			portletName = "FACES-3328");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3328-start");
 
@@ -134,6 +165,10 @@ definition {
 	test FacesPortletSmokeInt {
 
 		// FACES_224
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-224",
+			portletName = "FACES-224");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-224");
 
@@ -164,6 +199,10 @@ definition {
 			value1 = "viewParam2=xyz");
 
 		// FACES_257
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-257",
+			portletName = "FACES-257");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-257");
 
@@ -199,6 +238,10 @@ definition {
 
 		// FACES_2958
 
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-2958",
+			portletName = "FACES-2958");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2958");
 
 		for (var resourceActionIndex : list "link.xhtml,commandLinkAjax.xhtml,commandLinkNonAjax.xhtml,link.xhtml via Ajax,commandLinkAjax.xhtml via Ajax,commandLinkNonAjax.xhtml via Ajax") {
@@ -225,6 +268,10 @@ definition {
 
 		// FACES_3175
 
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3175",
+			portletName = "FACES-3175");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3175");
 
 		BridgeIssues.verifyValue(
@@ -236,6 +283,10 @@ definition {
 
 		// FACES_3231
 
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3231",
+			portletName = "FACES-3231");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3231");
 
 		BridgeIssues.verifyValue(
@@ -246,6 +297,10 @@ definition {
 			textValue = "FACES-3231");
 
 		// FACES_3300
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3300",
+			portletName = "FACES-3300");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3300");
 
@@ -267,6 +322,10 @@ definition {
 
 		// FACES_3356
 
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3356",
+			portletName = "FACES-3356");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3356");
 
 		BridgeIssues.verifyValue(
@@ -277,6 +336,10 @@ definition {
 			textValue = "FACES-3356");
 
 		// FACES_3404
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3404",
+			portletName = "FACES-3404");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3404");
 
@@ -293,6 +356,10 @@ definition {
 
 		// FACES_4340-workaround
 
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "mojarra-4340-workaround",
+			portletName = "MOJARRA-4340-workaround");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/mojarra-4340-workaround");
 
 		BridgeIssues.verifyValue(
@@ -303,6 +370,10 @@ definition {
 			textValue = "MOJARRA-4340-workaround");
 
 		// FACES_4345-workaround
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "mojarra-4345-workaround",
+			portletName = "MOJARRA-4345-workaround");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/mojarra-4345-workaround");
 

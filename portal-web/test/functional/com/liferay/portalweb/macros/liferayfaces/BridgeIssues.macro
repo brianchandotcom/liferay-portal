@@ -1,5 +1,25 @@
 definition {
 
+	macro addPageAndPortlet {
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Issues",
+			layoutName = "${portletName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "${portletName}",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/${pageURL}");
+
+		Portlet.addPG(portletName = "${portletName}");
+	}
+
 	macro select {
 		Click(locator1 = "BridgeIssues#SELECT_ONE_MENU");
 

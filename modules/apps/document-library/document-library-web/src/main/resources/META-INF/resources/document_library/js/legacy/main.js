@@ -511,7 +511,7 @@ AUI.add(
 					}
 
 					Liferay.Util.openSelectionModal({
-						height: 480,
+						height: '480px',
 						id: namespace + 'selectFolder',
 						onSelect: (selectedItem) => {
 							if (parameterName && parameterValue) {

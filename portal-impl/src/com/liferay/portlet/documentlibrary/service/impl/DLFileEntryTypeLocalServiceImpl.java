@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -335,6 +336,11 @@ public class DLFileEntryTypeLocalServiceImpl
 			DDMStructureManagerUtil.deleteStructure(
 				ddmStructure.getStructureId());
 		}
+
+		resourceLocalService.deleteResource(
+			dlFileEntryType.getCompanyId(), DLFileEntryType.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			dlFileEntryType.getFileEntryTypeId());
 
 		dlFileEntryTypePersistence.remove(dlFileEntryType);
 	}

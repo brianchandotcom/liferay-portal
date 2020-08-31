@@ -79,5 +79,57 @@ definition {
 			locator1 = "PageEditor#VIEWPORT_RESIZER");
 	}
 
+	@description = "This is a test for LPS-110723. When change to other viewports, there are only limited common fragment style categories available."
+	@priority = "5"
+	test ViewCommonFragmentStyleFieldSets {
+		task ("Add a Heading to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Assert all common fragment style fieldsets are available on Desktop viewport") {
+			PageEditor.clickConfigurableField(fragmentName = "Heading");
+
+			Pause(locator1 = "3000");
+
+			AssertClick(
+				key_navItem = "Styles",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Styles");
+
+			for (var fieldSetLabel : list "Margin,Padding,Size,Text,Background,Borders,Effects") {
+				AssertElementPresent(
+					key_fieldSetLabel = "${fieldSetLabel}",
+					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+			}
+		}
+
+		task ("Assert only Margin and Padding are available on other viewports") {
+			for (var deviceType : list "Tablet,Landscape Phone,Portrait Phone") {
+				Click(
+					key_deviceType = "${deviceType}",
+					locator1 = "PageEditor#DEVICE_TYPE");
+
+				Pause(locator1 = "3000");
+
+				for (var fieldSetLabel : list "Margin,Padding") {
+					AssertElementPresent(
+						key_fieldSetLabel = "${fieldSetLabel}",
+						locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+				}
+			}
+		}
+
+		task ("Go back to Desktop viewport") {
+			Click(
+				key_deviceType = "Desktop",
+				locator1 = "PageEditor#DEVICE_TYPE");
+		}
+	}
 
 }

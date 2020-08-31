@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -30,16 +29,6 @@ import java.util.Objects;
  * @author Eudaldo Alonso
  */
 public class StyleBookEntryUtil {
-
-	public static JSONArray getFrontendTokensValuesJSONArray(
-			FrontendTokenDefinition frontendTokenDefinition, Locale locale,
-			long styleBookEntryId)
-		throws Exception {
-
-		return getFrontendTokensValuesJSONArray(
-			frontendTokenDefinition, locale,
-			_getStyleBookEntry(styleBookEntryId));
-	}
 
 	public static JSONArray getFrontendTokensValuesJSONArray(
 			FrontendTokenDefinition frontendTokenDefinition, Locale locale,
@@ -145,11 +134,6 @@ public class StyleBookEntryUtil {
 		).put(
 			"value", value
 		);
-	}
-
-	private static StyleBookEntry _getStyleBookEntry(long styleBookEntryId) {
-		return StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-			styleBookEntryId);
 	}
 
 }

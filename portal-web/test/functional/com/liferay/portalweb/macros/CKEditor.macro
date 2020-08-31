@@ -38,8 +38,8 @@ definition {
 	macro addSourceContent {
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-		Type(
-			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON_2",
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 			value1 = "${content}");
 	}
 

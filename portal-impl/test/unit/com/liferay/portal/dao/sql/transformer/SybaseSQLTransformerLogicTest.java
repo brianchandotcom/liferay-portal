@@ -46,7 +46,7 @@ public class SybaseSQLTransformerLogicTest
 	@Test
 	public void testReplaceCastText() {
 		Assert.assertEquals(
-			"select CAST(foo AS NVARCHAR(5461)) from Foo",
+			"select CAST(foo AS NVARCHAR(16384)) from Foo",
 			sqlTransformer.transform(getCastTextOriginalSQL()));
 	}
 
@@ -62,7 +62,7 @@ public class SybaseSQLTransformerLogicTest
 
 	@Override
 	protected String getCastClobTextTransformedSQL() {
-		return "select CAST(foo AS NVARCHAR(5461)) from Foo";
+		return "select CAST(foo AS NVARCHAR(16384)) from Foo";
 	}
 
 	@Override

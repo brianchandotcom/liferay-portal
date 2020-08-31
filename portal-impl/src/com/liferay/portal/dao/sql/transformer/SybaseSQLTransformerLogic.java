@@ -55,7 +55,7 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	@Override
 	protected String replaceCastText(Matcher matcher) {
-		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
+		return matcher.replaceAll("CAST($1 AS NVARCHAR(16384))");
 	}
 
 	@Override

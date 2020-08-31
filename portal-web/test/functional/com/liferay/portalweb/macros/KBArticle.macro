@@ -128,11 +128,7 @@ definition {
 		}
 
 		if ("${kbArticleAddViaSource}" == "true") {
-			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
-
-			Type(
-				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
-				value1 = "${kbArticleContentSource}");
+			CKEditor.addSourceContent(content = "${kbArticleContentSource}");
 		}
 		else if ("${kbArticleAddViaTemplate}" == "true") {
 			CKEditor.addContent(kbArticleContentEdit = "${kbArticleContent}");

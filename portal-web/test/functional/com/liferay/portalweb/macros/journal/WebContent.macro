@@ -564,11 +564,7 @@ definition {
 		}
 
 		if (isSet(webContentSourceHTML)) {
-			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
-
-			Type(
-				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON_2",
-				value1 = "${webContentSourceHTML}");
+			CKEditor.addSourceContent(content = "${webContentSourceHTML}");
 		}
 
 		if (isSet(webContentImage)) {

@@ -84,7 +84,10 @@ export default ({history}) => {
 		updateItem(`/o/data-engine/v2.0/data-definitions/${originalItem.id}`, {
 			...originalItem,
 			name: {
-				[originalItem.defaultLanguageId]: value,
+				[originalItem.defaultLanguageId]: getValidName(
+					Liferay.Language.get('untitled-custom-object'),
+					value
+				),
 			},
 		})
 			.then(refetch)

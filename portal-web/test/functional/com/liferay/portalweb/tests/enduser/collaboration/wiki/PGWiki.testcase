@@ -68,29 +68,9 @@ definition {
 
 		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
 
-		AssertClick(
-			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
-			value1 = "This page is empty. Edit it to add some text.");
-
-		Panel.expandPanel(panel = "Configuration");
-
-		SelectNoError(
-			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
-			value1 = "HTML");
-
-		AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
-
-		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
-
-		var wikiPageContent = '''<!DOCTYPE html> <html lang="en"> <body> <h1>My First Heading</h1> <p>My first paragraph.</p> </body> </html>''';
-
-		Type(
-			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
-			value1 = "${wikiPageContent}");
-
-		SelectFrame(value1 = "relative=top");
-
-		PortletEntry.publish();
+		WikiPage.addFrontPagePG(
+			htmlSource = "true",
+			wikiPageContent = "${wikiPageContent}");
 
 		SitePages.openPagesAdmin(siteURLKey = "Child SiteName");
 
@@ -120,13 +100,9 @@ definition {
 			locator1 = "Link#EDIT",
 			value1 = "Edit");
 
-		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
-
 		var wikiPageContent = '''<!DOCTYPE html> <html lang="en"> <body> <h1>Edited My First Heading</h1> <p>Edited My first paragraph.</p> </body> </html>''';
 
-		Type(
-			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
-			value1 = "${wikiPageContent}");
+		CKEditor.addSourceContent(content = "${wikiPageContent}");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -168,11 +144,7 @@ definition {
 
 		AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 
-		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
-
-		Type(
-			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
-			value1 = "${welcomeToLiferay}");
+		CKEditor.addSourceContent(content = "${welcomeToLiferay}");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -291,31 +263,13 @@ definition {
 
 	@priority = "4"
 	test AddFrontPageContentWithNoJavascript {
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		AssertClick(
-			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
-			value1 = "This page is empty. Edit it to add some text.");
-
-		Panel.expandPanel(panel = "Configuration");
-
-		SelectNoError(
-			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
-			value1 = "HTML");
-
-		AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
-
-		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
-
 		var wikiPageContent = '''<p id='demo'>PASS</p> <script type='text/javascript'>document.getElementById('demo').innerHTML = 'this code should not be read by the client';</script>''';
 
-		Type(
-			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
-			value1 = "${wikiPageContent}");
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		SelectFrame(value1 = "relative=top");
-
-		PortletEntry.publish();
+		WikiPage.addFrontPagePG(
+			htmlSource = "true",
+			wikiPageContent = "${wikiPageContent}");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 

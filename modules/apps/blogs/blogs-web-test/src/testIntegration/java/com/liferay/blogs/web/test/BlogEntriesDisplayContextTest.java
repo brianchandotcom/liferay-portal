@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -153,6 +154,31 @@ public class BlogEntriesDisplayContextTest {
 		List<BlogsEntry> blogsEntries = searchContainer.getResults();
 
 		Assert.assertEquals(blogsEntries.toString(), 1, blogsEntries.size());
+	}
+
+	@Test
+	public void testGetSearchContainerByPublicAssetCategory() throws Exception {
+		AssetVocabulary assetVocabulary = _addAssetVocabulary(
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
+
+		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
+
+		BlogsEntry blogsEntry = _addBlogEntry(
+			new long[] {assetCategory.getCategoryId()});
+
+		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
+			_getMockHttpServletRequestWithSearch(assetCategory.getName()));
+
+		Assert.assertEquals(1, searchContainer.getTotal());
+
+		List<BlogsEntry> blogsEntries = searchContainer.getResults();
+
+		Assert.assertEquals(blogsEntries.toString(), 1, blogsEntries.size());
+
+		BlogsEntry returnedBlogsEntry = blogsEntries.get(0);
+
+		Assert.assertEquals(
+			returnedBlogsEntry.getTitle(), blogsEntry.getTitle());
 	}
 
 	private AssetCategory _addAssetCategory(AssetVocabulary assetVocabulary)

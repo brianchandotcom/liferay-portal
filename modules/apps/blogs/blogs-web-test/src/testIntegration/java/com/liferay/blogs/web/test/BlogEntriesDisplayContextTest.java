@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
@@ -146,31 +147,31 @@ public class BlogEntriesDisplayContextTest {
 		Assert.assertEquals(blogsEntries.toString(), 1, blogsEntries.size());
 	}
 
-	@Test
-	public void testGetSearchContainerWithSearch() throws Exception {
-		for (int i = 0; i <= SearchContainer.DEFAULT_DELTA; i++) {
-			_addBlogEntry("alpha_" + i);
-		}
+	private BlogsEntry _addBlogEntry(long[] assetCategoryIds) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
 
-		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
-			_getMockHttpServletRequestWithSearch("alpha"));
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
-		Assert.assertEquals(
-			SearchContainer.DEFAULT_DELTA + 1, searchContainer.getTotal());
-
-		List<BlogsEntry> blogsEntries = searchContainer.getResults();
-
-		Assert.assertEquals(
-			blogsEntries.toString(), SearchContainer.DEFAULT_DELTA,
-			blogsEntries.size());
+		return _addBlogEntry(RandomTestUtil.randomString(), serviceContext);
 	}
 
 	private BlogsEntry _addBlogEntry(String title) throws Exception {
+		return _addBlogEntry(
+			title,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	private BlogsEntry _addBlogEntry(
+			String title, ServiceContext serviceContext)
+		throws Exception {
+
 		return _blogsEntryService.addEntry(
 			title, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), 1, 1, 1990, 1, 1, true, false,
 			new String[0], RandomTestUtil.randomString(), null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			serviceContext);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()

@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -81,27 +79,18 @@ public class DispatchConfigurator {
 
 		properties.put("destination.name", destination.getName());
 
-		ServiceRegistration<Destination> serviceRegistration =
-			_bundleContext.registerService(
-				Destination.class, destination, properties);
-
-		_serviceRegistrations.put(destination.getName(), serviceRegistration);
+		_serviceRegistration = _bundleContext.registerService(
+			Destination.class, destination, properties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		for (ServiceRegistration<Destination> serviceRegistration :
-				_serviceRegistrations.values()) {
+		Destination destination = _bundleContext.getService(
+			_serviceRegistration.getReference());
 
-			Destination destination = _bundleContext.getService(
-				serviceRegistration.getReference());
+		_serviceRegistration.unregister();
 
-			serviceRegistration.unregister();
-
-			destination.destroy();
-		}
-
-		_serviceRegistrations.clear();
+		destination.destroy();
 	}
 
 	private static final int _MAXIMUM_QUEUE_SIZE = 100;
@@ -114,7 +103,6 @@ public class DispatchConfigurator {
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	private final Map<String, ServiceRegistration<Destination>>
-		_serviceRegistrations = new HashMap<>();
+	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

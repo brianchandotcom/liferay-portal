@@ -650,6 +650,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMON_STYLES_FIELDSET_LABEL</td>
+	<td>//div[contains(@class,'common-styles')]/div[contains(@class,'fieldset-label')][normalize-space()='${key_fieldSetLabel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CUSTOM_STYLES_SELECT_FIELD</td>
 	<td>//div[contains(@class,'custom-styles')]//div[label[contains(.,'${key_fieldLabel}')]]/select</td>
 	<td></td>

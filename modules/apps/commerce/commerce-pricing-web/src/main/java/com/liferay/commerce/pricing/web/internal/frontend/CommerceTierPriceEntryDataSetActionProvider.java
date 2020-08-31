@@ -97,7 +97,6 @@ public class CommerceTierPriceEntryDataSetActionProvider
 						commerceTierPriceEntry, httpServletRequest));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

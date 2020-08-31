@@ -95,7 +95,6 @@ public class CommercePriceModifierDataSetActionProvider
 						commercePriceModifier, httpServletRequest));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

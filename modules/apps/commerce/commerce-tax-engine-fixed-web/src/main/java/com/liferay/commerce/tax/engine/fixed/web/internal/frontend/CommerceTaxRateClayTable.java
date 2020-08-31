@@ -140,7 +140,6 @@ public class CommerceTaxRateClayTable
 						httpServletRequest, taxRate.getTaxRateId()));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

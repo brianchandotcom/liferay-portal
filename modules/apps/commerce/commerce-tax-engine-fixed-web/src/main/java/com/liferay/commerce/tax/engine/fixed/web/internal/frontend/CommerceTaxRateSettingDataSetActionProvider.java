@@ -96,7 +96,6 @@ public class CommerceTaxRateSettingDataSetActionProvider
 						taxRateSetting.getTaxRateSettingId()));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

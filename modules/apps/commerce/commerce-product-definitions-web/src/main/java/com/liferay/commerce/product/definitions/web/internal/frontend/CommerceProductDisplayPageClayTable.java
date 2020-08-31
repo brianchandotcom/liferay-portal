@@ -123,7 +123,6 @@ public class CommerceProductDisplayPageClayTable
 						productDisplayPage.getProductDisplayPageId()));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

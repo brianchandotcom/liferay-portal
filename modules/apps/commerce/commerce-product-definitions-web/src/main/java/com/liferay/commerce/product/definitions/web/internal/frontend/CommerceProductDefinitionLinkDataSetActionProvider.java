@@ -92,7 +92,6 @@ public class CommerceProductDefinitionLinkDataSetActionProvider
 						cpDefinitionLink, httpServletRequest));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("modal");
 			}
 		).build();
 	}

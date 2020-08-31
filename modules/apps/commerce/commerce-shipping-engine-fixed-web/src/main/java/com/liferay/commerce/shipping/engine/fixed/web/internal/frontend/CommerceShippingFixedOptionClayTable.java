@@ -119,7 +119,6 @@ public class CommerceShippingFixedOptionClayTable
 						shippingFixedOption.getShippingFixedOptionId()));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

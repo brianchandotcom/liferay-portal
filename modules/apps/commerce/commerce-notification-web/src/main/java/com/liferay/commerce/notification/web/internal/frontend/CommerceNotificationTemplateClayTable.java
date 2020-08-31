@@ -155,7 +155,6 @@ public class CommerceNotificationTemplateClayTable
 				dropdownItem.setHref(deletePortletURL);
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

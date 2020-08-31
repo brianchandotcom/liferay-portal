@@ -101,7 +101,6 @@ public class CommerceProductOptionValueDataSetActionProvider
 						httpServletRequest));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
 			() -> CommerceCatalogPermission.contains(

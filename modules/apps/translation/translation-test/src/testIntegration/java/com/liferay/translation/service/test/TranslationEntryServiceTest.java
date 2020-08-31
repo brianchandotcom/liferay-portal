@@ -83,6 +83,95 @@ public class TranslationEntryServiceTest {
 	}
 
 	@Test
+	public void testAddOrUpdateTranslationEntryPendingJournalArticleApprovedTranslation()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		TranslationTestUtil.withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role,
+					TranslationConstants.RESOURCE_NAME + "." +
+						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(_group.getGroupId()),
+					TranslationActionKeys.TRANSLATE);
+
+				RoleTestUtil.addResourcePermission(
+					role, JournalArticle.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.UPDATE);
+
+				InfoItemReference infoItemReference = new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
+
+				String stringFile = StringUtil.replace(
+					TranslationTestUtil.readFileToString(
+						"test-journal-article-only-title.xlf"),
+					"$ARTICLE_ID",
+					String.valueOf(journalArticle.getResourcePrimKey()));
+
+				InfoItemFieldValues infoItemFieldValues =
+					_xliffTranslationInfoItemFieldValuesImporter.
+						importInfoItemFieldValues(
+							_group.getGroupId(),
+							new InfoItemReference(
+								JournalArticle.class.getName(),
+								journalArticle.getResourcePrimKey()),
+							new ByteArrayInputStream(
+								stringFile.getBytes(StandardCharsets.UTF_8)));
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext();
+
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+
+				_translationEntry =
+					_translationEntryService.addOrUpdateTranslationEntry(
+						_group.getGroupId(),
+						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+						infoItemReference, infoItemFieldValues, serviceContext);
+			});
+
+		Map<Locale, String> titleMap = journalArticle.getTitleMap();
+
+		titleMap.put(LocaleUtil.US, "newTitle");
+
+		JournalTestUtil.updateArticle(
+			journalArticle, titleMap, journalArticle.getContent(), true, false,
+			ServiceContextTestUtil.getServiceContext());
+
+		JournalArticle latestJournalArticle =
+			_journalArticleService.getLatestArticle(
+				journalArticle.getGroupId(), journalArticle.getArticleId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			journalArticle.getTitle(LocaleUtil.US),
+			latestJournalArticle.getTitle(LocaleUtil.US));
+
+		_translationEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(),
+			_translationEntry.getTranslationEntryId(),
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(), new HashMap<>());
+
+		latestJournalArticle = _journalArticleService.getLatestArticle(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			"Este es el titulo",
+			latestJournalArticle.getTitle(LocaleUtil.SPAIN));
+	}
+
+	@Test
 	public void testAddOrUpdateTranslationEntryPendingJournalArticleRejectedTranslation()
 		throws Exception {
 
@@ -358,7 +447,7 @@ public class TranslationEntryServiceTest {
 
 		latestJournalArticle = _journalArticleService.getLatestArticle(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
 			"Este es el titulo",

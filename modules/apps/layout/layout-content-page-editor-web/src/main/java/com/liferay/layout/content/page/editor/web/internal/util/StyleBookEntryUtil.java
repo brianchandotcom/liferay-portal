@@ -30,13 +30,13 @@ import java.util.Objects;
  */
 public class StyleBookEntryUtil {
 
-	public static JSONArray getFrontendTokensValuesJSONArray(
+	public static JSONObject getFrontendTokensValuesJSONObject(
 			FrontendTokenDefinition frontendTokenDefinition, Locale locale,
 			StyleBookEntry styleBookEntry)
 		throws Exception {
 
-		JSONArray frontendTokensValuesJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		JSONObject frontendTokensValuesJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
 		JSONObject frontendTokenValuesJSONObject =
 			_getFrontendTokenValuesJSONObject(styleBookEntry);
@@ -68,7 +68,8 @@ public class StyleBookEntryUtil {
 					JSONObject frontendTokenJSONObject =
 						frontendTokensJSONArray.getJSONObject(k);
 
-					frontendTokensValuesJSONArray.put(
+					frontendTokensValuesJSONObject.put(
+						frontendTokenJSONObject.getString("name"),
 						_getProcessedFrontendTokenJSONObject(
 							frontendTokenJSONObject,
 							frontendTokenValuesJSONObject));
@@ -76,7 +77,7 @@ public class StyleBookEntryUtil {
 			}
 		}
 
-		return frontendTokensValuesJSONArray;
+		return frontendTokensValuesJSONObject;
 	}
 
 	private static JSONObject _getFrontendTokenValuesJSONObject(

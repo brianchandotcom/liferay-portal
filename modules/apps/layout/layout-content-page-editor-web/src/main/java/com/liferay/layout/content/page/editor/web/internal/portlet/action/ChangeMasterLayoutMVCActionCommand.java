@@ -161,7 +161,7 @@ public class ChangeMasterLayoutMVCActionCommand
 			"styleBookEntryId", layout.getStyleBookEntryId()
 		).put(
 			"tokenValues",
-			StyleBookEntryUtil.getFrontendTokensValuesJSONArray(
+			StyleBookEntryUtil.getFrontendTokensValuesJSONObject(
 				frontendTokenDefinition, locale, styleBookEntry)
 		);
 	}

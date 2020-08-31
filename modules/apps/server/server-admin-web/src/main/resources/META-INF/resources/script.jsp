@@ -30,6 +30,12 @@ if (SessionMessages.contains(renderRequest, "script")) {
 }
 
 String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput");
+
+String output = ParamUtil.getString(renderRequest, "output", "text");
+
+if (SessionMessages.contains(renderRequest, "output")) {
+	output = (String)SessionMessages.get(renderRequest, "output");
+}
 %>
 
 <liferay-ui:error exception="<%= ScriptingException.class %>">
@@ -57,6 +63,11 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 
 		</aui:select>
 
+		<aui:select name="output">
+			<aui:option label="text" selected='<%= output.equals("text") %>' value="text" />
+			<aui:option label="html" selected='<%= output.equals("html") %>' value="html" />
+		</aui:select>
+
 		<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
 	</aui:fieldset>
 </aui:fieldset-group>
@@ -64,7 +75,14 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 <c:if test="<%= Validator.isNotNull(scriptOutput) %>">
 	<b><liferay-ui:message key="output" /></b>
 
-	<pre><%= HtmlUtil.escape(scriptOutput) %></pre>
+	<c:choose>
+		<c:when test='<%= output.equals("html") %>'>
+			<div><%= scriptOutput %></div>
+		</c:when>
+		<c:otherwise>
+			<pre><%= HtmlUtil.escape(scriptOutput) %></pre>
+		</c:otherwise>
+	</c:choose>
 </c:if>
 
 <aui:button-row>

@@ -70,15 +70,18 @@ public class WikiPageURLItemSelectorReturnTypeResolver
 		String layoutFullURL = _portal.getLayoutFullURL(
 			page.getGroupId(), WikiPortletKeys.WIKI);
 
-		URL urlObject = new URL(layoutFullURL);
+		if (Validator.isNotNull(layoutFullURL)) {
+			URL urlObject = new URL(layoutFullURL);
 
-		String path = urlObject.getPath();
+			String path = urlObject.getPath();
 
-		if (Validator.isNotNull(path)) {
-			return StringBundler.concat(
-				path, Portal.FRIENDLY_URL_SEPARATOR, "wiki/", page.getNodeId(),
-				StringPool.SLASH,
-				URLCodec.encodeURL(WikiEscapeUtil.escapeName(page.getTitle())));
+			if (Validator.isNotNull(path)) {
+				return StringBundler.concat(
+					path, Portal.FRIENDLY_URL_SEPARATOR, "wiki/",
+					page.getNodeId(), StringPool.SLASH,
+					URLCodec.encodeURL(
+						WikiEscapeUtil.escapeName(page.getTitle())));
+			}
 		}
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(

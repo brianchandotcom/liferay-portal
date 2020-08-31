@@ -50,9 +50,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
-		// Workaround LPS-119022
-
-		/*SitePages.gotoPageMenuItem(
+		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
 			pageName = "Test Page");
 
@@ -62,7 +60,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			portlet = "Pages");*/
+			portlet = "Pages");
 
 		SitePages.deletePage(pageName = "Test Page");
 

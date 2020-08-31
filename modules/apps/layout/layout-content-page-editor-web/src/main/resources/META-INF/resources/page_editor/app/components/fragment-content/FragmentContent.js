@@ -209,7 +209,7 @@ const FragmentContent = ({
 	style.maxWidth = maxWidth;
 	style.minHeight = minHeight;
 	style.minWidth = minWidth;
-	style.opacity = opacity;
+	style.opacity = opacity ? opacity / 100 : null;
 	style.overflow = overflow;
 	style.width = width;
 

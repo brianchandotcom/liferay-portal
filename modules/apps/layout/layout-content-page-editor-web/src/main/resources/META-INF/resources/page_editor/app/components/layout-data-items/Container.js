@@ -112,7 +112,7 @@ const Container = React.forwardRef(
 		style.height = height;
 		style.maxHeight = maxHeight;
 		style.minHeight = minHeight;
-		style.opacity = opacity;
+		style.opacity = opacity ? opacity / 100 : null;
 		style.overflow = overflow;
 
 		if (!withinTopper) {

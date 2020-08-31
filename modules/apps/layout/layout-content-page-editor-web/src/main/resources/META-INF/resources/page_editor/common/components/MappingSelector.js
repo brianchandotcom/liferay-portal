@@ -181,6 +181,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 
 		if (isMapped(mappedItem)) {
 			onMappingSelect({
+				className: '',
 				classNameId: '',
 				classPK: '',
 				fieldId: '',
@@ -195,6 +196,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 		const data =
 			fieldValue === UNMAPPED_OPTION.value
 				? {
+						className: '',
 						classNameId: '',
 						classPK: '',
 						fieldId: '',
@@ -202,6 +204,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 				  }
 				: selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content
 				? {
+						className: selectedItem.className,
 						classNameId: selectedItem.classNameId,
 						classPK: selectedItem.classPK,
 						fieldId: fieldValue,

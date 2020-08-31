@@ -2077,6 +2077,69 @@ definition {
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM");
 		}
 
+		if (isSet(marginLeft)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_marginLeft = "${marginLeft}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_LEFT");
+		}
+
+		if (isSet(marginRight)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_marginRight = "${marginRight}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_RIGHT");
+		}
+
+		if (isSet(marginTop)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_marginTop = "${marginTop}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_TOP");
+		}
+
+		if (isSet(paddingBottom)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_paddingBottom = "${paddingBottom}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_PADDING_BOTTOM");
+		}
+
+		if (isSet(paddingLeft)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_paddingLeft = "${paddingLeft}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_PADDING_LEFT");
+		}
+
+		if (isSet(paddingRight)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_paddingRight = "${paddingRight}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_PADDING_RIGHT");
+		}
+
+		if (isSet(paddingTop)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_paddingTop = "${paddingTop}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_PADDING_TOP");
+		}
+
 		if (isSet(size)) {
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 

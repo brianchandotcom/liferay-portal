@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.LayoutSetTable;
-import com.liferay.portal.kernel.model.VirtualHostTable;
+import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
+import com.liferay.portal.kernel.service.persistence.CountryPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,39 +28,32 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class VirtualHostTableReferenceDefinition
-	implements TableReferenceDefinition<VirtualHostTable> {
+public class CountryTableReferenceDefinition
+	implements TableReferenceDefinition<CountryTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<VirtualHostTable>
+		ChildTableReferenceInfoBuilder<CountryTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<VirtualHostTable>
+		ParentTableReferenceInfoBuilder<CountryTable>
 			parentTableReferenceInfoBuilder) {
-
-		parentTableReferenceInfoBuilder.singleColumnReference(
-			VirtualHostTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			VirtualHostTable.INSTANCE.layoutSetId,
-			LayoutSetTable.INSTANCE.layoutSetId
-		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _virtualHostPersistence;
+		return _countryPersistence;
 	}
 
 	@Override
-	public VirtualHostTable getTable() {
-		return VirtualHostTable.INSTANCE;
+	public CountryTable getTable() {
+		return CountryTable.INSTANCE;
 	}
 
 	@Reference
-	private VirtualHostPersistence _virtualHostPersistence;
+	private CountryPersistence _countryPersistence;
 
 }

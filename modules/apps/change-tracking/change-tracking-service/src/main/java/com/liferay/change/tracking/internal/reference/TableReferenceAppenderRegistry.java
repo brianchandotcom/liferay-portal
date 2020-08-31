@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.internal.reference;
 
-import com.liferay.change.tracking.internal.reference.portal.ExpandoTableReferenceAppender;
+import com.liferay.change.tracking.internal.spi.reference.ExpandoTableReferenceAppender;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;

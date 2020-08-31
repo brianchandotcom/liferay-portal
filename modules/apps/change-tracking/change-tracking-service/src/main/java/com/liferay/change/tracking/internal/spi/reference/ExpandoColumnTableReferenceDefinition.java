@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.CountryTable;
-import com.liferay.portal.kernel.model.RegionTable;
+import com.liferay.expando.kernel.model.ExpandoColumnTable;
+import com.liferay.expando.kernel.model.ExpandoTableTable;
+import com.liferay.expando.kernel.service.persistence.ExpandoColumnPersistence;
+import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,35 +30,40 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class RegionTableReferenceDefinition
-	implements TableReferenceDefinition<RegionTable> {
+public class ExpandoColumnTableReferenceDefinition
+	implements TableReferenceDefinition<ExpandoColumnTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<RegionTable>
+		ChildTableReferenceInfoBuilder<ExpandoColumnTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<RegionTable>
+		ParentTableReferenceInfoBuilder<ExpandoColumnTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			RegionTable.INSTANCE.countryId, CountryTable.INSTANCE.countryId);
+			ExpandoColumnTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId
+		).singleColumnReference(
+			ExpandoColumnTable.INSTANCE.tableId,
+			ExpandoTableTable.INSTANCE.tableId
+		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _regionPersistence;
+		return _expandoColumnPersistence;
 	}
 
 	@Override
-	public RegionTable getTable() {
-		return RegionTable.INSTANCE;
+	public ExpandoColumnTable getTable() {
+		return ExpandoColumnTable.INSTANCE;
 	}
 
 	@Reference
-	private RegionPersistence _regionPersistence;
+	private ExpandoColumnPersistence _expandoColumnPersistence;
 
 }

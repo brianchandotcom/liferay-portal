@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.expando.kernel.model.ExpandoColumnTable;
-import com.liferay.expando.kernel.model.ExpandoRowTable;
-import com.liferay.expando.kernel.model.ExpandoTableTable;
-import com.liferay.expando.kernel.model.ExpandoValueTable;
-import com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence;
+import com.liferay.portal.kernel.model.AccountTable;
 import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.ContactTable;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.ContactPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,45 +31,43 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class ExpandoValueTableReferenceDefinition
-	implements TableReferenceDefinition<ExpandoValueTable> {
+public class ContactTableReferenceDefinition
+	implements TableReferenceDefinition<ContactTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<ExpandoValueTable>
+		ChildTableReferenceInfoBuilder<ContactTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<ExpandoValueTable>
+		ParentTableReferenceInfoBuilder<ContactTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			ExpandoValueTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
+			ContactTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
-			ExpandoValueTable.INSTANCE.tableId,
-			ExpandoTableTable.INSTANCE.tableId
+			ContactTable.INSTANCE.userId, UserTable.INSTANCE.userId
 		).singleColumnReference(
-			ExpandoValueTable.INSTANCE.columnId,
-			ExpandoColumnTable.INSTANCE.columnId
-		).singleColumnReference(
-			ExpandoValueTable.INSTANCE.rowId, ExpandoRowTable.INSTANCE.rowId
+			ContactTable.INSTANCE.accountId, AccountTable.INSTANCE.accountId
+		).parentColumnReference(
+			ContactTable.INSTANCE.contactId,
+			ContactTable.INSTANCE.parentContactId
 		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _expandoValuePersistence;
+		return _contactPersistence;
 	}
 
 	@Override
-	public ExpandoValueTable getTable() {
-		return ExpandoValueTable.INSTANCE;
+	public ContactTable getTable() {
+		return ContactTable.INSTANCE;
 	}
 
 	@Reference
-	private ExpandoValuePersistence _expandoValuePersistence;
+	private ContactPersistence _contactPersistence;
 
 }

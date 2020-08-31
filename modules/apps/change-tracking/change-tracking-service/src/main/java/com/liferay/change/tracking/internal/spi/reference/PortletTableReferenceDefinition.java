@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.RoleTable;
-import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.model.TeamTable;
+import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.PortletTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.TeamPersistence;
+import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,40 +29,35 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class TeamTableReferenceDefinition
-	implements TableReferenceDefinition<TeamTable> {
+public class PortletTableReferenceDefinition
+	implements TableReferenceDefinition<PortletTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<TeamTable>
+		ChildTableReferenceInfoBuilder<PortletTable>
 			childTableReferenceInfoBuilder) {
-
-		childTableReferenceInfoBuilder.resourcePermissionReference(
-			TeamTable.INSTANCE.teamId, Team.class
-		).classNameReference(
-			TeamTable.INSTANCE.teamId, RoleTable.INSTANCE.classPK, Team.class
-		);
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<TeamTable>
+		ParentTableReferenceInfoBuilder<PortletTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.groupedModel(TeamTable.INSTANCE);
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			PortletTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _teamPersistence;
+		return _portletPersistence;
 	}
 
 	@Override
-	public TeamTable getTable() {
-		return TeamTable.INSTANCE;
+	public PortletTable getTable() {
+		return PortletTable.INSTANCE;
 	}
 
 	@Reference
-	private TeamPersistence _teamPersistence;
+	private PortletPersistence _portletPersistence;
 
 }

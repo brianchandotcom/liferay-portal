@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.AccountTable;
 import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.ContactTable;
-import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.ContactPersistence;
+import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,43 +30,38 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class ContactTableReferenceDefinition
-	implements TableReferenceDefinition<ContactTable> {
+public class CompanyTableReferenceDefinition
+	implements TableReferenceDefinition<CompanyTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<ContactTable>
+		ChildTableReferenceInfoBuilder<CompanyTable>
 			childTableReferenceInfoBuilder) {
-	}
 
-	@Override
-	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<ContactTable>
-			parentTableReferenceInfoBuilder) {
-
-		parentTableReferenceInfoBuilder.singleColumnReference(
-			ContactTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
+		childTableReferenceInfoBuilder.singleColumnReference(
+			CompanyTable.INSTANCE.accountId, AccountTable.INSTANCE.accountId
 		).singleColumnReference(
-			ContactTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).singleColumnReference(
-			ContactTable.INSTANCE.accountId, AccountTable.INSTANCE.accountId
-		).parentColumnReference(
-			ContactTable.INSTANCE.contactId,
-			ContactTable.INSTANCE.parentContactId
+			CompanyTable.INSTANCE.logoId, ImageTable.INSTANCE.imageId
 		);
 	}
 
 	@Override
-	public BasePersistence<?> getBasePersistence() {
-		return _contactPersistence;
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<CompanyTable>
+			parentTableReferenceInfoBuilder) {
 	}
 
 	@Override
-	public ContactTable getTable() {
-		return ContactTable.INSTANCE;
+	public BasePersistence<?> getBasePersistence() {
+		return _companyPersistence;
+	}
+
+	@Override
+	public CompanyTable getTable() {
+		return CompanyTable.INSTANCE;
 	}
 
 	@Reference
-	private ContactPersistence _contactPersistence;
+	private CompanyPersistence _companyPersistence;
 
 }

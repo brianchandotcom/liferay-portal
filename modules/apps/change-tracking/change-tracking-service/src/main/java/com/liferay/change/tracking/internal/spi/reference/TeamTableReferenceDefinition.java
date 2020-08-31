@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.AccountTable;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.ImageTable;
+import com.liferay.portal.kernel.model.RoleTable;
+import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.model.TeamTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
+import com.liferay.portal.kernel.service.persistence.TeamPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,38 +30,40 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class CompanyTableReferenceDefinition
-	implements TableReferenceDefinition<CompanyTable> {
+public class TeamTableReferenceDefinition
+	implements TableReferenceDefinition<TeamTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<CompanyTable>
+		ChildTableReferenceInfoBuilder<TeamTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.singleColumnReference(
-			CompanyTable.INSTANCE.accountId, AccountTable.INSTANCE.accountId
-		).singleColumnReference(
-			CompanyTable.INSTANCE.logoId, ImageTable.INSTANCE.imageId
+		childTableReferenceInfoBuilder.resourcePermissionReference(
+			TeamTable.INSTANCE.teamId, Team.class
+		).classNameReference(
+			TeamTable.INSTANCE.teamId, RoleTable.INSTANCE.classPK, Team.class
 		);
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<CompanyTable>
+		ParentTableReferenceInfoBuilder<TeamTable>
 			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.groupedModel(TeamTable.INSTANCE);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _companyPersistence;
+		return _teamPersistence;
 	}
 
 	@Override
-	public CompanyTable getTable() {
-		return CompanyTable.INSTANCE;
+	public TeamTable getTable() {
+		return TeamTable.INSTANCE;
 	}
 
 	@Reference
-	private CompanyPersistence _companyPersistence;
+	private TeamPersistence _teamPersistence;
 
 }

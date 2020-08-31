@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.expando.kernel.model.ExpandoRowTable;
+import com.liferay.expando.kernel.model.ExpandoTableTable;
+import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
-import com.liferay.portal.kernel.model.RoleTable;
-import com.liferay.portal.kernel.model.UserGroupRoleTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,43 +30,38 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class UserGroupRoleTableReferenceDefinition
-	implements TableReferenceDefinition<UserGroupRoleTable> {
+public class ExpandoRowTableReferenceDefinition
+	implements TableReferenceDefinition<ExpandoRowTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<UserGroupRoleTable>
+		ChildTableReferenceInfoBuilder<ExpandoRowTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<UserGroupRoleTable>
+		ParentTableReferenceInfoBuilder<ExpandoRowTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			UserGroupRoleTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
+			ExpandoRowTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
-			UserGroupRoleTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).singleColumnReference(
-			UserGroupRoleTable.INSTANCE.groupId, GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			UserGroupRoleTable.INSTANCE.roleId, RoleTable.INSTANCE.roleId
+			ExpandoRowTable.INSTANCE.tableId, ExpandoTableTable.INSTANCE.tableId
 		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _userGroupRolePersistence;
+		return _expandoRowPersistence;
 	}
 
 	@Override
-	public UserGroupRoleTable getTable() {
-		return UserGroupRoleTable.INSTANCE;
+	public ExpandoRowTable getTable() {
+		return ExpandoRowTable.INSTANCE;
 	}
 
 	@Reference
-	private UserGroupRolePersistence _userGroupRolePersistence;
+	private ExpandoRowPersistence _expandoRowPersistence;
 
 }

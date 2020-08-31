@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.ContactTable;
-import com.liferay.portal.kernel.model.ImageTable;
+import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.portal.kernel.model.RoleTable;
+import com.liferay.portal.kernel.model.UserGroupRoleTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,44 +32,43 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class UserTableReferenceDefinition
-	implements TableReferenceDefinition<UserTable> {
+public class UserGroupRoleTableReferenceDefinition
+	implements TableReferenceDefinition<UserGroupRoleTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<UserTable>
+		ChildTableReferenceInfoBuilder<UserGroupRoleTable>
 			childTableReferenceInfoBuilder) {
-
-		childTableReferenceInfoBuilder.classNameReference(
-			UserTable.INSTANCE.userId, ContactTable.INSTANCE.classPK,
-			Contact.class
-		).singleColumnReference(
-			UserTable.INSTANCE.contactId, ContactTable.INSTANCE.contactId
-		).singleColumnReference(
-			UserTable.INSTANCE.portraitId, ImageTable.INSTANCE.imageId
-		);
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<UserTable>
+		ParentTableReferenceInfoBuilder<UserGroupRoleTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			UserTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
+			UserGroupRoleTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId
+		).singleColumnReference(
+			UserGroupRoleTable.INSTANCE.userId, UserTable.INSTANCE.userId
+		).singleColumnReference(
+			UserGroupRoleTable.INSTANCE.groupId, GroupTable.INSTANCE.groupId
+		).singleColumnReference(
+			UserGroupRoleTable.INSTANCE.roleId, RoleTable.INSTANCE.roleId
+		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _userPersistence;
+		return _userGroupRolePersistence;
 	}
 
 	@Override
-	public UserTable getTable() {
-		return UserTable.INSTANCE;
+	public UserGroupRoleTable getTable() {
+		return UserGroupRoleTable.INSTANCE;
 	}
 
 	@Reference
-	private UserPersistence _userPersistence;
+	private UserGroupRolePersistence _userGroupRolePersistence;
 
 }

@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
-import com.liferay.portal.kernel.model.RoleTable;
-import com.liferay.portal.kernel.model.UserGroupGroupRoleTable;
-import com.liferay.portal.kernel.model.UserGroupTable;
+import com.liferay.portal.kernel.model.LayoutTable;
+import com.liferay.portal.kernel.model.PortletPreferencesTable;
+import com.liferay.portal.kernel.model.PortletTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence;
+import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,45 +31,51 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class UserGroupGroupRoleTableReferenceDefinition
-	implements TableReferenceDefinition<UserGroupGroupRoleTable> {
+public class PortletPreferenceTableReferenceDefinition
+	implements TableReferenceDefinition<PortletPreferencesTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<UserGroupGroupRoleTable>
+		ChildTableReferenceInfoBuilder<PortletPreferencesTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<UserGroupGroupRoleTable>
+		ParentTableReferenceInfoBuilder<PortletPreferencesTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			UserGroupGroupRoleTable.INSTANCE.companyId,
+			PortletPreferencesTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
-			UserGroupGroupRoleTable.INSTANCE.userGroupId,
-			UserGroupTable.INSTANCE.userGroupId
-		).singleColumnReference(
-			UserGroupGroupRoleTable.INSTANCE.groupId,
-			GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			UserGroupGroupRoleTable.INSTANCE.roleId, RoleTable.INSTANCE.roleId
+			PortletPreferencesTable.INSTANCE.plid, LayoutTable.INSTANCE.plid
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				PortletTable.INSTANCE
+			).innerJoinON(
+				PortletPreferencesTable.INSTANCE,
+				PortletPreferencesTable.INSTANCE.companyId.eq(
+					PortletTable.INSTANCE.companyId
+				).and(
+					PortletPreferencesTable.INSTANCE.portletId.eq(
+						PortletTable.INSTANCE.portletId)
+				)
+			)
 		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _userGroupGroupRolePersistence;
+		return _portletPreferencesPersistence;
 	}
 
 	@Override
-	public UserGroupGroupRoleTable getTable() {
-		return UserGroupGroupRoleTable.INSTANCE;
+	public PortletPreferencesTable getTable() {
+		return PortletPreferencesTable.INSTANCE;
 	}
 
 	@Reference
-	private UserGroupGroupRolePersistence _userGroupGroupRolePersistence;
+	private PortletPreferencesPersistence _portletPreferencesPersistence;
 
 }

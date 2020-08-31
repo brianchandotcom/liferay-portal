@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.expando.kernel.model.ExpandoRowTable;
-import com.liferay.expando.kernel.model.ExpandoTableTable;
-import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.ImagePersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,38 +29,35 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class ExpandoRowTableReferenceDefinition
-	implements TableReferenceDefinition<ExpandoRowTable> {
+public class ImageTableReferenceDefinition
+	implements TableReferenceDefinition<ImageTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<ExpandoRowTable>
+		ChildTableReferenceInfoBuilder<ImageTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<ExpandoRowTable>
+		ParentTableReferenceInfoBuilder<ImageTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			ExpandoRowTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			ExpandoRowTable.INSTANCE.tableId, ExpandoTableTable.INSTANCE.tableId
-		);
+			ImageTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _expandoRowPersistence;
+		return _imagePersistence;
 	}
 
 	@Override
-	public ExpandoRowTable getTable() {
-		return ExpandoRowTable.INSTANCE;
+	public ImageTable getTable() {
+		return ImageTable.INSTANCE;
 	}
 
 	@Reference
-	private ExpandoRowPersistence _expandoRowPersistence;
+	private ImagePersistence _imagePersistence;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.internal.reference.TableReferenceAppender;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;

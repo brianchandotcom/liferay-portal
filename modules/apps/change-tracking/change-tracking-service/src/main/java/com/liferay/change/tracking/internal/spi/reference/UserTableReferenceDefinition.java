@@ -12,17 +12,18 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.LayoutTable;
-import com.liferay.portal.kernel.model.PortletPreferencesTable;
-import com.liferay.portal.kernel.model.PortletTable;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ContactTable;
+import com.liferay.portal.kernel.model.ImageTable;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,51 +32,44 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class PortletPreferenceTableReferenceDefinition
-	implements TableReferenceDefinition<PortletPreferencesTable> {
+public class UserTableReferenceDefinition
+	implements TableReferenceDefinition<UserTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<PortletPreferencesTable>
+		ChildTableReferenceInfoBuilder<UserTable>
 			childTableReferenceInfoBuilder) {
-	}
 
-	@Override
-	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<PortletPreferencesTable>
-			parentTableReferenceInfoBuilder) {
-
-		parentTableReferenceInfoBuilder.singleColumnReference(
-			PortletPreferencesTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
+		childTableReferenceInfoBuilder.classNameReference(
+			UserTable.INSTANCE.userId, ContactTable.INSTANCE.classPK,
+			Contact.class
 		).singleColumnReference(
-			PortletPreferencesTable.INSTANCE.plid, LayoutTable.INSTANCE.plid
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				PortletTable.INSTANCE
-			).innerJoinON(
-				PortletPreferencesTable.INSTANCE,
-				PortletPreferencesTable.INSTANCE.companyId.eq(
-					PortletTable.INSTANCE.companyId
-				).and(
-					PortletPreferencesTable.INSTANCE.portletId.eq(
-						PortletTable.INSTANCE.portletId)
-				)
-			)
+			UserTable.INSTANCE.contactId, ContactTable.INSTANCE.contactId
+		).singleColumnReference(
+			UserTable.INSTANCE.portraitId, ImageTable.INSTANCE.imageId
 		);
 	}
 
 	@Override
-	public BasePersistence<?> getBasePersistence() {
-		return _portletPreferencesPersistence;
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<UserTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			UserTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override
-	public PortletPreferencesTable getTable() {
-		return PortletPreferencesTable.INSTANCE;
+	public BasePersistence<?> getBasePersistence() {
+		return _userPersistence;
+	}
+
+	@Override
+	public UserTable getTable() {
+		return UserTable.INSTANCE;
 	}
 
 	@Reference
-	private PortletPreferencesPersistence _portletPreferencesPersistence;
+	private UserPersistence _userPersistence;
 
 }

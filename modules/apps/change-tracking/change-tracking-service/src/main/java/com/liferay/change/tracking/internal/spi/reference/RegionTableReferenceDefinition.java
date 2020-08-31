@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.change.tracking.internal.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.PortletTable;
+import com.liferay.portal.kernel.model.CountryTable;
+import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.PortletPersistence;
+import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,35 +29,35 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class PortletTableReferenceDefinition
-	implements TableReferenceDefinition<PortletTable> {
+public class RegionTableReferenceDefinition
+	implements TableReferenceDefinition<RegionTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<PortletTable>
+		ChildTableReferenceInfoBuilder<RegionTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<PortletTable>
+		ParentTableReferenceInfoBuilder<RegionTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			PortletTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
+			RegionTable.INSTANCE.countryId, CountryTable.INSTANCE.countryId);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _portletPersistence;
+		return _regionPersistence;
 	}
 
 	@Override
-	public PortletTable getTable() {
-		return PortletTable.INSTANCE;
+	public RegionTable getTable() {
+		return RegionTable.INSTANCE;
 	}
 
 	@Reference
-	private PortletPersistence _portletPersistence;
+	private RegionPersistence _regionPersistence;
 
 }

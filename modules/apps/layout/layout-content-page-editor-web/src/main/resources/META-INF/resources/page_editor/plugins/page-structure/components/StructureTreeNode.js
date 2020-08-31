@@ -68,6 +68,7 @@ export default function StructureTreeNode({node}) {
 	const toControlsId = useToControlsId();
 
 	const isActive = node.activable && nodeIsSelected(node.id, activeItemId);
+	const isDisabled = !node.activable || node.disabled;
 
 	const item = {
 		children: node.children,
@@ -127,6 +128,7 @@ export default function StructureTreeNode({node}) {
 
 	return (
 		<div
+			aria-disabled={isDisabled}
 			aria-selected={isActive}
 			className={classNames('page-editor__page-structure__tree-node', {
 				'drag-over-bottom':
@@ -144,35 +146,13 @@ export default function StructureTreeNode({node}) {
 					hoveredItemId
 				),
 			})}
-			onMouseLeave={(event) => {
-				event.stopPropagation();
-
-				if (isDraggingSource) {
-					return;
-				}
-
-				if (nodeIsHovered(node.id, hoveredItemId)) {
-					hoverItem(null);
-				}
-			}}
-			onMouseOver={(event) => {
-				event.stopPropagation();
-
-				if (isDraggingSource) {
-					return;
-				}
-
-				hoverItem(node.id);
-			}}
 			ref={targetRef}
 		>
-			<ClayButton
+			<div
 				aria-label={Liferay.Util.sub(Liferay.Language.get('select-x'), [
 					node.name,
 				])}
 				className="page-editor__page-structure__tree-node__mask"
-				disabled={!node.activable || node.disabled}
-				displayType="unstyled"
 				onClick={(event) => {
 					event.stopPropagation();
 					event.target.focus();
@@ -185,7 +165,28 @@ export default function StructureTreeNode({node}) {
 					}
 				}}
 				onDoubleClick={(event) => event.stopPropagation()}
+				onMouseLeave={(event) => {
+					event.stopPropagation();
+
+					if (isDraggingSource) {
+						return;
+					}
+
+					if (nodeIsHovered(node.id, hoveredItemId)) {
+						hoverItem(null);
+					}
+				}}
+				onMouseOver={(event) => {
+					event.stopPropagation();
+
+					if (isDraggingSource) {
+						return;
+					}
+
+					hoverItem(node.id);
+				}}
 				ref={node.draggable ? handlerRef : nodeRef}
+				role="button"
 			/>
 
 			<NameLabel

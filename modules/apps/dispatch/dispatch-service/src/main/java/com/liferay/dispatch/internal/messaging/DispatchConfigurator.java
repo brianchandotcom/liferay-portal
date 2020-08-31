@@ -41,8 +41,6 @@ public class DispatchConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
@@ -79,26 +77,19 @@ public class DispatchConfigurator {
 
 		properties.put("destination.name", destination.getName());
 
-		_serviceRegistration = _bundleContext.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			Destination.class, destination, properties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		Destination destination = _bundleContext.getService(
-			_serviceRegistration.getReference());
-
 		_serviceRegistration.unregister();
-
-		destination.destroy();
 	}
 
 	private static final int _MAXIMUM_QUEUE_SIZE = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DispatchConfigurator.class);
-
-	private BundleContext _bundleContext;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

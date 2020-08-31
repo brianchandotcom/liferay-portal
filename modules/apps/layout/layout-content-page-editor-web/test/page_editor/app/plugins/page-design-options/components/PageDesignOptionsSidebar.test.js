@@ -87,17 +87,6 @@ describe('PageDesignOptionsSidebar', () => {
 		expect(getByText('page-design-options')).toBeInTheDocument();
 	});
 
-	it('calls changeMasterLayout when a master layout is selected', () => {
-		const {getByLabelText} = renderComponent();
-		const button = getByLabelText('Pablo Master Layout');
-
-		userEvent.click(button);
-
-		expect(changeMasterLayout).toBeCalledWith(
-			expect.objectContaining({masterLayoutPlid: '15'})
-		);
-	});
-
 	it('calls changeStyleBookEntry when a style is selected', () => {
 		const {getByLabelText} = renderComponent();
 		const button = getByLabelText('Pablo Style');

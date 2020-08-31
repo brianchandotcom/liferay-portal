@@ -100,9 +100,6 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			_friendlyURLMapperProvider.getFriendlyURLMapper(
 				themeDisplay.getRequest());
 
-		friendlyURLMapper.getMappedFriendlyURLs(
-			_portal.getAlternateURLs(canonicalURL, themeDisplay, layout));
-
 		Map<Locale, String> mappedFriendlyURLs =
 			friendlyURLMapper.getMappedFriendlyURLs(alternateURLs);
 

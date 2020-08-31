@@ -57,7 +57,7 @@ definition {
 			value1 = "WC Title 5");
 	}
 
-	@description = "Validate if the user can filter by title"
+	@description = "Validate if the user can open de Info side panel of a web content"
 	@priority = "5"
 	test ContentDashboardViewInfoPanel {
 		ApplicationsMenu.gotoPortlet(

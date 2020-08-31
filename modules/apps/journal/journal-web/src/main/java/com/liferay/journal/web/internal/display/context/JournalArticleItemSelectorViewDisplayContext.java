@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -545,7 +546,10 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	private BreadcrumbEntry _getHomeBreadcrumb() throws Exception {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		breadcrumbEntry.setTitle(_themeDisplay.getSiteGroupName());
+		Group group = GroupLocalServiceUtil.getGroup(_getGroupId());
+
+		breadcrumbEntry.setTitle(
+			group.getDescriptiveName(_themeDisplay.getLocale()));
 
 		PortletURL portletURL = getPortletURL();
 

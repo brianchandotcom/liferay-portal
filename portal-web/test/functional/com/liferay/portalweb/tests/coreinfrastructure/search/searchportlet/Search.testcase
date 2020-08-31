@@ -972,7 +972,6 @@ definition {
 			searchTerm = "Entry Title");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SearchContentPagesSmoke {
 		JSONGroup.addGroup(groupName = "Site Name");

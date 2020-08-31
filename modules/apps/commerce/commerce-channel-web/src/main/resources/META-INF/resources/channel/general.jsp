@@ -243,5 +243,14 @@ if (shippingTaxCategory != null) {
 			'<%= liferayPortletResponse.getNamespace() %>shippingTaxSettings--taxCategoryId--',
 		itemsKey: 'id',
 		itemsLabel: ['name', 'LANG'],
+		onValueUpdated: function (value, shippingTaxData) {
+			if (value) {
+				window.document.querySelector('#shippingTaxCategoryId').value =
+					shippingTaxData.id;
+			}
+			else {
+				window.document.querySelector('#shippingTaxCategoryId').value = 0;
+			}
+		},
 	});
 </aui:script>

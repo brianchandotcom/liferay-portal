@@ -38,9 +38,10 @@ export function liferayNavigate(url) {
 }
 
 export function getValueFromItem(item, fieldName) {
-	if (!fieldName) {
+	if (!fieldName || typeof item === 'string') {
 		return null;
 	}
+
 	if (Array.isArray(fieldName)) {
 		return fieldName.reduce((acc, key) => {
 			if (key === 'LANG') {

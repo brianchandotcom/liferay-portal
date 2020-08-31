@@ -274,6 +274,88 @@ public class TranslationEntryServiceTest {
 			latestJournalArticle.getTitle(LocaleUtil.SPAIN));
 	}
 
+	@Test
+	public void testAddOrUpdateTranslationEntryUpdateJournalArticleRejectedTranslation()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		TranslationTestUtil.withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role,
+					TranslationConstants.RESOURCE_NAME + "." +
+						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(_group.getGroupId()),
+					TranslationActionKeys.TRANSLATE);
+
+				RoleTestUtil.addResourcePermission(
+					role, JournalArticle.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.UPDATE);
+
+				InfoItemReference infoItemReference = new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
+
+				String stringFile = StringUtil.replace(
+					TranslationTestUtil.readFileToString(
+						"test-journal-article-only-title.xlf"),
+					"$ARTICLE_ID",
+					String.valueOf(journalArticle.getResourcePrimKey()));
+
+				InfoItemFieldValues infoItemFieldValues =
+					_xliffTranslationInfoItemFieldValuesImporter.
+						importInfoItemFieldValues(
+							_group.getGroupId(),
+							new InfoItemReference(
+								JournalArticle.class.getName(),
+								journalArticle.getResourcePrimKey()),
+							new ByteArrayInputStream(
+								stringFile.getBytes(StandardCharsets.UTF_8)));
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext();
+
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+
+				_translationEntry =
+					_translationEntryService.addOrUpdateTranslationEntry(
+						_group.getGroupId(),
+						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+						infoItemReference, infoItemFieldValues, serviceContext);
+			});
+
+		JournalTestUtil.updateArticle(journalArticle, "newTitle");
+
+		JournalArticle latestJournalArticle =
+			_journalArticleService.getLatestArticle(
+				journalArticle.getGroupId(), journalArticle.getArticleId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			"newTitle", latestJournalArticle.getTitle(LocaleUtil.SPAIN));
+
+		_translationEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(),
+			_translationEntry.getTranslationEntryId(),
+			WorkflowConstants.STATUS_DENIED,
+			ServiceContextTestUtil.getServiceContext(),
+			new HashMap<String, Serializable>());
+
+		latestJournalArticle = _journalArticleService.getLatestArticle(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			"newTitle", latestJournalArticle.getTitle(LocaleUtil.SPAIN));
+	}
+
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddOrUpdateTranslationEntryWithoutTranslationPermission()
 		throws Exception {

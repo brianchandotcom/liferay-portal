@@ -22,6 +22,8 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.subscription.CommerceSubscriptionEntryHelper;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -34,7 +36,9 @@ public class CommerceSubscriptionEntryTestUtil {
 			CommerceSubscriptionEntryHelper commerceSubscriptionEntryHelper)
 		throws Exception {
 
-		CPInstance cpInstance = CPTestUtil.addCPInstance();
+		User user = UserLocalServiceUtil.getUser(userId);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(user.getGroupId());
 
 		cpInstance.setOverrideSubscriptionInfo(true);
 		cpInstance.setSubscriptionEnabled(true);

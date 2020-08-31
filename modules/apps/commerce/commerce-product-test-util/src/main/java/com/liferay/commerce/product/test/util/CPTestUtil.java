@@ -503,6 +503,25 @@ public class CPTestUtil {
 		return CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
 	}
 
+	public static CPInstance addCPInstanceWithSku(long groupId)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CPDefinition cpDefinition = _addCPDefinition(
+			SimpleCPTypeConstants.NAME, true, true, serviceContext);
+
+		CPInstance cpInstance = addCPDefinitionCPInstance(
+			cpDefinition.getCPDefinitionId(), Collections.emptyMap());
+
+		cpInstance.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		_addBasePriceEntry(cpInstance);
+
+		return CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
+	}
+
 	public static CPOption addCPOption(long groupId, boolean skuContributor)
 		throws PortalException {
 

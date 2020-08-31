@@ -985,7 +985,13 @@ definition {
 
 		Refresh();
 
-		PageEditor.addWidget(
+		// Workaround for LPS-120037
+
+		//PageEditor.addWidget(
+		//	portletName = "Search Results",
+		//	targetFragmentName = "Search Bar");
+
+		SearchResultPortlet.addToContentPage(
 			portletName = "Search Results",
 			targetFragmentName = "Search Bar");
 

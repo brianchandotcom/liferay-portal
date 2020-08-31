@@ -312,6 +312,14 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					}
 				}
 
+				String result = GitUtil.getGitResult(
+					project, "ls-files",
+					FileUtil.getAbsolutePath(project.getProjectDir()));
+
+				if (Validator.isNull(result)) {
+					return false;
+				}
+
 				if (GradlePluginsDefaultsUtil.isTestProject(project)) {
 					return false;
 				}

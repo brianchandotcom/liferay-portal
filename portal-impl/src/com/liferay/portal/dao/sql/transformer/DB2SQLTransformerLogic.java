@@ -57,7 +57,7 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	@Override
 	protected String replaceCastText(Matcher matcher) {
-		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
+		return matcher.replaceAll("CAST($1 AS VARCHAR(32672))");
 	}
 
 	@Override

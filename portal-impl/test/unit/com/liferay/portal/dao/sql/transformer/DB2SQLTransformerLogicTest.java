@@ -74,7 +74,7 @@ public class DB2SQLTransformerLogicTest
 
 	@Override
 	protected String getCastClobTextTransformedSQL() {
-		return "select CAST(foo AS VARCHAR(254)) from Foo";
+		return "select CAST(foo AS VARCHAR(32672)) from Foo";
 	}
 
 	@Override

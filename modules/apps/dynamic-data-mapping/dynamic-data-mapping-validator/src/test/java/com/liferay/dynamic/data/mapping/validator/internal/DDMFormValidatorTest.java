@@ -171,21 +171,6 @@ public class DDMFormValidatorTest {
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
-	@Test(expected = MustSetValidIndexType.class)
-	public void testInvalidFieldIndexType() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
-
-		DDMFormField ddmFormField = new DDMFormField(
-			"Text", DDMFormFieldType.TEXT);
-
-		ddmFormField.setIndexType("Invalid");
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		_ddmFormValidatorImpl.validate(ddmForm);
-	}
-
 	@Test(expected = MustSetValidCharactersForFieldName.class)
 	public void testInvalidFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
@@ -193,18 +178,6 @@ public class DDMFormValidatorTest {
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"*", DDMFormFieldType.TEXT);
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		_ddmFormValidatorImpl.validate(ddmForm);
-	}
-
-	@Test(expected = MustSetValidType.class)
-	public void testInvalidFieldType() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
-
-		DDMFormField ddmFormField = new DDMFormField("Name", "string");
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -295,6 +268,33 @@ public class DDMFormValidatorTest {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Name");
 
 		ddmForm.addDDMFormRule(new DDMFormRule(Arrays.asList("true"), "*/?"));
+
+		_ddmFormValidatorImpl.validate(ddmForm);
+	}
+
+	@Test(expected = MustSetValidIndexType.class)
+	public void testInvalidIndexType() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"Text", DDMFormFieldType.TEXT);
+
+		ddmFormField.setIndexType("Invalid");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		_ddmFormValidatorImpl.validate(ddmForm);
+	}
+
+	@Test(expected = MustSetValidType.class)
+	public void testInvalidType() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField("Name", "string");
+
+		ddmForm.addDDMFormField(ddmFormField);
 
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}

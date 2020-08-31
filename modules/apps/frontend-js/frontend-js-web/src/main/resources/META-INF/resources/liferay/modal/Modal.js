@@ -106,11 +106,13 @@ const openSelectionModal = ({
 	buttonAddLabel = Liferay.Language.get('add'),
 	buttonCancelLabel = Liferay.Language.get('cancel'),
 	customSelectEvent = false,
+	height,
 	id,
 	multiple = false,
 	onSelect,
 	selectEventName,
 	selectedData,
+	size,
 	title,
 	url,
 	zIndex,
@@ -138,6 +140,7 @@ const openSelectionModal = ({
 					},
 			  ]
 			: null,
+		height,
 		id: id || selectEventName,
 		onClose: () => {
 			eventHandlers.forEach((eventHandler) => {
@@ -185,6 +188,7 @@ const openSelectionModal = ({
 				});
 			}
 		},
+		size,
 		title,
 		url,
 		zIndex,

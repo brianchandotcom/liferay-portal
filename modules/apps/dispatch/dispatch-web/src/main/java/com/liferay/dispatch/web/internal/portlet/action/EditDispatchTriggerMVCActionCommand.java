@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -240,19 +240,21 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _sendMessage(long dispatchTriggerId) {
-		JSONObject payLoad = JSONUtil.put(
-			"dispatchTriggerId", dispatchTriggerId);
+		Message message = new Message();
 
-		SingleDestinationMessageSender messageSender =
-			_singleDestinationMessageSenderFactory.
-				createSingleDestinationMessageSender(
-					DispatchConstants.EXECUTOR_DESTINATION_NAME);
+		message.setPayload(
+			JSONUtil.put("dispatchTriggerId", dispatchTriggerId));
 
-		messageSender.send(payLoad.toString());
+		_destination.send(message);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditDispatchTriggerMVCActionCommand.class);
+
+	@Reference(
+		target = "(destination.name= " + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
+	)
+	private Destination _destination;
 
 	@Reference
 	private DispatchTriggerService _dispatchTriggerService;
@@ -262,9 +264,5 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SingleDestinationMessageSenderFactory
-		_singleDestinationMessageSenderFactory;
 
 }

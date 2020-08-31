@@ -25,6 +25,12 @@ definition {
 	}
 
 	tearDown {
+		task ("Go back to Desktop viewport") {
+			Click(
+				key_deviceType = "Desktop",
+				locator1 = "PageEditor#DEVICE_TYPE");
+		}
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
@@ -187,12 +193,6 @@ definition {
 						locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
 				}
 			}
-		}
-
-		task ("Go back to Desktop viewport") {
-			Click(
-				key_deviceType = "Desktop",
-				locator1 = "PageEditor#DEVICE_TYPE");
 		}
 	}
 

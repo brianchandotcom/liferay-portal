@@ -100,7 +100,16 @@
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= FormInstanceNameException.class %>" message="please-enter-a-valid-form-name" />
-<liferay-ui:error exception="<%= FormInstanceSettingsRedirectURLException.class %>" message="the-specified-redirect-url-is-not-allowed" />
+
+<liferay-ui:error exception="<%= FormInstanceSettingsRedirectURLException.class %>">
+
+	<%
+	FormInstanceSettingsRedirectURLException formInstanceSettingsRedirectURLException = (FormInstanceSettingsRedirectURLException)errorException;
+	%>
+
+	<%= formInstanceSettingsRedirectURLException.getMessage() %>
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= StorageException.class %>" message="please-enter-a-valid-form-settings" />
 <liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-form-definition" />
 <liferay-ui:error exception="<%= StructureLayoutException.class %>" message="please-enter-a-valid-form-layout" />

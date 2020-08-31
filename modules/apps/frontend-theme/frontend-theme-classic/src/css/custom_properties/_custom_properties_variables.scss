@@ -53,8 +53,8 @@ $theme-colors-cp: map-deep-merge(
 
 	// Body
 
-	--body-bg: $body-bg;
-	--body-color: $body-color;
+	--body-bg: #{$body-bg};
+	--body-color: #{$body-color};
 
 	// Border radius
 

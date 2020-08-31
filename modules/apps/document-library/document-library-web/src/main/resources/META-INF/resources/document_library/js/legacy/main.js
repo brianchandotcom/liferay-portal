@@ -510,7 +510,7 @@ AUI.add(
 						);
 					}
 
-					Liferay.Util.openModal({
+					Liferay.Util.openSelectionModal({
 						height: 480,
 						id: namespace + 'selectFolder',
 						onSelect: (selectedItem) => {

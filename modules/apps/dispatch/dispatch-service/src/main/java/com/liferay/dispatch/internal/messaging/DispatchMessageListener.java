@@ -47,12 +47,12 @@ public class DispatchMessageListener implements MessageListener {
 
 	@Override
 	public void receive(Message message) throws MessageListenerException {
-		String payLoadString = (String)message.getPayload();
+		String payload = (String)message.getPayload();
 
-		JSONObject payLoad = null;
+		JSONObject jsonObject = null;
 
 		try {
-			payLoad = JSONFactoryUtil.createJSONObject(payLoadString);
+			jsonObject = JSONFactoryUtil.createJSONObject(payload);
 		}
 		catch (JSONException jsonException) {
 			_log.error(jsonException, jsonException);
@@ -60,7 +60,7 @@ public class DispatchMessageListener implements MessageListener {
 			throw new MessageListenerException(jsonException);
 		}
 
-		long dispatchTriggerId = payLoad.getLong("dispatchTriggerId");
+		long dispatchTriggerId = jsonObject.getLong("dispatchTriggerId");
 
 		ScheduledTaskExecutorService scheduledTaskExecutorService = null;
 

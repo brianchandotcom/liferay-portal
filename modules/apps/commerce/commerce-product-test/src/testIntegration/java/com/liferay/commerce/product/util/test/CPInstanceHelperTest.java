@@ -413,7 +413,7 @@ public class CPInstanceHelperTest {
 			cpDefinitionOptionRelsMap.toString(), 2,
 			cpDefinitionOptionRelsMap.size());
 
-		List<CPDefinitionOptionRel> keys = new ArrayList(
+		List<CPDefinitionOptionRel> keys = new ArrayList<>(
 			cpDefinitionOptionRelsMap.keySet());
 
 		CPDefinitionOptionRel orderedCPDefinitionOptionRel1 = keys.get(0);
@@ -470,7 +470,7 @@ public class CPInstanceHelperTest {
 			cpDefinitionOptionRelsMap.toString(), 2,
 			cpDefinitionOptionRelsMap.size());
 
-		List<CPDefinitionOptionRel> keys = new ArrayList(
+		List<CPDefinitionOptionRel> keys = new ArrayList<>(
 			cpDefinitionOptionRelsMap.keySet());
 
 		CPDefinitionOptionRel orderedCPDefinitionOptionRel1 = keys.get(0);

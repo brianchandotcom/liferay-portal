@@ -20,7 +20,6 @@ import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.service.ScheduledTaskExecutorService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -60,26 +59,20 @@ public class DispatchMessageListener implements MessageListener {
 
 		long dispatchTriggerId = jsonObject.getLong("dispatchTriggerId");
 
-		ScheduledTaskExecutorService scheduledTaskExecutorService = null;
-
 		try {
-			scheduledTaskExecutorService = getScheduledTaskExecutorService(
-				dispatchTriggerId);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
+			DispatchTrigger dispatchTrigger =
+				_dispatchTriggerLocalService.getDispatchTrigger(
+					dispatchTriggerId);
 
-		if (scheduledTaskExecutorService != null) {
-			try {
-				scheduledTaskExecutorService.runProcess(dispatchTriggerId);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
-				}
+			ScheduledTaskExecutorService scheduledTaskExecutorService =
+				_scheduledTaskExecutorServiceTrackerMap.getService(
+					dispatchTrigger.getType());
+
+			scheduledTaskExecutorService.runProcess(dispatchTriggerId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
 			}
 		}
 	}
@@ -90,17 +83,6 @@ public class DispatchMessageListener implements MessageListener {
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ScheduledTaskExecutorService.class,
 				"scheduled.task.executor.service.type");
-	}
-
-	protected ScheduledTaskExecutorService getScheduledTaskExecutorService(
-			long dispatchTriggerId)
-		throws PortalException {
-
-		DispatchTrigger dispatchTrigger =
-			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
-
-		return _scheduledTaskExecutorServiceTrackerMap.getService(
-			dispatchTrigger.getType());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

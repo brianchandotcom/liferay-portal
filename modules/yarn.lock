@@ -4702,13 +4702,6 @@ big.js@^5.2.2:
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
-billboard.js@1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/billboard.js/-/billboard.js-1.5.1.tgz#856aabe7fb8dbd0328cd25d32f0c6a7480857ff3"
-  integrity sha512-MXaDZLcjoPlCSVY6qkFChZS6YE9u+oxVetu6ifa1mR74s0EUyacZW/3CJQcMt1GF8B7ddtDakUEZ2v44BvsfXw==
-  dependencies:
-    d3 "^5.5.0"
-
 billboard.js@^1.8.0:
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/billboard.js/-/billboard.js-1.9.2.tgz#625e9ce700f745c96c0cef48d48cdaed0d9ae688"
@@ -5498,12 +5491,12 @@ clay-charts-shared@^2.16.2:
     d3 "^5.7.0"
     metal "^2.16.6"
 
-clay-charts@2.18.1:
-  version "2.18.1"
-  resolved "https://registry.yarnpkg.com/clay-charts/-/clay-charts-2.18.1.tgz#2c3e5e220fc596f362031a7cdb329708ad6e65e5"
-  integrity sha512-GzC/vGYcx7NJG07Aocoip8q1b3iwa4bXNfBW+9uRSwC0QgJA8LAfeUPqWyk5TBhRoYaj2kGXqol9h6NOm68Psg==
+clay-charts@2.21.5:
+  version "2.21.5"
+  resolved "https://registry.yarnpkg.com/clay-charts/-/clay-charts-2.21.5.tgz#2b3468adbc8e04003f2311787fff922ba027a073"
+  integrity sha512-xaHuyxby916STXTZRE1+OaCt49eGRjlakQe37AfekLEBk2zpeqqck5GAv8v0G4rzwJCg4aP074tGWcibAfQbdw==
   dependencies:
-    billboard.js "1.5.1"
+    billboard.js "^1.8.0"
     clay-charts-shared "^2.16.2"
     d3 "5.0.0"
     metal "^2.16.2"
@@ -7207,7 +7200,7 @@ d3@^4.7.4:
     d3-voronoi "1.1.2"
     d3-zoom "1.7.1"
 
-d3@^5.5.0, d3@^5.7.0, d3@^5.9.2:
+d3@^5.7.0, d3@^5.9.2:
   version "5.9.2"
   resolved "https://registry.yarnpkg.com/d3/-/d3-5.9.2.tgz#64e8a7e9c3d96d9e6e4999d2c8a2c829767e67f5"
   integrity sha512-ydrPot6Lm3nTWH+gJ/Cxf3FcwuvesYQ5uk+j/kXEH/xbuYWYWTMAHTJQkyeuG8Y5WM5RSEYB41EctUrXQQytRQ==

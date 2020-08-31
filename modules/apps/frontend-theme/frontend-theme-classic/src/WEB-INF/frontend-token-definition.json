@@ -292,7 +292,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "#F1F2F5",
+							"defaultValue": "#FFF",
 							"editorType": "ColorPicker",
 							"label": "body-bg",
 							"mappings": [
@@ -973,7 +973,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#6C757D",
+							"defaultValue": "#6B6C7E",
 							"editorType": "ColorPicker",
 							"label": "blockquote-small-color",
 							"mappings": [

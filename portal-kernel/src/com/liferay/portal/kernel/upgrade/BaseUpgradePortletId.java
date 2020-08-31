@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -220,12 +222,22 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				"update PortletPreferences set portletId = '", newRootPortletId,
 				"' where portletId = '", oldRootPortletId, "'"));
 
-		runSQL(
+		DBTypeToSQLMap updatePortletIdCSS = new DBTypeToSQLMap(
+			StringBundler.concat(
+				"update PortletPreferences set preferences = replace(",
+				"preferences, '#portlet_", oldRootPortletId, "', '#portlet_",
+				newRootPortletId, "') where portletId = '", newRootPortletId,
+				"'"));
+
+		updatePortletIdCSS.add(
+			DBType.SYBASE,
 			StringBundler.concat(
 				"update PortletPreferences set preferences = replace(",
 				"CAST_TEXT(preferences), '#portlet_", oldRootPortletId,
 				"', '#portlet_", newRootPortletId, "') where portletId = '",
 				newRootPortletId, "'"));
+
+		runSQL(updatePortletIdCSS);
 
 		if (!newRootPortletId.contains("_INSTANCE_")) {
 			runSQL(
@@ -235,13 +247,23 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					newRootPortletId, "_INSTANCE_') where portletId like '",
 					oldRootPortletId, "_INSTANCE_%'"));
 
-			runSQL(
+			DBTypeToSQLMap updatePortletIdInstanceCSS = new DBTypeToSQLMap(
+				StringBundler.concat(
+					"update PortletPreferences set preferences = replace(",
+					"preferences, '#portlet_", oldRootPortletId, "_INSTANCE_',",
+					"'#portlet_", newRootPortletId, "_INSTANCE_') where ",
+					"portletId like '", newRootPortletId, "_INSTANCE_%'"));
+
+			updatePortletIdInstanceCSS.add(
+				DBType.SYBASE,
 				StringBundler.concat(
 					"update PortletPreferences set preferences = replace(",
 					"CAST_TEXT(preferences), '#portlet_", oldRootPortletId,
 					"_INSTANCE_','#portlet_", newRootPortletId,
 					"_INSTANCE_') where portletId like '", newRootPortletId,
 					"_INSTANCE_%'"));
+
+			runSQL(updatePortletIdInstanceCSS);
 		}
 
 		runSQL(
@@ -251,12 +273,22 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				"_USER_') where portletId like '", oldRootPortletId,
 				"_USER_%'"));
 
-		runSQL(
+		DBTypeToSQLMap updatePortletIdUserCSS = new DBTypeToSQLMap(
+			StringBundler.concat(
+				"update PortletPreferences set preferences = replace(",
+				"preferences, '#portlet_", oldRootPortletId, "_USER_', ",
+				"'#portlet_", newRootPortletId, "_USER_') where portletId ",
+				"like '", newRootPortletId, "_USER_%'"));
+
+		updatePortletIdUserCSS.add(
+			DBType.SYBASE,
 			StringBundler.concat(
 				"update PortletPreferences set preferences = replace(",
 				"CAST_TEXT(preferences), '#portlet_", oldRootPortletId,
 				"_USER_', '#portlet_", newRootPortletId, "_USER_') where ",
 				"portletId like '", newRootPortletId, "_USER_%'"));
+
+		runSQL(updatePortletIdUserCSS);
 	}
 
 	protected void updateLayout(long plid, String typeSettings)

@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.Iterator;
 
 /**
  * @author Rodrigo Paulino
@@ -97,6 +100,24 @@ public class UpgradeDDMFormFieldDataSourceType extends UpgradeProcess {
 		}
 	}
 
+	private void _convertStringToJSONArray(JSONObject jsonObject, String key) {
+		Object value = jsonObject.get(key);
+
+		if (value instanceof String) {
+			String valueString = (String)value;
+
+			if (!valueString.startsWith(StringPool.OPEN_BRACKET) ||
+				!valueString.endsWith(StringPool.CLOSE_BRACKET)) {
+
+				jsonObject.put(
+					key,
+					JSONUtil.putAll(
+						StringUtil.split(valueString)
+					).toString());
+			}
+		}
+	}
+
 	private String _upgradeDefinition(String definition)
 		throws PortalException {
 
@@ -111,21 +132,25 @@ public class UpgradeDDMFormFieldDataSourceType extends UpgradeProcess {
 		for (int i = 0; i < fieldsJSONArray.length(); i++) {
 			JSONObject jsonObject = fieldsJSONArray.getJSONObject(i);
 
-			Object dataSourceType = jsonObject.get("dataSourceType");
+			String type = jsonObject.getString("type");
 
-			if (dataSourceType instanceof String) {
-				String dataSourceTypeString = (String)dataSourceType;
+			if (type.equals("checkbox_multiple") || type.equals("radio") ||
+				type.equals("select")) {
 
-				if (!dataSourceTypeString.startsWith(StringPool.OPEN_BRACKET) ||
-					!dataSourceTypeString.endsWith(StringPool.CLOSE_BRACKET)) {
+				JSONObject predefinedValueJSONObject = jsonObject.getJSONObject(
+					"predefinedValue");
 
-					jsonObject.put(
-						"dataSourceType",
-						JSONUtil.put(
-							dataSourceType
-						).toString());
+				Iterator<String> iterator = predefinedValueJSONObject.keys();
+
+				while (iterator.hasNext()) {
+					String languageKey = iterator.next();
+
+					_convertStringToJSONArray(
+						predefinedValueJSONObject, languageKey);
 				}
 			}
+
+			_convertStringToJSONArray(jsonObject, "dataSourceType");
 
 			JSONArray nestedFieldsJSONArray = jsonObject.getJSONArray(
 				"nestedFields");

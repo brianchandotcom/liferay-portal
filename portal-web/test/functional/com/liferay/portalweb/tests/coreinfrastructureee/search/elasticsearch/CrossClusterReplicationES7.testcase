@@ -159,13 +159,7 @@ definition {
 			key_pending = "1",
 			key_untracked = "0");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Workflow");
-
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+		Refresh();
 
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",

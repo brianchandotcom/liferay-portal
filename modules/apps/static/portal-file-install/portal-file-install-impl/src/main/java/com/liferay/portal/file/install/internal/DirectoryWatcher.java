@@ -308,7 +308,17 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		super.start();
 	}
 
-	protected void findBundlesWithOptionalPackagesToRefresh(
+	private boolean _contains(String path, List<String> dirPaths) {
+		for (String dirPath : dirPaths) {
+			if (path.contains(dirPath)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private void _findBundlesWithOptionalPackagesToRefresh(
 		Set<Bundle> refreshBundles) {
 
 		Set<Bundle> bundles = new HashSet<>();
@@ -463,16 +473,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		refreshBundles.addAll(bundles);
-	}
-
-	private boolean _contains(String path, List<String> dirPaths) {
-		for (String dirPath : dirPaths) {
-			if (path.contains(dirPath)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private FileInstaller _findFileInstaller(
@@ -887,7 +887,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			bundles.addAll(installedBundles);
 
-			findBundlesWithOptionalPackagesToRefresh(bundles);
+			_findBundlesWithOptionalPackagesToRefresh(bundles);
 
 			if (!bundles.isEmpty()) {
 				_refresh(bundles);

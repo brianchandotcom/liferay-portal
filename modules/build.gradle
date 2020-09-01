@@ -204,7 +204,9 @@ gradle.beforeProject {
 						iml {
 							withXml { xmlProvider ->
 								Node rootNode = xmlProvider.asNode()
-								Node component = rootNode.component.find { it.@name == "NewModuleRootManager" }
+								Node component = rootNode.component.find { node->
+									node.@name == "NewModuleRootManager"
+								}
 
 								Node frontendTaglibNode = component.orderEntry.find { node ->
 									node.@type == "module" && node.@"module-name" == "frontend-taglib-frontend-taglib"

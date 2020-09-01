@@ -46,8 +46,6 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 		<%
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(backURL.toString());
-
-		renderResponse.setTitle(category.getName());
 		%>
 
 	</c:if>

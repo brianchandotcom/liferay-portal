@@ -114,6 +114,10 @@ components:
             type: object
         Channel:
             properties:
+                currencyCode:
+                    type: string
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     type: integer

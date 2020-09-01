@@ -25,6 +25,7 @@ import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCrite
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
@@ -100,6 +101,7 @@ public class DepotItemSelectorViewRendererCustomizer
 			AudioItemSelectorCriterion.class, FileItemSelectorCriterion.class,
 			ImageItemSelectorCriterion.class,
 			InfoItemItemSelectorCriterion.class,
+			InfoListItemSelectorCriterion.class,
 			LayoutItemSelectorCriterion.class,
 			VideoItemSelectorCriterion.class);
 

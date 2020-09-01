@@ -26,8 +26,12 @@ import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -36,6 +40,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -50,6 +55,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -698,16 +704,115 @@ public class FragmentEntryLinkLocalServiceImpl
 				_portal.getClassNameId(Layout.class),
 				oldFragmentEntryLink.getPlid());
 
+		oldFragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		String processedHTML = _getProcessedHTML(
+			oldFragmentEntryLink,
+			ServiceContextThreadLocal.getServiceContext());
+
+		String defaultEditableValues = String.valueOf(
+			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
+				processedHTML, oldFragmentEntryLink.getConfiguration()));
+
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLink.setCss(fragmentEntry.getCss());
 			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 			fragmentEntryLink.setJs(fragmentEntry.getJs());
 			fragmentEntryLink.setConfiguration(
 				fragmentEntry.getConfiguration());
+
+			String newEditableValues = _mergeEditableValues(
+				defaultEditableValues, fragmentEntryLink.getEditableValues());
+
+			fragmentEntryLink.setEditableValues(newEditableValues);
+
 			fragmentEntryLink.setLastPropagationDate(new Date());
 
 			fragmentEntryLinkPersistence.update(fragmentEntryLink);
 		}
+	}
+
+	private String _getProcessedHTML(
+			FragmentEntryLink fragmentEntryLink, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (serviceContext == null) {
+			return fragmentEntryLink.getHtml();
+		}
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+		HttpServletResponse httpServletResponse = serviceContext.getResponse();
+
+		if ((httpServletRequest == null) || (httpServletResponse == null)) {
+			return fragmentEntryLink.getHtml();
+		}
+
+		FragmentEntryProcessorContext fragmentEntryProcessorContext =
+			new DefaultFragmentEntryProcessorContext(
+				httpServletRequest, httpServletResponse,
+				FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.getMostRelevantLocale());
+
+		return _fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+			fragmentEntryLink, fragmentEntryProcessorContext);
+	}
+
+	private String _mergeEditableValues(
+		String defaultEditableValues, String editableValues) {
+
+		try {
+			JSONObject defaultEditableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(defaultEditableValues);
+
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(editableValues);
+
+			for (String fragmentEntryProcessorKey :
+					_FRAGMENT_ENTRY_PROCESSOR_KEYS) {
+
+				JSONObject editableFragmentEntryProcessorJSONObject =
+					editableValuesJSONObject.getJSONObject(
+						fragmentEntryProcessorKey);
+
+				if (editableFragmentEntryProcessorJSONObject == null) {
+					continue;
+				}
+
+				JSONObject defaultEditableFragmentEntryProcessorJSONObject =
+					defaultEditableValuesJSONObject.getJSONObject(
+						fragmentEntryProcessorKey);
+
+				if (defaultEditableFragmentEntryProcessorJSONObject == null) {
+					continue;
+				}
+
+				Iterator<String> iterator =
+					defaultEditableFragmentEntryProcessorJSONObject.keys();
+
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+
+					if (editableFragmentEntryProcessorJSONObject.has(key)) {
+						defaultEditableFragmentEntryProcessorJSONObject.put(
+							key,
+							editableFragmentEntryProcessorJSONObject.get(key));
+					}
+				}
+
+				editableValuesJSONObject.put(
+					fragmentEntryProcessorKey,
+					defaultEditableFragmentEntryProcessorJSONObject);
+			}
+
+			return editableValuesJSONObject.toJSONString();
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException, jsonException);
+			}
+		}
+
+		return editableValues;
 	}
 
 	private String _replaceResources(long fragmentEntryId, String html)
@@ -746,6 +851,14 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		return html;
 	}
+
+	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
+		"com.liferay.fragment.entry.processor.editable." +
+			"EditableFragmentEntryProcessor"
+	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryLinkLocalServiceImpl.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");

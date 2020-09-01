@@ -169,7 +169,10 @@ CommerceAccountAdminDisplayContext commerceAccountAdminDisplayContext = (Commerc
 		function <portlet:namespace />activateCommerceAccounts() {
 			var form = window.document['<portlet:namespace />fm'];
 
-			form['commerceAccountIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+			form['commerceAccountIds'].value = Liferay.Util.listCheckedExcept(
+				form,
+				'<portlet:namespace />allRowIds'
+			);
 			form['active'].value = 'true';
 
 			submitForm(form);
@@ -183,7 +186,10 @@ CommerceAccountAdminDisplayContext commerceAccountAdminDisplayContext = (Commerc
 			) {
 				var form = window.document['<portlet:namespace />fm'];
 
-				form['commerceAccountIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				form['commerceAccountIds'].value = Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				);
 				form['active'].value = 'false';
 
 				submitForm(form);

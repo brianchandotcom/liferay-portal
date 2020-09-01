@@ -207,7 +207,10 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 			) {
 				var form = window.document['<portlet:namespace />fm'];
 
-				form['deleteCommerceCountryIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				form['deleteCommerceCountryIds'].value = Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				);
 
 				submitForm(form);
 			}

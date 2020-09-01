@@ -191,7 +191,12 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 
 			form.setAttribute('method', 'post');
 			form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
-			form['deleteCPDefinitionGroupedEntryIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+			form[
+				'deleteCPDefinitionGroupedEntryIds'
+			].value = Liferay.Util.listCheckedExcept(
+				form,
+				'<portlet:namespace />allRowIds'
+			);
 
 			submitForm(
 				form,
@@ -220,7 +225,9 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 								'#<portlet:namespace />entryCPDefinitionIds'
 							).value = selectedItems;
 
-							var addCPDefinitionGroupedEntryFm = window.document.querySelector('#<portlet:namespace />addCPDefinitionGroupedEntryFm');
+							var addCPDefinitionGroupedEntryFm = window.document.querySelector(
+								'#<portlet:namespace />addCPDefinitionGroupedEntryFm'
+							);
 
 							submitForm(addCPDefinitionGroupedEntryFm);
 						}

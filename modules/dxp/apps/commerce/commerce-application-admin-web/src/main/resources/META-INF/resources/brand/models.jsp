@@ -135,7 +135,12 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 		) {
 			var form = window.document['<portlet:namespace />fm'];
 
-			form['deleteCommerceApplicationModelIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+			form[
+				'deleteCommerceApplicationModelIds'
+			].value = Liferay.Util.listCheckedExcept(
+				form,
+				'<portlet:namespace />allRowIds'
+			);
 
 			submitForm(form);
 		}

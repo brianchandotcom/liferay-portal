@@ -65,7 +65,12 @@ CommerceDataIntegrationProcessLogDisplayContext commerceDataIntegrationProcessLo
 
 			form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
 			form['redirect'].value = '<%= currentURL %>';
-			form['deleteCDataIntegrationProcessLogIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+			form[
+				'deleteCDataIntegrationProcessLogIds'
+			].value = Liferay.Util.listCheckedExcept(
+				form,
+				'<portlet:namespace />allRowIds'
+			);
 
 			submitForm(
 				form,

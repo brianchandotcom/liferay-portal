@@ -114,7 +114,9 @@ if (Validator.isNotNull(backURL)) {
 			}
 
 			form['commerceInventoryWarehouseId'].value = commerceInventoryWarehouseId;
-			form['commerceInventoryWarehouseItemId'].value = commerceInventoryWarehouseItemId;
+			form[
+				'commerceInventoryWarehouseItemId'
+			].value = commerceInventoryWarehouseItemId;
 
 			var quantityInputId =
 				'#<portlet:namespace />commerceInventoryWarehouseItemQuantity' + index;

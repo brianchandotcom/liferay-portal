@@ -106,7 +106,12 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 
 			form.setAttribute('method', 'post');
 			form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
-			form['deleteCommercePriceListIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+			form[
+				'deleteCommercePriceListIds'
+			].value = Liferay.Util.listCheckedExcept(
+				form,
+				'<portlet:namespace />allRowIds'
+			);
 
 			submitForm(form, '<portlet:actionURL name="editCommercePriceList" />');
 		}

@@ -132,7 +132,12 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 
 				form.setAttribute('method', 'post');
 				form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
-				form['deleteCommerceAccountGroupCommerceAccountRelIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				form[
+					'deleteCommerceAccountGroupCommerceAccountRelIds'
+				].value = Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				);
 
 				submitForm(
 					form,
@@ -175,7 +180,9 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 									','
 								);
 
-								var addCommerceAccountGroupCommerceAccountRelFm = window.document.querySelector('#<portlet:namespace />addCommerceAccountGroupCommerceAccountRelFm');
+								var addCommerceAccountGroupCommerceAccountRelFm = window.document.querySelector(
+									'#<portlet:namespace />addCommerceAccountGroupCommerceAccountRelFm'
+								);
 
 								submitForm(addCommerceAccountGroupCommerceAccountRelFm);
 							}

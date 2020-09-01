@@ -131,7 +131,12 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 				var form = window.document['<portlet:namespace />fm'];
 
 				form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
-				form['deleteCommerceBOMFolderApplicationRelIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				form[
+					'deleteCommerceBOMFolderApplicationRelIds'
+				].value = Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				);
 
 				submitForm(form);
 			}

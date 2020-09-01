@@ -66,7 +66,8 @@ String editUserRoleId = "editUserRoles" + commerceAccountUser.getUserId();
 
 			var form = window.document['<portlet:namespace />fm'];
 
-			form['originalRoleIds'].value = '<%= commerceAccountUserRelAdminDisplayContext.getUserRoleIds(commerceAccountUserRel) %>';
+			form['originalRoleIds'].value =
+				'<%= commerceAccountUserRelAdminDisplayContext.getUserRoleIds(commerceAccountUserRel) %>';
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 				eventName: 'userRoleItemSelector',
@@ -85,9 +86,15 @@ String editUserRoleId = "editUserRoles" + commerceAccountUser.getUserId();
 								<portlet:namespace />addUserRolesIds.push(item.id);
 							});
 
-							form['<%= Constants.CMD %>'].value = '<%= Constants.UPDATE %>';
-							form['commerceAccountUserId'].value = '<%= String.valueOf(commerceAccountUser.getUserId()) %>';
-							form['roleIds'].value = <portlet:namespace />addUserRolesIds.join(',');
+							form['<%= Constants.CMD %>'].value =
+								'<%= Constants.UPDATE %>';
+							form['commerceAccountUserId'].value =
+								'<%= String.valueOf(commerceAccountUser.getUserId()) %>';
+							form[
+								'roleIds'
+							].value = <portlet:namespace />addUserRolesIds.join(
+								','
+							);
 
 							submitForm(
 								form,

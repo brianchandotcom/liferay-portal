@@ -91,7 +91,12 @@ CommerceDataIntegrationProcessDisplayContext commerceDataIntegrationProcessDispl
 
 			form.setAttribute('method', 'post');
 			form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
-			form['deleteCDataIntegrationProcessIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+			form[
+				'deleteCDataIntegrationProcessIds'
+			].value = Liferay.Util.listCheckedExcept(
+				form,
+				'<portlet:namespace />allRowIds'
+			);
 
 			submitForm(
 				form,

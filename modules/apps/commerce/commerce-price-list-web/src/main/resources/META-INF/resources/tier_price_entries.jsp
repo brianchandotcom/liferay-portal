@@ -238,7 +238,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 
 				form.setAttribute('method', 'post');
 				form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
-				form['deleteCommerceTierPriceEntryIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				form[
+					'deleteCommerceTierPriceEntryIds'
+				].value = Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				);
 
 				submitForm(
 					form,

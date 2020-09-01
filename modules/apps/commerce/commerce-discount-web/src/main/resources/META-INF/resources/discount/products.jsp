@@ -133,7 +133,9 @@ SearchContainer<CommerceDiscountRel> cpDefinitionCommerceDiscountRelSearchContai
 								'#<portlet:namespace />classPKs'
 							).value = selectedItems;
 
-							var addCommerceDiscountRelFm = window.document.querySelector('#<portlet:namespace />addCommerceDiscountRelFm');
+							var addCommerceDiscountRelFm = window.document.querySelector(
+								'#<portlet:namespace />addCommerceDiscountRelFm'
+							);
 
 							submitForm(addCommerceDiscountRelFm);
 						}
@@ -158,7 +160,12 @@ SearchContainer<CommerceDiscountRel> cpDefinitionCommerceDiscountRelSearchContai
 		) {
 			var form = window.document['<portlet:namespace />fm'];
 
-			form['deleteCommerceDiscountRelIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+			form[
+				'deleteCommerceDiscountRelIds'
+			].value = Liferay.Util.listCheckedExcept(
+				form,
+				'<portlet:namespace />allRowIds'
+			);
 
 			submitForm(form);
 		}

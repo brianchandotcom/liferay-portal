@@ -203,7 +203,12 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 
 				form.setAttribute('method', 'post');
 				form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
-				form['deleteCommercePriceEntryIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				form[
+					'deleteCommercePriceEntryIds'
+				].value = Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				);
 
 				submitForm(form, '<portlet:actionURL name="editCommercePriceEntry" />');
 			}
@@ -227,7 +232,9 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 									'#<portlet:namespace />cpInstanceIds'
 								).value = selectedItems;
 
-								var addCommercePriceEntryFm = window.document.querySelector('#<portlet:namespace />addCommercePriceEntryFm');
+								var addCommercePriceEntryFm = window.document.querySelector(
+									'#<portlet:namespace />addCommercePriceEntryFm'
+								);
 
 								submitForm(addCommercePriceEntryFm);
 							}

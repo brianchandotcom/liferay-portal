@@ -83,7 +83,9 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 										'#<portlet:namespace />type'
 									).value = '<%= type %>';
 
-									var addCPDefinitionLinkFm = window.document.querySelector('#<portlet:namespace />addCPDefinitionLinkFm');
+									var addCPDefinitionLinkFm = window.document.querySelector(
+										'#<portlet:namespace />addCPDefinitionLinkFm'
+									);
 
 									submitForm(addCPDefinitionLinkFm);
 								}

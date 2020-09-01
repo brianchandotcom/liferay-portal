@@ -83,7 +83,9 @@ List<CPDefinition> cpDefinitions = addedAllCommerceDiscountRuleDisplayContext.ge
 								'#<portlet:namespace />addTypeSettings'
 							).value = selectedItems;
 
-							var fm = window.document.querySelector('#<portlet:namespace />fm');
+							var fm = window.document.querySelector(
+								'#<portlet:namespace />fm'
+							);
 
 							submitForm(fm);
 						}

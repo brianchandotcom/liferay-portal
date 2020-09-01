@@ -415,6 +415,73 @@ definition {
 		}
 	}
 
+	test SearchWithVirtualInstance {
+		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithVirtualInstance";
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Description",
+			dmDocumentTitle = "Apple 1",
+			groupName = "Guest");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		OSGiConfig.deployOSGiConfigs(
+			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
+			OSGiConfigs = "operationMode=&quot;REMOTE&quot;,logExceptionsOnly=&quot;true&quot;");
+
+		OSGiConfig.deployOSGiConfigs(
+			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
+			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Cross-Cluster Replication",
+			configurationScope = "System Scope");
+
+		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Apple 2");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple 2",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Apple 1",
+			searchAssetType = "Document");
+	}
+
 	@priority = "5"
 	test Smoke {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config";

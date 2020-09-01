@@ -470,6 +470,73 @@ definition {
 			siteNameScope = "Test Depot Name");
 	}
 
+	@description = "This test covers LPS-119994. It ensures that the user with access application permission can view the depot dashboard."
+	@priority = "4"
+	test ViewDashBoardWithAccessApplicationPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Depot Regrole Name",
+			userEmailAddress = "userea@liferay.com");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Depot Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+			roleTitle = "Depot Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.depot.model.DepotEntry",
+			roleTitle = "Depot Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			noViewApplicationPermission = "true");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		for (var resourceName : list "com_liferay_journal_web_portlet_JournalPortlet,com_liferay_document_library_web_portlet_DLAdminPortlet,com_liferay_asset_list_web_portlet_AssetListPortlet,com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet,com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet,com_liferay_trash_web_portlet_TrashPortlet,com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet,com_liferay_depot_web_portlet_DepotSettingsPortlet,com_liferay_portal_workflow_web_internal_portlet_SiteAdministrationWorkflowPortlet,com_liferay_exportimport_web_portlet_ExportPortlet,com_liferay_exportimport_web_portlet_ImportPortlet") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "${resourceName}",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+	}
+
 	@description = "This ensures that the user can view documents on site and library with all sites and libraries scope view permissions."
 	@priority = "5"
 	test ViewDocumentOnSiteAndLibrary {

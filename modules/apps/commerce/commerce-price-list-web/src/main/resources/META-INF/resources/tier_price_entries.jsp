@@ -234,16 +234,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-tier-price-entries" />'
 				)
 			) {
-				var form = AUI.$(document.<portlet:namespace />fm);
+				var form = window.document['<portlet:namespace />fm'];
 
-				form.attr('method', 'post');
-				form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-				form.fm('deleteCommerceTierPriceEntryIds').val(
-					Liferay.Util.listCheckedExcept(
-						form,
-						'<portlet:namespace />allRowIds'
-					)
-				);
+				form.setAttribute('method', 'post');
+				form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
+				form['deleteCommerceTierPriceEntryIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
 				submitForm(
 					form,

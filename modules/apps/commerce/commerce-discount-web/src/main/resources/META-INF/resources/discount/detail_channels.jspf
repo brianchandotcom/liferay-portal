@@ -42,12 +42,12 @@ long[] commerceChannelIds = commerceDiscountDisplayContext.getCommerceChannelRel
 
 		<aui:script>
 			function <portlet:namespace />fulfillCommerceChannelIds(e) {
-				var form = AUI.$(document.<portlet:namespace />fm);
+				var form = document['<portlet:namespace />fm'];
 				var values = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'
 				);
-				form.fm('commerceChannelIds').val(values.replace(/,?on/g, ''));
+				form['commerceChannelIds'].value = values.replace(/,?on/g, '');
 				return values;
 			}
 

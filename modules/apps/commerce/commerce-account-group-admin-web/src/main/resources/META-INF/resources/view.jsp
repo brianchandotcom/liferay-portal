@@ -133,14 +133,9 @@ CommerceAccountGroupAdminDisplayContext commerceAccountGroupAdminDisplayContext 
 					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-account-groups" />'
 				)
 			) {
-				var form = AUI.$(document.<portlet:namespace />fm);
+				var form = window.document['<portlet:namespace />fm'];
 
-				form.fm('deleteCommerceAccountGroupIds').val(
-					Liferay.Util.listCheckedExcept(
-						form,
-						'<portlet:namespace />allRowIds'
-					)
-				);
+				form['deleteCommerceAccountGroupIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
 				submitForm(form);
 			}

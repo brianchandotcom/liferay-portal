@@ -119,7 +119,7 @@ if (commerceDataIntegrationProcess != null) {
 	Liferay.on('<portlet:namespace />saveProcess', function (event) {
 		var form = window.document.querySelector('#<portlet:namespace />fm');
 
-		form.fm('typeSettings').val(contentEditor.get(STR_VALUE));
+		form['typeSettings'].value = contentEditor.get(STR_VALUE);
 
 		submitForm(form);
 	});

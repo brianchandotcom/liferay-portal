@@ -121,13 +121,13 @@
 		ddmForm.on('fieldEdited', function () {
 			var fieldValues = getMetalJsFormData(ddmForm);
 
-			var form = AUI.$(document.<portlet:namespace />fm);
-			form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
+			var form = document['<portlet:namespace />fm'];
+			form['ddmFormValues'].value = JSON.stringify(fieldValues);
 		});
 	});
 
 	function <portlet:namespace />saveAttachmentFileEntry(forceDisable) {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = window.document['<portlet:namespace />fm'];
 
 		var ddmForm = Liferay.component(
 			'ProductOptions<%= cpDefinitionId %>DDMForm'
@@ -159,7 +159,7 @@
 				fieldValues.push(fieldValue);
 			});
 
-			form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
+			form['ddmFormValues'].value = JSON.stringify(fieldValues);
 		}
 
 		submitForm(form);

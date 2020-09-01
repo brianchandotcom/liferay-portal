@@ -28,9 +28,9 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 
 <aui:script>
 	function <portlet:namespace />chooseRenderSelection() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = window.document['<portlet:namespace />fm'];
 
-		form.fm('<%= Constants.CMD %>').val('render-selection');
+		form['<%= Constants.CMD %>'].value = 'render-selection';
 
 		submitForm(form);
 	}

@@ -119,14 +119,9 @@ SearchContainer<CommerceDiscountRule> commerceDiscountRuleSearchContainer = comm
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-discount-rules" />'
 			)
 		) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var form = window.document['<portlet:namespace />fm'];
 
-			form.fm('deleteCommerceDiscountRuleIds').val(
-				Liferay.Util.listCheckedExcept(
-					form,
-					'<portlet:namespace />allRowIds'
-				)
-			);
+			form['deleteCommerceDiscountRuleIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
 			submitForm(form);
 		}

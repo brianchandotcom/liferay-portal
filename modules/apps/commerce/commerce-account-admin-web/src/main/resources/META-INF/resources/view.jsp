@@ -167,12 +167,10 @@ CommerceAccountAdminDisplayContext commerceAccountAdminDisplayContext = (Commerc
 
 	<aui:script>
 		function <portlet:namespace />activateCommerceAccounts() {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var form = window.document['<portlet:namespace />fm'];
 
-			form.fm('commerceAccountIds').val(
-				Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
-			);
-			form.fm('active').val('true');
+			form['commerceAccountIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+			form['active'].value = 'true';
 
 			submitForm(form);
 		}
@@ -183,15 +181,10 @@ CommerceAccountAdminDisplayContext commerceAccountAdminDisplayContext = (Commerc
 					'<liferay-ui:message key="are-you-sure-you-want-to-deactivate-the-selected-accounts" />'
 				)
 			) {
-				var form = AUI.$(document.<portlet:namespace />fm);
+				var form = window.document['<portlet:namespace />fm'];
 
-				form.fm('commerceAccountIds').val(
-					Liferay.Util.listCheckedExcept(
-						form,
-						'<portlet:namespace />allRowIds'
-					)
-				);
-				form.fm('active').val('false');
+				form['commerceAccountIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				form['active'].value = 'false';
 
 				submitForm(form);
 			}

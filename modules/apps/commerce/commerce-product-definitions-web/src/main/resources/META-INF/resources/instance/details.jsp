@@ -239,13 +239,13 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 		ddmForm.on('fieldEdited', function () {
 			var fieldValues = getMetalJsFormData(ddmForm);
 
-			var form = AUI.$(document.<portlet:namespace />fm);
-			form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
+			var form = window.document['<portlet:namespace />fm'];
+			form['ddmFormValues'].value = JSON.stringify(fieldValues);
 		});
 	});
 
 	function <portlet:namespace />saveInstance(forceDisable) {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = window.document['<portlet:namespace />fm'];
 
 		var ddmForm = Liferay.component(
 			'ProductOptions<%= cpDefinition.getCPDefinitionId() %>DDMForm'
@@ -277,7 +277,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 				fieldValues.push(fieldValue);
 			});
 
-			form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
+			form['ddmFormValues'].value = JSON.stringify(fieldValues);
 		}
 
 		submitForm(form);

@@ -128,16 +128,11 @@ PortletURL portletURL = commerceAccountAddressAdminDisplayContext.getPortletURL(
 					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-addresses" />'
 				)
 			) {
-				var form = AUI.$(document.<portlet:namespace />fm);
+				var form = window.document['<portlet:namespace />fm'];
 
-				form.attr('method', 'post');
-				form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-				form.fm('deleteCommerceAddressIds').val(
-					Liferay.Util.listCheckedExcept(
-						form,
-						'<portlet:namespace />allRowIds'
-					)
-				);
+				form.setAttribute('method', 'post');
+				form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
+				form['deleteCommerceAddressIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
 				submitForm(form, '<portlet:actionURL name="editCommerceAddress" />');
 			}

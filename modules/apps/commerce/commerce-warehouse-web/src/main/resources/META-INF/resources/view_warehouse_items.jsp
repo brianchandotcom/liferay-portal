@@ -104,26 +104,24 @@ if (Validator.isNotNull(backURL)) {
 			commerceInventoryWarehouseItemId,
 			index
 		) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var form = window.document['<portlet:namespace />fm'];
 
 			if (commerceInventoryWarehouseItemId > 0) {
-				form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
+				form['<%= Constants.CMD %>'].value = '<%= Constants.UPDATE %>';
 			}
 			else {
-				form.fm('<%= Constants.CMD %>').val('<%= Constants.ADD %>');
+				form['<%= Constants.CMD %>'].value = '<%= Constants.ADD %>';
 			}
 
-			form.fm('commerceInventoryWarehouseId').val(commerceInventoryWarehouseId);
-			form.fm('commerceInventoryWarehouseItemId').val(
-				commerceInventoryWarehouseItemId
-			);
+			form['commerceInventoryWarehouseId'].value = commerceInventoryWarehouseId;
+			form['commerceInventoryWarehouseItemId'].value = commerceInventoryWarehouseItemId;
 
 			var quantityInputId =
 				'#<portlet:namespace />commerceInventoryWarehouseItemQuantity' + index;
 
 			var quantityInput = window.document.querySelector(quantityInputId);
 
-			form.fm('quantity').val(quantityInput.value);
+			form['quantity'].value = quantityInput.value;
 
 			submitForm(form);
 		}

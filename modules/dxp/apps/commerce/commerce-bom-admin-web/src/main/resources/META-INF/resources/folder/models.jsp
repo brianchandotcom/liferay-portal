@@ -128,15 +128,10 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-models" />'
 				)
 			) {
-				var form = AUI.$(document.<portlet:namespace />fm);
+				var form = window.document['<portlet:namespace />fm'];
 
-				form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-				form.fm('deleteCommerceBOMFolderApplicationRelIds').val(
-					Liferay.Util.listCheckedExcept(
-						form,
-						'<portlet:namespace />allRowIds'
-					)
-				);
+				form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
+				form['deleteCommerceBOMFolderApplicationRelIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
 				submitForm(form);
 			}

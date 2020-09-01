@@ -156,14 +156,9 @@ SearchContainer<CommerceDiscountRel> cpDefinitionCommerceDiscountRelSearchContai
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-discount-products" />'
 			)
 		) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var form = window.document['<portlet:namespace />fm'];
 
-			form.fm('deleteCommerceDiscountRelIds').val(
-				Liferay.Util.listCheckedExcept(
-					form,
-					'<portlet:namespace />allRowIds'
-				)
-			);
+			form['deleteCommerceDiscountRelIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
 			submitForm(form);
 		}

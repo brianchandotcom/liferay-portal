@@ -116,21 +116,21 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 
 <aui:script>
 	function <portlet:namespace />moveSelectionDown(productEntryOrder) {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = window.document['<portlet:namespace />fm'];
 
-		form.fm('<%= Constants.CMD %>').val('move-selection-down');
-		form.fm('redirect').val('<%= HtmlUtil.escapeJS(currentURL) %>');
-		form.fm('productEntryOrder').val(productEntryOrder);
+		form['<%= Constants.CMD %>'].value = 'move-selection-down';
+		form['redirect'].value = '<%= HtmlUtil.escapeJS(currentURL) %>';
+		form['productEntryOrder'].value = productEntryOrder;
 
 		submitForm(form);
 	}
 
 	function <portlet:namespace />moveSelectionUp(productEntryOrder) {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = window.document['<portlet:namespace />fm'];
 
-		form.fm('<%= Constants.CMD %>').val('move-selection-up');
-		form.fm('redirect').val('<%= HtmlUtil.escapeJS(currentURL) %>');
-		form.fm('productEntryOrder').val(productEntryOrder);
+		form['<%= Constants.CMD %>'].value = 'move-selection-up';
+		form['redirect'].value = '<%= HtmlUtil.escapeJS(currentURL) %>';
+		form['productEntryOrder'].value = productEntryOrder;
 
 		submitForm(form);
 	}

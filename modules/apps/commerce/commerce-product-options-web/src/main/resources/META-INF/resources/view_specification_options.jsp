@@ -197,16 +197,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specification-labels" />'
 			)
 		) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var form = window.document['<portlet:namespace />fm'];
 
-			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('deleteCPSpecificationOptionIds').val(
-				Liferay.Util.listCheckedExcept(
-					form,
-					'<portlet:namespace />allRowIds'
-				)
-			);
+			form.setAttribute('method', 'post');
+			form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
+			form['deleteCPSpecificationOptionIds'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
 			submitForm(
 				form,

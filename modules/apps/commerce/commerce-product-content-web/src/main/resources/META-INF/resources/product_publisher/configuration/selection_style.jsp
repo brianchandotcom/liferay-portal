@@ -30,9 +30,9 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 
 <aui:script>
 	function <portlet:namespace />chooseSelectionStyle() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = window.document['<portlet:namespace />fm'];
 
-		form.fm('<%= Constants.CMD %>').val('selection-style');
+		form['<%= Constants.CMD %>'].value = 'selection-style';
 
 		submitForm(form);
 	}

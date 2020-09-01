@@ -16,7 +16,7 @@ import React, {useContext, useState} from 'react';
 
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {useSelector} from '../store/index';
+import {useSelectorCallback} from '../store/index';
 import {CollectionItemContext, INITIAL_STATE} from './CollectionItemContext';
 import {useActiveItemId, useActiveItemType, useIsActive} from './Controls';
 
@@ -40,10 +40,12 @@ export function useSetCollectionActiveItemContext(itemId) {
 	const activeItemType = useActiveItemType();
 	const isActive = useIsActive();
 	const collectionContext = useContext(CollectionItemContext);
-	const layoutData = useSelector((state) => state.layoutData);
 	const setState = useContext(CollectionActiveItemDispatchContext);
 
-	const item = layoutData.items[itemId];
+	const item = useSelectorCallback(
+		(state) => state.layoutData.items[itemId],
+		[itemId]
+	);
 
 	if (
 		isActive(itemId) ||

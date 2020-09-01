@@ -219,8 +219,8 @@ gradle.beforeProject {
 								component.orderEntry.findAll { node ->
 									node.@type == "module-library"
 								}.each { node ->
-									def name = node.library.CLASSES.root.@url[0]
-									def scope = node.@scope
+									String name = node.library.CLASSES.root.@url[0]
+									String scope = node.@scope
 
 									if (name.contains("com.liferay.portal.impl")) {
 										component.appendNode("orderEntry", ["module-name":"portal-impl", "scope":"$scope", "type":"module"])

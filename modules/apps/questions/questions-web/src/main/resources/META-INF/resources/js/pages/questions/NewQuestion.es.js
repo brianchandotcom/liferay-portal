@@ -128,7 +128,10 @@ export default withRouter(
 		};
 
 		const createQuestion = () => {
-			if (sectionTitle === context.rootTopicId) {
+			if (
+				sectionTitle === context.rootTopicId &&
+				+context.rootTopicId === 0
+			) {
 				createQuestionInRoot({
 					variables: {
 						articleBody,

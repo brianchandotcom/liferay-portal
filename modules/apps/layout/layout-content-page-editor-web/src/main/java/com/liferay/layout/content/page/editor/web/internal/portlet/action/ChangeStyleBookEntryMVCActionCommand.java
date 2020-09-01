@@ -94,7 +94,7 @@ public class ChangeStyleBookEntryMVCActionCommand
 
 		return JSONUtil.put(
 			"tokenValues",
-			StyleBookEntryUtil.getFrontendTokensValuesJSONObject(
+			StyleBookEntryUtil.getFrontendTokensValues(
 				frontendTokenDefinition, themeDisplay.getLocale(),
 				styleBookEntry));
 	}

@@ -14,8 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import static com.liferay.portal.kernel.util.GroupThreadLocal.getGroupId;
-
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererController;
@@ -164,7 +162,7 @@ public class ChangeMasterLayoutMVCActionCommand
 			"styleBookEntryId", layout.getStyleBookEntryId()
 		).put(
 			"tokenValues",
-			StyleBookEntryUtil.getFrontendTokensValuesJSONObject(
+			StyleBookEntryUtil.getFrontendTokensValues(
 				frontendTokenDefinition, locale, styleBookEntry)
 		);
 	}

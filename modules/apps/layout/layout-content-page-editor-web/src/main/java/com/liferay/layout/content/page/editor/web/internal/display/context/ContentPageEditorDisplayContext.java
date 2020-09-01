@@ -345,7 +345,7 @@ public class ContentPageEditorDisplayContext {
 						return JSONFactoryUtil.getJSONFactory();
 					}
 
-					return StyleBookEntryUtil.getFrontendTokensValuesJSONObject(
+					return StyleBookEntryUtil.getFrontendTokensValues(
 						frontendTokenDefinition, themeDisplay.getLocale(),
 						_getDefaultStyleBookEntry());
 				}

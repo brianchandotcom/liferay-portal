@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -30,13 +32,12 @@ import java.util.Objects;
  */
 public class StyleBookEntryUtil {
 
-	public static JSONObject getFrontendTokensValuesJSONObject(
+	public static Map<String, Object> getFrontendTokensValues(
 			FrontendTokenDefinition frontendTokenDefinition, Locale locale,
 			StyleBookEntry styleBookEntry)
 		throws Exception {
 
-		JSONObject frontendTokensValuesJSONObject =
-			JSONFactoryUtil.createJSONObject();
+		Map<String, Object> frontendTokensValues = new LinkedHashMap<>();
 
 		JSONObject frontendTokenValuesJSONObject =
 			_getFrontendTokenValuesJSONObject(styleBookEntry);
@@ -68,7 +69,7 @@ public class StyleBookEntryUtil {
 					JSONObject frontendTokenJSONObject =
 						frontendTokensJSONArray.getJSONObject(k);
 
-					frontendTokensValuesJSONObject.put(
+					frontendTokensValues.put(
 						frontendTokenJSONObject.getString("name"),
 						_getProcessedFrontendTokenJSONObject(
 							frontendTokenJSONObject,
@@ -77,7 +78,7 @@ public class StyleBookEntryUtil {
 			}
 		}
 
-		return frontendTokensValuesJSONObject;
+		return frontendTokensValues;
 	}
 
 	private static JSONObject _getFrontendTokenValuesJSONObject(

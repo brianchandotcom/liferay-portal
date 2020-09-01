@@ -88,16 +88,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String NO_INITIAL_DELAY = "file.install.noInitialDelay";
 
-	public static final String OPTIONAL_SCOPE =
-		"file.install.optionalImportRefreshScope";
-
 	public static final String POLL = "file.install.poll";
-
-	public static final String SCOPE_ALL = "all";
-
-	public static final String SCOPE_MANAGED = "managed";
-
-	public static final String SCOPE_NONE = "none";
 
 	public static final String START_LEVEL = "file.install.start.level";
 
@@ -126,7 +117,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_filter = bundleContext.getProperty(FILTER);
 		_noInitialDelay = GetterUtil.getBoolean(
 			bundleContext.getProperty(NO_INITIAL_DELAY));
-		_optionalScope = bundleContext.getProperty(OPTIONAL_SCOPE);
 		_poll = GetterUtil.getLong(bundleContext.getProperty(POLL), 2000);
 		_startBundles = GetterUtil.getBoolean(
 			bundleContext.getProperty(START_NEW_BUNDLES), true);
@@ -321,7 +311,19 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	protected void findBundlesWithOptionalPackagesToRefresh(
 		Set<Bundle> refreshBundles) {
 
-		Set<Bundle> bundles = getScopedBundles(_optionalScope);
+		Set<Bundle> bundles = new HashSet<>();
+
+		for (Artifact artifact : _getArtifacts()) {
+			long bundleId = artifact.getBundleId();
+
+			if (bundleId > 0) {
+				Bundle bundle = _bundleContext.getBundle(bundleId);
+
+				if (bundle != null) {
+					bundles.add(bundle);
+				}
+			}
+		}
 
 		bundles.removeAll(refreshBundles);
 
@@ -461,32 +463,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		refreshBundles.addAll(bundles);
-	}
-
-	protected Set<Bundle> getScopedBundles(String scope) {
-		if (SCOPE_NONE.equals(scope)) {
-			return new HashSet<>();
-		}
-		else if (SCOPE_MANAGED.equals(scope)) {
-			Set<Bundle> bundles = new HashSet<>();
-
-			for (Artifact artifact : _getArtifacts()) {
-				long bundleId = artifact.getBundleId();
-
-				if (bundleId > 0) {
-					Bundle bundle = _bundleContext.getBundle(bundleId);
-
-					if (bundle != null) {
-						bundles.add(bundle);
-					}
-				}
-			}
-
-			return bundles;
-		}
-		else {
-			return new HashSet<>(Arrays.asList(_bundleContext.getBundles()));
-		}
 	}
 
 	private boolean _contains(String path, List<String> dirPaths) {
@@ -1263,7 +1239,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private int _frameworkStartLevel;
 	private final Map<File, Artifact> _installationFailures = new HashMap<>();
 	private final boolean _noInitialDelay;
-	private final String _optionalScope;
 	private final long _poll;
 	private final Set<File> _processingFailures = new HashSet<>();
 	private final Scanner _scanner;

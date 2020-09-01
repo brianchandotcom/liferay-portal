@@ -179,6 +179,8 @@ public abstract class BaseChannelResourceTestCase {
 
 		Channel channel = randomChannel();
 
+		channel.setCurrencyCode(regex);
+		channel.setExternalReferenceCode(regex);
 		channel.setName(regex);
 		channel.setType(regex);
 
@@ -188,6 +190,8 @@ public abstract class BaseChannelResourceTestCase {
 
 		channel = ChannelSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, channel.getCurrencyCode());
+		Assert.assertEquals(regex, channel.getExternalReferenceCode());
 		Assert.assertEquals(regex, channel.getName());
 		Assert.assertEquals(regex, channel.getType());
 	}
@@ -369,6 +373,24 @@ public abstract class BaseChannelResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("currencyCode", additionalAssertFieldName)) {
+				if (channel.getCurrencyCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (channel.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (channel.getName() == null) {
 					valid = false;
@@ -482,6 +504,30 @@ public abstract class BaseChannelResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("currencyCode", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						channel1.getCurrencyCode(),
+						channel2.getCurrencyCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						channel1.getExternalReferenceCode(),
+						channel2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(channel1.getId(), channel2.getId())) {
@@ -603,6 +649,22 @@ public abstract class BaseChannelResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("currencyCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(channel.getCurrencyCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(channel.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -673,6 +735,10 @@ public abstract class BaseChannelResourceTestCase {
 	protected Channel randomChannel() throws Exception {
 		return new Channel() {
 			{
+				currencyCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				siteGroupId = RandomTestUtil.randomLong();

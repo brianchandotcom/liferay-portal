@@ -528,7 +528,8 @@ export const getThreads = (
 		!keywords &&
 		!creatorId &&
 		!sort &&
-		!section.messageBoardSections.items.length
+		!section.messageBoardSections.items.length &&
+		section.id !== 0
 	) {
 		return client
 			.query({

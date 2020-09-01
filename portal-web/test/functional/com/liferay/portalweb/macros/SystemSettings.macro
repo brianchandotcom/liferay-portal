@@ -1,15 +1,5 @@
 definition {
 
-	macro configureCrossClusterReplication {
-		FormFields.enableCheckbox(fieldName = "ccrEnabled");
-
-		FormFields.editTextMultiline(
-			fieldName = "ccrLocalClusterConnectionConfigurations",
-			fieldValue = "localhost:8080,${ccrLocalClusterConnectionID}");
-
-		SystemSettings.saveConfiguration();
-	}
-
 	macro configureDisplayStyle {
 		Click(locator1 = "Dropdown#TRIGGER");
 

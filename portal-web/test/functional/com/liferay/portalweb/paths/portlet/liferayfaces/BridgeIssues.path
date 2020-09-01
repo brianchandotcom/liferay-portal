@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AS7LEAKTRACKER</td>
+	<td>//span[contains(@id,'as7LeakInstances')]//li/code[contains(text(),'AS7LeakRequestScopeBean')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CALENDA_DATEPICKER</td>
 	<td>//table[contains(@class, 'ui-datepicker-calendar')]</td>
 	<td></td>
@@ -89,6 +94,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATE_TO_VIEW</td>
+	<td>//a[contains(text(), '${key_PageLink}')] | //div[@class='liferay-faces-bridge-body']/a[contains(text(), '${key_PageLink}')] | //input[@value='${key_PageLink}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATE_TO_VIEW1</td>
+	<td>//div[contains(@class, 'portlet-body')]/div[@class='liferay-faces-bridge-body']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_LINK</td>
 	<td>//a[contains(text(),'${key_PageLink}')] | //*[contains(@class,'testAction')] | //button[contains(text(),'${key_PageLink}')] | //input[@value='${key_PageLink}']</td>
 	<td></td>
@@ -109,6 +124,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PARAM_LINK</td>
+	<td>//div[contains(@class,'liferay-faces-bridge-body')]//ul[${key_ulIndex}]/li[${key_liIndex}]/a[contains(text(),'-Item')][@href]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAM_VALUE</td>
+	<td>//div[contains(@class,'liferay-faces-bridge-body')]//ul[${key_ulIndex}]/li[${key_liIndex}]/span[@class='param-value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAM_URL1</td>
+	<td>//span[contains(@id,':parameter1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAM_URL2</td>
+	<td>//span[contains(@id,':parameter2')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_BUTTON</td>
 	<td>//input[@value='result.xhtml']</td>
 	<td></td>
@@ -121,6 +156,26 @@
 <tr>
 	<td>REQUESTED_URL</td>
 	<td>//span[contains(@id, ':requestedURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_SIZE</td>
+	<td>//span[@id='component_resources_size']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE</td>
+	<td>//ul[@id='FACES_1618_resources']/li/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE2</td>
+	<td>//ul[@id='FACES_1618_resources']/li[2]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE3</td>
+	<td>//ul[@id='FACES_1618_resources']/li[3]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -161,6 +216,11 @@
 <tr>
 	<td>URL_BUTTON</td>
 	<td>//input[@type='button' and contains(@value, '${key_buttonName}')] </td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_MESSAGE</td>
+	<td>//span[contains(@id,':url')]</td>
 	<td></td>
 </tr>
 <tr>

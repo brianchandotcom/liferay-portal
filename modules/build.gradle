@@ -202,23 +202,34 @@ gradle.beforeProject {
 				idea {
 					module {
 						iml {
-							withXml { xmlProvider ->
+							withXml {
+								XmlProvider xmlProvider ->
+
 								Node rootNode = xmlProvider.asNode()
-								Node component = rootNode.component.find { node->
+
+								Node component = rootNode.component.find {
+									Node node->
+
 									node.@name == "NewModuleRootManager"
 								}
 
-								Node frontendTaglibNode = component.orderEntry.find { node ->
-									node.@type == "module" && node.@"module-name" == "frontend-taglib-frontend-taglib"
+								Node frontendTaglibNode = component.orderEntry.find {
+									Node node ->
+
+									(node.@type == "module") && (node.@"module-name" == "frontend-taglib-frontend-taglib")
 								}
 
 								if (frontendTaglibNode != null) {
 									frontendTaglibNode.@"module-name" = "frontend-taglib"
 								}
 
-								component.orderEntry.findAll { node ->
+								component.orderEntry.findAll {
+									Node node ->
+
 									node.@type == "module-library"
-								}.each { node ->
+								}.each {
+									Node node ->
+
 									String name = node.library.CLASSES.root.@url[0]
 									String scope = node.@scope
 

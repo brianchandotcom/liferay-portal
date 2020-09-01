@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>PAGE_STRUCTURE_TREE_NODE</td>
-	<td>//div[contains(@class,'page-structure') and contains(.,'${key_nodeName}')]/button[contains(@class,'tree-node')]</td>
+	<td>//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]/div[@role='button']</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>PAGE_STRUCTURE_TREE_NODE_ACTIVE</td>
-	<td>//div[contains(@class,'page-structure') and contains(.,'${key_nodeName}') and contains(@class,'active')]/button[contains(@class,'tree-node')]</td>
+	<td>//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')][contains(@class,'active')]/div[@role='button']</td>
 	<td></td>
 </tr>
 <tr>

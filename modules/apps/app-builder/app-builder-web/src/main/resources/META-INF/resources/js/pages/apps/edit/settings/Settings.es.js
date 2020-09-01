@@ -21,7 +21,13 @@ import EditAppContext, {
 	REMOVE_DEPLOYMENT,
 } from '../EditAppContext.es';
 
-export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
+export default ({
+	deploymentType,
+	tip = () => <></>,
+	settings = () => <></>,
+	subtitle,
+	title,
+}) => {
 	const {
 		dispatch,
 		state: {
@@ -38,7 +44,10 @@ export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 			<ClayLayout.ContentRow className="justify-content-between mb-3 pl-4 pr-4">
 				<ClayLayout.ContentCol>
 					<ClayLayout.ContentSection containerElement="section">
-						<h3>{title}</h3>
+						<h3>
+							{title}
+							{tip()}
+						</h3>
 						<p className="list-group-subtext">
 							<small>{subtitle}</small>
 						</p>

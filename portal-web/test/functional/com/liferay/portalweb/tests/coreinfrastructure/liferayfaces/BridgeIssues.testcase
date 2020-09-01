@@ -385,4 +385,204 @@ definition {
 			textValue = "MOJARRA-4340-workaround");
 	}
 
+	@priority = "5"
+	test FacesPortletSmokeIntOne {
+
+		// FACES_1470
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-1470",
+			portletName = "FACES-1470");
+
+		BridgeIssues.navigateToDo(
+			pageLink = "Navigate to view1.xhtml",
+			urlAppend = "web/bridge-issues/faces-1470");
+
+		BridgeIssues.navigateToDo(
+			pageLink = "Back to as7LeakTracker.xhtml",
+			urlAppend = "web/bridge-issues/faces-1470?p_p_id=FACES1470_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1470_WAR_comliferayfacesissuejsfportlet__facesViewIdRender=%2FWEB-INF%2Fviews%2FFACES-1470%2Fview1.xhtml");
+
+		BridgeIssues.navigateToDo(
+			pageLink = "Refresh AS7Leak List",
+			urlAppend = "web/bridge-issues/faces-1470");
+
+		AssertElementPresent(locator1 = "BridgeIssues#AS7LEAKTRACKER");
+
+		BridgeIssues.navigateToDo(
+			pageLink = "Click me to navigate to view2.xhtml via Ajax",
+			urlAppend = "web/bridge-issues/faces-1470?p_p_id=FACES1470_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1470_WAR_comliferayfacesissuejsfportlet__facesViewIdRender=%2FWEB-INF%2Fviews%2FFACES-1470%2Fview1.xhtml");
+
+		Click(
+			key_PageLink = "Click me to navigate to view1.xhtml via Ajax",
+			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
+
+		BridgeIssues.navigateToDo(
+			pageLink = "Refresh AS7Leak List",
+			urlAppend = "web/bridge-issues/faces-1470");
+
+		AssertElementPresent(locator1 = "BridgeIssues#AS7LEAKTRACKER");
+
+		BridgeIssues.navigateToDo(
+			pageLink = "Click me to navigate to view2.xhtml via non-Ajax (full postback)",
+			urlAppend = "web/bridge-issues/faces-1470?p_p_id=FACES1470_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1470_WAR_comliferayfacesissuejsfportlet__facesViewIdRender=%2FWEB-INF%2Fviews%2FFACES-1470%2Fview1.xhtml");
+
+		Click(
+			key_PageLink = "Click me to navigate to view1.xhtml via non-Ajax (full postback)",
+			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
+
+		BridgeIssues.navigateToDo(
+			pageLink = "Refresh AS7Leak List",
+			urlAppend = "web/bridge-issues/faces-1470");
+
+		AssertElementPresent(locator1 = "BridgeIssues#AS7LEAKTRACKER");
+
+		BridgeIssues.navigateToDo(
+			pageLink = "Click me to navigate to view2.xhtml via Ajax",
+			urlAppend = "web/bridge-issues/faces-1470?p_p_id=FACES1470_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1470_WAR_comliferayfacesissuejsfportlet__facesViewIdRender=%2FWEB-INF%2Fviews%2FFACES-1470%2Fview1.xhtml");
+
+		Click(
+			key_PageLink = "Click me to navigate to view1.xhtml via non-Ajax (full postback)",
+			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
+
+		BridgeIssues.navigateToDo(
+			pageLink = "Refresh AS7Leak List",
+			urlAppend = "web/bridge-issues/faces-1470");
+
+		AssertElementPresent(locator1 = "BridgeIssues#AS7LEAKTRACKER");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1470?p_p_id=FACES1470_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1470_WAR_comliferayfacesissuejsfportlet__facesViewIdRender=%2FWEB-INF%2Fviews%2FFACES-1470%2Fview1.xhtml");
+
+		UserBar.signOut();
+
+		BridgeIssues.navigateToDo(
+			pageLink = "Refresh AS7Leak List",
+			urlAppend = "web/bridge-issues/faces-1470");
+
+		AssertElementPresent(locator1 = "BridgeIssues#AS7LEAKTRACKER");
+
+		// Click the Perform Garbage Collection button and confirm that no AS7Leak class instances appear
+
+		// FACES-1478
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-1478",
+			portletName = "FACES-1478");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1478");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#URL_MESSAGE",
+			value1 = "http://localhost:8080/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
+
+		Click(
+			key_PageLink = "should be the same as the href attribute of this link",
+			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
+
+		AssertLocation(value1 = "http://localhost:8080/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#PARAM_URL1",
+			value1 = "_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#PARAM_URL2",
+			value1 = "_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
+
+		AssertLocation.assertPartialLocation(value1 = "_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo");
+
+		AssertLocation.assertPartialLocation(value1 = "_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
+
+		// FACES-1618
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-1618",
+			portletName = "FACES-1618");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1618");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#RESOURCE_SIZE",
+			value1 = "2");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#RESOURCE",
+			value1 = "FACES-1618:example.css");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#RESOURCE2",
+			value1 = "javax.faces:jsf.js");
+
+		Click(
+			key_PageLink = "go to next view with immediate=",
+			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#RESOURCE_SIZE",
+			value1 = "3");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#RESOURCE",
+			value1 = "FACES-1618:example.css");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#RESOURCE2",
+			value1 = "FACES-1618:example.js");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#RESOURCE3",
+			value1 = "javax.faces:jsf.js");
+
+		Click(
+			key_PageLink = "go to previous view with immediate=",
+			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#RESOURCE",
+			value1 = "FACES-1618:example.css");
+
+		// FACES-1638
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-1638",
+			portletName = "FACES-1638");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1638");
+
+		for (var Index : list "1,2") {
+			BridgeIssues.verifyParam(
+				liIndex = "1",
+				paramLink = "First-Item",
+				ulIndex = "${Index}");
+
+			BridgeIssues.verifyParam(
+				liIndex = "1",
+				paramValue = "1",
+				ulIndex = "${Index}");
+		}
+
+		for (var Index : list "1,2") {
+			BridgeIssues.verifyParam(
+				liIndex = "2",
+				paramLink = "Second-Item",
+				ulIndex = "${Index}");
+
+			BridgeIssues.verifyParam(
+				liIndex = "2",
+				paramValue = "2",
+				ulIndex = "${Index}");
+		}
+
+		for (var Index : list "1,2") {
+			BridgeIssues.verifyParam(
+				liIndex = "3",
+				paramLink = "Third-Item",
+				ulIndex = "${Index}");
+
+			BridgeIssues.verifyParam(
+				liIndex = "3",
+				paramValue = "3",
+				ulIndex = "${Index}");
+		}
+	}
+
 }

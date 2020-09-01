@@ -185,7 +185,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 		}
 
 		if (Objects.nonNull(locale) &&
-			_supportedEntityLanguages.contains(locale.getLanguage())) {
+			!_supportedEntityLanguages.contains(locale.getLanguage())) {
 
 			return Collections.emptySet();
 		}

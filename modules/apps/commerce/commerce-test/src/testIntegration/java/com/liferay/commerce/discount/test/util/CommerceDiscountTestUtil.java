@@ -361,7 +361,7 @@ public class CommerceDiscountTestUtil {
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 				calendar.get(Calendar.MINUTE), true, serviceContext);
 
-		_addTargetDetails(commerceDiscount, target, targetIds);
+		_addTargetDetails(groupId, commerceDiscount, target, targetIds);
 
 		return commerceDiscount;
 	}
@@ -393,7 +393,7 @@ public class CommerceDiscountTestUtil {
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 				calendar.get(Calendar.MINUTE), true, serviceContext);
 
-		_addTargetDetails(commerceDiscount, target, targetIds);
+		_addTargetDetails(groupId, commerceDiscount, target, targetIds);
 
 		return commerceDiscount;
 	}
@@ -430,17 +430,17 @@ public class CommerceDiscountTestUtil {
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 				calendar.get(Calendar.MINUTE), true, serviceContext);
 
-		_addTargetDetails(commerceDiscount, target, targetIds);
+		_addTargetDetails(groupId, commerceDiscount, target, targetIds);
 
 		return commerceDiscount;
 	}
 
 	private static void _addDiscountCategoryRel(
-			CommerceDiscount commerceDiscount, long... targetIds)
+			long groupId, CommerceDiscount commerceDiscount, long... targetIds)
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		for (long id : targetIds) {
 			CommerceDiscountRelLocalServiceUtil.addCommerceDiscountRel(
@@ -450,11 +450,11 @@ public class CommerceDiscountTestUtil {
 	}
 
 	private static void _addDiscountProductRel(
-			CommerceDiscount commerceDiscount, long... targetIds)
+			long groupId, CommerceDiscount commerceDiscount, long... targetIds)
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		for (long id : targetIds) {
 			CommerceDiscountRelLocalServiceUtil.addCommerceDiscountRel(
@@ -464,15 +464,15 @@ public class CommerceDiscountTestUtil {
 	}
 
 	private static void _addTargetDetails(
-			CommerceDiscount commerceDiscount, String target, long... targetIds)
+			long groupId, CommerceDiscount commerceDiscount, String target, long... targetIds)
 		throws Exception {
 
 		if (CommerceDiscountConstants.TARGET_CATEGORIES.equals(target)) {
-			_addDiscountCategoryRel(commerceDiscount, targetIds);
+			_addDiscountCategoryRel(groupId, commerceDiscount, targetIds);
 		}
 
 		if (CommerceDiscountConstants.TARGET_PRODUCTS.equals(target)) {
-			_addDiscountProductRel(commerceDiscount, targetIds);
+			_addDiscountProductRel(groupId, commerceDiscount, targetIds);
 		}
 	}
 

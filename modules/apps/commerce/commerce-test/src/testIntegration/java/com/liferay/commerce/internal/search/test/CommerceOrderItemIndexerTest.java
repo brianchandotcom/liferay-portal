@@ -80,10 +80,10 @@ public class CommerceOrderItemIndexerTest {
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		User user = UserTestUtil.addUser(_company);
+		_user = UserTestUtil.addUser(_company);
 
 		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), user.getUserId(), 0);
+			_company.getCompanyId(), _user.getUserId(), 0);
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
@@ -232,6 +232,7 @@ public class CommerceOrderItemIndexerTest {
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject
@@ -241,5 +242,8 @@ public class CommerceOrderItemIndexerTest {
 	private Group _group;
 
 	private Indexer<CommerceOrderItem> _indexer;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

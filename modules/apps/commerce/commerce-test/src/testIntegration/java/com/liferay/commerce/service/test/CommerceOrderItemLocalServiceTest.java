@@ -113,6 +113,13 @@ public class CommerceOrderItemLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		_user = UserTestUtil.addUser(_company);
+
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
+
 		List<CommerceInventoryBookedQuantity>
 			commerceInventoryBookedQuantities =
 				_commerceBookedQuantityLocalService.
@@ -127,13 +134,6 @@ public class CommerceOrderItemLocalServiceTest {
 					commerceInventoryBookedQuantity);
 		}
 
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addUser(_company);
-
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(), 0);
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), _user.getUserId());
 
@@ -141,7 +141,7 @@ public class CommerceOrderItemLocalServiceTest {
 			_group.getCompanyId());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		_commerceAccount =
 			_commerceAccountLocalService.addPersonalCommerceAccount(
@@ -191,7 +191,8 @@ public class CommerceOrderItemLocalServiceTest {
 		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
@@ -253,7 +254,8 @@ public class CommerceOrderItemLocalServiceTest {
 			WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpDefinition.getCPDefinitionId(), CPInstanceConstants.DEFAULT_SKU);
@@ -304,7 +306,8 @@ public class CommerceOrderItemLocalServiceTest {
 			WorkflowConstants.STATUS_DRAFT);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
@@ -456,7 +459,8 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertNotNull(_commerceAccount);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommerceTestUtil.addWarehouseCommerceChannelRel(
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -920,7 +924,8 @@ public class CommerceOrderItemLocalServiceTest {
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		BigDecimal option1Price = new BigDecimal("100");
 
@@ -1107,7 +1112,8 @@ public class CommerceOrderItemLocalServiceTest {
 			"cpInstance1SKU");
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommerceTestUtil.addWarehouseCommerceChannelRel(
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -1218,7 +1224,8 @@ public class CommerceOrderItemLocalServiceTest {
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance optionSKU1 =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(

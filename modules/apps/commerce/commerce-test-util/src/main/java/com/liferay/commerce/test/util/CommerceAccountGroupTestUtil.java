@@ -28,11 +28,11 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
  */
 public class CommerceAccountGroupTestUtil {
 
-	public static CommerceAccountGroup addCommerceAccountGroup()
+	public static CommerceAccountGroup addCommerceAccountGroup(long groupId)
 		throws PortalException {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CommerceAccountGroupLocalServiceUtil.addCommerceAccountGroup(
 			serviceContext.getCompanyId(), RandomTestUtil.randomString(), 0,
@@ -45,6 +45,26 @@ public class CommerceAccountGroupTestUtil {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
+
+		CommerceAccountGroup commerceAccountGroup =
+			CommerceAccountGroupLocalServiceUtil.addCommerceAccountGroup(
+				serviceContext.getCompanyId(), RandomTestUtil.randomString(), 0,
+				false, null, serviceContext);
+
+		CommerceAccountGroupCommerceAccountRelLocalServiceUtil.
+			addCommerceAccountGroupCommerceAccountRel(
+				commerceAccountGroup.getCommerceAccountGroupId(),
+				commerceAccount.getCommerceAccountId(), serviceContext);
+
+		return commerceAccountGroup;
+	}
+
+	public static CommerceAccountGroup addCommerceAccountToAccountGroup(
+			long groupId, CommerceAccount commerceAccount)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		CommerceAccountGroup commerceAccountGroup =
 			CommerceAccountGroupLocalServiceUtil.addCommerceAccountGroup(

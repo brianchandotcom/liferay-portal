@@ -62,6 +62,22 @@ public class CommerceInventoryTestUtil {
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
+			boolean active, ServiceContext serviceContext)
+		throws Exception {
+
+		return addCommerceInventoryWarehouse(
+			RandomTestUtil.randomString(), active, serviceContext);
+	}
+
+	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addCommerceInventoryWarehouse(
+			RandomTestUtil.randomString(), true, serviceContext);
+	}
+
+	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
 			String name)
 		throws Exception {
 
@@ -91,6 +107,33 @@ public class CommerceInventoryTestUtil {
 				serviceContext);
 	}
 
+	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
+			String name, boolean active, ServiceContext serviceContext)
+		throws Exception {
+
+		CommerceCountry commerceCountry = _setUpCountry(serviceContext);
+
+		CommerceRegion commerceRegion = _setUpRegion(
+			commerceCountry, serviceContext);
+
+		return CommerceInventoryWarehouseLocalServiceUtil.
+			addCommerceInventoryWarehouse(
+				name, RandomTestUtil.randomString(), active,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), commerceRegion.getCode(),
+				commerceCountry.getTwoLettersISOCode(),
+				RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(), null,
+				serviceContext);
+	}
+
+	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
+			String name, ServiceContext serviceContext)
+		throws Exception {
+
+		return addCommerceInventoryWarehouse(name, true, serviceContext);
+	}
+
 	public static CommerceInventoryWarehouseItem
 			addCommerceInventoryWarehouseItem(
 				long userId,
@@ -112,7 +155,7 @@ public class CommerceInventoryTestUtil {
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			addCommerceInventoryWarehouse();
+			addCommerceInventoryWarehouse(serviceContext);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),

@@ -20,7 +20,9 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -29,9 +31,11 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.test.util.HitsAssert;
 import com.liferay.portal.test.rule.Inject;
@@ -63,7 +67,12 @@ public class CPDefinitionIndexerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_company = CompanyTestUtil.addCompany();
+
+		_user = UserTestUtil.addUser(_company);
+
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
 	}
 
 	@Test
@@ -72,7 +81,7 @@ public class CPDefinitionIndexerTest {
 			_commerceCatalogLocalService.addCommerceCatalog(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				LocaleUtil.US.getDisplayLanguage(), null,
-				ServiceContextTestUtil.getServiceContext());
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
 			catalog.getGroupId());
@@ -104,6 +113,12 @@ public class CPDefinitionIndexerTest {
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@DeleteAfterTestRun
+	private Company _company;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

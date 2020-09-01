@@ -79,7 +79,7 @@ public class CommerceShippingHelperTest {
 			_user.getCompanyId());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		_commerceInventoryWarehouse =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();

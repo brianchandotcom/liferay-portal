@@ -147,13 +147,13 @@ public class CPTestUtil {
 				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds)
 		throws PortalException {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
-
 		CPDefinition cpDefinition =
 			CPDefinitionLocalServiceUtil.getCPDefinition(cpDefinitionId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(cpDefinition.getGroupId());
+
+		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 
 		long now = System.currentTimeMillis();
 
@@ -486,23 +486,6 @@ public class CPTestUtil {
 			cpDefinition.getCPDefinitionId(), sku);
 	}
 
-	public static CPInstance addCPInstanceWithSku() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		CPDefinition cpDefinition = _addCPDefinition(
-			SimpleCPTypeConstants.NAME, true, true, serviceContext);
-
-		CPInstance cpInstance = addCPDefinitionCPInstance(
-			cpDefinition.getCPDefinitionId(), Collections.emptyMap());
-
-		cpInstance.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		_addBasePriceEntry(cpInstance);
-
-		return CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
-	}
-
 	public static CPInstance addCPInstanceWithSku(long groupId)
 		throws PortalException {
 
@@ -718,7 +701,7 @@ public class CPTestUtil {
 			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(), StringPool.BLANK,
 			cpInstance.getPrice(), null,
-			ServiceContextTestUtil.getServiceContext());
+			ServiceContextTestUtil.getServiceContext(cpInstance.getGroupId()));
 	}
 
 	private static CPDefinition _addCPDefinition(

@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -89,6 +90,13 @@ public class CommerceOrderHttpHelperImplTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		_user = UserTestUtil.addUser(_company);
+
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
+
 		List<CommerceInventoryBookedQuantity>
 			commerceInventoryBookedQuantities =
 				_commerceBookedQuantityLocalService.
@@ -102,13 +110,6 @@ public class CommerceOrderHttpHelperImplTest {
 				deleteCommerceInventoryBookedQuantity(
 					commerceInventoryBookedQuantity);
 		}
-
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addUser(_company);
-
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(), 0);
 
 		PrincipalThreadLocal.setName(_user.getUserId());
 
@@ -161,8 +162,6 @@ public class CommerceOrderHttpHelperImplTest {
 		_commerceDiscountLocalService.deleteCommerceDiscounts(
 			_group.getCompanyId());
 		_commerceAccountLocalService.deleteCommerceAccount(_commerceAccount);
-		_groupLocalService.deleteGroup(_group);
-		_userLocalService.deleteUser(_user);
 	}
 
 	@Test
@@ -215,7 +214,8 @@ public class CommerceOrderHttpHelperImplTest {
 		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
 
 		_commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommerceTestUtil.addWarehouseCommerceChannelRel(
 			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -267,7 +267,11 @@ public class CommerceOrderHttpHelperImplTest {
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	private List<CommerceOrder> _commerceOrders;
+
+	@DeleteAfterTestRun
 	private Company _company;
+
+	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
@@ -275,6 +279,8 @@ public class CommerceOrderHttpHelperImplTest {
 
 	private HttpServletRequest _httpServletRequest;
 	private ThemeDisplay _themeDisplay;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 	@Inject

@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -104,11 +105,14 @@ public class CommerceShipmentTest {
 
 		_user = UserTestUtil.addUser(_company);
 
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
+
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_company.getCompanyId());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		_commerceOrders = new ArrayList<>();
 	}
@@ -124,10 +128,6 @@ public class CommerceShipmentTest {
 		_commerceChannelLocalService.deleteCommerceChannel(_commerceChannel);
 
 		_commerceCurrencyLocalService.deleteCommerceCurrency(_commerceCurrency);
-
-		_userLocalService.deleteUser(_user);
-
-		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Test
@@ -916,28 +916,26 @@ public class CommerceShipmentTest {
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(active);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				active,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_commerceChannelRelLocalService.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			commerceChannelId, ServiceContextTestUtil.getServiceContext());
+			commerceChannelId,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return commerceInventoryWarehouse;
 	}
 
 	private CPInstance _createCPInstance() throws Exception {
-		Group group = GroupTestUtil.addGroup(
-			_company.getGroupId(), _user.getUserId(), 0);
-
-		return CPTestUtil.addCPInstanceWithRandomSku(group.getGroupId());
+		return CPTestUtil.addCPInstanceWithRandomSku(_group.getGroupId());
 	}
 
 	private CPInstance _createCPInstance(BigDecimal price) throws Exception {
-		Group group = GroupTestUtil.addGroup(
-			_company.getGroupId(), _user.getUserId(), 0);
-
-		return CPTestUtil.addCPInstanceWithRandomSku(group.getGroupId(), price);
+		return CPTestUtil.addCPInstanceWithRandomSku(
+			_group.getGroupId(), price);
 	}
 
 	private CPInstance _createCPInstance(long groupId) throws Exception {
@@ -980,6 +978,7 @@ public class CommerceShipmentTest {
 	@Inject
 	private CommerceShippingHelper _commerceShippingHelper;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject
@@ -991,6 +990,10 @@ public class CommerceShipmentTest {
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
 
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 	@Inject

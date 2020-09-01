@@ -144,7 +144,8 @@ public class CommercePriceListAccountGroupTest {
 			_commerceAccount);
 
 		CommerceAccountGroup associatedAccountGroup =
-			CommerceAccountGroupTestUtil.addCommerceAccountGroup();
+			CommerceAccountGroupTestUtil.addCommerceAccountGroup(
+				_group.getGroupId());
 
 		CommercePriceListTestUtil.addUserPriceList(
 			_group.getGroupId(), 1, associatedAccountGroup);

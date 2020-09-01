@@ -37,10 +37,13 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -87,11 +90,17 @@ public class CommercePaymentEngineTest {
 
 		_user = UserTestUtil.addUser(_company);
 
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
+
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_company.getCompanyId());
 
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
+
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		_commercePaymentMethodGroupRelLocalService.
 			addCommercePaymentMethodGroupRel(
@@ -140,8 +149,7 @@ public class CommercePaymentEngineTest {
 		CommerceCatalog commerceCatalog =
 			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
 				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.toLanguageId(LocaleUtil.US), null,
-				ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
+				LocaleUtil.toLanguageId(LocaleUtil.US), null, _serviceContext);
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
@@ -160,7 +168,8 @@ public class CommercePaymentEngineTest {
 			ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				_serviceContext);
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
@@ -250,7 +259,8 @@ public class CommercePaymentEngineTest {
 			ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				_serviceContext);
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
@@ -315,7 +325,11 @@ public class CommercePaymentEngineTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
+	@DeleteAfterTestRun
+	private Group _group;
+
 	private HttpServletRequest _httpServletRequest;
+	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private User _user;

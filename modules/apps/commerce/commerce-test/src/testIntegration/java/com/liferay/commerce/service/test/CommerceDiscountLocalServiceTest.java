@@ -38,6 +38,7 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -85,11 +87,14 @@ public class CommerceDiscountLocalServiceTest {
 
 		_user = UserTestUtil.addUser(_company);
 
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
+
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_company.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_user.getCompanyId(), _user.getGroupId(), _user.getUserId());
+			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceAccount = CommerceAccountTestUtil.addBusinessCommerceAccount(
 			_user.getUserId(), RandomTestUtil.randomString(),
@@ -111,7 +116,7 @@ public class CommerceDiscountLocalServiceTest {
 			_commerceCurrency.getCode());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		_commercePricingConfiguration =
 			_configurationProvider.getSystemConfiguration(
@@ -631,6 +636,9 @@ public class CommerceDiscountLocalServiceTest {
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	private ServiceContext _serviceContext;
 

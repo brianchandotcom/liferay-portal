@@ -47,10 +47,13 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.TestCommerceContext;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -90,9 +93,12 @@ public class CommerceDiscountUsageTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_company = CompanyTestUtil.addCompany();
 
-		_user = UserTestUtil.addUser();
+		_user = UserTestUtil.addUser(_company);
+
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
 
 		_commerceAccount =
 			_commerceAccountLocalService.getPersonalCommerceAccount(
@@ -119,9 +125,6 @@ public class CommerceDiscountUsageTest {
 			_commerceAccountLocalService.deleteCommerceAccount(
 				_commerceAccount);
 		}
-
-		GroupTestUtil.deleteGroup(_group);
-		_userLocalService.deleteUser(_user);
 	}
 
 	@Test(expected = CommerceDiscountLimitationTimesException.class)
@@ -164,7 +167,7 @@ public class CommerceDiscountUsageTest {
 		);
 
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
@@ -290,7 +293,7 @@ public class CommerceDiscountUsageTest {
 		);
 
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), commerceChannel.getGroupId(), _commerceCurrency);
@@ -483,7 +486,7 @@ public class CommerceDiscountUsageTest {
 		throws Exception {
 
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
@@ -670,7 +673,13 @@ public class CommerceDiscountUsageTest {
 	@Inject
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
+	@DeleteAfterTestRun
+	private Company _company;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 	@Inject

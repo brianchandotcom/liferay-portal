@@ -119,7 +119,8 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouseActive =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				true, _serviceContext);
 
 		_commerceInventoryWarehouseItemLocalService.
 			addCommerceInventoryWarehouseItem(
@@ -154,10 +155,12 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse1 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				_serviceContext);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse2 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				_serviceContext);
 
 		int warehouse1ItemQuantity = 5;
 		int warehouse2ItemQuantity = 5;
@@ -216,10 +219,12 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse1 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				_serviceContext);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse2 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				_serviceContext);
 
 		int warehouse1ItemQuantity = 5;
 		int warehouse2ItemQuantity = 5;
@@ -363,10 +368,12 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse1 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				_serviceContext);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse2 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				_serviceContext);
 
 		int warehouse1ItemQuantity = 5;
 		int warehouse2ItemQuantity = 5;
@@ -503,10 +510,12 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse inactiveCommerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				false, _serviceContext);
 
 		CommerceInventoryWarehouse activeCommerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				true, _serviceContext);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -611,7 +620,8 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				false, _serviceContext);
 
 		int quantity = 10;
 
@@ -644,7 +654,8 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				false, _serviceContext);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -683,7 +694,8 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				false, _serviceContext);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CPDefinition.class.getName(), _cpInstance1.getCPDefinitionId(),
@@ -743,10 +755,12 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouseActive =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				true, _serviceContext);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouseInactive =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				false, _serviceContext);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -760,7 +774,7 @@ public class CommerceInventoryEngineTest {
 			_commerceChannel.getCommerceChannelId(), _serviceContext);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(_user.getGroupId());
 
 		List<CommerceInventoryWarehouse> activeWarehouses =
 			_commerceInventoryWarehouseLocalService.
@@ -798,7 +812,8 @@ public class CommerceInventoryEngineTest {
 		);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse1 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				true, _serviceContext);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -825,7 +840,7 @@ public class CommerceInventoryEngineTest {
 		Assert.assertEquals(commerceInventoryWarehouse1, retrievedWarehouse);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse2 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false, _serviceContext);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -851,7 +866,7 @@ public class CommerceInventoryEngineTest {
 		Assert.assertEquals(commerceInventoryWarehouse1, retrievedWarehouse);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse3 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true, _serviceContext);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),

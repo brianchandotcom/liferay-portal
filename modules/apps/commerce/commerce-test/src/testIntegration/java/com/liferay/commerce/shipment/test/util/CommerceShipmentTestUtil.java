@@ -122,32 +122,6 @@ public class CommerceShipmentTestUtil {
 	}
 
 	public static CommerceShipment createOrderShipment(
-			long commerceOrderId, long commerceWarehouseId)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		CommerceShipment commerceShipment =
-			CommerceShipmentLocalServiceUtil.addCommerceShipment(
-				commerceOrderId, serviceContext);
-
-		CommerceOrder commerceOrder =
-			CommerceOrderLocalServiceUtil.getCommerceOrder(commerceOrderId);
-
-		for (CommerceOrderItem commerceOrderItem :
-				commerceOrder.getCommerceOrderItems()) {
-
-			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
-				commerceShipment.getCommerceShipmentId(),
-				commerceOrderItem.getCommerceOrderItemId(), commerceWarehouseId,
-				commerceOrderItem.getQuantity(), serviceContext);
-		}
-
-		return commerceShipment;
-	}
-
-	public static CommerceShipment createOrderShipment(
 			long groupId, long commerceOrderId, long commerceWarehouseId)
 		throws PortalException {
 

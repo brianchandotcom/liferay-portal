@@ -38,12 +38,14 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.test.util.CommerceAccountGroupTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -80,11 +82,14 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		_user = UserTestUtil.addUser(_company);
 
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
+
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_company.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_user.getCompanyId(), _user.getGroupId(), _user.getUserId());
+			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceAccount1 =
 			_commerceAccountLocalService.getPersonalCommerceAccount(
@@ -101,7 +106,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 				_commerceAccount1.getCommerceAccountId(), _serviceContext);
 
 		_commerceChannel1 = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		_catalog = _commerceCatalogLocalService.addCommerceCatalog(
 			RandomTestUtil.randomString(), _commerceCurrency.getCode(),
@@ -138,18 +143,18 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_serviceContext);
 
 		CommerceAccountGroupTestUtil.addCommerceAccountToAccountGroup(
-			_commerceAccount4);
+			_group.getGroupId(), _commerceAccount4);
 		CommerceAccountGroupTestUtil.addCommerceAccountToAccountGroup(
-			_commerceAccount5);
+			_group.getGroupId(), _commerceAccount5);
 
 		_commerceChannel2 = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 		_commerceChannel3 = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 		_commerceChannel4 = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 		_commerceChannel5 = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		long[] commerceAccount3AccountGroups =
 			_commerceAccountHelper.getCommerceAccountGroupIds(
@@ -581,6 +586,9 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 	@DeleteAfterTestRun
 	private Company _company;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	private ServiceContext _serviceContext;
 

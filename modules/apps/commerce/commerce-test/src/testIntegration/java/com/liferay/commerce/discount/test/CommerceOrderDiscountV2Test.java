@@ -42,10 +42,13 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.TestCommerceContext;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -85,9 +88,12 @@ public class CommerceOrderDiscountV2Test {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_company = CompanyTestUtil.addCompany();
 
-		_user = UserTestUtil.addUser();
+		_user = UserTestUtil.addUser(_company);
+
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
 
 		_commerceAccount =
 			_commerceAccountLocalService.getPersonalCommerceAccount(
@@ -106,8 +112,6 @@ public class CommerceOrderDiscountV2Test {
 		}
 
 		_commerceAccountLocalService.deleteCommerceAccount(_commerceAccount);
-		GroupTestUtil.deleteGroup(_group);
-		_userLocalService.deleteUser(_user);
 
 		_commerceDiscountLocalService.deleteCommerceDiscounts(
 			_user.getCompanyId());
@@ -128,7 +132,7 @@ public class CommerceOrderDiscountV2Test {
 		);
 
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), commerceChannel.getGroupId(), _commerceCurrency);
@@ -163,7 +167,8 @@ public class CommerceOrderDiscountV2Test {
 			BigDecimal.valueOf(0.9));
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommerceTestUtil.addWarehouseCommerceChannelRel(
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -219,7 +224,7 @@ public class CommerceOrderDiscountV2Test {
 		);
 
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), commerceChannel.getGroupId(), _commerceCurrency);
@@ -266,7 +271,8 @@ public class CommerceOrderDiscountV2Test {
 				BigDecimal.valueOf(10));
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommerceTestUtil.addWarehouseCommerceChannelRel(
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -354,7 +360,7 @@ public class CommerceOrderDiscountV2Test {
 			"The final price will be calculated with the discounts"
 		);
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), commerceChannel.getGroupId(), _commerceCurrency);
@@ -401,7 +407,8 @@ public class CommerceOrderDiscountV2Test {
 				BigDecimal.valueOf(10));
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommerceTestUtil.addWarehouseCommerceChannelRel(
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -509,7 +516,13 @@ public class CommerceOrderDiscountV2Test {
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
+	@DeleteAfterTestRun
+	private Company _company;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 	@Inject

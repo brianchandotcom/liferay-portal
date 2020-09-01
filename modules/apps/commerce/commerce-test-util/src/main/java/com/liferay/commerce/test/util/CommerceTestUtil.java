@@ -105,7 +105,7 @@ public class CommerceTestUtil {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		if (userId == 0) {
 			userId = serviceContext.getUserId();
@@ -161,8 +161,12 @@ public class CommerceTestUtil {
 
 		CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				serviceContext);
 
 		CommerceChannel commerceChannel =
 			CommerceChannelLocalServiceUtil.getCommerceChannelByOrderGroupId(
@@ -246,8 +250,12 @@ public class CommerceTestUtil {
 
 		CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				serviceContext);
 
 		CommerceChannel commerceChannel =
 			CommerceChannelLocalServiceUtil.getCommerceChannelByOrderGroupId(

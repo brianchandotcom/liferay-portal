@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -73,10 +74,10 @@ public class CommercePriceListIndexerTest {
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		User defaultUser = _company.getDefaultUser();
+		_user = UserTestUtil.addUser(_company);
 
 		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), defaultUser.getUserId(), 0);
+			_company.getCompanyId(), _user.getUserId(), 0);
 	}
 
 	@Test
@@ -166,5 +167,8 @@ public class CommercePriceListIndexerTest {
 	private Company _company;
 
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

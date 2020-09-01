@@ -68,13 +68,16 @@ public class CommerceInventoryMVCCTest {
 
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _user.getUserId(), 0);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
 	}
 
 	@Test(expected = MVCCException.class)
 	public void testReplenishmentItemMVCC() throws Exception {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				RandomTestUtil.randomString(), true);
+				RandomTestUtil.randomString(), true, _serviceContext);
 
 		CPInstance cpInstance =
 			CommerceInventoryTestUtil.addRandomCPInstanceSku(
@@ -107,7 +110,7 @@ public class CommerceInventoryMVCCTest {
 	public void testWarehouseItemMVCC() throws Exception {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				RandomTestUtil.randomString(), true);
+				RandomTestUtil.randomString(), true, _serviceContext);
 
 		CPInstance cpInstance =
 			CommerceInventoryTestUtil.addRandomCPInstanceSku(
@@ -140,12 +143,7 @@ public class CommerceInventoryMVCCTest {
 	public void testWarehouseMVCC() throws Exception {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				RandomTestUtil.randomString(), true);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_company.getCompanyId(), _group.getGroupId(),
-				_user.getUserId());
+				RandomTestUtil.randomString(), true, _serviceContext);
 
 		_commerceInventoryWarehouseLocalService.
 			updateCommerceInventoryWarehouse(
@@ -161,7 +159,7 @@ public class CommerceInventoryMVCCTest {
 				commerceInventoryWarehouse.getCommerceRegionCode(),
 				commerceInventoryWarehouse.getLatitude(),
 				commerceInventoryWarehouse.getLongitude(),
-				commerceInventoryWarehouse.getMvccVersion(), serviceContext);
+				commerceInventoryWarehouse.getMvccVersion(), _serviceContext);
 
 		_commerceInventoryWarehouseLocalService.
 			updateCommerceInventoryWarehouse(
@@ -177,7 +175,7 @@ public class CommerceInventoryMVCCTest {
 				commerceInventoryWarehouse.getCommerceRegionCode(),
 				commerceInventoryWarehouse.getLatitude(),
 				commerceInventoryWarehouse.getLongitude(),
-				commerceInventoryWarehouse.getMvccVersion(), serviceContext);
+				commerceInventoryWarehouse.getMvccVersion(), _serviceContext);
 	}
 
 	@Inject
@@ -197,6 +195,8 @@ public class CommerceInventoryMVCCTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private User _user;

@@ -47,11 +47,13 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.TestCommerceContext;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -91,9 +93,12 @@ public class CommercePricingTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_company = CompanyTestUtil.addCompany();
 
-		_user = UserTestUtil.addUser();
+		_user = UserTestUtil.addUser(_company);
+
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
 
 		_commerceAccount =
 			_commerceAccountLocalService.getPersonalCommerceAccount(
@@ -108,7 +113,7 @@ public class CommercePricingTest {
 			_group.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_user.getCompanyId(), _user.getGroupId(), _user.getUserId());
+			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
 	}
 
 	@After
@@ -1135,6 +1140,9 @@ public class CommercePricingTest {
 
 	@Inject
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@DeleteAfterTestRun
 	private Group _group;

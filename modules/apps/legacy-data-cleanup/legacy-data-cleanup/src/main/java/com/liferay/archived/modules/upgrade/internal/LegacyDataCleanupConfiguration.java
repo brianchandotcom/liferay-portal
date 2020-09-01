@@ -24,51 +24,51 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "upgrades")
 @Meta.OCD(
 	id = "com.liferay.archived.modules.upgrade.internal.LegacyDataCleanupConfiguration",
-	name = "deprecated-modules-upgrade-configuration-name"
+	name = "legacy-data-cleanup-configuration-name"
 )
 public interface LegacyDataCleanupConfiguration {
 
 	@Meta.AD(
-		deflt = "false", name = "remove-chat-module-data", required = false
+		deflt = "false", name = "cleanup-chat-module-data", required = false
 	)
 	public boolean removeChatModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "remove-dictionary-module-data",
+		deflt = "false", name = "cleanup-dictionary-module-data",
 		required = false
 	)
 	public boolean removeDictionaryModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "remove-directory-module-data", required = false
+		deflt = "false", name = "cleanup-directory-module-data", required = false
 	)
 	public boolean removeDirectoryModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "remove-invitation-module-data",
+		deflt = "false", name = "cleanup-invitation-module-data",
 		required = false
 	)
 	public boolean removeInvitationModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "remove-mail-reader-module-data",
+		deflt = "false", name = "cleanup-mail-reader-module-data",
 		required = false
 	)
 	public boolean removeMailReaderModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "remove-private-messaging-module-data",
+		deflt = "false", name = "cleanup-private-messaging-module-data",
 		required = false
 	)
 	public boolean removePrivateMessagingModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "remove-shopping-module-data", required = false
+		deflt = "false", name = "cleanup-shopping-module-data", required = false
 	)
 	public boolean removeShoppingModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "remove-twitter-module-data", required = false
+		deflt = "false", name = "cleanup-twitter-module-data", required = false
 	)
 	public boolean removeTwitterModuleData();
 

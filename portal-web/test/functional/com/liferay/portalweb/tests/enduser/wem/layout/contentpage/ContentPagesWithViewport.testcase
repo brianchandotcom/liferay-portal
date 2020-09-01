@@ -41,6 +41,165 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-119979. Customize the Layout of Grid in each viewport."
+	@priority = "4"
+	test CustomizeLayoutOfGridInEachViewport {
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Change the Number of Modules to 6") {
+			PageEditor.editLayoutGrid(
+				columnCount = "6",
+				panel = "General");
+		}
+
+		task ("Select the 2 Modules per Row as Layout in Desktop viewport") {
+			PageEditor.editLayoutGrid(
+				layout = "2 Modules per Row",
+				panel = "Styles");
+		}
+
+		task ("Select the 3 Modules per Row as Layout in Tablet viewport") {
+			Click(
+				key_deviceType = "Tablet",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+
+			Select(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "3 Modules per Row");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Select the 6 Modules per Row as Layout in Landscape Phone viewport") {
+			Click(
+				key_deviceType = "Landscape Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+
+			Select(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "6 Modules per Row");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Select the 1 Module per Row as Layout in Portrait Phone viewport") {
+			Click(
+				key_deviceType = "Portrait Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+
+			Select(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "1 Module per Row");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Assert the Layout of Grid is 2 Modules per Row and the height of module doesn't equal 0 in Desktop viewport") {
+			Click(
+				key_deviceType = "Desktop",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+
+			PageEditor.viewGridStyle(
+				columnCount = "6",
+				layout = "6",
+				position = "1");
+
+			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-6')]");
+
+			TestUtils.assertNotEquals(
+				actual = "${moduleHeight}",
+				expected = "0px");
+		}
+
+		task ("Assert the Layout of Grid is 3 Modules per Row and the height of module doesn't equal 0 in Tablet viewport") {
+			Click(
+				key_deviceType = "Tablet",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewGridStyle(
+				columnCount = "6",
+				layout = "4",
+				position = "1");
+
+			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')]");
+
+			TestUtils.assertNotEquals(
+				actual = "${moduleHeight}",
+				expected = "0px");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		task ("Assert the Layout of Grid is 6 Modules per Row and the height of module doesn't equal 0 in Landscape Phone viewport") {
+			Click(
+				key_deviceType = "Landscape Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewGridStyle(
+				columnCount = "6",
+				layout = "2",
+				position = "1");
+
+			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-2')]");
+
+			TestUtils.assertNotEquals(
+				actual = "${moduleHeight}",
+				expected = "0px");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		task ("Assert the Layout of Grid is 1 Module per Row and the height of module doesn't equal 0 in Portrait Phone viewport") {
+			Click(
+				key_deviceType = "Portrait Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewGridStyle(
+				columnCount = "6",
+				layout = "12",
+				position = "1");
+
+			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-12')]");
+
+			TestUtils.assertNotEquals(
+				actual = "${moduleHeight}",
+				expected = "0px");
+
+			SelectFrame(value1 = "relative=top");
+		}
+	}
+
 	@description = "This is a test for LPS-110723. When change to other viewports, there are only limited common fragment style categories available."
 	@priority = "4"
 	test PropagateCommonFragmentStyleDefinedInDesktopToOtherViewports {

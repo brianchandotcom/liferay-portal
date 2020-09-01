@@ -84,8 +84,8 @@ export default ({children, dataLayoutBuilder}) => {
 		if (
 			allowNestedFields &&
 			Object.keys(hoveredField).length &&
-			hoveredField.type === 'fieldset' &&
-			!hoveredField.ddmStructureId
+			hoveredField.fieldType === 'fieldset' &&
+			!hoveredField.customProperties.ddmStructureId
 		) {
 			fieldActions = [
 				duplicateAction,
@@ -99,7 +99,7 @@ export default ({children, dataLayoutBuilder}) => {
 			];
 		}
 
-		if (hoveredField.type === 'fieldset') {
+		if (hoveredField.fieldType === 'fieldset') {
 			fieldActions.splice(fieldActions.indexOf(duplicateAction), 1);
 		}
 

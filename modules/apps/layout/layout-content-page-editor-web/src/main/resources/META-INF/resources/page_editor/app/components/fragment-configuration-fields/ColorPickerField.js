@@ -13,11 +13,11 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayColorPicker from '@clayui/color-picker';
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import ColorPicker from '../../../common/components/ColorPicker';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
@@ -29,18 +29,13 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 	const {tokenValues} = useStyleBook();
 	const [color, setColor] = useControlledState(tokenValues[value]?.value);
 
-	const colorTokens = Object.values(tokenValues).filter(
-		(token) => token.editorType === COLOR_PICKER_TYPE
-	);
-
-	const colorsToNames = colorTokens.reduce((acc, token) => {
-		const tokenValue = token.value.replace('#', '');
-		acc[tokenValue] = token.name;
-
-		return acc;
-	}, {});
-
-	const colors = colorTokens.map((token) => token.value.replace('#', ''));
+	const colors = Object.values(tokenValues)
+		.filter((token) => token.editorType === COLOR_PICKER_TYPE)
+		.map((token) => ({
+			label: token.label,
+			name: token.name,
+			value: token.value,
+		}));
 
 	if (!colors.length) {
 		return (
@@ -59,12 +54,12 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 			<label>{field.label}</label>
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend shrink>
-					<ClayColorPicker
+					<ColorPicker
 						colors={colors}
-						onValueChange={(nextColor) => {
-							setColor(nextColor);
+						onValueChange={({name, value}) => {
+							setColor(value);
 
-							onValueSelect(field.name, colorsToNames[nextColor]);
+							onValueSelect(field.name, name);
 						}}
 						showHex={false}
 						value={color}

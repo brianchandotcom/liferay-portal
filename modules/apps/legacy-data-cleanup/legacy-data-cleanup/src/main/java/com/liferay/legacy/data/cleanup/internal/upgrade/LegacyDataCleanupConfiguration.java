@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.archived.modules.upgrade.internal;
+package com.liferay.legacy.data.cleanup.internal.upgrade;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "upgrades")
 @Meta.OCD(
-	id = "com.liferay.archived.modules.upgrade.internal.LegacyDataCleanupConfiguration",
+	id = "com.liferay.legacy.data.cleanup.internal.upgrade.LegacyDataCleanupConfiguration",
 	name = "legacy-data-cleanup-configuration-name"
 )
 public interface LegacyDataCleanupConfiguration {
@@ -40,7 +40,8 @@ public interface LegacyDataCleanupConfiguration {
 	public boolean removeDictionaryModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "cleanup-directory-module-data", required = false
+		deflt = "false", name = "cleanup-directory-module-data",
+		required = false
 	)
 	public boolean removeDirectoryModuleData();
 

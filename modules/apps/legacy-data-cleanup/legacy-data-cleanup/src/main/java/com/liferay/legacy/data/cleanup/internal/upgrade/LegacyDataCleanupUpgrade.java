@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.archived.modules.upgrade.internal;
+package com.liferay.legacy.data.cleanup.internal.upgrade;
 
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -36,10 +36,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	configurationPid = "com.liferay.archived.modules.upgrade.internal.LegacyDataCleanupConfiguration",
+	configurationPid = "com.liferay.legacy.data.cleanup.internal.upgrade.LegacyDataCleanupConfiguration",
 	immediate = true, service = UpgradeStepRegistrator.class
 )
-public class LegacyDataCleanup implements UpgradeStepRegistrator {
+public class LegacyDataCleanupUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
@@ -49,8 +49,7 @@ public class LegacyDataCleanup implements UpgradeStepRegistrator {
 				"com.liferay.chat.service", CleanupChat::new);
 
 			_removeModuleData(
-				_legacyDataCleanupConfiguration::
-					removeDictionaryModuleData,
+				_legacyDataCleanupConfiguration::removeDictionaryModuleData,
 				"com.liferay.dictionary.web", CleanupDictionary::new);
 
 			_removeModuleData(
@@ -58,13 +57,11 @@ public class LegacyDataCleanup implements UpgradeStepRegistrator {
 				"com.liferay.directory.web", CleanupDirectory::new);
 
 			_removeModuleData(
-				_legacyDataCleanupConfiguration::
-					removeInvitationModuleData,
+				_legacyDataCleanupConfiguration::removeInvitationModuleData,
 				"com.liferay.invitation.web", CleanupInvitation::new);
 
 			_removeModuleData(
-				_legacyDataCleanupConfiguration::
-					removeMailReaderModuleData,
+				_legacyDataCleanupConfiguration::removeMailReaderModuleData,
 				"com.liferay.mail.reader.service", CleanupMailReader::new);
 
 			_removeModuleData(
@@ -89,9 +86,8 @@ public class LegacyDataCleanup implements UpgradeStepRegistrator {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_legacyDataCleanupConfiguration =
-			ConfigurableUtil.createConfigurable(
-				LegacyDataCleanupConfiguration.class, properties);
+		_legacyDataCleanupConfiguration = ConfigurableUtil.createConfigurable(
+			LegacyDataCleanupConfiguration.class, properties);
 	}
 
 	private void _removeModuleData(
@@ -113,11 +109,10 @@ public class LegacyDataCleanup implements UpgradeStepRegistrator {
 		}
 	}
 
-	private LegacyDataCleanupConfiguration
-		_legacyDataCleanupConfiguration;
-
 	@Reference
 	private ImageLocalService _imageLocalService;
+
+	private LegacyDataCleanupConfiguration _legacyDataCleanupConfiguration;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;

@@ -700,7 +700,7 @@ public class DDMFormAdminDisplayContext {
 		return ddmFormBuilderSettingsResponse.getFunctionsURL();
 	}
 
-	public String getInvalidDDMFormField(DDMFormInstance ddmFormInstance) {
+	public String getInvalidDDMFormFieldType(DDMFormInstance ddmFormInstance) {
 		try {
 			String invalidDDMFormFieldType = _invalidDDMFormFieldTypeMap.get(
 				ddmFormInstance.getFormInstanceId());
@@ -1071,7 +1071,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public boolean hasValidDDMFormFields(DDMFormInstance ddmFormInstance) {
-		if (Validator.isNull(getInvalidDDMFormField(ddmFormInstance))) {
+		if (Validator.isNull(getInvalidDDMFormFieldType(ddmFormInstance))) {
 			return true;
 		}
 

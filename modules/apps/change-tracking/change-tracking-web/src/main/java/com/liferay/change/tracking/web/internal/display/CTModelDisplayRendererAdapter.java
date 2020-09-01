@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 
 import java.io.InputStream;
 
@@ -55,7 +56,7 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 						model.getAttributeGetterFunctions();
 
 					Function<T, Object> function = attributeGetterFunctions.get(
-						key);
+						CamelCaseUtil.toCamelCase(key));
 
 					Blob blob = (Blob)function.apply(model);
 

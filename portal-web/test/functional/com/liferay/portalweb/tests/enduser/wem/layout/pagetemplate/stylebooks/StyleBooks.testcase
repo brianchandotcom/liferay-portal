@@ -167,7 +167,7 @@ definition {
 			StyleBooks.expandSection(sectionName = "Headings");
 
 			Type(
-				key_fieldLabel = "H1 Font Size",
+				key_fieldLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "2rem");
 
@@ -539,11 +539,11 @@ definition {
 			StyleBooks.selectForm(formName = "Typography");
 		}
 
-		task ("Edit H1 Font Size in Headings section") {
+		task ("Edit Heading 1 Font Size in Headings section") {
 			StyleBooks.expandSection(sectionName = "Headings");
 
 			Type(
-				key_fieldLabel = "H1 Font Size",
+				key_fieldLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "2rem");
 

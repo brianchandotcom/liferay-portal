@@ -116,6 +116,39 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
+	macro addPrivatePage {
+		var key_breadcrumbName="Pages";
+
+		Pause(locator1 = "3000");
+
+		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			SitePages.gotoAddFirstPage(pageType = "Private Page");
+		}
+		else {
+			AssertClick(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Pages");
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Private Page");
+		}
+
+		ContentPages._selectCard(
+			basicTemplate = "${basicTemplate}",
+			collectionName = "${collectionName}",
+			masterLayoutName = "${masterLayoutName}",
+			pageTemplateName = "${pageTemplateName}");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		PageEditor.assertFragmentSidebarLoaded();
+	}
+
 	macro addPublicCollectionPage {
 		Pause(locator1 = "3000");
 

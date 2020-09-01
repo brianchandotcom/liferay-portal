@@ -41,7 +41,7 @@ public class AssetEntryCTDisplayRenderer
 
 	@Override
 	public boolean isHideable(AssetEntry assetEntry) {
-		return false;
+		return true;
 	}
 
 }

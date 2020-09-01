@@ -75,7 +75,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 		'.add-layout-action-option',
 		function (event) {
 			Liferay.Util.openModal({
-				height: '480px',
+				height: '540px',
 				id: '<portlet:namespace />addLayoutDialog',
 				size: 'md',
 				title: '<liferay-ui:message key="add-collection-page" />',

@@ -178,7 +178,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		'.add-layout-action-option',
 		function (event) {
 			Liferay.Util.openModal({
-				height: '480px',
+				height: '540px',
 				id: '<portlet:namespace />addLayoutDialog',
 				size: 'md',
 				title: '<liferay-ui:message key="add-page" />',

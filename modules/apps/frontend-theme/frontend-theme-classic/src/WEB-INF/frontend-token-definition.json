@@ -270,18 +270,6 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "1rem",
-							"label": "spacer",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "spacer"
-								}
-							],
-							"name": "spacer",
-							"type": "String"
-						},
-						{
 							"defaultValue": "0",
 							"label": "spacer-0",
 							"mappings": [
@@ -294,7 +282,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "calc(var(--spacer) * 0.25)",
+							"defaultValue": "0.25rem",
 							"label": "spacer-1",
 							"mappings": [
 								{
@@ -306,7 +294,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "calc(var(--spacer) * 0.5)",
+							"defaultValue": "0.5rem",
 							"label": "spacer-2",
 							"mappings": [
 								{
@@ -318,7 +306,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "calc(var(--spacer) * 1)",
+							"defaultValue": "1rem",
 							"label": "spacer-3",
 							"mappings": [
 								{
@@ -330,7 +318,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "calc(var(--spacer) * 1.5)",
+							"defaultValue": "1.5rem",
 							"label": "spacer-4",
 							"mappings": [
 								{
@@ -342,7 +330,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "calc(var(--spacer) * 3)",
+							"defaultValue": "3rem",
 							"label": "spacer-5",
 							"mappings": [
 								{
@@ -354,7 +342,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "calc(var(--spacer) * 4.5)",
+							"defaultValue": "4.5rem",
 							"label": "spacer-6",
 							"mappings": [
 								{
@@ -366,7 +354,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "calc(var(--spacer) * 6)",
+							"defaultValue": "6rem",
 							"label": "spacer-7",
 							"mappings": [
 								{
@@ -378,7 +366,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "calc(var(--spacer) * 7.5)",
+							"defaultValue": "7.5rem",
 							"label": "spacer-8",
 							"mappings": [
 								{
@@ -390,7 +378,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "calc(var(--spacer) * 9)",
+							"defaultValue": "9rem",
 							"label": "spacer-9",
 							"mappings": [
 								{
@@ -402,7 +390,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "calc(var(--spacer) * 10)",
+							"defaultValue": "10rem",
 							"label": "spacer-10",
 							"mappings": [
 								{

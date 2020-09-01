@@ -92,8 +92,8 @@ definition {
 
 		task ("Move the Asset Publisher up to the Container via the Selection panel") {
 			DragAndDrop.javaScriptDragAndDropToUp(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//button[contains(@class,'tree-node')][@draggable='true']",
-				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//button[contains(@class,'tree-node')][@draggable='true']");
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']");
 
 			Pause(locator1 = "3000");
 		}
@@ -125,8 +125,8 @@ definition {
 
 		task ("Move the Container down to the Heading via the Selection panel") {
 			DragAndDrop.javaScriptDragAndDropToBottom(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//button[contains(@class,'tree-node')][@draggable='true']",
-				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//button[contains(@class,'tree-node')][@draggable='true']");
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']");
 
 			Pause(locator1 = "3000");
 		}
@@ -208,8 +208,8 @@ definition {
 			Pause(locator1 = "3000");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Button')]//button[contains(@class,'tree-node')][@draggable='true']",
-				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//button[contains(@class,'tree-node')][@draggable='true']");
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Button')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']");
 
 			Pause(locator1 = "3000");
 
@@ -225,8 +225,8 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//button[contains(@class,'tree-node')][@draggable='true']",
-				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')][1]//button[contains(@aria-label,'Module')]");
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')][1]//div[@role='button'][contains(@aria-label,'Module')]");
 
 			Pause(locator1 = "3000");
 
@@ -277,8 +277,8 @@ definition {
 			Pause(locator1 = "3000");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//button[contains(@class,'tree-node')][@draggable='true']",
-				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')]//button[contains(@aria-label,'Collection Item')]");
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')]//div[@role='button'][contains(@aria-label,'Collection Item')]");
 
 			Pause(locator1 = "3000");
 

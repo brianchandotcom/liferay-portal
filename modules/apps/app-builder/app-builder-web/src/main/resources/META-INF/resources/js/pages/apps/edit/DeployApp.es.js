@@ -17,7 +17,7 @@ import React from 'react';
 
 import ProductMenuSettings from './settings/ProductMenuSettings.es';
 import Settings from './settings/Settings.es';
-import WidgetSettings from './settings/WidgetSettings.es';
+import WidgetTip from './settings/WidgetTip.es';
 
 const Divider = () => {
 	return (
@@ -33,8 +33,8 @@ export const DeploySettings = () => (
 	<>
 		<Settings
 			deploymentType="widget"
-			settings={WidgetSettings}
 			subtitle={Liferay.Language.get('deploy-a-widget')}
+			tip={WidgetTip}
 			title={Liferay.Language.get('widget')}
 		/>
 

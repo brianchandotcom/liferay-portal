@@ -53,10 +53,17 @@ public class LayoutDisplayPageProviderUtil {
 				getLayoutDisplayPageProviderByClassName(className);
 
 		try {
-			return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(
-					className,
-					ParamUtil.getLong(httpServletRequest, "classPK")));
+			layoutDisplayPageObjectProvider =
+				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					new InfoItemReference(
+						className,
+						ParamUtil.getLong(httpServletRequest, "classPK")));
+
+			httpServletRequest.setAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+				layoutDisplayPageObjectProvider);
+
+			return layoutDisplayPageObjectProvider;
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get info display object provider", exception);

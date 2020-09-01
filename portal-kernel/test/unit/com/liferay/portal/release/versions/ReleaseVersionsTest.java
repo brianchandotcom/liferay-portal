@@ -302,6 +302,17 @@ public class ReleaseVersionsTest {
 		return null;
 	}
 
+	private boolean _hasGitCommitMarkerFile(Path dirPath) {
+		Path gitCommitPath = dirPath.resolve(
+			"git-commit-" + String.valueOf(dirPath.getFileName()));
+
+		if (Files.exists(gitCommitPath)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isInGitRepoReadOnly(Path dirPath) throws IOException {
 		Path gitRepoPath = _getGitRepoPath(dirPath);
 
@@ -396,6 +407,10 @@ public class ReleaseVersionsTest {
 					String dirName = String.valueOf(dirPath.getFileName());
 
 					if (Objects.equals(dirName, "node_modules")) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					if (_hasGitCommitMarkerFile(dirPath)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 

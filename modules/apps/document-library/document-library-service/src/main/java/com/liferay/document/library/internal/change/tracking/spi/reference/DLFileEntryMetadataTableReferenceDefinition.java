@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadataTable;
 import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.dynamic.data.mapping.model.DDMContentTable;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
@@ -46,6 +47,9 @@ public class DLFileEntryMetadataTableReferenceDefinition
 		childTableReferenceInfoBuilder.classNameReference(
 			DLFileEntryMetadataTable.INSTANCE.fileEntryMetadataId,
 			DDMStructureLinkTable.INSTANCE.classPK, DLFileEntryMetadata.class
+		).singleColumnReference(
+			DLFileEntryMetadataTable.INSTANCE.DDMStorageId,
+			DDMContentTable.INSTANCE.contentId
 		).classNameReference(
 			DLFileEntryMetadataTable.INSTANCE.DDMStorageId,
 			DDMStorageLinkTable.INSTANCE.classPK, DDMContent.class

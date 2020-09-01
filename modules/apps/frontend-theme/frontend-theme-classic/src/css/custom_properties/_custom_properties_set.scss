@@ -128,9 +128,9 @@ body,
 
 // Container max
 
-@each $breakpoint, $container-max-width in $container-max-widths {
-	.container-max-#{$breakpoint} {
-		max-width: $container-max-width;
+@each $key, $value in $custom-properties-container-max-widths {
+	.container-fluid-max-#{$key} {
+		max-width: #{$value};
 	}
 }
 

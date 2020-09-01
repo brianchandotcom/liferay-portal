@@ -1,3 +1,16 @@
+// Container max widths
+
+$custom-properties-container-max-widths: ();
+$custom-properties-container-max-widths: map-merge(
+	(
+		sm: var(--container-max-sm),
+		md: var(--container-max-md),
+		lg: var(--container-max-lg),
+		xl: var(--container-max-xl),
+	),
+	$custom-properties-container-max-widths
+);
+
 // Spacers map copy
 
 $spacers-cp: ();

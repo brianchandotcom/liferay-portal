@@ -73,6 +73,7 @@ import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 import com.liferay.roles.admin.constants.RolesAdminWebKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
+import com.liferay.roles.admin.role.type.mapper.PanelCategoryRoleTypeMapper;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 
 import java.io.IOException;
@@ -81,9 +82,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -351,9 +354,11 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	public List<PersonalMenuEntry> getPersonalMenuEntries() {
 		List<PersonalMenuEntry> personalMenuEntries = new ArrayList<>(
-			_serviceTrackerList.size());
+			_personalMenuEntryServiceTrackerList.size());
 
-		for (PersonalMenuEntry personalMenuEntry : _serviceTrackerList) {
+		for (PersonalMenuEntry personalMenuEntry :
+				_personalMenuEntryServiceTrackerList) {
+
 			personalMenuEntries.add(personalMenuEntry);
 		}
 
@@ -519,15 +524,20 @@ public class RolesAdminPortlet extends MVCPortlet {
 			new PropertyServiceReferenceComparator<>(
 				"product.navigation.personal.menu.entry.order");
 
-		_serviceTrackerList = ServiceTrackerListFactory.open(
+		_personalMenuEntryServiceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, PersonalMenuEntry.class,
 			Collections.reverseOrder(
 				groupComparator.thenComparing(entryOrderComparator)));
+
+		_panelCategoryRoleTypeMapperServiceTrackerList =
+			ServiceTrackerListFactory.open(
+				bundleContext, PanelCategoryRoleTypeMapper.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerList.close();
+		_personalMenuEntryServiceTrackerList.close();
+		_panelCategoryRoleTypeMapperServiceTrackerList.close();
 	}
 
 	@Override
@@ -638,6 +648,14 @@ public class RolesAdminPortlet extends MVCPortlet {
 		portletRequest.setAttribute(
 			RolesAdminWebKeys.ROLE_TYPES,
 			_roleTypeContributorProvider.getRoleTypeContributors());
+
+		String mvcPath = ParamUtil.getString(portletRequest, "mvcPath");
+
+		if (mvcPath.equals("/edit_role_permissions.jsp")) {
+			portletRequest.setAttribute(
+				RolesAdminWebKeys.PANEL_CATEGORY_KEYS,
+				_getPanelCategoryKeys(type));
+		}
 	}
 
 	@Reference(unbind = "-")
@@ -795,6 +813,23 @@ public class RolesAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	private String[] _getPanelCategoryKeys(int type) {
+		Set<String> panelCategoryKeys = new HashSet<>();
+
+		for (PanelCategoryRoleTypeMapper panelCategoryRoleTypeMapper :
+				_panelCategoryRoleTypeMapperServiceTrackerList) {
+
+			if (ArrayUtil.contains(
+					panelCategoryRoleTypeMapper.getRoleTypes(), type)) {
+
+				panelCategoryKeys.add(
+					panelCategoryRoleTypeMapper.getPanelCategoryKey());
+			}
+		}
+
+		return panelCategoryKeys.toArray(new String[0]);
+	}
+
 	private boolean _isDepotGroup(long companyId, String groupKey) {
 		try {
 			Group group = _groupService.getGroup(companyId, groupKey);
@@ -823,6 +858,11 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
+	private ServiceTrackerList
+		<PanelCategoryRoleTypeMapper, PanelCategoryRoleTypeMapper>
+			_panelCategoryRoleTypeMapperServiceTrackerList;
+	private ServiceTrackerList<PersonalMenuEntry, PersonalMenuEntry>
+		_personalMenuEntryServiceTrackerList;
 
 	@Reference
 	private Portal _portal;
@@ -840,8 +880,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 	@Reference
 	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
 
-	private ServiceTrackerList<PersonalMenuEntry, PersonalMenuEntry>
-		_serviceTrackerList;
 	private UserService _userService;
 
 }

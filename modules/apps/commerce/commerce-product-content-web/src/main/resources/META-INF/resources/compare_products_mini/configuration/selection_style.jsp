@@ -30,7 +30,7 @@ CPCompareContentMiniDisplayContext cpCompareContentMiniDisplayContext = (CPCompa
 
 <aui:script>
 	function <portlet:namespace />chooseSelectionStyle() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = window.document.querySelector(document.<portlet:namespace />fm);
 
 		submitForm(form);
 	}

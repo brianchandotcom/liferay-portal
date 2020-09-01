@@ -232,9 +232,7 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 									'#<portlet:namespace />cpInstanceIds'
 								).value = selectedItems;
 
-								var addCommercePriceEntryFm = AUI.$(
-									'#<portlet:namespace />addCommercePriceEntryFm'
-								);
+								var addCommercePriceEntryFm = window.document.querySelector('#<portlet:namespace />addCommercePriceEntryFm');
 
 								submitForm(addCommercePriceEntryFm);
 							}

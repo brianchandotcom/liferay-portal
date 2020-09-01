@@ -180,9 +180,7 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 									','
 								);
 
-								var addCommerceAccountGroupCommerceAccountRelFm = AUI.$(
-									'#<portlet:namespace />addCommerceAccountGroupCommerceAccountRelFm'
-								);
+								var addCommerceAccountGroupCommerceAccountRelFm = window.document.querySelector('#<portlet:namespace />addCommerceAccountGroupCommerceAccountRelFm');
 
 								submitForm(addCommerceAccountGroupCommerceAccountRelFm);
 							}

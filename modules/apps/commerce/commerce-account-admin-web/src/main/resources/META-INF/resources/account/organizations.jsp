@@ -180,9 +180,7 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 									','
 								);
 
-								var addCommerceAccountOrganizationRelFm = AUI.$(
-									'#<portlet:namespace />addCommerceAccountOrganizationRelFm'
-								);
+								var addCommerceAccountOrganizationRelFm = window.document.querySelector('#<portlet:namespace />addCommerceAccountOrganizationRelFm');
 
 								submitForm(addCommerceAccountOrganizationRelFm);
 							}

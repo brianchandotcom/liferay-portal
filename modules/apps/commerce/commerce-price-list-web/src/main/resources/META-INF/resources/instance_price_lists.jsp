@@ -80,9 +80,7 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 							'#<portlet:namespace />commercePriceListIds'
 						).value = selectedItems;
 
-						var addCommercePriceEntryFm = AUI.$(
-							'#<portlet:namespace />addCommercePriceEntryFm'
-						);
+						var addCommercePriceEntryFm = window.document.querySelector('#<portlet:namespace />addCommercePriceEntryFm');
 
 						submitForm(addCommercePriceEntryFm);
 					}

@@ -133,9 +133,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 								'#<portlet:namespace />classPKs'
 							).value = selectedItems;
 
-							var addCommerceDiscountRelFm = AUI.$(
-								'#<portlet:namespace />addCommerceDiscountRelFm'
-							);
+							var addCommerceDiscountRelFm = window.document.querySelector('#<portlet:namespace />addCommerceDiscountRelFm');
 
 							submitForm(addCommerceDiscountRelFm);
 						}

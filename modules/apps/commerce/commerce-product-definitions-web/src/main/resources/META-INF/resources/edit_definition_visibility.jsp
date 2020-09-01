@@ -104,7 +104,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 							'#<portlet:namespace />commerceAccountGroupIds'
 						).value = <portlet:namespace />addCommerceAccountGroupIds;
 
-						var form = AUI.$('#<portlet:namespace />fm');
+						var form = window.document.querySelector('#<portlet:namespace />fm');
 
 						submitForm(form);
 					}
@@ -144,7 +144,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 							'#<portlet:namespace />commerceChannelIds'
 						).value = <portlet:namespace />addCommerceChannelIds;
 
-						var form = AUI.$('#<portlet:namespace />fm');
+						var form = window.document.querySelector('#<portlet:namespace />fm');
 
 						submitForm(form);
 					}

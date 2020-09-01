@@ -186,9 +186,7 @@ PortletURL portletURL = commerceAccountUserRelAdminDisplayContext.getPortletURL(
 									'#<portlet:namespace />userIds'
 								).value = <portlet:namespace />addUserIds.join(',');
 
-								var addCommerceAccountUserRelFm = AUI.$(
-									'#<portlet:namespace />addCommerceAccountUserRelFm'
-								);
+								var addCommerceAccountUserRelFm = window.document.querySelector('#<portlet:namespace />addCommerceAccountUserRelFm');
 
 								submitForm(addCommerceAccountUserRelFm);
 							}

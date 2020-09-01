@@ -150,7 +150,7 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 						var formName =
 							'#<portlet:namespace />' + commerceVirtualOrderItemId + 'Fm';
 
-						var form = AUI.$(formName);
+						var form = window.document.querySelector(formName);
 
 						submitForm(form);
 					},

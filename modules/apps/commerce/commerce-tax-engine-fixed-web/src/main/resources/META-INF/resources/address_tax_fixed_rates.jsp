@@ -57,7 +57,7 @@ CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDis
 
 <aui:script>
 	function <portlet:namespace />selectApplyTaxTo() {
-		var fm = AUI.$(document.<portlet:namespace />fm);
+		var fm = window.document.querySelector(document.<portlet:namespace />fm);
 
 		submitForm(fm);
 	}

@@ -160,7 +160,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 
 							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 1) %>' name="custom">
 								function(val, fieldNode, ruleValue) {
-									if (AUI.$('#<portlet:namespace />neverEnds')[0].checked) {
+									if (window.document.querySelector('#<portlet:namespace />neverEnds')[0].checked) {
 										return true;
 									}
 
@@ -283,7 +283,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 
 							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 1) %>' name="custom">
 								function(val, fieldNode, ruleValue) {
-									if (AUI.$('#<portlet:namespace />deliveryNeverEnds')[0].checked) {
+									if (window.document.querySelector('#<portlet:namespace />deliveryNeverEnds')[0].checked) {
 										return true;
 									}
 

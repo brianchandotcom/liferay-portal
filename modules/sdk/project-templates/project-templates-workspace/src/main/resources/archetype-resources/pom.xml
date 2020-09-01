@@ -25,6 +25,7 @@
 		<liferay.bom.version>7.3.4</liferay.bom.version>
 		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.3.4-ga5/liferay-ce-portal-tomcat-7.3.4-ga5-20200811154319029.tar.gz</liferay.workspace.bundle.url>
 #end
+		<liferay.repository.url>https://repository-cdn.liferay.com/nexus/content/groups/public/</liferay.repository.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencyManagement>
@@ -52,10 +53,16 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>liferay-public</id>
+			<url>${liferay.repository.url}</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<repositories>
 		<repository>
 			<id>liferay-public</id>
-			<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
+			<url>${liferay.repository.url}</url>
 		</repository>
 	</repositories>
 	<build>

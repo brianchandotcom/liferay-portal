@@ -42,10 +42,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 	</c:if>
 
 	<%
-	boolean hasValidDDMFormFields = ddmFormAdminDisplayContext.hasValidDDMFormFields(formInstance);
-	boolean hasValidStorageType = ddmFormAdminDisplayContext.hasValidStorageType(formInstance);
-
-	boolean isValidForm = hasValidDDMFormFields && hasValidStorageType;
+	boolean isValidForm = ddmFormAdminDisplayContext.hasValidDDMFormFields(formInstance) && ddmFormAdminDisplayContext.hasValidStorageType(formInstance);
 	%>
 
 	<c:if test="<%= formInstancePermissionCheckerHelper.isShowDuplicateIcon() %>">

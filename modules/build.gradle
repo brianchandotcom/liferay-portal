@@ -197,6 +197,55 @@ gradle.beforeProject {
 					}
 				}
 			}
+
+			pluginManager.withPlugin("idea") {
+				idea {
+					module {
+						iml {
+							withXml { xmlProvider ->
+								Node rootNode = xmlProvider.asNode()
+								Node component = rootNode.component.find { it.@name == "NewModuleRootManager" }
+
+								Node frontendTaglibNode = component.orderEntry.find { node ->
+									node.@type == "module" && node.@"module-name" == "frontend-taglib-frontend-taglib"
+								}
+
+								if (frontendTaglibNode != null) {
+									frontendTaglibNode.@"module-name" = "frontend-taglib"
+								}
+
+								component.orderEntry.findAll { node ->
+									node.@type == "module-library"
+								}.each { node ->
+									def name = node.library.CLASSES.root.@url[0]
+									def scope = node.@scope
+
+									if (name.contains("com.liferay.portal.impl")) {
+										component.appendNode("orderEntry", ["module-name":"portal-impl", "scope":"$scope", "type":"module"])
+										component.remove(node)
+									}
+									else if (name.contains("com.liferay.portal.kernel")) {
+										component.appendNode("orderEntry", ["module-name":"portal-kernel", "scope":"$scope", "type":"module"])
+										component.remove(node)
+									}
+									else if (name.contains("com.liferay.portal.test")) {
+										component.appendNode("orderEntry", ["module-name":"portal-test", "scope":"$scope", "type":"module"])
+										component.remove(node)
+									}
+									else if (name.contains("com.liferay.util.java")) {
+										component.appendNode("orderEntry", ["module-name":"util-java", "scope":"$scope", "type":"module"])
+										component.remove(node)
+									}
+									else if (name.contains("com.liferay.util.taglib")) {
+										component.appendNode("orderEntry", ["module-name":"util-taglib", "scope":"$scope", "type":"module"])
+										component.remove(node)
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
 		printProjectPath {

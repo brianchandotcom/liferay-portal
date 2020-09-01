@@ -948,7 +948,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#6C757D",
+							"defaultValue": "#A7A9BC",
 							"editorType": "ColorPicker",
 							"label": "text-muted",
 							"mappings": [

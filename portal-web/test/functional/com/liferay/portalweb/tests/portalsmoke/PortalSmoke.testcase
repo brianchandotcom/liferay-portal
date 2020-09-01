@@ -37,7 +37,7 @@ definition {
 		property environment.acceptance = "true";
 		property testray.component.names = "Training";
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 
@@ -58,7 +58,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.smoke = "false";
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}
@@ -70,7 +70,7 @@ definition {
 		property database.jndi.enabled = "true";
 		property portal.smoke = "false";
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}
@@ -80,7 +80,7 @@ definition {
 		property custom.properties = "javascript.single.page.application.enabled=false";
 		property portal.smoke = "false";
 
-		Smoke.viewWelcomePage();
+		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
 	}

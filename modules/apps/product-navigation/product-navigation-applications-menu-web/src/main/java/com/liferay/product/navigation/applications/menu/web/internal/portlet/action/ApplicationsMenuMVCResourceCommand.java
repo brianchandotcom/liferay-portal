@@ -30,19 +30,16 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
-import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.site.util.RecentGroupManager;
 
@@ -143,15 +140,11 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 			themeDisplay.getScopeGroup());
 
 		for (PanelApp panelApp : panelApps) {
-			Portlet portlet = _portletLocalService.getPortletById(
-				themeDisplay.getCompanyId(), panelApp.getPortletId());
-
 			childPanelCategoriesJSONArray.put(
 				JSONUtil.put(
 					"key", panelApp.getKey()
 				).put(
-					"label",
-					_portal.getPortletTitle(portlet, themeDisplay.getLocale())
+					"label", panelApp.getLabel(themeDisplay.getLocale())
 				).put(
 					"panelApps",
 					JSONUtil.putAll(
@@ -168,11 +161,8 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		Portlet portlet = _portletLocalService.getPortletById(
-			themeDisplay.getCompanyId(), panelApp.getPortletId());
-
 		return JSONUtil.put(
-			"label", _portal.getPortletTitle(portlet, themeDisplay.getLocale())
+			"label", panelApp.getLabel(themeDisplay.getLocale())
 		).put(
 			"portletId", panelApp.getPortletId()
 		).put(
@@ -341,9 +331,6 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	@Reference
-	private GroupSearchProvider _groupSearchProvider;
-
-	@Reference
 	private GroupURLProvider _groupURLProvider;
 
 	@Reference
@@ -357,9 +344,6 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private RecentGroupManager _recentGroupManager;

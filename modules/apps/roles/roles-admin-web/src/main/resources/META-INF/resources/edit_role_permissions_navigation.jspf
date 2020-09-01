@@ -257,13 +257,12 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 				</c:when>
 			</c:choose>
 
-			<c:if test="<%= (role.getType() == RoleConstants.TYPE_ACCOUNT) || (role.getType() == RoleConstants.TYPE_ORGANIZATION) %>">
-
-				<%
-				PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(AccountPanelCategoryKeys.CONTROL_PANEL_ACCOUNT_ENTRIES_ADMIN);
+			<%
+			for (String panelCategoryKey : (String[])request.getAttribute(RolesAdminWebKeys.PANEL_CATEGORY_KEYS)) {
+				PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(panelCategoryKey);
 
 				List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory);
-				%>
+			%>
 
 				<c:if test="<%= !panelApps.isEmpty() %>">
 					<div class="permission-navigation-section">
@@ -310,7 +309,10 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 						</ul>
 					</div>
 				</c:if>
-			</c:if>
+
+			<%
+			}
+			%>
 
 			<li class="nav-item permission-navigation-section">
 				<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">

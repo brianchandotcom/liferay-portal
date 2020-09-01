@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -113,11 +115,22 @@ public class GetTotalReadsMVCResourceCommandTest {
 					_classNameLocalService
 				).build(),
 				() -> {
+					MockLiferayResourceRequest mockLiferayResourceRequest =
+						_getMockLiferayResourceRequest();
+
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setRequest(
+						mockLiferayResourceRequest.getHttpServletRequest());
+
+					ServiceContextThreadLocal.pushServiceContext(
+						serviceContext);
+
 					MockLiferayResourceResponse mockLiferayResourceResponse =
 						new MockLiferayResourceResponse();
 
 					_mvcResourceCommand.serveResource(
-						_getMockLiferayResourceRequest(),
+						mockLiferayResourceRequest,
 						mockLiferayResourceResponse);
 
 					ByteArrayOutputStream byteArrayOutputStream =

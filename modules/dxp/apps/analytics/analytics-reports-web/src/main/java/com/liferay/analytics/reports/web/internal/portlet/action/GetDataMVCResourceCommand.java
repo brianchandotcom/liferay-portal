@@ -132,13 +132,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 									getClassNameId()));
 			CanonicalURLProvider canonicalURLProvider =
 				new CanonicalURLProvider(
-					_assetDisplayPageFriendlyURLProvider, httpServletRequest,
-					_language,
-					LayoutDisplayPageProviderUtil.
-						getLayoutDisplayPageObjectProvider(
-							httpServletRequest,
-							_layoutDisplayPageProviderTracker, _portal),
-					_layoutSEOLinkManager, _portal);
+					httpServletRequest, _layoutSEOLinkManager, _portal);
 			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class,

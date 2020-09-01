@@ -16,7 +16,6 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
-import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
@@ -84,13 +83,7 @@ public class GetHistoricalReadsMVCResourceCommand
 
 			CanonicalURLProvider canonicalURLProvider =
 				new CanonicalURLProvider(
-					_assetDisplayPageFriendlyURLProvider, httpServletRequest,
-					_language,
-					LayoutDisplayPageProviderUtil.
-						getLayoutDisplayPageObjectProvider(
-							httpServletRequest,
-							_layoutDisplayPageProviderTracker, _portal),
-					_layoutSEOLinkManager, _portal);
+					httpServletRequest, _layoutSEOLinkManager, _portal);
 
 			HistoricalMetric historicalMetric =
 				analyticsReportsDataProvider.getHistoricalReadsHistoricalMetric(

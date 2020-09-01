@@ -16,7 +16,6 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
-import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
@@ -70,10 +69,7 @@ public class GetTotalReadsMVCResourceCommand extends BaseMVCResourceCommand {
 			new AnalyticsReportsDataProvider(_http);
 
 		CanonicalURLProvider canonicalURLProvider = new CanonicalURLProvider(
-			_assetDisplayPageFriendlyURLProvider, httpServletRequest, _language,
-			LayoutDisplayPageProviderUtil.getLayoutDisplayPageObjectProvider(
-				httpServletRequest, _layoutDisplayPageProviderTracker, _portal),
-			_layoutSEOLinkManager, _portal);
+			httpServletRequest, _layoutSEOLinkManager, _portal);
 
 		try {
 			JSONObject jsonObject = JSONUtil.put(

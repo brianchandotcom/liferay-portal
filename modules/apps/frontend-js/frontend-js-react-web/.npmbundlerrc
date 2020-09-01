@@ -60,5 +60,6 @@
 		"whatwg-fetch": true
 	},
 	"output": "build/node/packageRunBuild/resources",
-	"preset": "liferay-npm-bundler-preset-standard"
+	"preset": "liferay-npm-bundler-preset-standard",
+	"sources": ["src/main/resources/META-INF/resources"]
 }

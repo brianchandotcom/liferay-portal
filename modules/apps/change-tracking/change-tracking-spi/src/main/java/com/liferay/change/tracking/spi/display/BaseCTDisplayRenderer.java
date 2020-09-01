@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -51,6 +52,19 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 	implements CTDisplayRenderer<T> {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getEditURL(HttpServletRequest, BaseModel)}
+	 */
+	@Deprecated
+	@SuppressWarnings("unchecked")
+	public String getEditURL(
+			HttpServletRequest httpServletRequest, CTModel<?> ctModel)
+		throws Exception {
+
+		return getEditURL(httpServletRequest, (T)ctModel);
+	}
+
 	@Override
 	public String getEditURL(HttpServletRequest httpServletRequest, T model)
 		throws Exception {
@@ -60,6 +74,18 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 
 	@Override
 	public abstract Class<T> getModelClass();
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getTitle(Locale, BaseModel)}
+	 */
+	@Deprecated
+	@SuppressWarnings("unchecked")
+	public String getTitle(Locale locale, CTModel<?> ctModel)
+		throws PortalException {
+
+		return getTitle(locale, (T)ctModel);
+	}
 
 	@Override
 	public abstract String getTitle(Locale locale, T model)
@@ -75,6 +101,16 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		return LanguageUtil.get(
 			resourceBundle, "model.resource." + modelClass.getName(),
 			modelClass.getName());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #isHideable(BaseModel)}
+	 */
+	@Deprecated
+	@SuppressWarnings("unchecked")
+	public boolean isHideable(CTModel<?> ctModel) {
+		return isHideable((T)ctModel);
 	}
 
 	@Override

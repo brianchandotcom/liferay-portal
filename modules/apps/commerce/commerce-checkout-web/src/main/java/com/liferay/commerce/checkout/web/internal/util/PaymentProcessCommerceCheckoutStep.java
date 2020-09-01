@@ -16,11 +16,7 @@ package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.checkout.web.internal.display.context.PaymentProcessCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
@@ -28,8 +24,6 @@ import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.math.BigDecimal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -60,33 +54,6 @@ public class PaymentProcessCommerceCheckoutStep
 	@Override
 	public String getName() {
 		return NAME;
-	}
-
-	@Override
-	public boolean isActive(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		CommerceOrder commerceOrder =
-			(CommerceOrder)httpServletRequest.getAttribute(
-				CommerceCheckoutWebKeys.COMMERCE_ORDER);
-
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceOrderPrice commerceOrderPrice =
-			_commerceOrderPriceCalculation.getCommerceOrderPrice(
-				commerceOrder, commerceContext);
-
-		CommerceMoney orderPriceTotal = commerceOrderPrice.getTotal();
-
-		if (BigDecimal.ZERO.compareTo(orderPriceTotal.getPrice()) == 0) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override

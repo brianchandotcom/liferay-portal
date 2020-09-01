@@ -84,13 +84,16 @@ public class CommercePaymentServlet extends HttpServlet {
 
 			_nextUrl = ParamUtil.getString(httpServletRequest, "nextStep");
 
+			_commerceOrderId = commerceOrder.getCommerceOrderId();
+
 			if (BigDecimal.ZERO.compareTo(commerceOrder.getTotal()) == 0) {
+				_commercePaymentEngine.completePayment(
+					_commerceOrderId, null, httpServletRequest);
+
 				httpServletResponse.sendRedirect(_nextUrl);
 
 				return;
 			}
-
-			_commerceOrderId = commerceOrder.getCommerceOrderId();
 
 			CommercePaymentResult commercePaymentResult = _startPayment(
 				httpServletRequest);

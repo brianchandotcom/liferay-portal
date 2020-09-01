@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -147,6 +149,17 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 		CommercePaymentMethod commercePaymentMethod =
 			_commercePaymentUtils.getCommercePaymentMethod(commerceOrderId);
 
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
+		if (BigDecimal.ZERO.compareTo(commerceOrder.getTotal()) == 0) {
+			updateOrderPaymentStatus(
+				commerceOrderId, CommerceOrderConstants.PAYMENT_STATUS_PAID,
+				null);
+
+			return _commercePaymentUtils.emptyResult(commerceOrderId);
+		}
+
 		if ((commercePaymentMethod == null) ||
 			!commercePaymentMethod.isCompleteEnabled()) {
 
@@ -155,9 +168,6 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 
 			return _commercePaymentUtils.emptyResult(commerceOrderId);
 		}
-
-		CommerceOrder commerceOrder =
-			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 		CommercePaymentRequest commercePaymentRequest =
 			_commercePaymentUtils.getCommercePaymentRequest(

@@ -39,4 +39,9 @@ public class AssetEntryCTDisplayRenderer
 		return assetEntry.getTitle(locale);
 	}
 
+	@Override
+	public boolean isHideable(AssetEntry assetEntry) {
+		return false;
+	}
+
 }

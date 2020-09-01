@@ -40,25 +40,7 @@ definition {
 			dmDocumentTitle = "Apple1",
 			groupName = "Guest");
 
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
-			OSGiConfigs = "productionModeEnabled=&quot;true&quot;,logExceptionsOnly=&quot;true&quot;");
-
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
-			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Search",
-			configurationName = "Cross-Cluster Replication",
-			configurationScope = "System Scope");
-
-		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
+		CrossClusterReplication.setupCrossClusterReplication();
 
 		Navigator.openURL();
 
@@ -92,25 +74,7 @@ definition {
 	test BreakWorkflowSLA {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#BreakWorkflowSLA";
 
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
-			OSGiConfigs = "productionModeEnabled=&quot;true&quot;,logExceptionsOnly=&quot;true&quot;");
-
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
-			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Search",
-			configurationName = "Cross-Cluster Replication",
-			configurationScope = "System Scope");
-
-		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
+		CrossClusterReplication.setupCrossClusterReplication();
 
 		Navigator.openURL();
 
@@ -175,25 +139,7 @@ definition {
 	test CreateBlogsEntryWithNewWorkflow {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CreateBlogsEntryWithNewWorkflow";
 
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
-			OSGiConfigs = "productionModeEnabled=&quot;true&quot;,logExceptionsOnly=&quot;true&quot;");
-
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
-			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Search",
-			configurationName = "Cross-Cluster Replication",
-			configurationScope = "System Scope");
-
-		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
+		CrossClusterReplication.setupCrossClusterReplication();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -286,25 +232,7 @@ definition {
 	test SearchWithResultRankings {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithResultRankings";
 
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
-			OSGiConfigs = "productionModeEnabled=&quot;true&quot;,logExceptionsOnly=&quot;true&quot;");
-
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
-			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Search",
-			configurationName = "Cross-Cluster Replication",
-			configurationScope = "System Scope");
-
-		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
+		CrossClusterReplication.setupCrossClusterReplication();
 
 		JSONWebcontent.addWebContent(
 			content = "",
@@ -348,25 +276,7 @@ definition {
 	test SearchWithSynonyms {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithSynonyms";
 
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
-			OSGiConfigs = "productionModeEnabled=&quot;true&quot;,logExceptionsOnly=&quot;true&quot;");
-
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
-			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Search",
-			configurationName = "Cross-Cluster Replication",
-			configurationScope = "System Scope");
-
-		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
+		CrossClusterReplication.setupCrossClusterReplication();
 
 		for (var title : list "banana,red apple") {
 			JSONWebcontent.addWebContent(
@@ -419,25 +329,7 @@ definition {
 			virtualHost = "www.able.com",
 			webId = "www.able.com");
 
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
-			OSGiConfigs = "productionModeEnabled=&quot;true&quot;,logExceptionsOnly=&quot;true&quot;");
-
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
-			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Search",
-			configurationName = "Cross-Cluster Replication",
-			configurationScope = "System Scope");
-
-		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
+		CrossClusterReplication.setupCrossClusterReplication();
 
 		User.firstLoginPG(
 			password = "test",
@@ -480,25 +372,7 @@ definition {
 			dmDocumentTitle = "DM Title 1",
 			groupName = "Guest");
 
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
-			OSGiConfigs = "productionModeEnabled=&quot;true&quot;,logExceptionsOnly=&quot;true&quot;");
-
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
-			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Search",
-			configurationName = "Cross-Cluster Replication",
-			configurationScope = "System Scope");
-
-		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
+		CrossClusterReplication.setupCrossClusterReplication();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

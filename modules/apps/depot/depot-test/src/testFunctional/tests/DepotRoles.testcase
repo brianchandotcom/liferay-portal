@@ -345,6 +345,10 @@ definition {
 
 		ProductMenu.gotoSite(depotName = "Test Depot Name");
 
+		DepotNavigator.gotoPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
@@ -461,6 +465,10 @@ definition {
 			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoSite(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 

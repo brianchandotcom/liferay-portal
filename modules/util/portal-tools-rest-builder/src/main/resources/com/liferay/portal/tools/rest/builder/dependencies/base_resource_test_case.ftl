@@ -494,7 +494,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#if properties?keys?seq_contains("id")>
 							${schemaVarName}Resource.delete${schemaName}(
 								<#list deleteJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-									<#if freeMarkerTool.isPathParameter(javaMethodParameter, deleteJavaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+									<#if freeMarkerTool.isPathParameter(javaMethodParameter, deleteJavaMethodSignature.operation) &&
+											(stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") || stringUtil.equals(javaMethodParameter.parameterName, "id"))>
 										${schemaVarName}1.getId()
 									<#else>
 										null
@@ -504,7 +505,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 							${schemaVarName}Resource.delete${schemaName}(
 								<#list deleteJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-									<#if freeMarkerTool.isPathParameter(javaMethodParameter, deleteJavaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+									<#if freeMarkerTool.isPathParameter(javaMethodParameter, deleteJavaMethodSignature.operation) &&
+											(stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") || stringUtil.equals(javaMethodParameter.parameterName, "id"))>
 										${schemaVarName}2.getId()
 									<#else>
 										null
@@ -1278,12 +1280,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 									new HashMap<String, Object>() {
 										{
 											put(
-												"${schemaVarName}Id",
-												<#if stringUtil.equals(properties.id, "String")>
-													"\"" + ${schemaVarName}.getId() + "\""
-												<#else>
-													${schemaVarName}.getId()
-												</#if>
+												<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+													<#if stringUtil.equals(javaMethodParameter.parameterName, "id") ||
+															stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
+														"${javaMethodParameter.parameterName}",
+														<#if stringUtil.equals(properties.id, "String")>
+															"\"" + ${schemaVarName}.getId() + "\""
+														<#else>
+															${schemaVarName}.getId()
+														</#if>
+													</#if>
+												</#list>
 											);
 										}
 									})),
@@ -1298,12 +1305,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 									new HashMap<String, Object>() {
 										{
 											put(
-												"${schemaVarName}Id",
-												<#if stringUtil.equals(properties.id, "String")>
-													"\"" + ${schemaVarName}.getId() + "\""
-												<#else>
-													${schemaVarName}.getId()
-												</#if>
+												<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+													<#if stringUtil.equals(javaMethodParameter.parameterName, "id") ||
+															stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
+														"${javaMethodParameter.parameterName}",
+														<#if stringUtil.equals(properties.id, "String")>
+															"\"" + ${schemaVarName}.getId() + "\""
+														<#else>
+															${schemaVarName}.getId()
+														</#if>
+													</#if>
+												</#list>
 											);
 										}
 									},

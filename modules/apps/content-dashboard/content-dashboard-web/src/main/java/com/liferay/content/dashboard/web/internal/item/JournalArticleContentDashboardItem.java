@@ -246,6 +246,10 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public long getUserId() {
+		if (_latestApprovedJournalArticle != null) {
+			return _latestApprovedJournalArticle.getUserId();
+		}
+
 		return _journalArticle.getUserId();
 	}
 

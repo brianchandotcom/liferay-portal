@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.util.AssetListPortletUtil;
@@ -25,6 +26,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
+import com.liferay.item.selector.PortletItemSelectorView;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -73,13 +75,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ItemSelectorView.class)
 public class AssetListItemSelectorView
-	implements ItemSelectorView<InfoListItemSelectorCriterion> {
+	implements PortletItemSelectorView<InfoListItemSelectorCriterion> {
 
 	@Override
 	public Class<? extends InfoListItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
 		return InfoListItemSelectorCriterion.class;
+	}
+
+	@Override
+	public List<String> getPortletIds() {
+		return Collections.singletonList(AssetListPortletKeys.ASSET_LIST);
 	}
 
 	@Override

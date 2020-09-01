@@ -18,12 +18,16 @@ import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -67,7 +71,7 @@ public class DepotGroupItemSelectorProvider
 
 			for (DepotEntry depotEntry :
 					_depotEntryService.getGroupConnectedDepotEntries(
-						_getLiveGroupId(groupId), start, end)) {
+						_getGroupId(groupId), start, end)) {
 
 				groups.add(depotEntry.getGroup());
 			}
@@ -85,7 +89,7 @@ public class DepotGroupItemSelectorProvider
 	public int getGroupsCount(long companyId, long groupId, String keywords) {
 		try {
 			return _depotEntryService.getGroupConnectedDepotEntriesCount(
-				_getLiveGroupId(groupId));
+				_getGroupId(groupId));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -114,14 +118,31 @@ public class DepotGroupItemSelectorProvider
 		return _depotConfiguration.isEnabled();
 	}
 
-	private long _getLiveGroupId(long groupId) throws PortalException {
+	private long _getGroupId(long groupId) throws PortalException {
 		Group group = _groupService.getGroup(groupId);
+
+		if (group.isLayoutPrototype()) {
+			LayoutPrototype layoutPrototype =
+				_layoutPrototypeService.getLayoutPrototype(group.getClassPK());
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchFirstLayoutPageTemplateEntry(
+						layoutPrototype.getLayoutPrototypeId());
+
+			if ((layoutPageTemplateEntry != null) &&
+				(layoutPageTemplateEntry.getGroupId() > 0)) {
+
+				group = _groupService.getGroup(
+					layoutPageTemplateEntry.getGroupId());
+			}
+		}
 
 		if (group.isStagingGroup()) {
 			return group.getLiveGroupId();
 		}
 
-		return groupId;
+		return group.getGroupId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -138,6 +159,13 @@ public class DepotGroupItemSelectorProvider
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPrototypeService _layoutPrototypeService;
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.depot.web)")
 	private ResourceBundleLoader _resourceBundleLoader;

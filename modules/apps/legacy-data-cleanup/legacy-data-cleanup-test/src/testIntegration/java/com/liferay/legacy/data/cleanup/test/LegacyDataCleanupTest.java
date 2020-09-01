@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.archived.modules.upgrade.test;
+package com.liferay.legacy.data.cleanup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;

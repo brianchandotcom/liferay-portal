@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.archived.modules.upgrade.internal;
+package com.liferay.legacy.data.cleanup.internal.upgrade;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;

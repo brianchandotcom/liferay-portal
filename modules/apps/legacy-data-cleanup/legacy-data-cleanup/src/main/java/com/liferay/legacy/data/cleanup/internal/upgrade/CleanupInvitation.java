@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.archived.modules.upgrade.internal;
+package com.liferay.legacy.data.cleanup.internal.upgrade;
 
 /**
- * @author Sam Ziemer
+ * @author Adolfo Pérez
  */
-public class CleanupDictionary extends BaseCleanupNoninstanceablePortlet {
+public class CleanupInvitation extends BaseCleanupNoninstanceablePortlet {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		removePortlet(
-			"com.liferay.dictionary.web", new String[] {"23"},
+			"com.liferay.invitation.web", null,
 			new String[] {
-				"com_liferay_dictionary_web_portlet_DictionaryPortlet"
+				"com_liferay_invitation_web_portlet_InvitationPortlet"
 			});
 	}
 

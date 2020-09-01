@@ -12,26 +12,20 @@
  * details.
  */
 
-package com.liferay.roles.admin.constants;
+package com.liferay.roles.admin.role.type.mapper;
 
 /**
+ * Defines a mapping between role types and a panel category. When implemented,
+ * the returned role types will be able to define permissions for apps under the
+ * returned panel category. This will be visible in the Define Permissions view
+ * in the Roles Admin portlet.
+ *
  * @author Drew Brokke
  */
-public class RolesAdminWebKeys {
+public interface PanelCategoryRoleTypeMapper {
 
-	public static final String CURRENT_ROLE_TYPE = "CURRENT_ROLE_TYPE";
+	public String getPanelCategoryKey();
 
-	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
-
-	public static final String MODAL_SEGMENT_STATE = "MODAL_SEGMENT_STATE";
-
-	public static final String PANEL_CATEGORY_KEYS = "PANEL_CATEGORY_KEYS";
-
-	public static final String ROLE_TYPE_CONTRIBUTOR_PROVIDER =
-		"ROLE_TYPE_CONTRIBUTOR_PROVIDER";
-
-	public static final String ROLE_TYPES = "ROLE_TYPES";
-
-	public static final String SHOW_NAV_TABS = "SHOW_NAV_TABS";
+	public int[] getRoleTypes();
 
 }

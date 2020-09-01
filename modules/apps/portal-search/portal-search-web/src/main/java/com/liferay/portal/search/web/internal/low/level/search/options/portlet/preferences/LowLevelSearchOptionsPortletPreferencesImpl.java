@@ -15,6 +15,13 @@
 package com.liferay.portal.search.web.internal.low.level.search.options.portlet.preferences;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferences;
 import com.liferay.portal.search.web.internal.util.PortletPreferencesHelper;
 
@@ -33,6 +40,33 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 
 		_portletPreferencesHelper = new PortletPreferencesHelper(
 			portletPreferencesOptional);
+	}
+
+	@Override
+	public JSONArray getAttributesJSONArray() {
+		String fieldsString = getAttributesString();
+
+		if (Validator.isBlank(fieldsString)) {
+			return _getDefaultAttributesJSONArray();
+		}
+
+		try {
+			return JSONFactoryUtil.createJSONArray(fieldsString);
+		}
+		catch (JSONException jsonException) {
+			_log.error(
+				"Unable to create a JSON array from: " + fieldsString,
+				jsonException);
+
+			return _getDefaultAttributesJSONArray();
+		}
+	}
+
+	@Override
+	public String getAttributesString() {
+		return _portletPreferencesHelper.getString(
+			LowLevelSearchOptionsPortletPreferences.PREFERENCE_ATTRIBUTES,
+			StringPool.BLANK);
 	}
 
 	@Override
@@ -105,6 +139,18 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	public String getIndexesString() {
 		return getIndexesOptional().orElse(StringPool.BLANK);
 	}
+
+	private JSONArray _getDefaultAttributesJSONArray() {
+		return JSONUtil.put(
+			JSONUtil.put(
+				"key", StringPool.BLANK
+			).put(
+				"value", StringPool.BLANK
+			));
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LowLevelSearchOptionsPortletPreferencesImpl.class);
 
 	private final PortletPreferencesHelper _portletPreferencesHelper;
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.low.level.search.options.portlet.shared.search;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.low.level.search.options.constants.LowLevelSearchOptionsPortletKeys;
 import com.liferay.portal.search.web.internal.low.level.search.options.portlet.preferences.LowLevelSearchOptionsPortletPreferences;
@@ -21,6 +23,8 @@ import com.liferay.portal.search.web.internal.low.level.search.options.portlet.p
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
+
+import java.io.Serializable;
 
 import java.util.Optional;
 
@@ -72,7 +76,27 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 		).indexes(
 			SearchStringUtil.splitAndUnquote(
 				lowLevelSearchOptionsPortletPreferences.getIndexesOptional())
+		).withSearchContext(
+			searchContext -> applyAttributes(
+				lowLevelSearchOptionsPortletPreferences, searchContext)
 		);
+	}
+
+	protected void applyAttributes(
+		LowLevelSearchOptionsPortletPreferences
+			lowLevelSearchOptionsPortletPreferences,
+		SearchContext searchContext) {
+
+		for (Object object :
+				lowLevelSearchOptionsPortletPreferences.
+					getAttributesJSONArray()) {
+
+			JSONObject jsonObject = (JSONObject)object;
+
+			searchContext.setAttribute(
+				jsonObject.getString("key"),
+				(Serializable)jsonObject.get("value"));
+		}
 	}
 
 }

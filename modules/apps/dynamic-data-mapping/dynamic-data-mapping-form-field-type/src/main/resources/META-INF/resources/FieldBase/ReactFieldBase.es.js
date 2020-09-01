@@ -104,6 +104,10 @@ function FieldBase({
 	const localizedValueArray = useMemo(() => {
 		const languageValues = [];
 
+		if (!localizedValue) {
+			return languageValues;
+		}
+
 		Object.keys(localizedValue).forEach((key) => {
 			if (key !== editingLanguageId && localizedValue[key] !== '') {
 				languageValues.push({

@@ -264,7 +264,7 @@ const Main = ({
 	fieldName,
 	id,
 	localizable,
-	localizedValue,
+	localizedValue = {},
 	name,
 	onBlur,
 	onChange,

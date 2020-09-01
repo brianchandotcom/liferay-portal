@@ -40,6 +40,7 @@ import {
 	UPDATE_IDS,
 	UPDATE_PAGES,
 } from './actions.es';
+import {getDataDefinitionField} from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
 
 const AppContext = createContext();
@@ -507,11 +508,16 @@ const createReducer = (dataLayoutBuilder) => {
 				};
 			}
 			case UPDATE_HOVERED_FIELD: {
-				const {hoveredField} = action.payload;
+				const {hoveredField = {}} = action.payload;
+
+				const newHoveredField = getDataDefinitionField(
+					state.dataDefinition,
+					hoveredField.fieldName
+				);
 
 				return {
 					...state,
-					hoveredField: hoveredField || state.hoveredField,
+					hoveredField: newHoveredField || state.hoveredField,
 				};
 			}
 			case UPDATE_CONFIG: {

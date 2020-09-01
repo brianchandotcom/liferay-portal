@@ -30,6 +30,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JavaScriptAwarePortal
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdate;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesListener;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
@@ -304,13 +305,18 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_serviceTracker = _openServiceTracker();
 
-		_serviceTrackerList = ServiceTrackerListFactory.open(
+		_javaScriptAwarePortalWebResources = ServiceTrackerListFactory.open(
 			bundleContext, JavaScriptAwarePortalWebResources.class);
+
+		_npmRegistryUpdatesListeners = ServiceTrackerListFactory.open(
+			bundleContext, NPMRegistryUpdatesListener.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerList.close();
+		_javaScriptAwarePortalWebResources.close();
+
+		_npmRegistryUpdatesListeners.close();
 
 		_serviceTracker.close();
 
@@ -503,6 +509,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_resolvedJSModules = resolvedJSModules;
 		_resolvedJSPackages = resolvedJSPackages;
 		_exactMatchMap = exactMatchMap;
+
+		if (_npmRegistryUpdatesListeners != null) {
+			for (NPMRegistryUpdatesListener npmRegistryUpdatesListener :
+					_npmRegistryUpdatesListeners) {
+
+				npmRegistryUpdatesListener.onAfterUpdate();
+			}
+		}
 	}
 
 	private static final JSPackage _NULL_JS_PACKAGE =
@@ -520,6 +534,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 		new ConcurrentHashMap<>();
 	private Map<String, String> _exactMatchMap;
 	private final Map<String, String> _globalAliases = new HashMap<>();
+	private ServiceTrackerList
+		<JavaScriptAwarePortalWebResources, JavaScriptAwarePortalWebResources>
+			_javaScriptAwarePortalWebResources;
 
 	@Reference
 	private JSBundleProcessor _jsBundleProcessor;
@@ -531,15 +548,15 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private Map<String, JSPackage> _jsPackages = new HashMap<>();
 	private List<JSPackageVersion> _jsPackageVersions = new ArrayList<>();
+	private ServiceTrackerList
+		<NPMRegistryUpdatesListener, NPMRegistryUpdatesListener>
+			_npmRegistryUpdatesListeners;
 	private final Map<String, String> _partialMatchMap =
 		new ConcurrentHashMap<>();
 	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();
 	private Map<String, JSPackage> _resolvedJSPackages = new HashMap<>();
 	private ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_serviceTracker;
-	private ServiceTrackerList
-		<JavaScriptAwarePortalWebResources, JavaScriptAwarePortalWebResources>
-			_serviceTrackerList;
 
 	private static class JSPackageVersion {
 
@@ -583,7 +600,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 				for (JavaScriptAwarePortalWebResources
 						javaScriptAwarePortalWebResources :
-							_serviceTrackerList) {
+							_javaScriptAwarePortalWebResources) {
 
 					javaScriptAwarePortalWebResources.updateLastModifed(
 						bundle.getLastModified());

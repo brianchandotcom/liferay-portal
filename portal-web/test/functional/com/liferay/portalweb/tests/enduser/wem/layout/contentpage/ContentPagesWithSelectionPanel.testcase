@@ -38,6 +38,8 @@ definition {
 	@description = "This is a test for LPS-118271. Can change the order of the elements in page editor via Selection panel."
 	@priority = "5"
 	test ChangeOrderOfElementsViaSelectionPanel {
+		property portal.acceptance = "true";
+
 		task ("Add a Container element to the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -160,6 +162,8 @@ definition {
 	@description = "This is a test for LPS-118271. Can add elements into Layout elements via Selection panel."
 	@priority = "5"
 	test MoveElementsIntoLayoutElementsViaSelectionPanel {
+		property portal.acceptance = "true";
+
 		task ("Add a Container element to the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -241,6 +245,8 @@ definition {
 	@description = "This is a test for LPS-118271. Can add fragments into the cell of Collection Display via Selection panel."
 	@priority = "5"
 	test MoveFragmentsIntoCollectionDisplayViaSelectionPanel {
+		property portal.acceptance = "true";
+
 		task ("Add three web content articles") {
 			for (var i : list "1,2,3") {
 				JSONWebcontent.addWebContent(

@@ -135,6 +135,26 @@ definition {
 		User.firstLoginPG();
 	}
 
+	@description = "Validate experience edition and deletion"
+	@priority = "5"
+	test EditAndDeleteExperience {
+		property portal.acceptance = "true";
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addExperience(experienceName = "exp1");
+
+		Refresh();
+
+		PageEditor.editExperience(newExperience = "exp1_edited");
+
+		PageEditor.deleteExperience(experienceName = "exp1_edited");
+
+		Button.clickPublish();
+	}
+
 	@description = "Validate inline text changes between experiences"
 	@priority = "5"
 	test EditInlineTextExperience {

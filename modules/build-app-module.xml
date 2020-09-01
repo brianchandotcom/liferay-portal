@@ -258,7 +258,7 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties">
+	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
 			<condition>
 				<not>

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
+import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuWebKeys;
 
 import java.util.Map;
 
@@ -55,12 +56,12 @@ public class ApplicationsMenuDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"liferayLogoURL",
-			StringBundler.concat(
-				themeDisplay.getPathImage(), "/company_logo?img_id=",
-				company.getLogoId(), "&t=",
-				WebServerServletTokenUtil.getToken(company.getLogoId()))
+			_httpServletRequest.getAttribute(
+				ProductNavigationApplicationsMenuWebKeys.LIFERAY_LOGO_URL)
 		).put(
-			"liferayName", HtmlUtil.escape(company.getName())
+			"liferayName",
+			_httpServletRequest.getAttribute(
+				ProductNavigationApplicationsMenuWebKeys.LIFERAY_NAME)
 		).put(
 			"panelAppsURL",
 			() -> {

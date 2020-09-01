@@ -18,6 +18,7 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadataTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.model.DLFolderTable;
@@ -51,6 +52,9 @@ public class DLFileEntryTableReferenceDefinition
 		).singleColumnReference(
 			DLFileEntryTable.INSTANCE.custom2ImageId,
 			ImageTable.INSTANCE.imageId
+		).singleColumnReference(
+			DLFileEntryTable.INSTANCE.fileEntryId,
+			DLFileEntryMetadataTable.INSTANCE.fileEntryId
 		).assetEntryReference(
 			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntry.class
 		).resourcePermissionReference(

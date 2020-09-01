@@ -19,7 +19,6 @@ import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfo
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadataTable;
-import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
@@ -64,9 +63,6 @@ public class DLFileEntryMetadataTableReferenceDefinition
 		).singleColumnReference(
 			DLFileEntryMetadataTable.INSTANCE.DDMStructureId,
 			DDMStructureTable.INSTANCE.structureId
-		).singleColumnReference(
-			DLFileEntryMetadataTable.INSTANCE.fileEntryId,
-			DLFileEntryTable.INSTANCE.fileEntryId
 		).singleColumnReference(
 			DLFileEntryMetadataTable.INSTANCE.fileVersionId,
 			DLFileVersionTable.INSTANCE.fileVersionId

@@ -1,5 +1,35 @@
 definition {
 
+	macro filterByCategory{
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+		
+		Click(locator1 = "ContentDashboard#FILTER_BY_CATEGORY_OPTION");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#DIALOG");
+		
+		Click(locator1 = "ContentDashboard#SEARCH_CATEGORY_FIELD");
+
+		Type(
+			locator1 = "ContentDashboard#SEARCH_CATEGORY_FIELD",
+			value1 = "Vocabulary 1");
+
+		KeyPress(
+			locator1 = "ContentDashboard#SEARCH_CATEGORY_FIELD",
+			value1 = "\ENTER");
+
+		Click(locator1 = "ContentDashboard#OPEN_VOCABULARY_CATEGORIES");
+
+		Click(locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
+
+		Click(locator1 = "ContentDashboard#SELECT_CATEGORY_BUTTON");
+	}
+
 	macro filterByTitle {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(

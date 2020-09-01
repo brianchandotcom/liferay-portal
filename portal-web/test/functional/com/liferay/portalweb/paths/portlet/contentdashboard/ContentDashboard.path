@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CATEGORY_NAME_ELEMENT</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(),'Category Name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLOSE_INFO_PANEL_BUTTON</td>
 	<td>//*[contains(@class, 'component-action btn btn-monospaced btn-unstyled')]</td>
 	<td></td>
@@ -16,6 +21,11 @@
 <tr>
 	<td>FILTER_AND_ORDER_DROPDOWN</td>
 	<td>//*[contains(@class, 'dropdown-toggle btn nav-link btn-unstyled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BY_CATEGORY_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Categories')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,6 +46,21 @@
 <tr>
 	<td>INFO_PANEL_TITLE</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(text(),'Content Info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPEN_VOCABULARY_CATEGORIES</td>
+	<td>(//*[contains(@class, 'lfr-treeview-node-list-item__button')])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_CATEGORY_FIELD</td>
+	<td>//*[contains(@class, 'form-control h-100 input-group-inset input-group-inset-after')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_CATEGORY_BUTTON</td>
+	<td>//button[contains(@id, 'addButton')]</td>
 	<td></td>
 </tr>
 <tr>

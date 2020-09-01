@@ -59,10 +59,6 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(redirect);
 	}
-
-	Folder folder = DLAppServiceUtil.getFolder(folderId);
-
-	renderResponse.setTitle(folder.getName());
 }
 %>
 

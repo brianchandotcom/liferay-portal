@@ -77,6 +77,77 @@ definition {
 		Page.viewNoPG(pageName = "Test Page");
 	}
 
+	@priority = "4"
+	test PublishPrivateContentPageWithFragment {
+		property test.name.skip.portal.instance = "ChangeListPage#PublishPrivateContentPageWithFragment";
+
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
+		JSONFragment.addFragmentCollection(
+			groupName = "Guest",
+			name = "Collection Name");
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "Guest");
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+		var fragmentHTML = '''<lfr-widget-asset-list>''';
+		var htmlSnippet = '''<lfr-''';
+
+		FragmentsEditor.autocompleteFragmentHTML(
+			autocompleteField = "lfr-widget-asset-list",
+			fragmentHTML = "${fragmentHTML}",
+			htmlSnippet = "${htmlSnippet}");
+
+		PortletEntry.publish();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		ContentPages.addPrivatePage(pageName = "Test Page");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Fragment Name");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/test-page");
+
+		WebContent.viewPGViaAP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		ChangeList.prepareToPublish(publicationName = "Publication Name");
+
+		ChangeList.publishPublication(publicationName = "Publication Name");
+
+		Navigator.gotoPrivateSitePage(
+			pageName = "Test Page",
+			siteName = "Guest");
+
+		WebContent.viewPGViaAP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+	}
+
 	@priority = "5"
 	test ViewPageFriendlyURLAfterRevertingPublication {
 		property test.name.skip.portal.instance = "ChangeListPage#ViewPageFriendlyURLAfterRevertingPublication";

@@ -232,31 +232,27 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 
 		var javaScript = '''
 Simulate = {
-	dragAndDrop: async function(source, target) {
-		const dataTransfer = new DataTransfer();
-
-		const dispatchEvent = async(type, element) => {
+	dragAndDrop: function (source, target) {
+		const dispatchEvent = function (type, element) {
 			const rect = element.getBoundingClientRect();
-
-			const event = new DragEvent(
-				type,{
-					bubbles: true,
-					clientX: rect.left + (rect.width / 2),
-					clientY: rect.top + rect.height,
-					dataTransfer: dataTransfer,
-					relatedTarget: element
-				});
-
-			element.dispatchEvent(event);
+			const event = document.createEvent('customEvent');
+			event.initEvent(type, true, true);
+			event.relatedTarget = element;
+			(event.clientX = rect.left + rect.width / 2),
+				(event.clientY = rect.top + rect.height),
+				element.dispatchEvent(event);
+			return Promise.resolve();
 		};
-
-		await dispatchEvent('dragstart', source);
-
-		await dispatchEvent('dragover', target);
-
-		await dispatchEvent('drop', target);
-
-		await dispatchEvent('dragend', source);
+		dispatchEvent('dragstart', source)
+			.then(function () {
+				dispatchEvent('dragover', target);
+			})
+			.then(function () {
+				dispatchEvent('drop', target);
+			})
+			.then(function () {
+				dispatchEvent('dragend', source);
+			});
 	}
 };
 

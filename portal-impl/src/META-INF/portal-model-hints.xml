@@ -709,7 +709,7 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field localized="true" name="description" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 			<hint name="display-width">300</hint>
 		</field>
 		<field localized="true" name="keywords" type="String">

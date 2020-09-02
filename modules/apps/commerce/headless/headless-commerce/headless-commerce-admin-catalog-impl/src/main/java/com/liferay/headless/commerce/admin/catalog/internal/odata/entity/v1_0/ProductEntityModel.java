@@ -35,7 +35,7 @@ public class ProductEntityModel implements EntityModel {
 	public ProductEntityModel() {
 		_entityFieldsMap = Stream.of(
 			new CollectionEntityField(
-				new IntegerEntityField(
+				new StringEntityField(
 					"categoryIds", locale -> "assetCategoryIds")),
 			new IntegerEntityField("catalogId", locale -> "commerceCatalogId"),
 			new DateTimeEntityField(

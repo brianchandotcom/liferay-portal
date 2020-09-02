@@ -610,21 +610,6 @@
 
 		<remake-dir dir="dist" />
 
-		<remake-dir dir="tools/zip_tmpl/license" />
-
-		<copy
-			file="copyright.txt"
-			todir="tools/zip_tmpl/license"
-		/>
-		<copy
-			file="lib/versions.html"
-			todir="tools/zip_tmpl/license"
-		/>
-		<copy
-			file="readme.markdown"
-			todir="tools/zip_tmpl"
-		/>
-
 		<antcall target="zip-portal-war" />
 
 		<antcall target="build-dist-plugins" />
@@ -2628,6 +2613,21 @@ plugins.includes=</echo>
 						dir="${zip.executable.dir}"
 					/>
 				</copy>
+
+				<remake-dir dir="tools/zip_tmpl/license" />
+
+				<copy
+					file="copyright.txt"
+					todir="tools/zip_tmpl/license"
+				/>
+				<copy
+					file="lib/versions.html"
+					todir="tools/zip_tmpl/license"
+				/>
+				<copy
+					file="readme.markdown"
+					todir="tools/zip_tmpl"
+				/>
 
 				<copy
 					preservelastmodified="true"

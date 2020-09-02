@@ -270,6 +270,9 @@
 	}
 
 	.breadcrumb {
+		.questions-breadcrumb-item {
+			max-width: 14rem;
+		}
 		.breadcrumb-item {
 			color: $secondary;
 			font-size: 1.15rem;

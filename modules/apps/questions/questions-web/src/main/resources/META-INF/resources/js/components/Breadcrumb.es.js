@@ -234,7 +234,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 							key={i}
 						>
 							<BreadcrumbDropdown
-								className="breadcrumb-item breadcrumb-text-truncate"
+								className="breadcrumb-item breadcrumb-text-truncate questions-breadcrumb-item"
 								section={section}
 								ui={ui}
 							/>
@@ -245,7 +245,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 							key={i}
 						>
 							<BreadcrumbDropdown
-								className="breadcrumb-item breadcrumb-text-truncate"
+								className="breadcrumb-item breadcrumb-text-truncate questions-breadcrumb-item"
 								section={section}
 							/>
 						</li>
@@ -256,7 +256,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 								key={i}
 							>
 								<BreadcrumbDropdown
-									className="breadcrumb-item breadcrumb-text-truncate"
+									className="breadcrumb-item breadcrumb-text-truncate questions-breadcrumb-item"
 									section={section}
 								/>
 							</li>

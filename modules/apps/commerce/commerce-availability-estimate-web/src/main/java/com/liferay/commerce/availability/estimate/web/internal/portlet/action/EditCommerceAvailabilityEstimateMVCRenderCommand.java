@@ -19,7 +19,7 @@ import com.liferay.commerce.availability.estimate.web.internal.display.context.C
 import com.liferay.commerce.exception.NoSuchAvailabilityEstimateException;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;

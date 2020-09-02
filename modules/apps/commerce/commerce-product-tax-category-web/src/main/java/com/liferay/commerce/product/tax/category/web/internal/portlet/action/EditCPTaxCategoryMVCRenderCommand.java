@@ -20,7 +20,7 @@ import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.tax.category.web.internal.display.context.CPTaxCategoryDisplayContext;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;

@@ -91,7 +91,6 @@ definition {
 
 	@priority = "5"
 	test ViewWorkflowArchive704 {
-		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "mariadb,mysql,postgresql";
@@ -102,7 +101,6 @@ definition {
 
 	@priority = "5"
 	test ViewWorkflowArchive70106 {
-		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";

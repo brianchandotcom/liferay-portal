@@ -67,6 +67,8 @@ if (cpDisplayLayout != null) {
 
 				<liferay-asset:asset-categories-selector
 					categoryIds="<%= StringUtil.merge(assetCategoryIds, StringPool.COMMA) %>"
+					className="<%= CPDisplayLayout.class.getName() %>"
+					classTypePK="<%= AssetCategoryConstants.ALL_CLASS_NAME_ID %>"
 					hiddenInput="classPK"
 					singleSelect="<%= true %>"
 				/>

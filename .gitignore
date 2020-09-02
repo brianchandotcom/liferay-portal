@@ -159,7 +159,7 @@
 /tools/sdk
 /tools/selenium/*.exe
 /tools/selenium/extensions/ide.*.js
-/tools/zip_tmpl/license
+/tools/zip_tmpl
 /tunnel-web/docroot/WEB-INF/classes
 /tunnel-web/docroot/WEB-INF/lib
 /tunnel-web/docroot/WEB-INF/remoting-servlet-ext.xml

@@ -459,7 +459,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 		Company company = themeDisplay.getCompany();
 
-		sb.append(company.getCompanyId());
+		sb.append(company.getLogoId());
 
 		sb.append("&t=");
 		sb.append(WebServerServletTokenUtil.getToken(logoId));

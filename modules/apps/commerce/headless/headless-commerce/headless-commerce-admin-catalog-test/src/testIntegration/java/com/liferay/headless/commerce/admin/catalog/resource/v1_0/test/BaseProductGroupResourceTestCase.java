@@ -225,9 +225,9 @@ public abstract class BaseProductGroupResourceTestCase {
 			(List<ProductGroup>)page.getItems());
 		assertValid(page);
 
-		productGroupResource.deleteProductGroup(null);
+		productGroupResource.deleteProductGroup(productGroup1.getId());
 
-		productGroupResource.deleteProductGroup(null);
+		productGroupResource.deleteProductGroup(productGroup2.getId());
 	}
 
 	@Test
@@ -675,7 +675,7 @@ public abstract class BaseProductGroupResourceTestCase {
 						"deleteProductGroup",
 						new HashMap<String, Object>() {
 							{
-								put("productGroupId", productGroup.getId());
+								put("id", productGroup.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteProductGroup"));
@@ -691,7 +691,7 @@ public abstract class BaseProductGroupResourceTestCase {
 						"productGroup",
 						new HashMap<String, Object>() {
 							{
-								put("productGroupId", productGroup.getId());
+								put("id", productGroup.getId());
 							}
 						},
 						new GraphQLField("id"))),

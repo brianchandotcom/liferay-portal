@@ -224,9 +224,9 @@ public abstract class BaseOptionResourceTestCase {
 			Arrays.asList(option1, option2), (List<Option>)page.getItems());
 		assertValid(page);
 
-		optionResource.deleteOption(null);
+		optionResource.deleteOption(option1.getId());
 
-		optionResource.deleteOption(null);
+		optionResource.deleteOption(option2.getId());
 	}
 
 	@Test
@@ -628,7 +628,7 @@ public abstract class BaseOptionResourceTestCase {
 						"deleteOption",
 						new HashMap<String, Object>() {
 							{
-								put("optionId", option.getId());
+								put("id", option.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteOption"));
@@ -644,7 +644,7 @@ public abstract class BaseOptionResourceTestCase {
 						"option",
 						new HashMap<String, Object>() {
 							{
-								put("optionId", option.getId());
+								put("id", option.getId());
 							}
 						},
 						new GraphQLField("id"))),

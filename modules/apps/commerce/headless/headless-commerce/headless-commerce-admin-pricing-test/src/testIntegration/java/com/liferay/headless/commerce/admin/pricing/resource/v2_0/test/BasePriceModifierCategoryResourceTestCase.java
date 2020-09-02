@@ -247,9 +247,7 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 						"deletePriceModifierCategory",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"priceModifierCategoryId",
-									priceModifierCategory.getId());
+								put("id", priceModifierCategory.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceModifierCategory"));
@@ -265,9 +263,7 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 						"priceModifierCategory",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"priceModifierCategoryId",
-									priceModifierCategory.getId());
+								put("id", priceModifierCategory.getId());
 							}
 						},
 						new GraphQLField("id"))),
@@ -333,9 +329,11 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 			(List<PriceModifierCategory>)page.getItems());
 		assertValid(page);
 
-		priceModifierCategoryResource.deletePriceModifierCategory(null);
+		priceModifierCategoryResource.deletePriceModifierCategory(
+			priceModifierCategory1.getId());
 
-		priceModifierCategoryResource.deletePriceModifierCategory(null);
+		priceModifierCategoryResource.deletePriceModifierCategory(
+			priceModifierCategory2.getId());
 	}
 
 	@Test
@@ -499,9 +497,11 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 			(List<PriceModifierCategory>)page.getItems());
 		assertValid(page);
 
-		priceModifierCategoryResource.deletePriceModifierCategory(null);
+		priceModifierCategoryResource.deletePriceModifierCategory(
+			priceModifierCategory1.getId());
 
-		priceModifierCategoryResource.deletePriceModifierCategory(null);
+		priceModifierCategoryResource.deletePriceModifierCategory(
+			priceModifierCategory2.getId());
 	}
 
 	@Test

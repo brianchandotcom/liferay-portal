@@ -377,7 +377,7 @@ public abstract class BaseAccountAddressResourceTestCase {
 						"deleteAccountAddress",
 						new HashMap<String, Object>() {
 							{
-								put("accountAddressId", accountAddress.getId());
+								put("id", accountAddress.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteAccountAddress"));
@@ -393,7 +393,7 @@ public abstract class BaseAccountAddressResourceTestCase {
 						"accountAddress",
 						new HashMap<String, Object>() {
 							{
-								put("accountAddressId", accountAddress.getId());
+								put("id", accountAddress.getId());
 							}
 						},
 						new GraphQLField("id"))),
@@ -580,9 +580,9 @@ public abstract class BaseAccountAddressResourceTestCase {
 			(List<AccountAddress>)page.getItems());
 		assertValid(page);
 
-		accountAddressResource.deleteAccountAddress(null);
+		accountAddressResource.deleteAccountAddress(accountAddress1.getId());
 
-		accountAddressResource.deleteAccountAddress(null);
+		accountAddressResource.deleteAccountAddress(accountAddress2.getId());
 	}
 
 	@Test
@@ -749,9 +749,9 @@ public abstract class BaseAccountAddressResourceTestCase {
 			(List<AccountAddress>)page.getItems());
 		assertValid(page);
 
-		accountAddressResource.deleteAccountAddress(null);
+		accountAddressResource.deleteAccountAddress(accountAddress1.getId());
 
-		accountAddressResource.deleteAccountAddress(null);
+		accountAddressResource.deleteAccountAddress(accountAddress2.getId());
 	}
 
 	@Test

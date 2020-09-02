@@ -247,9 +247,7 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 						"deletePriceListAccountGroup",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"priceListAccountGroupId",
-									priceListAccountGroup.getId());
+								put("id", priceListAccountGroup.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceListAccountGroup"));
@@ -265,9 +263,7 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 						"priceListAccountGroup",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"priceListAccountGroupId",
-									priceListAccountGroup.getId());
+								put("id", priceListAccountGroup.getId());
 							}
 						},
 						new GraphQLField("id"))),
@@ -333,9 +329,11 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 			(List<PriceListAccountGroup>)page.getItems());
 		assertValid(page);
 
-		priceListAccountGroupResource.deletePriceListAccountGroup(null);
+		priceListAccountGroupResource.deletePriceListAccountGroup(
+			priceListAccountGroup1.getId());
 
-		priceListAccountGroupResource.deletePriceListAccountGroup(null);
+		priceListAccountGroupResource.deletePriceListAccountGroup(
+			priceListAccountGroup2.getId());
 	}
 
 	@Test
@@ -499,9 +497,11 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 			(List<PriceListAccountGroup>)page.getItems());
 		assertValid(page);
 
-		priceListAccountGroupResource.deletePriceListAccountGroup(null);
+		priceListAccountGroupResource.deletePriceListAccountGroup(
+			priceListAccountGroup1.getId());
 
-		priceListAccountGroupResource.deletePriceListAccountGroup(null);
+		priceListAccountGroupResource.deletePriceListAccountGroup(
+			priceListAccountGroup2.getId());
 	}
 
 	@Test

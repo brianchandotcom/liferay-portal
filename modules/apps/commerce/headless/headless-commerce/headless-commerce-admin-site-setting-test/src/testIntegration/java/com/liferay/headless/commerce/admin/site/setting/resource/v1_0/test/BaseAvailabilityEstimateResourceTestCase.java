@@ -237,9 +237,7 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 						"deleteAvailabilityEstimate",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"availabilityEstimateId",
-									availabilityEstimate.getId());
+								put("id", availabilityEstimate.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteAvailabilityEstimate"));
@@ -255,9 +253,7 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 						"availabilityEstimate",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"availabilityEstimateId",
-									availabilityEstimate.getId());
+								put("id", availabilityEstimate.getId());
 							}
 						},
 						new GraphQLField("id"))),
@@ -390,9 +386,11 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 			(List<AvailabilityEstimate>)page.getItems());
 		assertValid(page);
 
-		availabilityEstimateResource.deleteAvailabilityEstimate(null);
+		availabilityEstimateResource.deleteAvailabilityEstimate(
+			availabilityEstimate1.getId());
 
-		availabilityEstimateResource.deleteAvailabilityEstimate(null);
+		availabilityEstimateResource.deleteAvailabilityEstimate(
+			availabilityEstimate2.getId());
 	}
 
 	@Test

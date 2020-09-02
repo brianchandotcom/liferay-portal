@@ -297,7 +297,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 						"deleteOptionCategory",
 						new HashMap<String, Object>() {
 							{
-								put("optionCategoryId", optionCategory.getId());
+								put("id", optionCategory.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteOptionCategory"));
@@ -313,7 +313,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 						"optionCategory",
 						new HashMap<String, Object>() {
 							{
-								put("optionCategoryId", optionCategory.getId());
+								put("id", optionCategory.getId());
 							}
 						},
 						new GraphQLField("id"))),

@@ -412,7 +412,7 @@ public abstract class BaseDiscountResourceTestCase {
 						"deleteDiscount",
 						new HashMap<String, Object>() {
 							{
-								put("discountId", discount.getId());
+								put("id", discount.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscount"));
@@ -428,7 +428,7 @@ public abstract class BaseDiscountResourceTestCase {
 						"discount",
 						new HashMap<String, Object>() {
 							{
-								put("discountId", discount.getId());
+								put("id", discount.getId());
 							}
 						},
 						new GraphQLField("id"))),

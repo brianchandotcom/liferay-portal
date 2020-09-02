@@ -256,9 +256,9 @@ public abstract class BaseAccountResourceTestCase {
 			Arrays.asList(account1, account2), (List<Account>)page.getItems());
 		assertValid(page);
 
-		accountResource.deleteAccount(null);
+		accountResource.deleteAccount(account1.getId());
 
-		accountResource.deleteAccount(null);
+		accountResource.deleteAccount(account2.getId());
 	}
 
 	@Test
@@ -670,7 +670,7 @@ public abstract class BaseAccountResourceTestCase {
 						"deleteAccount",
 						new HashMap<String, Object>() {
 							{
-								put("accountId", account.getId());
+								put("id", account.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteAccount"));
@@ -686,7 +686,7 @@ public abstract class BaseAccountResourceTestCase {
 						"account",
 						new HashMap<String, Object>() {
 							{
-								put("accountId", account.getId());
+								put("id", account.getId());
 							}
 						},
 						new GraphQLField("id"))),

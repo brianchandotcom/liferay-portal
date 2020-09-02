@@ -413,7 +413,7 @@ public abstract class BasePriceListResourceTestCase {
 						"deletePriceList",
 						new HashMap<String, Object>() {
 							{
-								put("priceListId", priceList.getId());
+								put("id", priceList.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceList"));
@@ -429,7 +429,7 @@ public abstract class BasePriceListResourceTestCase {
 						"priceList",
 						new HashMap<String, Object>() {
 							{
-								put("priceListId", priceList.getId());
+								put("id", priceList.getId());
 							}
 						},
 						new GraphQLField("id"))),

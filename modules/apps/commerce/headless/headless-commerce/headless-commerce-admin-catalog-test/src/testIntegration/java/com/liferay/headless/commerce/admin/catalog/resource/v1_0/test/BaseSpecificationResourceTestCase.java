@@ -225,9 +225,9 @@ public abstract class BaseSpecificationResourceTestCase {
 			(List<Specification>)page.getItems());
 		assertValid(page);
 
-		specificationResource.deleteSpecification(null);
+		specificationResource.deleteSpecification(specification1.getId());
 
-		specificationResource.deleteSpecification(null);
+		specificationResource.deleteSpecification(specification2.getId());
 	}
 
 	@Test
@@ -553,7 +553,7 @@ public abstract class BaseSpecificationResourceTestCase {
 						"deleteSpecification",
 						new HashMap<String, Object>() {
 							{
-								put("specificationId", specification.getId());
+								put("id", specification.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteSpecification"));
@@ -569,7 +569,7 @@ public abstract class BaseSpecificationResourceTestCase {
 						"specification",
 						new HashMap<String, Object>() {
 							{
-								put("specificationId", specification.getId());
+								put("id", specification.getId());
 							}
 						},
 						new GraphQLField("id"))),

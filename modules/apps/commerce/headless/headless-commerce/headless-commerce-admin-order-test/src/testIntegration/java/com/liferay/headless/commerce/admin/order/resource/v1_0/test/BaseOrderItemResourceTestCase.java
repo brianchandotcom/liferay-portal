@@ -348,7 +348,7 @@ public abstract class BaseOrderItemResourceTestCase {
 						"deleteOrderItem",
 						new HashMap<String, Object>() {
 							{
-								put("orderItemId", orderItem.getId());
+								put("id", orderItem.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteOrderItem"));
@@ -364,7 +364,7 @@ public abstract class BaseOrderItemResourceTestCase {
 						"orderItem",
 						new HashMap<String, Object>() {
 							{
-								put("orderItemId", orderItem.getId());
+								put("id", orderItem.getId());
 							}
 						},
 						new GraphQLField("id"))),
@@ -488,9 +488,9 @@ public abstract class BaseOrderItemResourceTestCase {
 			(List<OrderItem>)page.getItems());
 		assertValid(page);
 
-		orderItemResource.deleteOrderItem(null);
+		orderItemResource.deleteOrderItem(orderItem1.getId());
 
-		orderItemResource.deleteOrderItem(null);
+		orderItemResource.deleteOrderItem(orderItem2.getId());
 	}
 
 	@Test
@@ -643,9 +643,9 @@ public abstract class BaseOrderItemResourceTestCase {
 			(List<OrderItem>)page.getItems());
 		assertValid(page);
 
-		orderItemResource.deleteOrderItem(null);
+		orderItemResource.deleteOrderItem(orderItem1.getId());
 
-		orderItemResource.deleteOrderItem(null);
+		orderItemResource.deleteOrderItem(orderItem2.getId());
 	}
 
 	@Test

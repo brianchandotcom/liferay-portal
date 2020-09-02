@@ -238,9 +238,7 @@ public abstract class BaseDiscountChannelResourceTestCase {
 						"deleteDiscountChannel",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"discountChannelId",
-									discountChannel.getId());
+								put("id", discountChannel.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscountChannel"));
@@ -256,9 +254,7 @@ public abstract class BaseDiscountChannelResourceTestCase {
 						"discountChannel",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"discountChannelId",
-									discountChannel.getId());
+								put("id", discountChannel.getId());
 							}
 						},
 						new GraphQLField("id"))),
@@ -324,9 +320,9 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			(List<DiscountChannel>)page.getItems());
 		assertValid(page);
 
-		discountChannelResource.deleteDiscountChannel(null);
+		discountChannelResource.deleteDiscountChannel(discountChannel1.getId());
 
-		discountChannelResource.deleteDiscountChannel(null);
+		discountChannelResource.deleteDiscountChannel(discountChannel2.getId());
 	}
 
 	@Test
@@ -476,9 +472,9 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			(List<DiscountChannel>)page.getItems());
 		assertValid(page);
 
-		discountChannelResource.deleteDiscountChannel(null);
+		discountChannelResource.deleteDiscountChannel(discountChannel1.getId());
 
-		discountChannelResource.deleteDiscountChannel(null);
+		discountChannelResource.deleteDiscountChannel(discountChannel2.getId());
 	}
 
 	@Test

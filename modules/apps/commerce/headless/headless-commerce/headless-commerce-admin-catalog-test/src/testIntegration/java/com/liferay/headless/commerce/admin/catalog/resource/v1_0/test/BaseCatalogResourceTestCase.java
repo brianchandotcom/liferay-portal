@@ -345,7 +345,7 @@ public abstract class BaseCatalogResourceTestCase {
 						"deleteCatalog",
 						new HashMap<String, Object>() {
 							{
-								put("catalogId", catalog.getId());
+								put("id", catalog.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteCatalog"));
@@ -361,7 +361,7 @@ public abstract class BaseCatalogResourceTestCase {
 						"catalog",
 						new HashMap<String, Object>() {
 							{
-								put("catalogId", catalog.getId());
+								put("id", catalog.getId());
 							}
 						},
 						new GraphQLField("id"))),
@@ -452,9 +452,9 @@ public abstract class BaseCatalogResourceTestCase {
 			Arrays.asList(catalog1, catalog2), (List<Catalog>)page.getItems());
 		assertValid(page);
 
-		catalogResource.deleteCatalog(null);
+		catalogResource.deleteCatalog(catalog1.getId());
 
-		catalogResource.deleteCatalog(null);
+		catalogResource.deleteCatalog(catalog2.getId());
 	}
 
 	@Test

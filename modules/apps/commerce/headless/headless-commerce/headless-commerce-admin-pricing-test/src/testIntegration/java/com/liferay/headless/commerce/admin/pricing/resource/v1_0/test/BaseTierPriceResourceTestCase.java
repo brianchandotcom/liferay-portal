@@ -254,9 +254,9 @@ public abstract class BaseTierPriceResourceTestCase {
 			(List<TierPrice>)page.getItems());
 		assertValid(page);
 
-		tierPriceResource.deleteTierPrice(null);
+		tierPriceResource.deleteTierPrice(tierPrice1.getId());
 
-		tierPriceResource.deleteTierPrice(null);
+		tierPriceResource.deleteTierPrice(tierPrice2.getId());
 	}
 
 	@Test
@@ -412,9 +412,9 @@ public abstract class BaseTierPriceResourceTestCase {
 			(List<TierPrice>)page.getItems());
 		assertValid(page);
 
-		tierPriceResource.deleteTierPrice(null);
+		tierPriceResource.deleteTierPrice(tierPrice1.getId());
 
-		tierPriceResource.deleteTierPrice(null);
+		tierPriceResource.deleteTierPrice(tierPrice2.getId());
 	}
 
 	@Test
@@ -650,7 +650,7 @@ public abstract class BaseTierPriceResourceTestCase {
 						"deleteTierPrice",
 						new HashMap<String, Object>() {
 							{
-								put("tierPriceId", tierPrice.getId());
+								put("id", tierPrice.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteTierPrice"));
@@ -666,7 +666,7 @@ public abstract class BaseTierPriceResourceTestCase {
 						"tierPrice",
 						new HashMap<String, Object>() {
 							{
-								put("tierPriceId", tierPrice.getId());
+								put("id", tierPrice.getId());
 							}
 						},
 						new GraphQLField("id"))),

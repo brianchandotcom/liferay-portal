@@ -243,9 +243,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 						"deleteDiscountProductGroup",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"discountProductGroupId",
-									discountProductGroup.getId());
+								put("id", discountProductGroup.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscountProductGroup"));
@@ -261,9 +259,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 						"discountProductGroup",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"discountProductGroupId",
-									discountProductGroup.getId());
+								put("id", discountProductGroup.getId());
 							}
 						},
 						new GraphQLField("id"))),
@@ -329,9 +325,11 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 			(List<DiscountProductGroup>)page.getItems());
 		assertValid(page);
 
-		discountProductGroupResource.deleteDiscountProductGroup(null);
+		discountProductGroupResource.deleteDiscountProductGroup(
+			discountProductGroup1.getId());
 
-		discountProductGroupResource.deleteDiscountProductGroup(null);
+		discountProductGroupResource.deleteDiscountProductGroup(
+			discountProductGroup2.getId());
 	}
 
 	@Test
@@ -490,9 +488,11 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 			(List<DiscountProductGroup>)page.getItems());
 		assertValid(page);
 
-		discountProductGroupResource.deleteDiscountProductGroup(null);
+		discountProductGroupResource.deleteDiscountProductGroup(
+			discountProductGroup1.getId());
 
-		discountProductGroupResource.deleteDiscountProductGroup(null);
+		discountProductGroupResource.deleteDiscountProductGroup(
+			discountProductGroup2.getId());
 	}
 
 	@Test

@@ -427,7 +427,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 						"deleteAccountGroup",
 						new HashMap<String, Object>() {
 							{
-								put("accountGroupId", accountGroup.getId());
+								put("id", accountGroup.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteAccountGroup"));
@@ -443,7 +443,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 						"accountGroup",
 						new HashMap<String, Object>() {
 							{
-								put("accountGroupId", accountGroup.getId());
+								put("id", accountGroup.getId());
 							}
 						},
 						new GraphQLField("id"))),

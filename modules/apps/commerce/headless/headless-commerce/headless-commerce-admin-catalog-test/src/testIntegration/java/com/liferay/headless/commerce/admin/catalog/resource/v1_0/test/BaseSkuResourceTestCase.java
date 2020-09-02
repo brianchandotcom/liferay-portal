@@ -255,9 +255,9 @@ public abstract class BaseSkuResourceTestCase {
 			Arrays.asList(sku1, sku2), (List<Sku>)page.getItems());
 		assertValid(page);
 
-		skuResource.deleteSku(null);
+		skuResource.deleteSku(sku1.getId());
 
-		skuResource.deleteSku(null);
+		skuResource.deleteSku(sku2.getId());
 	}
 
 	@Test
@@ -390,9 +390,9 @@ public abstract class BaseSkuResourceTestCase {
 			Arrays.asList(sku1, sku2), (List<Sku>)page.getItems());
 		assertValid(page);
 
-		skuResource.deleteSku(null);
+		skuResource.deleteSku(sku1.getId());
 
-		skuResource.deleteSku(null);
+		skuResource.deleteSku(sku2.getId());
 	}
 
 	@Test
@@ -492,9 +492,9 @@ public abstract class BaseSkuResourceTestCase {
 			Arrays.asList(sku1, sku2), (List<Sku>)page.getItems());
 		assertValid(page);
 
-		skuResource.deleteSku(null);
+		skuResource.deleteSku(sku1.getId());
 
-		skuResource.deleteSku(null);
+		skuResource.deleteSku(sku2.getId());
 	}
 
 	@Test
@@ -856,7 +856,7 @@ public abstract class BaseSkuResourceTestCase {
 						"deleteSku",
 						new HashMap<String, Object>() {
 							{
-								put("skuId", sku.getId());
+								put("id", sku.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteSku"));
@@ -872,7 +872,7 @@ public abstract class BaseSkuResourceTestCase {
 						"sku",
 						new HashMap<String, Object>() {
 							{
-								put("skuId", sku.getId());
+								put("id", sku.getId());
 							}
 						},
 						new GraphQLField("id"))),

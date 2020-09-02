@@ -267,9 +267,9 @@ public abstract class BasePriceModifierResourceTestCase {
 			(List<PriceModifier>)page.getItems());
 		assertValid(page);
 
-		priceModifierResource.deletePriceModifier(null);
+		priceModifierResource.deletePriceModifier(priceModifier1.getId());
 
-		priceModifierResource.deletePriceModifier(null);
+		priceModifierResource.deletePriceModifier(priceModifier2.getId());
 	}
 
 	@Test
@@ -436,9 +436,9 @@ public abstract class BasePriceModifierResourceTestCase {
 			(List<PriceModifier>)page.getItems());
 		assertValid(page);
 
-		priceModifierResource.deletePriceModifier(null);
+		priceModifierResource.deletePriceModifier(priceModifier1.getId());
 
-		priceModifierResource.deletePriceModifier(null);
+		priceModifierResource.deletePriceModifier(priceModifier2.getId());
 	}
 
 	@Test
@@ -901,7 +901,7 @@ public abstract class BasePriceModifierResourceTestCase {
 						"deletePriceModifier",
 						new HashMap<String, Object>() {
 							{
-								put("priceModifierId", priceModifier.getId());
+								put("id", priceModifier.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceModifier"));
@@ -917,7 +917,7 @@ public abstract class BasePriceModifierResourceTestCase {
 						"priceModifier",
 						new HashMap<String, Object>() {
 							{
-								put("priceModifierId", priceModifier.getId());
+								put("id", priceModifier.getId());
 							}
 						},
 						new GraphQLField("id"))),

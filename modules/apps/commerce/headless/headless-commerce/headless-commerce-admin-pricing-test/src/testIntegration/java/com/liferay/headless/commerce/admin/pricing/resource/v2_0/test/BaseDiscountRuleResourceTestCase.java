@@ -245,7 +245,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 						"deleteDiscountRule",
 						new HashMap<String, Object>() {
 							{
-								put("discountRuleId", discountRule.getId());
+								put("id", discountRule.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscountRule"));
@@ -261,7 +261,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 						"discountRule",
 						new HashMap<String, Object>() {
 							{
-								put("discountRuleId", discountRule.getId());
+								put("id", discountRule.getId());
 							}
 						},
 						new GraphQLField("id"))),
@@ -414,9 +414,9 @@ public abstract class BaseDiscountRuleResourceTestCase {
 			(List<DiscountRule>)page.getItems());
 		assertValid(page);
 
-		discountRuleResource.deleteDiscountRule(null);
+		discountRuleResource.deleteDiscountRule(discountRule1.getId());
 
-		discountRuleResource.deleteDiscountRule(null);
+		discountRuleResource.deleteDiscountRule(discountRule2.getId());
 	}
 
 	@Test
@@ -566,9 +566,9 @@ public abstract class BaseDiscountRuleResourceTestCase {
 			(List<DiscountRule>)page.getItems());
 		assertValid(page);
 
-		discountRuleResource.deleteDiscountRule(null);
+		discountRuleResource.deleteDiscountRule(discountRule1.getId());
 
-		discountRuleResource.deleteDiscountRule(null);
+		discountRuleResource.deleteDiscountRule(discountRule2.getId());
 	}
 
 	@Test

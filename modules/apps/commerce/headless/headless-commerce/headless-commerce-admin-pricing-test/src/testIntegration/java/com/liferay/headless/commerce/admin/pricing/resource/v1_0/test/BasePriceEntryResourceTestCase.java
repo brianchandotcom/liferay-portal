@@ -348,7 +348,7 @@ public abstract class BasePriceEntryResourceTestCase {
 						"deletePriceEntry",
 						new HashMap<String, Object>() {
 							{
-								put("priceEntryId", priceEntry.getId());
+								put("id", priceEntry.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceEntry"));
@@ -364,7 +364,7 @@ public abstract class BasePriceEntryResourceTestCase {
 						"priceEntry",
 						new HashMap<String, Object>() {
 							{
-								put("priceEntryId", priceEntry.getId());
+								put("id", priceEntry.getId());
 							}
 						},
 						new GraphQLField("id"))),
@@ -492,9 +492,9 @@ public abstract class BasePriceEntryResourceTestCase {
 			(List<PriceEntry>)page.getItems());
 		assertValid(page);
 
-		priceEntryResource.deletePriceEntry(null);
+		priceEntryResource.deletePriceEntry(priceEntry1.getId());
 
-		priceEntryResource.deletePriceEntry(null);
+		priceEntryResource.deletePriceEntry(priceEntry2.getId());
 	}
 
 	@Test
@@ -655,9 +655,9 @@ public abstract class BasePriceEntryResourceTestCase {
 			(List<PriceEntry>)page.getItems());
 		assertValid(page);
 
-		priceEntryResource.deletePriceEntry(null);
+		priceEntryResource.deletePriceEntry(priceEntry1.getId());
 
-		priceEntryResource.deletePriceEntry(null);
+		priceEntryResource.deletePriceEntry(priceEntry2.getId());
 	}
 
 	@Test

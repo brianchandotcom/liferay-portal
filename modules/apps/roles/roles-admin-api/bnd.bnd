@@ -4,6 +4,6 @@ Bundle-Version: 5.3.0
 Export-Package:\
 	com.liferay.roles.admin.constants,\
 	com.liferay.roles.admin.group.type.contributor,\
+	com.liferay.roles.admin.panel.category.role.type.mapper,\
 	com.liferay.roles.admin.role.type.contributor,\
-	com.liferay.roles.admin.role.type.contributor.provider,\
-	com.liferay.roles.admin.role.type.mapper
+	com.liferay.roles.admin.role.type.contributor.provider

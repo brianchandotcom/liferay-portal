@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.role.type.mapper;
+package com.liferay.roles.admin.panel.category.role.type.mapper;
 
 /**
  * Defines a mapping between role types and a panel category. When implemented,

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	configurationPid = "DataCleanupConfiguration",
+	configurationPid = "com.liferay.data.cleanup.internal.upgrade.DataCleanupConfiguration",
 	immediate = true, service = UpgradeStepRegistrator.class
 )
 public class DataCleanup implements UpgradeStepRegistrator {
@@ -65,8 +65,7 @@ public class DataCleanup implements UpgradeStepRegistrator {
 				"com.liferay.mail.reader.service", CleanupMailReader::new);
 
 			_removeModuleData(
-				_dataCleanupConfiguration::
-					removePrivateMessagingModuleData,
+				_dataCleanupConfiguration::removePrivateMessagingModuleData,
 				"com.liferay.social.privatemessaging.service",
 				() -> new CleanupPrivateMessaging(_mbThreadLocalService));
 
@@ -109,10 +108,10 @@ public class DataCleanup implements UpgradeStepRegistrator {
 		}
 	}
 
+	private DataCleanupConfiguration _dataCleanupConfiguration;
+
 	@Reference
 	private ImageLocalService _imageLocalService;
-
-	private DataCleanupConfiguration _dataCleanupConfiguration;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;

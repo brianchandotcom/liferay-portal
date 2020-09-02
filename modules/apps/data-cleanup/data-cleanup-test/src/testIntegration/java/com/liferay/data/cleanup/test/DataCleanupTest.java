@@ -148,8 +148,7 @@ public class DataCleanupTest {
 
 		if (Validator.isNotNull(sqlFilePath)) {
 			try (InputStream inputStream =
-					DataCleanupTest.class.getResourceAsStream(
-						sqlFilePath)) {
+					DataCleanupTest.class.getResourceAsStream(sqlFilePath)) {
 
 				DB db = DBManagerUtil.getDB();
 

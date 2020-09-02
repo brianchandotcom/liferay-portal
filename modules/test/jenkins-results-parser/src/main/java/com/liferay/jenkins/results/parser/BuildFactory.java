@@ -43,10 +43,6 @@ public class BuildFactory {
 			return new AxisBuild(url, (BatchBuild)parentBuild);
 		}
 
-		if (url.contains("subrepository-source-format")) {
-			return new BatchBuild(url, (TopLevelBuild)parentBuild);
-		}
-
 		if (url.contains("-controller")) {
 			return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}

@@ -74,18 +74,14 @@ public class BuildFactory {
 			}
 		}
 
-		TopLevelBuild topLevelBuild = new DefaultTopLevelBuild(
-			url, (TopLevelBuild)parentBuild);
-
-		String jobName = topLevelBuild.getJobName();
-
 		if (jobName.equals("root-cause-analysis-tool")) {
 			return new RootCauseAnalysisToolBuild(
 				url, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.startsWith("test-portal-acceptance-pullrequest")) {
-			String testSuite = topLevelBuild.getParameterValue("CI_TEST_SUITE");
+			String testSuite = JenkinsResultsParserUtil.getBuildParameter(
+				url, "CI_TEST_SUITE");
 
 			if (Objects.equals(testSuite, "bundle")) {
 				return new StandaloneTopLevelBuild(
@@ -133,7 +129,7 @@ public class BuildFactory {
 			return new QAWebsitesTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}
 
-		return topLevelBuild;
+		return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
 	}
 
 	public static Build newBuildFromArchive(String archiveName) {

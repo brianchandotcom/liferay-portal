@@ -82,18 +82,24 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 					(UserSearchTerms)searchContainer.getSearchTerms();
 
 				String action = Constants.DELETE;
-				String icon = "times-circle";
 
 				if (userSearchTerms.isActive()) {
 					action = Constants.DEACTIVATE;
-					icon = "hidden";
 				}
 
 				dropdownItem.setHref(
 					StringBundler.concat(
 						"javascript:", liferayPortletResponse.getNamespace(),
 						"deleteUsers('", action, "');"));
+
+				String icon = "times-circle";
+
+				if (userSearchTerms.isActive()) {
+					icon = "hidden";
+				}
+
 				dropdownItem.setIcon(icon);
+
 				dropdownItem.setLabel(LanguageUtil.get(request, action));
 				dropdownItem.setQuickAction(true);
 			}

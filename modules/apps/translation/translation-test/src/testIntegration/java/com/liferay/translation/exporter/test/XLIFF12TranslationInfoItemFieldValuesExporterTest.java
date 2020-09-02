@@ -75,7 +75,7 @@ public class XLIFF12TranslationInfoItemFieldValuesExporterTest {
 			StringUtil.replace(
 				TranslationTestUtil.readFileToString(
 					"test-journal-article-v12.xlf"),
-				"$JOURNAL_ARTICLE_ID",
+				"[$JOURNAL_ARTICLE_ID$]",
 				String.valueOf(journalArticle.getResourcePrimKey())),
 			StreamUtil.toString(
 				_xliffTranslationInfoItemFieldValuesExporter.

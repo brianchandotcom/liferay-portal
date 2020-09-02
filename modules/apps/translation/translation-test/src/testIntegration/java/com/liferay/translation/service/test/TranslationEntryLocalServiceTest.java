@@ -76,7 +76,7 @@ public class TranslationEntryLocalServiceTest {
 			StringUtil.replace(
 				TranslationTestUtil.readFileToString(
 					"test-journal-article-simple.xlf"),
-				"$JOURNAL_ARTICLE_ID",
+				"[$JOURNAL_ARTICLE_ID$]",
 				String.valueOf(journalArticle.getResourcePrimKey())),
 			"application/xliff+xml", LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			serviceContext);
@@ -107,7 +107,7 @@ public class TranslationEntryLocalServiceTest {
 			StringUtil.replace(
 				TranslationTestUtil.readFileToString(
 					"test-journal-article-simple.xlf"),
-				"$JOURNAL_ARTICLE_ID",
+				"[$JOURNAL_ARTICLE_ID$]",
 				String.valueOf(journalArticle.getResourcePrimKey())),
 			"application/xliff+xml", LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

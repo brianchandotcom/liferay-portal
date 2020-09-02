@@ -32,9 +32,9 @@ export const createRepeatedField = (sourceField, repeatedIndex) => {
 		nestedFields: (sourceField.nestedFields || []).map((nestedField) => ({
 			...nestedField,
 			localizedValue: {},
-			value: undefined,
+			value: nestedField.predefinedValue,
 		})),
-		value: undefined,
+		value: sourceField.predefinedValue,
 	};
 };
 

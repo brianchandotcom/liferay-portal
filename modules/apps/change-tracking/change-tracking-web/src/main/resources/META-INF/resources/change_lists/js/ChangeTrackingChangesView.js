@@ -1214,9 +1214,11 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_handleShowHideableToggle(showHideable) {
-		this.sessionState.showHideable = showHideable;
+		if (this.sessionState) {
+			this.sessionState.showHideable = showHideable;
 
-		this._saveSessionState();
+			this._saveSessionState();
+		}
 
 		if (!showHideable) {
 			if (

@@ -226,11 +226,6 @@ public class KeywordResourceImpl
 			dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", siteId));
 		}
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.sqlRestriction(
-				"exists (select 1 from AssetEntries_AssetTags where tagId = " +
-					"this_.tagId)"));
-
 		return _assetTagLocalService.dynamicQueryCount(dynamicQuery);
 	}
 

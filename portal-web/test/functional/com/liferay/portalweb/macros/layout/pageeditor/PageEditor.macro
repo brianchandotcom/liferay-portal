@@ -488,6 +488,14 @@ definition {
 			Pause(locator1 = "3000");
 		}
 
+		if (isSet(backgroundColor)) {
+			PageEditor.selectColorSwatchItem(
+				colorSwatchItem = "${backgroundColor}",
+				fieldLabel = "Background Color");
+
+			Pause(locator1 = "3000");
+		}
+
 		if (isSet(borderColor)) {
 			PageEditor.selectColorSwatchItem(
 				colorSwatchItem = "${borderColor}",
@@ -2006,6 +2014,15 @@ definition {
 				key_alignment = "${alignment}",
 				key_fragmentName = "${fragmentName}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT");
+		}
+
+		if (isSet(backgroundColor)) {
+			var fragmentName = StringUtil.upperCaseFirstLetter("${fragmentName}");
+
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_paletteItem = "${backgroundColor}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BACKGROUND_COLOR");
 		}
 
 		if (isSet(borderColor)) {

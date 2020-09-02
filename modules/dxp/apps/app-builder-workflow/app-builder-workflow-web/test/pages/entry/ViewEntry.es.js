@@ -26,24 +26,32 @@ const context = {
 	showFormView: true,
 };
 
-const instances = {
-	items: [
-		{
-			assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
-			classPK: 0,
-			completed: false,
-			taskNames: ['Review'],
-		},
-	],
-	totalCount: 4,
-};
+const mockToast = jest.fn();
+jest.mock('app-builder-web/js/utils/toast.es', () => ({
+	__esModule: true,
+	errorToast: () => mockToast(),
+}));
 
 describe('ViewEntry', () => {
-	it('renders with workflow info', async () => {
+	it('renders workflow info correctly with pending entry', async () => {
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORDS(1)));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORD_APPS(1)));
-		fetch.mockResponseOnce(JSON.stringify(instances));
+		fetch.mockResponseOnce(
+			JSON.stringify({
+				items: [
+					{
+						assignees: [
+							{id: -1, name: 'Unassigned', reviewer: true},
+						],
+						classPK: 0,
+						completed: false,
+						taskNames: ['Review'],
+					},
+				],
+				totalCount: 4,
+			})
+		);
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LAYOUT));
 
 		const {container, getAllByRole} = render(
@@ -77,5 +85,121 @@ describe('ViewEntry', () => {
 		expect(buttons[2].title).toBe('delete');
 		expect(buttons[3].title).toBe('edit');
 		expect(buttons[4].title).toBe('assign-to');
+	});
+
+	it('renders workflow info correctly with completed entry', async () => {
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORDS(1)));
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORD_APPS(1)));
+		fetch.mockResponseOnce(
+			JSON.stringify({
+				items: [
+					{
+						classPK: 0,
+						completed: true,
+					},
+				],
+				totalCount: 1,
+			})
+		);
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LAYOUT));
+
+		const {container} = render(
+			<AppContextProviderWrapper appContext={context}>
+				<ViewEntry match={{params: {entryIndex: 1}}} />
+			</AppContextProviderWrapper>,
+			{wrapper: PermissionsContextProviderWrapper}
+		);
+
+		await waitForElementToBeRemoved(() =>
+			document.querySelector('span.loading-animation')
+		);
+
+		const infoItems = container.querySelectorAll('.info-item');
+
+		expect(infoItems.length).toBe(4);
+		expect(infoItems[0]).toHaveTextContent('status: completed');
+		expect(infoItems[1]).toHaveTextContent('step: --');
+		expect(infoItems[2]).toHaveTextContent('assignee: --');
+		expect(infoItems[3]).toHaveTextContent('version: 1.0');
+	});
+
+	it('renders workflow info correctly without task names', async () => {
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORDS(1)));
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORD_APPS(1)));
+		fetch.mockResponseOnce(
+			JSON.stringify({
+				items: [
+					{
+						assignees: [
+							{id: -1, name: 'Unassigned', reviewer: true},
+						],
+						classPK: 0,
+						completed: false,
+					},
+				],
+				totalCount: 1,
+			})
+		);
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LAYOUT));
+
+		const {container} = render(
+			<AppContextProviderWrapper appContext={context}>
+				<ViewEntry match={{params: {entryIndex: 1}}} />
+			</AppContextProviderWrapper>,
+			{wrapper: PermissionsContextProviderWrapper}
+		);
+
+		await waitForElementToBeRemoved(() =>
+			document.querySelector('span.loading-animation')
+		);
+
+		const infoItems = container.querySelectorAll('.info-item');
+
+		expect(infoItems.length).toBe(4);
+		expect(infoItems[0]).toHaveTextContent('status: pending');
+		expect(infoItems[1]).toHaveTextContent('step: --');
+		expect(infoItems[2]).toHaveTextContent('assignee: --');
+		expect(infoItems[3]).toHaveTextContent('version: 1.0');
+	});
+
+	it('shows error toast when an error happens while trying to get Data Records', async () => {
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
+		fetch.mockRejectedValue({});
+
+		render(
+			<AppContextProviderWrapper appContext={context}>
+				<ViewEntry match={{params: {entryIndex: 1}}} />
+			</AppContextProviderWrapper>,
+			{wrapper: PermissionsContextProviderWrapper}
+		);
+
+		await waitForElementToBeRemoved(() =>
+			document.querySelector('span.loading-animation')
+		);
+
+		expect(mockToast).toHaveBeenCalledTimes(1);
+	});
+
+	it('shows error toast when an error happens while trying to get instances', async () => {
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORDS(1)));
+		fetch.mockResponseOnce(JSON.stringify({items: []}));
+		fetch.mockRejectedValueOnce({});
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LAYOUT));
+
+		render(
+			<AppContextProviderWrapper appContext={context}>
+				<ViewEntry match={{params: {entryIndex: 1}}} />
+			</AppContextProviderWrapper>,
+			{wrapper: PermissionsContextProviderWrapper}
+		);
+
+		await waitForElementToBeRemoved(() =>
+			document.querySelector('span.loading-animation')
+		);
+
+		expect(mockToast).toHaveBeenCalledTimes(2);
 	});
 });

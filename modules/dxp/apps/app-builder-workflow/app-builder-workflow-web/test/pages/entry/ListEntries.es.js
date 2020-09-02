@@ -31,7 +31,7 @@ const context = {
 const instances = {
 	items: [
 		{
-			assignees: [{name: 'User 1'}],
+			assignees: [{id: -1, name: 'Unassigned'}],
 			classPK: 0,
 			completed: false,
 			taskNames: ['Review'],
@@ -64,6 +64,12 @@ window.Liferay.Util = {
 	navigate: (url) => mockNavigate(url),
 };
 
+const mockToast = jest.fn();
+jest.mock('app-builder-web/js/utils/toast.es', () => ({
+	__esModule: true,
+	errorToast: () => mockToast(),
+}));
+
 describe('ListEntries', () => {
 	it('renders with 5 entries and calls navigate after clicking on add button', async () => {
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.APP_WORKFLOW));
@@ -91,7 +97,7 @@ describe('ListEntries', () => {
 		expect(entries[0].children[0]).toHaveTextContent('Name Test 0');
 		expect(entries[0].children[1]).toHaveTextContent('pending');
 		expect(entries[0].children[2]).toHaveTextContent('Review');
-		expect(entries[0].children[3]).toHaveTextContent('User 1');
+		expect(entries[0].children[3]).toHaveTextContent('Administrator');
 
 		expect(entries[1].children[0]).toHaveTextContent('Name Test 1');
 		expect(entries[1].children[1]).toHaveTextContent('pending');
@@ -153,5 +159,62 @@ describe('ListEntries', () => {
 			container.querySelector('.taglib-empty-result-message button')
 				.textContent
 		).toContain('new-entry');
+	});
+
+	it('shows error toast when an error happens while trying to get Data Records', async () => {
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.APP_WORKFLOW));
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LIST_VIEW));
+		fetch.mockRejectedValueOnce({});
+
+		render(
+			<AppContextProviderWrapper appContext={context}>
+				<ListEntries />
+			</AppContextProviderWrapper>,
+			{wrapper: PermissionsContextProviderWrapper}
+		);
+
+		await waitForElementToBeRemoved(() =>
+			document.querySelector('span.loading-animation')
+		);
+
+		expect(mockToast).toHaveBeenCalled();
+	});
+
+	it('shows error toast when an error happens while trying to get App Workflow', async () => {
+		fetch.mockRejectedValueOnce({});
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LIST_VIEW));
+		fetch.mockResponse(JSON.stringify(ENTRY.DATA_RECORDS(0)));
+
+		await act(async () => {
+			await render(
+				<AppContextProviderWrapper appContext={context}>
+					<ListEntries />
+				</AppContextProviderWrapper>,
+				{wrapper: PermissionsContextProviderWrapper}
+			);
+		});
+
+		expect(mockToast).toHaveBeenCalled();
+	});
+
+	it('shows error toast when errors happens while trying to get Data List View, Data Defition Id and Data Records', async () => {
+		fetch.mockRejectedValue({});
+
+		await act(async () => {
+			await render(
+				<AppContextProviderWrapper
+					appContext={{
+						appId: null,
+					}}
+				>
+					<ListEntries />
+				</AppContextProviderWrapper>,
+				{wrapper: PermissionsContextProviderWrapper}
+			);
+		});
+
+		expect(mockToast).toHaveBeenCalledTimes(3);
 	});
 });

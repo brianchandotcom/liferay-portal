@@ -146,9 +146,9 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@description = "This is a test for LPS-102566 and LPS-109594. There's a custom masters page created in site, when add a new page, there's an option to select the created masters, and the common elements added in masters page are added in page. The header of drop zone is next to border of the management toolbar by default on master page template."
+	@description = "This is a test for LPS-102566, LPS-109594 and LPS-119634. Add a page based on custom master."
 	@priority = "5"
-	test AddPageBasedOnCustomMastersAndInheritElementsFromCustomMasters {
+	test AddPageBasedOnCustomMaster {
 		property portal.acceptance = "true";
 
 		task ("Assert header of Drop Zone is inside body by default") {
@@ -163,12 +163,29 @@ definition {
 				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
 		}
 
-		task ("Add a custom masters with Button fragment") {
+		task ("Add a Button fragment to master") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				dropTarget = "Header",
 				fragmentName = "Button",
 				scope = "Master");
+		}
+
+		task ("Configure the Button fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Button");
+
+			PageEditor.configureFragment(type = "Link");
+
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			PageEditor.configureFragment(
+				alignment = "Center",
+				backgroundColor = "Gray 300",
+				size = "Large");
+
+			PageEditor.viewFragmentStyle(
+				backgroundColor = "gray-300",
+				fragmentName = "button");
 
 			Button.click(button = "Publish Master");
 		}
@@ -185,6 +202,14 @@ definition {
 			AssertVisible(
 				key_fragmentName = "button",
 				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "button",
+				size = "lg",
+				type = "link");
+
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-content--master')][contains(@class,'text-center')][//div[contains(@class,'component-button')]]");
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-content--master')][contains(@style,'color: var(--gray-300)')][//div[contains(@class,'component-button')]]");
 		}
 	}
 

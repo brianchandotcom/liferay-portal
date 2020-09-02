@@ -263,12 +263,34 @@ schema=schema.xml</echo>
 		</sequential>
 	</macrodef>
 
+	<target name="blacklist-commerce">
+		<pathconvert pathsep="," property="commerce.modules">
+			<path>
+				<fileset
+					dir="${liferay.home}/osgi/modules"
+				>
+					<include name="com.liferay.commerce.*" />
+					<include name="com.liferay.headless.commerce.*" />
+				</fileset>
+			</path>
+			<mapper
+				from="^(.*)/(.*\.jar)"
+				to="\2"
+				type="regexp"
+			/>
+		</pathconvert>
+
+		<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config" message=",${commerce.modules}&quot;" />
+	</target>
+
 	<target name="deploy-solr">
 		<gradle-execute dir="modules/apps/portal-search-solr7" task="deploy">
 			<arg value="clean" />
 		</gradle-execute>
 
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=&quot;com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.elasticsearch.monitoring.web&quot;</echo>
+
+		<antcall target="blacklist-commerce" />
 	</target>
 
 	<target name="print-solr-indices">

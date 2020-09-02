@@ -146,6 +146,26 @@ export default function StructureTreeNode({node}) {
 					hoveredItemId
 				),
 			})}
+			onMouseLeave={(event) => {
+				event.stopPropagation();
+
+				if (isDraggingSource) {
+					return;
+				}
+
+				if (nodeIsHovered(node.id, hoveredItemId)) {
+					hoverItem(null);
+				}
+			}}
+			onMouseOver={(event) => {
+				event.stopPropagation();
+
+				if (isDraggingSource) {
+					return;
+				}
+
+				hoverItem(node.id);
+			}}
 			ref={targetRef}
 		>
 			<div
@@ -165,26 +185,6 @@ export default function StructureTreeNode({node}) {
 					}
 				}}
 				onDoubleClick={(event) => event.stopPropagation()}
-				onMouseLeave={(event) => {
-					event.stopPropagation();
-
-					if (isDraggingSource) {
-						return;
-					}
-
-					if (nodeIsHovered(node.id, hoveredItemId)) {
-						hoverItem(null);
-					}
-				}}
-				onMouseOver={(event) => {
-					event.stopPropagation();
-
-					if (isDraggingSource) {
-						return;
-					}
-
-					hoverItem(node.id);
-				}}
 				ref={node.draggable ? handlerRef : nodeRef}
 				role="button"
 			/>

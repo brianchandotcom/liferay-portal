@@ -34,7 +34,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -390,8 +389,6 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		long companyId, String canonicalURL, Locale locale,
 		ResourceBundle resourceBundle) {
 
-		JSONArray trafficSourcesJSONArray = JSONFactoryUtil.createJSONArray();
-
 		Map<String, String> helpMessageMap = HashMapBuilder.put(
 			"organic",
 			ResourceBundleUtil.getString(
@@ -415,30 +412,32 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		List<TrafficSource> trafficSources = _getTrafficSources(
 			analyticsReportsDataProvider, canonicalURL, companyId);
 
-		titleMap.forEach(
-			(name, title) -> {
-				Stream<TrafficSource> stream = trafficSources.stream();
+		return JSONUtil.putAll(
+			Stream.of(
+				"organic", "paid"
+			).map(
+				name -> {
+					Stream<TrafficSource> stream = trafficSources.stream();
 
-				trafficSourcesJSONArray.put(
-					stream.filter(
+					return stream.filter(
 						trafficSource -> Objects.equals(
 							name, trafficSource.getName())
 					).findFirst(
 					).map(
 						trafficSource -> trafficSource.toJSONObject(
-							helpMessageMap.get(name), locale, title)
+							helpMessageMap.get(name), locale,
+							titleMap.get(name))
 					).orElse(
 						JSONUtil.put(
 							"helpMessage", helpMessageMap.get(name)
 						).put(
 							"name", name
 						).put(
-							"title", title
+							"title", titleMap.get(name)
 						)
-					));
-			});
-
-		return trafficSourcesJSONArray;
+					);
+				}
+			).toArray());
 	}
 
 	private JSONArray _getViewURLsJSONArray(

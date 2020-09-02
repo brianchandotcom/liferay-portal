@@ -6,7 +6,7 @@
 />
 
 <#if stringUtil.equals(language, "ftl")>
-${r"<#if"} ${variableName}?? && ${variableName} != "">
+${r"<#if"} (${variableName})?? && ${variableName} != "">
 	<img alt="${getVariableReferenceCode(variableAltName)}" data-fileentryid="${getVariableReferenceCode(variableFieldEntryId)}" src="${getVariableReferenceCode(variableName)}" />
 ${r"</#if>"}
 <#else>

@@ -51,9 +51,10 @@ function MainSearch() {
 						displayType="unstyled"
 						onClick={(event) => {
 							event.preventDefault();
+							
 							updateInputValue('');
 
-							return updateSearchParam('');
+							updateSearchParam('');
 						}}
 						style={{
 							opacity: !inputValue.length ? 0 : 1,
@@ -66,7 +67,7 @@ function MainSearch() {
 						onClick={(event) => {
 							event.preventDefault();
 
-							return updateSearchParam(inputValue);
+							updateSearchParam(inputValue);
 						}}
 						symbol="search"
 					/>

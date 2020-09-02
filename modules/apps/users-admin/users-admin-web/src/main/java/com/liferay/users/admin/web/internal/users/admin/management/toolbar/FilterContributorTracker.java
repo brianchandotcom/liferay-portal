@@ -39,7 +39,7 @@ public class FilterContributorTracker {
 
 		if (filterContributors == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("No entries found for key: " + id);
+				_log.debug("No filter contributors found for ID " + id);
 			}
 
 			return new FilterContributor[0];

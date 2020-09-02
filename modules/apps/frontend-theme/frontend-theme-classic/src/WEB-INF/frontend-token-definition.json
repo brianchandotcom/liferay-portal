@@ -1121,7 +1121,6 @@
 						},
 						{
 							"defaultValue": "rgba(0, 0, 0, .1)",
-							"editorType": "ColorPicker",
 							"label": "hr-border-color",
 							"mappings": [
 								{

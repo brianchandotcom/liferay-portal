@@ -88,16 +88,6 @@ body {
 	}
 }
 
-#content.container-fluid {
-	padding: 0;
-
-	.row {
-		.col-md-12 {
-			padding: 0;
-		}
-	}
-}
-
 .btn-group + .info-panel {
 	@include media-breakpoint-up(sm) {
 		top: auto;

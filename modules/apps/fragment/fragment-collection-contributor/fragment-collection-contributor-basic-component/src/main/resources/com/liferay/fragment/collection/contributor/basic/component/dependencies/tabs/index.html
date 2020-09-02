@@ -19,6 +19,7 @@
 						aria-controls="tabPanel${i+1}"
 						aria-selected="false"
 						class="nav-link"
+						data-fragment-namespace="${fragmentEntryLinkNamespace}"
 						id="tab${i+1}"
 						role="tab"
 					>
@@ -39,7 +40,7 @@
 
 	<div class="tab-panel">
 		[#list 0..configuration.numberOfTabs-1 as i]
-		<div aria-labelledby="tab${i+1}" class="tab-panel-item d-none" id="tabPanel${i+1}" role="tabpanel" tabindex="0">
+		<div aria-labelledby="tab${i+1}" class="tab-panel-item d-none" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel${i+1}" role="tabpanel" tabindex="0">
 			<lfr-drop-zone></lfr-drop-zone>
 		</div>
 		[/#list]

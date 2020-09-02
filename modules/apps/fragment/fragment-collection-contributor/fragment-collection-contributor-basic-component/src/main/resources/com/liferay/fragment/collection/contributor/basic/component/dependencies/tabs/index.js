@@ -1,9 +1,9 @@
 const dropdown = fragmentElement.querySelector('.navbar-collapse');
 const dropdownButton = fragmentElement.querySelector('.navbar-toggler-link');
 const editMode = document.body.classList.contains('has-edit-mode-menu');
-const tabItems = [].slice.call(fragmentElement.querySelectorAll('.nav-link'));
+const tabItems = [].slice.call(fragmentElement.querySelectorAll('[data-fragment-namespace="' + fragmentNamespace + '"].nav-link'));
 const tabPanelItems = [].slice.call(
-	fragmentElement.querySelectorAll('.tab-panel-item')
+	fragmentElement.querySelectorAll('[data-fragment-namespace="' + fragmentNamespace + '"].tab-panel-item')
 );
 
 function activeTab(item) {

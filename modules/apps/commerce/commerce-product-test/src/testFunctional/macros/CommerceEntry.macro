@@ -41,7 +41,7 @@ definition {
 	}
 
 	macro addNewCatalogsEntry {
-		IFrame.selectModalFrame();
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
@@ -59,7 +59,7 @@ definition {
 	}
 
 	macro addNewChannelsEntry {
-		IFrame.selectModalFrame();
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
 
@@ -90,7 +90,7 @@ definition {
 				locator1 = "Button#SELECT",
 				value1 = "Select Site");
 
-			IFrame.selectModalFrame();
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			Click(
 				key_siteName = "${siteName}",
@@ -293,7 +293,7 @@ definition {
 	}
 
 	macro addProductsEntry {
-		IFrame.selectModalFrame();
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",

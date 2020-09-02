@@ -444,10 +444,11 @@ definition {
 
 		BlogsNavigator.gotoBrowseImage();
 
-		ItemSelector.viewLocationInfoViaBlogs(
-			locationName = "Site Name",
-			navTab = "Blog Images",
-			titleList = "Document_1.jpg");
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		for (var subheaderItem : list "Everywhere,Current Site") {
+			ManagementBar.viewNoSubheaderInFilterAndOrder(subheaderItem = "${subheaderItem}");
+		}
 	}
 
 	@description = "This ensures that the location info of depot documents can be viewed through Blogs on a connected site."

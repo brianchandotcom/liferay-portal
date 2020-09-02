@@ -623,7 +623,7 @@ create table Layout (
 	classPK LONG,
 	name STRING null,
 	title STRING null,
-	description STRING null,
+	description TEXT null,
 	keywords STRING null,
 	robots STRING null,
 	type_ VARCHAR(75) null,

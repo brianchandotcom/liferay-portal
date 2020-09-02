@@ -180,7 +180,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		const [action] = formattedActions;
 		const {data: actionData} = action;
 
-		if (actionData?.id && !actionData?.href) {
+		if (actionData?.id && !action?.href) {
 			return null;
 		}
 
@@ -201,7 +201,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		return isLink(action.target, action.onClick) ? (
 			<ClayLink
 				className="btn btn-secondary btn-sm"
-				href={formatActionURL(actionData.href, itemData)}
+				href={formatActionURL(action.href, itemData)}
 				monospaced={Boolean(action.icon)}
 			>
 				{content}

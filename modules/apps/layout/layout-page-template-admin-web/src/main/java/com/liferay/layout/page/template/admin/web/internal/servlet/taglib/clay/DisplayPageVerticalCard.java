@@ -14,10 +14,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -25,14 +21,15 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.DisplayPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -44,6 +41,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -181,25 +179,33 @@ public class DisplayPageVerticalCard
 		return HtmlUtil.escape(_layoutPageTemplateEntry.getName());
 	}
 
-	private String _getSubtypeLabel() throws PortalException {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+	private String _getSubtypeLabel() {
+		InfoItemFormVariationsProvider infoItemFormVariationsProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
 				_layoutPageTemplateEntry.getClassName());
 
-		if ((assetRendererFactory == null) ||
-			(_layoutPageTemplateEntry.getClassTypeId() <= 0)) {
+		if (infoItemFormVariationsProvider != null) {
+			Collection<InfoItemFormVariation> infoItemFormVariations =
+				infoItemFormVariationsProvider.getInfoItemFormVariations(
+					_layoutPageTemplateEntry.getGroupId());
 
-			return StringPool.BLANK;
+			for (InfoItemFormVariation infoItemFormVariation :
+					infoItemFormVariations) {
+
+				String key = infoItemFormVariation.getKey();
+
+				if (key.equals(
+						String.valueOf(
+							_layoutPageTemplateEntry.getClassTypeId()))) {
+
+					return infoItemFormVariation.getLabel(
+						_themeDisplay.getLocale());
+				}
+			}
 		}
 
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		ClassType classType = classTypeReader.getClassType(
-			_layoutPageTemplateEntry.getClassTypeId(),
-			_themeDisplay.getLocale());
-
-		return classType.getName();
+		return StringPool.BLANK;
 	}
 
 	private String _getTypeLabel() {

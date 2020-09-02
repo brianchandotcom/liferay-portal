@@ -160,7 +160,9 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 			})
 				.then((response) => {
 					setCollection(
-						response.length > 0 ? response : DEFAULT_COLLECTION
+						response.length > 0 && response.items?.length > 0
+							? response
+							: DEFAULT_COLLECTION
 					);
 				})
 				.catch((error) => {

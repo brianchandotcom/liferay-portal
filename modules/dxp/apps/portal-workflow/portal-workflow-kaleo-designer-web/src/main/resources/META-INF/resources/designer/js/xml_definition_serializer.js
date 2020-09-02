@@ -358,7 +358,6 @@ AUI.add(
 							if (isValue(item)) {
 								buffer.push(XMLUtil.create('screenName', item));
 							}
-
 							else if (isValue(dataAssignments.emailAddress[index])) {
 								buffer.push(
 									XMLUtil.create(

@@ -138,6 +138,10 @@ public class UserItemSelectorViewDisplayContext {
 		return _searchContainer;
 	}
 
+	public String getSearchContainerId() {
+		return "users";
+	}
+
 	protected long[] getCheckedUserIds() {
 		return ParamUtil.getLongValues(_portletRequest, "checkedUserIds");
 	}

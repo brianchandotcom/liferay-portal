@@ -40,6 +40,9 @@ public class UserItemSelectorViewManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			userItemSelectorViewDisplayContext.getSearchContainer());
+
+		_userItemSelectorViewDisplayContext =
+			userItemSelectorViewDisplayContext;
 	}
 
 	@Override
@@ -58,7 +61,7 @@ public class UserItemSelectorViewManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchContainerId() {
-		return "users";
+		return _userItemSelectorViewDisplayContext.getSearchContainerId();
 	}
 
 	@Override
@@ -75,5 +78,8 @@ public class UserItemSelectorViewManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"first-name", "last-name", "screen-name"};
 	}
+
+	private final UserItemSelectorViewDisplayContext
+		_userItemSelectorViewDisplayContext;
 
 }

@@ -30,7 +30,7 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 	id='<%= liferayPortletResponse.getNamespace() + "userSelectorWrapper" %>'
 >
 	<liferay-ui:search-container
-		id="users"
+		id="<%= userItemSelectorViewDisplayContext.getSearchContainerId() %>"
 		searchContainer="<%= userItemSelectorViewDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row

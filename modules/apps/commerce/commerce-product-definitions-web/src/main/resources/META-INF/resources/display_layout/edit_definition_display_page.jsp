@@ -125,9 +125,7 @@ if (cpDisplayLayout != null) {
 					</p>
 				</aui:field-wrapper>
 
-				<aui:button-row>
-					<aui:button name="chooseDisplayPage" value="choose" />
-				</aui:button-row>
+				<aui:button name="chooseDisplayPage" value="choose" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

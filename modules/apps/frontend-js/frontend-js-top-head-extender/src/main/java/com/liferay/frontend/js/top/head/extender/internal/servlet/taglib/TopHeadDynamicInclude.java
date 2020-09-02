@@ -64,14 +64,19 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isThemeJsFastLoad()) {
+			boolean cdnDynamicResourcesEnabled =
+				_portal.isCDNDynamicResourcesEnabled(
+					themeDisplay.getCompanyId());
+
 			if (themeDisplay.isThemeJsBarebone()) {
 				_renderBundleComboURLs(
-					httpServletRequest, httpServletResponse, _jsResourceURLs);
+					httpServletRequest, httpServletResponse, _jsResourceURLs,
+					cdnDynamicResourcesEnabled);
 			}
 			else {
 				_renderBundleComboURLs(
-					httpServletRequest, httpServletResponse,
-					_allJsResourceURLs);
+					httpServletRequest, httpServletResponse, _allJsResourceURLs,
+					cdnDynamicResourcesEnabled);
 			}
 		}
 		else {
@@ -235,7 +240,8 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 	private void _renderBundleComboURLs(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, List<String> urls)
+			HttpServletResponse httpServletResponse, List<String> urls,
+			boolean cdnDynamicResourcesEnabled)
 		throws IOException {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
@@ -254,6 +260,10 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
+
+		if (!cdnDynamicResourcesEnabled) {
+			absolutePortalURLBuilder.ignoreCDNHost();
+		}
 
 		String comboURL = absolutePortalURLBuilder.forResource(
 			comboPath

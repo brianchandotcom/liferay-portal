@@ -19,6 +19,8 @@ import java.io.StringReader;
 
 import java.util.Objects;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Yoo
@@ -28,7 +30,15 @@ public class BuildFactory {
 	public static Build newBuild(String url, Build parentBuild) {
 		url = JenkinsResultsParserUtil.getLocalURL(url);
 
-		if (url.contains("AXIS_VARIABLE=")) {
+		Matcher matcher = _buildURLPattern.matcher(url);
+
+		if (!matcher.find()) {
+			throw new IllegalArgumentException("Invalid Jenkins build URL");
+		}
+
+		String axisVariable = matcher.group("axisVariable");
+
+		if (axisVariable != null) {
 			String jobVariant = JenkinsResultsParserUtil.getBuildParameter(
 				url, "JOB_VARIANT");
 
@@ -156,5 +166,12 @@ public class BuildFactory {
 	private static final String[] _TOKENS_BATCH = {
 		"-batch", "-dist", "environment-"
 	};
+
+	private static final Pattern _buildURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/?",
+			"((?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)|)/?",
+			"((?<buildNumber>\\d+)|buildWithParameters\\?",
+			"(?<queryString>.*))/?"));
 
 }

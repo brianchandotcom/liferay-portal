@@ -375,7 +375,7 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Right",
-				textColor = "6C757D");
+				textColor = "6B6C7E");
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
 
@@ -402,7 +402,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'text-right')][//h2[contains(@class,'component-heading')]]",
 				locator2 = "color",
-				value1 = "rgba(108, 117, 125, 1)");
+				value1 = "rgba(107, 108, 126, 1)");
 		}
 
 		task ("Remove the fragment") {

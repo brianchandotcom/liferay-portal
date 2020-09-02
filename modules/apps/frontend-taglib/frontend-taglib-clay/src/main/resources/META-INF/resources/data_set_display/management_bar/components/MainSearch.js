@@ -12,8 +12,8 @@
  * details.
  */
 
-import Icon from '@clayui/icon';
-import classNames from 'classnames';
+import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayInput} from '@clayui/form';
 import React, {useContext, useEffect, useState} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
@@ -36,55 +36,43 @@ function MainSearch() {
 	}
 
 	return (
-		<div className="d-inline">
-			<div className="input-group">
-				<div className="input-group-item">
-					<div className="main-input-wrapper">
-						<input
-							className="form-control input-group-inset input-group-inset-after main-input-search"
-							onChange={(event) =>
-								updateInputValue(event.target.value)
-							}
-							onKeyDown={handleKeyDown}
-							placeholder={Liferay.Language.get('search')}
-							type="text"
-							value={inputValue}
-						/>
+		<ClayInput.Group>
+			<ClayInput.GroupItem>
+				<ClayInput
+					className="input-group-inset input-group-inset-after"
+					onChange={(event) => updateInputValue(event.target.value)}
+					onKeyDown={handleKeyDown}
+					placeholder={Liferay.Language.get('search')}
+					value={inputValue}
+				/>
+				<ClayInput.GroupInsetItem after tag="div">
+					<ClayButtonWithIcon
+						disabled={!inputValue.length}
+						displayType="unstyled"
+						onClick={(event) => {
+							event.preventDefault();
+							updateInputValue('');
 
-						<button
-							className={classNames(
-								'main-input-reset-button btn btn-unstyled',
-								!inputValue.length && 'd-none'
-							)}
-							disabled={!inputValue.length}
-							onClick={(event) => {
-								event.preventDefault();
-								updateInputValue('');
+							return updateSearchParam('');
+						}}
+						style={{
+							opacity: !inputValue.length ? 0 : 1,
+							pointerEvents: !inputValue.length ? 'none' : 'auto',
+						}}
+						symbol="times-circle"
+					/>
+					<ClayButtonWithIcon
+						displayType="unstyled"
+						onClick={(event) => {
+							event.preventDefault();
 
-								return updateSearchParam('');
-							}}
-							type="button"
-						>
-							<Icon symbol="times-circle" />
-						</button>
-					</div>
-
-					<span className="input-group-inset-item input-group-inset-item-after">
-						<button
-							className="btn btn-unstyled"
-							onClick={(event) => {
-								event.preventDefault();
-
-								return updateSearchParam(inputValue);
-							}}
-							type="button"
-						>
-							<Icon symbol="search" />
-						</button>
-					</span>
-				</div>
-			</div>
-		</div>
+							return updateSearchParam(inputValue);
+						}}
+						symbol="search"
+					/>
+				</ClayInput.GroupInsetItem>
+			</ClayInput.GroupItem>
+		</ClayInput.Group>
 	);
 }
 

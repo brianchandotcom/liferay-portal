@@ -1,3 +1,18 @@
+// Buttons colors
+
+$custom-properties-button-colors: ();
+$custom-properties-button-colors: map-merge(
+	(
+		primary: $btn-primary,
+		outline-primary: $btn-outline-primary,
+		secondary: $btn-secondary,
+		outline-secondary: $btn-outline-secondary,
+		link: $btn-link,
+	),
+	$custom-properties-button-colors
+);
+$custom-properties-button-maps: ();
+
 // Container max widths
 
 $custom-properties-container-max-widths: ();
@@ -33,8 +48,8 @@ $custom-properties-spacers: map-merge(
 
 // Theme colors
 
-$theme-colors-cp: ();
-$theme-colors-cp: map-deep-merge(
+$custom-properties-theme-colors: ();
+$custom-properties-theme-colors: map-merge(
 	(
 		danger: var(--danger),
 		dark: var(--dark),
@@ -47,8 +62,73 @@ $theme-colors-cp: map-deep-merge(
 		success: var(--success),
 		warning: var(--warning),
 	),
-	$theme-colors-cp
+	$custom-properties-theme-colors
 );
+
+// Buttons
+
+@each $key, $map in $custom-properties-button-colors {
+	$normal: ();
+	$hover: ();
+
+	:root {
+		@each $status in (normal, hover) {
+			$prefix: $status + '-';
+
+			@if ($status == normal) {
+				$prefix: '';
+			}
+
+			@each $prop in (background-color, border-color, color) {
+				$alias: $prefix + $prop;
+				$btn-variable: '';
+
+				@if ($prop == background-color) {
+					$alias: $prefix + 'bg';
+				}
+
+				@if (map-has-key($map, #{$alias})) {
+					$btn-variable: map-get($map, #{$alias});
+				} @else if($status == normal) {
+					$btn-variable: map-get($map, #{$prop});
+				} @else {
+					$btn-variable: map-get(map-get($map, #{$status}), #{$prop});
+				}
+
+				@if ($btn-variable != null) {
+					--btn-#{$key}-#{$prefix}#{$prop}: #{$btn-variable};
+
+					@if ($status == normal) {
+						$normal: map-merge(
+							(#{$prop}: var(--btn-#{$key}-#{$prop})),
+							$normal
+						);
+					} @else {
+						$hover: map-merge(
+							(#{$prop}: var(--btn-#{$key}-#{$prefix}#{$prop})),
+							$hover
+						);
+					}
+				}
+			}
+		}
+	}
+
+	$normal: map-merge(
+		(
+			hover: $hover,
+			focus: $hover,
+			active: $hover,
+			disabled: $hover,
+		),
+		$normal
+	);
+
+	$custom-properties-button-maps: map-merge(
+		(#{$key}: $normal),
+		$custom-properties-button-maps
+	);
+}
 
 :root {
 	// Aspect ratios
@@ -95,20 +175,6 @@ $theme-colors-cp: map-deep-merge(
 	@each $key, $value in $theme-colors {
 		--#{$key}: #{$value};
 	}
-
-	--danger-l1: #{$danger-l1};
-	--danger-l2: #{$danger-l2};
-	--info-l1: #{$info-l1};
-	--info-l2: #{$info-l2};
-	--primary-d1: #{$primary-d1};
-	--primary-l1: #{$primary-l1};
-	--primary-l3: #{$primary-l3};
-	--secondary-d1: var(--gray-800);
-	--success-d1: #{$success-d1};
-	--success-l1: #{$success-l1};
-	--success-l2: #{$success-l2};
-	--warning-l1: #{$warning-l1};
-	--warning-l2: #{$warning-l2};
 
 	// Container max
 

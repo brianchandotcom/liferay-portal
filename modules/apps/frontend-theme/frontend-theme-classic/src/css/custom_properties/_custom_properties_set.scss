@@ -18,7 +18,7 @@
 
 // Background and text color variants
 
-@each $color, $value in $theme-colors-cp {
+@each $color, $value in $custom-properties-theme-colors {
 	.bg-#{$color} {
 		background-color: $value !important;
 	}
@@ -51,79 +51,10 @@ body,
 
 // Buttons
 
-.btn-link:not(.dropdown-item) {
-	@include button-cp(
-		var(--transparent),
-		var(--transparent),
-		var(--primary),
-		var(--transparent),
-		var(--transparent),
-		var(--primary-d1)
-	);
-}
-
-.btn-outline-light {
-	@include button-cp(
-		var(--transparent),
-		var(--white),
-		var(--white),
-		var(--white),
-		var(--white),
-		var(--dark)
-	);
-}
-
-.btn-outline-primary {
-	@include button-cp(
-		var(--transparent),
-		var(--primary),
-		var(--primary),
-		var(--primary-d1),
-		var(--primary-d1),
-		var(--white)
-	);
-}
-
-.btn-outline-secondary {
-	@include button-cp(
-		var(--transparent),
-		var(--gray-400),
-		var(--secondary),
-		var(--gray-200),
-		var(--transparent),
-		var(--dark)
-	);
-}
-
-.btn-primary {
-	@include button-cp(
-		var(--primary),
-		var(--primary),
-		var(--white),
-		var(--primary-d1),
-		var(--primary-d1)
-	);
-}
-
-.btn-secondary {
-	@include button-cp(
-		var(--white),
-		var(--gray-400),
-		var(--secondary),
-		var(--gray-100),
-		var(--gray-400),
-		var(--dark)
-	);
-}
-
-.btn-success {
-	@include button-cp(
-		var(--success),
-		var(--success),
-		var(--white),
-		var(--success-d1),
-		var(--success-d1)
-	);
+@each $key, $map in $custom-properties-button-maps {
+	.btn-#{$key} {
+		@include clay-button-variant($map);
+	}
 }
 
 // Container max

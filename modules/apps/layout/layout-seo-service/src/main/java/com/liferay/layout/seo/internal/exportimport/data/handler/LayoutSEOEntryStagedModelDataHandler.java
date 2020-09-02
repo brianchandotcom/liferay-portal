@@ -14,14 +14,25 @@
 
 package com.liferay.layout.seo.internal.exportimport.data.handler;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,9 +51,7 @@ public class LayoutSEOEntryStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {LayoutSEOEntry.class.getName()};
 
 	@Override
-	public void deleteStagedModel(LayoutSEOEntry layoutSEOEntry)
-		throws PortalException {
-
+	public void deleteStagedModel(LayoutSEOEntry layoutSEOEntry) {
 		_layoutSEOEntryLocalService.deleteLayoutSEOEntry(layoutSEOEntry);
 	}
 
@@ -74,8 +83,39 @@ public class LayoutSEOEntryStagedModelDataHandler
 			LayoutSEOEntry layoutSEOEntry)
 		throws Exception {
 
+		DDMStructure ddmStructure = _getDDMStructure(
+			portletDataContext.getCompanyId());
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, layoutSEOEntry, ddmStructure,
+			PortletDataContext.REFERENCE_TYPE_STRONG);
+
+		Element layoutSEOEntryElement = portletDataContext.getExportDataElement(
+			layoutSEOEntry);
+
+		Element structureFieldsElement = layoutSEOEntryElement.addElement(
+			"structure-fields");
+
+		String ddmFormValuesPath = ExportImportPathUtil.getModelPath(
+			ddmStructure, String.valueOf(layoutSEOEntry.getDDMStorageId()));
+
+		structureFieldsElement.addAttribute(
+			"ddm-form-values-path", ddmFormValuesPath);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				_jsonDDMFormValuesSerializer.serialize(
+					DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+						_storageEngine.getDDMFormValues(
+							layoutSEOEntry.getDDMStorageId())
+					).build());
+
+		portletDataContext.addZipEntry(
+			ddmFormValuesPath,
+			ddmFormValuesSerializerSerializeResponse.getContent());
+
 		portletDataContext.addClassedModel(
-			portletDataContext.getExportDataElement(layoutSEOEntry),
+			layoutSEOEntryElement,
 			ExportImportPathUtil.getModelPath(layoutSEOEntry), layoutSEOEntry);
 	}
 
@@ -127,7 +167,32 @@ public class LayoutSEOEntryStagedModelDataHandler
 		}
 	}
 
+	private DDMStructure _getDDMStructure(long companyId) throws Exception {
+		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
+
+		return _ddmStructureLocalService.getStructure(
+			companyGroup.getGroupId(),
+			_classNameLocalService.getClassNameId(
+				LayoutSEOEntry.class.getName()),
+			"custom-meta-tags");
+	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference(target = "(ddm.form.values.serializer.type=json)")
+	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
+
 	@Reference
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
+
+	@Reference
+	private StorageEngine _storageEngine;
 
 }

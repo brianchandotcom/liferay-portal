@@ -40,10 +40,10 @@ public class ApplicationsMenuUtil {
 	public static String getLiferayLogoURL(ServletContext servletContext) {
 		if (_isDXPVersion()) {
 			return servletContext.getContextPath() +
-				"/images/dxp_company_logo.png";
+				"/images/liferay_dxp_logo.png";
 		}
 
-		return servletContext.getContextPath() + "/images/company_logo.png";
+		return servletContext.getContextPath() + "/images/liferay_logo.png";
 	}
 
 	public static String getLiferayName() {

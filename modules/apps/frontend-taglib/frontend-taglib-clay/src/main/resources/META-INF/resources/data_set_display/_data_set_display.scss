@@ -41,23 +41,9 @@
 		}
 	}
 
-	.main-input-wrapper {
-		position: relative;
-	}
-
 	.main-input-search {
 		padding-right: map-get($spacers, 5) !important;
 		width: 100%;
-	}
-
-	.main-input-reset-button {
-		color: currentColor;
-		height: 100%;
-		position: absolute;
-		right: 0;
-		text-align: center;
-		top: 0;
-		width: map-get($spacers, 5);
 	}
 
 	.table {

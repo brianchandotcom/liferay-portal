@@ -120,7 +120,8 @@ export default function getAlloyEditorProcessor(
 					if (
 						event.data.keyCode === KEY_ENTER &&
 						_element &&
-						_element.getAttribute('type') === 'text'
+						(_element.getAttribute('type') === 'text' ||
+							_element.dataset.lfrEditableType === 'text')
 					) {
 						event.cancel();
 					}

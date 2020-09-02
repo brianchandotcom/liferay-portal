@@ -200,6 +200,9 @@ public class GetDataMVCResourceCommandTest {
 				MockLiferayResourceResponse mockLiferayResourceResponse =
 					new MockLiferayResourceResponse();
 
+				_mvcResourceCommand.serveResource(
+					mockLiferayResourceRequest, mockLiferayResourceResponse);
+
 				ByteArrayOutputStream byteArrayOutputStream =
 					(ByteArrayOutputStream)
 						mockLiferayResourceResponse.getPortletOutputStream();
@@ -213,7 +216,7 @@ public class GetDataMVCResourceCommandTest {
 				JSONObject authorJSONObject = contextJSONObject.getJSONObject(
 					"author");
 
-				Assert.assertEquals(authorName, authorJSONObject.get("alt"));
+				Assert.assertEquals(authorName, authorJSONObject.get("name"));
 				Assert.assertEquals(
 					authorProfileImage, authorJSONObject.get("url"));
 

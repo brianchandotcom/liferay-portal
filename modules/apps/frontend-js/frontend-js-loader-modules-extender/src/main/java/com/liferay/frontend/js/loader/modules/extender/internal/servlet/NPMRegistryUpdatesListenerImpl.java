@@ -37,7 +37,7 @@ public class NPMRegistryUpdatesListenerImpl
 			_bundleContext.getService(serviceReference);
 
 		try {
-			jsResolveModulesServlet.updateEtag();
+			jsResolveModulesServlet.updateETag();
 		}
 		finally {
 			_bundleContext.ungetService(serviceReference);

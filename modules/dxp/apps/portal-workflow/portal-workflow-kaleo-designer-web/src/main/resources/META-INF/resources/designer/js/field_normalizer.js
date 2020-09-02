@@ -22,6 +22,12 @@ AUI.add(
 		var isObject = Lang.isObject;
 		var isValue = Lang.isValue;
 
+		var STR_BLANK = '';
+
+		var isNotEmptyValue = function (item) {
+			return isValue(item) && item !== STR_BLANK;
+		};
+
 		var COL_TYPES_ASSIGNMENT = [
 			'address',
 			'receptionType',
@@ -50,7 +56,7 @@ AUI.add(
 		var populateUser = function (assignments) {
 			if (
 				isArray(assignments.emailAddress) &&
-				assignments.emailAddress.filter(isValue).length !== 0
+				assignments.emailAddress.filter(isNotEmptyValue).length !== 0
 			) {
 				KaleoDesignerRemoteServices.getUser(
 					assignments.emailAddress,
@@ -71,7 +77,7 @@ AUI.add(
 			}
 			else if (
 				isArray(assignments.screenName) &&
-				assignments.screenName.filter(isValue).length !== 0
+				assignments.screenName.filter(isNotEmptyValue).length !== 0
 			) {
 				KaleoDesignerRemoteServices.getUser(
 					null,
@@ -92,7 +98,7 @@ AUI.add(
 			}
 			else if (
 				isArray(assignments.userId) &&
-				assignments.userId.filter(isValue).length !== 0
+				assignments.userId.filter(isNotEmptyValue).length !== 0
 			) {
 				KaleoDesignerRemoteServices.getUser(
 					null,
@@ -132,7 +138,7 @@ AUI.add(
 
 				data.forEach((item1, index1) => {
 					A.each(item1, (item2, index2) => {
-						if (isValue(item2)) {
+						if (isNotEmptyValue(item2)) {
 							_put(actions, index2, item2, index1);
 						}
 					});
@@ -148,7 +154,7 @@ AUI.add(
 					COL_TYPES_ASSIGNMENT.forEach((item1) => {
 						var value = data[0][item1];
 
-						if (!isValue(value)) {
+						if (!isNotEmptyValue(value)) {
 							return;
 						}
 
@@ -170,7 +176,7 @@ AUI.add(
 						if (
 							item1 !== 'receptionType' &&
 							AArray.some(assignmentValue, (item2) => {
-								var valid = isValue(item2);
+								var valid = isNotEmptyValue(item2);
 
 								if (
 									valid &&
@@ -180,7 +186,7 @@ AUI.add(
 								) {
 									valid = AArray.some(
 										AObject.values(item2),
-										isValue
+										isNotEmptyValue
 									);
 								}
 
@@ -209,7 +215,7 @@ AUI.add(
 
 				data.forEach((item1, index1) => {
 					A.each(item1, (item2, index2) => {
-						if (isValue(item2)) {
+						if (isNotEmptyValue(item2)) {
 							_put(delays, index2, item2, index1);
 						}
 					});
@@ -225,7 +231,7 @@ AUI.add(
 
 				data.forEach((item1, index1) => {
 					A.each(item1, (item2, index2) => {
-						if (isValue(item2)) {
+						if (isNotEmptyValue(item2)) {
 							if (index2 === 'recipients') {
 								if (item2[0] && item2[0].receptionType) {
 									_put(
@@ -255,7 +261,7 @@ AUI.add(
 
 				data.forEach((item1, index1) => {
 					A.each(item1, (item2, index2) => {
-						if (isValue(item2)) {
+						if (isNotEmptyValue(item2)) {
 							if (index2 === 'delay' || index2 === 'recurrence') {
 								return;
 							}

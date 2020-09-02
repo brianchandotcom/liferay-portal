@@ -107,15 +107,19 @@ if (Validator.isNotNull(backURL)) {
 			var form = window.document['<portlet:namespace />fm'];
 
 			if (commerceInventoryWarehouseItemId > 0) {
-				form['<%= Constants.CMD %>'].value = '<%= Constants.UPDATE %>';
+				form['<portlet:namespace /><%= Constants.CMD %>'].value =
+					'<%= Constants.UPDATE %>';
 			}
 			else {
-				form['<%= Constants.CMD %>'].value = '<%= Constants.ADD %>';
+				form['<portlet:namespace /><%= Constants.CMD %>'].value =
+					'<%= Constants.ADD %>';
 			}
 
-			form['commerceInventoryWarehouseId'].value = commerceInventoryWarehouseId;
 			form[
-				'commerceInventoryWarehouseItemId'
+				'<portlet:namespace />commerceInventoryWarehouseId'
+			].value = commerceInventoryWarehouseId;
+			form[
+				'<portlet:namespace />commerceInventoryWarehouseItemId'
 			].value = commerceInventoryWarehouseItemId;
 
 			var quantityInputId =
@@ -123,7 +127,7 @@ if (Validator.isNotNull(backURL)) {
 
 			var quantityInput = window.document.querySelector(quantityInputId);
 
-			form['quantity'].value = quantityInput.value;
+			form['<portlet:namespace />quantity'].value = quantityInput.value;
 
 			submitForm(form);
 		}

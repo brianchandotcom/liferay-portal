@@ -32,7 +32,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 	function <portlet:namespace />chooseSelectionStyle() {
 		var form = window.document['<portlet:namespace />fm'];
 
-		form['<%= Constants.CMD %>'].value = 'selection-style';
+		form['<portlet:namespace /><%= Constants.CMD %>'].value = 'selection-style';
 
 		submitForm(form);
 	}

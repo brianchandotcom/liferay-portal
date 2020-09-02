@@ -161,7 +161,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 			var form = window.document['<portlet:namespace />fm'];
 
 			form[
-				'deleteCommerceDiscountRelIds'
+				'<portlet:namespace />deleteCommerceDiscountRelIds'
 			].value = Liferay.Util.listCheckedExcept(
 				form,
 				'<portlet:namespace />allRowIds'

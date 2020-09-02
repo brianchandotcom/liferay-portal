@@ -169,7 +169,7 @@ CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasureme
 				var form = window.document['<portlet:namespace />fm'];
 
 				form[
-					'deleteCPMeasurementUnitIds'
+					'<portlet:namespace />deleteCPMeasurementUnitIds'
 				].value = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'

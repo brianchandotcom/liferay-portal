@@ -137,7 +137,9 @@ CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayC
 			) {
 				var form = window.document['<portlet:namespace />fm'];
 
-				form['deleteCPTaxCategoryIds'].value = Liferay.Util.listCheckedExcept(
+				form[
+					'<portlet:namespace />deleteCPTaxCategoryIds'
+				].value = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'
 				);

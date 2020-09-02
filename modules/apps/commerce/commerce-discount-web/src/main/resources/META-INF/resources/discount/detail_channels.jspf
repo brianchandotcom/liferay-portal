@@ -47,7 +47,10 @@ long[] commerceChannelIds = commerceDiscountDisplayContext.getCommerceChannelRel
 					form,
 					'<portlet:namespace />allRowIds'
 				);
-				form['commerceChannelIds'].value = values.replace(/,?on/g, '');
+				form['<portlet:namespace />commerceChannelIds'].value = values.replace(
+					/,?on/g,
+					''
+				);
 				return values;
 			}
 

@@ -158,7 +158,9 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 			) {
 				var form = window.document['<portlet:namespace />fm'];
 
-				form['deleteCommerceRegionIds'].value = Liferay.Util.listCheckedExcept(
+				form[
+					'<portlet:namespace />deleteCommerceRegionIds'
+				].value = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'
 				);

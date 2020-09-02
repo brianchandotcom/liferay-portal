@@ -143,7 +143,7 @@ CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscoun
 				var form = window.document['<portlet:namespace />fm'];
 
 				form[
-					'deleteCommerceDiscountIds'
+					'<portlet:namespace />deleteCommerceDiscountIds'
 				].value = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'

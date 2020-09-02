@@ -240,7 +240,9 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 			var fieldValues = getMetalJsFormData(ddmForm);
 
 			var form = window.document['<portlet:namespace />fm'];
-			form['ddmFormValues'].value = JSON.stringify(fieldValues);
+			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
+				fieldValues
+			);
 		});
 	});
 
@@ -277,7 +279,9 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 				fieldValues.push(fieldValue);
 			});
 
-			form['ddmFormValues'].value = JSON.stringify(fieldValues);
+			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
+				fieldValues
+			);
 		}
 
 		submitForm(form);

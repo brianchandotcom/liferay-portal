@@ -122,7 +122,9 @@
 			var fieldValues = getMetalJsFormData(ddmForm);
 
 			var form = document['<portlet:namespace />fm'];
-			form['ddmFormValues'].value = JSON.stringify(fieldValues);
+			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
+				fieldValues
+			);
 		});
 	});
 
@@ -159,7 +161,9 @@
 				fieldValues.push(fieldValue);
 			});
 
-			form['ddmFormValues'].value = JSON.stringify(fieldValues);
+			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
+				fieldValues
+			);
 		}
 
 		submitForm(form);

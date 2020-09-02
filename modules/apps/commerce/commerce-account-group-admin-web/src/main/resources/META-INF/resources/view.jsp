@@ -136,7 +136,7 @@ CommerceAccountGroupAdminDisplayContext commerceAccountGroupAdminDisplayContext 
 				var form = window.document['<portlet:namespace />fm'];
 
 				form[
-					'deleteCommerceAccountGroupIds'
+					'<portlet:namespace />deleteCommerceAccountGroupIds'
 				].value = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'

@@ -76,7 +76,7 @@ long[] commerceChannelIds = commerceCountriesDisplayContext.getCommerceChannelRe
 			form,
 			'<portlet:namespace />allRowIds'
 		);
-		form['commerceChannelIds'].value = values;
+		form['<portlet:namespace />commerceChannelIds'].value = values;
 		return values;
 	}
 

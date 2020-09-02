@@ -136,7 +136,7 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 			var form = window.document['<portlet:namespace />fm'];
 
 			form[
-				'deleteCommerceApplicationModelIds'
+				'<portlet:namespace />deleteCommerceApplicationModelIds'
 			].value = Liferay.Util.listCheckedExcept(
 				form,
 				'<portlet:namespace />allRowIds'

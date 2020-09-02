@@ -137,7 +137,7 @@ CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayCo
 				var form = window.document['<portlet:namespace />fm'];
 
 				form[
-					'deleteCommerceAvailabilityEstimateIds'
+					'<portlet:namespace />deleteCommerceAvailabilityEstimateIds'
 				].value = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'

@@ -190,9 +190,10 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 			var form = window.document['<portlet:namespace />fm'];
 
 			form.setAttribute('method', 'post');
-			form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
+			form['<portlet:namespace /><%= Constants.CMD %>'].value =
+				'<%= Constants.DELETE %>';
 			form[
-				'deleteCPDefinitionGroupedEntryIds'
+				'<portlet:namespace />deleteCPDefinitionGroupedEntryIds'
 			].value = Liferay.Util.listCheckedExcept(
 				form,
 				'<portlet:namespace />allRowIds'

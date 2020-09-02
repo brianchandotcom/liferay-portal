@@ -180,9 +180,10 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 			) {
 				var form = window.document['<portlet:namespace />fm'];
 
-				form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
+				form['<portlet:namespace /><%= Constants.CMD %>'].value =
+					'<%= Constants.DELETE %>';
 				form[
-					'deleteCommerceCurrencyIds'
+					'<portlet:namespace />deleteCommerceCurrencyIds'
 				].value = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'
@@ -200,9 +201,10 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 			) {
 				var form = window.document['<portlet:namespace />fm'];
 
-				form['<%= Constants.CMD %>'].value = 'updateExchangeRates';
+				form['<portlet:namespace /><%= Constants.CMD %>'].value =
+					'updateExchangeRates';
 				form[
-					'updateCommerceCurrencyExchangeRateIds'
+					'<portlet:namespace />updateCommerceCurrencyExchangeRateIds'
 				].value = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'

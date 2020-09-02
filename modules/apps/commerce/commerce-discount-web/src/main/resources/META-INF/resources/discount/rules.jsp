@@ -122,7 +122,7 @@ SearchContainer<CommerceDiscountRule> commerceDiscountRuleSearchContainer = comm
 			var form = window.document['<portlet:namespace />fm'];
 
 			form[
-				'deleteCommerceDiscountRuleIds'
+				'<portlet:namespace />deleteCommerceDiscountRuleIds'
 			].value = Liferay.Util.listCheckedExcept(
 				form,
 				'<portlet:namespace />allRowIds'

@@ -118,9 +118,11 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 	function <portlet:namespace />moveSelectionDown(productEntryOrder) {
 		var form = window.document['<portlet:namespace />fm'];
 
-		form['<%= Constants.CMD %>'].value = 'move-selection-down';
-		form['redirect'].value = '<%= HtmlUtil.escapeJS(currentURL) %>';
-		form['productEntryOrder'].value = productEntryOrder;
+		form['<portlet:namespace /><%= Constants.CMD %>'].value =
+			'move-selection-down';
+		form['<portlet:namespace />redirect'].value =
+			'<%= HtmlUtil.escapeJS(currentURL) %>';
+		form['<portlet:namespace />productEntryOrder'].value = productEntryOrder;
 
 		submitForm(form);
 	}
@@ -128,9 +130,11 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 	function <portlet:namespace />moveSelectionUp(productEntryOrder) {
 		var form = window.document['<portlet:namespace />fm'];
 
-		form['<%= Constants.CMD %>'].value = 'move-selection-up';
-		form['redirect'].value = '<%= HtmlUtil.escapeJS(currentURL) %>';
-		form['productEntryOrder'].value = productEntryOrder;
+		form['<portlet:namespace /><%= Constants.CMD %>'].value =
+			'move-selection-up';
+		form['<portlet:namespace />redirect'].value =
+			'<%= HtmlUtil.escapeJS(currentURL) %>';
+		form['<portlet:namespace />productEntryOrder'].value = productEntryOrder;
 
 		submitForm(form);
 	}

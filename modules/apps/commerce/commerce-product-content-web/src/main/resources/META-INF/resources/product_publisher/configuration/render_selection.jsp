@@ -30,7 +30,8 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 	function <portlet:namespace />chooseRenderSelection() {
 		var form = window.document['<portlet:namespace />fm'];
 
-		form['<%= Constants.CMD %>'].value = 'render-selection';
+		form['<portlet:namespace /><%= Constants.CMD %>'].value =
+			'render-selection';
 
 		submitForm(form);
 	}

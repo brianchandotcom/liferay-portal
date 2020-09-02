@@ -17,6 +17,7 @@ import {debounce, openSelectionModal} from 'frontend-js-web';
 import {config} from '../config/index';
 
 const KEY_ENTER = 13;
+const KEY_SPACE = 32;
 
 const defaultGetEditorWrapper = (element) => {
 	const wrapper = document.createElement('div');
@@ -30,6 +31,12 @@ const defaultGetEditorWrapper = (element) => {
 
 const defaultRender = (element, value) => {
 	element.innerHTML = value;
+};
+
+const keyupHandler = (event) => {
+	if (event.keyCode === KEY_SPACE) {
+		event.preventDefault();
+	}
 };
 
 /**
@@ -74,6 +81,8 @@ export default function getAlloyEditorProcessor(
 
 			editorWrapper.setAttribute('id', editorName);
 			editorWrapper.setAttribute('name', editorName);
+
+			element.addEventListener('keyup', keyupHandler);
 
 			_editor = AlloyEditor.editable(editorWrapper, {
 				...editorConfig,
@@ -183,6 +192,10 @@ export default function getAlloyEditorProcessor(
 				_eventHandlers = null;
 				_element = null;
 				_callbacks = {};
+			}
+
+			if (element) {
+				element.removeEventListener('keyup', keyupHandler);
 			}
 		},
 

@@ -148,7 +148,13 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "No theme found for specified theme id classic_WAR_classictheme. Returning the default theme.");
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AssertHTMLSourceTextPresent(value1 = "-theme/images/favicon.ico");
+
+		AssertHTMLSourceTextNotPresent(value1 = "classic-theme/images/favicon.ico");
+
+		Portlet.viewTitle(portletName = "Hello World");
 
 		takeScreenshot();
 	}

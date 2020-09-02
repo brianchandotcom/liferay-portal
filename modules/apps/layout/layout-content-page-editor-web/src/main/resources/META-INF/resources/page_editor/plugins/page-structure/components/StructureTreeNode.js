@@ -185,7 +185,7 @@ export default function StructureTreeNode({node}) {
 					}
 				}}
 				onDoubleClick={(event) => event.stopPropagation()}
-				ref={node.draggable ? handlerRef : nodeRef}
+				ref={handlerRef}
 				role="button"
 			/>
 
@@ -195,6 +195,7 @@ export default function StructureTreeNode({node}) {
 				icon={node.icon}
 				id={node.id}
 				name={node.name}
+				ref={nodeRef}
 			/>
 
 			{node.removable && canUpdatePageStructure && (
@@ -218,26 +219,29 @@ StructureTreeNode.propTypes = {
 	}).isRequired,
 };
 
-const NameLabel = ({activable, disabled, icon, id, name}) => {
-	const activeItemId = useActiveItemId();
+const NameLabel = React.forwardRef(
+	({activable, disabled, icon, id, name}, ref) => {
+		const activeItemId = useActiveItemId();
 
-	return (
-		<div
-			className={classNames(
-				'page-editor__page-structure__tree-node__name',
-				{
-					'page-editor__page-structure__tree-node__name--active':
-						activable && nodeIsSelected(id, activeItemId),
-					'page-editor__page-structure__tree-node__name--disabled': disabled,
-				}
-			)}
-		>
-			{icon && <ClayIcon symbol={icon || ''} />}
+		return (
+			<div
+				className={classNames(
+					'page-editor__page-structure__tree-node__name',
+					{
+						'page-editor__page-structure__tree-node__name--active':
+							activable && nodeIsSelected(id, activeItemId),
+						'page-editor__page-structure__tree-node__name--disabled': disabled,
+					}
+				)}
+				ref={ref}
+			>
+				{icon && <ClayIcon symbol={icon || ''} />}
 
-			{name || Liferay.Language.get('element')}
-		</div>
-	);
-};
+				{name || Liferay.Language.get('element')}
+			</div>
+		);
+	}
+);
 
 const RemoveButton = ({node, visible}) => {
 	const dispatch = useDispatch();

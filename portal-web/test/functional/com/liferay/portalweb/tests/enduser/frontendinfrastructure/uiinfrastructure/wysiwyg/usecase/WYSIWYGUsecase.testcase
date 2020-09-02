@@ -119,9 +119,7 @@ definition {
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
-		SelectFrame.selectFrameNoLoading(
-			key_fieldLabel = "content",
-			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 		Click(locator1 = "CKEditor#BODY");
 

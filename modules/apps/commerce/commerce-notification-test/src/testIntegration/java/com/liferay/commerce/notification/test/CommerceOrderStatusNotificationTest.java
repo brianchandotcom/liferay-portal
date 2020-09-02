@@ -34,7 +34,9 @@ import com.liferay.commerce.notification.service.CommerceNotificationTemplateLoc
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalServiceUtil;
 import com.liferay.commerce.notification.test.util.CommerceNotificationTestUtil;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
@@ -53,6 +55,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +68,8 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Luca Pellizzon
@@ -115,6 +121,46 @@ public class CommerceOrderStatusNotificationTest {
 				deleteCommerceNotificationTemplate(
 					commerceNotificationTemplate);
 		}
+	}
+
+	@Test
+	public void testFreeOrderPlacedNotification() throws Exception {
+		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		_commerceOrder.setTotal(BigDecimal.ZERO);
+
+		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrder);
+
+		Assert.assertEquals(BigDecimal.ZERO, _commerceOrder.getTotal());
+
+		_commercePaymentEngine.completePayment(
+			_commerceOrder.getCommerceOrderId(), null,
+			new MockHttpServletRequest());
+
+		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
+			_commerceOrder.getCommerceOrderId());
+
+		Assert.assertEquals(
+			CommerceOrderConstants.PAYMENT_STATUS_PAID,
+			_commerceOrder.getPaymentStatus());
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_PENDING,
+			_commerceOrder.getOrderStatus());
+
+		Thread.sleep(1000);
+
+		int commerceNotificationQueueEntriesCount =
+			_commerceNotificationQueueEntryLocalService.
+				getCommerceNotificationQueueEntriesCount(
+					_commerceChannel.getGroupId());
+
+		Assert.assertEquals(1, commerceNotificationQueueEntriesCount);
+
+		_checkCommerceNotificationTemplate(
+			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED);
 	}
 
 	@Ignore
@@ -309,6 +355,12 @@ public class CommerceOrderStatusNotificationTest {
 
 	@Inject
 	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Inject
+	private CommercePaymentEngine _commercePaymentEngine;
 
 	@Inject
 	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;

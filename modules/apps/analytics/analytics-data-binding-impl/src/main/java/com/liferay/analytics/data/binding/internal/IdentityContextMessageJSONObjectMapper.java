@@ -43,23 +43,14 @@ public class IdentityContextMessageJSONObjectMapper
 	public String map(IdentityContextMessage identityContextMessage)
 		throws IOException {
 
-		return _objectMapper.writeValueAsString(identityContextMessage);
+		return ObjectMapperHolder._objectMapper.writeValueAsString(
+			identityContextMessage);
 	}
 
 	@Override
 	public IdentityContextMessage map(String jsonString) throws IOException {
-		return _objectMapper.readValue(
+		return ObjectMapperHolder._objectMapper.readValue(
 			jsonString, IdentityContextMessage.class);
-	}
-
-	private final ObjectMapper _objectMapper = new ObjectMapper();
-
-	{
-		_objectMapper.addMixIn(
-			IdentityContextMessage.class, IdentityContextMessageMixIn.class);
-
-		_objectMapper.configure(
-			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	}
 
 	private static final class IdentityContextMessageMixIn {
@@ -120,6 +111,21 @@ public class IdentityContextMessageJSONObjectMapper
 
 		@JsonProperty("webGLFingerPrint")
 		private String _webGLFingerPrint;
+
+	}
+
+	private static class ObjectMapperHolder {
+
+		private static final ObjectMapper _objectMapper = new ObjectMapper() {
+			{
+				addMixIn(
+					IdentityContextMessage.class,
+					IdentityContextMessageMixIn.class);
+
+				configure(
+					DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			}
+		};
 
 	}
 

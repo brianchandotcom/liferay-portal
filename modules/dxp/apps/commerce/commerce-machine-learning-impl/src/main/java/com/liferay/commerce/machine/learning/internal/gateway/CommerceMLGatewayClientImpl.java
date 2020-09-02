@@ -135,7 +135,8 @@ public class CommerceMLGatewayClientImpl implements CommerceMLGatewayClient {
 			String json = jsonWebServiceClient.doPostAsJSON(
 				_ML_START_URL_PATH, unicodeProperties);
 
-			return _objectMapper.readValue(json, CommerceMLJobState.class);
+			return ObjectMapperHolder._objectMapper.readValue(
+				json, CommerceMLJobState.class);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -262,6 +263,10 @@ public class CommerceMLGatewayClientImpl implements CommerceMLGatewayClient {
 	@Reference
 	private JSONWebServiceClientFactory _jsonWebServiceClientFactory;
 
-	private final ObjectMapper _objectMapper = new ObjectMapper();
+	private static class ObjectMapperHolder {
+
+		private static final ObjectMapper _objectMapper = new ObjectMapper();
+
+	}
 
 }

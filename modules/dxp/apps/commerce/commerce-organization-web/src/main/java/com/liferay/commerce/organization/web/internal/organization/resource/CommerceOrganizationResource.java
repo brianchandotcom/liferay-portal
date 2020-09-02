@@ -142,7 +142,8 @@ public class CommerceOrganizationResource {
 		}
 
 		try {
-			String json = _OBJECT_MAPPER.writeValueAsString(object);
+			String json = ObjectMapperHolder._objectMapper.writeValueAsString(
+				object);
 
 			return Response.ok(
 				json, MediaType.APPLICATION_JSON
@@ -157,13 +158,6 @@ public class CommerceOrganizationResource {
 		).build();
 	}
 
-	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper() {
-		{
-			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-			disable(SerializationFeature.INDENT_OUTPUT);
-		}
-	};
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrganizationResource.class);
 
@@ -175,5 +169,16 @@ public class CommerceOrganizationResource {
 
 	@Reference
 	private Portal _portal;
+
+	private static class ObjectMapperHolder {
+
+		private static final ObjectMapper _objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				disable(SerializationFeature.INDENT_OUTPUT);
+			}
+		};
+
+	}
 
 }

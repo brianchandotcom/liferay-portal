@@ -192,7 +192,7 @@ definition {
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
-			for (var field : list "All Categories,Tags") {
+			for (var field : list "All Categories,Topic,Tags") {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
@@ -249,7 +249,7 @@ definition {
 				key_value = "Text",
 				locator1 = "Select#GROUPED_SELECT_VALUE");
 
-			for (var field : list "All Categories,Tags") {
+			for (var field : list "All Categories,Topic,Tags") {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",

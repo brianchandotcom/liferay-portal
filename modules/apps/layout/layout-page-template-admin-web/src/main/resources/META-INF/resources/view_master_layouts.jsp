@@ -21,7 +21,6 @@ MasterLayoutDisplayContext masterLayoutDisplayContext = new MasterLayoutDisplayC
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= layoutPageTemplatesAdminDisplayContext.getNavigationItems() %>"
 />
 

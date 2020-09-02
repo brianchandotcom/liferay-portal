@@ -21,7 +21,6 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%= assetListDisplayContext.getNavigationItems("collection-providers") %>'
 />
 

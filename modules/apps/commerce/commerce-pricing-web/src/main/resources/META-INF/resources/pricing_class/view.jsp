@@ -23,7 +23,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "product-groups"));
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= PricingNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 

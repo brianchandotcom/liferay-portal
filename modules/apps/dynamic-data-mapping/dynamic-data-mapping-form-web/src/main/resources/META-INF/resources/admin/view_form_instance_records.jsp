@@ -23,7 +23,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getNavigationItems() %>"
 />
 

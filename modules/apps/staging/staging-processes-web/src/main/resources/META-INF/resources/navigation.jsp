@@ -38,7 +38,6 @@ String searchContainerId = "publishLayoutProcesses";
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= stagingProcessesWebDisplayContext.getNavigationItems() %>"
 />
 

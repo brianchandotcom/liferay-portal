@@ -23,7 +23,6 @@ CommerceBOMDefinition commerceBOMDefinition = commerceBOMAdminDisplayContext.get
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 

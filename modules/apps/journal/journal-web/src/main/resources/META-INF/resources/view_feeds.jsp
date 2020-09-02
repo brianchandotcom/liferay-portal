@@ -28,7 +28,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%= journalDisplayContext.getNavigationItems("feeds") %>'
 />
 

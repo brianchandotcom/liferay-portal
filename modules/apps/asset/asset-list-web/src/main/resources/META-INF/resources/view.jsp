@@ -21,7 +21,6 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%= assetListDisplayContext.getNavigationItems("collections") %>'
 />
 

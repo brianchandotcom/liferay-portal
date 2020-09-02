@@ -25,7 +25,6 @@ Role role = usersDisplayContext.getRole();
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 

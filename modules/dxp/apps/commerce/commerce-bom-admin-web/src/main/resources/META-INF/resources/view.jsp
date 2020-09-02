@@ -21,7 +21,6 @@ CommerceBOMAdminDisplayContext commerceBOMAdminDisplayContext = (CommerceBOMAdmi
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 

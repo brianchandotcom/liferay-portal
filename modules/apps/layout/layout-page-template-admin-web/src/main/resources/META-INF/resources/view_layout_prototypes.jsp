@@ -21,7 +21,6 @@ LayoutPrototypeDisplayContext layoutPrototypeDisplayContext = new LayoutPrototyp
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= layoutPageTemplatesAdminDisplayContext.getNavigationItems() %>"
 />
 

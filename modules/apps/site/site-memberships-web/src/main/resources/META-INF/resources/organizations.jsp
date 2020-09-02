@@ -23,7 +23,6 @@ OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDispl
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 

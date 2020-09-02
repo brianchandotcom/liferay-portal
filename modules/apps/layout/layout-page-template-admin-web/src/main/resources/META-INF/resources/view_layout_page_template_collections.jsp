@@ -23,7 +23,6 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= layoutPageTemplatesAdminDisplayContext.getNavigationItems() %>"
 />
 

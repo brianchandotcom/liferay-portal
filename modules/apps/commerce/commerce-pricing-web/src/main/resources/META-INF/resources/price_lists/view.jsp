@@ -21,7 +21,6 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= PricingNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 

@@ -29,7 +29,6 @@ if (ddmStructure != null) {
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%= journalDisplayContext.getNavigationItems("templates") %>'
 />
 

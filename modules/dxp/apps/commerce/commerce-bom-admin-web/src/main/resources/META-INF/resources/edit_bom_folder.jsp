@@ -23,7 +23,6 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 

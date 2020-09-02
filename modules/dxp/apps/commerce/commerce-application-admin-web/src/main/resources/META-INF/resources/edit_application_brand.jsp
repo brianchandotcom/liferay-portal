@@ -23,7 +23,6 @@ CommerceApplicationBrand commerceApplicationBrand = commerceApplicationAdminDisp
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 

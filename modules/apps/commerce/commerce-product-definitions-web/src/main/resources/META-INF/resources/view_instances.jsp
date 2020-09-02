@@ -27,7 +27,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 

@@ -17,7 +17,6 @@
 <%@ include file="/import/init.jsp" %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{

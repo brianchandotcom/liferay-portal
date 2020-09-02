@@ -29,48 +29,49 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface DataCleanupConfiguration {
 
 	@Meta.AD(
-		deflt = "false", name = "cleanup-chat-module-data", required = false
+		deflt = "false", name = "clean-up-chat-module-data", required = false
 	)
-	public boolean removeChatModuleData();
+	public boolean cleanUpChatModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "cleanup-dictionary-module-data",
+		deflt = "false", name = "clean-up-dictionary-module-data",
 		required = false
 	)
-	public boolean removeDictionaryModuleData();
+	public boolean cleanUpDictionaryModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "cleanup-directory-module-data",
+		deflt = "false", name = "clean-up-directory-module-data",
 		required = false
 	)
-	public boolean removeDirectoryModuleData();
+	public boolean cleanUpDirectoryModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "cleanup-invitation-module-data",
+		deflt = "false", name = "clean-up-invitation-module-data",
 		required = false
 	)
-	public boolean removeInvitationModuleData();
+	public boolean cleanUpInvitationModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "cleanup-mail-reader-module-data",
+		deflt = "false", name = "clean-up-mail-reader-module-data",
 		required = false
 	)
-	public boolean removeMailReaderModuleData();
+	public boolean cleanUpMailReaderModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "cleanup-private-messaging-module-data",
+		deflt = "false", name = "clean-up-private-messaging-module-data",
 		required = false
 	)
-	public boolean removePrivateMessagingModuleData();
+	public boolean cleanUpPrivateMessagingModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "cleanup-shopping-module-data", required = false
+		deflt = "false", name = "clean-up-shopping-module-data",
+		required = false
 	)
-	public boolean removeShoppingModuleData();
+	public boolean cleanUpShoppingModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "cleanup-twitter-module-data", required = false
+		deflt = "false", name = "clean-up-twitter-module-data", required = false
 	)
-	public boolean removeTwitterModuleData();
+	public boolean cleanUpTwitterModuleData();
 
 }

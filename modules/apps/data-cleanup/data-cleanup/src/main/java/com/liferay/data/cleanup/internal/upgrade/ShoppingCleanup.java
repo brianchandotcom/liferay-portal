@@ -25,9 +25,9 @@ import java.sql.ResultSet;
 /**
  * @author Preston Crary
  */
-public class CleanupShopping extends UpgradeProcess {
+public class ShoppingCleanup extends UpgradeProcess {
 
-	public CleanupShopping(ImageLocalService imageLocalService) {
+	public ShoppingCleanup(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
 	}
 

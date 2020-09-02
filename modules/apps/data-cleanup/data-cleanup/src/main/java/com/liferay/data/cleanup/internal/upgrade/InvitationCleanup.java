@@ -15,20 +15,16 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 /**
- * @author Sam Ziemer
+ * @author Adolfo Pérez
  */
-public class CleanupDirectory extends BaseCleanupNoninstanceablePortlet {
+public class InvitationCleanup extends BaseNoninstanceablePortletCleanup {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		removePortlet(
-			"com.liferay.directory.web",
-			new String[] {"11", "186", "187", "188"},
+			"com.liferay.invitation.web", null,
 			new String[] {
-				"com_liferay_directory_web_portlet_DirectoryPortlet",
-				"com_liferay_directory_web_portlet_FriendsDirectoryPortlet",
-				"com_liferay_directory_web_portlet_SiteMembersDirectoryPortlet",
-				"com_liferay_directory_web_portlet_MySitesDirectoryPortlet"
+				"com_liferay_invitation_web_portlet_InvitationPortlet"
 			});
 	}
 

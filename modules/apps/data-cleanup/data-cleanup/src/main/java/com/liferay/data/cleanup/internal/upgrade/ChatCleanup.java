@@ -17,41 +17,38 @@ package com.liferay.data.cleanup.internal.upgrade;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
- * @author Alejandro Tardín
+ * @author Preston Crary
  */
-public class CleanupTwitter extends UpgradeProcess {
+public class ChatCleanup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			"delete from ClassName_ where value = " +
-				"'com.liferay.twitter.model.Feed'");
-
-		LayoutTypeSettingsUtil.removePortletId(
-			connection, "com_liferay_twitter_web_portlet_TwitterPortlet");
+				"'com.liferay.chat.model.Entry'");
+		runSQL(
+			"delete from ClassName_ where value = " +
+				"'com.liferay.chat.model.Status'");
 
 		runSQL(
 			"delete from Portlet where portletId = " +
-				"'com_liferay_twitter_web_portlet_TwitterPortlet'");
+				"'com_liferay_chat_web_portlet_ChatPortlet'");
 
 		runSQL(
-			"delete from PortletPreferences where portletId = " +
-				"'com_liferay_twitter_web_portlet_TwitterPortlet'");
+			"delete from PortletPreferences where portletId =" +
+				"'com_liferay_chat_web_portlet_ChatPortlet'");
 
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.twitter.service'");
 		runSQL(
 			"delete from Release_ where servletContextName = " +
-				"'com.liferay.twitter.web'");
-
+				"'com.liferay.chat.service'");
 		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.twitter.model.Feed'");
+			"delete from Release_ where servletContextName = " +
+				"'com.liferay.chat.web'");
 
-		runSQL("delete from ServiceComponent where buildNamespace = 'Twitter'");
+		runSQL("delete from ServiceComponent where buildNamespace = 'Chat'");
 
-		runSQL("drop table Twitter_Feed");
+		runSQL("drop table Chat_Entry");
+		runSQL("drop table Chat_Status");
 	}
 
 }

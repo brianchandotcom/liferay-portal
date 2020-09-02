@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	configurationPid = "DataCleanupConfiguration",
+	configurationPid = "com.liferay.data.cleanup.internal.DataCleanupConfiguration",
 	immediate = true, service = UpgradeStepRegistrator.class
 )
 public class DataCleanup implements UpgradeStepRegistrator {
@@ -44,40 +44,39 @@ public class DataCleanup implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		try {
-			_removeModuleData(
-				_dataCleanupConfiguration::removeChatModuleData,
-				"com.liferay.chat.service", CleanupChat::new);
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::cleanUpChatModuleData,
+				"com.liferay.chat.service", ChatCleanup::new);
 
-			_removeModuleData(
-				_dataCleanupConfiguration::removeDictionaryModuleData,
-				"com.liferay.dictionary.web", CleanupDictionary::new);
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::cleanUpDictionaryModuleData,
+				"com.liferay.dictionary.web", DictionaryCleanup::new);
 
-			_removeModuleData(
-				_dataCleanupConfiguration::removeDirectoryModuleData,
-				"com.liferay.directory.web", CleanupDirectory::new);
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::cleanUpDirectoryModuleData,
+				"com.liferay.directory.web", DirectoryCleanup::new);
 
-			_removeModuleData(
-				_dataCleanupConfiguration::removeInvitationModuleData,
-				"com.liferay.invitation.web", CleanupInvitation::new);
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::cleanUpInvitationModuleData,
+				"com.liferay.invitation.web", InvitationCleanup::new);
 
-			_removeModuleData(
-				_dataCleanupConfiguration::removeMailReaderModuleData,
-				"com.liferay.mail.reader.service", CleanupMailReader::new);
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::cleanUpMailReaderModuleData,
+				"com.liferay.mail.reader.service", MailReaderCleanup::new);
 
-			_removeModuleData(
-				_dataCleanupConfiguration::
-					removePrivateMessagingModuleData,
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::cleanUpPrivateMessagingModuleData,
 				"com.liferay.social.privatemessaging.service",
-				() -> new CleanupPrivateMessaging(_mbThreadLocalService));
+				() -> new PrivateMessagingCleanup(_mbThreadLocalService));
 
-			_removeModuleData(
-				_dataCleanupConfiguration::removeShoppingModuleData,
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::cleanUpShoppingModuleData,
 				"com.liferay.shopping.service",
-				() -> new CleanupShopping(_imageLocalService));
+				() -> new ShoppingCleanup(_imageLocalService));
 
-			_removeModuleData(
-				_dataCleanupConfiguration::removeTwitterModuleData,
-				"com.liferay.twitter.service", CleanupTwitter::new);
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::cleanUpTwitterModuleData,
+				"com.liferay.twitter.service", TwitterCleanup::new);
 		}
 		catch (UpgradeException upgradeException) {
 			ReflectionUtil.throwException(upgradeException);
@@ -90,7 +89,7 @@ public class DataCleanup implements UpgradeStepRegistrator {
 			DataCleanupConfiguration.class, properties);
 	}
 
-	private void _removeModuleData(
+	private void _cleanUpModuleData(
 			Supplier<Boolean> booleanSupplier, String servletContextName,
 			Supplier<UpgradeProcess> upgradeProcessSupplier)
 		throws UpgradeException {
@@ -109,10 +108,10 @@ public class DataCleanup implements UpgradeStepRegistrator {
 		}
 	}
 
+	private DataCleanupConfiguration _dataCleanupConfiguration;
+
 	@Reference
 	private ImageLocalService _imageLocalService;
-
-	private DataCleanupConfiguration _dataCleanupConfiguration;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;

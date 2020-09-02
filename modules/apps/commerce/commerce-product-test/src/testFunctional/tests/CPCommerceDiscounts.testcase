@@ -1,9 +1,8 @@
 @component-name = "portal-commerce"
-@ignore = "true"
 definition {
 
 	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property testray.main.component.name = "Commerce";
 
 	setUp {
@@ -32,9 +31,8 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	test CreateNewDiscount {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceDiscounts#CreateNewDiscount";
 
 		ApplicationsMenu.gotoPortlet(

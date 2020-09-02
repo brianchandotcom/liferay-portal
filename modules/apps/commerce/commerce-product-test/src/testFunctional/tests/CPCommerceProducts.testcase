@@ -1,9 +1,8 @@
 @component-name = "portal-commerce"
-@ignore = "true"
 definition {
 
 	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property testray.main.component.name = "Commerce";
 
 	setUp {
@@ -30,8 +29,8 @@ definition {
 	}
 
 	test ProductPublishing {
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property environment.acceptance = "quarantine";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceProducts#ProductPublishing";
 
 		ApplicationsMenu.gotoPortlet(
@@ -120,7 +119,7 @@ definition {
 	}
 
 	test TranslateProductName {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceProducts#TranslateProductName";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");

@@ -1,9 +1,8 @@
 @component-name = "portal-commerce"
-@ignore = "true"
 definition {
 
 	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property testray.main.component.name = "Commerce";
 
 	setUp {
@@ -47,8 +46,8 @@ definition {
 	}
 
 	test CreateNewSpecificationOptions {
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property environment.acceptance = "quarantine";
+		property portal.acceptance = "quarantine";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -84,8 +83,8 @@ definition {
 	}
 
 	test PublishSimpleProduct {
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property environment.acceptance = "quarantine";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CommerceSmoke#PublishSimpleProduct";
 
 		ApplicationsMenu.gotoPortlet(

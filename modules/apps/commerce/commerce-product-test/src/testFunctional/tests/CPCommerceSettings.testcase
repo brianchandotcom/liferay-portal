@@ -1,9 +1,8 @@
 @component-name = "portal-commerce"
-@ignore = "true"
 definition {
 
 	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property testray.main.component.name = "Commerce";
 
 	setUp {
@@ -23,9 +22,8 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	test CreateNewAvailabilityEstimate {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewAvailabilityEstimate";
 
 		ApplicationsMenu.gotoPortlet(
@@ -44,9 +42,8 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@ignore = "true"
 	test CreateNewCountry {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewCountry";
 
 		ApplicationsMenu.gotoPortlet(
@@ -77,9 +74,8 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@ignore = "true"
 	test CreateNewMeasurementUnits {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewMeasurementUnits";
 
 		ApplicationsMenu.gotoPortlet(
@@ -108,9 +104,8 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@ignore = "true"
 	test CreateNewNotificationTemplate {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewNotificationTemplate";
 
 		CommerceEntry.createNewAccountGroup(

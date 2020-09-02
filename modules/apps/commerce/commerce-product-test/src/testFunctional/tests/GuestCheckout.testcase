@@ -1,9 +1,8 @@
 @component-name = "portal-commerce"
-@ignore = "true"
 definition {
 
 	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property testray.main.component.name = "Commerce";
 
 	setUp {
@@ -36,7 +35,7 @@ definition {
 	}
 
 	test AssertGuestCartIsTransferredToAccount {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCartIsTransferredToAccount";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -136,7 +135,7 @@ definition {
 	}
 
 	test AssertGuestCartItemIsNotTransferredIfSkuIsAlreadyPresent {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCartItemIsNotTransferredIfSkuIsAlreadyPresent";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -266,7 +265,7 @@ definition {
 	}
 
 	test AssertGuestCartItemIsTransferredToExistingCart {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCartItemIsTransferredToExistingCart";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -396,7 +395,7 @@ definition {
 	}
 
 	test AssertGuestCheckoutAuthenticationPage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCheckoutAuthenticationPage";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -448,7 +447,7 @@ definition {
 	}
 
 	test AssertGuestsWithSameEmailHaveDifferentAccounts {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestsWithSameEmailHaveDifferentAccounts";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -569,7 +568,7 @@ definition {
 	}
 
 	test AssertNewAccountIsCreatedAfterGuestCheckout {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertNewAccountIsCreatedAfterGuestCheckout";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -645,7 +644,7 @@ definition {
 	}
 
 	test GuestAccountIsNotCombinedWithExistingUserAccount {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestAccountIsNotCombinedWithExistingUserAccount";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -810,7 +809,7 @@ definition {
 	}
 
 	test GuestCheckoutDisabled {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutDisabled";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -910,7 +909,7 @@ definition {
 	}
 
 	test GuestCheckoutEnabled {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutEnabled";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -973,7 +972,7 @@ definition {
 	}
 
 	test GuestCheckoutWithNoShippableProduct {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutWithNoShippableProduct";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -1053,7 +1052,7 @@ definition {
 	}
 
 	test GuestCheckoutWithShippableProduct {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutWithShippableProduct";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
@@ -1114,7 +1113,7 @@ definition {
 	}
 
 	test UserAccountIsNotCombinedWithExistingGuestAccount {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#UserAccountIsNotCombinedWithExistingGuestAccount";
 
 		ApplicationsMenu.gotoPortlet(

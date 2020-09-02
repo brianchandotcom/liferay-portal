@@ -611,6 +611,7 @@ definition {
 
 		ItemSelector.viewWCEverywhereFilterResults(
 			folderWebContentTitle = "WC WebContent From Depot",
+			siteName = "Test Depot Name",
 			viewFolderWC = "true",
 			wcFolderName = "WC Folder Name",
 			webContentTitle = "WC WebContent From Site");

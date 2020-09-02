@@ -451,7 +451,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the location info of depot documents can be viewed through Blogs on a connected site."
+	@description = "This ensures that the location info of the documents can be viewed through Blogs on a connected site."
 	@priority = "5"
 	test ViewDocumentsLocationInfo {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -460,8 +460,6 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -469,15 +467,37 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
-
-		DMFolder.addCP(dmFolderName = "DM Folder Name");
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",
 			folderName = "DM Folder Name",
 			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			folderName = "DM Folder Name",
+			groupName = "Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
@@ -489,16 +509,18 @@ definition {
 
 		Depot.connectSite(siteList = "Site Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+		for (var locationName : list "Test Depot Name,Site Name") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
-		BlogsNavigator.gotoAddEntry();
+			BlogsNavigator.gotoAddEntry();
 
-		BlogsNavigator.gotoSelectFile();
+			BlogsNavigator.gotoSelectFile();
 
-		ItemSelector.viewLocationInfoViaBlogs(
-			locationName = "Test Depot Name",
-			navTab = "Documents and Media",
-			titleList = "Document_1.jpg,Document_2.jpg,DM Folder Name");
+			ItemSelector.viewLocationInfoViaBlogs(
+				locationName = "${locationName}",
+				navTab = "Documents and Media",
+				titleList = "Document_1.jpg,Document_2.jpg,DM Folder Name");
+		}
 	}
 
 	@description = "This test covers LPS-118808. It ensures that an image in the depot folder can be viewed through everywhere filter on a connected site."

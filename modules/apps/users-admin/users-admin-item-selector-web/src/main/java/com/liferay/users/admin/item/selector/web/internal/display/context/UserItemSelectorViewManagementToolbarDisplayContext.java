@@ -63,7 +63,7 @@ public class UserItemSelectorViewManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getDisplayViews() {
-		return new String[] {"list"};
+		return new String[] {"descriptive", "icon", "list"};
 	}
 
 	@Override

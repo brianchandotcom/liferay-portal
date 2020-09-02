@@ -18,6 +18,8 @@
 
 <%
 UserItemSelectorViewDisplayContext userItemSelectorViewDisplayContext = (UserItemSelectorViewDisplayContext)request.getAttribute(UserItemSelectorViewConstants.USER_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+
+String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 %>
 
 <clay:management-toolbar
@@ -39,28 +41,65 @@ UserItemSelectorViewDisplayContext userItemSelectorViewDisplayContext = (UserIte
 		>
 
 			<%
-			String userFullName = user.getFullName();
-
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				"id", user.getUserId()
 			).put(
-				"name", userFullName
+				"name", user.getFullName()
 			).build();
 
 			row.setData(data);
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="name"
-				value="<%= HtmlUtil.escape(userFullName) %>"
-			/>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-text>
+						<liferay-ui:user-portrait
+							userId="<%= user.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="screen-name"
-				property="screenName"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5><%= user.getFullName() %></h5>
+
+						<h6 class="text-default">
+							<span><%= user.getScreenName() %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("entry-card lfr-asset-item selectable");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:user-vertical-card
+							actionJspServletContext="<%= application %>"
+							cssClass="entry-display-style"
+							resultRow="<%= row %>"
+							rowChecker="<%= userItemSelectorViewDisplayContext.getRowChecker() %>"
+							subtitle="<%= user.getScreenName() %>"
+							title="<%= user.getFullName() %>"
+							userId="<%= user.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="name"
+						value="<%= HtmlUtil.escape(user.getFullName()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="screen-name"
+						property="screenName"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

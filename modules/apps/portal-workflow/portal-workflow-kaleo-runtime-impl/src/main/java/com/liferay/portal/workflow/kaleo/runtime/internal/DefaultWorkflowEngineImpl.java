@@ -57,6 +57,7 @@ import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.runtime.internal.node.NodeExecutorFactory;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoInstanceOrderByComparator;
 
 import java.io.InputStream;
@@ -205,6 +206,13 @@ public class DefaultWorkflowEngineImpl
 				currentKaleoNode.getType());
 
 			nodeExecutor.executeTimer(currentKaleoNode, executionContext);
+
+			kaleoTimerInstanceToken.setWorkflowContext(
+				WorkflowContextUtil.convert(
+					executionContext.getWorkflowContext()));
+
+			kaleoTimerInstanceTokenLocalService.updateKaleoTimerInstanceToken(
+				kaleoTimerInstanceToken);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				new Callable<Void>() {

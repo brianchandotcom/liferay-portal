@@ -355,18 +355,20 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				false, false);
 		}
 
-		// All users should be able to view all system roles
+		// All users should be able to view all system roles as default
 
 		Role userRole = getRole(companyId, RoleConstants.USER);
 
 		for (String roleName : allSystemRoles) {
-			Role role = getRole(companyId, roleName);
+			if (!companyRolesMap.containsKey(roleName)) {
+				Role role = getRole(companyId, roleName);
 
-			resourcePermissionLocalService.setResourcePermissions(
-				companyId, Role.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(role.getRoleId()), userRole.getRoleId(),
-				new String[] {ActionKeys.VIEW});
+				resourcePermissionLocalService.setResourcePermissions(
+					companyId, Role.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(role.getRoleId()), userRole.getRoleId(),
+					new String[] {ActionKeys.VIEW});
+			}
 		}
 	}
 

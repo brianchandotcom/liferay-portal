@@ -126,28 +126,6 @@ public class LayoutSEOEntryStagedModelDataHandler
 			LayoutSEOEntry layoutSEOEntry)
 		throws Exception {
 
-		Element layoutSEOEntryElement = portletDataContext.getImportDataElement(
-			layoutSEOEntry);
-
-		DDMStructure ddmStructure = _getDDMStructure(
-			portletDataContext.getCompanyId());
-
-		Element structureFieldsElement =
-			(Element)layoutSEOEntryElement.selectSingleNode("structure-fields");
-
-		String ddmFormValuesPath = structureFieldsElement.attributeValue(
-			"ddm-form-values-path");
-
-		String serializedDDMFormValues = portletDataContext.getZipEntryAsString(
-			ddmFormValuesPath);
-
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			layoutSEOEntry);
-
-		serviceContext.setAttribute(
-			ddmStructure.getStructureId() + "ddmFormValues",
-			serializedDDMFormValues);
-
 		LayoutSEOEntry existingLayoutSEOEntry =
 			fetchStagedModelByUuidAndGroupId(
 				layoutSEOEntry.getUuid(), layoutSEOEntry.getGroupId());
@@ -169,7 +147,8 @@ public class LayoutSEOEntryStagedModelDataHandler
 				layoutSEOEntry.getOpenGraphImageAltMap(),
 				layoutSEOEntry.getOpenGraphImageFileEntryId(),
 				layoutSEOEntry.isOpenGraphTitleEnabled(),
-				layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
+				layoutSEOEntry.getOpenGraphTitleMap(),
+				_createServiceContext(layoutSEOEntry, portletDataContext));
 		}
 		else {
 			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
@@ -184,8 +163,36 @@ public class LayoutSEOEntryStagedModelDataHandler
 				layoutSEOEntry.getOpenGraphImageAltMap(),
 				layoutSEOEntry.getOpenGraphImageFileEntryId(),
 				layoutSEOEntry.isOpenGraphTitleEnabled(),
-				layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
+				layoutSEOEntry.getOpenGraphTitleMap(),
+				_createServiceContext(layoutSEOEntry, portletDataContext));
 		}
+	}
+
+	private ServiceContext _createServiceContext(
+			LayoutSEOEntry layoutSEOEntry,
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			layoutSEOEntry);
+
+		DDMStructure ddmStructure = _getDDMStructure(
+			portletDataContext.getCompanyId());
+
+		Element layoutSEOEntryElement = portletDataContext.getImportDataElement(
+			layoutSEOEntry);
+
+		Element structureFieldsElement =
+			(Element)layoutSEOEntryElement.selectSingleNode("structure-fields");
+
+		String serializedDDMFormValues = portletDataContext.getZipEntryAsString(
+			structureFieldsElement.attributeValue("ddm-form-values-path"));
+
+		serviceContext.setAttribute(
+			ddmStructure.getStructureId() + "ddmFormValues",
+			serializedDDMFormValues);
+
+		return serviceContext;
 	}
 
 	private DDMStructure _getDDMStructure(long companyId) throws Exception {

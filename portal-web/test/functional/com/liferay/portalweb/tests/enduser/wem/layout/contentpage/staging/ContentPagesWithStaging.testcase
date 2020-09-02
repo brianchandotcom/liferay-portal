@@ -588,7 +588,7 @@ definition {
 			text = "New editable fragment text");
 
 		PageEditor.editLayoutContainer(
-			backgroundColor = "287D3C",
+			backgroundColor = "Success",
 			panel = "Styles");
 
 		PageEditor.removeFragment(fragmentName = "Container");

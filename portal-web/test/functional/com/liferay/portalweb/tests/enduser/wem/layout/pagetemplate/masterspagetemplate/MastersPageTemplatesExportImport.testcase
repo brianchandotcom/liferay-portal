@@ -224,7 +224,7 @@ definition {
 			PageEditor.configureFragment(
 				alignment = "Center",
 				marginBottom = "1",
-				textColor = "DA1414");
+				textColor = "Danger");
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
 

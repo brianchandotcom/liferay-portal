@@ -492,7 +492,7 @@ definition {
 
 		task ("Edit the Container's properties") {
 			PageEditor.editLayoutContainer(
-				backgroundColor = "287D3C",
+				backgroundColor = "Success",
 				containerWidth = "Fixed Width",
 				paddingBottom = "4",
 				paddingTop = "2",
@@ -1458,7 +1458,7 @@ definition {
 
 		task ("Configure the Container") {
 			PageEditor.editLayoutContainer(
-				backgroundColor = "287D3C",
+				backgroundColor = "Success",
 				panel = "Styles");
 
 			PageEditor.viewContainerStyle(
@@ -1469,7 +1469,7 @@ definition {
 		task ("Configure the Heading") {
 			PageEditor.gotoStyle(fragmentName = "Heading");
 
-			PageEditor.configureFragment(textColor = "FFFFFF");
+			PageEditor.configureFragment(textColor = "White");
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "heading",

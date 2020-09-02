@@ -375,7 +375,7 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Right",
-				textColor = "6B6C7E");
+				textColor = "Blockquote Small Color");
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
 
@@ -511,7 +511,7 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Right",
-				textColor = "B95000");
+				textColor = "Warning");
 		}
 
 		task ("View the fragment style") {
@@ -566,7 +566,7 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Separator");
 
 			PageEditor.configureFragment(
-				borderColor = "F7F8F9",
+				borderColor = "Gray 100",
 				bottomSpacing = "1");
 		}
 
@@ -720,8 +720,8 @@ definition {
 				position = "1");
 
 			PageEditor.editLayoutContainer(
-				backgroundColor = "B95000",
-				borderColor = "DA1414",
+				backgroundColor = "Warning",
+				borderColor = "Danger",
 				borderRadius = "Border Radius Large",
 				borderWidth = "5",
 				boxShadow = "Box Shadow Large",

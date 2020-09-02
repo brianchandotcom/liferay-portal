@@ -70,7 +70,7 @@ definition {
 
 		BridgeIssues.verifyValue(
 			detailValue = "State successfully saved and restored.",
-			restorestate = "true",
+			restoreState = "true",
 			statusValue = "SUCCESS",
 			textValue = "FACES-3031");
 
@@ -114,7 +114,7 @@ definition {
 
 		BridgeIssues.verifyValue(
 			detailValue = "Successfully navigated after exporting/downloading data from a PrimeFaces component.",
-			restorestate = "true",
+			restoreState = "true",
 			statusValue = "SUCCESS",
 			textValue = "FACES-3327");
 
@@ -259,7 +259,7 @@ definition {
 			BridgeIssues.verifyValue(
 				detailValue = "All special URL characters were correctly encoded.",
 				link = "${resourceActionIndex}",
-				restorestate = "true",
+				restoreState = "true",
 				statusValue = "SUCCESS",
 				textValue = "FACES-2958");
 
@@ -277,7 +277,7 @@ definition {
 		BridgeIssues.verifyValue(
 			detailValue = "Successfully avoided reloading FACES-3175:reproducer.js resource.",
 			link = "result.xhtml",
-			restorestate = "true",
+			restoreState = "true",
 			statusValue = "SUCCESS",
 			textValue = "FACES-3175");
 
@@ -292,7 +292,7 @@ definition {
 		BridgeIssues.verifyValue(
 			detailValue = "Successfully load html from head section template.",
 			link = "Load html from head section template.",
-			restorestate = "true",
+			restoreState = "true",
 			statusValue = "SUCCESS",
 			textValue = "FACES-3231");
 
@@ -331,7 +331,7 @@ definition {
 		BridgeIssues.verifyValue(
 			detailValue = "Successfully handled",
 			link = "To nonExistentView.xhtml",
-			restorestate = "true",
+			restoreState = "true",
 			statusValue = "SUCCESS",
 			textValue = "FACES-3356");
 
@@ -347,7 +347,7 @@ definition {
 			BridgeIssues.verifyValue(
 				detailValue = "Liferay parameter was properly encoded in Render",
 				link = "${resourceActionIndex}",
-				restorestate = "true",
+				restoreState = "true",
 				statusValue = "SUCCESS",
 				textValue = "FACES-3404");
 
@@ -365,7 +365,7 @@ definition {
 		BridgeIssues.verifyValue(
 			detailValue = "Successfully loaded body script in Ajax request.",
 			link = "result.xhtml",
-			restorestate = "true",
+			restoreState = "true",
 			statusValue = "SUCCESS",
 			textValue = "MOJARRA-4340-workaround");
 
@@ -380,7 +380,7 @@ definition {
 		BridgeIssues.verifyValue(
 			detailValue = "Resource URLs loaded via Ajax were not double escaped.",
 			link = "result.xhtml",
-			restorestate = "true",
+			restoreState = "true",
 			statusValue = "SUCCESS",
 			textValue = "MOJARRA-4340-workaround");
 	}

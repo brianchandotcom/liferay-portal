@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>PAGE_LINK</td>
-	<td>//a[contains(text(),'${key_PageLink}')] | //*[contains(@class,'testAction')] | //button[contains(text(),'${key_PageLink}')] | //input[@value='${key_PageLink}']</td>
+	<td>//*[contains(text(),'${key_PageLink}')] | //*[contains(@class,'testAction')] | //input[@value='${key_PageLink}']</td>
 	<td></td>
 </tr>
 <tr>

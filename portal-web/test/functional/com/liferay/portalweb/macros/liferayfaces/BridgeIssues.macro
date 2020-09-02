@@ -92,8 +92,7 @@ definition {
 	}
 
 	macro verifyValue {
-
-		if ("${restorestate}" == "true") {
+		if ("${restoreState}" == "true") {
 			Click(
 				key_PageLink = "${link}",
 				locator1 = "BridgeIssues#PAGE_LINK");

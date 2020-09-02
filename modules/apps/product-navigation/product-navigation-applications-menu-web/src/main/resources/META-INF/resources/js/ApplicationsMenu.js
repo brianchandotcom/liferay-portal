@@ -425,7 +425,12 @@ const ApplicationsMenu = ({
 			) {
 				event.preventDefault();
 
-				handleTriggerButtonClick();
+				if (visible) {
+					onClose();
+				}
+				else {
+					handleTriggerButtonClick();
+				}
 			}
 		},
 		true,
@@ -454,7 +459,7 @@ const ApplicationsMenu = ({
 
 	const handleTriggerButtonClick = () => {
 		fetchCategories();
-		setVisible(!visible);
+		setVisible(true);
 	};
 
 	return (

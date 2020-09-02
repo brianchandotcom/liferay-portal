@@ -103,11 +103,16 @@ public class TrashManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getComponentContext() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		PortletURL restoreEntriesURL = liferayPortletResponse.createActionURL(
 			TrashPortletKeys.TRASH);
 
 		restoreEntriesURL.setParameter(
 			ActionRequest.ACTION_NAME, "restoreEntries");
+		restoreEntriesURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
 
 		return HashMapBuilder.<String, Object>put(
 			"restoreEntriesURL", restoreEntriesURL.toString()

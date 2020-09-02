@@ -542,6 +542,12 @@ definition {
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 			AssertVisible(
+				key_breadcrumbName = "${siteName}",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "${wcFolderName}");
+
+			AssertVisible(
 				key_rowEntry = "${folderWebContentTitle}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}

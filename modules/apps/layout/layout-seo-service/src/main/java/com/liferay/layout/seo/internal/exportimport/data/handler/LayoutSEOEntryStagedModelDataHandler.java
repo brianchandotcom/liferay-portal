@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Collections;
@@ -125,6 +126,28 @@ public class LayoutSEOEntryStagedModelDataHandler
 			LayoutSEOEntry layoutSEOEntry)
 		throws Exception {
 
+		Element layoutSEOEntryElement = portletDataContext.getImportDataElement(
+			layoutSEOEntry);
+
+		DDMStructure ddmStructure = _getDDMStructure(
+			portletDataContext.getCompanyId());
+
+		Element structureFieldsElement =
+			(Element)layoutSEOEntryElement.selectSingleNode("structure-fields");
+
+		String ddmFormValuesPath = structureFieldsElement.attributeValue(
+			"ddm-form-values-path");
+
+		String serializedDDMFormValues = portletDataContext.getZipEntryAsString(
+			ddmFormValuesPath);
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			layoutSEOEntry);
+
+		serviceContext.setAttribute(
+			ddmStructure.getStructureId() + "ddmFormValues",
+			serializedDDMFormValues);
+
 		LayoutSEOEntry existingLayoutSEOEntry =
 			fetchStagedModelByUuidAndGroupId(
 				layoutSEOEntry.getUuid(), layoutSEOEntry.getGroupId());
@@ -146,8 +169,7 @@ public class LayoutSEOEntryStagedModelDataHandler
 				layoutSEOEntry.getOpenGraphImageAltMap(),
 				layoutSEOEntry.getOpenGraphImageFileEntryId(),
 				layoutSEOEntry.isOpenGraphTitleEnabled(),
-				layoutSEOEntry.getOpenGraphTitleMap(),
-				portletDataContext.createServiceContext(layoutSEOEntry));
+				layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
 		}
 		else {
 			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
@@ -162,8 +184,7 @@ public class LayoutSEOEntryStagedModelDataHandler
 				layoutSEOEntry.getOpenGraphImageAltMap(),
 				layoutSEOEntry.getOpenGraphImageFileEntryId(),
 				layoutSEOEntry.isOpenGraphTitleEnabled(),
-				layoutSEOEntry.getOpenGraphTitleMap(),
-				portletDataContext.createServiceContext(layoutSEOEntry));
+				layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
 		}
 	}
 

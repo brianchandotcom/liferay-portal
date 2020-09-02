@@ -445,6 +445,15 @@
 							.setAttribute('readOnly', true);
 					};
 				}
+				else if (dialogName === 'image2') {
+					instance._bindBrowseButton(
+						event.editor,
+						dialogDefinition,
+						'info',
+						'imageselector',
+						'txtUrl'
+					);
+				}
 				else if (dialogName === 'video') {
 					instance._bindBrowseButton(
 						event.editor,

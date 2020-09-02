@@ -61,7 +61,7 @@ const renderComponent = ({
 } = {}) => {
 	return render(
 		<StoreAPIContextProvider
-			dispatch={() => {}}
+			dispatch={() => Promise.resolve({})}
 			getState={() => ({
 				masterLayout: {
 					masterLayoutPlid: '0',

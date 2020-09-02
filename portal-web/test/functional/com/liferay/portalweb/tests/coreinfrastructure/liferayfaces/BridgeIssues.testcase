@@ -28,140 +28,6 @@ definition {
 	}
 
 	@priority = "5"
-	test FacesPortletSmoke {
-
-		// FACES_1513_2185
-
-		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-1513-2185",
-			portletName = "FACES-1513-2185");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1513-2185");
-
-		BridgeDemos.exportFile(lastName = "Export via p:dataExporter");
-
-		// Only export files, no verification of file content
-
-		BridgeDemos.exportFile(lastName = "Export via pe:exporter");
-
-		BridgeDemos.exportFile(lastName = "Download via p:fileDownload");
-
-		// FACES_2921
-
-		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-2921",
-			portletName = "FACES-2921");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2921");
-
-		AssertElementPresent(locator1 = "BridgeIssues#RENDER_KITID");
-
-		AssertElementPresent(
-			key_attribute = "HTML_BASIC",
-			locator1 = "BridgeIssues#HTML_BASIC");
-
-		// FACES_3031
-
-		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3031",
-			portletName = "FACES-3031");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3031");
-
-		BridgeIssues.verifyValue(
-			detailValue = "State successfully saved and restored.",
-			restoreState = "true",
-			statusValue = "SUCCESS",
-			textValue = "FACES-3031");
-
-		// FACES_3250
-
-		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3250",
-			portletName = "FACES-3250");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3250");
-
-		Click(locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON");
-
-		BridgeIssues.upload3250File(
-			fileName = "Document_2.jpeg",
-			instantAjax = "false");
-
-		AssertElementPresent(locator1 = "BridgeIssues#FILE_NAME");
-
-		Click(locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON_2");
-
-		BridgeIssues.upload3250File(
-			fileName = "Document_2.jpeg",
-			instantAjax = "true",
-			submit = "skinSimple=false");
-
-		Click(locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON_3");
-
-		BridgeIssues.upload3250File(
-			fileName = "Document_2.jpeg",
-			instantAjax = "true",
-			submit = "skinSimple=true");
-
-		// FACES_3327
-
-		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3327",
-			portletName = "FACES-3327");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3327");
-
-		BridgeIssues.verifyValue(
-			detailValue = "Successfully navigated after exporting/downloading data from a PrimeFaces component.",
-			restoreState = "true",
-			statusValue = "SUCCESS",
-			textValue = "FACES-3327");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3327");
-
-		BridgeDemos.exportFile(lastName = "Export via p:dataExporter");
-
-		// Only export files, no verification of file content
-
-		BridgeDemos.exportFile(lastName = "Export via pe:exporter");
-
-		BridgeDemos.exportFile(lastName = "Download via p:fileDownload");
-
-		// FACES_3328
-
-		JSONLayout.addPublicLayout(
-			groupName = "Bridge Issues",
-			layoutName = "FACES-3328-start");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Bridge Issues",
-			layoutName = "FACES-3328-end");
-
-		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3328",
-			portletName = "FACES-3328");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3328-start");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3328");
-
-		Click(locator1 = "BridgeIssues#CALENDA_TRIGGER_BUTTON");
-
-		AssertElementPresent(locator1 = "BridgeIssues#CALENDA_TABLE");
-
-		AssertElementPresent(locator1 = "BridgeIssues#CALENDA_DATEPICKER");
-
-		AssertElementPresent(locator1 = "BridgeIssues#CALENDA_DATEPICKER");
-
-		AssertElementPresent(locator1 = "BridgeIssues#SELECT_ONE_MENU");
-
-		BridgeIssues.select(textValue = "Item 2");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3328-end");
-	}
-
-	@priority = "5"
 	test FacesPortletSmokeInt {
 
 		// FACES_224
@@ -583,6 +449,146 @@ definition {
 				paramValue = "3",
 				ulIndex = "${Index}");
 		}
+	}
+
+	@priority = "5"
+	test PrimefacesIssuesSmoke {
+
+		// FACES_1513_2185
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-1513-2185",
+			portletName = "FACES-1513-2185");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1513-2185");
+
+		BridgeDemos.exportFile(lastName = "Export via p:dataExporter");
+
+		// Only export files, no verification of file content
+
+		BridgeDemos.exportFile(lastName = "Export via pe:exporter");
+
+		BridgeDemos.exportFile(lastName = "Download via p:fileDownload");
+
+		// FACES_2921
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-2921",
+			portletName = "FACES-2921");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2921");
+
+		AssertElementPresent(locator1 = "BridgeIssues#RENDER_KITID");
+
+		AssertElementPresent(
+			key_attribute = "HTML_BASIC",
+			locator1 = "BridgeIssues#HTML_BASIC");
+
+		// FACES_3031
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3031",
+			portletName = "FACES-3031");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3031");
+
+		BridgeIssues.verifyValue(
+			detailValue = "State successfully saved and restored.",
+			restoreState = "true",
+			statusValue = "SUCCESS",
+			textValue = "FACES-3031");
+
+		// FACES_3250
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3250",
+			portletName = "FACES-3250");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3250");
+
+		Click(locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON");
+
+		BridgeIssues.upload3250File(
+			fileName = "Document_2.jpeg",
+			instantAjax = "false");
+
+		AssertElementPresent(locator1 = "BridgeIssues#FILE_NAME");
+
+		Click(locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON_2");
+
+		BridgeIssues.upload3250File(
+			fileName = "Document_2.jpeg",
+			instantAjax = "true",
+			submit = "skinSimple=false");
+
+		Click(locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON_3");
+
+		BridgeIssues.upload3250File(
+			fileName = "Document_2.jpeg",
+			instantAjax = "true",
+			submit = "skinSimple=true");
+
+		// FACES_3327
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3327",
+			portletName = "FACES-3327");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3327");
+
+		BridgeIssues.verifyValue(
+			detailValue = "Successfully navigated after exporting/downloading data from a PrimeFaces component.",
+			restoreState = "true",
+			statusValue = "SUCCESS",
+			textValue = "FACES-3327");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3327");
+
+		BridgeDemos.exportFile(lastName = "Export via p:dataExporter");
+
+		// Only export files, no verification of file content
+
+		BridgeDemos.exportFile(lastName = "Export via pe:exporter");
+
+		BridgeDemos.exportFile(lastName = "Download via p:fileDownload");
+
+		// FACES_3328
+
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Issues",
+			layoutName = "FACES-3328-start");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Issues",
+			layoutName = "FACES-3328-end");
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-3328",
+			portletName = "FACES-3328");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3328-start");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Click(locator1 = "//a[@href='${portalURL}/web/bridge-issues/faces-3328']");
+
+		Click(locator1 = "BridgeIssues#CALENDA_TRIGGER_BUTTON");
+
+		AssertElementPresent(locator1 = "BridgeIssues#CALENDA_TABLE");
+
+		AssertElementPresent(locator1 = "BridgeIssues#CALENDA_DATEPICKER");
+
+		AssertElementPresent(locator1 = "BridgeIssues#SELECT_ONE_MENU");
+
+		Click(locator1 = "BridgeIssues#CALENDA_TRIGGER_BUTTON");
+
+		BridgeIssues.select(textValue = "Item 2");
+
+		Click(locator1 = "//a[@href='${portalURL}/web/bridge-issues/faces-3328-end']");
+
+		AssertNotVisible(locator1 = "//table[contains(@class, 'ui-datepicker-calendar')]");
+
+		AssertNotVisible(locator1 = "//*[contains(@id,'p_selectOneMenu')]");
 	}
 
 }

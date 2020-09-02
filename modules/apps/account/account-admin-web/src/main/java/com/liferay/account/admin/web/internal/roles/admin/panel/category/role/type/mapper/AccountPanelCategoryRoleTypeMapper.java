@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.account.admin.web.internal.roles.admin.role.type.mapper;
+package com.liferay.account.admin.web.internal.roles.admin.panel.category.role.type.mapper;
 
 import com.liferay.account.constants.AccountPanelCategoryKeys;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.roles.admin.role.type.mapper.PanelCategoryRoleTypeMapper;
+import com.liferay.roles.admin.panel.category.role.type.mapper.PanelCategoryRoleTypeMapper;
 
 import org.osgi.service.component.annotations.Component;
 

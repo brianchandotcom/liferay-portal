@@ -23,10 +23,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "upgrades")
 @Meta.OCD(
-	id = "com.liferay.data.cleanup.internal.upgrade.DataCleanupConfiguration",
+	id = "com.liferay.data.cleanup.internal.upgrade.DataCleanUpConfiguration",
 	name = "data-cleanup-configuration-name"
 )
-public interface DataCleanupConfiguration {
+public interface DataCleanUpConfiguration {
 
 	@Meta.AD(
 		deflt = "false", name = "cleanup-chat-module-data", required = false

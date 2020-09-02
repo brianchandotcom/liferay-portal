@@ -51,7 +51,7 @@ import org.junit.runner.RunWith;
  * @author Preston Crary
  */
 @RunWith(Arquillian.class)
-public class DataCleanupTest {
+public class DataCleanUpTest {
 
 	@ClassRule
 	@Rule
@@ -148,7 +148,7 @@ public class DataCleanupTest {
 
 		if (Validator.isNotNull(sqlFilePath)) {
 			try (InputStream inputStream =
-					DataCleanupTest.class.getResourceAsStream(sqlFilePath)) {
+					DataCleanUpTest.class.getResourceAsStream(sqlFilePath)) {
 
 				DB db = DBManagerUtil.getDB();
 
@@ -223,7 +223,7 @@ public class DataCleanupTest {
 	}
 
 	private static final String _CONFIGURATION_PID =
-		"com.liferay.data.cleanup.internal.upgrade.DataCleanupConfiguration";
+		"com.liferay.data.cleanup.internal.upgrade.DataCleanUpConfiguration";
 
 	private static final String[] _SERVLET_CONTEXT_NAMES = {
 		"com.liferay.chat.service", "com.liferay.dictionary.web",

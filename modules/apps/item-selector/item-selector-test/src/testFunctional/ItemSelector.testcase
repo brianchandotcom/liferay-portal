@@ -423,9 +423,9 @@ definition {
 		SikuliAssertElementPresent(locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE_PREVIEW");
 	}
 
-	@description = "This ensures that the location info of a blog image can be viewed through Blogs."
-	@priority = "5"
-	test ViewBlogsImageLocationInfo {
+	@description = "This test covers LPS-119709. It ensures that the blog images can not filter by the everywhere and the current site."
+	@priority = "4"
+	test ViewBlogsImageNoScopeFilter {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");

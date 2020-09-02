@@ -42,7 +42,6 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -69,20 +68,6 @@ public class CPInstanceOptionValueRelLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LocaleUtil.US.getDisplayLanguage(), null,
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		List<CPDefinition> cpDefinitions =
-			_cpDefinitionLocalService.getCPDefinitions(
-				_commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CPDefinition cpDefinition : cpDefinitions) {
-			_cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
-		}
-
-		_commerceCatalogLocalService.deleteCommerceCatalog(_commerceCatalog);
 	}
 
 	@Test

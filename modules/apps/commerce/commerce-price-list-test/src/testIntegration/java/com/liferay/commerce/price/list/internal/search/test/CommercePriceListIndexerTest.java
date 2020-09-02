@@ -167,8 +167,6 @@ public class CommercePriceListIndexerTest {
 	private Company _company;
 
 	private Group _group;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

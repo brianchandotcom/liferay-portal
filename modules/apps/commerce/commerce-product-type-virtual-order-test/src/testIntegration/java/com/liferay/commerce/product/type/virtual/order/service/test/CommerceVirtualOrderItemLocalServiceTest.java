@@ -107,8 +107,6 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 		for (CommerceOrder commerceOrder : _commerceOrders) {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
-
-		_cpDefinitionLocalService.deleteCPDefinitions(_company.getCompanyId());
 	}
 
 	@Test
@@ -311,10 +309,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 		return _cpInstanceLocalService.updateCPInstance(cpInstance);
 	}
 
-	@DeleteAfterTestRun
 	private CommerceCatalog _commerceCatalog;
-
-	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
 	@DeleteAfterTestRun
@@ -350,10 +345,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

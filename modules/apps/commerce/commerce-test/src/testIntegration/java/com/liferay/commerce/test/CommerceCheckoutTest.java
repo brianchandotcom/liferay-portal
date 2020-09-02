@@ -383,7 +383,6 @@ public class CommerceCheckoutTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject

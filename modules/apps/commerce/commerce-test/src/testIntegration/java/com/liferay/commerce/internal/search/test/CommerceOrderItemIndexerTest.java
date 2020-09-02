@@ -238,9 +238,7 @@ public class CommerceOrderItemIndexerTest {
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private Indexer<CommerceOrderItem> _indexer;
 
 	@DeleteAfterTestRun

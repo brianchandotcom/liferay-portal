@@ -110,11 +110,6 @@ public class CommerceOrderDiscountV2Test {
 		for (CommerceOrder commerceOrder : _commerceOrders) {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
-
-		_commerceAccountLocalService.deleteCommerceAccount(_commerceAccount);
-
-		_commerceDiscountLocalService.deleteCommerceDiscounts(
-			_user.getCompanyId());
 	}
 
 	@Test
@@ -519,10 +514,7 @@ public class CommerceOrderDiscountV2Test {
 	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 	@Inject

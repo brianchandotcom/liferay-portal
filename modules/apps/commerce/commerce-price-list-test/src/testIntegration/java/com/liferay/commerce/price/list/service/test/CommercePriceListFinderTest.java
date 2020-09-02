@@ -55,7 +55,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.frutilla.FrutillaRule;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -111,11 +110,6 @@ public class CommercePriceListFinderTest {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_cpDefinitionLocalService.deleteCPDefinitions(_company.getCompanyId());
 	}
 
 	@Test
@@ -566,10 +560,7 @@ public class CommercePriceListFinderTest {
 	@Inject
 	private CommerceAccountLocalService _commerceAccountLocalService;
 
-	@DeleteAfterTestRun
 	private CommerceCatalog _commerceCatalog;
-
-	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
 	@DeleteAfterTestRun
@@ -596,12 +587,8 @@ public class CommercePriceListFinderTest {
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private ServiceContext _serviceContext;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

@@ -31,7 +31,6 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -45,7 +44,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -93,18 +91,7 @@ public class CPDefinitionOptionRelLocalServiceTest {
 	public void tearDown() throws Exception {
 		_serviceContext = null;
 
-		List<CPDefinition> cpDefinitions =
-			_cpDefinitionLocalService.getCPDefinitions(
-				_commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CPDefinition cpDefinition : cpDefinitions) {
-			_cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
-		}
-
-		_cpOptionLocalService.deleteCPOptions(_commerceCatalog.getCompanyId());
-
-		_commerceCatalogLocalService.deleteCommerceCatalog(_commerceCatalog);
+		_cpOptionLocalService.deleteCPOptions(_company.getCompanyId());
 	}
 
 	@Test

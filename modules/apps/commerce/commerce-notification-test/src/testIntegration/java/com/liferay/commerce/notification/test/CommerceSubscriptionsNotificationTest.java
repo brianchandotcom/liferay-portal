@@ -161,7 +161,7 @@ public class CommerceSubscriptionsNotificationTest {
 		_commerceSubscriptionEngine.suspendRecurringPayment(
 			commerceSubscriptionEntry.getCommerceSubscriptionEntryId());
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 
 		_checkCommerceNotificationTemplate(
 			CommerceSubscriptionNotificationConstants.SUBSCRIPTION_SUSPENDED);
@@ -169,7 +169,7 @@ public class CommerceSubscriptionsNotificationTest {
 		_commerceSubscriptionEngine.activateRecurringPayment(
 			commerceSubscriptionEntry.getCommerceSubscriptionEntryId());
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 
 		_checkCommerceNotificationTemplate(
 			CommerceSubscriptionNotificationConstants.SUBSCRIPTION_ACTIVATED);
@@ -177,7 +177,7 @@ public class CommerceSubscriptionsNotificationTest {
 		_commerceSubscriptionEngine.cancelRecurringPayment(
 			commerceSubscriptionEntry.getCommerceSubscriptionEntryId());
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 
 		_checkCommerceNotificationTemplate(
 			CommerceSubscriptionNotificationConstants.SUBSCRIPTION_CANCELLED);

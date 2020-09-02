@@ -123,10 +123,6 @@ public class CommerceShipmentTest {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
 
-		_cpDefinitionLocalService.deleteCPDefinitions(_company.getCompanyId());
-
-		_commerceChannelLocalService.deleteCommerceChannel(_commerceChannel);
-
 		_commerceCurrencyLocalService.deleteCommerceCurrency(_commerceCurrency);
 	}
 
@@ -990,7 +986,6 @@ public class CommerceShipmentTest {
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@DeleteAfterTestRun

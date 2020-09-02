@@ -240,12 +240,8 @@ public class CommercePricingClassLocalServiceTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private ServiceContext _serviceContext;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

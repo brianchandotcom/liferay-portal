@@ -32,7 +32,6 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -99,18 +98,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 	public void tearDown() throws Exception {
 		_serviceContext = null;
 
-		List<CPDefinition> cpDefinitions =
-			_cpDefinitionLocalService.getCPDefinitions(
-				_commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CPDefinition cpDefinition : cpDefinitions) {
-			_cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
-		}
-
-		_cpOptionLocalService.deleteCPOptions(_commerceCatalog.getCompanyId());
-
-		_commerceCatalogLocalService.deleteCommerceCatalog(_commerceCatalog);
+		_cpOptionLocalService.deleteCPOptions(_company.getCompanyId());
 	}
 
 	@Test

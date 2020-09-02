@@ -61,7 +61,6 @@ import java.math.RoundingMode;
 
 import org.frutilla.FrutillaRule;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -106,12 +105,6 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		_commerceTaxMethod = CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
 			_user.getUserId(), _commerceChannel.getGroupId(), true);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_commerceAccountLocalService.deleteCommerceAccount(
-			_commerceAccount.getCommerceAccountId());
 	}
 
 	@Test
@@ -351,9 +344,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun

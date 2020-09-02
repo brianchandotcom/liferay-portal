@@ -159,17 +159,6 @@ public class CommerceOrderItemLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		_deleteCommerceAccountTestOrderItems();
-
-		List<CPDefinition> cpDefinitions =
-			_cpDefinitionLocalService.getCPDefinitions(
-				_commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CPDefinition cpDefinition : cpDefinitions) {
-			_cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
-		}
-
-		_commerceCatalogLocalService.deleteCommerceCatalog(_commerceCatalog);
 	}
 
 	@Test
@@ -1581,9 +1570,7 @@ public class CommerceOrderItemLocalServiceTest {
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
-	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
-
 	private CommerceContext _commerceContext;
 
 	@DeleteAfterTestRun
@@ -1598,6 +1585,7 @@ public class CommerceOrderItemLocalServiceTest {
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject
@@ -1613,9 +1601,7 @@ public class CommerceOrderItemLocalServiceTest {
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun

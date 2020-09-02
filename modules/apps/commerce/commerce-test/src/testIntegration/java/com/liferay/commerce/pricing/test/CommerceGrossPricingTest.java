@@ -27,7 +27,6 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
-import com.liferay.commerce.discount.service.CommerceDiscountLocalServiceUtil;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -150,19 +149,6 @@ public class CommerceGrossPricingTest {
 	public void tearDown() throws Exception {
 		_commerceTaxMethodLocalService.deleteCommerceTaxMethod(
 			_commerceTaxMethod.getCommerceTaxMethodId());
-
-		CommerceDiscountLocalServiceUtil.deleteCommerceDiscounts(
-			_user.getCompanyId());
-
-		_commerceAccountLocalService.deleteCommerceAccount(
-			_commerceAccount.getCommerceAccountId());
-
-		_commerceAccountGroupCommerceAccountRelLocalService.
-			deleteCommerceAccountGroupCommerceAccountRelByCAccountGroupId(
-				_commerceAccount.getCommerceAccountId());
-
-		_commerceAccountGroupLocalService.deleteCommerceAccountGroup(
-			_commerceAccountGroup.getCommerceAccountGroupId());
 	}
 
 	@Test
@@ -1714,9 +1700,7 @@ public class CommerceGrossPricingTest {
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
-	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
-
 	private CommerceCurrency _commerceCurrency;
 
 	@Inject
@@ -1754,10 +1738,7 @@ public class CommerceGrossPricingTest {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	private double _factor;
-
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private double _rate;
 	private ServiceContext _serviceContext;
 

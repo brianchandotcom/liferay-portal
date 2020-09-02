@@ -394,15 +394,13 @@ public class CommerceSubscriptionEntryTest {
 	private CommerceSubscriptionEntryLocalService
 		_commerceSubscriptionEntryLocalService;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

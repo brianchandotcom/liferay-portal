@@ -123,7 +123,7 @@ public class CommercePaymentSubscriptionsTest {
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 
 		List<CommerceSubscriptionEntry> commerceSubscriptionEntries =
 			_commerceSubscriptionEntryLocalService.
@@ -203,9 +203,9 @@ public class CommercePaymentSubscriptionsTest {
 	private CommerceSubscriptionEntryLocalService
 		_commerceSubscriptionEntryLocalService;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@DeleteAfterTestRun

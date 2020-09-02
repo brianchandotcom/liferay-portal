@@ -125,11 +125,6 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 		for (CommerceOrder commerceOrder : _commerceOrders) {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
-
-		_commerceAccountLocalService.deleteCommerceAccount(_commerceAccount);
-
-		_commerceDiscountLocalService.deleteCommerceDiscounts(
-			_user.getCompanyId());
 	}
 
 	@Test
@@ -632,10 +627,7 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 	@Inject

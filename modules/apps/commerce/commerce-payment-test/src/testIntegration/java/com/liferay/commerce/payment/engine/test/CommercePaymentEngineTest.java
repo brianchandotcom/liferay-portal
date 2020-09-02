@@ -325,13 +325,9 @@ public class CommercePaymentEngineTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private HttpServletRequest _httpServletRequest;
 	private ServiceContext _serviceContext;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

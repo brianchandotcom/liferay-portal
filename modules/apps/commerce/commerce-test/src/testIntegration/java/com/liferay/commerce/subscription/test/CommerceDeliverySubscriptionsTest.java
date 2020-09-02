@@ -47,7 +47,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -87,13 +86,6 @@ public class CommerceDeliverySubscriptionsTest {
 			_commerceCurrency.getCommerceCurrencyId());
 	}
 
-	@After
-	public void tearDown() {
-		_commerceInventoryWarehouseItemLocalService.
-			deleteCommerceInventoryWarehouseItemsByCompanyId(
-				_user.getCompanyId());
-	}
-
 	@Test
 	public void testDeliveryAndPaymentSubscription() throws Exception {
 		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToUserOrder(
@@ -107,7 +99,7 @@ public class CommerceDeliverySubscriptionsTest {
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 
 		List<CommerceSubscriptionEntry> commerceSubscriptionEntries =
 			_commerceSubscriptionEntryLocalService.
@@ -205,7 +197,7 @@ public class CommerceDeliverySubscriptionsTest {
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 
 		List<CommerceSubscriptionEntry> commerceSubscriptionEntries =
 			_commerceSubscriptionEntryLocalService.
@@ -232,7 +224,7 @@ public class CommerceDeliverySubscriptionsTest {
 
 		commerceSubscriptionEntry.setNextIterationDate(new Date());
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 
 		_commerceSubscriptionEntryHelper.checkDeliverySubscriptionStatus(
 			commerceSubscriptionEntry);
@@ -284,9 +276,9 @@ public class CommerceDeliverySubscriptionsTest {
 	private CommerceSubscriptionEntryLocalService
 		_commerceSubscriptionEntryLocalService;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@DeleteAfterTestRun

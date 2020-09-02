@@ -153,9 +153,7 @@ public class CommercePriceFormatterTest {
 	@Inject
 	private CommercePriceFormatter _commercePriceFormatter;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private BigDecimal _price;
 
 }

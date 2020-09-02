@@ -130,8 +130,6 @@ public class CommerceDiscountLocalServiceTest {
 		for (CommerceOrder commerceOrder : _commerceOrders) {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
-
-		_cpDefinitionLocalService.deleteCPDefinitions(_company.getCompanyId());
 	}
 
 	@Test
@@ -610,10 +608,7 @@ public class CommerceDiscountLocalServiceTest {
 	@Inject
 	private CommerceAccountHelper _commerceAccountHelper;
 
-	@DeleteAfterTestRun
 	private CommerceCatalog _commerceCatalog;
-
-	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
 	@DeleteAfterTestRun
@@ -637,9 +632,7 @@ public class CommerceDiscountLocalServiceTest {
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun

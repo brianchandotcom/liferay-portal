@@ -26,6 +26,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -155,6 +156,9 @@ public class CommerceShippingHelperTest {
 		Assert.assertEquals(
 			expectedDimensions.getWidth(), actualDimensions.getWidth(),
 			0.00001);
+
+		CommerceOrderLocalServiceUtil.deleteCommerceOrder(
+			commerceOrder.getCommerceOrderId());
 	}
 
 	@Test
@@ -211,6 +215,9 @@ public class CommerceShippingHelperTest {
 				cpInstance3.getWeight();
 
 		Assert.assertEquals(expectedWeight, actualWeight, 0.0001);
+
+		CommerceOrderLocalServiceUtil.deleteCommerceOrder(
+			commerceOrder.getCommerceOrderId());
 	}
 
 	@Rule
@@ -269,9 +276,9 @@ public class CommerceShippingHelperTest {
 	@Inject
 	private CommerceShippingHelper _commerceShippingHelper;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@DeleteAfterTestRun

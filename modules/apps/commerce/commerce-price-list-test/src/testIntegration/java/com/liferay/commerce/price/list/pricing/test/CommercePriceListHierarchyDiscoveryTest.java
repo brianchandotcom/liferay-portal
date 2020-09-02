@@ -210,12 +210,6 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceList4);
 		_commercePriceListLocalService.deleteCommercePriceList(
 			_commercePriceList5);
-
-		_commerceChannelLocalService.deleteCommerceChannel(_commerceChannel1);
-		_commerceChannelLocalService.deleteCommerceChannel(_commerceChannel2);
-		_commerceChannelLocalService.deleteCommerceChannel(_commerceChannel3);
-		_commerceChannelLocalService.deleteCommerceChannel(_commerceChannel4);
-		_commerceChannelLocalService.deleteCommerceChannel(_commerceChannel5);
 	}
 
 	@Test
@@ -587,12 +581,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private ServiceContext _serviceContext;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

@@ -98,7 +98,6 @@ public class OrderStockManagementTest {
 		}
 
 		_commerceCurrencyLocalService.deleteCommerceCurrency(_commerceCurrency);
-		_commerceChannelLocalService.deleteCommerceChannel(_commerceChannel);
 	}
 
 	@Test

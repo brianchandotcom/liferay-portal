@@ -183,7 +183,7 @@ public class CommerceOrderStatusNotificationTest {
 
 		// Notifications are asynchronous, give time to send
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 
 		int commerceNotificationQueueEntriesCount =
 			_commerceNotificationQueueEntryLocalService.
@@ -201,7 +201,7 @@ public class CommerceOrderStatusNotificationTest {
 
 		// Notifications are asynchronous, give time to send
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 
 		commerceNotificationQueueEntriesCount =
 			_commerceNotificationQueueEntryLocalService.
@@ -246,7 +246,7 @@ public class CommerceOrderStatusNotificationTest {
 
 		// Notifications are asynchronous, give time to send
 
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 
 		commerceNotificationQueueEntriesCount =
 			_commerceNotificationQueueEntryLocalService.
@@ -264,7 +264,7 @@ public class CommerceOrderStatusNotificationTest {
 
 		// Notifications are asynchronous, give time to send
 
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 
 		commerceNotificationQueueEntriesCount =
 			_commerceNotificationQueueEntryLocalService.
@@ -376,9 +376,7 @@ public class CommerceOrderStatusNotificationTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun

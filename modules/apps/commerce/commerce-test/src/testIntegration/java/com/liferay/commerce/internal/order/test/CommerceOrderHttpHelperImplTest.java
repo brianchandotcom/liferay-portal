@@ -158,10 +158,6 @@ public class CommerceOrderHttpHelperImplTest {
 		for (CommerceOrder commerceOrder : _commerceOrders) {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
-
-		_commerceDiscountLocalService.deleteCommerceDiscounts(
-			_group.getCompanyId());
-		_commerceAccountLocalService.deleteCommerceAccount(_commerceAccount);
 	}
 
 	@Test
@@ -271,7 +267,6 @@ public class CommerceOrderHttpHelperImplTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
@@ -279,8 +274,6 @@ public class CommerceOrderHttpHelperImplTest {
 
 	private HttpServletRequest _httpServletRequest;
 	private ThemeDisplay _themeDisplay;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 	@Inject

@@ -356,9 +356,9 @@ public class CommerceShipmentItemTest {
 	@Inject
 	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@DeleteAfterTestRun

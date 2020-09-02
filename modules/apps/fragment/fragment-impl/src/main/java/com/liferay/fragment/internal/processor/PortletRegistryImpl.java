@@ -149,6 +149,18 @@ public class PortletRegistryImpl implements PortletRegistry {
 		List<Portlet> portlets = stream.map(
 			fragmentEntryLinkPortletId -> _portletLocalService.getPortletById(
 				fragmentEntryLinkPortletId)
+		).filter(
+			portlet -> {
+				if (portlet == null) {
+					return false;
+				}
+
+				if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
+					return false;
+				}
+
+				return true;
+			}
 		).distinct(
 		).collect(
 			Collectors.toList()

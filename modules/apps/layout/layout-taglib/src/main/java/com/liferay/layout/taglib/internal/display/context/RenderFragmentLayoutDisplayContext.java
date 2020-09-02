@@ -123,6 +123,14 @@ public class RenderFragmentLayoutDisplayContext {
 				_themeDisplay.getCompanyId(),
 				portletPreferences.getPortletId());
 
+			if (portlet == null) {
+				continue;
+			}
+
+			if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
+				continue;
+			}
+
 			_portlets.add(portlet);
 		}
 

@@ -28,7 +28,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.users.admin.item.selector.web.internal.constants.UserItemSelectorViewConstants" %><%@
 page import="com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewDisplayContext" %><%@
-page import="com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewManagementToolbarDisplayContext" %>
+page import="com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewManagementToolbarDisplayContext" %><%@
+page import="com.liferay.users.admin.item.selector.web.internal.servlet.taglib.clay.SelectUserUserCard" %>
 
 <%@ page import="java.util.Map" %>
 

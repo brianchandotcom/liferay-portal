@@ -61,7 +61,7 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5><%= user.getFullName() %></h5>
+						<h5 class="table-title"><%= user.getFullName() %></h5>
 
 						<h6 class="text-default">
 							<span><%= user.getScreenName() %></span>
@@ -75,20 +75,14 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<liferay-frontend:user-vertical-card
-							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
-							resultRow="<%= row %>"
-							rowChecker="<%= userItemSelectorViewDisplayContext.getRowChecker() %>"
-							subtitle="<%= user.getScreenName() %>"
-							title="<%= user.getFullName() %>"
-							userId="<%= user.getUserId() %>"
+						<clay:user-card
+							userCard="<%= new SelectUserUserCard(user, renderRequest, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-content table-title"
 						name="name"
 						value="<%= HtmlUtil.escape(user.getFullName()) %>"
 					/>
@@ -103,7 +97,7 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="list"
+			displayStyle="<%= userItemSelectorViewDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 			searchContainer="<%= userItemSelectorViewDisplayContext.getSearchContainer() %>"
 		/>
@@ -111,24 +105,36 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 </clay:container-fluid>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace /><%= HtmlUtil.escape(userItemSelectorViewDisplayContext.getSearchContainerId()) %>'
+	);
 
 	searchContainer.on('rowToggled', function (event) {
 		var allSelectedElements = event.elements.allSelectedElements;
-		var arr = [];
+		var selectedData = [];
 
 		allSelectedElements.each(function () {
-			var row = this.ancestor('tr');
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					var row = this.ancestor('tr');
+				</c:when>
+				<c:otherwise>
+					var row = this.ancestor('li');
+				</c:otherwise>
+			</c:choose>
 
 			var data = row.getDOM().dataset;
 
-			arr.push({id: data.id, name: data.name});
+			selectedData.push({
+				id: data.id,
+				name: data.name,
+			});
 		});
 
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(userItemSelectorViewDisplayContext.getItemSelectedEventName()) %>',
 			{
-				data: arr,
+				data: selectedData,
 			}
 		);
 	});

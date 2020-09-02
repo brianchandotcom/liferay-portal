@@ -108,7 +108,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${categoryName}");
+			value1 = "Message Boards");
 	}
 
 	macro gotoPG {
@@ -229,7 +229,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${categoryName}");
+			value1 = "Message Boards");
 	}
 
 	macro viewDefaultPG {

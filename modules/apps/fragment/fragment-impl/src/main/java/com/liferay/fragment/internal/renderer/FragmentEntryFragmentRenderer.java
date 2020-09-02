@@ -161,7 +161,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		String configuration, String namespace,
 		HttpServletRequest httpServletRequest) {
 
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(18);
 
 		sb.append("<div id=\"");
 
@@ -219,11 +219,13 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		if (Validator.isNotNull(js)) {
 			sb.append("<script>(function() {");
-			sb.append("var fragmentElement = document.querySelector('#");
-			sb.append(fragmentIdSB.toString());
-			sb.append("'); var configuration = ");
+			sb.append("var configuration = ");
 			sb.append(configuration);
-			sb.append(";");
+			sb.append("; var fragmentElement = document.querySelector('#");
+			sb.append(fragmentIdSB.toString());
+			sb.append("'); var fragmentNamespace = '");
+			sb.append(namespace);
+			sb.append("';");
 			sb.append(js);
 			sb.append(";}());</script>");
 		}

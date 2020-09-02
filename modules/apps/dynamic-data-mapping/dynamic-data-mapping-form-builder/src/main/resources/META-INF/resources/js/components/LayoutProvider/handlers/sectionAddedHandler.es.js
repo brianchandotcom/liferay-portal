@@ -73,7 +73,10 @@ const handleSectionAdded = (props, state, event) => {
 
 					return addNestedField({
 						field: updatedParentField,
-						indexes,
+						indexes: {
+							...indexes,
+							pageIndex: 0,
+						},
 						nestedField: fieldSetField,
 						props,
 					});

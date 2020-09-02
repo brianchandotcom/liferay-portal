@@ -44,7 +44,7 @@ export const addField = (
 
 					const pages = FormSupport.addFieldToColumn(
 						[{rows: field.rows}],
-						pageIndex,
+						0,
 						rowIndex,
 						columnIndex,
 						newField.fieldName

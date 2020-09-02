@@ -53,29 +53,31 @@ public class BuildFactory {
 			return new AxisBuild(url, (BatchBuild)parentBuild);
 		}
 
-		if (url.contains("-controller")) {
+		String jobName = matcher.group("jobName");
+
+		if (jobName.contains("-controller")) {
 			return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}
 
-		if (url.contains("-source-format")) {
+		if (jobName.contains("-source-format")) {
 			return new SourceFormatBuild(url, (TopLevelBuild)parentBuild);
 		}
 
-		if (url.contains("-source")) {
+		if (jobName.contains("-source")) {
 			return new SourceBuild(url, parentBuild);
 		}
 
-		if (url.contains("-validation")) {
+		if (jobName.contains("-validation")) {
 			return new ValidationBuild(url, (TopLevelBuild)parentBuild);
 		}
 
-		if (url.contains("root-cause-analysis-tool-batch")) {
+		if (jobName.contains("root-cause-analysis-tool-batch")) {
 			return new FreestyleBatchBuild(url, (TopLevelBuild)parentBuild);
 		}
 
 		for (String batchToken : _TOKENS_BATCH) {
-			if (url.contains(batchToken)) {
-				if (url.contains("qa-websites")) {
+			if (jobName.contains(batchToken)) {
+				if (jobName.contains("qa-websites")) {
 					return new QAWebsitesBatchBuild(
 						url, (TopLevelBuild)parentBuild);
 				}

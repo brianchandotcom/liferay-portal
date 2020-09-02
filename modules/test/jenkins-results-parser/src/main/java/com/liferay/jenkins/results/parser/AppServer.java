@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,13 +40,20 @@ public class AppServer {
 			JenkinsResultsParserUtil.executeBatchCommandService(
 				_getStartCommand(), _getBinDir(), _getEnvironments(),
 				_getMaxLogSize());
-
-			return;
+		}
+		else {
+			JenkinsResultsParserUtil.executeBashCommandService(
+				_getStartCommand(), _getBinDir(), _getEnvironments(),
+				_getMaxLogSize());
 		}
 
-		JenkinsResultsParserUtil.executeBashCommandService(
-			_getStartCommand(), _getBinDir(), _getEnvironments(),
-			_getMaxLogSize());
+		String type = getType();
+
+		if (type.contains("websphere")) {
+			JenkinsResultsParserUtil.executeBashCommandService(
+				_getReadLiferayLogCommand(), _getAppServerParentDir(),
+				_getEnvironments(), _getMaxLogSize());
+		}
 	}
 
 	public void stopService() {
@@ -60,6 +68,18 @@ public class AppServer {
 		JenkinsResultsParserUtil.executeBashCommandService(
 			_getStopCommand(), _getBinDir(), _getEnvironments(),
 			_getMaxLogSize());
+	}
+
+	private File _getAppServerParentDir() {
+		String appServerParentDirString = _project.getProperty(
+			"test.app.server.parent.dir");
+
+		if (appServerParentDirString == null) {
+			appServerParentDirString = _project.getProperty(
+				"app.server.parent.dir");
+		}
+
+		return new File(appServerParentDirString);
 	}
 
 	private File _getBinDir() {
@@ -155,6 +175,31 @@ public class AppServer {
 		}
 
 		return path.replaceAll("[^:]+/jdk[^/]*/[^:]*bin", javaHome + "/bin");
+	}
+
+	private String _getReadLiferayLogCommand() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("#!/bin/bash\n");
+
+		sb.append("while [ ! -f logs/liferay.*.log ]\n");
+		sb.append("do\n");
+		sb.append("sleep 1;\n");
+		sb.append("done\n");
+
+		sb.append("tail -f logs/liferay.*.log;");
+
+		File readLogBashFile = new File(
+			_getAppServerParentDir(), "read_liferay_log.sh");
+
+		try {
+			JenkinsResultsParserUtil.write(readLogBashFile, sb.toString());
+
+			return readLogBashFile.getCanonicalPath();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private String _getStartCommand() {

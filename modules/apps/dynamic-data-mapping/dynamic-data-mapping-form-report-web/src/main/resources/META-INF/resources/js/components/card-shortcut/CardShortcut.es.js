@@ -17,33 +17,34 @@ import React, {useContext, useState} from 'react';
 import fieldTypes from '../../utils/fieldTypes.es';
 import {SidebarContext} from '../sidebar/SidebarContext.es';
 
-const INDEX_REGEX = /.*(\d+)$/;
-
 export default ({fields}) => {
-	const [itemSelectedIndex, setItemSelectedIndex] = useState(() => {
-		if (window.location.hash) {
-			return window.location.hash.match(INDEX_REGEX)[1];
-		}
-		else {
-			return null;
-		}
-	});
+	const [itemSelectedIndex, setItemSelectedIndex] = useState();
 
 	const {portletNamespace} = useContext(SidebarContext);
+
+	const scrollToCard = (portletNamespace, index) => {
+		const card = document.getElementById(
+			`${portletNamespace}card_${index}`
+		);
+
+		if (card !== null) {
+			card.scrollIntoView();
+		}
+	};
 
 	const shortcuts = fields.map((field, index) => {
 		if (Object.keys(fieldTypes).includes(field.type)) {
 			return (
-				<li
-					key={`card-item-${index}`}
-					onClick={() => setItemSelectedIndex(index)}
-				>
+				<li key={`card-item-${index}`}>
 					<a
 						className={`${
 							itemSelectedIndex == index ? 'selected' : ''
 						}`}
 						data-senna-off
-						href={`#${portletNamespace}card_${index}`}
+						onClick={() => {
+							setItemSelectedIndex(index);
+							scrollToCard(portletNamespace, index);
+						}}
 					>
 						<div className="indicator"></div>
 						<div className="field-label">{field.label}</div>

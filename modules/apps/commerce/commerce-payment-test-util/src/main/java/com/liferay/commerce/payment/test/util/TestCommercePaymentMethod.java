@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = true, immediate = true,
 	property = "commerce.payment.engine.method.key=" + TestCommercePaymentMethod.KEY,
 	service = CommercePaymentMethod.class
 )

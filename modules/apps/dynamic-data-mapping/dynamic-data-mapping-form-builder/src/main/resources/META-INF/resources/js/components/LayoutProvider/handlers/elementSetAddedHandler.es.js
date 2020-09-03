@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import {generateFieldName} from '../util/fields.es';
 
@@ -57,7 +57,18 @@ const handleElementSetAdded = (props, state, event) => {
 		pages[pageIndex].rows.splice(rowIndex, 0, rows[i]);
 	}
 
-	return {pages};
+	return {
+		pages: pages.map((page, index) => {
+			if (index === pageIndex) {
+				return {
+					...page,
+					rows: FormSupport.removeEmptyRows(pages, index),
+				};
+			}
+
+			return page;
+		}),
+	};
 };
 
 export default handleElementSetAdded;

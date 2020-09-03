@@ -21,9 +21,9 @@
 		<model-name>com.liferay.commerce.inventory.model.CommerceInventoryWarehouse</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_address_content_web_internal_portlet_CommerceAddressContentPortlet</portlet-name>
-			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_warehouse_web_internal_portlet_CommerceInventoryWarehousePortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>

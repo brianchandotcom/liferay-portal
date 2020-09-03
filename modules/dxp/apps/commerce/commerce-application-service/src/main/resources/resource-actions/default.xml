@@ -20,7 +20,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.application.model.CommerceApplicationBrand</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_application_admin_web_internal_portlet_CommerceApplicationAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>
@@ -43,7 +43,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.application.model.CommerceApplicationModel</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_application_admin_web_internal_portlet_CommerceApplicationAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>

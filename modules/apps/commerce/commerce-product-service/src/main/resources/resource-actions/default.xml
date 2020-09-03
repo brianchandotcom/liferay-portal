@@ -33,7 +33,6 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.product</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionCategoriesPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>

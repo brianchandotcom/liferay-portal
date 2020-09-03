@@ -26,6 +26,7 @@ import {CollectionActiveItemContextProvider} from './CollectionActiveItemContext
 import {ControlsProvider} from './Controls';
 import DragPreview from './DragPreview';
 import LayoutViewport from './LayoutViewport';
+import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import URLParser from './URLParser';
@@ -45,6 +46,7 @@ export default function App({state}) {
 						<DragPreview />
 						<Toolbar />
 						<LayoutViewport />
+						<ShortcutManager />
 
 						<StyleBookContextProvider>
 							<Sidebar />

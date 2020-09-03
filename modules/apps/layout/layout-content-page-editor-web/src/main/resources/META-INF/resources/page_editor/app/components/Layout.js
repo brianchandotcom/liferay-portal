@@ -31,7 +31,6 @@ import {useSelector} from '../store/index';
 import {deepEqual} from '../utils/checkDeepEqual';
 import {useSetCollectionActiveItemContext} from './CollectionActiveItemContext';
 import {useActivationOrigin, useIsActive, useSelectItem} from './Controls';
-import ShortcutManager from './ShortcutManager';
 import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
 import FragmentWithControls from './layout-data-items/FragmentWithControls';
 import {
@@ -133,8 +132,6 @@ export default function Layout({mainItemId}) {
 					)}
 				</div>
 			)}
-
-			<ShortcutManager />
 
 			{mainItem && (
 				<div

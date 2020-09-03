@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_BREADCRUMB_ELLIPSIS</td>
+	<td>//button[contains(@class,'dropdown')]//*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-h')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_BREADCRUMB_PARENT_TOPIC_BUTTON</td>
 	<td>//button[contains(@class,'dropdown') and contains(.,'${key_topicName}')]</td>
 	<td></td>

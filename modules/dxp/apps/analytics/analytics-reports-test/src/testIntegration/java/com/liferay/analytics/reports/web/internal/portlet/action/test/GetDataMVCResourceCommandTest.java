@@ -345,20 +345,14 @@ public class GetDataMVCResourceCommandTest {
 
 					JSONObject jsonObject1 = jsonArray.getJSONObject(0);
 
-					Assert.assertEquals("paid", jsonObject1.get("name"));
+					Assert.assertEquals("organic", jsonObject1.get("name"));
 
-					Assert.assertNull(jsonObject1.get("value"));
+					Assert.assertEquals(93.93D, jsonObject1.get("share"));
 
-					JSONObject jsonObject2 = jsonArray.getJSONObject(1);
-
-					Assert.assertEquals("organic", jsonObject2.get("name"));
-
-					Assert.assertEquals(93.93D, jsonObject2.get("share"));
-
-					Assert.assertEquals(3192, jsonObject2.get("value"));
+					Assert.assertEquals(3192, jsonObject1.get("value"));
 
 					JSONArray countryKeywordsJSONArray =
-						(JSONArray)jsonObject2.get("countryKeywords");
+						(JSONArray)jsonObject1.get("countryKeywords");
 
 					Assert.assertEquals(
 						JSONUtil.put(
@@ -381,6 +375,12 @@ public class GetDataMVCResourceCommandTest {
 							)
 						).toString(),
 						countryKeywordsJSONArray.toString());
+
+					JSONObject jsonObject2 = jsonArray.getJSONObject(1);
+
+					Assert.assertEquals("paid", jsonObject2.get("name"));
+
+					Assert.assertNull(jsonObject2.get("value"));
 				});
 		}
 		finally {
@@ -442,20 +442,6 @@ public class GetDataMVCResourceCommandTest {
 									resourceBundle,
 									"this-number-refers-to-the-volume-of-" +
 										"people-that-find-your-page-through-" +
-											"paid-keywords")
-							).put(
-								"name", "paid"
-							).put(
-								"title",
-								ResourceBundleUtil.getString(
-									resourceBundle, "paid")
-							),
-							JSONUtil.put(
-								"helpMessage",
-								ResourceBundleUtil.getString(
-									resourceBundle,
-									"this-number-refers-to-the-volume-of-" +
-										"people-that-find-your-page-through-" +
 											"a-search-engine")
 							).put(
 								"name", "organic"
@@ -463,6 +449,20 @@ public class GetDataMVCResourceCommandTest {
 								"title",
 								ResourceBundleUtil.getString(
 									resourceBundle, "organic")
+							),
+							JSONUtil.put(
+								"helpMessage",
+								ResourceBundleUtil.getString(
+									resourceBundle,
+									"this-number-refers-to-the-volume-of-" +
+										"people-that-find-your-page-through-" +
+											"paid-keywords")
+							).put(
+								"name", "paid"
+							).put(
+								"title",
+								ResourceBundleUtil.getString(
+									resourceBundle, "paid")
 							)
 						).toJSONString(),
 						jsonArray.toJSONString());

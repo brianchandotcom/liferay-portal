@@ -14,7 +14,9 @@
 
 package com.liferay.organizations.internal.upgrade;
 
+import com.liferay.organizations.internal.configuration.OrganizationTypeConfiguration;
 import com.liferay.organizations.internal.upgrade.v1_0_0.UpgradeOrganizationTypesConfiguration;
+import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -39,10 +41,20 @@ public class OrganizationServiceUpgrade implements UpgradeStepRegistrator {
 			"0.0.1", "1.0.0",
 			new UpgradeOrganizationTypesConfiguration(
 				_configurationAdmin, _props));
+
+		registry.register(
+			"1.0.0", "1.0.1",
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				"com.liferay.organizations.service.internal.configuration." +
+					"OrganizationTypeConfiguration",
+				OrganizationTypeConfiguration.class.getName()));
 	}
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
 
 	@Reference
 	private Props _props;

@@ -95,9 +95,10 @@
 								)
 								.classList.add('hide');
 
-							fileEntryRemove.removeClass('hide');
+							fileEntryRemove.classList.remove('hide');
 
-							fileEntryNameInput.html('<a>' + value.title + '</a>');
+							fileEntryNameInput.innerHTML =
+								'<a>' + value.title + '</a>';
 						}
 					},
 				},
@@ -126,8 +127,8 @@
 				.querySelector('#lfr-definition-virtual-button-row-message')
 				.classList.remove('hide');
 
-			fileEntryNameInput.html('<liferay-ui:message key="none" />');
+			fileEntryNameInput.innerHTML = '<liferay-ui:message key="none" />';
 
-			fileEntryRemove.addClass('hide');
+			fileEntryRemove.classList.add('hide');
 		});
 </aui:script>

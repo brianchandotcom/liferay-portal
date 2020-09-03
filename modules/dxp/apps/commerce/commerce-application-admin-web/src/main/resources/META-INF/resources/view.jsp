@@ -18,6 +18,8 @@
 
 <%
 CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = (CommerceApplicationAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 %>
 
 <clay:navigation-bar

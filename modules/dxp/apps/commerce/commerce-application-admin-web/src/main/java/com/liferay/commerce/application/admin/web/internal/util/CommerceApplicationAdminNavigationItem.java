@@ -84,7 +84,7 @@ public class CommerceApplicationAdminNavigationItem
 			"content.Language", themeDisplay.getLocale(), getClass());
 
 		navigationItem.setLabel(
-			LanguageUtil.get(resourceBundle, "application"));
+			LanguageUtil.get(resourceBundle, "applications"));
 
 		return navigationItem;
 	}

@@ -879,6 +879,11 @@ public class GroupWrapper
 	}
 
 	@Override
+	public boolean isDepot() {
+		return model.isDepot();
+	}
+
+	@Override
 	public boolean isGuest() {
 		return model.isGuest();
 	}

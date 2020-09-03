@@ -161,6 +161,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean isControlPanel();
 
+	public boolean isDepot();
+
 	public boolean isGuest();
 
 	public boolean isInStagingPortlet(String portletId);

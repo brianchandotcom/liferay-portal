@@ -64,6 +64,15 @@ definition {
 			key_sidebarButton = "Selection",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
+		if (isSet(target)) {
+			Select(
+				key_fieldLabel = "Target",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${target}");
+
+			Pause(locator1 = "3000");
+		}
+
 		PageEditor.waitForAutoSave();
 	}
 

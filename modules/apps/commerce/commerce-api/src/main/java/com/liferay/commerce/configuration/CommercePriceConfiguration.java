@@ -15,27 +15,21 @@
 package com.liferay.commerce.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
-
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Alec Sloan
+ * @author Alessio Antonio Rendina
  */
-@ExtendedObjectClassDefinition(
-	category = "orders", scope = ExtendedObjectClassDefinition.Scope.GROUP
-)
+@ExtendedObjectClassDefinition(category = "pricing")
 @Meta.OCD(
-	id = "com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration",
-	localization = "content/Language", name = "order-fields-configuration-name"
+	id = "com.liferay.commerce.configuration.CommercePriceConfiguration",
+	localization = "content/Language", name = "price-configuration-name"
 )
-public interface CommerceOrderFieldsConfiguration {
-
-	@Meta.AD(deflt = "-1", name = "account-cart-max-allowed", required = false)
-	public int accountCartMaxAllowed();
+public interface CommercePriceConfiguration {
 
 	@Meta.AD(
-		deflt = "true", name = "show-purchase-order-number", required = false
+		deflt = "false", name = "display-discount-levels", required = false
 	)
-	public boolean showPurchaseOrderNumber();
+	public boolean displayDiscountLevels();
 
 }

@@ -15,38 +15,22 @@
 package com.liferay.commerce.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
-
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Luca Pellizzon
- * @author Alessio Antonio Rendina
+ * @author Alec Sloan
  */
 @ExtendedObjectClassDefinition(
-	category = "catalog", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
+	category = "orders", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.configuration.CommerceSubscriptionConfiguration",
+	id = "com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration",
 	localization = "content/Language",
-	name = "commerce-subscription-configuration-name"
+	name = "order-checkout-configuration-name"
 )
-public interface CommerceSubscriptionConfiguration {
+public interface CommerceOrderCheckoutConfiguration {
 
-	@Meta.AD(
-		deflt = "10", name = "renewal-check-interval-minutes", required = false
-	)
-	public int renewalCheckIntervalMinutes();
-
-	@Meta.AD(
-		deflt = "false", name = "subscription-cancellation-allowed",
-		required = false
-	)
-	public boolean subscriptionCancellationAllowed();
-
-	@Meta.AD(
-		deflt = "false", name = "subscription-suspension-allowed",
-		required = false
-	)
-	public boolean subscriptionSuspensionAllowed();
+	@Meta.AD(deflt = "false", name = "guest-checkout-enabled", required = false)
+	public boolean guestCheckoutEnabled();
 
 }

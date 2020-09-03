@@ -15,26 +15,26 @@
 package com.liferay.commerce.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
-
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Alec Sloan
  */
 @ExtendedObjectClassDefinition(
-	category = "shipping", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "orders", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.configuration.CommerceShippingGroupServiceConfiguration",
-	localization = "content/Language",
-	name = "commerce-shipping-group-service-configuration-name"
+	id = "com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration",
+	localization = "content/Language", name = "order-fields-configuration-name"
 )
-public interface CommerceShippingGroupServiceConfiguration {
+public interface CommerceOrderFieldsConfiguration {
+
+	@Meta.AD(deflt = "-1", name = "account-cart-max-allowed", required = false)
+	public int accountCartMaxAllowed();
 
 	@Meta.AD(
-		deflt = "address", name = "commerce-shipping-origin-locator-key",
-		required = false
+		deflt = "true", name = "show-purchase-order-number", required = false
 	)
-	public String commerceShippingOriginLocatorKey();
+	public boolean showPurchaseOrderNumber();
 
 }

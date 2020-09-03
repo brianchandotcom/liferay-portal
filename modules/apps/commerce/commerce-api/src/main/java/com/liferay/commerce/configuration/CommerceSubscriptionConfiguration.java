@@ -15,22 +15,37 @@
 package com.liferay.commerce.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
-
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
+ * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
-@ExtendedObjectClassDefinition(category = "pricing")
-@Meta.OCD(
-	id = "com.liferay.commerce.configuration.CommercePriceConfiguration",
-	localization = "content/Language", name = "price-configuration-name"
+@ExtendedObjectClassDefinition(
+	category = "catalog", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
-public interface CommercePriceConfiguration {
+@Meta.OCD(
+	id = "com.liferay.commerce.configuration.CommerceSubscriptionConfiguration",
+	localization = "content/Language",
+	name = "commerce-subscription-configuration-name"
+)
+public interface CommerceSubscriptionConfiguration {
 
 	@Meta.AD(
-		deflt = "false", name = "display-discount-levels", required = false
+		deflt = "10", name = "renewal-check-interval-minutes", required = false
 	)
-	public boolean displayDiscountLevels();
+	public int renewalCheckIntervalMinutes();
+
+	@Meta.AD(
+		deflt = "false", name = "subscription-cancellation-allowed",
+		required = false
+	)
+	public boolean subscriptionCancellationAllowed();
+
+	@Meta.AD(
+		deflt = "false", name = "subscription-suspension-allowed",
+		required = false
+	)
+	public boolean subscriptionSuspensionAllowed();
 
 }

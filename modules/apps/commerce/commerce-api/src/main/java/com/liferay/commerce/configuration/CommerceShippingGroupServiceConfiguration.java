@@ -15,31 +15,25 @@
 package com.liferay.commerce.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
-
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
-@ExtendedObjectClassDefinition(category = "orders")
-@Meta.OCD(
-	id = "com.liferay.commerce.configuration.CommerceOrderConfiguration",
-	localization = "content/Language", name = "orders-configuration-name"
+@ExtendedObjectClassDefinition(
+	category = "shipping", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
-public interface CommerceOrderConfiguration {
-
-	@Meta.AD(deflt = "15", name = "order-check-interval", required = false)
-	public int checkInterval();
-
-	@Meta.AD(deflt = "43200", name = "order-delete-interval", required = false)
-	public int deleteInterval();
-
-	@Meta.AD(deflt = "10000", name = "guest-cart-max-allowed", required = false)
-	public int guestCartMaxAllowed();
+@Meta.OCD(
+	id = "com.liferay.commerce.configuration.CommerceShippingGroupServiceConfiguration",
+	localization = "content/Language",
+	name = "commerce-shipping-group-service-configuration-name"
+)
+public interface CommerceShippingGroupServiceConfiguration {
 
 	@Meta.AD(
-		deflt = "1000", name = "guest-cart-item-max-allowed", required = false
+		deflt = "address", name = "commerce-shipping-origin-locator-key",
+		required = false
 	)
-	public int guestCartItemMaxAllowed();
+	public String commerceShippingOriginLocatorKey();
 
 }

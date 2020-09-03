@@ -15,23 +15,30 @@
 package com.liferay.commerce.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
-
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Alec Sloan
+ * @author Marco Leo
  */
-@ExtendedObjectClassDefinition(
-	category = "orders", scope = ExtendedObjectClassDefinition.Scope.GROUP
-)
+@ExtendedObjectClassDefinition(category = "orders")
 @Meta.OCD(
-	id = "com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration",
-	localization = "content/Language",
-	name = "order-checkout-configuration-name"
+	id = "com.liferay.commerce.configuration.CommerceOrderConfiguration",
+	localization = "content/Language", name = "orders-configuration-name"
 )
-public interface CommerceOrderCheckoutConfiguration {
+public interface CommerceOrderConfiguration {
 
-	@Meta.AD(deflt = "false", name = "guest-checkout-enabled", required = false)
-	public boolean guestCheckoutEnabled();
+	@Meta.AD(deflt = "15", name = "order-check-interval", required = false)
+	public int checkInterval();
+
+	@Meta.AD(deflt = "43200", name = "order-delete-interval", required = false)
+	public int deleteInterval();
+
+	@Meta.AD(deflt = "10000", name = "guest-cart-max-allowed", required = false)
+	public int guestCartMaxAllowed();
+
+	@Meta.AD(
+		deflt = "1000", name = "guest-cart-item-max-allowed", required = false
+	)
+	public int guestCartItemMaxAllowed();
 
 }

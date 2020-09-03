@@ -44,7 +44,7 @@ public class CommerceCatalogPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return CommercePanelCategoryKeys.CONTROL_PANEL_COMMERCE;
+		return CommercePanelCategoryKeys.COMMERCE;
 	}
 
 	@Override

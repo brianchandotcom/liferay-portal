@@ -1,18 +1,18 @@
 definition {
 
-	macro filterByCategory{
+	macro filterByCategory {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
 				value1 = "Filter and Order");
 		}
-		
+
 		Click(locator1 = "ContentDashboard#FILTER_BY_CATEGORY_OPTION");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#DIALOG");
-		
+
 		Click(locator1 = "ContentDashboard#SEARCH_CATEGORY_FIELD");
 
 		Type(
@@ -21,11 +21,11 @@ definition {
 
 		Click(locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
 
-		SelectFrame(value1 = "relative=top"); 
-		
+		SelectFrame(value1 = "relative=top");
+
 		AssertClickNoError(
-				locator1 = "ContentDashboard#SELECT_CATEGORY_BUTTON",
-				value1 = "Select");
+			locator1 = "ContentDashboard#SELECT_CATEGORY_BUTTON",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 	}

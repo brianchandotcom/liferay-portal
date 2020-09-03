@@ -6,4 +6,30 @@ definition {
 		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
 	}
 
+	macro viewChangesViaChangesStyle {
+		ChangeListChanges.changeDisplayStyle(displayStyle = "Changes");
+
+		Pause(locator1 = "3000");
+
+		key_changeCategory = "${changeCategory}";
+		key_changeUser = "${changeUser}";
+		key_changeSite = "${changeSite}";
+		key_changeTitle = "${changeTitle}";
+		key_changeType = "${changeType}";
+
+		AssertElementPresent(locator1 = "ChangeListChanges#CHANGES_CHANGE_USER");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ChangeListChanges#CHANGES_CHANGE_SITE",
+			value1 = "${changeSite}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ChangeListChanges#CHANGES_CHANGE_TITLE",
+			value1 = "${changeTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ChangeListChanges#CHANGES_CHANGE_TYPE",
+			value1 = "${changeType}");
+	}
+
 }

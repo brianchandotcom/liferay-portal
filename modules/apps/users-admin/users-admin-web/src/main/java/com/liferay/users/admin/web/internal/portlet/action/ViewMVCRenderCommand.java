@@ -52,7 +52,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		renderRequest.setAttribute(
-			UsersAdminWebKeys.FILTER_CONTRIBUTORS,
+			UsersAdminWebKeys.MANAGEMENT_TOOLBAR_FILTER_CONTRIBUTORS,
 			_filterContributorTracker.getFilterContributors(
 				UsersAdminManagementToolbarKeys.VIEW_FLAT_USERS));
 		renderRequest.setAttribute(

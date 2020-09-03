@@ -23,11 +23,12 @@ public class UsersAdminWebKeys {
 
 	public static final String EDITABLE = "EDITABLE";
 
-	public static final String FILTER_CONTRIBUTORS = "FILTER_CONTRIBUTORS";
-
 	public static final String FORM_LABEL = "FORM_LABEL";
 
 	public static final String JSP_PATH = "JSP_PATH";
+
+	public static final String MANAGEMENT_TOOLBAR_FILTER_CONTRIBUTORS =
+		"MANAGEMENT_TOOLBAR_FILTER_CONTRIBUTORS";
 
 	public static final String ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT =
 		"ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT";

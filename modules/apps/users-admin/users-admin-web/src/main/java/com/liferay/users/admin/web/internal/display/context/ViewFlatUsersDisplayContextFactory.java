@@ -136,7 +136,7 @@ public class ViewFlatUsersDisplayContextFactory {
 
 		return Optional.ofNullable(
 			(FilterContributor[])httpServletRequest.getAttribute(
-				UsersAdminWebKeys.FILTER_CONTRIBUTORS));
+				UsersAdminWebKeys.MANAGEMENT_TOOLBAR_FILTER_CONTRIBUTORS));
 	}
 
 	protected static boolean isShowDeleteButton(

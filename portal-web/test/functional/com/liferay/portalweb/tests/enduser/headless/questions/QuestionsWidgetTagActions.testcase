@@ -87,6 +87,67 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can sort the tags."
+	@priority = "4"
+	test SortQuestionsTags {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		for (var num : list "1,2") {
+			Questions.addQuestionByAPI(
+				bodyField = "Question Body ${num}",
+				categoryName = "Questions Test Category",
+				tagField = "tag1",
+				titleField = "Question ${num}");
+		}
+
+		Questions.addQuestionByAPI(
+			bodyField = "Question Body 3",
+			categoryName = "Questions Test Category",
+			tagField = "tag2",
+			titleField = "Question 3");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoTab(questionTabField = "Tags");
+
+		Questions.viewTagsFilterResults(
+			position = "1",
+			tagName = "tag1",
+			usedTimes = "Used 2 Times");
+
+		Questions.viewTagsFilterResults(
+			position = "2",
+			tagName = "tag2",
+			usedTimes = "Used 1 Times");
+
+		Questions.configureTagsFilter(filterBy = "Latest Created");
+
+		Questions.viewTagsFilterResults(
+			position = "1",
+			tagName = "tag2");
+
+		Questions.viewTagsFilterResults(
+			position = "2",
+			tagName = "tag1");
+
+		Questions.configureTagsFilter(filterBy = "Number of Usages");
+
+		Questions.viewTagsFilterResults(
+			position = "1",
+			tagName = "tag1",
+			usedTimes = "Used 2 Times");
+
+		Questions.viewTagsFilterResults(
+			position = "2",
+			tagName = "tag2",
+			usedTimes = "Used 1 Times");
+	}
+
 	@description = "Validate if when the user click in the tag of the Tags tab, the user is redirected to the questions that use this tag"
 	@priority = "3"
 	test TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag {

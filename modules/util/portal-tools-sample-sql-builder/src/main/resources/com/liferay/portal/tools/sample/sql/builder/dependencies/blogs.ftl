@@ -1,7 +1,5 @@
 <#assign blogsEntryModels = dataFactory.newBlogsEntryModels(groupId) />
 
-${dataFactory.toInsertSQL(dataFactory.newUserNotificationDeliveryModel("com_liferay_comment_web_portlet_CommentPortlet"))}
-
 <#list blogsEntryModels as blogsEntryModel>
 	${dataFactory.toInsertSQL(blogsEntryModel)}
 

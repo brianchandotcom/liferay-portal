@@ -617,9 +617,17 @@ public class ViewChangesDisplayContext {
 					changeType = "deleted";
 				}
 
-				long ctCollectionId =
-					_ctDisplayRendererRegistry.getCtCollectionId(
-						_ctCollection, ctEntry);
+				long ctCollectionId = _ctCollection.getCtCollectionId();
+
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_APPROVED) ||
+					(ctEntry.getChangeType() !=
+						CTConstants.CT_CHANGE_TYPE_DELETION)) {
+
+					ctCollectionId =
+						_ctDisplayRendererRegistry.getCtCollectionId(
+							_ctCollection, ctEntry);
+				}
 
 				CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
 					_ctDisplayRendererRegistry.getCTSQLMode(

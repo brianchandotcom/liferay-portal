@@ -21,7 +21,7 @@ import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import java.util.TreeMap;
 
 /**
- * @author José Ángel Jiménez
+ * @author JosĂ© Ă�ngel JimĂ©nez
  */
 public class PortalUpgradeProcessRegistryImpl
 	implements PortalUpgradeProcessRegistry {
@@ -50,6 +50,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(new Version(5, 1, 0), new UpgradeMVCCVersion());
 
 		upgradeProcesses.put(new Version(5, 1, 1), new UpgradeVirtualHost());
+
+		upgradeProcesses.put(new Version(5, 1, 2), new UpgradeLayoutDescription());
 	}
 
 }

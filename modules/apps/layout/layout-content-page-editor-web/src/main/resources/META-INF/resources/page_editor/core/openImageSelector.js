@@ -17,8 +17,18 @@ import {openSelectionModal} from 'frontend-js-web';
 import {config} from '../app/config/index';
 
 export function openImageSelector(callback, destroyedCallback = null) {
+	let _destroyedCallback = destroyedCallback;
+
+	const invokeDestroyedCallbackOnce = () => {
+		if (typeof _destroyedCallback === 'function') {
+			_destroyedCallback();
+
+			_destroyedCallback = null;
+		}
+	};
+
 	openSelectionModal({
-		onClose: destroyedCallback,
+		onClose: invokeDestroyedCallbackOnce,
 		onSelect: (selectedItem) => {
 			if (selectedItem) {
 				const {returnType, value} = selectedItem;
@@ -38,11 +48,8 @@ export function openImageSelector(callback, destroyedCallback = null) {
 
 				callback(selectedImage);
 			}
-			else {
-				if (destroyedCallback) {
-					destroyedCallback();
-				}
-			}
+
+			invokeDestroyedCallbackOnce();
 		},
 		selectEventName: `${config.portletNamespace}selectImage`,
 		title: Liferay.Language.get('select'),

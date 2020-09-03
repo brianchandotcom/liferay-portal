@@ -20,8 +20,18 @@ export function openInfoItemSelector(
 	itemSelectorURL,
 	destroyedCallback = null
 ) {
+	let _destroyedCallback = destroyedCallback;
+
+	const invokeDestroyedCallbackOnce = () => {
+		if (typeof _destroyedCallback === 'function') {
+			_destroyedCallback();
+
+			_destroyedCallback = null;
+		}
+	};
+
 	openSelectionModal({
-		onClose: destroyedCallback,
+		onClose: invokeDestroyedCallbackOnce,
 		onSelect: (selectedItem) => {
 			if (selectedItem && selectedItem.value) {
 				const infoItem = {
@@ -31,6 +41,8 @@ export function openInfoItemSelector(
 
 				callback(infoItem);
 			}
+
+			invokeDestroyedCallbackOnce();
 		},
 		selectEventName: eventName,
 		title: Liferay.Language.get('select'),

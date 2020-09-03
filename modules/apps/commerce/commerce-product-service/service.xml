@@ -630,83 +630,6 @@
 
 		<reference entity="Layout" package-path="com.liferay.portal" />
 	</entity>
-	<entity deprecated="true" local-service="true" name="CPFriendlyURLEntry" remote-service="false" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="CPFriendlyURLEntryId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
-		<column name="languageId" type="String" />
-		<column name="urlTitle" type="String" />
-		<column name="main" type="boolean" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="classNameId" />
-			<order-column name="classPK" />
-			<order-column name="urlTitle" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="C_C" return-type="Collection">
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
-		<finder name="G_C_C" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
-		<finder name="G_C_U" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="urlTitle" />
-		</finder>
-		<finder name="G_C_C_M" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-			<finder-column name="main" />
-		</finder>
-		<finder name="G_C_L_U" return-type="FriendlyURLEntry">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="languageId" />
-			<finder-column name="urlTitle" />
-		</finder>
-		<finder name="G_C_C_L_U" return-type="FriendlyURLEntry">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-			<finder-column name="languageId" />
-			<finder-column name="urlTitle" />
-		</finder>
-		<finder name="G_C_C_L_M" return-type="FriendlyURLEntry">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-			<finder-column name="languageId" />
-			<finder-column name="main" />
-		</finder>
-	</entity>
 	<entity external-reference-code="true" local-service="true" name="CPInstance" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -1178,7 +1101,6 @@
 		<exception>CPDefinitionProductTypeName</exception>
 		<exception>CPDisplayLayoutEntry</exception>
 		<exception>CPDisplayLayoutLayoutUuid</exception>
-		<exception>CPFriendlyURLEntry</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>
 		<exception>CPInstanceJson</exception>
@@ -1194,7 +1116,6 @@
 		<exception>DuplicateCommerceChannelRel</exception>
 		<exception>DuplicateCPAttachmentFileEntry</exception>
 		<exception>DuplicateCPDefinitionOptionRelKey</exception>
-		<exception>DuplicateCPFriendlyURLEntry</exception>
 		<exception>DuplicateCProduct</exception>
 		<exception>DuplicateCPSpecificationOptionKey</exception>
 		<exception>InvalidCommerceChannelType</exception>

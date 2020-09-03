@@ -183,10 +183,6 @@ class Sidebar extends Component {
 						field.fieldName == 'rows'
 							? readOnlyFieldName
 							: false,
-					localizedValue:
-						field.fieldName == 'predefinedValue'
-							? field.localizedValue[editingLanguageId]
-							: field.localizedValue,
 					readOnly:
 						field.fieldName == 'name' ? readOnlyFieldName : false,
 				};

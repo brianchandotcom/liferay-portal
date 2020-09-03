@@ -152,7 +152,7 @@ definition {
 
 		PageEditor.deleteExperience(experienceName = "exp1_edited");
 
-		Button.clickPublish();
+		PageEditor.clickPublish();
 	}
 
 	@description = "Validate inline text changes between experiences"

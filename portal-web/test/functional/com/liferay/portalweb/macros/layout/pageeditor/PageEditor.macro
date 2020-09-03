@@ -708,6 +708,14 @@ definition {
 		AssertConfirm(value1 = "Do you want to delete this experience? Its content will be deleted.");
 
 		Alert.viewSuccessMessage();
+
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+		AssertElementNotPresent(
+			key_experienceName = "${newExperience}",
+			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
 	macro editCollectionDisplay {

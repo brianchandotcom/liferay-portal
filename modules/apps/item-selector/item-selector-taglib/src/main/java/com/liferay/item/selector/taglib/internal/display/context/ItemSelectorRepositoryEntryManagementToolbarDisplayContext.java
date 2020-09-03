@@ -25,7 +25,6 @@ import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrows
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -219,7 +218,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 				_httpServletRequest, "current-organization");
 		}
 
-		if (group.getType() == GroupConstants.TYPE_DEPOT) {
+		if (group.isDepot()) {
 			return LanguageUtil.get(
 				_httpServletRequest, "current-asset-library");
 		}

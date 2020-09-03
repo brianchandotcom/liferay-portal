@@ -24,7 +24,6 @@ import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -223,7 +222,7 @@ public class DepotPanelAppController {
 		public boolean isShow(PermissionChecker permissionChecker, Group group)
 			throws PortalException {
 
-			if ((group.getType() == GroupConstants.TYPE_DEPOT) &&
+			if (group.isDepot() &&
 				!DepotPanelAppController.this.isShow(
 					_panelApp, group.getGroupId())) {
 

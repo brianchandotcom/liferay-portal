@@ -23,7 +23,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -232,7 +231,7 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 			return LanguageUtil.get(request, "current-organization");
 		}
 
-		if (group.getType() == GroupConstants.TYPE_DEPOT) {
+		if (group.isDepot()) {
 			return LanguageUtil.get(request, "current-asset-library");
 		}
 

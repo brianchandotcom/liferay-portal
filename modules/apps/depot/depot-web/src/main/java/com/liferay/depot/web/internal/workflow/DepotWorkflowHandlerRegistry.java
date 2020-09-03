@@ -17,7 +17,6 @@ package com.liferay.depot.web.internal.workflow;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -157,7 +156,7 @@ public class DepotWorkflowHandlerRegistry {
 
 		@Override
 		public boolean isVisible(Group group) {
-			if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
+			if (!group.isDepot() ||
 				_depotApplicationController.isClassNameEnabled(
 					getClassName(), group.getGroupId())) {
 

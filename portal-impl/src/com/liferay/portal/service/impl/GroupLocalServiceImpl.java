@@ -5166,7 +5166,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		if (!Objects.equals(group.getClassName(), Group.class.getName()) &&
-			(group.getType() != GroupConstants.TYPE_DEPOT)) {
+			!group.isDepot()) {
 
 			return;
 		}

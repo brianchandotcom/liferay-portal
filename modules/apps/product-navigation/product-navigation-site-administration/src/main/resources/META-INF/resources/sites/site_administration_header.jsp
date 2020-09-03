@@ -54,7 +54,7 @@ int childPanelCategoriesSize = GetterUtil.getInteger(request.getAttribute("produ
 							expand="<%= true %>"
 						>
 							<div class="depot-type">
-								<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "asset-library" : "site" %>' />
+								<liferay-ui:message key='<%= group.isDepot() ? "asset-library" : "site" %>' />
 							</div>
 
 							<div class="lfr-portal-tooltip site-name text-truncate" title="<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>">

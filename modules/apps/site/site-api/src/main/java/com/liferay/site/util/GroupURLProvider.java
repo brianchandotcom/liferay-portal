@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -102,7 +101,7 @@ public class GroupURLProvider {
 		Group group, PortletRequest portletRequest,
 		boolean includeStagingGroup) {
 
-		if (group.getType() == GroupConstants.TYPE_DEPOT) {
+		if (group.isDepot()) {
 			String depotDashboardGroupURL = _getDepotDashboardGroupURL(
 				group, portletRequest);
 

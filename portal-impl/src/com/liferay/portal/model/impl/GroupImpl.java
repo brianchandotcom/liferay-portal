@@ -321,7 +321,7 @@ public class GroupImpl extends GroupBaseImpl {
 		else if (isUser()) {
 			iconCss = "user";
 		}
-		else if (getType() == GroupConstants.TYPE_DEPOT) {
+		else if (isDepot()) {
 			iconCss = "books";
 		}
 
@@ -598,7 +598,7 @@ public class GroupImpl extends GroupBaseImpl {
 		throws PortalException {
 
 		if (getGroupId() == themeDisplay.getScopeGroupId()) {
-			if (getType() == GroupConstants.TYPE_DEPOT) {
+			if (isDepot()) {
 				return StringUtil.appendParentheticalSuffix(
 					themeDisplay.translate("current-asset-library"),
 					HtmlUtil.escape(
@@ -623,7 +623,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public String getScopeLabel(ThemeDisplay themeDisplay) {
-		if (getType() == GroupConstants.TYPE_DEPOT) {
+		if (isDepot()) {
 			if (getGroupId() == themeDisplay.getScopeGroupId()) {
 				return "current-asset-library";
 			}

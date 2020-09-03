@@ -15,7 +15,6 @@
 package com.liferay.portal.vulcan.util;
 
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 
 /**
  * @author Javier Gamarra
@@ -39,7 +38,7 @@ public class GroupUtil {
 	}
 
 	private static boolean _isDepot(Group group) {
-		if (GroupConstants.TYPE_DEPOT == group.getType()) {
+		if (group.isDepot()) {
 			return true;
 		}
 

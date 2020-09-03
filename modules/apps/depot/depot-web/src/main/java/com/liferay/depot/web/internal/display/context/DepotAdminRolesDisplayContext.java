@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -254,9 +253,7 @@ public class DepotAdminRolesDisplayContext {
 			Group group = userGroupRole.getGroup();
 			Role role = userGroupRole.getRole();
 
-			if ((group != null) &&
-				Objects.equals(group.getType(), GroupConstants.TYPE_DEPOT) &&
-				(role != null) &&
+			if ((group != null) && group.isDepot() && (role != null) &&
 				(role.getType() == RoleConstants.TYPE_DEPOT)) {
 
 				return true;

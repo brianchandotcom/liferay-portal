@@ -28,7 +28,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -100,7 +99,7 @@ public class DepotItemSelectorViewRenderer implements ItemSelectorViewRenderer {
 
 				Group scopeGroup = themeDisplay.getScopeGroup();
 
-				if (scopeGroup.getType() != GroupConstants.TYPE_DEPOT) {
+				if (!scopeGroup.isDepot()) {
 					_itemSelectorViewRenderer.renderHTML(pageContext);
 
 					return;

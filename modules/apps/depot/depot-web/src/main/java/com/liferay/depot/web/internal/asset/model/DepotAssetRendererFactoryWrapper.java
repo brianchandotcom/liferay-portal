@@ -23,7 +23,6 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -220,7 +219,7 @@ public class DepotAssetRendererFactoryWrapper<T>
 	public boolean isSelectable() {
 		Group group = _getGroup();
 
-		if ((group != null) && (group.getType() == GroupConstants.TYPE_DEPOT) &&
+		if ((group != null) && group.isDepot() &&
 			!_depotApplicationController.isClassNameEnabled(
 				getClassName(), group.getGroupId())) {
 

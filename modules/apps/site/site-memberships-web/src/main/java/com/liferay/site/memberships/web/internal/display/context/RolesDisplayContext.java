@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -192,7 +191,7 @@ public class RolesDisplayContext {
 
 		Group group = GroupLocalServiceUtil.fetchGroup(getGroupId());
 
-		if (group.getType() == GroupConstants.TYPE_DEPOT) {
+		if (group.isDepot()) {
 			roles = DepotRolesUtil.filterGroupRoles(
 				themeDisplay.getPermissionChecker(), getGroupId(), roles);
 		}

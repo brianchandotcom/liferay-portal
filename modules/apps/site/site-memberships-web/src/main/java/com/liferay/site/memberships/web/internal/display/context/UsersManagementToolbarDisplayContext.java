@@ -27,7 +27,6 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -381,7 +380,7 @@ public class UsersManagementToolbarDisplayContext
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (scopeGroup.getType() == GroupConstants.TYPE_DEPOT) {
+		if (scopeGroup.isDepot()) {
 			selectURL.setParameter(
 				"roleType", String.valueOf(RoleConstants.TYPE_DEPOT));
 		}

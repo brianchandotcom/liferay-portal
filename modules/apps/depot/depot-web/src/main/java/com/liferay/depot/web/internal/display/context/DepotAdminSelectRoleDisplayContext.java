@@ -221,7 +221,7 @@ public class DepotAdminSelectRoleDisplayContext {
 				while (iterator.hasNext()) {
 					Group group = iterator.next();
 
-					if (group.getType() != GroupConstants.TYPE_DEPOT) {
+					if (!group.isDepot()) {
 						iterator.remove();
 					}
 				}

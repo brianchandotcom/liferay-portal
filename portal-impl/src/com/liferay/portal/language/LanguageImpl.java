@@ -1600,10 +1600,7 @@ public class LanguageImpl implements Language, Serializable {
 			group = group.getLiveGroup();
 		}
 
-		if ((!group.isSite() &&
-			 (group.getType() != GroupConstants.TYPE_DEPOT)) ||
-			group.isCompany()) {
-
+		if ((!group.isSite() && !group.isDepot()) || group.isCompany()) {
 			return true;
 		}
 

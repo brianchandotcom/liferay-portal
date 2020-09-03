@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -237,9 +236,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 			Group group = _groupLocalService.fetchGroup(primKey);
 
-			if ((group == null) ||
-				(group.getType() != GroupConstants.TYPE_DEPOT)) {
-
+			if ((group == null) || !group.isDepot()) {
 				return hasPermissionSupplier.get();
 			}
 
@@ -262,7 +259,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	private boolean _isContentReviewer(Group group) throws PortalException {
-		if ((group == null) || (group.getType() != GroupConstants.TYPE_DEPOT)) {
+		if ((group == null) || !group.isDepot()) {
 			return false;
 		}
 
@@ -277,7 +274,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	private boolean _isDepotGroupOwner(Group group) {
-		if ((group != null) && (group.getType() == GroupConstants.TYPE_DEPOT) &&
+		if ((group != null) && group.isDepot() &&
 			isGroupOwner(group.getGroupId())) {
 
 			return true;
@@ -287,7 +284,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	private boolean _isGroupAdmin(Group group) throws PortalException {
-		if ((group == null) || (group.getType() != GroupConstants.TYPE_DEPOT)) {
+		if ((group == null) || !group.isDepot()) {
 			return false;
 		}
 
@@ -319,7 +316,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	private boolean _isGroupMember(Group group) throws Exception {
-		if ((group == null) || (group.getType() != GroupConstants.TYPE_DEPOT)) {
+		if ((group == null) || !group.isDepot()) {
 			return false;
 		}
 
@@ -336,7 +333,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	private boolean _isGroupOwner(Group group) throws PortalException {
-		if ((group == null) || (group.getType() != GroupConstants.TYPE_DEPOT)) {
+		if ((group == null) || !group.isDepot()) {
 			return false;
 		}
 

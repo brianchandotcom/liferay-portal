@@ -834,7 +834,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		try {
 			Group group = _groupService.getGroup(companyId, groupKey);
 
-			if (group.getType() == GroupConstants.TYPE_DEPOT) {
+			if (group.isDepot()) {
 				return true;
 			}
 

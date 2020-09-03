@@ -94,7 +94,7 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 				/>
 			</c:if>
 
-			<c:if test="<%= (group.getType() != GroupConstants.TYPE_DEPOT) && !group.isCompany() %>">
+			<c:if test="<%= !group.isDepot() && !group.isCompany() %>">
 				<clay:button
 					cssClass="list-group-heading navigation-link panel-header-link"
 					displayType="unstyled"
@@ -113,7 +113,7 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 	</c:if>
 </c:if>
 
-<c:if test="<%= (group.getType() != GroupConstants.TYPE_DEPOT) && !group.isCompany() %>">
+<c:if test="<%= !group.isDepot() && !group.isCompany() %>">
 
 	<%
 	PortletURL portletURL = PortletURLFactoryUtil.create(request, ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU, RenderRequest.RENDER_PHASE);

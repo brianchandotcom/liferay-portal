@@ -17,7 +17,6 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -179,9 +178,7 @@ public class NavigationBarTag extends BaseContainerTag {
 
 			Group scopeGroup = themeDisplay.getScopeGroup();
 
-			if ((scopeGroup != null) &&
-				(scopeGroup.getType() == GroupConstants.TYPE_DEPOT)) {
-
+			if ((scopeGroup != null) && scopeGroup.isDepot()) {
 				return false;
 			}
 		}

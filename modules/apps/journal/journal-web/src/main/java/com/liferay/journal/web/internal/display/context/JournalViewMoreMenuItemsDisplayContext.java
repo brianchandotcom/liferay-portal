@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -99,7 +98,7 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if (ddmStructure.getGroupId() == scopeGroup.getGroupId()) {
-			if (scopeGroup.getType() == GroupConstants.TYPE_DEPOT) {
+			if (scopeGroup.isDepot()) {
 				return LanguageUtil.get(
 					_httpServletRequest, "current-asset-library");
 			}

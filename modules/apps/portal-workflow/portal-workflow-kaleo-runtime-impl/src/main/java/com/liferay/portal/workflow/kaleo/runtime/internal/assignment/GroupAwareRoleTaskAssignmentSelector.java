@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -154,7 +153,7 @@ public class GroupAwareRoleTaskAssignmentSelector
 	protected boolean isValidAssignment(Group group, Role role)
 		throws PortalException {
 
-		if ((group != null) && (group.getType() == GroupConstants.TYPE_DEPOT) &&
+		if ((group != null) && group.isDepot() &&
 			(role.getType() == RoleConstants.TYPE_DEPOT)) {
 
 			return true;

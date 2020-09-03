@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -179,10 +178,7 @@ public class SiteParamConverterProvider
 	}
 
 	private boolean _isDepotOrSite(Group group) {
-		if ((group != null) &&
-			((group.getType() == GroupConstants.TYPE_DEPOT) ||
-			 group.isSite())) {
-
+		if ((group != null) && (group.isDepot() || group.isSite())) {
 			return true;
 		}
 

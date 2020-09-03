@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntryContributor;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -73,9 +72,7 @@ public class DepotBreadcrumbEntryContributorImpl
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if ((depotEntryId == 0) &&
-			(scopeGroup.getType() != GroupConstants.TYPE_DEPOT)) {
-
+		if ((depotEntryId == 0) && !scopeGroup.isDepot()) {
 			return originalBreadcrumbEntries;
 		}
 

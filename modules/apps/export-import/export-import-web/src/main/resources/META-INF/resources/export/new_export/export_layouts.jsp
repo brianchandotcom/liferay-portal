@@ -147,7 +147,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 					exportImportConfigurationId="<%= exportImportConfigurationId %>"
 				/>
 
-				<c:if test="<%= (group.getType() != GroupConstants.TYPE_DEPOT) && !group.isCompany() && !group.isLayoutPrototype() %>">
+				<c:if test="<%= !group.isDepot() && !group.isCompany() && !group.isLayoutPrototype() %>">
 					<liferay-staging:select-pages
 						action="<%= Constants.EXPORT %>"
 						disableInputs="<%= configuredExport %>"

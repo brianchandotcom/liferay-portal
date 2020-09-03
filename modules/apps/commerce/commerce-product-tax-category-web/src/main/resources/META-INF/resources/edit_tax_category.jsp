@@ -19,31 +19,19 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
-
 CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPTaxCategory cpTaxCategory = cpTaxCategoryDisplayContext.getCPTaxCategory();
 
-String title = LanguageUtil.get(request, "add-tax-category");
+portletDisplay.setShowBackIcon(true);
 
-if (cpTaxCategory != null) {
-	title = LanguageUtil.format(request, "edit-x", cpTaxCategory.getName(languageId), false);
+if (Validator.isNull(redirect)) {
+	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 }
-
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
-	"direction-right", StringPool.TRUE
-).build();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+else {
+	portletDisplay.setURLBack(redirect);
+}
 %>
-
-<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
-	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
-</liferay-util:include>
-
-<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCPTaxCategory" var="editCPTaxCategoryActionURL" />
 

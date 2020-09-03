@@ -14,27 +14,14 @@
 
 package com.liferay.commerce.product.tax.category.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.product.exception.NoSuchCPTaxCategoryException;
-import com.liferay.commerce.product.service.CPTaxCategoryService;
-import com.liferay.commerce.product.tax.category.web.internal.display.context.CPTaxCategoryDisplayContext;
-import com.liferay.commerce.tax.service.CommerceTaxMethodService;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -42,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CPPortletKeys.CP_TAX_CATEGORY,
 		"mvc.command.name=editCPTaxCategory"
 	},
 	service = MVCRenderCommand.class
@@ -54,50 +41,7 @@ public class EditCPTaxCategoryMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/edit_tax_category.jsp");
-
-		try {
-			CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext =
-				new CPTaxCategoryDisplayContext(
-					_commerceTaxMethodService, _cpTaxCategoryService,
-					renderRequest, renderResponse);
-
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT, cpTaxCategoryDisplayContext);
-
-			requestDispatcher.include(
-				_portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse));
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchCPTaxCategoryException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, exception.getClass());
-
-				return "/error.jsp";
-			}
-
-			throw new PortletException(
-				"Unable to include edit_tax_category.jsp", exception);
-		}
-
-		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+		return "/edit_tax_category.jsp";
 	}
-
-	@Reference
-	private CommerceTaxMethodService _commerceTaxMethodService;
-
-	@Reference
-	private CPTaxCategoryService _cpTaxCategoryService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.tax.category.web)"
-	)
-	private ServletContext _servletContext;
 
 }

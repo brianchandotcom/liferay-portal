@@ -37,7 +37,7 @@ public class LayoutTable {
 		{"privateLayout", Types.BOOLEAN}, {"layoutId", Types.BIGINT},
 		{"parentLayoutId", Types.BIGINT}, {"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"description", Types.CLOB},
 		{"keywords", Types.VARCHAR}, {"robots", Types.VARCHAR},
 		{"type_", Types.VARCHAR}, {"typeSettings", Types.CLOB},
 		{"hidden_", Types.BOOLEAN}, {"system_", Types.BOOLEAN},
@@ -92,7 +92,7 @@ TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 
 TABLE_COLUMNS_MAP.put("keywords", Types.VARCHAR);
 
@@ -130,7 +130,7 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,head BOOLEAN,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null)";
+"create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,head BOOLEAN,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title STRING null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 

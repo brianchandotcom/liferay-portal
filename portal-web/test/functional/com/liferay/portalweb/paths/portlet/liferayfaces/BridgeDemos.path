@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>EDIT_LINK</td>
-	<td>//a[contains(@id,'editLink')]</td>
+	<td>//a[contains(@id,'editLink')] | //input[@value='Edit Preferences']</td>
 	<td></td>
 </tr>
 <tr>

@@ -753,6 +753,16 @@ definition {
 
 		BridgeDemos.viewApplication(applicantName = "JSF JSP");
 
+		BridgeDemos.editDateFormat(dateFormat = "MM/dd/yy");
+
+		BridgeDemos.gotoEdit();
+
+		Click(locator1 = "BridgeDemos#RESET_BUTTON");
+
+		BridgeDemos.viewDateFormat(
+			dateFormat = "MM/dd/yyyy",
+			displayDate = "${displayDate}");
+
 		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
 
 		BridgeDemos.viewFieldErrorMessage(

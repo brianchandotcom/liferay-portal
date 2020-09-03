@@ -81,9 +81,7 @@ definition {
 	}
 
 	macro gotoEdit {
-		AssertClick(
-			locator1 = "BridgeDemos#EDIT_LINK",
-			value1 = "Edit");
+		Click(locator1 = "BridgeDemos#EDIT_LINK");
 	}
 
 	macro submit {

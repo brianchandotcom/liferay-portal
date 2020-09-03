@@ -20,6 +20,8 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -65,6 +67,14 @@ public class ApplicationsMenuSiteProductNavigationControlMenuEntry
 
 		if (!ApplicationsMenuUtil.isEnableApplicationsMenu(
 				themeDisplay.getCompanyId(), _configurationProvider)) {
+
+			return false;
+		}
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if ((scopeGroup != null) &&
+			(scopeGroup.getType() == GroupConstants.TYPE_DEPOT)) {
 
 			return false;
 		}

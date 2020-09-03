@@ -172,13 +172,13 @@ definition {
 		ChangeList.GotoViewDiffInConflictingChanges(entryTitle = "Test Test modified a Asset");
 
 		ChangeList.viewChangesDiff(
-			columnName = "title",
+			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
 			entryTitle = "Test Test modified a Asset",
 			publicationName = "Publication 2 Name");
 
 		ChangeList.viewChangesDiff(
-			columnName = "ctCollectionId",
+			columnName = "ct-collection-id",
 			columnValueInPublication = "2",
 			entryTitle = "Test Test modified a Asset",
 			publicationName = "Publication 2 Name");

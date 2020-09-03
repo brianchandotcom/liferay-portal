@@ -54,7 +54,7 @@ export function MappingPanel({item}) {
 				...fragmentEntryLink.editableValues[processoryKey],
 				[editableId]: {
 					config: isMapped(newEditableValue)
-						? {...editableValue.config, alt: ''}
+						? {...editableValue.config, alt: '', imageTitle: ''}
 						: editableValue.config,
 					defaultValue: editableValue.defaultValue,
 					...newEditableValue,

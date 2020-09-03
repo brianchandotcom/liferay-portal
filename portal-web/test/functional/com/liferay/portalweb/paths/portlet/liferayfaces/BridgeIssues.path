@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>NAVIGATE_TO_VIEW</td>
-	<td>//a[contains(text(), '${key_PageLink}')] | //div[@class='liferay-faces-bridge-body']/a[contains(text(), '${key_PageLink}')] | //input[@value='${key_PageLink}']</td>
+	<td>//a[contains(text(), '${key_PageLink}')] | //div[@class='liferay-faces-bridge-body']/a[contains(text(), '${key_PageLink}')] | //input[contains(@value, '${key_PageLink}')]</td>
 	<td></td>
 </tr>
 <tr>

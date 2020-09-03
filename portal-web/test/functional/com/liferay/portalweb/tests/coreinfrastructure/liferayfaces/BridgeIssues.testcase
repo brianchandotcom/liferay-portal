@@ -49,7 +49,7 @@ definition {
 			value1 = "This is view2.xhtml");
 
 		AssertElementPresent.assertVisible(
-			locator1 = "BridgeIssues#VIEW_PARAM_VALUE1",
+			locator1 = "BridgeIssues#VIEW_PARAM1",
 			value1 = "abc");
 
 		AssertElementPresent.assertVisible(
@@ -57,7 +57,7 @@ definition {
 			value1 = "viewParam1=abc");
 
 		AssertElementPresent.assertVisible(
-			locator1 = "BridgeIssues#VIEW_PARAM_VALUE2",
+			locator1 = "BridgeIssues#VIEW_PARAM2",
 			value1 = "xyz");
 
 		AssertElementPresent.assertVisible(
@@ -405,6 +405,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "BridgeIssues#RESOURCE",
 			value1 = "FACES-1618:example.css");
+
+		AssertTextEquals(
+			locator1 = "BridgeIssues#RESOURCE2",
+			value1 = "javax.faces:jsf.js");
+
+		AssertElementNotPresent(locator1 = "BridgeIssues#RESOURCE3");
 
 		// FACES-1638
 

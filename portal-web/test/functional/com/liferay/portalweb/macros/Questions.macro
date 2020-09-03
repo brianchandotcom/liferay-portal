@@ -461,6 +461,26 @@ definition {
 		}
 	}
 
+	macro viewTagsFilterResults {
+		AssertTextEquals.assertPartialText(
+			key_position = "${position}",
+			locator1 = "Questions#TAGS_POSITION",
+			value1 = "${tagName}");
+
+		if (isSet(usedTimes)) {
+			AssertTextEquals.assertPartialText(
+				key_position = "${position}",
+				locator1 = "Questions#TAGS_POSITION",
+				value1 = "${usedTimes}");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				key_position = "${position}",
+				locator1 = "Questions#TAGS_POSITION",
+				value1 = "Created");
+		}
+	}
+
 	macro voteQuestion {
 		AssertTextEquals(
 			key_votedResult = "${currentVotedCount}",

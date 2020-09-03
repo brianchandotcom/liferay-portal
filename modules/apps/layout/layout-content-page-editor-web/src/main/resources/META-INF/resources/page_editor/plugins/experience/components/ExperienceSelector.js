@@ -18,6 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
+import {openToast} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
@@ -166,9 +167,8 @@ const ExperienceSelector = ({
 						setEditingExperience({});
 						onModalClose();
 					}
-
-					Liferay.Util.openToast({
-						title: Liferay.Language.get(
+					openToast({
+						message: Liferay.Language.get(
 							'the-experience-was-updated-successfully'
 						),
 						type: 'success',
@@ -198,9 +198,8 @@ const ExperienceSelector = ({
 					if (isMounted()) {
 						onModalClose();
 					}
-
-					Liferay.Util.openToast({
-						title: Liferay.Language.get(
+					openToast({
+						message: Liferay.Language.get(
 							'the-experience-was-created-successfully'
 						),
 						type: 'success',
@@ -241,11 +240,23 @@ const ExperienceSelector = ({
 				segmentsExperienceId: id,
 				selectedExperienceId: selectedExperience.segmentsExperienceId,
 			})
-		).catch((_error) => {
-
-			// TODO handle error
-
-		});
+		)
+			.then(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'the-experience-was-deleted-successfully'
+					),
+					type: 'success',
+				});
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			});
 	};
 
 	const decreasePriority = (id) => {

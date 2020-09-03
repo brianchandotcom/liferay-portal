@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -90,6 +91,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alec Sloan
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CommerceOrderEngineTest {
 
@@ -176,8 +178,6 @@ public class CommerceOrderEngineTest {
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
 
-		Thread.sleep(5000);
-
 		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
 			_user.getUserId());
@@ -210,8 +210,6 @@ public class CommerceOrderEngineTest {
 			_commerceShipment1.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
 
-		Thread.sleep(5000);
-
 		Assert.assertEquals(
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
 			_commerceShipment1.getStatus());
@@ -220,13 +218,9 @@ public class CommerceOrderEngineTest {
 			_commerceShipment1.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED);
 
-		Thread.sleep(5000);
-
 		Assert.assertEquals(
 			CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED,
 			_commerceShipment1.getStatus());
-
-		Thread.sleep(5000);
 
 		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
 			_commerceOrder.getCommerceOrderId());
@@ -262,8 +256,6 @@ public class CommerceOrderEngineTest {
 
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
-
-		Thread.sleep(5000);
 
 		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
@@ -301,8 +293,6 @@ public class CommerceOrderEngineTest {
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
 			_commerceShipment1.getStatus());
 
-		Thread.sleep(5000);
-
 		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
 			_commerceOrder.getCommerceOrderId());
 
@@ -331,8 +321,6 @@ public class CommerceOrderEngineTest {
 
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
-
-		Thread.sleep(5000);
 
 		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
@@ -370,8 +358,6 @@ public class CommerceOrderEngineTest {
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
 			_commerceShipment1.getStatus());
 
-		Thread.sleep(5000);
-
 		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
 			_commerceOrder.getCommerceOrderId());
 
@@ -400,8 +386,6 @@ public class CommerceOrderEngineTest {
 			_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 				_commerceOrder, CommerceOrderConstants.ORDER_STATUS_CANCELLED,
 				_user.getUserId());
-
-			Thread.sleep(5000);
 
 			Assert.assertEquals(
 				_commerceOrder.getOrderStatus(),
@@ -716,8 +700,6 @@ public class CommerceOrderEngineTest {
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
 
-		Thread.sleep(5000);
-
 		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
 			_user.getUserId());
@@ -750,16 +732,12 @@ public class CommerceOrderEngineTest {
 			_commerceShipment1.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED);
 
-		Thread.sleep(5000);
-
 		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
 			_commerceOrder.getCommerceOrderId());
 
 		Assert.assertEquals(
 			CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED,
 			_commerceOrder.getOrderStatus());
-
-		Thread.sleep(5000);
 
 		int remainingQuantity =
 			commerceOrderItem.getQuantity() -
@@ -775,8 +753,6 @@ public class CommerceOrderEngineTest {
 			_commerceShipment2.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
 
-		Thread.sleep(5000);
-
 		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
 			_commerceOrder.getCommerceOrderId());
 
@@ -790,8 +766,6 @@ public class CommerceOrderEngineTest {
 		_commerceShipment2 = _commerceShipmentLocalService.updateStatus(
 			_commerceShipment2.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED);
-
-		Thread.sleep(5000);
 
 		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
 			_commerceOrder.getCommerceOrderId());
@@ -912,16 +886,12 @@ public class CommerceOrderEngineTest {
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_ON_HOLD,
 			_user.getUserId());
 
-		Thread.sleep(5000);
-
 		Assert.assertEquals(
 			_commerceOrder.getOrderStatus(), OnHoldCommerceOrderStatusImpl.KEY);
 
 		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_ON_HOLD,
 			_user.getUserId());
-
-		Thread.sleep(5000);
 
 		Assert.assertEquals(
 			_commerceOrder.getOrderStatus(),

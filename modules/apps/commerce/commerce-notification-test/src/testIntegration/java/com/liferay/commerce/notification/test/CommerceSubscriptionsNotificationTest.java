@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -69,6 +70,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Luca Pellizzon
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @Ignore
 @RunWith(Arquillian.class)
 public class CommerceSubscriptionsNotificationTest {
@@ -143,8 +145,6 @@ public class CommerceSubscriptionsNotificationTest {
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
 
-		Thread.sleep(5000);
-
 		List<CommerceSubscriptionEntry> commerceSubscriptionEntries =
 			_commerceSubscriptionEntryLocalService.
 				getCommerceSubscriptionEntries(
@@ -161,23 +161,17 @@ public class CommerceSubscriptionsNotificationTest {
 		_commerceSubscriptionEngine.suspendRecurringPayment(
 			commerceSubscriptionEntry.getCommerceSubscriptionEntryId());
 
-		Thread.sleep(5000);
-
 		_checkCommerceNotificationTemplate(
 			CommerceSubscriptionNotificationConstants.SUBSCRIPTION_SUSPENDED);
 
 		_commerceSubscriptionEngine.activateRecurringPayment(
 			commerceSubscriptionEntry.getCommerceSubscriptionEntryId());
 
-		Thread.sleep(5000);
-
 		_checkCommerceNotificationTemplate(
 			CommerceSubscriptionNotificationConstants.SUBSCRIPTION_ACTIVATED);
 
 		_commerceSubscriptionEngine.cancelRecurringPayment(
 			commerceSubscriptionEntry.getCommerceSubscriptionEntryId());
-
-		Thread.sleep(5000);
 
 		_checkCommerceNotificationTemplate(
 			CommerceSubscriptionNotificationConstants.SUBSCRIPTION_CANCELLED);

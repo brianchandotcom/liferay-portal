@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -44,7 +45,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
@@ -57,6 +58,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Luca Pellizzon
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CommerceDeliverySubscriptionsTest {
 
@@ -98,8 +100,6 @@ public class CommerceDeliverySubscriptionsTest {
 
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
-
-		Thread.sleep(5000);
 
 		List<CommerceSubscriptionEntry> commerceSubscriptionEntries =
 			_commerceSubscriptionEntryLocalService.
@@ -197,8 +197,6 @@ public class CommerceDeliverySubscriptionsTest {
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
 
-		Thread.sleep(5000);
-
 		List<CommerceSubscriptionEntry> commerceSubscriptionEntries =
 			_commerceSubscriptionEntryLocalService.
 				getCommerceSubscriptionEntries(
@@ -222,9 +220,11 @@ public class CommerceDeliverySubscriptionsTest {
 
 		// Set subscription entry to be renewable
 
-		commerceSubscriptionEntry.setNextIterationDate(new Date());
+		Calendar now = Calendar.getInstance();
 
-		Thread.sleep(5000);
+		now.add(Calendar.MINUTE, -2);
+
+		commerceSubscriptionEntry.setNextIterationDate(now.getTime());
 
 		_commerceSubscriptionEntryHelper.checkDeliverySubscriptionStatus(
 			commerceSubscriptionEntry);

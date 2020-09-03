@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -76,6 +77,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Luca Pellizzon
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CommerceOrderStatusNotificationTest {
 
@@ -155,8 +157,6 @@ public class CommerceOrderStatusNotificationTest {
 			CommerceOrderConstants.ORDER_STATUS_PENDING,
 			_commerceOrder.getOrderStatus());
 
-		Thread.sleep(1000);
-
 		int commerceNotificationQueueEntriesCount =
 			_commerceNotificationQueueEntryLocalService.
 				getCommerceNotificationQueueEntriesCount(
@@ -181,10 +181,6 @@ public class CommerceOrderStatusNotificationTest {
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
 
-		// Notifications are asynchronous, give time to send
-
-		Thread.sleep(5000);
-
 		int commerceNotificationQueueEntriesCount =
 			_commerceNotificationQueueEntryLocalService.
 				getCommerceNotificationQueueEntriesCount(
@@ -198,10 +194,6 @@ public class CommerceOrderStatusNotificationTest {
 		_commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
 			_user.getUserId());
-
-		// Notifications are asynchronous, give time to send
-
-		Thread.sleep(5000);
 
 		commerceNotificationQueueEntriesCount =
 			_commerceNotificationQueueEntryLocalService.
@@ -244,10 +236,6 @@ public class CommerceOrderStatusNotificationTest {
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_SHIPPED,
 			_user.getUserId());
 
-		// Notifications are asynchronous, give time to send
-
-		Thread.sleep(5000);
-
 		commerceNotificationQueueEntriesCount =
 			_commerceNotificationQueueEntryLocalService.
 				getCommerceNotificationQueueEntriesCount(
@@ -261,10 +249,6 @@ public class CommerceOrderStatusNotificationTest {
 		_commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
 			_user.getUserId());
-
-		// Notifications are asynchronous, give time to send
-
-		Thread.sleep(5000);
 
 		commerceNotificationQueueEntriesCount =
 			_commerceNotificationQueueEntryLocalService.

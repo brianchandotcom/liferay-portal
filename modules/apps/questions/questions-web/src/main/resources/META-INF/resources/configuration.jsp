@@ -92,7 +92,7 @@ catch (Exception exception) {
 					var form = document.<portlet:namespace />fm;
 
 					Liferay.Util.setFormValues(form, {
-						categoryName: Liferay.Util.unescape(event.name),
+						rootTopicName: Liferay.Util.unescape(event.name),
 						rootTopicId: event.categoryid,
 					});
 

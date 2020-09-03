@@ -61,6 +61,11 @@ public class JSResolveModulesServlet extends HttpServlet {
 		updateETag();
 	}
 
+	public void updateETag() {
+		_etag = StringBundler.concat(
+			"W/", StringPool.QUOTE, UUID.randomUUID(), StringPool.QUOTE);
+	}
+
 	@Override
 	protected void service(
 			HttpServletRequest httpServletRequest,
@@ -92,11 +97,6 @@ public class JSResolveModulesServlet extends HttpServlet {
 		printWriter.write(browserModulesResolution.toJSON());
 
 		printWriter.close();
-	}
-
-	protected void updateETag() {
-		_etag = StringBundler.concat(
-			"W/", StringPool.QUOTE, UUID.randomUUID(), StringPool.QUOTE);
 	}
 
 	private List<String> _getModuleNames(HttpServletRequest httpServletRequest)

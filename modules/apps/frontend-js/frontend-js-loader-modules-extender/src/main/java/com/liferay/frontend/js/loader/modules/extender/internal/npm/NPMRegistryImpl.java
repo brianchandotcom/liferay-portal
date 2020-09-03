@@ -314,9 +314,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	@Deactivate
 	protected void deactivate() {
-		_javaScriptAwarePortalWebResources.close();
-
 		_npmRegistryUpdatesListeners.close();
+
+		_javaScriptAwarePortalWebResources.close();
 
 		_serviceTracker.close();
 

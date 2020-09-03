@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.frontend.js.loader.modules.extender.internal.servlet;
+package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.servlet.JSResolveModulesServlet;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesListener;
 
 import org.osgi.framework.BundleContext;

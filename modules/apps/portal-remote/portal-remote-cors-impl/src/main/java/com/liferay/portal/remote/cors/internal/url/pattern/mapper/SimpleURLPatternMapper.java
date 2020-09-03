@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal;
+package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import com.liferay.portal.kernel.util.Validator;
 
@@ -24,30 +24,30 @@ import java.util.Map;
  * @author Carlos Sierra Andrés
  * @author Brian Wing Shun Chan
  */
-public class SimpleURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
+public class SimpleURLPatternMapper<T> extends BaseURLPatternMapper<T> {
 
-	public SimpleURLToCORSSupportMapper(Map<String, CORSSupport> corsSupports) {
-		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
+	public SimpleURLPatternMapper(Map<String, T> cargos) {
+		for (Map.Entry<String, T> entry : cargos.entrySet()) {
 			put(entry.getValue(), entry.getKey());
 		}
 	}
 
 	@Override
-	public CORSSupport get(String urlPath) {
+	public T get(String urlPath) {
 		if (Validator.isNull(urlPath)) {
 			return null;
 		}
 
-		CORSSupport corsSupport = _exactURLPatternCORSSupports.get(urlPath);
+		T cargo = _exactURLPatternCargos.get(urlPath);
 
-		if (corsSupport != null) {
-			return corsSupport;
+		if (cargo != null) {
+			return cargo;
 		}
 
-		corsSupport = _wildcardURLPatternCORSSupports.get(urlPath + "/*");
+		cargo = _wildcardURLPatternCargos.get(urlPath + "/*");
 
-		if (corsSupport != null) {
-			return corsSupport;
+		if (cargo != null) {
+			return cargo;
 		}
 
 		int index = 0;
@@ -61,20 +61,19 @@ public class SimpleURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 				continue;
 			}
 
-			corsSupport = _wildcardURLPatternCORSSupports.get(
+			cargo = _wildcardURLPatternCargos.get(
 				urlPath.substring(0, i) + "*");
 
-			if (corsSupport != null) {
-				return corsSupport;
+			if (cargo != null) {
+				return cargo;
 			}
 		}
 
-		return _extensionURLPatternCORSSupports.get(
-			"*" + urlPath.substring(index));
+		return _extensionURLPatternCargos.get("*" + urlPath.substring(index));
 	}
 
 	@Override
-	protected void put(CORSSupport corsSupport, String urlPattern)
+	protected void put(T cargo, String urlPattern)
 		throws IllegalArgumentException {
 
 		if (Validator.isBlank(urlPattern)) {
@@ -82,31 +81,28 @@ public class SimpleURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 		}
 
 		if (isWildcardURLPattern(urlPattern)) {
-			if (!_wildcardURLPatternCORSSupports.containsKey(urlPattern)) {
-				_wildcardURLPatternCORSSupports.put(urlPattern, corsSupport);
+			if (!_wildcardURLPatternCargos.containsKey(urlPattern)) {
+				_wildcardURLPatternCargos.put(urlPattern, cargo);
 			}
 
 			return;
 		}
 
 		if (isExtensionURLPattern(urlPattern)) {
-			if (!_extensionURLPatternCORSSupports.containsKey(urlPattern)) {
-				_extensionURLPatternCORSSupports.put(urlPattern, corsSupport);
+			if (!_extensionURLPatternCargos.containsKey(urlPattern)) {
+				_extensionURLPatternCargos.put(urlPattern, cargo);
 			}
 
 			return;
 		}
 
-		if (!_exactURLPatternCORSSupports.containsKey(urlPattern)) {
-			_exactURLPatternCORSSupports.put(urlPattern, corsSupport);
+		if (!_exactURLPatternCargos.containsKey(urlPattern)) {
+			_exactURLPatternCargos.put(urlPattern, cargo);
 		}
 	}
 
-	private final Map<String, CORSSupport> _exactURLPatternCORSSupports =
-		new HashMap<>();
-	private final Map<String, CORSSupport> _extensionURLPatternCORSSupports =
-		new HashMap<>();
-	private final Map<String, CORSSupport> _wildcardURLPatternCORSSupports =
-		new HashMap<>();
+	private final Map<String, T> _exactURLPatternCargos = new HashMap<>();
+	private final Map<String, T> _extensionURLPatternCargos = new HashMap<>();
+	private final Map<String, T> _wildcardURLPatternCargos = new HashMap<>();
 
 }

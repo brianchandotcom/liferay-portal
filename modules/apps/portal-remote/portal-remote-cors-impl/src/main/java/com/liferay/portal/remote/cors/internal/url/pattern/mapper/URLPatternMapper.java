@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal;
+package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface URLToCORSSupportMapper {
+public interface URLPatternMapper<T> {
 
-	public CORSSupport get(String urlPath);
+	public T get(String urlPath);
 
 }

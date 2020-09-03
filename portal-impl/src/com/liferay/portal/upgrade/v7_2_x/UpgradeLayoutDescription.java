@@ -22,12 +22,12 @@ public class UpgradeLayoutDescription extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumnType(
-				LayoutTable.TABLE_NAME, "description",
-				"TEXT null")) {
+				LayoutTable.TABLE_NAME, "description", "TEXT null")) {
 
 			alter(
 				LayoutTable.class,
 				new AlterColumnType("description", "TEXT null"));
 		}
 	}
+
 }

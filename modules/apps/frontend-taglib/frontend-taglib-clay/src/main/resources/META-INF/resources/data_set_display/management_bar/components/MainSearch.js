@@ -28,7 +28,7 @@ function MainSearch({setShowMobile}) {
 	}, [searchParam]);
 
 	function handleKeyDown(event) {
-		if (event.keyCode === 13) {
+		if (event.key === 'Enter') {
 			event.preventDefault();
 
 			return updateSearchParam(inputValue);

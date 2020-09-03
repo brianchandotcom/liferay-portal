@@ -825,11 +825,15 @@ public interface BaseProjectTemplatesTestCase {
 			String content = FileUtil.read(buildFilePath);
 
 			if (!content.contains("allprojects")) {
+				Path m2tmpPath = Paths.get(
+					System.getProperty("maven.repo.local") + "-tmp");
+
 				content +=
-					"allprojects {\n\trepositories {\n\t\tmavenLocal()\n\t}\n" +
-						"\tconfigurations.all {\n\t\tresolutionStrategy." +
-							"force 'javax.servlet:javax.servlet-api:3.0.1'" +
-								"\n\t}\n}";
+					"allprojects {\n\trepositories {\n\t\tmavenLocal()\n\t\t" +
+						"maven {\n\t\t\turl file(\"" + m2tmpPath +
+							"\").toURI()\n\t\t}\n\t}\n\tconfigurations.all {" +
+								"\n\t\tresolutionStrategy.force 'javax." +
+									"servlet:javax.servlet-api:3.0.1'\n\t}\n}";
 
 				Files.write(
 					buildFilePath, content.getBytes(StandardCharsets.UTF_8));

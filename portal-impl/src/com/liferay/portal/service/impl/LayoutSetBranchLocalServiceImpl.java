@@ -37,6 +37,9 @@ import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutBranchLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +50,7 @@ import com.liferay.portal.service.base.LayoutSetBranchLocalServiceBaseImpl;
 
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -264,6 +268,16 @@ public class LayoutSetBranchLocalServiceImpl
 			LayoutSetBranch layoutSetBranch, boolean includeMaster)
 		throws PortalException {
 
+		//Layout
+
+		for ( long deletablePlid : getDeletablePlids(layoutSetBranch.getLayoutSetBranchId())) {
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(deletablePlid);
+
+			if(layout != null){
+				LayoutLocalServiceUtil.deleteLayout(layout);
+			}
+		}
+
 		// Layout branch
 
 		if (!includeMaster && layoutSetBranch.isMaster()) {
@@ -295,6 +309,37 @@ public class LayoutSetBranchLocalServiceImpl
 			layoutSetBranch.getLayoutSetBranchId());
 
 		return layoutSetBranch;
+	}
+
+	private List<Long> getRelatedLayoutPlids(long layoutSetBranchId){
+		List<Long> relatedPlids = new ArrayList<Long>();
+
+		List<LayoutBranch> layoutBranches = layoutBranchLocalService.getLayoutSetBranchLayoutBranches(layoutSetBranchId);
+		for (LayoutBranch layoutBranch : layoutBranches) {
+
+			relatedPlids.add(layoutBranch.getPlid());
+		}
+		return  relatedPlids;
+	}
+
+	public List<Long> getDeletablePlids(long layoutSetBranchId){
+		List<Long> deletablePlids = new ArrayList<Long>();
+		List<Long> relatedPlids = getRelatedLayoutPlids(layoutSetBranchId);
+
+		for (long relatedPlid : relatedPlids) {
+			boolean deletableLayout = true;
+			List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(relatedPlid);
+			for (LayoutRevision layoutRevision : layoutRevisions) {
+				if(layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE && layoutRevision.getLayoutSetBranchId() != layoutSetBranchId){
+					deletableLayout = false;
+				}
+			}
+
+			if(deletableLayout){
+				deletablePlids.add(relatedPlid);
+			}
+		}
+		return deletablePlids;
 	}
 
 	@Override

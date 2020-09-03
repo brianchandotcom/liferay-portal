@@ -27,6 +27,7 @@ import serviceFetch from '../../../../../../src/main/resources/META-INF/resource
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
+	DELETE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/actions';
@@ -132,6 +133,10 @@ const mockConfig = {
 };
 
 describe('ExperienceToolbarSection', () => {
+	beforeAll(() => {
+		Liferay.component = jest.fn();
+	});
+
 	afterEach(() => {
 		cleanup();
 		serviceFetch.mockReset();
@@ -684,6 +689,12 @@ describe('ExperienceToolbarSection', () => {
 				}),
 			}),
 			expect.any(Function)
+		);
+
+		expect(mockDispatch).toHaveBeenCalledWith(
+			expect.objectContaining({
+				type: DELETE_SEGMENTS_EXPERIENCE,
+			})
 		);
 	});
 });

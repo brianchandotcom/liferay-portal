@@ -16,10 +16,12 @@
 
 <liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_SPECIFICATION_OPTIONS %>" varImpl="viewProductSpecificationOptionsURL">
 	<portlet:param name="mvcPath" value="/view_specification_options.jsp" />
+	<portlet:param name="specificationNavbarItemKey" value="specification-labels" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_OPTION_CATEGORIES %>" varImpl="viewProductOptionCategoriesURL">
-	<portlet:param name="mvcPath" value="/view_option_categories.jsp" />
+<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_SPECIFICATION_OPTIONS %>" varImpl="viewProductOptionCategoriesURL">
+	<portlet:param name="mvcRenderCommandName" value="viewProductOptionCategories" />
+	<portlet:param name="specificationNavbarItemKey" value="specification-groups" />
 </liferay-portlet:renderURL>
 
 <%
@@ -28,7 +30,7 @@ List<NavigationItem> navigationItems = new ArrayList<>();
 if (PortletPermissionUtil.contains(permissionChecker, CPPortletKeys.CP_SPECIFICATION_OPTIONS, ActionKeys.VIEW)) {
 	NavigationItem cpSpecificationOptionsNavigationItem = new NavigationItem();
 
-	cpSpecificationOptionsNavigationItem.setActive(portletName.equals(CPPortletKeys.CP_SPECIFICATION_OPTIONS));
+	cpSpecificationOptionsNavigationItem.setActive(specificationNavbarItemKey.equals("specification-labels"));
 	cpSpecificationOptionsNavigationItem.setHref(viewProductSpecificationOptionsURL.toString());
 	cpSpecificationOptionsNavigationItem.setLabel(LanguageUtil.get(request, "specification-labels"));
 
@@ -38,7 +40,7 @@ if (PortletPermissionUtil.contains(permissionChecker, CPPortletKeys.CP_SPECIFICA
 if (PortletPermissionUtil.contains(permissionChecker, CPPortletKeys.CP_OPTIONS, ActionKeys.VIEW)) {
 	NavigationItem cpOptionCategoriesNavigationItem = new NavigationItem();
 
-	cpOptionCategoriesNavigationItem.setActive(portletName.equals(CPPortletKeys.CP_OPTION_CATEGORIES));
+	cpOptionCategoriesNavigationItem.setActive(specificationNavbarItemKey.equals("specification-groups"));
 	cpOptionCategoriesNavigationItem.setHref(viewProductOptionCategoriesURL.toString());
 	cpOptionCategoriesNavigationItem.setLabel(LanguageUtil.get(request, "specification-groups"));
 

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"commerce.product.navigation.item.key=" + CPPortletKeys.CP_OPTION_CATEGORIES,
+		"commerce.product.navigation.item.key=" + CPPortletKeys.CP_SPECIFICATION_OPTIONS,
 		"commerce.product.navigation.item.order:Integer=30"
 	},
 	service = CPNavigationItem.class
@@ -59,7 +59,7 @@ public class CPSpecificationOptionNavigationItem implements CPNavigationItem {
 		boolean manageCPOptionCategoriesPermission =
 			_portletPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				CPPortletKeys.CP_OPTION_CATEGORIES, ActionKeys.VIEW);
+				CPPortletKeys.CP_SPECIFICATION_OPTIONS, ActionKeys.VIEW);
 
 		boolean manageCPSpecificationOptionsPermission =
 			_portletPermission.contains(
@@ -77,7 +77,7 @@ public class CPSpecificationOptionNavigationItem implements CPNavigationItem {
 		String portletId = _portal.getPortletId(portletRequest);
 
 		navigationItem.setActive(
-			portletId.equals(CPPortletKeys.CP_OPTION_CATEGORIES) ||
+			portletId.equals(CPPortletKeys.CP_SPECIFICATION_OPTIONS) ||
 			portletId.equals(CPPortletKeys.CP_SPECIFICATION_OPTIONS));
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(

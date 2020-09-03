@@ -12,21 +12,22 @@
  * details.
  */
 
-package com.liferay.commerce.product.options.web.internal.portlet;
+package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.constants.CPWebKeys;
+import com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.options.web.internal.display.context.CPOptionCategoryDisplayContext;
-import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.io.IOException;
-
-import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -40,32 +41,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.css-class-wrapper=portlet-commerce-product-option-categories",
-		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.layout-cacheable=true",
-		"com.liferay.portlet.preferences-owned-by-group=true",
-		"com.liferay.portlet.preferences-unique-per-layout=false",
-		"com.liferay.portlet.private-request-attributes=false",
-		"com.liferay.portlet.private-session-attributes=false",
-		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.scopeable=true",
-		"javax.portlet.display-name=Product Option Categories",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/view_option_categories.jsp",
-		"javax.portlet.name=" + CPPortletKeys.CP_OPTION_CATEGORIES,
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.name=" + CPPortletKeys.CP_SPECIFICATION_OPTIONS,
+		"mvc.command.name=viewProductOptionCategories"
 	},
-	service = {CPOptionCategoriesPortlet.class, Portlet.class}
+	service = MVCRenderCommand.class
 )
-public class CPOptionCategoriesPortlet extends MVCPortlet {
+public class ViewCPOptionCategoriesMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
-	public void render(
+	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
+		throws PortletException {
 
 		try {
 			CPOptionCategoryDisplayContext cpOptionCategoryDisplayContext =
@@ -76,12 +63,40 @@ public class CPOptionCategoriesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpOptionCategoryDisplayContext);
+
+			setCPOptionCategoryRequestAttribute(renderRequest);
 		}
-		catch (PortalException portalException) {
-			SessionErrors.add(renderRequest, portalException.getClass());
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCPOptionCategoryException ||
+				exception instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, exception.getClass());
+
+				return "/error.jsp";
+			}
+
+			throw new PortletException(exception);
 		}
 
-		super.render(renderRequest, renderResponse);
+		return "/view_option_categories.jsp";
+	}
+
+	protected void setCPOptionCategoryRequestAttribute(
+			RenderRequest renderRequest)
+		throws PortalException {
+
+		long cpOptionCategoryId = ParamUtil.getLong(
+			renderRequest, "cpOptionCategoryId");
+
+		CPOptionCategory cpOptionCategory = null;
+
+		if (cpOptionCategoryId > 0) {
+			cpOptionCategory = _cpOptionCategoryService.getCPOptionCategory(
+				cpOptionCategoryId);
+		}
+
+		renderRequest.setAttribute(
+			CPWebKeys.CP_OPTION_CATEGORY, cpOptionCategory);
 	}
 
 	@Reference

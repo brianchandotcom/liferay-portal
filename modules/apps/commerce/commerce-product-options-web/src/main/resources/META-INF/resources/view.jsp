@@ -20,8 +20,6 @@
 NPMResolver npmResolver = (NPMResolver)request.getAttribute("NPMResolver");
 
 String cpOptionsEditorRequire = npmResolver.resolveModuleName("commerce-product-options-web/CPOptionsEditor.es") + " as CPOptionsEditor";
-
-renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 %>
 
 <clay:navigation-bar

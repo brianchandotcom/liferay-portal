@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String specificationNavbarItemKey = ParamUtil.getString(request, "specificationNavbarItemKey", "specification-labels");
+
 CPSpecificationOptionDisplayContext cpSpecificationOptionDisplayContext = (CPSpecificationOptionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 String displayStyle = cpSpecificationOptionDisplayContext.getDisplayStyle();
@@ -27,7 +29,7 @@ portletURL.setParameter("searchContainerId", "cpSpecificationOptions");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
+renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 %>
 
 <clay:navigation-bar
@@ -144,6 +146,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductSpecificationOption");
+							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpSpecificationOptionId", String.valueOf(cpSpecificationOption.getCPSpecificationOptionId()));
 							%>
 

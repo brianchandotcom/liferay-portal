@@ -17,24 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
+String specificationNavbarItemKey = ParamUtil.getString(request, "specificationNavbarItemKey", "specification-labels");
+
 CPSpecificationOption cpSpecificationOption = (CPSpecificationOption)request.getAttribute(CPWebKeys.CP_SPECIFICATION_OPTION);
 
 long cpSpecificationOptionId = BeanParamUtil.getLong(cpSpecificationOption, request, "CPSpecificationOptionId");
 
-String title = LanguageUtil.get(request, "add-specification-label");
-
-if (cpSpecificationOption != null) {
-	title = cpSpecificationOption.getTitle(locale);
-}
-
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
-	"direction-right", StringPool.TRUE
-).build();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "specification-labels"), specificationOptionsURL, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
-
-renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
+renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 %>
 
 <clay:navigation-bar
@@ -42,18 +33,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 />
 
 <%@ include file="/navbar_specifications.jspf" %>
-<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editProductSpecificationOption" var="editProductSpecificationOptionActionURL" />
 
 <aui:form action="<%= editProductSpecificationOptionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpSpecificationOption == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= specificationOptionsURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="cpSpecificationOptionId" type="hidden" value="<%= String.valueOf(cpSpecificationOptionId) %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= specificationOptionsURL %>"
+			backURL="<%= redirect %>"
 			formModelBean="<%= cpSpecificationOption %>"
 			id="<%= CPSpecificationOptionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_SPECIFICATION_OPTION %>"
 			markupView="lexicon"

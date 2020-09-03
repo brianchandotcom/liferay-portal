@@ -17,24 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
+String specificationNavbarItemKey = ParamUtil.getString(request, "specificationNavbarItemKey", "specification-groups");
+
 CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWebKeys.CP_OPTION_CATEGORY);
 
 long cpOptionCategoryId = BeanParamUtil.getLong(cpOptionCategory, request, "CPOptionCategoryId");
 
-String title = LanguageUtil.get(request, "add-specification-group");
-
-if (cpOptionCategory != null) {
-	title = cpOptionCategory.getTitle(locale);
-}
-
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
-	"direction-right", StringPool.TRUE
-).build();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "specification-groups"), optionCategoriesURL, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
-
-renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
+renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 %>
 
 <clay:navigation-bar
@@ -42,18 +33,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 />
 
 <%@ include file="/navbar_specifications.jspf" %>
-<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editProductOptionCategory" var="editProductOptionCategoryActionURL" />
 
 <aui:form action="<%= editProductOptionCategoryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOptionCategory == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= optionCategoriesURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="cpOptionCategoryId" type="hidden" value="<%= String.valueOf(cpOptionCategoryId) %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= optionCategoriesURL %>"
+			backURL="<%= redirect %>"
 			formModelBean="<%= cpOptionCategory %>"
 			id="<%= CPOptionCategoryFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION_CATEGORY %>"
 			markupView="lexicon"

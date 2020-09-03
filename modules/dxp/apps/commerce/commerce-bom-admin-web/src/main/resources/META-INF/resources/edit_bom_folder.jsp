@@ -20,6 +20,8 @@
 CommerceBOMAdminDisplayContext commerceBOMAdminDisplayContext = (CommerceBOMAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerceBOMFolder();
+
+renderResponse.setTitle(LanguageUtil.get(request, "bill-of-materials"));
 %>
 
 <clay:navigation-bar

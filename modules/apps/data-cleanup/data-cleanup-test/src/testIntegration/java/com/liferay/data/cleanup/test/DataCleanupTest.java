@@ -80,35 +80,35 @@ public class DataCleanupTest {
 	@Test
 	public void testDeprecatedModulesUpgradeChat() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"removeChatModuleData", "com.liferay.chat.service",
+			"cleanUpChatModuleData", "com.liferay.chat.service",
 			"dependencies/chat-tables.sql", null);
 	}
 
 	@Test
 	public void testDeprecatedModulesUpgradeDictionary() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"removeDictionaryModuleData", "com.liferay.dictionary.web", null,
+			"cleanUpDictionaryModuleData", "com.liferay.dictionary.web", null,
 			"com_liferay_dictionary_web_portlet_DictionaryPortlet");
 	}
 
 	@Test
 	public void testDeprecatedModulesUpgradeDirectory() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"removeDirectoryModuleData", "com.liferay.directory.web", null,
+			"cleanUpDirectoryModuleData", "com.liferay.directory.web", null,
 			"com_liferay_directory_web_portlet_DirectoryPortlet");
 	}
 
 	@Test
 	public void testDeprecatedModulesUpgradeInvitation() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"removeInvitationModuleData", "com.liferay.invitation.web", null,
+			"cleanUpInvitationModuleData", "com.liferay.invitation.web", null,
 			"com_liferay_invitation_web_portlet_InvitationPortlet");
 	}
 
 	@Test
 	public void testDeprecatedModulesUpgradeMailReader() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"removeMailReaderModuleData", "com.liferay.mail.reader.service",
+			"cleanUpMailReaderModuleData", "com.liferay.mail.reader.service",
 			"dependencies/mail-reader-tables.sql",
 			"com_liferay_mail_reader_web_portlet_MailPortlet");
 	}
@@ -118,7 +118,7 @@ public class DataCleanupTest {
 		throws Exception {
 
 		_testDeprecatedModulesUpgrade(
-			"removePrivateMessagingModuleData",
+			"cleanUpPrivateMessagingModuleData",
 			"com.liferay.social.privatemessaging.service",
 			"dependencies/private-messaging-tables.sql",
 			"com_liferay_social_privatemessaging_web_portlet_" +
@@ -128,7 +128,7 @@ public class DataCleanupTest {
 	@Test
 	public void testDeprecatedModulesUpgradeShopping() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"removeShoppingModuleData", "com.liferay.shopping.service",
+			"cleanUpShoppingModuleData", "com.liferay.shopping.service",
 			"dependencies/shopping-tables.sql",
 			"com_liferay_shopping_web_portlet_ShoppingPortlet");
 	}
@@ -136,7 +136,7 @@ public class DataCleanupTest {
 	@Test
 	public void testDeprecatedModulesUpgradeTwitter() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"removeTwitterModuleData", "com.liferay.twitter.service",
+			"cleanUpTwitterModuleData", "com.liferay.twitter.service",
 			"dependencies/twitter-tables.sql",
 			"com_liferay_twitter_web_portlet_TwitterPortlet");
 	}

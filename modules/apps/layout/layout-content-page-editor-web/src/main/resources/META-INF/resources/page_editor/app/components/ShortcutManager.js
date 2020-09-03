@@ -60,6 +60,7 @@ export default function ShortcutManager() {
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 
 	const state = useSelector((state) => state);
+
 	const {
 		fragmentEntryLinks,
 		layoutData,
@@ -67,124 +68,80 @@ export default function ShortcutManager() {
 		widgets,
 	} = state;
 
-	const duplicate = (event) => {
-		event.preventDefault();
+	const activeItem = layoutData.items[activeItemId];
 
-		const item = layoutData.items[activeItemId];
-
-		if (
-			item &&
-			canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets) &&
-			(document.activeElement === document.body ||
-				document.activeElement.type === 'button')
-		) {
-			dispatch(
-				duplicateItem({
-					itemId: activeItemId,
-					segmentsExperienceId,
-					selectItem,
-				})
-			);
-		}
+	const duplicate = () => {
+		dispatch(
+			duplicateItem({
+				itemId: activeItemId,
+				segmentsExperienceId,
+				selectItem,
+			})
+		);
 	};
 
-	const remove = (event) => {
-		if (!isInteractiveElement(event.target)) {
-			event.preventDefault();
-		}
-
-		const item = layoutData.items[activeItemId];
-
-		if (
-			item &&
-			canBeRemoved(item, layoutData) &&
-			(document.activeElement === document.body ||
-				document.activeElement.type === 'button')
-		) {
-			dispatch(
-				deleteItem({
-					itemId: item.itemId,
-					selectItem,
-					store: state,
-				})
-			);
-		}
+	const remove = () => {
+		dispatch(
+			deleteItem({
+				itemId: activeItemId,
+				selectItem,
+				store: state,
+			})
+		);
 	};
 
-	const save = (event) => {
-		event.preventDefault();
-
-		const item = layoutData.items[activeItemId];
-
-		if (
-			item &&
-			canBeSaved(item, layoutData) &&
-			(document.activeElement === document.body ||
-				document.activeElement.type === 'button')
-		) {
-			setOpenSaveModal(true);
-		}
+	const save = () => {
+		setOpenSaveModal(true);
 	};
 
 	const undo = (event) => {
-		if (!isInteractiveElement(event.target) && !isWithinIframe()) {
-			event.preventDefault();
-
-			if (event.shiftKey) {
-				dispatch(redoThunk({store: state}));
-			}
-			else {
-				dispatch(undoThunk({store: state}));
-			}
+		if (event.shiftKey) {
+			dispatch(redoThunk({store: state}));
+		}
+		else {
+			dispatch(undoThunk({store: state}));
 		}
 	};
 
 	const move = (event) => {
-		const item = layoutData.items[activeItemId];
+		const {itemId, parentId} = activeItem;
 
-		if (item && !isInteractiveElement(event.target)) {
-			event.preventDefault();
+		const parentItem = layoutData.items[parentId];
 
-			const {itemId, parentId} = item;
+		const numChildren = parentItem.children.length;
 
-			const parentItem = layoutData.items[parentId];
+		const currentPosition = parentItem.children.indexOf(itemId);
 
-			const numChildren = parentItem.children.length;
+		const direction =
+			event.keyCode === ARROW_UP_KEYCODE
+				? MOVE_ITEM_DIRECTIONS.UP
+				: MOVE_ITEM_DIRECTIONS.DOWN;
 
-			const currentPosition = parentItem.children.indexOf(itemId);
-
-			const direction =
-				event.keyCode === ARROW_UP_KEYCODE
-					? MOVE_ITEM_DIRECTIONS.UP
-					: MOVE_ITEM_DIRECTIONS.DOWN;
-
-			if (
-				(direction === MOVE_ITEM_DIRECTIONS.UP &&
-					currentPosition === 0) ||
-				(direction === MOVE_ITEM_DIRECTIONS.DOWN &&
-					currentPosition === numChildren - 1)
-			) {
-				return;
-			}
-
-			let position;
-
-			if (direction === MOVE_ITEM_DIRECTIONS.UP) {
-				position = currentPosition - 1;
-			}
-			else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
-				position = currentPosition + 1;
-			}
-
-			dispatch(
-				moveItem({
-					itemId,
-					parentItemId: parentId,
-					position,
-					segmentsExperienceId,
-				})
-			);
+		if (
+			(direction === MOVE_ITEM_DIRECTIONS.UP && currentPosition === 0) ||
+			(direction === MOVE_ITEM_DIRECTIONS.DOWN &&
+				currentPosition === numChildren - 1)
+		) {
+			return;
 		}
+
+		let position;
+
+		if (direction === MOVE_ITEM_DIRECTIONS.UP) {
+			position = currentPosition - 1;
+		}
+		else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
+			position = currentPosition + 1;
+		}
+
+		dispatch(
+			moveItem({
+				itemId,
+				parentItemId: parentId,
+				position,
+				segmentsExperienceId,
+			})
+		);
 	};
 
 	const keymapRef = useRef(null);
@@ -192,26 +149,45 @@ export default function ShortcutManager() {
 	keymapRef.current = {
 		duplicate: {
 			action: duplicate,
+			canBeExecuted: () =>
+				!!layoutData.items[activeItemId] &&
+				canBeDuplicated(
+					fragmentEntryLinks,
+					layoutData.items[activeItemId],
+					layoutData,
+					widgets
+				),
 			isKeyCombination: (event) =>
 				ctrlOrMeta(event) && event.keyCode === D_KEYCODE,
 		},
 		move: {
 			action: move,
+			canBeExecuted: (event) =>
+				!!layoutData.items[activeItemId] &&
+				!isInteractiveElement(event.target),
 			isKeyCombination: (event) =>
 				event.keyCode === ARROW_UP_KEYCODE ||
 				event.keyCode === ARROW_DOWN_KEYCODE,
 		},
 		remove: {
 			action: remove,
+			canBeExecuted: (event) =>
+				!!layoutData.items[activeItemId] &&
+				canBeRemoved(layoutData.items[activeItemId], layoutData) &&
+				!isInteractiveElement(event.target),
 			isKeyCombination: (event) => event.keyCode === BACKSPACE_KEYCODE,
 		},
 		save: {
 			action: save,
+			canBeExecuted: () =>
+				!!layoutData.items[activeItemId] &&
+				canBeSaved(layoutData.items[activeItemId], layoutData),
 			isKeyCombination: (event) =>
 				ctrlOrMeta(event) && event.keyCode === S_KEYCODE,
 		},
 		undo: {
 			action: undo,
+			canBeExecuted: () => !isWithinIframe(),
 			isKeyCombination: (event) =>
 				ctrlOrMeta(event) &&
 				event.keyCode === Z_KEYCODE &&
@@ -221,11 +197,16 @@ export default function ShortcutManager() {
 
 	useEffect(() => {
 		const onKeyDown = (event) => {
-			const shortcut = Object.values(keymapRef.current).find((shortcut) =>
-				shortcut.isKeyCombination(event)
+			const shortcut = Object.values(keymapRef.current).find(
+				(shortcut) =>
+					shortcut.isKeyCombination(event) &&
+					shortcut.canBeExecuted(event)
 			);
 
 			if (shortcut) {
+				event.stopPropagation();
+				event.preventDefault();
+
 				shortcut.action(event);
 			}
 		};

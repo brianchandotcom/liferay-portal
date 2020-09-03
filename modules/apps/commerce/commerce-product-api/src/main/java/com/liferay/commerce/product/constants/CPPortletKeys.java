@@ -32,6 +32,10 @@ public class CPPortletKeys {
 		"com_liferay_commerce_inventory_web_internal_portlet_" +
 			"CommerceInventoryPortlet";
 
+	public static final String COMMERCE_INVENTORY_WAREHOUSE =
+		"com_liferay_commerce_warehouse_web_internal_portlet_" +
+			"CommerceInventoryWarehousePortlet";
+
 	public static final String COMMERCE_PAYMENT_METHODS =
 		"com_liferay_commerce_payment_web_internal_portlet_" +
 			"CommercePaymentMethodPortlet";
@@ -68,9 +72,9 @@ public class CPPortletKeys {
 		"com_liferay_commerce_product_definitions_web_internal_portlet_" +
 			"CPDefinitionsPortlet";
 
-	public static final String CP_OPTION_CATEGORIES =
-		"com_liferay_commerce_product_options_web_internal_portlet_" +
-			"CPOptionCategoriesPortlet";
+	public static final String CP_MEASUREMENT_UNIT =
+		"com_liferay_commerce_product_measurement_unit_web_internal_portlet_" +
+			"CPMeasurementUnitPortlet";
 
 	public static final String CP_OPTION_FACETS =
 		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
@@ -103,5 +107,9 @@ public class CPPortletKeys {
 	public static final String CP_SPECIFICATION_OPTIONS =
 		"com_liferay_commerce_product_options_web_internal_portlet_" +
 			"CPSpecificationOptionsPortlet";
+
+	public static final String CP_TAX_CATEGORY =
+		"com_liferay_commerce_product_tax_category_web_internal_portlet_" +
+			"CPTaxCategoryPortlet";
 
 }

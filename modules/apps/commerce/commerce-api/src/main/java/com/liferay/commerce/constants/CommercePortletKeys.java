@@ -24,6 +24,10 @@ public class CommercePortletKeys {
 		"com_liferay_commerce_address_content_web_internal_portlet_" +
 			"CommerceAddressContentPortlet";
 
+	public static final String COMMERCE_AVAILABILITY_ESTIMATE =
+		"com_liferay_commerce_availability_estimate_web_internal_portlet_" +
+			"CommerceAvailabilityEstimatePortlet";
+
 	public static final String COMMERCE_CART_CONTENT =
 		"com_liferay_commerce_cart_content_web_internal_portlet_" +
 			"CommerceCartContentPortlet";
@@ -39,6 +43,14 @@ public class CommercePortletKeys {
 	public static final String COMMERCE_CHECKOUT =
 		"com_liferay_commerce_checkout_web_internal_portlet_" +
 			"CommerceCheckoutPortlet";
+
+	public static final String COMMERCE_COUNTRY =
+		"com_liferay_commerce_address_web_internal_portlet_" +
+			"CommerceCountryPortlet";
+
+	public static final String COMMERCE_HEALTH_CHECK =
+		"com_liferay_commerce_health_status_web_internal_portlet_" +
+			"CommerceHealthCheckPortlet";
 
 	public static final String COMMERCE_OPEN_ORDER_CONTENT =
 		"com_liferay_commerce_order_content_web_internal_portlet_" +

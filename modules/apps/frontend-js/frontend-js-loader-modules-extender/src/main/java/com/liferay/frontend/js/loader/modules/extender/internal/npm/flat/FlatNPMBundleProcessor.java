@@ -83,7 +83,27 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			_log.info("Processing NPM bundle: " + flatJSBundle);
 		}
 
+		Enumeration<URL> enumeration = bundle.findEntries(
+			"META-INF/resources", "package.json", true);
+
+		if (enumeration == null) {
+			_log.error("No package.json files found in " + bundle);
+
+			return null;
+		}
+
 		List<Future<Map.Entry<URL, JSONObject>>> futures = new ArrayList<>();
+
+		while (enumeration.hasMoreElements()) {
+			URL packageJSONURL = enumeration.nextElement();
+
+			futures.add(
+				_executorService.submit(
+					() -> new AbstractMap.SimpleImmutableEntry<>(
+						packageJSONURL,
+						_jsonFactory.createJSONObject(
+							StringUtil.read(packageJSONURL.openStream())))));
+		}
 
 		URL manifestJSONURL = bundle.getEntry(
 			"META-INF/resources/manifest.json");
@@ -107,26 +127,6 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 							manifestJSONURL,
 							jsonObject.getJSONObject("packages"));
 					}));
-		}
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			"META-INF/resources", "package.json", true);
-
-		if (enumeration == null) {
-			_log.error("No package.json files found in " + bundle);
-
-			return null;
-		}
-
-		while (enumeration.hasMoreElements()) {
-			URL packageJSONURL = enumeration.nextElement();
-
-			futures.add(
-				_executorService.submit(
-					() -> new AbstractMap.SimpleImmutableEntry<>(
-						packageJSONURL,
-						_jsonFactory.createJSONObject(
-							StringUtil.read(packageJSONURL.openStream())))));
 		}
 
 		Map<URL, Collection<String>> moduleDependenciesMap = new HashMap<>();

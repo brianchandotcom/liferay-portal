@@ -563,7 +563,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-LPS-117818. Map manual URL to text fragment."
+	@description = "This is a test for LPS-117818. Map manual URL to text fragment."
 	@priority = "5"
 	test MapManualURLToTextFragment {
 		property portal.acceptance = "true";

@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.style.book.model.StyleBookEntry;
 
 import java.util.LinkedHashMap;
@@ -71,7 +71,7 @@ public class StyleBookEntryUtil {
 
 					frontendTokensValues.put(
 						frontendTokenJSONObject.getString("name"),
-						_getProcessedFrontendTokenJSONObject(
+						_getProcessedFrontendToken(
 							frontendTokenJSONObject,
 							frontendTokenValuesJSONObject));
 				}
@@ -93,7 +93,7 @@ public class StyleBookEntryUtil {
 		return JSONFactoryUtil.createJSONObject();
 	}
 
-	private static JSONObject _getProcessedFrontendTokenJSONObject(
+	private static Map<String, Object> _getProcessedFrontendToken(
 		JSONObject frontendTokenJSONObject,
 		JSONObject frontendTokenValuesJSONObject) {
 
@@ -111,22 +111,26 @@ public class StyleBookEntryUtil {
 			value = frontendTokenJSONObject.getString("defaultValue");
 		}
 
-		JSONArray mappingsJSONArray = frontendTokenJSONObject.getJSONArray(
-			"mappings");
-		String cssVariable = StringPool.BLANK;
+		return HashMapBuilder.<String, Object>put(
+			"cssVariable",
+			() -> {
+				JSONArray mappingsJSONArray =
+					frontendTokenJSONObject.getJSONArray("mappings");
 
-		for (int l = 0; l < mappingsJSONArray.length(); l++) {
-			JSONObject mappingJSONObject = mappingsJSONArray.getJSONObject(l);
+				for (int l = 0; l < mappingsJSONArray.length(); l++) {
+					JSONObject mappingJSONObject =
+						mappingsJSONArray.getJSONObject(l);
 
-			if (Objects.equals(
-					mappingJSONObject.getString("type"), "cssVariable")) {
+					if (Objects.equals(
+							mappingJSONObject.getString("type"),
+							"cssVariable")) {
 
-				cssVariable = mappingJSONObject.getString("value");
+						return mappingJSONObject.getString("value");
+					}
+				}
+
+				return null;
 			}
-		}
-
-		return JSONUtil.put(
-			"cssVariable", cssVariable
 		).put(
 			"editorType", frontendTokenJSONObject.get("editorType")
 		).put(
@@ -135,7 +139,7 @@ public class StyleBookEntryUtil {
 			"name", name
 		).put(
 			"value", value
-		);
+		).build();
 	}
 
 }

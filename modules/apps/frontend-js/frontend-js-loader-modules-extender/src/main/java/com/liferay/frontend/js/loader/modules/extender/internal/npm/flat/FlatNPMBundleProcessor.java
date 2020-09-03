@@ -92,93 +92,20 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			return null;
 		}
 
-		List<Future<Map.Entry<URL, JSONObject>>> futures = new ArrayList<>();
-
-		while (enumeration.hasMoreElements()) {
-			URL packageJSONURL = enumeration.nextElement();
-
-			futures.add(
-				_executorService.submit(
-					() -> new AbstractMap.SimpleImmutableEntry<>(
-						packageJSONURL,
-						_jsonFactory.createJSONObject(
-							StringUtil.read(packageJSONURL.openStream())))));
-		}
-
 		URL manifestJSONURL = bundle.getEntry(
 			"META-INF/resources/manifest.json");
 
-		if (manifestJSONURL != null) {
-			futures.add(
-				_executorService.submit(
-					() -> {
-						String content = StringUtil.read(
-							manifestJSONURL.openStream());
-
-						if (!content.contains("\"flags\"")) {
-							return new AbstractMap.SimpleImmutableEntry<>(
-								manifestJSONURL, null);
-						}
-
-						JSONObject jsonObject = _jsonFactory.createJSONObject(
-							content);
-
-						return new AbstractMap.SimpleImmutableEntry<>(
-							manifestJSONURL,
-							jsonObject.getJSONObject("packages"));
-					}));
-		}
-
-		Map<URL, Collection<String>> moduleDependenciesMap = new HashMap<>();
-
-		enumeration = bundle.findEntries("META-INF/resources", "*.js", true);
-
-		if (enumeration != null) {
-			List<Future<Map.Entry<URL, Collection<String>>>>
-				moduleDepedenciesFutures = new ArrayList<>();
-
-			while (enumeration.hasMoreElements()) {
-				URL jsURL = enumeration.nextElement();
-
-				moduleDepedenciesFutures.add(
-					_executorService.submit(
-						() -> new AbstractMap.SimpleImmutableEntry<>(
-							jsURL,
-							_parseModuleDependencies(_getDefineArgs(jsURL)))));
-			}
-
-			for (Future<Map.Entry<URL, Collection<String>>> future :
-					moduleDepedenciesFutures) {
-
-				try {
-					Map.Entry<URL, Collection<String>> entry = future.get();
-
-					moduleDependenciesMap.put(entry.getKey(), entry.getValue());
-				}
-				catch (Exception exception) {
-					_log.error(exception, exception);
-				}
-			}
-		}
-
-		Map<URL, JSONObject> jsonObjects = new HashMap<>();
-
-		for (Future<Map.Entry<URL, JSONObject>> future : futures) {
-			try {
-				Map.Entry<URL, JSONObject> entry = future.get();
-
-				jsonObjects.put(entry.getKey(), entry.getValue());
-			}
-			catch (Exception exception) {
-				_log.error(exception, exception);
-			}
-		}
+		Map<URL, JSONObject> jsonObjects = _loadJSONObjects(
+			enumeration, manifestJSONURL);
 
 		JSONObject packagesJSONObject = jsonObjects.remove(manifestJSONURL);
 
 		Manifest manifest = new Manifest(packagesJSONObject);
 
 		JSONObject packageJSONObject = jsonObjects.remove(url);
+
+		Map<URL, Collection<String>> moduleDependenciesMap =
+			_loadModuleDependenciesMap(bundle);
 
 		_processPackage(
 			flatJSBundle, manifest, packageJSONObject, jsonObjects,
@@ -278,6 +205,98 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 			return null;
 		}
+	}
+
+	private Map<URL, JSONObject> _loadJSONObjects(
+		Enumeration<URL> enumeration, URL manifestJSONURL) {
+
+		List<Future<Map.Entry<URL, JSONObject>>> futures = new ArrayList<>();
+
+		while (enumeration.hasMoreElements()) {
+			URL packageJSONURL = enumeration.nextElement();
+
+			futures.add(
+				_executorService.submit(
+					() -> new AbstractMap.SimpleImmutableEntry<>(
+						packageJSONURL,
+						_jsonFactory.createJSONObject(
+							StringUtil.read(packageJSONURL.openStream())))));
+		}
+
+		if (manifestJSONURL != null) {
+			futures.add(
+				_executorService.submit(
+					() -> {
+						String content = StringUtil.read(
+							manifestJSONURL.openStream());
+
+						if (!content.contains("\"flags\"")) {
+							return new AbstractMap.SimpleImmutableEntry<>(
+								manifestJSONURL, null);
+						}
+
+						JSONObject jsonObject = _jsonFactory.createJSONObject(
+							content);
+
+						return new AbstractMap.SimpleImmutableEntry<>(
+							manifestJSONURL,
+							jsonObject.getJSONObject("packages"));
+					}));
+		}
+
+		Map<URL, JSONObject> jsonObjects = new HashMap<>();
+
+		for (Future<Map.Entry<URL, JSONObject>> future : futures) {
+			try {
+				Map.Entry<URL, JSONObject> entry = future.get();
+
+				jsonObjects.put(entry.getKey(), entry.getValue());
+			}
+			catch (Exception exception) {
+				_log.error(exception, exception);
+			}
+		}
+
+		return jsonObjects;
+	}
+
+	private Map<URL, Collection<String>> _loadModuleDependenciesMap(
+		Bundle bundle) {
+
+		Map<URL, Collection<String>> moduleDependenciesMap = new HashMap<>();
+
+		Enumeration<URL> enumeration = bundle.findEntries(
+			"META-INF/resources", "*.js", true);
+
+		if (enumeration != null) {
+			List<Future<Map.Entry<URL, Collection<String>>>>
+				moduleDepedenciesFutures = new ArrayList<>();
+
+			while (enumeration.hasMoreElements()) {
+				URL jsURL = enumeration.nextElement();
+
+				moduleDepedenciesFutures.add(
+					_executorService.submit(
+						() -> new AbstractMap.SimpleImmutableEntry<>(
+							jsURL,
+							_parseModuleDependencies(_getDefineArgs(jsURL)))));
+			}
+
+			for (Future<Map.Entry<URL, Collection<String>>> future :
+					moduleDepedenciesFutures) {
+
+				try {
+					Map.Entry<URL, Collection<String>> entry = future.get();
+
+					moduleDependenciesMap.put(entry.getKey(), entry.getValue());
+				}
+				catch (Exception exception) {
+					_log.error(exception, exception);
+				}
+			}
+		}
+
+		return moduleDependenciesMap;
 	}
 
 	private String _normalizeModuleContent(String moduleContent) {

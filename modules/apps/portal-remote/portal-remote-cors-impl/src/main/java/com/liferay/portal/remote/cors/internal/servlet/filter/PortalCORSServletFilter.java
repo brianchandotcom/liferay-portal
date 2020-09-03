@@ -35,9 +35,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration;
 import com.liferay.portal.remote.cors.internal.CORSSupport;
-import com.liferay.portal.remote.cors.internal.URLToCORSSupportMapper;
-import com.liferay.portal.remote.cors.internal.URLToCORSSupportMapperFactory;
 import com.liferay.portal.remote.cors.internal.configuration.persistence.listener.PortalCORSConfigurationModelListener;
+import com.liferay.portal.remote.cors.internal.url.pattern.mapper.URLPatternMapper;
+import com.liferay.portal.remote.cors.internal.url.pattern.mapper.URLPatternMapperFactory;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -156,7 +156,7 @@ public class PortalCORSServletFilter
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_defaultURLToCORSSupportMapper = _createDefaultURLToCORSSupportMapper();
+		_defaultURLPatternMapper = _createDefaultURLPatternMapper();
 
 		_serviceRegistration = bundleContext.registerService(
 			ConfigurationModelListener.class,
@@ -196,10 +196,10 @@ public class PortalCORSServletFilter
 			return;
 		}
 
-		URLToCORSSupportMapper urlToCORSSupportMapper =
-			_getURLToCORSSupportMapper(companyId);
+		URLPatternMapper<CORSSupport> urlPatternMapper = _getURLPatternMapper(
+			companyId);
 
-		CORSSupport corsSupport = urlToCORSSupportMapper.get(
+		CORSSupport corsSupport = urlPatternMapper.get(
 			_getURI(httpServletRequest));
 
 		if (corsSupport != null) {
@@ -233,7 +233,7 @@ public class PortalCORSServletFilter
 		filterChain.doFilter(httpServletRequest, httpServletResponse);
 	}
 
-	private URLToCORSSupportMapper _createDefaultURLToCORSSupportMapper() {
+	private URLPatternMapper<CORSSupport> _createDefaultURLPatternMapper() {
 		Map<String, CORSSupport> corsSupports = new HashMap<>();
 
 		_populateCORSSupports(
@@ -241,7 +241,7 @@ public class PortalCORSServletFilter
 			ConfigurableUtil.createConfigurable(
 				PortalCORSConfiguration.class, new HashMapDictionary<>()));
 
-		return URLToCORSSupportMapperFactory.create(corsSupports);
+		return URLPatternMapperFactory.create(corsSupports);
 	}
 
 	private String _getURI(HttpServletRequest httpServletRequest) {
@@ -257,22 +257,21 @@ public class PortalCORSServletFilter
 		return _http.normalizePath(uri);
 	}
 
-	private URLToCORSSupportMapper _getURLToCORSSupportMapper(long companyId) {
-		URLToCORSSupportMapper urlPatternMatcher = _urlToCORSSupportMappers.get(
+	private URLPatternMapper<CORSSupport> _getURLPatternMapper(long companyId) {
+		URLPatternMapper<CORSSupport> urlPatternMapper = _urlPatternMappers.get(
 			companyId);
 
-		if (urlPatternMatcher != null) {
-			return urlPatternMatcher;
+		if (urlPatternMapper != null) {
+			return urlPatternMapper;
 		}
 
-		urlPatternMatcher = _urlToCORSSupportMappers.get(
-			CompanyConstants.SYSTEM);
+		urlPatternMapper = _urlPatternMappers.get(CompanyConstants.SYSTEM);
 
-		if (urlPatternMatcher != null) {
-			return urlPatternMatcher;
+		if (urlPatternMapper != null) {
+			return urlPatternMapper;
 		}
 
-		return _defaultURLToCORSSupportMapper;
+		return _defaultURLPatternMapper;
 	}
 
 	private boolean _isGuest() {
@@ -330,15 +329,15 @@ public class PortalCORSServletFilter
 		_mergeCORSConfiguration(corsSupports, CompanyConstants.SYSTEM);
 
 		if (corsSupports.isEmpty()) {
-			_urlToCORSSupportMappers.remove(CompanyConstants.SYSTEM);
+			_urlPatternMappers.remove(CompanyConstants.SYSTEM);
 		}
 		else {
-			_urlToCORSSupportMappers.put(
+			_urlPatternMappers.put(
 				CompanyConstants.SYSTEM,
-				URLToCORSSupportMapperFactory.create(corsSupports));
+				URLPatternMapperFactory.create(corsSupports));
 		}
 
-		for (long companyId : _urlToCORSSupportMappers.keySet()) {
+		for (long companyId : _urlPatternMappers.keySet()) {
 			if (companyId != CompanyConstants.SYSTEM) {
 				_rebuild(companyId);
 			}
@@ -351,15 +350,15 @@ public class PortalCORSServletFilter
 		_mergeCORSConfiguration(corsSupports, companyId);
 
 		if (corsSupports.isEmpty()) {
-			_urlToCORSSupportMappers.remove(companyId);
+			_urlPatternMappers.remove(companyId);
 
 			return;
 		}
 
 		_mergeCORSConfiguration(corsSupports, CompanyConstants.SYSTEM);
 
-		_urlToCORSSupportMappers.put(
-			companyId, URLToCORSSupportMapperFactory.create(corsSupports));
+		_urlPatternMappers.put(
+			companyId, URLPatternMapperFactory.create(corsSupports));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -369,7 +368,7 @@ public class PortalCORSServletFilter
 		_configurationPidsProperties = Collections.synchronizedMap(
 			new LinkedHashMap<>());
 	private String _contextPath;
-	private URLToCORSSupportMapper _defaultURLToCORSSupportMapper;
+	private URLPatternMapper<CORSSupport> _defaultURLPatternMapper;
 
 	@Reference
 	private Http _http;
@@ -379,7 +378,7 @@ public class PortalCORSServletFilter
 
 	private ServiceRegistration<ConfigurationModelListener>
 		_serviceRegistration;
-	private final Map<Long, URLToCORSSupportMapper> _urlToCORSSupportMappers =
+	private final Map<Long, URLPatternMapper<CORSSupport>> _urlPatternMappers =
 		Collections.synchronizedMap(new LinkedHashMap<>());
 
 }

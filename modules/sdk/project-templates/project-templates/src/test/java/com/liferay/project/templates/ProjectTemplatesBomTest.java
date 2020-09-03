@@ -14,6 +14,8 @@
 
 package com.liferay.project.templates;
 
+import aQute.bnd.version.Version;
+
 import com.liferay.project.templates.extensions.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
 
@@ -41,8 +43,6 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Assume.assumeTrue(_isBomTest());
-
 		String gradleDistribution = System.getProperty("gradle.distribution");
 
 		if (Validator.isNull(gradleDistribution)) {
@@ -59,7 +59,13 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 
 	@Test
 	public void testBomVersion() throws Exception {
-		File workspaceDir = buildWorkspace(temporaryFolder, _BOM_VERSION);
+		Assume.assumeTrue(_isBomTest());
+
+		Version v = Version.parseVersion(_BOM_VERSION.replaceAll("-", "."));
+
+		String liferayVersion = v.getMajor() + "." + v.getMinor();
+
+		File workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
 
 		writeGradlePropertiesInWorkspace(
 			workspaceDir,
@@ -67,17 +73,139 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 
 		File modulesDir = new File(workspaceDir, "modules");
 
+		String template = "api";
+
 		File apiProjectDir = buildTemplateWithGradle(
-			modulesDir, "api", "apiTest");
+			modulesDir, template, template + "test");
+
+		testOutput(apiProjectDir, template, workspaceDir);
+
+		template = "control-menu-entry";
+
+		File controlMenuEntryProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(controlMenuEntryProjectDir, template, workspaceDir);
+
+		template = "mvc-portlet";
+
+		File mvcPortletProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(mvcPortletProjectDir, template, workspaceDir);
+
+		template = "npm-react-portlet";
+
+		File npmReactPortletProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(npmReactPortletProjectDir, template, workspaceDir);
+
+		template = "panel-app";
+
+		File panelAppProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(panelAppProjectDir, template, workspaceDir);
+
+		template = "portlet-configuration-icon";
+
+		File portletConfigurationIconProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(portletConfigurationIconProjectDir, template, workspaceDir);
+
+		template = "portlet-provider";
+
+		File portletProviderProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(portletProviderProjectDir, template, workspaceDir);
+
+		template = "portlet-toolbar-contributor";
+
+		File portletToolbarContributorProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(portletToolbarContributorProjectDir, template, workspaceDir);
+
+		template = "service-builder";
+
+		File serviceBuilderProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		String apiProjectName = template + "test-api";
+
+		String serviceProjectName = template + "test-service";
 
 		executeGradle(
-			workspaceDir, _gradleDistribution, GRADLE_TASK_PATH_BUILD);
+			workspaceDir, _gradleDistribution,
+			":modules:service-buildertest:" + serviceProjectName +
+				GRADLE_TASK_PATH_BUILD_SERVICE);
 
-		testOutputs(apiProjectDir);
+		testOutput(serviceBuilderProjectDir, apiProjectName, workspaceDir);
+		testOutput(serviceBuilderProjectDir, serviceProjectName, workspaceDir);
+
+		template = "service-wrapper";
+
+		File serviceWrapperProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test", "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
+
+		testOutput(serviceWrapperProjectDir, template, workspaceDir);
+
+		template = "simulation-panel-entry";
+
+		File simulationPanelEntryProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(simulationPanelEntryProjectDir, template, workspaceDir);
+
+		template = "template-context-contributor";
+
+		File templateContextContributorProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(
+			templateContextContributorProjectDir, template, workspaceDir);
+
+		template = "war-hook";
+
+		File warHookProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(warHookProjectDir, template, workspaceDir);
+
+		template = "war-mvc-portlet";
+
+		File warMvcPortletProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(warMvcPortletProjectDir, template, workspaceDir);
 	}
 
-	public void testOutputs(File projectDir) throws IOException {
-		File projectOutputDir = new File(projectDir, "build/libs");
+	public void testOutput(
+			File projectDir, String projectName, File workspaceDir)
+		throws IOException {
+
+		File projectOutputDir;
+
+		if (projectName.contains("service-builder")) {
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:service-buildertest:" + projectName +
+					GRADLE_TASK_PATH_BUILD);
+
+			projectOutputDir = new File(
+				projectDir, projectName + "/build/libs");
+		}
+		else {
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:" + projectName + "test" + GRADLE_TASK_PATH_BUILD);
+
+			projectOutputDir = new File(projectDir, "build/libs");
+		}
 
 		Path projectOutputPath = FileTestUtil.getFile(
 			projectOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);

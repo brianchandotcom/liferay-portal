@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal;
+package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,32 +27,26 @@ import org.junit.Test;
 /**
  * @author Arthur Chan
  */
-public class SimpleURLToCORSSupportMapperTest {
+public class SimpleURLPatternMapperTest {
 
 	@Test
 	public void testGet() {
 		KeyValuePair[] keyValuePairs = _createKeyValuePairs();
 
-		URLToCORSSupportMapper urlToCORSSupportMapper =
-			createURLToCORSSupportMapper(_createCORSSupports(keyValuePairs));
+		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(
+			_createCargos(keyValuePairs));
 
 		for (KeyValuePair keyValuePair : keyValuePairs) {
-			CORSSupport corsSupport = urlToCORSSupportMapper.get(
-				keyValuePair.getKey());
+			String cargo = urlPatternMapper.get(keyValuePair.getKey());
 
-			if (corsSupport == null) {
+			if (cargo == null) {
 				Assert.assertEquals("", keyValuePair.getValue());
 
 				continue;
 			}
 
-			Map<String, String> headers = new HashMap<>();
-
-			corsSupport.writeResponseHeaders(__ -> "origin", headers::put);
-
 			try {
-				Assert.assertEquals(
-					keyValuePair.getValue(), headers.get("pattern"));
+				Assert.assertEquals(keyValuePair.getValue(), cargo);
 			}
 			catch (ComparisonFailure comparisonFailure) {
 				throw new ComparisonFailure(
@@ -63,30 +57,24 @@ public class SimpleURLToCORSSupportMapperTest {
 		}
 	}
 
-	protected URLToCORSSupportMapper createURLToCORSSupportMapper(
-		Map<String, CORSSupport> corsSupports) {
+	protected URLPatternMapper<String> createURLPatternMapper(
+		Map<String, String> cargos) {
 
-		return new SimpleURLToCORSSupportMapper(corsSupports);
+		return new SimpleURLPatternMapper<>(cargos);
 	}
 
-	private Map<String, CORSSupport> _createCORSSupports(
-		KeyValuePair[] keyValuePairs) {
-
-		Map<String, CORSSupport> corsSupports = new HashMap<>();
+	private Map<String, String> _createCargos(KeyValuePair[] keyValuePairs) {
+		Map<String, String> cargos = new HashMap<>();
 
 		for (KeyValuePair keyValuePair : keyValuePairs) {
 			if (Validator.isBlank(keyValuePair.getValue())) {
 				continue;
 			}
 
-			CORSSupport corsSupport = new CORSSupport();
-
-			corsSupport.setHeader("pattern", keyValuePair.getValue());
-
-			corsSupports.put(keyValuePair.getValue(), corsSupport);
+			cargos.put(keyValuePair.getValue(), keyValuePair.getValue());
 		}
 
-		return corsSupports;
+		return cargos;
 	}
 
 	private KeyValuePair[] _createKeyValuePairs() {

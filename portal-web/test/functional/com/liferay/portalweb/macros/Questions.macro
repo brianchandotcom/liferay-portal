@@ -56,6 +56,36 @@ definition {
 			titleField = "${titleField}");
 	}
 
+	macro addRootTopic {
+		if (IsElementPresent(locator1 = "Button#ANY", key_text = "New Topic")) {
+			Click(
+				key_text = "New Topic",
+				locator1 = "Button#ANY");
+		}
+		else {
+			Click(
+				key_card = "New Topic",
+				locator1 = "Card#CARD");
+		}
+
+		Type(
+			key_text = "Topic Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${rootTopicName}");
+
+		Type(
+			key_label = "Description",
+			locator1 = "TextArea#ANY_LABELED",
+			value1 = "${rootTopicDescription}");
+
+		Button.click(button = "Create");
+
+		AssertTextEquals(
+			key_card = "${rootTopicName}",
+			locator1 = "Card#CARD_TITLE",
+			value1 = "${rootTopicName}");
+	}
+
 	macro addSubTopic {
 		Click(locator1 = "Questions#NEW_TOPIC");
 

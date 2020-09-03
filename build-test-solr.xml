@@ -281,11 +281,18 @@ schema=schema.xml</echo>
 					<include name="com.liferay.headless.commerce.*" />
 				</fileset>
 			</path>
-			<mapper
-				from="^(.*)/(.*\.jar)"
-				to="\2"
-				type="regexp"
-			/>
+			<chainedmapper>
+				<mapper
+					from="^(.*)/(.*\.jar)"
+					to="\2"
+					type="regexp"
+				/>
+				<mapper
+					from="*.jar"
+					to="*"
+					type="glob"
+				/>
+			</chainedmapper>
 		</pathconvert>
 
 		<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config" message=",${commerce.modules}&quot;" />

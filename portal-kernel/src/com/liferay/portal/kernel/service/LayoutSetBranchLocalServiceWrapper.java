@@ -286,6 +286,14 @@ public class LayoutSetBranchLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<java.lang.Long> getDeletablePlids(
+		long layoutSetBranchId) {
+
+		return _layoutSetBranchLocalService.getDeletablePlids(
+			layoutSetBranchId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

@@ -45,7 +45,7 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 			<c:otherwise>
 
 				<%
-				String errorMessage = "";
+				String errorMessage = StringPool.BLANK;
 
 				if (!hasValidDDMFormFields) {
 					errorMessage = LanguageUtil.format(request, "this-form-was-created-using-a-custom-field-type-x-that-is-not-available-for-this-liferay-dxp-installation.-instal-x-to-make-it-available-for-editing", ddmFormAdminDisplayContext.getInvalidDDMFormFieldType(ddmFormInstance));

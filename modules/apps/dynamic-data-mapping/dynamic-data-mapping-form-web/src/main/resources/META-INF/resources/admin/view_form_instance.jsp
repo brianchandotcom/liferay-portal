@@ -99,7 +99,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 										>
 
 											<%
-											String errorMessage = "";
+											String errorMessage = StringPool.BLANK;
 
 											if (!hasValidDDMFormFields) {
 												errorMessage = LanguageUtil.format(request, "this-form-was-created-using-a-custom-field-type-x-that-is-not-available-for-this-liferay-dxp-installation.-instal-x-to-make-it-available-for-editing", ddmFormAdminDisplayContext.getInvalidDDMFormFieldType(formInstance));

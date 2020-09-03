@@ -109,6 +109,7 @@ const openSelectionModal = ({
 	height,
 	id,
 	multiple = false,
+	onClose,
 	onSelect,
 	selectEventName,
 	selectedData,
@@ -148,6 +149,10 @@ const openSelectionModal = ({
 			});
 
 			eventHandlers.splice(0, eventHandlers.length);
+
+			if (onClose) {
+				onClose();
+			}
 		},
 		onOpen: ({container, processClose}) => {
 			const selectEventHandler = Liferay.on(selectEventName, (event) => {

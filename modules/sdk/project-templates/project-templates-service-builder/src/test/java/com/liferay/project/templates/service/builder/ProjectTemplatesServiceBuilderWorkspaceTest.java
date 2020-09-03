@@ -284,7 +284,7 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 					executeGradle(
 						rootProject, _gradleDistribution,
 						projectPath + ":" + serviceProjectName +
-							_GRADLE_TASK_PATH_BUILD_SERVICE);
+							GRADLE_TASK_PATH_BUILD_SERVICE);
 
 					return null;
 				}
@@ -378,9 +378,6 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 			"Changes in " + file + " incorrectly overridden", newContent,
 			FileUtil.read(path));
 	}
-
-	private static final String _GRADLE_TASK_PATH_BUILD_SERVICE =
-		":buildService";
 
 	private static URI _gradleDistribution;
 

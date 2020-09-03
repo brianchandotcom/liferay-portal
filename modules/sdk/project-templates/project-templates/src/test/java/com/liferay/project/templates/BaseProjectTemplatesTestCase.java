@@ -139,6 +139,8 @@ public interface BaseProjectTemplatesTestCase {
 
 	public static final String GRADLE_TASK_PATH_BUILD = ":build";
 
+	public static final String GRADLE_TASK_PATH_BUILD_SERVICE = ":buildService";
+
 	public static final String GRADLE_TASK_PATH_DEPLOY = ":deploy";
 
 	public static final String[] GRADLE_WRAPPER_FILE_NAMES = {

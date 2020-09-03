@@ -3,7 +3,7 @@
 
 <service-builder api-package-path="com.liferay.counter.kernel" auto-import-default-references="false" package-path="com.liferay.counter">
 	<namespace>Counter</namespace>
-	<entity local-service="true" name="Counter" persistence="false" remote-service="false">
+	<entity cache-enabled="false" local-service="true" name="Counter" persistence="false" remote-service="false">
 
 		<!-- PK fields -->
 

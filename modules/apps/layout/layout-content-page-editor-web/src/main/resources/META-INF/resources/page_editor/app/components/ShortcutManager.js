@@ -39,28 +39,12 @@ import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 const ctrlOrMeta = (event) =>
 	(event.ctrlKey && !event.metaKey) || (!event.ctrlKey && event.metaKey);
 
-const isCommentsAlloyEditor = (element) => {
+const isInteractiveElement = (element) => {
 	return (
-		element.classList.contains('alloy-editor') &&
-		element.parentElement.classList.contains('alloy-editor-container') &&
-		closest(element, '.page-editor__sidebar')
-	);
-};
-
-const isEditableCKEditor = (element) => {
-	return (
-		element.classList.contains('cke_editable') &&
-		closest(element, '.page-editor__editable')
-	);
-};
-
-const isTextElement = (element) => {
-	return (
-		(element.tagName === 'INPUT' &&
-			(element.type === 'text' ||
-				element.type === 'search' ||
-				element.type === 'number')) ||
-		element.tagName === 'TEXTAREA'
+		['INPUT', 'OPTION', 'SELECT', 'TEXTAREA'].includes(element.tagName) ||
+		!!closest(element, '.page-editor__editable') ||
+		!!closest(element, '.cke_editable') ||
+		!!closest(element, '.alloy-editor-container')
 	);
 };
 
@@ -105,11 +89,7 @@ export default function ShortcutManager() {
 	};
 
 	const remove = (event) => {
-		if (
-			!isEditableCKEditor(event.target) &&
-			!isTextElement(event.target) &&
-			!isCommentsAlloyEditor(event.target)
-		) {
+		if (!isInteractiveElement(event.target)) {
 			event.preventDefault();
 		}
 
@@ -147,11 +127,7 @@ export default function ShortcutManager() {
 	};
 
 	const undo = (event) => {
-		if (
-			!isTextElement(event.target) &&
-			!isCommentsAlloyEditor(event.target) &&
-			!isWithinIframe()
-		) {
+		if (!isInteractiveElement(event.target) && !isWithinIframe()) {
 			event.preventDefault();
 
 			if (event.shiftKey) {
@@ -166,12 +142,7 @@ export default function ShortcutManager() {
 	const move = (event) => {
 		const item = layoutData.items[activeItemId];
 
-		if (
-			item &&
-			!isTextElement(event.target) &&
-			!isEditableCKEditor(event.target) &&
-			!isCommentsAlloyEditor(event.target)
-		) {
+		if (item && !isInteractiveElement(event.target)) {
 			event.preventDefault();
 
 			const {itemId, parentId} = item;

@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.notification.internal.security.permission.resource;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
@@ -40,7 +40,7 @@ public class CommerceNotificationPortletResourcePermissionDefinition
 
 		return new PortletResourcePermissionLogic[] {
 			new StagedPortletPermissionLogic(
-				_stagingPermission, CommerceAdminPortletKeys.COMMERCE_ADMIN)
+				_stagingPermission, CPPortletKeys.COMMERCE_CHANNELS)
 		};
 	}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.tax.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.tax.exception.NoSuchTaxMethodException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CPPortletKeys.COMMERCE_CHANNELS,
 		"mvc.command.name=editCommerceTaxMethod"
 	},
 	service = MVCRenderCommand.class

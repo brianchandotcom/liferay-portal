@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.payment.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.NoSuchPaymentMethodException;
 import com.liferay.commerce.payment.exception.CommercePaymentMethodGroupRelNameException;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
@@ -122,7 +121,7 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 		String mvcRenderCommandName) {
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			actionRequest, CommerceAdminPortletKeys.COMMERCE_ADMIN,
+			actionRequest, CPPortletKeys.COMMERCE_CHANNELS,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);

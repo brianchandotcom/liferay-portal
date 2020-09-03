@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.notification.internal.security.permission.resource;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -62,8 +62,7 @@ public class CommerceNotificationTemplateModelResourcePermissionRegistrar {
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
 					new StagedModelPermissionLogic<>(
-						_stagingPermission,
-						CommerceAdminPortletKeys.COMMERCE_ADMIN,
+						_stagingPermission, CPPortletKeys.COMMERCE_CHANNELS,
 						CommerceNotificationTemplate::
 							getCommerceNotificationTemplateId))),
 			properties);

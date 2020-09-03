@@ -148,21 +148,25 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The class name of the entity to show categories selector for. Available vocabularies will be filtered by this class name.</description>
 			<name>className</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The ID(class PK) of the entity to show categories selector for.</description>
 			<name>classPK</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The class type of the entity to show categories selector for. Available vocabularies will be filtered by this class type.</description>
 			<name>classTypePK</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The array of group IDs to show categories selector for. Available vocabularies will be filtered by these group IDs.</description>
 			<name>groupIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -184,6 +188,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If true, categories selector shows only vocabularies marked as required. False by default.</description>
 			<name>showOnlyRequiredVocabularies</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -194,12 +199,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If true, categories selector allows to select only one asset category at once. False by default.</description>
 			<name>singleSelect</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Vocabularies visibility types to show in the categories selector.</description>
+			<description>Vocabularies visibility types to show in the categories selector, public or internal. By default - AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC</description>
 			<name>visibilityTypes</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

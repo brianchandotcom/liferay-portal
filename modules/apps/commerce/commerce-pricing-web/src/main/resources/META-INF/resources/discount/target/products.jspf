@@ -33,7 +33,7 @@
 						discountExternalReferenceCode: discountExternalReferenceCode,
 						discountId: id,
 						productExternalReferenceCode: product.externalReferenceCode,
-						productId: product.id,
+						productId: product.productId,
 					};
 
 					return CommerceDiscountProductsResource.addDiscountProduct(id, productData)

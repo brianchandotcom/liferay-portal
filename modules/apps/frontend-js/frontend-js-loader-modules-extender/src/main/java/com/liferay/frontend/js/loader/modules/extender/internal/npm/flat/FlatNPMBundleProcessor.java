@@ -129,37 +129,35 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 							StringUtil.read(packageJSONURL.openStream())))));
 		}
 
-		enumeration = bundle.findEntries("META-INF/resources", "*.js", true);
-
-		if (enumeration == null) {
-			enumeration = Collections.enumeration(Collections.emptyList());
-		}
-
-		List<Future<Map.Entry<URL, Collection<String>>>>
-			moduleDepedenciesFutures = new ArrayList<>();
-
-		while (enumeration.hasMoreElements()) {
-			URL jsURL = enumeration.nextElement();
-
-			moduleDepedenciesFutures.add(
-				_executorService.submit(
-					() -> new AbstractMap.SimpleImmutableEntry<>(
-						jsURL,
-						_parseModuleDependencies(_getDefineArgs(jsURL)))));
-		}
-
 		Map<URL, Collection<String>> moduleDependenciesMap = new HashMap<>();
 
-		for (Future<Map.Entry<URL, Collection<String>>> future :
-				moduleDepedenciesFutures) {
+		enumeration = bundle.findEntries("META-INF/resources", "*.js", true);
 
-			try {
-				Map.Entry<URL, Collection<String>> entry = future.get();
+		if (enumeration != null) {
+			List<Future<Map.Entry<URL, Collection<String>>>>
+				moduleDepedenciesFutures = new ArrayList<>();
 
-				moduleDependenciesMap.put(entry.getKey(), entry.getValue());
+			while (enumeration.hasMoreElements()) {
+				URL jsURL = enumeration.nextElement();
+
+				moduleDepedenciesFutures.add(
+					_executorService.submit(
+						() -> new AbstractMap.SimpleImmutableEntry<>(
+							jsURL,
+							_parseModuleDependencies(_getDefineArgs(jsURL)))));
 			}
-			catch (Exception exception) {
-				_log.error(exception, exception);
+
+			for (Future<Map.Entry<URL, Collection<String>>> future :
+					moduleDepedenciesFutures) {
+
+				try {
+					Map.Entry<URL, Collection<String>> entry = future.get();
+
+					moduleDependenciesMap.put(entry.getKey(), entry.getValue());
+				}
+				catch (Exception exception) {
+					_log.error(exception, exception);
+				}
 			}
 		}
 

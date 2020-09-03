@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(service = ItemSelectorView.class)
-public class AssetListItemSelectorView
+public class AssetListPortletItemSelectorView
 	implements PortletItemSelectorView<InfoListItemSelectorCriterion> {
 
 	@Override
@@ -118,7 +118,7 @@ public class AssetListItemSelectorView
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssetListItemSelectorView.class);
+		AssetListPortletItemSelectorView.class);
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(

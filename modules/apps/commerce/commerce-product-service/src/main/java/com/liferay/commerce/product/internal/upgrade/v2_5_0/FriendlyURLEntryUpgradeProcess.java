@@ -39,6 +39,10 @@ public class FriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	public void doUpgrade() throws Exception {
+		if (!hasTable("CPFriendlyURLEntry")) {
+			return;
+		}
+
 		String insertFriendlyUREntrySQL = StringBundler.concat(
 			"insert into FriendlyURLEntry (mvccVersion, uuid_, ",
 			"defaultLanguageId, friendlyURLEntryId, groupId, companyId, ",

@@ -39,6 +39,10 @@ public class CPFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (!hasTable("CPFriendlyURLEntry")) {
+			return;
+		}
+
 		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
 			CPDefinition.class);
 		long cProductClassNameId = _classNameLocalService.getClassNameId(

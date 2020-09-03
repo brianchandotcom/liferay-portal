@@ -1069,6 +1069,11 @@ public class CommerceProductPriceCalculationV2Impl
 				_getBasePriceListId(cpInstance), cpInstance.getCPInstanceUuid(),
 				false);
 
+		if (commerceBasePriceEntry == null) {
+			return commerceMoneyFactory.create(
+				commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
+		}
+
 		BigDecimal unitPrice = _getCommercePrice(
 			commercePriceList.getCommercePriceListId(), commerceBasePriceEntry,
 			quantity);

@@ -52,7 +52,7 @@ export default ({tagsChange, tagsLoaded, tags = []}) => {
 			<ClayForm.Group className="c-mt-4">
 				<div className="questions-tag-selector">
 					<AssetTagsSelector
-						eventName={`_${context.portletNamespace}_selectTag`}
+						eventName={`${context.portletNamespace}selectTag`}
 						groupIds={[context.siteKey]}
 						inputValue={inputValue}
 						onInputValueChange={setInputValue}

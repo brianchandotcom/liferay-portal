@@ -38,6 +38,78 @@ definition {
 		}
 	}
 
+	macro bookFlight {
+		Select(
+			key_item = "title",
+			locator1 = "BridgeDemos#FLIGHT_SELECT",
+			value1 = "${title}");
+
+		Type(
+			key_field = "firstName",
+			locator1 = "BridgeDemos#BOOKING_FIELD",
+			value1 = "${firstName}");
+		Type(
+			key_field = "lastName",
+			locator1 = "BridgeDemos#BOOKING_FIELD",
+			value1 = "${lastName}");
+		Type(
+			key_field = "emailAddress",
+			locator1 = "BridgeDemos#BOOKING_FIELD",
+			value1 = "${emailAddress}");
+		Type(
+			key_field = "phoneNumber",
+			locator1 = "BridgeDemos#BOOKING_FIELD",
+			value1 = "${phoneNumber}");
+		Type(
+			key_field = "addressLine1",
+			locator1 = "BridgeDemos#BOOKING_FIELD",
+			value1 = "${addressLine1}");
+		Type(
+			key_field = "city",
+			locator1 = "BridgeDemos#BOOKING_FIELD",
+			value1 = "${city}");
+
+		Select(
+			key_item = "province",
+			locator1 = "BridgeDemos#FLIGHT_SELECT",
+			value1 = "${province}");
+
+		Select(
+			key_item = "paymentType",
+			locator1 = "BridgeDemos#FLIGHT_SELECT",
+			value1 = "${paymentType}");
+
+		Type(
+			key_field = "accountNumber",
+			locator1 = "BridgeDemos#BOOKING_FIELD",
+			value1 = "${accountNumber}");
+		Type(
+			key_field = "expirationMonth",
+			locator1 = "BridgeDemos#BOOKING_FIELD",
+			value1 = "${expirationMonth}");
+
+		Click(
+			key_buttonName = "Purchase",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "BridgeDemos#FIELD_ERROR_JSF_JSP",
+			value1 = "Value is required");
+
+		Type(
+			key_field = "cvv",
+			locator1 = "BridgeDemos#BOOKING_FIELD",
+			value1 = "${cvv}");
+
+		Click(
+			key_buttonName = "Purchase",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "BridgeDemos#RESULT_MESSAGE",
+			value1 = "Thank you John for your purchase.");
+	}
+
 	macro editDateFormat {
 		BridgeDemos.gotoEdit();
 
@@ -77,6 +149,59 @@ definition {
 				locator1 = "BridgeDemos#EXPORT_LINK");
 
 			DownloadTempFile();
+		}
+	}
+
+	macro findFlight {
+		Click(
+			key_buttonName = "Enter Booking Flow",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		Select(
+			key_item = "bookingType",
+			locator1 = "BridgeDemos#FLIGHT_SELECT",
+			value1 = "${bookingType}");
+
+		Select(
+			key_item = "departure",
+			locator1 = "BridgeDemos#FLIGHT_SELECT",
+			value1 = "${departure}");
+
+		Select(
+			key_item = "arrival",
+			locator1 = "BridgeDemos#FLIGHT_SELECT",
+			value1 = "${arrival}");
+
+		Type.sendKeys(
+			key_field = "departureDate",
+			locator1 = "BridgeDemos#BOOKING_FIELD",
+			value1 = "${date}");
+
+		Click(
+			key_buttonName = "Search Flights",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		AssertElementPresent(
+			key_buttonName = "Add to Cart",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		Click(
+			key_buttonName = "Add to Cart",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		AssertElementPresent(
+			key_buttonName = "Remove",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		if ("${bookAdditionalTravel}" == "true") {
+			Click(
+				key_buttonName = "Book Additional Travel",
+				locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+		}
+		else {
+			Click(
+				key_buttonName = "Checkout",
+				locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
 		}
 	}
 
@@ -130,6 +255,34 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = "${postalCode}");
 		}
+	}
+
+	macro submitSurvey {
+		Click(
+			key_buttonName = "Call Survey Flow",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		Type(
+			key_num = "1",
+			locator1 = "BridgeDemos#SURVEY_QUESTION",
+			value1 = "${question1}");
+
+		Type(
+			key_num = "2",
+			locator1 = "BridgeDemos#SURVEY_QUESTION",
+			value1 = "${question2}");
+
+		Click(
+			key_buttonName = "Finish",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		AssertTextEquals(
+			locator1 = "BridgeDemos#RESULT_MESSAGE",
+			value1 = "Thank you John for participating in our survey.");
+
+		Click(
+			key_buttonName = "Return From Survey Flow",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
 	}
 
 	macro uploadFile {
@@ -275,6 +428,14 @@ definition {
 				key_fieldName = "${fieldName}",
 				locator1 = "BridgeDemos#FIELD_ERROR",
 				value1 = "${errorMessage}");
+		}
+	}
+
+	macro viewLibraries {
+		for (var libraryName : list "${libraryName}") {
+			AssertElementPresent(
+				key_libraryName = "${libraryName}",
+				locator1 = "BridgeDemos#LIBRARY_VERSION");
 		}
 	}
 

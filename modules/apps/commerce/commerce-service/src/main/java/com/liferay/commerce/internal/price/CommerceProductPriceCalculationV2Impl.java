@@ -540,7 +540,7 @@ public class CommerceProductPriceCalculationV2Impl
 		CommerceCatalog commerceCatalog = cpInstance.getCommerceCatalog();
 
 		CommercePriceList basePriceList =
-			_commercePriceListLocalService.getCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
 				commerceCatalog.getGroupId());
 
 		if (basePriceList != null) {
@@ -584,6 +584,12 @@ public class CommerceProductPriceCalculationV2Impl
 			long cpInstanceId, long commercePriceListId, int quantity,
 			BigDecimal finalPrice, CommerceContext commerceContext)
 		throws PortalException {
+
+		if ((finalPrice == null) ||
+			(finalPrice.compareTo(BigDecimal.ZERO) <= 0)) {
+
+			return null;
+		}
 
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);

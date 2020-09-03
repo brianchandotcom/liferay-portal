@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.address.web.internal.display.context;
 
-import com.liferay.commerce.address.web.internal.admin.CountriesCommerceAdminModule;
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.address.web.internal.servlet.taglib.ui.CommerceCountryScreenNavigationConstants;
 import com.liferay.commerce.model.CommerceCountry;
@@ -83,9 +82,6 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"commerceAdminModuleKey", CountriesCommerceAdminModule.KEY);
 
 		if (getCommerceCountryId() > 0) {
 			portletURL.setParameter(

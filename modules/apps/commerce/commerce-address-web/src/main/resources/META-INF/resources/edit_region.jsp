@@ -17,11 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
-
 CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-CommerceCountry commerceCountry = commerceRegionsDisplayContext.getCommerceCountry();
 
 long commerceCountryId = commerceRegionsDisplayContext.getCommerceCountryId();
 
@@ -29,42 +25,15 @@ CommerceRegion commerceRegion = commerceRegionsDisplayContext.getCommerceRegion(
 
 long commerceRegionId = commerceRegionsDisplayContext.getCommerceRegionId();
 
-PortletURL editCountryURL = renderResponse.createRenderURL();
+portletDisplay.setShowBackIcon(true);
 
-editCountryURL.setParameter("commerceAdminModuleKey", CountriesCommerceAdminModule.KEY);
-editCountryURL.setParameter("commerceCountryId", String.valueOf(commerceCountryId));
-
-String contextTitle = commerceCountry.getName(locale);
-
-String title;
-
-if (commerceRegion == null) {
-	title = LanguageUtil.format(request, "add-region-to-x", contextTitle);
+if (Validator.isNull(redirect)) {
+	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 }
 else {
-	title = contextTitle + " - " + commerceRegion.getName();
+	portletDisplay.setURLBack(redirect);
 }
-
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
-	"direction-right", StringPool.TRUE
-).build();
-
-String screenNavigationCategoryKey = commerceRegionsDisplayContext.getScreenNavigationCategoryKey();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), countriesURL, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, editCountryURL.toString(), data);
-
-editCountryURL.setParameter("screenNavigationCategoryKey", screenNavigationCategoryKey);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationCategoryKey), editCountryURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
-
-<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
-	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
-</liferay-util:include>
-
-<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceRegion" var="editCommerceRegionActionURL" />
 

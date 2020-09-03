@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceCountryAlreadyExistsException;
 import com.liferay.commerce.exception.CommerceCountryNameException;
 import com.liferay.commerce.exception.CommerceCountryThreeLettersISOCodeException;
@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_COUNTRY,
 		"mvc.command.name=editCommerceCountry"
 	},
 	service = MVCActionCommand.class
@@ -159,7 +159,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			actionRequest, CommerceAdminPortletKeys.COMMERCE_ADMIN,
+			actionRequest, CommercePortletKeys.COMMERCE_COUNTRY,
 			PortletRequest.RENDER_PHASE);
 
 		if (commerceCountry != null) {

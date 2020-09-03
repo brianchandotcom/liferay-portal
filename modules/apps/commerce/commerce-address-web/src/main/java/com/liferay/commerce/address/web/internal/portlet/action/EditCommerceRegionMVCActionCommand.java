@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceRegionNameException;
 import com.liferay.commerce.exception.NoSuchRegionException;
 import com.liferay.commerce.model.CommerceRegion;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_COUNTRY,
 		"mvc.command.name=editCommerceRegion"
 	},
 	service = MVCActionCommand.class

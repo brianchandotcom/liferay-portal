@@ -14,29 +14,14 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
-import com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext;
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.exception.NoSuchCountryException;
-import com.liferay.commerce.product.service.CommerceChannelRelService;
-import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.starter.CommerceRegionsStarterRegistry;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -44,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_COUNTRY,
 		"mvc.command.name=editCommerceCountry"
 	},
 	service = MVCRenderCommand.class
@@ -56,62 +41,7 @@ public class EditCommerceCountryMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/edit_country.jsp");
-
-		try {
-			CommerceCountriesDisplayContext commerceCountriesDisplayContext =
-				new CommerceCountriesDisplayContext(
-					_actionHelper, _commerceChannelRelService,
-					_commerceChannelService, _commerceCountryService,
-					_commerceRegionsStarterRegistry, renderRequest,
-					renderResponse);
-
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceCountriesDisplayContext);
-
-			requestDispatcher.include(
-				_portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse));
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchCountryException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, exception.getClass());
-
-				return "/error.jsp";
-			}
-
-			throw new PortletException(
-				"Unable to include edit_country.jsp", exception);
-		}
-
-		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+		return "/edit_country.jsp";
 	}
-
-	@Reference
-	private ActionHelper _actionHelper;
-
-	@Reference
-	private CommerceChannelRelService _commerceChannelRelService;
-
-	@Reference
-	private CommerceChannelService _commerceChannelService;
-
-	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
-	private CommerceRegionsStarterRegistry _commerceRegionsStarterRegistry;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.address.web)"
-	)
-	private ServletContext _servletContext;
 
 }

@@ -12,61 +12,57 @@
  * details.
  */
 
-package com.liferay.commerce.internal.context;
+package com.liferay.commerce.context;
 
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
-import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.Portal;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-public class CommerceContextImpl implements CommerceContext {
+public class BaseCommerceContextHttp implements CommerceContext {
 
-	public CommerceContextImpl(
-		long companyId, long channelGroupId, long orderId,
-		long commerceAccountId, CommerceAccountHelper commerceAccountHelper,
-		CommerceAccountLocalService commerceAccountLocalService,
-		CommerceAccountService commerceAccountService,
+	public BaseCommerceContextHttp(
+		HttpServletRequest httpServletRequest,
+		CommerceAccountHelper commerceAccountHelper,
 		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
-		CommerceOrderService commerceOrderService,
-		ConfigurationProvider configurationProvider) {
+		CommerceOrderHttpHelper commerceOrderHttpHelper,
+		ConfigurationProvider configurationProvider, Portal portal) {
 
-		_companyId = companyId;
-		_channelGroupId = channelGroupId;
-		_orderId = orderId;
-		_commerceAccountId = commerceAccountId;
+		_httpServletRequest = httpServletRequest;
 		_commerceAccountHelper = commerceAccountHelper;
-		_commerceAccountLocalService = commerceAccountLocalService;
-		_commerceAccountService = commerceAccountService;
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
-		_commerceOrderService = commerceOrderService;
+		_commerceOrderHttpHelper = commerceOrderHttpHelper;
+		_portal = portal;
 
 		try {
-			if (getCommerceChannelGroupId() > 0) {
+			CommerceChannel commerceChannel = _fetchCommerceChannel();
+
+			if (commerceChannel != null) {
 				_commerceAccountGroupServiceConfiguration =
 					configurationProvider.getConfiguration(
 						CommerceAccountGroupServiceConfiguration.class,
 						new GroupServiceSettingsLocator(
-							_channelGroupId,
+							commerceChannel.getGroupId(),
 							CommerceAccountConstants.SERVICE_NAME));
 			}
 		}
@@ -77,17 +73,14 @@ public class CommerceContextImpl implements CommerceContext {
 
 	@Override
 	public CommerceAccount getCommerceAccount() throws PortalException {
-		if (_commerceAccount != null) {
+		CommerceChannel commerceChannel = _fetchCommerceChannel();
+
+		if ((_commerceAccount != null) || (commerceChannel == null)) {
 			return _commerceAccount;
 		}
 
-		if (_commerceAccountId == CommerceAccountConstants.ACCOUNT_ID_GUEST) {
-			return _commerceAccountLocalService.getGuestCommerceAccount(
-				_companyId);
-		}
-
-		_commerceAccount = _commerceAccountService.getCommerceAccount(
-			_commerceAccountId);
+		_commerceAccount = _commerceAccountHelper.getCurrentCommerceAccount(
+			commerceChannel.getGroupId(), _httpServletRequest);
 
 		return _commerceAccount;
 	}
@@ -113,14 +106,16 @@ public class CommerceContextImpl implements CommerceContext {
 
 	@Override
 	public long getCommerceChannelGroupId() throws PortalException {
-		return _channelGroupId;
+		return _commerceChannelLocalService.
+			getCommerceChannelGroupIdBySiteGroupId(
+				_portal.getScopeGroupId(_httpServletRequest));
 	}
 
 	@Override
 	public long getCommerceChannelId() throws PortalException {
 		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByGroupId(
-				_channelGroupId);
+			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+				_portal.getScopeGroupId(_httpServletRequest));
 
 		if (commerceChannel == null) {
 			return 0;
@@ -136,18 +131,28 @@ public class CommerceContextImpl implements CommerceContext {
 		}
 
 		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByGroupId(
-				_channelGroupId);
+			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+				_portal.getScopeGroupId(_httpServletRequest));
 
-		_commerceCurrency = _commerceCurrencyLocalService.getCommerceCurrency(
-			_companyId, commerceChannel.getCommerceCurrencyCode());
+		if (commerceChannel == null) {
+			_commerceCurrency =
+				_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+					_portal.getCompanyId(_httpServletRequest));
+		}
+		else {
+			_commerceCurrency =
+				_commerceCurrencyLocalService.getCommerceCurrency(
+					_portal.getCompanyId(_httpServletRequest),
+					commerceChannel.getCommerceCurrencyCode());
+		}
 
 		return _commerceCurrency;
 	}
 
 	@Override
 	public CommerceOrder getCommerceOrder() throws PortalException {
-		_commerceOrder = _commerceOrderService.fetchCommerceOrder(_orderId);
+		_commerceOrder = _commerceOrderHttpHelper.getCurrentCommerceOrder(
+			_httpServletRequest);
 
 		return _commerceOrder;
 	}
@@ -161,24 +166,25 @@ public class CommerceContextImpl implements CommerceContext {
 		return _commerceAccountGroupServiceConfiguration.commerceSiteType();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceContextImpl.class);
+	private CommerceChannel _fetchCommerceChannel() throws PortalException {
+		return _commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+			_portal.getScopeGroupId(_httpServletRequest));
+	}
 
-	private final long _channelGroupId;
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseCommerceContextHttp.class);
+
 	private CommerceAccount _commerceAccount;
 	private long[] _commerceAccountGroupIds;
 	private CommerceAccountGroupServiceConfiguration
 		_commerceAccountGroupServiceConfiguration;
 	private final CommerceAccountHelper _commerceAccountHelper;
-	private final long _commerceAccountId;
-	private final CommerceAccountLocalService _commerceAccountLocalService;
-	private final CommerceAccountService _commerceAccountService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private CommerceOrder _commerceOrder;
-	private final CommerceOrderService _commerceOrderService;
-	private final long _companyId;
-	private final long _orderId;
+	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private final HttpServletRequest _httpServletRequest;
+	private final Portal _portal;
 
 }

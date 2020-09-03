@@ -41,6 +41,10 @@ public class ExpandoColumnModelListener
 	public void onAfterRemove(ExpandoColumn expandoColumn)
 		throws ModelListenerException {
 
+		if (expandoColumn == null) {
+			return;
+		}
+
 		try {
 			if (_checkCPOptionValueExpandoColumn(expandoColumn.getTableId())) {
 				_removeCPDefinitionOptionValueRelExpandoColumn(expandoColumn);

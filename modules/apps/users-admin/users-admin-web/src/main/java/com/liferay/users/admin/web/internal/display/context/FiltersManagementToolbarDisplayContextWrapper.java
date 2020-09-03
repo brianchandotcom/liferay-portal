@@ -42,11 +42,11 @@ public class FiltersManagementToolbarDisplayContextWrapper
 	extends ManagementToolbarDisplayContextWrapper {
 
 	public FiltersManagementToolbarDisplayContextWrapper(
+		FilterContributor[] filterContributors,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		ManagementToolbarDisplayContext managementToolbarDisplayContext,
-		FilterContributor[] filterContributors) {
+		ManagementToolbarDisplayContext managementToolbarDisplayContext) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,

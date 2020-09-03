@@ -107,10 +107,10 @@ public class ViewFlatUsersDisplayContextFactory {
 		if (filterContributorsOptional.isPresent()) {
 			managementToolbarDisplayContext =
 				new FiltersManagementToolbarDisplayContextWrapper(
+					filterContributorsOptional.get(),
 					liferayPortletRequest.getHttpServletRequest(),
 					liferayPortletRequest, liferayPortletResponse,
-					managementToolbarDisplayContext,
-					filterContributorsOptional.get());
+					managementToolbarDisplayContext);
 		}
 
 		viewFlatUsersDisplayContext.setManagementToolbarDisplayContext(

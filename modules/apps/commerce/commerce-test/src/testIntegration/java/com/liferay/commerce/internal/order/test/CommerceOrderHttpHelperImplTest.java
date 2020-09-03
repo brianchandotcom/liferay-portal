@@ -120,7 +120,8 @@ public class CommerceOrderHttpHelperImplTest {
 				_user.getUserId());
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, null, _user, _group, _commerceAccount, null);
+			_commerceCurrency, _commerceChannel, _user, _group,
+			_commerceAccount, null);
 
 		_httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
@@ -136,6 +137,8 @@ public class CommerceOrderHttpHelperImplTest {
 			PermissionCheckerFactoryUtil.create(_user));
 
 		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+
+		_httpServletRequest.setAttribute(WebKeys.USER_ID, _user.getUserId());
 
 		_themeDisplay.setRequest(_httpServletRequest);
 

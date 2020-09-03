@@ -163,9 +163,18 @@ definition {
 
 	macro changeTopic {
 		if (isSet(gotoParentTopic)) {
-			Click(
-				key_topicName = "${gotoParentTopic}",
-				locator1 = "Questions#QUESTIONS_BREADCRUMB_PARENT_TOPIC_BUTTON");
+			if (isSet(multipleSubTopics)) {
+				Click(locator1 = "Questions#QUESTIONS_BREADCRUMB_ELLIPSIS");
+
+				Click(
+					key_topicName = "${gotoParentTopic}",
+					locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_OPTION");
+			}
+			else {
+				Click(
+					key_topicName = "${gotoParentTopic}",
+					locator1 = "Questions#QUESTIONS_BREADCRUMB_PARENT_TOPIC_BUTTON");
+			}
 		}
 		else {
 			Click(

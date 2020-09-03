@@ -1,0 +1,9 @@
+definition {
+
+	macro changeDisplayStyle {
+		Click(locator1 = "ChangeListChanges#CURRENT_DISPLAY_STYLE");
+
+		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
+	}
+
+}

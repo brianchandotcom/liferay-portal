@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"commerce.pricing.navigation.item.key=" + CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
-		"commerce.pricing.navigation.item.order:Integer=10"
+		"commerce.pricing.navigation.item.order:Integer=40"
 	},
 	service = PricingNavigationItem.class
 )

@@ -29,7 +29,6 @@ else {
 }
 
 portletDisplay.setShowBackIcon(true);
-renderResponse.setTitle(LanguageUtil.get(request, "product-groups"));
 %>
 
 <liferay-portlet:renderURL var="editCommercePricingClassExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

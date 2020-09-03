@@ -25,12 +25,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Alberti
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"panel.app.order:Integer=350",
-		"panel.category.key=" + CommercePanelCategoryKeys.CONTROL_PANEL_COMMERCE
+		"panel.app.order:Integer=400",
+		"panel.category.key=" + CommercePanelCategoryKeys.COMMERCE_PRICING
 	},
 	service = PanelApp.class
 )

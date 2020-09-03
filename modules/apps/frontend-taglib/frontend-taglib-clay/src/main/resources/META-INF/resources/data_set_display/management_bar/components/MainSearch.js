@@ -18,7 +18,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
 
-function MainSearch() {
+function MainSearch({setShowMobile}) {
 	const {searchParam, updateSearchParam} = useContext(DataSetDisplayContext);
 
 	const [inputValue, updateInputValue] = useState(searchParam);
@@ -39,6 +39,7 @@ function MainSearch() {
 		<ClayInput.Group>
 			<ClayInput.GroupItem>
 				<ClayInput
+					aria-label={Liferay.Language.get('search')}
 					className="input-group-inset input-group-inset-after"
 					onChange={(event) => updateInputValue(event.target.value)}
 					onKeyDown={handleKeyDown}
@@ -47,12 +48,16 @@ function MainSearch() {
 				/>
 				<ClayInput.GroupInsetItem after tag="div">
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('clear')}
+						className="navbar-breakpoint-d-none"
 						disabled={!inputValue.length}
 						displayType="unstyled"
+						monospaced={false}
 						onClick={(event) => {
 							event.preventDefault();
-							
+
 							updateInputValue('');
+							setShowMobile(false);
 
 							updateSearchParam('');
 						}}
@@ -63,13 +68,16 @@ function MainSearch() {
 						symbol="times-circle"
 					/>
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('search')}
 						displayType="unstyled"
+						monospaced={false}
 						onClick={(event) => {
 							event.preventDefault();
 
 							updateSearchParam(inputValue);
 						}}
 						symbol="search"
+						type="submit"
 					/>
 				</ClayInput.GroupInsetItem>
 			</ClayInput.GroupItem>

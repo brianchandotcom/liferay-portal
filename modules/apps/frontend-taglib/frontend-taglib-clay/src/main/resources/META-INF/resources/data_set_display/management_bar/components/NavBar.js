@@ -12,8 +12,11 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import ActiveViewSelector from './ActiveViewSelector';
 import {useAppState} from './Context';
@@ -25,28 +28,55 @@ function NavBar({creationMenu, showSearch, views}) {
 	const {
 		state: {filters},
 	} = useAppState();
+	const [showMobile, setShowMobile] = useState(false);
 
 	return (
-		<nav className="management-bar management-bar-light navbar navbar-expand-md">
-			<div className="container-fluid container-fluid-max-xl">
+		<ClayManagementToolbar className="c-mb-0 justify-content-space-between">
+			<ClayManagementToolbar.ItemList>
 				{!!filters.length && (
-					<div className="mr-2 navbar-nav">
+					<ClayManagementToolbar.Item>
 						<FiltersDropdown />
-					</div>
+					</ClayManagementToolbar.Item>
 				)}
+			</ClayManagementToolbar.ItemList>
+
+			{showSearch && (
+				<>
+					<ClayManagementToolbar.Search
+						onSubmit={(event) => {
+							event.preventDefault();
+						}}
+						showMobile={showMobile}
+					>
+						<MainSearch setShowMobile={setShowMobile} />
+					</ClayManagementToolbar.Search>
+				</>
+			)}
+
+			<ClayManagementToolbar.ItemList>
 				{showSearch && (
-					<div className="navbar-form navbar-overlay-sm-down pl-0">
-						<MainSearch />
-					</div>
+					<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+						<ClayButton
+							className="nav-link nav-link-monospaced"
+							displayType="unstyled"
+							onClick={() => setShowMobile(true)}
+						>
+							<ClayIcon symbol="search" />
+						</ClayButton>
+					</ClayManagementToolbar.Item>
 				)}
-				<div className="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down pl-0">
-					{views?.length > 1 ? (
+				{views?.length > 1 && (
+					<ClayManagementToolbar.Item>
 						<ActiveViewSelector views={views} />
-					) : null}
-				</div>
-				{creationMenu && <CreationMenu {...creationMenu} />}
-			</div>
-		</nav>
+					</ClayManagementToolbar.Item>
+				)}
+				{creationMenu && (
+					<ClayManagementToolbar.Item>
+						<CreationMenu {...creationMenu} />
+					</ClayManagementToolbar.Item>
+				)}
+			</ClayManagementToolbar.ItemList>
+		</ClayManagementToolbar>
 	);
 }
 

@@ -38,12 +38,12 @@ public class AppServer {
 	public void startService() {
 		if (JenkinsResultsParserUtil.isWindows()) {
 			JenkinsResultsParserUtil.executeBatchCommandService(
-				_getStartCommand(), _getBinDir(), _getEnvironments(),
+				_getStartAppServerCommand(), _getBinDir(), _getEnvironments(),
 				_getMaxLogSize());
 		}
 		else {
 			JenkinsResultsParserUtil.executeBashCommandService(
-				_getStartCommand(), _getBinDir(), _getEnvironments(),
+				_getStartAppServerCommand(), _getBinDir(), _getEnvironments(),
 				_getMaxLogSize());
 		}
 
@@ -51,7 +51,7 @@ public class AppServer {
 
 		if (type.contains("websphere")) {
 			JenkinsResultsParserUtil.executeBashCommandService(
-				_getReadLiferayLogCommand(), _getAppServerParentDir(),
+				_getStartReadLiferayLogCommand(), _getAppServerParentDir(),
 				_getEnvironments(), _getMaxLogSize());
 		}
 	}
@@ -59,15 +59,18 @@ public class AppServer {
 	public void stopService() {
 		if (JenkinsResultsParserUtil.isWindows()) {
 			JenkinsResultsParserUtil.executeBatchCommandService(
-				_getStopCommand(), _getBinDir(), _getEnvironments(),
+				_getStopAppServerCommand(), _getBinDir(), _getEnvironments(),
 				_getMaxLogSize());
-
-			return;
+		}
+		else {
+			JenkinsResultsParserUtil.executeBashCommandService(
+				_getStopAppServerCommand(), _getBinDir(), _getEnvironments(),
+				_getMaxLogSize());
 		}
 
 		JenkinsResultsParserUtil.executeBashCommandService(
-			_getStopCommand(), _getBinDir(), _getEnvironments(),
-			_getMaxLogSize());
+			_getStopReadLiferayLogCommand(), _getAppServerParentDir(),
+			_getEnvironments(), _getMaxLogSize());
 	}
 
 	private File _getAppServerParentDir() {
@@ -177,31 +180,7 @@ public class AppServer {
 		return path.replaceAll("[^:]+/jdk[^/]*/[^:]*bin", javaHome + "/bin");
 	}
 
-	private String _getReadLiferayLogCommand() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("#!/bin/bash\n");
-
-		sb.append("while [ ! -f logs/liferay.*.log ]\n");
-		sb.append("do\n");
-		sb.append("sleep 1;\n");
-		sb.append("done\n");
-
-		sb.append("tail -f logs/liferay.*.log;");
-
-		File file = new File(_getAppServerParentDir(), "read_liferay_log.sh");
-
-		try {
-			JenkinsResultsParserUtil.write(file, sb.toString());
-
-			return file.getCanonicalPath();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	private String _getStartCommand() {
+	private String _getStartAppServerCommand() {
 		return JenkinsResultsParserUtil.combine(
 			_getStartExecutable(), " ", _getStartExecutableArgLine());
 	}
@@ -234,7 +213,32 @@ public class AppServer {
 		return startExecutableArgLine;
 	}
 
-	private String _getStopCommand() {
+	private String _getStartReadLiferayLogCommand() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("#!/bin/bash\n");
+
+		sb.append("while [ ! -f logs/liferay.*.log ]\n");
+		sb.append("do\n");
+		sb.append("sleep 1;\n");
+		sb.append("done\n");
+
+		sb.append("tail -f logs/liferay.*.log;");
+
+		File file = new File(
+			_getAppServerParentDir(), "start_read_liferay_log.sh");
+
+		try {
+			JenkinsResultsParserUtil.write(file, sb.toString());
+
+			return file.getCanonicalPath();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private String _getStopAppServerCommand() {
 		return JenkinsResultsParserUtil.combine(
 			_getStopExecutable(), " ", _getStopExecutableArgLine());
 	}
@@ -265,6 +269,30 @@ public class AppServer {
 		}
 
 		return stopExecutableArgLine;
+	}
+
+	private String _getStopReadLiferayLogCommand() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("#!/bin/bash\n");
+
+		sb.append("kill $(ps aux | grep tail | grep logs | ");
+		sb.append("awk '{print $2}')\n");
+
+		sb.append("kill $(ps aux | grep start_read_liferay_log | ");
+		sb.append("awk '{print $2}')\n");
+
+		File file = new File(
+			_getAppServerParentDir(), "stop_read_liferay_log.sh");
+
+		try {
+			JenkinsResultsParserUtil.write(file, sb.toString());
+
+			return file.getCanonicalPath();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private final Project _project;

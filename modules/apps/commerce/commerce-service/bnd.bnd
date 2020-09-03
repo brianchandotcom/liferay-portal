@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Commerce Service
 Bundle-SymbolicName: com.liferay.commerce.service
 Bundle-Version: 10.0.4
-Export-Package:\
-	com.liferay.commerce.configuration,\
-	com.liferay.commerce.configuration.definition,\
-	com.liferay.commerce.model.impl
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
 Liferay-Require-SchemaVersion: 4.9.0
 Liferay-Service: true

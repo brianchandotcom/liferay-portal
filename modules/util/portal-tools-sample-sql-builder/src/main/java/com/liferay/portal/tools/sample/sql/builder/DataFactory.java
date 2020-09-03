@@ -34,7 +34,6 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
 import com.liferay.commerce.product.model.CPDefinitionModel;
-import com.liferay.commerce.product.model.CPFriendlyURLEntryModel;
 import com.liferay.commerce.product.model.CPInstanceModel;
 import com.liferay.commerce.product.model.CPTaxCategoryModel;
 import com.liferay.commerce.product.model.CProduct;
@@ -45,7 +44,6 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelModel;
 import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
-import com.liferay.commerce.product.model.impl.CPFriendlyURLEntryModelImpl;
 import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
 import com.liferay.commerce.product.model.impl.CPTaxCategoryModelImpl;
 import com.liferay.commerce.product.model.impl.CProductModelImpl;
@@ -1523,15 +1521,6 @@ public class DataFactory {
 			cpDefinitionModel.getCPDefinitionId(), SequentialUUID.generate(), 0,
 			true, true, "text/plain",
 			"Definition " + cpDefinitionModel.getCPDefinitionId());
-	}
-
-	public CPFriendlyURLEntryModel newCPFriendlyURLEntryModel(
-		CProductModel cProductModel) {
-
-		return newCPFriendlyURLEntryModel(
-			0, getClassNameId(CProduct.class), cProductModel.getCProductId(),
-			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
-				"Definition " + cProductModel.getPublishedCPDefinitionId()));
 	}
 
 	public CPInstanceModel newCPInstanceModel(
@@ -4145,43 +4134,6 @@ public class DataFactory {
 		blogsEntryModel.setStatusDate(new Date());
 
 		return blogsEntryModel;
-	}
-
-	protected CPFriendlyURLEntryModel newCPFriendlyURLEntryModel(
-		long groupId, long classNameId, long classPK, String urlTitle) {
-
-		CPFriendlyURLEntryModel cpFriendlyURLEntryModel =
-			new CPFriendlyURLEntryModelImpl();
-
-		// UUID
-
-		cpFriendlyURLEntryModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		cpFriendlyURLEntryModel.setCPFriendlyURLEntryId(_counter.get());
-
-		// Group instance
-
-		cpFriendlyURLEntryModel.setGroupId(groupId);
-
-		// Audit fields
-
-		cpFriendlyURLEntryModel.setCompanyId(_companyId);
-		cpFriendlyURLEntryModel.setUserId(_sampleUserId);
-		cpFriendlyURLEntryModel.setUserName(_SAMPLE_USER_NAME);
-		cpFriendlyURLEntryModel.setCreateDate(new Date());
-		cpFriendlyURLEntryModel.setModifiedDate(new Date());
-
-		// Other fields
-
-		cpFriendlyURLEntryModel.setClassNameId(classNameId);
-		cpFriendlyURLEntryModel.setClassPK(classPK);
-		cpFriendlyURLEntryModel.setLanguageId("en_US");
-		cpFriendlyURLEntryModel.setUrlTitle(urlTitle);
-		cpFriendlyURLEntryModel.setMain(true);
-
-		return cpFriendlyURLEntryModel;
 	}
 
 	protected DDMContentModel newDDMContentModel(

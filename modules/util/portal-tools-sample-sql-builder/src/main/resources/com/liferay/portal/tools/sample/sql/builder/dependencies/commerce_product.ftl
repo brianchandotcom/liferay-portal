@@ -24,14 +24,9 @@ ${dataFactory.toInsertSQL(commerceCurrencyModel)}
 	<#list dataFactory.getSequence(dataFactory.maxCommerceProductDefinitionCount) as commerceProductDefinitionCount>
 		<#assign
 			cpDefinitionModel = dataFactory.newCPDefinitionModel(cpTaxCategoryModel, cProductModel, commerceCatalogGroupModel, commerceProductDefinitionCount)
-			cpFriendlyURLEntryModel = dataFactory.newCPFriendlyURLEntryModel(cProductModel)
 		/>
 
 		${dataFactory.toInsertSQL(cpDefinitionModel)}
-
-		${dataFactory.toInsertSQL(cpFriendlyURLEntryModel)}
-
-		${csvFileWriter.write("cpFriendlyURLEntry", cpFriendlyURLEntryModel.urlTitle + "\n")}
 
 		${dataFactory.toInsertSQL(dataFactory.newCPDefinitionModelAssetEntryModel(cpDefinitionModel, commerceCatalogGroupModel))}
 

@@ -17,17 +17,17 @@ definition {
 
 		Type(
 			locator1 = "ContentDashboard#SEARCH_CATEGORY_FIELD",
-			value1 = "Vocabulary 1");
-
-		KeyPress(
-			locator1 = "ContentDashboard#SEARCH_CATEGORY_FIELD",
-			value1 = "\ENTER");
-
-		Click(locator1 = "ContentDashboard#OPEN_VOCABULARY_CATEGORIES");
+			value1 = "Category Name");
 
 		Click(locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
 
-		Click(locator1 = "ContentDashboard#SELECT_CATEGORY_BUTTON");
+		SelectFrame(value1 = "relative=top"); 
+		
+		AssertClickNoError(
+				locator1 = "ContentDashboard#SELECT_CATEGORY_BUTTON",
+				value1 = "Select");
+
+		SelectFrame(value1 = "relative=top");
 	}
 
 	macro filterByTitle {

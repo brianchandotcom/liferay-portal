@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPEN_VOCABULARY_CATEGORIES</td>
-	<td>(//*[contains(@class, 'lfr-treeview-node-list-item__button')])</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH_CATEGORY_FIELD</td>
 	<td>//*[contains(@class, 'form-control h-100 input-group-inset input-group-inset-after')]</td>
 	<td></td>

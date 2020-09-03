@@ -6019,18 +6019,8 @@ public class ServiceBuilder {
 		String dataSource = entityElement.attributeValue("data-source");
 		String sessionFactory = entityElement.attributeValue("session-factory");
 		String txManager = entityElement.attributeValue("tx-manager");
-
 		boolean cacheEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("cache-enabled"), true);
-
-		if (_dtdVersion.isSameVersionAs("7.3.0") && !cacheEnabled) {
-			System.out.println(
-				StringBundler.concat(
-					"Warning: unable to disable cache for entity ", entityName,
-					", corresponding support has been removed cause there is ",
-					"no good reason to disable cache for a specific entity"));
-		}
-
 		boolean changeTrackingEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("change-tracking-enabled"),
 			_changeTrackingEnabled);

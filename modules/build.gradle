@@ -311,6 +311,7 @@ gradle.beforeProject {
 				systemProperty "maven.repo.local", System.properties["maven.repo.local"]
 				systemProperty "nodejs.npm.ci.registry", project.findProperty("nodejs.npm.ci.registry")
 				systemProperty "nodejs.npm.ci.sass.binary.site", project.findProperty("nodejs.npm.ci.sass.binary.site")
+				systemProperty "project.templates.bom.version", project.findProperty("project.templates.bom.version")
 				systemProperty "project.templates.test.builds", project.findProperty("project.templates.test.builds")
 				systemProperty "repository.url", System.properties["repository.url"]
 				systemProperty "test.debug.bundle.diffs", System.properties["test.debug.bundle.diffs"]

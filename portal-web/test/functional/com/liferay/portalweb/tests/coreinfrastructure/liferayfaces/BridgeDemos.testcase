@@ -638,6 +638,91 @@ definition {
 	}
 
 	@priority = "5"
+	test JSFFlowsPortletSmoke {
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "jsf flows");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "jsf flows",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-flows");
+
+		Portlet.addPG(portletName = "jsf-flows");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-flows");
+
+		BridgeDemos.viewLibraries(libraryName = "Mojarra,Liferay Faces Alloy,Liferay Faces Bridge Impl,Liferay Faces Bridge Ext,Weld");
+
+		Click(
+			key_buttonName = "Enter Booking Flow",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		AssertElementPresent(
+			key_buttonName = "Exit Booking Flow",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		Click(
+			key_buttonName = "Exit Booking Flow",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		AssertElementPresent(
+			key_buttonName = "Enter Booking Flow",
+			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
+
+		BridgeDemos.findFlight(
+			arrival = "Louisville: Louisville International Standiford Field (SDF)",
+			bookAdditionalTravel = "true",
+			bookingType = "Flight",
+			date = "08/12/2015",
+			departure = "Los Angeles: Los Angeles International Airport (LAX)");
+
+		Select(
+			key_item = "bookingType",
+			locator1 = "BridgeDemos#FLIGHT_SELECT",
+			value1 = "Cruise");
+
+		AssertTextEquals(
+			locator1 = "//fieldset[contains(@id,':bookingTypeFieldSet')]/p",
+			value1 = "'Flight' is currently the only type of booking that is implemented in this demo.");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-flows");
+
+		BridgeDemos.findFlight(
+			arrival = "Louisville: Louisville International Standiford Field (SDF)",
+			bookingType = "Flight",
+			date = "08/12/2015",
+			departure = "Los Angeles: Los Angeles International Airport (LAX)");
+
+		BridgeDemos.bookFlight(
+			accountNumber = "12345678901234567890",
+			addressLine1 = "123 Gilgod Ave",
+			city = "Hollywood",
+			cvv = "123",
+			emailAddress = "John@Adams.org",
+			expirationMonth = "01/10",
+			firstName = "John",
+			lastName = "Adams",
+			paymentType = "Visa",
+			phoneNumber = "1234567890",
+			province = "California",
+			title = "Mr.");
+
+		BridgeDemos.submitSurvey(
+			question1 = "Liferay",
+			question2 = "Cockpit");
+
+		BridgeDemos.viewLibraries(libraryName = "bookingFlowModelBeanInScope=false,cartModelBeanInScope=false,flightSearchModelBeanInScope=false,surveyFlowModelBeanInScope=false");
+	}
+
+	@priority = "5"
 	test JSFHTML5ApplicantPortletSmoke {
 		JSONLayout.addPublicLayout(
 			groupName = "Bridge Demos",

@@ -101,15 +101,16 @@ public class ViewFlatUsersDisplayContextFactory {
 				isShowDeleteButton(userSearchTerms),
 				isShowRestoreButton(userSearchTerms));
 
-		Optional<FilterContributor[]> filtersOptional = getFiltersOptional(
-			httpServletRequest);
+		Optional<FilterContributor[]> filterContributorsOptional =
+			getFilterContributorsOptional(httpServletRequest);
 
-		if (filtersOptional.isPresent()) {
+		if (filterContributorsOptional.isPresent()) {
 			managementToolbarDisplayContext =
 				new FiltersManagementToolbarDisplayContextWrapper(
 					liferayPortletRequest.getHttpServletRequest(),
 					liferayPortletRequest, liferayPortletResponse,
-					managementToolbarDisplayContext, filtersOptional.get());
+					managementToolbarDisplayContext,
+					filterContributorsOptional.get());
 		}
 
 		viewFlatUsersDisplayContext.setManagementToolbarDisplayContext(
@@ -131,8 +132,8 @@ public class ViewFlatUsersDisplayContextFactory {
 		return viewFlatUsersDisplayContext;
 	}
 
-	protected static Optional<FilterContributor[]> getFiltersOptional(
-		HttpServletRequest httpServletRequest) {
+	protected static Optional<FilterContributor[]>
+		getFilterContributorsOptional(HttpServletRequest httpServletRequest) {
 
 		return Optional.ofNullable(
 			(FilterContributor[])httpServletRequest.getAttribute(
@@ -204,11 +205,13 @@ public class ViewFlatUsersDisplayContextFactory {
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		Optional<FilterContributor[]> filtersOptional = getFiltersOptional(
-			httpServletRequest);
+		Optional<FilterContributor[]> filterContributorsOptional =
+			getFilterContributorsOptional(httpServletRequest);
 
-		if (filtersOptional.isPresent()) {
-			for (FilterContributor filterContributor : filtersOptional.get()) {
+		if (filterContributorsOptional.isPresent()) {
+			for (FilterContributor filterContributor :
+					filterContributorsOptional.get()) {
+
 				params.putAll(
 					filterContributor.getSearchParameters(
 						ParamUtil.getString(

@@ -139,7 +139,11 @@ export const createSubTopicQuery = gql`
 	) {
 		createMessageBoardSectionMessageBoardSection(
 			parentMessageBoardSectionId: $parentMessageBoardSectionId
-			messageBoardSection: {description: $description, title: $title}
+			messageBoardSection: {
+				description: $description
+				title: $title
+				viewableBy: ANYONE
+			}
 		) {
 			id
 			title
@@ -155,7 +159,11 @@ export const createTopicQuery = gql`
 	) {
 		createSiteMessageBoardSection(
 			siteKey: $siteKey
-			messageBoardSection: {description: $description, title: $title}
+			messageBoardSection: {
+				description: $description
+				title: $title
+				viewableBy: ANYONE
+			}
 		) {
 			id
 			title

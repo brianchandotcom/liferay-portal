@@ -44,7 +44,7 @@ public class StaticSizeTrieURLPatternMapper<T>
 			new long[2][_maxURLPatternLength][_ASCII_CHARACTER_RANGE];
 
 		for (Map.Entry<String, T> entry : cargos.entrySet()) {
-			put(entry.getValue(), entry.getKey());
+			put(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -179,7 +179,7 @@ public class StaticSizeTrieURLPatternMapper<T>
 	}
 
 	@Override
-	protected void put(T cargo, String urlPattern, boolean wildcard) {
+	protected void put(String urlPattern, T cargo, boolean wildcard) {
 		List<T> cargos = null;
 		long[][][] trieMatrix = null;
 

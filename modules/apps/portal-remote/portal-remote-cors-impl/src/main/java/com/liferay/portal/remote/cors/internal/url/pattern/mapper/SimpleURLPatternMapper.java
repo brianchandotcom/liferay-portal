@@ -28,7 +28,7 @@ public class SimpleURLPatternMapper<T> extends BaseURLPatternMapper<T> {
 
 	public SimpleURLPatternMapper(Map<String, T> cargos) {
 		for (Map.Entry<String, T> entry : cargos.entrySet()) {
-			put(entry.getValue(), entry.getKey());
+			put(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -73,7 +73,7 @@ public class SimpleURLPatternMapper<T> extends BaseURLPatternMapper<T> {
 	}
 
 	@Override
-	protected void put(T cargo, String urlPattern)
+	protected void put(String urlPattern, T cargo)
 		throws IllegalArgumentException {
 
 		if (Validator.isBlank(urlPattern)) {

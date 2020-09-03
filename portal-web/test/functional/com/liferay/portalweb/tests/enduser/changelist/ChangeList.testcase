@@ -157,11 +157,39 @@ definition {
 
 		ChangeList.selectPublication(publicationName = "Publication Name");
 
+		ChangeList.gotoReviewChanges();
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Web Content Article",
+			changeSite = "Guest",
+			changeTitle = "WC WebContent Title",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		ChangeListChanges.viewChangesViaContextStyle(
+			changeCategory = "Web Content Article",
+			changeDescription = "Test Test deleted a Web Content Article in Guest",
+			changeTitle = "WC WebContent Title");
+
 		ChangeList.prepareToPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 
 		ChangeList.selectPublication(publicationName = "Publication 2 Name");
+
+		ChangeList.gotoReviewChanges();
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Web Content Article",
+			changeSite = "Guest",
+			changeTitle = "WC WebContent Title 2 Edit",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		ChangeListChanges.viewChangesViaContextStyle(
+			changeCategory = "Web Content Article",
+			changeDescription = "Test Test added a Web Content Article in Guest",
+			changeTitle = "WC WebContent Title 2 Edit");
 
 		ChangeList.prepareToPublish(publicationName = "Publication 2 Name");
 
@@ -169,7 +197,7 @@ definition {
 			entryTitle = "Test Test modified a Asset",
 			warningMessage = "Modification conflicts with a deletion.");
 
-		ChangeList.GotoViewDiffInConflictingChanges(entryTitle = "Test Test modified a Asset");
+		ChangeList.gotoViewDiffInConflictingChanges(entryTitle = "Test Test modified a Asset");
 
 		ChangeList.viewChangesDiff(
 			columnName = "Title",

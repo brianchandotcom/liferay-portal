@@ -311,7 +311,9 @@ definition {
 			subTopicDescription = "SubTopicB Description",
 			subTopicName = "SubTopicB");
 
-		Questions.changeTopic(gotoParentTopic = "Questions Test Category");
+		Questions.changeTopic(
+			gotoParentTopic = "Questions Test Category",
+			multipleSubTopics = "true");
 
 		Questions.changeTopic(
 			parentTopicName = "Questions Test Category",

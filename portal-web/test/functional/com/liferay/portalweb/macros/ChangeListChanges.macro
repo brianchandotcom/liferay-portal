@@ -32,4 +32,24 @@ definition {
 			value1 = "${changeType}");
 	}
 
+	macro viewChangesViaContextStyle {
+		ChangeListChanges.changeDisplayStyle(displayStyle = "Context");
+
+		Pause(locator1 = "3000");
+
+		key_changeCategory = "${changeCategory}";
+		key_changeDescription = "${changeDescription}";
+		key_changeTitle = "${changeTitle}";
+
+		Click.javaScriptClick(locator1 = "ChangeListChanges#CONTEXT_CHANGE_CATEGORY_RADIO");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ChangeListChanges#CONTEXT_CHANGE_TITLE",
+			value1 = "${changeTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ChangeListChanges#CONTEXT_CHANGE_DESCRIPTION",
+			value1 = "${changeDescription}");
+	}
+
 }

@@ -272,7 +272,7 @@
 						{
 							"defaultValue": "#0b5fff",
 							"editorType": "ColorPicker",
-							"label": "button-primary-background-color",
+							"label": "background-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -285,7 +285,7 @@
 						{
 							"defaultValue": "#0b5fff",
 							"editorType": "ColorPicker",
-							"label": "button-primary-border-color",
+							"label": "border-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -298,7 +298,7 @@
 						{
 							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
-							"label": "button-primary-color",
+							"label": "color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -311,7 +311,7 @@
 						{
 							"defaultValue": "#0053f0",
 							"editorType": "ColorPicker",
-							"label": "button-primary-hover-background-color",
+							"label": "hover-background-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -324,7 +324,7 @@
 						{
 							"defaultValue": "transparent",
 							"editorType": "ColorPicker",
-							"label": "button-primary-hover-border-color",
+							"label": "hover-border-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -337,7 +337,7 @@
 						{
 							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
-							"label": "button-primary-hover-color",
+							"label": "hover-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -356,7 +356,7 @@
 						{
 							"defaultValue": "#0b5fff",
 							"editorType": "ColorPicker",
-							"label": "button-outline-primary-border-color",
+							"label": "border-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -369,7 +369,7 @@
 						{
 							"defaultValue": "#0b5fff",
 							"editorType": "ColorPicker",
-							"label": "button-outline-primary-color",
+							"label": "color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -382,7 +382,7 @@
 						{
 							"defaultValue": "#f0f5ff",
 							"editorType": "ColorPicker",
-							"label": "button-outline-primary-hover-background-color",
+							"label": "hover-background-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -395,7 +395,7 @@
 						{
 							"defaultValue": "#0b5fff",
 							"editorType": "ColorPicker",
-							"label": "button-outline-primary-hover-border-color",
+							"label": "hover-border-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -408,7 +408,7 @@
 						{
 							"defaultValue": "#0b5fff",
 							"editorType": "ColorPicker",
-							"label": "button-outline-primary-hover-color",
+							"label": "hover-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -427,7 +427,7 @@
 						{
 							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
-							"label": "button-secondary-background-color",
+							"label": "background-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -440,7 +440,7 @@
 						{
 							"defaultValue": "#cdced9",
 							"editorType": "ColorPicker",
-							"label": "button-secondary-border-color",
+							"label": "border-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -453,7 +453,7 @@
 						{
 							"defaultValue": "#6b6c7e",
 							"editorType": "ColorPicker",
-							"label": "button-secondary-color",
+							"label": "color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -466,7 +466,7 @@
 						{
 							"defaultValue": "#f7f8f9",
 							"editorType": "ColorPicker",
-							"label": "button-secondary-hover-background-color",
+							"label": "hover-background-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -479,7 +479,7 @@
 						{
 							"defaultValue": "#cdced9",
 							"editorType": "ColorPicker",
-							"label": "button-secondary-hover-border-color",
+							"label": "hover-border-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -492,7 +492,7 @@
 						{
 							"defaultValue": "#272833",
 							"editorType": "ColorPicker",
-							"label": "button-secondary-hover-color",
+							"label": "hover-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -511,7 +511,7 @@
 						{
 							"defaultValue": "#cdced9",
 							"editorType": "ColorPicker",
-							"label": "button-outline-secondary-border-color",
+							"label": "border-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -524,7 +524,7 @@
 						{
 							"defaultValue": "rgba(39, 40, 51, 0.03)",
 							"editorType": "ColorPicker",
-							"label": "button-outline-secondary-hover-background-color",
+							"label": "hover-background-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -537,7 +537,7 @@
 						{
 							"defaultValue": "transparent",
 							"editorType": "ColorPicker",
-							"label": "button-outline-secondary-hover-border-color",
+							"label": "hover-border-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -550,7 +550,7 @@
 						{
 							"defaultValue": "#272833",
 							"editorType": "ColorPicker",
-							"label": "button-outline-secondary-hover-color",
+							"label": "hover-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -569,7 +569,7 @@
 						{
 							"defaultValue": "#0b5fff",
 							"editorType": "ColorPicker",
-							"label": "button-link-color",
+							"label": "color",
 							"mappings": [
 								{
 									"type": "cssVariable",
@@ -582,7 +582,7 @@
 						{
 							"defaultValue": "#004ad7",
 							"editorType": "ColorPicker",
-							"label": "button-link-hover-color",
+							"label": "hover-color",
 							"mappings": [
 								{
 									"type": "cssVariable",

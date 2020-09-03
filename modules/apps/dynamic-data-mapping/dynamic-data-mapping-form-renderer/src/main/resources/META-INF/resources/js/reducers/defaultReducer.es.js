@@ -34,7 +34,10 @@ export default (state, action) => {
 							let value;
 
 							if (localizedValue) {
-								if (localizedValue[editingLanguageId]) {
+								if (
+									localizedValue[editingLanguageId] !==
+									undefined
+								) {
 									value = localizedValue[editingLanguageId];
 								}
 								else if (localizedValue[defaultLanguageId]) {

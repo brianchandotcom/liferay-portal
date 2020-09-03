@@ -44,9 +44,10 @@ const Text = ({
 
 	useEffect(() => {
 		if (prevEditingLanguageId !== editingLanguageId && localizable) {
-			const newValue = localizedValue[editingLanguageId]
-				? localizedValue[editingLanguageId]
-				: localizedValue[defaultLanguageId];
+			const newValue =
+				localizedValue[editingLanguageId] !== undefined
+					? localizedValue[editingLanguageId]
+					: localizedValue[defaultLanguageId];
 			setValue(newValue);
 		}
 	}, [

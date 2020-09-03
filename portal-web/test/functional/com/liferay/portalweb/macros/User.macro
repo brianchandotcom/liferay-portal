@@ -1291,10 +1291,12 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#VOCABULARY_LABEL");
 
 		AssertElementPresent.assertVisible(
+			key_vocabularyName = "${vocabularyName}",
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_CATEGORY_SELECT",
 			value1 = "Select");
 
 		AssertClick(
+			key_vocabularyName = "${vocabularyName}",
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_CATEGORY_SELECT",
 			value1 = "Select");
 

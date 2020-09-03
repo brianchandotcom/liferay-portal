@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
@@ -250,14 +251,16 @@ function TopperContent({
 			</TopperLabel>
 
 			<div className="page-editor__topper__content" ref={targetRef}>
-				{React.cloneElement(children, {
-					data: notDroppableMessage
-						? {
-								'data-not-droppable-message': notDroppableMessage,
-						  }
-						: null,
-					withinTopper: true,
-				})}
+				<TopperErrorBoundary>
+					{React.cloneElement(children, {
+						data: notDroppableMessage
+							? {
+									'data-not-droppable-message': notDroppableMessage,
+							  }
+							: null,
+						withinTopper: true,
+					})}
+				</TopperErrorBoundary>
 			</div>
 		</div>
 	);
@@ -268,6 +271,39 @@ TopperContent.propTypes = {
 	itemElement: PropTypes.object,
 	layoutData: LayoutDataPropTypes.isRequired,
 };
+
+class TopperErrorBoundary extends React.Component {
+	static getDerivedStateFromError(error) {
+		if (process.env.NODE_ENV === 'development') {
+			console.error(error);
+		}
+
+		return {error};
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			error: null,
+		};
+	}
+
+	render() {
+		return this.state.error ? (
+			<ClayAlert
+				displayType="danger"
+				title={Liferay.Language.get('error')}
+			>
+				{Liferay.Language.get(
+					'an-unexpected-error-occurred-while-rendering-this-item'
+				)}
+			</ClayAlert>
+		) : (
+			this.props.children
+		);
+	}
+}
 
 function TopperLabel({children, isActive, item, itemElement}) {
 	const [isInset, setIsInset] = useState(false);

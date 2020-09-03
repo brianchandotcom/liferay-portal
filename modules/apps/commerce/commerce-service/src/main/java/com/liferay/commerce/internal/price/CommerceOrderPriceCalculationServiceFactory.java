@@ -18,14 +18,12 @@ import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
-import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -52,18 +50,8 @@ public class CommerceOrderPriceCalculationServiceFactory
 		ServiceRegistration<CommerceOrderPriceCalculation>
 			serviceRegistration) {
 
-		if ((_commercePricingConfiguration == null) ||
-			Objects.equals(
-				_commercePricingConfiguration.commercePricingCalculationKey(),
-				CommercePricingConstants.VERSION_2_0)) {
-
-			return new CommerceOrderPriceCalculationV2Impl(
-				_commerceChannelLocalService, _commerceDiscountCalculationV2,
-				_commerceMoneyFactory, _commerceTaxCalculation);
-		}
-
-		return new CommerceOrderPriceCalculationImpl(
-			_commerceChannelLocalService, _commerceDiscountCalculation,
+		return new CommerceOrderPriceCalculationV2Impl(
+			_commerceChannelLocalService, _commerceDiscountCalculationV2,
 			_commerceMoneyFactory, _commerceTaxCalculation);
 	}
 
@@ -93,9 +81,6 @@ public class CommerceOrderPriceCalculationServiceFactory
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference(target = "(commerce.discount.calculation.key=v1.0)")
-	private CommerceDiscountCalculation _commerceDiscountCalculation;
 
 	@Reference(target = "(commerce.discount.calculation.key=v2.0)")
 	private CommerceDiscountCalculation _commerceDiscountCalculationV2;

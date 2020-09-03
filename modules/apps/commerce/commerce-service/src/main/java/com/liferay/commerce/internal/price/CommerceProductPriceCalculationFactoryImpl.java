@@ -25,11 +25,9 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
-import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.pricing.modifier.CommercePriceModifierHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -37,7 +35,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Activate;
@@ -63,31 +60,15 @@ public class CommerceProductPriceCalculationFactoryImpl
 	public CommerceProductPriceCalculation
 		getCommerceProductPriceCalculation() {
 
-		if ((_commercePricingConfiguration == null) ||
-			Objects.equals(
-				_commercePricingConfiguration.commercePricingCalculationKey(),
-				CommercePricingConstants.VERSION_2_0)) {
-
-			return new CommerceProductPriceCalculationV2Impl(
-				_commerceChannelLocalService, _commerceCurrencyLocalService,
-				_commerceDiscountCalculationV2, _commerceMoneyFactory,
-				_commercePriceEntryLocalService, _commercePriceListLocalService,
-				_commercePriceModifierHelper,
-				_commerceTierPriceEntryLocalService, _commerceTaxCalculation,
-				_configurationProvider, _cpDefinitionOptionRelLocalService,
-				_cpInstanceLocalService,
-				_commerceDiscountApplicationStrategyMap,
-				_commercePriceListDiscoveryMap);
-		}
-
-		return new CommerceProductPriceCalculationImpl(
-			_commerceCatalogLocalService, _commerceChannelLocalService,
-			_commerceCurrencyLocalService, _commerceDiscountCalculation,
-			_commerceMoneyFactory, _commercePriceEntryLocalService,
-			_commercePriceListDiscoveryByHierarchy,
-			_commercePriceListLocalService, _commerceTierPriceEntryLocalService,
-			_commerceTaxCalculation, _cpDefinitionOptionRelLocalService,
-			_cpInstanceLocalService);
+		return new CommerceProductPriceCalculationV2Impl(
+			_commerceChannelLocalService, _commerceCurrencyLocalService,
+			_commerceDiscountCalculationV2, _commerceMoneyFactory,
+			_commercePriceEntryLocalService, _commercePriceListLocalService,
+			_commercePriceModifierHelper, _commerceTierPriceEntryLocalService,
+			_commerceTaxCalculation, _configurationProvider,
+			_cpDefinitionOptionRelLocalService, _cpInstanceLocalService,
+			_commerceDiscountApplicationStrategyMap,
+			_commercePriceListDiscoveryMap);
 	}
 
 	public void unsetCommerceDiscountApplicationStrategy(
@@ -152,9 +133,6 @@ public class CommerceProductPriceCalculationFactoryImpl
 	}
 
 	@Reference
-	private CommerceCatalogLocalService _commerceCatalogLocalService;
-
-	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
@@ -162,9 +140,6 @@ public class CommerceProductPriceCalculationFactoryImpl
 
 	private final Map<String, CommerceDiscountApplicationStrategy>
 		_commerceDiscountApplicationStrategyMap = new ConcurrentHashMap<>();
-
-	@Reference(target = "(commerce.discount.calculation.key=v1.0)")
-	private CommerceDiscountCalculation _commerceDiscountCalculation;
 
 	@Reference(target = "(commerce.discount.calculation.key=v2.0)")
 	private CommerceDiscountCalculation _commerceDiscountCalculationV2;
@@ -174,11 +149,6 @@ public class CommerceProductPriceCalculationFactoryImpl
 
 	@Reference
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
-
-	@Reference(
-		target = "(commerce.price.list.discovery.key=" + CommercePricingConstants.ORDER_BY_HIERARCHY + ")"
-	)
-	private CommercePriceListDiscovery _commercePriceListDiscoveryByHierarchy;
 
 	private final Map<String, CommercePriceListDiscovery>
 		_commercePriceListDiscoveryMap = new ConcurrentHashMap<>();

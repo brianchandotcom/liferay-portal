@@ -210,6 +210,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_CREATE_SEGMENT</td>
+	<td>//button[contains(.,'New Segment')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_DEFAULT_BUTTON_NAME</td>
 	<td>//div[contains(@class,'page-editor__toolbar-experience')]/button[contains(.,'Default')]</td>
 	<td></td>

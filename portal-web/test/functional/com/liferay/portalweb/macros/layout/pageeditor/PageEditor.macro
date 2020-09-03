@@ -918,6 +918,18 @@ definition {
 
 		Click(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
 
+		Click(locator1 = "PageEditor#EXPERIENCE_CREATE_SEGMENT");
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+
+		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressContains Test 2");
+
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(PropertyField = "liferay2");
+
+		Button.clickSave();
+
 		Type(
 			locator1 = "PageEditor#EXPERIENCE_NAME",
 			value1 = "${key_experienceName}");

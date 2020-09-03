@@ -69,17 +69,13 @@ public class CommerceProductUpgradeStepRegistrator
 			_log.info("COMMERCE PRODUCT UPGRADE STEP REGISTRATOR STARTED");
 		}
 
-		registry.register(
-			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
-			new DummyUpgradeProcess());
+		registry.register("1.0.0", "1.1.0", new DummyUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_1_0, _SCHEMA_VERSION_1_2_0,
-			new ProductSubscriptionUpgradeProcess());
+			"1.1.0", "1.2.0", new ProductSubscriptionUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_2_0, _SCHEMA_VERSION_1_3_0,
-			new CPAttachmentFileEntryUpgradeProcess(),
+			"1.2.0", "1.3.0", new CPAttachmentFileEntryUpgradeProcess(),
 			new CPDefinitionLinkUpgradeProcess(),
 			new CPDefinitionOptionRelUpgradeProcess(),
 			new CPDefinitionUpgradeProcess(), new CProductUpgradeProcess(),
@@ -87,153 +83,104 @@ public class CommerceProductUpgradeStepRegistrator
 			new CPInstanceUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_3_0, _SCHEMA_VERSION_1_4_0,
+			"1.3.0", "1.4.0",
 			new CPDefinitionSpecificationOptionValueUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_4_0, _SCHEMA_VERSION_1_5_0,
+			"1.4.0", "1.5.0",
 			new CProductExternalReferenceCodeUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_5_0, _SCHEMA_VERSION_1_6_0,
+			"1.5.0", "1.6.0",
 			new CommerceCatalogUpgradeProcess(
 				_classNameLocalService, _groupLocalService),
 			new CPDefinitionTrashEntriesUpgradeProcess(_classNameLocalService));
 
 		registry.register(
-			_SCHEMA_VERSION_1_6_0, _SCHEMA_VERSION_1_7_0,
-			new CPDefinitionFiltersUpgradeProcess());
+			"1.6.0", "1.7.0", new CPDefinitionFiltersUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_7_0, _SCHEMA_VERSION_1_8_0,
+			"1.7.0", "1.8.0",
 			new com.liferay.commerce.product.internal.upgrade.v1_8_0.
 				CPAttachmentFileEntryUpgradeProcess(_classNameLocalService));
 
 		registry.register(
-			_SCHEMA_VERSION_1_8_0, _SCHEMA_VERSION_1_9_0,
+			"1.8.0", "1.9.0",
 			new com.liferay.commerce.product.internal.upgrade.v1_9_0.
 				CPDefinitionOptionRelUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_9_0, _SCHEMA_VERSION_1_10_0,
+			"1.9.0", "1.10.0",
 			new com.liferay.commerce.product.internal.upgrade.v1_10_0.
 				CPAttachmentFileEntryUpgradeProcess(_jsonFactory),
 			new com.liferay.commerce.product.internal.upgrade.v1_10_0.
 				CPInstanceUpgradeProcess(_jsonFactory));
 
 		registry.register(
-			_SCHEMA_VERSION_1_10_0, _SCHEMA_VERSION_1_10_1,
+			"1.10.0", "1.10.1",
 			new CommerceSiteTypeUpgradeProcess(
 				_classNameLocalService, _groupLocalService,
 				_configurationProvider, _settingsFactory));
 
 		registry.register(
-			_SCHEMA_VERSION_1_10_1, _SCHEMA_VERSION_1_11_0,
+			"1.10.1", "1.11.0",
 			new CPAttachmentFileEntryGroupUpgradeProcess(
 				_assetCategoryLocalService, _classNameLocalService));
 
 		registry.register(
-			_SCHEMA_VERSION_1_11_0, _SCHEMA_VERSION_1_11_1,
+			"1.11.0", "1.11.1",
 			new CPDisplayLayoutUpgradeProcess(_layoutLocalService));
 
 		registry.register(
-			_SCHEMA_VERSION_1_11_1, _SCHEMA_VERSION_1_11_2,
+			"1.11.1", "1.11.2",
 			new com.liferay.commerce.product.internal.upgrade.v1_11_2.
 				CPDefinitionLinkUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_11_2, _SCHEMA_VERSION_2_0_0,
+			"1.11.2", "2.0.0",
 			new CPInstanceOptionValueRelUpgradeProcess(
 				_jsonFactory, _portalUUID));
 
 		registry.register(
-			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_1_0,
-			new CommerceCatalogSystemUpgradeProcess(),
+			"2.0.0", "2.1.0", new CommerceCatalogSystemUpgradeProcess(),
 			new SubscriptionUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_2_1_0, _SCHEMA_VERSION_2_2_0,
-			new CPDefinitionOptionValueRelUpgradeProcess());
+			"2.1.0", "2.2.0", new CPDefinitionOptionValueRelUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_2_2_0, _SCHEMA_VERSION_2_2_1,
+			"2.2.0", "2.2.1",
 			new com.liferay.commerce.product.internal.upgrade.v2_2_1.
 				CPDefinitionOptionValueRelUpgradeProcess());
 
-		registry.register(
-			_SCHEMA_VERSION_2_2_1, _SCHEMA_VERSION_2_2_2,
-			new DummyUpgradeProcess());
+		registry.register("2.2.1", "2.2.2", new DummyUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_2_2_2, _SCHEMA_VERSION_2_3_0,
-			new CommerceChannelUpgradeProcess());
+			"2.2.2", "2.3.0", new CommerceChannelUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_2_3_0, _SCHEMA_VERSION_2_4_0,
+			"2.3.0", "2.4.0",
 			new com.liferay.commerce.product.internal.upgrade.v2_4_0.
 				CPDefinitionOptionValueRelUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_2_4_0, _SCHEMA_VERSION_2_5_0,
+			"2.4.0", "2.5.0",
 			new FriendlyURLEntryUpgradeProcess(_groupLocalService));
 
 		registry.register(
-			_SCHEMA_VERSION_2_5_0, _SCHEMA_VERSION_2_6_0,
+			"2.5.0", "2.6.0",
 			new com.liferay.commerce.product.internal.upgrade.v2_6_0.
 				CPInstanceUpgradeProcess());
+
+		registry.register(
+			"2.6.0", "3.0.0",
+			new com.liferay.commerce.product.internal.upgrade.v3_0_0.
+				CPFriendlyURLEntryUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE PRODUCT UPGRADE STEP REGISTRATOR FINISHED");
 		}
 	}
-
-	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
-
-	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
-
-	private static final String _SCHEMA_VERSION_1_2_0 = "1.2.0";
-
-	private static final String _SCHEMA_VERSION_1_3_0 = "1.3.0";
-
-	private static final String _SCHEMA_VERSION_1_4_0 = "1.4.0";
-
-	private static final String _SCHEMA_VERSION_1_5_0 = "1.5.0";
-
-	private static final String _SCHEMA_VERSION_1_6_0 = "1.6.0";
-
-	private static final String _SCHEMA_VERSION_1_7_0 = "1.7.0";
-
-	private static final String _SCHEMA_VERSION_1_8_0 = "1.8.0";
-
-	private static final String _SCHEMA_VERSION_1_9_0 = "1.9.0";
-
-	private static final String _SCHEMA_VERSION_1_10_0 = "1.10.0";
-
-	private static final String _SCHEMA_VERSION_1_10_1 = "1.10.1";
-
-	private static final String _SCHEMA_VERSION_1_11_0 = "1.11.0";
-
-	private static final String _SCHEMA_VERSION_1_11_1 = "1.11.1";
-
-	private static final String _SCHEMA_VERSION_1_11_2 = "1.11.2";
-
-	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
-
-	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
-
-	private static final String _SCHEMA_VERSION_2_2_0 = "2.2.0";
-
-	private static final String _SCHEMA_VERSION_2_2_1 = "2.2.1";
-
-	private static final String _SCHEMA_VERSION_2_2_2 = "2.2.2";
-
-	private static final String _SCHEMA_VERSION_2_3_0 = "2.3.0";
-
-	private static final String _SCHEMA_VERSION_2_4_0 = "2.4.0";
-
-	private static final String _SCHEMA_VERSION_2_5_0 = "2.5.0";
-
-	private static final String _SCHEMA_VERSION_2_6_0 = "2.6.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceProductUpgradeStepRegistrator.class);

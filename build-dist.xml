@@ -2625,7 +2625,7 @@ plugins.includes=</echo>
 					todir="tools/zip_tmpl/license"
 				/>
 				<copy
-					file="readme.markdown"
+					file="README.markdown"
 					todir="tools/zip_tmpl"
 				/>
 

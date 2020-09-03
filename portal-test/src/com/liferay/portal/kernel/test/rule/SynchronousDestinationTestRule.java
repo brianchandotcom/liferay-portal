@@ -138,6 +138,16 @@ public class SynchronousDestinationTestRule
 				DestinationNames.BACKGROUND_TASK);
 			Filter backgroundTaskStatusFilter = _registerDestinationFilter(
 				DestinationNames.BACKGROUND_TASK_STATUS);
+			Filter commerceOrderFilter = _registerDestinationFilter(
+				"liferay/order_status");
+			Filter commercePaymentFilter = _registerDestinationFilter(
+				"liferay/payment_status");
+			Filter commerceShipmentFilter = _registerDestinationFilter(
+				"liferay/shipment_status");
+			Filter commerceStockFilter = _registerDestinationFilter(
+				"liferay/stock_quantity");
+			Filter commerceSubscriptionFilter = _registerDestinationFilter(
+				"liferay/subscription_status");
 			Filter ddmStructureReindexFilter = _registerDestinationFilter(
 				"liferay/ddm_structure_reindex");
 			Filter kaleoGraphWalkerFilter = _registerDestinationFilter(
@@ -155,10 +165,12 @@ public class SynchronousDestinationTestRule
 
 			serviceDependencyManager.registerDependencies(
 				auditFilter, asyncFilter, backgroundTaskFilter,
-				backgroundTaskStatusFilter, ddmStructureReindexFilter,
-				kaleoGraphWalkerFilter, mailFilter, pdfProcessorFilter,
-				rawMetaDataProcessorFilter, segmentsEntryReindexFilter,
-				subscrpitionSenderFilter);
+				backgroundTaskStatusFilter, commerceOrderFilter,
+				commercePaymentFilter, commerceShipmentFilter,
+				commerceStockFilter, commerceSubscriptionFilter,
+				ddmStructureReindexFilter, kaleoGraphWalkerFilter, mailFilter,
+				pdfProcessorFilter, rawMetaDataProcessorFilter,
+				segmentsEntryReindexFilter, subscrpitionSenderFilter);
 
 			serviceDependencyManager.waitForDependencies();
 
@@ -187,6 +199,11 @@ public class SynchronousDestinationTestRule
 			replaceDestination("liferay/report_request");
 			replaceDestination("liferay/reports_admin");
 			replaceDestination("liferay/segments_entry_reindex");
+			replaceDestination("liferay/order_status");
+			replaceDestination("liferay/payment_status");
+			replaceDestination("liferay/shipment_status");
+			replaceDestination("liferay/stock_quantity");
+			replaceDestination("liferay/subscription_status");
 
 			if (_sync != null) {
 				for (String name : _sync.destinationNames()) {

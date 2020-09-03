@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.health.status.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
 import com.liferay.commerce.health.status.CommerceHealthHttpStatusRegistry;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_HEALTH_CHECK,
 		"mvc.command.name=fixCommerceHealthStatusIssue"
 	},
 	service = MVCActionCommand.class

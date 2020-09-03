@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal;
+package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import com.liferay.portal.kernel.util.Validator;
 
@@ -20,19 +20,19 @@ import com.liferay.portal.kernel.util.Validator;
  * @author Carlos Sierra Andrés
  * @author Arthur Chan
  */
-public abstract class BaseTrieURLToCORSSupportMapper
-	extends BaseURLToCORSSupportMapper {
+public abstract class BaseTrieURLPatternMapper<T>
+	extends BaseURLPatternMapper<T> {
 
 	@Override
-	public CORSSupport get(String urlPath) {
+	public T get(String urlPath) {
 		try {
-			CORSSupport corsSupport = getWildcardCORSSupport(urlPath);
+			T value = getWildcardValue(urlPath);
 
-			if (corsSupport != null) {
-				return corsSupport;
+			if (value != null) {
+				return value;
 			}
 
-			return getExtensionCORSSupport(urlPath);
+			return getExtensionValue(urlPath);
 		}
 		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 			throw new IllegalArgumentException(
@@ -41,16 +41,16 @@ public abstract class BaseTrieURLToCORSSupportMapper
 		}
 	}
 
-	protected abstract CORSSupport getExtensionCORSSupport(String urlPath);
+	protected abstract T getExtensionValue(String urlPath);
 
-	protected abstract CORSSupport getWildcardCORSSupport(String urlPath);
+	protected abstract T getWildcardValue(String urlPath);
 
 	@Override
-	protected void put(CORSSupport corsSupport, String urlPattern)
+	protected void put(T value, String urlPattern)
 		throws IllegalArgumentException {
 
-		if (corsSupport == null) {
-			throw new IllegalArgumentException("CORS support is null");
+		if (value == null) {
+			throw new IllegalArgumentException("Value is null");
 		}
 
 		if (Validator.isBlank(urlPattern)) {
@@ -59,18 +59,18 @@ public abstract class BaseTrieURLToCORSSupportMapper
 
 		try {
 			if (isWildcardURLPattern(urlPattern)) {
-				put(corsSupport, urlPattern, true);
+				put(value, urlPattern, true);
 
 				return;
 			}
 
 			if (isExtensionURLPattern(urlPattern)) {
-				put(corsSupport, urlPattern, false);
+				put(value, urlPattern, false);
 
 				return;
 			}
 
-			put(corsSupport, urlPattern, true);
+			put(value, urlPattern, true);
 		}
 		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 			throw new IllegalArgumentException(
@@ -79,8 +79,7 @@ public abstract class BaseTrieURLToCORSSupportMapper
 		}
 	}
 
-	protected abstract void put(
-		CORSSupport corsSupport, String urlPattern, boolean wildcard);
+	protected abstract void put(T value, String urlPattern, boolean wildcard);
 
 	protected static final byte ASCII_CHARACTER_RANGE = 96;
 

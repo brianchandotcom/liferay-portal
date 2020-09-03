@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal;
+package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -20,8 +20,7 @@ import java.net.URISyntaxException;
 /**
  * @author Carlos Sierra Andrés
  */
-public abstract class BaseURLToCORSSupportMapper
-	implements URLToCORSSupportMapper {
+public abstract class BaseURLPatternMapper<T> implements URLPatternMapper<T> {
 
 	protected boolean isExtensionURLPattern(String urlPattern) {
 
@@ -76,7 +75,7 @@ public abstract class BaseURLToCORSSupportMapper
 		return true;
 	}
 
-	protected abstract void put(CORSSupport corsSupport, String urlPattern)
+	protected abstract void put(T value, String urlPattern)
 		throws IllegalArgumentException;
 
 }

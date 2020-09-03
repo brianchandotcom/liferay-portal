@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal;
+package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import java.util.Map;
 
@@ -20,16 +20,14 @@ import java.util.Map;
  * @author Carlos Sierra Andrés
  * @author Arthur Chan
  */
-public class URLToCORSSupportMapperFactory {
+public class URLPatternMapperFactory {
 
-	public static URLToCORSSupportMapper create(
-		Map<String, CORSSupport> corsSupports) {
-
-		if (corsSupports.size() > 64) {
-			return new DynamicSizeTrieURLToCORSSupportMapper(corsSupports);
+	public static <T> URLPatternMapper<T> create(Map<String, T> values) {
+		if (values.size() > 64) {
+			return new DynamicSizeTrieURLPatternMapper<>(values);
 		}
 
-		return new StaticSizeTrieURLToCORSSupportMapper(corsSupports);
+		return new StaticSizeTrieURLPatternMapper<>(values);
 	}
 
 }

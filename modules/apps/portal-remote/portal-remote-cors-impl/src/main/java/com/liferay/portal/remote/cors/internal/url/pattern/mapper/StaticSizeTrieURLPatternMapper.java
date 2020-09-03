@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal;
+package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +22,13 @@ import java.util.Map;
  * @author Arthur Chan
  * @author Carlos Sierra Andrés
  */
-public class StaticSizeTrieURLToCORSSupportMapper
-	extends BaseTrieURLToCORSSupportMapper {
+public class StaticSizeTrieURLPatternMapper<T>
+	extends BaseTrieURLPatternMapper<T> {
 
-	public StaticSizeTrieURLToCORSSupportMapper(
-		Map<String, CORSSupport> corsSupports) {
-
+	public StaticSizeTrieURLPatternMapper(Map<String, T> values) {
 		int maxURLPatternLength = 0;
 
-		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
+		for (Map.Entry<String, T> entry : values.entrySet()) {
 			String urlPattern = entry.getKey();
 
 			if (urlPattern.length() > maxURLPatternLength) {
@@ -45,13 +43,13 @@ public class StaticSizeTrieURLToCORSSupportMapper
 		_wildCardTrieMatrix =
 			new long[2][_maxURLPatternLength][ASCII_CHARACTER_RANGE];
 
-		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
+		for (Map.Entry<String, T> entry : values.entrySet()) {
 			put(entry.getValue(), entry.getKey());
 		}
 	}
 
 	@Override
-	protected CORSSupport getExtensionCORSSupport(String urlPath) {
+	protected T getExtensionValue(String urlPath) {
 		long currentBitmask = _BITMASK;
 		int maxRow = Math.min(urlPath.length(), _maxURLPatternLength - 1);
 
@@ -76,8 +74,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 					_extensionTrieMatrix[1][row + 1][_INDEX_STAR];
 
 				if (bitmask != 0) {
-					return _extensionCORSSupports.get(
-						_getFirstSetBitIndex(bitmask));
+					return _extensionValues.get(_getFirstSetBitIndex(bitmask));
 				}
 
 				break;
@@ -88,7 +85,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 	}
 
 	@Override
-	protected CORSSupport getWildcardCORSSupport(String urlPath) {
+	protected T getWildcardValue(String urlPath) {
 		boolean exact = false;
 		boolean wildcard = false;
 
@@ -141,8 +138,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 				return null;
 			}
 
-			return _wildcardCORSSupports.get(
-				_getFirstSetBitIndex(bestMatchBitmask));
+			return _wildcardValues.get(_getFirstSetBitIndex(bestMatchBitmask));
 		}
 
 		if (exact) {
@@ -150,7 +146,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 				currentBitmask & _wildCardTrieMatrix[1][row - 1][column];
 
 			if (bitmask != 0) {
-				return _wildcardCORSSupports.get(_getFirstSetBitIndex(bitmask));
+				return _wildcardValues.get(_getFirstSetBitIndex(bitmask));
 			}
 
 			return null;
@@ -161,7 +157,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 				currentBitmask & _wildCardTrieMatrix[1][row - 1][column];
 
 			if (bitmask != 0) {
-				return _wildcardCORSSupports.get(_getFirstSetBitIndex(bitmask));
+				return _wildcardValues.get(_getFirstSetBitIndex(bitmask));
 			}
 		}
 
@@ -172,27 +168,23 @@ public class StaticSizeTrieURLToCORSSupportMapper
 		extraBitmask &= _wildCardTrieMatrix[1][row + 1][_INDEX_STAR];
 
 		if (extraBitmask != 0) {
-			return _wildcardCORSSupports.get(
-				_getFirstSetBitIndex(extraBitmask));
+			return _wildcardValues.get(_getFirstSetBitIndex(extraBitmask));
 		}
 
-		return _wildcardCORSSupports.get(
-			_getFirstSetBitIndex(bestMatchBitmask));
+		return _wildcardValues.get(_getFirstSetBitIndex(bestMatchBitmask));
 	}
 
 	@Override
-	protected void put(
-		CORSSupport corsSupport, String urlPattern, boolean wildcard) {
-
-		List<CORSSupport> corsSupports = null;
+	protected void put(T value, String urlPattern, boolean wildcard) {
+		List<T> values = null;
 		long[][][] trieMatrix = null;
 
 		if (wildcard) {
-			corsSupports = _wildcardCORSSupports;
+			values = _wildcardValues;
 			trieMatrix = _wildCardTrieMatrix;
 		}
 		else {
-			corsSupports = _extensionCORSSupports;
+			values = _extensionValues;
 			trieMatrix = _extensionTrieMatrix;
 		}
 
@@ -206,7 +198,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 		int index = _getExactIndex(urlPattern, trieMatrix);
 
 		if (index > -1) {
-			corsSupports.add(index, corsSupport);
+			values.add(index, value);
 
 			return;
 		}
@@ -239,7 +231,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 
 		trieMatrix[1][row - 1][column] |= bitmask;
 
-		corsSupports.add(index, corsSupport);
+		values.add(index, value);
 	}
 
 	private int _getExactIndex(String urlPath, long[][][] trieMatrix) {
@@ -334,14 +326,12 @@ public class StaticSizeTrieURLToCORSSupportMapper
 
 	private static final int _INDEX_STAR = '*' - ASCII_PRINTABLE_OFFSET;
 
-	private List<CORSSupport> _extensionCORSSupports = new ArrayList<>(
-		Long.SIZE);
 	private final long[][][] _extensionTrieMatrix;
 	private int _extensionURLPatternsCount;
+	private List<T> _extensionValues = new ArrayList<>(Long.SIZE);
 	private final int _maxURLPatternLength;
-	private List<CORSSupport> _wildcardCORSSupports = new ArrayList<>(
-		Long.SIZE);
 	private final long[][][] _wildCardTrieMatrix;
 	private int _wildcardURLPatternCount;
+	private List<T> _wildcardValues = new ArrayList<>(Long.SIZE);
 
 }

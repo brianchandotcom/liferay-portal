@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal;
+package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,22 +22,20 @@ import java.util.Map;
  * @author Arthur Chan
  * @author Carlos Sierra Andrés
  */
-public class DynamicSizeTrieURLToCORSSupportMapper
-	extends BaseTrieURLToCORSSupportMapper {
+public class DynamicSizeTrieURLPatternMapper<T>
+	extends BaseTrieURLPatternMapper<T> {
 
-	public DynamicSizeTrieURLToCORSSupportMapper(
-		Map<String, CORSSupport> corsSupports) {
-
+	public DynamicSizeTrieURLPatternMapper(Map<String, T> values) {
 		_extensionTrieNode = _trieNodeHeap.nextAvailableTrieNode();
 		_wildCardTrieNode = _trieNodeHeap.nextAvailableTrieNode();
 
-		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
+		for (Map.Entry<String, T> entry : values.entrySet()) {
 			put(entry.getValue(), entry.getKey());
 		}
 	}
 
 	@Override
-	protected CORSSupport getExtensionCORSSupport(String urlPath) {
+	protected T getExtensionValue(String urlPath) {
 		TrieNode currentTrieNode = null;
 		TrieNode previousTrieNode = _extensionTrieNode;
 
@@ -60,7 +58,7 @@ public class DynamicSizeTrieURLToCORSSupportMapper
 				TrieNode nextTrieNode = currentTrieNode.getNextTrieNode('*');
 
 				if ((nextTrieNode != null) && nextTrieNode.isEnd()) {
-					return nextTrieNode.getCORSSupport();
+					return nextTrieNode.getValue();
 				}
 			}
 
@@ -71,7 +69,7 @@ public class DynamicSizeTrieURLToCORSSupportMapper
 	}
 
 	@Override
-	protected CORSSupport getWildcardCORSSupport(String urlPath) {
+	protected T getWildcardValue(String urlPath) {
 		boolean exact = false;
 		boolean wildcard = false;
 
@@ -85,7 +83,7 @@ public class DynamicSizeTrieURLToCORSSupportMapper
 			wildcard = true;
 		}
 
-		CORSSupport corsSupport = null;
+		T value = null;
 		TrieNode currentTrieNode = null;
 		TrieNode previousTrieNode = _wildCardTrieNode;
 
@@ -101,7 +99,7 @@ public class DynamicSizeTrieURLToCORSSupportMapper
 				TrieNode nextTrieNode = currentTrieNode.getNextTrieNode('*');
 
 				if ((nextTrieNode != null) && nextTrieNode.isEnd()) {
-					corsSupport = nextTrieNode.getCORSSupport();
+					value = nextTrieNode.getValue();
 				}
 			}
 
@@ -114,11 +112,11 @@ public class DynamicSizeTrieURLToCORSSupportMapper
 					return null;
 				}
 
-				return currentTrieNode.getCORSSupport();
+				return currentTrieNode.getValue();
 			}
 
 			if (!wildcard && currentTrieNode.isEnd()) {
-				return currentTrieNode.getCORSSupport();
+				return currentTrieNode.getValue();
 			}
 
 			currentTrieNode = currentTrieNode.getNextTrieNode('/');
@@ -127,18 +125,16 @@ public class DynamicSizeTrieURLToCORSSupportMapper
 				currentTrieNode = currentTrieNode.getNextTrieNode('*');
 
 				if ((currentTrieNode != null) && currentTrieNode.isEnd()) {
-					corsSupport = currentTrieNode.getCORSSupport();
+					value = currentTrieNode.getValue();
 				}
 			}
 		}
 
-		return corsSupport;
+		return value;
 	}
 
 	@Override
-	protected void put(
-		CORSSupport corsSupport, String urlPattern, boolean wildcard) {
-
+	protected void put(T value, String urlPattern, boolean wildcard) {
 		TrieNode previousTrieNode = null;
 
 		if (wildcard) {
@@ -171,7 +167,7 @@ public class DynamicSizeTrieURLToCORSSupportMapper
 		}
 
 		if (currentTrieNode != null) {
-			currentTrieNode.setCORSSupport(corsSupport);
+			currentTrieNode.setValue(value);
 		}
 	}
 
@@ -189,24 +185,20 @@ public class DynamicSizeTrieURLToCORSSupportMapper
 			}
 		}
 
-		public CORSSupport getCORSSupport() {
-			return _corsSupport;
-		}
-
 		public TrieNode getNextTrieNode(char character) {
 			return _trieNodes.get(character - ASCII_PRINTABLE_OFFSET);
 		}
 
+		public T getValue() {
+			return _value;
+		}
+
 		public boolean isEnd() {
-			if (_corsSupport != null) {
+			if (_value != null) {
 				return true;
 			}
 
 			return false;
-		}
-
-		public void setCORSSupport(CORSSupport corsSupport) {
-			_corsSupport = corsSupport;
 		}
 
 		public TrieNode setNextTrieNode(char character, TrieNode nextTrieNode) {
@@ -215,8 +207,12 @@ public class DynamicSizeTrieURLToCORSSupportMapper
 			return nextTrieNode;
 		}
 
-		private CORSSupport _corsSupport;
+		public void setValue(T value) {
+			_value = value;
+		}
+
 		private final List<TrieNode> _trieNodes;
+		private T _value;
 
 	}
 

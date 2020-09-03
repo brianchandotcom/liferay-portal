@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BOOKING_FIELD</td>
+	<td>//input[contains(@id,':${key_field}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHOOSE_FILES</td>
 	<td>//input[@type='file']</td>
 	<td></td>
@@ -84,6 +89,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FLIGHT_SELECT</td>
+	<td>//select[contains(@id,':${key_item}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JSF_FLOWS_BUTTON</td>
+	<td>//input[@value='${key_buttonName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIBRARY_VERSION</td>
 	<td>//li[contains(.,'${key_libraryName}')]</td>
 	<td></td>
@@ -91,6 +106,11 @@
 <tr>
 	<td>RESET_BUTTON</td>
 	<td>//input[@type='submit'][@value='Reset']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_MESSAGE</td>
+	<td>//div[contains(@class,'liferay-faces-bridge-body')]//form</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,6 +136,11 @@
 <tr>
 	<td>SUBMIT_FILE_BUTTON</td>
 	<td>//form[@method='post'][@enctype='multipart/form-data']/*[@type='submit' or @value='Submit' or contains(.,'Submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SURVEY_QUESTION</td>
+	<td>//div[contains(@id,':question${key_num}')]/input</td>
 	<td></td>
 </tr>
 <tr>

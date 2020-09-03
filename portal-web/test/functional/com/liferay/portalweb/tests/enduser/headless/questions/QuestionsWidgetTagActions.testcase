@@ -157,18 +157,23 @@ definition {
 	@priority = "4"
 	test ValidateTagsOccurrences {
 		for (var num : list "1,2") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Question ValidateTagsOccurrences${num}",
-				userEmailAddress = "test@liferay.com");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.addRootTopic(
+				rootTopicDescription = "Description",
+				rootTopicName = "Question ValidateTagsOccurrences${num}");
 		}
 
+		Questions.gotoCategory(categoryName = "Question ValidateTagsOccurrences1");
+
 		for (var num : list "1,2") {
-			Questions.addQuestionByAPI(
-				bodyField = "${num}- Body ValidateTagsOccurrences",
-				categoryName = "Question ValidateTagsOccurrences1",
-				tagField = "tag1",
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "${num}- Body ValidateTagsOccurrences",
 				titleField = "${num}- Title ValidateTagsOccurrences");
+
+			Questions.addTags(tagLocator = "tag1");
+
+			Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 		}
 
 		Navigator.gotoPage(pageName = "Questions Page");

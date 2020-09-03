@@ -935,6 +935,14 @@ definition {
 			value1 = "${key_experienceName}");
 
 		Click(locator1 = "Button#SAVE");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+		AssertElementPresent(
+			key_experienceName = "${newExperience}",
+			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
 	macro editFragmentHTML {

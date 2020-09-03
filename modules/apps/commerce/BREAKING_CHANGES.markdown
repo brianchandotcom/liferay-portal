@@ -341,7 +341,28 @@ and want users to be able to sort products.
 
 #### Why was this change made?
 
-Give administrators more flexibility on whether or not they want to provide
-sorting functionality of product search results.
+---------------------------------------
+
+### Concurrency Management for Inventory
+- **Date:** 2020-Sep-3
+- **JIRA Ticket:** [COMMERCE-4565](https://issues.liferay.com/browse/COMMERCE-4565)
+
+#### What changed?
+
+Moved Commerce to the same level as Applications and Control Panel in the
+Applications Menu. Also dropped the commerce-admin-api and commerce-admin-web
+modules.
+
+#### Who is affected?
+
+Developers: It's not possible anymore to add items to Commerce->Settings section
+by implementing CommerceAdminModule.
+
+End Users: The Commerce sections are now at the same level as the Control Panel.
+
+#### Why was this change made?
+
+This change was made in order not to lose the navigation scope in the header
+bar while remaining compliant with DXP 7.3 standards.
 
 ---------------------------------------

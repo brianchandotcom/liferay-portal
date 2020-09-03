@@ -188,8 +188,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
-import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.kernel.model.UserNotificationDeliveryModel;
 import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.model.VirtualHostModel;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -228,7 +226,6 @@ import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.model.impl.UserModelImpl;
-import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
@@ -3704,32 +3701,6 @@ public class DataFactory {
 		}
 
 		return userModels;
-	}
-
-	public UserNotificationDeliveryModel newUserNotificationDeliveryModel(
-		String portletId) {
-
-		UserNotificationDeliveryModel userNotificationDeliveryModel =
-			new UserNotificationDeliveryModelImpl();
-
-		// PK fields
-
-		userNotificationDeliveryModel.setUserNotificationDeliveryId(
-			_counter.get());
-
-		// Audit fields
-
-		userNotificationDeliveryModel.setCompanyId(_companyId);
-		userNotificationDeliveryModel.setUserId(_sampleUserId);
-
-		// Other fields
-
-		userNotificationDeliveryModel.setPortletId(portletId);
-		userNotificationDeliveryModel.setDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_WEBSITE);
-		userNotificationDeliveryModel.setDeliver(true);
-
-		return userNotificationDeliveryModel;
 	}
 
 	public GroupModel newUserPersonalSiteGroupModel() {

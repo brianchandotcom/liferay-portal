@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -322,7 +323,9 @@ public class SaveFormInstanceMVCCommandHelper {
 									LanguageUtil.format(
 										httpServletRequest, sb.toString(),
 										new String[] {
-											host, "redirect.url.domains.allowed"
+											host,
+											PropsKeys.
+												REDIRECT_URL_DOMAINS_ALLOWED
 										}));
 							}
 						}
@@ -343,7 +346,8 @@ public class SaveFormInstanceMVCCommandHelper {
 											httpServletRequest, sb.toString(),
 											new String[] {
 												hostAddress,
-												"redirect.url.ips.allowed"
+												PropsKeys.
+													REDIRECT_URL_IPS_ALLOWED
 											}));
 								}
 							}

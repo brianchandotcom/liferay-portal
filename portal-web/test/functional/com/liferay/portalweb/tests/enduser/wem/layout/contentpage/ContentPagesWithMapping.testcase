@@ -550,7 +550,9 @@ definition {
 			fragmentName = "Banner Center",
 			id = "link");
 
-		PageEditorEditableLink.updateURL(url = "https://liferay.com");
+		PageEditorEditableLink.updateURL(
+			target = "Self",
+			url = "https://liferay.com");
 
 		PageEditor.clickPublish();
 
@@ -560,6 +562,8 @@ definition {
 
 		task ("Assert editable has the specified URL mapped correctly") {
 			Click(locator1 = "//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}
 	}
 
@@ -583,7 +587,9 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditorEditableLink.updateURL(url = "https://liferay.com");
+			PageEditorEditableLink.updateURL(
+				target = "Self",
+				url = "https://liferay.com");
 
 			PageEditor.clickPublish();
 		}

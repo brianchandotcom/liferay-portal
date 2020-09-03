@@ -58,6 +58,14 @@ trustStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-solr-blacklist-osgi-configs">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=&quot;com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.elasticsearch.monitoring.web&quot;</echo>
+
+			<antcall target="blacklist-commerce" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-solr-ssl-properties">
 		<sequential>
 			<if>
@@ -287,10 +295,6 @@ schema=schema.xml</echo>
 		<gradle-execute dir="modules/apps/portal-search-solr7" task="deploy">
 			<arg value="clean" />
 		</gradle-execute>
-
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=&quot;com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.elasticsearch.monitoring.web&quot;</echo>
-
-		<antcall target="blacklist-commerce" />
 	</target>
 
 	<target name="print-solr-indices">
@@ -346,6 +350,8 @@ schema=schema.xml</echo>
 		<unzip-solr />
 
 		<prepare-solr-configurations />
+
+		<configure-solr-blacklist-osgi-configs />
 
 		<configure-liferay-solr-adapter-osgi-configs />
 

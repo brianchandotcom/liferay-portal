@@ -234,6 +234,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAGS_POSITION</td>
+	<td>//div[contains(@class,'question-tags')][${key_position}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAGS_LIST_TAB_NAMES</td>
 	<td>//a[contains(@href, '${key_tagName}')]</td>
 	<td></td>

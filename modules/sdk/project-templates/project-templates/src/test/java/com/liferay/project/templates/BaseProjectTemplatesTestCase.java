@@ -1324,7 +1324,7 @@ public interface BaseProjectTemplatesTestCase {
 		if (isBuildProjects()) {
 			executeGradle(
 				workspaceDir, gradleDistribution,
-				":modules:" + name + ":build");
+				":modules:" + name + GRADLE_TASK_PATH_BUILD);
 
 			testExists(workspaceProjectDir, jarFilePath);
 		}

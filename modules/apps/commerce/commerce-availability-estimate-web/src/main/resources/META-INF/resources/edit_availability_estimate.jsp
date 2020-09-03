@@ -19,31 +19,19 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
-
 CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayContext = (CommerceAvailabilityEstimateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceAvailabilityEstimate commerceAvailabilityEstimate = commerceAvailabilityEstimateDisplayContext.getCommerceAvailabilityEstimate();
 
-String title = LanguageUtil.get(request, "add-availability-estimate");
+portletDisplay.setShowBackIcon(true);
 
-if (commerceAvailabilityEstimate != null) {
-	title = LanguageUtil.format(request, "edit-x", commerceAvailabilityEstimate.getTitle(languageId), false);
+if (Validator.isNull(redirect)) {
+	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 }
-
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
-	"direction-right", StringPool.TRUE
-).build();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), PortalUtil.escapeRedirect(redirect), data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+else {
+	portletDisplay.setURLBack(redirect);
+}
 %>
-
-<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
-	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
-</liferay-util:include>
-
-<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceAvailabilityEstimate" var="editCommerceAvailabilityEstimateActionURL" />
 

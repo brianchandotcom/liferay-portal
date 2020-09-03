@@ -14,26 +14,14 @@
 
 package com.liferay.commerce.availability.estimate.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.availability.estimate.web.internal.display.context.CommerceAvailabilityEstimateDisplayContext;
-import com.liferay.commerce.exception.NoSuchAvailabilityEstimateException;
-import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -41,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_AVAILABILITY_ESTIMATE,
 		"mvc.command.name=editCommerceAvailabilityEstimate"
 	},
 	service = MVCRenderCommand.class
@@ -54,51 +42,7 @@ public class EditCommerceAvailabilityEstimateMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/edit_availability_estimate.jsp");
-
-		try {
-			CommerceAvailabilityEstimateDisplayContext
-				commerceAvailabilityEstimateDisplayContext =
-					new CommerceAvailabilityEstimateDisplayContext(
-						_commerceAvailabilityEstimateService, renderRequest,
-						renderResponse);
-
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceAvailabilityEstimateDisplayContext);
-
-			requestDispatcher.include(
-				_portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse));
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchAvailabilityEstimateException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, exception.getClass());
-
-				return "/error.jsp";
-			}
-
-			throw new PortletException(
-				"Unable to include edit_availability_estimate.jsp", exception);
-		}
-
-		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+		return "/edit_availability_estimate.jsp";
 	}
-
-	@Reference
-	private CommerceAvailabilityEstimateService
-		_commerceAvailabilityEstimateService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.estimate.web)"
-	)
-	private ServletContext _servletContext;
 
 }

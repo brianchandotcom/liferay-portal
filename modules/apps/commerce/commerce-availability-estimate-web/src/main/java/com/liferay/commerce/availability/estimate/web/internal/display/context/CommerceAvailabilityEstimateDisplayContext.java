@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.availability.estimate.web.internal.display.context;
 
-import com.liferay.commerce.availability.estimate.web.internal.admin.AvailabilityEstimatesCommerceAdminModule;
 import com.liferay.commerce.availability.estimate.web.internal.util.CommerceAvailabilityEstimateUtil;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
@@ -84,9 +83,6 @@ public class CommerceAvailabilityEstimateDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"commerceAdminModuleKey",
-			AvailabilityEstimatesCommerceAdminModule.KEY);
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 

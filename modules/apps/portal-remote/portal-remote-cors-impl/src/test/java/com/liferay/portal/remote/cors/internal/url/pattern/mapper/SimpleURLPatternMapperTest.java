@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal;
+package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,32 +27,26 @@ import org.junit.Test;
 /**
  * @author Arthur Chan
  */
-public class SimpleURLToCORSSupportMapperTest {
+public class SimpleURLPatternMapperTest {
 
 	@Test
 	public void testGet() {
 		KeyValuePair[] keyValuePairs = _createKeyValuePairs();
 
-		URLToCORSSupportMapper urlToCORSSupportMapper =
-			createURLToCORSSupportMapper(_createCORSSupports(keyValuePairs));
+		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(
+			_createValues(keyValuePairs));
 
 		for (KeyValuePair keyValuePair : keyValuePairs) {
-			CORSSupport corsSupport = urlToCORSSupportMapper.get(
-				keyValuePair.getKey());
+			String value = urlPatternMapper.get(keyValuePair.getKey());
 
-			if (corsSupport == null) {
+			if (value == null) {
 				Assert.assertEquals("", keyValuePair.getValue());
 
 				continue;
 			}
 
-			Map<String, String> headers = new HashMap<>();
-
-			corsSupport.writeResponseHeaders(__ -> "origin", headers::put);
-
 			try {
-				Assert.assertEquals(
-					keyValuePair.getValue(), headers.get("pattern"));
+				Assert.assertEquals(keyValuePair.getValue(), value);
 			}
 			catch (ComparisonFailure comparisonFailure) {
 				throw new ComparisonFailure(
@@ -63,30 +57,10 @@ public class SimpleURLToCORSSupportMapperTest {
 		}
 	}
 
-	protected URLToCORSSupportMapper createURLToCORSSupportMapper(
-		Map<String, CORSSupport> corsSupports) {
+	protected URLPatternMapper<String> createURLPatternMapper(
+		Map<String, String> values) {
 
-		return new SimpleURLToCORSSupportMapper(corsSupports);
-	}
-
-	private Map<String, CORSSupport> _createCORSSupports(
-		KeyValuePair[] keyValuePairs) {
-
-		Map<String, CORSSupport> corsSupports = new HashMap<>();
-
-		for (KeyValuePair keyValuePair : keyValuePairs) {
-			if (Validator.isBlank(keyValuePair.getValue())) {
-				continue;
-			}
-
-			CORSSupport corsSupport = new CORSSupport();
-
-			corsSupport.setHeader("pattern", keyValuePair.getValue());
-
-			corsSupports.put(keyValuePair.getValue(), corsSupport);
-		}
-
-		return corsSupports;
+		return new SimpleURLPatternMapper<>(values);
 	}
 
 	private KeyValuePair[] _createKeyValuePairs() {
@@ -136,6 +110,20 @@ public class SimpleURLToCORSSupportMapperTest {
 			new KeyValuePair("test/main.jsp/*", ""),
 			new KeyValuePair("test/main.jspf", "*.jspf")
 		};
+	}
+
+	private Map<String, String> _createValues(KeyValuePair[] keyValuePairs) {
+		Map<String, String> values = new HashMap<>();
+
+		for (KeyValuePair keyValuePair : keyValuePairs) {
+			if (Validator.isBlank(keyValuePair.getValue())) {
+				continue;
+			}
+
+			values.put(keyValuePair.getValue(), keyValuePair.getValue());
+		}
+
+		return values;
 	}
 
 }

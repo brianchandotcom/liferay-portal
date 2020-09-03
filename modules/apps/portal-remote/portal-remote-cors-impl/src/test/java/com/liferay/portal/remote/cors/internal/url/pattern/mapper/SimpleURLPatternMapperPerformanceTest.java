@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal;
+package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import com.liferay.portal.kernel.util.KeyValuePair;
 
@@ -25,19 +25,19 @@ import org.junit.Test;
 /**
  * @author Arthur Chan
  */
-public class SimpleURLToCORSSupportMapperPerformanceTest {
+public class SimpleURLPatternMapperPerformanceTest {
 
 	@Test
 	public void testGet() {
 		KeyValuePair[] keyValuePairs = _createKeyValuePairs();
-		URLToCORSSupportMapper urlToCORSSupportMapper =
-			createURLToCORSSupportMapper(_createCORSSupports());
+		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(
+			_createValues());
 
 		long start = System.currentTimeMillis();
 
 		for (int i = 0; i < 100000; i++) {
 			for (KeyValuePair keyValuePair : keyValuePairs) {
-				urlToCORSSupportMapper.get(keyValuePair.getKey());
+				urlPatternMapper.get(keyValuePair.getKey());
 			}
 		}
 
@@ -50,89 +50,10 @@ public class SimpleURLToCORSSupportMapperPerformanceTest {
 		Assert.assertTrue(delta < 2000);
 	}
 
-	protected URLToCORSSupportMapper createURLToCORSSupportMapper(
-		Map<String, CORSSupport> corsSupports) {
+	protected URLPatternMapper<String> createURLPatternMapper(
+		Map<String, String> values) {
 
-		return new SimpleURLToCORSSupportMapper(corsSupports);
-	}
-
-	private Map<String, CORSSupport> _createCORSSupports() {
-		Map<String, CORSSupport> corsSupports = new HashMap<>();
-
-		// Exact
-
-		_put(corsSupports, "/url/some/random/pattern/do/test.mp3/");
-		_put(corsSupports, "/url/some/random/pattern/four");
-		_put(corsSupports, "/url/some/random/pattern/four/");
-		_put(corsSupports, "/url/some/random/pattern/one");
-		_put(corsSupports, "/url/some/random/pattern/one*");
-		_put(corsSupports, "/url/some/random/pattern/one/");
-		_put(corsSupports, "/url/some/random/pattern/one/*/");
-		_put(corsSupports, "/url/some/random/pattern/one/*/do/test");
-		_put(corsSupports, "/url/some/random/pattern/three");
-		_put(corsSupports, "/url/some/random/pattern/three/");
-		_put(corsSupports, "/url/some/random/pattern/two");
-		_put(corsSupports, "/url/some/random/pattern/two*");
-		_put(corsSupports, "/url/some/random/pattern/two/");
-		_put(corsSupports, "/url/some/random/pattern/two/*/");
-		_put(corsSupports, "/url/some/random/pattern/two/*/do/test");
-		_put(corsSupports, "url/some/random/pattern/do/test.mp3/");
-		_put(corsSupports, "url/some/random/pattern/four");
-		_put(corsSupports, "url/some/random/pattern/four/");
-		_put(corsSupports, "url/some/random/pattern/one");
-		_put(corsSupports, "url/some/random/pattern/one/");
-		_put(corsSupports, "url/some/random/pattern/one/*");
-		_put(corsSupports, "url/some/random/pattern/three");
-		_put(corsSupports, "url/some/random/pattern/three/");
-		_put(corsSupports, "url/some/random/pattern/two");
-		_put(corsSupports, "url/some/random/pattern/two/");
-		_put(corsSupports, "url/some/random/pattern/two/*");
-
-		// Extension
-
-		_put(corsSupports, "*.bin");
-		_put(corsSupports, "*.cpp");
-		_put(corsSupports, "*.deb");
-		_put(corsSupports, "*.doc");
-		_put(corsSupports, "*.jpg");
-		_put(corsSupports, "*.jsp");
-		_put(corsSupports, "*.jspf");
-		_put(corsSupports, "*.mov");
-		_put(corsSupports, "*.mp3");
-		_put(corsSupports, "*.pdf");
-		_put(corsSupports, "*.png");
-		_put(corsSupports, "*.tar");
-		_put(corsSupports, "*.txt");
-		_put(corsSupports, "*.xml");
-		_put(corsSupports, "*.xpm");
-		_put(corsSupports, "*.zip");
-
-		// Wildcard
-
-		_put(corsSupports, "/*");
-		_put(corsSupports, "/*/*");
-		_put(corsSupports, "/*//*");
-		_put(corsSupports, "//*");
-		_put(corsSupports, "/do/test.mp3/*");
-		_put(corsSupports, "/one/*");
-		_put(corsSupports, "/some/random/pattern/*");
-		_put(corsSupports, "/url/*");
-		_put(corsSupports, "/url/some/random/pattern/*");
-		_put(corsSupports, "/url/some/random/pattern/do/test.mp3/*");
-		_put(corsSupports, "/url/some/random/pattern/four/*");
-		_put(corsSupports, "/url/some/random/pattern/four/four/*");
-		_put(corsSupports, "/url/some/random/pattern/four/four/four/*");
-		_put(corsSupports, "/url/some/random/pattern/one/*");
-		_put(corsSupports, "/url/some/random/pattern/one/one/*");
-		_put(corsSupports, "/url/some/random/pattern/one/one/one/*");
-		_put(corsSupports, "/url/some/random/pattern/three/*");
-		_put(corsSupports, "/url/some/random/pattern/three/three/*");
-		_put(corsSupports, "/url/some/random/pattern/three/three/three/*");
-		_put(corsSupports, "/url/some/random/pattern/two/*");
-		_put(corsSupports, "/url/some/random/pattern/two/two/*");
-		_put(corsSupports, "/url/some/random/pattern/two/two/two/*");
-
-		return corsSupports;
+		return new SimpleURLPatternMapper<>(values);
 	}
 
 	private KeyValuePair[] _createKeyValuePairs() {
@@ -264,14 +185,87 @@ public class SimpleURLToCORSSupportMapperPerformanceTest {
 		};
 	}
 
-	private void _put(
-		Map<String, CORSSupport> corsSupports, String urlPattern) {
+	private Map<String, String> _createValues() {
+		Map<String, String> values = new HashMap<>();
 
-		CORSSupport corsSupport = new CORSSupport();
+		// Exact
 
-		corsSupport.setHeader("pattern", urlPattern);
+		_put(values, "/url/some/random/pattern/do/test.mp3/");
+		_put(values, "/url/some/random/pattern/four");
+		_put(values, "/url/some/random/pattern/four/");
+		_put(values, "/url/some/random/pattern/one");
+		_put(values, "/url/some/random/pattern/one*");
+		_put(values, "/url/some/random/pattern/one/");
+		_put(values, "/url/some/random/pattern/one/*/");
+		_put(values, "/url/some/random/pattern/one/*/do/test");
+		_put(values, "/url/some/random/pattern/three");
+		_put(values, "/url/some/random/pattern/three/");
+		_put(values, "/url/some/random/pattern/two");
+		_put(values, "/url/some/random/pattern/two*");
+		_put(values, "/url/some/random/pattern/two/");
+		_put(values, "/url/some/random/pattern/two/*/");
+		_put(values, "/url/some/random/pattern/two/*/do/test");
+		_put(values, "url/some/random/pattern/do/test.mp3/");
+		_put(values, "url/some/random/pattern/four");
+		_put(values, "url/some/random/pattern/four/");
+		_put(values, "url/some/random/pattern/one");
+		_put(values, "url/some/random/pattern/one/");
+		_put(values, "url/some/random/pattern/one/*");
+		_put(values, "url/some/random/pattern/three");
+		_put(values, "url/some/random/pattern/three/");
+		_put(values, "url/some/random/pattern/two");
+		_put(values, "url/some/random/pattern/two/");
+		_put(values, "url/some/random/pattern/two/*");
 
-		corsSupports.put(urlPattern, corsSupport);
+		// Extension
+
+		_put(values, "*.bin");
+		_put(values, "*.cpp");
+		_put(values, "*.deb");
+		_put(values, "*.doc");
+		_put(values, "*.jpg");
+		_put(values, "*.jsp");
+		_put(values, "*.jspf");
+		_put(values, "*.mov");
+		_put(values, "*.mp3");
+		_put(values, "*.pdf");
+		_put(values, "*.png");
+		_put(values, "*.tar");
+		_put(values, "*.txt");
+		_put(values, "*.xml");
+		_put(values, "*.xpm");
+		_put(values, "*.zip");
+
+		// Wildcard
+
+		_put(values, "/*");
+		_put(values, "/*/*");
+		_put(values, "/*//*");
+		_put(values, "//*");
+		_put(values, "/do/test.mp3/*");
+		_put(values, "/one/*");
+		_put(values, "/some/random/pattern/*");
+		_put(values, "/url/*");
+		_put(values, "/url/some/random/pattern/*");
+		_put(values, "/url/some/random/pattern/do/test.mp3/*");
+		_put(values, "/url/some/random/pattern/four/*");
+		_put(values, "/url/some/random/pattern/four/four/*");
+		_put(values, "/url/some/random/pattern/four/four/four/*");
+		_put(values, "/url/some/random/pattern/one/*");
+		_put(values, "/url/some/random/pattern/one/one/*");
+		_put(values, "/url/some/random/pattern/one/one/one/*");
+		_put(values, "/url/some/random/pattern/three/*");
+		_put(values, "/url/some/random/pattern/three/three/*");
+		_put(values, "/url/some/random/pattern/three/three/three/*");
+		_put(values, "/url/some/random/pattern/two/*");
+		_put(values, "/url/some/random/pattern/two/two/*");
+		_put(values, "/url/some/random/pattern/two/two/two/*");
+
+		return values;
+	}
+
+	private void _put(Map<String, String> values, String urlPattern) {
+		values.put(urlPattern, urlPattern);
 	}
 
 }

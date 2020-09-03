@@ -110,9 +110,13 @@ public class JournalArticleInfoItemObjectProvider
 			throw new RuntimeException(portalException);
 		}
 
-		if ((article == null) || article.isInTrash()) {
+		if (article == null) {
 			throw new NoSuchInfoItemException(
 				"Unable to get journal article " + infoItemIdentifier);
+		}
+
+		if (article.isInTrash()) {
+			return null;
 		}
 
 		return article;

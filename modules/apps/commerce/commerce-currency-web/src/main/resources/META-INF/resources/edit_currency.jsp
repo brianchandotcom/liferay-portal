@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
+String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCurrenciesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
@@ -30,25 +30,11 @@ String roundingMode = BeanParamUtil.getString(commerceCurrency, request, "roundi
 
 boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary");
 
-String title = LanguageUtil.get(request, "add-currency");
-
-if (commerceCurrency != null) {
-	title = LanguageUtil.format(request, "edit-x", commerceCurrency.getName(locale), false);
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
 }
-
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
-	"direction-right", StringPool.TRUE
-).build();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
-
-<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
-	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
-</liferay-util:include>
-
-<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceCurrency" var="editCommerceCurrencyActionURL" />
 

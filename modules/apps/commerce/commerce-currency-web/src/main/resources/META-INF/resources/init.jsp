@@ -21,16 +21,13 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
-page import="com.liferay.commerce.currency.configuration.CommerceCurrencyConfiguration" %><%@
+<%@ page import="com.liferay.commerce.currency.configuration.CommerceCurrencyConfiguration" %><%@
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyCodeException" %><%@
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyFractionDigitsException" %><%@
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyNameException" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
-page import="com.liferay.commerce.currency.web.internal.admin.CurrenciesCommerceAdminModule" %><%@
 page import="com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext" %><%@
 page import="com.liferay.commerce.currency.web.internal.servlet.taglib.ui.CommerceCurrencyScreenNavigationConstants" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -38,16 +35,13 @@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.math.BigDecimal" %><%@
 page import="java.math.RoundingMode" %>
-
-<%@ page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -56,7 +50,3 @@ page import="java.math.RoundingMode" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-String commerceAdminModuleKey = CurrenciesCommerceAdminModule.KEY;
-%>

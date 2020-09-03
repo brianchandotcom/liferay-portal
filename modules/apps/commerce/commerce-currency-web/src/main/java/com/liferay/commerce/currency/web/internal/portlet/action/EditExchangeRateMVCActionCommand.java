@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.currency.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.currency.configuration.CommerceCurrencyConfiguration;
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
+import com.liferay.commerce.currency.constants.CommerceCurrencyPortletKeys;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CommerceCurrencyPortletKeys.COMMERCE_CURRENCY,
 		"mvc.command.name=editExchangeRate"
 	},
 	service = MVCActionCommand.class

@@ -37,9 +37,6 @@ import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.LayoutBranchLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -270,11 +267,13 @@ public class LayoutSetBranchLocalServiceImpl
 
 		//Layout
 
-		for ( long deletablePlid : getDeletablePlids(layoutSetBranch.getLayoutSetBranchId())) {
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(deletablePlid);
+		for (long deletablePlid :
+				getDeletablePlids(layoutSetBranch.getLayoutSetBranchId())) {
 
-			if(layout != null){
-				LayoutLocalServiceUtil.deleteLayout(layout);
+			Layout layout = layoutLocalService.fetchLayout(deletablePlid);
+
+			if (layout != null) {
+				layoutLocalService.deleteLayout(layout);
 			}
 		}
 
@@ -309,37 +308,6 @@ public class LayoutSetBranchLocalServiceImpl
 			layoutSetBranch.getLayoutSetBranchId());
 
 		return layoutSetBranch;
-	}
-
-	private List<Long> getRelatedLayoutPlids(long layoutSetBranchId){
-		List<Long> relatedPlids = new ArrayList<Long>();
-
-		List<LayoutBranch> layoutBranches = layoutBranchLocalService.getLayoutSetBranchLayoutBranches(layoutSetBranchId);
-		for (LayoutBranch layoutBranch : layoutBranches) {
-
-			relatedPlids.add(layoutBranch.getPlid());
-		}
-		return  relatedPlids;
-	}
-
-	public List<Long> getDeletablePlids(long layoutSetBranchId){
-		List<Long> deletablePlids = new ArrayList<Long>();
-		List<Long> relatedPlids = getRelatedLayoutPlids(layoutSetBranchId);
-
-		for (long relatedPlid : relatedPlids) {
-			boolean deletableLayout = true;
-			List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(relatedPlid);
-			for (LayoutRevision layoutRevision : layoutRevisions) {
-				if(layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE && layoutRevision.getLayoutSetBranchId() != layoutSetBranchId){
-					deletableLayout = false;
-				}
-			}
-
-			if(deletableLayout){
-				deletablePlids.add(relatedPlid);
-			}
-		}
-		return deletablePlids;
 	}
 
 	@Override
@@ -378,6 +346,33 @@ public class LayoutSetBranchLocalServiceImpl
 
 		return layoutSetBranchPersistence.fetchByG_P_N(
 			groupId, privateLayout, name);
+	}
+
+	public List<Long> getDeletablePlids(long layoutSetBranchId) {
+		List<Long> deletablePlids = new ArrayList<>();
+		List<Long> relatedPlids = _getRelatedLayoutPlids(layoutSetBranchId);
+
+		for (long relatedPlid : relatedPlids) {
+			boolean deletableLayout = true;
+			List<LayoutRevision> layoutRevisions =
+				layoutRevisionLocalService.getLayoutRevisions(relatedPlid);
+
+			for (LayoutRevision layoutRevision : layoutRevisions) {
+				if ((layoutRevision.getStatus() !=
+						WorkflowConstants.STATUS_INCOMPLETE) &&
+					(layoutRevision.getLayoutSetBranchId() !=
+						layoutSetBranchId)) {
+
+					deletableLayout = false;
+				}
+			}
+
+			if (deletableLayout) {
+				deletablePlids.add(relatedPlid);
+			}
+		}
+
+		return deletablePlids;
 	}
 
 	@Override
@@ -618,6 +613,20 @@ public class LayoutSetBranchLocalServiceImpl
 					noSuchLayoutSetBranchException);
 			}
 		}
+	}
+
+	private List<Long> _getRelatedLayoutPlids(long layoutSetBranchId) {
+		List<Long> relatedPlids = new ArrayList<>();
+
+		List<LayoutBranch> layoutBranches =
+			layoutBranchLocalService.getLayoutSetBranchLayoutBranches(
+				layoutSetBranchId);
+
+		for (LayoutBranch layoutBranch : layoutBranches) {
+			relatedPlids.add(layoutBranch.getPlid());
+		}
+
+		return relatedPlids;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

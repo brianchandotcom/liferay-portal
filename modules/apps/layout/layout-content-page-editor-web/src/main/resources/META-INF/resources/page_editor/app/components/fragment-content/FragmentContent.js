@@ -99,6 +99,12 @@ const FragmentContent = ({
 		? fragmentEntryLink.editableValues
 		: {};
 
+	useEffect(() => {
+		if (fragmentEntryLink?.error) {
+			throw new Error(fragmentEntryLink.error);
+		}
+	}, [fragmentEntryLink?.error]);
+
 	/**
 	 * fragmentElement keeps a copy of the fragment real HTML,
 	 * we perform editableValues replacements over this copy

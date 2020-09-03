@@ -21,7 +21,9 @@ import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,6 +48,11 @@ public class DDMFormRendererUtil {
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		StringBundler sb = new StringBundler(ddmFormFields.size());
+
+		Set<String> fieldNamespaceSet = new HashSet<>();
+
+		ddmFormFieldRenderingContext.setProperty(
+			"fieldNamespaceSet", fieldNamespaceSet);
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			if (_isDDMFormFieldSkippable(

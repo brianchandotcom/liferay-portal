@@ -227,6 +227,15 @@ to "none" to disable transaction management.
 >
 
 <!--
+The cache-enabled value specifies whether or not to cache this queries for this
+entity. Set this to false if data in the table will be updated by other
+programs. The default value is true.
+-->
+<!ATTLIST entity
+	cache-enabled CDATA #IMPLIED
+>
+
+<!--
 The change-tracking-enabled value specifies whether or not to enable change
 tracking for this entity. Change tracking is a publishing framework that
 intercepts changes to data in the entity's generated PersistenceImpl class and

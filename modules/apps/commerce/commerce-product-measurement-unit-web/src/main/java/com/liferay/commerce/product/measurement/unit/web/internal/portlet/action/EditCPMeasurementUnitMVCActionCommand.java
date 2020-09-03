@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.measurement.unit.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPMeasurementUnitKeyException;
 import com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CPPortletKeys.CP_MEASUREMENT_UNIT,
 		"mvc.command.name=editCPMeasurementUnit"
 	},
 	service = MVCActionCommand.class

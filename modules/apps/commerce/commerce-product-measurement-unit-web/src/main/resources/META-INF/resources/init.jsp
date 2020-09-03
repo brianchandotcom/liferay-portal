@@ -22,12 +22,9 @@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
-page import="com.liferay.commerce.product.exception.CPMeasurementUnitKeyException" %><%@
-page import="com.liferay.commerce.product.measurement.unit.web.internal.admin.MeasurementUnitsCommerceAdminModule" %><%@
+<%@ page import="com.liferay.commerce.product.exception.CPMeasurementUnitKeyException" %><%@
 page import="com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext" %><%@
 page import="com.liferay.commerce.product.model.CPMeasurementUnit" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -35,13 +32,10 @@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
-
-<%@ page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -50,7 +44,3 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-String commerceAdminModuleKey = MeasurementUnitsCommerceAdminModule.KEY;
-%>

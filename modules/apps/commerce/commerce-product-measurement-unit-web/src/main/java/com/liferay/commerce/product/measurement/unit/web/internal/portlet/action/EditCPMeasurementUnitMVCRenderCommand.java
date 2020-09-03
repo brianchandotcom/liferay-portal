@@ -14,26 +14,14 @@
 
 package com.liferay.commerce.product.measurement.unit.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException;
-import com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext;
-import com.liferay.commerce.product.service.CPMeasurementUnitService;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -41,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CPPortletKeys.CP_MEASUREMENT_UNIT,
 		"mvc.command.name=editCPMeasurementUnit"
 	},
 	service = MVCRenderCommand.class
@@ -53,47 +41,7 @@ public class EditCPMeasurementUnitMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/edit_measurement_unit.jsp");
-
-		try {
-			CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext =
-				new CPMeasurementUnitsDisplayContext(
-					_cpMeasurementUnitService, renderRequest, renderResponse);
-
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpMeasurementUnitsDisplayContext);
-
-			requestDispatcher.include(
-				_portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse));
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchCPMeasurementUnitException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, exception.getClass());
-
-				return "/error.jsp";
-			}
-
-			throw new PortletException(
-				"Unable to include edit_measurement_unit.jsp", exception);
-		}
-
-		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+		return "/edit_measurement_unit.jsp";
 	}
-
-	@Reference
-	private CPMeasurementUnitService _cpMeasurementUnitService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.measurement.unit.web)"
-	)
-	private ServletContext _servletContext;
 
 }

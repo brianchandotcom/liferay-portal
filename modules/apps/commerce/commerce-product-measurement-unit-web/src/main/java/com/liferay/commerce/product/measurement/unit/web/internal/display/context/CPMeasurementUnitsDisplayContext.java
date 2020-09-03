@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.measurement.unit.web.internal.display.context;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
-import com.liferay.commerce.product.measurement.unit.web.internal.admin.MeasurementUnitsCommerceAdminModule;
 import com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasurementUnitUtil;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
@@ -125,8 +124,6 @@ public class CPMeasurementUnitsDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"commerceAdminModuleKey", MeasurementUnitsCommerceAdminModule.KEY);
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 
@@ -232,8 +229,6 @@ public class CPMeasurementUnitsDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter(
-			"commerceAdminModuleKey", MeasurementUnitsCommerceAdminModule.KEY);
 		portletURL.setParameter("toolbarItem", toolbarItem);
 		portletURL.setParameter("type", String.valueOf(type));
 

@@ -86,7 +86,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro GotoViewDiffInConflictingChanges {
+	macro gotoReviewChanges {
+		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
+
+		MenuItem.click(menuItem = "Review Changes");
+
+		Pause(locator1 = "3000");
+	}
+
+	macro gotoViewDiffInConflictingChanges {
 		Click(
 			key_entryTitle = "${entryTitle}",
 			locator1 = "ChangeList#CONFICTING_CHANGES_VIEW_BUTTON",

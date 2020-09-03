@@ -539,7 +539,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/search");
 
-		Portlet.addPG(portletName = "Search Results");
+		SearchPortlets.addWidgets(searchPortletList = "Search Results");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 
@@ -565,11 +565,25 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name-staging/test-content-page");
 
 		ContentPages.clickPencil();
 
-		PageEditor.addWidget(portletName = "Categories Navigation");
+		PageEditor.addWidget(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(
+			contentPage = "true",
+			webContentTitle = "WC WebContent Title");
 
 		PageEditor.clickPublish();
 
@@ -578,8 +592,8 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Test Content Page",
-			searchAssetType = "Categories");
+			searchAssetTitle = "WC WebContent Title",
+			searchAssetType = "Web Content");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -592,8 +606,8 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Test Content Page",
-			searchAssetType = "Categories");
+			searchAssetTitle = "WC WebContent Title",
+			searchAssetType = "Web Content");
 	}
 
 	@description = "This is a use case for LPS-72545."

@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.warehouse.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.CommerceGeocoderException;
 import com.liferay.commerce.exception.NoSuchWarehouseException;
 import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseActiveException;
@@ -25,10 +24,10 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceGeocoder;
 import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
-import com.liferay.commerce.warehouse.web.internal.admin.WarehousesCommerceAdminModule;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -60,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+		"javax.portlet.name=" + CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE,
 		"mvc.command.name=editCommerceInventoryWarehouse"
 	},
 	service = MVCActionCommand.class
@@ -131,10 +130,6 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				SessionErrors.add(
 					actionRequest, throwable.getClass(),
 					throwable.getMessage());
-
-				actionResponse.setRenderParameter(
-					"commerceAdminModuleKey",
-					WarehousesCommerceAdminModule.KEY);
 			}
 			else if (throwable instanceof NoSuchWarehouseException ||
 					 throwable instanceof PrincipalException) {

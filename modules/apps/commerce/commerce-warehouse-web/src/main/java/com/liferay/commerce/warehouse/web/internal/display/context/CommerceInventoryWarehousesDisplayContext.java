@@ -24,7 +24,6 @@ import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.util.CommerceUtil;
-import com.liferay.commerce.warehouse.web.internal.admin.WarehousesCommerceAdminModule;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -177,8 +176,6 @@ public class CommerceInventoryWarehousesDisplayContext {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"commerceAdminModuleKey", WarehousesCommerceAdminModule.KEY);
 		portletURL.setParameter(
 			"countryTwoLettersISOCode", getCommerceCountryTwoLettersIsoCode());
 

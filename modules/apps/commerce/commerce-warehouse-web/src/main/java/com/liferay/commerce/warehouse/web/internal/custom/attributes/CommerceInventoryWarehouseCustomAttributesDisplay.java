@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.warehouse.web.internal.custom.attributes;
 
-import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 
@@ -23,10 +23,11 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ethan Bustad
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
+	property = "javax.portlet.name=" + CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE,
 	service = CustomAttributesDisplay.class
 )
 public class CommerceInventoryWarehouseCustomAttributesDisplay

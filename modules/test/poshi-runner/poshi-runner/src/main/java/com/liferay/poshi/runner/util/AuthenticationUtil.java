@@ -34,8 +34,6 @@ public class AuthenticationUtil {
 	public static String generateTimeBasedOTP(String secretKey) {
 		String otpAlgorithm = "HmacSHA1";
 
-		byte[] secret = Base32.decode(secretKey);
-
 		long time = (System.currentTimeMillis() - 3000) / 30000;
 
 		String timeCountHex = StringUtil.toUpperCase(Long.toHexString(time));
@@ -51,7 +49,7 @@ public class AuthenticationUtil {
 		try {
 			Mac mac = Mac.getInstance(otpAlgorithm);
 
-			mac.init(new SecretKeySpec(secret, "RAW"));
+			mac.init(new SecretKeySpec(Base32.decode(secretKey), "RAW"));
 
 			BigInteger bigInteger = new BigInteger("10" + timeCountHex, 16);
 

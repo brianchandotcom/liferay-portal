@@ -22,6 +22,7 @@ WorkflowNavigationDisplayContext workflowNavigationDisplayContext = (WorkflowNav
 
 <c:if test="<%= workflowPortletTabs.size() != 1 %>">
 	<clay:navigation-bar
+		inverted="<%= false %>"
 		navigationItems="<%= workflowNavigationDisplayContext.getNavigationItems(selectedWorkflowPortletTab, workflowPortletTabs) %>"
 	/>
 </c:if>

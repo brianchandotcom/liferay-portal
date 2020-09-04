@@ -321,7 +321,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 					</c:if>
 
 					<c:if test="<%= Validator.isNotNull(dropdownItems) || Validator.isNotNull(previewUrl) %>">
-						<div class="align-items-center border-left col-auto d-flex pl-3">
+						<div class="align-items-center col-auto d-flex pl-3">
 							<c:if test="<%= Validator.isNotNull(dropdownItems) && (dropdownItems.size() > 0) %>">
 								<div id="dropdown-header-container">
 									<liferay-ui:icon

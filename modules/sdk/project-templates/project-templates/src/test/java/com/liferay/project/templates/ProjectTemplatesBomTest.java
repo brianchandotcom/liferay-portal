@@ -61,11 +61,11 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 	public void testBomVersion() throws Exception {
 		Assume.assumeTrue(_isBomTest());
 
-		Version v = Version.parseVersion(_BOM_VERSION.replaceAll("-", "."));
+		Version version = Version.parseVersion(
+			_BOM_VERSION.replaceAll("-", "."));
 
-		String liferayVersion = v.getMajor() + "." + v.getMinor();
-
-		File workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
+		File workspaceDir = buildWorkspace(
+			temporaryFolder, version.getMajor() + "." + version.getMinor());
 
 		writeGradlePropertiesInWorkspace(
 			workspaceDir,
@@ -73,68 +73,29 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 
 		File modulesDir = new File(workspaceDir, "modules");
 
-		String template = "api";
+		_buildTemplateTestOutput(modulesDir, "api", workspaceDir);
 
-		File apiProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
+		_buildTemplateTestOutput(
+			modulesDir, "control-menu-entry", workspaceDir);
 
-		testOutput(apiProjectDir, template, workspaceDir);
+		_buildTemplateTestOutput(modulesDir, "mvc-portlet", workspaceDir);
 
-		template = "control-menu-entry";
+		_buildTemplateTestOutput(modulesDir, "npm-react-portlet", workspaceDir);
 
-		File controlMenuEntryProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
+		_buildTemplateTestOutput(modulesDir, "panel-app", workspaceDir);
 
-		testOutput(controlMenuEntryProjectDir, template, workspaceDir);
+		_buildTemplateTestOutput(
+			modulesDir, "portlet-configuration-icon", workspaceDir);
 
-		template = "mvc-portlet";
+		_buildTemplateTestOutput(modulesDir, "portlet-provider", workspaceDir);
 
-		File mvcPortletProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
+		_buildTemplateTestOutput(
+			modulesDir, "portlet-toolbar-contributor", workspaceDir);
 
-		testOutput(mvcPortletProjectDir, template, workspaceDir);
-
-		template = "npm-react-portlet";
-
-		File npmReactPortletProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
-
-		testOutput(npmReactPortletProjectDir, template, workspaceDir);
-
-		template = "panel-app";
-
-		File panelAppProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
-
-		testOutput(panelAppProjectDir, template, workspaceDir);
-
-		template = "portlet-configuration-icon";
-
-		File portletConfigurationIconProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
-
-		testOutput(portletConfigurationIconProjectDir, template, workspaceDir);
-
-		template = "portlet-provider";
-
-		File portletProviderProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
-
-		testOutput(portletProviderProjectDir, template, workspaceDir);
-
-		template = "portlet-toolbar-contributor";
-
-		File portletToolbarContributorProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
-
-		testOutput(portletToolbarContributorProjectDir, template, workspaceDir);
-
-		template = "service-builder";
+		String template = "service-builder";
 
 		File serviceBuilderProjectDir = buildTemplateWithGradle(
 			modulesDir, template, template + "test");
-
-		String apiProjectName = template + "test-api";
 
 		String serviceProjectName = template + "test-service";
 
@@ -143,7 +104,8 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 			":modules:service-buildertest:" + serviceProjectName +
 				GRADLE_TASK_PATH_BUILD_SERVICE);
 
-		testOutput(serviceBuilderProjectDir, apiProjectName, workspaceDir);
+		testOutput(
+			serviceBuilderProjectDir, template + "test-api", workspaceDir);
 		testOutput(serviceBuilderProjectDir, serviceProjectName, workspaceDir);
 
 		template = "service-wrapper";
@@ -154,34 +116,15 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 
 		testOutput(serviceWrapperProjectDir, template, workspaceDir);
 
-		template = "simulation-panel-entry";
+		_buildTemplateTestOutput(
+			modulesDir, "simulation-panel-entry", workspaceDir);
 
-		File simulationPanelEntryProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
+		_buildTemplateTestOutput(
+			modulesDir, "template-context-contributor", workspaceDir);
 
-		testOutput(simulationPanelEntryProjectDir, template, workspaceDir);
+		_buildTemplateTestOutput(modulesDir, "war-hook", workspaceDir);
 
-		template = "template-context-contributor";
-
-		File templateContextContributorProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
-
-		testOutput(
-			templateContextContributorProjectDir, template, workspaceDir);
-
-		template = "war-hook";
-
-		File warHookProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
-
-		testOutput(warHookProjectDir, template, workspaceDir);
-
-		template = "war-mvc-portlet";
-
-		File warMvcPortletProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
-
-		testOutput(warMvcPortletProjectDir, template, workspaceDir);
+		_buildTemplateTestOutput(modulesDir, "war-mvc-portlet", workspaceDir);
 	}
 
 	public void testOutput(
@@ -224,6 +167,16 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		}
 
 		return false;
+	}
+
+	private void _buildTemplateTestOutput(
+			File modulesDir, String template, File workspaceDir)
+		throws Exception {
+
+		File apiProjectDir = buildTemplateWithGradle(
+			modulesDir, template, template + "test");
+
+		testOutput(apiProjectDir, template, workspaceDir);
 	}
 
 	private static final String _BOM_VERSION = System.getProperty(

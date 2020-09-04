@@ -354,7 +354,9 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 					function injectRegionPlaceholder(list) {
 						var callbackList = [
 							{
-								commerceCountryId: '0',
+								commerceRegionId: '0',
+								name:
+									'- <liferay-ui:message key="select-region" />',
 								nameCurrentValue:
 									'- <liferay-ui:message key="select-region" />',
 							},

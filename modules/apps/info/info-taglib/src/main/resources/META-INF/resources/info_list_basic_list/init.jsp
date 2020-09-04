@@ -33,7 +33,6 @@ if (Objects.equals(infoListStyleKey, BasicListInfoListStyle.BORDERED.getKey())) 
 }
 else if (Objects.equals(infoListStyleKey, BasicListInfoListStyle.INLINE.getKey())) {
 	listCssClass = "list-inline";
-	listItemCssClass = "list-inline-item";
 }
 else if (Objects.equals(infoListStyleKey, BasicListInfoListStyle.UNSTYLED.getKey())) {
 	listCssClass = "list-unstyled";

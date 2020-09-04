@@ -289,23 +289,13 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			throw new MustSetFieldType(ddmFormField.getName());
 		}
 
-		boolean validType = false;
-
 		Set<String> ddmFormFieldTypeNames = new HashSet<>(
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeNames());
 
 		ddmFormFieldTypeNames.addAll(
 			SetUtil.fromArray(DDMConstants.SUPPORTED_DDM_FORM_FIELD_TYPES));
 
-		for (String type : ddmFormFieldTypeNames) {
-			if (type.equals(ddmFormField.getType())) {
-				validType = true;
-
-				break;
-			}
-		}
-
-		if (!validType) {
+		if (!ddmFormFieldTypeNames.contains(ddmFormField.getType())) {
 			throw new MustSetValidType(ddmFormField.getType());
 		}
 

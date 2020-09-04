@@ -23,6 +23,8 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.Deserializer;
+import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -30,9 +32,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.net.URL;
+
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -45,11 +53,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -96,13 +106,14 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			"META-INF/resources/manifest.json");
 
 		Map<URL, JSONObject> jsonObjects = _loadJSONObjects(
-			enumeration, manifestJSONURL);
+			bundle, enumeration, manifestJSONURL);
 
-		JSONObject packagesJSONObject = jsonObjects.remove(manifestJSONURL);
+		JSONObject packagesJSONObject = _removeByURL(
+			jsonObjects, manifestJSONURL);
 
 		Manifest manifest = new Manifest(packagesJSONObject);
 
-		JSONObject packageJSONObject = jsonObjects.remove(url);
+		JSONObject packageJSONObject = _removeByURL(jsonObjects, url);
 
 		Map<URL, Collection<String>> moduleDependenciesMap =
 			_loadModuleDependenciesMap(bundle);
@@ -208,7 +219,29 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	}
 
 	private Map<URL, JSONObject> _loadJSONObjects(
-		Enumeration<URL> enumeration, URL manifestJSONURL) {
+		Bundle bundle, Enumeration<URL> enumeration, URL manifestJSONURL) {
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		File cacheFile = bundleContext.getDataFile("cache_json_objects");
+
+		Path cacheFilePath = cacheFile.toPath();
+
+		if (Files.exists(cacheFilePath)) {
+			try {
+				Deserializer deserializer = new Deserializer(
+					ByteBuffer.wrap(Files.readAllBytes(cacheFilePath)));
+
+				if (deserializer.readLong() == bundle.getLastModified()) {
+					return deserializer.readObject();
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to load cached json objects", exception);
+				}
+			}
+		}
 
 		List<Future<Map.Entry<URL, JSONObject>>> futures = new ArrayList<>();
 
@@ -244,7 +277,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 					}));
 		}
 
-		Map<URL, JSONObject> jsonObjects = new HashMap<>();
+		HashMap<URL, JSONObject> jsonObjects = new HashMap<>();
 
 		for (Future<Map.Entry<URL, JSONObject>> future : futures) {
 			try {
@@ -257,13 +290,52 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			}
 		}
 
+		Serializer serializer = new Serializer();
+
+		serializer.writeLong(bundle.getLastModified());
+
+		try (OutputStream outputStream = Files.newOutputStream(cacheFilePath)) {
+			serializer.writeObject(jsonObjects);
+
+			serializer.writeTo(outputStream);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to write json objects cache file", exception);
+			}
+		}
+
 		return jsonObjects;
 	}
 
 	private Map<URL, Collection<String>> _loadModuleDependenciesMap(
 		Bundle bundle) {
 
-		Map<URL, Collection<String>> moduleDependenciesMap = new HashMap<>();
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		File cacheFile = bundleContext.getDataFile("cache_model_dependencies");
+
+		Path cacheFilePath = cacheFile.toPath();
+
+		if (Files.exists(cacheFilePath)) {
+			try {
+				Deserializer deserializer = new Deserializer(
+					ByteBuffer.wrap(Files.readAllBytes(cacheFilePath)));
+
+				if (deserializer.readLong() == bundle.getLastModified()) {
+					return deserializer.readObject();
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to load cached model dependencies", exception);
+				}
+			}
+		}
+
+		HashMap<URL, Collection<String>> moduleDependenciesMap =
+			new HashMap<>();
 
 		Enumeration<URL> enumeration = bundle.findEntries(
 			"META-INF/resources", "*.js", true);
@@ -293,6 +365,22 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 				catch (Exception exception) {
 					_log.error(exception, exception);
 				}
+			}
+		}
+
+		Serializer serializer = new Serializer();
+
+		serializer.writeLong(bundle.getLastModified());
+
+		try (OutputStream outputStream = Files.newOutputStream(cacheFilePath)) {
+			serializer.writeObject(moduleDependenciesMap);
+
+			serializer.writeTo(outputStream);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to write model dependencies cache file", exception);
 			}
 		}
 
@@ -605,6 +693,46 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 
 		flatJSBundle.addJSPackage(flatJSPackage);
+	}
+
+	private JSONObject _removeByURL(Map<URL, JSONObject> jsonObjects, URL url) {
+		JSONObject jsonObject = jsonObjects.remove(url);
+
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		Set<Map.Entry<URL, JSONObject>> entrySet = jsonObjects.entrySet();
+
+		Iterator<Map.Entry<URL, JSONObject>> iterator = entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<URL, JSONObject> entry = iterator.next();
+
+			URL entryURL = entry.getKey();
+
+			if (Objects.equals(url.getPath(), entryURL.getPath()) &&
+				Objects.equals(
+					_trimFwkHash(url.getHost()),
+					_trimFwkHash(entryURL.getHost()))) {
+
+				iterator.remove();
+
+				return entry.getValue();
+			}
+		}
+
+		return null;
+	}
+
+	private String _trimFwkHash(String host) {
+		int index = host.indexOf(".fwk");
+
+		if (index != -1) {
+			return host.substring(0, index);
+		}
+
+		return host;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

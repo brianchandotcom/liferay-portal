@@ -153,7 +153,9 @@ public class UpgradeDDMFormFieldDataSourceTypeAndPredefinedValue
 				}
 			}
 
-			_convertStringToJSONArray(jsonObject, "dataSourceType");
+			if (type.equals("select")) {
+				_convertStringToJSONArray(jsonObject, "dataSourceType");
+			}
 
 			JSONArray nestedFieldsJSONArray = jsonObject.getJSONArray(
 				"nestedFields");

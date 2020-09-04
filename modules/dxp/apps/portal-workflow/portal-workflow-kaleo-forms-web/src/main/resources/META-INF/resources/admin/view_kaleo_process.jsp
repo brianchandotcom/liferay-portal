@@ -41,6 +41,7 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoPr
 %>
 
 <clay:navigation-bar
+	inverted="<%= true %>"
 	navigationItems="<%= kaleoFormsViewRecordsDisplayContext.getNavigationItems() %>"
 />
 

@@ -49,6 +49,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	<div class="forms-navigation-bar">
 		<clay:navigation-bar
 			id="formsNavigationBar"
+			inverted="<%= true %>"
 			navigationItems="<%= ddmFormAdminDisplayContext.getFormBuilderNavigationItems() %>"
 		/>
 	</div>

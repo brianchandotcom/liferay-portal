@@ -17,5 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <clay:navigation-bar
+	inverted="<%= true %>"
 	navigationItems="<%= ddmDataProviderDisplayContext.getNavigationItems(liferayPortletRequest, liferayPortletResponse) %>"
 />

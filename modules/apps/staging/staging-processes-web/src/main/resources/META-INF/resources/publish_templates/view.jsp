@@ -53,6 +53,7 @@ StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPubl
 %>
 
 <clay:navigation-bar
+	inverted="<%= true %>"
 	navigationItems="<%= publishTemplatesDisplayContext.getNavigationItems() %>"
 />
 

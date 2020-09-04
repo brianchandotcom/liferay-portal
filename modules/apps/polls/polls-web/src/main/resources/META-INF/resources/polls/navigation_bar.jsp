@@ -17,5 +17,6 @@
 <%@ include file="/polls/init.jsp" %>
 
 <clay:navigation-bar
+	inverted="<%= true %>"
 	navigationItems="<%= pollsDisplayContext.getNavigationItems() %>"
 />

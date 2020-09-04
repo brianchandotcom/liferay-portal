@@ -40,6 +40,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 		%>
 
 		<clay:navigation-bar
+			inverted="<%= true %>"
 			navigationItems="<%= journalHistoryDisplayContext.getNavigationItems() %>"
 		/>
 

@@ -27,6 +27,7 @@
 />
 
 <clay:navigation-bar
+	inverted="<%= true %>"
 	navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>"
 />
 

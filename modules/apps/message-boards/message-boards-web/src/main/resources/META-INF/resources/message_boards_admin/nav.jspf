@@ -19,6 +19,7 @@ boolean hasBanUserPermission = MBResourcePermission.contains(permissionChecker, 
 %>
 
 <clay:navigation-bar
+	inverted="<%= true %>"
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{

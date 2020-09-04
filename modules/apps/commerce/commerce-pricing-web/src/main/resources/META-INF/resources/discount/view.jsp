@@ -23,6 +23,7 @@ PortletURL portletURL = commerceDiscountDisplayContext.getPortletURL();
 %>
 
 <clay:navigation-bar
+	inverted="<%= true %>"
 	navigationItems="<%= PricingNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 

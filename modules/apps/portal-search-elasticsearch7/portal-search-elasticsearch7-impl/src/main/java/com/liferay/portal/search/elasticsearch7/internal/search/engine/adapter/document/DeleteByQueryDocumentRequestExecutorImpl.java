@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentResponse;
+import com.liferay.portal.search.query.QueryTranslator;
 
 import java.io.IOException;
 
@@ -64,10 +64,19 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 		deleteByQueryRequest.indices(
 			deleteByQueryDocumentRequest.getIndexNames());
 
-		QueryBuilder queryBuilder = _queryTranslator.translate(
-			deleteByQueryDocumentRequest.getQuery(), null);
+		if (deleteByQueryDocumentRequest.getPortalSearchQuery() != null) {
+			QueryBuilder queryBuilder = _queryTranslator.translate(
+				deleteByQueryDocumentRequest.getPortalSearchQuery());
 
-		deleteByQueryRequest.setQuery(queryBuilder);
+			deleteByQueryRequest.setQuery(queryBuilder);
+		}
+		else {
+			@SuppressWarnings("deprecation")
+			QueryBuilder queryBuilder = _legacyQueryTranslator.translate(
+				deleteByQueryDocumentRequest.getQuery(), null);
+
+			deleteByQueryRequest.setQuery(queryBuilder);
+		}
 
 		deleteByQueryRequest.setRefresh(
 			deleteByQueryDocumentRequest.isRefresh());
@@ -101,6 +110,14 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
+	protected void setLegacyQueryTranslator(
+		com.liferay.portal.kernel.search.query.QueryTranslator<QueryBuilder>
+			legacyQueryTranslator) {
+
+		_legacyQueryTranslator = legacyQueryTranslator;
+	}
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	protected void setQueryTranslator(
 		QueryTranslator<QueryBuilder> queryTranslator) {
 
@@ -108,6 +125,8 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+	private com.liferay.portal.kernel.search.query.QueryTranslator<QueryBuilder>
+		_legacyQueryTranslator;
 	private QueryTranslator<QueryBuilder> _queryTranslator;
 
 }

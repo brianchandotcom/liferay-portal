@@ -41,9 +41,9 @@ public class StaticSizeTrieURLToCORSSupportMapper
 		_maxURLPatternLength = maxURLPatternLength + 1;
 
 		_extensionTrieMatrix =
-			new long[2][_maxURLPatternLength][_ASCII_CHARACTER_RANGE];
+			new long[2][_maxURLPatternLength][ASCII_CHARACTER_RANGE];
 		_wildCardTrieMatrix =
-			new long[2][_maxURLPatternLength][_ASCII_CHARACTER_RANGE];
+			new long[2][_maxURLPatternLength][ASCII_CHARACTER_RANGE];
 
 		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
 			put(entry.getValue(), entry.getKey());
@@ -62,7 +62,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 				break;
 			}
 
-			int column = character - _ASCII_PRINTABLE_OFFSET;
+			int column = character - ASCII_PRINTABLE_OFFSET;
 
 			currentBitmask &= _extensionTrieMatrix[0][row][column];
 
@@ -111,7 +111,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 		for (; row < maxRow; ++row) {
 			char character = urlPath.charAt(row);
 
-			column = character - _ASCII_PRINTABLE_OFFSET;
+			column = character - ASCII_PRINTABLE_OFFSET;
 
 			currentBitmask &= _wildCardTrieMatrix[0][row][column];
 
@@ -232,7 +232,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 				character = urlPattern.charAt(urlPattern.length() - 1 - row);
 			}
 
-			column = character - _ASCII_PRINTABLE_OFFSET;
+			column = character - ASCII_PRINTABLE_OFFSET;
 
 			trieMatrix[0][row][column] |= bitmask;
 		}
@@ -251,7 +251,7 @@ public class StaticSizeTrieURLToCORSSupportMapper
 		for (; row < maxRow; ++row) {
 			char character = urlPath.charAt(row);
 
-			column = character - _ASCII_PRINTABLE_OFFSET;
+			column = character - ASCII_PRINTABLE_OFFSET;
 
 			bitmask &= trieMatrix[0][row][column];
 
@@ -328,15 +328,11 @@ public class StaticSizeTrieURLToCORSSupportMapper
 		return firstSetBitIndex;
 	}
 
-	private static final byte _ASCII_CHARACTER_RANGE = 96;
-
-	private static final byte _ASCII_PRINTABLE_OFFSET = 32;
-
 	private static final long _BITMASK = ~0;
 
-	private static final int _INDEX_SLASH = '/' - _ASCII_PRINTABLE_OFFSET;
+	private static final int _INDEX_SLASH = '/' - ASCII_PRINTABLE_OFFSET;
 
-	private static final int _INDEX_STAR = '*' - _ASCII_PRINTABLE_OFFSET;
+	private static final int _INDEX_STAR = '*' - ASCII_PRINTABLE_OFFSET;
 
 	private List<CORSSupport> _extensionCORSSupports = new ArrayList<>(
 		Long.SIZE);

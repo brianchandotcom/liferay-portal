@@ -105,6 +105,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
@@ -638,8 +639,14 @@ public class DLFileEntryLocalServiceImpl
 
 		// WebDAVProps
 
-		webDAVPropsLocalService.deleteWebDAVProps(
-			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+		// Temporary fix until sharing is CT enabled. See LPS-119611.
+
+		String fileName = dlFileEntry.getFileName();
+
+		if (!fileName.contains(TempFileEntryUtil.TEMP_RANDOM_SUFFIX)) {
+			webDAVPropsLocalService.deleteWebDAVProps(
+				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+		}
 
 		// File entry metadata
 

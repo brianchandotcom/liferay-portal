@@ -9,9 +9,7 @@ definition {
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_TAG_OPTION");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(locator1 = "ContentDashboard#FIRST_CHECKBOX_TAGS");
 
@@ -19,12 +17,8 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		if (IsElementPresent(locator1 = "ContentDashboard#SELECT_TAGS_BUTTON")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#SELECT_TAGS_BUTTON",
-				value1 = "Select");
-		}
-
+		Click(locator1 = "ContentDashboard#SELECT_TAGS_BUTTON");
+		
 		Pause(locator1 = "3000");
 
 		SelectFrame(value1 = "relative=top");
@@ -74,6 +68,18 @@ definition {
 		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 
 		Click(locator1 = "ContentDashboard#INFO_OPTION");
+	}
+
+	macro searchValue {
+		Click(locator1 = "ContentDashboard#SEARCH_FIELD");
+
+		Type(
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = "${webContentTitle}");
+
+		KeyPress(
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = "\ENTER");
 	}
 
 }

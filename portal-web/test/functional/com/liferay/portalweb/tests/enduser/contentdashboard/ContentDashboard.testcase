@@ -74,19 +74,14 @@ definition {
 	@description = "Validate if the user can filter by tag"
 	@priority = "5"
 	test ContentDashboardFilterByTag {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithTagCP(
-			tagNameList = "tag1",
-			webContentContent = "Web Content With tag1",
-			webContentTitle = "Web Content First");
-		
-		WebContentNavigator.gotoAddCP();
-		
-		WebContent.addWithTagCP(
-			tagNameList = "tag2",
-			webContentContent = "Web Content With tag2",
-			webContentTitle = "Web Content Second");
+			tagNameList = "tag1,tag2",
+			webContentContent = "Web Content With Tag1 and Tag2",
+			webContentTitle = "Web Content Title");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
@@ -97,31 +92,23 @@ definition {
 
 		ContentDashboard.filterByTag();
 
-		ContentDashboard.searchValue(webContentTitle = "First");
+		ContentDashboard.searchValue(webContentTitle = "Web Content Title");
 
 		Pause(locator1 = "3000");
 
 		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_BY_TAG",
-			value1 = "Web Content First");
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_TAGS",
+			value1 = "Web Content Title");
 		
-		ContentDashboard.searchValue(webContentTitle = "Second");
-		
-		Pause(locator1 = "3000");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_BY_TAG",
-			value1 = "Web Content Second");
-		
-		WebContentNavigator.gotoAddCP();
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		JSONWebcontent.deleteWebContent(
-				groupName = "Test Site Name",
-				title = "Web Content First");
-		
-		JSONWebcontent.deleteWebContent(
-				groupName = "Test Site Name",
-				title = "Web Content Second");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "Web Content Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",

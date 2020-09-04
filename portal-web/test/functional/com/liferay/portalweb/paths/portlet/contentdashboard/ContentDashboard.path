@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIRST_ELEMENT_LISTED_TAGS</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(),'Web Content Title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_OPTION</td>
 	<td>//*[contains(@data-action, 'showInfo')]</td>
 	<td></td>
@@ -64,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_FIELD</td>
+	<td>//*[contains(@class,'form-control input-group-inset input-group-inset-after')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SECOND_CHECKBOX_TAGS</td>
 	<td>//*[contains(@title,'Select') and contains(@value,'tag2')]</td>
 	<td></td>
@@ -75,7 +85,7 @@
 </tr>
 <tr>
 	<td>SELECT_TAGS_BUTTON</td>
-	<td>//*[contains(@id,'addButton') and contains(text(),'Select')]</td>
+	<td>//*[contains(@class,'btn btn-primary') and contains(text(),'Select')]</td>
 	<td></td>
 </tr>
 <tr>

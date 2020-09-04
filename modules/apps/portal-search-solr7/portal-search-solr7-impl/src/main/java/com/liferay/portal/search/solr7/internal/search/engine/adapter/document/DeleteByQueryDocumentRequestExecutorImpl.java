@@ -49,7 +49,7 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 		UpdateRequest updateRequest = new UpdateRequest();
 
 		String queryString = _queryTranslator.translate(
-			deleteByQueryDocumentRequest.getQuery(), null);
+			deleteByQueryDocumentRequest.getQuery72(), null);
 
 		updateRequest.deleteByQuery(queryString);
 

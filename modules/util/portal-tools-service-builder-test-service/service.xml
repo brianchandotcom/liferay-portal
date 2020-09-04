@@ -43,6 +43,22 @@
 
 		<reference entity="LVEntry" package-path="com.liferay.portal.tools.service.builder.test" />
 	</entity>
+	<entity cache-enabled="false" local-service="true" name="CacheDisabledEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="cacheDisabledEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="CacheDisabledEntry" unique="true">
+			<finder-column name="name" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="EagerBlobEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_2_x;
 
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -21,7 +22,7 @@ import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import java.util.TreeMap;
 
 /**
- * @author JosĂ© Ă�ngel JimĂ©nez
+ * @author José Ángel Jiménez
  */
 public class PortalUpgradeProcessRegistryImpl
 	implements PortalUpgradeProcessRegistry {
@@ -51,8 +52,7 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(new Version(5, 1, 1), new UpgradeVirtualHost());
 
-		upgradeProcesses.put(
-			new Version(5, 1, 2), new UpgradeLayoutDescription());
+		upgradeProcesses.put(new Version(5, 1, 2), new DummyUpgradeProcess());
 	}
 
 }

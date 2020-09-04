@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_2_x;
+package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_2_x.util.LayoutTable;
 
 /**
- * @author L�szl� Pap
+ * @author Laszlo Pap
  */
 public class UpgradeLayoutDescription extends UpgradeProcess {
 

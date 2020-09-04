@@ -1075,9 +1075,20 @@ class RuleEditor extends Component {
 		let secondOperandType = 'field';
 		let valueType = 'field';
 		if (value[0] == 'value') {
-			valueType = 'string';
-			secondOperandType = this._getFieldTypeByFieldName(operands[0].value)
-				.dataType;
+			const fieldType = this._getFieldTypeByFieldName(operands[0].value);
+
+			if (
+				fieldType.type === 'checkbox_multiple' ||
+				fieldType.type === 'radio' ||
+				fieldType.type === 'select'
+			) {
+				valueType = 'option';
+				secondOperandType = 'option';
+			}
+			else {
+				valueType = 'string';
+				secondOperandType = fieldType.dataType;
+			}
 		}
 
 		if (

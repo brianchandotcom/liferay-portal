@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -74,6 +75,7 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.util.CollectionUtils;
 
 /**
@@ -122,17 +124,18 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		final WritePropertiesTask recordArtifactTask = _addTaskRecordArtifact(
 			project, archivesConfiguration, relengDir);
 
-		Delete cleanArtifactsPublishCommandsTask =
-			_addRootTaskCleanArtifactsPublishCommands(project.getGradle());
+		TaskProvider<Delete> cleanArtifactsPublishCommandsTaskProvider =
+			_getTaskCleanArtifactsPublishCommandsProvider(project.getGradle());
 
-		MergeFilesTask mergeArtifactsPublishCommandsTask =
-			_addRootTaskMergeArtifactsPublishCommands(
-				cleanArtifactsPublishCommandsTask);
+		TaskProvider<MergeFilesTask> mergeArtifactsPublishCommandsTaskProvider =
+			_getTaskMergeArtifactsPublishCommandsProvider(
+				project.getGradle(), cleanArtifactsPublishCommandsTaskProvider);
 
 		WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask =
 			_addTaskWriteArtifactPublishCommands(
-				project, recordArtifactTask, cleanArtifactsPublishCommandsTask,
-				mergeArtifactsPublishCommandsTask);
+				project, recordArtifactTask,
+				cleanArtifactsPublishCommandsTaskProvider,
+				mergeArtifactsPublishCommandsTaskProvider);
 
 		mergeArtifactsPublishCommandsTask.mustRunAfter(
 			writeArtifactPublishCommandsTask);
@@ -163,120 +166,166 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	private LiferayRelengPlugin() {
 	}
 
-	private Delete _addRootTaskCleanArtifactsPublishCommands(Gradle gradle) {
+	private TaskProvider<Delete> _getTaskCleanArtifactsPublishCommandsProvider(
+		Gradle gradle) {
+
 		StartParameter startParameter = gradle.getStartParameter();
 
-		Project project = GradleUtil.getProject(
+		final Project currentProject = GradleUtil.getProject(
 			gradle.getRootProject(), startParameter.getCurrentDir());
 
-		TaskContainer taskContainer = project.getTasks();
+		TaskProvider<Delete> cleanArtifactsPublishCommandsTaskProvider =
+			GradleUtil.fetchTaskProvider(
+				currentProject, CLEAN_ARTIFACTS_PUBLISH_COMMANDS_TASK_NAME,
+				Delete.class);
 
-		Delete delete = (Delete)taskContainer.findByName(
-			CLEAN_ARTIFACTS_PUBLISH_COMMANDS_TASK_NAME);
-
-		if (delete != null) {
-			return delete;
+		if (cleanArtifactsPublishCommandsTaskProvider != null) {
+			return cleanArtifactsPublishCommandsTaskProvider;
 		}
 
-		delete = GradleUtil.addTask(
-			project, CLEAN_ARTIFACTS_PUBLISH_COMMANDS_TASK_NAME, Delete.class);
+		cleanArtifactsPublishCommandsTaskProvider = GradleUtil.addTaskProvider(
+			currentProject, CLEAN_ARTIFACTS_PUBLISH_COMMANDS_TASK_NAME,
+			Delete.class);
 
-		delete.delete(
-			new File(project.getBuildDir(), "artifacts-publish-commands"));
-		delete.setDescription(
-			"Deletes the temporary directory that contains the artifacts " +
-				"publish commands.");
+		cleanArtifactsPublishCommandsTaskProvider.configure(
+			new Action<Delete>() {
 
-		return delete;
+				@Override
+				public void execute(
+					Delete cleanArtifactsPublishCommandsDelete) {
+
+					File buildDir = currentProject.getBuildDir();
+
+					cleanArtifactsPublishCommandsDelete.delete(
+						new File(buildDir, "artifacts-publish-commands"));
+					cleanArtifactsPublishCommandsDelete.setDescription(
+						"Deletes the temporary directory that contains " +
+							"the artifacts publish commands.");
+				}
+
+			});
+
+		return cleanArtifactsPublishCommandsTaskProvider;
 	}
 
-	private MergeFilesTask _addRootTaskMergeArtifactsPublishCommands(
-		Delete cleanArtifactsPublishCommandsTask) {
+	private TaskProvider<MergeFilesTask>
+		_getTaskMergeArtifactsPublishCommandsProvider(
+			Gradle gradle,
+			final TaskProvider<Delete>
+				cleanArtifactsPublishCommandsTaskProvider) {
 
-		Project rootProject = cleanArtifactsPublishCommandsTask.getProject();
+		StartParameter startParameter = gradle.getStartParameter();
 
-		TaskContainer taskContainer = rootProject.getTasks();
+		final Project currentProject = GradleUtil.getProject(
+			gradle.getRootProject(), startParameter.getCurrentDir());
 
-		MergeFilesTask mergeFilesTask =
-			(MergeFilesTask)taskContainer.findByName(
-				MERGE_ARTIFACTS_PUBLISH_COMMANDS);
+		TaskProvider<MergeFilesTask> mergeArtifactsPublishCommandsTaskProvider =
+			GradleUtil.fetchTaskProvider(
+				currentProject, MERGE_ARTIFACTS_PUBLISH_COMMANDS,
+				MergeFilesTask.class);
 
-		if (mergeFilesTask != null) {
-			return mergeFilesTask;
+		if (mergeArtifactsPublishCommandsTaskProvider != null) {
+			return mergeArtifactsPublishCommandsTaskProvider;
 		}
 
-		mergeFilesTask = GradleUtil.addTask(
-			rootProject, MERGE_ARTIFACTS_PUBLISH_COMMANDS,
+		mergeArtifactsPublishCommandsTaskProvider = GradleUtil.addTaskProvider(
+			currentProject, MERGE_ARTIFACTS_PUBLISH_COMMANDS,
 			MergeFilesTask.class);
 
-		File dir = GradleUtil.toFile(
-			rootProject,
-			CollectionUtils.first(
-				cleanArtifactsPublishCommandsTask.getDelete()));
-
-		mergeFilesTask.doLast(
-			new Action<Task>() {
+		mergeArtifactsPublishCommandsTaskProvider.configure(
+			new Action<MergeFilesTask>() {
 
 				@Override
-				public void execute(Task task) {
-					MergeFilesTask mergeFilesTask = (MergeFilesTask)task;
+				public void execute(
+					MergeFilesTask
+						mergeArtifactsPublishCommandsMergeFilesTask) {
 
-					Logger logger = mergeFilesTask.getLogger();
+					Delete cleanArtifactsPublishCommandsDelete =
+						cleanArtifactsPublishCommandsTaskProvider.get();
 
-					File file = mergeFilesTask.getOutputFile();
+					Set<Object> delete =
+						cleanArtifactsPublishCommandsDelete.getDelete();
 
-					if (file.exists()) {
-						boolean success = file.setExecutable(true);
+					File dir = GradleUtil.toFile(
+						currentProject, CollectionUtils.first(delete));
 
-						if (!success) {
-							logger.error(
-								"Unable to set the owner's execute " +
-									"permission for {}",
-								file);
-						}
+					mergeArtifactsPublishCommandsMergeFilesTask.doLast(
+						new Action<Task>() {
 
-						if (logger.isQuietEnabled()) {
-							logger.quiet(
-								"Artifacts publish commands written in {}.",
-								file);
-						}
-					}
-					else {
-						if (logger.isQuietEnabled()) {
-							logger.quiet(
-								"No artifacts publish commands are available.");
-						}
-					}
+							@Override
+							public void execute(Task task) {
+								MergeFilesTask mergeFilesTask =
+									(MergeFilesTask)task;
+
+								Logger logger = mergeFilesTask.getLogger();
+
+								File file = mergeFilesTask.getOutputFile();
+
+								if (file.exists()) {
+									boolean success = file.setExecutable(true);
+
+									if (!success) {
+										logger.error(
+											"Unable to set the owner's " +
+												"execute permission for {}",
+											file);
+									}
+
+									if (logger.isQuietEnabled()) {
+										logger.quiet(
+											"Artifacts publish commands " +
+												"written in {}.",
+											file);
+									}
+								}
+								else {
+									if (logger.isQuietEnabled()) {
+										logger.quiet(
+											"No artifacts publish " +
+												"commands are available.");
+									}
+								}
+							}
+
+						});
+
+					mergeArtifactsPublishCommandsMergeFilesTask.setDescription(
+						"Merges the artifacts publish commands.");
+					mergeArtifactsPublishCommandsMergeFilesTask.setHeader(
+						"#!/bin/bash" + System.lineSeparator() +
+							System.lineSeparator() + "set -e" +
+								System.lineSeparator());
+
+					mergeArtifactsPublishCommandsMergeFilesTask.setInputFiles(
+						new File(
+							dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step1.sh"),
+						new File(
+							dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step2.sh"),
+						new File(
+							dir,
+							WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step3.sh"));
+
+					mergeArtifactsPublishCommandsMergeFilesTask.setOutputFile(
+						new File(dir, "artifacts-publish-commands.sh"));
+
+					TaskOutputs taskOutputs =
+						mergeArtifactsPublishCommandsMergeFilesTask.
+							getOutputs();
+
+					taskOutputs.upToDateWhen(
+						new Spec<Task>() {
+
+							@Override
+							public boolean isSatisfiedBy(Task task) {
+								return false;
+							}
+
+						});
 				}
 
 			});
 
-		mergeFilesTask.setDescription("Merges the artifacts publish commands.");
-		mergeFilesTask.setHeader(
-			"#!/bin/bash" + System.lineSeparator() + System.lineSeparator() +
-				"set -e" + System.lineSeparator());
-
-		mergeFilesTask.setInputFiles(
-			new File(dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step1.sh"),
-			new File(dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step2.sh"),
-			new File(dir, WRITE_ARTIFACT_PUBLISH_COMMANDS + "-step3.sh"));
-
-		mergeFilesTask.setOutputFile(
-			new File(dir, "artifacts-publish-commands.sh"));
-
-		TaskOutputs taskOutputs = mergeFilesTask.getOutputs();
-
-		taskOutputs.upToDateWhen(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					return false;
-				}
-
-			});
-
-		return mergeFilesTask;
+		return mergeArtifactsPublishCommandsTaskProvider;
 	}
 
 	private Task _addTaskPrintDependentArtifact(Project project) {
@@ -480,8 +529,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	private WriteArtifactPublishCommandsTask
 		_addTaskWriteArtifactPublishCommands(
 			Project project, final WritePropertiesTask recordArtifactTask,
-			Delete cleanArtifactsPublishCommandsTask,
-			MergeFilesTask mergeArtifactsPublishCommandsTask) {
+			TaskProvider<Delete> cleanArtifactsPublishCommandsTaskProvider,
+			TaskProvider<MergeFilesTask>
+				mergeArtifactsPublishCommandsTaskProvider) {
 
 		final WriteArtifactPublishCommandsTask
 			writeArtifactPublishCommandsTask = GradleUtil.addTask(
@@ -489,7 +539,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				WriteArtifactPublishCommandsTask.class);
 
 		writeArtifactPublishCommandsTask.dependsOn(
-			cleanArtifactsPublishCommandsTask);
+			cleanArtifactsPublishCommandsTaskProvider);
 
 		writeArtifactPublishCommandsTask.doFirst(
 			new Action<Task>() {
@@ -511,7 +561,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			});
 
 		writeArtifactPublishCommandsTask.finalizedBy(
-			mergeArtifactsPublishCommandsTask);
+			mergeArtifactsPublishCommandsTaskProvider);
 
 		writeArtifactPublishCommandsTask.setArtifactPropertiesFile(
 			new Callable<File>() {
@@ -526,6 +576,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		writeArtifactPublishCommandsTask.setDescription(
 			"Prints the artifact publish commands if this project has been " +
 				"changed since the last publish.");
+
+		Delete cleanArtifactsPublishCommandsTask =
+			cleanArtifactsPublishCommandsTaskProvider.get();
 
 		writeArtifactPublishCommandsTask.setOutputDir(
 			CollectionUtils.first(

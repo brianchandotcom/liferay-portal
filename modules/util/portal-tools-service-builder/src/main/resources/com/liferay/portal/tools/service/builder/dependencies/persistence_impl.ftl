@@ -9,14 +9,23 @@
 </#if>
 
 <#if osgiModule>
+	<#assign ctPersistenceHelper = "ctPersistenceHelper"/>
+<#else>
+	<#assign ctPersistenceHelper = "CTPersistenceHelperUtil"/>
+</#if>
+
+<#if serviceBuilder.isVersionGTE_7_3_0() && !entity.isCacheEnabled()>
 	<#assign
-		ctPersistenceHelper = "ctPersistenceHelper"
+		entityCache = "dummyEntityCache"
+		finderCache = "dummyFinderCache"
+	/>
+<#elseif osgiModule>
+	<#assign
 		entityCache = "entityCache"
 		finderCache = "finderCache"
 	/>
 <#else>
 	<#assign
-		ctPersistenceHelper = "CTPersistenceHelperUtil"
 		entityCache = "EntityCacheUtil"
 		finderCache = "FinderCacheUtil"
 	/>
@@ -1889,7 +1898,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	<#if !serviceBuilder.isVersionLTE_7_1_0()>
 		@Override
 		protected EntityCache getEntityCache() {
-			<#if osgiModule>
+			<#if serviceBuilder.isVersionGTE_7_3_0() && !entity.isCacheEnabled()>
+				return dummyEntityCache;
+			<#elseif osgiModule>
 				return entityCache;
 			<#else>
 				return EntityCacheUtil.getEntityCache();
@@ -2666,19 +2677,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			protected CTPersistenceHelper ctPersistenceHelper;
 		</#if>
 
-		<#if dependencyInjectorDS>
-			@Reference
-		<#else>
-			@ServiceReference(type = EntityCache.class)
-		</#if>
-		protected EntityCache entityCache;
+		<#if serviceBuilder.isVersionLTE_7_2_0() || entity.isCacheEnabled()>
+			<#if dependencyInjectorDS>
+				@Reference
+			<#else>
+				@ServiceReference(type = EntityCache.class)
+			</#if>
+			protected EntityCache entityCache;
 
-		<#if dependencyInjectorDS>
-			@Reference
-		<#else>
-			@ServiceReference(type = FinderCache.class)
+			<#if dependencyInjectorDS>
+				@Reference
+			<#else>
+				@ServiceReference(type = FinderCache.class)
+			</#if>
+			protected FinderCache finderCache;
 		</#if>
-		protected FinderCache finderCache;
 	</#if>
 
 	<#list entity.entityColumns as entityColumn>

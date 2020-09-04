@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Dialect;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
@@ -68,6 +69,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.io.Serializable;
 
@@ -898,6 +900,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected static final String WHERE_OR = " OR ";
 
+	protected static EntityCache dummyEntityCache =
+		ProxyFactory.newDummyInstance(EntityCache.class);
+	protected static FinderCache dummyFinderCache =
+		ProxyFactory.newDummyInstance(FinderCache.class);
 	protected static final NullModel nullModel = new NullModel();
 
 	protected int databaseInMaxParameters;

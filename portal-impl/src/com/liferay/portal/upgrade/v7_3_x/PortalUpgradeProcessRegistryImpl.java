@@ -132,6 +132,9 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 18, 0), new UpgradeLayoutStyleBookEntry());
 
 		upgradeProcesses.put(new Version(8, 18, 1), new UpgradeModules());
+
+		upgradeProcesses.put(
+			new Version(8, 18, 2), new UpgradeLayoutDescription());
 	}
 
 }

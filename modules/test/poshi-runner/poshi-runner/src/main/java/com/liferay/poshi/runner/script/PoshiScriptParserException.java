@@ -39,7 +39,7 @@ public class PoshiScriptParserException extends Exception {
 
 			sb.append("\n\n");
 			sb.append(_poshiScriptParserExceptions.size());
-			sb.append(" errors in Poshi Script syntax\n\n");
+			sb.append(" errors in POSHI Script syntax\n\n");
 
 			for (Exception exception : _poshiScriptParserExceptions) {
 				sb.append(exception.getMessage());

@@ -27,6 +27,37 @@ CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/serv
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-blacklist-osgi-config">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames="com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.elasticsearch.monitoring.web</echo>
+
+			<pathconvert pathsep="," property="commerce.modules">
+				<path>
+					<fileset
+						dir="${liferay.home}/osgi/modules"
+					>
+						<include name="com.liferay.commerce.*" />
+						<include name="com.liferay.headless.commerce.*" />
+					</fileset>
+				</path>
+				<chainedmapper>
+					<mapper
+						from="^(.*)/(.*\.jar)"
+						to="\2"
+						type="regexp"
+					/>
+					<mapper
+						from="*.jar"
+						to="*"
+						type="glob"
+					/>
+				</chainedmapper>
+			</pathconvert>
+
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">,${commerce.modules}"</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-liferay-solr-adapter-osgi-configs">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrConfiguration.config">readURL="http://localhost:8983/solr/liferay"
@@ -38,31 +69,6 @@ writeURL="http://localhost:8983/solr/liferay"</echo>
 		<sequential>
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrConfiguration.config">
 clientType="CLOUD"</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="configure-liferay-solr-ssl-adapter-properties">
-		<sequential>
-			<replace
-				file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrConfiguration.config"
-			>
-				<replacetoken><![CDATA[http://]]></replacetoken>
-				<replacevalue><![CDATA[https://]]></replacevalue>
-			</replace>
-
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrConfiguration.config">
-authenticationMode="CERT"</echo>
-
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrSSLSocketFactoryConfiguration.config">keyStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"
-trustStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="configure-solr-blacklist-osgi-configs">
-		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=&quot;com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.elasticsearch.monitoring.web</echo>
-
-			<antcall target="blacklist-commerce" />
 		</sequential>
 	</macrodef>
 
@@ -358,7 +364,7 @@ schema=schema.xml</echo>
 
 		<prepare-solr-configurations />
 
-		<configure-solr-blacklist-osgi-configs />
+		<configure-blacklist-osgi-config />
 
 		<configure-liferay-solr-adapter-osgi-configs />
 

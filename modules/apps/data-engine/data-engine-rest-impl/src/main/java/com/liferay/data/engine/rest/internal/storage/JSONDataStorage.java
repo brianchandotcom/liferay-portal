@@ -99,7 +99,7 @@ public class JSONDataStorage implements DataStorage {
 			_serializeDDMFormValues(
 				MapToDDMFormValuesConverterUtil.toDDMFormValues(
 					dataRecordValues, ddmStructure.getFullHierarchyDDMForm(),
-					_portal.getSiteDefaultLocale(siteId))),
+					null)),
 			new ServiceContext() {
 				{
 					setScopeGroupId(siteId);

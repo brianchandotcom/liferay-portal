@@ -14,6 +14,7 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
+import com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -36,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	configurationPid = "com.liferay.data.cleanup.internal.DataCleanupConfiguration",
+	configurationPid = "com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration",
 	immediate = true, service = UpgradeStepRegistrator.class
 )
 public class DataCleanup implements UpgradeStepRegistrator {

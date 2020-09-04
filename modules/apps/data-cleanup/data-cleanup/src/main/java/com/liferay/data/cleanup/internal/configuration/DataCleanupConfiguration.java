@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.cleanup.internal.upgrade;
+package com.liferay.data.cleanup.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "upgrades")
 @Meta.OCD(
-	id = "com.liferay.data.cleanup.internal.upgrade.DataCleanupConfiguration",
+	id = "com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration",
 	name = "data-cleanup-configuration-name"
 )
 public interface DataCleanupConfiguration {

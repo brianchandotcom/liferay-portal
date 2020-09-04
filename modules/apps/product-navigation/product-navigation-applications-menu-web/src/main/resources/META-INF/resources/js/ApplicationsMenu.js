@@ -43,10 +43,10 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 				{Liferay.Language.get('sites')}
 			</h2>
 
-			<div className="c-my-2">
-				<ul className="list-unstyled">
+			<div className="c-mt-2">
+				<ul className="c-mb-0 list-unstyled">
 					{virtualInstance && (
-						<li className="applications-menu-virtual-instance c-mb-4 c-mt-3">
+						<li className="applications-menu-virtual-instance c-mt-2">
 							<a
 								className="applications-menu-nav-link"
 								href={virtualInstance.url}
@@ -73,6 +73,8 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 					)}
 				</ul>
 			</div>
+
+			<div className="applications-menu-nav-divider c-my-3"></div>
 
 			<div className="applications-menu-sites c-my-2">
 				<ul className="list-unstyled">

@@ -17,7 +17,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchEagerBlobEntryException;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntryTable;
@@ -184,7 +182,7 @@ public class EagerBlobEntryPersistenceImpl
 		List<EagerBlobEntry> list = null;
 
 		if (useFinderCache) {
-			list = (List<EagerBlobEntry>)finderCache.getResult(
+			list = (List<EagerBlobEntry>)dummyFinderCache.getResult(
 				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -251,7 +249,7 @@ public class EagerBlobEntryPersistenceImpl
 				cacheResult(list);
 
 				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					dummyFinderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
@@ -568,7 +566,8 @@ public class EagerBlobEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)dummyFinderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -603,7 +602,7 @@ public class EagerBlobEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				dummyFinderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -697,7 +696,7 @@ public class EagerBlobEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
+			result = dummyFinderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
@@ -750,7 +749,7 @@ public class EagerBlobEntryPersistenceImpl
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
-						finderCache.putResult(
+						dummyFinderCache.putResult(
 							_finderPathFetchByUUID_G, finderArgs, list);
 					}
 				}
@@ -809,7 +808,8 @@ public class EagerBlobEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)dummyFinderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -848,7 +848,7 @@ public class EagerBlobEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				dummyFinderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -893,11 +893,11 @@ public class EagerBlobEntryPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(EagerBlobEntry eagerBlobEntry) {
-		entityCache.putResult(
+		dummyEntityCache.putResult(
 			EagerBlobEntryImpl.class, eagerBlobEntry.getPrimaryKey(),
 			eagerBlobEntry);
 
-		finderCache.putResult(
+		dummyFinderCache.putResult(
 			_finderPathFetchByUUID_G,
 			new Object[] {
 				eagerBlobEntry.getUuid(), eagerBlobEntry.getGroupId()
@@ -913,7 +913,7 @@ public class EagerBlobEntryPersistenceImpl
 	@Override
 	public void cacheResult(List<EagerBlobEntry> eagerBlobEntries) {
 		for (EagerBlobEntry eagerBlobEntry : eagerBlobEntries) {
-			if (entityCache.getResult(
+			if (dummyEntityCache.getResult(
 					EagerBlobEntryImpl.class, eagerBlobEntry.getPrimaryKey()) ==
 						null) {
 
@@ -926,45 +926,46 @@ public class EagerBlobEntryPersistenceImpl
 	 * Clears the cache for all eager blob entries.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		entityCache.clearCache(EagerBlobEntryImpl.class);
+		dummyEntityCache.clearCache(EagerBlobEntryImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		dummyFinderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the eager blob entry.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(EagerBlobEntry eagerBlobEntry) {
-		entityCache.removeResult(EagerBlobEntryImpl.class, eagerBlobEntry);
+		dummyEntityCache.removeResult(EagerBlobEntryImpl.class, eagerBlobEntry);
 	}
 
 	@Override
 	public void clearCache(List<EagerBlobEntry> eagerBlobEntries) {
 		for (EagerBlobEntry eagerBlobEntry : eagerBlobEntries) {
-			entityCache.removeResult(EagerBlobEntryImpl.class, eagerBlobEntry);
+			dummyEntityCache.removeResult(
+				EagerBlobEntryImpl.class, eagerBlobEntry);
 		}
 	}
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		dummyFinderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(EagerBlobEntryImpl.class, primaryKey);
+			dummyEntityCache.removeResult(EagerBlobEntryImpl.class, primaryKey);
 		}
 	}
 
@@ -976,9 +977,9 @@ public class EagerBlobEntryPersistenceImpl
 			eagerBlobEntryModelImpl.getGroupId()
 		};
 
-		finderCache.putResult(
+		dummyFinderCache.putResult(
 			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
-		finderCache.putResult(
+		dummyFinderCache.putResult(
 			_finderPathFetchByUUID_G, args, eagerBlobEntryModelImpl, false);
 	}
 
@@ -1137,7 +1138,7 @@ public class EagerBlobEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
+		dummyEntityCache.putResult(
 			EagerBlobEntryImpl.class, eagerBlobEntryModelImpl, false, true);
 
 		cacheUniqueFindersCache(eagerBlobEntryModelImpl);
@@ -1284,7 +1285,7 @@ public class EagerBlobEntryPersistenceImpl
 		List<EagerBlobEntry> list = null;
 
 		if (useFinderCache) {
-			list = (List<EagerBlobEntry>)finderCache.getResult(
+			list = (List<EagerBlobEntry>)dummyFinderCache.getResult(
 				finderPath, finderArgs, this);
 		}
 
@@ -1322,7 +1323,7 @@ public class EagerBlobEntryPersistenceImpl
 				cacheResult(list);
 
 				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					dummyFinderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
@@ -1354,7 +1355,7 @@ public class EagerBlobEntryPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(
+		Long count = (Long)dummyFinderCache.getResult(
 			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1367,7 +1368,7 @@ public class EagerBlobEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(
+				dummyFinderCache.putResult(
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
@@ -1388,7 +1389,7 @@ public class EagerBlobEntryPersistenceImpl
 
 	@Override
 	protected EntityCache getEntityCache() {
-		return entityCache;
+		return dummyEntityCache;
 	}
 
 	@Override
@@ -1462,7 +1463,7 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 	public void destroy() {
-		entityCache.removeCache(EagerBlobEntryImpl.class.getName());
+		dummyEntityCache.removeCache(EagerBlobEntryImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
 
@@ -1474,12 +1475,6 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 	private BundleContext _bundleContext;
-
-	@ServiceReference(type = EntityCache.class)
-	protected EntityCache entityCache;
-
-	@ServiceReference(type = FinderCache.class)
-	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_EAGERBLOBENTRY =
 		"SELECT eagerBlobEntry FROM EagerBlobEntry eagerBlobEntry";

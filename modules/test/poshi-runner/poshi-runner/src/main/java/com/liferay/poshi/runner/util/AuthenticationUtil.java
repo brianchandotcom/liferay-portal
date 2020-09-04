@@ -32,8 +32,6 @@ import jodd.util.Base32;
 public class AuthenticationUtil {
 
 	public static String generateTimeBasedOTP(String secretKey) {
-		String otpAlgorithm = "HmacSHA1";
-
 		long time = (System.currentTimeMillis() - 3000) / 30000;
 
 		String timeCountHex = StringUtil.toUpperCase(Long.toHexString(time));
@@ -47,7 +45,7 @@ public class AuthenticationUtil {
 			CharPool.NUMBER_0);
 
 		try {
-			Mac mac = Mac.getInstance(otpAlgorithm);
+			Mac mac = Mac.getInstance(_HMAC_SHA1_ALGORITHM);
 
 			mac.init(new SecretKeySpec(Base32.decode(secretKey), "RAW"));
 
@@ -64,18 +62,23 @@ public class AuthenticationUtil {
 				((hash[offset] & 0x7f) << 24) | ((hash[offset + 1] & 0xff) << 16) |
 				((hash[offset + 2] & 0xff) << 8) | (hash[offset + 3] & 0xff);
 
-			int timeBasedOTP = binary % (int)Math.pow(10, 6);
+			int timeBasedOTP = binary % (int)Math.pow(10, _TIME_BASED_OTP_DIGITS);
 
-			return String.format("%0" + 6 + "d", timeBasedOTP);
+			return String.format("%0" + _TIME_BASED_OTP_DIGITS + "d", timeBasedOTP);
 		}
 		catch (InvalidKeyException invalidKeyException) {
 			throw new IllegalArgumentException(
-				"Invalid secret key for algorithm " + otpAlgorithm, invalidKeyException);
+				"Invalid secret key for algorithm " + _HMAC_SHA1_ALGORITHM, invalidKeyException);
 
 		}
 		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
 			throw new IllegalArgumentException(
-				"Invalid algorithm " + otpAlgorithm, noSuchAlgorithmException);
+				"Invalid algorithm " + _HMAC_SHA1_ALGORITHM, noSuchAlgorithmException);
 		}
 	}
+
+	private static final String _HMAC_SHA1_ALGORITHM = "HmacSHA1";
+
+	private static final int _TIME_BASED_OTP_DIGITS = 6;
+
 }

@@ -5,6 +5,7 @@
 		<suppress checks="CamelCaseNameCheck" files="ant-mirrors-get/src/main/java/com/liferay/ant/mirrors/get/MirrorsGetTask\.java" />
 		<suppress checks="CamelCaseNameCheck" files="gradle-util/src/main/java/com/liferay/gradle/util/FileUtil\.java" />
 		<suppress checks="JSONNamingCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayThemePlugin\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/LiferayRelengPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/internal/WatchOSGiPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/JspCDefaultsPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayExtPlugin\.java" />
@@ -27,6 +28,7 @@
 		<suppress checks="JavaDiamondOperatorCheck" files="ant-beanshell/.*" />
 		<suppress checks="JavaDiamondOperatorCheck" files="ant-bnd/.*" />
 		<suppress checks="JavaDiamondOperatorCheck" files="ant-gradle/.*" />
+		<suppress checks="JavaLongLinesCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/LiferayRelengPlugin\.java" />
 		<suppress checks="JavaModuleInternalImportsCheck" files="gradle-plugins/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
 		<suppress checks="JavaPackagePathCheck" files=".*/foo-api/.*" />
 		<suppress checks="JavaPackagePathCheck" files="gradle-plugins-source-formatter/src/gradleTest/.*" />

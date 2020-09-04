@@ -45,7 +45,6 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -555,9 +554,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Task printStaleArtifactTask) {
-					Project project = printStaleArtifactTask.getProject();
+					if (GradlePluginsDefaultsUtil.isTestProject(
+							printStaleArtifactTask.getProject())) {
 
-					if (GradlePluginsDefaultsUtil.isTestProject(project)) {
 						printStaleArtifactTask.setEnabled(false);
 					}
 				}
@@ -991,13 +990,13 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				public void execute(
 					Delete cleanArtifactsPublishCommandsDelete) {
 
-					File buildDir = currentProject.getBuildDir();
-
 					cleanArtifactsPublishCommandsDelete.delete(
-						new File(buildDir, "artifacts-publish-commands"));
+						new File(
+							currentProject.getBuildDir(),
+							"artifacts-publish-commands"));
 					cleanArtifactsPublishCommandsDelete.setDescription(
-						"Deletes the temporary directory that contains " +
-							"the artifacts publish commands.");
+						"Deletes the temporary directory that contains the " +
+							"artifacts publish commands.");
 				}
 
 			});
@@ -1045,11 +1044,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					Delete cleanArtifactsPublishCommandsDelete =
 						cleanArtifactsPublishCommandsTaskProvider.get();
 
-					Set<Object> delete =
-						cleanArtifactsPublishCommandsDelete.getDelete();
-
 					File dir = GradleUtil.toFile(
-						currentProject, CollectionUtils.first(delete));
+						currentProject,
+						CollectionUtils.first(
+							cleanArtifactsPublishCommandsDelete.getDelete()));
 
 					mergeArtifactsPublishCommandsMergeFilesTask.doLast(
 						new Action<Task>() {
@@ -1083,8 +1081,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 								else {
 									if (logger.isQuietEnabled()) {
 										logger.quiet(
-											"No artifacts publish " +
-												"commands are available.");
+											"No artifacts publish commands " +
+												"are available.");
 									}
 								}
 							}

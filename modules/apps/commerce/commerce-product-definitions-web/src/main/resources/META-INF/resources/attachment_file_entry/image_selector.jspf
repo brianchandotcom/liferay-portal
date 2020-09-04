@@ -58,9 +58,12 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 </c:choose>
 
 <aui:script use="liferay-item-selector-dialog">
-	window.document
-		.querySelector('#<portlet:namespace />selectFile')
-		.addEventListener('click', function (event) {
+	var selectFileButton = window.document.querySelector(
+		'#<portlet:namespace />selectFile'
+	);
+
+	if (selectFileButton) {
+		selectFileButton.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -99,12 +102,16 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 
 			itemSelectorDialog.open();
 		});
+	}
 </aui:script>
 
 <aui:script>
-	window.document
-		.querySelector('#<portlet:namespace />deleteFile')
-		.addEventListener('click', function (event) {
+	var deleteFileButton = window.document.querySelector(
+		'#<portlet:namespace />deleteFile'
+	);
+
+	if (deleteFileButton) {
+		deleteFileButton.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			window.document.querySelector(
@@ -119,8 +126,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 				.querySelector('#<portlet:namespace />fileEntryContainer')
 				.classList.add('hidden');
 
-			window.document
-				.querySelector('#<portlet:namespace />deleteFile')
-				.classList.add('hidden');
+			deleteFileButton.classList.add('hidden');
 		});
+	}
 </aui:script>

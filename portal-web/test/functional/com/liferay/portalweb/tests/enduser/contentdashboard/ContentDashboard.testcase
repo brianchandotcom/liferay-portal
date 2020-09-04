@@ -99,7 +99,7 @@ definition {
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_TAGS",
 			value1 = "Web Content Title");
-		
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");

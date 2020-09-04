@@ -522,6 +522,19 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "#272833",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-secondary-color"
+								}
+							],
+							"name": "btnOutlineSecondaryColor",
+							"type": "String"
+						},
+						{
 							"defaultValue": "rgba(39, 40, 51, 0.03)",
 							"editorType": "ColorPicker",
 							"label": "hover-background-color",

@@ -9,8 +9,9 @@ $light-color: #e7e7ed;
 $lead-font-weight: 400;
 $small-font-size: 0.875rem;
 
-$portlet-decorate-bg: #fff;
-$portlet-decorate-border: 1px solid $light-color;
+$btn-outline-secondary: (
+	color: $dark-color,
+);
 
 $navigation-bar-size: (
 	active-border-offset-bottom: -0.4375rem,
@@ -21,6 +22,9 @@ $navigation-bar-size: (
 $navigation-bar-light: (
 	border-color: $border-color,
 );
+
+$portlet-decorate-bg: #fff;
+$portlet-decorate-border: 1px solid $light-color;
 
 // Compat
 

@@ -14,11 +14,14 @@
 
 package com.liferay.portal.security.ldap.internal.upgrade.v1_0_0;
 
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
+import com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration;
+import com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration;
+import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 
 import java.util.Dictionary;
 
@@ -28,9 +31,9 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Marta Medio
  */
-public class UpgradeLDAPAuthConfiguration extends UpgradeProcess {
+public class UpgradeLDAPSystemConfigurations extends UpgradeProcess {
 
-	public UpgradeLDAPAuthConfiguration(
+	public UpgradeLDAPSystemConfigurations(
 		ConfigurationAdmin configurationAdmin,
 		ConfigurationProvider configurationProvider) {
 
@@ -40,13 +43,15 @@ public class UpgradeLDAPAuthConfiguration extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_upgradeConfiguration();
+		_upgradeConfiguration(LDAPAuthConfiguration.class.getName());
+		_upgradeConfiguration(LDAPExportConfiguration.class.getName());
+		_upgradeConfiguration(LDAPImportConfiguration.class.getName());
+		_upgradeConfiguration(SystemLDAPConfiguration.class.getName());
 	}
 
-	private void _upgradeConfiguration() throws Exception {
+	private void _upgradeConfiguration(String className) throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			"(service.factoryPid=" + LDAPAuthConfiguration.class.getName() +
-				")");
+			"(service.factoryPid=" + className + ")");
 
 		if (configurations == null) {
 			return;
@@ -56,19 +61,17 @@ public class UpgradeLDAPAuthConfiguration extends UpgradeProcess {
 			Dictionary<String, Object> configurationProperties =
 				configuration.getProperties();
 
-			String companyId = GetterUtil.getString(
+			Long companyId = GetterUtil.getLong(
 				configurationProperties.get("companyId"));
 
-			if (companyId.equals(_PROPERTY_VALUE_COMPANY_ID_DEFAULT)) {
-				ConfigurationProviderUtil.saveSystemConfiguration(
-					LDAPAuthConfiguration.class, configurationProperties);
+			if (companyId == CompanyConstants.SYSTEM) {
+				_configurationProvider.saveSystemConfiguration(
+					Class.forName(className), configurationProperties);
 
 				configuration.delete();
 			}
 		}
 	}
-
-	private static final String _PROPERTY_VALUE_COMPANY_ID_DEFAULT = "0";
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final ConfigurationProvider _configurationProvider;

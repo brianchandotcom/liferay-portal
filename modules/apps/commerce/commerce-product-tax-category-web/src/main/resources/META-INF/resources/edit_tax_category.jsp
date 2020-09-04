@@ -49,6 +49,8 @@ else {
 			<aui:fieldset>
 				<aui:input name="name" />
 
+				<aui:input name="externalReferenceCode" />
+
 				<aui:input name="description" />
 			</aui:fieldset>
 		</aui:fieldset-group>

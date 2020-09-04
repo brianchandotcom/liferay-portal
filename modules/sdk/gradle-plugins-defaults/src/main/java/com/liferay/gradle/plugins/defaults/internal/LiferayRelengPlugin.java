@@ -166,7 +166,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			recordArtifactTaskProvider,
 			writeArtifactPublishCommandsTaskProvider);
 
-		_configureLiferayRelengProperties(project);
+		_configureProperties(project);
 
 		PublishArtifactSet publishArtifactSet =
 			archivesConfiguration.getArtifacts();
@@ -743,7 +743,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureLiferayRelengProperties(Project project) {
+	private void _configureProperties(Project project) {
 		boolean privateModule = false;
 
 		String projectPath = project.getPath();

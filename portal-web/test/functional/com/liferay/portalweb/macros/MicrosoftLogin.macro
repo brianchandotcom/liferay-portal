@@ -80,7 +80,7 @@ definition {
 		if (IsElementPresent(locator1 = "Portlet#HEADER")) {
 			AssertTextEquals(
 				locator1 = "Portlet#HEADER",
-				value1 = "${dmRepositoryName}");
+				value1 = "Documents and Media");
 		}
 		else {
 			AssertTextEquals(

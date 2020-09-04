@@ -136,7 +136,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		TaskProvider<MergeFilesTask> mergeArtifactsPublishCommandsTaskProvider =
 			_getTaskMergeArtifactsPublishCommandsProvider(
-				project.getGradle(), cleanArtifactsPublishCommandsTaskProvider);
+				project.getGradle(), cleanArtifactsPublishCommandsTaskProvider,
+				writeArtifactPublishCommandsTaskProvider);
 
 		final TaskProvider<BuildChangeLogTask> buildChangeLogTaskProvider =
 			GradleUtil.getTaskProvider(
@@ -165,9 +166,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			mergeArtifactsPublishCommandsTaskProvider,
 			recordArtifactTaskProvider,
 			writeArtifactPublishCommandsTaskProvider);
-
-		mergeArtifactsPublishCommandsTask.mustRunAfter(
-			writeArtifactPublishCommandsTask);
 
 		_configureLiferayRelengProperties(project);
 
@@ -242,7 +240,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		_getTaskMergeArtifactsPublishCommandsProvider(
 			Gradle gradle,
 			final TaskProvider<Delete>
-				cleanArtifactsPublishCommandsTaskProvider) {
+				cleanArtifactsPublishCommandsTaskProvider,
+			final TaskProvider<WriteArtifactPublishCommandsTask>
+				writeArtifactPublishCommandsTaskProvider) {
 
 		StartParameter startParameter = gradle.getStartParameter();
 
@@ -269,6 +269,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				public void execute(
 					MergeFilesTask
 						mergeArtifactsPublishCommandsMergeFilesTask) {
+
+					mergeArtifactsPublishCommandsMergeFilesTask.mustRunAfter(
+						writeArtifactPublishCommandsTaskProvider);
 
 					Delete cleanArtifactsPublishCommandsDelete =
 						cleanArtifactsPublishCommandsTaskProvider.get();

@@ -15,11 +15,14 @@
 package com.liferay.asset.categories.navigation.web.internal.upgrade;
 
 import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.asset.categories.navigation.web.internal.configuration.AssetCategoriesNavigationPortletInstanceConfiguration;
+import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -48,6 +51,17 @@ public class AssetCategoriesNavigationWebUpgrade
 				}
 
 			});
+
+		registry.register(
+			"1.0.0", "1.0.1",
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				"com.liferay.asset.categories.navigation.web.configuration." +
+					"AssetCategoriesNavigationPortletInstanceConfiguration",
+				AssetCategoriesNavigationPortletInstanceConfiguration.class.
+					getName()));
 	}
+
+	@Reference
+	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
 
 }

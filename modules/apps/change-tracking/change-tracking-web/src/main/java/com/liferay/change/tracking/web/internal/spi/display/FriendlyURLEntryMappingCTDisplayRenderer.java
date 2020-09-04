@@ -19,6 +19,7 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -57,17 +58,21 @@ public class FriendlyURLEntryMappingCTDisplayRenderer
 			className.getClassName(),
 			ResourceActionsUtil.getCompositeModelNameSeparator());
 
+		String modelResource = _resourceActions.getModelResource(
+			locale, classNames[0]);
+
+		if (modelResource.startsWith("model.resource.")) {
+			modelResource = classNames[0];
+		}
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
 		return _language.format(
 			resourceBundle, "x-for-x",
 			new String[] {
-				_language.get(
-					resourceBundle,
-					"model.resource." +
-						FriendlyURLEntryMapping.class.getName()),
-				_language.get(resourceBundle, "model.resource." + classNames[0])
+				"model.resource." + FriendlyURLEntryMapping.class.getName(),
+				modelResource
 			});
 	}
 
@@ -81,5 +86,8 @@ public class FriendlyURLEntryMappingCTDisplayRenderer
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 }

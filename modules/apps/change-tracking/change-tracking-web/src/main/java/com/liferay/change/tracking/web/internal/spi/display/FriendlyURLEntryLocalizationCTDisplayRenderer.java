@@ -49,10 +49,8 @@ public class FriendlyURLEntryLocalizationCTDisplayRenderer
 		return _language.format(
 			resourceBundle, "x-for-x",
 			new String[] {
-				_language.get(
-					resourceBundle,
-					"model.resource." +
-						FriendlyURLEntryLocalization.class.getName()),
+				"model.resource." +
+					FriendlyURLEntryLocalization.class.getName(),
 				friendlyURLEntryLocalization.getLanguageId()
 			});
 	}

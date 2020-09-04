@@ -16,8 +16,10 @@ package com.liferay.commerce.pricing.internal.upgrade;
 
 import com.liferay.commerce.pricing.internal.upgrade.v1_1_0.CommercePricingClassUpgradeProcess;
 import com.liferay.commerce.pricing.internal.upgrade.v2_0_1.CommercePriceModifierUpgradeProcess;
+import com.liferay.commerce.pricing.internal.upgrade.v2_1_0.CommercePricingConfigurationUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -54,6 +56,11 @@ public class CommercePricingUpgradeStepRegistrator
 			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_0_1,
 			new CommercePriceModifierUpgradeProcess());
 
+		registry.register(
+			_SCHEMA_VERSION_2_0_1, _SCHEMA_VERSION_2_1_0,
+			new CommercePricingConfigurationUpgradeProcess(
+				_configurationProvider));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE PRICING UPGRADE STEP REGISTRATOR FINISHED");
 		}
@@ -67,8 +74,13 @@ public class CommercePricingUpgradeStepRegistrator
 
 	private static final String _SCHEMA_VERSION_2_0_1 = "2.0.1";
 
+	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePricingUpgradeStepRegistrator.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

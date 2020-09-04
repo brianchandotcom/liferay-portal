@@ -16,13 +16,13 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.price.list.display.context.BaseCommercePriceListDisplayContext;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
-import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
-import com.liferay.commerce.price.list.display.context.BaseCommercePriceListDisplayContext;
-import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
 import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
+import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;

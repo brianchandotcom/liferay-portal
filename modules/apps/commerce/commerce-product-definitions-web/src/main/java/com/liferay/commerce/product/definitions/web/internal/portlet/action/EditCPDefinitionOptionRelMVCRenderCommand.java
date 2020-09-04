@@ -16,8 +16,8 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionRelDisplayContext;
-import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;

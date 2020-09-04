@@ -15,8 +15,8 @@
 package com.liferay.commerce.product.type.grouped.web.internal.display.context;
 
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
-import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;

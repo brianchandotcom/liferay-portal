@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.price.list.portlet.action;
+package com.liferay.commerce.price.list.internal.portlet.action;
 
 import com.liferay.commerce.price.list.constants.CommercePriceListWebKeys;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
@@ -37,10 +38,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(enabled = false, service = CommercePriceListActionHelper.class)
-public class CommercePriceListActionHelperImpl implements CommercePriceListActionHelper {
+public class CommercePriceListActionHelperImpl
+	implements CommercePriceListActionHelper {
 
 	public List<CommercePriceEntry> getCommercePriceEntries(
-		PortletRequest portletRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CommercePriceEntry> commercePriceEntries = new ArrayList<>();
@@ -120,7 +122,7 @@ public class CommercePriceListActionHelperImpl implements CommercePriceListActio
 	}
 
 	public List<CommercePriceList> getCommercePriceLists(
-		PortletRequest portletRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CommercePriceList> commercePriceLists = new ArrayList<>();
@@ -142,7 +144,7 @@ public class CommercePriceListActionHelperImpl implements CommercePriceListActio
 	}
 
 	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
-		PortletRequest portletRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CommerceTierPriceEntry> commerceTierPriceEntries =
@@ -165,7 +167,7 @@ public class CommercePriceListActionHelperImpl implements CommercePriceListActio
 	}
 
 	public CommerceTierPriceEntry getCommerceTierPriceEntry(
-		RenderRequest renderRequest)
+			RenderRequest renderRequest)
 		throws PortalException {
 
 		long commerceTierPriceEntryId = ParamUtil.getLong(

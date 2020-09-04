@@ -58,11 +58,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = com.liferay.commerce.product.portlet.action.ActionHelper.class)
+@Component(enabled = false, service = ActionHelper.class)
 public class ActionHelperImpl implements ActionHelper {
 
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		PortletRequest portletRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries = new ArrayList<>();
@@ -84,7 +84,7 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public CPAttachmentFileEntry getCPAttachmentFileEntry(
-		PortletRequest portletRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
@@ -162,7 +162,7 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-		PortletRequest portletRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPDefinitionLink> cpDefinitionLinks = new ArrayList<>();
@@ -180,7 +180,7 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public CPDefinitionOptionRel getCPDefinitionOptionRel(
-		PortletRequest portletRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
@@ -219,7 +219,7 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
-		PortletRequest portletRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
@@ -237,7 +237,7 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(
-		PortletRequest portletRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
@@ -268,7 +268,7 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		long cpDefinitionOptionRelId)
+			long cpDefinitionOptionRelId)
 		throws PortalException {
 
 		int total =
@@ -280,7 +280,7 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		PortletRequest portletRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
@@ -290,7 +290,7 @@ public class ActionHelperImpl implements ActionHelper {
 			portletRequest, "rowIds");
 
 		for (long cpDefinitionOptionValueRelId :
-			cpDefinitionOptionValueRelIds) {
+				cpDefinitionOptionValueRelIds) {
 
 			cpDefinitionOptionValueRels.add(
 				_cpDefinitionOptionValueRelService.
@@ -318,15 +318,15 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public CPDefinitionSpecificationOptionValue
-	getCPDefinitionSpecificationOptionValue(
-		PortletRequest portletRequest)
+			getCPDefinitionSpecificationOptionValue(
+				PortletRequest portletRequest)
 		throws PortalException {
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
-			(CPDefinitionSpecificationOptionValue)
-				portletRequest.getAttribute(
-					CPWebKeys.CP_DEFINITION_SPECIFICATION_OPTION_VALUE);
+				(CPDefinitionSpecificationOptionValue)
+					portletRequest.getAttribute(
+						CPWebKeys.CP_DEFINITION_SPECIFICATION_OPTION_VALUE);
 
 		if (cpDefinitionSpecificationOptionValue != null) {
 			return cpDefinitionSpecificationOptionValue;
@@ -352,8 +352,8 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public List<CPDefinitionSpecificationOptionValue>
-	getCPDefinitionSpecificationOptionValues(
-		PortletRequest portletRequest)
+			getCPDefinitionSpecificationOptionValues(
+				PortletRequest portletRequest)
 		throws PortalException {
 
 		List<CPDefinitionSpecificationOptionValue>
@@ -363,7 +363,7 @@ public class ActionHelperImpl implements ActionHelper {
 			ParamUtil.getLongValues(portletRequest, "rowIds");
 
 		for (long cpDefinitionSpecificationOptionValueId :
-			cpDefinitionSpecificationOptionValueIds) {
+				cpDefinitionSpecificationOptionValueIds) {
 
 			cpDefinitionSpecificationOptionValues.add(
 				_cpDefinitionSpecificationOptionValueService.
@@ -421,7 +421,7 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		long cpDefinitionId)
+			long cpDefinitionId)
 		throws PortalException {
 
 		return _cpDefinitionOptionRelService.getCPDefinitionOptionRels(
@@ -429,8 +429,8 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	public void writeJSON(
-		PortletRequest portletRequest, ActionResponse actionResponse,
-		Object object)
+			PortletRequest portletRequest, ActionResponse actionResponse,
+			Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =
@@ -454,7 +454,7 @@ public class ActionHelperImpl implements ActionHelper {
 				cpDefinition.getCProductId());
 
 			if ((cpDefinition.getStatus() ==
-				 WorkflowConstants.STATUS_APPROVED) &&
+					WorkflowConstants.STATUS_APPROVED) &&
 				(cpDefinitionId != cProduct.getPublishedCPDefinitionId())) {
 
 				cpDefinition = _cpDefinitionService.fetchCPDefinition(

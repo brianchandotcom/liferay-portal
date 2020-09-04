@@ -16,6 +16,8 @@ import React, {useRef} from 'react';
 import {useDragLayer} from 'react-dnd';
 import ReactDOM from 'react-dom';
 
+import {OPTIONS_TYPES} from './DnD.es';
+
 const layerStyles = {
 	height: '100%',
 	left: 0,
@@ -51,7 +53,7 @@ export default function DragPreview({children, component: Component}) {
 		item: monitor.getItem(),
 	}));
 
-	if (!isDragging) {
+	if (!isDragging || (isDragging && item.type !== OPTIONS_TYPES.OPTION)) {
 		return null;
 	}
 

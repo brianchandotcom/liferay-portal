@@ -208,7 +208,7 @@ export default () => {
 					target,
 					'.app-builder-upper-toolbar',
 					'button.close',
-					'.data-layout-builder-sidebar',
+					'.display-settings',
 					'.dropdown-menu',
 					'.nav-underline',
 					'#ddm-actionable-fields-container'

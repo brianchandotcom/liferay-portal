@@ -17,7 +17,7 @@ import React, {useEffect} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-const OPTIONS_TYPES = {
+export const OPTIONS_TYPES = {
 	OPTION: 'option',
 };
 

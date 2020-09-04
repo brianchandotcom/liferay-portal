@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 import ListHeadItem from '../../shared/components/list/ListHeadItem.es';
@@ -29,22 +29,14 @@ const Item = ({
 }) => {
 	const {defaultDelta} = useContext(AppContext);
 
-	const getFiltersQuery = useCallback(
-		(slaStatus) => ({
-			[filterConstants.assignee.key]: [id],
-			[filterConstants.processStatus.key]: [
-				processStatusConstants.pending,
-			],
-			[filterConstants.processStep.key]: taskNames,
-			[filterConstants.slaStatus.key]: [slaStatus],
-		}),
-		[id, taskNames]
-	);
+	const getFiltersQuery = (slaStatus) => ({
+		[filterConstants.assignee.key]: [id],
+		[filterConstants.processStatus.key]: [processStatusConstants.pending],
+		[filterConstants.processStep.key]: taskNames,
+		[filterConstants.slaStatus.key]: [slaStatus],
+	});
 
-	const instancesListPath = useMemo(
-		() => `/instance/${processId}/${defaultDelta}/1`,
-		[defaultDelta, processId]
-	);
+	const instancesListPath = `/instance/${processId}/${defaultDelta}/1`;
 
 	return (
 		<tr>

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import {useFetch} from '../../shared/hooks/useFetch.es';
 import {useFilter} from '../../shared/hooks/useFilter.es';
@@ -43,26 +43,18 @@ const InstanceListPage = ({routeParams}) => {
 			dateEnd,
 			dateStart,
 			slaStatuses,
-			statuses = [],
+			statuses,
 			taskNames,
 		},
 		prefixedKeys,
 		selectedFilters,
 	} = useFilter({filterKeys});
 
-	const completedStatus = statuses.some(
+	const completed = statuses?.some(
 		(status) => status === processStatusConstants.completed
 	);
 
-	const completed =
-		statuses && statuses.length == 1
-			? statuses[0] === processStatusConstants.completed
-			: undefined;
-
-	const timeRange = useMemo(
-		() => (completedStatus ? getTimeRangeParams(dateStart, dateEnd) : {}),
-		[completedStatus, dateEnd, dateStart]
-	);
+	const timeRange = completed ? getTimeRangeParams(dateStart, dateEnd) : {};
 
 	const {data, fetchData} = useFetch({
 		params: {

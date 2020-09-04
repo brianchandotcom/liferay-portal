@@ -73,27 +73,22 @@ const Body = ({data, setRetry, tasks}) => {
 		return Object.entries(taskTransitions).map((array) => array[1]);
 	}, [workflowTaskTransitions]);
 
-	const statesProps = useMemo(
-		() => ({
-			errorProps: {
-				actionButton: (
-					<RetryButton
-						onClick={() => setRetry((retry) => retry + 1)}
-					/>
-				),
-				className: 'pb-7 pt-8',
-				hideAnimation: true,
-				message: Liferay.Language.get('failed-to-retrieve-tasks'),
-				messageClassName: 'small',
-			},
-			loadingProps: {
-				className: 'mb-4 mt-6 py-8',
-				message: Liferay.Language.get('retrieving-all-transitions'),
-				messageClassName: 'small',
-			},
-		}),
-		[setRetry]
-	);
+	const statesProps = {
+		errorProps: {
+			actionButton: (
+				<RetryButton onClick={() => setRetry((retry) => retry + 1)} />
+			),
+			className: 'pb-7 pt-8',
+			hideAnimation: true,
+			message: Liferay.Language.get('failed-to-retrieve-tasks'),
+			messageClassName: 'small',
+		},
+		loadingProps: {
+			className: 'mb-4 mt-6 py-8',
+			message: Liferay.Language.get('retrieving-all-transitions'),
+			messageClassName: 'small',
+		},
+	};
 
 	return (
 		<ClayModal.Body>

@@ -10,7 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 
 import ContentView from '../../../shared/components/content-view/ContentView.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
@@ -37,27 +37,24 @@ const Body = ({currentTab, items, processId, processStepKey, totalCount}) => {
 		}
 	};
 
-	const statesProps = useMemo(
-		() => ({
-			emptyProps: {
-				className: 'py-6',
-				hideAnimation: true,
-				message: getEmptyMessage(currentTab),
-				messageClassName: 'small',
-			},
-			errorProps: {
-				actionButton: <ReloadButton />,
-				className: 'py-6',
-				hideAnimation: true,
-				message: Liferay.Language.get(
-					'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-				),
-				messageClassName: 'small',
-			},
-			loadingProps: {className: 'py-6'},
-		}),
-		[currentTab]
-	);
+	const statesProps = {
+		emptyProps: {
+			className: 'py-6',
+			hideAnimation: true,
+			message: getEmptyMessage(currentTab),
+			messageClassName: 'small',
+		},
+		errorProps: {
+			actionButton: <ReloadButton />,
+			className: 'py-6',
+			hideAnimation: true,
+			message: Liferay.Language.get(
+				'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+			),
+			messageClassName: 'small',
+		},
+		loadingProps: {className: 'py-6'},
+	};
 
 	return (
 		<Panel.Body>

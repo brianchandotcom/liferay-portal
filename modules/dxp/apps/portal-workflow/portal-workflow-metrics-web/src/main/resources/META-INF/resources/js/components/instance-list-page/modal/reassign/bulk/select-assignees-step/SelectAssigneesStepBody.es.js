@@ -10,7 +10,7 @@
  */
 
 import ClayModal from '@clayui/modal';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 
 import ContentView from '../../../../../../shared/components/content-view/ContentView.es';
 import RetryButton from '../../../../../../shared/components/list/RetryButton.es';
@@ -29,29 +29,22 @@ const Body = ({data, setRetry, tasks}) => {
 		items: tasks,
 	});
 
-	const statesProps = useMemo(
-		() => ({
-			errorProps: {
-				actionButton: (
-					<RetryButton
-						onClick={() => setRetry((retry) => retry + 1)}
-					/>
-				),
-				className: 'mt-5 py-8',
-				hideAnimation: true,
-				message: Liferay.Language.get('failed-to-retrieve-assignees'),
-				messageClassName: 'small',
-			},
-			loadingProps: {
-				className: 'mt-5 py-8',
-				message: Liferay.Language.get(
-					'retrieving-all-possible-assignees'
-				),
-				messageClassName: 'small',
-			},
-		}),
-		[setRetry]
-	);
+	const statesProps = {
+		errorProps: {
+			actionButton: (
+				<RetryButton onClick={() => setRetry((retry) => retry + 1)} />
+			),
+			className: 'mt-5 py-8',
+			hideAnimation: true,
+			message: Liferay.Language.get('failed-to-retrieve-assignees'),
+			messageClassName: 'small',
+		},
+		loadingProps: {
+			className: 'mt-5 py-8',
+			message: Liferay.Language.get('retrieving-all-possible-assignees'),
+			messageClassName: 'small',
+		},
+	};
 
 	return (
 		<ClayModal.Body>

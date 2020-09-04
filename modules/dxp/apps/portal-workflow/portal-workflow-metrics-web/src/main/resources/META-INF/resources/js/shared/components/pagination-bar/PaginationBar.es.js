@@ -11,7 +11,7 @@
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import pathToRegexp from 'path-to-regexp';
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useCallback, useContext} from 'react';
 
 import {AppContext} from '../../../components/AppContext.es';
 import {useRouter} from '../../hooks/useRouter.es';
@@ -32,20 +32,12 @@ const PaginationBar = ({
 		match: {params, path},
 	} = useRouter();
 
-	const deltas = useMemo(() => deltaValues.map((label) => ({label})), [
-		deltaValues,
-	]);
-
-	const labels = useMemo(
-		() => ({
-			paginationResults: Liferay.Language.get(
-				'showing-x-to-x-of-x-entries'
-			),
-			perPageItems: Liferay.Language.get('x-entries'),
-			selectPerPageItems: Liferay.Language.get('x-entries'),
-		}),
-		[]
-	);
+	const deltas = deltaValues.map((label) => ({label}));
+	const labels = {
+		paginationResults: Liferay.Language.get('showing-x-to-x-of-x-entries'),
+		perPageItems: Liferay.Language.get('x-entries'),
+		selectPerPageItems: Liferay.Language.get('x-entries'),
+	};
 
 	const handleChangePageSize = useCallback(
 		(newPageSize) => {

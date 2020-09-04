@@ -9,27 +9,22 @@
  * distribution rights of the Software.
  */
 
-import {useMemo} from 'react';
-
 import filterConstants from '../util/filterConstants.es';
 
 const useFiltersConstants = (filterKeys) => {
-	return useMemo(() => {
-		const keys = [];
-		const pinnedValues = [];
-		const titles = [];
+	const keys = [];
+	const pinnedValues = [];
+	const titles = [];
 
-		filterKeys.forEach((filterKey) => {
-			if (filterConstants[filterKey]) {
-				keys.push(filterConstants[filterKey].key);
-				pinnedValues.push(filterConstants[filterKey].pinned);
-				titles.push(filterConstants[filterKey].title);
-			}
-		});
+	filterKeys.forEach((filterKey) => {
+		if (filterConstants[filterKey]) {
+			keys.push(filterConstants[filterKey].key);
+			pinnedValues.push(filterConstants[filterKey].pinned);
+			titles.push(filterConstants[filterKey].title);
+		}
+	});
 
-		return {keys, pinnedValues, titles};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [filterKeys]);
+	return {keys, pinnedValues, titles};
 };
 
 export {useFiltersConstants};

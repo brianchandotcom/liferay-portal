@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 
 import filterConstants from '../../../shared/components/filter/util/filterConstants.es';
 import ChildLink from '../../../shared/components/router/ChildLink.es';
@@ -29,35 +29,22 @@ const Item = ({
 }) => {
 	const {defaultDelta} = useContext(AppContext);
 
-	const counts = useMemo(
-		() => ({
-			onTime: onTimeTaskCount,
-			overdue: overdueTaskCount,
-			total: taskCount,
-		}),
-		[onTimeTaskCount, overdueTaskCount, taskCount]
-	);
+	const counts = {
+		onTime: onTimeTaskCount,
+		overdue: overdueTaskCount,
+		total: taskCount,
+	};
 
-	const filters = useMemo(
-		() => ({
-			[filterConstants.assignee.key]: [id],
-			[filterConstants.processStatus.key]: [
-				processStatusConstants.pending,
-			],
-			[filterConstants.processStep.key]: [processStepKey],
-			[filterConstants.slaStatus.key]: [slaStatusConstants[currentTab]],
-		}),
-		[currentTab, id, processStepKey]
-	);
+	const filters = {
+		[filterConstants.assignee.key]: [id],
+		[filterConstants.processStatus.key]: [processStatusConstants.pending],
+		[filterConstants.processStep.key]: [processStepKey],
+		[filterConstants.slaStatus.key]: [slaStatusConstants[currentTab]],
+	};
 
-	const formattedPercentage = useMemo(
-		() => getFormattedPercentage(counts[currentTab], taskCount),
-		[counts, currentTab, taskCount]
-	);
-
-	const instancesListPath = useMemo(
-		() => `/instance/${processId}/${defaultDelta}/1`,
-		[defaultDelta, processId]
+	const formattedPercentage = getFormattedPercentage(
+		counts[currentTab],
+		taskCount
 	);
 
 	return (
@@ -66,7 +53,7 @@ const Item = ({
 				<ChildLink
 					className={'workload-by-assignee-link'}
 					query={{filters}}
-					to={instancesListPath}
+					to={`/instance/${processId}/${defaultDelta}/1`}
 				>
 					<span>{name}</span>
 				</ChildLink>

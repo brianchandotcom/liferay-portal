@@ -10,7 +10,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 import {Route, Switch} from 'react-router-dom';
 
 import HeaderKebab from '../../shared/components/header/HeaderKebab.es';
@@ -68,8 +68,8 @@ const ProcessMetricsContainer = ({history, processId, query}) => {
 
 	useProcessTitle(processId);
 
-	const dashboardTab = useMemo(
-		() => ({
+	const tabs = {
+		dashboard: {
 			key: 'dashboard',
 			name: Liferay.Language.get('dashboard'),
 			params: {
@@ -79,23 +79,20 @@ const ProcessMetricsContainer = ({history, processId, query}) => {
 				sort: 'overdueInstanceCount:asc',
 			},
 			path: '/metrics/:processId/dashboard/:pageSize/:page/:sort',
-		}),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[processId]
-	);
-
-	const performanceTab = useMemo(
-		() => ({
+		},
+		performance: {
 			key: 'performance',
 			name: Liferay.Language.get('performance'),
 			params: {processId},
 			path: '/metrics/:processId/performance',
-		}),
-		[processId]
-	);
+		},
+	};
 
 	if (history.location.pathname === `/metrics/${processId}`) {
-		const pathname = getPathname(dashboardTab.params, dashboardTab.path);
+		const pathname = getPathname(
+			tabs.dashboard.params,
+			tabs.dashboard.path
+		);
 
 		const search = stringify({
 			...parse(query),
@@ -116,20 +113,20 @@ const ProcessMetricsContainer = ({history, processId, query}) => {
 				]}
 			/>
 
-			<NavbarTabs tabs={[dashboardTab, performanceTab]} />
+			<NavbarTabs tabs={Object.values(tabs)} />
 
 			<SLAInfo processId={processId} />
 
 			<Switch>
 				<Route
 					exact
-					path={dashboardTab.path}
+					path={tabs.dashboard.path}
 					render={withParams(DashboardTab)}
 				/>
 
 				<Route
 					exact
-					path={performanceTab.path}
+					path={tabs.performance.path}
 					render={withParams(PerformanceTab)}
 				/>
 			</Switch>

@@ -12,7 +12,7 @@
 import ClayLayout from '@clayui/layout';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {usePrevious} from 'frontend-js-react-web';
-import React, {useCallback, useContext, useEffect, useMemo} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';
@@ -80,9 +80,8 @@ const Header = ({
 		},
 	];
 
-	const selectedOnPage = useMemo(
-		() => selectedItems.filter(({id}) => items.find(compareId(id))),
-		[items, selectedItems]
+	const selectedOnPage = selectedItems.filter(({id}) =>
+		items.find(compareId(id))
 	);
 
 	const allPageSelected =
@@ -94,27 +93,19 @@ const Header = ({
 			selectedOnPage.length > 0 && !allPageSelected && !selectAll,
 	};
 
-	const isRemainingItem = useCallback(
-		(clear) => ({assignees = [], id, status}) => {
-			const assignedToUser = !!assignees.find(
-				({id}) => id === Number(userId)
-			);
-			const completed = status === processStatusConstants.completed;
-			const selected = clear && selectedItems.find(compareId(id));
-			const {reviewer} = assignees.find(({id}) => id === -1) || {};
+	const isRemainingItem = (clear) => ({assignees = [], id, status}) => {
+		const assignedToUser = !!assignees.find(
+			({id}) => id === Number(userId)
+		);
+		const completed = status === processStatusConstants.completed;
+		const selected = clear && selectedItems.find(compareId(id));
+		const {reviewer} = assignees.find(({id}) => id === -1) || {};
 
-			return (reviewer || assignedToUser) && !completed && !selected;
-		},
-		[selectedItems, userId]
-	);
+		return (reviewer || assignedToUser) && !completed && !selected;
+	};
 
-	const remainingItems = useMemo(() => {
-		return items.filter(isRemainingItem(true));
-	}, [items, isRemainingItem]);
-
-	const toolbarActive = useMemo(() => selectedItems.length > 0, [
-		selectedItems,
-	]);
+	const remainingItems = items.filter(isRemainingItem(true));
+	const toolbarActive = selectedItems.length > 0;
 
 	useEffect(() => {
 		if (
@@ -154,28 +145,12 @@ const Header = ({
 		[items, remainingItems, selectedItems]
 	);
 
-	const statusesFilterItem = useMemo(
-		() => selectedFilters.find((filter) => filter.key === 'statuses'),
-		[selectedFilters]
-	);
-	const {key} = statusesFilterItem ? statusesFilterItem.items[0] : {};
-	const completedStatusSelected = useMemo(
-		() =>
-			selectedFilters.length > 0 && statusesFilterItem
-				? key === processStatusConstants.completed
-				: false,
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[key]
-	);
+	const isCompletedSelected = selectedFilters
+		.find(({key}) => key === filterConstants.processStatus.key)
+		?.items.some(({key}) => key === processStatusConstants.completed);
 
-	const selectedFilterItems = useMemo(
-		() =>
-			selectedFilters.filter(
-				(filter) =>
-					completedStatusSelected ||
-					filter.key !== filterConstants.timeRange.key
-			),
-		[completedStatusSelected, selectedFilters]
+	const selectedFilterItems = selectedFilters.filter(
+		({key}) => isCompletedSelected || key !== filterConstants.timeRange.key
 	);
 
 	return (
@@ -213,7 +188,7 @@ const Header = ({
 
 						<ProcessStatusFilter />
 
-						{completedStatusSelected && (
+						{isCompletedSelected && (
 							<TimeRangeFilter
 								options={{
 									withSelectionTitle: false,

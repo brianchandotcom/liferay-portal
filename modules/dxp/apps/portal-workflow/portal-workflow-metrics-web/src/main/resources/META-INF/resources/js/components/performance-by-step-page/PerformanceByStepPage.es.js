@@ -34,17 +34,12 @@ const PerformanceByStepPage = ({query, routeParams}) => {
 		prefixedKeys,
 	} = useFilter({});
 
-	const timeRange = useMemo(() => getTimeRangeParams(dateStart, dateEnd), [
-		dateEnd,
-		dateStart,
-	]);
-
 	const {data, fetchData} = useFetch({
 		params: {
 			completed: true,
 			key: search,
 			...paginationParams,
-			...timeRange,
+			...getTimeRangeParams(dateStart, dateEnd),
 		},
 		url: `/processes/${processId}/nodes/metrics`,
 	});

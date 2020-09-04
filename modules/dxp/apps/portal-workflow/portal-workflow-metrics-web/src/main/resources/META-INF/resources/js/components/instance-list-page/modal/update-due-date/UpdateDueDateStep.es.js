@@ -13,7 +13,7 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import getCN from 'classnames';
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import MaskedInput from 'react-text-mask';
 
 import {
@@ -152,13 +152,10 @@ const TimePickerInputWithOptions = ({format, isAmPm, setValue, value}) => {
 	const [invalidTime, setInvalidTime] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 	const inputRef = useRef();
-	const options = useMemo(() => getTimeOptions(isAmPm), [isAmPm]);
-	const popoverStyle = useMemo(() => {
-		const {current: {offsetWidth = 270} = {}} = inputRef;
+	const options = getTimeOptions(isAmPm);
 
-		return {left: `${(offsetWidth - 120) / 2}px`};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [inputRef.current]);
+	const {offsetWidth = 270} = inputRef.current || {};
+	const popoverStyle = {left: `${(offsetWidth - 120) / 2}px`};
 
 	useEffect(() => {
 		setInvalidTime(!isValidDate(value, format));

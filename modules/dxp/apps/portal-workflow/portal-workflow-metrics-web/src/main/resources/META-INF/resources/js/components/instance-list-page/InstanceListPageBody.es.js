@@ -47,26 +47,23 @@ const Body = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fetchData, visibleModal]);
 
-	const statesProps = useMemo(
-		() => ({
-			emptyProps: {
-				filtered,
-				message: Liferay.Language.get(
-					'once-there-are-active-processes-metrics-will-appear-here'
-				),
-			},
-			errorProps: {
-				actionButton: <ReloadButton />,
-				hideAnimation: true,
-				message: Liferay.Language.get(
-					'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-				),
-				messageClassName: 'small',
-			},
-			loadingProps: {},
-		}),
-		[filtered]
-	);
+	const statesProps = {
+		emptyProps: {
+			filtered,
+			message: Liferay.Language.get(
+				'once-there-are-active-processes-metrics-will-appear-here'
+			),
+		},
+		errorProps: {
+			actionButton: <ReloadButton />,
+			hideAnimation: true,
+			message: Liferay.Language.get(
+				'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+			),
+			messageClassName: 'small',
+		},
+		loadingProps: {},
+	};
 
 	return (
 		<PromisesResolver promises={promises}>

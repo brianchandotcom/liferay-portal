@@ -10,7 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 
 import ContentView from '../../../shared/components/content-view/ContentView.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
@@ -21,27 +21,24 @@ import {AppContext} from '../../AppContext.es';
 import {Table} from './PerformanceByAssigneeCardTable.es';
 
 const Body = ({filtered, items, totalCount}) => {
-	const statesProps = useMemo(
-		() => ({
-			emptyProps: {
-				className: 'mt-5 py-8',
-				filtered,
-				hideAnimation: true,
-				messageClassName: 'small',
-			},
-			errorProps: {
-				actionButton: <ReloadButton />,
-				className: 'mt-4 py-8',
-				hideAnimation: true,
-				message: Liferay.Language.get(
-					'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-				),
-				messageClassName: 'small',
-			},
-			loadingProps: {className: 'mt-4 py-8'},
-		}),
-		[filtered]
-	);
+	const statesProps = {
+		emptyProps: {
+			className: 'mt-5 py-8',
+			filtered,
+			hideAnimation: true,
+			messageClassName: 'small',
+		},
+		errorProps: {
+			actionButton: <ReloadButton />,
+			className: 'mt-4 py-8',
+			hideAnimation: true,
+			message: Liferay.Language.get(
+				'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+			),
+			messageClassName: 'small',
+		},
+		loadingProps: {className: 'mt-4 py-8'},
+	};
 
 	return (
 		<Panel.Body>

@@ -37,7 +37,7 @@ const SingleUpdateDueDateModal = () => {
 		updateDueDate,
 		visibleModal,
 	} = useContext(ModalContext);
-	const {selectedInstance, setSelectedItem, setSelectedItems} = useContext(
+	const {selectedInstance, setSelectedItems} = useContext(
 		InstanceListContext
 	);
 
@@ -45,7 +45,6 @@ const SingleUpdateDueDateModal = () => {
 
 	const onCloseModal = (refetch) => {
 		closeModal(refetch);
-		setSelectedItem({});
 		setSelectedItems([]);
 		setUpdateDueDate({
 			comment: undefined,
@@ -60,13 +59,10 @@ const SingleUpdateDueDateModal = () => {
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {completed: false, page: 1, pageSize: 1},
-		url: `/workflow-instances/${selectedInstance.id}/workflow-tasks`,
+		url: `/workflow-instances/${selectedInstance?.id}/workflow-tasks`,
 	});
 
-	const {dateDue, id: taskId} = useMemo(
-		() => (data.items && data.items[0] ? data.items[0] : {}),
-		[data]
-	);
+	const {dateDue, id: taskId} = data.items?.[0] || {};
 
 	const {postData} = usePost({
 		admin: true,
@@ -104,7 +100,7 @@ const SingleUpdateDueDateModal = () => {
 	const promises = useMemo(() => {
 		setErrorToast(false);
 
-		if (selectedInstance.id && visibleModal === 'updateDueDate') {
+		if (selectedInstance?.id && visibleModal === 'updateDueDate') {
 			return [
 				fetchData().catch((err) => {
 					setErrorToast(
@@ -120,23 +116,18 @@ const SingleUpdateDueDateModal = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fetchData, retry, visibleModal]);
 
-	const statesProps = useMemo(
-		() => ({
-			errorProps: {
-				actionButton: (
-					<RetryButton
-						onClick={() => setRetry((retry) => retry + 1)}
-					/>
-				),
-				className: 'mt-5 py-5',
-				hideAnimation: true,
-				message: Liferay.Language.get('unable-to-retrieve-data'),
-				messageClassName: 'small',
-			},
-			loadingProps: {className: 'mt-3 py-7'},
-		}),
-		[setRetry]
-	);
+	const statesProps = {
+		errorProps: {
+			actionButton: (
+				<RetryButton onClick={() => setRetry((retry) => retry + 1)} />
+			),
+			className: 'mt-5 py-5',
+			hideAnimation: true,
+			message: Liferay.Language.get('unable-to-retrieve-data'),
+			messageClassName: 'small',
+		},
+		loadingProps: {className: 'mt-3 py-7'},
+	};
 
 	return (
 		<>

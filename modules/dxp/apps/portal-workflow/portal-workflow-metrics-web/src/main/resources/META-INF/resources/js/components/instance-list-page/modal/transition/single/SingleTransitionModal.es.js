@@ -13,13 +13,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {useToaster} from '../../../../../shared/components/toaster/hooks/useToaster.es';
 import {useFetch} from '../../../../../shared/hooks/useFetch.es';
@@ -35,7 +29,7 @@ const SingleTransitionModal = () => {
 		singleTransition,
 		visibleModal,
 	} = useContext(ModalContext);
-	const {selectedInstance, setSelectedItem, setSelectedItems} = useContext(
+	const {selectedInstance, setSelectedItems} = useContext(
 		InstanceListContext
 	);
 	const {title, transitionName} = singleTransition;
@@ -46,12 +40,11 @@ const SingleTransitionModal = () => {
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {completed: false, page: 1, pageSize: 1},
-		url: `/workflow-instances/${selectedInstance.id}/workflow-tasks`,
+		url: `/workflow-instances/${selectedInstance?.id}/workflow-tasks`,
 	});
 
 	const onCloseModal = (refetch) => {
 		closeModal(refetch);
-		setSelectedItem({});
 		setSelectedItems([]);
 		setSingleTransition({
 			title: '',
@@ -64,15 +57,13 @@ const SingleTransitionModal = () => {
 	});
 
 	useEffect(() => {
-		if (selectedInstance.id && visibleModal === 'singleTransition') {
+		if (selectedInstance?.id && visibleModal === 'singleTransition') {
 			fetchData();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fetchData, visibleModal]);
 
-	const taskId = useMemo(() => (data && data.items ? data.items[0].id : {}), [
-		data,
-	]);
+	const taskId = data?.items?.[0].id;
 
 	const {postData} = usePost({
 		admin: true,

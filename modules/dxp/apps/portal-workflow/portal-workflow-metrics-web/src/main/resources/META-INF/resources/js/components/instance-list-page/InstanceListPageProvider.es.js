@@ -9,30 +9,22 @@
  * distribution rights of the Software.
  */
 
-import React, {createContext, useMemo, useState} from 'react';
+import React, {createContext, useState} from 'react';
 
 const InstanceListContext = createContext(null);
 
 const InstanceListPageProvider = ({children}) => {
 	const [instanceId, setInstanceId] = useState();
 	const [selectAll, setSelectAll] = useState(false);
-	const [selectedItem, setSelectedItem] = useState({});
 	const [selectedItems, setSelectedItems] = useState([]);
-
-	const selectedInstance = useMemo(
-		() => (selectedItems.length === 1 ? selectedItems[0] : selectedItem),
-		[selectedItem, selectedItems]
-	);
 
 	const value = {
 		instanceId,
 		selectAll,
-		selectedInstance,
-		selectedItem,
+		selectedInstance: selectedItems[0],
 		selectedItems,
 		setInstanceId,
 		setSelectAll,
-		setSelectedItem,
 		setSelectedItems,
 	};
 

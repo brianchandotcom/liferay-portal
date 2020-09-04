@@ -10,22 +10,15 @@
  */
 
 import ClayTable from '@clayui/table';
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import {Item} from './SLAListPageTableItem.es';
 
 const Table = ({items}) => {
-	const blockedItems = useMemo(
-		() => items.filter(({status}) => status === 2),
-		[items]
-	);
+	const blockedItems = items.filter(({status}) => status === 2);
+	const unblockedItems = items.filter(({status}) => status !== 2);
 
 	const showBlockedDivider = blockedItems.length > 0;
-	const unblockedItems = useMemo(
-		() => items.filter(({status}) => status !== 2),
-		[items]
-	);
-
 	const showRunningDivider = showBlockedDivider && unblockedItems.length > 0;
 
 	return (

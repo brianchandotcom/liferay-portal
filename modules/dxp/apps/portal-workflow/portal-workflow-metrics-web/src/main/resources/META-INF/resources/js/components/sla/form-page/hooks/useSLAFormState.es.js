@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useState} from 'react';
 
 import {useFetch} from '../../../../shared/hooks/useFetch.es';
 import {usePost} from '../../../../shared/hooks/usePost.es';
@@ -44,50 +44,46 @@ const useSLAFormState = ({errors, id, processId, setErrors}) => {
 		},
 	});
 
-	const body = useMemo(() => {
-		const {
-			calendarKey,
-			days,
-			description,
-			hours,
-			name,
-			pauseNodeKeys,
-			startNodeKeys,
-			stopNodeKeys,
-		} = sla;
+	const {
+		calendarKey,
+		days,
+		description,
+		hours,
+		name,
+		pauseNodeKeys,
+		startNodeKeys,
+		stopNodeKeys,
+	} = sla;
 
-		const duration = durationAsMilliseconds(days, hours);
-
-		return {
-			calendarKey,
-			description,
-			duration,
-			name,
-			pauseNodeKeys: {
-				nodeKeys: pauseNodeKeys.nodeKeys.map(({executionType, id}) => ({
-					executionType,
-					id,
-				})),
-				status: 0,
-			},
-			processId,
-			startNodeKeys: {
-				nodeKeys: startNodeKeys.nodeKeys.map(({executionType, id}) => ({
-					executionType,
-					id,
-				})),
-				status: 0,
-			},
+	const body = {
+		calendarKey,
+		description,
+		duration: durationAsMilliseconds(days, hours),
+		name,
+		pauseNodeKeys: {
+			nodeKeys: pauseNodeKeys.nodeKeys.map(({executionType, id}) => ({
+				executionType,
+				id,
+			})),
 			status: 0,
-			stopNodeKeys: {
-				nodeKeys: stopNodeKeys.nodeKeys.map(({executionType, id}) => ({
-					executionType,
-					id,
-				})),
-				status: 0,
-			},
-		};
-	}, [processId, sla]);
+		},
+		processId,
+		startNodeKeys: {
+			nodeKeys: startNodeKeys.nodeKeys.map(({executionType, id}) => ({
+				executionType,
+				id,
+			})),
+			status: 0,
+		},
+		status: 0,
+		stopNodeKeys: {
+			nodeKeys: stopNodeKeys.nodeKeys.map(({executionType, id}) => ({
+				executionType,
+				id,
+			})),
+			status: 0,
+		},
+	};
 
 	const parseSLA = ({
 		calendarKey,

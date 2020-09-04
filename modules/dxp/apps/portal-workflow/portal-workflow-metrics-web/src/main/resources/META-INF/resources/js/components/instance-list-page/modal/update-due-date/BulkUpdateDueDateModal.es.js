@@ -10,7 +10,7 @@
  */
 
 import {useModal} from '@clayui/modal';
-import React, {useCallback, useContext, useMemo, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 
 import ModalWithSteps from '../../../../shared/components/modal-with-steps/ModalWithSteps.es';
 import {useToaster} from '../../../../shared/components/toaster/hooks/useToaster.es';
@@ -58,17 +58,13 @@ const BulkUpdateDueDateModal = () => {
 		onClose: onCloseModal,
 	});
 
-	const body = useMemo(() => {
-		if (dueDate) {
-			return tasks.map(({id: workflowTaskId}) => ({
+	const body = dueDate
+		? tasks.map(({id: workflowTaskId}) => ({
 				comment,
 				dueDate,
 				workflowTaskId,
-			}));
-		}
-
-		return [];
-	}, [comment, dueDate, tasks]);
+		  }))
+		: [];
 
 	const {patchData} = usePatch({
 		admin: true,
@@ -136,71 +132,53 @@ const BulkUpdateDueDateModal = () => {
 		setErrorToast(false);
 	}, [clearContext]);
 
-	const getStep = useCallback(
-		(step) => {
-			const steps = {
-				selectDueDate: {
-					cancelBtn: {
-						disabled: updating,
-						handle: onClose,
-					},
-					component: UpdateDueDateStep,
-					nextBtn: {
-						disabled: !dueDate || updating,
-						handle: handleDone,
-						text: Liferay.Language.get('done'),
-					},
-					order: 2,
-					previousBtn: {
-						disabled: updating,
-						handle: handlePrevious,
-					},
-					props: {
-						className: 'fixed-height modal-metrics-content',
-					},
-					subtitle: Liferay.Language.get('update-due-date'),
-					title: Liferay.Language.get('update-tasks-due-dates'),
-				},
-				selectTasks: {
-					cancelBtn: {
-						disabled: fetching,
-						handle: onClose,
-					},
-					component: SelectTasksStep,
-					nextBtn: {
-						disabled: tasks.length === 0 || fetching,
-						handle: handleNext,
-						text: Liferay.Language.get('next'),
-					},
-					order: 1,
-					previousBtn: false,
-					props: {setErrorToast},
-					subtitle: Liferay.Language.get('select-tasks'),
-					title: Liferay.Language.get('select-tasks-to-update'),
-				},
-			};
-
-			return steps[step];
+	const STEPS = {
+		selectDueDate: {
+			cancelBtn: {
+				disabled: updating,
+				handle: onClose,
+			},
+			component: UpdateDueDateStep,
+			nextBtn: {
+				disabled: !dueDate || updating,
+				handle: handleDone,
+				text: Liferay.Language.get('done'),
+			},
+			order: 2,
+			previousBtn: {
+				disabled: updating,
+				handle: handlePrevious,
+			},
+			props: {
+				className: 'fixed-height modal-metrics-content',
+			},
+			subtitle: Liferay.Language.get('update-due-date'),
+			title: Liferay.Language.get('update-tasks-due-dates'),
 		},
-		[
-			dueDate,
-			fetching,
-			handleDone,
-			handleNext,
-			handlePrevious,
-			onClose,
-			updating,
-			tasks.length,
-		]
-	);
-
-	const step = useMemo(() => getStep(currentStep), [currentStep, getStep]);
+		selectTasks: {
+			cancelBtn: {
+				disabled: fetching,
+				handle: onClose,
+			},
+			component: SelectTasksStep,
+			nextBtn: {
+				disabled: tasks.length === 0 || fetching,
+				handle: handleNext,
+				text: Liferay.Language.get('next'),
+			},
+			order: 1,
+			previousBtn: false,
+			props: {setErrorToast},
+			subtitle: Liferay.Language.get('select-tasks'),
+			title: Liferay.Language.get('select-tasks-to-update'),
+		},
+	};
 
 	return (
 		<ModalWithSteps
 			error={errorToast}
 			observer={observer}
-			step={step}
+			step={STEPS[currentStep]}
 			visible={visibleModal === 'bulkUpdateDueDate'}
 		/>
 	);

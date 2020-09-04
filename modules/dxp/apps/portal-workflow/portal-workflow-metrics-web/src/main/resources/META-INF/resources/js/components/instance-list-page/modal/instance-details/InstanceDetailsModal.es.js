@@ -57,13 +57,8 @@ const InstanceDetailsModal = () => {
 	const {instanceId, setInstanceId} = useContext(InstanceListContext);
 	const {closeModal, processId, visibleModal} = useContext(ModalContext);
 
-	const url = useMemo(
-		() => `/processes/${processId}/instances/${instanceId}`,
-		[instanceId, processId]
-	);
-
 	const {data, fetchData} = useFetch({
-		url,
+		url: `/processes/${processId}/instances/${instanceId}`,
 	});
 
 	const promises = useMemo(() => {

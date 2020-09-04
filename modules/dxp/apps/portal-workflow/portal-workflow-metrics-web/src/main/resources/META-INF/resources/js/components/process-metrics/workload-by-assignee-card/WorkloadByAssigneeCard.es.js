@@ -55,15 +55,13 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 		filterValues: {taskNames: [taskName] = ['allSteps']},
 	} = useFilter({filterKeys});
 
-	const sort = useMemo(() => {
-		const items = {
-			onTime: 'onTimeTaskCount:desc',
-			overdue: 'overdueTaskCount:desc',
-			total: 'taskCount:desc',
-		};
+	const sortItems = {
+		onTime: 'onTimeTaskCount:desc',
+		overdue: 'overdueTaskCount:desc',
+		total: 'taskCount:desc',
+	};
 
-		return items[currentTab];
-	}, [currentTab]);
+	const sort = sortItems[currentTab];
 
 	const taskNames = taskName !== 'allSteps' ? [taskName] : undefined;
 

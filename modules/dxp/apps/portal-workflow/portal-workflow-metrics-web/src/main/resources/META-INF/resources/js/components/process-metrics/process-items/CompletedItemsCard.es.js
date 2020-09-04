@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import {useFilter} from '../../../shared/hooks/useFilter.es';
 import TimeRangeFilter from '../../filter/TimeRangeFilter.es';
@@ -30,10 +30,7 @@ const CompletedItemsCard = ({routeParams}) => {
 		filtersError,
 	} = useFilter({filterKeys, prefixKeys});
 
-	const timeRange = useMemo(
-		() => getTimeRangeParams(completedDateStart, completedDateEnd),
-		[completedDateEnd, completedDateStart]
-	);
+	const timeRange = getTimeRangeParams(completedDateStart, completedDateEnd);
 
 	return (
 		<ProcessItemsCard

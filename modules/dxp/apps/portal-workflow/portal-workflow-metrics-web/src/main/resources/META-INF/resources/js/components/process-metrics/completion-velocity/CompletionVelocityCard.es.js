@@ -46,19 +46,13 @@ const CompletionVelocityCard = ({routeParams}) => {
 		timeRange,
 	]);
 
-	const defaultUnit = useMemo(
-		() => velocityUnits.find((unit) => unit.defaultVelocityUnit) || {},
-		[velocityUnits]
-	);
+	const defaultUnit =
+		velocityUnits.find((unit) => unit.defaultVelocityUnit) || {};
 
-	const velocityUnit = useMemo(
-		() => velocityUnits.find((unit) => unit.key === velocity),
-		[velocity, velocityUnits]
-	);
+	const velocityUnit =
+		velocityUnits.find((unit) => unit.key === velocity) || defaultUnit;
 
-	const currentVelocityUnit = velocityUnit || defaultUnit;
-
-	const {key: unit} = currentVelocityUnit;
+	const {key: unit} = velocityUnit;
 
 	const {data, fetchData} = useFetch({
 		params: {
@@ -88,7 +82,7 @@ const CompletionVelocityCard = ({routeParams}) => {
 				<CompletionVelocityCard.Body
 					data={data}
 					timeRange={timeRange}
-					velocityUnit={currentVelocityUnit}
+					velocityUnit={velocityUnit}
 				/>
 			</Panel>
 		</PromisesResolver>

@@ -10,7 +10,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useCallback, useContext} from 'react';
 import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
@@ -35,16 +35,12 @@ const DurationSection = ({onChangeHandler}) => {
 		sla: {calendarKey = defaultCalendar.key, days, hours},
 	} = useContext(SLAFormContext);
 
-	const daysMask = useMemo(
-		() =>
-			createNumberMask({
-				allowLeadingZeroes: true,
-				includeThousandsSeparator: false,
-				integerLimit: 4,
-				prefix: '',
-			}),
-		[]
-	);
+	const daysMask = createNumberMask({
+		allowLeadingZeroes: true,
+		includeThousandsSeparator: false,
+		integerLimit: 4,
+		prefix: '',
+	});
 
 	const onDurationChanged = useCallback(
 		(newDays) => {

@@ -155,18 +155,12 @@ const Item = ({totalCount, ...instance}) => {
 
 const QuickActionMenu = ({disabled, instance}) => {
 	const {openModal, setSingleTransition} = useContext(ModalContext);
-	const {setSelectedItem, setSelectedItems} = useContext(InstanceListContext);
+	const {setSelectedItems} = useContext(InstanceListContext);
 	const {transitions = [], taskNames = []} = instance;
 
 	const handleClick = (bulkModal, singleModal) => {
-		if (taskNames.length > 1) {
-			setSelectedItems([instance]);
-			openModal(bulkModal);
-		}
-		else {
-			setSelectedItem(instance);
-			openModal(singleModal);
-		}
+		openModal(taskNames.length > 1 ? bulkModal : singleModal);
+		setSelectedItems([instance]);
 	};
 
 	const transitionLabel = capitalize(Liferay.Language.get('transition'));
@@ -196,7 +190,7 @@ const QuickActionMenu = ({disabled, instance}) => {
 					name,
 					onClick: () => {
 						openModal('singleTransition');
-						setSelectedItem(instance);
+						setSelectedItems([instance]);
 						setSingleTransition({
 							title: label,
 							transitionName: name,

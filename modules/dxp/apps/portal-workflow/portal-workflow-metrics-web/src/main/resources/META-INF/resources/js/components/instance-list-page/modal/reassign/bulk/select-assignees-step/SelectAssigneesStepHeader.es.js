@@ -12,13 +12,7 @@
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {Autocomplete} from '../../../../../../shared/components/autocomplete/Autocomplete.es';
 import PromisesResolver from '../../../../../../shared/components/promises-resolver/PromisesResolver.es';
@@ -45,15 +39,7 @@ const Header = ({data}) => {
 		}
 	}, [data]);
 
-	const defaultValue = useMemo(
-		() => (selectedAssignee ? selectedAssignee.name : ''),
-		[selectedAssignee]
-	);
-
-	const disableBulk = useMemo(() => reassigning || assignees.length === 0, [
-		assignees,
-		reassigning,
-	]);
+	const disableBulk = reassigning || assignees.length === 0;
 
 	const handleCheck = ({target}) => {
 		setBulkReassign({
@@ -104,7 +90,7 @@ const Header = ({data}) => {
 				</ClayManagementToolbar.ItemList>
 				<ClayManagementToolbar.Search>
 					<Autocomplete
-						defaultValue={defaultValue}
+						defaultValue={selectedAssignee?.name || ''}
 						disabled={disableBulk || !useSameAssignee}
 						items={assignees}
 						onSelect={handleSelect}

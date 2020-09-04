@@ -12,7 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 
 import Portal from '../portal/Portal.es';
 import ChildLink from '../router/ChildLink.es';
@@ -20,13 +20,9 @@ import ChildLink from '../router/ChildLink.es';
 const HeaderKebab = ({kebabItems = []}) => {
 	const [active, setActive] = useState(false);
 
-	const container = useMemo(() => {
-		const nav = document.querySelector(
-			'.user-control-group ul.control-menu-nav'
-		);
-
-		return nav ? nav.lastElementChild : null;
-	}, []);
+	const nav = document.querySelector(
+		'.user-control-group ul.control-menu-nav'
+	);
 
 	if (!kebabItems.length) {
 		return null;
@@ -35,7 +31,7 @@ const HeaderKebab = ({kebabItems = []}) => {
 	return (
 		<Portal
 			className="control-menu-nav-item"
-			container={container}
+			container={nav?.lastElementChild}
 			elementId="headerKebab"
 			position="before"
 		>

@@ -9,18 +9,15 @@
  * distribution rights of the Software.
  */
 
-import {useMemo} from 'react';
-
 import {useFetch} from '../../../../shared/hooks/useFetch.es';
 
 const useCalendars = () => {
 	const {data, fetchData: fetchCalendars} = useFetch({url: '/calendars'});
 
-	const calendars = useMemo(() => data.items || [], [data]);
+	const calendars = data.items || [];
 
-	const defaultCalendar = useMemo(
-		() => calendars.find(({defaultCalendar}) => defaultCalendar),
-		[calendars]
+	const defaultCalendar = calendars.find(
+		({defaultCalendar}) => defaultCalendar
 	);
 
 	return {calendars, defaultCalendar, fetchCalendars};

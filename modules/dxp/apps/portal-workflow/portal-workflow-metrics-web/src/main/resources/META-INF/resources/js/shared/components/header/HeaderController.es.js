@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useContext, useEffect, useMemo} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import {AppContext} from '../../../components/AppContext.es';
 import HeaderBackButton from './HeaderBackButton.es';
@@ -18,28 +18,21 @@ import HeaderTitle from './HeaderTitle.es';
 
 const HeaderController = ({basePath}) => {
 	const {portletNamespace, title} = useContext(AppContext);
+	const header = document.getElementById(`${portletNamespace}controlMenu`);
 
-	const container = useMemo(() => {
-		const header = document.getElementById(
-			`${portletNamespace}controlMenu`
-		);
-
-		if (!header) {
-			return {};
-		}
-
-		return {
-			button: header.querySelector(
-				'.sites-control-group .control-menu-nav'
-			),
-			status: header.querySelector(
-				'.user-control-group li.control-menu-nav-item'
-			),
-			title: header.querySelector(
-				'.tools-control-group .control-menu-level-1-heading'
-			),
-		};
-	}, [portletNamespace]);
+	const container = header
+		? {
+				button: header.querySelector(
+					'.sites-control-group .control-menu-nav'
+				),
+				status: header.querySelector(
+					'.user-control-group li.control-menu-nav-item'
+				),
+				title: header.querySelector(
+					'.tools-control-group .control-menu-level-1-heading'
+				),
+		  }
+		: {};
 
 	useEffect(() => {
 		const legacyElement = document.querySelector(

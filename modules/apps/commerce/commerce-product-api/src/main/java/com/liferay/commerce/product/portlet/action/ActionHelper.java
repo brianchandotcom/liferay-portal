@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.portlet.action;
+package com.liferay.commerce.product.portlet.action;
 
-import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -34,27 +33,22 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
-import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
-
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -136,34 +130,7 @@ public class ActionHelper {
 		return cpDefinition;
 	}
 
-	public CPDefinitionInventory getCPDefinitionInventory(
-			RenderRequest renderRequest)
-		throws PortalException {
 
-		CPDefinitionInventory cpDefinitionInventory =
-			(CPDefinitionInventory)renderRequest.getAttribute(
-				CPWebKeys.CP_DEFINITION_INVENTORY);
-
-		if (cpDefinitionInventory != null) {
-			return cpDefinitionInventory;
-		}
-
-		long cpDefinitionId = ParamUtil.getLong(
-			renderRequest, "cpDefinitionId");
-
-		if (cpDefinitionId > 0) {
-			cpDefinitionInventory =
-				_cpDefinitionInventoryService.
-					fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
-		}
-
-		if (cpDefinitionInventory != null) {
-			renderRequest.setAttribute(
-				CPWebKeys.CP_DEFINITION_INVENTORY, cpDefinitionInventory);
-		}
-
-		return cpDefinitionInventory;
-	}
 
 	public CPDefinitionLink getCPDefinitionLink(PortletRequest portletRequest)
 		throws PortalException {
@@ -498,9 +465,6 @@ public class ActionHelper {
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
-
-	@Reference
-	private CPDefinitionInventoryService _cpDefinitionInventoryService;
 
 	@Reference
 	private CPDefinitionLinkService _cpDefinitionLinkService;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.servlet.taglib.ui;
+package com.liferay.commerce.product.servlet.taglib.ui;
 
 /**
  * @author Alessio Antonio Rendina

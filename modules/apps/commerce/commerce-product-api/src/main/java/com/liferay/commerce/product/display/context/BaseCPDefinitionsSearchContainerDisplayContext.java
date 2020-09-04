@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.display.context;
+package com.liferay.commerce.product.display.context;
 
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -27,13 +27,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina

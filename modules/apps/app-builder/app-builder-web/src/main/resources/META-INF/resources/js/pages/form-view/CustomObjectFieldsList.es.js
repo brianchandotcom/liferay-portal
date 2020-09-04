@@ -271,27 +271,26 @@ export default ({keywords}) => {
 		onDoubleClick: handleOnDoubleClick,
 	};
 
+	const FieldTypeListWrapper = ({categoryName, fieldTypes}) => (
+		<>
+			{showCategories && <FieldCategory categoryName={categoryName} />}
+
+			<FieldTypeList
+				{...fieldTypeListProps}
+				fieldTypes={fieldTypes}
+				showEmptyState={false}
+			/>
+		</>
+	);
+
 	return (
 		<>
-			{showCategories && (
-				<FieldCategory
-					categoryName={Liferay.Language.get('custom-fields')}
-				/>
-			)}
-
-			<FieldTypeList
-				{...fieldTypeListProps}
+			<FieldTypeListWrapper
+				categoryName={Liferay.Language.get('custom-fields')}
 				fieldTypes={customFieldTypes}
 			/>
-
-			{showCategories && (
-				<FieldCategory
-					categoryName={Liferay.Language.get('native-fields')}
-				/>
-			)}
-
-			<FieldTypeList
-				{...fieldTypeListProps}
+			<FieldTypeListWrapper
+				categoryName={Liferay.Language.get('native-fields')}
 				fieldTypes={nativeFieldTypes}
 			/>
 		</>

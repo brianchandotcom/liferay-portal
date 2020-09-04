@@ -245,6 +245,724 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	private LiferayRelengPlugin() {
 	}
 
+	private void _configureProperties(Project project) {
+		boolean privateModule = false;
+
+		String projectPath = project.getPath();
+
+		if (projectPath.startsWith(":dxp:") ||
+			projectPath.startsWith(":private:")) {
+
+			privateModule = true;
+		}
+
+		String liferayRelengAppTitlePrefix = GradleUtil.getProperty(
+			project, _LIFERAY_RELENG_APP_TITLE_PREFIX, (String)null);
+
+		if (Validator.isNull(liferayRelengAppTitlePrefix)) {
+			if (privateModule) {
+				liferayRelengAppTitlePrefix = "Liferay";
+			}
+			else {
+				liferayRelengAppTitlePrefix = "Liferay CE";
+			}
+
+			GradleUtil.setProperty(
+				project, _LIFERAY_RELENG_APP_TITLE_PREFIX,
+				liferayRelengAppTitlePrefix);
+		}
+
+		String liferayRelengPublic = GradleUtil.getProperty(
+			project, _LIFERAY_RELENG_PUBLIC, (String)null);
+
+		if (Validator.isNull(liferayRelengPublic)) {
+			liferayRelengPublic = String.valueOf(!privateModule);
+
+			GradleUtil.setProperty(
+				project, _LIFERAY_RELENG_PUBLIC, liferayRelengPublic);
+		}
+
+		String liferayRelengSupported = GradleUtil.getProperty(
+			project, _LIFERAY_RELENG_SUPPORTED, (String)null);
+
+		if (Validator.isNull(liferayRelengSupported)) {
+			liferayRelengSupported = String.valueOf(privateModule);
+
+			GradleUtil.setProperty(
+				project, _LIFERAY_RELENG_SUPPORTED, liferayRelengSupported);
+		}
+	}
+
+	private void _configureTaskBuildChangeLogProvider(
+		TaskProvider<BuildChangeLogTask> buildChangeLogTaskProvider,
+		final File relengDir) {
+
+		buildChangeLogTaskProvider.configure(
+			new Action<BuildChangeLogTask>() {
+
+				@Override
+				public void execute(BuildChangeLogTask buildChangeLogTask) {
+					String ticketIdPrefixes = GradleUtil.getProperty(
+						buildChangeLogTask.getProject(), "jira.project.keys",
+						(String)null);
+
+					if (Validator.isNotNull(ticketIdPrefixes)) {
+						buildChangeLogTask.ticketIdPrefixes(
+							ticketIdPrefixes.split(","));
+					}
+
+					buildChangeLogTask.setChangeLogFile(
+						new File(relengDir, "liferay-releng.changelog"));
+				}
+
+			});
+	}
+
+	private void _configureTaskEnabledIfRelease(Task task) {
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Project project = task.getProject();
+
+					if (GradleUtil.hasStartParameterTask(
+							project, task.getName()) ||
+						!GradlePluginsDefaultsUtil.isSnapshot(project)) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+	}
+
+	private void _configureTaskPrintDependentArtifactProvider(
+		TaskProvider<Task> printDependentArtifactTaskProvider) {
+
+		printDependentArtifactTaskProvider.configure(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task printDependentArtifactTask) {
+					printDependentArtifactTask.doLast(
+						new Action<Task>() {
+
+							@Override
+							public void execute(Task task) {
+								Project project = task.getProject();
+
+								File projectDir = project.getProjectDir();
+
+								System.out.println(
+									projectDir.getAbsolutePath());
+							}
+
+						});
+
+					Spec<Task> onlyIfSpec = new Spec<Task>() {
+
+						@Override
+						public boolean isSatisfiedBy(Task task) {
+							Project project = task.getProject();
+
+							String ignoreProjectRegex =
+								GradleUtil.getTaskPrefixedProperty(
+									task, "ignore.project.regex");
+
+							if (Validator.isNotNull(ignoreProjectRegex)) {
+								Pattern pattern = Pattern.compile(
+									ignoreProjectRegex);
+
+								Matcher matcher = pattern.matcher(
+									project.getName());
+
+								if (matcher.find()) {
+									return false;
+								}
+							}
+
+							String result = GitUtil.getGitResult(
+								project, "ls-files",
+								FileUtil.getAbsolutePath(
+									project.getProjectDir()));
+
+							if (Validator.isNull(result)) {
+								return false;
+							}
+
+							if (GradlePluginsDefaultsUtil.isTestProject(
+									project)) {
+
+								return false;
+							}
+
+							if (!LiferayRelengUtil.hasUnpublishedDependencies(
+									project)) {
+
+								return false;
+							}
+
+							return true;
+						}
+
+					};
+
+					printDependentArtifactTask.onlyIf(onlyIfSpec);
+
+					printDependentArtifactTask.setDescription(
+						"Prints the project directory if this project contains " +
+							"dependencies to other projects.");
+					printDependentArtifactTask.setGroup(
+						JavaBasePlugin.VERIFICATION_GROUP);
+				}
+
+			});
+	}
+
+	private void _configureTaskPrintStaleArtifactOnlyIf(
+		Project project, Task printStaleArtifactTask,
+		final WritePropertiesTask recordArtifactTask) {
+
+		final boolean liferayThemeProject = GradleUtil.hasPlugin(
+			project, LiferayThemeDefaultsPlugin.class);
+
+		if (liferayThemeProject &&
+			GradlePluginsDefaultsUtil.hasNPMParentThemesDependencies(project)) {
+
+			printStaleArtifactTask.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
+		}
+
+		Spec<Task> onlyIfSpec = new Spec<Task>() {
+
+			@Override
+			public boolean isSatisfiedBy(Task task) {
+				Project project = task.getProject();
+
+				String ignoreProjectRegex = GradleUtil.getTaskPrefixedProperty(
+					task, "ignore.project.regex");
+
+				if (Validator.isNotNull(ignoreProjectRegex)) {
+					Pattern pattern = Pattern.compile(ignoreProjectRegex);
+
+					Matcher matcher = pattern.matcher(project.getName());
+
+					if (matcher.find()) {
+						return false;
+					}
+				}
+
+				File gitRepoDir = GradleUtil.getRootDir(
+					project, GitRepo.GIT_REPO_FILE_NAME);
+
+				if (gitRepoDir != null) {
+					File file = new File(
+						gitRepoDir, GitRepo.GIT_REPO_FILE_NAME);
+
+					try {
+						if (!FileUtil.contains(file, "mode = push")) {
+							return false;
+						}
+					}
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
+					}
+				}
+
+				File relengIgnoreDir = GradleUtil.getRootDir(
+					project, RELENG_IGNORE_FILE_NAME);
+
+				if (relengIgnoreDir != null) {
+					return false;
+				}
+
+				String result = GitUtil.getGitResult(
+					project, "ls-files",
+					FileUtil.getAbsolutePath(project.getProjectDir()));
+
+				if (Validator.isNull(result)) {
+					return false;
+				}
+
+				if (liferayThemeProject &&
+					LiferayRelengUtil.hasStaleParentTheme(project)) {
+
+					return true;
+				}
+
+				if (LiferayRelengUtil.hasUnpublishedCommits(
+						project, project.getProjectDir(),
+						recordArtifactTask.getOutputFile())) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		printStaleArtifactTask.onlyIf(onlyIfSpec);
+	}
+
+	private void _configureTaskPrintStaleArtifactProvider(
+		final Project project,
+		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
+		TaskProvider<Task> printStaleArtifactTaskProvider) {
+
+		printStaleArtifactTaskProvider.configure(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task printStaleArtifactTask) {
+					printStaleArtifactTask.doLast(
+						new Action<Task>() {
+
+							@Override
+							public void execute(Task task) {
+								Project project = task.getProject();
+
+								File projectDir = project.getProjectDir();
+
+								System.out.println(
+									projectDir.getAbsolutePath());
+							}
+
+						});
+
+					printStaleArtifactTask.setDescription(
+						"Prints the project directory if this project has been changed " +
+							"since the last publish.");
+					printStaleArtifactTask.setGroup(
+						JavaBasePlugin.VERIFICATION_GROUP);
+
+					_configureTaskPrintStaleArtifactOnlyIf(
+						project, printStaleArtifactTask,
+						recordArtifactTaskProvider.get());
+				}
+
+			});
+	}
+
+	private void
+		_configureTaskPrintStaleArtifactProviderForLiferayOSGiDefaultsPlugin(
+			TaskProvider<Task> printStaleArtifactTaskProvider) {
+
+		printStaleArtifactTaskProvider.configure(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task printStaleArtifactTask) {
+					Project project = printStaleArtifactTask.getProject();
+
+					if (GradlePluginsDefaultsUtil.isTestProject(project)) {
+						printStaleArtifactTask.setEnabled(false);
+					}
+				}
+
+			});
+	}
+
+	private void _configureTaskProcessResourcesProvider(
+		final Project project,
+		final TaskProvider<BuildChangeLogTask> buildChangeLogTaskProvider,
+		TaskProvider<Copy> processResourcesTaskProvider) {
+
+		processResourcesTaskProvider.configure(
+			new Action<Copy>() {
+
+				@Override
+				public void execute(Copy processResourcesCopy) {
+					processResourcesCopy.from(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								BuildChangeLogTask buildChangeLogTask =
+									buildChangeLogTaskProvider.get();
+
+								return buildChangeLogTask.getChangeLogFile();
+							}
+
+						},
+						new Closure<Void>(project) {
+
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								copySpec.into("META-INF");
+							}
+
+						});
+				}
+
+			});
+	}
+
+	private void _configureTaskRecordArtifactProvider(
+		final Project project,
+		TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
+		final File relengDir) {
+
+		recordArtifactTaskProvider.configure(
+			new Action<WritePropertiesTask>() {
+
+				@Override
+				public void execute(
+					WritePropertiesTask recordArtifactWritePropertiesTask) {
+
+					recordArtifactWritePropertiesTask.property(
+						"artifact.git.id",
+						new Callable<String>() {
+
+							@Override
+							public String call() throws Exception {
+								return GitUtil.getGitResult(
+									project, "rev-parse", "HEAD");
+							}
+
+						});
+
+					recordArtifactWritePropertiesTask.setDescription(
+						"Records the commit ID and the artifact URLs.");
+					recordArtifactWritePropertiesTask.setOutputFile(
+						new File(relengDir, "artifact.properties"));
+				}
+
+			});
+	}
+
+	private void _configureTaskRecordArtifactProvider(
+		final Project project,
+		TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
+		final PublishArtifact publishArtifact) {
+
+		WritePropertiesTask recordArtifactWritePropertiesTask =
+			recordArtifactTaskProvider.get();
+
+		recordArtifactWritePropertiesTask.property(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					String key = publishArtifact.getClassifier();
+
+					if (Validator.isNull(key)) {
+						key = publishArtifact.getType();
+
+						if ((JavaPlugin.JAR_TASK_NAME.equals(key) &&
+							 GradleUtil.hasPlugin(project, JavaPlugin.class)) ||
+							(WarPlugin.WAR_TASK_NAME.equals(key) &&
+							 (GradleUtil.hasPlugin(
+								 project, LiferayAntPlugin.class) ||
+							  GradleUtil.hasPlugin(
+								  project, LiferayThemePlugin.class)))) {
+
+							key = null;
+						}
+					}
+
+					if (Validator.isNull(key)) {
+						return "artifact.url";
+					}
+
+					return "artifact." + key + ".url";
+				}
+
+			},
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return LiferayRelengUtil.getArtifactRemoteURL(
+						project, publishArtifact, false);
+				}
+
+			});
+	}
+
+	private void _configureTaskUploadArchivesProvider(
+		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
+		TaskProvider<Upload> uploadArchivesTaskProvider) {
+
+		uploadArchivesTaskProvider.configure(
+			new Action<Upload>() {
+
+				@Override
+				public void execute(Upload uploadArchivesUpload) {
+					uploadArchivesUpload.dependsOn(recordArtifactTaskProvider);
+
+					_configureTaskEnabledIfRelease(
+						recordArtifactTaskProvider.get());
+				}
+
+			});
+	}
+
+	private void _configureTaskWriteArtifactPublishCommandsOnlyIf(
+		Project project,
+		WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask,
+		final WritePropertiesTask recordArtifactTask) {
+
+		final String force = GradleUtil.getTaskPrefixedProperty(
+			writeArtifactPublishCommandsTask, "force");
+
+		final boolean liferayThemeProject = GradleUtil.hasPlugin(
+			project, LiferayThemeDefaultsPlugin.class);
+
+		if (liferayThemeProject &&
+			GradlePluginsDefaultsUtil.hasNPMParentThemesDependencies(project)) {
+
+			writeArtifactPublishCommandsTask.dependsOn(
+				NodePlugin.NPM_INSTALL_TASK_NAME);
+		}
+
+		Spec<Task> onlyIfSpec = new Spec<Task>() {
+
+			@Override
+			public boolean isSatisfiedBy(Task task) {
+				Project project = task.getProject();
+
+				String ignoreProjectRegex = GradleUtil.getTaskPrefixedProperty(
+					task, "ignore.project.regex");
+
+				if (Validator.isNotNull(ignoreProjectRegex)) {
+					Pattern pattern = Pattern.compile(ignoreProjectRegex);
+
+					Matcher matcher = pattern.matcher(project.getName());
+
+					if (matcher.find()) {
+						return false;
+					}
+				}
+
+				File gitRepoDir = GradleUtil.getRootDir(
+					project, GitRepo.GIT_REPO_FILE_NAME);
+
+				if (gitRepoDir != null) {
+					File file = new File(
+						gitRepoDir, GitRepo.GIT_REPO_FILE_NAME);
+
+					try {
+						if (!FileUtil.contains(file, "mode = push")) {
+							return false;
+						}
+					}
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
+					}
+				}
+
+				File relengIgnoreDir = GradleUtil.getRootDir(
+					project, RELENG_IGNORE_FILE_NAME);
+
+				if (relengIgnoreDir != null) {
+					return false;
+				}
+
+				String result = GitUtil.getGitResult(
+					project, "ls-files",
+					FileUtil.getAbsolutePath(project.getProjectDir()));
+
+				if (Validator.isNull(result)) {
+					return false;
+				}
+
+				if (Boolean.parseBoolean(force)) {
+					return true;
+				}
+
+				if (liferayThemeProject &&
+					LiferayRelengUtil.hasStaleParentTheme(project)) {
+
+					return true;
+				}
+
+				if (LiferayRelengUtil.hasUnpublishedCommits(
+						project, project.getProjectDir(),
+						recordArtifactTask.getOutputFile())) {
+
+					if (LiferayRelengUtil.hasUnpublishedDependencies(project)) {
+						return false;
+					}
+
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		writeArtifactPublishCommandsTask.onlyIf(onlyIfSpec);
+	}
+
+	private void _configureTaskWriteArtifactPublishCommandsProvider(
+		final Project project,
+		final TaskProvider<Delete> cleanArtifactsPublishCommandsTaskProvider,
+		final TaskProvider<MergeFilesTask>
+			mergeArtifactsPublishCommandsTaskProvider,
+		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
+		TaskProvider<WriteArtifactPublishCommandsTask>
+			writeArtifactPublishCommandsTaskProvider) {
+
+		writeArtifactPublishCommandsTaskProvider.configure(
+			new Action<WriteArtifactPublishCommandsTask>() {
+
+				@Override
+				public void execute(
+					WriteArtifactPublishCommandsTask
+						writeArtifactPublishCommandsTask) {
+
+					writeArtifactPublishCommandsTask.dependsOn(
+						cleanArtifactsPublishCommandsTaskProvider);
+
+					writeArtifactPublishCommandsTask.doFirst(
+						new Action<Task>() {
+
+							@Override
+							public void execute(Task task) {
+								Project project = task.getProject();
+
+								Gradle gradle = project.getGradle();
+
+								StartParameter startParameter =
+									gradle.getStartParameter();
+
+								if (startParameter.
+										isParallelProjectExecutionEnabled()) {
+
+									throw new GradleException(
+										"Unable to run " + task +
+											" in parallel");
+								}
+							}
+
+						});
+
+					writeArtifactPublishCommandsTask.finalizedBy(
+						mergeArtifactsPublishCommandsTaskProvider);
+
+					writeArtifactPublishCommandsTask.setArtifactPropertiesFile(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								WritePropertiesTask
+									recordArtifactWritePropertiesTask =
+										recordArtifactTaskProvider.get();
+
+								return recordArtifactWritePropertiesTask.
+									getOutputFile();
+							}
+
+						});
+
+					writeArtifactPublishCommandsTask.setDescription(
+						"Prints the artifact publish commands if this project has been " +
+							"changed since the last publish.");
+
+					Delete cleanArtifactsPublishCommandsDelete =
+						cleanArtifactsPublishCommandsTaskProvider.get();
+
+					writeArtifactPublishCommandsTask.setOutputDir(
+						CollectionUtils.first(
+							cleanArtifactsPublishCommandsDelete.getDelete()));
+
+					_configureTaskWriteArtifactPublishCommandsOnlyIf(
+						project, writeArtifactPublishCommandsTask,
+						recordArtifactTaskProvider.get());
+				}
+
+			});
+	}
+
+	private void
+		_configureTaskWriteArtifactPublishCommandsProviderAfterEvaluate(
+			Project project,
+			TaskProvider<WriteArtifactPublishCommandsTask>
+				writeArtifactPublishCommandsTaskProvider) {
+
+		TaskProvider<ReplaceRegexTask> updateVersionTaskProvider =
+			GradleUtil.fetchTaskProvider(
+				project, UPDATE_VERSION_TASK_NAME, ReplaceRegexTask.class);
+
+		if (updateVersionTaskProvider != null) {
+			ReplaceRegexTask updateVersionReplaceRegexTask =
+				updateVersionTaskProvider.get();
+
+			Map<String, FileCollection> matches =
+				updateVersionReplaceRegexTask.getMatches();
+
+			WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask =
+				writeArtifactPublishCommandsTaskProvider.get();
+
+			writeArtifactPublishCommandsTask.prepNextFiles(matches.values());
+		}
+
+		if (GradleUtil.hasPlugin(project, CachePlugin.class)) {
+			CacheExtension cacheExtension = GradleUtil.getExtension(
+				project, CacheExtension.class);
+
+			WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask =
+				writeArtifactPublishCommandsTaskProvider.get();
+
+			for (TaskCache taskCache : cacheExtension.getTasks()) {
+				writeArtifactPublishCommandsTask.prepNextFiles(
+					new File(
+						taskCache.getCacheDir(),
+						TaskCacheApplicator.DIGEST_FILE_NAME));
+			}
+		}
+
+		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class)) {
+			TaskProvider<WriteDigestTask> writeParentThemesDigestTaskProvider =
+				GradleUtil.getTaskProvider(
+					project,
+					LiferayThemeDefaultsPlugin.
+						WRITE_PARENT_THEMES_DIGEST_TASK_NAME,
+					WriteDigestTask.class);
+
+			WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask =
+				writeArtifactPublishCommandsTaskProvider.get();
+			WriteDigestTask writeParentThemesDigestWriteDigestTask =
+				writeParentThemesDigestTaskProvider.get();
+
+			writeArtifactPublishCommandsTask.prepNextCommitFile(
+				"digest",
+				writeParentThemesDigestWriteDigestTask.getDigestFile());
+		}
+	}
+
+	private void
+		_configureTaskWriteArtifactPublishCommandsProviderForLiferayOSGiDefaultsPlugin(
+			TaskProvider<WriteArtifactPublishCommandsTask>
+				writeArtifactPublishCommandsTaskProvider) {
+
+		writeArtifactPublishCommandsTaskProvider.configure(
+			new Action<WriteArtifactPublishCommandsTask>() {
+
+				@Override
+				public void execute(
+					WriteArtifactPublishCommandsTask
+						writeArtifactPublishCommandsTask) {
+
+					if (GradlePluginsDefaultsUtil.isTestProject(
+							writeArtifactPublishCommandsTask.getProject())) {
+
+						writeArtifactPublishCommandsTask.setEnabled(false);
+					}
+
+					writeArtifactPublishCommandsTask.
+						setFirstPublishExcludedTaskName(
+							LiferayOSGiDefaultsPlugin.
+								UPDATE_FILE_VERSIONS_TASK_NAME);
+				}
+
+			});
+	}
+
 	private TaskProvider<Delete> _getTaskCleanArtifactsPublishCommandsProvider(
 		Gradle gradle) {
 
@@ -410,722 +1128,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			});
 
 		return mergeArtifactsPublishCommandsTaskProvider;
-	}
-
-	private void _configureTaskPrintDependentArtifactProvider(
-		TaskProvider<Task> printDependentArtifactTaskProvider) {
-
-		printDependentArtifactTaskProvider.configure(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task printDependentArtifactTask) {
-					printDependentArtifactTask.doLast(
-						new Action<Task>() {
-
-							@Override
-							public void execute(Task task) {
-								Project project = task.getProject();
-
-								File projectDir = project.getProjectDir();
-
-								System.out.println(
-									projectDir.getAbsolutePath());
-							}
-
-						});
-
-					Spec<Task> onlyIfSpec = new Spec<Task>() {
-
-						@Override
-						public boolean isSatisfiedBy(Task task) {
-							Project project = task.getProject();
-
-							String ignoreProjectRegex =
-								GradleUtil.getTaskPrefixedProperty(
-									task, "ignore.project.regex");
-
-							if (Validator.isNotNull(ignoreProjectRegex)) {
-								Pattern pattern = Pattern.compile(
-									ignoreProjectRegex);
-
-								Matcher matcher = pattern.matcher(
-									project.getName());
-
-								if (matcher.find()) {
-									return false;
-								}
-							}
-
-							String result = GitUtil.getGitResult(
-								project, "ls-files",
-								FileUtil.getAbsolutePath(
-									project.getProjectDir()));
-
-							if (Validator.isNull(result)) {
-								return false;
-							}
-
-							if (GradlePluginsDefaultsUtil.isTestProject(
-									project)) {
-
-								return false;
-							}
-
-							if (!LiferayRelengUtil.hasUnpublishedDependencies(
-									project)) {
-
-								return false;
-							}
-
-							return true;
-						}
-
-					};
-
-					printDependentArtifactTask.onlyIf(onlyIfSpec);
-
-					printDependentArtifactTask.setDescription(
-						"Prints the project directory if this project contains " +
-							"dependencies to other projects.");
-					printDependentArtifactTask.setGroup(
-						JavaBasePlugin.VERIFICATION_GROUP);
-				}
-
-			});
-	}
-
-	private void _configureTaskPrintStaleArtifactProvider(
-		final Project project,
-		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
-		TaskProvider<Task> printStaleArtifactTaskProvider) {
-
-		printStaleArtifactTaskProvider.configure(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task printStaleArtifactTask) {
-					printStaleArtifactTask.doLast(
-						new Action<Task>() {
-
-							@Override
-							public void execute(Task task) {
-								Project project = task.getProject();
-
-								File projectDir = project.getProjectDir();
-
-								System.out.println(
-									projectDir.getAbsolutePath());
-							}
-
-						});
-
-					printStaleArtifactTask.setDescription(
-						"Prints the project directory if this project has been changed " +
-							"since the last publish.");
-					printStaleArtifactTask.setGroup(
-						JavaBasePlugin.VERIFICATION_GROUP);
-
-					_configureTaskPrintStaleArtifactOnlyIf(
-						project, printStaleArtifactTask,
-						recordArtifactTaskProvider.get());
-				}
-
-			});
-	}
-
-	private void _configureTaskRecordArtifactProvider(
-		final Project project,
-		TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
-		final File relengDir) {
-
-		recordArtifactTaskProvider.configure(
-			new Action<WritePropertiesTask>() {
-
-				@Override
-				public void execute(
-					WritePropertiesTask recordArtifactWritePropertiesTask) {
-
-					recordArtifactWritePropertiesTask.property(
-						"artifact.git.id",
-						new Callable<String>() {
-
-							@Override
-							public String call() throws Exception {
-								return GitUtil.getGitResult(
-									project, "rev-parse", "HEAD");
-							}
-
-						});
-
-					recordArtifactWritePropertiesTask.setDescription(
-						"Records the commit ID and the artifact URLs.");
-					recordArtifactWritePropertiesTask.setOutputFile(
-						new File(relengDir, "artifact.properties"));
-				}
-
-			});
-	}
-
-	private void _configureTaskRecordArtifactProvider(
-		final Project project,
-		TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
-		final PublishArtifact publishArtifact) {
-
-		WritePropertiesTask recordArtifactWritePropertiesTask =
-			recordArtifactTaskProvider.get();
-
-		recordArtifactWritePropertiesTask.property(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					String key = publishArtifact.getClassifier();
-
-					if (Validator.isNull(key)) {
-						key = publishArtifact.getType();
-
-						if ((JavaPlugin.JAR_TASK_NAME.equals(key) &&
-							 GradleUtil.hasPlugin(project, JavaPlugin.class)) ||
-							(WarPlugin.WAR_TASK_NAME.equals(key) &&
-							 (GradleUtil.hasPlugin(
-								 project, LiferayAntPlugin.class) ||
-							  GradleUtil.hasPlugin(
-								  project, LiferayThemePlugin.class)))) {
-
-							key = null;
-						}
-					}
-
-					if (Validator.isNull(key)) {
-						return "artifact.url";
-					}
-
-					return "artifact." + key + ".url";
-				}
-
-			},
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return LiferayRelengUtil.getArtifactRemoteURL(
-						project, publishArtifact, false);
-				}
-
-			});
-	}
-
-	private void _configureTaskWriteArtifactPublishCommandsProvider(
-		final Project project,
-		final TaskProvider<Delete> cleanArtifactsPublishCommandsTaskProvider,
-		final TaskProvider<MergeFilesTask> mergeArtifactsPublishCommandsTaskProvider,
-		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
-		TaskProvider<WriteArtifactPublishCommandsTask>
-			writeArtifactPublishCommandsTaskProvider) {
-
-		writeArtifactPublishCommandsTaskProvider.configure(
-			new Action<WriteArtifactPublishCommandsTask>() {
-
-				@Override
-				public void execute(
-					WriteArtifactPublishCommandsTask
-						writeArtifactPublishCommandsTask) {
-
-					writeArtifactPublishCommandsTask.dependsOn(
-						cleanArtifactsPublishCommandsTaskProvider);
-
-					writeArtifactPublishCommandsTask.doFirst(
-						new Action<Task>() {
-
-							@Override
-							public void execute(Task task) {
-								Project project = task.getProject();
-
-								Gradle gradle = project.getGradle();
-
-								StartParameter startParameter =
-									gradle.getStartParameter();
-
-								if (startParameter.
-										isParallelProjectExecutionEnabled()) {
-
-									throw new GradleException(
-										"Unable to run " + task +
-											" in parallel");
-								}
-							}
-
-						});
-
-					writeArtifactPublishCommandsTask.finalizedBy(
-						mergeArtifactsPublishCommandsTaskProvider);
-
-					writeArtifactPublishCommandsTask.setArtifactPropertiesFile(
-						new Callable<File>() {
-
-							@Override
-							public File call() throws Exception {
-								WritePropertiesTask
-									recordArtifactWritePropertiesTask =
-										recordArtifactTaskProvider.get();
-
-								return recordArtifactWritePropertiesTask.
-									getOutputFile();
-							}
-
-						});
-
-					writeArtifactPublishCommandsTask.setDescription(
-						"Prints the artifact publish commands if this project has been " +
-							"changed since the last publish.");
-
-					Delete cleanArtifactsPublishCommandsDelete =
-						cleanArtifactsPublishCommandsTaskProvider.get();
-
-					writeArtifactPublishCommandsTask.setOutputDir(
-						CollectionUtils.first(
-							cleanArtifactsPublishCommandsDelete.getDelete()));
-
-					_configureTaskWriteArtifactPublishCommandsOnlyIf(
-						project, writeArtifactPublishCommandsTask,
-						recordArtifactTaskProvider.get());
-				}
-
-			});
-	}
-
-	private void
-		_configureTaskWriteArtifactPublishCommandsProviderAfterEvaluate(
-			Project project,
-			TaskProvider<WriteArtifactPublishCommandsTask>
-				writeArtifactPublishCommandsTaskProvider) {
-
-		TaskProvider<ReplaceRegexTask> updateVersionTaskProvider =
-			GradleUtil.fetchTaskProvider(
-				project, UPDATE_VERSION_TASK_NAME, ReplaceRegexTask.class);
-
-		if (updateVersionTaskProvider != null) {
-			ReplaceRegexTask updateVersionReplaceRegexTask =
-				updateVersionTaskProvider.get();
-
-			Map<String, FileCollection> matches =
-				updateVersionReplaceRegexTask.getMatches();
-
-			WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask =
-				writeArtifactPublishCommandsTaskProvider.get();
-
-			writeArtifactPublishCommandsTask.prepNextFiles(matches.values());
-		}
-
-		if (GradleUtil.hasPlugin(project, CachePlugin.class)) {
-			CacheExtension cacheExtension = GradleUtil.getExtension(
-				project, CacheExtension.class);
-
-			WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask =
-				writeArtifactPublishCommandsTaskProvider.get();
-
-			for (TaskCache taskCache : cacheExtension.getTasks()) {
-				writeArtifactPublishCommandsTask.prepNextFiles(
-					new File(
-						taskCache.getCacheDir(),
-						TaskCacheApplicator.DIGEST_FILE_NAME));
-			}
-		}
-
-		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class)) {
-			TaskProvider<WriteDigestTask> writeParentThemesDigestTaskProvider =
-				GradleUtil.getTaskProvider(
-					project,
-					LiferayThemeDefaultsPlugin.
-						WRITE_PARENT_THEMES_DIGEST_TASK_NAME,
-					WriteDigestTask.class);
-
-			WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask =
-				writeArtifactPublishCommandsTaskProvider.get();
-			WriteDigestTask writeParentThemesDigestWriteDigestTask =
-				writeParentThemesDigestTaskProvider.get();
-
-			writeArtifactPublishCommandsTask.prepNextCommitFile(
-				"digest",
-				writeParentThemesDigestWriteDigestTask.getDigestFile());
-		}
-	}
-
-	private void _configureProperties(Project project) {
-		boolean privateModule = false;
-
-		String projectPath = project.getPath();
-
-		if (projectPath.startsWith(":dxp:") ||
-			projectPath.startsWith(":private:")) {
-
-			privateModule = true;
-		}
-
-		String liferayRelengAppTitlePrefix = GradleUtil.getProperty(
-			project, _LIFERAY_RELENG_APP_TITLE_PREFIX, (String)null);
-
-		if (Validator.isNull(liferayRelengAppTitlePrefix)) {
-			if (privateModule) {
-				liferayRelengAppTitlePrefix = "Liferay";
-			}
-			else {
-				liferayRelengAppTitlePrefix = "Liferay CE";
-			}
-
-			GradleUtil.setProperty(
-				project, _LIFERAY_RELENG_APP_TITLE_PREFIX,
-				liferayRelengAppTitlePrefix);
-		}
-
-		String liferayRelengPublic = GradleUtil.getProperty(
-			project, _LIFERAY_RELENG_PUBLIC, (String)null);
-
-		if (Validator.isNull(liferayRelengPublic)) {
-			liferayRelengPublic = String.valueOf(!privateModule);
-
-			GradleUtil.setProperty(
-				project, _LIFERAY_RELENG_PUBLIC, liferayRelengPublic);
-		}
-
-		String liferayRelengSupported = GradleUtil.getProperty(
-			project, _LIFERAY_RELENG_SUPPORTED, (String)null);
-
-		if (Validator.isNull(liferayRelengSupported)) {
-			liferayRelengSupported = String.valueOf(privateModule);
-
-			GradleUtil.setProperty(
-				project, _LIFERAY_RELENG_SUPPORTED, liferayRelengSupported);
-		}
-	}
-
-	private void _configureTaskBuildChangeLogProvider(
-		TaskProvider<BuildChangeLogTask> buildChangeLogTaskProvider,
-		final File relengDir) {
-
-		buildChangeLogTaskProvider.configure(
-			new Action<BuildChangeLogTask>() {
-
-				@Override
-				public void execute(BuildChangeLogTask buildChangeLogTask) {
-					String ticketIdPrefixes = GradleUtil.getProperty(
-						buildChangeLogTask.getProject(), "jira.project.keys",
-						(String)null);
-
-					if (Validator.isNotNull(ticketIdPrefixes)) {
-						buildChangeLogTask.ticketIdPrefixes(
-							ticketIdPrefixes.split(","));
-					}
-
-					buildChangeLogTask.setChangeLogFile(
-						new File(relengDir, "liferay-releng.changelog"));
-				}
-
-			});
-	}
-
-	private void _configureTaskEnabledIfRelease(Task task) {
-		task.onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					Project project = task.getProject();
-
-					if (GradleUtil.hasStartParameterTask(
-							project, task.getName()) ||
-						!GradlePluginsDefaultsUtil.isSnapshot(project)) {
-
-						return true;
-					}
-
-					return false;
-				}
-
-			});
-	}
-
-	private void _configureTaskPrintStaleArtifactProviderForLiferayOSGiDefaultsPlugin(
-		TaskProvider<Task> printStaleArtifactTaskProvider) {
-
-		printStaleArtifactTaskProvider.configure(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task printStaleArtifactTask) {
-					Project project = printStaleArtifactTask.getProject();
-
-					if (GradlePluginsDefaultsUtil.isTestProject(project)) {
-						printStaleArtifactTask.setEnabled(false);
-					}
-				}
-
-			});
-	}
-
-	private void _configureTaskPrintStaleArtifactOnlyIf(
-		Project project, Task printStaleArtifactTask,
-		final WritePropertiesTask recordArtifactTask) {
-
-		final boolean liferayThemeProject = GradleUtil.hasPlugin(
-			project, LiferayThemeDefaultsPlugin.class);
-
-		if (liferayThemeProject &&
-			GradlePluginsDefaultsUtil.hasNPMParentThemesDependencies(project)) {
-
-			printStaleArtifactTask.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
-		}
-
-		Spec<Task> onlyIfSpec = new Spec<Task>() {
-
-			@Override
-			public boolean isSatisfiedBy(Task task) {
-				Project project = task.getProject();
-
-				String ignoreProjectRegex = GradleUtil.getTaskPrefixedProperty(
-					task, "ignore.project.regex");
-
-				if (Validator.isNotNull(ignoreProjectRegex)) {
-					Pattern pattern = Pattern.compile(ignoreProjectRegex);
-
-					Matcher matcher = pattern.matcher(project.getName());
-
-					if (matcher.find()) {
-						return false;
-					}
-				}
-
-				File gitRepoDir = GradleUtil.getRootDir(
-					project, GitRepo.GIT_REPO_FILE_NAME);
-
-				if (gitRepoDir != null) {
-					File file = new File(
-						gitRepoDir, GitRepo.GIT_REPO_FILE_NAME);
-
-					try {
-						if (!FileUtil.contains(file, "mode = push")) {
-							return false;
-						}
-					}
-					catch (IOException ioException) {
-						throw new UncheckedIOException(ioException);
-					}
-				}
-
-				File relengIgnoreDir = GradleUtil.getRootDir(
-					project, RELENG_IGNORE_FILE_NAME);
-
-				if (relengIgnoreDir != null) {
-					return false;
-				}
-
-				String result = GitUtil.getGitResult(
-					project, "ls-files",
-					FileUtil.getAbsolutePath(project.getProjectDir()));
-
-				if (Validator.isNull(result)) {
-					return false;
-				}
-
-				if (liferayThemeProject &&
-					LiferayRelengUtil.hasStaleParentTheme(project)) {
-
-					return true;
-				}
-
-				if (LiferayRelengUtil.hasUnpublishedCommits(
-						project, project.getProjectDir(),
-						recordArtifactTask.getOutputFile())) {
-
-					return true;
-				}
-
-				return false;
-			}
-
-		};
-
-		printStaleArtifactTask.onlyIf(onlyIfSpec);
-	}
-
-	private void _configureTaskProcessResourcesProvider(
-		final Project project,
-		final TaskProvider<BuildChangeLogTask> buildChangeLogTaskProvider,
-		TaskProvider<Copy> processResourcesTaskProvider) {
-
-		processResourcesTaskProvider.configure(
-			new Action<Copy>() {
-
-				@Override
-				public void execute(Copy processResourcesCopy) {
-					processResourcesCopy.from(
-						new Callable<File>() {
-
-							@Override
-							public File call() throws Exception {
-								BuildChangeLogTask buildChangeLogTask =
-									buildChangeLogTaskProvider.get();
-
-								return buildChangeLogTask.getChangeLogFile();
-							}
-
-						},
-						new Closure<Void>(project) {
-
-							@SuppressWarnings("unused")
-							public void doCall(CopySpec copySpec) {
-								copySpec.into("META-INF");
-							}
-
-						});
-				}
-
-			});
-	}
-
-	private void _configureTaskUploadArchivesProvider(
-		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
-		TaskProvider<Upload> uploadArchivesTaskProvider) {
-
-		uploadArchivesTaskProvider.configure(
-			new Action<Upload>() {
-
-				@Override
-				public void execute(Upload uploadArchivesUpload) {
-					uploadArchivesUpload.dependsOn(recordArtifactTaskProvider);
-
-					_configureTaskEnabledIfRelease(
-						recordArtifactTaskProvider.get());
-				}
-
-			});
-	}
-
-	private void
-		_configureTaskWriteArtifactPublishCommandsProviderForLiferayOSGiDefaultsPlugin(
-			TaskProvider<WriteArtifactPublishCommandsTask>
-				writeArtifactPublishCommandsTaskProvider) {
-
-		writeArtifactPublishCommandsTaskProvider.configure(
-			new Action<WriteArtifactPublishCommandsTask>() {
-
-				@Override
-				public void execute(
-					WriteArtifactPublishCommandsTask
-						writeArtifactPublishCommandsTask) {
-
-					if (GradlePluginsDefaultsUtil.isTestProject(
-							writeArtifactPublishCommandsTask.getProject())) {
-
-						writeArtifactPublishCommandsTask.setEnabled(false);
-					}
-
-					writeArtifactPublishCommandsTask.
-						setFirstPublishExcludedTaskName(
-							LiferayOSGiDefaultsPlugin.
-								UPDATE_FILE_VERSIONS_TASK_NAME);
-				}
-
-			});
-	}
-
-	private void _configureTaskWriteArtifactPublishCommandsOnlyIf(
-		Project project,
-		WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask,
-		final WritePropertiesTask recordArtifactTask) {
-
-		final String force = GradleUtil.getTaskPrefixedProperty(
-			writeArtifactPublishCommandsTask, "force");
-
-		final boolean liferayThemeProject = GradleUtil.hasPlugin(
-			project, LiferayThemeDefaultsPlugin.class);
-
-		if (liferayThemeProject &&
-			GradlePluginsDefaultsUtil.hasNPMParentThemesDependencies(project)) {
-
-			writeArtifactPublishCommandsTask.dependsOn(
-				NodePlugin.NPM_INSTALL_TASK_NAME);
-		}
-
-		Spec<Task> onlyIfSpec = new Spec<Task>() {
-
-			@Override
-			public boolean isSatisfiedBy(Task task) {
-				Project project = task.getProject();
-
-				String ignoreProjectRegex = GradleUtil.getTaskPrefixedProperty(
-					task, "ignore.project.regex");
-
-				if (Validator.isNotNull(ignoreProjectRegex)) {
-					Pattern pattern = Pattern.compile(ignoreProjectRegex);
-
-					Matcher matcher = pattern.matcher(project.getName());
-
-					if (matcher.find()) {
-						return false;
-					}
-				}
-
-				File gitRepoDir = GradleUtil.getRootDir(
-					project, GitRepo.GIT_REPO_FILE_NAME);
-
-				if (gitRepoDir != null) {
-					File file = new File(
-						gitRepoDir, GitRepo.GIT_REPO_FILE_NAME);
-
-					try {
-						if (!FileUtil.contains(file, "mode = push")) {
-							return false;
-						}
-					}
-					catch (IOException ioException) {
-						throw new UncheckedIOException(ioException);
-					}
-				}
-
-				File relengIgnoreDir = GradleUtil.getRootDir(
-					project, RELENG_IGNORE_FILE_NAME);
-
-				if (relengIgnoreDir != null) {
-					return false;
-				}
-
-				String result = GitUtil.getGitResult(
-					project, "ls-files",
-					FileUtil.getAbsolutePath(project.getProjectDir()));
-
-				if (Validator.isNull(result)) {
-					return false;
-				}
-
-				if (Boolean.parseBoolean(force)) {
-					return true;
-				}
-
-				if (liferayThemeProject &&
-					LiferayRelengUtil.hasStaleParentTheme(project)) {
-
-					return true;
-				}
-
-				if (LiferayRelengUtil.hasUnpublishedCommits(
-						project, project.getProjectDir(),
-						recordArtifactTask.getOutputFile())) {
-
-					if (LiferayRelengUtil.hasUnpublishedDependencies(project)) {
-						return false;
-					}
-
-					return true;
-				}
-
-				return false;
-			}
-
-		};
-
-		writeArtifactPublishCommandsTask.onlyIf(onlyIfSpec);
 	}
 
 	private static final String _LIFERAY_RELENG_APP_TITLE_PREFIX =

@@ -36,11 +36,11 @@ const OPEN_MENU_TITLE_TPL =
 	'<kbd class="c-kbd">M</kbd>' +
 	'</kbd>';
 
-const EnvironmentsPanel = ({portletNamespace, sites, virtualInstance}) => {
+const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 	return (
-		<div className="applications-menu-environments c-p-3 c-px-md-4">
-			<h2 className="applications-menu-environments-label c-mt-2 c-mt-md-0">
-				{Liferay.Language.get('environments')}
+		<div className="applications-menu-sites c-p-3 c-px-md-4">
+			<h2 className="applications-menu-sites-label c-mt-2 c-mt-md-0">
+				{Liferay.Language.get('sites')}
 			</h2>
 
 			<div className="c-my-2">
@@ -323,7 +323,7 @@ const AppsPanel = ({
 							lg="3"
 							md="4"
 						>
-							<EnvironmentsPanel
+							<SitesPanel
 								portletNamespace={portletNamespace}
 								sites={sites}
 								virtualInstance={virtualInstance}
@@ -368,7 +368,7 @@ const AppsPanel = ({
 							lg="3"
 							md="4"
 						>
-							<div className="applications-menu-environments"></div>
+							<div className="applications-menu-sites"></div>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>

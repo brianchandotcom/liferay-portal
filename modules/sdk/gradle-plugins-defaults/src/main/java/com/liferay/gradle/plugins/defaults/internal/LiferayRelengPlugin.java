@@ -107,14 +107,21 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
+
+		// Plugins
+
 		GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
+
+		// Configurations
 
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
 		Configuration archivesConfiguration = configurationContainer.getByName(
 			Dependency.ARCHIVES_CONFIGURATION);
+
+		// Tasks
 
 		TaskProvider<Task> printDependentArtifactTaskProvider =
 			GradleUtil.addTaskProvider(
@@ -165,6 +172,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			mergeArtifactsPublishCommandsTaskProvider,
 			recordArtifactTaskProvider,
 			writeArtifactPublishCommandsTaskProvider);
+
+		// Other
 
 		_configureProperties(project);
 

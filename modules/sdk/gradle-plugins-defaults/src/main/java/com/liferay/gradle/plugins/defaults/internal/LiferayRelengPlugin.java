@@ -217,6 +217,17 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_configureTaskWriteArtifactPublishCommandsProviderAfterEvaluate(
+						project, writeArtifactPublishCommandsTaskProvider);
+				}
+
+			});
 	}
 
 	protected static final String RELENG_IGNORE_FILE_NAME =
@@ -601,7 +612,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		final TaskProvider<Delete> cleanArtifactsPublishCommandsTaskProvider,
 		final TaskProvider<MergeFilesTask> mergeArtifactsPublishCommandsTaskProvider,
 		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
-		final TaskProvider<WriteArtifactPublishCommandsTask>
+		TaskProvider<WriteArtifactPublishCommandsTask>
 			writeArtifactPublishCommandsTaskProvider) {
 
 		writeArtifactPublishCommandsTaskProvider.configure(
@@ -670,17 +681,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					_configureTaskWriteArtifactPublishCommandsOnlyIf(
 						project, writeArtifactPublishCommandsTask,
 						recordArtifactTaskProvider.get());
-				}
-
-			});
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					_configureTaskWriteArtifactPublishCommandsProviderAfterEvaluate(
-						project, writeArtifactPublishCommandsTaskProvider);
 				}
 
 			});

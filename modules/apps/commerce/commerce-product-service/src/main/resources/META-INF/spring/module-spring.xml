@@ -41,8 +41,6 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPDisplayLayoutLocalServiceImpl" id="com.liferay.commerce.product.service.CPDisplayLayoutLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl" id="com.liferay.commerce.product.service.CPDisplayLayoutService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDisplayLayoutPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence" />
-	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CPFriendlyURLEntryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceLocalServiceImpl" id="com.liferay.commerce.product.service.CPInstanceLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceServiceImpl" id="com.liferay.commerce.product.service.CPInstanceService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPInstancePersistence" />

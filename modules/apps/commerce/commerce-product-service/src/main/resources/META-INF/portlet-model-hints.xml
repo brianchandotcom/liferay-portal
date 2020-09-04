@@ -268,23 +268,6 @@
 			<validator name="required" />
 		</field>
 	</model>
-	<model name="com.liferay.commerce.product.model.CPFriendlyURLEntry">
-		<field name="uuid" type="String" />
-		<field name="CPFriendlyURLEntryId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="languageId" type="String" />
-		<field name="urlTitle" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="main" type="boolean" />
-	</model>
 	<model name="com.liferay.commerce.product.model.CPInstance">
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />

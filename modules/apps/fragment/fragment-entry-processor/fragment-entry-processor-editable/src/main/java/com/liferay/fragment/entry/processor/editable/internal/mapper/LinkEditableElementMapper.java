@@ -101,9 +101,13 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			replaceLink = true;
 		}
 
-		if (configJSONObject.has("target")) {
-			linkElement.attr("target", configJSONObject.getString("target"));
+		String target = "_blank";
+
+		if (Validator.isNotNull(configJSONObject.getString("target"))) {
+			target = configJSONObject.getString("target");
 		}
+
+		linkElement.attr("target", target);
 
 		String mappedField = configJSONObject.getString("mappedField");
 

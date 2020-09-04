@@ -6,6 +6,10 @@
 		<field name="companyId" type="long" />
 		<field name="bigDecimalValue" type="BigDecimal" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry">
+		<field name="cacheDisabledEntryId" type="long" />
+		<field name="name" type="String" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry">
 		<field name="uuid" type="String" />
 		<field name="eagerBlobEntryId" type="long" />

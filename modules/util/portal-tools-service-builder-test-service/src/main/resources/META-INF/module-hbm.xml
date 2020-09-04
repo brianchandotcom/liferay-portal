@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LocalizedEntry" />
@@ -22,6 +23,12 @@
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="bigDecimalValue" type="org.hibernate.type.BigDecimalType" />
+	</class>
+	<class name="com.liferay.portal.tools.service.builder.test.model.impl.CacheDisabledEntryImpl" table="CacheDisabledEntry">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="cacheDisabledEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.EagerBlobEntryImpl" table="EagerBlobEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="eagerBlobEntryId" type="long">

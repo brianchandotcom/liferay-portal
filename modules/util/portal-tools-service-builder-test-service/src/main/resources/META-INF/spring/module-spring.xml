@@ -8,6 +8,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.BigDecimalEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.CacheDisabledEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.CacheDisabledEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.CacheDisabledEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.CacheDisabledEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.EagerBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.EagerBlobEntryPersistence" />

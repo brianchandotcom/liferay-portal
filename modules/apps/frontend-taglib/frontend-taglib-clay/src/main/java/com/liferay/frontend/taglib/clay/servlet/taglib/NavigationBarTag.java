@@ -16,11 +16,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Map;
@@ -44,10 +40,6 @@ public class NavigationBarTag extends BaseContainerTag {
 	}
 
 	public boolean getInverted() {
-		if (_inverted == null) {
-			_inverted = _isInvertedByDefault();
-		}
-
 		return _inverted;
 	}
 
@@ -83,7 +75,7 @@ public class NavigationBarTag extends BaseContainerTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_inverted = null;
+		_inverted = false;
 		_navigationItems = null;
 		_spritemap = null;
 	}
@@ -95,7 +87,7 @@ public class NavigationBarTag extends BaseContainerTag {
 
 	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
-		props.put("inverted", getInverted());
+		props.put("inverted", _inverted);
 		props.put("navigationItems", _navigationItems);
 
 		return super.prepareProps(props);
@@ -110,8 +102,7 @@ public class NavigationBarTag extends BaseContainerTag {
 		cssClasses.add("navigation-bar");
 
 		cssClasses.add(
-			getInverted() ? "navigation-bar-secondary" :
-				"navigation-bar-light");
+			_inverted ? "navigation-bar-secondary" : "navigation-bar-light");
 
 		return super.processCssClasses(cssClasses);
 	}
@@ -165,30 +156,9 @@ public class NavigationBarTag extends BaseContainerTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	private boolean _isInvertedByDefault() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay != null) {
-			Layout layout = themeDisplay.getLayout();
-
-			if ((layout != null) && !layout.isTypeControlPanel()) {
-				return false;
-			}
-
-			Group scopeGroup = themeDisplay.getScopeGroup();
-
-			if ((scopeGroup != null) && scopeGroup.isDepot()) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:navigation_bar:";
 
-	private Boolean _inverted;
+	private boolean _inverted;
 	private List<NavigationItem> _navigationItems;
 	private String _spritemap;
 

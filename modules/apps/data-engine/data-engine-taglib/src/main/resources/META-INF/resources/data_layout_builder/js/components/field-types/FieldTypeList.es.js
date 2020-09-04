@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
+import EmptyState from '../empty-state/EmptyState.es';
 import FieldType from './FieldType.es';
 
 const FieldTypeWrapper = ({expanded, fieldType, showArrows, ...otherProps}) => {
@@ -32,14 +33,17 @@ const FieldTypeWrapper = ({expanded, fieldType, showArrows, ...otherProps}) => {
 
 export default ({
 	deleteLabel,
-	fieldTypes,
+	emptyState,
+	fieldTypes: fieldTypeList,
 	keywords,
 	onClick,
 	onDelete,
 	onDoubleClick,
+	showEmptyState = true,
 }) => {
 	const regex = new RegExp(keywords, 'ig');
-	const fieldTypeList = fieldTypes
+
+	const fieldTypes = fieldTypeList
 		.filter(({system}) => !system)
 		.filter(({description, label}) => {
 			if (!keywords) {
@@ -49,7 +53,11 @@ export default ({
 			return regex.test(description) || regex.test(label);
 		});
 
-	return fieldTypeList.map((fieldType, index) => {
+	if (showEmptyState && !fieldTypes.length) {
+		return <EmptyState emptyState={emptyState} keywords={keywords} small />;
+	}
+
+	return fieldTypes.map((fieldType, index) => {
 		const {isFieldSet, nestedDataDefinitionFields = []} = fieldType;
 
 		const handleOnClick = (props) => {

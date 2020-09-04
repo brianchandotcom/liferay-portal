@@ -59,21 +59,25 @@ public class AuthenticationUtil {
 			int offset = hash[hash.length - 1] & 0xf;
 
 			int binary =
-				((hash[offset] & 0x7f) << 24) | ((hash[offset + 1] & 0xff) << 16) |
+				((hash[offset] & 0x7f) << 24) |
+				((hash[offset + 1] & 0xff) << 16) |
 				((hash[offset + 2] & 0xff) << 8) | (hash[offset + 3] & 0xff);
 
-			int timeBasedOTP = binary % (int)Math.pow(10, _TIME_BASED_OTP_DIGITS);
+			int timeBasedOTP =
+				binary % (int)Math.pow(10, _TIME_BASED_OTP_DIGITS);
 
-			return String.format("%0" + _TIME_BASED_OTP_DIGITS + "d", timeBasedOTP);
+			return String.format(
+				"%0" + _TIME_BASED_OTP_DIGITS + "d", timeBasedOTP);
 		}
 		catch (InvalidKeyException invalidKeyException) {
 			throw new IllegalArgumentException(
-				"Invalid secret key for algorithm " + _HMAC_SHA1_ALGORITHM, invalidKeyException);
-
+				"Invalid secret key for algorithm " + _HMAC_SHA1_ALGORITHM,
+				invalidKeyException);
 		}
 		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
 			throw new IllegalArgumentException(
-				"Invalid algorithm " + _HMAC_SHA1_ALGORITHM, noSuchAlgorithmException);
+				"Invalid algorithm " + _HMAC_SHA1_ALGORITHM,
+				noSuchAlgorithmException);
 		}
 	}
 

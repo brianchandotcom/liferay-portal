@@ -103,18 +103,14 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
-		File relengDir = LiferayRelengUtil.getRelengDir(project);
-
-		if (relengDir == null) {
-			return;
-		}
-
 		GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
 
 		final BuildChangeLogTask buildChangeLogTask =
 			(BuildChangeLogTask)GradleUtil.getTask(
 				project, ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
+
+		File relengDir = LiferayRelengUtil.getRelengDir(project);
 
 		final WritePropertiesTask recordArtifactTask = _addTaskRecordArtifact(
 			project, relengDir);

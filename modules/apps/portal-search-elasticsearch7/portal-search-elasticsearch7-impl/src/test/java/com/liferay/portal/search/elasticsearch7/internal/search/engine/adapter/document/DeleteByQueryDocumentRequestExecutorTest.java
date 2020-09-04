@@ -17,7 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslatorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 
 import org.elasticsearch.index.reindex.DeleteByQueryRequest;
@@ -71,6 +71,16 @@ public class DeleteByQueryDocumentRequestExecutorTest {
 				new DeleteByQueryDocumentRequestExecutorImpl() {
 					{
 						setElasticsearchClientResolver(_elasticsearchFixture);
+
+						com.liferay.portal.search.elasticsearch7.internal.
+							legacy.query.ElasticsearchQueryTranslatorFixture
+								legacyElasticsearchQueryTranslatorFixture =
+									new com.liferay.portal.search.
+										elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslatorFixture();
+
+						setLegacyQueryTranslator(
+							legacyElasticsearchQueryTranslatorFixture.
+								getElasticsearchQueryTranslator());
 
 						ElasticsearchQueryTranslatorFixture
 							elasticsearchQueryTranslatorFixture =

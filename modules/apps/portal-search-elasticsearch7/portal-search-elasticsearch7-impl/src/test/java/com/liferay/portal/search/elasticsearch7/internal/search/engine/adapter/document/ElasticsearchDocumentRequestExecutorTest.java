@@ -20,6 +20,7 @@ import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
+import com.liferay.portal.search.query.Query;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +58,7 @@ public class ElasticsearchDocumentRequestExecutorTest {
 	@Test
 	public void testExecuteDeleteByQueryDocumentRequest() {
 		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-			new DeleteByQueryDocumentRequest(null);
+			new DeleteByQueryDocumentRequest((Query)null);
 
 		_elasticsearchDocumentRequestExecutor.executeDocumentRequest(
 			deleteByQueryDocumentRequest);
@@ -102,7 +103,7 @@ public class ElasticsearchDocumentRequestExecutorTest {
 	@Test
 	public void testExecuteUpdateByQueryDocumentRequest() {
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
-			new UpdateByQueryDocumentRequest(null, null);
+			new UpdateByQueryDocumentRequest((Query)null, null);
 
 		_elasticsearchDocumentRequestExecutor.executeDocumentRequest(
 			updateByQueryDocumentRequest);

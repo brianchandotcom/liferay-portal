@@ -74,6 +74,16 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 					{
 						setElasticsearchClientResolver(_elasticsearchFixture);
 
+						com.liferay.portal.search.elasticsearch7.internal.
+							legacy.query.ElasticsearchQueryTranslatorFixture
+								lecacyElasticsearchQueryTranslatorFixture =
+									new com.liferay.portal.search.
+										elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslatorFixture();
+
+						setLegacyQueryTranslator(
+							lecacyElasticsearchQueryTranslatorFixture.
+								getElasticsearchQueryTranslator());
+
 						ElasticsearchQueryTranslatorFixture
 							elasticsearchQueryTranslatorFixture =
 								new ElasticsearchQueryTranslatorFixture();

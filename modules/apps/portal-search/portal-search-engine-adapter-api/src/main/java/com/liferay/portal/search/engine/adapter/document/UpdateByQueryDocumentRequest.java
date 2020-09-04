@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.engine.adapter.document;
 
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
+import com.liferay.portal.search.script.Script;
 
 /**
  * @author Michael C. Han
@@ -26,10 +26,10 @@ public class UpdateByQueryDocumentRequest
 	implements DocumentRequest<UpdateByQueryDocumentResponse> {
 
 	public UpdateByQueryDocumentRequest(
-		Query query, JSONObject scriptJSONObject, String... indexNames) {
+		Query query, Script script, String... indexNames) {
 
 		_query = query;
-		_scriptJSONObject = scriptJSONObject;
+		_script = script;
 		_indexNames = indexNames;
 	}
 
@@ -48,8 +48,8 @@ public class UpdateByQueryDocumentRequest
 		return _query;
 	}
 
-	public JSONObject getScriptJSONObject() {
-		return _scriptJSONObject;
+	public Script getScript() {
+		return _script;
 	}
 
 	public boolean isRefresh() {
@@ -71,7 +71,7 @@ public class UpdateByQueryDocumentRequest
 	private final String[] _indexNames;
 	private final Query _query;
 	private boolean _refresh;
-	private final JSONObject _scriptJSONObject;
+	private final Script _script;
 	private boolean _waitForCompletion;
 
 }

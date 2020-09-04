@@ -14,13 +14,13 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
-import com.liferay.portal.json.JSONObjectImpl;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslatorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
+import com.liferay.portal.search.internal.script.ScriptsImpl;
+import com.liferay.portal.search.script.Scripts;
 
 import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 
@@ -62,11 +62,9 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 
 		booleanQuery.addExactTerm(_FIELD_NAME, true);
 
-		JSONObject jsonObject = new JSONObjectImpl();
-
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
 			new UpdateByQueryDocumentRequest(
-				booleanQuery, jsonObject, new String[] {_INDEX_NAME});
+				booleanQuery, null, new String[] {_INDEX_NAME});
 
 		updateByQueryDocumentRequest.setRefresh(refresh);
 
@@ -83,6 +81,8 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 						setQueryTranslator(
 							elasticsearchQueryTranslatorFixture.
 								getElasticsearchQueryTranslator());
+
+						setScripts(_scripts);
 					}
 				};
 
@@ -107,6 +107,8 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 	private static final String _FIELD_NAME = "testField";
 
 	private static final String _INDEX_NAME = "test_request_index";
+
+	private static final Scripts _scripts = new ScriptsImpl();
 
 	private ElasticsearchFixture _elasticsearchFixture;
 

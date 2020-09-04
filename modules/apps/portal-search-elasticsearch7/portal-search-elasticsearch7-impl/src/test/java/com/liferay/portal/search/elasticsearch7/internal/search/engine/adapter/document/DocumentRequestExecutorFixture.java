@@ -21,6 +21,8 @@ import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequest
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
+import com.liferay.portal.search.internal.script.ScriptsImpl;
+import com.liferay.portal.search.script.Scripts;
 
 /**
  * @author Dylan Rebelak
@@ -183,6 +185,8 @@ public class DocumentRequestExecutorFixture {
 				setQueryTranslator(
 					elasticsearchQueryTranslatorFixture.
 						getElasticsearchQueryTranslator());
+
+				setScripts(_scripts);
 			}
 		};
 	}
@@ -213,6 +217,8 @@ public class DocumentRequestExecutorFixture {
 
 		_elasticsearchDocumentFactory = elasticsearchDocumentFactory;
 	}
+
+	private static final Scripts _scripts = new ScriptsImpl();
 
 	private DocumentRequestExecutor _documentRequestExecutor;
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

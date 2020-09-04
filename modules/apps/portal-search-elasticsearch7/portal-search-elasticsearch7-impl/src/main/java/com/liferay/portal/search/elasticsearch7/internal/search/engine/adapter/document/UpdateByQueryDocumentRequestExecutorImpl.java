@@ -17,10 +17,17 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
 
+import com.liferay.portal.search.script.ScriptBuilder;
+import com.liferay.portal.search.script.ScriptType;
+import com.liferay.portal.search.script.Scripts;
+
 import java.io.IOException;
+
+import java.util.Map;
 
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -74,11 +81,42 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		updateByQueryRequest.setRefresh(
 			updateByQueryDocumentRequest.isRefresh());
 
-		JSONObject jsonObject =
-			updateByQueryDocumentRequest.getScriptJSONObject();
+		if (updateByQueryDocumentRequest.getScript() != null) {
+			Script script = _scriptTranslator.translate(
+				updateByQueryDocumentRequest.getScript());
 
-		if (jsonObject != null) {
-			Script script = new Script(jsonObject.toString());
+			updateByQueryRequest.setScript(script);
+		}
+		else if (updateByQueryDocumentRequest.getScriptJSONObject() != null) {
+			ScriptBuilder builder = _scripts.builder();
+
+			JSONObject scriptJSONObject =
+				updateByQueryDocumentRequest.getScriptJSONObject();
+
+			if (scriptJSONObject.has("idOrCode")) {
+				builder.idOrCode(scriptJSONObject.getString("idOrCode"));
+			}
+
+			if (scriptJSONObject.has("language")) {
+				builder.language(scriptJSONObject.getString("language"));
+			}
+
+			if (scriptJSONObject.has("optionsMap")) {
+				builder.options(
+					(Map<String, String>)scriptJSONObject.get("optionsMap"));
+			}
+
+			if (scriptJSONObject.has("parametersMap")) {
+				builder.parameters(
+					(Map<String, Object>)scriptJSONObject.get("parametersMap"));
+			}
+
+			if (scriptJSONObject.has("scriptType")) {
+				builder.scriptType(
+					(ScriptType)scriptJSONObject.get("scriptType"));
+			}
+
+			Script script = _scriptTranslator.translate(builder.build());
 
 			updateByQueryRequest.setScript(script);
 		}
@@ -118,7 +156,14 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		_queryTranslator = queryTranslator;
 	}
 
+	@Reference(unbind = "-")
+	protected void setScripts(Scripts scripts) {
+		_scripts = scripts;
+	}
+
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 	private QueryTranslator<QueryBuilder> _queryTranslator;
+	private Scripts _scripts;
+	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 }

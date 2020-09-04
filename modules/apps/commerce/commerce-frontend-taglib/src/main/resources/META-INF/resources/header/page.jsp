@@ -103,11 +103,11 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 										<liferay-ui:icon-help message="external-reference-code" />
 
 										<c:if test="<%= Validator.isNotNull(externalReferenceCodeEditUrl) %>">
-											<clay:link
-												elementClasses="btn btn-link btn-unstyled header-info-link ml-3"
-												href="#"
+											<clay:button
+												displayType="unstyled"
+												icon="pencil"
 												id="erc-edit-modal-opener"
-												label='<%= LanguageUtil.get(request, "edit") %>'
+												small="<%= true %>"
 											/>
 
 											<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events">

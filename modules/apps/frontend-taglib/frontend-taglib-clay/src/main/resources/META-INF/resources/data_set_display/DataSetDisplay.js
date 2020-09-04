@@ -491,7 +491,7 @@ function DataSetDisplay({
 				{style === 'fluid' && (
 					<div className="data-set-display data-set-display-fluid">
 						{managementBar}
-						<div className="container mt-3">
+						<div className="container-fluid container-xl mt-3">
 							{wrappedView}
 							{paginationComponent}
 						</div>

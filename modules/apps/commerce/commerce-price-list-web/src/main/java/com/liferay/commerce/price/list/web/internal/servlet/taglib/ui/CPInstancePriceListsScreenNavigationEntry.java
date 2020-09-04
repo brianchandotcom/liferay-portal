@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.price.list.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.web.internal.display.context.CPInstanceCommercePriceEntryDisplayContext;
-import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
+import com.liferay.commerce.product.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;

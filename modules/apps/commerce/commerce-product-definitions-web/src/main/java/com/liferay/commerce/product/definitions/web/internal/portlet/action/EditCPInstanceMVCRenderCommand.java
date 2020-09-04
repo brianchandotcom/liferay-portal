@@ -20,7 +20,7 @@ import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;

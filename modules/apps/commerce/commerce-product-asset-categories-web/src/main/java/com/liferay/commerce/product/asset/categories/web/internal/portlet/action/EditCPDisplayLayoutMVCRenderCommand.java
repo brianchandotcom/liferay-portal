@@ -16,7 +16,7 @@ package com.liferay.commerce.product.asset.categories.web.internal.portlet.actio
 
 import com.liferay.commerce.product.asset.categories.web.internal.display.context.CategoryCPDisplayLayoutDisplayContext;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;

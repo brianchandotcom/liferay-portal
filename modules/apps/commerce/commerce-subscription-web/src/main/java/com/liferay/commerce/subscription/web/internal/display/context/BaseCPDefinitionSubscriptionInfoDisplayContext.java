@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.subscription.web.internal.display.context;
 
-import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributor;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;

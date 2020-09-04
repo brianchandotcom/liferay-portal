@@ -16,10 +16,10 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
-import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
-import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;

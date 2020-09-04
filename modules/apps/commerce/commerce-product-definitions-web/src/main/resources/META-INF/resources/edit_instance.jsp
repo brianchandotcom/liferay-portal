@@ -1,4 +1,5 @@
-<%--
+<%@ page
+	import="com.liferay.commerce.product.servlet.taglib.ui.CPInstanceScreenNavigationConstants" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *

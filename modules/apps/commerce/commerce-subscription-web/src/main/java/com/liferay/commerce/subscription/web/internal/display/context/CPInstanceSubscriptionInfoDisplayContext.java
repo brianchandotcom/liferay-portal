@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.subscription.web.internal.display.context;
 
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
+import com.liferay.commerce.product.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.portal.kernel.exception.PortalException;

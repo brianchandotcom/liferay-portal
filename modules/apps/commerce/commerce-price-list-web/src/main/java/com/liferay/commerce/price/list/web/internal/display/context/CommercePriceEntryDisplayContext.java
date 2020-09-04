@@ -19,10 +19,10 @@ import com.liferay.commerce.item.selector.criterion.CommerceProductInstanceItemS
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
-import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
-import com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListScreenNavigationConstants;
+import com.liferay.commerce.price.list.display.context.BaseCommercePriceListDisplayContext;
+import com.liferay.commerce.price.list.constants.CommercePriceListScreenNavigationConstants;
 import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
-import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;

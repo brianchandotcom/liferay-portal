@@ -22,16 +22,18 @@ import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
+import com.liferay.commerce.product.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.service.CPDAvailabilityEstimateService;
+import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
@@ -41,9 +43,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,6 +68,7 @@ public class CPDefinitionConfigurationDisplayContext
 		CommerceLowStockActivityRegistry commerceLowStockActivityRegistry,
 		CPDAvailabilityEstimateService cpdAvailabilityEstimateService,
 		CPDefinitionInventoryEngineRegistry cpDefinitionInventoryEngineRegistry,
+		CPDefinitionInventoryService cpDefinitionInventoryService,
 		CPDefinitionService cpDefinitionService,
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
 		CPTaxCategoryService cpTaxCategoryService, ItemSelector itemSelector) {
@@ -79,6 +85,7 @@ public class CPDefinitionConfigurationDisplayContext
 		_cpdAvailabilityEstimateService = cpdAvailabilityEstimateService;
 		_cpDefinitionInventoryEngineRegistry =
 			cpDefinitionInventoryEngineRegistry;
+		_cpDefinitionInventoryService = cpDefinitionInventoryService;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_cpTaxCategoryService = cpTaxCategoryService;
 	}
@@ -128,8 +135,7 @@ public class CPDefinitionConfigurationDisplayContext
 			return _cpDefinitionInventory;
 		}
 
-		_cpDefinitionInventory = actionHelper.getCPDefinitionInventory(
-			cpRequestHelper.getRenderRequest());
+		_cpDefinitionInventory = _getCPDefinitionInventory();
 
 		return _cpDefinitionInventory;
 	}
@@ -169,6 +175,36 @@ public class CPDefinitionConfigurationDisplayContext
 		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_CONFIGURATION;
 	}
 
+	private CPDefinitionInventory _getCPDefinitionInventory()
+		throws PortalException {
+
+		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
+
+		CPDefinitionInventory cpDefinitionInventory =
+			(CPDefinitionInventory)renderRequest.getAttribute(
+				CPWebKeys.CP_DEFINITION_INVENTORY);
+
+		if (cpDefinitionInventory != null) {
+			return cpDefinitionInventory;
+		}
+
+		long cpDefinitionId = ParamUtil.getLong(
+			renderRequest, "cpDefinitionId");
+
+		if (cpDefinitionId > 0) {
+			cpDefinitionInventory =
+				_cpDefinitionInventoryService.
+					fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
+		}
+
+		if (cpDefinitionInventory != null) {
+			renderRequest.setAttribute(
+				CPWebKeys.CP_DEFINITION_INVENTORY, cpDefinitionInventory);
+		}
+
+		return cpDefinitionInventory;
+	}
+
 	private final CommerceAvailabilityEstimateService
 		_commerceAvailabilityEstimateService;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
@@ -179,6 +215,7 @@ public class CPDefinitionConfigurationDisplayContext
 	private CPDefinitionInventory _cpDefinitionInventory;
 	private final CPDefinitionInventoryEngineRegistry
 		_cpDefinitionInventoryEngineRegistry;
+	private final CPDefinitionInventoryService _cpDefinitionInventoryService;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 	private final CPTaxCategoryService _cpTaxCategoryService;
 

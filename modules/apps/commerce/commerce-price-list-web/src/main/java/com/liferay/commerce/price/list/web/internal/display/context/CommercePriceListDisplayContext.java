@@ -31,9 +31,9 @@ import com.liferay.commerce.price.list.service.CommercePriceListAccountRelServic
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.price.list.util.comparator.CommercePriceListPriorityComparator;
-import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
+import com.liferay.commerce.price.list.display.context.BaseCommercePriceListDisplayContext;
 import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
-import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.item.selector.ItemSelector;

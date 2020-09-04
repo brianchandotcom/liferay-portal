@@ -18,16 +18,17 @@ import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionConfigurationDisplayContext;
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
+import com.liferay.commerce.product.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.service.CPDAvailabilityEstimateService;
+import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
@@ -130,7 +131,8 @@ public class CPDefinitionConfigurationScreenNavigationEntry
 					_commerceCurrencyLocalService,
 					_commerceLowStockActivityRegistry,
 					_cpdAvailabilityEstimateService,
-					_cpDefinitionInventoryEngineRegistry, _cpDefinitionService,
+					_cpDefinitionInventoryEngineRegistry,
+					_cpDefinitionInventoryService, _cpDefinitionService,
 					_cpMeasurementUnitLocalService, _cpTaxCategoryService,
 					_itemSelector);
 
@@ -180,6 +182,9 @@ public class CPDefinitionConfigurationScreenNavigationEntry
 	@Reference
 	private CPDefinitionInventoryEngineRegistry
 		_cpDefinitionInventoryEngineRegistry;
+
+	@Reference
+	private CPDefinitionInventoryService _cpDefinitionInventoryService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

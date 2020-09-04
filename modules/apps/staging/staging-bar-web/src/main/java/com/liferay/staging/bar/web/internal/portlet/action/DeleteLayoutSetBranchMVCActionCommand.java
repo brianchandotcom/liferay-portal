@@ -14,14 +14,21 @@
 
 package com.liferay.staging.bar.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,6 +69,19 @@ public class DeleteLayoutSetBranchMVCActionCommand
 		}
 
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			Layout layout = themeDisplay.getLayout();
+
+			List<Long> deletablePlids =
+				_layoutSetBranchLocalService.getDeletablePlids(
+					layoutSetBranchId);
+
+			if (deletablePlids.contains(layout.getPlid())) {
+				throw new PortalException();
+			}
+
 			_layoutSetBranchService.deleteLayoutSetBranch(layoutSetBranchId);
 
 			SessionMessages.add(actionRequest, "sitePageVariationDeleted");
@@ -82,6 +102,9 @@ public class DeleteLayoutSetBranchMVCActionCommand
 
 		_layoutSetBranchService = layoutSetBranchService;
 	}
+
+	@Reference
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 	private LayoutSetBranchService _layoutSetBranchService;
 

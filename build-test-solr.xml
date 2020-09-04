@@ -29,15 +29,15 @@ CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/serv
 
 	<macrodef name="configure-liferay-solr-adapter-osgi-configs">
 		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrConfiguration.config">readURL=http://localhost:8983/solr/liferay
-writeURL=http://localhost:8983/solr/liferay</echo>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrConfiguration.config">readURL="http://localhost:8983/solr/liferay"
+writeURL="http://localhost:8983/solr/liferay"</echo>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="configure-liferay-solr-solrcloud-osgi-configs">
 		<sequential>
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrConfiguration.config">
-clientType=CLOUD</echo>
+clientType="CLOUD"</echo>
 		</sequential>
 	</macrodef>
 
@@ -51,10 +51,10 @@ clientType=CLOUD</echo>
 			</replace>
 
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrConfiguration.config">
-authenticationMode=CERT</echo>
+authenticationMode="CERT"</echo>
 
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrSSLSocketFactoryConfiguration.config">keyStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks
-trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrSSLSocketFactoryConfiguration.config">keyStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"
+trustStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"</echo>
 		</sequential>
 	</macrodef>
 

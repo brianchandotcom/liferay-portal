@@ -75,7 +75,7 @@ public abstract class BaseURLPatternMapper<T> implements URLPatternMapper<T> {
 		return true;
 	}
 
-	protected abstract void put(T value, String urlPattern)
+	protected abstract void put(String urlPattern, T value)
 		throws IllegalArgumentException;
 
 }

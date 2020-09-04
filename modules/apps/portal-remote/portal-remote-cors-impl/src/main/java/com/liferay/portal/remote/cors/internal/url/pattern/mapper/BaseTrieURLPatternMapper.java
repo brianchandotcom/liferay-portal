@@ -46,7 +46,7 @@ public abstract class BaseTrieURLPatternMapper<T>
 	protected abstract T getWildcardValue(String urlPath);
 
 	@Override
-	protected void put(T value, String urlPattern)
+	protected void put(String urlPattern, T value)
 		throws IllegalArgumentException {
 
 		if (value == null) {
@@ -59,18 +59,18 @@ public abstract class BaseTrieURLPatternMapper<T>
 
 		try {
 			if (isWildcardURLPattern(urlPattern)) {
-				put(value, urlPattern, true);
+				put(urlPattern, value, true);
 
 				return;
 			}
 
 			if (isExtensionURLPattern(urlPattern)) {
-				put(value, urlPattern, false);
+				put(urlPattern, value, false);
 
 				return;
 			}
 
-			put(value, urlPattern, true);
+			put(urlPattern, value, true);
 		}
 		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 			throw new IllegalArgumentException(
@@ -79,7 +79,7 @@ public abstract class BaseTrieURLPatternMapper<T>
 		}
 	}
 
-	protected abstract void put(T value, String urlPattern, boolean wildcard);
+	protected abstract void put(String urlPattern, T value, boolean wildcard);
 
 	protected static final byte ASCII_CHARACTER_RANGE = 96;
 

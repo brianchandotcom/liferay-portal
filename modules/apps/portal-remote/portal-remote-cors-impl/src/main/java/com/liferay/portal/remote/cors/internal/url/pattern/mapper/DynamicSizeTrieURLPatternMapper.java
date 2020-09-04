@@ -30,7 +30,7 @@ public class DynamicSizeTrieURLPatternMapper<T>
 		_wildCardTrieNode = _trieNodeHeap.nextAvailableTrieNode();
 
 		for (Map.Entry<String, T> entry : values.entrySet()) {
-			put(entry.getValue(), entry.getKey());
+			put(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -134,7 +134,7 @@ public class DynamicSizeTrieURLPatternMapper<T>
 	}
 
 	@Override
-	protected void put(T value, String urlPattern, boolean wildcard) {
+	protected void put(String urlPattern, T value, boolean wildcard) {
 		TrieNode previousTrieNode = null;
 
 		if (wildcard) {

@@ -1136,7 +1136,7 @@ class RuleEditor extends Component {
 			fieldInstance.options.map((option) => {
 				if (option.value === secondOperandValue) {
 					secondOperandOptionValue = option.value;
-					secondOperandValue = option.label;
+					secondOperandValue = option.value;
 				}
 			});
 		}

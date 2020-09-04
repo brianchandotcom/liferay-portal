@@ -198,6 +198,10 @@ const withActionableFields = (ChildComponent) => {
 				return;
 			}
 
+			if (fieldName !== selectedFieldActions.state.fieldName) {
+				selectedFieldActions.close();
+			}
+
 			const hoveredNode = this._getHoveredNode();
 
 			if (hoveredNode) {

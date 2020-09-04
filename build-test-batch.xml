@@ -6322,7 +6322,7 @@ ${output.content}</echo>
 		</sequential>
 	</target>
 
-	<target name="portal-web-jdk8">
+	<target name="poshi-validation-jdk8">
 		<run-batch-test>
 			<test-action>
 				<run-poshi-validation />

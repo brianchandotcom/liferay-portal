@@ -102,7 +102,7 @@ public class CommerceAccountItemSelectorViewDisplayContext {
 			_commerceAccountService.getUserCommerceAccounts(
 				_commerceAccountItemSelectorRequestHelper.getUserId(),
 				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-				CommerceAccountConstants.SITE_TYPE_B2C_B2B, getKeywords(),
+				CommerceAccountConstants.SITE_TYPE_B2X, getKeywords(),
 				_searchContainer.getStart(), _searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
@@ -110,7 +110,7 @@ public class CommerceAccountItemSelectorViewDisplayContext {
 		int total = _commerceAccountService.getUserCommerceAccountsCount(
 			_commerceAccountItemSelectorRequestHelper.getUserId(),
 			CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-			CommerceAccountConstants.SITE_TYPE_B2C_B2B, getKeywords());
+			CommerceAccountConstants.SITE_TYPE_B2X, getKeywords());
 
 		_searchContainer.setTotal(total);
 

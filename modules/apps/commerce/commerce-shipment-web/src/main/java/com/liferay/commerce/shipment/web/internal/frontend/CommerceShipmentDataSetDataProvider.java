@@ -186,8 +186,8 @@ public class CommerceShipmentDataSetDataProvider
 			List<CommerceAccount> commerceAccounts =
 				_commerceAccountLocalService.getUserCommerceAccounts(
 					userId, CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-					CommerceAccountConstants.SITE_TYPE_B2C_B2B,
-					StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					CommerceAccountConstants.SITE_TYPE_B2X, StringPool.BLANK,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			return ListUtil.toLongArray(
 				commerceAccounts, CommerceAccountModel::getCommerceAccountId);

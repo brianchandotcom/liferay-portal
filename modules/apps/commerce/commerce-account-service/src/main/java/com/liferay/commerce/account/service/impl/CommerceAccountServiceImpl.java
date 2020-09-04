@@ -192,7 +192,7 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 				accountType = CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL;
 			}
 			else if (commerceSiteType ==
-						CommerceAccountConstants.SITE_TYPE_B2C_B2B) {
+						CommerceAccountConstants.SITE_TYPE_B2X) {
 
 				accountType = -1;
 			}
@@ -264,7 +264,7 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 				accountType = CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL;
 			}
 			else if (commerceSiteType ==
-						CommerceAccountConstants.SITE_TYPE_B2C_B2B) {
+						CommerceAccountConstants.SITE_TYPE_B2X) {
 
 				accountType = -1;
 			}

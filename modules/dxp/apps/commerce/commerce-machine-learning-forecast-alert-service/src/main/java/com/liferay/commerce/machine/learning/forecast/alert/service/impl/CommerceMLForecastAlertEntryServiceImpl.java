@@ -157,7 +157,7 @@ public class CommerceMLForecastAlertEntryServiceImpl
 
 		List<CommerceAccount> commerceAccounts =
 			_commerceAccountLocalService.getUserCommerceAccounts(
-				userId, null, CommerceAccountConstants.SITE_TYPE_B2C_B2B, null,
+				userId, null, CommerceAccountConstants.SITE_TYPE_B2X, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return ListUtil.toLongArray(

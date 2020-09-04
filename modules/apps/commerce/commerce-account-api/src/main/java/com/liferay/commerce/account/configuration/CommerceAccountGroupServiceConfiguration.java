@@ -34,7 +34,7 @@ public interface CommerceAccountGroupServiceConfiguration {
 
 	@Meta.AD(
 		deflt = "" + CommerceAccountConstants.SITE_TYPE_B2C,
-		name = "commerce-site-type", optionLabels = {"B2C", "B2B", "B2C-B2B"},
+		name = "commerce-site-type", optionLabels = {"B2C", "B2B", "B2X"},
 		optionValues = {"0", "1", "2"}, required = false
 	)
 	public int commerceSiteType();

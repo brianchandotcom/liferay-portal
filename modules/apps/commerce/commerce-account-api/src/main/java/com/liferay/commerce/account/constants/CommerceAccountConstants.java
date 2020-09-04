@@ -60,10 +60,10 @@ public class CommerceAccountConstants {
 
 	public static final int SITE_TYPE_B2C = 0;
 
-	public static final int SITE_TYPE_B2C_B2B = 2;
+	public static final int SITE_TYPE_B2X = 2;
 
 	public static final int[] SITE_TYPES = {
-		SITE_TYPE_B2C, SITE_TYPE_B2B, SITE_TYPE_B2C_B2B
+		SITE_TYPE_B2C, SITE_TYPE_B2B, SITE_TYPE_B2X
 	};
 
 	public static String getAccountGroupTypeLabel(int accountGroupType) {
@@ -98,8 +98,8 @@ public class CommerceAccountConstants {
 		else if (siteType == SITE_TYPE_B2B) {
 			return "b2b";
 		}
-		else if (siteType == SITE_TYPE_B2C_B2B) {
-			return "b2c-b2b";
+		else if (siteType == SITE_TYPE_B2X) {
+			return "b2x";
 		}
 
 		return null;

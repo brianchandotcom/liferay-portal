@@ -252,7 +252,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		int commerceSiteType = _getCommerceSiteType(channelGroupId);
 
 		if ((commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) ||
-			(commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C_B2B)) {
+			(commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2X)) {
 
 			return _commerceAccountService.getPersonalCommerceAccount(
 				user.getUserId());

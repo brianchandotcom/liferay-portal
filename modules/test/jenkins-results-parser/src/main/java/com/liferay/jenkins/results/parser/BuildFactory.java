@@ -20,7 +20,6 @@ import java.io.StringReader;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Peter Yoo
@@ -30,10 +29,11 @@ public class BuildFactory {
 	public static Build newBuild(String url, Build parentBuild) {
 		url = JenkinsResultsParserUtil.getLocalURL(url);
 
-		Matcher matcher = _buildURLPattern.matcher(url);
+		Matcher matcher = _buildURLMultiPattern.find(url);
 
-		if (!matcher.find()) {
-			throw new IllegalArgumentException("Invalid Jenkins build URL");
+		if (matcher == null) {
+			throw new IllegalArgumentException(
+				"Invalid Jenkins build URL: " + url);
 		}
 
 		String axisVariable = matcher.group("axisVariable");
@@ -92,8 +92,15 @@ public class BuildFactory {
 		}
 
 		if (jobName.startsWith("test-portal-acceptance-pullrequest")) {
-			String testSuite = JenkinsResultsParserUtil.getBuildParameter(
-				url, "CI_TEST_SUITE");
+			String testSuite = null;
+
+			try {
+				testSuite = JenkinsResultsParserUtil.getBuildParameter(
+					url, "CI_TEST_SUITE");
+			}
+			catch (RuntimeException runtimeException) {
+				System.out.println(runtimeException.getMessage());
+			}
 
 			if (Objects.equals(testSuite, "bundle")) {
 				return new StandaloneTopLevelBuild(
@@ -165,15 +172,22 @@ public class BuildFactory {
 			archiveProperties.getProperty("top.level.build.url"), null);
 	}
 
+	private static final String _BUILD_URL_SUFFIX_REGEX =
+		JenkinsResultsParserUtil.combine(
+			"((?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)|)/?",
+			"((?<buildNumber>\\d+)|buildWithParameters\\?" +
+				"(?<queryString>.*))/?");
+
 	private static final String[] _TOKENS_BATCH = {
 		"-batch", "-dist", "environment-"
 	};
 
-	private static final Pattern _buildURLPattern = Pattern.compile(
+	private static final MultiPattern _buildURLMultiPattern = new MultiPattern(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/?",
-			"((?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)|)/?",
-			"((?<buildNumber>\\d+)|buildWithParameters\\?",
-			"(?<queryString>.*))/?"));
+			_BUILD_URL_SUFFIX_REGEX),
+		JenkinsResultsParserUtil.combine(
+			".*?Test/+[^/]+/+test-[0-9]-[0-9]{1,2}/", "(?<jobName>[^/]+)/?",
+			_BUILD_URL_SUFFIX_REGEX));
 
 }

@@ -780,7 +780,8 @@ public class JenkinsResultsParserUtil {
 			return buildParameters.get(key);
 		}
 
-		throw new RuntimeException("Unable to find build parameter " + key);
+		throw new RuntimeException(
+			"Unable to find build parameter '" + key + "' at " + buildURL);
 	}
 
 	public static Map<String, String> getBuildParameters(String buildURL) {

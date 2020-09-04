@@ -240,10 +240,6 @@
 			<contains>No binary licenses found</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LRQA-60489 - Ignore Media expression uses unknowns feature prefers reduced motion warning">
-			<contains>Media expression uses unknown feature 'prefers-reduced-motion'</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="WCM-202">
 			<contains>No score point assigners available</contains>
 			<matches></matches>

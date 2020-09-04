@@ -71,6 +71,77 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
+	@description = "Validate if the user can filter by tag"
+	@priority = "5"
+	test ContentDashboardFilterByTag {
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "tag1",
+			webContentContent = "Web Content With tag1",
+			webContentTitle = "Web Content First");
+		
+		WebContentNavigator.gotoAddCP();
+		
+		WebContent.addWithTagCP(
+			tagNameList = "tag2",
+			webContentContent = "Web Content With tag2",
+			webContentTitle = "Web Content Second");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.filterByTag();
+
+		ContentDashboard.searchValue(webContentTitle = "First");
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_BY_TAG",
+			value1 = "Web Content First");
+		
+		ContentDashboard.searchValue(webContentTitle = "Second");
+		
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_BY_TAG",
+			value1 = "Web Content Second");
+		
+		WebContentNavigator.gotoAddCP();
+
+		JSONWebcontent.deleteWebContent(
+				groupName = "Test Site Name",
+				title = "Web Content First");
+		
+		JSONWebcontent.deleteWebContent(
+				groupName = "Test Site Name",
+				title = "Web Content Second");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			portlet = "Tags");
+
+		Tag.viewCP(tagName = "tag1");
+
+		PortletEntry.deleteViaToolbar(rowEntries = "tag1");
+
+		Alert.viewSuccessMessage();
+
+		Tag.viewCP(tagName = "tag2");
+
+		PortletEntry.deleteViaToolbar(rowEntries = "tag2");
+
+		Alert.viewSuccessMessage();
+
+		Portlet.viewEmptyMessage(message = "There are no tags.");
+	}
+
 	@description = "Validate if the user can filter by title"
 	@priority = "5"
 	test ContentDashboardFilterByTitle {

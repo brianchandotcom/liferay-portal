@@ -1392,6 +1392,25 @@ definition {
 				key_navItem = "Link",
 				locator1 = "PageEditor#NAV_ITEM_BUTTON",
 				value1 = "Link");
+
+			Type(
+				locator1 = "PageEditorEditableLink#URL",
+				value1 = "${url}");
+
+			Click(
+				key_sidebarButton = "Selection",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			if (isSet(target)) {
+				Select(
+					key_fieldLabel = "Target",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${target}");
+
+				Pause(locator1 = "3000");
+			}
+
+			PageEditor.waitForAutoSave();
 		}
 
 		PageEditor.waitForAutoSave();

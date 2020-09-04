@@ -83,10 +83,7 @@ const CustomTimeRangeForm = ({
 
 	return (
 		<div className="custom-range-wrapper" ref={wrapperRef}>
-			<form
-				className="custom-range-form"
-				data-testid="customTimeRangeForm"
-			>
+			<form className="custom-range-form">
 				<h4 className="mb-2">{Liferay.Language.get('custom-range')}</h4>
 
 				<span className="form-text mb-3 text-semi-bold">
@@ -103,7 +100,6 @@ const CustomTimeRangeForm = ({
 
 						<MaskedInput
 							className="form-control"
-							data-testid="dateStartInput"
 							defaultValue={dateStart}
 							mask={dateMask}
 							name="dateStart"
@@ -120,7 +116,6 @@ const CustomTimeRangeForm = ({
 
 						<MaskedInput
 							className="form-control"
-							data-testid="dateEndInput"
 							defaultValue={dateEnd}
 							mask={dateMask}
 							name="dateEnd"
@@ -135,19 +130,11 @@ const CustomTimeRangeForm = ({
 			<div className="dropdown-divider" />
 
 			<div className="custom-range-footer">
-				<button
-					className="btn btn-secondary"
-					data-testid="cancelButton"
-					onMouseDown={onCancel}
-				>
+				<button className="btn btn-secondary" onMouseDown={onCancel}>
 					{Liferay.Language.get('cancel')}
 				</button>
 
-				<button
-					className="btn btn-primary ml-3"
-					data-testid="applyButton"
-					onClick={onApply}
-				>
+				<button className="btn btn-primary ml-3" onClick={onApply}>
 					{Liferay.Language.get('apply')}
 				</button>
 			</div>
@@ -168,9 +155,7 @@ const FormGroupItem = ({children, error}) => (
 						<ClayIcon symbol="exclamation-full" />
 					</span>
 
-					<span className="text-semi-bold" data-testid="errorSpan">
-						{error}
-					</span>
+					<span className="text-semi-bold">{error}</span>
 				</div>
 			</div>
 		)}

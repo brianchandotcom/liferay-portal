@@ -19,7 +19,7 @@ const query =
 	'?filters.dateEnd=2019-12-09&filters.dateStart=2019-12-03&filters.timeRange%5B0%5D=custom';
 
 describe('The performance by assignee card component should', () => {
-	let getByTestId;
+	let getAllByPlaceholderText;
 
 	afterEach(cleanup);
 
@@ -32,14 +32,13 @@ describe('The performance by assignee card component should', () => {
 			wrapper,
 		});
 
-		getByTestId = renderResult.getByTestId;
+		getAllByPlaceholderText = renderResult.getAllByPlaceholderText;
 	});
 
 	test('Be redered with default custom dates', () => {
-		const dateEnd = getByTestId('dateEndInput');
-		const dateStart = getByTestId('dateStartInput');
+		const dates = getAllByPlaceholderText('MM/DD/YYYY');
 
-		expect(dateEnd.value).toBe('12/09/2019');
-		expect(dateStart.value).toBe('12/03/2019');
+		expect(dates[0].value).toBe('12/03/2019');
+		expect(dates[1].value).toBe('12/09/2019');
 	});
 });

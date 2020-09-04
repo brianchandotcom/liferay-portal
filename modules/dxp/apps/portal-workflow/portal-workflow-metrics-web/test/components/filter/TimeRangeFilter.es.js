@@ -91,7 +91,12 @@ describe('The time range filter component should', () => {
 	});
 
 	describe('Render with custom date range option selected and', () => {
-		let dateEndInput, dateStartInput, getByTestId;
+		let container,
+			dateEndInput,
+			dateStartInput,
+			getAllByPlaceholderText,
+			getByTestId,
+			getByText;
 
 		beforeAll(() => {
 			jsonSessionStorage.set('timeRanges', data);
@@ -101,8 +106,11 @@ describe('The time range filter component should', () => {
 				{wrapper}
 			);
 
+			container = renderResult.container;
+			getAllByPlaceholderText = renderResult.getAllByPlaceholderText;
 			getAllByTestId = renderResult.getAllByTestId;
 			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Show the date the href has as a suggestion', () => {
@@ -110,8 +118,8 @@ describe('The time range filter component should', () => {
 
 			fireEvent.click(filterItems[0]);
 
-			dateEndInput = getByTestId('dateEndInput');
-			dateStartInput = getByTestId('dateStartInput');
+			dateEndInput = getAllByPlaceholderText('MM/DD/YYYY')[1];
+			dateStartInput = getAllByPlaceholderText('MM/DD/YYYY')[0];
 
 			expect(dateStartInput.value).toEqual('12/03/2019');
 			expect(dateEndInput.value).toEqual('12/09/2019');
@@ -124,7 +132,7 @@ describe('The time range filter component should', () => {
 			fireEvent.change(dateEndInput, {target: {value: '13/09/2020'}});
 			fireEvent.blur(dateEndInput);
 
-			const errorSpan = getAllByTestId('errorSpan');
+			const errorSpan = container.querySelectorAll('.form-feedback-item');
 
 			expect(errorSpan[0]).toHaveTextContent('please-enter-a-valid-date');
 			expect(errorSpan[1]).toHaveTextContent('please-enter-a-valid-date');
@@ -137,7 +145,7 @@ describe('The time range filter component should', () => {
 			fireEvent.change(dateEndInput, {target: {value: '12/09/1960'}});
 			fireEvent.blur(dateEndInput);
 
-			const errorSpan = getAllByTestId('errorSpan');
+			const errorSpan = container.querySelectorAll('.form-feedback-item');
 
 			expect(errorSpan[0]).toHaveTextContent(
 				'the-date-cannot-be-earlier-than-1970'
@@ -154,7 +162,7 @@ describe('The time range filter component should', () => {
 			fireEvent.change(dateEndInput, {target: {value: '12/09/2019'}});
 			fireEvent.blur(dateEndInput);
 
-			const errorSpan = getAllByTestId('errorSpan');
+			const errorSpan = container.querySelectorAll('.form-feedback-item');
 
 			expect(errorSpan[0]).toHaveTextContent(
 				'the-start-date-cannot-be-later-than-the-end-date'
@@ -175,9 +183,11 @@ describe('The time range filter component should', () => {
 			fireEvent.change(dateEndInput, {target: {value: '12/09/2019'}});
 			fireEvent.blur(dateEndInput);
 
-			const applyButton = getByTestId('applyButton');
+			const applyButton = getByText('apply');
 
-			const customTimeRangeForm = getByTestId('customTimeRangeForm');
+			const customTimeRangeForm = container.querySelector(
+				'form.custom-range-form'
+			);
 			expect(customTimeRangeForm).not.toBeUndefined();
 
 			fireEvent.click(applyButton);

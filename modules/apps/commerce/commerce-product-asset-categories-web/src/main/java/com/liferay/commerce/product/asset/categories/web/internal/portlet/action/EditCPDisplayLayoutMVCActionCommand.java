@@ -125,27 +125,19 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		List<Long> classPKs = new ArrayList<>();
 
-		long classPKParam = ParamUtil.getLong(actionRequest, "classPK");
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_portal.getCompanyId(actionRequest));
 
-		if (classPKParam > 0) {
-			classPKs.add(classPKParam);
-		}
-		else {
-			Group companyGroup = _groupLocalService.getCompanyGroup(
-				_portal.getCompanyId(actionRequest));
+		List<AssetVocabulary> assetVocabularies =
+			_assetVocabularyLocalService.getGroupVocabularies(
+				companyGroup.getGroupId(), false);
 
-			List<AssetVocabulary> assetVocabularies =
-				_assetVocabularyLocalService.getGroupVocabularies(
-					companyGroup.getGroupId(), false);
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			long classPKParam = ParamUtil.getLong(
+				actionRequest, "classPK_" + assetVocabulary.getVocabularyId());
 
-			for (AssetVocabulary assetVocabulary : assetVocabularies) {
-				classPKParam = ParamUtil.getLong(
-					actionRequest,
-					"classPK_" + assetVocabulary.getVocabularyId());
-
-				if (classPKParam > 0) {
-					classPKs.add(classPKParam);
-				}
+			if (classPKParam > 0) {
+				classPKs.add(classPKParam);
 			}
 		}
 

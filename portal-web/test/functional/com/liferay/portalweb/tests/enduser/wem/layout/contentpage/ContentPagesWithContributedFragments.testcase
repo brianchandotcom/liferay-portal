@@ -396,18 +396,10 @@ definition {
 			fragmentName = "Grid",
 			targetFragmentName = "Container");
 
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "Basic Components",
-			key_fragmentName = "Tabs",
-			key_position = "1",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#CONTAINER_CONTAINER",
-			value1 = "");
-
-		AssertElementPresent(
-			key_fragmentName = "Tabs",
-			key_inFragmentName = "Container",
-			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+		PageEditor.addElementToContainer(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs",
+			navTab = "Fragments");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_collectionName = "Basic Components",

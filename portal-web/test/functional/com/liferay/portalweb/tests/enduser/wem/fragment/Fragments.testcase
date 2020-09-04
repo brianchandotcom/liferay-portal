@@ -88,29 +88,10 @@ definition {
 		}
 
 		task ("Assert add a Container to another Container") {
-			PageEditor.addFragment(
+			PageEditor.addElementToContainer(
 				collectionName = "Layout Elements",
-				fragmentName = "Container");
-
-			Click.clickNoWaitForVisible(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-
-			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Layout Elements",
-				key_fragmentName = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#CONTAINER_CONTAINER",
-				value1 = "");
-
-			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Container')]//li[contains(@class,'title')]",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+				fragmentName = "Container",
+				navTab = "Fragments");
 		}
 
 		task ("Assert add a Container to module of Grid") {
@@ -190,25 +171,10 @@ definition {
 				collectionName = "Layout Elements",
 				fragmentName = "Container");
 
-			Click.clickNoWaitForVisible(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-
-			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Layout Elements",
-				key_fragmentName = "Grid",
-				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#CONTAINER_CONTAINER",
-				value1 = "");
-
-			AssertElementPresent(
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+			PageEditor.addElementToContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				navTab = "Fragments");
 		}
 
 		task ("Assert add second Row fragment to the same Section") {
@@ -675,27 +641,10 @@ definition {
 		}
 
 		task ("Add a Card fragment to Container") {
-			Click.clickNoWaitForVisible(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-
-			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Basic Components",
-				key_fragmentName = "Card",
-				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#CONTAINER_CONTAINER",
-				value1 = "");
-
-			AssertElementPresent(
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Card')]",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-
-			PageEditor.waitForAutoSave();
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Card",
+				navTab = "Fragments");
 		}
 
 		task ("Add a Heading below Card inside the Container") {
@@ -1109,20 +1058,10 @@ definition {
 		}
 
 		task ("Add an Image to the Container") {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Basic Components",
-				key_fragmentName = "Image",
-				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#CONTAINER_CONTAINER",
-				value1 = "Image");
-
-			AssertElementPresent(
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Image')]",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-
-			PageEditor.waitForAutoSave();
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Image",
+				navTab = "Fragments");
 		}
 
 		task ("Add an Asset Publisher below Image inside the Container") {
@@ -1203,25 +1142,10 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Container");
 
-		Click.clickNoWaitForVisible(
-			key_elementType = "Container",
-			key_position = "1",
-			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-
-		PageEditor.expandFragmentCollection(collectionName = "Collection Name");
-
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "Collection Name",
-			key_fragmentName = "Fragment Name 2",
-			key_position = "1",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#CONTAINER_CONTAINER",
-			value1 = "");
-
-		AssertElementPresent(
-			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name 2')]//li[contains(@class,'title')]",
-			key_position = "1",
-			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		PageEditor.addElementToContainer(
+			collectionName = "Collection Name",
+			fragmentName = "Fragment Name 2",
+			navTab = "Fragments");
 
 		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
 

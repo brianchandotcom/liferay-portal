@@ -567,20 +567,10 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Container");
 
-		Click.clickNoWaitForVisible(
-			key_elementType = "Container",
-			key_position = "1",
-			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-
-		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "Basic Components",
-			key_fragmentName = "Heading",
-			key_position = "1",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#CONTAINER_CONTAINER",
-			value1 = "");
+		PageEditor.addElementToContainer(
+			collectionName = "Basic Components",
+			fragmentName = "Heading",
+			navTab = "Fragments");
 
 		PageEditor.editFragmentText(
 			fragmentName = "Heading",

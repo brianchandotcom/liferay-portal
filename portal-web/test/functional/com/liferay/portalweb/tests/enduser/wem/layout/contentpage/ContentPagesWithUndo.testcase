@@ -301,20 +301,10 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Container");
 
-		Click.clickNoWaitForVisible(
-			key_elementType = "Container",
-			key_position = "1",
-			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-
-		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
-
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "Layout Elements",
-			key_fragmentName = "Grid",
-			key_position = "1",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#CONTAINER_CONTAINER",
-			value1 = "");
+		PageEditor.addElementToContainer(
+			collectionName = "Layout Elements",
+			fragmentName = "Grid",
+			navTab = "Fragments");
 
 		PageEditor.removeFragmentViaPageStructure(fragmentName = "Container");
 

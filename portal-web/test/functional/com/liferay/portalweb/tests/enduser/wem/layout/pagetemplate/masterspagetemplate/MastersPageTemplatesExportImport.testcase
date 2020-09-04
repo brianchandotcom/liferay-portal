@@ -84,27 +84,10 @@ definition {
 				fragmentName = "Container",
 				scope = "Master");
 
-			Click.clickNoWaitForVisible(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-
-			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Basic Components",
-				key_fragmentName = "Heading",
-				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#CONTAINER_CONTAINER",
-				value1 = "");
-
-			PageEditor.waitForAutoSave();
-
-			AssertElementPresent(
-				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				navTab = "Fragments");
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",

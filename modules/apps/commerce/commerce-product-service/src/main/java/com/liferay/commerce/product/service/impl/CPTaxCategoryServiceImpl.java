@@ -34,7 +34,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 	@Override
 	public CPTaxCategory addCPTaxCategory(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
+			String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
@@ -42,7 +42,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.addCPTaxCategory(
-			nameMap, descriptionMap, serviceContext);
+			nameMap, descriptionMap, externalReferenceCode, serviceContext);
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 	@Override
 	public CPTaxCategory updateCPTaxCategory(
 			long cpTaxCategoryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap)
+			Map<Locale, String> descriptionMap, String externalReferenceCode)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
@@ -137,7 +137,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.updateCPTaxCategory(
-			cpTaxCategoryId, nameMap, descriptionMap);
+			cpTaxCategoryId, nameMap, descriptionMap, externalReferenceCode);
 	}
 
 }

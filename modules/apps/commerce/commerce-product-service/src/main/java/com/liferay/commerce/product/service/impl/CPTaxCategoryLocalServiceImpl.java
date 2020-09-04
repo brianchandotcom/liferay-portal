@@ -39,7 +39,7 @@ public class CPTaxCategoryLocalServiceImpl
 	@Override
 	public CPTaxCategory addCPTaxCategory(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
+			String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -56,6 +56,7 @@ public class CPTaxCategoryLocalServiceImpl
 		cpTaxCategory.setUserName(user.getFullName());
 		cpTaxCategory.setNameMap(nameMap);
 		cpTaxCategory.setDescriptionMap(descriptionMap);
+		cpTaxCategory.setExternalReferenceCode(externalReferenceCode);
 
 		return cpTaxCategoryPersistence.update(cpTaxCategory);
 	}
@@ -128,7 +129,7 @@ public class CPTaxCategoryLocalServiceImpl
 	@Override
 	public CPTaxCategory updateCPTaxCategory(
 			long cpTaxCategoryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap)
+			Map<Locale, String> descriptionMap, String externalReferenceCode)
 		throws PortalException {
 
 		CPTaxCategory cpTaxCategory = cpTaxCategoryPersistence.findByPrimaryKey(
@@ -138,6 +139,7 @@ public class CPTaxCategoryLocalServiceImpl
 
 		cpTaxCategory.setNameMap(nameMap);
 		cpTaxCategory.setDescriptionMap(descriptionMap);
+		cpTaxCategory.setExternalReferenceCode(externalReferenceCode);
 
 		return cpTaxCategoryPersistence.update(cpTaxCategory);
 	}

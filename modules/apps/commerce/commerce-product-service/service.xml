@@ -1047,7 +1047,7 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CPTaxCategory" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CPTaxCategory" remote-service="true">
 
 		<!-- PK fields -->
 

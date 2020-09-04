@@ -157,8 +157,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			project, recordArtifactTaskProvider,
 			printStaleArtifactTaskProvider);
 		_configureTaskRecordArtifactProvider(
-			project, archivesConfiguration, recordArtifactTaskProvider,
-			relengDir);
+			project, recordArtifactTaskProvider, relengDir);
 		_configureTaskUploadArchivesProvider(
 			recordArtifactTaskProvider, uploadArchivesTaskProvider);
 		_configureTaskWriteArtifactPublishCommandsProvider(
@@ -168,6 +167,20 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			writeArtifactPublishCommandsTaskProvider);
 
 		_configureLiferayRelengProperties(project);
+
+		PublishArtifactSet publishArtifactSet =
+			archivesConfiguration.getArtifacts();
+
+		publishArtifactSet.all(
+			new Action<PublishArtifact>() {
+
+				@Override
+				public void execute(PublishArtifact publishArtifact) {
+					_configureTaskRecordArtifactProvider(
+						project, recordArtifactTaskProvider, publishArtifact);
+				}
+
+			});
 
 		GradleUtil.withPlugin(
 			project, JavaPlugin.class,
@@ -500,8 +513,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskRecordArtifactProvider(
-		final Project project, final Configuration archivesConfiguration,
-		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
+		final Project project,
+		TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
 		final File relengDir) {
 
 		recordArtifactTaskProvider.configure(
@@ -530,39 +543,21 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
 
-		PublishArtifactSet publishArtifactSet =
-			archivesConfiguration.getArtifacts();
+	private void _configureTaskRecordArtifactProvider(
+		final Project project,
+		TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
+		final PublishArtifact publishArtifact) {
 
-		publishArtifactSet.all(
-			new Action<PublishArtifact>() {
+		WritePropertiesTask recordArtifactWritePropertiesTask =
+			recordArtifactTaskProvider.get();
+
+		recordArtifactWritePropertiesTask.property(
+			new Callable<String>() {
 
 				@Override
-				public void execute(final PublishArtifact publishArtifact) {
-					WritePropertiesTask recordArtifactWritePropertiesTask =
-						recordArtifactTaskProvider.get();
-
-					recordArtifactWritePropertiesTask.property(
-						new Callable<String>() {
-
-							@Override
-							public String call() throws Exception {
-								return _getKey(publishArtifact);
-							}
-
-						},
-						new Callable<String>() {
-
-							@Override
-							public String call() throws Exception {
-								return LiferayRelengUtil.getArtifactRemoteURL(
-									project, publishArtifact, false);
-							}
-
-						});
-				}
-
-				private String _getKey(PublishArtifact publishArtifact) {
+				public String call() throws Exception {
 					String key = publishArtifact.getClassifier();
 
 					if (Validator.isNull(key)) {
@@ -585,6 +580,15 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					}
 
 					return "artifact." + key + ".url";
+				}
+
+			},
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return LiferayRelengUtil.getArtifactRemoteURL(
+						project, publishArtifact, false);
 				}
 
 			});

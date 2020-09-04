@@ -224,12 +224,11 @@ export default withRouter(
 							<div className="col-md-10">
 								<div className="align-items-end flex-column-reverse flex-md-row row">
 									<div className="c-mt-4 c-mt-md-0 col-md-8">
-										{(question.messageBoardSection &&
+										{!!question.messageBoardSection &&
 											!!question.messageBoardSection
-												.numberOfMessageBoardSections) ||
-											(+context.rootTopicId === 0 && (
+												.numberOfMessageBoardSections && (
 												<Link
-													to={`/questions/${questionId}`}
+													to={`/questions/${sectionTitle}`}
 												>
 													<SectionLabel
 														section={
@@ -237,7 +236,7 @@ export default withRouter(
 														}
 													/>
 												</Link>
-											))}
+											)}
 
 										<h1
 											className={classNames(

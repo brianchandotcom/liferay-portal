@@ -44,12 +44,12 @@ definition {
 	@priority = "3"
 	test ChangeStyleBookOfContentPageViaLookAndFeelInStagingSite {
 		task ("Edit the style book and Publish it") {
-			StyleBooks.selectForm(formName = "Color System");
+			StyleBooks.selectForm(formName = "Buttons");
 
-			StyleBooks.expandSection(sectionName = "Theme Colors");
+			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Primary",
+				key_text = "Background Color",
 				locator1 = "TextInput#ANY",
 				value1 = "#00FF00");
 
@@ -232,12 +232,12 @@ definition {
 	@priority = "4"
 	test ChangeStyleBookOfContentPageViaPageDesignOptionsPanelInStagingSite {
 		task ("Edit the style book and Publish it") {
-			StyleBooks.selectForm(formName = "Color System");
+			StyleBooks.selectForm(formName = "Buttons");
 
-			StyleBooks.expandSection(sectionName = "Theme Colors");
+			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Primary",
+				key_text = "Background Color",
 				locator1 = "TextInput#ANY",
 				value1 = "#00FF00");
 
@@ -384,12 +384,12 @@ definition {
 	@priority = "3"
 	test ChangeStyleBookOfWidgetPageViaLookAndFeelInStagingSite {
 		task ("Edit the style book and Publish it") {
-			StyleBooks.selectForm(formName = "Color System");
+			StyleBooks.selectForm(formName = "Buttons");
 
-			StyleBooks.expandSection(sectionName = "Theme Colors");
+			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Primary",
+				key_text = "Background Color",
 				locator1 = "TextInput#ANY",
 				value1 = "#00FF00");
 
@@ -397,10 +397,23 @@ definition {
 
 			Pause(locator1 = "3000");
 
+			StyleBooks.expandSection(sectionName = "Button Secondary");
+
 			Type(
-				key_text = "Secondary",
+				key_text = "Color",
 				locator1 = "TextInput#ANY",
 				value1 = "#FF0000");
+
+			StyleBooks.waitForAutoSave();
+
+			Pause(locator1 = "3000");
+
+			StyleBooks.expandSection(sectionName = "Button Outline Secondary");
+
+			Type(
+				key_text = "Color",
+				locator1 = "TextInput#ANY",
+				value1 = "#0000FF");
 
 			StyleBooks.waitForAutoSave();
 
@@ -460,13 +473,17 @@ definition {
 				locator2 = "background-color",
 				value1 = "rgba(0, 255, 0, 1)");
 
-			for (var buttonName : list "RSS,Subscribe") {
-				AssertCssValue(
-					key_text = "${buttonName}",
-					locator1 = "Button#ANY",
-					locator2 = "color",
-					value1 = "rgba(255, 0, 0, 1)");
-			}
+			AssertCssValue(
+				key_text = "Subscribe",
+				locator1 = "Button#ANY",
+				locator2 = "color",
+				value1 = "rgba(255, 0, 0, 1)");
+
+			AssertCssValue(
+				key_text = "RSS",
+				locator1 = "Button#ANY",
+				locator2 = "color",
+				value1 = "rgba(0, 0, 255, 1)");
 		}
 
 		task ("Change to default style book via Look and Feel") {
@@ -517,12 +534,12 @@ definition {
 	@priority = "4"
 	test PreviewTheEffectOnPageInStyleBookEditorInStagingSite {
 		task ("Edit the style book and Publish it") {
-			StyleBooks.selectForm(formName = "Color System");
+			StyleBooks.selectForm(formName = "Buttons");
 
-			StyleBooks.expandSection(sectionName = "Theme Colors");
+			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Primary",
+				key_text = "Background Color",
 				locator1 = "TextInput#ANY",
 				value1 = "#FF0000");
 
@@ -599,12 +616,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Edit the style book and Publish it") {
-			StyleBooks.selectForm(formName = "Color System");
+			StyleBooks.selectForm(formName = "Buttons");
 
-			StyleBooks.expandSection(sectionName = "Theme Colors");
+			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Primary",
+				key_text = "Background Color",
 				locator1 = "TextInput#ANY",
 				value1 = "#00FF00");
 
@@ -741,12 +758,12 @@ definition {
 
 			Pause(locator1 = "3000");
 
-			StyleBooks.selectForm(formName = "Color System");
+			StyleBooks.selectForm(formName = "Buttons");
 
-			StyleBooks.expandSection(sectionName = "Theme Colors");
+			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Primary",
+				key_text = "Background Color",
 				locator1 = "TextInput#ANY",
 				value1 = "#FF0000");
 

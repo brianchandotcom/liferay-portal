@@ -182,8 +182,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			});
 
-		GradleUtil.withPlugin(
-			project, JavaPlugin.class,
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			JavaPlugin.class,
 			new Action<JavaPlugin>() {
 
 				@Override
@@ -196,6 +198,22 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					_configureTaskProcessResourcesProvider(
 						project, buildChangeLogTaskProvider,
 						processResourcesTaskProvider);
+				}
+
+			});
+
+		pluginContainer.withType(
+			LiferayOSGiDefaultsPlugin.class,
+			new Action<LiferayOSGiDefaultsPlugin>() {
+
+				@Override
+				public void execute(
+					LiferayOSGiDefaultsPlugin liferayOSGiDefaultsPlugin) {
+
+					_configureTaskPrintStaleArtifactProviderForLiferayOSGiDefaultsPlugin(
+						printStaleArtifactTaskProvider);
+					_configureTaskWriteArtifactPublishCommandsProviderForLiferayOSGiDefaultsPlugin(
+						writeArtifactPublishCommandsTaskProvider);
 				}
 
 			});
@@ -460,7 +478,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	private void _configureTaskPrintStaleArtifactProvider(
 		final Project project,
 		final TaskProvider<WritePropertiesTask> recordArtifactTaskProvider,
-		final TaskProvider<Task> printStaleArtifactTaskProvider) {
+		TaskProvider<Task> printStaleArtifactTaskProvider) {
 
 		printStaleArtifactTaskProvider.configure(
 			new Action<Task>() {
@@ -491,22 +509,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					_configureTaskPrintStaleArtifactOnlyIf(
 						project, printStaleArtifactTask,
 						recordArtifactTaskProvider.get());
-				}
-
-			});
-
-		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withType(
-			LiferayOSGiDefaultsPlugin.class,
-			new Action<LiferayOSGiDefaultsPlugin>() {
-
-				@Override
-				public void execute(
-					LiferayOSGiDefaultsPlugin liferayOSGiDefaultsPlugin) {
-
-					_configureTaskPrintStaleArtifactProviderForLiferayOSGiDefaultsPlugin(
-						printStaleArtifactTaskProvider);
 				}
 
 			});
@@ -668,22 +670,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					_configureTaskWriteArtifactPublishCommandsOnlyIf(
 						project, writeArtifactPublishCommandsTask,
 						recordArtifactTaskProvider.get());
-				}
-
-			});
-
-		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withType(
-			LiferayOSGiDefaultsPlugin.class,
-			new Action<LiferayOSGiDefaultsPlugin>() {
-
-				@Override
-				public void execute(
-					LiferayOSGiDefaultsPlugin liferayOSGiDefaultsPlugin) {
-
-					_configureTaskWriteArtifactPublishCommandsProviderForLiferayOSGiDefaultsPlugin(
-						writeArtifactPublishCommandsTaskProvider);
 				}
 
 			});

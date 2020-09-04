@@ -19,6 +19,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {useIsMounted, useStateSafe} from 'frontend-js-react-web';
 import React from 'react';
+import {createPortal} from 'react-dom';
 
 import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
@@ -180,7 +181,7 @@ export default function Sidebar() {
 		}
 	};
 
-	return (
+	return createPortal(
 		<ClayTooltipProvider>
 			<div className="page-editor__sidebar" ref={dropClearRef}>
 				<div
@@ -301,7 +302,8 @@ export default function Sidebar() {
 					)}
 				</div>
 			</div>
-		</ClayTooltipProvider>
+		</ClayTooltipProvider>,
+		document.body
 	);
 }
 

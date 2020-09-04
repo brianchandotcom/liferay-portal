@@ -989,7 +989,7 @@ definition {
 				imageFileName = "${imageFileName}",
 				navTab = "Documents and Media");
 		}
-		if (isSet(imageSourceURL)) {
+		else if (isSet(imageSourceURL)) {
 			ItemSelector.addFromURL(
 				imageSourceURL = "${imageSourceURL}",
 				navTab = "URL");

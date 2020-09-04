@@ -180,12 +180,27 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 
 		boolean hasNestedFunction = _hasNestedFunction(operands);
 
-		for (SPIDDMFormRuleCondition.Operand operand : operands) {
+		for (int i = 0; i < operands.size(); i++) {
+			SPIDDMFormRuleCondition.Operand operand = operands.get(i);
+
 			if (hasNestedFunction) {
 				sb.append(operand.getValue());
 			}
 			else {
-				sb.append(convertOperand(operand));
+				if ((i > 0) && Objects.equals("option", operand.getType())) {
+					SPIDDMFormRuleCondition.Operand previousOperand =
+						operands.get(i - 1);
+
+					sb.append(
+						String.format(
+							_FUNCTION_CALL_BINARY_EXPRESSION_FORMAT,
+							"getOptionLabel",
+							StringUtil.quote(previousOperand.getValue()),
+							StringUtil.quote(operand.getValue())));
+				}
+				else {
+					sb.append(convertOperand(operand));
+				}
 			}
 
 			sb.append(StringPool.COMMA_AND_SPACE);
@@ -329,6 +344,9 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 	}
 
 	private static final String _COMPARISON_EXPRESSION_FORMAT = "%s %s %s";
+
+	private static final String _FUNCTION_CALL_BINARY_EXPRESSION_FORMAT =
+		"%s(%s, %s)";
 
 	private static final String _FUNCTION_CALL_UNARY_EXPRESSION_FORMAT =
 		"%s(%s)";

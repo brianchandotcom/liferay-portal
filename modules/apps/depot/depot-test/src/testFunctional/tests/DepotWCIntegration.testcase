@@ -158,9 +158,13 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@description = "This test covers LPS-117068. It ensures that web content using a structure stored in AL can be removed from the disconnected site."
+	@description = "This test covers LPS-117063 and LPS-117068. It ensures that web content using a structure stored in AL can be selected without NPE throwing and removed from the disconnected site."
 	@priority = "4"
 	test RemoveCustomizedWCFromDisconnectedSite {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
 		NavItem.gotoStructures();
@@ -228,6 +232,19 @@ definition {
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
 		Depot.disconnectSite(siteList = "Site Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

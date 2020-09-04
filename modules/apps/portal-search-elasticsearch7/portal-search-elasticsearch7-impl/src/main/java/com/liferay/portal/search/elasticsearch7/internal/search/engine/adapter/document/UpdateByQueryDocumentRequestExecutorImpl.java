@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
 
@@ -74,11 +74,9 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		updateByQueryRequest.setRefresh(
 			updateByQueryDocumentRequest.isRefresh());
 
-		JSONObject jsonObject =
-			updateByQueryDocumentRequest.getScriptJSONObject();
-
-		if (jsonObject != null) {
-			Script script = new Script(jsonObject.toString());
+		if (updateByQueryDocumentRequest.getScript() != null) {
+			Script script = _scriptTranslator.translate(
+				updateByQueryDocumentRequest.getScript());
 
 			updateByQueryRequest.setScript(script);
 		}
@@ -120,5 +118,6 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 	private QueryTranslator<QueryBuilder> _queryTranslator;
+	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 }

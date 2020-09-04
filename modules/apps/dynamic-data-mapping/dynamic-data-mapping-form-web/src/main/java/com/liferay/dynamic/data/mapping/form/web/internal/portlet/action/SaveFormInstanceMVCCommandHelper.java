@@ -302,12 +302,11 @@ public class SaveFormInstanceMVCCommandHelper {
 					URI uri = _getURI(valueString);
 
 					if (uri != null) {
-						StringBundler sb = new StringBundler(4);
+						StringBundler sb = new StringBundler(3);
 
 						sb.append("the-specified-redirect-url-is-not-allowed-");
 						sb.append("due-to-installation-settings.-add-x-into-");
-						sb.append("the-property-x-in-the-file-portal-");
-						sb.append("ext.properties-to-fix-it");
+						sb.append("the-property-x-to-fix-it");
 
 						String securityMode =
 							PropsValues.REDIRECT_URL_SECURITY_MODE;

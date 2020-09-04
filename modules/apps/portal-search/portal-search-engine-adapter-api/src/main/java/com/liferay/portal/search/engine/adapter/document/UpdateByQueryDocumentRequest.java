@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.engine.adapter.document;
 
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.script.Script;
 
 /**
@@ -25,12 +25,31 @@ public class UpdateByQueryDocumentRequest
 	extends CrossClusterRequest
 	implements DocumentRequest<UpdateByQueryDocumentResponse> {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by
+	 *             UpdateByQueryDocumentRequest.UpdateByQueryDocumentRequest(
+	 *             Query, Query, String...)
+	 */
+	@Deprecated
+	public UpdateByQueryDocumentRequest(
+		com.liferay.portal.kernel.search.Query legacyQuery, Script script,
+		String... indexNames) {
+
+		_legacyQuery = legacyQuery;
+		_script = script;
+		_indexNames = indexNames;
+
+		_query = null;
+	}
+
 	public UpdateByQueryDocumentRequest(
 		Query query, Script script, String... indexNames) {
 
 		_query = query;
 		_script = script;
 		_indexNames = indexNames;
+
+		_legacyQuery = null;
 	}
 
 	@Override
@@ -46,6 +65,14 @@ public class UpdateByQueryDocumentRequest
 
 	public Query getQuery() {
 		return _query;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by getQuery
+	 */
+	@Deprecated
+	public com.liferay.portal.kernel.search.Query getQuery72() {
+		return _legacyQuery;
 	}
 
 	public Script getScript() {
@@ -69,6 +96,7 @@ public class UpdateByQueryDocumentRequest
 	}
 
 	private final String[] _indexNames;
+	private final com.liferay.portal.kernel.search.Query _legacyQuery;
 	private final Query _query;
 	private boolean _refresh;
 	private final Script _script;

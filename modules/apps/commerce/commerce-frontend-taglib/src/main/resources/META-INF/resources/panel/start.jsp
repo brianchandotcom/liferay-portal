@@ -69,6 +69,9 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 							);
 							var toggleCheckbox = document.getElementById('<%= collapseSwitchId %>');
 							var collapseClickable = true;
+							var collapsableElement = document.getElementById(
+								'<%= randomNamespace %>collapse'
+							);
 
 							[toggleSwitch, toggleLabel].forEach(function (el) {
 								el.addEventListener('click', function (e) {
@@ -76,6 +79,9 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 
 									if (collapseClickable) {
 										toggleCheckbox.click();
+										collapsableElement.classList[
+											toggleCheckbox.checked ? 'remove' : 'add'
+										]('show');
 										toggleCheckbox.checked = !toggleCheckbox.checked;
 									}
 

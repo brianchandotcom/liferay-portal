@@ -48,6 +48,8 @@ if (Validator.isNotNull(backURL)) {
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="commerceInventoryWarehouseId" type="hidden" />
 				<aui:input name="commerceInventoryWarehouseItemId" type="hidden" />
+				<aui:input name="mvccVersion" type="hidden" />
+				<aui:input name="quantity" type="hidden" />
 				<aui:input name="sku" type="hidden" value="<%= cpInstance.getSku() %>" />
 
 				<table class="show-quick-actions-on-hover table table-autofit table-list table-responsive-lg">
@@ -74,17 +76,15 @@ if (Validator.isNotNull(backURL)) {
 							int curIndex = commerceInventoryWarehouses.indexOf(commerceInventoryWarehouse);
 						%>
 
-							<aui:model-context bean="<%= commerceInventoryWarehouseItem %>" model="<%= CommerceInventoryWarehouseItem.class %>" />
-
 							<tr>
 								<td>
 									<%= HtmlUtil.escape(commerceInventoryWarehouse.getName()) %>
 								</td>
 								<td>
-									<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" name="quantity" wrapperCssClass="m-0" />
+									<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" name="commerceInventoryWarehouseItemQuantity" value="<%= commerceInventoryWarehouseItem.getQuantity() %>" wrapperCssClass="m-0" />
 								</td>
 								<td class="text-center">
-									<aui:button cssClass="btn-primary" name='<%= "saveButton" + curIndex %>' onClick="<%= commerceInventoryWarehouseItemsDisplayContext.getUpdateCommerceInventoryWarehouseItemTaglibOnClick(commerceInventoryWarehouse.getCommerceInventoryWarehouseId(), commerceInventoryWarehouseItemId, curIndex) %>" primary="<%= true %>" value="save" />
+									<aui:button cssClass="btn-primary" name='<%= "saveButton" + curIndex %>' onClick="<%= commerceInventoryWarehouseItemsDisplayContext.getUpdateCommerceInventoryWarehouseItemTaglibOnClick(commerceInventoryWarehouse.getCommerceInventoryWarehouseId(), commerceInventoryWarehouseItemId, commerceInventoryWarehouseItem.getMvccVersion(), curIndex) %>" primary="<%= true %>" value="save" />
 								</td>
 							</tr>
 
@@ -102,6 +102,7 @@ if (Validator.isNotNull(backURL)) {
 		function <portlet:namespace/>updateCommerceInventoryWarehouseItem(
 			commerceInventoryWarehouseId,
 			commerceInventoryWarehouseItemId,
+			mvccVersion,
 			index
 		) {
 			var form = window.document['<portlet:namespace />fm'];
@@ -121,6 +122,7 @@ if (Validator.isNotNull(backURL)) {
 			form[
 				'<portlet:namespace />commerceInventoryWarehouseItemId'
 			].value = commerceInventoryWarehouseItemId;
+			form['<portlet:namespace />mvccVersion'].value = mvccVersion;
 
 			var quantityInputId =
 				'#<portlet:namespace />commerceInventoryWarehouseItemQuantity' + index;

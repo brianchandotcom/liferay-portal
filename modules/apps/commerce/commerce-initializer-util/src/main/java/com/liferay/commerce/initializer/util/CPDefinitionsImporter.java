@@ -55,6 +55,7 @@ import com.liferay.commerce.service.CPDAvailabilityEstimateLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService;
 import com.liferay.commerce.util.comparator.CommerceAvailabilityEstimatePriorityComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -303,7 +304,8 @@ public class CPDefinitionsImporter {
 
 		CPTaxCategory cpTaxCategory =
 			_cpTaxCategoryLocalService.addCPTaxCategory(
-				nameMap, Collections.emptyMap(), serviceContext);
+				nameMap, Collections.emptyMap(), StringPool.BLANK,
+				serviceContext);
 
 		return cpTaxCategory.getCPTaxCategoryId();
 	}

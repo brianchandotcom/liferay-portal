@@ -51,7 +51,7 @@ public class CommerceTaxTestUtil {
 		CPTaxCategory cpTaxCategory =
 			CPTaxCategoryLocalServiceUtil.addCPTaxCategory(
 				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(groupId));
 
 		return cpTaxCategory.getCPTaxCategoryId();

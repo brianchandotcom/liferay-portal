@@ -21,6 +21,7 @@ import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.TaxCategory;
 import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.DTOMapper;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -80,7 +81,8 @@ public class TaxCategoryHelper {
 		return _cpTaxCategoryService.updateCPTaxCategory(
 			cpTaxCategory.getCPTaxCategoryId(),
 			LanguageUtils.getLocalizedMap(taxCategory.getName()),
-			LanguageUtils.getLocalizedMap(taxCategory.getDescription()));
+			LanguageUtils.getLocalizedMap(taxCategory.getDescription()),
+			cpTaxCategory.getExternalReferenceCode());
 	}
 
 	public TaxCategory upsertTaxCategory(
@@ -107,7 +109,7 @@ public class TaxCategoryHelper {
 		CPTaxCategory cpTaxCategory = _cpTaxCategoryService.addCPTaxCategory(
 			LanguageUtils.getLocalizedMap(taxCategory.getName()),
 			LanguageUtils.getLocalizedMap(taxCategory.getDescription()),
-			serviceContext);
+			StringPool.BLANK, serviceContext);
 
 		return _dtoMapper.modelToDTO(cpTaxCategory);
 	}

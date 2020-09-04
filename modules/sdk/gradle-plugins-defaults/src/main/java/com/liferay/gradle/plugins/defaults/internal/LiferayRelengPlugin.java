@@ -56,6 +56,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.PublishArtifact;
 import org.gradle.api.artifacts.PublishArtifactSet;
@@ -106,6 +107,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
 
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration archivesConfiguration = configurationContainer.getByName(
+			Dependency.ARCHIVES_CONFIGURATION);
+
 		final BuildChangeLogTask buildChangeLogTask =
 			(BuildChangeLogTask)GradleUtil.getTask(
 				project, ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
@@ -113,7 +120,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		File relengDir = LiferayRelengUtil.getRelengDir(project);
 
 		final WritePropertiesTask recordArtifactTask = _addTaskRecordArtifact(
-			project, relengDir);
+			project, archivesConfiguration, relengDir);
 
 		Delete cleanArtifactsPublishCommandsTask =
 			_addRootTaskCleanArtifactsPublishCommands(project.getGradle());
@@ -383,7 +390,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	}
 
 	private WritePropertiesTask _addTaskRecordArtifact(
-		Project project, File destinationDir) {
+		Project project, Configuration archivesConfiguration,
+		File destinationDir) {
 
 		final WritePropertiesTask writePropertiesTask = GradleUtil.addTask(
 			project, RECORD_ARTIFACT_TASK_NAME, WritePropertiesTask.class);
@@ -405,10 +413,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		writePropertiesTask.setOutputFile(
 			new File(destinationDir, "artifact.properties"));
 
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, Dependency.ARCHIVES_CONFIGURATION);
-
-		PublishArtifactSet publishArtifactSet = configuration.getArtifacts();
+		PublishArtifactSet publishArtifactSet =
+			archivesConfiguration.getArtifacts();
 
 		Action<PublishArtifact> action = new Action<PublishArtifact>() {
 

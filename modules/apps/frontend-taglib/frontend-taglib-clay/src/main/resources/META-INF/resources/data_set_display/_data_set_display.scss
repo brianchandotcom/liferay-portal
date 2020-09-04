@@ -120,6 +120,10 @@
 	}
 
 	&.data-set-display-inline {
+		.data-set-display-pagination-wrapper {
+			padding-top: 0.5rem;
+		}
+
 		.table {
 			border-bottom: 1px solid $border-color;
 		}

@@ -14,12 +14,15 @@
 
 package com.liferay.site.navigation.language.web.internal.upgrade;
 
+import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLanguagePortletInstanceConfiguration;
 import com.liferay.site.navigation.language.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.site.navigation.language.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -36,6 +39,17 @@ public class SiteNavigationLanguageWebUpgrade
 		registry.register(
 			"0.0.1", "1.0.0", new UpgradePortletId(),
 			new UpgradePortletPreferences());
+
+		registry.register(
+			"1.0.0", "1.0.1",
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				"com.liferay.site.navigation.language.web.configuration." +
+					"SiteNavigationLanguagePortletInstanceConfiguration",
+				SiteNavigationLanguagePortletInstanceConfiguration.class.
+					getName()));
 	}
+
+	@Reference
+	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
 
 }

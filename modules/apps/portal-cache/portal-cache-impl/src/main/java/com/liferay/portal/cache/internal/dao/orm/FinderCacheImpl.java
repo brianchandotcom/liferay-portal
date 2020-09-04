@@ -389,6 +389,8 @@ public class FinderCacheImpl
 	@Deactivate
 	protected void deactivate() {
 		_finderPathServiceTrackerMap.close();
+
+		_argumentsResolverServiceTrackerMap.close();
 	}
 
 	private Object[] _getArguments(

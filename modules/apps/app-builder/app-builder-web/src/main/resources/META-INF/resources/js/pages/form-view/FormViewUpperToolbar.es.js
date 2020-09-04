@@ -32,7 +32,12 @@ export default ({newCustomObject, showTranslationManager}) => {
 	const [isLoading, setLoading] = useState(false);
 
 	const [state, dispatch] = useContext(FormViewContext);
-	const {dataDefinition, dataDefinitionId, dataLayout} = state;
+	const {
+		dataDefinition,
+		dataDefinitionId,
+		dataLayout,
+		initialAvailableLanguageIds,
+	} = state;
 
 	useEffect(() => {
 		if (dataDefinition.defaultLanguageId) {
@@ -133,7 +138,17 @@ export default ({newCustomObject, showTranslationManager}) => {
 						defaultLanguageId={defaultLanguageId}
 						editingLanguageId={editingLanguageId}
 						onEditingLanguageIdChange={onEditingLanguageIdChange}
-						translatedLanguageIds={dataLayout.name}
+						translatedLanguageIds={{
+							...dataLayout.name,
+							...initialAvailableLanguageIds.reduce(
+								(acc, cur) => {
+									acc[cur] = cur;
+
+									return acc;
+								},
+								{}
+							),
+						}}
 					/>
 				</UpperToolbar.Group>
 			)}

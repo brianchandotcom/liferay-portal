@@ -77,6 +77,7 @@ const initialState = {
 	focusedCustomObjectField: {},
 	focusedField: {},
 	hoveredField: {},
+	initialAvailableLanguageIds: [],
 	sidebarOpen: true,
 	sidebarPanelId: 'fields',
 	spritemap: `${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`,
@@ -356,6 +357,8 @@ const createReducer = (dataLayoutBuilder) => {
 						...state.dataDefinition,
 						...dataDefinition,
 					},
+					initialAvailableLanguageIds:
+						dataDefinition.availableLanguageIds,
 				};
 			}
 			case UPDATE_DATA_LAYOUT: {

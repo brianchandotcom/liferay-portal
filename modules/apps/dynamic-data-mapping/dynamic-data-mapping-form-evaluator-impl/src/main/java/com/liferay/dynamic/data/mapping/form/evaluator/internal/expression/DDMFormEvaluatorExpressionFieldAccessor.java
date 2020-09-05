@@ -115,7 +115,7 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			getDDMFormFieldValueAccessor(ddmFormFieldContextKey.getName());
 
-		return ddmFormFieldValueAccessor.getValue(
+		return ddmFormFieldValueAccessor.getValueForEvaluation(
 			ddmFormFieldValue,
 			Optional.ofNullable(
 				_locale

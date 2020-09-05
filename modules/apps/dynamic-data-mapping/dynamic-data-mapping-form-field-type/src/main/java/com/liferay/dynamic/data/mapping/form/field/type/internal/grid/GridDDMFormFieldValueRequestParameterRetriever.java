@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.grid;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -42,20 +43,27 @@ public class GridDDMFormFieldValueRequestParameterRetriever
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		Map<String, String[]> parameterMap =
-			httpServletRequest.getParameterMap();
-
-		if (!parameterMap.containsKey(ddmFormFieldParameterName)) {
-			return jsonObject.toString();
+		try {
+			jsonObject = jsonFactory.createJSONObject(
+				httpServletRequest.getParameter(ddmFormFieldParameterName));
 		}
+		catch (JSONException jsonException) {
+			Map<String, String[]> parameterMap =
+				httpServletRequest.getParameterMap();
 
-		String[] parameterValues = parameterMap.get(ddmFormFieldParameterName);
+			if (!parameterMap.containsKey(ddmFormFieldParameterName)) {
+				return jsonObject.toString();
+			}
 
-		for (String value : parameterValues) {
-			if (!value.isEmpty()) {
-				String[] values = value.split(";");
+			String[] parameterValues = parameterMap.get(
+				ddmFormFieldParameterName);
 
-				jsonObject.put(values[0], values[1]);
+			for (String value : parameterValues) {
+				if (!value.isEmpty()) {
+					String[] values = value.split(";");
+
+					jsonObject.put(values[0], values[1]);
+				}
 			}
 		}
 

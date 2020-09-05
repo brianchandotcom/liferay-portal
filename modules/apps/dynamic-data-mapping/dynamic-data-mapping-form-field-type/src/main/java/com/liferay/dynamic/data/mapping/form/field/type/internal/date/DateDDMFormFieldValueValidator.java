@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.date;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -47,22 +46,20 @@ public class DateDDMFormFieldValueValidator
 	public void validate(DDMFormField ddmFormField, Value value)
 		throws DDMFormFieldValueValidationException {
 
-		DDMForm ddmForm = ddmFormField.getDDMForm();
-
-		Locale defaultLocale = ddmForm.getDefaultLocale();
-
-		String valueString = value.getString(defaultLocale);
-
-		validateDateValue(ddmFormField, defaultLocale, valueString);
+		for (Locale availableLocale : value.getAvailableLocales()) {
+			validateDateValue(
+				ddmFormField, availableLocale,
+				value.getString(availableLocale));
+		}
 	}
 
 	protected void validateDateValue(
-			DDMFormField ddmFormField, Locale defaultLocale, String valueString)
+			DDMFormField ddmFormField, Locale locale, String valueString)
 		throws DDMFormFieldValueValidationException {
 
 		if (Validator.isNotNull(valueString)) {
 			try {
-				DateUtil.formatDate("yyyy-MM-dd", valueString, defaultLocale);
+				DateUtil.formatDate("yyyy-MM-dd", valueString, locale);
 			}
 			catch (ParseException parseException) {
 				if (_log.isDebugEnabled()) {

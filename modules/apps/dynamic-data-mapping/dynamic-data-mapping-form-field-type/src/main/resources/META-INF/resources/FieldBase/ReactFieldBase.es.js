@@ -25,10 +25,22 @@ import {
 	useForm,
 	usePage,
 } from 'dynamic-data-mapping-form-renderer';
+import moment from 'moment';
 import React, {useMemo} from 'react';
 
-const convertValueToString = (value) => {
-	if (value && typeof value === 'object') {
+const convertInputValue = (fieldType, value) => {
+	if (fieldType === 'date') {
+		const date = moment(value).toDate();
+
+		if (moment(date).isValid()) {
+			return moment(date).format('YYYY-MM-DD');
+		}
+	}
+	else if (
+		fieldType === 'document_library' ||
+		fieldType === 'grid' ||
+		fieldType === 'image'
+	) {
 		if (Object.keys(value).length === 0) {
 			return '';
 		}
@@ -259,7 +271,11 @@ function FieldBase({
 							key={language.name}
 							name={language.name}
 							type="hidden"
-							value={convertValueToString(language.value)}
+							value={
+								language.value
+									? convertInputValue(type, language.value)
+									: ''
+							}
 						/>
 					))}
 

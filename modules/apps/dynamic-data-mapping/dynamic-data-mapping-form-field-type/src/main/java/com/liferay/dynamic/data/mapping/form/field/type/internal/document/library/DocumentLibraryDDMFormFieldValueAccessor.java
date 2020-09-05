@@ -70,6 +70,13 @@ public class DocumentLibraryDDMFormFieldValueAccessor
 	}
 
 	@Override
+	public JSONObject getValueForEvaluation(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		return getValue(ddmFormFieldValue, locale);
+	}
+
+	@Override
 	public boolean isEmpty(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		JSONObject valueJSONObject = getValue(ddmFormFieldValue, locale);
 

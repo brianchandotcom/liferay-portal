@@ -70,6 +70,13 @@ public class LocalizableTextDDMFormFieldValueAccessor
 	}
 
 	@Override
+	public JSONObject getValueForEvaluation(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		return getValue(ddmFormFieldValue, locale);
+	}
+
+	@Override
 	public boolean isEmpty(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		JSONObject jsonObject = getValue(ddmFormFieldValue, locale);
 

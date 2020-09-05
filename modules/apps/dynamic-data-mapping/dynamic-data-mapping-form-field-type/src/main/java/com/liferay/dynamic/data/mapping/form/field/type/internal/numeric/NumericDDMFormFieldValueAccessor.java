@@ -68,6 +68,13 @@ public class NumericDDMFormFieldValueAccessor
 		return null;
 	}
 
+	@Override
+	public BigDecimal getValueForEvaluation(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		return getValue(ddmFormFieldValue, locale);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		NumericDDMFormFieldValueAccessor.class);
 

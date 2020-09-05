@@ -50,6 +50,13 @@ public class CheckboxDDMFormFieldValueAccessor
 	}
 
 	@Override
+	public Boolean getValueForEvaluation(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		return getValue(ddmFormFieldValue, locale);
+	}
+
+	@Override
 	public boolean isEmpty(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		Boolean valueBoolean = getValue(ddmFormFieldValue, locale);
 

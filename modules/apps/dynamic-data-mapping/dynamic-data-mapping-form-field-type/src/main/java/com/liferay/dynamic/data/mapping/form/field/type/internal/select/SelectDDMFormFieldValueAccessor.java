@@ -61,6 +61,13 @@ public class SelectDDMFormFieldValueAccessor
 	public JSONArray getValue(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
+		return getOptionsValuesJSONArray(ddmFormFieldValue, locale);
+	}
+
+	@Override
+	public JSONArray getValueForEvaluation(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
 		JSONArray optionsValuesJSONArray = getOptionsValuesJSONArray(
 			ddmFormFieldValue, locale);
 

@@ -43,4 +43,11 @@ public class DefaultDDMFormFieldValueAccessor
 		return value.getString(locale);
 	}
 
+	@Override
+	public String getValueForEvaluation(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		return getValue(ddmFormFieldValue, locale);
+	}
+
 }

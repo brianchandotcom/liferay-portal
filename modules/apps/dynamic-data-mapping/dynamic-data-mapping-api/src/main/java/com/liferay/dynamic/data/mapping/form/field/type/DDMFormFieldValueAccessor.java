@@ -34,6 +34,9 @@ public interface DDMFormFieldValueAccessor<T> {
 
 	public T getValue(DDMFormFieldValue ddmFormFieldValue, Locale locale);
 
+	public T getValueForEvaluation(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale);
+
 	public default boolean isEmpty(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 

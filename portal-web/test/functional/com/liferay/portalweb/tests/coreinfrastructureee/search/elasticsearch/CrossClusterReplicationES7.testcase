@@ -136,6 +136,52 @@ definition {
 			key_untracked = "0");
 	}
 
+	@priority = "3"
+	test CleanAndReindexWorkflowMetricsTransitions {
+		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsTransitions";
+
+		CrossClusterReplication.setupCrossClusterReplication();
+
+		CrossClusterReplication.setupWorkflow();
+
+		CrossClusterReplication.cleanWorkflowIndex(workflowIndexName = "workflow-metrics-transitions");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		AssertElementNotPresent(
+			key_menuItem = "Approve",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Transitions");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		AssertElementPresent(
+			key_menuItem = "Approve",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+	}
+
 	test CreateBlogsEntryWithNewWorkflow {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CreateBlogsEntryWithNewWorkflow";
 

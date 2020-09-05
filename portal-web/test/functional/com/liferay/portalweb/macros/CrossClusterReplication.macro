@@ -1,5 +1,21 @@
 definition {
 
+	macro cleanWorkflowIndex {
+		var companyId = JSONCompany.getCompanyId();
+
+		var cleanCurl = '''
+			http://localhost:9200/liferay-${companyId}-${workflowIndexName}/_delete_by_query?pretty \
+			-H 'Content-Type: application/json' \
+			-d '{
+				"query": {
+					"match_all": {}
+				}
+			}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
+	}
+
 	macro setupCrossClusterReplication {
 		OSGiConfig.deployOSGiConfigs(
 			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",

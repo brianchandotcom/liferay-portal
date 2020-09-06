@@ -128,6 +128,7 @@ import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -1681,7 +1682,10 @@ public class LayoutStagedModelDataHandler
 			ManifestSummary manifestSummary =
 				portletDataContext.getManifestSummary();
 
-			if (layout.isTypeAssetDisplay()) {
+			if (!_isPortletDefinedInManifest(
+					portletDataContext.getCompanyId(), portletId,
+					manifestSummary)) {
+
 				manifestSummary = null;
 			}
 
@@ -2398,6 +2402,18 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return layout.getLayoutPrototypeUuid();
+	}
+
+	private boolean _isPortletDefinedInManifest(
+			long companyId, String portletId, ManifestSummary manifestSummary)
+		throws Exception {
+
+		Collection<String> manifestSummaryKeys =
+			manifestSummary.getManifestSummaryKeys();
+
+		return manifestSummaryKeys.contains(
+			_exportImportHelper.getExportableRootPortletId(
+				companyId, portletId));
 	}
 
 	private Layout _updateCollectionLayoutTypeSettings(

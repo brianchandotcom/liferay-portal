@@ -14,18 +14,15 @@
 
 package com.liferay.analytics.reports.web.internal.portlet.action;
 
-import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -188,16 +185,7 @@ public class GetTrafficSourcesMVCResourceCommand
 		GetTrafficSourcesMVCResourceCommand.class);
 
 	@Reference
-	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;
-
-	@Reference
 	private Http _http;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

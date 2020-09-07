@@ -595,7 +595,9 @@ public class LayoutSiteNavigationMenuItemType
 			siteNavigationMenuItem.getTypeSettings());
 
 		return GetterUtil.getBoolean(
-			typeSettingsUnicodeProperties.get("useCustomName"));
+			typeSettingsUnicodeProperties.get("useCustomName"),
+			GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.get("setCustomName")));
 	}
 
 	@Reference

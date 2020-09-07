@@ -166,7 +166,7 @@ const Container = React.forwardRef(
 				{...data}
 				href={link.href}
 				style={{color: 'inherit', textDecoration: 'none'}}
-				target={link.target || '_blank'}
+				target={link.target}
 			>
 				{content}
 			</a>

@@ -14,8 +14,11 @@
 
 package com.liferay.fragment.renderer.react.internal.model.listener;
 
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
@@ -28,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +48,7 @@ public class FragmentEntryLinkModelListener
 
 	@Override
 	public void onAfterCreate(FragmentEntryLink fragmentEntryLink) {
-		if (!_isReact(fragmentEntryLink)) {
+		if (!_isReactFragmentEntry(fragmentEntryLink.getFragmentEntryId())) {
 			return;
 		}
 
@@ -61,7 +63,7 @@ public class FragmentEntryLinkModelListener
 
 	@Override
 	public void onAfterRemove(FragmentEntryLink fragmentEntryLink) {
-		if (!_isReact(fragmentEntryLink)) {
+		if (!_isReactFragmentEntry(fragmentEntryLink.getFragmentEntryId())) {
 			return;
 		}
 
@@ -75,7 +77,7 @@ public class FragmentEntryLinkModelListener
 
 	@Override
 	public void onAfterUpdate(FragmentEntryLink fragmentEntryLink) {
-		if (!_isReact(fragmentEntryLink)) {
+		if (!_isReactFragmentEntry(fragmentEntryLink.getFragmentEntryId())) {
 			return;
 		}
 
@@ -101,7 +103,9 @@ public class FragmentEntryLinkModelListener
 		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			if (!_isReact(fragmentEntryLink)) {
+			if (!_isReactFragmentEntry(
+					fragmentEntryLink.getFragmentEntryId())) {
+
 				continue;
 			}
 
@@ -128,17 +132,14 @@ public class FragmentEntryLinkModelListener
 			fragmentEntryLink.getFragmentEntryLinkId();
 	}
 
-	private boolean _isReact(FragmentEntryLink fragmentEntryLink) {
-		String fragmentTypeHeader = "//# fragmentType=";
+	private boolean _isReactFragmentEntry(long fragmentEntryId) {
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
 
-		String js = fragmentEntryLink.getJs();
+		if ((fragmentEntry != null) &&
+			(fragmentEntry.getType() == FragmentConstants.TYPE_REACT)) {
 
-		if (Validator.isNotNull(js) && js.startsWith(fragmentTypeHeader)) {
-			String fragmentType = StringUtil.extractLast(
-				StringUtil.extractFirst(js, StringPool.NEW_LINE),
-				fragmentTypeHeader);
-
-			return fragmentType.equals("react");
+			return true;
 		}
 
 		return false;
@@ -149,6 +150,9 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	private JSPackage _jsPackage;
 

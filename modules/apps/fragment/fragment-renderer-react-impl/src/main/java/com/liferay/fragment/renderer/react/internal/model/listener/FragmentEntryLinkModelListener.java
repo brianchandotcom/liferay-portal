@@ -98,17 +98,12 @@ public class FragmentEntryLinkModelListener
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				FragmentConstants.TYPE_REACT, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
 		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			if (!_isReactFragmentEntry(
-					fragmentEntryLink.getFragmentEntryId())) {
-
-				continue;
-			}
-
 			npmRegistryUpdate.registerJSModule(
 				_jsPackage, _getModuleName(fragmentEntryLink), _dependencies,
 				_getJs(fragmentEntryLink), null);

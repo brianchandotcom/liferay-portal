@@ -87,6 +87,12 @@ definition {
 				siteName = "Test Site Name");
 		}
 
+		task ("Add a Container to page") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
 		task ("Assert add a Container to another Container") {
 			PageEditor.addElementToContainer(
 				collectionName = "Layout Elements",

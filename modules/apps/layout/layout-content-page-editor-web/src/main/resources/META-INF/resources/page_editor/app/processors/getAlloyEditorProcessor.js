@@ -18,7 +18,7 @@ import {config} from '../config/index';
 
 const KEY_ENTER = 13;
 const KEY_SPACE = 32;
-const KEY_SHIFT_ENTER = CKEDITOR.SHIFT + KEY_ENTER;
+const KEY_SHIFT_ENTER = (window.CKEDITOR?.SHIFT ?? 0) + KEY_ENTER;
 
 const defaultGetEditorWrapper = (element) => {
 	const wrapper = document.createElement('div');

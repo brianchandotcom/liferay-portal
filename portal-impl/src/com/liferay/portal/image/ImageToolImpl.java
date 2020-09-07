@@ -395,6 +395,67 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
+	public Image getDefaultLiferayLogo() {
+		if (_defaultLiferayLogo != null) {
+			return _defaultLiferayLogo;
+		}
+
+		ClassLoader classLoader = ImageToolImpl.class.getClassLoader();
+
+		try {
+			InputStream inputStream = null;
+
+			String imageDefaultLiferayLogo = PropsUtil.get(
+				PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO);
+
+			int index = imageDefaultLiferayLogo.indexOf(CharPool.SEMICOLON);
+
+			if (index == -1) {
+				inputStream = classLoader.getResourceAsStream(
+					PropsUtil.get(
+						PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO));
+			}
+			else {
+				String bundleIdString = imageDefaultLiferayLogo.substring(
+					0, index);
+
+				int bundleId = GetterUtil.getInteger(bundleIdString, -1);
+
+				String name = imageDefaultLiferayLogo.substring(index + 1);
+
+				if (bundleId < 0) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Fallback to portal class loader because of " +
+								"invalid bundle ID " + bundleIdString);
+					}
+
+					inputStream = classLoader.getResourceAsStream(name);
+				}
+				else {
+					URL url = ModuleFrameworkUtilAdapter.getBundleResource(
+						bundleId, name);
+
+					inputStream = url.openStream();
+				}
+			}
+
+			if (inputStream == null) {
+				_log.error("Default liferay logo is not available");
+			}
+
+			_defaultLiferayLogo = getImage(inputStream);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to configure the default liferay logo: " +
+					exception.getMessage());
+		}
+
+		return _defaultLiferayLogo;
+	}
+
+	@Override
 	public Image getDefaultOrganizationLogo() {
 		if (_defaultOrganizationLogo != null) {
 			return _defaultOrganizationLogo;
@@ -1006,6 +1067,7 @@ public class ImageToolImpl implements ImageTool {
 	private static ImageMagick _imageMagick;
 
 	private Image _defaultCompanyLogo;
+	private Image _defaultLiferayLogo;
 	private Image _defaultOrganizationLogo;
 	private Image _defaultSpacer;
 	private Image _defaultUserFemalePortrait;

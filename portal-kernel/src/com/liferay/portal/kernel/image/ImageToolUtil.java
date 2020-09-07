@@ -140,6 +140,10 @@ public class ImageToolUtil {
 		return getImageTool().getDefaultCompanyLogo();
 	}
 
+	public static Image getDefaultLiferayLogo() {
+		return getImageTool().getDefaultLiferayLogo();
+	}
+
 	public static Image getDefaultOrganizationLogo() {
 		return getImageTool().getDefaultOrganizationLogo();
 	}

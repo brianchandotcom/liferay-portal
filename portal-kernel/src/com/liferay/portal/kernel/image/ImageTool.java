@@ -92,6 +92,8 @@ public interface ImageTool {
 
 	public Image getDefaultCompanyLogo();
 
+	public Image getDefaultLiferayLogo();
+
 	public Image getDefaultOrganizationLogo();
 
 	public Image getDefaultSpacer();

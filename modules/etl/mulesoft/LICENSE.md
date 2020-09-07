@@ -5,8 +5,8 @@ MuleSoft Certified Connectors are developed by MuleSoft's partners and developer
 
 By installing this connector, you consent to MuleSoft sharing your contact information with the developer of this connector so that you can receive more information about it directly from the developer.
 
-GNU LESSER GENERAL PUBLIC LICENSE VERSION 2.1
-=============================================   
+GNU LESSER GENERAL PUBLIC LICENSE VERSION 2.1 OR LATER
+======================================================   
 
   0. This License Agreement applies to any software library or other
 program which contains a notice placed by the copyright holder or

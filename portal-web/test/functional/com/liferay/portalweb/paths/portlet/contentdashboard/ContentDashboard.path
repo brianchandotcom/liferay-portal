@@ -9,8 +9,42 @@
 </thead>
 <tbody>
 <tr>
+	<td>AUTHOR_SELECT_DISPLAY_MODE_BUTTON</td>
+	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'nav-link-monospaced') and contains(@class, 'btn nav-link')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHOR_CARDS_DISPLAY_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Cards')]</td>
+	<td></td>
+</tr>ç<tr>
+	<td>AUTHOR_CARDS_ELEMENT</td>
+	<td>//*[contains(@class, 'aspect-ratio card-item-first')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHOR_LIST_DISPLAY_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'List')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHOR_ELEMENT_CHECKBOX</td>
+	<td>//*[contains(@title,'Select') and contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHOR_TABLE_DISPLAY_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Table')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_NAME_ELEMENT</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(text(),'Category Name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLEAR_FILTERS_BUTTON</td>
+	<td>//*[contains(@class, ' component-link tbar-link') and contains(text(),'Clear')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -21,6 +55,11 @@
 <tr>
 	<td>FILTER_AND_ORDER_DROPDOWN</td>
 	<td>//*[contains(@class, 'dropdown-toggle btn nav-link btn-unstyled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BY_AUTHOR_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Author')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,6 +115,11 @@
 <tr>
 	<td>SECOND_CHECKBOX_TAGS</td>
 	<td>//*[contains(@title,'Select') and contains(@value,'tag2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_AUTHOR_BUTTON</td>
+	<td>//button[contains(@class, 'btn btn-primary') and contains(text(),'Select')]</td>
 	<td></td>
 </tr>
 <tr>

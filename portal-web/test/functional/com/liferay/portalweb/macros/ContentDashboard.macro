@@ -1,5 +1,117 @@
 definition {
 
+	macro clearFilters {
+		Click(locator1 = "ContentDashboard#CLEAR_FILTERS_BUTTON");
+	}
+
+	macro filterByAuthorCard {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_AUTHOR_OPTION");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "ContentDashboard#AUTHOR_SELECT_DISPLAY_MODE_BUTTON");
+
+		Click(locator1 = "ContentDashboard#AUTHOR_CARDS_DISPLAY_OPTION");
+
+		Click(locator1 = "ContentDashboard#SEARCH_FIELD");
+
+		Type(
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = "Test");
+
+		KeyPress(
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = "\ENTER");
+
+		Click(locator1 = "ContentDashboard#AUTHOR_CARDS_ELEMENT");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClickNoError(
+			locator1 = "ContentDashboard#SELECT_AUTHOR_BUTTON",
+			value1 = "Select");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro filterByAuthorList {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_AUTHOR_OPTION");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "ContentDashboard#AUTHOR_SELECT_DISPLAY_MODE_BUTTON");
+
+		Click(locator1 = "ContentDashboard#AUTHOR_LIST_DISPLAY_OPTION");
+
+		Click(locator1 = "ContentDashboard#SEARCH_FIELD");
+
+		Type(
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = "Test");
+
+		KeyPress(
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = "\ENTER");
+
+		Click(locator1 = "ContentDashboard#AUTHOR_ELEMENT_CHECKBOX");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClickNoError(
+			locator1 = "ContentDashboard#SELECT_AUTHOR_BUTTON",
+			value1 = "Select");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro filterByAuthorTable {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_AUTHOR_OPTION");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "ContentDashboard#AUTHOR_SELECT_DISPLAY_MODE_BUTTON");
+
+		Click(locator1 = "ContentDashboard#AUTHOR_TABLE_DISPLAY_OPTION");
+
+		Click(locator1 = "ContentDashboard#SEARCH_FIELD");
+
+		Type(
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = "Test");
+
+		KeyPress(
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = "\ENTER");
+
+		Click(locator1 = "ContentDashboard#AUTHOR_ELEMENT_CHECKBOX");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClickNoError(
+			locator1 = "ContentDashboard#SELECT_AUTHOR_BUTTON",
+			value1 = "Select");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro filterByCategory {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(

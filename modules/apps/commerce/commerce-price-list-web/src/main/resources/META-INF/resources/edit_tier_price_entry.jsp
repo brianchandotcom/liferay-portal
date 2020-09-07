@@ -28,16 +28,9 @@ long commercePriceListId = commerceTierPriceEntryDisplayContext.getCommercePrice
 long commerceTierPriceEntryId = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryId();
 
 BigDecimal price = BigDecimal.ZERO;
-BigDecimal promoPrice = BigDecimal.ZERO;
 
-if (commerceTierPriceEntry != null) {
-	if (commerceTierPriceEntry.getPrice() != null) {
-		price = commerceTierPriceEntry.getPrice();
-	}
-
-	if (commerceTierPriceEntry.getPromoPrice() != null) {
-		promoPrice = commerceTierPriceEntry.getPromoPrice();
-	}
+if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getPrice() != null)) {
+	price = commerceTierPriceEntry.getPrice();
 }
 
 CPInstance cpInstance = commercePriceEntry.getCPInstance();
@@ -96,10 +89,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(price) %>">
-					<aui:validator name="number" />
-				</aui:input>
-
-				<aui:input name="promoPrice" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(promoPrice) %>">
 					<aui:validator name="number" />
 				</aui:input>
 

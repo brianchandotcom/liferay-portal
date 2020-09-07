@@ -32,15 +32,10 @@ CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
 CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
 
 BigDecimal price = BigDecimal.ZERO;
-BigDecimal promoPrice = BigDecimal.ZERO;
 
 if ((commercePriceEntry != null) && (commerceTierPriceEntry != null)) {
 	if (commerceTierPriceEntry.getPrice() != null) {
 		price = commerceCurrency.round(commerceTierPriceEntry.getPrice());
-	}
-
-	if (commerceTierPriceEntry.getPromoPrice() != null) {
-		promoPrice = commerceCurrency.round(commerceTierPriceEntry.getPromoPrice());
 	}
 }
 %>
@@ -63,11 +58,6 @@ if ((commercePriceEntry != null) && (commerceTierPriceEntry != null)) {
 		<div class="row">
 			<div class="col-12">
 				<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= price %>">
-					<aui:validator name="min">0</aui:validator>
-					<aui:validator name="number" />
-				</aui:input>
-
-				<aui:input name="promoPrice" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= promoPrice %>">
 					<aui:validator name="min">0</aui:validator>
 					<aui:validator name="number" />
 				</aui:input>

@@ -395,6 +395,17 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return getService().getFragmentEntryLinks(start, end);
 	}
 
+	public static java.util.List<com.liferay.fragment.model.FragmentEntryLink>
+		getFragmentEntryLinks(
+			int type, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.fragment.model.FragmentEntryLink>
+					orderByComparator) {
+
+		return getService().getFragmentEntryLinks(
+			type, start, end, orderByComparator);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getAllFragmentEntryLinksByFragmentEntryId(long, long, int,

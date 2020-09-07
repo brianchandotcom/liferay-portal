@@ -36,6 +36,13 @@ public interface FragmentEntryLinkFinder {
 		long groupId, long fragmentEntryId, int layoutPageTemplateEntryType);
 
 	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
+		findByType(
+			int type, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.fragment.model.FragmentEntryLink>
+					orderByComparator);
+
+	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
 		findByG_F(
 			long groupId, long fragmentEntryId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator

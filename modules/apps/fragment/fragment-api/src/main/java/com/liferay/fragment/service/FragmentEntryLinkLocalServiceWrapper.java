@@ -423,6 +423,16 @@ public class FragmentEntryLinkLocalServiceWrapper
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(start, end);
 	}
 
+	@Override
+	public java.util.List<FragmentEntryLink> getFragmentEntryLinks(
+		int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntryLink>
+			orderByComparator) {
+
+		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
+			type, start, end, orderByComparator);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getAllFragmentEntryLinksByFragmentEntryId(long, long, int,

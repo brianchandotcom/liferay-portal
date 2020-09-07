@@ -327,6 +327,11 @@ public interface FragmentEntryLinkLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinks(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinks(
+		int type, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator);
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getAllFragmentEntryLinksByFragmentEntryId(long, long, int,

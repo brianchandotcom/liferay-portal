@@ -25,7 +25,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "bill-of-materials"));
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
+	inverted="<%= false %>"
 	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 

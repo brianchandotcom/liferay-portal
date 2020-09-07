@@ -49,5 +49,6 @@ if (PortletPermissionUtil.contains(permissionChecker, CPPortletKeys.CP_OPTIONS, 
 %>
 
 <clay:navigation-bar
+	inverted="<%= false %>"
 	navigationItems="<%= navigationItems %>"
 />

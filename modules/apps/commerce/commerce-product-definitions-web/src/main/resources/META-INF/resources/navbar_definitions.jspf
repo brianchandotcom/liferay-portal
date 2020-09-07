@@ -42,5 +42,6 @@ catalogNavigationItems.add(cpInstancesCatalogNavigationItem);
 %>
 
 <clay:navigation-bar
+	inverted="<%= false %>"
 	navigationItems="<%= catalogNavigationItems %>"
 />

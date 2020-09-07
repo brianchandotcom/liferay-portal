@@ -33,7 +33,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
+	inverted="<%= false %>"
 	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 

@@ -23,7 +23,7 @@ String cpOptionsEditorRequire = npmResolver.resolveModuleName("commerce-product-
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
+	inverted="<%= false %>"
 	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 
@@ -36,6 +36,7 @@ navigationItem.setLabel(LanguageUtil.get(request, "option-templates"));
 %>
 
 <clay:navigation-bar
+	inverted="<%= false %>"
 	navigationItems="<%= Collections.singletonList(navigationItem) %>"
 />
 

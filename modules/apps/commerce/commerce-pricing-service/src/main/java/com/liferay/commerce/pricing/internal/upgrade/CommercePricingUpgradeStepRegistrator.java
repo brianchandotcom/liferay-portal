@@ -43,21 +43,19 @@ public class CommercePricingUpgradeStepRegistrator
 		}
 
 		registry.register(
-			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
-			new CommercePricingClassUpgradeProcess());
+			"1.0.0", "1.1.0", new CommercePricingClassUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_1_0, _SCHEMA_VERSION_2_0_0,
+			"1.1.0", "2.0.0",
 			new com.liferay.commerce.pricing.internal.upgrade.v2_0_0.
 				CommercePricingClassUpgradeProcess(
 					_resourceActionLocalService, _resourceLocalService));
 
 		registry.register(
-			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_0_1,
-			new CommercePriceModifierUpgradeProcess());
+			"2.0.0", "2.0.1", new CommercePriceModifierUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_2_0_1, _SCHEMA_VERSION_2_1_0,
+			"2.0.1", "2.1.0",
 			new CommercePricingConfigurationUpgradeProcess(
 				_configurationProvider));
 
@@ -65,16 +63,6 @@ public class CommercePricingUpgradeStepRegistrator
 			_log.info("COMMERCE PRICING UPGRADE STEP REGISTRATOR FINISHED");
 		}
 	}
-
-	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
-
-	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
-
-	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
-
-	private static final String _SCHEMA_VERSION_2_0_1 = "2.0.1";
-
-	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePricingUpgradeStepRegistrator.class);

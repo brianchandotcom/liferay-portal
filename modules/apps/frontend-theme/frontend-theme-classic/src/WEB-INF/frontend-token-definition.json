@@ -5,7 +5,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "#FFFFFF",
+							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
 							"label": "white",
 							"mappings": [
@@ -18,7 +18,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#F7F8F9",
+							"defaultValue": "#f7f8f9",
 							"editorType": "ColorPicker",
 							"label": "gray-100",
 							"mappings": [
@@ -31,7 +31,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#F1F2F5",
+							"defaultValue": "#f1f2f5",
 							"editorType": "ColorPicker",
 							"label": "gray-200",
 							"mappings": [
@@ -44,7 +44,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#E7E7ED",
+							"defaultValue": "#e7e7ed",
 							"editorType": "ColorPicker",
 							"label": "gray-300",
 							"mappings": [
@@ -57,7 +57,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#CDCED9",
+							"defaultValue": "#cdced9",
 							"editorType": "ColorPicker",
 							"label": "gray-400",
 							"mappings": [
@@ -70,7 +70,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#A7A9BC",
+							"defaultValue": "#a7a9bc",
 							"editorType": "ColorPicker",
 							"label": "gray-500",
 							"mappings": [
@@ -83,7 +83,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#6B6C7E",
+							"defaultValue": "#6b6c7e",
 							"editorType": "ColorPicker",
 							"label": "gray-600",
 							"mappings": [
@@ -109,7 +109,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#393A4A",
+							"defaultValue": "#393a4a",
 							"editorType": "ColorPicker",
 							"label": "gray-800",
 							"mappings": [
@@ -135,7 +135,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#000000",
+							"defaultValue": "#000",
 							"editorType": "ColorPicker",
 							"label": "black",
 							"mappings": [
@@ -154,7 +154,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "#0B5FFF",
+							"defaultValue": "#0b5fff",
 							"editorType": "ColorPicker",
 							"label": "primary",
 							"mappings": [
@@ -167,7 +167,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#6B6C7E",
+							"defaultValue": "#6b6c7e",
 							"editorType": "ColorPicker",
 							"label": "secondary",
 							"mappings": [
@@ -180,7 +180,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#287D3C",
+							"defaultValue": "#287d3c",
 							"editorType": "ColorPicker",
 							"label": "success",
 							"mappings": [
@@ -193,7 +193,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#2E5AAC",
+							"defaultValue": "#2e5aac",
 							"editorType": "ColorPicker",
 							"label": "info",
 							"mappings": [
@@ -206,7 +206,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#B95000",
+							"defaultValue": "#b95000",
 							"editorType": "ColorPicker",
 							"label": "warning",
 							"mappings": [
@@ -219,7 +219,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#DA1414",
+							"defaultValue": "#da1414",
 							"editorType": "ColorPicker",
 							"label": "danger",
 							"mappings": [
@@ -245,7 +245,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#F1F2F5",
+							"defaultValue": "#f1f2f5",
 							"editorType": "ColorPicker",
 							"label": "light",
 							"mappings": [
@@ -414,7 +414,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "#FFF",
+							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
 							"label": "body-bg",
 							"mappings": [
@@ -1070,7 +1070,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#A7A9BC",
+							"defaultValue": "#a7a9bc",
 							"editorType": "ColorPicker",
 							"label": "text-muted",
 							"mappings": [
@@ -1095,7 +1095,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#6B6C7E",
+							"defaultValue": "#6b6c7e",
 							"editorType": "ColorPicker",
 							"label": "blockquote-small-color",
 							"mappings": [

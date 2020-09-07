@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
@@ -145,7 +145,7 @@ public class FragmentEntryLinkModelListener
 		return false;
 	}
 
-	private static final List<String> _dependencies = Arrays.asList(
+	private static final List<String> _dependencies = Collections.singletonList(
 		"frontend-js-react-web$react");
 
 	@Reference

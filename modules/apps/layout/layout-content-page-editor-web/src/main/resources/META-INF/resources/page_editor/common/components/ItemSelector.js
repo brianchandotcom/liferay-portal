@@ -80,6 +80,9 @@ export default function ItemSelector({
 									aria-label={Liferay.Language.get(
 										'select-content-button'
 									)}
+									className={
+										'page-editor__item-selector__content-button'
+									}
 									displayType="secondary"
 									onClick={() => setActive(true)}
 									small
@@ -119,6 +122,9 @@ export default function ItemSelector({
 							aria-label={Liferay.Language.get(
 								'select-content-button'
 							)}
+							className={
+								'page-editor__item-selector__content-button'
+							}
 							displayType="secondary"
 							onClick={() =>
 								openInfoItemSelector(

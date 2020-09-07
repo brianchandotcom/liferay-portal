@@ -86,7 +86,13 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 											<%= beanId %>
 										</strong>
 
-										<liferay-ui:icon-help message="identification-number" />
+										<clay:button
+											cssClass="lfr-portal-tooltip text-secondary"
+											displayType="unstyled"
+											icon="question-circle"
+											small="<%= true %>"
+											title='<%= LanguageUtil.get(request, "identification-number") %>'
+										/>
 									</small>
 								</c:if>
 
@@ -100,10 +106,17 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 											<%= externalReferenceCode %>
 										</strong>
 
-										<liferay-ui:icon-help message="external-reference-code" />
+										<clay:button
+											cssClass="lfr-portal-tooltip text-secondary"
+											displayType="unstyled"
+											icon="question-circle"
+											small="<%= true %>"
+											title='<%= LanguageUtil.get(request, "external-reference-code") %>'
+										/>
 
 										<c:if test="<%= Validator.isNotNull(externalReferenceCodeEditUrl) %>">
 											<clay:button
+												cssClass="text-secondary"
 												displayType="unstyled"
 												icon="pencil"
 												id="erc-edit-modal-opener"

@@ -792,57 +792,97 @@ definition {
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
 			value1 = "General");
 
-		Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		if (isSet(assetListName)) {
-			NavItem.click(navItem = "Collections");
-
-			LexiconCard.clickCard(card = "${assetListName}");
-
+		if (isSet(selectedName)) {
 			AssertElementPresent(
-				key_contentName = "${assetListName}",
+				key_contentName = "${selectedName}",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+		else {
+			Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
 
-			if (isSet(layout)) {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			if (isSet(assetListName)) {
+				NavItem.click(navItem = "Collections");
+
+				LexiconCard.clickCard(card = "${assetListName}");
+
+				AssertElementPresent(
+					key_contentName = "${assetListName}",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			}
+			else if (isSet(infoListProviderName)) {
+				NavItem.click(navItem = "Collection Providers");
+
+				LexiconCard.clickCard(card = "${infoListProviderName}");
+
+				AssertElementPresent(
+					key_contentName = "${infoListProviderName}",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			}
+		}
+
+		if (isSet(layout)) {
+			Select(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${layout}");
+
+			Pause(locator1 = "3000");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${layout}");
+		}
+
+		if (isSet(listStyle)) {
+			AssertElementPresent(
+				key_fieldLabel = "List Style",
+				key_groupLabel = "Templates",
+				key_value = "${listStyle}",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			Select(
+				key_fieldLabel = "List Style",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${listStyle}");
+
+			Pause(locator1 = "3000");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "List Style",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${listStyle}");
+
+			if (isSet(listItemStyle)) {
 				Select(
-					key_fieldLabel = "Layout",
+					key_fieldLabel = "List Item Style",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "${layout}");
+					value1 = "${listItemStyle}");
 
 				Pause(locator1 = "3000");
 
 				AssertSelectedLabel(
-					key_fieldLabel = "Layout",
+					key_fieldLabel = "List Item Style",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "${layout}");
-			}
-
-			if (isSet(maxNumberOfItems)) {
-				Type(
-					key_fieldLabel = "Max Number Of Items",
-					locator1 = "FormFields#NUMBER_FIELD",
-					value1 = "${maxNumberOfItems}");
-
-				AssertTextEquals(
-					key_fieldLabel = "Max Number Of Items",
-					locator1 = "FormFields#NUMBER_FIELD",
-					value1 = "${maxNumberOfItems}");
+					value1 = "${listItemStyle}");
 			}
 		}
 
-		if (isSet(infoListProviderName)) {
-			NavItem.click(navItem = "Collection Providers");
+		if (isSet(maxNumberOfItems)) {
+			Type(
+				key_fieldLabel = "Max Number Of Items",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${maxNumberOfItems}");
 
-			LexiconCard.clickCard(card = "${infoListProviderName}");
-
-			AssertElementPresent(
-				key_contentName = "${infoListProviderName}",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			AssertTextEquals(
+				key_fieldLabel = "Max Number Of Items",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${maxNumberOfItems}");
 		}
 
-		Pause(locator1 = "1000");
+		PageEditor.waitForAutoSave();
 	}
 
 	macro editComment {

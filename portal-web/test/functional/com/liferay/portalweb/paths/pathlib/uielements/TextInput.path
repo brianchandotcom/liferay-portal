@@ -259,6 +259,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GROUPED_TEXT_INPUT</td>
+	<td>//div[contains(@class,'panel-group')][contains(.,'${key_groupLabel}')]//div[contains(@class,'form-group')][label[normalize-space(text())='${key_fieldLabel}']]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMAGE_DESCRIPTION</td>
 	<td>//label[contains(.,'Image Description')]/following-sibling::input</td>
 	<td></td>

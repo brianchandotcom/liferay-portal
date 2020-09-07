@@ -27,6 +27,50 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can filter by Author, using different display types"
+	@priority = "5"
+	test ContentDashboardFilterByAuthor {
+		JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+		
+		Pause(locator1 = "5000");
+
+		ContentDashboard.filterByAuthorTable();
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC WebContent Title");
+
+		ContentDashboard.filterByAuthorList;
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC WebContent Title");
+
+		ContentDashboard.filterByAuthorCard();
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC WebContent Title");
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title");
+	}
+
 	@description = "Validate if the user can filter by category"
 	@priority = "5"
 	test ContentDashboardFilterByCategory {

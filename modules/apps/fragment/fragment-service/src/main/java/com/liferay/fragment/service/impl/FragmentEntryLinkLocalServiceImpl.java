@@ -298,6 +298,15 @@ public class FragmentEntryLinkLocalServiceImpl
 			groupId, classNameId, classPK);
 	}
 
+	@Override
+	public List<FragmentEntryLink> getFragmentEntryLinks(
+		int type, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return fragmentEntryLinkFinder.findByType(
+			type, start, end, orderByComparator);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getAllFragmentEntryLinksByFragmentEntryId(long, long, int,

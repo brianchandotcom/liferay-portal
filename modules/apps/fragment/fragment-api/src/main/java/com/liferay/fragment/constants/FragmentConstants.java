@@ -30,6 +30,10 @@ public class FragmentConstants {
 
 	public static final String TYPE_COMPONENT_LABEL = "component";
 
+	public static final int TYPE_REACT = 2;
+
+	public static final String TYPE_REACT_LABEL = "react";
+
 	public static final int TYPE_SECTION = 0;
 
 	public static final String TYPE_SECTION_LABEL = "section";
@@ -39,12 +43,20 @@ public class FragmentConstants {
 			return TYPE_COMPONENT;
 		}
 
+		if (Objects.equals(TYPE_REACT_LABEL, label)) {
+			return TYPE_REACT;
+		}
+
 		return TYPE_SECTION;
 	}
 
 	public static String getTypeLabel(int type) {
 		if (type == TYPE_COMPONENT) {
 			return TYPE_COMPONENT_LABEL;
+		}
+
+		if (type == TYPE_REACT) {
+			return TYPE_REACT_LABEL;
 		}
 
 		return TYPE_SECTION_LABEL;

@@ -31,15 +31,15 @@ definition {
 	@priority = "5"
 	test ContentDashboardFilterByAuthor {
 		JSONWebcontent.addWebContent(
-				content = "WC Content",
-				groupName = "Test Site Name",
-				title = "WC Title");
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
 			portlet = "Content Dashboard");
-		
+
 		Pause(locator1 = "5000");
 
 		ContentDashboard.filterByAuthorTable();
@@ -59,7 +59,7 @@ definition {
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 			value1 = "WC Title");
-		
+
 		ContentDashboard.clearFilters();
 
 		ContentDashboard.filterByAuthorCard();

@@ -115,14 +115,14 @@ export function formatActionURL(url, item) {
 	const replacedURL = url.replace(new RegExp('{(.*?)}', 'mg'), (matched) =>
 		getValueFromItem(
 			item,
-			matched.substring(1, matched.length - 1).split('|')
+			matched.substring(1, matched.length - 1).split('.')
 		)
 	);
 
 	return replacedURL.replace(new RegExp('(%7B.*?%7D)', 'mg'), (matched) =>
 		getValueFromItem(
 			item,
-			matched.substring(3, matched.length - 3).split('|')
+			matched.substring(3, matched.length - 3).split('.')
 		)
 	);
 }

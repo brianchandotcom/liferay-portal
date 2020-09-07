@@ -145,13 +145,13 @@
 					authToken = authToken.substring(0, authToken.indexOf('#'));
 				}
 
-				form.append(
-					'<input name="p_auth" type="hidden" value="' +
-						authToken +
-						'" />'
-				);
-
 				if (authToken) {
+					form.append(
+						'<input name="p_auth" type="hidden" value="' +
+							authToken +
+							'" />'
+					);
+
 					searchParams.delete('p_auth');
 
 					action = baseURL + '?' + searchParams.toString();

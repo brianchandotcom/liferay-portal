@@ -412,6 +412,14 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public DLFileEntryType fetchFileEntryType(
+		long groupId, long dataDefinitionId) {
+
+		return _dlFileEntryTypeLocalService.fetchFileEntryType(
+			groupId, dataDefinitionId);
+	}
+
+	@Override
+	public DLFileEntryType fetchFileEntryType(
 		long groupId, String fileEntryTypeKey) {
 
 		return _dlFileEntryTypeLocalService.fetchFileEntryType(

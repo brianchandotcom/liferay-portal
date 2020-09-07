@@ -304,6 +304,10 @@ public interface DLFileEntryTypeLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType fetchFileEntryType(
+		long groupId, long dataDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType fetchFileEntryType(
 		long groupId, String fileEntryTypeKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

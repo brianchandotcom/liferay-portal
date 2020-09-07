@@ -32,7 +32,7 @@ export default function Main({
 	timeSpanOptions,
 	totalReadsDataProvider,
 	totalViewsDataProvider,
-	trafficSources,
+	trafficSourcesDataProvider,
 	viewURLs,
 }) {
 	return (
@@ -89,13 +89,11 @@ export default function Main({
 				timeSpanOptions={timeSpanOptions}
 			/>
 
-			{trafficSources.length > 0 && (
-				<TrafficSources
-					languageTag={languageTag}
-					onTrafficSourceClick={onTrafficSourceClick}
-					trafficSources={trafficSources}
-				/>
-			)}
+			<TrafficSources
+				dataProvider={trafficSourcesDataProvider}
+				languageTag={languageTag}
+				onTrafficSourceClick={onTrafficSourceClick}
+			/>
 		</div>
 	);
 }
@@ -119,7 +117,7 @@ Main.proptypes = {
 	).isRequired,
 	totalReadsDataProvider: PropTypes.func.isRequired,
 	totalViewsDataProvider: PropTypes.func.isRequired,
-	trafficSources: PropTypes.array.isRequired,
+	trafficSourcesDataProvider: PropTypes.func.isRequired,
 	viewURLs: PropTypes.arrayOf(
 		PropTypes.shape({
 			default: PropTypes.bool.isRequired,

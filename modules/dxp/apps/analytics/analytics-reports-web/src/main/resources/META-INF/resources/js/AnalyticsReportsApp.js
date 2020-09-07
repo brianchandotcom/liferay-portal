@@ -148,7 +148,6 @@ export default function ({context}) {
 							timeRange={state.data.timeRange}
 							timeSpanKey={state.data.timeSpanKey}
 							timeSpanOptions={state.data.timeSpans}
-							trafficSources={state.data.trafficSources}
 							viewURLs={state.data.viewURLs}
 						/>
 					</div>

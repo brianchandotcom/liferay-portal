@@ -32,7 +32,6 @@ export default function Navigation({
 	timeSpanKey,
 	timeRange,
 	timeSpanOptions,
-	trafficSources,
 	viewURLs,
 }) {
 	const [{historicalWarning, publishedToday, warning}] = useContext(
@@ -42,6 +41,8 @@ export default function Navigation({
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const [currentPage, setCurrentPage] = useState({view: 'main'});
+
+	const [trafficSources, setTrafficSources] = useState([]);
 
 	const [trafficSourceName, setTrafficSourceName] = useState('');
 
@@ -69,15 +70,14 @@ export default function Navigation({
 			.then((response) => response.analyticsReportsTotalViews);
 	}, [api]);
 
-	const handleTrafficShare = useCallback(() => {
-		const trafficSource = trafficSources.find((trafficSource) => {
-			return trafficSource['name'] === trafficSourceName;
-		});
+	const handleTrafficSources = useCallback(() => {
+		return api
+			.getTrafficSources()
+			.then((response) => response.trafficSources);
+	}, [api]);
 
-		return Promise.resolve(trafficSource?.share ?? '-');
-	}, [trafficSourceName, trafficSources]);
-
-	const handleTrafficSourceClick = (trafficSourceName) => {
+	const handleTrafficSourceClick = (trafficSources, trafficSourceName) => {
+		setTrafficSources(trafficSources);
 		setTrafficSourceName(trafficSourceName);
 
 		const trafficSource = trafficSources.find((trafficSource) => {
@@ -90,9 +90,16 @@ export default function Navigation({
 		});
 	};
 
-	const handleTrafficSourceName = useCallback((trafficSourceName) => {
+	const handleTrafficSourceName = (trafficSourceName) =>
 		setTrafficSourceName(trafficSourceName);
-	}, []);
+
+	const handleTrafficShare = useCallback(() => {
+		const trafficSource = trafficSources.find((trafficSource) => {
+			return trafficSource['name'] === trafficSourceName;
+		});
+
+		return Promise.resolve(trafficSource?.share ?? '-');
+	}, [trafficSourceName, trafficSources]);
 
 	const handleTrafficVolume = useCallback(() => {
 		const trafficSource = trafficSources.find((trafficSource) => {
@@ -152,7 +159,7 @@ export default function Navigation({
 						timeSpanOptions={timeSpanOptions}
 						totalReadsDataProvider={handleTotalReads}
 						totalViewsDataProvider={handleTotalViews}
-						trafficSources={trafficSources}
+						trafficSourcesDataProvider={handleTrafficSources}
 						viewURLs={viewURLs}
 					/>
 				</div>
@@ -195,7 +202,6 @@ Navigation.proptypes = {
 			label: PropTypes.string.isRequired,
 		})
 	).isRequired,
-	trafficSources: PropTypes.array.isRequired,
 	viewURLs: PropTypes.arrayOf(
 		PropTypes.shape({
 			default: PropTypes.bool.isRequired,

@@ -1,0 +1,101 @@
+{
+	"deletedItems": [
+	],
+	"items": {
+		"00e7d166-2014-47b2-8b67-4a8ceb8af194": {
+			"children": [
+				"4e4d84dc-b067-40b4-ad7c-55519438e4d4"
+			],
+			"config": {
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 12,
+				"tablet": {
+				}
+			},
+			"itemId": "00e7d166-2014-47b2-8b67-4a8ceb8af194",
+			"parentId": "31f06b57-1e57-4719-bb0b-ca37a8d32af6",
+			"type": "column"
+		},
+		"210c0509-84da-49e8-9148-c41e6b2f7815": {
+			"children": [
+				"7f03b58c-d127-4fef-b130-1032a93e9243"
+			],
+			"config": {
+			},
+			"itemId": "210c0509-84da-49e8-9148-c41e6b2f7815",
+			"parentId": "",
+			"type": "root"
+		},
+		"31f06b57-1e57-4719-bb0b-ca37a8d32af6": {
+			"children": [
+				"00e7d166-2014-47b2-8b67-4a8ceb8af194"
+			],
+			"config": {
+				"gutters": true,
+				"landscapeMobile": {
+				},
+				"modulesPerRow": 1,
+				"numberOfColumns": 1,
+				"portraitMobile": {
+				},
+				"reverseOrder": false,
+				"tablet": {
+				},
+				"verticalAlignment": "top"
+			},
+			"itemId": "31f06b57-1e57-4719-bb0b-ca37a8d32af6",
+			"parentId": "7f03b58c-d127-4fef-b130-1032a93e9243",
+			"type": "row"
+		},
+		"4e4d84dc-b067-40b4-ad7c-55519438e4d4": {
+			"children": [
+			],
+			"config": {
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}"
+			},
+			"itemId": "4e4d84dc-b067-40b4-ad7c-55519438e4d4",
+			"parentId": "00e7d166-2014-47b2-8b67-4a8ceb8af194",
+			"type": "fragment"
+		},
+		"7f03b58c-d127-4fef-b130-1032a93e9243": {
+			"children": [
+				"31f06b57-1e57-4719-bb0b-ca37a8d32af6"
+			],
+			"config": {
+				"backgroundImage": {
+				},
+				"borderColor": "",
+				"borderRadius": "",
+				"borderWidth": 0,
+				"contentDisplay": "block",
+				"justify": "",
+				"link": {
+				},
+				"marginBottom": 0,
+				"marginLeft": 0,
+				"marginRight": 0,
+				"marginTop": 0,
+				"opacity": 100,
+				"paddingBottom": 0,
+				"paddingHorizontal": 0,
+				"paddingLeft": 0,
+				"paddingRight": 0,
+				"paddingTop": 0,
+				"shadow": "",
+				"type": "fluid",
+				"widthType": "fluid"
+			},
+			"itemId": "7f03b58c-d127-4fef-b130-1032a93e9243",
+			"parentId": "210c0509-84da-49e8-9148-c41e6b2f7815",
+			"type": "container"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "210c0509-84da-49e8-9148-c41e6b2f7815"
+	},
+	"version": 1
+}

@@ -315,10 +315,8 @@ public class RenderLayoutStructureDisplayContext {
 		JSONObject linkJSONObject =
 			containerStyledLayoutStructureItem.getLinkJSONObject();
 
-		if ((linkJSONObject == null) ||
-			Validator.isNull(linkJSONObject.getString("target"))) {
-
-			return "_blank";
+		if (linkJSONObject == null) {
+			return StringPool.BLANK;
 		}
 
 		return linkJSONObject.getString("target");

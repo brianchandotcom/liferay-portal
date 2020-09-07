@@ -32,8 +32,6 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -119,9 +117,6 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 	@Activate
 	protected void activate() {
 		_jsPackage = _npmResolver.getJSPackage();
-
-		_portalCache = (PortalCache<String, String>)_multiVMPool.getPortalCache(
-			FragmentEntryLink.class.getName());
 	}
 
 	private FragmentEntry _getContributedFragmentEntry(
@@ -150,22 +145,6 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		}
 
 		return fragmentEntryLink;
-	}
-
-	private boolean _isCacheable(FragmentEntryLink fragmentEntryLink) {
-		if (Validator.isNull(fragmentEntryLink.getRendererKey())) {
-			return fragmentEntryLink.isCacheable();
-		}
-
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorTracker.getFragmentEntry(
-				fragmentEntryLink.getRendererKey());
-
-		if (fragmentEntry == null) {
-			return false;
-		}
-
-		return fragmentEntry.isCacheable();
 	}
 
 	private String _renderFragmentEntry(
@@ -257,33 +236,6 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			fragmentRendererContext);
 
-		StringBundler cacheKeySB = new StringBundler(5);
-
-		cacheKeySB.append(fragmentEntryLink.getFragmentEntryLinkId());
-		cacheKeySB.append(StringPool.DASH);
-		cacheKeySB.append(fragmentRendererContext.getLocale());
-		cacheKeySB.append(StringPool.DASH);
-		cacheKeySB.append(
-			StringUtil.merge(
-				fragmentRendererContext.getSegmentsExperienceIds(),
-				StringPool.SEMICOLON));
-
-		String content = StringPool.BLANK;
-
-		if (Objects.equals(
-				fragmentRendererContext.getMode(),
-				FragmentEntryLinkConstants.VIEW) &&
-			(fragmentRendererContext.getPreviewClassPK() <= 0) &&
-			fragmentRendererContext.isUseCachedContent() &&
-			_isCacheable(fragmentEntryLink)) {
-
-			content = _portalCache.get(cacheKeySB.toString());
-
-			if (Validator.isNotNull(content)) {
-				return content;
-			}
-		}
-
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
@@ -352,19 +304,9 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 			"configuration", configurationJSONObject
 		).build();
 
-		content = _renderFragmentEntry(
+		return _renderFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId(), css, html, data,
 			fragmentEntryLink.getNamespace(), httpServletRequest);
-
-		if (Objects.equals(
-				fragmentRendererContext.getMode(),
-				FragmentEntryLinkConstants.VIEW) &&
-			_isCacheable(fragmentEntryLink)) {
-
-			_portalCache.put(cacheKeySB.toString(), content);
-		}
-
-		return content;
 	}
 
 	private String _writePortletPaths(
@@ -384,8 +326,6 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		return unsyncStringWriter.toString();
 	}
 
-	private static PortalCache<String, String> _portalCache;
-
 	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
@@ -397,9 +337,6 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	private JSPackage _jsPackage;
-
-	@Reference
-	private MultiVMPool _multiVMPool;
 
 	@Reference
 	private NPMResolver _npmResolver;

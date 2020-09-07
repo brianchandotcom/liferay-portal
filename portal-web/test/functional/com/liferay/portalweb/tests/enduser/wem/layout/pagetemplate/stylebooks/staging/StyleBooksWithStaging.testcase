@@ -49,8 +49,9 @@ definition {
 			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Background Color",
-				locator1 = "TextInput#ANY",
+				key_fieldLabel = "Background Color",
+				key_groupLabel = "Button Primary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#00FF00");
 
 			StyleBooks.waitForAutoSave();
@@ -237,8 +238,9 @@ definition {
 			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Background Color",
-				locator1 = "TextInput#ANY",
+				key_fieldLabel = "Background Color",
+				key_groupLabel = "Button Primary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#00FF00");
 
 			StyleBooks.waitForAutoSave();
@@ -389,8 +391,9 @@ definition {
 			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Background Color",
-				locator1 = "TextInput#ANY",
+				key_fieldLabel = "Background Color",
+				key_groupLabel = "Button Primary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#00FF00");
 
 			StyleBooks.waitForAutoSave();
@@ -400,8 +403,9 @@ definition {
 			StyleBooks.expandSection(sectionName = "Button Secondary");
 
 			Type(
-				key_text = "Color",
-				locator1 = "TextInput#ANY",
+				key_fieldLabel = "Color",
+				key_groupLabel = "Button Secondary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#FF0000");
 
 			StyleBooks.waitForAutoSave();
@@ -411,8 +415,9 @@ definition {
 			StyleBooks.expandSection(sectionName = "Button Outline Secondary");
 
 			Type(
-				key_text = "Color",
-				locator1 = "TextInput#ANY",
+				key_fieldLabel = "Color",
+				key_groupLabel = "Button Outline Secondary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#0000FF");
 
 			StyleBooks.waitForAutoSave();
@@ -539,8 +544,9 @@ definition {
 			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Background Color",
-				locator1 = "TextInput#ANY",
+				key_fieldLabel = "Background Color",
+				key_groupLabel = "Button Primary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#FF0000");
 
 			StyleBooks.waitForAutoSave();
@@ -621,8 +627,9 @@ definition {
 			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Background Color",
-				locator1 = "TextInput#ANY",
+				key_fieldLabel = "Background Color",
+				key_groupLabel = "Button Primary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#00FF00");
 
 			StyleBooks.waitForAutoSave();
@@ -763,8 +770,9 @@ definition {
 			StyleBooks.expandSection(sectionName = "Button Primary");
 
 			Type(
-				key_text = "Background Color",
-				locator1 = "TextInput#ANY",
+				key_fieldLabel = "Background Color",
+				key_groupLabel = "Button Primary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#FF0000");
 
 			StyleBooks.waitForAutoSave();

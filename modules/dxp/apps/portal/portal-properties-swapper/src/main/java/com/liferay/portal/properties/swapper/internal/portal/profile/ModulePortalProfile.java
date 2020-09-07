@@ -20,6 +20,8 @@ import com.liferay.portal.profile.PortalProfile;
 import com.liferay.portal.properties.swapper.internal.DefaultCompanyLogoSwapper;
 import com.liferay.portal.properties.swapper.internal.DefaultCompanyNameSwapper;
 import com.liferay.portal.properties.swapper.internal.DefaultGuestGroupLogoSwapper;
+import com.liferay.portal.properties.swapper.internal.DefaultLiferayLogoSwapper;
+import com.liferay.portal.properties.swapper.internal.DefaultLiferayNameSwapper;
 
 import java.util.Collections;
 
@@ -41,7 +43,9 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			Collections.singleton(PortalProfile.PORTAL_PROFILE_NAME_DXP),
 			DefaultCompanyLogoSwapper.class.getName(),
 			DefaultCompanyNameSwapper.class.getName(),
-			DefaultGuestGroupLogoSwapper.class.getName());
+			DefaultGuestGroupLogoSwapper.class.getName(),
+			DefaultLiferayLogoSwapper.class.getName(),
+			DefaultLiferayNameSwapper.class.getName());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

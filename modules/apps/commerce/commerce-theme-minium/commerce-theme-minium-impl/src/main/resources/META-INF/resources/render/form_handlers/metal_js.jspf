@@ -61,24 +61,39 @@
 		})
 	}
 
+	function getFormValues(form) {
+		return !form ? [] : form.getImmediateFields().map(
+			function(field) {
+				var value = field.getValue();
+
+				return {
+					key: field.get('fieldName'),
+					value: Array.isArray(value) ? value : [value]
+				};
+			}
+		);
+	}
+
 	function getFormData() {
 		var form = Liferay.component('ProductOptions' + cpDefinitionId);
 
-		if (!form) {
-			return []
-		}
+		try {
+			var formValuesRefs = form.props.pages[0].rows;
 
-		var renderer = Object.values(form.refs)[0];
+			return formValuesRefs.map(function(valueRef) {
+				var optionKey = valueRef.columns[0].fields[0].fieldName,
+					optionValue = valueRef.columns[0].fields[0].value;
 
-		return Object.values(renderer.refs)
-			.map(
-				function(option) {
-					return {
-						key: option.fieldName,
-						value: option.value
-					}
+				return {
+					key: optionKey,
+					value: optionValue
 				}
-			)
+			});
+		} catch(ignore) {
+			// TODO remove console log
+			console.log('blown away');
+			return [];
+		}
 	}
 
 	function updateAddToCart(productExists, cpInstanceId, formValues) {
@@ -142,9 +157,10 @@
 		document.querySelector('[data-text-cp-instance-sku]').innerHTML = Liferay.Util.escape(productData.sku) || '';
 		document.querySelector('[data-text-cp-instance-manufacturer-part-number]').innerHTML = Liferay.Util.escape(productData.manufacturerPartNumber) || '';
 		document.querySelector('[data-text-cp-instance-gtin]').innerHTML = Liferay.Util.escape(productData.gtin) || '';
+
 		var availabilityEstimateContainer = document.querySelector('[data-text-cp-instance-availability-estimate]');
-		var availabilityContainer = document.querySelector('[data-text-cp-instance-availability]')
-		var stockQuantityContainer = document.querySelector('[data-text-cp-instance-stock-quantity]')
+		var availabilityContainer = document.querySelector('[data-text-cp-instance-availability]');
+		var stockQuantityContainer = document.querySelector('[data-text-cp-instance-stock-quantity]');
 
 		if (availabilityEstimateContainer && availabilityContainer && stockQuantityContainer) {
 			availabilityContainer.innerHTML = productData.availability || '';
@@ -158,9 +174,9 @@
 		Liferay.fire(
 			"priceUpdated",
 			{
-				displayDiscountLevels: response.displayDiscountLevels,
+				displayDiscountLevels: productData.displayDiscountLevels,
 				id: '<%= "productDetail_" + cpCatalogEntry.getCPDefinitionId() %>',
-				prices: response.prices
+				prices: productData.prices
 			}
 		);
 	}

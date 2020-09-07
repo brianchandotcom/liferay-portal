@@ -70,8 +70,6 @@ String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 			</h4>
 
 			<div class="product-detail-options">
-				<%@ include file="/render/form_handlers/aui.jspf" %>
-
 				<%= cpContentHelper.renderOptions(renderRequest, renderResponse) %>
 
 				<%@ include file="/render/form_handlers/metal_js.jspf" %>

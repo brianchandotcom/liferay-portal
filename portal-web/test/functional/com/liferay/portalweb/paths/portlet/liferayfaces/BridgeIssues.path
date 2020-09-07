@@ -19,6 +19,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_LINK</td>
+	<td>//body//link[${key_blcount}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_LINK_D</td>
+	<td>xpath=(//body//link[@href='${key_blcount}'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_SCRIPT</td>
+	<td>//body//script[${key_bscount}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_SCRIPT_D</td>
+	<td>xpath=(//body//script[@src='${key_bscount}'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CALENDA_DATEPICKER</td>
 	<td>//table[contains(@class, 'ui-datepicker-calendar')]</td>
 	<td></td>
@@ -84,6 +104,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEAD_LINK</td>
+	<td>//head//link[${key_hlcount}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEAD_LINK_D</td>
+	<td>xpath=(//head//link[@src='${key_hlcount}'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEAD_SCRIPT</td>
+	<td>//head//script[${key_hscount}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEAD_SCRIPT_D</td>
+	<td>xpath=(//head//script[@src='${key_hscount}'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HTML_BASIC</td>
 	<td>//div[@class='liferay-faces-bridge-body']/code[contains(text(),'${key_attribute}')]</td>
 	<td></td>
@@ -91,6 +131,16 @@
 <tr>
 	<td>INVALID_URL</td>
 	<td>//ol[@id='invalidTestURLs']/li[${key_inValidURL}]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIFERAY_LOGO</td>
+	<td>//div[contains(@id,'jsf')][contains(@id,'applicant')][contains(@class,'liferay-faces-bridge-body')]//img[contains(@src, 'liferay-logo.png')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIFERAY_LOGO_P</td>
+	<td>//div[contains(@id,'prime')][contains(@id,'applicant')][contains(@class,'liferay-faces-bridge-body')]//img[contains(@src, 'liferay-logo.png')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -151,6 +201,11 @@
 <tr>
 	<td>RENDER_KITID</td>
 	<td>//code[@id='renderKitId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTED_MESSAGE</td>
+	<td>//div[@class='html-field'][${key_field}]//span[contains(text(), 'Value is required.')]</td>
 	<td></td>
 </tr>
 <tr>

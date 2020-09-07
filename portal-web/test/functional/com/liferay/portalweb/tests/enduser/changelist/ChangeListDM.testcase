@@ -212,6 +212,27 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
+		ChangeList.gotoReviewChanges();
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeSite = "Guest",
+			changeTitle = "DM Document Title",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Guest",
+			changeTitle = "DM Document Type Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		ChangeListChanges.viewChangesViaContextStyle(
+			changeCategory = "Document",
+			changeDescription = "Test Test added a Document in Guest",
+			changeTitle = "DM Document Title");
+
 		ChangeList.prepareToPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");

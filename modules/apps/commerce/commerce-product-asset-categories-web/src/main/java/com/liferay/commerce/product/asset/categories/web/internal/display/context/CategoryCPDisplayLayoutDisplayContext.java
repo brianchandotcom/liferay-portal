@@ -16,6 +16,7 @@ package com.liferay.commerce.product.asset.categories.web.internal.display.conte
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -64,13 +65,16 @@ public class CategoryCPDisplayLayoutDisplayContext
 	extends BaseCPDefinitionsDisplayContext {
 
 	public CategoryCPDisplayLayoutDisplayContext(
-		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+		ActionHelper actionHelper,
+		AssetCategoryLocalService assetCategoryLocalService,
+		HttpServletRequest httpServletRequest,
 		CommerceChannelLocalService commerceChannelLocalService,
 		CPDisplayLayoutService cpDisplayLayoutService,
 		GroupLocalService groupLocalService, ItemSelector itemSelector) {
 
 		super(actionHelper, httpServletRequest);
 
+		_assetCategoryLocalService = assetCategoryLocalService;
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_cpDisplayLayoutService = cpDisplayLayoutService;
 		_groupLocalService = groupLocalService;
@@ -92,9 +96,13 @@ public class CategoryCPDisplayLayoutDisplayContext
 		return portletURL.toString();
 	}
 
-	public String getCategorySelectorURL(
-		RenderResponse renderResponse, String selectedCategories) {
+	public AssetCategory getAssetCategory(long assetCategoryId)
+		throws PortalException {
 
+		return _assetCategoryLocalService.getAssetCategory(assetCategoryId);
+	}
+
+	public String getCategorySelectorURL(RenderResponse renderResponse) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -113,7 +121,6 @@ public class CategoryCPDisplayLayoutDisplayContext
 					themeDisplay.getCompanyGroupId());
 			portletURL.setParameter(
 				"eventName", renderResponse.getNamespace() + "selectCategory");
-			portletURL.setParameter("selectedCategories", selectedCategories);
 			portletURL.setParameter("singleSelect", "true");
 			portletURL.setParameter(
 				"vocabularyIds",
@@ -278,6 +285,7 @@ public class CategoryCPDisplayLayoutDisplayContext
 		return portletURL;
 	}
 
+	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private CPDisplayLayout _cpDisplayLayout;
 	private final CPDisplayLayoutService _cpDisplayLayoutService;

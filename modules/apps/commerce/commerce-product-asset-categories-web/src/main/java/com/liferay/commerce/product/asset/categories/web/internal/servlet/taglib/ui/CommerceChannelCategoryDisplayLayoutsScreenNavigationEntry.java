@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.asset.categories.web.internal.servlet.taglib.ui;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.product.asset.categories.web.internal.display.context.CategoryCPDisplayLayoutDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -120,9 +121,9 @@ public class CommerceChannelCategoryDisplayLayoutsScreenNavigationEntry
 		CategoryCPDisplayLayoutDisplayContext
 			categoryCPDisplayLayoutDisplayContext =
 				new CategoryCPDisplayLayoutDisplayContext(
-					_actionHelper, httpServletRequest,
-					_commerceChannelLocalService, _cpDisplayLayoutService,
-					_groupLocalService, _itemSelector);
+					_actionHelper, _assetCategoryLocalService,
+					httpServletRequest, _commerceChannelLocalService,
+					_cpDisplayLayoutService, _groupLocalService, _itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -138,6 +139,9 @@ public class CommerceChannelCategoryDisplayLayoutsScreenNavigationEntry
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

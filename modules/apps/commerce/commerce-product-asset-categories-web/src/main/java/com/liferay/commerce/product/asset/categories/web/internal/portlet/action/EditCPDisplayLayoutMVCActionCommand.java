@@ -123,21 +123,29 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 		long cpDisplayLayoutId = ParamUtil.getLong(
 			actionRequest, "cpDisplayLayoutId");
 
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+
 		List<Long> classPKs = new ArrayList<>();
 
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			_portal.getCompanyId(actionRequest));
+		if (classPK > 0) {
+			classPKs.add(classPK);
+		}
+		else {
+			Group companyGroup = _groupLocalService.getCompanyGroup(
+				_portal.getCompanyId(actionRequest));
 
-		List<AssetVocabulary> assetVocabularies =
-			_assetVocabularyLocalService.getGroupVocabularies(
-				companyGroup.getGroupId(), false);
+			List<AssetVocabulary> assetVocabularies =
+				_assetVocabularyLocalService.getGroupVocabularies(
+					companyGroup.getGroupId(), false);
 
-		for (AssetVocabulary assetVocabulary : assetVocabularies) {
-			long classPK = ParamUtil.getLong(
-				actionRequest, "classPK_" + assetVocabulary.getVocabularyId());
+			for (AssetVocabulary assetVocabulary : assetVocabularies) {
+				long assetVocabularyClassPK = ParamUtil.getLong(
+					actionRequest,
+					"classPK_" + assetVocabulary.getVocabularyId());
 
-			if (classPK > 0) {
-				classPKs.add(classPK);
+				if (assetVocabularyClassPK > 0) {
+					classPKs.add(assetVocabularyClassPK);
+				}
 			}
 		}
 
@@ -158,11 +166,11 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 				throw new CPDisplayLayoutEntryException();
 			}
 
-			for (long classPK : classPKs) {
+			for (long curClassPK : classPKs) {
 				_cpDisplayLayoutService.addCPDisplayLayout(
 					_portal.getUserId(actionRequest),
 					commerceChannel.getSiteGroupId(), AssetCategory.class,
-					classPK, layoutUuid);
+					curClassPK, layoutUuid);
 			}
 		}
 	}

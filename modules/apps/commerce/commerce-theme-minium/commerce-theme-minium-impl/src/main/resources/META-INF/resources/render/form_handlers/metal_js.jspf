@@ -90,8 +90,6 @@
 				}
 			});
 		} catch(ignore) {
-			// TODO remove console log
-			console.log('blown away');
 			return [];
 		}
 	}

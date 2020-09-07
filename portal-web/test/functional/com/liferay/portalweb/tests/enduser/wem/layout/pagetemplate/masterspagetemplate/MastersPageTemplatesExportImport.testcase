@@ -166,7 +166,7 @@ definition {
 	@description = "This is a use case for LPS-102207. Can export a master page template containing the custom configuration settings of fragments and import."
 	@priority = "5"
 	test ExportImportMastersPageTemplateWithCustomConfigurationSettingOfFragments {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Add a custom master") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(

@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.product.asset.categories.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDisplayLayout;
@@ -39,6 +42,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -49,6 +53,7 @@ import java.util.Locale;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -85,6 +90,43 @@ public class CategoryCPDisplayLayoutDisplayContext
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
+	}
+
+	public String getCategorySelectorURL(
+		RenderResponse renderResponse, String selectedCategories) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				httpServletRequest, AssetCategory.class.getName(),
+				PortletProvider.Action.BROWSE);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			List<AssetVocabulary> vocabularies =
+				AssetVocabularyServiceUtil.getGroupVocabularies(
+					themeDisplay.getCompanyGroupId());
+			portletURL.setParameter(
+				"eventName", renderResponse.getNamespace() + "selectCategory");
+			portletURL.setParameter("selectedCategories", selectedCategories);
+			portletURL.setParameter("singleSelect", "true");
+			portletURL.setParameter(
+				"vocabularyIds",
+				ListUtil.toString(
+					vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR));
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURL.toString();
+		}
+		catch (Exception exception) {
+		}
+
+		return null;
 	}
 
 	public CommerceChannel getCommerceChannel() {

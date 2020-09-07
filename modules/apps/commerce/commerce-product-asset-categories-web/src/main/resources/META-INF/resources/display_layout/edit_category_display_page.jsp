@@ -64,13 +64,9 @@ if (cpDisplayLayout != null) {
 
 				<h4><liferay-ui:message key="select-categories" /></h4>
 
-				<liferay-asset:asset-categories-selector
-					categoryIds="<%= StringUtil.merge(assetCategoryIds, StringPool.COMMA) %>"
-					className="<%= CPDisplayLayout.class.getName() %>"
-					classTypePK="<%= AssetCategoryConstants.ALL_CLASS_NAME_ID %>"
-					hiddenInput="classPK"
-					singleSelect="<%= true %>"
-				/>
+				<div id="<portlet:namespace />categoriesContainer"></div>
+
+				<aui:button name="selectCategories" value="select" />
 
 				<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= (cpDisplayLayout == null) ? StringPool.BLANK : cpDisplayLayout.getLayoutUuid() %>" />
 
@@ -150,4 +146,111 @@ if (cpDisplayLayout != null) {
 
 		displayPageItemRemove.classList.add('hide');
 	});
+</aui:script>
+
+<%
+String selectedCategories = StringUtil.merge(assetCategoryIds, StringPool.COMMA);
+%>
+
+<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+	var categoriesContainer = document.querySelector(
+		'#<portlet:namespace />categoriesContainer'
+	);
+
+	function createLabel(id, title) {
+		var labelContainer = document.createElement('span');
+		labelContainer.classList.add('label');
+		labelContainer.classList.add('label-dismissible');
+		labelContainer.classList.add('label-secondary');
+		labelContainer.setAttribute('id', id);
+
+		var linkContainer = document.createElement('span');
+		linkContainer.classList.add('label-item');
+		linkContainer.classList.add('label-item-expand');
+
+		var link = document.createElement('a');
+		link.setAttribute('href', '#' + id);
+		link.innerText = title;
+		linkContainer.appendChild(link);
+
+		var buttonContainer = document.createElement('span');
+		buttonContainer.classList.add('label-item');
+		buttonContainer.classList.add('label-item-after');
+
+		var button = document.createElement('button');
+		button.classList.add('close');
+		button.setAttribute('aria-label', 'Close');
+		button.setAttribute('type', 'button');
+		button.addEventListener('click', handleCloseButtonClick);
+
+		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+		svg.classList.add('lexicon-icon');
+		svg.classList.add('lexicon-icon-times');
+		svg.setAttribute('focusable', false);
+		svg.setAttribute('role', 'presentation');
+
+		var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+		use.setAttribute(
+			'href',
+			Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg#times'
+		);
+
+		svg.appendChild(use);
+		button.appendChild(svg);
+		buttonContainer.appendChild(button);
+
+		labelContainer.appendChild(linkContainer);
+		labelContainer.appendChild(buttonContainer);
+
+		return labelContainer;
+	}
+
+	function handleCloseButtonClick(event) {
+		var button = event.currentTarget;
+		categoriesContainer.removeChild(button.parentElement.parentElement);
+	}
+
+	window.document
+		.querySelector('#<portlet:namespace />selectCategories')
+		.addEventListener('click', function (event) {
+			var itemSelectorDialog = new ItemSelectorDialog.default({
+				eventName: '<portlet:namespace />selectCategory',
+				'strings.add': '<liferay-ui:message key="done" />',
+				title: '<liferay-ui:message key="select-category-display-page" />',
+				url:
+					'<%= categoryCPDisplayLayoutDisplayContext.getCategorySelectorURL(renderResponse, selectedCategories) %>',
+			});
+
+			itemSelectorDialog.open();
+
+			itemSelectorDialog.on('selectedItemChange', function (event) {
+				if (event.selectedItem) {
+					var selectedItem = event.selectedItem;
+
+					Object.keys(selectedItem).forEach(function (key) {
+						var item = selectedItem[key];
+
+						var existingNode = categoriesContainer.querySelector(
+							'#category-' + item.categoryId
+						);
+
+						if (item.unchecked) {
+							if (categoriesContainer.contains(existingNode)) {
+								categoriesContainer.removeChild(existingNode);
+							}
+							delete selectedItem.key;
+							return;
+						}
+
+						if (!categoriesContainer.contains(existingNode)) {
+							var categoryNode = createLabel(
+								'category-' + item.categoryId,
+								item.value
+							);
+							categoriesContainer.appendChild(categoryNode);
+						}
+					});
+				}
+			});
+		});
 </aui:script>

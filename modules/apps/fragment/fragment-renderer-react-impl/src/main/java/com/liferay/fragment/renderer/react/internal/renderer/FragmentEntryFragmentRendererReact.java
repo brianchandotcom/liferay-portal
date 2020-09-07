@@ -14,13 +14,9 @@
 
 package com.liferay.fragment.renderer.react.internal.renderer;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
@@ -28,10 +24,8 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -41,7 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
-import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.CharArrayWriter;
 import java.io.IOException;
@@ -51,7 +44,6 @@ import java.io.Writer;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -106,8 +98,7 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 
 			printWriter.write(
 				_renderFragmentEntryLink(
-					fragmentRendererContext, httpServletRequest,
-					httpServletResponse));
+					fragmentRendererContext, httpServletRequest));
 		}
 		catch (PortalException portalException) {
 			throw new IOException(portalException);
@@ -229,67 +220,11 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 
 	private String _renderFragmentEntryLink(
 			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletRequest httpServletRequest)
 		throws IOException, PortalException {
 
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			fragmentRendererContext);
-
-		DefaultFragmentEntryProcessorContext
-			defaultFragmentEntryProcessorContext =
-				new DefaultFragmentEntryProcessorContext(
-					httpServletRequest, httpServletResponse,
-					fragmentRendererContext.getMode(),
-					fragmentRendererContext.getLocale());
-
-		Optional<Object> displayObjectOptional =
-			fragmentRendererContext.getDisplayObjectOptional();
-
-		defaultFragmentEntryProcessorContext.setDisplayObject(
-			displayObjectOptional.orElse(null));
-
-		Optional<Map<String, Object>> fieldValuesOptional =
-			fragmentRendererContext.getFieldValuesOptional();
-
-		defaultFragmentEntryProcessorContext.setFieldValues(
-			fieldValuesOptional.orElse(null));
-
-		defaultFragmentEntryProcessorContext.setPreviewClassNameId(
-			fragmentRendererContext.getPreviewClassNameId());
-		defaultFragmentEntryProcessorContext.setPreviewClassPK(
-			fragmentRendererContext.getPreviewClassPK());
-		defaultFragmentEntryProcessorContext.setPreviewType(
-			fragmentRendererContext.getPreviewType());
-		defaultFragmentEntryProcessorContext.setPreviewVersion(
-			fragmentRendererContext.getPreviewVersion());
-		defaultFragmentEntryProcessorContext.setSegmentsExperienceIds(
-			fragmentRendererContext.getSegmentsExperienceIds());
-
-		String css = StringPool.BLANK;
-
-		if (Validator.isNotNull(fragmentEntryLink.getCss())) {
-			css = _fragmentEntryProcessorRegistry.processFragmentEntryLinkCSS(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext);
-		}
-
-		String html = StringPool.BLANK;
-
-		if (Validator.isNotNull(fragmentEntryLink.getHtml()) ||
-			Validator.isNotNull(fragmentEntryLink.getEditableValues())) {
-
-			html = _fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, defaultFragmentEntryProcessorContext);
-		}
-
-		if (Objects.equals(
-				defaultFragmentEntryProcessorContext.getMode(),
-				FragmentEntryLinkConstants.EDIT)) {
-
-			html = _writePortletPaths(
-				fragmentEntryLink, html, httpServletRequest,
-				httpServletResponse);
-		}
 
 		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -305,25 +240,9 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		).build();
 
 		return _renderFragmentEntry(
-			fragmentEntryLink.getFragmentEntryId(), css, html, data,
-			fragmentEntryLink.getNamespace(), httpServletRequest);
-	}
-
-	private String _writePortletPaths(
-			FragmentEntryLink fragmentEntryLink, String html,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException {
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		_portletRegistry.writePortletPaths(
-			fragmentEntryLink, httpServletRequest,
-			new PipingServletResponse(httpServletResponse, unsyncStringWriter));
-
-		unsyncStringWriter.append(html);
-
-		return unsyncStringWriter.toString();
+			fragmentEntryLink.getFragmentEntryId(), fragmentEntryLink.getCss(),
+			fragmentEntryLink.getHtml(), data, fragmentEntryLink.getNamespace(),
+			httpServletRequest);
 	}
 
 	@Reference
@@ -333,16 +252,10 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
-	@Reference
-	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
-
 	private JSPackage _jsPackage;
 
 	@Reference
 	private NPMResolver _npmResolver;
-
-	@Reference
-	private PortletRegistry _portletRegistry;
 
 	@Reference
 	private ReactRenderer _reactRenderer;

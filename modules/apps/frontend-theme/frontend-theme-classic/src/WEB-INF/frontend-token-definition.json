@@ -1420,7 +1420,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#272833",
+							"defaultValue": "#6b6c7e",
 							"editorType": "ColorPicker",
 							"label": "color",
 							"mappings": [

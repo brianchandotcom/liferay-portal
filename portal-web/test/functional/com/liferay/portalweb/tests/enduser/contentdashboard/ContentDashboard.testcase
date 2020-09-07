@@ -162,6 +162,11 @@ definition {
 	@description = "Validate if the user can open de Info side panel of a web content"
 	@priority = "5"
 	test ContentDashboardViewInfoPanel {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
@@ -176,6 +181,10 @@ definition {
 			value1 = "Content Info");
 
 		Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
+
+		JSONWebcontent.deleteWebContent(
+				groupName = "Test Site Name",
+				title = "WC Title");
 	}
 
 }

@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_MENU_DROPDOWN_BUTTON</td>
-	<td>//button[contains(@class, 'dropdown-toggle component-action btn btn-monospaced btn-unstyled')]</td>
+	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'btn-monospaced') and contains(@class, 'component-action')]</td>
 	<td></td>
 </tr>
 </tbody>

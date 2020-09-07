@@ -7,7 +7,14 @@ definition {
 	}
 
 	macro viewChangesViaChangesStyle {
-		ChangeListChanges.changeDisplayStyle(displayStyle = "Changes");
+		if ("${publishedPublication}" == "true") {
+			Click(
+				key_publicationName = "Publication Name",
+				locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME");
+		}
+		else {
+			ChangeListChanges.changeDisplayStyle(displayStyle = "Changes");
+		}
 
 		Pause(locator1 = "3000");
 

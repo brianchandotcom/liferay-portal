@@ -181,7 +181,11 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 				!StringUtil.equals(
 					fragmentRenderer.getKey(),
 					FragmentRendererConstants.
-						FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY)) {
+						FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY) &&
+				!StringUtil.equals(
+					fragmentRenderer.getKey(),
+					FragmentRendererConstants.
+						FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY_REACT)) {
 
 				return false;
 			}

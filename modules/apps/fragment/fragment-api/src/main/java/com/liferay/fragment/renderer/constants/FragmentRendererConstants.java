@@ -22,4 +22,7 @@ public class FragmentRendererConstants {
 	public static final String FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY =
 		"FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY";
 
+	public static final String FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY_REACT =
+		"FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY_REACT";
+
 }

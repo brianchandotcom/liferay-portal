@@ -133,6 +133,32 @@ definition {
 			dmDocumentTitle = "DM Document Title Edit",
 			dmFolderName = "DM Folder Name");
 
+		ChangeList.gotoReviewChanges();
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeSite = "Guest",
+			changeTitle = "DM Document Title Edit",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Documents Folder",
+			changeSite = "Guest",
+			changeTitle = "DM Folder Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		ChangeListChanges.viewChangesViaContextStyle(
+			changeCategory = "Document",
+			changeDescription = "Test Test modified a Document in Guest",
+			changeTitle = "DM Document Title Edit");
+
+		ChangeListChanges.viewChangesViaContextStyle(
+			changeCategory = "Documents Folder",
+			changeDescription = "Test Test added a Documents Folder in Guest",
+			changeTitle = "DM Folder Name");
+
 		ChangeList.prepareToPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");

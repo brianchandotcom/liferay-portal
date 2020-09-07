@@ -2560,6 +2560,368 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-112094. The full content of asset entries should be shown when select Full Content as List Item Style for different List styles."
+	@priority = "5"
+	test ViewFullContentListItemStyleInDifferentListStyles {
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			Blogs.addEntryWithUploadedCoverImage(
+				coverImageName = "Document_1",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				navTab = "Blog Images",
+				uploadFileName = "Document_1.jpg");
+
+			Pause(locator1 = "3000");
+
+			PortletEntry.publish();
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection, Bordered List as List Style and Full Content as List Item Style") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets",
+				listItemStyle = "Full Content",
+				listStyle = "Bordered List");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Bordered List") {
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Bordered List at view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Bulleted List as List Style and Full Content as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Full Content",
+				listStyle = "Bulleted List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Bulleted List") {
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Bulleted List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Inline List as List Style and Full Content as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Full Content",
+				listStyle = "Inline List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Inline List") {
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Inline List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Numbered List as List Style and Full Content as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Full Content",
+				listStyle = "Numbered List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Numbered List") {
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Numbered List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Select the Unstyled List as List Style and Full Content as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Full Content",
+				listStyle = "Unstyled List",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Unstyled List") {
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+		}
+
+		task ("Assert the Full Content of collection items are shown in Unstyled List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "2";
+
+			for (var content : list "Blogs Entry Content,Web Content Content") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${content}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertVisible(
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "//div[contains(@class,'cover-image')][contains(@style,'Document_1.jpg')]",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+		}
+	}
+
 	@description = "This is a test for LPS-112249. The ratings of each collection item are shown when add a Content Ratings fragment to Collection Display."
 	@priority = "5"
 	test ViewRatingsViaContentRatingsInCollectionDisplay {

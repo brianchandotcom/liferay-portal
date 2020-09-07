@@ -87,7 +87,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		throws Exception {
 
 		if (_infoItemDetails == null) {
-			return false;
+			return true;
 		}
 
 		InfoItemPermissionProvider infoItemPermissionProvider =

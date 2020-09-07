@@ -327,7 +327,6 @@ public class DataFactory {
 
 		_accountId = _counter.get();
 		_companyId = _counter.get();
-		_defaultDDLDDMStructureVersionId = _counter.get();
 		_defaultDLDDMStructureId = _counter.get();
 		_defaultDLDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMStructureId = _counter.get();
@@ -1972,8 +1971,7 @@ public class DataFactory {
 	public DDMStructureVersionModel newDDMStructureVersionModel(
 		DDMStructureModel ddmStructureModel) {
 
-		return newDDMStructureVersionModel(
-			ddmStructureModel, _defaultDDLDDMStructureVersionId);
+		return newDDMStructureVersionModel(ddmStructureModel, _counter.get());
 	}
 
 	public DDMStructureVersionModel newDDMStructureVersionModel(
@@ -5033,7 +5031,6 @@ public class DataFactory {
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
 	private AssetVocabularyModel _defaultAssetVocabularyModel;
-	private final long _defaultDDLDDMStructureVersionId;
 	private final long _defaultDLDDMStructureId;
 	private final long _defaultDLDDMStructureVersionId;
 	private long _defaultDLFileEntryTypeId =

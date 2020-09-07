@@ -2639,6 +2639,252 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-112094. The title of asset entries should be shown when select Title as List Item Style for different List styles."
+	@priority = "5"
+	test ViewTitleListItemStyleInDifferentListStyles {
+		property osgi.app.includes = "bookmarks";
+		property osgi.app.includes = "document-library-google-docs";
+		property portal.acceptance = "true";
+
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection, Bordered List as List Style and Title as List Item Style") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Bordered List");
+		}
+
+		task ("Assert the Title of collection items are shown in Bordered List") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Title of collection items are shown in Bordered List at view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the Bulleted List as List Style and Title as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Bulleted List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Assert the Title of collection items are shown in Bulleted List") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Title of collection items are shown in Bulleted List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the Inline List as List Style and Title as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Inline List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Assert the Title of collection items are shown in Inline List") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Title of collection items are shown in Inline List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the Numbered List as List Style and Title as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Numbered List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Assert the Title of collection items are shown in Numbered List") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Title of collection items are shown in Numbered List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the Unstyled List as List Style and Title as List Item Style") {
+			ContentPages.clickPencil();
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Unstyled List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Assert the Title of collection items are shown in Unstyled List") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Title of collection items are shown in Unstyled List at view mode") {
+			PageEditor.clickPublish();
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
 	@priority = "5"
 	test ViewWebContentViaContentInCollectionDisplay {

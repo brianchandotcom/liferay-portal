@@ -139,6 +139,12 @@ public interface PropsKeys {
 	public static final String APPLICATION_STARTUP_EVENTS =
 		"application.startup.events";
 
+	public static final String APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO =
+		"application.menu.default.liferay.logo";
+
+	public static final String APPLICATIONS_MENU_DEFAULT_LIFERAY_NAME =
+		"application.menu.default.liferay.name";
+
 	public static final String ASSET_BROWSER_SEARCH_WITH_DATABASE =
 		"asset.browser.search.with.database";
 

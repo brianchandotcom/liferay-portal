@@ -22,10 +22,10 @@ CategoryCPDisplayLayoutDisplayContext categoryCPDisplayLayoutDisplayContext = (C
 CommerceChannel commerceChannel = categoryCPDisplayLayoutDisplayContext.getCommerceChannel();
 CPDisplayLayout cpDisplayLayout = categoryCPDisplayLayoutDisplayContext.getCPDisplayLayout();
 
-long[] assetCategoryIds = new long[0];
+AssetCategory assetCategory = null;
 
 if (cpDisplayLayout != null) {
-	assetCategoryIds = ArrayUtil.append(assetCategoryIds, cpDisplayLayout.getClassPK());
+	assetCategory = categoryCPDisplayLayoutDisplayContext.getAssetCategory(cpDisplayLayout.getClassPK());
 }
 
 String layoutBreadcrumb = StringPool.BLANK;
@@ -51,6 +51,7 @@ if (cpDisplayLayout != null) {
 	<aui:form action="<%= editCategoryDisplayPageActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDisplayLayout == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="classPK" type="hidden" value="<%= (cpDisplayLayout == null) ? 0 : cpDisplayLayout.getClassPK() %>" />
 		<aui:input name="commerceChannelId" type="hidden" value="<%= categoryCPDisplayLayoutDisplayContext.getCommerceChannelId() %>" />
 
 		<liferay-ui:error exception="<%= CPDisplayLayoutEntryException.class %>" message="please-select-a-valid-category" />
@@ -148,14 +149,17 @@ if (cpDisplayLayout != null) {
 	});
 </aui:script>
 
-<%
-String selectedCategories = StringUtil.merge(assetCategoryIds, StringPool.COMMA);
-%>
-
 <aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+	var assetCategoryId = <%= (assetCategory == null) ? "null" : assetCategory.getCategoryId() %>;
+
+	var assetCategoryName =
+		'<%= (assetCategory == null) ? "" : assetCategory.getTitle(locale) %>';
+
 	var categoriesContainer = document.querySelector(
 		'#<portlet:namespace />categoriesContainer'
 	);
+
+	var classPK = document.querySelector('#<portlet:namespace />classPK');
 
 	function createLabel(id, title) {
 		var labelContainer = document.createElement('span');
@@ -210,6 +214,15 @@ String selectedCategories = StringUtil.merge(assetCategoryIds, StringPool.COMMA)
 		categoriesContainer.removeChild(button.parentElement.parentElement);
 	}
 
+	if (assetCategoryId) {
+		var categoryNode = createLabel(
+			'category-' + assetCategoryId,
+			assetCategoryName
+		);
+		categoriesContainer.appendChild(categoryNode);
+		classPK.value = assetCategoryId;
+	}
+
 	window.document
 		.querySelector('#<portlet:namespace />selectCategories')
 		.addEventListener('click', function (event) {
@@ -218,7 +231,7 @@ String selectedCategories = StringUtil.merge(assetCategoryIds, StringPool.COMMA)
 				'strings.add': '<liferay-ui:message key="done" />',
 				title: '<liferay-ui:message key="select-category-display-page" />',
 				url:
-					'<%= categoryCPDisplayLayoutDisplayContext.getCategorySelectorURL(renderResponse, selectedCategories) %>',
+					'<%= categoryCPDisplayLayoutDisplayContext.getCategorySelectorURL(renderResponse) %>',
 			});
 
 			itemSelectorDialog.open();
@@ -230,24 +243,26 @@ String selectedCategories = StringUtil.merge(assetCategoryIds, StringPool.COMMA)
 					Object.keys(selectedItem).forEach(function (key) {
 						var item = selectedItem[key];
 
-						var existingNode = categoriesContainer.querySelector(
-							'#category-' + item.categoryId
-						);
+						if (!item.unchecked) {
+							var categoryNodes = categoriesContainer.children;
 
-						if (item.unchecked) {
-							if (categoriesContainer.contains(existingNode)) {
-								categoriesContainer.removeChild(existingNode);
+							for (var i = 0; i < categoryNodes.length; i++) {
+								categoriesContainer.removeChild(
+									categoryNodes.item(i)
+								);
 							}
-							delete selectedItem.key;
-							return;
-						}
 
-						if (!categoriesContainer.contains(existingNode)) {
+							delete selectedItem.key;
+
 							var categoryNode = createLabel(
 								'category-' + item.categoryId,
 								item.value
 							);
+
 							categoriesContainer.appendChild(categoryNode);
+							classPK.value = item.categoryId;
+
+							return;
 						}
 					});
 				}

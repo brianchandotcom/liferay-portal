@@ -253,6 +253,60 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
+	@description = "This test covers LLPS-118395. It ensures that a web content in a depot can be selected through the page template."
+	@priority = "4"
+	test SelectDepotContentViaPageTemplate {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC Depot WebContent");
+
+		JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+			groupName = "Site Name",
+			layoutPageTemplateCollectionName = "Page Template Collection");
+
+		JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+			groupName = "Site Name",
+			layoutPageTemplateCollectionName = "Page Template Collection",
+			layoutPageTemplateEntryName = "Page Template Name",
+			layoutPageTemplateStatus = "Approved",
+			layoutPageTemplateType = "Widget Page Template");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(
+			depotName = "Test Depot Name",
+			webContentTitle = "WC Depot WebContent");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		SitePages.addPublicPage(
+			collectionName = "Page Template Collection",
+			pageName = "Page Name",
+			pageTemplateName = "Page Template Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+	}
+
 	@description = "This test covers LPS-105119. It ensures that a web content in a depot can be selected through the field."
 	@priority = "4"
 	test SelectDepotContentViaWebContentField {

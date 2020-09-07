@@ -35,7 +35,7 @@ function TotalCount({
 
 	const isMounted = useIsMounted();
 
-	const [, addWarning] = useWarning();
+	const [warning, addWarning] = useWarning();
 
 	const [{publishedToday}] = useContext(StoreContext);
 
@@ -50,7 +50,9 @@ function TotalCount({
 				.catch(() => {
 					if (isMounted()) {
 						setValue('-');
-						addWarning();
+						if (!warning) {
+							addWarning();
+						}
 					}
 				});
 		}

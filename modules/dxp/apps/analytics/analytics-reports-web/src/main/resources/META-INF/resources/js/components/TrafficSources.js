@@ -59,9 +59,12 @@ export default function TrafficSources({
 
 	useEffect(() => {
 		if (missingTrafficSourceValue) {
-			addWarning();
+			if (!warning) {
+				addWarning();
+			}
 		}
-	}, [addWarning, missingTrafficSourceValue]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [warning, missingTrafficSourceValue]);
 
 	function handleLegendMouseEnter(name) {
 		setHighlighted(name);

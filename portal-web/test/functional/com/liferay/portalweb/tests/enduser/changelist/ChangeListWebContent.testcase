@@ -282,6 +282,22 @@ definition {
 			key_webContentTitle = "WC WebContent Title",
 			locator1 = "WC#ENTRY_LIST_TITLE");
 
+		ChangeList.gotoReviewChanges();
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Guest",
+			changeTitle = "WC Structure Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Template",
+			changeSite = "Guest",
+			changeTitle = "WC Template Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
 		ChangeList.prepareToPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");

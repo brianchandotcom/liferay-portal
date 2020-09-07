@@ -75,7 +75,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 								</c:if>
 							</div>
 
-							<div class="border-left col d-flex flex-column justify-content-center">
+							<div class="col d-flex flex-column justify-content-center separator-left">
 								<c:if test="<%= Validator.isNotNull(beanIdLabel) %>">
 									<small class="d-block">
 										<span class="header-info-title">

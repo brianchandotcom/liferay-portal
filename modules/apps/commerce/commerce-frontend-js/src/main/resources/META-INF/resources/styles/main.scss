@@ -49,6 +49,21 @@
 			top: 56px;
 		}
 	}
+
+	.separator-left {
+		margin-left: 36px;
+		padding-left: 16px;
+
+		&:before {
+			background-color: $border-color;
+			content: '';
+			height: 24px;
+			left: 0;
+			position: absolute;
+			top: 12px;
+			width: 1px;
+		}
+	}
 }
 
 .filter-panel-head {

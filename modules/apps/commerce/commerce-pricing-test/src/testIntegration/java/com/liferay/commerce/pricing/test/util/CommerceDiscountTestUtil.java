@@ -215,7 +215,8 @@ public class CommerceDiscountTestUtil {
 	}
 
 	private static void _addTargetDetails(
-			long groupId, CommerceDiscount commerceDiscount, String target, long... targetIds)
+			long groupId, CommerceDiscount commerceDiscount, String target,
+			long... targetIds)
 		throws Exception {
 
 		if (CommerceDiscountConstants.TARGET_CATEGORIES.equals(target)) {

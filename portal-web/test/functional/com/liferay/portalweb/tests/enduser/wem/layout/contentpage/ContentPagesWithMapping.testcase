@@ -577,37 +577,49 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98031."
+	@description = "This is a test for LPS-98031 and LPS-120348. Map Manual URL to Link fragment and select blank as target."
 	@priority = "5"
 	test MapManualURLToLinkFragment {
 		property portal.acceptance = "true";
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Banner Center fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			fragmentName = "Banner Center");
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
 
-		PageEditorEditableLink.gotoEditableFieldLink(
-			fragmentName = "Banner Center",
-			id = "link");
+		task ("Map manual URL to link editable field of Banner Center") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Banner Center",
+				id = "link");
 
-		PageEditorEditableLink.updateURL(
-			target = "Self",
-			url = "https://liferay.com");
+			PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
-		PageEditor.clickPublish();
-
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+			PageEditor.clickPublish();
+		}
 
 		task ("Assert editable has the specified URL mapped correctly") {
-			Click(locator1 = "//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(locator1 = "//a[contains(@href,'https://liferay.com') and contains(@target,'blank')][normalize-space(text())='Go Somewhere']");
+		}
+
+		task ("Assert mapped URL work in view mode") {
+			Click(locator1 = "//a[contains(@href,'https://liferay.com') and contains(@target,'blank')][normalize-space(text())='Go Somewhere']");
+
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+			SelectWindow.selectPopUp(locator1 = "null");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+
+			SelectWindow(locator1 = "title=Content Page Name - Test Site Name - ${siteName}");
 		}
 	}
 

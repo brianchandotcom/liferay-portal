@@ -2166,6 +2166,8 @@ public class JournalArticleFinderImpl
 			 StringUtil.containsIgnoreCase(
 				 orderByComparator.getOrderBy(), _TITLE_FIELD + " DESC",
 				 StringPool.COMMA))) {
+
+			return true;
 		}
 
 		return false;

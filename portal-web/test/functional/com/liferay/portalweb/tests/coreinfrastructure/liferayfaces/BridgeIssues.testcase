@@ -237,6 +237,79 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test Faces1635And1433PortletSmoke {
+
+		// FACES_1635Resources
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-1635?p_p_parallel=0",
+			portletName = "jsf-applicant");
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "faces-1635?p_p_parallel=0",
+			portletName = "primefaces-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1635?p_p_parallel=0");
+
+		AssertElementPresent(locator1 = "BridgeIssues#LIFERAY_LOGO");
+
+		AssertElementPresent(locator1 = "BridgeIssues#LIFERAY_LOGO_P");
+
+		var key_blcount = "1";
+		var key_bscount = "1";
+		var key_hlcount = "1";
+		var key_hscount = "1";
+
+		while (IsElementPresent(locator1 = "BridgeIssues#HEAD_SCRIPT") && (maxIterations = "50")) {
+			var key_hsrc = selenium.getAttribute("//head//script[${key_hscount}]@scr");
+
+			AssertElementNotPresent(locator1 = "BridgeIssues#HEAD_SCRIPT_D");
+
+			var key_hscount = ${key_hscount} + 1;
+		}
+
+		while (IsElementPresent(locator1 = "BridgeIssues#HEAD_LINK") && (maxIterations = "50")) {
+			var key_hhref = selenium.getAttribute("//head//link[${key_hlcount}]@href");
+
+			AssertElementNotPresent(locator1 = "BridgeIssues#HEAD_LINK_D");
+
+			var key_hlcount = ${key_hlcount} + 1;
+		}
+
+		while (IsElementPresent(locator1 = "BridgeIssues#BODY_SCRIPT") && (maxIterations = "50")) {
+			var key_bsrc = selenium.getAttribute("//body//script[${key_bscount}]@scr");
+
+			AssertElementNotPresent(locator1 = "BridgeIssues#BODY_SCRIPT_D");
+
+			var key_bscount = ${key_bscount} + 1;
+		}
+
+		while (IsElementPresent(locator1 = "BridgeIssues#BODY_LINK") && (maxIterations = "50")) {
+			var key_bhref = selenium.getAttribute("//body//link[${key_blcount}]@href");
+
+			AssertElementNotPresent(locator1 = "BridgeIssues#BODY_SCRIPT_D");
+
+			var key_blcount = ${key_blcount} + 1;
+		}
+
+		// JSFSPEC_1433
+
+		BridgeIssues.addPageAndPortlet(
+			pageURL = "jsfspec-1433",
+			portletName = "JSFSPEC_1433");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/jsfspec-1433");
+
+		Click(
+			key_PageLink = "Run Test",
+			locator1 = "BridgeIssues#PAGE_LINK");
+
+		for (var key_field : list "1,2,3,4,5,6,7,8,9,10,11") {
+			AssertElementPresent(locator1 = "BridgeIssues#REQUESTED_MESSAGE");
+		}
+	}
+
 	@priority = "3"
 	test FacesIssuesPortletSmoke {
 

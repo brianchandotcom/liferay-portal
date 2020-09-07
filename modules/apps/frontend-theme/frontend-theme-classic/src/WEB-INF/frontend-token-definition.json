@@ -270,354 +270,6 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "#0b5fff",
-							"editorType": "ColorPicker",
-							"label": "background-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-primary-background-color"
-								}
-							],
-							"name": "btnPrimaryBackgroundColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#0b5fff",
-							"editorType": "ColorPicker",
-							"label": "border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-primary-border-color"
-								}
-							],
-							"name": "btnPrimaryBorderColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#fff",
-							"editorType": "ColorPicker",
-							"label": "color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-primary-color"
-								}
-							],
-							"name": "btnPrimaryColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#0053f0",
-							"editorType": "ColorPicker",
-							"label": "hover-background-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-primary-hover-background-color"
-								}
-							],
-							"name": "btnPrimaryHoverBackgroundColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "transparent",
-							"editorType": "ColorPicker",
-							"label": "hover-border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-primary-hover-border-color"
-								}
-							],
-							"name": "btnPrimaryHoverBorderColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#fff",
-							"editorType": "ColorPicker",
-							"label": "hover-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-primary-hover-color"
-								}
-							],
-							"name": "btnPrimaryHoverColor",
-							"type": "String"
-						}
-					],
-					"label": "button-primary",
-					"name": "btnPrimary"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "#0b5fff",
-							"editorType": "ColorPicker",
-							"label": "border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-outline-primary-border-color"
-								}
-							],
-							"name": "btnOutlinePrimaryBorderColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#0b5fff",
-							"editorType": "ColorPicker",
-							"label": "color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-outline-primary-color"
-								}
-							],
-							"name": "btnOutlinePrimaryColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#f0f5ff",
-							"editorType": "ColorPicker",
-							"label": "hover-background-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-outline-primary-hover-background-color"
-								}
-							],
-							"name": "btnOutlinePrimaryHoverBackgroundColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#0b5fff",
-							"editorType": "ColorPicker",
-							"label": "hover-border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-outline-primary-hover-border-color"
-								}
-							],
-							"name": "btnOutlinePrimaryHoverBorderColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#0b5fff",
-							"editorType": "ColorPicker",
-							"label": "hover-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-outline-primary-hover-color"
-								}
-							],
-							"name": "btnOutlinePrimaryHoverColor",
-							"type": "String"
-						}
-					],
-					"label": "button-outline-primary",
-					"name": "btnOutlinePrimary"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "#fff",
-							"editorType": "ColorPicker",
-							"label": "background-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-secondary-background-color"
-								}
-							],
-							"name": "btnSecondaryBackgroundColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#cdced9",
-							"editorType": "ColorPicker",
-							"label": "border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-secondary-border-color"
-								}
-							],
-							"name": "btnSecondaryBorderColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#6b6c7e",
-							"editorType": "ColorPicker",
-							"label": "color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-secondary-color"
-								}
-							],
-							"name": "btnSecondaryColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#f7f8f9",
-							"editorType": "ColorPicker",
-							"label": "hover-background-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-secondary-hover-background-color"
-								}
-							],
-							"name": "btnSecondaryHoverBackgroundColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#cdced9",
-							"editorType": "ColorPicker",
-							"label": "hover-border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-secondary-hover-border-color"
-								}
-							],
-							"name": "btnSecondaryHoverBorderColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#272833",
-							"editorType": "ColorPicker",
-							"label": "hover-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-secondary-hover-color"
-								}
-							],
-							"name": "btnSecondaryHoverColor",
-							"type": "String"
-						}
-					],
-					"label": "button-secondary",
-					"name": "btnSecondary"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "#cdced9",
-							"editorType": "ColorPicker",
-							"label": "border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-outline-secondary-border-color"
-								}
-							],
-							"name": "btnOutlineSecondaryBorderColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#272833",
-							"editorType": "ColorPicker",
-							"label": "color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-outline-secondary-color"
-								}
-							],
-							"name": "btnOutlineSecondaryColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "rgba(39, 40, 51, 0.03)",
-							"editorType": "ColorPicker",
-							"label": "hover-background-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-outline-secondary-hover-background-color"
-								}
-							],
-							"name": "btnOutlineSecondaryHoverBackgroundColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "transparent",
-							"editorType": "ColorPicker",
-							"label": "hover-border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-outline-secondary-hover-border-color"
-								}
-							],
-							"name": "btnOutlineSecondaryHoverBorderColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#272833",
-							"editorType": "ColorPicker",
-							"label": "hover-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-outline-secondary-hover-color"
-								}
-							],
-							"name": "btnOutlineSecondaryHoverColor",
-							"type": "String"
-						}
-					],
-					"label": "button-outline-secondary",
-					"name": "btnOutlineSecondary"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "#0b5fff",
-							"editorType": "ColorPicker",
-							"label": "color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-link-color"
-								}
-							],
-							"name": "btnLinkColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "#004ad7",
-							"editorType": "ColorPicker",
-							"label": "hover-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "btn-link-hover-color"
-								}
-							],
-							"name": "btnLinkHoverColor",
-							"type": "String"
-						}
-					],
-					"label": "button-link",
-					"name": "btnLink"
-				}
-			],
-			"label": "buttons",
-			"name": "buttons"
-		},
-		{
-			"frontendTokenSets": [
-				{
-					"frontendTokens": [
-						{
 							"defaultValue": "0",
 							"label": "spacer-0",
 							"mappings": [
@@ -1510,6 +1162,354 @@
 			],
 			"label": "typography",
 			"name": "typography"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#0b5fff",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-primary-background-color"
+								}
+							],
+							"name": "btnPrimaryBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#0b5fff",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-primary-border-color"
+								}
+							],
+							"name": "btnPrimaryBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#fff",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-primary-color"
+								}
+							],
+							"name": "btnPrimaryColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#0053f0",
+							"editorType": "ColorPicker",
+							"label": "hover-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-primary-hover-background-color"
+								}
+							],
+							"name": "btnPrimaryHoverBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "hover-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-primary-hover-border-color"
+								}
+							],
+							"name": "btnPrimaryHoverBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#fff",
+							"editorType": "ColorPicker",
+							"label": "hover-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-primary-hover-color"
+								}
+							],
+							"name": "btnPrimaryHoverColor",
+							"type": "String"
+						}
+					],
+					"label": "button-primary",
+					"name": "btnPrimary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#0b5fff",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-primary-border-color"
+								}
+							],
+							"name": "btnOutlinePrimaryBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#0b5fff",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-primary-color"
+								}
+							],
+							"name": "btnOutlinePrimaryColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#f0f5ff",
+							"editorType": "ColorPicker",
+							"label": "hover-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-primary-hover-background-color"
+								}
+							],
+							"name": "btnOutlinePrimaryHoverBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#0b5fff",
+							"editorType": "ColorPicker",
+							"label": "hover-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-primary-hover-border-color"
+								}
+							],
+							"name": "btnOutlinePrimaryHoverBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#0b5fff",
+							"editorType": "ColorPicker",
+							"label": "hover-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-primary-hover-color"
+								}
+							],
+							"name": "btnOutlinePrimaryHoverColor",
+							"type": "String"
+						}
+					],
+					"label": "button-outline-primary",
+					"name": "btnOutlinePrimary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#fff",
+							"editorType": "ColorPicker",
+							"label": "background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-secondary-background-color"
+								}
+							],
+							"name": "btnSecondaryBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#cdced9",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-secondary-border-color"
+								}
+							],
+							"name": "btnSecondaryBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#6b6c7e",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-secondary-color"
+								}
+							],
+							"name": "btnSecondaryColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#f7f8f9",
+							"editorType": "ColorPicker",
+							"label": "hover-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-secondary-hover-background-color"
+								}
+							],
+							"name": "btnSecondaryHoverBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#cdced9",
+							"editorType": "ColorPicker",
+							"label": "hover-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-secondary-hover-border-color"
+								}
+							],
+							"name": "btnSecondaryHoverBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#272833",
+							"editorType": "ColorPicker",
+							"label": "hover-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-secondary-hover-color"
+								}
+							],
+							"name": "btnSecondaryHoverColor",
+							"type": "String"
+						}
+					],
+					"label": "button-secondary",
+					"name": "btnSecondary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#cdced9",
+							"editorType": "ColorPicker",
+							"label": "border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-secondary-border-color"
+								}
+							],
+							"name": "btnOutlineSecondaryBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#272833",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-secondary-color"
+								}
+							],
+							"name": "btnOutlineSecondaryColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "rgba(39, 40, 51, 0.03)",
+							"editorType": "ColorPicker",
+							"label": "hover-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-secondary-hover-background-color"
+								}
+							],
+							"name": "btnOutlineSecondaryHoverBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "hover-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-secondary-hover-border-color"
+								}
+							],
+							"name": "btnOutlineSecondaryHoverBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#272833",
+							"editorType": "ColorPicker",
+							"label": "hover-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-outline-secondary-hover-color"
+								}
+							],
+							"name": "btnOutlineSecondaryHoverColor",
+							"type": "String"
+						}
+					],
+					"label": "button-outline-secondary",
+					"name": "btnOutlineSecondary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#0b5fff",
+							"editorType": "ColorPicker",
+							"label": "color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-link-color"
+								}
+							],
+							"name": "btnLinkColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#004ad7",
+							"editorType": "ColorPicker",
+							"label": "hover-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "btn-link-hover-color"
+								}
+							],
+							"name": "btnLinkHoverColor",
+							"type": "String"
+						}
+					],
+					"label": "button-link",
+					"name": "btnLink"
+				}
+			],
+			"label": "buttons",
+			"name": "buttons"
 		}
 	]
 }

@@ -210,6 +210,23 @@ definition {
 			columnValueInPublication = "2",
 			entryTitle = "Test Test modified a Asset",
 			publicationName = "Publication 2 Name");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Navigator.gotoNavTab(navTab = "History");
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Web Content Article",
+			changeSite = "Guest",
+			changeTitle = "WC WebContent Title",
+			changeType = "Deleted",
+			changeUser = "Test Test",
+			publishedPublication = "true");
 	}
 
 	@priority = "5"

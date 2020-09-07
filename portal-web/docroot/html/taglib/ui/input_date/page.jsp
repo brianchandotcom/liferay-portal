@@ -58,11 +58,12 @@ if (!BrowserSnifferUtil.isMobile(request)) {
 
 	simpleDateFormatPattern = shortDateFormatSimpleDateFormat.toPattern();
 
-	simpleDateFormatPattern = simpleDateFormatPattern.replaceAll("yyyy", "yy");
+	simpleDateFormatPattern = simpleDateFormatPattern.replaceAll("yyyy", "y");
+	simpleDateFormatPattern = simpleDateFormatPattern.replaceAll("yy", "y");
 	simpleDateFormatPattern = simpleDateFormatPattern.replaceAll("MM", "M");
 	simpleDateFormatPattern = simpleDateFormatPattern.replaceAll("dd", "d");
 
-	simpleDateFormatPattern = simpleDateFormatPattern.replaceAll("yy", "yyyy");
+	simpleDateFormatPattern = simpleDateFormatPattern.replaceAll("y", "yyyy");
 	simpleDateFormatPattern = simpleDateFormatPattern.replaceAll("M", "MM");
 	simpleDateFormatPattern = simpleDateFormatPattern.replaceAll("d", "dd");
 

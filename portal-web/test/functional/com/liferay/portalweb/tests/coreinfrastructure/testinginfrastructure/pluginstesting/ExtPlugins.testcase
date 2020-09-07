@@ -27,9 +27,15 @@ definition {
 	test ViewSampleExtPluginValidationViaDirectDeploy {
 		property direct.deploy.enabled = "true";
 
-		AssertConsoleTextPresent(value1 = "EXT_ATOM_SERVLET_INSTALLED");
-
 		AssertConsoleTextPresent(value1 = "EXT_WEB_SERVLET_INSTALLED");
+
+		AssertConsoleTextNotPresent(value1 = "EXT_ATOM_SERVLET_INSTALLED");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080/api/atom");
+
+		Pause(locator1 = "1000");
+
+		AssertConsoleTextPresent(value1 = "EXT_ATOM_SERVLET_INSTALLED");
 
 		User.firstLoginPG();
 

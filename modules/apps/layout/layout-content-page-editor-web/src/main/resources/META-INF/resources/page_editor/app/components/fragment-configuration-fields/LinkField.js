@@ -36,27 +36,24 @@ const SOURCE_OPTIONS = {
 	},
 };
 
-export const TARGET_OPTIONS = {
-	blank: {
+export const TARGET_OPTIONS = [
+	{
 		label: `${Liferay.Language.get('blank')}`,
 		value: '_blank',
 	},
-
-	parent: {
+	{
 		label: `${Liferay.Language.get('parent')}`,
 		value: '_parent',
 	},
-
-	self: {
+	{
 		label: `${Liferay.Language.get('self')}`,
 		value: '_self',
 	},
-
-	top: {
+	{
 		label: `${Liferay.Language.get('top')}`,
 		value: '_top',
 	},
-};
+];
 
 export default function LinkField({field, onValueSelect, value}) {
 	const [nextValue, setNextValue] = useControlledState(value || {});
@@ -177,7 +174,7 @@ export default function LinkField({field, onValueSelect, value}) {
 					onChange={(event) =>
 						handleChange({target: event.target.value})
 					}
-					options={Object.values(TARGET_OPTIONS)}
+					options={TARGET_OPTIONS}
 					value={nextValue.target}
 				/>
 			</ClayForm.Group>
@@ -194,21 +191,21 @@ LinkField.propTypes = {
 			classPK: PropTypes.string,
 			fieldId: PropTypes.string,
 			target: PropTypes.oneOf(
-				Object.values(TARGET_OPTIONS).map((option) => option.value)
+				TARGET_OPTIONS.map((option) => option.value)
 			),
 		}),
 
 		PropTypes.shape({
 			href: PropTypes.string,
 			target: PropTypes.oneOf(
-				Object.values(TARGET_OPTIONS).map((option) => option.value)
+				TARGET_OPTIONS.map((option) => option.value)
 			),
 		}),
 
 		PropTypes.shape({
 			mappedField: PropTypes.string,
 			target: PropTypes.oneOf(
-				Object.values(TARGET_OPTIONS).map((option) => option.value)
+				TARGET_OPTIONS.map((option) => option.value)
 			),
 		}),
 	]),

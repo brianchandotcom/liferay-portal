@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Alberto Chaparro
  */
-@ExtendedObjectClassDefinition(category = "infrastructure")
+@ExtendedObjectClassDefinition(category = "infrastructure", generateUI = false)
 @Meta.OCD(
 	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionConfiguration",
 	localization = "content/Language", name = "db-partition-configuration-name"

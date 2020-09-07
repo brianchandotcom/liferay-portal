@@ -38,16 +38,16 @@ const SOURCE_OPTIONS = {
 
 export const TARGET_OPTIONS = [
 	{
+		label: `${Liferay.Language.get('self')}`,
+		value: '_self',
+	},
+	{
 		label: `${Liferay.Language.get('blank')}`,
 		value: '_blank',
 	},
 	{
 		label: `${Liferay.Language.get('parent')}`,
 		value: '_parent',
-	},
-	{
-		label: `${Liferay.Language.get('self')}`,
-		value: '_self',
 	},
 	{
 		label: `${Liferay.Language.get('top')}`,

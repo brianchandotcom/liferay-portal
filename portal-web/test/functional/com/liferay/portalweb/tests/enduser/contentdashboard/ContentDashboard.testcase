@@ -183,8 +183,8 @@ definition {
 		Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
 
 		JSONWebcontent.deleteWebContent(
-				groupName = "Test Site Name",
-				title = "WC Title");
+			groupName = "Test Site Name",
+			title = "WC Title");
 	}
 
 }

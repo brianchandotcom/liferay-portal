@@ -17,6 +17,7 @@ function APIService({
 		analyticsReportsHistoricalViewsURL,
 		analyticsReportsTotalReadsURL,
 		analyticsReportsTotalViewsURL,
+		analyticsReportsTrafficSourcesURL,
 	},
 	namespace,
 	page: {plid},
@@ -57,11 +58,21 @@ function APIService({
 		});
 	}
 
+	function getTrafficSources() {
+		const body = {plid};
+
+		return _fetchWithError(analyticsReportsTrafficSourcesURL, {
+			body: _getFormDataRequest(body, namespace),
+			method: 'POST',
+		});
+	}
+
 	return {
 		getHistoricalReads,
 		getHistoricalViews,
 		getTotalReads,
 		getTotalViews,
+		getTrafficSources,
 	};
 }
 

@@ -157,8 +157,6 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		BlogsEntry.addTitle(entryTitle = "${entryTitle}");
-
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",

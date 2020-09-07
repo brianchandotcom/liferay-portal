@@ -37,6 +37,7 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -107,6 +108,25 @@ public class FragmentEntryLinkModelListener
 			npmRegistryUpdate.registerJSModule(
 				_jsPackage, _getModuleName(fragmentEntryLink), _dependencies,
 				_getJs(fragmentEntryLink), null);
+		}
+
+		npmRegistryUpdate.finish();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_jsPackage = _npmResolver.getJSPackage();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				FragmentConstants.TYPE_REACT, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			npmRegistryUpdate.unregisterJSModule(
+				_jsPackage.getJSModule(_getModuleName(fragmentEntryLink)));
 		}
 
 		npmRegistryUpdate.finish();

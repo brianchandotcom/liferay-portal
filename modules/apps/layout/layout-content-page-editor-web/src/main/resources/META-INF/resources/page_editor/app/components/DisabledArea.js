@@ -189,7 +189,7 @@ const DisabledArea = () => {
 		createPortal(
 			<ClayPopover alignPosition={position} ref={popoverRef} show>
 				{Liferay.Language.get(
-					'this-area-is-defined-by-the-theme.-to-change-theme-settings-go-to-the-look-and-feel-configuration-in-the-sidebar'
+					'this-area-is-defined-by-the-theme.-you-can-change--the-theme-settings-by-clicking-more-in-the-page-design-options-panel-on-the-sidebar'
 				)}
 			</ClayPopover>,
 			globalContext.document.body

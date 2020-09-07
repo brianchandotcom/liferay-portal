@@ -222,6 +222,18 @@
 				(FragmentEntryLink.fragmentEntryId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.findByType">
+		<![CDATA[
+			SELECT
+				FragmentEntryLink.*
+			FROM
+				FragmentEntryLink
+			INNER JOIN
+				FragmentEntry ON
+					(FragmentEntryLink.fragmentEntryId = FragmentEntry.fragmentEntryId) AND
+					(FragmentEntry.type_ = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.findByG_F">
 		<![CDATA[
 			SELECT

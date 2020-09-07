@@ -203,6 +203,15 @@ definition {
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "WC WebContent Title");
 
+		ChangeList.gotoReviewChanges();
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Widget",
+			changeSite = "Guest",
+			changeTitle = "Asset Publisher on Test Page",
+			changeType = "Added",
+			changeUser = "Test Test");
+
 		ChangeList.prepareToPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");

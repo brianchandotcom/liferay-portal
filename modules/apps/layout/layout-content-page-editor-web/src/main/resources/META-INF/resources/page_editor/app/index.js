@@ -12,12 +12,37 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import App from './components/App';
 import {initializeConfig} from './config/index';
+
+let removeChild;
+
+/**
+ * LPS-120418 remove child function that doesn't throw a NotFoundError exception.
+ * This is done by default in all browser except ie11
+ *
+ * When mounting the dropzones this error is thrown making the fragment fail,
+ * swallowing seems harmless and makes the dropzones work in ie11
+ */
+function safeRemoveChild() {
+	try {
+		return removeChild.apply(this, arguments);
+	}
+	catch (error) {
+		if (!!error && !!error.message && error.message === 'NotFoundError') {
+			if (process.env.NODE_ENV === 'development') {
+				console.warn('IE NotFoundError handled');
+			}
+		}
+		else {
+			throw error;
+		}
+	}
+}
 
 /**
  * Default application export.
@@ -27,6 +52,21 @@ import {initializeConfig} from './config/index';
  */
 export default function (data) {
 	initializeConfig(data.config);
+
+	if (Liferay?.Browser?.isIe()) {
+		removeChild = window.HTMLElement.prototype.removeChild;
+
+		window.HTMLElement.prototype.removeChild = safeRemoveChild;
+	}
+
+	useEffect(() => {
+		return () => {
+			if (removeChild) {
+				window.HTMLElement.prototype.removeChild = removeChild;
+				removeChild = undefined;
+			}
+		};
+	}, []);
 
 	return (
 		<DndProvider backend={HTML5Backend}>

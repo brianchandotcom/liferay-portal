@@ -73,7 +73,7 @@ public class UpgradeLayoutClassedModelUsage extends UpgradeProcess {
 				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 					assetEntryUsage.getAssetEntryId());
 
-				if (assetEntry == null) {
+				if ((assetEntry == null) || (assetEntryUsage.getPlid() <= 0)) {
 					continue;
 				}
 

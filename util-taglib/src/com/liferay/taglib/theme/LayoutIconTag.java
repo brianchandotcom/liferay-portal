@@ -51,7 +51,7 @@ public class LayoutIconTag extends IncludeTag implements BodyTag {
 				null, false, true, "page-icon", false, false, false,
 				pageContext);
 
-			jspWriter.write("\" class=\"layout-logo-");
+			jspWriter.write("\" class=\"layout-logo layout-logo-");
 			jspWriter.write(String.valueOf(layout.getPlid()));
 			jspWriter.write("\" src=\"");
 

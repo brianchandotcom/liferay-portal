@@ -25,6 +25,9 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -35,13 +38,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.react.renderer.ComponentDescriptor;
+import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -55,8 +64,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jorge Ferrer
- * @author Pablo Molina
+ * @author Chema Balsas
+ * @author Eudaldo Alonso
  */
 @Component(service = FragmentRenderer.class)
 public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
@@ -78,7 +87,8 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 
 	@Override
 	public String getKey() {
-		return FragmentRendererConstants.FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY;
+		return FragmentRendererConstants.
+			FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY_REACT;
 	}
 
 	@Override
@@ -108,6 +118,8 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 
 	@Activate
 	protected void activate() {
+		_jsPackage = _npmResolver.getJSPackage();
+
 		_portalCache = (PortalCache<String, String>)_multiVMPool.getPortalCache(
 			FragmentEntryLink.class.getName());
 	}
@@ -157,11 +169,12 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 	}
 
 	private String _renderFragmentEntry(
-		long fragmentEntryId, String css, String html, String js,
-		String configuration, String namespace,
-		HttpServletRequest httpServletRequest) {
+			long fragmentEntryId, String css, String html,
+			Map<String, Object> data, String namespace,
+			HttpServletRequest httpServletRequest)
+		throws IOException {
 
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("<div id=\"");
 
@@ -176,6 +189,21 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 
 		sb.append("\" >");
 		sb.append(html);
+
+		long fragmentEntryLinkId = fragmentEntryId;
+
+		Writer writer = new CharArrayWriter();
+
+		_reactRenderer.renderReact(
+			new ComponentDescriptor(
+				ModuleNameUtil.getModuleResolvedId(
+					_jsPackage, "fragmentEntryLink/" + fragmentEntryLinkId),
+				"fragment" + fragmentEntryLinkId, Collections.emptyList(),
+				true),
+			data, httpServletRequest, writer);
+
+		sb.append(writer.toString());
+
 		sb.append("</div>");
 
 		if (Validator.isNotNull(css)) {
@@ -217,19 +245,6 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 			}
 		}
 
-		if (Validator.isNotNull(js)) {
-			sb.append("<script>(function() {");
-			sb.append("var configuration = ");
-			sb.append(configuration);
-			sb.append("; var fragmentElement = document.querySelector('#");
-			sb.append(fragmentIdSB.toString());
-			sb.append("'); var fragmentNamespace = '");
-			sb.append(namespace);
-			sb.append("';");
-			sb.append(js);
-			sb.append(";}());</script>");
-		}
-
 		return sb.toString();
 	}
 
@@ -237,7 +252,7 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 			FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws PortalException {
+		throws IOException, PortalException {
 
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			fragmentRendererContext);
@@ -333,9 +348,12 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 					fragmentEntryLink.getEditableValues());
 		}
 
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"configuration", configurationJSONObject
+		).build();
+
 		content = _renderFragmentEntry(
-			fragmentEntryLink.getFragmentEntryId(), css, html,
-			fragmentEntryLink.getJs(), configurationJSONObject.toString(),
+			fragmentEntryLink.getFragmentEntryId(), css, html, data,
 			fragmentEntryLink.getNamespace(), httpServletRequest);
 
 		if (Objects.equals(
@@ -378,10 +396,18 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
+	private JSPackage _jsPackage;
+
 	@Reference
 	private MultiVMPool _multiVMPool;
 
 	@Reference
+	private NPMResolver _npmResolver;
+
+	@Reference
 	private PortletRegistry _portletRegistry;
+
+	@Reference
+	private ReactRenderer _reactRenderer;
 
 }

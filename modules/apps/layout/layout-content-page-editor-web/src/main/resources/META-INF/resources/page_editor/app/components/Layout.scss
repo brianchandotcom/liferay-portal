@@ -23,6 +23,7 @@ $emptyItemMinHeight: 180px;
 			background-color: $gray-100;
 			box-shadow: inset 0 0 0 1px $primary-l2;
 			color: $gray-500;
+			font-family: $font-family-base;
 			font-size: 14px;
 			font-weight: 600;
 			margin-top: 0;
@@ -45,6 +46,7 @@ $emptyItemMinHeight: 180px;
 	}
 
 	&__col &__col__resizer {
+		background-color: $primary;
 		border-radius: 50%;
 		border-width: 0;
 		cursor: col-resize;
@@ -231,6 +233,7 @@ $emptyItemMinHeight: 180px;
 
 		&__title {
 			color: $gray-500;
+			font-family: $font-family-base;
 			font-size: 14px;
 			font-weight: 600;
 			margin-top: 0;

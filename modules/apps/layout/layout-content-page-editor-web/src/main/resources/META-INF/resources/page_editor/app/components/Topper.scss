@@ -66,6 +66,10 @@
 		}
 	}
 
+	&__content .alert {
+		font-family: $font-family-base;
+	}
+
 	&.active > &__bar {
 		opacity: 1;
 		transform: translateY(2px);
@@ -208,6 +212,7 @@
 
 	&__title {
 		cursor: default;
+		font-family: $font-family-base;
 		font-weight: 600;
 		margin-right: 8px;
 		min-width: 44px;

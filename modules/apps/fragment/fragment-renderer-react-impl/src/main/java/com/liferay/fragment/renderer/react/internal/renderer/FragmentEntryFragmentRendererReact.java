@@ -96,9 +96,27 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		try {
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
+			FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
+				fragmentRendererContext);
+
+			JSONObject configurationJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			if (Validator.isNotNull(fragmentEntryLink.getConfiguration())) {
+				configurationJSONObject =
+					_fragmentEntryConfigurationParser.
+						getConfigurationJSONObject(
+							fragmentEntryLink.getConfiguration(),
+							fragmentEntryLink.getEditableValues());
+			}
+
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"configuration", configurationJSONObject
+			).build();
+
 			printWriter.write(
-				_renderFragmentEntryLink(
-					fragmentRendererContext, httpServletRequest));
+				_renderFragmentEntry(
+					fragmentEntryLink, data, httpServletRequest));
 		}
 		catch (PortalException portalException) {
 			throw new IOException(portalException);
@@ -139,8 +157,7 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 	}
 
 	private String _renderFragmentEntry(
-			long fragmentEntryId, String css, String html,
-			Map<String, Object> data, String namespace,
+			FragmentEntryLink fragmentEntryLink, Map<String, Object> data,
 			HttpServletRequest httpServletRequest)
 		throws IOException {
 
@@ -151,33 +168,33 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		StringBundler fragmentIdSB = new StringBundler(4);
 
 		fragmentIdSB.append("fragment-");
-		fragmentIdSB.append(fragmentEntryId);
+		fragmentIdSB.append(fragmentEntryLink.getFragmentEntryId());
 		fragmentIdSB.append("-");
-		fragmentIdSB.append(namespace);
+		fragmentIdSB.append(fragmentEntryLink.getNamespace());
 
 		sb.append(fragmentIdSB.toString());
 
 		sb.append("\" >");
-		sb.append(html);
-
-		long fragmentEntryLinkId = fragmentEntryId;
+		sb.append(fragmentEntryLink.getHtml());
 
 		Writer writer = new CharArrayWriter();
 
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(
 				ModuleNameUtil.getModuleResolvedId(
-					_jsPackage, "fragmentEntryLink/" + fragmentEntryLinkId),
-				"fragment" + fragmentEntryLinkId, Collections.emptyList(),
-				true),
+					_jsPackage,
+					"fragmentEntryLink/" +
+						fragmentEntryLink.getFragmentEntryLinkId()),
+				"fragment" + fragmentEntryLink.getFragmentEntryLinkId(),
+				Collections.emptyList(), true),
 			data, httpServletRequest, writer);
 
 		sb.append(writer.toString());
 
 		sb.append("</div>");
 
-		if (Validator.isNotNull(css)) {
-			String outputKey = fragmentEntryId + "_CSS";
+		if (Validator.isNotNull(fragmentEntryLink.getCss())) {
+			String outputKey = fragmentEntryLink.getFragmentEntryId() + "_CSS";
 
 			OutputData outputData = (OutputData)httpServletRequest.getAttribute(
 				WebKeys.OUTPUT_DATA);
@@ -193,7 +210,8 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 					outputKey, StringPool.BLANK);
 
 				if (cssSB != null) {
-					cssLoaded = Objects.equals(cssSB.toString(), css);
+					cssLoaded = Objects.equals(
+						cssSB.toString(), fragmentEntryLink.getCss());
 				}
 			}
 			else {
@@ -202,13 +220,14 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 
 			if (!cssLoaded) {
 				sb.append("<style>");
-				sb.append(css);
+				sb.append(fragmentEntryLink.getCss());
 				sb.append("</style>");
 
 				outputData.addOutputKey(outputKey);
 
 				outputData.setDataSB(
-					outputKey, StringPool.BLANK, new StringBundler(css));
+					outputKey, StringPool.BLANK,
+					new StringBundler(fragmentEntryLink.getCss()));
 
 				httpServletRequest.setAttribute(
 					WebKeys.OUTPUT_DATA, outputData);
@@ -216,33 +235,6 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		}
 
 		return sb.toString();
-	}
-
-	private String _renderFragmentEntryLink(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest)
-		throws IOException, PortalException {
-
-		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
-			fragmentRendererContext);
-
-		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject();
-
-		if (Validator.isNotNull(fragmentEntryLink.getConfiguration())) {
-			configurationJSONObject =
-				_fragmentEntryConfigurationParser.getConfigurationJSONObject(
-					fragmentEntryLink.getConfiguration(),
-					fragmentEntryLink.getEditableValues());
-		}
-
-		Map<String, Object> data = HashMapBuilder.<String, Object>put(
-			"configuration", configurationJSONObject
-		).build();
-
-		return _renderFragmentEntry(
-			fragmentEntryLink.getFragmentEntryId(), fragmentEntryLink.getCss(),
-			fragmentEntryLink.getHtml(), data, fragmentEntryLink.getNamespace(),
-			httpServletRequest);
 	}
 
 	@Reference

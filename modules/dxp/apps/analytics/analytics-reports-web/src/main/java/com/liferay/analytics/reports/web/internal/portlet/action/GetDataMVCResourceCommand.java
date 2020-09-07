@@ -220,33 +220,33 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"endpoints",
 			JSONUtil.put(
-				"getAnalyticsReportsHistoricalReadsURL",
+				"analyticsReportsHistoricalReadsURL",
 				String.valueOf(
 					_getResourceURL(
 						layoutDisplayPageObjectProvider, urlLocale,
 						resourceResponse,
 						"/analytics_reports/get_historical_reads"))
 			).put(
-				"getAnalyticsReportsHistoricalViewsURL",
+				"analyticsReportsHistoricalViewsURL",
 				String.valueOf(
 					_getResourceURL(
 						layoutDisplayPageObjectProvider, urlLocale,
 						resourceResponse,
 						"/analytics_reports/get_historical_views"))
 			).put(
-				"getAnalyticsReportsTotalReadsURL",
+				"analyticsReportsTotalReadsURL",
 				String.valueOf(
 					_getResourceURL(
 						layoutDisplayPageObjectProvider, urlLocale,
 						resourceResponse, "/analytics_reports/get_total_reads"))
 			).put(
-				"getAnalyticsReportsTotalViewsURL",
+				"analyticsReportsTotalViewsURL",
 				String.valueOf(
 					_getResourceURL(
 						layoutDisplayPageObjectProvider, urlLocale,
 						resourceResponse, "/analytics_reports/get_total_views"))
 			).put(
-				"getAnalyticsReportsTrafficSourcesURL",
+				"analyticsReportsTrafficSourcesURL",
 				String.valueOf(
 					_getResourceURL(
 						layoutDisplayPageObjectProvider, urlLocale,

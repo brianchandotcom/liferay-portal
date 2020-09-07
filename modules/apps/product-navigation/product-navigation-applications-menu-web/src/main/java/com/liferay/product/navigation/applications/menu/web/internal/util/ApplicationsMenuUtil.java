@@ -24,35 +24,15 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 /**
  * @author Eudaldo Alonso
  */
 public class ApplicationsMenuUtil {
-
-	public static String getLiferayLogoURL(ServletContext servletContext) {
-		if (_isDXPVersion()) {
-			return servletContext.getContextPath() +
-				"/images/liferay_dxp_logo.png";
-		}
-
-		return servletContext.getContextPath() + "/images/liferay_logo.png";
-	}
-
-	public static String getLiferayName() {
-		if (_isDXPVersion()) {
-			return "Liferay DXP";
-		}
-
-		return "Liferay";
-	}
 
 	public static boolean hasChildPanelCategories(
 		PanelCategoryRegistry panelCategoryRegistry,
@@ -124,16 +104,6 @@ public class ApplicationsMenuUtil {
 		}
 
 		return false;
-	}
-
-	private static boolean _isDXPVersion() {
-		String name = ReleaseInfo.getName();
-
-		if (name.contains("Community")) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

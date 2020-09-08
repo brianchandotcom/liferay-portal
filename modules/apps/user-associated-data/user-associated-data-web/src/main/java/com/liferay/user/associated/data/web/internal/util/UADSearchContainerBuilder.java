@@ -207,7 +207,7 @@ public class UADSearchContainerBuilder {
 	public SearchContainer<UADEntity<?>> getUADEntitySearchContainer(
 		LiferayPortletResponse liferayPortletResponse,
 		RenderRequest renderRequest, PortletURL currentURL, long[] groupIds,
-		User selectedUser, UADDisplay<UADEntity<?>> uadDisplay) {
+		User selectedUser, UADDisplay<Object> uadDisplay) {
 
 		SearchContainer<UADEntity<?>> searchContainer =
 			_constructSearchContainer(
@@ -217,7 +217,7 @@ public class UADSearchContainerBuilder {
 		try {
 			DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
-			List<UADEntity<?>> entities = uadDisplay.search(
+			List<?> entities = uadDisplay.search(
 				selectedUser.getUserId(), groupIds, displayTerms.getKeywords(),
 				searchContainer.getOrderByCol(),
 				searchContainer.getOrderByType(), searchContainer.getStart(),
@@ -228,7 +228,7 @@ public class UADSearchContainerBuilder {
 
 			List<UADEntity<?>> uadEntities = new ArrayList<>();
 
-			for (UADEntity<?> entity : entities) {
+			for (Object entity : entities) {
 				uadEntities.add(
 					_constructUADEntity(
 						liferayPortletRequest, liferayPortletResponse, entity,
@@ -370,13 +370,13 @@ public class UADSearchContainerBuilder {
 		return searchContainer;
 	}
 
-	private <T> UADEntity<T> _constructUADEntity(
+	private UADEntity<?> _constructUADEntity(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse, T entity,
-			UADDisplay<T> uadDisplay)
+			LiferayPortletResponse liferayPortletResponse, Object entity,
+			UADDisplay<Object> uadDisplay)
 		throws Exception {
 
-		UADEntity<T> uadEntity = new UADEntity(
+		UADEntity<?> uadEntity = new UADEntity(
 			entity, uadDisplay.getPrimaryKey(entity),
 			uadDisplay.getEditURL(
 				entity, liferayPortletRequest, liferayPortletResponse),

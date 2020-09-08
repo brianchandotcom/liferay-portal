@@ -107,8 +107,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			String uadRegistryKey = _getUADRegistryKey(
 				applicationKey, renderRequest);
 
-			UADDisplay<Object> uadDisplay =
-				(UADDisplay<Object>)_uadRegistry.getUADDisplay(uadRegistryKey);
+			UADDisplay<?> uadDisplay = _uadRegistry.getUADDisplay(
+				uadRegistryKey);
 
 			renderRequest.setAttribute(
 				UADWebKeys.UAD_INFO_PANEL_DISPLAY,
@@ -198,7 +198,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 	private SearchContainer<UADEntity<?>> _getSearchContainer(
 			String applicationKey, RenderRequest renderRequest,
 			RenderResponse renderResponse, ScopeDisplay scopeDisplay,
-			UADDisplay<UADEntity<?>> uadDisplay,
+			UADDisplay<Object> uadDisplay,
 			UADHierarchyDisplay uadHierarchyDisplay, User user)
 		throws Exception {
 
@@ -234,8 +234,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private UADInfoPanelDisplay _getUADInfoPanelDisplay(
-		UADDisplay<Object> uadDisplay,
-		UADHierarchyDisplay uadHierarchyDisplay) {
+		UADDisplay<?> uadDisplay, UADHierarchyDisplay uadHierarchyDisplay) {
 
 		UADInfoPanelDisplay uadInfoPanelDisplay = new UADInfoPanelDisplay();
 
@@ -245,7 +244,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				(UADDisplay<Object>)uadHierarchyDisplay.getUADDisplays()[0]);
 		}
 		else {
-			uadInfoPanelDisplay.setUADDisplay(uadDisplay);
+			uadInfoPanelDisplay.setUADDisplay((UADDisplay<Object>)uadDisplay);
 		}
 
 		return uadInfoPanelDisplay;
@@ -282,8 +281,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 		viewUADEntitiesDisplay.setSearchContainer(
 			_getSearchContainer(
 				applicationKey, renderRequest, renderResponse, scopeDisplay,
-				(UADDisplay<UADEntity<?>>)uadDisplay, uadHierarchyDisplay,
-				user));
+				(UADDisplay<Object>)uadDisplay, uadHierarchyDisplay, user));
 
 		if (uadHierarchyDisplay != null) {
 			viewUADEntitiesDisplay.setHierarchy(true);

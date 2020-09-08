@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -241,17 +242,18 @@ public class AddFormInstanceRecordMVCCommandHelper {
 	}
 
 	protected void removeValue(
-		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+		DDMFormFieldValue ddmFormFieldValue, Set<Locale> availableLocales) {
 
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
 		if (ddmFormField.isLocalizable()) {
-			ddmFormFieldValue.setValue(
-				new LocalizedValue(locale) {
-					{
-						addString(locale, StringPool.BLANK);
-					}
-				});
+			LocalizedValue localizedValue = new LocalizedValue();
+
+			for (Locale availableLocale : availableLocales) {
+				localizedValue.addString(availableLocale, StringPool.BLANK);
+			}
+
+			ddmFormFieldValue.setValue(localizedValue);
 		}
 		else {
 			ddmFormFieldValue.setValue(new UnlocalizedValue(StringPool.BLANK));
@@ -270,8 +272,11 @@ public class AddFormInstanceRecordMVCCommandHelper {
 			ddmFormFieldValue -> invisibleFields.contains(
 				ddmFormFieldValue.getName())
 		).forEach(
-			ddmFormFieldValue -> removeValue(
-				ddmFormFieldValue, ddmFormValues.getDefaultLocale())
+			ddmFormFieldValue -> {
+				Value value = ddmFormFieldValue.getValue();
+
+				removeValue(ddmFormFieldValue, value.getAvailableLocales());
+			}
 		);
 	}
 

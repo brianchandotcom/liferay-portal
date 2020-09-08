@@ -23,7 +23,7 @@ EditDisplayPageMenuDisplayContext editDisplayPageMenuDisplayContext = (EditDispl
 <li class="control-menu-nav-item">
 	<clay:dropdown-menu
 		borderless="<%= true %>"
-		displayType="secondary"
+		displayType="unstyled"
 		dropdownItems="<%= editDisplayPageMenuDisplayContext.getDropdownItems() %>"
 		icon="pencil"
 		monospaced="<%= true %>"

@@ -15,7 +15,9 @@
 package com.liferay.saml.persistence.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.UpgradeSamlSpAuthRequest;
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.UpgradeSamlSpMessage;
 import com.liferay.saml.persistence.internal.upgrade.v2_1_0.UpgradeSamlIdpSpConnection;
@@ -30,7 +32,35 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class SamlServiceUpgrade implements UpgradeStepRegistrator {
 
+	@Override
 	public void register(Registry registry) {
+		try {
+			BaseUpgradeServiceModuleRelease upgradeServiceModuleRelease =
+				new BaseUpgradeServiceModuleRelease() {
+
+					@Override
+					protected String getNamespace() {
+						return "Saml";
+					}
+
+					@Override
+					protected String getNewBundleSymbolicName() {
+						return "com.liferay.saml.persistence.service";
+					}
+
+					@Override
+					protected String getOldBundleSymbolicName() {
+						return "saml-portlet";
+					}
+
+				};
+
+			upgradeServiceModuleRelease.upgrade();
+		}
+		catch (UpgradeException upgradeException) {
+			throw new RuntimeException(upgradeException);
+		}
+
 		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(

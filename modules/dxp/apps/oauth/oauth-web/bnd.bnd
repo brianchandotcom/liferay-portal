@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.oauth.web.internal.activator.OAuthWebBundleActivator
 Bundle-Name: Liferay OAuth Web
 Bundle-SymbolicName: com.liferay.oauth.web
 Bundle-Version: 4.0.14

@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.portal.security.audit.storage.internal.activator.AuditStorageServiceBundleActivator
 Bundle-Name: Liferay Portal Security Audit Storage Service
 Bundle-SymbolicName: com.liferay.portal.security.audit.storage.service
 Bundle-Version: 5.0.15

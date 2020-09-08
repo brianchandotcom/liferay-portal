@@ -91,7 +91,7 @@ public class CommercePricingClassCPDefinitionRelDataSetActionProvider
 						commercePricingClassCPDefinitionRel.
 							getCommercePricingClassCPDefinitionRelId()));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					LanguageUtil.get(httpServletRequest, "remove"));
 				dropdownItem.setTarget("async");
 				dropdownItem.putData("method", "delete");
 			}

@@ -150,6 +150,9 @@ public class PropsValues {
 	public static final String[] APPLICATION_STARTUP_EVENTS =
 		PropsUtil.getArray(PropsKeys.APPLICATION_STARTUP_EVENTS);
 
+	public static String APPLICATIONS_MENU_DEFAULT_LIFERAY_NAME = PropsUtil.get(
+		PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_NAME);
+
 	public static final boolean ASSET_BROWSER_SEARCH_WITH_DATABASE =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.ASSET_BROWSER_SEARCH_WITH_DATABASE));

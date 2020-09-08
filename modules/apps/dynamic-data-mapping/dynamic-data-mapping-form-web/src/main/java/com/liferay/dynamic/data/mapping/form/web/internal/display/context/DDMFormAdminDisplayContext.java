@@ -1676,8 +1676,7 @@ public class DDMFormAdminDisplayContext {
 	private String _displayStyle;
 	private final FormInstancePermissionCheckerHelper
 		_formInstancePermissionCheckerHelper;
-	private final Map<Long, String> _invalidDDMFormFieldTypes =
-		new HashMap<>();
+	private final Map<Long, String> _invalidDDMFormFieldTypes = new HashMap<>();
 	private final NPMResolver _npmResolver;
 	private final Portal _portal;
 

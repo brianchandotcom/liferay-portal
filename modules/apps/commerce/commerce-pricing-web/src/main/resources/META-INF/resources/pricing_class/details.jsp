@@ -41,7 +41,7 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 				title='<%= LanguageUtil.get(request, "details") %>'
 			>
 				<div class="col-12 lfr-form-content">
-					<aui:input bean="<%= commercePricingClass %>" disabled="<%= isViewOnly %>" model="<%= CommercePricingClass.class %>" name="title" label="name" required="<%= true %>" />
+					<aui:input bean="<%= commercePricingClass %>" disabled="<%= isViewOnly %>" label="name" model="<%= CommercePricingClass.class %>" name="title" required="<%= true %>" />
 
 					<aui:input localized="<%= true %>" name="description" type="textarea" value="<%= commercePricingClass.getDescription(locale) %>" />
 				</div>

@@ -26,34 +26,31 @@ public class OAuthServiceBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {
-		OAuthUpgradeServiceModuleRelease oAuthUpgradeServiceModuleRelease =
-			new OAuthUpgradeServiceModuleRelease();
+		BaseUpgradeServiceModuleRelease upgradeServiceModuleRelease =
+			new BaseUpgradeServiceModuleRelease() {
 
-		oAuthUpgradeServiceModuleRelease.upgrade();
+				@Override
+				protected String getNamespace() {
+					return "OAuth";
+				}
+
+				@Override
+				protected String getNewBundleSymbolicName() {
+					return "com.liferay.oauth.service";
+				}
+
+				@Override
+				protected String getOldBundleSymbolicName() {
+					return "oauth-portlet";
+				}
+
+			};
+
+		upgradeServiceModuleRelease.upgrade();
 	}
 
 	@Override
 	public void stop(BundleContext context) {
-	}
-
-	private static class OAuthUpgradeServiceModuleRelease
-		extends BaseUpgradeServiceModuleRelease {
-
-		@Override
-		protected String getNamespace() {
-			return "OAuth";
-		}
-
-		@Override
-		protected String getNewBundleSymbolicName() {
-			return "com.liferay.oauth.service";
-		}
-
-		@Override
-		protected String getOldBundleSymbolicName() {
-			return "oauth-portlet";
-		}
-
 	}
 
 }

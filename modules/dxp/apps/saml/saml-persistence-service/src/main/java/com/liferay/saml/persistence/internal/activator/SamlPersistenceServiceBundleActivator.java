@@ -26,34 +26,30 @@ public class SamlPersistenceServiceBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {
-		SamlServiceModuleRelease samlServiceModuleRelease =
-			new SamlServiceModuleRelease();
+		BaseUpgradeServiceModuleRelease upgradeServiceModuleRelease =
+			new BaseUpgradeServiceModuleRelease() {
 
-		samlServiceModuleRelease.upgrade();
+				@Override
+				protected String getNamespace() {
+					return "Saml";
+				}
+
+				@Override
+				protected String getNewBundleSymbolicName() {
+					return "com.liferay.saml.persistence.service";
+				}
+
+				@Override
+				protected String getOldBundleSymbolicName() {
+					return "saml-portlet";
+				}
+			};
+
+		upgradeServiceModuleRelease.upgrade();
 	}
 
 	@Override
 	public void stop(BundleContext context) {
-	}
-
-	private static class SamlServiceModuleRelease
-		extends BaseUpgradeServiceModuleRelease {
-
-		@Override
-		protected String getNamespace() {
-			return "Saml";
-		}
-
-		@Override
-		protected String getNewBundleSymbolicName() {
-			return "com.liferay.saml.persistence.service";
-		}
-
-		@Override
-		protected String getOldBundleSymbolicName() {
-			return "saml-portlet";
-		}
-
 	}
 
 }

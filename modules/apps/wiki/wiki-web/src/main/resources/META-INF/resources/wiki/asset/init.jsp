@@ -14,28 +14,36 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/document-library" prefix="liferay-document-library" %><%@
+taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.util.AssetHelper" %><%@
 page import="com.liferay.petra.reflect.ReflectionUtil" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.service.ServiceContextFactory" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.URLCodec" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
 page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.model.WikiPageDisplay" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %>
 
-<%@ page import="java.util.function.Supplier" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.function.Supplier" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletMode" %><%@

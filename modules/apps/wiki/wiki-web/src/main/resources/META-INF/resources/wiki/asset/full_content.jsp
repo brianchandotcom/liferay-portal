@@ -69,7 +69,41 @@ WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(
 
 <%= pageDisplay.getFormattedContent() %>
 
-<liferay-util:include page="/wiki/view_attachments.jsp" servletContext="<%= application %>" />
+<c:if test="<%= wikiPage.getAttachmentsFileEntriesCount() > 0 %>">
+	<div class="page-attachments">
+		<h5><liferay-ui:message key="attachments" /></h5>
+
+		<clay:row>
+
+			<%
+			List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
+
+			for (FileEntry fileEntry : attachmentsFileEntries) {
+				String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
+			%>
+
+				<clay:col
+					md="4"
+				>
+					<liferay-frontend:horizontal-card
+						text="<%= fileEntry.getTitle() %>"
+						url="<%= rowURL %>"
+					>
+						<liferay-frontend:horizontal-card-col>
+							<liferay-document-library:mime-type-sticker
+								fileVersion="<%= fileEntry.getFileVersion() %>"
+							/>
+						</liferay-frontend:horizontal-card-col>
+					</liferay-frontend:horizontal-card>
+				</clay:col>
+
+			<%
+			}
+			%>
+
+		</clay:row>
+	</div>
+</c:if>
 
 <liferay-expando:custom-attributes-available
 	className="<%= WikiPage.class.getName() %>"

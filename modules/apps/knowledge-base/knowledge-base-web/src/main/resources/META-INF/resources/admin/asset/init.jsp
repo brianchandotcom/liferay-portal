@@ -14,7 +14,23 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/document-library" prefix="liferay-document-library" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.knowledge.base.model.KBArticle" %><%@
-page import="com.liferay.knowledge.base.web.internal.constants.KBWebKeys" %>
+page import="com.liferay.knowledge.base.web.internal.constants.KBWebKeys" %><%@
+page import="com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.List" %>
+
+<liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects />

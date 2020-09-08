@@ -264,7 +264,7 @@ definition {
 		while (IsElementPresent(locator1 = "BridgeIssues#HEAD_SCRIPT") && (maxIterations = "50")) {
 			var key_hsrc = selenium.getAttribute("//head//script[${key_hscount}]@scr");
 
-			AssertElementNotPresent(locator1 = "BridgeIssues#HEAD_SCRIPT_D");
+			AssertElementNotPresent(locator1 = "BridgeIssues#HEAD_SCRIPT_2");
 
 			var key_hscount = ${key_hscount} + 1;
 		}
@@ -272,7 +272,7 @@ definition {
 		while (IsElementPresent(locator1 = "BridgeIssues#HEAD_LINK") && (maxIterations = "50")) {
 			var key_hhref = selenium.getAttribute("//head//link[${key_hlcount}]@href");
 
-			AssertElementNotPresent(locator1 = "BridgeIssues#HEAD_LINK_D");
+			AssertElementNotPresent(locator1 = "BridgeIssues#HEAD_LINK_2");
 
 			var key_hlcount = ${key_hlcount} + 1;
 		}
@@ -280,7 +280,7 @@ definition {
 		while (IsElementPresent(locator1 = "BridgeIssues#BODY_SCRIPT") && (maxIterations = "50")) {
 			var key_bsrc = selenium.getAttribute("//body//script[${key_bscount}]@scr");
 
-			AssertElementNotPresent(locator1 = "BridgeIssues#BODY_SCRIPT_D");
+			AssertElementNotPresent(locator1 = "BridgeIssues#BODY_SCRIPT_2");
 
 			var key_bscount = ${key_bscount} + 1;
 		}
@@ -288,7 +288,7 @@ definition {
 		while (IsElementPresent(locator1 = "BridgeIssues#BODY_LINK") && (maxIterations = "50")) {
 			var key_bhref = selenium.getAttribute("//body//link[${key_blcount}]@href");
 
-			AssertElementNotPresent(locator1 = "BridgeIssues#BODY_SCRIPT_D");
+			AssertElementNotPresent(locator1 = "BridgeIssues#BODY_SCRIPT_2");
 
 			var key_blcount = ${key_blcount} + 1;
 		}

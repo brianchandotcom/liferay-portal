@@ -34,16 +34,16 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PanelCategory.class
 )
-public class CommerceOrdersManagementPanelCategory extends BasePanelCategory {
+public class CommerceOrderManagementPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return CommercePanelCategoryKeys.COMMERCE_ORDERS_MANAGEMENT;
+		return CommercePanelCategoryKeys.COMMERCE_ORDER_MANAGEMENT;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "orders-management");
+		return LanguageUtil.get(locale, "order-management");
 	}
 
 }

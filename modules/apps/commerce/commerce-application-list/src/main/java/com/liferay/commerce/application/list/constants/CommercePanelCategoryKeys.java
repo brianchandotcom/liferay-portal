@@ -25,8 +25,15 @@ public class CommercePanelCategoryKeys {
 	public static final String COMMERCE_INVENTORY_MANAGEMENT =
 		"commerce.inventory_management";
 
+	public static final String COMMERCE_ORDER_MANAGEMENT =
+		"commerce.order_management";
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String COMMERCE_ORDERS_MANAGEMENT =
-		"commerce.orders_management";
+		COMMERCE_ORDER_MANAGEMENT;
 
 	public static final String COMMERCE_PRICING = "commerce.pricing";
 

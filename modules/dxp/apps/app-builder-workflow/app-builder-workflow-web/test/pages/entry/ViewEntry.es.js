@@ -27,13 +27,14 @@ const context = {
 };
 
 const mockToast = jest.fn();
+
 jest.mock('app-builder-web/js/utils/toast.es', () => ({
 	__esModule: true,
 	errorToast: () => mockToast(),
 }));
 
 describe('ViewEntry', () => {
-	it('renders workflow info correctly with pending entry', async () => {
+	it('renders workflow info with pending entry', async () => {
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORDS(1)));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORD_APPS(1)));
@@ -87,7 +88,7 @@ describe('ViewEntry', () => {
 		expect(buttons[4].title).toBe('assign-to');
 	});
 
-	it('renders workflow info correctly with completed entry', async () => {
+	it('renders workflow info with completed entry', async () => {
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORDS(1)));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORD_APPS(1)));
@@ -124,7 +125,7 @@ describe('ViewEntry', () => {
 		expect(infoItems[3]).toHaveTextContent('version: 1.0');
 	});
 
-	it('renders workflow info correctly without task names', async () => {
+	it('renders workflow info without task names', async () => {
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORDS(1)));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORD_APPS(1)));

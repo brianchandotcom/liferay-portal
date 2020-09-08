@@ -65,6 +65,7 @@ window.Liferay.Util = {
 };
 
 const mockToast = jest.fn();
+
 jest.mock('app-builder-web/js/utils/toast.es', () => ({
 	__esModule: true,
 	errorToast: () => mockToast(),

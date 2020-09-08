@@ -21,10 +21,14 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.test.util.search.FileEntryBlueprint;
 import com.liferay.document.library.test.util.search.FileEntrySearchFixture;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
@@ -32,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -268,35 +273,75 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 	}
 
 	protected String populateHttpHeader(
-		String fieldName, String value, String ddmStructureId) {
+			long ddmStructureId, String fieldName, String value)
+		throws PortalException {
 
-		Map<String, String> ddmField = HashMapBuilder.put(
-			"ddmFieldName",
-			StringBundler.concat(
-				"ddm__text__", ddmStructureId, "__HttpHeaders_", fieldName)
-		).put(
-			"ddmFieldValueText", value
-		).put(
-			"ddmFieldValueText_String_sortable", StringUtil.toLowerCase(value)
-		).put(
-			"ddmValueFieldName", "ddmFieldValueText"
-		).build();
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
 
-		return ddmField.toString();
+		String header = "HttpHeaders_" + fieldName;
+
+		if (!GetterUtil.getBoolean(
+				ddmStructure.getFieldProperty(header, "localizable"))) {
+
+			Map<String, String> ddmField = HashMapBuilder.put(
+				"ddmFieldName",
+				StringBundler.concat(
+					"ddm__text__", ddmStructureId, "__HttpHeaders_", fieldName)
+			).put(
+				"ddmFieldValueText", value
+			).put(
+				"ddmFieldValueText_String_sortable",
+				StringUtil.toLowerCase(value)
+			).put(
+				"ddmValueFieldName", "ddmFieldValueText"
+			).build();
+
+			return ddmField.toString();
+		}
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		String ddmFields = StringPool.BLANK;
+
+		for (Locale locale : ddmForm.getAvailableLocales()) {
+			String ddmFieldValueText = StringBundler.concat(
+				"ddmFieldValueText", StringPool.UNDERLINE,
+				LocaleUtil.toLanguageId(locale));
+
+			Map<String, String> ddmField = HashMapBuilder.put(
+				ddmFieldValueText, value
+			).put(
+				ddmFieldValueText + "_String_sortable",
+				StringUtil.toLowerCase(value)
+			).put(
+				"ddmFieldName",
+				StringBundler.concat(
+					"ddm__text__", ddmStructure.getStructureId(),
+					StringBundler.concat(
+						StringPool.UNDERLINE, StringPool.UNDERLINE, header,
+						StringPool.UNDERLINE, LocaleUtil.toLanguageId(locale)))
+			).put(
+				"ddmValueFieldName", ddmFieldValueText
+			).build();
+
+			ddmFields = ddmFields + String.valueOf(ddmField);
+		}
+
+		return ddmFields;
 	}
 
 	protected void populateHttpHeaders(
 			FileEntry fileEntry, Map<String, String> map)
 		throws Exception {
 
-		String ddmStructureId = String.valueOf(getDDMStructureId(fileEntry));
-
 		String[] ddmFieldArray = new String[2];
 
 		ddmFieldArray[0] = populateHttpHeader(
-			"CONTENT_TYPE", "text/plain; charset=UTF-8", ddmStructureId);
+			getDDMStructureId(fileEntry), "CONTENT_TYPE",
+			"text/plain; charset=UTF-8");
 		ddmFieldArray[1] = populateHttpHeader(
-			"CONTENT_ENCODING", "UTF-8", ddmStructureId);
+			getDDMStructureId(fileEntry), "CONTENT_ENCODING", "UTF-8");
 
 		map.put(
 			"ddmFieldArray",

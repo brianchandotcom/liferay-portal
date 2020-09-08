@@ -24,7 +24,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleService;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
@@ -107,9 +107,10 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			);
 		}
 
-		JournalArticle latestArticle = _journalArticleService.getLatestArticle(
-			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			WorkflowConstants.STATUS_ANY);
+		JournalArticle latestArticle =
+			_journalArticleLocalService.getLatestArticle(
+				journalArticle.getGroupId(), journalArticle.getArticleId(),
+				WorkflowConstants.STATUS_ANY);
 
 		Map<Locale, String> titleMap = latestArticle.getTitleMap();
 		Map<Locale, String> descriptionMap = latestArticle.getDescriptionMap();
@@ -146,7 +147,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 		}
 
-		return _journalArticleService.updateArticle(
+		return _journalArticleLocalService.updateArticle(
 			latestArticle.getUserId(), latestArticle.getGroupId(),
 			latestArticle.getFolderId(), latestArticle.getArticleId(),
 			latestArticle.getVersion(), titleMap, descriptionMap,
@@ -211,7 +212,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 	}
 
 	@Reference
-	private JournalArticleService _journalArticleService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private JournalConverter _journalConverter;

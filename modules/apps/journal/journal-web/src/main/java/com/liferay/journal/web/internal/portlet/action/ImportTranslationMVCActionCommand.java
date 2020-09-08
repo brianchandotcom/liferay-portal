@@ -17,12 +17,16 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
@@ -75,6 +79,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			_checkExceededSizeLimit(uploadPortletRequest);
 
 			_checkContentType(uploadPortletRequest.getContentType("file"));
+
+			_checkPermission(article, themeDisplay);
 
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file")) {
@@ -140,6 +146,29 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			throw new PortalException(throwable);
 		}
 	}
+
+	private void _checkPermission(
+			JournalArticle article, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		InfoItemPermissionProvider<Object> infoItemPermissionProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemPermissionProvider.class,
+				JournalArticle.class.getName());
+
+		if (!infoItemPermissionProvider.hasPermission(
+				themeDisplay.getPermissionChecker(), article,
+				ActionKeys.UPDATE)) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getPermissionChecker(),
+				JournalArticle.class.getName(), article.getResourcePrimKey(),
+				ActionKeys.UPDATE);
+		}
+	}
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference(
 		target = "(item.class.name=com.liferay.journal.model.JournalArticle)"

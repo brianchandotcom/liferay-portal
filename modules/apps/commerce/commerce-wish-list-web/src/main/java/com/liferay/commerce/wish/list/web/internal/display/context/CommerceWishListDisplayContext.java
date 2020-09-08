@@ -169,7 +169,7 @@ public class CommerceWishListDisplayContext {
 				cpInstance.getCPInstanceId(), 1,
 				_commerceWishListRequestHelper.getCommerceContext());
 
-		if (commerceMoney == null) {
+		if (commerceMoney.isEmpty()) {
 			return StringPool.BLANK;
 		}
 

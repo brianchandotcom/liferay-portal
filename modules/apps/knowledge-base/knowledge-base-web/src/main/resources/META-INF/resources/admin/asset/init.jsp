@@ -14,12 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/asset/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%
-KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-%>
-
-<%= kbArticle.getContent() %>
-
-<liferay-util:include page="/admin/common/article_attachments.jsp" servletContext="<%= application %>" />
+<%@ page import="com.liferay.knowledge.base.model.KBArticle" %><%@
+page import="com.liferay.knowledge.base.web.internal.constants.KBWebKeys" %>

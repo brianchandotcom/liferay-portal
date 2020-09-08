@@ -58,7 +58,7 @@ definition {
 			item = "Edit");
 
 		task ("Assert editable has the specified URL mapped correctly") {
-			Click(locator1 = "//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
+			AssertVisible(locator1 = "//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
 		}
 	}
 

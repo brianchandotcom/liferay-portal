@@ -72,6 +72,23 @@ clientType="CLOUD"</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-liferay-solr-ssl-adapter-properties">
+		<sequential>
+			<replace
+				file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrConfiguration.config"
+			>
+				<replacetoken><![CDATA[http://]]></replacetoken>
+				<replacevalue><![CDATA[https://]]></replacevalue>
+			</replace>
+
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrConfiguration.config">
+authenticationMode="CERT"</echo>
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr7.configuration.SolrSSLSocketFactoryConfiguration.config">keyStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"
+trustStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-solr-ssl-properties">
 		<sequential>
 			<if>

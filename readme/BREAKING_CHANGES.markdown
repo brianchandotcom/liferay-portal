@@ -550,6 +550,32 @@ around a single Editor to provide a more cohesive and comprehensive experience.
 
 ---------------------------------------
 
+### Removed liferay-editor-image-uploader Plugin
+- **Date:** 2020-Mar-27
+- **JIRA Ticket:** [LPS-110734](https://issues.liferay.com/browse/LPS-110734)
+
+### What changed?
+
+`liferay-editor-image-uploader` AUI plugin was removed. Its code was merged
+into `addimages` CKEditor plugin, used by Alloy Editor and CKEditor.
+
+### Who is affected
+
+This affects custom solutions that use the plugin directly.
+
+### How should I update my code?
+
+There's no direct replacement for the `liferay-editor-image-uploader` plugin.
+If you have a component that relies on it, you can co-locate a copy of the old
+implementation and use it locally within your module.
+
+#### Why was this change made?
+
+This change enables image drag and drop handling in CKEditor and provides a
+common image uploader for both Alloy Editor and CKEditor.
+
+---------------------------------------
+
 ### asset.vocabulary.default Now Holds a Language Key
 - **Date:** 2020-Apr-28
 - **JIRA Ticket:** [LPS-112334](https://issues.liferay.com/browse/LPS-112334)
@@ -827,46 +853,21 @@ For more information about this error, see
 
 ---------------------------------------
 
-### Removed liferay-editor-image-uploader Plugin
-- **Date:** 2020-Mar-27
-- **JIRA Ticket:** [LPS-110734](https://issues.liferay.com/browse/LPS-110734)
-
-### What changed?
-
-`liferay-editor-image-uploader` AUI plugin was removed. Its code was merged
-into `addimages` CKEditor plugin, used by Alloy Editor and CKEditor.
-
-### Who is affected
-
-This affects custom solutions that use the plugin directly.
-
-### How should I update my code?
-
-There's no direct replacement for the `liferay-editor-image-uploader` plugin.
-If you have a component that relies on it, you can co-locate a copy of the old
-implementation and use it locally within your module.
-
-#### Why was this change made?
-
-This change enables image drag and drop handling in CKEditor and provides a
-common image uploader for both Alloy Editor and CKEditor.
-
----------------------------------------
-
 ### Removed classNameId related methods from DDM Persistence classes
 - **Date:** 2020-Aug-18
 - **JIRA Ticket:** [LPS-108525](https://issues.liferay.com/browse/LPS-108525)
 
 ### What changed?
 
-The `countByClassNameId`, `findByClassNameId`, `removeByClassNameId` methods were removed from the following classes:
+The `countByClassNameId`, `findByClassNameId`, and `removeByClassNameId` methods
+were removed from the following classes:
 
-`com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence`
-`com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil`
-`com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence`
-`com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil`
-`com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence`
-`com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkUtil`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkUtil`
 
 ### Who is affected
 
@@ -874,8 +875,7 @@ This affects anyone who uses one of these methods.
 
 ### How should I update my code?
 
-You can use the other finder and counter methods existing in the class instead
-of the removed methods.
+You can use the other finder and counter methods.
 
 #### Why was this change made?
 

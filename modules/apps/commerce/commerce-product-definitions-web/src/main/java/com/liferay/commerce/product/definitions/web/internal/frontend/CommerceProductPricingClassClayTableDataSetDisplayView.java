@@ -41,7 +41,7 @@ public class CommerceProductPricingClassClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField nameField =
-			clayTableSchemaBuilder.addClayTableSchemaField("title", "title");
+			clayTableSchemaBuilder.addClayTableSchemaField("title", "name");
 
 		nameField.setContentRenderer("actionLink");
 

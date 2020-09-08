@@ -99,10 +99,14 @@ public class ShippingMethodCheckoutStepDisplayContext {
 
 		sb.append(commerceShippingOption.getLabel());
 		sb.append(" (+");
+
+		CommerceContext commerceContext = _getCommerceContext();
+
 		sb.append(
 			_commercePriceFormatter.format(
-				themeDisplay.getCompanyId(), commerceShippingOption.getAmount(),
-				themeDisplay.getLocale()));
+				commerceContext.getCommerceCurrency(),
+				commerceShippingOption.getAmount(), themeDisplay.getLocale()));
+
 		sb.append(CharPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
@@ -116,21 +120,23 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		CommerceContext commerceContext =
-			(CommerceContext)_httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
 		CommerceShippingEngine commerceShippingEngine =
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
 				commerceShippingMethod.getEngineKey());
 
 		List<CommerceShippingOption> commerceShippingOptions =
 			commerceShippingEngine.getCommerceShippingOptions(
-				commerceContext, _commerceOrder, themeDisplay.getLocale());
+				_getCommerceContext(), _commerceOrder,
+				themeDisplay.getLocale());
 
 		return ListUtil.sort(
 			commerceShippingOptions,
 			new CommerceShippingOptionLabelComparator());
+	}
+
+	private CommerceContext _getCommerceContext() {
+		return (CommerceContext)_httpServletRequest.getAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT);
 	}
 
 	private final CommerceOrder _commerceOrder;

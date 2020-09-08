@@ -629,7 +629,6 @@ public class JournalTransformer {
 					String optionLabel = localizedLabel.getString(locale);
 
 					templateNode.appendOptionMap(optionValue, optionLabel);
-
 					templateNode.appendOption(optionValue);
 				}
 			}

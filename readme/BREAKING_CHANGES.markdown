@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `20bb08f47603`.*
+*This document has been reviewed through commit `4334fc6cc349`.*
 
 ## Breaking Changes Contribution Guidelines
 

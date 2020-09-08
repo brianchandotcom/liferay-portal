@@ -51,10 +51,17 @@ public class TranslationEntryAssetRendererFactory
 			long classPK, int type)
 		throws PortalException {
 
-		return new TranslationEntryAssetRenderer(
-			_infoItemServiceTracker, _resourceBundleLoader, _servletContext,
-			_translationEntryLocalService.getTranslationEntry(classPK),
-			_translationInfoFieldChecker, _translationSnapshotProvider);
+		TranslationEntry translationEntry =
+			_translationEntryLocalService.fetchTranslationEntry(classPK);
+
+		if (translationEntry != null) {
+			return new TranslationEntryAssetRenderer(
+				_infoItemServiceTracker, _resourceBundleLoader, _servletContext,
+				translationEntry, _translationInfoFieldChecker,
+				_translationSnapshotProvider);
+		}
+
+		return null;
 	}
 
 	@Override

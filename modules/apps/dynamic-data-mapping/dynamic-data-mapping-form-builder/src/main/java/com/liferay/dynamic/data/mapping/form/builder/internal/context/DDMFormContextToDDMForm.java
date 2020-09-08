@@ -257,7 +257,7 @@ public class DDMFormContextToDDMForm
 		}
 		else {
 			errorMessageLocalizedValue = getLocalizedValue(
-				errorMessageJSONObject, availableLocales);
+				errorMessageJSONObject, availableLocales, defaultLocale);
 		}
 
 		ddmFormFieldValidation.setErrorMessageLocalizedValue(
@@ -275,7 +275,7 @@ public class DDMFormContextToDDMForm
 		}
 		else {
 			parameterLocalizedValue = getLocalizedValue(
-				parameterJSONObject, availableLocales);
+				parameterJSONObject, availableLocales, defaultLocale);
 		}
 
 		ddmFormFieldValidation.setParameterLocalizedValue(
@@ -285,7 +285,8 @@ public class DDMFormContextToDDMForm
 	}
 
 	protected LocalizedValue getLocalizedValue(
-		JSONObject jsonObject, Set<Locale> availableLocales) {
+		JSONObject jsonObject, Set<Locale> availableLocales,
+		Locale defaultLocale) {
 
 		LocalizedValue localizedValue = new LocalizedValue();
 
@@ -293,12 +294,15 @@ public class DDMFormContextToDDMForm
 			return localizedValue;
 		}
 
-		for (Locale availableLocale : availableLocales) {
-			String languageId = LocaleUtil.toLanguageId(availableLocale);
+		String defaultValueString = jsonObject.getString(
+			LocaleUtil.toLanguageId(defaultLocale));
 
+		for (Locale availableLocale : availableLocales) {
 			localizedValue.addString(
-				LocaleUtil.fromLanguageId(languageId),
-				jsonObject.getString(languageId));
+				availableLocale,
+				jsonObject.getString(
+					LocaleUtil.toLanguageId(availableLocale),
+					defaultValueString));
 		}
 
 		return localizedValue;

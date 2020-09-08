@@ -154,7 +154,7 @@ public class CommerceProductPriceCalculationV2Impl
 		BigDecimal unitPrice = unitPriceMoney.getPrice();
 		BigDecimal promoPrice = promoPriceMoney.getPrice();
 
-		if ((promoPrice != null) &&
+		if (!promoPriceMoney.isEmpty() &&
 			(promoPrice.compareTo(BigDecimal.ZERO) > 0) &&
 			(promoPrice.compareTo(unitPrice) <= 0)) {
 
@@ -339,7 +339,7 @@ public class CommerceProductPriceCalculationV2Impl
 			cpInstanceId, quantity, commerceContext);
 
 		if (commerceProductPrice == null) {
-			return null;
+			return commerceMoneyFactory.emptyCommerceMoney();
 		}
 
 		return commerceProductPrice.getFinalPrice();
@@ -372,7 +372,7 @@ public class CommerceProductPriceCalculationV2Impl
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		CommerceMoney commerceMoney = null;
+		CommerceMoney commerceMoney = commerceMoneyFactory.emptyCommerceMoney();
 		BigDecimal maxPrice = BigDecimal.ZERO;
 
 		List<CPInstance> cpInstances =
@@ -385,7 +385,9 @@ public class CommerceProductPriceCalculationV2Impl
 				cpInstance.getCPInstanceId(), quantity,
 				commerceContext.getCommerceCurrency(), secure, commerceContext);
 
-			if (maxPrice.compareTo(cpInstanceCommerceMoney.getPrice()) < 0) {
+			if (commerceMoney.isEmpty() ||
+				(maxPrice.compareTo(cpInstanceCommerceMoney.getPrice()) < 0)) {
+
 				commerceMoney = cpInstanceCommerceMoney;
 
 				maxPrice = commerceMoney.getPrice();
@@ -409,7 +411,7 @@ public class CommerceProductPriceCalculationV2Impl
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		CommerceMoney commerceMoney = null;
+		CommerceMoney commerceMoney = commerceMoneyFactory.emptyCommerceMoney();
 		BigDecimal minPrice = BigDecimal.ZERO;
 
 		List<CPInstance> cpInstances =
@@ -422,7 +424,7 @@ public class CommerceProductPriceCalculationV2Impl
 				cpInstance.getCPInstanceId(), quantity,
 				commerceContext.getCommerceCurrency(), secure, commerceContext);
 
-			if ((commerceMoney == null) ||
+			if (commerceMoney.isEmpty() ||
 				(minPrice.compareTo(cpInstanceCommerceMoney.getPrice()) > 0)) {
 
 				commerceMoney = cpInstanceCommerceMoney;
@@ -665,7 +667,7 @@ public class CommerceProductPriceCalculationV2Impl
 			return commerceMoneyFactory.create(commerceCurrency, price);
 		}
 
-		return null;
+		return commerceMoneyFactory.emptyCommerceMoney();
 	}
 
 	private BigDecimal _getCommercePrice(

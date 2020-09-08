@@ -73,6 +73,10 @@ public abstract class BaseCommerceProductPriceCalculation
 		CommerceMoney commerceMoney = getUnitMinPrice(
 			cpDefinitionId, 1, commerceContext);
 
+		if (commerceMoney.isEmpty()) {
+			return commerceMoney;
+		}
+
 		cpDefinitionMinimumPrice = cpDefinitionMinimumPrice.add(
 			commerceMoney.getPrice());
 
@@ -305,7 +309,7 @@ public abstract class BaseCommerceProductPriceCalculation
 
 		BigDecimal promoPrice = promoPriceMoney.getPrice();
 
-		if ((promoPrice != null) &&
+		if (!promoPriceMoney.isEmpty() &&
 			(promoPrice.compareTo(BigDecimal.ZERO) > 0)) {
 
 			BigDecimal unitPromoPriceWithTaxAmount = getConvertedPrice(
@@ -499,6 +503,10 @@ public abstract class BaseCommerceProductPriceCalculation
 		CommerceMoney commerceMoney = getFinalPrice(
 			cpInstance.getCPInstanceId(), quantity, commerceContext);
 
+		if (commerceMoney.isEmpty()) {
+			return BigDecimal.ZERO;
+		}
+
 		return commerceMoney.getPrice();
 	}
 
@@ -511,24 +519,28 @@ public abstract class BaseCommerceProductPriceCalculation
 		BigDecimal priceDifference = BigDecimal.ZERO;
 
 		if (cpInstanceId > 0) {
-			CommerceMoney cpInstanceFinalPrice = getFinalPrice(
+			CommerceMoney cpInstanceFinalPriceCommerceMoney = getFinalPrice(
 				cpInstanceId, cpInstanceMinQuantity, commerceContext);
 
-			priceDifference = priceDifference.add(
-				cpInstanceFinalPrice.getPrice());
+			if (!cpInstanceFinalPriceCommerceMoney.isEmpty()) {
+				priceDifference = priceDifference.add(
+					cpInstanceFinalPriceCommerceMoney.getPrice());
+			}
 		}
-
-		BigDecimal selectedCPInstanceFinalPrice = BigDecimal.ZERO;
 
 		if (selectedCPInstanceId > 0) {
-			CommerceMoney commerceMoney = getFinalPrice(
-				selectedCPInstanceId, selectedCPInstanceMinQuantity,
-				commerceContext);
+			CommerceMoney selectedCPInstanceFinalPriceCommerceMoney =
+				getFinalPrice(
+					selectedCPInstanceId, selectedCPInstanceMinQuantity,
+					commerceContext);
 
-			selectedCPInstanceFinalPrice = commerceMoney.getPrice();
+			if (!selectedCPInstanceFinalPriceCommerceMoney.isEmpty()) {
+				priceDifference = priceDifference.subtract(
+					selectedCPInstanceFinalPriceCommerceMoney.getPrice());
+			}
 		}
 
-		return priceDifference.subtract(selectedCPInstanceFinalPrice);
+		return priceDifference;
 	}
 
 	private boolean _isRequiredPriceContributor(

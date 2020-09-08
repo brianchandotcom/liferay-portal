@@ -94,10 +94,6 @@ definition {
 			italicClose = "</em>",
 			italicOpen = "<em>",
 			usecase = "Instant Ajax");
-	}
-
-	@priority = "5"
-	test InputRichTextSmokeOne {
 
 		// InputRichTextDOMEvents
 

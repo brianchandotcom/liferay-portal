@@ -92,7 +92,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Riccardo Alberti
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
+@DataGuard(scope = DataGuard.Scope.NONE)
 @RunWith(Arquillian.class)
 public class CommerceGrossPricingTest {
 
@@ -1733,6 +1733,7 @@ public class CommerceGrossPricingTest {
 	@Inject
 	private CommerceTaxMethodLocalService _commerceTaxMethodLocalService;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject

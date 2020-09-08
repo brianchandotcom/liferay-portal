@@ -82,7 +82,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Riccardo Alberti
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
+@DataGuard(scope = DataGuard.Scope.NONE)
 @RunWith(Arquillian.class)
 public class CommercePricingTest {
 
@@ -1129,7 +1129,9 @@ public class CommercePricingTest {
 	@Inject
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
+	@DeleteAfterTestRun
 	private Company _company;
+
 	private Group _group;
 	private ServiceContext _serviceContext;
 

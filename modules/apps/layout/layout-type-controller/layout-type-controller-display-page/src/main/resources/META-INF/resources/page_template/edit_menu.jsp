@@ -20,11 +20,13 @@
 EditDisplayPageMenuDisplayContext editDisplayPageMenuDisplayContext = (EditDisplayPageMenuDisplayContext)request.getAttribute(DisplayPageLayoutTypeControllerWebKeys.EDIT_DISPLAY_PAGE_MENU_DISPLAY_CONTEXT);
 %>
 
-<clay:dropdown-menu
-	borderless="<%= true %>"
-	displayType="secondary"
-	dropdownItems="<%= editDisplayPageMenuDisplayContext.getDropdownItems() %>"
-	icon="pencil"
-	monospaced="<%= true %>"
-	small="<%= true %>"
-/>
+<li class="control-menu-nav-item">
+	<clay:dropdown-menu
+		borderless="<%= true %>"
+		displayType="secondary"
+		dropdownItems="<%= editDisplayPageMenuDisplayContext.getDropdownItems() %>"
+		icon="pencil"
+		monospaced="<%= true %>"
+		small="<%= true %>"
+	/>
+</li>

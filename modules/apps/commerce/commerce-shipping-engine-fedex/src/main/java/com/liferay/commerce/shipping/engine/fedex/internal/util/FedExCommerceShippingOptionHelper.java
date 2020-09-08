@@ -514,15 +514,27 @@ public class FedExCommerceShippingOptionHelper {
 		BigDecimal price = BigDecimal.ZERO;
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			CommerceMoney commerceMoney =
-				_commerceProductPriceCalculation.getFinalPrice(
+			price = price.add(
+				_getPrice(
 					commerceOrderItem.getCPInstanceId(),
-					commerceOrderItem.getQuantity(), false, _commerceContext);
-
-			price = price.add(commerceMoney.getPrice());
+					commerceOrderItem.getQuantity()));
 		}
 
 		return price;
+	}
+
+	private BigDecimal _getPrice(long cpInstanceId, int quantity)
+		throws Exception {
+
+		CommerceMoney commerceMoney =
+			_commerceProductPriceCalculation.getFinalPrice(
+				cpInstanceId, quantity, false, _commerceContext);
+
+		if (commerceMoney.isEmpty()) {
+			return BigDecimal.ZERO;
+		}
+
+		return commerceMoney.getPrice();
 	}
 
 	private RateRequest _getRateRequest(
@@ -676,16 +688,14 @@ public class FedExCommerceShippingOptionHelper {
 			double fedExWeight = _getFedExWeight(
 				_commerceShippingHelper.getWeight(cpInstance));
 
-			CommerceMoney commerceMoney =
-				_commerceProductPriceCalculation.getFinalPrice(
-					commerceOrderItem.getCPInstanceId(), 1, false,
-					_commerceContext);
+			BigDecimal price = _getPrice(
+				commerceOrderItem.getCPInstanceId(), 1);
 
 			for (int j = 0; j < commerceOrderItem.getQuantity(); j++) {
 				RequestedPackageLineItem requestedPackageLineItem =
 					_getRequestedPackageLineItem(
-						fedExWidth, fedExHeight, fedExDepth, fedExWeight,
-						commerceMoney.getPrice(), 1, i + 1);
+						fedExWidth, fedExHeight, fedExDepth, fedExWeight, price,
+						1, i + 1);
 
 				requestedPackageLineItems.add(requestedPackageLineItem);
 			}

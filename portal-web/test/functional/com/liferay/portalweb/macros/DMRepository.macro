@@ -50,6 +50,22 @@ definition {
 				locator1 = "DocumentsAndMediaEditRepository#LIBRARY_NAME_FIELD",
 				value1 = "${dmRepositoryLibraryName}");
 		}
+
+		if (isSet(permissionDefinitionKey)) {
+			Panel.expandPanel(panel = "Permissions");
+
+			if (IsNotVisible(key_text = "Hide Options",locator1 = "Button#ANY")) {
+				AssertClick(
+					key_text = "More Options",
+					locator1 = "Button#ANY",
+					value1 = "More Options");
+			}
+
+			var key_permissionDefinitionKey = "${permissionDefinitionKey}";
+			var key_roleTitle = "${roleTitle}";
+
+			Check(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
+		}
 	}
 
 	macro cleanRepository {

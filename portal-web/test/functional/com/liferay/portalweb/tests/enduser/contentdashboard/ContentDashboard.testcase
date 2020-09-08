@@ -30,6 +30,8 @@ definition {
 	@description = "Validate if the user can filter by Author, using different display types"
 	@priority = "5"
 	test ContentDashboardFilterByAuthor {
+		property portal.acceptance = "true";
+		
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Test Site Name",
@@ -82,6 +84,8 @@ definition {
 	@description = "Validate if the user can filter by category"
 	@priority = "5"
 	test ContentDashboardFilterByCategory {
+		property portal.acceptance = "true";
+
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name");
@@ -214,6 +218,8 @@ definition {
 	@description = "Validate if the user can open de Info side panel of a web content"
 	@priority = "5"
 	test ContentDashboardViewInfoPanel {
+		property portal.acceptance = "true";
+		
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Test Site Name",

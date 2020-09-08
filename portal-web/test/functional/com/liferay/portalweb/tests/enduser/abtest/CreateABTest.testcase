@@ -4,7 +4,7 @@ definition {
 	// Ignore test until Analytics Cloud connection is fully automated
 
 	property portal.release = "true";
-	property portal.upstream = "quarantine";
+	property portal.upstream = "false";
 	property testray.main.component.name = "A/B Test";
 	property analytics.cloud.enabled = "true";
 
@@ -63,7 +63,6 @@ definition {
 	}
 
 	@description = "Validate if the user can create an A/B Test"
-	@ignore = "true"
 	@priority = "5"
 	test CreateABTestByBounceRate {
 		ABTest.createABTestByBounceRate(testTitle = "Create A/B Test Title");
@@ -89,7 +88,6 @@ definition {
 	}
 
 	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
-	@ignore = "true"
 	@priority = "5"
 	test CreateABTestRunWithDeletedVariants {
 		ABTest.createABTestByBounceRate(testTitle = "AB test title");

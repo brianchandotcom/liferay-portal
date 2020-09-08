@@ -476,10 +476,12 @@ definition {
 			locator1 = "OAuth2#ADMIN_TABLE_APP_DESCRIPTION",
 			value1 = "${description}");
 
-		AssertTextEquals(
-			key_tableName = "${applicationName}",
-			locator1 = "OAuth2#ADMIN_TABLE_APP_CLIENT_ID",
-			value1 = "${clientId}");
+		if (isSet(clientId)) {
+			AssertTextEquals(
+				key_tableName = "${applicationName}",
+				locator1 = "OAuth2#ADMIN_TABLE_APP_CLIENT_ID",
+				value1 = "${clientId}");
+		}
 	}
 
 	macro viewGrantedAuthViaAdmin {

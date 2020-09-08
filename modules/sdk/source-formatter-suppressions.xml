@@ -10,11 +10,13 @@
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/JspCDefaultsPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayExtPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayOSGiExtPlugin\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayOSGiPlugin\.java" />
 		<suppress checks="OperatorOperandCheck" files="project-templates/project-templates/src/test/java/com/liferay/project/templates/ProjectTemplateFilesTest\.java" />
 		<suppress checks="TryWithResourcesCheck" files="ant-beanshell/.*" />
 		<suppress checks="TryWithResourcesCheck" files="ant-gradle/.*" />
 		<suppress checks="TryWithResourcesCheck" files="ant-mirrors-get/.*" />
 		<suppress checks="TryWithResourcesCheck" files="ant-sync-dir/.*" />
+		<suppress checks="VariableDeclarationAsUsedCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayOSGiPlugin\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDBundleInformationCheck" files="gradle-plugins-target-platform/src/gradleTest/.*" />

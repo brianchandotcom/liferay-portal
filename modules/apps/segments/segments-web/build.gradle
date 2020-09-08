@@ -18,6 +18,7 @@ dependencies {
 	compileOnly project(":apps:roles:roles-item-selector-api")
 	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":apps:users-admin:users-admin-item-selector-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

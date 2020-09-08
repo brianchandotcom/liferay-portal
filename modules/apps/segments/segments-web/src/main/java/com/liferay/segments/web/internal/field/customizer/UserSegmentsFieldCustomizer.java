@@ -14,19 +14,22 @@
 
 package com.liferay.segments.web.internal.field.customizer;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
+import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -86,13 +89,18 @@ public class UserSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 	@Override
 	public Field.SelectEntity getSelectEntity(PortletRequest portletRequest) {
 		try {
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				portletRequest, SegmentsPortletKeys.SEGMENTS,
-				PortletRequest.RENDER_PHASE);
+			UserItemSelectorCriterion userItemSelectorCriterion =
+				new UserItemSelectorCriterion();
 
-			portletURL.setParameter("mvcRenderCommandName", "selectUsers");
-			portletURL.setParameter("eventName", "selectEntity");
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+			userItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				Collections.singletonList(new UUIDItemSelectorReturnType()));
+
+			PortletURL portletURL = _itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(portletRequest),
+				"selectEntity", userItemSelectorCriterion);
+
+			portletURL.setParameter(
+				"checkedUserIdsEnabled", String.valueOf(Boolean.TRUE));
 
 			return new Field.SelectEntity(
 				"selectEntity",
@@ -124,6 +132,9 @@ public class UserSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 
 	private static final List<String> _fieldNames = ListUtil.fromArray(
 		"userId");
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

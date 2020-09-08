@@ -62,6 +62,10 @@ public class CommerceMoneyImpl implements CommerceMoney {
 		_price = price;
 	}
 
+	protected CommercePriceFormatter getCommercePriceFormatter() {
+		return _commercePriceFormatter;
+	}
+
 	private CommerceCurrency _commerceCurrency;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private BigDecimal _price;

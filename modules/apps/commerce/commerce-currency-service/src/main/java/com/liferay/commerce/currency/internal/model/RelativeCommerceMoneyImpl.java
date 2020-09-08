@@ -29,8 +29,6 @@ public class RelativeCommerceMoneyImpl extends CommerceMoneyImpl {
 		CommercePriceFormatter commercePriceFormatter) {
 
 		super(commercePriceFormatter);
-
-		_commercePriceFormatter = commercePriceFormatter;
 	}
 
 	@Override
@@ -41,10 +39,11 @@ public class RelativeCommerceMoneyImpl extends CommerceMoneyImpl {
 			price = BigDecimal.ZERO;
 		}
 
-		return _commercePriceFormatter.formatAsRelative(
+		CommercePriceFormatter commercePriceFormatter =
+			getCommercePriceFormatter();
+
+		return commercePriceFormatter.formatAsRelative(
 			getCommerceCurrency(), price, locale);
 	}
-
-	private final CommercePriceFormatter _commercePriceFormatter;
 
 }

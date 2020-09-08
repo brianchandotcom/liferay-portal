@@ -515,32 +515,29 @@ public abstract class BaseCommerceProductPriceCalculation
 	}
 
 	private BigDecimal _getCPInstancePriceDifference(
-			long cpInstanceId, int cpInstanceMinQuantity,
-			long selectedCPInstanceId, int selectedCPInstanceMinQuantity,
-			CommerceContext commerceContext)
+			long cpInstanceId1, int cpInstance1MinQuantity, long cpInstanceId2,
+			int cpInstance2MinQuantity, CommerceContext commerceContext)
 		throws PortalException {
 
 		BigDecimal priceDifference = BigDecimal.ZERO;
 
-		if (cpInstanceId > 0) {
-			CommerceMoney cpInstanceFinalPriceCommerceMoney = getFinalPrice(
-				cpInstanceId, cpInstanceMinQuantity, commerceContext);
+		if (cpInstanceId1 > 0) {
+			CommerceMoney cpInstance1FinalPriceCommerceMoney = getFinalPrice(
+				cpInstanceId1, cpInstance1MinQuantity, commerceContext);
 
-			if (!cpInstanceFinalPriceCommerceMoney.isEmpty()) {
+			if (!cpInstance1FinalPriceCommerceMoney.isEmpty()) {
 				priceDifference = priceDifference.add(
-					cpInstanceFinalPriceCommerceMoney.getPrice());
+					cpInstance1FinalPriceCommerceMoney.getPrice());
 			}
 		}
 
-		if (selectedCPInstanceId > 0) {
-			CommerceMoney selectedCPInstanceFinalPriceCommerceMoney =
-				getFinalPrice(
-					selectedCPInstanceId, selectedCPInstanceMinQuantity,
-					commerceContext);
+		if (cpInstanceId2 > 0) {
+			CommerceMoney cpInstance2FinalPriceCommerceMoney = getFinalPrice(
+				cpInstanceId2, cpInstance2MinQuantity, commerceContext);
 
-			if (!selectedCPInstanceFinalPriceCommerceMoney.isEmpty()) {
+			if (!cpInstance2FinalPriceCommerceMoney.isEmpty()) {
 				priceDifference = priceDifference.subtract(
-					selectedCPInstanceFinalPriceCommerceMoney.getPrice());
+					cpInstance2FinalPriceCommerceMoney.getPrice());
 			}
 		}
 

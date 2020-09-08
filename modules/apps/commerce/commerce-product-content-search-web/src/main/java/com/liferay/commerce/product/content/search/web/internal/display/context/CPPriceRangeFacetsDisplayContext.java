@@ -87,14 +87,11 @@ public class CPPriceRangeFacetsDisplayContext {
 
 		String[] priceRange = RangeParserUtil.parserRange(facetTerm);
 
-		BigDecimal rangeLow = new BigDecimal(priceRange[0]);
-		BigDecimal rangeHigh = new BigDecimal(priceRange[1]);
-
 		String formattedRangeLow = _commercePriceFormatter.format(
-			_themeDisplay.getCompanyId(), commerceCurrency.getCode(), rangeLow,
+			commerceCurrency, new BigDecimal(priceRange[0]),
 			_themeDisplay.getLocale());
 		String formattedRangeHigh = _commercePriceFormatter.format(
-			_themeDisplay.getCompanyId(), commerceCurrency.getCode(), rangeHigh,
+			commerceCurrency, new BigDecimal(priceRange[1]),
 			_themeDisplay.getLocale());
 
 		if (Double.valueOf(priceRange[1]) == Double.MAX_VALUE) {

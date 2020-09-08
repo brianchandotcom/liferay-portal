@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>H4_COMPONENT_TITLE</td>
+	<td>//h4[@class='component-title']/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER</td>
 	<td>//*[@data-qa-id='headerTitle']</td>
 	<td></td>

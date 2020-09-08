@@ -56,18 +56,23 @@ definition {
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
+		var companyId = JSONCompany.getCompanyId();
+
+		var curl = '''
+			http://localhost:9201/liferay-${companyId}/_delete_by_query?pretty \
+			-H 'Content-Type: application/json' \
+			-d '{
+				"query": {
+					"match": {
+							"_type": "LiferayDocumentType"
+					}
+				}
+			}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+
 		Portlet.shutdownServer();
-
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-		var elasticsearchDeleted = FileUtil.delete("${liferayHome}/data/elasticsearch7");
-
-		if ("${elasticsearchDeleted}" == "true") {
-			echo("Deleted ${liferayHome}/data/elasticsearch7");
-		}
-		else {
-			fail("Failed to delete elasticsearch7 directory");
-		}
 
 		var newProperty = "index.on.startup=true";
 

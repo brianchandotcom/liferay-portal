@@ -189,7 +189,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			project.getConfigurations();
 
 		final Configuration compileIncludeConfiguration =
-			configurationContainer.create(COMPILE_INCLUDE_CONFIGURATION_NAME);
+			configurationContainer.maybeCreate(
+				COMPILE_INCLUDE_CONFIGURATION_NAME);
 
 		Configuration compileOnlyConfiguration =
 			configurationContainer.getByName(
@@ -208,8 +209,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		final JavaPluginConvention javaPluginConvention = convention.getPlugin(
 			JavaPluginConvention.class);
 
+		SourceSetContainer javaSourceSetContainer =
+			javaPluginConvention.getSourceSets();
+
+		final SourceSet javaMainSourceSet = javaSourceSetContainer.getByName(
+			SourceSet.MAIN_SOURCE_SET_NAME);
+
 		_configureConventionBasePlugin(bundleExtension, basePluginConvention);
-		_configureConventionJavaPlugin(project, javaPluginConvention);
+		_configureConventionJavaPlugin(project, javaMainSourceSet);
 
 		// Tasks
 
@@ -250,7 +257,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureTaskDeployDependenciesProvider(
 			liferayExtension, deployDependenciesTaskProvider);
 		_configureTaskDeployFastProvider(
-			project, bundleExtension, liferayExtension, javaPluginConvention,
+			project, bundleExtension, liferayExtension, javaMainSourceSet,
 			classesTaskProvider, compileJSPTaskProvider, deployFastTaskProvider,
 			processResourcesTaskProvider);
 		_configureTaskJarProvider(project, bundleExtension, jarTaskProvider);
@@ -283,7 +290,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					_configureTaskBuildWSDDJarProvider(
 						project, bundleExtension, liferayExtension,
-						liferayOSGiExtension, javaPluginConvention,
+						liferayOSGiExtension, javaMainSourceSet,
 						buildWSDDTask, buildWSDDJarTaskProvider,
 						cleanTaskProvider, deployTaskProvider);
 				}
@@ -423,7 +430,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureConventionJavaPlugin(
-		Project project, JavaPluginConvention javaPluginConvention) {
+		Project project, SourceSet javaMainSourceSet) {
 
 		File docrootDir = project.file("docroot");
 
@@ -431,16 +438,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			return;
 		}
 
-		SourceSet mainSourceSet = _getSourceSet(
-			javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
-
 		File javaClassesDir = new File(docrootDir, "WEB-INF/classes");
 
-		SourceDirectorySet javaSourceDirectorySet = mainSourceSet.getJava();
+		SourceDirectorySet javaSourceDirectorySet =
+			javaMainSourceSet.getJava();
 
 		javaSourceDirectorySet.setOutputDir(javaClassesDir);
 
-		SourceSetOutput sourceSetOutput = mainSourceSet.getOutput();
+		SourceSetOutput sourceSetOutput = javaMainSourceSet.getOutput();
 
 		sourceSetOutput.setResourcesDir(javaClassesDir);
 
@@ -451,7 +456,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		javaSourceDirectorySet.setSrcDirs(srcDirs);
 
 		SourceDirectorySet resourcesSourceDirectorySet =
-			mainSourceSet.getResources();
+			javaMainSourceSet.getResources();
 
 		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
 	}
@@ -554,14 +559,18 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		final Configuration compileIncludeConfiguration,
 		Convention convention) {
 
+		// Conventions
+
+		ApplicationPluginConvention applicationPluginConvention =
+			convention.getPlugin(ApplicationPluginConvention.class);
+
 		String mainClassName = bundleExtension.getInstruction("Main-Class");
 
 		if (Validator.isNotNull(mainClassName)) {
-			ApplicationPluginConvention applicationPluginConvention =
-				convention.getPlugin(ApplicationPluginConvention.class);
-
 			applicationPluginConvention.setMainClassName(mainClassName);
 		}
+
+		// Tasks
 
 		TaskProvider<JavaExec> runTaskProvider = GradleUtil.getTaskProvider(
 			project, ApplicationPlugin.TASK_RUN_NAME, JavaExec.class);
@@ -766,8 +775,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		final Project project, final BundleExtension bundleExtension,
 		LiferayExtension liferayExtension,
 		final LiferayOSGiExtension liferayOSGiExtension,
-		final JavaPluginConvention javaPluginConvention,
-		final BuildWSDDTask buildWSDDTask,
+		final SourceSet javaMainSourceSet,  final BuildWSDDTask buildWSDDTask,
 		TaskProvider<Jar> buildWSDDJarTaskProvider,
 		TaskProvider<Delete> cleanTaskProvider,
 		TaskProvider<Copy> deployTaskProvider) {
@@ -810,15 +818,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 									builder.putAll(properties, true);
 
-									SourceSet sourceSet = _getSourceSet(
-										javaPluginConvention,
-										SourceSet.MAIN_SOURCE_SET_NAME);
-
 									SourceDirectorySet sourceDirectorySet =
-										sourceSet.getJava();
+										javaMainSourceSet.getJava();
 
 									SourceSetOutput sourceSetOutput =
-										sourceSet.getOutput();
+										javaMainSourceSet.getOutput();
 
 									FileCollection buildDirs = project.files(
 										sourceDirectorySet.getOutputDir(),
@@ -841,7 +845,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 									}
 
 									SourceDirectorySet allSource =
-										sourceSet.getAllSource();
+										javaMainSourceSet.getAllSource();
 
 									Set<File> srcDirs = allSource.getSrcDirs();
 
@@ -1157,7 +1161,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	private void _configureTaskDeployFastProvider(
 		final Project project, final BundleExtension bundleExtension,
 		final LiferayExtension liferayExtension,
-		final JavaPluginConvention javaPluginConvention,
+		final SourceSet javaMainSourceSet,
 		final TaskProvider<Task> classesTaskProvider,
 		final TaskProvider<JavaCompile> compileJSPTaskProvider,
 		TaskProvider<Copy> deployFastTaskProvider,
@@ -1269,11 +1273,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					deployFastCopy.dependsOn(classesTaskProvider);
 
-					SourceSet mainSourceSet = _getSourceSet(
-						javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
-
 					deployFastCopy.from(
-						mainSourceSet.getOutput(),
+						javaMainSourceSet.getOutput(),
 						new Closure<Void>(project) {
 
 							@SuppressWarnings("unused")
@@ -1596,15 +1597,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		properties.put(Constants.INCLUDE_RESOURCE, sb.toString());
 
 		return properties;
-	}
-
-	private SourceSet _getSourceSet(
-		JavaPluginConvention javaPluginConvention, String name) {
-
-		SourceSetContainer sourceSetContainer =
-			javaPluginConvention.getSourceSets();
-
-		return sourceSetContainer.getByName(name);
 	}
 
 	private static final String _CACHE_PLUGIN_ID = "com.liferay.cache";

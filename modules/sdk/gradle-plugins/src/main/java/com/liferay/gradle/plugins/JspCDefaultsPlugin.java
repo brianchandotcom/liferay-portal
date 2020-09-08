@@ -73,6 +73,12 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 		JavaPluginConvention javaPluginConvention = convention.getPlugin(
 			JavaPluginConvention.class);
 
+		SourceSetContainer javaSourceSetContainer =
+			javaPluginConvention.getSourceSets();
+
+		final SourceSet javaMainSourceSet = javaSourceSetContainer.getByName(
+			SourceSet.MAIN_SOURCE_SET_NAME);
+
 		// Tasks
 
 		final TaskProvider<JavaCompile> compileJSPTaskProvider =
@@ -89,12 +95,12 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 				project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME, Copy.class);
 
 		_configureTaskGenerateJSPJavaProvider(
-			javaPluginConvention, generateJSPJavaTaskProvider,
+			javaMainSourceSet, generateJSPJavaTaskProvider,
 			processResourcesTaskProvider);
 		_configureTaskJarProvider(
 			project, compileJSPTaskProvider, jarTaskProvider);
 		_configureTaskProcessResourcesProvider(
-			javaPluginConvention, processResourcesTaskProvider);
+			javaMainSourceSet, processResourcesTaskProvider);
 
 		// Other
 
@@ -145,7 +151,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 	}
 
 	private void _configureTaskGenerateJSPJavaProvider(
-		final JavaPluginConvention javaPluginConvention,
+		final SourceSet javaMainSourceSet,
 		TaskProvider<CompileJSPTask> generateJSPJavaTaskProvider,
 		final TaskProvider<Copy> processResourcesTaskProvider) {
 
@@ -164,12 +170,8 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 							@Override
 							public File call() throws Exception {
-								SourceSet sourceSet = _getSourceSet(
-									javaPluginConvention,
-									SourceSet.MAIN_SOURCE_SET_NAME);
-
 								SourceSetOutput sourceSetOutput =
-									sourceSet.getOutput();
+									javaMainSourceSet.getOutput();
 
 								return new File(
 									sourceSetOutput.getResourcesDir(),
@@ -204,7 +206,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 	}
 
 	private void _configureTaskProcessResourcesProvider(
-		final JavaPluginConvention javaPluginConvention,
+		final SourceSet javaMainSourceSet,
 		TaskProvider<Copy> processResourcesTaskProvider) {
 
 		processResourcesTaskProvider.configure(
@@ -212,11 +214,8 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 				@Override
 				public void execute(Copy processResourcesCopy) {
-					SourceSet sourceSet = _getSourceSet(
-						javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
-
 					SourceDirectorySet sourceDirectorySet =
-						sourceSet.getResources();
+						javaMainSourceSet.getResources();
 
 					FileTree fileTree = sourceDirectorySet.getAsFileTree();
 
@@ -268,15 +267,6 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 				}
 
 			});
-	}
-
-	private SourceSet _getSourceSet(
-		JavaPluginConvention javaPluginConvention, String name) {
-
-		SourceSetContainer sourceSetContainer =
-			javaPluginConvention.getSourceSets();
-
-		return sourceSetContainer.getByName(name);
 	}
 
 }

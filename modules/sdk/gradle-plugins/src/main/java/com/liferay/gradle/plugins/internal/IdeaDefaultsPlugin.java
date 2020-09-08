@@ -31,8 +31,11 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.XmlProvider;
+import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
@@ -55,6 +58,19 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	protected void applyPluginDefaults(
 		Project project, final IdeaPlugin ideaPlugin) {
 
+		// Conventions
+
+		Convention convention = project.getConvention();
+
+		JavaPluginConvention javaPluginConvention = convention.getPlugin(
+			JavaPluginConvention.class);
+
+		SourceSetContainer javaSourceSetContainer =
+			javaPluginConvention.getSourceSets();
+
+		final SourceSet javaMainSourceSet = javaSourceSetContainer.getByName(
+			SourceSet.MAIN_SOURCE_SET_NAME);
+
 		// Tasks
 
 		TaskProvider<Task> ideaTaskProvider = GradleUtil.getTaskProvider(
@@ -68,14 +84,15 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 		final IdeaModule ideaModule = ideaModel.getModule();
 
-		_configureIdeaModule(project, ideaModule);
+		_configureIdeaModule(project, javaMainSourceSet, ideaModule);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					_configureIdeaModuleAfterEvaluate(project, ideaModule);
+					_configureIdeaModuleAfterEvaluate(
+						project, javaMainSourceSet, ideaModule);
 				}
 
 			});
@@ -90,7 +107,8 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	}
 
 	private void _configureIdeaModule(
-		final Project project, IdeaModule ideaModule) {
+		final Project project, final SourceSet javaMainSourceSet,
+		IdeaModule ideaModule) {
 
 		IdeaModuleIml ideaModuleIml = ideaModule.getIml();
 
@@ -103,11 +121,8 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 					return;
 				}
 
-				SourceSet sourceSet = GradleUtil.getSourceSet(
-					project, SourceSet.MAIN_SOURCE_SET_NAME);
-
 				File resourcesDir = new File(
-					GradleUtil.getSrcDir(sourceSet.getResources()),
+					GradleUtil.getSrcDir(javaMainSourceSet.getResources()),
 					"META-INF/resources");
 
 				if (!resourcesDir.exists()) {
@@ -163,21 +178,18 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	}
 
 	private void _configureIdeaModuleAfterEvaluate(
-		Project project, IdeaModule ideaModule) {
+		Project project, SourceSet javaMainSourceSet, IdeaModule ideaModule) {
 
 		Set<File> excludeDirs = ideaModule.getExcludeDirs();
 
 		if (GradleUtil.hasPlugin(project, JavaPlugin.class)) {
-			SourceSet sourceSet = GradleUtil.getSourceSet(
-				project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-			File javaClassesDir = FileUtil.getJavaClassesDir(sourceSet);
+			File javaClassesDir = FileUtil.getJavaClassesDir(javaMainSourceSet);
 
 			if (!FileUtil.isChild(javaClassesDir, project.getBuildDir())) {
 				excludeDirs.add(javaClassesDir);
 			}
 
-			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+			SourceSetOutput sourceSetOutput = javaMainSourceSet.getOutput();
 
 			File resourcesDir = sourceSetOutput.getResourcesDir();
 

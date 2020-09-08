@@ -36,11 +36,15 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.Sync;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.TaskProvider;
@@ -68,6 +72,28 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 		BundleExtension bundleExtension = BndUtil.getBundleExtension(
 			project.getExtensions());
 
+		// Conventions
+
+		Convention convention = project.getConvention();
+
+		JavaPluginConvention javaPluginConvention = convention.getPlugin(
+			JavaPluginConvention.class);
+
+		SourceSetContainer javaSourceSetContainer =
+			javaPluginConvention.getSourceSets();
+
+		SourceSet javaMainSourceSet = javaSourceSetContainer.getByName(
+			SourceSet.MAIN_SOURCE_SET_NAME);
+
+		// Configurations
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration compileIncludeConfiguration =
+			configurationContainer.maybeCreate(
+				LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME);
+
 		// Tasks
 
 		TaskProvider<Sync> buildBundleDirTaskProvider =
@@ -86,7 +112,8 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 		_configureTaskBuildBundleDirProvider(
 			project, buildBundleDirTaskProvider, jarTaskProvider);
 		_configureTaskJarCompileIncludeFragmentProvider(
-			project, bundleExtension, jarCompileIncludeFragmentTaskProvider);
+			project, javaMainSourceSet, bundleExtension,
+			compileIncludeConfiguration, jarCompileIncludeFragmentTaskProvider);
 		_configureTaskWatchProvider(
 			buildBundleDirTaskProvider, jarCompileIncludeFragmentTaskProvider,
 			watchTaskProvider);
@@ -139,7 +166,9 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJarCompileIncludeFragmentProvider(
-		final Project project, final BundleExtension bundleExtension,
+		final Project project, final SourceSet javaMainSourceSet,
+		final BundleExtension bundleExtension,
+		final Configuration compileIncludeConfiguration,
 		TaskProvider<ExecuteBndTask> jarCompileIncludeFragmentTaskProvider) {
 
 		jarCompileIncludeFragmentTaskProvider.configure(
@@ -201,10 +230,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 								@Override
 								public Iterable<File> call() throws Exception {
-									return GradleUtil.getConfiguration(
-										project,
-										LiferayOSGiPlugin.
-											COMPILE_INCLUDE_CONFIGURATION_NAME);
+									return compileIncludeConfiguration;
 								}
 
 							},
@@ -222,22 +248,13 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 							@Override
 							public boolean isSatisfiedBy(Task task) {
-								Configuration configuration =
-									GradleUtil.getConfiguration(
-										project,
-										LiferayOSGiPlugin.
-											COMPILE_INCLUDE_CONFIGURATION_NAME);
-
-								return !configuration.isEmpty();
+								return !compileIncludeConfiguration.isEmpty();
 							}
 
 						});
 
-					SourceSet sourceSet = GradleUtil.getSourceSet(
-						project, SourceSet.MAIN_SOURCE_SET_NAME);
-
 					jarCompileIncludeFragmentExecuteBndTask.setClasspath(
-						sourceSet.getCompileClasspath());
+						javaMainSourceSet.getCompileClasspath());
 
 					jarCompileIncludeFragmentExecuteBndTask.setDescription(
 						"Generates an OSGi fragment containing all " +

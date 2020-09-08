@@ -108,7 +108,7 @@
 			if (transferFiles.length > 0) {
 				new CKEDITOR.dom.event(nativeEvent).preventDefault();
 
-				const editor = event.editor;
+				const editor = event.listenerData.editor;
 
 				this._handleFiles(transferFiles, editor);
 			}
@@ -192,23 +192,20 @@
 		 * @protected
 		 */
 		_onPaste(event) {
-			if (
-				event.data &&
-				event.data.$ &&
-				event.data.$.clipboardData &&
-				event.data.$.clipboardData.items &&
-				event.data.$.clipboardData.items.length > 0
-			) {
-				const pastedData = event.data.$.clipboardData.items[0];
-
-				if (pastedData.type.indexOf('image') === 0) {
-					const imageFile = pastedData.getAsFile();
-
-					this._processFile(imageFile, event.editor);
-				}
+			if (!event.data?.$?.clipboardData?.items) {
+				return;
 			}
-			else if (event.data && event.data.type === 'html') {
-				const editor = event.editor;
+
+			const editor = event.listenerData.editor;
+
+			const clipboardItem = event.data.$.clipboardData.items[0];
+
+			if (clipboardItem.type.indexOf('image') === 0) {
+				const imageFile = clipboardItem.getAsFile();
+
+				this._processFile(imageFile, editor);
+			}
+			else if (clipboardItem.type === 'html') {
 				const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
 					event.data.dataValue
 				);
@@ -319,10 +316,47 @@
 		 */
 		init(editor) {
 			editor.once('contentDom', () => {
-				editor.on('dragenter', this._onDragEnter.bind(this));
-				editor.on('dragover', this._onDragOver.bind(this));
-				editor.on('drop', this._onDragDrop.bind(this));
-				editor.on('paste', this._onPaste.bind(this));
+				const editable = editor.editable();
+
+				editable.attachListener(
+					editable,
+					'dragenter',
+					this._onDragEnter,
+					this,
+					{
+						editor,
+					}
+				);
+
+				editable.attachListener(
+					editable,
+					'dragover',
+					this._onDragOver,
+					this,
+					{
+						editor,
+					}
+				);
+
+				editable.attachListener(
+					editable,
+					'drop',
+					this._onDragDrop,
+					this,
+					{
+						editor,
+					}
+				);
+
+				editable.attachListener(
+					editable,
+					'paste',
+					this._onPaste,
+					this,
+					{
+						editor,
+					}
+				);
 			});
 
 			AUI().use('aui-progressbar,uploader', (A) => {

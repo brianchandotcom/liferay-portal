@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_APPLY</td>
-	<td>//button[@data-testid='applyButton']</td>
+	<td>//button[contains(text(),'Apply')]</td>
 	<td></td>
 </tr>
 <tr>

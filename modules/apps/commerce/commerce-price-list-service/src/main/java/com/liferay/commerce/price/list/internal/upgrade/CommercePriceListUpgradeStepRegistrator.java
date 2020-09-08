@@ -45,7 +45,7 @@ public class CommercePriceListUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE PRICE LIST UPGRADE STEP REGISTRATOR STARTED");
+			_log.info("Commerce price list upgrade step registrator started");
 		}
 
 		registry.register(
@@ -90,7 +90,7 @@ public class CommercePriceListUpgradeStepRegistrator
 		registry.register("2.1.2", "2.1.3", new DummyUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE PRICE LIST UPGRADE STEP REGISTRATOR FINISHED");
+			_log.info("Commerce price list upgrade step registrator finished");
 		}
 	}
 

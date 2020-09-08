@@ -912,11 +912,14 @@ https://issues.liferay.com/browse/LPS-103549.
 
 ### What changed?
 
-The path for the lexicon icons has been changed from `themeDisplay.getPathThemeImages() + "/lexicon/icons.svg` to `themeDisplay.getPathThemeImages() + "/clay/icons.svg`
+The path for the lexicon icons has been changed from
+`themeDisplay.getPathThemeImages() + "/lexicon/icons.svg` to
+`themeDisplay.getPathThemeImages() + "/clay/icons.svg`
 
 ### Who is affected
 
-This affects custom solutions that use this path directly. The gradle task for building the icons on the `lexicon` path will be removed.
+This affects custom solutions that use the lexicon icons path directly. The
+Gradle task for building the icons on the `lexicon` path will be removed.
 
 ### How should I update my code?
 
@@ -924,6 +927,6 @@ Update the path to reference `clay` instead of `lexicon`
 
 #### Why was this change made?
 
-This change was made to unify references to the icon spritemap.
+This change was made to unify references to the icon sprite map.
 
 ---------------------------------------

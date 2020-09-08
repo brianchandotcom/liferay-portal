@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Shuyang Zhou
+ * @author Eudaldo Alonso
  */
 @Component(enabled = false, immediate = true, service = {})
 public class DefaultLiferayLogoSwapper {
@@ -37,7 +37,7 @@ public class DefaultLiferayLogoSwapper {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		if (PropsHelperUtil.isCustomized(
-				PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO)) {
+				PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO)) {
 
 			return;
 		}
@@ -45,10 +45,10 @@ public class DefaultLiferayLogoSwapper {
 		Bundle bundle = bundleContext.getBundle();
 
 		PropsUtil.set(
-			PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO,
+			PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO,
 			bundle.getBundleId() +
 				";com/liferay/portal/properties/swapper/internal" +
-					"/default_company_logo.png");
+					"/default_liferay_logo.png");
 
 		ImageTool imageTool = ImageToolUtil.getImageTool();
 
@@ -62,7 +62,7 @@ public class DefaultLiferayLogoSwapper {
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to swap default company logo",
+					"Unable to swap default liferay logo",
 					reflectiveOperationException);
 			}
 		}

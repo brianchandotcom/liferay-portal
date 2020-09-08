@@ -24,16 +24,14 @@ ApplicationsMenuInstanceConfiguration applicationsMenuInstanceConfiguration = Co
 %>
 
 <div class="lfr-product-menu-sidebar <%= applicationsMenuInstanceConfiguration.enableApplicationsMenu() ? "lfr-applications-menu" : "" %>" id="productMenuSidebar">
-	<div class="sidebar-header">
-		<h1 class="sr-only">
-			<liferay-ui:message key="product-admin-menu" />
-		</h1>
+	<c:if test="<%= !applicationsMenuInstanceConfiguration.enableApplicationsMenu() %>">
+		<div class="sidebar-header">
+			<h1 class="sr-only"><liferay-ui:message key="product-admin-menu" /></h1>
 
-		<clay:content-row>
-			<clay:content-col
-				expand="<%= true %>"
-			>
-				<c:if test="<%= !applicationsMenuInstanceConfiguration.enableApplicationsMenu() %>">
+			<clay:content-row>
+				<clay:content-col
+					expand="<%= true %>"
+				>
 					<a href="<%= PortalUtil.addPreservedParameters(themeDisplay, themeDisplay.getURLPortal(), false, true) %>">
 						<span class="company-details text-truncate">
 							<img alt="" class="company-logo" src="<%= themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId()) %>" />
@@ -41,14 +39,14 @@ ApplicationsMenuInstanceConfiguration applicationsMenuInstanceConfiguration = Co
 							<span class="company-name"><%= HtmlUtil.escape(company.getName()) %></span>
 						</span>
 					</a>
-				</c:if>
-			</clay:content-col>
+				</clay:content-col>
 
-			<clay:content-col>
-				<aui:icon cssClass="d-inline-block d-md-none icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
-			</clay:content-col>
-		</clay:content-row>
-	</div>
+				<clay:content-col>
+					<aui:icon cssClass="d-inline-block d-md-none icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+				</clay:content-col>
+			</clay:content-row>
+		</div>
+	</c:if>
 
 	<div class="sidebar-body">
 		<c:choose>

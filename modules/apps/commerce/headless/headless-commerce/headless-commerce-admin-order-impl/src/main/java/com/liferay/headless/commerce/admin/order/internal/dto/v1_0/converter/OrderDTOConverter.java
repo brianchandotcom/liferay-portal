@@ -240,7 +240,10 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 		BigDecimal commerceOrderShippingValue =
 			commerceOrderShippingAmountMoney.getPrice();
 
-		order.setShippingAmountValue(commerceOrderShippingValue.doubleValue());
+		if (commerceOrderShippingValue != null) {
+			order.setShippingAmountValue(
+				commerceOrderShippingValue.doubleValue());
+		}
 
 		CommerceMoney commerceOrderShippingWithTaxAmountMoney =
 			commerceOrder.getShippingWithTaxAmountMoney();

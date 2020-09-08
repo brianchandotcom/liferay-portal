@@ -12,38 +12,38 @@
  * details.
  */
 
-const RETRY_TIMES = 3,
-	RETRY_INTERVAL = 333;
-
-function retrySlidersBootUp() {
-	let currentRetry = 0;
-
-	return new Promise((resolve, reject) => {
-		const retryCycle = setInterval(() => {
-			currentRetry++;
-
-			if (currentRetry <= RETRY_TIMES) {
-				const componentReady = Liferay.component('SpeedwellSlider');
-
-				if (componentReady) {
-					clearInterval(retryCycle);
-
-					resolve(componentReady);
-				}
-			}
-			else {
-				clearInterval(retryCycle);
-
-				reject(
-					new Error('SpeedwellSlider component failed to initialize')
-				);
-			}
-		}, RETRY_INTERVAL);
-	});
-}
-
 AUI().ready(() => {
 	const Speedwell = window.Speedwell;
+	
+	const RETRY_TIMES = 3,
+		RETRY_INTERVAL = 333;
+
+	function retrySlidersBootUp() {
+		let currentRetry = 0;
+
+		return new Promise((resolve, reject) => {
+			const retryCycle = setInterval(() => {
+				currentRetry++;
+
+				if (currentRetry <= RETRY_TIMES) {
+					const componentReady = Liferay.component('SpeedwellSlider');
+
+					if (componentReady) {
+						clearInterval(retryCycle);
+
+						resolve(componentReady);
+					}
+				}
+				else {
+					clearInterval(retryCycle);
+
+					reject(
+						new Error('SpeedwellSlider component failed to initialize')
+					);
+				}
+			}, RETRY_INTERVAL);
+		});
+	}
 
 	if (!!Speedwell && !!Speedwell.features) {
 		Speedwell.features.sliders = [];

@@ -39,7 +39,7 @@ const ModalContent = ({
 	fieldSet,
 	onClose,
 }) => {
-	const [{appProps}] = useContext(AppContext);
+	const [{appProps, config: appConfig}] = useContext(AppContext);
 	const [childrenContext, setChildrenContext] = useState({
 		dataLayoutBuilder: null,
 		dispatch: () => {},
@@ -50,7 +50,7 @@ const ModalContent = ({
 	const {
 		dataLayoutBuilder,
 		dispatch,
-		state: {config, dataLayout},
+		state: {dataLayout},
 	} = childrenContext;
 
 	const {contentType} = appProps;
@@ -78,7 +78,7 @@ const ModalContent = ({
 			dispatch({
 				payload: {
 					config: {
-						...config,
+						...appConfig,
 						allowFieldSets: false,
 					},
 				},

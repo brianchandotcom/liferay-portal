@@ -323,14 +323,12 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			return;
 		}
 
-		for (Locale locale : value.getAvailableLocales()) {
-			boolean valid = evaluateValidationExpression(
-				ddmFormField.getDataType(), ddmFormField.getName(),
-				ddmFormFieldValidation, locale, value);
+		boolean valid = evaluateValidationExpression(
+			ddmFormField.getDataType(), ddmFormField.getName(),
+			ddmFormFieldValidation, value.getDefaultLocale(), value);
 
-			if (!valid) {
-				throw new MustSetValidValue(ddmFormField.getName());
-			}
+		if (!valid) {
+			throw new MustSetValidValue(ddmFormField.getName());
 		}
 	}
 

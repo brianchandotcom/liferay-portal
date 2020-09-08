@@ -13,6 +13,6 @@ dependencies {
 }
 
 test {
-	systemProperty "blacklist.cfg.name", System.getProperty("blacklist.cfg.name")
+	systemProperty "blacklist.config.name", System.getProperty("blacklist.config.name")
 	systemProperty "liferay.home", System.getProperty("liferay.home")
 }

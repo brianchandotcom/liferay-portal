@@ -188,9 +188,23 @@ const DisabledArea = () => {
 		show &&
 		createPortal(
 			<ClayPopover alignPosition={position} ref={popoverRef} show>
-				{Liferay.Language.get(
-					'this-area-is-defined-by-the-theme.-you-can-change--the-theme-settings-by-clicking-more-in-the-page-design-options-panel-on-the-sidebar'
-				)}
+				<div
+					dangerouslySetInnerHTML={{
+						__html: Liferay.Util.sub(
+							Liferay.Language.get(
+								'this-area-is-defined-by-the-theme.-you-can-change-the-theme-settings-by-clicking-x-in-the-x-panel-on-the-sidebar'
+							),
+							[
+								`<strong>${Liferay.Language.get(
+									'more'
+								)}</strong>`,
+								`<strong>${Liferay.Language.get(
+									'page-design-options'
+								)}</strong>`,
+							]
+						),
+					}}
+				/>
 			</ClayPopover>,
 			globalContext.document.body
 		)

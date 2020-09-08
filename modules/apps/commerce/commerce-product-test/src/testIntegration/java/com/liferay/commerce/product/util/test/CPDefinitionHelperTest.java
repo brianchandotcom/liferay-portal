@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -90,6 +89,9 @@ public class CPDefinitionHelperTest {
 		for (CPDefinition cpDefinition : cpDefinitions) {
 			_cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
 		}
+
+		_commerceCatalogLocalService.deleteCommerceCatalogs(
+			_company.getCompanyId());
 	}
 
 	@Test

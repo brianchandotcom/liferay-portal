@@ -242,12 +242,13 @@ public class AddFormInstanceRecordMVCCommandHelper {
 	}
 
 	protected void removeValue(
-		DDMFormFieldValue ddmFormFieldValue, Set<Locale> availableLocales) {
+		DDMFormFieldValue ddmFormFieldValue, Set<Locale> availableLocales,
+		Locale defaultLocale) {
 
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
 		if (ddmFormField.isLocalizable()) {
-			LocalizedValue localizedValue = new LocalizedValue();
+			LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
 
 			for (Locale availableLocale : availableLocales) {
 				localizedValue.addString(availableLocale, StringPool.BLANK);
@@ -275,7 +276,9 @@ public class AddFormInstanceRecordMVCCommandHelper {
 			ddmFormFieldValue -> {
 				Value value = ddmFormFieldValue.getValue();
 
-				removeValue(ddmFormFieldValue, value.getAvailableLocales());
+				removeValue(
+					ddmFormFieldValue, value.getAvailableLocales(),
+					value.getDefaultLocale());
 			}
 		);
 	}

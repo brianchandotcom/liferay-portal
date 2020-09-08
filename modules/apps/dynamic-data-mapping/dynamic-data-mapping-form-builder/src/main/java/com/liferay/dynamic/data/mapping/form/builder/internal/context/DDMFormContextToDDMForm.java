@@ -288,7 +288,7 @@ public class DDMFormContextToDDMForm
 		JSONObject jsonObject, Set<Locale> availableLocales,
 		Locale defaultLocale) {
 
-		LocalizedValue localizedValue = new LocalizedValue();
+		LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
 
 		if (jsonObject == null) {
 			return localizedValue;

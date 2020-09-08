@@ -785,31 +785,45 @@ This change was made because these properties are not useful for an entity.
 
 #### What changed?
 
-Dynamic Data Mapping fields in Elasticsearch that start with `ddm__keyword__` and `ddm__text__` have been moved to a new nested document `ddmFieldArray`.
+Dynamic Data Mapping fields in Elasticsearch that start with `ddm__keyword__`
+and `ddm__text__` have been moved to a new nested document `ddmFieldArray`.
 
 The `ddmFieldArray` has several entries with following fields:
 
-- `ddmFieldName`: Contains the Dynamic Data Mapping structure field name. This name is generated using `DDMIndexer.encodeName` methods.
-- `ddmFieldValue*`: Contains the indexed data. The name of this field is generated using `DDMIndexer.getValueFieldName` and depends on the field's data type and language.
-- `ddmValueFieldName`: Contains the index field name where the indexed data is stored.
+- `ddmFieldName`: Contains the Dynamic Data Mapping structure field name. This
+name is generated using `DDMIndexer.encodeName` methods.
+- `ddmFieldValue*`: Contains the indexed data. The name of this field is
+generated using `DDMIndexer.getValueFieldName` and depends on the field's data
+type and language.
+- `ddmValueFieldName`: Contains the index field name where the indexed data is
+stored.
 
  This change is not applied if you are using the SOLR search engine.
 
 #### Who is affected?
 
-This affects anyone with custom developments that execute queries in the Elasticsearch index using `ddm__keyword__*` and `ddm__text__*` fields.
+This affects anyone with custom developments that execute queries in the
+Elasticsearch index using `ddm__keyword__*` and `ddm__text__*` fields.
 
 #### How should I update my code?
 
-You have to use the new nested document `ddmFieldArray` in your Elasticsearch queries.
+You have to use the new nested document `ddmFieldArray` in your Elasticsearch
+queries.
 
-There are some examples in Liferay code. For example, [DDMIndexerImpl](https://github.com/liferay/liferay-portal/blob/7.3.x/modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/util/DDMIndexerImpl.java) and [AssetHelperImpl](https://github.com/liferay/liferay-portal/blob/master/modules/apps/asset/asset-service/src/main/java/com/liferay/asset/internal/util/AssetHelperImpl.java) use the `DDM_FIELD_ARRAY` constant.
+There are some examples in Liferay code. For example,
+[DDMIndexerImpl](https://github.com/liferay/liferay-portal/blob/7.3.x/modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/util/DDMIndexerImpl.java)
+and
+[AssetHelperImpl](https://github.com/liferay/liferay-portal/blob/master/modules/apps/asset/asset-service/src/main/java/com/liferay/asset/internal/util/AssetHelperImpl.java)
+use the `DDM_FIELD_ARRAY` constant.
 
 #### Why was this change made?
 
-This change was made to avoid Elasticsearch *Limit of total fields has been exceeded* error that can be produced if you have a large number of Dynamic Data Mapping structures.
+This change was made to avoid the *Limit of total fields has been exceeded*
+Elasticsearch error that occurs if you have too many Dynamic Data Mapping
+structures.
 
-For more information about this error, see [LPS-103224](https://issues.liferay.com/browse/LPS-103224).
+For more information about this error, see
+[LPS-103224](https://issues.liferay.com/browse/LPS-103224).
 
 ---------------------------------------
 
@@ -834,8 +848,8 @@ implementation and use it locally within your module.
 
 #### Why was this change made?
 
-This change was made to enable image drag and drop handling in CKEditor, and
-have a common solution for both Alloy Editor and CKEditor.
+This change enables image drag and drop handling in CKEditor and provides a
+common image uploader for both Alloy Editor and CKEditor.
 
 ---------------------------------------
 

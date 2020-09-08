@@ -310,6 +310,10 @@ public class CTPreferencesLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void resetCTPreferences(long ctCollectionId) {
+		getService().resetCTPreferences(ctCollectionId);
+	}
+
 	/**
 	 * Updates the ct preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

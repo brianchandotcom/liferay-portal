@@ -323,6 +323,11 @@ public class CTPreferencesLocalServiceWrapper
 		return _ctPreferencesLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void resetCTPreferences(long ctCollectionId) {
+		_ctPreferencesLocalService.resetCTPreferences(ctCollectionId);
+	}
+
 	/**
 	 * Updates the ct preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

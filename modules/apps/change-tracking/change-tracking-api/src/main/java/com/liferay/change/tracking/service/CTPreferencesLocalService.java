@@ -258,6 +258,8 @@ public interface CTPreferencesLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void resetCTPreferences(long ctCollectionId);
+
 	/**
 	 * Updates the ct preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -442,16 +442,6 @@ definition {
 			dmDocumentTitle = "Document_1.doc",
 			dmRepositoryName = "true");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Collaboration Test Application");
-
-		PermissionsInline.addOrRemoveAccessPermissionFromAllRoles(
-			addOrRemoveViewPermission = "Add",
-			roleList = "guest");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
 		User.logoutPG();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

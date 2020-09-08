@@ -94,11 +94,7 @@ export default function getAlloyEditorProcessor(
 					changeLinkCallback
 				) => {
 					openSelectionModal({
-						onSelect: (selectedItem) => {
-							if (selectedItem) {
-								changeLinkCallback(selectedItem);
-							}
-						},
+						onSelect: changeLinkCallback,
 						selectEventName: editor.title + 'selectItem',
 						title: Liferay.Language.get('select-item'),
 						url,

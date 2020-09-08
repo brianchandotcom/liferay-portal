@@ -17,39 +17,25 @@ import {openSelectionModal} from 'frontend-js-web';
 import {config} from '../app/config/index';
 
 export function openImageSelector(callback, destroyedCallback = null) {
-	let _destroyedCallback = destroyedCallback;
-
-	const invokeDestroyedCallbackOnce = () => {
-		if (typeof _destroyedCallback === 'function') {
-			_destroyedCallback();
-
-			_destroyedCallback = null;
-		}
-	};
-
 	openSelectionModal({
-		onClose: invokeDestroyedCallbackOnce,
+		onClose: destroyedCallback,
 		onSelect: (selectedItem) => {
-			if (selectedItem) {
-				const {returnType, value} = selectedItem;
+			const {returnType, value} = selectedItem;
 
-				const selectedImage = {};
+			const selectedImage = {};
 
-				if (returnType === 'URL') {
-					selectedImage.title = '';
-					selectedImage.url = value;
-				}
-				else {
-					const fileEntry = JSON.parse(value);
+			if (returnType === 'URL') {
+				selectedImage.title = '';
+				selectedImage.url = value;
+			}
+			else {
+				const fileEntry = JSON.parse(value);
 
-					selectedImage.title = fileEntry.title;
-					selectedImage.url = fileEntry.url;
-				}
-
-				callback(selectedImage);
+				selectedImage.title = fileEntry.title;
+				selectedImage.url = fileEntry.url;
 			}
 
-			invokeDestroyedCallbackOnce();
+			callback(selectedImage);
 		},
 		selectEventName: `${config.portletNamespace}selectImage`,
 		title: Liferay.Language.get('select'),

@@ -58,11 +58,12 @@ public class GridDDMFormFieldValueRequestParameterRetriever
 			String[] parameterValues = parameterMap.get(
 				ddmFormFieldParameterName);
 
-			for (String value : parameterValues) {
-				if (!value.isEmpty()) {
-					String[] values = value.split(";");
+			for (String parameterValue : parameterValues) {
+				if (!parameterValue.isEmpty()) {
+					String[] parameterValueParts = parameterValue.split(";");
 
-					jsonObject.put(values[0], values[1]);
+					jsonObject.put(
+						parameterValueParts[0], parameterValueParts[1]);
 				}
 			}
 		}

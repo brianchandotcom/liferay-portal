@@ -488,37 +488,6 @@ This feature has been deprecated.
 
 ---------------------------------------
 
-### Simple Editor Is No Longer Bundled by Default
-- **Date:** 2020-Mar-27
-- **JIRA Ticket:** [LPS-110734](https://issues.liferay.com/browse/LPS-110734)
-
-### What changed?
-
-As of 7.3, CKEditor is the default and only supported WYSIWYG editor.
-
-### Who is affected
-
-This affects anyone who uses the Liferay Frontend Editor Simple Web module.
-
-### How should I update my code?
-
-If you've configured Liferay Portal to use the Simple Editor, you can remove
-these configurations. If you still want to use the Simple Editor, you must take
-these steps:
-
-- Keep your configurations.
-- Open https://repository.liferay.com/nexus/index.html in your browser.
-- Search for `com.liferay.frontend.editor.simple.web`.
-- Download a .jar file for the `com.liferay.frontend.editor.simple.web` module.
-- Deploy the .jar file you downloaded in your liferay-portal installation.
-
-#### Why was this change made?
-
-This change was made to consolidate all our UX for writing Rich Text Content
-around a single Editor to provide a more cohesive and comprehensive experience.
-
----------------------------------------
-
 ### TinyMCE Editor Is No Longer Bundled by Default
 - **Date:** 2020-Mar-27
 - **JIRA Ticket:** [LPS-110733](https://issues.liferay.com/browse/LPS-110733)
@@ -573,6 +542,37 @@ implementation and use it locally within your module.
 
 This change enables image drag and drop handling in CKEditor and provides a
 common image uploader for both Alloy Editor and CKEditor.
+
+---------------------------------------
+
+### Simple Editor Is No Longer Bundled by Default
+- **Date:** 2020-Mar-27
+- **JIRA Ticket:** [LPS-110734](https://issues.liferay.com/browse/LPS-110734)
+
+### What changed?
+
+As of 7.3, CKEditor is the default and only supported WYSIWYG editor.
+
+### Who is affected
+
+This affects anyone who uses the Liferay Frontend Editor Simple Web module.
+
+### How should I update my code?
+
+If you've configured Liferay Portal to use the Simple Editor, you can remove
+these configurations. If you still want to use the Simple Editor, you must take
+these steps:
+
+- Keep your configurations.
+- Open https://repository.liferay.com/nexus/index.html in your browser.
+- Search for `com.liferay.frontend.editor.simple.web`.
+- Download a .jar file for the `com.liferay.frontend.editor.simple.web` module.
+- Deploy the .jar file you downloaded in your liferay-portal installation.
+
+#### Why was this change made?
+
+This change was made to consolidate all our UX for writing Rich Text Content
+around a single Editor to provide a more cohesive and comprehensive experience.
 
 ---------------------------------------
 

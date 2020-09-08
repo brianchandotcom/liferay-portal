@@ -61,7 +61,7 @@ public class SourceFormatterDefaultsPlugin
 				project, SourceFormatterPlugin.FORMAT_SOURCE_TASK_NAME,
 				FormatSourceTask.class);
 
-		// Other
+		// Containers
 
 		TaskContainer taskContainer = project.getTasks();
 

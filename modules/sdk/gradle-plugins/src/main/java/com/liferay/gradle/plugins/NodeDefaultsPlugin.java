@@ -44,7 +44,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 		_configureExtensionNode(project, nodeExtension);
 
-		// Other
+		// Containers
 
 		TaskContainer taskContainer = project.getTasks();
 

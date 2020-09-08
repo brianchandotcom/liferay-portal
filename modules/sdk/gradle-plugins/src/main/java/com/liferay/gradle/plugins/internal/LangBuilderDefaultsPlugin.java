@@ -44,7 +44,7 @@ public class LangBuilderDefaultsPlugin
 			project, LangBuilderPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);
 
-		// Other
+		// Containers
 
 		TaskContainer taskContainer = project.getTasks();
 

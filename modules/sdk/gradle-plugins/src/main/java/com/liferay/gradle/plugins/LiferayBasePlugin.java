@@ -113,6 +113,22 @@ public class LiferayBasePlugin implements Plugin<Project> {
 				dockerContainerId, dockerFilesDir);
 		}
 
+		// Containers
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			DirectDeployTask.class,
+			new Action<DirectDeployTask>() {
+
+				@Override
+				public void execute(DirectDeployTask directDeployTask) {
+					_configureTaskDirectDeploy(
+						directDeployTask, liferayExtension);
+				}
+
+			});
+
 		// Other
 
 		GradleUtil.applyScript(
@@ -148,20 +164,6 @@ public class LiferayBasePlugin implements Plugin<Project> {
 							}
 
 						});
-				}
-
-			});
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			DirectDeployTask.class,
-			new Action<DirectDeployTask>() {
-
-				@Override
-				public void execute(DirectDeployTask directDeployTask) {
-					_configureTaskDirectDeploy(
-						directDeployTask, liferayExtension);
 				}
 
 			});

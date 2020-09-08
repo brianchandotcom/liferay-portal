@@ -69,7 +69,7 @@ public class AlloyTaglibDefaultsPlugin
 			project, _PORTAL_TOOL_CONFIGURATION_NAME, "org.freemarker",
 			"freemarker", "2.3.23");
 
-		// Other
+		// Containers
 
 		TaskContainer taskContainer = project.getTasks();
 

@@ -95,7 +95,7 @@ public class ServiceBuilderDefaultsPlugin
 		_configureTaskProcessResourcesProvider(
 			buildServiceTaskProvider, processResourcesTaskProvider);
 
-		// Other
+		// Containers
 
 		TaskContainer taskContainer = project.getTasks();
 

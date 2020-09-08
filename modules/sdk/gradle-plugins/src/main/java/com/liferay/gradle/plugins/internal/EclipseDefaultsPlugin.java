@@ -74,14 +74,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
 		_configureTaskEclipseProvider(eclipseTaskProvider);
 
-		// Other
-
-		final File portalRootDir = GradleUtil.getRootDir(
-			project.getRootProject(), "portal-impl");
-
-		_configureEclipseClasspath(project, eclipseModelExtension);
-		_configureEclipseProject(
-			project, eclipseModelExtension, eclipseTaskProvider, portalRootDir);
+		// Containers
 
 		PluginContainer pluginContainer = project.getPlugins();
 
@@ -96,6 +89,15 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 				}
 
 			});
+
+		// Other
+
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
+		_configureEclipseClasspath(project, eclipseModelExtension);
+		_configureEclipseProject(
+			project, eclipseModelExtension, eclipseTaskProvider, portalRootDir);
 	}
 
 	@Override

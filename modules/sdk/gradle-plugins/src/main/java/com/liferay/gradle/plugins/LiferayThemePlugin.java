@@ -131,9 +131,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 			project, liferayExtension, createLiferayThemeJsonTaskProvider);
 		_configureTaskDeployProvider(project, deployTaskProvider);
 
-		// Other
-
-		_configureProject(project, packageJsonMap);
+		// Containers
 
 		final TaskContainer taskContainer = project.getTasks();
 
@@ -148,6 +146,10 @@ public class LiferayThemePlugin implements Plugin<Project> {
 				}
 
 			});
+
+		// Other
+
+		_configureProject(project, packageJsonMap);
 
 		ArtifactHandler artifacts = project.getArtifacts();
 

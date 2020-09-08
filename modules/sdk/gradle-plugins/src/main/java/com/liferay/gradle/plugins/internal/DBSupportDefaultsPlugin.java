@@ -77,7 +77,7 @@ public class DBSupportDefaultsPlugin
 			project, DBSupportPlugin.TOOL_CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);
 
-		// Other
+		// Containers
 
 		TaskContainer taskContainer = project.getTasks();
 

@@ -51,7 +51,7 @@ public class CSSBuilderDefaultsPlugin
 			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
 			PortalTools.GROUP, _FRONTEND_COMMON_CSS_NAME);
 
-		// Other
+		// Containers
 
 		TaskContainer taskContainer = project.getTasks();
 

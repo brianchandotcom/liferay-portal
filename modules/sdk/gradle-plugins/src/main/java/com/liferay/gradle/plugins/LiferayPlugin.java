@@ -61,7 +61,7 @@ public class LiferayPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, clazz);
 
-		// Other
+		// Containers
 
 		PluginContainer pluginContainer = project.getPlugins();
 

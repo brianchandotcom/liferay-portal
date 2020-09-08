@@ -208,20 +208,22 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, renderResponse);
 
 		if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
-			return _uadSearchContainerBuilder.getSearchContainer(
-				liferayPortletResponse, renderRequest, currentURL,
-				scopeDisplay.getUADApplicationSummaryDisplays());
+			return _uadSearchContainerBuilder.
+				getApplicationSummaryUADEntitySearchContainer(
+					liferayPortletResponse, renderRequest, currentURL,
+					scopeDisplay.getUADApplicationSummaryDisplays());
 		}
 
 		if (uadHierarchyDisplay != null) {
-			return _uadSearchContainerBuilder.getSearchContainer(
-				liferayPortletResponse, renderRequest, applicationKey,
-				currentURL, scopeDisplay.getGroupIds(),
-				uadHierarchyDisplay.getFirstContainerTypeClass(), 0L, user,
-				uadHierarchyDisplay);
+			return _uadSearchContainerBuilder.
+				getHierarchyUADEntitySearchContainer(
+					liferayPortletResponse, renderRequest, applicationKey,
+					currentURL, scopeDisplay.getGroupIds(),
+					uadHierarchyDisplay.getFirstContainerTypeClass(), 0L, user,
+					uadHierarchyDisplay);
 		}
 
-		return _uadSearchContainerBuilder.getSearchContainer(
+		return _uadSearchContainerBuilder.getUADEntitySearchContainer(
 			liferayPortletResponse, renderRequest, currentURL,
 			scopeDisplay.getGroupIds(), user, uadDisplay);
 	}

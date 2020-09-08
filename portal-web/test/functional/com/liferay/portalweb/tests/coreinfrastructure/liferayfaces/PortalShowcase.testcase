@@ -158,26 +158,6 @@ definition {
 
 			KeyPress(
 				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
 				value1 = "\UP");
 
 			KeyPress(

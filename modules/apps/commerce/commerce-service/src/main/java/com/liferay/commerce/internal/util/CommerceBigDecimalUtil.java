@@ -37,6 +37,14 @@ public class CommerceBigDecimalUtil {
 		return false;
 	}
 
+	public static boolean isZero(BigDecimal value) {
+		if (value.compareTo(BigDecimal.ZERO) == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean lt(BigDecimal value1, BigDecimal value2) {
 		if (value1.compareTo(value2) < 0) {
 			return true;

@@ -23,6 +23,7 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.discount.application.strategy.CommerceDiscountApplicationStrategy;
+import com.liferay.commerce.internal.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.internal.util.CommercePriceConverterUtil;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceImpl;
@@ -151,12 +152,11 @@ public class CommerceProductPriceCalculationV2Impl
 		CommerceMoney promoPriceMoney = _getPromoPrice(
 			commercePromoPriceListId, cpInstanceId, quantity, commerceContext);
 
-		BigDecimal unitPrice = unitPriceMoney.getPrice();
-		BigDecimal promoPrice = promoPriceMoney.getPrice();
-
 		if (!promoPriceMoney.isEmpty() &&
-			(promoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-			(promoPrice.compareTo(unitPrice) <= 0)) {
+			CommerceBigDecimalUtil.gt(
+				promoPriceMoney.getPrice(), BigDecimal.ZERO) &&
+			CommerceBigDecimalUtil.lte(
+				promoPriceMoney.getPrice(), unitPriceMoney.getPrice())) {
 
 			finalPrice = promoPriceMoney.getPrice();
 
@@ -164,7 +164,8 @@ public class CommerceProductPriceCalculationV2Impl
 		}
 
 		BigDecimal[] updatedPrices = getUpdatedPrices(
-			unitPrice, promoPrice, finalPrice, commerceContext,
+			unitPriceMoney.getPrice(), promoPriceMoney.getPrice(), finalPrice,
+			commerceContext,
 			commerceProductPriceRequest.getCommerceOptionValues());
 
 		finalPrice = updatedPrices[2];
@@ -373,7 +374,6 @@ public class CommerceProductPriceCalculationV2Impl
 		throws PortalException {
 
 		CommerceMoney commerceMoney = commerceMoneyFactory.emptyCommerceMoney();
-		BigDecimal maxPrice = BigDecimal.ZERO;
 
 		List<CPInstance> cpInstances =
 			cpInstanceLocalService.getCPDefinitionInstances(
@@ -386,11 +386,11 @@ public class CommerceProductPriceCalculationV2Impl
 				commerceContext.getCommerceCurrency(), secure, commerceContext);
 
 			if (commerceMoney.isEmpty() ||
-				(maxPrice.compareTo(cpInstanceCommerceMoney.getPrice()) < 0)) {
+				CommerceBigDecimalUtil.lt(
+					commerceMoney.getPrice(),
+					cpInstanceCommerceMoney.getPrice())) {
 
 				commerceMoney = cpInstanceCommerceMoney;
-
-				maxPrice = commerceMoney.getPrice();
 			}
 		}
 
@@ -412,7 +412,6 @@ public class CommerceProductPriceCalculationV2Impl
 		throws PortalException {
 
 		CommerceMoney commerceMoney = commerceMoneyFactory.emptyCommerceMoney();
-		BigDecimal minPrice = BigDecimal.ZERO;
 
 		List<CPInstance> cpInstances =
 			cpInstanceLocalService.getCPDefinitionInstances(
@@ -425,11 +424,11 @@ public class CommerceProductPriceCalculationV2Impl
 				commerceContext.getCommerceCurrency(), secure, commerceContext);
 
 			if (commerceMoney.isEmpty() ||
-				(minPrice.compareTo(cpInstanceCommerceMoney.getPrice()) > 0)) {
+				CommerceBigDecimalUtil.gt(
+					commerceMoney.getPrice(),
+					cpInstanceCommerceMoney.getPrice())) {
 
 				commerceMoney = cpInstanceCommerceMoney;
-
-				minPrice = commerceMoney.getPrice();
 			}
 		}
 
@@ -588,7 +587,7 @@ public class CommerceProductPriceCalculationV2Impl
 		throws PortalException {
 
 		if ((finalPrice == null) ||
-			(finalPrice.compareTo(BigDecimal.ZERO) <= 0)) {
+			CommerceBigDecimalUtil.lte(finalPrice, BigDecimal.ZERO)) {
 
 			return null;
 		}

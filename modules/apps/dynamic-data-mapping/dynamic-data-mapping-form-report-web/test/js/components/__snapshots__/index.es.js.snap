@@ -272,7 +272,6 @@ exports[`index renders 1`] = `
           <a
             class=""
             data-senna-off="true"
-            href="#_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_0"
           >
             <div
               class="indicator"
@@ -288,7 +287,6 @@ exports[`index renders 1`] = `
           <a
             class=""
             data-senna-off="true"
-            href="#_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_1"
           >
             <div
               class="indicator"
@@ -304,7 +302,6 @@ exports[`index renders 1`] = `
           <a
             class=""
             data-senna-off="true"
-            href="#_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_2"
           >
             <div
               class="indicator"

@@ -237,7 +237,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = "3"
 	test Faces1635And1433PortletSmoke {
 
 		// FACES_1635Resources
@@ -246,9 +246,9 @@ definition {
 			pageURL = "faces-1635?p_p_parallel=0",
 			portletName = "jsf-applicant");
 
-		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-1635?p_p_parallel=0",
-			portletName = "primefaces-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1635?p_p_parallel=0");
+
+		Portlet.addPG(portletName = "primefaces-applicant");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1635?p_p_parallel=0");
 

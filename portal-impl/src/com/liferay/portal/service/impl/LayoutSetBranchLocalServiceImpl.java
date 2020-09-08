@@ -364,6 +364,8 @@ public class LayoutSetBranchLocalServiceImpl
 						layoutSetBranchId)) {
 
 					deletableLayout = false;
+
+					break;
 				}
 			}
 

@@ -123,9 +123,9 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 		long cpDisplayLayoutId = ParamUtil.getLong(
 			actionRequest, "cpDisplayLayoutId");
 
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
 		List<Long> classPKs = new ArrayList<>();
+
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		if (classPK > 0) {
 			classPKs.add(classPK);

@@ -119,6 +119,7 @@ public class CategoryCPDisplayLayoutDisplayContext
 			List<AssetVocabulary> vocabularies =
 				AssetVocabularyServiceUtil.getGroupVocabularies(
 					themeDisplay.getCompanyGroupId());
+
 			portletURL.setParameter(
 				"eventName", renderResponse.getNamespace() + "selectCategory");
 			portletURL.setParameter("singleSelect", "true");

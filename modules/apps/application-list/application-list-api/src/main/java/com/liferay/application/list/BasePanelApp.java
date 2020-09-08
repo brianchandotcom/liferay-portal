@@ -17,6 +17,8 @@ package com.liferay.application.list;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -69,18 +72,23 @@ public abstract class BasePanelApp implements PanelApp {
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
+		try {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				locale, getClass());
 
-		if (resourceBundle == null) {
 			return LanguageUtil.get(
-				locale,
+				resourceBundle,
 				JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
 					getPortletId());
 		}
+		catch (MissingResourceException missingResourceException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(missingResourceException, missingResourceException);
+			}
+		}
 
 		return LanguageUtil.get(
-			resourceBundle,
+			locale,
 			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
 				getPortletId());
 	}
@@ -223,6 +231,8 @@ public abstract class BasePanelApp implements PanelApp {
 	}
 
 	protected GroupProvider groupProvider;
+
+	private static final Log _log = LogFactoryUtil.getLog(BasePanelApp.class);
 
 	private Portlet _portlet;
 	private PortletLocalService _portletLocalService;

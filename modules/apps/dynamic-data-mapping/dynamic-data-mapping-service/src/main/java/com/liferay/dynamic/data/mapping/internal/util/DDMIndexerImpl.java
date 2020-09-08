@@ -60,7 +60,11 @@ import java.math.BigDecimal;
 
 import java.text.Format;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -535,20 +539,32 @@ public class DDMIndexerImpl implements DDMIndexer {
 			document, ddmStructureField, indexType, valueFieldName,
 			_getSortableValue(ddmFormField, locale, value), value);
 
+		List<com.liferay.portal.kernel.search.Field> fieldList =
+			new ArrayList<>();
+
+		fieldList.add(
+			new com.liferay.portal.kernel.search.Field(DDM_FIELD_NAME, name));
+
+		fieldList.add(
+			new com.liferay.portal.kernel.search.Field(
+				DDM_VALUE_FIELD_NAME, valueFieldName));
+
 		Map<String, com.liferay.portal.kernel.search.Field> fields =
 			document.getFields();
+
+		for (com.liferay.portal.kernel.search.Field field : fields.values()) {
+			fieldList.add(field);
+		}
+
+		Collections.sort(
+			fieldList,
+			Comparator.comparing(
+				com.liferay.portal.kernel.search.Field::getName));
 
 		com.liferay.portal.kernel.search.Field ddmField =
 			new com.liferay.portal.kernel.search.Field("");
 
-		ddmField.addField(
-			new com.liferay.portal.kernel.search.Field(DDM_FIELD_NAME, name));
-
-		ddmField.addField(
-			new com.liferay.portal.kernel.search.Field(
-				DDM_VALUE_FIELD_NAME, valueFieldName));
-
-		for (com.liferay.portal.kernel.search.Field field : fields.values()) {
+		for (com.liferay.portal.kernel.search.Field field : fieldList) {
 			ddmField.addField(field);
 		}
 

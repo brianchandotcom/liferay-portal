@@ -273,6 +273,8 @@ definition {
 		}
 
 		if (isSet(webContentContent)) {
+			Pause(locator1 = "3000");
+
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 			AssertTextEquals(
@@ -283,6 +285,8 @@ definition {
 		}
 
 		if (isSet(webContentDescription)) {
+			Pause(locator1 = "3000");
+
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			AssertTextEquals(

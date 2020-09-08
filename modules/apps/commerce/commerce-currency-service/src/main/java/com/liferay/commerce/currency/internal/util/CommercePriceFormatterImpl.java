@@ -71,30 +71,6 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	}
 
 	@Override
-	public String format(long companyId, BigDecimal price, Locale locale)
-		throws PortalException {
-
-		CommerceCurrency commerceCurrency =
-			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
-				companyId);
-
-		return format(commerceCurrency, price, locale);
-	}
-
-	@Override
-	public String format(
-			long companyId, String commerceCurrencyCode, BigDecimal price,
-			Locale locale)
-		throws PortalException {
-
-		CommerceCurrency commerceCurrency =
-			_commerceCurrencyLocalService.getCommerceCurrency(
-				companyId, commerceCurrencyCode);
-
-		return format(commerceCurrency, price, locale);
-	}
-
-	@Override
 	public String formatAsRelative(
 		CommerceCurrency commerceCurrency, BigDecimal relativePrice,
 		Locale locale) {
@@ -161,9 +137,6 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 		return decimalFormat;
 	}
-
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	private volatile RoundingTypeConfiguration _roundingTypeConfiguration;
 

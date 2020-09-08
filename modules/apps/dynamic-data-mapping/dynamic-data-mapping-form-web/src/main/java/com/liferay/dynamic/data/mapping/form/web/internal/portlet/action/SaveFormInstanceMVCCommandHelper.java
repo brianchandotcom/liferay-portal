@@ -310,9 +310,9 @@ public class SaveFormInstanceMVCCommandHelper {
 			if (uri != null) {
 				StringBundler sb = new StringBundler(3);
 
-				sb.append("the-specified-redirect-url-is-not-allowed-");
-				sb.append("due-to-installation-settings.-add-x-into-");
-				sb.append("the-property-x-to-fix-it");
+				sb.append("the-specified-redirect-url-is-not-allowed-due-to-");
+				sb.append("installation-settings.-add-x-into-the-property-x-");
+				sb.append("to-fix-it");
 
 				String securityMode = PropsValues.REDIRECT_URL_SECURITY_MODE;
 

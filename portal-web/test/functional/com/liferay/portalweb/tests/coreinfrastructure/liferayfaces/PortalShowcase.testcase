@@ -96,4 +96,148 @@ definition {
 			usecase = "Instant Ajax");
 	}
 
+	@priority = "5"
+	test InputRichTextSmokeOne {
+
+		// InputRichTextDOMEvents
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/portal-showcase/-/portal-tag/portal/inputrichtext/general");
+
+		Click(
+			key_field = "DOM Events",
+			locator1 = "PortalShowcase#INPUT_RICH_TEXT");
+
+		Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
+
+		RobotType(locator1 = "Hello world!");
+
+		AssertTextEquals(
+			locator1 = "PortalShowcase#TEXT_FEEDBACK",
+			value1 = "onfocus");
+
+		PortalShowcase.submit();
+
+		AssertTextEquals(
+			locator1 = "PortalShowcase#TEXT_FEEDBACK",
+			value1 = "onfocus onchange onblur");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PortalShowcase#MODAL_VALUE",
+			value1 = "<p>Hello world!</p>");
+
+		Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
+
+		AssertTextEquals(
+			locator1 = "PortalShowcase#TEXT_FEEDBACK",
+			value1 = "onfocus onchange onblur onfocus");
+
+		PortalShowcase.submit();
+
+		AssertTextEquals(
+			locator1 = "PortalShowcase#TEXT_FEEDBACK",
+			value1 = "onfocus onchange onblur onfocus onblur");
+
+		// InputRichTextGeneralTest
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/portal-showcase/-/portal-tag/portal/inputrichtext/general");
+
+		Click(locator1 = "//a[contains(text(),'Default Value')]");
+
+		AssertElementPresent(
+			key_message = "<p>This is some <strong>bold</strong> text<br />",
+			locator1 = "JSFShowcase#RESULT_MESSAGE");
+
+		AssertElementPresent(
+			key_message = "and this is some <em>italic</em> text.</p>",
+			locator1 = "JSFShowcase#RESULT_MESSAGE");
+
+		var TextLength = StringUtil.length("ll");
+
+		var i = "0";
+
+		while ("${i}" != "${TextLength}") {
+			Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
+
+			var i = ${i} + 1;
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\UP");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
+
+			RobotType(locator1 = "ld o");
+		}
+
+		PortalShowcase.submit();
+
+		AssertElementPresent(
+			key_message = "<p>This is some <strong>bold old</strong> text<br />",
+			locator1 = "JSFShowcase#RESULT_MESSAGE");
+
+		// InputRichTextImmediateTest
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/portal-showcase/-/portal-tag/portal/inputrichtext/general");
+
+		Click(locator1 = "//a[contains(text(),'Immediate')]");
+
+		PortalShowcase.submitImmediate(
+			immediate = "true",
+			messageImmediate1 = "APPLY_REQUEST_VALUES",
+			text = "Hello World!",
+			textResult = "<p>Hello world!</p>");
+
+		PortalShowcase.submitImmediate(
+			immediate = "false",
+			messageImmediate2 = "PROCESS_VALIDATIONS",
+			text = "Hello World!",
+			textResult = "<p>Hello world!</p>");
+	}
+
 }

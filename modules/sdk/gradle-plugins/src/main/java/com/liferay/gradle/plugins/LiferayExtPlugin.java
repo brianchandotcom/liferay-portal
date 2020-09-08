@@ -89,14 +89,6 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 		_configureExtensionLiferay(liferayExtension);
 
-		// Configurations
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		Configuration portalConfiguration = configurationContainer.getByName(
-			LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
-
 		// Conventions
 
 		Convention convention = project.getConvention();
@@ -125,6 +117,14 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		_configureSourceSetExt(warPluginConvention, extUtilBridgesSourceSet);
 		_configureSourceSetExt(warPluginConvention, extUtilJavaSourceSet);
 		_configureSourceSetExt(warPluginConvention, extUtilTaglibSourceSet);
+
+		// Configurations
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration portalConfiguration = configurationContainer.getByName(
+			LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
 
 		// Tasks
 

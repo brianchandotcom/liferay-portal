@@ -85,6 +85,17 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		LiferayExtension liferayExtension = extensionContainer.getByType(
 			LiferayExtension.class);
 
+		// Conventions
+
+		Convention convention = project.getConvention();
+
+		BasePluginConvention basePluginConvention = convention.getPlugin(
+			BasePluginConvention.class);
+
+		Map<String, Object> packageJsonMap = _getPackageJsonMap(project);
+
+		_configureConventionBasePlugin(basePluginConvention, packageJsonMap);
+
 		// Configurations
 
 		ConfigurationContainer configurationContainer =
@@ -97,17 +108,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 		_configureConfigurationDefault(
 			archivesConfiguration, defaultConfiguration);
-
-		// Conventions
-
-		Convention convention = project.getConvention();
-
-		BasePluginConvention basePluginConvention = convention.getPlugin(
-			BasePluginConvention.class);
-
-		Map<String, Object> packageJsonMap = _getPackageJsonMap(project);
-
-		_configureConventionBasePlugin(basePluginConvention, packageJsonMap);
 
 		// Tasks
 

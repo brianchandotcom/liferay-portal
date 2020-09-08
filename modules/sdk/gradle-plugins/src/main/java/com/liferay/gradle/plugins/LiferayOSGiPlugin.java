@@ -183,23 +183,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureExtensionBundle(project, bundleExtension);
 		_configureExtensionLiferay(project, liferayExtension);
 
-		// Configurations
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		final Configuration compileIncludeConfiguration =
-			configurationContainer.maybeCreate(
-				COMPILE_INCLUDE_CONFIGURATION_NAME);
-
-		Configuration compileOnlyConfiguration =
-			configurationContainer.getByName(
-				JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
-
-		_configureConfigurationCompileInclude(compileIncludeConfiguration);
-		_configureConfigurationCompileOnly(
-			compileIncludeConfiguration, compileOnlyConfiguration);
-
 		// Conventions
 
 		final Convention convention = project.getConvention();
@@ -217,6 +200,23 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		_configureConventionBasePlugin(bundleExtension, basePluginConvention);
 		_configureConventionJavaPlugin(project, javaMainSourceSet);
+
+		// Configurations
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		final Configuration compileIncludeConfiguration =
+			configurationContainer.maybeCreate(
+				COMPILE_INCLUDE_CONFIGURATION_NAME);
+
+		Configuration compileOnlyConfiguration =
+			configurationContainer.getByName(
+				JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+
+		_configureConfigurationCompileInclude(compileIncludeConfiguration);
+		_configureConfigurationCompileOnly(
+			compileIncludeConfiguration, compileOnlyConfiguration);
 
 		// Tasks
 

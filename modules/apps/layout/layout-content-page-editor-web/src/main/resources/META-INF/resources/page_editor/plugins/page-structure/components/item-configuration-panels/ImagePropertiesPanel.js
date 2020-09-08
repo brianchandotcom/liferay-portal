@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
@@ -164,7 +164,7 @@ export function ImagePropertiesPanel({item}) {
 			/>
 
 			{type === EDITABLE_TYPES.image && (
-				<>
+				<ClayForm.Group>
 					<label htmlFor={imageDescriptionId}>
 						{Liferay.Language.get('image-description')}
 					</label>
@@ -189,7 +189,7 @@ export function ImagePropertiesPanel({item}) {
 						type="text"
 						value={imageDescription || ''}
 					/>
-				</>
+				</ClayForm.Group>
 			)}
 		</>
 	);

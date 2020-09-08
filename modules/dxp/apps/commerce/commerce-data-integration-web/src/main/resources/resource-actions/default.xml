@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_commerce_data_integration_manager_web_internal_portlet_CommerceDataIntegrationPortlet</portlet-name>
+		<portlet-name>com_liferay_commerce_data_integration_web_internal_portlet_CommerceDataIntegrationPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>

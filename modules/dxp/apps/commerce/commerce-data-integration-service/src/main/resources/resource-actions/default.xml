@@ -18,7 +18,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_data_integration_manager_web_internal_portlet_CommerceDataIntegrationPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_data_integration_web_internal_portlet_CommerceDataIntegrationPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>

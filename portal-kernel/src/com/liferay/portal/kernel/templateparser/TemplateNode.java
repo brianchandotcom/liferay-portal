@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +67,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		put("data", data);
 		put("type", type);
 		put("options", new ArrayList<String>());
-		put("optionsMap", new HashMap<String, String>());
+		put("optionsMap", new LinkedHashMap<String, String>());
 	}
 
 	public void appendChild(TemplateNode templateNode) {

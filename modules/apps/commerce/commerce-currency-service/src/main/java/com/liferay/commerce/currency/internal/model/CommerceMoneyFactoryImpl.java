@@ -40,9 +40,8 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 	public CommerceMoney create(
 		CommerceCurrency commerceCurrency, BigDecimal price) {
 
-		return _createCommerceMoney(
-			new CommerceMoneyImpl(_commercePriceFormatter), commerceCurrency,
-			price);
+		return new CommerceMoneyImpl(
+			commerceCurrency, _commercePriceFormatter, price);
 	}
 
 	@Override
@@ -50,17 +49,19 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 		CommerceCurrency commerceCurrency, BigDecimal price,
 		PriceFormat priceFormat) {
 
-		if (priceFormat == PriceFormat.DEFAULT) {
-			return create(commerceCurrency, price);
-		}
-		else if (priceFormat == PriceFormat.RELATIVE) {
-			return _createCommerceMoney(
-				new RelativeCommerceMoneyImpl(_commercePriceFormatter),
-				commerceCurrency, price);
+		if (priceFormat == null) {
+			throw new IllegalArgumentException("Price format must not be null");
 		}
 
-		throw new IllegalArgumentException(
-			"Invalid price format: " + priceFormat);
+		CommerceMoney commerceMoney = new CommerceMoneyImpl(
+			commerceCurrency, _commercePriceFormatter, price);
+
+		if (priceFormat == PriceFormat.RELATIVE) {
+			commerceMoney = new RelativeCommerceMoneyImpl(
+				commerceCurrency, _commercePriceFormatter, price);
+		}
+
+		return commerceMoney;
 	}
 
 	@Override
@@ -76,16 +77,6 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		CommerceMoneyFactoryUtil.setCommerceMoneyFactory(this);
-	}
-
-	private CommerceMoney _createCommerceMoney(
-		CommerceMoneyImpl commerceMoneyImpl, CommerceCurrency commerceCurrency,
-		BigDecimal price) {
-
-		commerceMoneyImpl.setCommerceCurrency(commerceCurrency);
-		commerceMoneyImpl.setPrice(price);
-
-		return commerceMoneyImpl;
 	}
 
 	@Reference

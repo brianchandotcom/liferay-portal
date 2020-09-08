@@ -31,7 +31,7 @@ definition {
 	@priority = "5"
 	test ContentDashboardFilterByAuthor {
 		property portal.acceptance = "true";
-		
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Test Site Name",
@@ -219,7 +219,7 @@ definition {
 	@priority = "5"
 	test ContentDashboardViewInfoPanel {
 		property portal.acceptance = "true";
-		
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Test Site Name",

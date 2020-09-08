@@ -513,7 +513,6 @@ definition {
 		task ("Map Manual URL to Container") {
 			PageEditor.editLayoutContainer(
 				panel = "Link",
-				target = "Self",
 				url = "https://liferay.com");
 
 			PageEditor.clickPublish();
@@ -524,9 +523,9 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//div[contains(@class,'layout-content')]/a[contains(@href,'https://liferay.com') and contains(@target,'self')]");
+			AssertVisible(locator1 = "//div[contains(@class,'layout-content')]/a[contains(@href,'https://liferay.com')]");
 
-			Click(locator1 = "//div[contains(@class,'layout-content')]/a[contains(@href,'https://liferay.com') and contains(@target,'self')]");
+			Click(locator1 = "//div[contains(@class,'layout-content')]/a[contains(@href,'https://liferay.com')]");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}
@@ -557,9 +556,7 @@ definition {
 				fragmentName = "Image",
 				id = "image-square");
 
-			PageEditorEditableLink.updateURL(
-				target = "Self",
-				url = "https://liferay.com");
+			PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
 			PageEditor.clickPublish();
 		}
@@ -569,9 +566,9 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//a[contains(@href,'https://liferay.com') and contains(@target,'self')]/img[contains(@src,'Document_1.jpg')]");
+			AssertVisible(locator1 = "//a[contains(@href,'https://liferay.com')]/img[contains(@src,'Document_1.jpg')]");
 
-			Click(locator1 = "//a[contains(@href,'https://liferay.com') and contains(@target,'self')]/img[contains(@src,'Document_1.jpg')]");
+			Click(locator1 = "//a[contains(@href,'https://liferay.com')]/img[contains(@src,'Document_1.jpg')]");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}
@@ -597,7 +594,9 @@ definition {
 				fragmentName = "Banner Center",
 				id = "link");
 
-			PageEditorEditableLink.updateURL(url = "https://liferay.com");
+			PageEditorEditableLink.updateURL(
+				target = "Blank",
+				url = "https://liferay.com");
 
 			PageEditor.clickPublish();
 		}
@@ -643,9 +642,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditorEditableLink.updateURL(
-				target = "Self",
-				url = "https://liferay.com");
+			PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
 			PageEditor.clickPublish();
 		}
@@ -655,9 +652,9 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//a[contains(@href,'https://liferay.com') and contains(@target,'self')][normalize-space(text())='Heading Example']");
+			AssertVisible(locator1 = "//a[contains(@href,'https://liferay.com')][normalize-space(text())='Heading Example']");
 
-			Click(locator1 = "//a[contains(@href,'https://liferay.com') and contains(@target,'self')][normalize-space(text())='Heading Example']");
+			Click(locator1 = "//a[contains(@href,'https://liferay.com')][normalize-space(text())='Heading Example']");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}

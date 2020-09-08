@@ -99,7 +99,9 @@ definition {
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryPath = "Documentos compartidos",
 			dmRepositoryName = "Sharepoint (${configurationName})",
-			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com");
+			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com",
+			permissionDefinitionKey = "ACCESS",
+			roleTitle = "Guest");
 
 		PortletEntry.save();
 

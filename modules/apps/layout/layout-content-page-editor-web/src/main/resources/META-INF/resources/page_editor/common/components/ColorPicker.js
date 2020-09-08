@@ -40,7 +40,7 @@ const ColorPicker = ({
 					small={small}
 				>
 					<ClayInput.GroupItem shrink>
-						<ClayInput.GroupText>
+						<ClayInput.GroupText className="page-editor__ColorPicker__input-group-text--rounded-left">
 							<Splotch
 								className="dropdown-toggle"
 								disabled={disabled}

@@ -59,6 +59,15 @@ public class CommerceMoneyImpl implements CommerceMoney {
 		return _price;
 	}
 
+	@Override
+	public boolean isEmpty() {
+		if (_price == null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected CommercePriceFormatter getCommercePriceFormatter() {
 		return _commercePriceFormatter;
 	}

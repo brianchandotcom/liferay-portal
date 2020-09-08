@@ -31,4 +31,6 @@ public interface CommerceMoney {
 
 	public BigDecimal getPrice();
 
+	public boolean isEmpty();
+
 }

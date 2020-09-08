@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
 
+import java.util.Locale;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -74,6 +76,39 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 			price);
 	}
 
+	@Override
+	public CommerceMoney emptyCommerceMoney() {
+		if (_emptyCommerceMoney != null) {
+			return _emptyCommerceMoney;
+		}
+
+		_emptyCommerceMoney = new CommerceMoney() {
+
+			@Override
+			public String format(Locale locale) throws PortalException {
+				return _commercePriceFormatter.format(BigDecimal.ZERO, locale);
+			}
+
+			@Override
+			public CommerceCurrency getCommerceCurrency() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public BigDecimal getPrice() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isEmpty() {
+				return true;
+			}
+
+		};
+
+		return _emptyCommerceMoney;
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		CommerceMoneyFactoryUtil.setCommerceMoneyFactory(this);
@@ -84,5 +119,7 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	private CommerceMoney _emptyCommerceMoney;
 
 }

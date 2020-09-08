@@ -34,4 +34,6 @@ public interface CommerceMoneyFactory {
 	public CommerceMoney create(long commerceCurrencyId, BigDecimal price)
 		throws PortalException;
 
+	public CommerceMoney emptyCommerceMoney();
+
 }

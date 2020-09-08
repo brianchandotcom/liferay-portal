@@ -92,7 +92,7 @@ public class UADSearchContainerBuilder {
 			}
 
 			uadEntities.add(
-				_constructUADEntity(
+				_constructApplicationSummaryUADEntity(
 					liferayPortletResponse, renderRequest, currentURL,
 					uadApplicationSummaryDisplay));
 		}
@@ -216,7 +216,7 @@ public class UADSearchContainerBuilder {
 
 			for (Object entity : entities) {
 				uadEntities.add(
-					_constructUADEntity(
+					_constructHierarchyUADEntity(
 						liferayPortletRequest, liferayPortletResponse,
 						applicationKey, entity, selectedUser.getUserId(),
 						uadHierarchyDisplay));
@@ -255,6 +255,70 @@ public class UADSearchContainerBuilder {
 		searchContainer.setRowChecker(rowChecker);
 
 		return searchContainer;
+	}
+
+	private <T> UADEntity<T> _constructApplicationSummaryUADEntity(
+			LiferayPortletResponse liferayPortletResponse,
+			RenderRequest renderRequest, PortletURL currentURL,
+			UADApplicationSummaryDisplay uadApplicationSummaryDisplay)
+		throws PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL viewURL = PortletURLUtil.clone(
+			currentURL, liferayPortletResponse);
+
+		viewURL.setParameter(
+			"applicationKey", uadApplicationSummaryDisplay.getApplicationKey());
+
+		UADEntity<T> uadEntity = new UADEntity(
+			null, uadApplicationSummaryDisplay.getApplicationKey(), null, false,
+			null, true, viewURL.toString());
+
+		uadEntity.addColumnEntry(
+			"name",
+			UADLanguageUtil.getApplicationName(
+				uadApplicationSummaryDisplay.getApplicationKey(),
+				themeDisplay.getLocale()));
+
+		uadEntity.addColumnEntry(
+			"count", uadApplicationSummaryDisplay.getCount());
+
+		return uadEntity;
+	}
+
+	private <T> UADEntity<T> _constructHierarchyUADEntity(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String applicationKey, T entity, long selectedUserId,
+			UADHierarchyDisplay uadHierarchyDisplay)
+		throws Exception {
+
+		String editURL = uadHierarchyDisplay.getEditURL(
+			liferayPortletRequest, liferayPortletResponse, entity);
+
+		String viewURL = uadHierarchyDisplay.getViewURL(
+			liferayPortletRequest, liferayPortletResponse, applicationKey,
+			entity, selectedUserId);
+
+		UADEntity<T> uadEntity = new UADEntity(
+			uadHierarchyDisplay.unwrap(entity),
+			uadHierarchyDisplay.getPrimaryKey(entity), editURL,
+			uadHierarchyDisplay.isInTrash(entity),
+			uadHierarchyDisplay.getTypeClass(entity),
+			uadHierarchyDisplay.isUserOwned(entity, selectedUserId), viewURL);
+
+		Map<String, Object> columnFieldValues =
+			uadHierarchyDisplay.getFieldValues(
+				entity, LocaleThreadLocal.getThemeDisplayLocale());
+
+		for (Map.Entry<String, Object> entry : columnFieldValues.entrySet()) {
+			uadEntity.addColumnEntry(
+				entry.getKey(), SafeDisplayValueUtil.get(entry.getValue()));
+		}
+
+		return uadEntity;
 	}
 
 	private SearchContainer<UADEntity<?>> _constructSearchContainer(
@@ -306,39 +370,6 @@ public class UADSearchContainerBuilder {
 
 	private <T> UADEntity<T> _constructUADEntity(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			String applicationKey, T entity, long selectedUserId,
-			UADHierarchyDisplay uadHierarchyDisplay)
-		throws Exception {
-
-		String editURL = uadHierarchyDisplay.getEditURL(
-			liferayPortletRequest, liferayPortletResponse, entity);
-
-		String viewURL = uadHierarchyDisplay.getViewURL(
-			liferayPortletRequest, liferayPortletResponse, applicationKey,
-			entity, selectedUserId);
-
-		UADEntity<T> uadEntity = new UADEntity(
-			uadHierarchyDisplay.unwrap(entity),
-			uadHierarchyDisplay.getPrimaryKey(entity), editURL,
-			uadHierarchyDisplay.isInTrash(entity),
-			uadHierarchyDisplay.getTypeClass(entity),
-			uadHierarchyDisplay.isUserOwned(entity, selectedUserId), viewURL);
-
-		Map<String, Object> columnFieldValues =
-			uadHierarchyDisplay.getFieldValues(
-				entity, LocaleThreadLocal.getThemeDisplayLocale());
-
-		for (Map.Entry<String, Object> entry : columnFieldValues.entrySet()) {
-			uadEntity.addColumnEntry(
-				entry.getKey(), SafeDisplayValueUtil.get(entry.getValue()));
-		}
-
-		return uadEntity;
-	}
-
-	private <T> UADEntity<T> _constructUADEntity(
-			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, T entity,
 			UADDisplay<T> uadDisplay)
 		throws Exception {
@@ -360,37 +391,6 @@ public class UADSearchContainerBuilder {
 				SafeDisplayValueUtil.get(
 					columnFieldValues.get(columnFieldName)));
 		}
-
-		return uadEntity;
-	}
-
-	private <T> UADEntity<T> _constructUADEntity(
-			LiferayPortletResponse liferayPortletResponse,
-			RenderRequest renderRequest, PortletURL currentURL,
-			UADApplicationSummaryDisplay uadApplicationSummaryDisplay)
-		throws PortletException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL viewURL = PortletURLUtil.clone(
-			currentURL, liferayPortletResponse);
-
-		viewURL.setParameter(
-			"applicationKey", uadApplicationSummaryDisplay.getApplicationKey());
-
-		UADEntity<T> uadEntity = new UADEntity(
-			null, uadApplicationSummaryDisplay.getApplicationKey(), null, false,
-			null, true, viewURL.toString());
-
-		uadEntity.addColumnEntry(
-			"name",
-			UADLanguageUtil.getApplicationName(
-				uadApplicationSummaryDisplay.getApplicationKey(),
-				themeDisplay.getLocale()));
-
-		uadEntity.addColumnEntry(
-			"count", uadApplicationSummaryDisplay.getCount());
 
 		return uadEntity;
 	}

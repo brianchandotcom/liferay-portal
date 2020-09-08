@@ -52,32 +52,6 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade713 {
-		property data.archive.type = "data-archive-oauth2-system-level";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.1.3";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
-
-		OAuth2.viewApplicationInTable(
-			applicationName = "OAuth Application",
-			description = "Registering a new application");
-
-		OAuth2.viewApplication(
-			applicationName = "OAuth Application",
-			callbackURI = "http://www.liferay.com",
-			checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
-			clientProfile = "Web Application",
-			clientSecret = "${generatedClientSecret}",
-			description = "Registering a new application",
-			privacyPolicyURL = "http://www.liferay.com",
-			websiteURL = "http://www.liferay.com");
-	}
-
-	@priority = "5"
 	test ViewOAuth2ApplicationInInstanceLevelAfterUpgrade720 {
 		property data.archive.type = "data-archive-oauth2-instance-level";
 		property database.types = "mariadb,mysql,postgresql";
@@ -99,32 +73,6 @@ definition {
 
 		OAuth2.viewApplication(
 			applicationName = "OAuth Instance Application",
-			callbackURI = "http://www.liferay.com",
-			checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
-			clientProfile = "Web Application",
-			clientSecret = "${generatedClientSecret}",
-			description = "Registering a new application",
-			privacyPolicyURL = "http://www.liferay.com",
-			websiteURL = "http://www.liferay.com");
-	}
-
-	@priority = "5"
-	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade720 {
-		property data.archive.type = "data-archive-oauth2-system-level";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.2.0";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
-
-		OAuth2.viewApplicationInTable(
-			applicationName = "OAuth Application",
-			description = "Registering a new application");
-
-		OAuth2.viewApplication(
-			applicationName = "OAuth Application",
 			callbackURI = "http://www.liferay.com",
 			checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 			clientProfile = "Web Application",
@@ -165,9 +113,40 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade71103 {
+	test ViewOAuth2ApplicationInInstanceLevelAfterUpgrade72101 {
+		property data.archive.type = "data-archive-oauth2-instance-level";
+		property portal.version = "7.2.10.1";
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		OAuth2.viewApplicationInTable(
+			applicationName = "OAuth Instance Application",
+			description = "Registering a new application");
+
+		OAuth2.viewApplication(
+			applicationName = "OAuth Instance Application",
+			callbackURI = "http://www.liferay.com",
+			checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
+			clientProfile = "Web Application",
+			clientSecret = "${generatedClientSecret}",
+			description = "Registering a new application",
+			privacyPolicyURL = "http://www.liferay.com",
+			websiteURL = "http://www.liferay.com");
+	}
+
+	@priority = "5"
+	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade713 {
 		property data.archive.type = "data-archive-oauth2-system-level";
-		property portal.version = "7.1.10.3";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
@@ -190,14 +169,10 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewOAuth2ApplicationInInstanceLevelAfterUpgrade72101 {
-		property data.archive.type = "data-archive-oauth2-instance-level";
-		property portal.version = "7.2.10.1";
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade720 {
+		property data.archive.type = "data-archive-oauth2-system-level";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.0";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
@@ -205,11 +180,36 @@ definition {
 			portlet = "OAuth 2 Administration");
 
 		OAuth2.viewApplicationInTable(
-			applicationName = "OAuth Instance Application",
+			applicationName = "OAuth Application",
 			description = "Registering a new application");
 
 		OAuth2.viewApplication(
-			applicationName = "OAuth Instance Application",
+			applicationName = "OAuth Application",
+			callbackURI = "http://www.liferay.com",
+			checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
+			clientProfile = "Web Application",
+			clientSecret = "${generatedClientSecret}",
+			description = "Registering a new application",
+			privacyPolicyURL = "http://www.liferay.com",
+			websiteURL = "http://www.liferay.com");
+	}
+
+	@priority = "5"
+	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade71103 {
+		property data.archive.type = "data-archive-oauth2-system-level";
+		property portal.version = "7.1.10.3";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		OAuth2.viewApplicationInTable(
+			applicationName = "OAuth Application",
+			description = "Registering a new application");
+
+		OAuth2.viewApplication(
+			applicationName = "OAuth Application",
 			callbackURI = "http://www.liferay.com",
 			checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 			clientProfile = "Web Application",

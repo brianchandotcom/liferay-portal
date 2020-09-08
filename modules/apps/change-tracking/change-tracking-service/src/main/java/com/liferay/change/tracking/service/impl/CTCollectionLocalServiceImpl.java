@@ -392,25 +392,8 @@ public class CTCollectionLocalServiceImpl
 		ctMessagePersistence.removeByCTCollectionId(
 			ctCollection.getCtCollectionId());
 
-		for (CTPreferences ctPreferences :
-				ctPreferencesPersistence.findByCollectionId(
-					ctCollection.getCtCollectionId())) {
-
-			ctPreferences.setCtCollectionId(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-			ctPreferencesPersistence.update(ctPreferences);
-		}
-
-		for (CTPreferences ctPreferences :
-				ctPreferencesPersistence.findByPreviousCollectionId(
-					ctCollection.getCtCollectionId())) {
-
-			ctPreferences.setPreviousCtCollectionId(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-			ctPreferencesPersistence.update(ctPreferences);
-		}
+		_ctPreferencesLocalService.resetCTPreferences(
+			ctCollection.getCtCollectionId());
 
 		List<CTProcess> ctProcesses = ctProcessPersistence.findByCollectionId(
 			ctCollection.getCtCollectionId());

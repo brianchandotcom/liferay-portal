@@ -16,7 +16,6 @@ package com.liferay.commerce.product.definitions.web.internal.frontend;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
@@ -167,10 +166,7 @@ public class CommerceProductInstanceDataSetDataProvider
 					cpInstance.getCompanyId(),
 					commerceCatalog.getCommerceCurrencyCode()));
 
-		return _commercePriceFormatter.format(
-			cpInstance.getCompanyId(),
-			commerceCatalog.getCommerceCurrencyCode(), commerceMoney.getPrice(),
-			locale);
+		return commerceMoney.format(locale);
 	}
 
 	private BaseModelSearchResult<CPInstance> _getBaseModelSearchResult(
@@ -230,9 +226,6 @@ public class CommerceProductInstanceDataSetDataProvider
 
 	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;
-
-	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;

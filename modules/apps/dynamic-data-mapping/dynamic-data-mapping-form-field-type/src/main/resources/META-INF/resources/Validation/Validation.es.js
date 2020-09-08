@@ -108,12 +108,14 @@ const Validation = ({
 
 				return {
 					...prevState,
-					errorMessage: errorMessage[editingLanguageId]
-						? errorMessage[editingLanguageId]
-						: errorMessage[defaultLanguageId],
-					parameter: parameter[editingLanguageId]
-						? parameter[editingLanguageId]
-						: parameter[defaultLanguageId],
+					errorMessage:
+						errorMessage[editingLanguageId] !== undefined
+							? errorMessage[editingLanguageId]
+							: errorMessage[defaultLanguageId],
+					parameter:
+						parameter[editingLanguageId] !== undefined
+							? parameter[editingLanguageId]
+							: parameter[defaultLanguageId],
 				};
 			});
 		}

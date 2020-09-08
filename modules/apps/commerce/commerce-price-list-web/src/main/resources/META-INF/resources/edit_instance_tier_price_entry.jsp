@@ -33,7 +33,7 @@ CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
 
 BigDecimal price = BigDecimal.ZERO;
 
-if ((commercePriceEntry != null) && (commerceTierPriceEntry != null) && (commerceTierPriceEntry.getPrice() != null)) {
+if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getPrice() != null)) {
 	price = commerceCurrency.round(commerceTierPriceEntry.getPrice());
 }
 %>

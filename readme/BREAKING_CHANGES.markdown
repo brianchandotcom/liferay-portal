@@ -16,9 +16,6 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain
   feature or API will be dropped in an upcoming version.
-* Recommendations: For example, recommending using a newly introduced API that
-  replaces an old API, in spite of the old API being kept in Liferay Portal for
-  backwards compatibility.
 
 *This document has been reviewed through commit `20bb08f47603`.*
 

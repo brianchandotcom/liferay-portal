@@ -105,7 +105,7 @@
 
 	<target depends="move-artifact,move-artifact-dependencies,move-artifact-wsdd" name="dist-module-artifact-lpkg" />
 
-	<target depends="get-artifact-properties" name="download-artifact" unless="artifact.exclude">
+	<target depends="get-artifact-properties-releng" name="download-artifact" unless="artifact.exclude">
 		<if>
 			<or>
 				<contains string="${basedir}" substring="dxp${file.separator}" />
@@ -137,7 +137,7 @@
 		</exec>
 	</target>
 
-	<target depends="get-artifact-properties" if="${download.artifact.sources}" name="download-artifact-sources" unless="download.artifact.sources.skip">
+	<target depends="get-artifact-properties-releng" if="${download.artifact.sources}" name="download-artifact-sources" unless="download.artifact.sources.skip">
 		<mkdir dir="${dist.dir}/sources" />
 
 		<if>
@@ -175,7 +175,7 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-properties" if="download.artifact.wsdd" name="download-artifact-wsdd" unless="artifact.exclude">
+	<target depends="get-artifact-properties-releng" if="download.artifact.wsdd" name="download-artifact-wsdd" unless="artifact.exclude">
 		<if>
 			<or>
 				<contains string="${basedir}" substring="private${file.separator}" />
@@ -258,7 +258,9 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" unless="artifact.exclude">
+	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" unless="artifact.exclude" />
+
+	<target name="get-artifact-properties-releng" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
 			<condition>
 				<not>

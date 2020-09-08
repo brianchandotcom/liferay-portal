@@ -4916,6 +4916,9 @@ public class DataFactory {
 				else if (name.equals("LPageTemplateStructureRelId")) {
 					name = "LayoutPageTemplateStructureRelId";
 				}
+				else if (name.equals("DeliverySubTypeSettings")) {
+					name = "DeliverySubscriptionTypeSettings";
+				}
 
 				int type = (int)tableColumn[1];
 

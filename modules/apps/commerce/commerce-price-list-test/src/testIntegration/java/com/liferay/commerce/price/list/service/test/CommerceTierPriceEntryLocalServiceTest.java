@@ -22,6 +22,7 @@ import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.price.list.test.util.CommercePriceEntryTestUtil;
 import com.liferay.commerce.price.list.test.util.CommerceTierPriceEntryTestUtil;
@@ -43,6 +44,7 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -70,6 +72,12 @@ public class CommerceTierPriceEntryLocalServiceTest {
 
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), defaultUser.getUserId(), 0);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_commercePriceListLocalService.deleteCommercePriceLists(
+			_company.getCompanyId());
 	}
 
 	@Test
@@ -428,6 +436,9 @@ public class CommerceTierPriceEntryLocalServiceTest {
 
 	@Inject
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
+	@Inject
+	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Inject
 	private CommerceTierPriceEntryLocalService

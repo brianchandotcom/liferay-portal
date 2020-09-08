@@ -22,6 +22,7 @@ import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.test.util.CommercePriceEntryTestUtil;
 import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
@@ -46,6 +47,7 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -76,6 +78,12 @@ public class CommercePriceEntryLocalServiceTest {
 			_company.getCompanyId(), defaultUser.getUserId(), 0);
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_company.getCompanyId());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_commercePriceListLocalService.deleteCommercePriceLists(
 			_company.getCompanyId());
 	}
 
@@ -712,6 +720,9 @@ public class CommercePriceEntryLocalServiceTest {
 
 	@Inject
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
+	@Inject
+	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@DeleteAfterTestRun
 	private Company _company;

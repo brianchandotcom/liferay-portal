@@ -48,6 +48,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUti
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
@@ -159,6 +160,8 @@ public class CommerceOrderItemLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		_deleteCommerceAccountTestOrderItems();
+
+		_cpOptionLocalService.deleteCPOptions(_company.getCompanyId());
 	}
 
 	@Test
@@ -1600,6 +1603,9 @@ public class CommerceOrderItemLocalServiceTest {
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Inject
+	private CPOptionLocalService _cpOptionLocalService;
 
 	private Group _group;
 	private ServiceContext _serviceContext;

@@ -1731,7 +1731,6 @@ public class CommerceGrossPricingTest {
 	@Inject
 	private CommerceTaxMethodLocalService _commerceTaxMethodLocalService;
 
-	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject

@@ -200,16 +200,8 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_commercePriceListLocalService.deleteCommercePriceList(
-			_commercePriceList1);
-		_commercePriceListLocalService.deleteCommercePriceList(
-			_commercePriceList2);
-		_commercePriceListLocalService.deleteCommercePriceList(
-			_commercePriceList3);
-		_commercePriceListLocalService.deleteCommercePriceList(
-			_commercePriceList4);
-		_commercePriceListLocalService.deleteCommercePriceList(
-			_commercePriceList5);
+		_commercePriceListLocalService.deleteCommercePriceLists(
+			_company.getCompanyId());
 	}
 
 	@Test

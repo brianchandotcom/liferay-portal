@@ -74,6 +74,7 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -111,6 +112,12 @@ public class CommerceProductPriceCalculationV2Test {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_commercePriceListLocalService.deleteCommercePriceLists(
+			_company.getCompanyId());
 	}
 
 	@Test

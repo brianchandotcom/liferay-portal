@@ -1127,9 +1127,7 @@ public class CommercePricingTest {
 	@Inject
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
-	@DeleteAfterTestRun
 	private Company _company;
-
 	private Group _group;
 	private ServiceContext _serviceContext;
 

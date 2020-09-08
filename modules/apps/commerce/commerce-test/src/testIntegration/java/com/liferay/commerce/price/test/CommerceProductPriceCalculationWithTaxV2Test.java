@@ -25,6 +25,7 @@ import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceRequest;
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.price.list.test.util.CommercePriceEntryTestUtil;
 import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
@@ -61,6 +62,7 @@ import java.math.RoundingMode;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -105,6 +107,12 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		_commerceTaxMethod = CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
 			_user.getUserId(), _commerceChannel.getGroupId(), true);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_commercePriceListLocalService.deleteCommercePriceLists(
+			_company.getCompanyId());
 	}
 
 	@Test
@@ -328,6 +336,9 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 	private CommerceChannel _commerceChannel;
 
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Inject
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;

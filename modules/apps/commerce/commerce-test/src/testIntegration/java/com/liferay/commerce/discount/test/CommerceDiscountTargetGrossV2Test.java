@@ -132,6 +132,9 @@ public class CommerceDiscountTargetGrossV2Test {
 		for (CommerceOrder commerceOrder : _commerceOrders) {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
+
+		_commercePriceListLocalService.deleteCommercePriceLists(
+			_company.getCompanyId());
 	}
 
 	@Test

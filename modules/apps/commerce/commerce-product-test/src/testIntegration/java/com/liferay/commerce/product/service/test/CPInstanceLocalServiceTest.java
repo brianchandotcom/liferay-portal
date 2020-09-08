@@ -28,6 +28,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUti
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
@@ -53,6 +54,7 @@ import java.util.Map;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -79,6 +81,20 @@ public class CPInstanceLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LocaleUtil.US.getDisplayLanguage(), null,
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		List<CPDefinition> cpDefinitions =
+			_cpDefinitionLocalService.getCPDefinitions(
+				_commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CPDefinition cpDefinition : cpDefinitions) {
+			_cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
+		}
+
+		_cpOptionLocalService.deleteCPOptions(_company.getCompanyId());
 	}
 
 	@Test
@@ -680,5 +696,8 @@ public class CPInstanceLocalServiceTest {
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Inject
+	private CPOptionLocalService _cpOptionLocalService;
 
 }

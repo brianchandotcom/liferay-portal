@@ -28,10 +28,12 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
@@ -64,6 +66,7 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -98,6 +101,11 @@ public class CommerceSubscriptionEntryTest {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_cpOptionLocalService.deleteCPOptions(_company.getCompanyId());
 	}
 
 	@Test
@@ -400,7 +408,13 @@ public class CommerceSubscriptionEntryTest {
 	private Company _company;
 
 	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Inject
+	private CPOptionLocalService _cpOptionLocalService;
 
 	private Group _group;
 	private User _user;

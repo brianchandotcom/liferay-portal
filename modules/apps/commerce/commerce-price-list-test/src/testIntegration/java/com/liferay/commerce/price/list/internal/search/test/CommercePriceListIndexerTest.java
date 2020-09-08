@@ -46,6 +46,7 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -78,6 +79,12 @@ public class CommercePriceListIndexerTest {
 
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _user.getUserId(), 0);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_commercePriceListLocalService.deleteCommercePriceLists(
+			_company.getCompanyId());
 	}
 
 	@Test

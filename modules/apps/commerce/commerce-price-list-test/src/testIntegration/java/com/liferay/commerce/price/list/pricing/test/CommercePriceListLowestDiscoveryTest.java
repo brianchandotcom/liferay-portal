@@ -27,6 +27,7 @@ import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.discovery.CommercePriceListDiscovery;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.test.util.CommercePriceEntryTestUtil;
 import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
@@ -56,6 +57,7 @@ import java.math.BigDecimal;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -111,6 +113,12 @@ public class CommercePriceListLowestDiscoveryTest {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_commercePriceListLocalService.deleteCommercePriceLists(
+			_company.getCompanyId());
 	}
 
 	@Test
@@ -316,6 +324,9 @@ public class CommercePriceListLowestDiscoveryTest {
 		filter = "commerce.price.list.discovery.key=" + CommercePricingConstants.ORDER_BY_LOWEST_ENTRY
 	)
 	private CommercePriceListDiscovery _commercePriceListDiscovery;
+
+	@Inject
+	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@DeleteAfterTestRun
 	private Company _company;

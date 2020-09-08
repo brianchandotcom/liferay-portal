@@ -16,12 +16,14 @@ package com.liferay.commerce.product.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -47,6 +49,7 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -75,6 +78,18 @@ public class CPDefinitionHelperTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LocaleUtil.toLanguageId(LocaleUtil.US), null,
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		List<CPDefinition> cpDefinitions =
+			_cpDefinitionLocalService.getCPDefinitions(
+				_commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CPDefinition cpDefinition : cpDefinitions) {
+			_cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
+		}
 	}
 
 	@Test
@@ -148,6 +163,9 @@ public class CPDefinitionHelperTest {
 
 		Assert.assertTrue(
 			actualCPDefinitionIds.containsAll(cpDefinitionIdsList));
+
+		AssetCategoryLocalServiceUtil.deleteAssetCategory(
+			assetCategory.getCategoryId());
 	}
 
 	@Test
@@ -262,10 +280,12 @@ public class CPDefinitionHelperTest {
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
-	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

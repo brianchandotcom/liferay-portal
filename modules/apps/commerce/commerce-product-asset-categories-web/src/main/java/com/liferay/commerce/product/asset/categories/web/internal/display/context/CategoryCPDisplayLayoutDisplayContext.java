@@ -102,39 +102,35 @@ public class CategoryCPDisplayLayoutDisplayContext
 		return _assetCategoryLocalService.getAssetCategory(assetCategoryId);
 	}
 
-	public String getCategorySelectorURL(RenderResponse renderResponse) {
+	public String getCategorySelectorURL(RenderResponse renderResponse)
+		throws Exception {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		try {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				httpServletRequest, AssetCategory.class.getName(),
-				PortletProvider.Action.BROWSE);
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, AssetCategory.class.getName(),
+			PortletProvider.Action.BROWSE);
 
-			if (portletURL == null) {
-				return null;
-			}
-
-			List<AssetVocabulary> vocabularies =
-				AssetVocabularyServiceUtil.getGroupVocabularies(
-					themeDisplay.getCompanyGroupId());
-
-			portletURL.setParameter(
-				"eventName", renderResponse.getNamespace() + "selectCategory");
-			portletURL.setParameter("singleSelect", "true");
-			portletURL.setParameter(
-				"vocabularyIds",
-				ListUtil.toString(
-					vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR));
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			return portletURL.toString();
-		}
-		catch (Exception exception) {
+		if (portletURL == null) {
+			return null;
 		}
 
-		return null;
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				themeDisplay.getCompanyGroupId());
+
+		portletURL.setParameter(
+			"eventName", renderResponse.getNamespace() + "selectCategory");
+		portletURL.setParameter("singleSelect", "true");
+		portletURL.setParameter(
+			"vocabularyIds",
+			ListUtil.toString(
+				vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR));
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
 	}
 
 	public CommerceChannel getCommerceChannel() {

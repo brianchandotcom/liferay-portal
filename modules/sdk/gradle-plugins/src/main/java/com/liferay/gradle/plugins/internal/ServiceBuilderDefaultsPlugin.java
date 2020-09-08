@@ -36,6 +36,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -126,7 +127,7 @@ public class ServiceBuilderDefaultsPlugin
 							@Override
 							public void execute(BuildDBTask buildDBTask) {
 								_configureTaskBuildDBForLiferayBasePlugin(
-									buildDBTask);
+									project, buildDBTask);
 							}
 
 						});
@@ -169,11 +170,17 @@ public class ServiceBuilderDefaultsPlugin
 	}
 
 	private void _configureTaskBuildDBForLiferayBasePlugin(
-		BuildDBTask buildDBTask) {
+		Project project, BuildDBTask buildDBTask) {
 
-		Configuration portalConfiguration = GradleUtil.getConfiguration(
-			buildDBTask.getProject(),
+		// Configurations
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration portalConfiguration = configurationContainer.getByName(
 			LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
+
+		// Tasks
 
 		buildDBTask.setClasspath(portalConfiguration);
 	}

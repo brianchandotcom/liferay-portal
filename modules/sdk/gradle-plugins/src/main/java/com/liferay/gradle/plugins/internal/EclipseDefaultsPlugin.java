@@ -34,6 +34,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.XmlProvider;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskProvider;
@@ -216,16 +217,24 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	private void _configurePluginJava(
 		Project project, EclipseModel eclipseModelExtension) {
 
+		// Configurations
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration compileOnlyConfiguration =
+			configurationContainer.getByName(
+				JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+
+		// Other
+
 		EclipseClasspath eclipseClasspath =
 			eclipseModelExtension.getClasspath();
 
 		Collection<Configuration> configurations =
 			eclipseClasspath.getPlusConfigurations();
 
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
-
-		configurations.add(configuration);
+		configurations.add(compileOnlyConfiguration);
 	}
 
 	private void _configureTaskEclipseProvider(

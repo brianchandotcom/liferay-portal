@@ -34,6 +34,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.TaskContainer;
@@ -58,8 +59,11 @@ public class DBSupportDefaultsPlugin
 
 		// Configurations
 
-		Configuration dbSupportConfiguration = GradleUtil.getConfiguration(
-			project, DBSupportPlugin.CONFIGURATION_NAME);
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration dbSupportConfiguration = configurationContainer.getByName(
+			DBSupportPlugin.CONFIGURATION_NAME);
 
 		_configureConfigurationDBSupport(
 			project, liferayExtension, dbSupportConfiguration);

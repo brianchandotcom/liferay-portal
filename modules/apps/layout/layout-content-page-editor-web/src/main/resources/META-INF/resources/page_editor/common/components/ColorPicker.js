@@ -70,7 +70,11 @@ const ColorPicker = ({
 								<div className="clay-color-swatch-item" key={i}>
 									<Splotch
 										onClick={() => {
-											onValueChange({label, name, value});
+											onValueChange({
+												label,
+												name,
+												value,
+											});
 											setActive((active) => !active);
 
 											if (splotchRef.current) {
@@ -91,13 +95,14 @@ const ColorPicker = ({
 };
 
 const Splotch = React.forwardRef(
-	({active, onClick, size, title, value}, ref) => {
+	({active, className, onClick, size, title, value}, ref) => {
 		return (
 			<button
 				className={classNames(
 					'btn clay-color-btn clay-color-btn-bordered',
 					{
 						active,
+						[className]: !!className,
 					}
 				)}
 				onClick={onClick}

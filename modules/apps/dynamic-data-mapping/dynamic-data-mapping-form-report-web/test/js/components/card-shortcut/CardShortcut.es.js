@@ -37,23 +37,6 @@ const createCardShortcut = () => (
 	</SidebarContextProviderWrapper>
 );
 
-const setCardId = () => {
-	delete window.location;
-
-	window.location = {reload: jest.fn()};
-
-	global.window = Object.create(window);
-
-	const cardId =
-		'#_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_1';
-
-	Object.defineProperty(window, 'location', {
-		value: {
-			hash: cardId,
-		},
-	});
-};
-
 describe('CardShortcut', () => {
 	afterEach(cleanup);
 
@@ -67,13 +50,11 @@ describe('CardShortcut', () => {
 		window.location = location;
 	});
 
-	it('anchors are created for each field', () => {
+	it('a label is created for each field', () => {
 		const {getByText} = render(createCardShortcut());
 
-		fields.forEach((field, index) => {
-			expect(getByText(field.label).closest('a').href).toBe(
-				`http://localhost/#_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_card_${index}`
-			);
+		fields.forEach((field) => {
+			expect(getByText(field.label).className).toBe('field-label');
 		});
 	});
 
@@ -91,17 +72,5 @@ describe('CardShortcut', () => {
 		});
 
 		expect(item.closest('.selected')).not.toBe(null);
-	});
-
-	it('when page reloads it selects the item according to card number of url', () => {
-		setCardId();
-
-		const {getByText} = render(createCardShortcut());
-
-		const field1 = getByText('Field 1');
-		const field2 = getByText('Field 2');
-
-		expect(field1.closest('.selected')).toBe(null);
-		expect(field2.closest('.selected')).not.toBe(null);
 	});
 });

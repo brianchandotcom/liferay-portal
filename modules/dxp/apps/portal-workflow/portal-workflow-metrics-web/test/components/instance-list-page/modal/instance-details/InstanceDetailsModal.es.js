@@ -21,14 +21,13 @@ import {MockRouter} from '../../../../mock/MockRouter.es';
 
 const ContainerMock = ({children, clientMock}) => {
 	const [instanceId, setInstanceId] = useState(37634);
-	const closeModal = jest.fn();
 
 	return (
 		<MockRouter client={clientMock}>
 			<InstanceListContext.Provider value={{instanceId, setInstanceId}}>
 				<ModalContext.Provider
 					value={{
-						closeModal,
+						closeModal: jest.fn(),
 						processId: '12345',
 						visibleModal: 'instanceDetails',
 					}}

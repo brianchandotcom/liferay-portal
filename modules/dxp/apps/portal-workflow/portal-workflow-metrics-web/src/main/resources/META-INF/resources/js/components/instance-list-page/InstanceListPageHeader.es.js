@@ -44,8 +44,8 @@ const Header = ({
 		setSelectAll,
 		setSelectedItems,
 	} = useContext(InstanceListContext);
-	const previousCount = usePrevious(totalCount);
 	const {openModal} = useContext(ModalContext);
+	const previousCount = usePrevious(totalCount);
 
 	const handleClick = useCallback(
 		(bulkModal, singleModal) => {

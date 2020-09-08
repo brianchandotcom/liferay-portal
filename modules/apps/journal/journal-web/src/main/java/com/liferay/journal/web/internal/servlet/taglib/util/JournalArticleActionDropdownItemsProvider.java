@@ -117,8 +117,7 @@ public class JournalArticleActionDropdownItemsProvider {
 		UnsafeConsumer<DropdownItem, Exception> viewContentArticleAction =
 			_getViewContentArticleActionUnsafeConsumer();
 
-		boolean importExportTranslationEnabled =
-			hasUpdatePermission && !_isSingleLanguageSite();
+		boolean singleLanguageSite = _isSingleLanguageSite();
 
 		return DropdownItemListBuilder.add(
 			() -> hasUpdatePermission, _getEditArticleActionUnsafeConsumer()
@@ -143,15 +142,13 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> hasViewPermission && (previewContentArticleAction != null),
 			previewContentArticleAction
 		).add(
-			() ->
-				(hasUpdatePermission || hasViewPermission) &&
-				!_isSingleLanguageSite(),
+			() -> hasViewPermission && !singleLanguageSite,
 			_getTranslateActionUnsafeConsumer()
 		).add(
-			() -> importExportTranslationEnabled,
+			() -> hasViewPermission && !singleLanguageSite,
 			_getExportForTranslationActionUnsafeConsumer()
 		).add(
-			() -> importExportTranslationEnabled,
+			() -> hasUpdatePermission && !singleLanguageSite,
 			_getImportTranslationActionUnsafeConsumer()
 		).add(
 			() -> hasUpdatePermission && (availableLanguageIds.length > 1),

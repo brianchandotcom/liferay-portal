@@ -15,8 +15,8 @@
 package com.liferay.portal.search.engine.adapter.document;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.script.Script;
 
 /**
@@ -33,22 +33,25 @@ public class UpdateByQueryDocumentRequest
 	 */
 	@Deprecated
 	public UpdateByQueryDocumentRequest(
-		Query query, JSONObject scriptJSONObject, String... indexNames) {
+		com.liferay.portal.kernel.search.Query query,
+		JSONObject scriptJSONObject, String... indexNames) {
 
 		_query = query;
 		_scriptJSONObject = scriptJSONObject;
 		_indexNames = indexNames;
 
+		_portalSearchQuery = null;
 		_script = null;
 	}
 
 	public UpdateByQueryDocumentRequest(
-		Query query, Script script, String... indexNames) {
+		Query portalSearchQuery, Script script, String... indexNames) {
 
-		_query = query;
+		_portalSearchQuery = portalSearchQuery;
 		_script = script;
 		_indexNames = indexNames;
 
+		_query = null;
 		_scriptJSONObject = null;
 	}
 
@@ -63,7 +66,16 @@ public class UpdateByQueryDocumentRequest
 		return _indexNames;
 	}
 
-	public Query getQuery() {
+	public Query getPortalSearchQuery() {
+		return _portalSearchQuery;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getPortalSearchQuery()}
+	 */
+	@Deprecated
+	public com.liferay.portal.kernel.search.Query getQuery() {
 		return _query;
 	}
 
@@ -92,7 +104,8 @@ public class UpdateByQueryDocumentRequest
 	}
 
 	private final String[] _indexNames;
-	private final Query _query;
+	private final Query _portalSearchQuery;
+	private final com.liferay.portal.kernel.search.Query _query;
 	private boolean _refresh;
 	private final Script _script;
 	private final JSONObject _scriptJSONObject;

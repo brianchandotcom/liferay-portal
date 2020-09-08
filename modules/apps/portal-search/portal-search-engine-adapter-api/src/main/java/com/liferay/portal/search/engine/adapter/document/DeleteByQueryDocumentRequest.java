@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.engine.adapter.document;
 
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
+import com.liferay.portal.search.query.Query;
 
 /**
  * @author Michael C. Han
@@ -24,9 +24,28 @@ public class DeleteByQueryDocumentRequest
 	extends CrossClusterRequest
 	implements DocumentRequest<DeleteByQueryDocumentResponse> {
 
-	public DeleteByQueryDocumentRequest(Query query, String... indexNames) {
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by
+	 *             DeleteByQueryDocumentRequest.DeleteByQueryDocumentRequest(
+	 *             Query, String...)
+	 */
+	@Deprecated
+	public DeleteByQueryDocumentRequest(
+		com.liferay.portal.kernel.search.Query query, String... indexNames) {
+
 		_query = query;
 		_indexNames = indexNames;
+
+		_portalSearchQuery = null;
+	}
+
+	public DeleteByQueryDocumentRequest(
+		Query portalSearchQuery, String... indexNames) {
+
+		_portalSearchQuery = portalSearchQuery;
+		_indexNames = indexNames;
+
+		_query = null;
 	}
 
 	@Override
@@ -40,7 +59,16 @@ public class DeleteByQueryDocumentRequest
 		return _indexNames;
 	}
 
-	public Query getQuery() {
+	public Query getPortalSearchQuery() {
+		return _portalSearchQuery;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getPortalSearchQuery()}
+	 */
+	@Deprecated
+	public com.liferay.portal.kernel.search.Query getQuery() {
 		return _query;
 	}
 
@@ -61,7 +89,8 @@ public class DeleteByQueryDocumentRequest
 	}
 
 	private final String[] _indexNames;
-	private final Query _query;
+	private final Query _portalSearchQuery;
+	private final com.liferay.portal.kernel.search.Query _query;
 	private boolean _refresh;
 	private boolean _waitForCompletion;
 

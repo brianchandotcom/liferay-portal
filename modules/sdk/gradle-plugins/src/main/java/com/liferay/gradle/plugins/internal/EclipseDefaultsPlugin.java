@@ -35,6 +35,7 @@ import org.gradle.api.Task;
 import org.gradle.api.XmlProvider;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskProvider;
@@ -61,8 +62,10 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
 		// Extensions
 
-		final EclipseModel eclipseModelExtension = GradleUtil.getExtension(
-			project, EclipseModel.class);
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		final EclipseModel eclipseModelExtension = extensionContainer.getByType(
+			EclipseModel.class);
 
 		// Tasks
 

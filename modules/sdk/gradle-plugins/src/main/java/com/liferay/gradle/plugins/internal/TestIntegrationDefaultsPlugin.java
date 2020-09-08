@@ -40,6 +40,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.TaskProvider;
 
 /**
@@ -57,11 +58,12 @@ public class TestIntegrationDefaultsPlugin
 
 		// Extensions
 
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		LiferayExtension liferayExtension = extensionContainer.getByType(
+			LiferayExtension.class);
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension =
-			GradleUtil.getExtension(
-				project, TestIntegrationTomcatExtension.class);
+			extensionContainer.getByType(TestIntegrationTomcatExtension.class);
 
 		TomcatAppServer tomcatAppServer =
 			(TomcatAppServer)liferayExtension.getAppServer("tomcat");

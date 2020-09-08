@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGener
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.TaskProvider;
 
 /**
@@ -41,9 +42,11 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 
 		// Extensions
 
+		ExtensionContainer extensionContainer = project.getExtensions();
+
 		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
-			GradleUtil.getExtension(
-				project, JSModuleConfigGeneratorExtension.class);
+			extensionContainer.getByType(
+				JSModuleConfigGeneratorExtension.class);
 
 		_configureExtensionJSModuleConfigGenerator(
 			project, jsModuleConfigGeneratorExtension);

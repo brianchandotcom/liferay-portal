@@ -1,0 +1,16 @@
+{
+	"dependencies": {
+		"metal-dom": "2.16.8"
+	},
+	"name": "site-navigation-menu-web",
+	"optionalDependencies": {
+		"fsevents": "^1.2.7"
+	},
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
+	},
+	"version": "5.0.12"
+}

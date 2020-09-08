@@ -260,27 +260,6 @@
 
 	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" unless="artifact.exclude" />
 
-	<target name="get-artifact-properties-releng" unless="artifact.exclude">
-		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
-			<condition>
-				<not>
-					<available file="${releng.module.dir}/artifact.properties" />
-				</not>
-			</condition>
-		</fail>
-
-		<loadproperties srcFile="${releng.module.dir}/artifact.properties" />
-
-		<condition property="download.artifact.sources.skip">
-			<or>
-				<istrue value="${artifact.exclude}" />
-				<not>
-					<isset property="artifact.sources.url" />
-				</not>
-			</or>
-		</condition>
-	</target>
-
 	<target depends="get-artifact-version-from-releng" if="artifact.bnd" name="get-artifact-properties-bnd">
 		<property file="bnd.bnd" />
 
@@ -404,6 +383,27 @@
 
 		<property name="artifact.location.dest" value="${output.dir}/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${artifact.name}-${artifact.version}.war" />
 		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${artifact.version}.war" />
+	</target>
+
+	<target name="get-artifact-properties-releng" unless="artifact.exclude">
+		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
+			<condition>
+				<not>
+					<available file="${releng.module.dir}/artifact.properties" />
+				</not>
+			</condition>
+		</fail>
+
+		<loadproperties srcFile="${releng.module.dir}/artifact.properties" />
+
+		<condition property="download.artifact.sources.skip">
+			<or>
+				<istrue value="${artifact.exclude}" />
+				<not>
+					<isset property="artifact.sources.url" />
+				</not>
+			</or>
+		</condition>
 	</target>
 
 	<target if="${get.artifact.version.from.releng}" name="get-artifact-version-from-releng" unless="artifact.exclude">

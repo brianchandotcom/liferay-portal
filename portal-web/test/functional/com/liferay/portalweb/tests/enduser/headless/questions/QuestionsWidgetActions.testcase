@@ -605,6 +605,10 @@ definition {
 
 		Questions.unSubscribeQuestion(questionTitle = "Title AddQuestion");
 
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.gotoTab(questionTabField = "My Subscriptions");
+
 		Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
 
 		Questions.gotoTab(questionTabField = "Questions");

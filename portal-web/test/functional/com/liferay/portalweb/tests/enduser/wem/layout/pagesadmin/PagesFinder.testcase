@@ -14,62 +14,6 @@ definition {
 
 		task ("Create new Sites") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
-
-			JSONGroup.addGroup(groupName = "Test Site Name 2");
-
-			JSONGroup.addGroup(groupName = "Test Site Name 3");
-		}
-
-		task ("Add layouts of various types for the pages finder") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Portlet Page",
-				type = "portlet");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page",
-				type = "content");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Embedded Page",
-				type = "embedded");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Link to Layout",
-				type = "link_to_layout");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Full Page Application",
-				type = "full_page_application");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Panel Page",
-				type = "panel");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test URL",
-				type = "url");
-
-			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Private Page",
-				type = "portlet");
-
-			for (var i : list "1,2,3,4") {
-				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Default Page ${i}");
-			}
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name 2",
-				layoutName = "Test Page Name");
 		}
 	}
 
@@ -81,10 +25,6 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name 2");
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name 3");
 		}
 	}
 
@@ -93,7 +33,11 @@ definition {
 	test AddChildPageViaPageFinder {
 		property portal.acceptance = "true";
 
-		Navigator.openSiteURL(siteName = "Test Site Name 2");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		PagesFinder.goToFindAPage();
 
@@ -116,20 +60,20 @@ definition {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
-					groupName = "Test Site Name 3",
+					groupName = "Test Site Name",
 					title = "${entryTitle}");
 			}
 		}
 
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name 3",
+				groupName = "Test Site Name",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a Collection Page based on Dynamic Collection via Pages Tree Panel") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name-3");
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesFinder.goToFindAPage();
 
@@ -200,7 +144,7 @@ definition {
 	@description = "This is a test for LPS-107775. Can add new collections when add a collection page from page tree panel."
 	@priority = "5"
 	test AddcollectionViaAddingCollectionPage {
-		ProductMenu.gotoSite(site = "Test Site Name 3");
+		ProductMenu.gotoSite(site = "Test Site Name");
 
 		PagesFinder.goToFindAPage();
 
@@ -230,7 +174,7 @@ definition {
 	@description = "This is the test for LPS-103104. Can add pages of different types via page tree panel."
 	@priority = "3"
 	test AddPagesOfDifferentTypesViaPageFinder {
-		ProductMenu.gotoSite(site = "Test Site Name 3");
+		ProductMenu.gotoSite(site = "Test Site Name");
 
 		PagesFinder.goToFindAPage();
 
@@ -284,7 +228,7 @@ definition {
 	test AddPageViaPageFinder {
 		property portal.acceptance = "true";
 
-		Navigator.openSiteURL(siteName = "Test Site Name 2");
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		PagesFinder.goToFindAPage();
 
@@ -297,7 +241,11 @@ definition {
 	@priority = "4"
 	test ConfigurePageViaPageFinder {
 		task ("Assert Test Page Name is shown in Pages admin") {
-			ApplicationsMenu.gotoSite(site = "Test Site Name 2");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -338,6 +286,16 @@ definition {
 	test NavigateToBothPageTypesViaPageFinder {
 		property portal.acceptance = "true";
 
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Portlet Page",
+			type = "portlet");
+
+		JSONLayout.addPrivateLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Private Page",
+			type = "portlet");
+
 		task ("Navigate to Test site Name") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 		}
@@ -356,6 +314,39 @@ definition {
 	@description = "This is a test for LPS-102544. Can quickly browse and go to different pages with sidebar tree."
 	@priority = "4"
 	test NavigateToDifferentPageViaPageFinder {
+		task ("Add layouts of various types for the pages finder") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Portlet Page",
+				type = "portlet");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page",
+				type = "content");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Embedded Page",
+				type = "embedded");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Full Page Application",
+				type = "full_page_application");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Panel Page",
+				type = "panel");
+
+			for (var i : list "1,2,3,4") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Default Page ${i}");
+			}
+		}
+
 		task ("Navigate to Test site Name") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 		}
@@ -371,6 +362,21 @@ definition {
 	@priority = "4"
 	test ReorganizePagesViaPageFinder {
 		task ("Access to Page Tree panel in Test Site Name") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Portlet Page",
+				type = "portlet");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page",
+				type = "content");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Embedded Page",
+				type = "embedded");
+
 			Navigator.openSiteURL(siteName = "Test Site Name");
 
 			PagesFinder.goToFindAPage();
@@ -415,6 +421,39 @@ definition {
 	test SearchAllPageTypes {
 		property portal.acceptance = "true";
 
+		task ("Add layouts of various types for the pages finder") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Portlet Page",
+				type = "portlet");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page",
+				type = "content");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Embedded Page",
+				type = "embedded");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Full Page Application",
+				type = "full_page_application");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Panel Page",
+				type = "panel");
+
+			for (var i : list "1,2,3,4,5,6") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Default Page ${i}");
+			}
+		}
+
 		task ("Navigate to Test site Name") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 		}
@@ -437,6 +476,16 @@ definition {
 	@description = "This is a test for LPS-102544. Can search for a page in sidebar."
 	@priority = "4"
 	test SearchPageAndViewViaSidebar {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Portlet Page",
+			type = "portlet");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page",
+			type = "content");
+
 		task ("Navigate to Test site Name") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
 		}

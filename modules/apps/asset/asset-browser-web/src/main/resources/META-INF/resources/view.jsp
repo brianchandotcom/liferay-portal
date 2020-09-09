@@ -104,16 +104,18 @@
 							</c:choose>
 						</h5>
 
-						<h6 class="text-default">
-							<liferay-ui:message key="location" />:
-							<span class="text-secondary">
-								<clay:icon
-									symbol="<%= assetBrowserDisplayContext.getGroupCssIcon(assetRenderer.getGroupId()) %>"
-								/>
+						<c:if test="<%= assetBrowserDisplayContext.isSearchEverywhere() %>">
+							<h6 class="text-default">
+								<liferay-ui:message key="location" />:
+								<span class="text-secondary">
+									<clay:icon
+										symbol="<%= assetBrowserDisplayContext.getGroupCssIcon(assetRenderer.getGroupId()) %>"
+									/>
 
-								<small><%= assetBrowserDisplayContext.getGroupLabel(assetRenderer.getGroupId(), locale) %></small>
-							</span>
-						</h6>
+									<small><%= assetBrowserDisplayContext.getGroupLabel(assetRenderer.getGroupId(), locale) %></small>
+								</span>
+							</h6>
+						</c:if>
 
 						<c:if test="<%= Validator.isNull(assetBrowserDisplayContext.getTypeSelection()) %>">
 							<h6 class="text-muted">
@@ -168,17 +170,19 @@
 						value="<%= HtmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse)) %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						name="location"
-					>
-						<span class="text-secondary">
-							<clay:icon
-								symbol="<%= assetBrowserDisplayContext.getGroupCssIcon(assetRenderer.getGroupId()) %>"
-							/>
+					<c:if test="<%= assetBrowserDisplayContext.isSearchEverywhere() %>">
+						<liferay-ui:search-container-column-text
+							name="location"
+						>
+							<span class="text-secondary">
+								<clay:icon
+									symbol="<%= assetBrowserDisplayContext.getGroupCssIcon(assetRenderer.getGroupId()) %>"
+								/>
 
-							<small><%= assetBrowserDisplayContext.getGroupLabel(assetRenderer.getGroupId(), locale) %></small>
-						</span>
-					</liferay-ui:search-container-column-text>
+								<small><%= assetBrowserDisplayContext.getGroupLabel(assetRenderer.getGroupId(), locale) %></small>
+							</span>
+						</liferay-ui:search-container-column-text>
+					</c:if>
 
 					<liferay-ui:search-container-column-text
 						name="author"

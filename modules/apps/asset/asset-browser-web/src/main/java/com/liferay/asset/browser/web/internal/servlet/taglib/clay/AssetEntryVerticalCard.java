@@ -150,14 +150,16 @@ public class AssetEntryVerticalCard implements VerticalCard {
 					_assetBrowserDisplayContext.getSubtypeSelectionId()));
 		}
 
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			_assetEntry.getGroupId());
+		if (_assetBrowserDisplayContext.isSearchEverywhere()) {
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				_assetEntry.getGroupId());
 
-		try {
-			return HtmlUtil.escape(
-				group.getDescriptiveName(_themeDisplay.getLocale()));
-		}
-		catch (Exception exception) {
+			try {
+				return HtmlUtil.escape(
+					group.getDescriptiveName(_themeDisplay.getLocale()));
+			}
+			catch (Exception exception) {
+			}
 		}
 
 		return null;

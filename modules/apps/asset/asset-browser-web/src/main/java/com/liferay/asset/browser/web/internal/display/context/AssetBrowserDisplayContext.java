@@ -382,6 +382,17 @@ public class AssetBrowserDisplayContext {
 		return _multipleSelection;
 	}
 
+	public boolean isSearchEverywhere() {
+		if (_searchEverywhere != null) {
+			return _searchEverywhere;
+		}
+
+		_searchEverywhere = Objects.equals(
+			ParamUtil.getString(_httpServletRequest, "scope"), "everywhere");
+
+		return _searchEverywhere;
+	}
+
 	public boolean isShowAddButton() {
 		if (_showAddButton != null) {
 			return _showAddButton;
@@ -492,7 +503,7 @@ public class AssetBrowserDisplayContext {
 		if (getGroupId() == 0) {
 			_filterGroupIds = getSelectedGroupIds();
 		}
-		else if (!_isSearchEverywhere()) {
+		else if (!isSearchEverywhere()) {
 			_filterGroupIds = new long[] {getGroupId()};
 		}
 		else {
@@ -573,17 +584,6 @@ public class AssetBrowserDisplayContext {
 		}
 
 		return statuses;
-	}
-
-	private boolean _isSearchEverywhere() {
-		if (_searchEverywhere != null) {
-			return _searchEverywhere;
-		}
-
-		_searchEverywhere = Objects.equals(
-			ParamUtil.getString(_httpServletRequest, "scope"), "everywhere");
-
-		return _searchEverywhere;
 	}
 
 	private boolean _isShowNonindexable() {

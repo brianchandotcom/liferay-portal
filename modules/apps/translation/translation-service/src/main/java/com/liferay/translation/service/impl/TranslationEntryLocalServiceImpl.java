@@ -106,11 +106,15 @@ public class TranslationEntryLocalServiceImpl
 			translationEntry.setClassName(className);
 			translationEntry.setClassPK(classPK);
 			translationEntry.setLanguageId(languageId);
+			translationEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
 
 		translationEntry.setContent(content);
 		translationEntry.setContentType(contentType);
-		translationEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		if (!translationEntry.isDraft() && !translationEntry.isPending()) {
+			translationEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 

@@ -14,6 +14,9 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {RulesSupport} from 'dynamic-data-mapping-form-builder';
+import {usePage} from 'dynamic-data-mapping-form-renderer';
+import {openModal} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -126,6 +129,8 @@ const Options = ({
 	onChange,
 	value = {},
 }) => {
+	const {builderRules} = usePage();
+
 	const initialOptionRef = useRef(
 		getInitialOption(generateOptionValueUsingOptionLabel)
 	);
@@ -317,6 +322,36 @@ const Options = ({
 		return [normalizeFields(fields, generateOptionValueUsingOptionLabel)];
 	};
 
+	const handleConfirmDelete = (index, option) => {
+		if (RulesSupport.findRuleByFieldName(option, builderRules)) {
+			openModal({
+				bodyHTML: Liferay.Language.get(
+					'a-rule-is-applied-to-this-field'
+				),
+				buttons: [
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('cancel'),
+						type: 'cancel',
+					},
+					{
+						displayType: 'danger',
+						label: Liferay.Language.get('confirm'),
+						onClick: () => {
+							composedDelete(index);
+						},
+						type: 'cancel',
+					},
+				],
+				size: 'md',
+				title: Liferay.Language.get('delete-field-with-rule-applied'),
+			});
+		}
+		else {
+			composedDelete(index);
+		}
+	};
+
 	const handleDelete = (fields, index) => {
 		fields.splice(index, 1);
 
@@ -358,7 +393,7 @@ const Options = ({
 				>
 					<Option
 						disabled={disabled}
-						onClick={() => composedDelete(index)}
+						onClick={() => handleConfirmDelete(index, option.label)}
 						showCloseButton={
 							!(fields.length - 1 === index) && !disabled
 						}

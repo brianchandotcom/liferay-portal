@@ -540,7 +540,8 @@ class Sidebar extends Component {
 				!this._isControlProductMenuItem(target) &&
 				!this._isProductMenuSidebarItem(target) &&
 				!this._isSidebarElement(target) &&
-				!this._isTranslationItem(target))
+				!this._isTranslationItem(target) &&
+				!this._isModalElement(target))
 		) {
 			this.close();
 
@@ -728,7 +729,6 @@ class Sidebar extends Component {
 			});
 		}
 	}
-
 	_handleSettingsFormAttached() {
 		const reactForm = this.refs.evaluableForm.reactComponentRef.current;
 		const {editingLanguageId} = this.props;
@@ -1102,6 +1102,7 @@ class Sidebar extends Component {
 			defaultLanguageId,
 			editingLanguageId,
 			portletNamespace,
+			rules: builderRules,
 			spritemap,
 		} = this.props;
 		const {pages, rules} = this.getSettingsFormContext();
@@ -1116,6 +1117,7 @@ class Sidebar extends Component {
 		return (
 			<Form
 				activePage={activeTab}
+				builderRules={builderRules}
 				defaultLanguageId={defaultLanguageId}
 				editable={true}
 				editingLanguageId={editingLanguageId}

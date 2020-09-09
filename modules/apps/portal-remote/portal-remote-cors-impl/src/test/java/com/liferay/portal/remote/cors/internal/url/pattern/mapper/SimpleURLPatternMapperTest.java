@@ -108,7 +108,8 @@ public class SimpleURLPatternMapperTest {
 			new KeyValuePair("test", ""), new KeyValuePair("test.jsp", "*.jsp"),
 			new KeyValuePair("test.jspf/", ""), new KeyValuePair("test/", ""),
 			new KeyValuePair("test/main.jsp/*", ""),
-			new KeyValuePair("test/main.jspf", "*.jspf")
+			new KeyValuePair("test/main.jspf", "*.jspf"),
+			new KeyValuePair("nonexisting.extension", "")
 		};
 	}
 

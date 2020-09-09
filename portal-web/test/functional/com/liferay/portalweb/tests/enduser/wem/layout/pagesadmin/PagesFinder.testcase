@@ -293,6 +293,46 @@ definition {
 		PagesFinder.navigateToPage(pageName = "Test Public Page");
 	}
 
+	@description = "This is the test for LPS-116618. Configure page via Page Tree panel."
+	@priority = "4"
+	test ConfigurePageViaPageFinder {
+		task ("Assert Test Page Name is shown in Pages admin") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name 2");
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			AssertVisible(
+				key_pageName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+		}
+
+		task ("Configure page via Page Tree panel") {
+			PagesFinder.goToFindAPage();
+
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Configure",
+				pageName = "Test Page Name");
+
+			Page.editName(pageNameEdit = "New Test Page Name");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("View the renamed page is shown in Pages admin") {
+			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+			AssertVisible(
+				key_pageName = "New Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+		}
+
+		task ("View the renamed page is shown in Page Tree panel") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "New Test Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."
 	@priority = "5"
 	test NavigateToBothPageTypesViaPageFinder {

@@ -14,6 +14,9 @@
 
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
+const regexEmptyField = /\[\]/g;
+const regexFieldPattern = /Field\d{8}/g;
+
 const clearTargetValue = (actions, index) => {
 	if (actions[index]) {
 		actions[index].target = '';
@@ -127,6 +130,69 @@ const formatRules = (pages, rules) => {
 	return formattedRules;
 };
 
+const fieldNameBelongsToAction = (fieldName, actions) => {
+	return actions
+		.map((action) => {
+			if (action.action == 'auto-fill') {
+				return Object.values(action.outputs).some(
+					(output) => output == fieldName
+				);
+			}
+			if (action.action == 'calculate') {
+				const expressionFields = getExpressionFields(action);
+				if (fieldName == '') {
+					const expressionEmptyFields = getExpressionFields(
+						action,
+						regexEmptyField
+					);
+
+					return (
+						(expressionEmptyFields &&
+							expressionEmptyFields.indexOf('[]') >= 0) ||
+						action.target == fieldName
+					);
+				}
+				else {
+					return (
+						!expressionFields ||
+						expressionFields.indexOf(fieldName) >= 0 ||
+						action.target == fieldName
+					);
+				}
+			}
+			else {
+				return action.target == fieldName;
+			}
+		})
+		.some((fieldFound) => fieldFound == true);
+};
+
+const fieldNameBelongsToCondition = (fieldName, conditions) => {
+	return conditions
+		.map((condition) => {
+			return condition.operands
+				.map((operand) => operand.value == fieldName)
+				.some((fieldFound) => fieldFound == true);
+		})
+		.some((fieldFound) => fieldFound == true);
+};
+
+const findInvalidRule = (rule) => {
+	return findRuleByFieldName('', [rule]);
+};
+
+const findRuleByFieldName = (fieldName, rules) => {
+	return rules.some(
+		(rule) =>
+			fieldNameBelongsToAction(fieldName, rule.actions) ||
+			fieldNameBelongsToCondition(fieldName, rule.conditions)
+	);
+};
+
+const getExpressionFields = (action, regex = regexFieldPattern) => {
+	return action.expression.match(regex);
+};
+
 const syncActions = (pages, actions) => {
 	actions.forEach((action) => {
 		if (action.action === 'auto-fill') {
@@ -139,6 +205,25 @@ const syncActions = (pages, actions) => {
 			Object.keys(outputs)
 				.filter((key) => !targetFieldExists(outputs[key], pages))
 				.map((key) => delete outputs[key]);
+		}
+		else if (action.action === 'calculate') {
+			const expressionFields = getExpressionFields(action);
+
+			if (expressionFields && expressionFields.length > 0) {
+				expressionFields.forEach((field) => {
+					if (!targetFieldExists(field, pages)) {
+						const inexistentField = new RegExp(field, 'g');
+						action.expression = action.expression.replace(
+							inexistentField,
+							''
+						);
+					}
+				});
+			}
+
+			if (!targetFieldExists(action.target, pages)) {
+				action.target = '';
+			}
 		}
 		else if (action.action === 'jump-to-page') {
 			const target = parseInt(action.target, 10) + 1;
@@ -179,6 +264,8 @@ export default {
 	clearOperatorValue,
 	clearSecondOperandValue,
 	clearTargetValue,
+	findInvalidRule,
+	findRuleByFieldName,
 	formatRules,
 	syncActions,
 };

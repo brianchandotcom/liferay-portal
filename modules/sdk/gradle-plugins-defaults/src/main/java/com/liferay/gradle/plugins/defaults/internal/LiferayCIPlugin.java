@@ -46,12 +46,16 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.plugins.Convention;
+import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.testing.Test;
 
@@ -64,6 +68,9 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
+
+		// Containers
+
 		final TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -148,6 +155,8 @@ public class LiferayCIPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		// Other
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -263,7 +272,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskTestForTestIntegrationPlugin(
-		Project project, Test test) {
+		final Project project, Test test) {
 
 		String taskName = TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME;
 
@@ -276,17 +285,33 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
-					Project project = task.getProject();
 
-					Logger logger = project.getLogger();
+					// Conventions
 
-					SourceSet sourceSet = GradleUtil.getSourceSet(
-						project,
-						TestIntegrationBasePlugin.
-							TEST_INTEGRATION_SOURCE_SET_NAME);
+					Convention convention = project.getConvention();
 
-					Configuration configuration = GradleUtil.getConfiguration(
-						project, sourceSet.getCompileConfigurationName());
+					JavaPluginConvention javaPluginConvention =
+						convention.getPlugin(JavaPluginConvention.class);
+
+					SourceSetContainer sourceSetContainer =
+						javaPluginConvention.getSourceSets();
+
+					SourceSet testIntegrationSourceSet =
+						sourceSetContainer.getByName(
+							TestIntegrationBasePlugin.
+								TEST_INTEGRATION_SOURCE_SET_NAME);
+
+					// Configurations
+
+					ConfigurationContainer configurationContainer =
+						project.getConfigurations();
+
+					Configuration configuration =
+						configurationContainer.getByName(
+							testIntegrationSourceSet.
+								getCompileConfigurationName());
+
+					// Dependencies
 
 					DependencySet dependencySet =
 						configuration.getDependencies();
@@ -299,6 +324,8 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 						if (CIUtil.isExcludedDependencyProject(
 								project, dependencyProject)) {
+
+							Logger logger = project.getLogger();
 
 							if (logger.isLifecycleEnabled()) {
 								logger.lifecycle(

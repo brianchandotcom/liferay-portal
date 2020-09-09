@@ -34,8 +34,8 @@ export default ({
 		<>
 			<li className="breadcrumb-item breadcrumb-text-truncate mr-0">
 				{hasDropdown &&
-				section.subCategories &&
-				section.subCategories.length > 0 ? (
+				section.subSections &&
+				section.subSections.length > 0 ? (
 					<ClayDropDown
 						active={active}
 						onActiveChange={setActive}
@@ -63,7 +63,7 @@ export default ({
 					>
 						<ClayDropDown.ItemList>
 							<ClayDropDown.Group>
-								{section.subCategories.map((section, i) => (
+								{section.subSections.map((section, i) => (
 									<Link
 										className="text-decoration-none"
 										key={i}

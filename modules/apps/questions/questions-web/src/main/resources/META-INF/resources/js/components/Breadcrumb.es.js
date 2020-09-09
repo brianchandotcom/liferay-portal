@@ -44,13 +44,13 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 		[];
 
 	const createEllipsisSectionData = () => {
-		const categories = breadcrumbNodes
+		const sections = breadcrumbNodes
 			.slice(1, breadcrumbNodes.length - 1)
 			.map((section) => {
 				return {title: section.title};
 			});
 
-		return {subCategories: categories, title: ''};
+		return {subSections: sections, title: ''};
 	};
 
 	const findParent = (messageBoardSectionId) =>
@@ -64,7 +64,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 	const buildBreadcrumbNodesData = useCallback(
 		(rootSection, section, acc = []) => {
 			acc.push({
-				subCategories: getSubSections(section),
+				subSections: getSubSections(section),
 				title: section.title,
 			});
 			if (+rootSection !== +section.id) {
@@ -94,7 +94,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 							rootSection
 						).then((data) => {
 							acc.push({
-								subCategories: data.messageBoardSections.items,
+								subSections: data.messageBoardSections.items,
 								title: rootSection,
 							});
 

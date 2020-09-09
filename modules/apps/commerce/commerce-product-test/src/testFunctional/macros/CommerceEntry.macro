@@ -425,9 +425,21 @@ definition {
 	}
 
 	macro deleteCommerceEntry {
+		var paginationResults = selenium.getText("CommerceEntry#PAGINATION_RESULTS");
+
+		var numberOfEntries = StringUtil.extractLast("${paginationResults}", " ");
+
+		var numberOfEntriesAfterDeletion = MathUtil.difference("${numberOfEntries}", "1");
+
+		paginationResults = StringUtil.replace("${paginationResults}", "${numberOfEntries}", "${numberOfEntriesAfterDeletion}");
+
 		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		CommerceEntry.clickNoError(menuItem = "Delete");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#PAGINATION_RESULTS",
+			value1 = "${paginationResults}");
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 

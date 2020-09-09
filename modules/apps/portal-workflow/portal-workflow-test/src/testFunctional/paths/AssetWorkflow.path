@@ -44,6 +44,22 @@
 	<td>//span[contains(@class,'workflow-status')]//strong</td>
 	<td></td>
 </tr>
+<!--TRANSLATIONS_PREVIEW-->
+<tr>
+	<td>TRANSLATIONS_PREVIEW_EDITOR</td>
+	<td>//div[contains(@class,'translate-editor-preview') and contains(.,'${key_fieldValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATIONS_PREVIEW_LOCALIZATION</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_localizationName}')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATIONS_PREVIEW_TITLE</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@id,'MyWorkflowTaskPortlet_Title') and contains(@value,'${key_titleValue}') and @readonly='true'] </td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -27,23 +27,13 @@ import org.osgi.service.component.annotations.Modified;
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.depot.web.internal.configuration.FFDepotConfiguration",
 	service = DepotConfiguration.class
 )
 public class DepotConfigurationImpl implements DepotConfiguration {
 
 	@Override
 	public boolean isEnabled() {
-		return _ffDepotConfiguration.enabled();
+		return true;
 	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffDepotConfiguration = ConfigurableUtil.createConfigurable(
-			FFDepotConfiguration.class, properties);
-	}
-
-	private volatile FFDepotConfiguration _ffDepotConfiguration;
 
 }

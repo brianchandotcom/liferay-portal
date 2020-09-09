@@ -50,17 +50,6 @@ public class DepotAdminPanelApp extends BasePanelApp {
 	}
 
 	@Override
-	public boolean isShow(PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		if (!_depotConfiguration.isEnabled()) {
-			return false;
-		}
-
-		return super.isShow(permissionChecker, group);
-	}
-
-	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + DepotPortletKeys.DEPOT_ADMIN + ")",
 		unbind = "-"
@@ -77,8 +66,5 @@ public class DepotAdminPanelApp extends BasePanelApp {
 
 		return themeDisplay.getControlPanelGroup();
 	}
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 }

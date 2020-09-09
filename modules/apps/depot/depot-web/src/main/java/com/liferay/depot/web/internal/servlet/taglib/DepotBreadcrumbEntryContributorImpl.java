@@ -59,10 +59,6 @@ public class DepotBreadcrumbEntryContributorImpl
 		List<BreadcrumbEntry> originalBreadcrumbEntries,
 		HttpServletRequest httpServletRequest) {
 
-		if (!_depotConfiguration.isEnabled()) {
-			return originalBreadcrumbEntries;
-		}
-
 		long depotEntryId = ParamUtil.getLong(
 			httpServletRequest, "depotEntryId");
 
@@ -217,9 +213,6 @@ public class DepotBreadcrumbEntryContributorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DepotBreadcrumbEntryContributorImpl.class);
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private DepotEntryService _depotEntryService;

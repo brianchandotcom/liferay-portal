@@ -91,10 +91,6 @@ public class DepotItemSelectorView
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
-		if (!_depotConfiguration.isEnabled()) {
-			return false;
-		}
-
 		if (groupItemSelectorCriterion == null) {
 			return true;
 		}
@@ -137,9 +133,6 @@ public class DepotItemSelectorView
 
 	@Reference
 	private DepotApplicationController _depotApplicationController;
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private DepotPanelAppController _depotPanelAppController;

@@ -50,10 +50,6 @@ public class UserMembershipsPostJSPDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (!_depotConfiguration.isEnabled()) {
-			return;
-		}
-
 		try {
 			PortletRequest portletRequest =
 				(PortletRequest)httpServletRequest.getAttribute(
@@ -105,9 +101,6 @@ public class UserMembershipsPostJSPDynamicInclude
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserMembershipsPostJSPDynamicInclude.class);
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -50,10 +50,6 @@ public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 		throws IOException {
 
 		try {
-			if (!_depotConfiguration.isEnabled()) {
-				return;
-			}
-
 			PortletRequest portletRequest =
 				(PortletRequest)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -101,9 +97,6 @@ public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserRolesPostJSPDynamicInclude.class);
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private ItemSelector _itemSelector;

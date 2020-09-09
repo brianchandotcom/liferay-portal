@@ -32,16 +32,4 @@ public class DepotGroupTypeContributor implements GroupTypeContributor {
 		return DepotEntry.class.getName();
 	}
 
-	@Override
-	public boolean isEnabled() {
-		if (_depotConfiguration.isEnabled()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
-
 }

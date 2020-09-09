@@ -40,17 +40,10 @@ public class PermissionCheckerFactoryImpl
 	public PermissionChecker wrapPermissionChecker(
 		PermissionChecker permissionChecker) {
 
-		if (!_depotConfiguration.isEnabled()) {
-			return permissionChecker;
-		}
-
 		return new DepotPermissionCheckerWrapper(
 			permissionChecker, _depotEntryModelResourcePermission,
 			_groupLocalService, _roleLocalService, _userGroupRoleLocalService);
 	}
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 	@Reference(target = "(model.class.name=com.liferay.depot.model.DepotEntry)")
 	private ModelResourcePermission<DepotEntry>

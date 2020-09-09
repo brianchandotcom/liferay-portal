@@ -50,7 +50,7 @@ public class DepotSettingsPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (!group.isDepot() || !_depotConfiguration.isEnabled()) {
+		if (!group.isDepot()) {
 			return false;
 		}
 
@@ -65,9 +65,6 @@ public class DepotSettingsPanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private Portal _portal;

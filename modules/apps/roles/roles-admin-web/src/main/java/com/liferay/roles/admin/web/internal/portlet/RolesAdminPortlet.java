@@ -772,15 +772,13 @@ public class RolesAdminPortlet extends MVCPortlet {
 		else if (panelCategoryHelper.containsPortlet(
 					portletId, PanelCategoryKeys.SITE_ADMINISTRATION)) {
 
-			if (_depotConfiguration.isEnabled()) {
-				updateAction(
-					role, scopeGroupId, DepotEntry.class.getName(),
-					ActionKeys.VIEW_SITE_ADMINISTRATION, true, scope,
-					ArrayUtil.filter(
-						groupIds,
-						groupId -> _isDepotGroup(
-							role.getCompanyId(), groupId)));
-			}
+			updateAction(
+				role, scopeGroupId, DepotEntry.class.getName(),
+				ActionKeys.VIEW_SITE_ADMINISTRATION, true, scope,
+				ArrayUtil.filter(
+					groupIds,
+					groupId -> _isDepotGroup(
+						role.getCompanyId(), groupId)));
 
 			selResource = Group.class.getName();
 			actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;

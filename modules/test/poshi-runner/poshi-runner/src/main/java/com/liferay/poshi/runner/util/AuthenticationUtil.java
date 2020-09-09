@@ -45,7 +45,7 @@ public class AuthenticationUtil {
 			CharPool.NUMBER_0);
 
 		try {
-			Mac mac = Mac.getInstance(_HMAC_SHA1_ALGORITHM);
+			Mac mac = Mac.getInstance(_ALGORITHM_HMAC_SHA1);
 
 			mac.init(new SecretKeySpec(Base32.decode(secretKey), "RAW"));
 
@@ -64,25 +64,25 @@ public class AuthenticationUtil {
 				((hash[offset + 2] & 0xff) << 8) | (hash[offset + 3] & 0xff);
 
 			int timeBasedOTP =
-				binary % (int)Math.pow(10, _TIME_BASED_OTP_DIGITS);
+				binary % (int)Math.pow(10, _DIGITS_TIME_BASED_OTP);
 
 			return String.format(
-				"%0" + _TIME_BASED_OTP_DIGITS + "d", timeBasedOTP);
+				"%0" + _DIGITS_TIME_BASED_OTP + "d", timeBasedOTP);
 		}
 		catch (InvalidKeyException invalidKeyException) {
 			throw new IllegalArgumentException(
-				"Invalid secret key for algorithm " + _HMAC_SHA1_ALGORITHM,
+				"Invalid secret key for algorithm " + _ALGORITHM_HMAC_SHA1,
 				invalidKeyException);
 		}
 		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
 			throw new IllegalArgumentException(
-				"Invalid algorithm " + _HMAC_SHA1_ALGORITHM,
+				"Invalid algorithm " + _ALGORITHM_HMAC_SHA1,
 				noSuchAlgorithmException);
 		}
 	}
 
-	private static final String _HMAC_SHA1_ALGORITHM = "HmacSHA1";
+	private static final String _ALGORITHM_HMAC_SHA1 = "HmacSHA1";
 
-	private static final int _TIME_BASED_OTP_DIGITS = 6;
+	private static final int _DIGITS_TIME_BASED_OTP = 6;
 
 }

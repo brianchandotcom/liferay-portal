@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.SearchEngineInformation;
@@ -60,8 +61,6 @@ import java.math.BigDecimal;
 
 import java.text.Format;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -531,6 +530,14 @@ public class DDMIndexerImpl implements DDMIndexer {
 			String indexType, Locale locale, String name, Serializable value)
 		throws PortalException {
 
+		com.liferay.portal.kernel.search.Field ddmField =
+			new com.liferay.portal.kernel.search.Field(StringPool.BLANK);
+
+		List<com.liferay.portal.kernel.search.Field> sortedFields =
+			new SortedArrayList<>(
+				Comparator.comparing(
+					com.liferay.portal.kernel.search.Field::getName));
+
 		Document document = new DocumentImpl();
 
 		String valueFieldName = getValueFieldName(indexType, locale);
@@ -539,34 +546,19 @@ public class DDMIndexerImpl implements DDMIndexer {
 			document, ddmStructureField, indexType, valueFieldName,
 			_getSortableValue(ddmFormField, locale, value), value);
 
-		List<com.liferay.portal.kernel.search.Field> fieldList =
-			new ArrayList<>();
+		Map<String, com.liferay.portal.kernel.search.Field> documentFields =
+			document.getFields();
 
-		fieldList.add(
+		sortedFields.addAll(documentFields.values());
+
+		sortedFields.add(
 			new com.liferay.portal.kernel.search.Field(DDM_FIELD_NAME, name));
 
-		fieldList.add(
+		sortedFields.add(
 			new com.liferay.portal.kernel.search.Field(
 				DDM_VALUE_FIELD_NAME, valueFieldName));
 
-		Map<String, com.liferay.portal.kernel.search.Field> fields =
-			document.getFields();
-
-		for (com.liferay.portal.kernel.search.Field field : fields.values()) {
-			fieldList.add(field);
-		}
-
-		Collections.sort(
-			fieldList,
-			Comparator.comparing(
-				com.liferay.portal.kernel.search.Field::getName));
-
-		com.liferay.portal.kernel.search.Field ddmField =
-			new com.liferay.portal.kernel.search.Field("");
-
-		for (com.liferay.portal.kernel.search.Field field : fieldList) {
-			ddmField.addField(field);
-		}
+		sortedFields.forEach(ddmField::addField);
 
 		return ddmField;
 	}

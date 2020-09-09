@@ -53,6 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -279,10 +280,11 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructureId);
 
-		String header = "HttpHeaders_" + fieldName;
+		String httpHeaderFieldName = "HttpHeaders_" + fieldName;
 
 		if (!GetterUtil.getBoolean(
-				ddmStructure.getFieldProperty(header, "localizable"))) {
+				ddmStructure.getFieldProperty(
+					httpHeaderFieldName, "localizable"))) {
 
 			Map<String, String> ddmField = HashMapBuilder.put(
 				"ddmFieldName",
@@ -302,9 +304,11 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-		String ddmFields = StringPool.BLANK;
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
-		for (Locale locale : ddmForm.getAvailableLocales()) {
+		StringBundler sb = new StringBundler(availableLocales.size());
+
+		for (Locale locale : availableLocales) {
 			String ddmFieldValueText = StringBundler.concat(
 				"ddmFieldValueText", StringPool.UNDERLINE,
 				LocaleUtil.toLanguageId(locale));
@@ -319,16 +323,17 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 				StringBundler.concat(
 					"ddm__text__", ddmStructure.getStructureId(),
 					StringBundler.concat(
-						StringPool.UNDERLINE, StringPool.UNDERLINE, header,
-						StringPool.UNDERLINE, LocaleUtil.toLanguageId(locale)))
+						StringPool.UNDERLINE, StringPool.UNDERLINE,
+						httpHeaderFieldName, StringPool.UNDERLINE,
+						LocaleUtil.toLanguageId(locale)))
 			).put(
 				"ddmValueFieldName", ddmFieldValueText
 			).build();
 
-			ddmFields = ddmFields + String.valueOf(ddmField);
+			sb.append(ddmField.toString());
 		}
 
-		return ddmFields;
+		return sb.toString();
 	}
 
 	protected void populateHttpHeaders(

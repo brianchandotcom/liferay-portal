@@ -14,6 +14,8 @@
 
 package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -55,6 +57,17 @@ public class SimpleURLPatternMapperTest {
 					comparisonFailure.getActual());
 			}
 		}
+	}
+
+	@Test
+	public void testGetExtensionEdgeCases() {
+		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(
+			HashMapBuilder.put(
+				"*.jsp", "*.jsp"
+			).build());
+
+		Assert.assertNull(urlPatternMapper.getValue("jsp"));
+		Assert.assertEquals("*.jsp", urlPatternMapper.getValue(".jsp"));
 	}
 
 	protected URLPatternMapper<String> createURLPatternMapper(

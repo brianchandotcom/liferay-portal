@@ -17,7 +17,7 @@ Here are some of the types of changes documented in this file:
 * Deprecations or end of support: For example, warning that a certain
   feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through commit `20bb08f47603`.*
+*This document has been reviewed through commit `4334fc6cc349`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -76,8 +76,7 @@ in ascending chronological order.
 
 #### What changed?
 
-Liferay FontAwesome, which included icon fonts for Font Awesome,
-Glyphicon, and custom Liferay icons, is no longer included by default.
+Liferay FontAwesome, which included icon fonts for Font Awesome, Glyphicon, and custom Liferay icons, is no longer included by default.
 
 #### Who is affected?
 
@@ -89,33 +88,25 @@ Depending on how you're using icon fonts, there's a few approaches you can take.
 
 ##### For liferay-ui:icon usage
 
-Replace `<liferay-ui:icon iconCssClass="icon-user">` with
-`<liferay-ui:icon icon="user" markupView="lexicon" />`
+Replace `<liferay-ui:icon iconCssClass="icon-user">` with `<liferay-ui:icon icon="user" markupView="lexicon" />`
 
-##### For JS generated icons
+##### For JavaScript-generated icons
 
-Those manually generating FontAwesome icon html can use the
-`Liferay.Util.getLexiconIconTpl('user')` API. For example, the previous call
-would return the html code for a user svg icon.
+Those manually generating FontAwesome icon html can use the `Liferay.Util.getLexiconIconTpl('user')` API. For example, the previous call would return the html code for a user svg icon.
 
-##### For direct html within jsps
+##### For direct HTML within JSPs
 
-Developers directly using icons in jsps can either use the `liferay-ui:icon`
-tag as explained above or the `clay:icon` one to generate svg-based icons
-instead.
+Developers directly using icons in jsps can either use the `liferay-ui:icon` tag as explained above or the `clay:icon` one to generate svg-based icons instead.
 
 ##### For non-controlled code
 
 If you don't have access to the content that uses the icon fonts or you don't want to update the code or content, you can include the fonts in your Themes.
 
-During the 7.2 upgrade process, the theme upgrade assistant prompts developers
-to keep FontAwesome as part of the Theme. Themes that already include the icon
-fonts won't be affected and will continue to work in 7.3.
+During the 7.2 upgrade process, the theme upgrade assistant prompts developers to keep FontAwesome as part of the Theme. Themes that already include the icon fonts won't be affected and will continue to work in 7.3.
 
 #### Why was this change made?
 
-This change was made to save bandwidth and increase performance of your sites
-by not serving unnecessary files.
+This change was made to save bandwidth and increase performance of your sites by not serving unnecessary files.
 
 ---------------------------------------
 
@@ -125,24 +116,19 @@ by not serving unnecessary files.
 
 #### What changed?
 
-The legacy metal+soy `liferay.frontend.ProgressBar` component, used as a
-temporary bridge for legacy behaviour, was removed.
+The legacy metal+soy `liferay.frontend.ProgressBar` component, used as a temporary bridge for legacy behaviour, was removed.
 
 #### Who is affected?
 
-This affects any code that relies on `liferay.frontend.ProgressBar`; this is
-usually done via `soy` as `{call liferay.frontend.ProgressBar /}`.
+This affects any code that relies on `liferay.frontend.ProgressBar`; this is usually done via `soy` as `{call liferay.frontend.ProgressBar /}`.
 
 #### How should I update my code?
 
-There's no direct replacement for the `liferay.frontend.ProgressBar` component.
-If you have a component that relies on it, you can co-locate a copy of the old
-implementation and use it locally within your module.
+There's no direct replacement for the `liferay.frontend.ProgressBar` component. If you have a component that relies on it, you can co-locate a copy of the old implementation and use it locally within your module.
 
 #### Why was this change made?
 
-The `liferay.frontend.ProgressBar` component was deprecated in 7.2 and is no
-longer used.
+The `liferay.frontend.ProgressBar` component was deprecated in 7.2 and is no longer used.
 
 ---------------------------------------
 
@@ -152,24 +138,19 @@ longer used.
 
 #### What changed?
 
-The legacy metal+soy `liferay.frontend.Slider` component, used as a
-temporary bridge for legacy behaviour, was removed.
+The legacy metal+soy `liferay.frontend.Slider` component, used as a temporary bridge for legacy behaviour, was removed.
 
 #### Who is affected?
 
-This affects any code that relies on `liferay.frontend.Slider`; this is
-usually done via `soy` as `{call liferay.frontend.Slider /}`.
+This affects any code that relies on `liferay.frontend.Slider`; this is usually done via `soy` as `{call liferay.frontend.Slider /}`.
 
 #### How should I update my code?
 
-There's no direct replacement for the `liferay.frontend.Slider` component.
-If you have a component that relies on it, you can co-locate a copy of the old
-implementation and use it locally within your module.
+There's no direct replacement for the `liferay.frontend.Slider` component. If you have a component that relies on it, you can co-locate a copy of the old implementation and use it locally within your module.
 
 #### Why was this change made?
 
-The `liferay.frontend.Slider` component was deprecated in 7.2 and is no
-longer used.
+The `liferay.frontend.Slider` component was deprecated in 7.2 and is no longer used.
 
 ---------------------------------------
 
@@ -179,8 +160,7 @@ longer used.
 
 #### What changed?
 
-The Java class
-`com.liferay.asset.taglib.servlet.taglib.soy.AssetTagsSelectorTag` was removed.
+The Java class `com.liferay.asset.taglib.servlet.taglib.soy.AssetTagsSelectorTag` was removed.
 
 #### Who is affected?
 
@@ -188,14 +168,11 @@ This affects any code that directly instantiates or extends this class.
 
 #### How should I update my code?
 
-There's no direct replacement for the removed class. If you have code that
-depends on it, you must copy over the old implementation to your own
-project and change the dependency to rely on your local version.
+There's no direct replacement for the removed class. If you have code that depends on it, you must copy over the old implementation to your own project and change the dependency to rely on your local version.
 
 #### Why was this change made?
 
-The `asset:asset-tags-selector` and its components have been migrated to React,
-making the old tag and its soy infrastructure unnecessary.
+The `asset:asset-tags-selector` and its components have been migrated to React, making the old tag and its soy infrastructure unnecessary.
 
 ---------------------------------------
 
@@ -205,19 +182,15 @@ making the old tag and its soy infrastructure unnecessary.
 
 #### What changed?
 
-The portal property `user.groups.copy.layouts.to.user.personal.site` and the
-behavior associated with it were removed.
+The portal property `user.groups.copy.layouts.to.user.personal.site` and the behavior associated with it were removed.
 
 #### Who is affected?
 
-This affects anyone who set the `user.groups.copy.layouts.to.user.personal.site`
-property to `true` to copy User Group pages to User Personal Sites.
+This affects anyone who set the `user.groups.copy.layouts.to.user.personal.site` property to `true` to copy User Group pages to User Personal Sites.
 
 #### How should I update my code?
 
-There's no direct replacement for this property. If you depend on the behavior,
-you can copy the old implementations of
-`UserGroupLocalServiceImpl#copyUserGroupLayouts` to your own project.
+There's no direct replacement for this property. If you depend on the behavior, you can copy the old implementations of `UserGroupLocalServiceImpl#copyUserGroupLayouts` to your own project.
 
 #### Why was this change made?
 
@@ -231,9 +204,7 @@ The behavior associated with this property has been deprecated since 6.2.
 
 #### What changed?
 
-The support for deploying EXT plugins using Auto Deployer (via
-`liferay-home/deploy folder`) was removed. EXT plugins copied to the deploy
-folder are no longer recognized.
+The support for deploying EXT plugins using Auto Deployer (via `liferay-home/deploy folder`) was removed. EXT plugins copied to the deploy folder are no longer recognized.
 
 #### Who is affected?
 
@@ -241,8 +212,7 @@ This affects anyone deploying EXT plugins via the Auto Deployer.
 
 #### How should I update my code?
 
-There's no direct replacement for the removed feature. If you have an EXT
-plugin, you must deploy it manually or use [`ant direct-deploy`](https://github.com/liferay/liferay-plugins-ee/blob/7.0.x/ext/build-common-ext.xml#L211).
+There's no direct replacement for the removed feature. If you have an EXT plugin, you must deploy it manually or use [`ant direct-deploy`](https://github.com/liferay/liferay-plugins-ee/blob/7.0.x/ext/build-common-ext.xml#L211).
 
 #### Why was this change made?
 
@@ -256,20 +226,13 @@ This feature has been deprecated since 7.1.
 
 #### What changed?
 
-The OSGi property `autoUpgrade` defined in
-`com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration.config`
-was replaced with the portal property `upgrade.database.auto.run`.
+The OSGi property `autoUpgrade` defined in `com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration.config` was replaced with the portal property `upgrade.database.auto.run`.
 
-Unlike the old property, which only controlled the upgrade processes in
-modules, the new one also affects the Core upgrade processes. The default value
-is `false`, so upgrade processes won't run on startup or module deployment. You
-can execute module upgrade processes anytime via Gogo console.
+Unlike the old property, which only controlled the upgrade processes in modules, the new one also affects the Core upgrade processes. The default value is `false`, so upgrade processes won't run on startup or module deployment. You can execute module upgrade processes anytime via Gogo console.
 
 #### Who is affected?
 
-This affects development environments where you don't want to run the upgrade
-when a new process is deployed. This property can't be set to `true` in
-production environments. In these cases, you must use the upgrade tool to execute minor and major schema version changes.
+This affects development environments where you don't want to run the upgrade when a new process is deployed. This property can't be set to `true` in production environments. In these cases, you must use the upgrade tool to execute minor and major schema version changes.
 
 #### How should I update my code?
 
@@ -277,9 +240,7 @@ This change doesn't affect your code.
 
 #### Why was this change made?
 
-This change was made to unify the auto-upgrade feature between the Core and
-modules. The default value has also changed to avoid the execution of new
-upgrade processes on startup in production environments.
+This change was made to unify the auto-upgrade feature between the Core and modules. The default value has also changed to avoid the execution of new upgrade processes on startup in production environments.
 
 ---------------------------------------
 
@@ -289,8 +250,7 @@ upgrade processes on startup in production environments.
 
 #### What changed?
 
-The cache bootstrap feature has been removed. These properties can no longer
-be used to enable/configure cache bootstrap:
+The cache bootstrap feature has been removed. These properties can no longer be used to enable/configure cache bootstrap:
 
 `ehcache.bootstrap.cache.loader.enabled`,
 `ehcache.bootstrap.cache.loader.properties.default`,
@@ -302,8 +262,7 @@ This affects anyone using the properties listed above.
 
 #### How should I update my code?
 
-There's no direct replacement for the removed feature. If you have code that
-depends on it, you must implement it yourself.
+There's no direct replacement for the removed feature. If you have code that depends on it, you must implement it yourself.
 
 #### Why was this change made?
 
@@ -321,13 +280,11 @@ The `liferay-frontend:cards-treeview` tag was removed.
 
 #### Who is affected?
 
-This affects anyone using the tag from a jsp, or some of its components inside
-a SOY (Closure Templates) template.
+This affects anyone using the tag from a jsp, or some of its components inside a SOY (Closure Templates) template.
 
 #### How should I update my code?
 
-There's no direct replacement for the removed feature. If you have code that
-depends on it, you must implement it yourself.
+There's no direct replacement for the removed feature. If you have code that depends on it, you must implement it yourself.
 
 #### Why was this change made?
 
@@ -345,13 +302,11 @@ The `liferay-frontend:contextual-sidebar` tag was removed.
 
 #### Who is affected?
 
-This affects anyone using the tag from a jsp or some of its components inside
-a SOY (Closure Templates) template.
+This affects anyone using the tag from a jsp or some of its components inside a SOY (Closure Templates) template.
 
 #### How should I update my code?
 
-There's no direct replacement for the removed feature. If you have code that
-depends on it, you must implement it yourself.
+There's no direct replacement for the removed feature. If you have code that depends on it, you must implement it yourself.
 
 #### Why was this change made?
 
@@ -365,30 +320,27 @@ This change was made because the tag was primarily used internally.
 
 #### What changed?
 
-The placement and structure of the Control and Product Menus has changed to
-address several accessibility concerns and common visual glitches.
+The placement and structure of the Control and Product Menus has changed to address several accessibility concerns and common visual glitches.
 
 These changes have been applied to the Control and Product menus:
+
 - The Product Menu has been moved outside of the Control Menu
 - The Control Menu now uses `position:sticky` to control its behaviour
 - Styles of the menus inside the Control Menu have been updated to account for the new sticky behaviour
 
 #### Who is affected?
 
-This could affect developers that have a custom Control Panel Theme with a
-customized `portlet.ftl` template or those that have developed a custom menu
-that behaves as a sticky bar and is included using the `*ControlMenuEntry` API.
+This could affect developers that have a custom Control Panel Theme with a customized `portlet.ftl` template or those that have developed a custom menu that behaves as a sticky bar and is included using the `*ControlMenuEntry` API.
 
 #### How should I update my code?
 
 ##### Control Panel Themes
 
-Developers with custom Control Panel themes should move the call (if any) to the
-`@liferay.control_menu` macro above the portlet section in their `portlet.ftl`.
+Developers with custom Control Panel themes should move the call (if any) to the `@liferay.control_menu` macro above the portlet section in their `portlet.ftl`.
 
 **Before:**
 
-```
+```markup
 <section class="portlet" id="portlet_${htmlUtil.escapeAttribute(portletDisplay.getId())}">
 	${portletDisplay.writeContent(writer)}
 </section>
@@ -400,7 +352,7 @@ Developers with custom Control Panel themes should move the call (if any) to the
 
 **After:**
 
-```
+```markup
 <#if portletDisplay.isStateMax()>
 	<@liferay.control_menu />
 </#if>
@@ -412,20 +364,16 @@ Developers with custom Control Panel themes should move the call (if any) to the
 
 ##### Custom Sticky Bars
 
-Developers with custom Sticky Bars included using the `*ControlMenuEntry` API
-can use the newly included extension points in the Control Menu to inject their
-components.
+Developers with custom Sticky Bars included using the `*ControlMenuEntry` API can use the newly included extension points in the Control Menu to inject their components.
 
-Move the code that injects the menu to a `DynamicInclude` component and register
-it for the proper position:
+Move the code that injects the menu to a `DynamicInclude` component and register it for the proper position:
+
 - Before the Control Menu: Use `com.liferay.product.navigation.taglib#/page.jsp#pre`
 - After the Control Menu: Use `com.liferay.product.navigation.taglib#/page.jsp#post`
 
 #### Why was this change made?
 
-This change was made to improve accessibility and simplify the required logic
-for positioning and controlling top-positioned menus. It provides a more correct
-and expected markup that avoids common visual glitches.
+This change was made to improve accessibility and simplify the required logic for positioning and controlling top-positioned menus. It provides a more correct and expected markup that avoids common visual glitches.
 
 ---------------------------------------
 
@@ -435,29 +383,21 @@ and expected markup that avoids common visual glitches.
 
 #### What changed?
 
-Previously, `jQuery` was being included on every page by default and made
-available through the global `window.$` and the scoped `AUI.$` variables. After
-this change, `jQuery` is no longer included by default and those variables are
-`undefined`.
+Previously, `jQuery` was being included on every page by default and made available through the global `window.$` and the scoped `AUI.$` variables. After this change, `jQuery` is no longer included by default and those variables are `undefined`.
 
 #### Who is affected?
 
-This affects any developer who used `AUI.$` or `window.$` in their custom
-scripts.
+This affects any developer who used `AUI.$` or `window.$` in their custom scripts.
 
 #### How should I update my code?
 
-Use any of the strategies to add third party libraries to provide your own
-version of JQuery to use in your code.
+Use any of the strategies to add third party libraries to provide your own version of JQuery to use in your code.
 
-Additionally, as a temporary measure, you can bring back the old behaviour by
-setting the `Enable jQuery` property in *System Settings* &rarr; *Third Party*
-&rarr; *jQuery* to `true`.
+Additionally, as a temporary measure, you can bring back the old behaviour by setting the `Enable jQuery` property in *System Settings* &rarr; *Third Party* &rarr; *jQuery* to `true`.
 
 #### Why was this change made?
 
-This change was made to avoid bundling and serving additional library code on
-every page that was mostly unused and redundant.
+This change was made to avoid bundling and serving additional library code on every page that was mostly unused and redundant.
 
 ---------------------------------------
 
@@ -467,8 +407,7 @@ every page that was mostly unused and redundant.
 
 #### What changed?
 
-Properties with the prefix `layout.parallel.render` were removed, which means
-parallel rendering is only supported when AJAX rendering is enabled.
+Properties with the prefix `layout.parallel.render` were removed, which means parallel rendering is only supported when AJAX rendering is enabled.
 
 #### Who is affected?
 
@@ -476,8 +415,7 @@ This affects anyone using the removed properties.
 
 #### How should I update my code?
 
-Remove any properties prefixed with `layout.parallel.render` from your
-properties file.
+Remove any properties prefixed with `layout.parallel.render` from your properties file.
 
 #### Why was this change made?
 
@@ -485,34 +423,25 @@ This feature has been deprecated.
 
 ---------------------------------------
 
-### Simple Editor Is No Longer Bundled by Default
+### Removed liferay-editor-image-uploader Plugin
 - **Date:** 2020-Mar-27
 - **JIRA Ticket:** [LPS-110734](https://issues.liferay.com/browse/LPS-110734)
 
 ### What changed?
 
-As of 7.3, CKEditor is the default and only supported WYSIWYG editor.
+`liferay-editor-image-uploader` AUI plugin was removed. Its code was merged into `addimages` CKEditor plugin, used by Alloy Editor and CKEditor.
 
 ### Who is affected
 
-This affects anyone who uses the Liferay Frontend Editor Simple Web module.
+This affects custom solutions that use the plugin directly.
 
 ### How should I update my code?
 
-If you've configured Liferay Portal to use the Simple Editor, you can remove
-these configurations. If you still want to use the Simple Editor, you must take
-these steps:
-
-- Keep your configurations.
-- Open https://repository.liferay.com/nexus/index.html in your browser.
-- Search for `com.liferay.frontend.editor.simple.web`.
-- Download a .jar file for the `com.liferay.frontend.editor.simple.web` module.
-- Deploy the .jar file you downloaded in your liferay-portal installation.
+There's no direct replacement for the `liferay-editor-image-uploader` plugin. If you have a component that relies on it, you can co-locate a copy of the old implementation and use it locally within your module.
 
 #### Why was this change made?
 
-This change was made to consolidate all our UX for writing Rich Text Content
-around a single Editor to provide a more cohesive and comprehensive experience.
+This change enables image drag and drop handling in CKEditor and provides a common image uploader for both Alloy Editor and CKEditor.
 
 ---------------------------------------
 
@@ -530,9 +459,7 @@ This affects anyone who uses TinyMCE.
 
 ### How should I update my code?
 
-If you've configured Liferay Portal to use the TinyMCE, you can remove
-these configurations. If you still want to use TinyMCE, you must take these
-steps:
+If you've configured Liferay Portal to use the TinyMCE, you can remove these configurations. If you still want to use TinyMCE, you must take these steps:
 
 - Keep your configurations.
 - Open https://repository.liferay.com/nexus/index.html in your browser.
@@ -542,8 +469,35 @@ steps:
 
 #### Why was this change made?
 
-This change was made to consolidate all our UX for writing Rich Text Content
-around a single Editor to provide a more cohesive and comprehensive experience.
+This change was made to consolidate all our UX for writing Rich Text Content around a single Editor to provide a more cohesive and comprehensive experience.
+
+---------------------------------------
+
+### Simple Editor Is No Longer Bundled by Default
+- **Date:** 2020-Mar-27
+- **JIRA Ticket:** [LPS-110734](https://issues.liferay.com/browse/LPS-110734)
+
+### What changed?
+
+As of 7.3, CKEditor is the default and only supported WYSIWYG editor.
+
+### Who is affected
+
+This affects anyone who uses the Liferay Front-end Editor Simple Web module.
+
+### How should I update my code?
+
+If you've configured Liferay Portal to use the Simple Editor, you can remove these configurations. If you still want to use the Simple Editor, you must take these steps:
+
+- Keep your configurations.
+- Open https://repository.liferay.com/nexus/index.html in your browser.
+- Search for `com.liferay.frontend.editor.simple.web`.
+- Download a .jar file for the `com.liferay.frontend.editor.simple.web` module.
+- Deploy the .jar file you downloaded in your liferay-portal installation.
+
+#### Why was this change made?
+
+This change was made to consolidate all our UX for writing Rich Text Content around a single Editor to provide a more cohesive and comprehensive experience.
 
 ---------------------------------------
 
@@ -553,8 +507,7 @@ around a single Editor to provide a more cohesive and comprehensive experience.
 
 ### What changed?
 
-`asset.vocabulary.default` is now a language key and no longer has a fixed value
-of `Topic`.
+`asset.vocabulary.default` is now a language key and no longer has a fixed value of `Topic`.
 
 ### Who is affected
 
@@ -562,14 +515,11 @@ This affects anyone who overwrites the property.
 
 ### How should I update my code?
 
-There is no need to change the code if the property is not overwritten. If the
-property was overwritten and the specified key is not found, the provided text
-will be taken as the name of the default vocabulary.
+There is no need to change the code if the property is not overwritten. If the property was overwritten and the specified key is not found, the provided text will be taken as the name of the default vocabulary.
 
 #### Why was this change made?
 
-The change was made so users don't have to change the name for the default
-vocabulary in all languages.
+The change was made so users don't have to change the name for the default vocabulary in all languages.
 
 ---------------------------------------
 
@@ -579,20 +529,17 @@ vocabulary in all languages.
 
 #### What changed?
 
-The global AUI `Liferay.Poller` utility is now deprecated and is no longer
-initialized by default.
+The global AUI `Liferay.Poller` utility is now deprecated and is no longer initialized by default.
 
 #### Who is affected?
 
-This affects any code that relies on `Liferay.Poller`; this is usually done via
-a call to `Liferay.Poller.init()` in a JSP.
+This affects any code that relies on `Liferay.Poller`; this is usually done via a call to `Liferay.Poller.init()` in a JSP.
 
 #### How should I update my code?
 
-There's no direct replacement for the `Liferay.Poller` utility. If you must
-initialize `Liferay.Poller`, update your JSP to use the code below:
+There's no direct replacement for the `Liferay.Poller` utility. If you must initialize `Liferay.Poller`, update your JSP to use the code below:
 
-```
+```markup
 <%@ page import="com.liferay.petra.encryptor.Encryptor" %>
 
 <%-- For access to `company` and `themeDisplay`. --%>
@@ -610,9 +557,7 @@ initialize `Liferay.Poller`, update your JSP to use the code below:
 
 #### Why was this change made?
 
-The `Liferay.Poller` component was only used in the Chat application, which is
-archived. Skipping initialization by default streamlines page loads for the
-common case.
+The `Liferay.Poller` component was only used in the Chat application, which is archived. Skipping initialization by default streamlines page loads for the common case.
 
 ---------------------------------------
 
@@ -626,23 +571,15 @@ common case.
 
 #### Who is affected?
 
-This affects Liferay Portal installations using legacy web content features
-provided by the `ContentTransformerListener`, such as embedding web content
-inside another web content, a legacy edit in place infrastructure, token
-replacements (`@article_group_id@`, `@articleId;elementName@`), etc.
+This affects Liferay Portal installations using legacy web content features provided by the `ContentTransformerListener`, such as embedding web content inside another web content, a legacy edit in place infrastructure, token replacements (`@article_group_id@`, `@articleId;elementName@`), etc.
 
 #### How should I update my code?
 
-There's no need to update your code. If you still want to use
-`ContentTransformerListener`, you can enable it in System Settings via the
-*Enable ContentTransformerListener* property under *Content & Data* &rarr; *Web
-Content* &rarr; *Virtual Instance Scope* &rarr; *Web Content*.
+There's no need to update your code. If you still want to use `ContentTransformerListener`, you can enable it in System Settings via the *Enable ContentTransformerListener* property under *Content & Data* &rarr; *Web Content* &rarr; *Virtual Instance Scope* &rarr; *Web Content*.
 
 #### Why was this change made?
 
-`ContentTransformerListener` was disabled to improve performance, due to its
-expensive string processing on article elements (calling
-`HtmlUtil.stripComments` and `HtmlUtil.stripHtml` on article fields).
+`ContentTransformerListener` was disabled to improve performance, due to its expensive string processing on article elements (calling `HtmlUtil.stripComments` and `HtmlUtil.stripHtml` on article fields).
 
 ---------------------------------------
 
@@ -652,9 +589,7 @@ expensive string processing on article elements (calling
 
 #### What changed?
 
-The `Liferay.BrowserSelectors.run()` function is no longer called on pages,
-which as a result removes some CSS classes from the opening `<html>` tag. Many
-of these are now added to the `<body>` element instead.
+The `Liferay.BrowserSelectors.run()` function is no longer called on pages, which as a result removes some CSS classes from the opening `<html>` tag. Many of these are now added to the `<body>` element instead.
 
 #### Who is affected?
 
@@ -684,10 +619,7 @@ This affects any code that relies on these CSS classes in the `<html>` element:
 
 #### How should I update my code?
 
-There's no direct replacement for the `Liferay.BrowserSelectors.run()` function,
-but you can adapt your CSS and JavaScript to target new classes on the `<body>`
-element instead. These classes are added to the `<body>` element to reflect
-the browser you're currently using:
+There's no direct replacement for the `Liferay.BrowserSelectors.run()` function, but you can adapt your CSS and JavaScript to target new classes on the `<body>` element instead. These classes are added to the `<body>` element to reflect the browser you're currently using:
 
 - `chrome`
 - `edge`
@@ -696,8 +628,7 @@ the browser you're currently using:
 - `mobile`
 - `other`
 
-Alternatively, you can still invoke `Liferay.BrowserSelectors.run()` to apply
-the old classes to the `<html>` element with the code below:
+Alternatively, you can still invoke `Liferay.BrowserSelectors.run()` to apply the old classes to the `<html>` element with the code below:
 
 ```
 <aui:script use="liferay-browser-selectors">
@@ -707,10 +638,7 @@ the old classes to the `<html>` element with the code below:
 
 #### Why was this change made?
 
-The classes, some of which referred to outdated browsers, were being added to
-the top `<html>` element via legacy JavaScript that depended on Alloy UI. This
-change, which removes the outdated browser references, is now done on the server
-side, improving page loading times.
+The classes, some of which referred to outdated browsers, were being added to the top `<html>` element via legacy JavaScript that depended on Alloy UI. This change, which removes the outdated browser references, is now done on the server side, improving page loading times.
 
 ---------------------------------------
 
@@ -720,8 +648,7 @@ side, improving page loading times.
 
 #### What changed?
 
-Blocking cache support was removed. These properties can no longer be used to
-enable blocking cache:
+Blocking cache support was removed. These properties can no longer be used to enable blocking cache:
 
 - `ehcache.blocking.cache.allowed`
 - `permissions.object.blocking.cache`
@@ -733,8 +660,7 @@ This affects anyone using the properties listed above.
 
 #### How should I update my code?
 
-There's no direct replacement for the removed feature. If you have code that
-depends on it, you must implement it yourself.
+There's no direct replacement for the removed feature. If you have code that depends on it, you must implement it yourself.
 
 #### Why was this change made?
 
@@ -754,8 +680,7 @@ Support was removed for setting these cache properties for an entity:
 - `value.object.finder.cache.enabled*`
 - `value.object.column.bitmask.enabled*`
 
-For example, these properties are for entity
-`com.liferay.portal.kernel.model.User`:
+For example, these properties are for entity `com.liferay.portal.kernel.model.User`:
 
 - `value.object.entity.cache.enabled.com.liferay.portal.kernel.model.User`
 - `value.object.finder.cache.enabled.com.liferay.portal.kernel.model.User`
@@ -767,8 +692,7 @@ This affects anyone using the properties listed above for an entity.
 
 #### How should I update my code?
 
-There's no direct replacement for the removed feature. You must remove
-these properties from your entities.
+There's no direct replacement for the removed feature. You must remove these properties from your entities.
 
 #### Why was this change made?
 
@@ -784,12 +708,13 @@ This change was made because these properties are not useful for an entity.
 
 Dynamic Data Mapping fields in Elasticsearch that start with `ddm__keyword__` and `ddm__text__` have been moved to a new nested document `ddmFieldArray`.
 
-The new nested document `ddmFieldArray` has several entries with following fields:
- - `ddmFieldName`: Contains the Dynamic Data Mapping structure field name. This name is generated using `DDMIndexer.encodeName` methods.
- - `ddmFieldValue*`: Contains the indexed data. The name of this field is generated using `DDMIndexer.getValueFieldName` and depends on its data type and language.
- - `ddmValueFieldName`: Contains the index field name where the indexed data is stored.
+The `ddmFieldArray` has several entries with following fields:
 
- This change is not applied if you are using SOLR search engine.
+- `ddmFieldName`: Contains the Dynamic Data Mapping structure field name. This name is generated using `DDMIndexer.encodeName` methods.
+- `ddmFieldValue*`: Contains the indexed data. The name of this field is generated using `DDMIndexer.getValueFieldName` and depends on the field's data type and language.
+- `ddmValueFieldName`: Contains the index field name where the indexed data is stored.
+
+ This change is not applied if you are using the SOLR search engine.
 
 #### Who is affected?
 
@@ -799,44 +724,19 @@ This affects anyone with custom developments that execute queries in the Elastic
 
 You have to use the new nested document `ddmFieldArray` in your Elasticsearch queries.
 
-There are some examples in Liferay code, for example, you can see the usage of DDM_FIELD_ARRAY constant in [DDMIndexerImpl](https://github.com/liferay/liferay-portal/blob/master/modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/util/DDMIndexerImpl.java) and [AssetHelperImpl](https://github.com/liferay/liferay-portal/blob/master/modules/apps/asset/asset-service/src/main/java/com/liferay/asset/internal/util/AssetHelperImpl.java) java classes.
+There are some examples in Liferay code. For example, [DDMIndexerImpl](https://github.com/liferay/liferay-portal/blob/7.3.x/modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/util/DDMIndexerImpl.java) and [AssetHelperImpl](https://github.com/liferay/liferay-portal/blob/master/modules/apps/asset/asset-service/src/main/java/com/liferay/asset/internal/util/AssetHelperImpl.java) use the `DDM_FIELD_ARRAY` constant.
 
 You can also restore the legacy behavior from System Settings and continue using `ddm__keyword__*` and `ddm__text__*` fields.
- - Go to "System Settings" => "Dynamic Data Mapping" => "Dynamic Data Mapping Indexer"
- - Check "Enable Legacy Dynamic Data Mapping Index Fields"
- - It is necessary to execute a full reindex after changing this configuration.
+
+1. Go to *System Settings* &rarr; *Dynamic Data Mapping* &rarr; *Dynamic Data Mapping Indexer*
+1. Select *Enable Legacy Dynamic Data Mapping Index Fields*
+1. Execute a full reindex.
 
 #### Why was this change made?
 
-This change was made to avoid Elasticsearch "Limit of total fields has been exceeded" error that can be produced if you have a large number of Dynamic Data Mapping structures.
+This change was made to avoid the *Limit of total fields has been exceeded* Elasticsearch error that occurs if you have too many Dynamic Data Mapping structures.
 
 For more information about this error, see [LPS-103224](https://issues.liferay.com/browse/LPS-103224).
-
----------------------------------------
-
-### Removed liferay-editor-image-uploader Plugin
-- **Date:** 2020-Mar-27
-- **JIRA Ticket:** [LPS-110734](https://issues.liferay.com/browse/LPS-110734)
-
-### What changed?
-
-`liferay-editor-image-uploader` AUI plugin was removed. Its code was merged
-into `addimages` CKEditor plugin, used by Alloy Editor and CKEditor.
-
-### Who is affected
-
-This affects custom solutions that use the plugin directly.
-
-### How should I update my code?
-
-There's no direct replacement for the `liferay-editor-image-uploader` plugin.
-If you have a component that relies on it, you can co-locate a copy of the old
-implementation and use it locally within your module.
-
-#### Why was this change made?
-
-This change was made to enable image drag and drop handling in CKEditor, and
-have a common solution for both Alloy Editor and CKEditor.
 
 ---------------------------------------
 
@@ -846,14 +746,14 @@ have a common solution for both Alloy Editor and CKEditor.
 
 ### What changed?
 
-The `countByClassNameId`, `findByClassNameId`, `removeByClassNameId` methods were removed from the following classes:
+The `countByClassNameId`, `findByClassNameId`, and `removeByClassNameId` methods were removed from the following classes:
 
-`com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence`
-`com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil`
-`com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence`
-`com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil`
-`com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence`
-`com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkUtil`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence`
+- `com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkUtil`
 
 ### Who is affected
 
@@ -861,13 +761,11 @@ This affects anyone who uses one of these methods.
 
 ### How should I update my code?
 
-You can use the other finder and counter methods existing in the class instead
-of the removed methods.
+You can use the other finder and counter methods.
 
 #### Why was this change made?
 
-These methods were removed as part of the solution for
-https://issues.liferay.com/browse/LPS-108525.
+These methods were removed as part of the solution for https://issues.liferay.com/browse/LPS-108525.
 
 ---------------------------------------
 
@@ -889,8 +787,7 @@ You can use `isShowAddButton(Group scopeGroup)` method instead of this method.
 
 #### Why was this change made?
 
-This method was removed as part of a clean up refactor. See more in
-https://issues.liferay.com/browse/LPS-103549.
+This method was removed as part of a clean up refactor. See more in https://issues.liferay.com/browse/LPS-103549.
 
 ---------------------------------------
 ### Moving lexicon icons path
@@ -903,7 +800,7 @@ The path for the lexicon icons has been changed from `themeDisplay.getPathThemeI
 
 ### Who is affected
 
-This affects custom solutions that use this path directly. The gradle task for building the icons on the `lexicon` path will be removed.
+This affects custom solutions that use the lexicon icons path directly. The Gradle task for building the icons on the `lexicon` path will be removed.
 
 ### How should I update my code?
 
@@ -911,6 +808,6 @@ Update the path to reference `clay` instead of `lexicon`
 
 #### Why was this change made?
 
-This change was made to unify references to the icon spritemap.
+This change was made to unify references to the icon sprite map.
 
 ---------------------------------------

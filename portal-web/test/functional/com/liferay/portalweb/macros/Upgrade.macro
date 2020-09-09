@@ -898,18 +898,6 @@ definition {
 				fragmentName = "Paragraph",
 				targetFragmentName = "Rich Text");
 		}
-
-		task ("Assert button fragment configuration survived") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-configuration-content-page");
-
-			ContentPages.clickPencil();
-
-			PageEditor.viewFragmentStyle(
-				alignment = "center",
-				fragmentName = "button",
-				size = "lg",
-				type = "link");
-		}
 	}
 
 	macro publishStagedSite {

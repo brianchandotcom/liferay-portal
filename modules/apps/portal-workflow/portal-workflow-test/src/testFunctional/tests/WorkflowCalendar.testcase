@@ -145,7 +145,6 @@ definition {
 	@description = "This is a use case for LPS-59572."
 	@priority = "3"
 	test DeleteAndRestoreEvent {
-		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

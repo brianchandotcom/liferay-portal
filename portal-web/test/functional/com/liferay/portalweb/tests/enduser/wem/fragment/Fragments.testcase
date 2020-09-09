@@ -539,14 +539,16 @@ definition {
 
 			PageEditor.configureFragment(
 				borderColor = "Gray 100",
-				bottomSpacing = "1");
+				bottomSpacing = "1",
+				separatorColor = "danger");
 		}
 
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
 				borderColor = "gray-100",
 				bottomSpacing = "1",
-				fragmentName = "separator");
+				fragmentName = "separator",
+				separatorColor = "danger");
 		}
 
 		task ("Remove the fragment") {

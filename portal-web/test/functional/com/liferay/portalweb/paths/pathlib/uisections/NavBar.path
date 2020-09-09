@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOGGLE_NAVIGATION</td>
+	<td>//div[contains(@class,'navbar')]//button[contains(@aria-label,'Toggle navigation')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USERS</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'navbar-nav')]/li/a[contains(.,'Users')]</td>
 	<td></td>

@@ -28,6 +28,17 @@ import org.junit.Test;
 public class StaticSizeTrieURLPatternMapperTest
 	extends SimpleURLPatternMapperTest {
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testExtensionMaximumCount() {
+		Map<String, String> map = new HashMap<>();
+
+		for (int i = 0; i < (Long.SIZE + 1); i++) {
+			map.put("*.key" + i, "value" + i);
+		}
+
+		createURLPatternMapper(map);
+	}
+
 	@Test
 	public void testFullAddresses() {
 		Map<String, String> map = new HashMap<>();
@@ -53,6 +64,17 @@ public class StaticSizeTrieURLPatternMapperTest
 
 		Assert.assertNull(urlPatternMapper.getValue("jsp"));
 		Assert.assertEquals("*.jsp", urlPatternMapper.getValue(".jsp"));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testWilcardMaximumCount() {
+		Map<String, String> map = new HashMap<>();
+
+		for (int i = 0; i < (Long.SIZE + 1); i++) {
+			map.put("key" + i, "value" + 1);
+		}
+
+		createURLPatternMapper(map);
 	}
 
 	@Override

@@ -29,7 +29,7 @@ definition {
 	test CheckAUIPreloadConfiguration {
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#CheckAUIPreloadConfiguration";
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -45,7 +45,7 @@ definition {
 			enableSetting = "false",
 			settingFieldName = "Preload Widely Used AUI Modules");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

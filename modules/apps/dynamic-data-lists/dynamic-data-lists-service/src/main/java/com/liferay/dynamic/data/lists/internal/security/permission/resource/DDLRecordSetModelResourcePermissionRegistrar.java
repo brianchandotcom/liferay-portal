@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.lists.internal.security.permission.resource;
 
-import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.constants.DDLConstants;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.constants.DDLRecordSetConstants;
@@ -60,10 +59,6 @@ public class DDLRecordSetModelResourcePermissionRegistrar {
 								DDLRecordSetConstants.
 									SCOPE_DYNAMIC_DATA_LISTS) {
 
-							return null;
-						}
-
-						if (actionId.equals(DDLActionKeys.ADD_RECORD)) {
 							return null;
 						}
 

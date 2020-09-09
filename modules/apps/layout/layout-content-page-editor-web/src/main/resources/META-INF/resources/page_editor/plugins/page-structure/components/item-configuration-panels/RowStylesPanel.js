@@ -138,6 +138,10 @@ export const RowStylesPanel = ({item}) => {
 			</p>
 
 			<div className="page-editor__page-structure__section__custom-styles">
+				<h1 className="sr-only">
+					{Liferay.Language.get('custom-styles')}
+				</h1>
+
 				<Select
 					configurationKey="modulesPerRow"
 					handleChange={onCustomStylesValueSelect}

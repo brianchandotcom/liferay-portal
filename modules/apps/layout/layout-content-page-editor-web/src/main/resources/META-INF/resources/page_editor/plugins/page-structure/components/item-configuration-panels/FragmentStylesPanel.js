@@ -108,6 +108,8 @@ const CustomStyles = ({fragmentEntryLink, onValueSelect}) => {
 
 	return fieldSets?.length ? (
 		<div className="page-editor__page-structure__section__custom-styles">
+			<h1 className="sr-only">{Liferay.Language.get('custom-styles')}</h1>
+
 			{fieldSets.map((fieldSet, index) => {
 				return (
 					<FieldSet

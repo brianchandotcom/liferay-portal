@@ -63,6 +63,10 @@ export const ContainerStylesPanel = ({item}) => {
 
 			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
 				<div className="page-editor__page-structure__section__custom-styles">
+					<h1 className="sr-only">
+						{Liferay.Language.get('custom-styles')}
+					</h1>
+
 					<SelectField
 						field={{
 							label: Liferay.Language.get('container-width'),

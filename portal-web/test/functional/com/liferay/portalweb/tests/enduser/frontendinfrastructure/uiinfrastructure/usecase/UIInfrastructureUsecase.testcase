@@ -25,9 +25,6 @@ definition {
 		}
 	}
 
-	// Ignored due to LPS-113623
-
-	@ignore = "true"
 	@priority = "5"
 	test CheckAUIPreloadConfiguration {
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#CheckAUIPreloadConfiguration";

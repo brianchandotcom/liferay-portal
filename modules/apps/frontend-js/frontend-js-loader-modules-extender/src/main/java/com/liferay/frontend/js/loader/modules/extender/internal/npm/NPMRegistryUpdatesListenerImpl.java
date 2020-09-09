@@ -17,10 +17,8 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 import com.liferay.frontend.js.loader.modules.extender.internal.servlet.JSResolveModulesServlet;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesListener;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -31,25 +29,10 @@ public class NPMRegistryUpdatesListenerImpl
 
 	@Override
 	public void onAfterUpdate() {
-		ServiceReference<JSResolveModulesServlet> serviceReference =
-			_bundleContext.getServiceReference(JSResolveModulesServlet.class);
-
-		JSResolveModulesServlet jsResolveModulesServlet =
-			_bundleContext.getService(serviceReference);
-
-		try {
-			jsResolveModulesServlet.updateETag();
-		}
-		finally {
-			_bundleContext.ungetService(serviceReference);
-		}
+		_jsResolveModulesServlet.updateETag();
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
-	private BundleContext _bundleContext;
+	@Reference
+	private JSResolveModulesServlet _jsResolveModulesServlet;
 
 }

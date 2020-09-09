@@ -30,8 +30,6 @@ public class BufferedIncrementConfiguration {
 	public BufferedIncrementConfiguration(String configuration) {
 		Filter filter = new Filter(configuration);
 
-		_enabled = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.BUFFERED_INCREMENT_ENABLED, filter));
 		_standbyQueueThreshold = GetterUtil.getInteger(
 			PropsUtil.get(
 				PropsKeys.BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD, filter));
@@ -118,10 +116,6 @@ public class BufferedIncrementConfiguration {
 		return _threadpoolMaxSize;
 	}
 
-	public boolean isEnabled() {
-		return _enabled;
-	}
-
 	public boolean isStandbyEnabled() {
 		return _standbyEnabled;
 	}
@@ -129,7 +123,6 @@ public class BufferedIncrementConfiguration {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BufferedIncrementConfiguration.class);
 
-	private final boolean _enabled;
 	private final boolean _standbyEnabled;
 	private final int _standbyQueueThreshold;
 	private final long _standbyTimeUpperLimit;

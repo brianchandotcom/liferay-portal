@@ -840,8 +840,7 @@ public class JournalContentDisplayContext {
 					enableViewCountIncrement());
 		}
 		else {
-			_enableViewCountIncrement =
-				PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED;
+			_enableViewCountIncrement = PropsValues.VIEW_COUNTS_ENABLED;
 		}
 
 		return _enableViewCountIncrement;

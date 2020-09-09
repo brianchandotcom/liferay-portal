@@ -168,6 +168,11 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #VIEW_COUNTS_ENABLED}
+	 */
+	@Deprecated
 	public static final boolean ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(
@@ -389,6 +394,11 @@ public class PropsValues {
 	public static final String BROWSER_LAUNCHER_URL = PropsUtil.get(
 		PropsKeys.BROWSER_LAUNCHER_URL);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #VIEW_COUNTS_ENABLED}
+	 */
+	@Deprecated
 	public static final boolean BUFFERED_INCREMENT_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.BUFFERED_INCREMENT_ENABLED));
@@ -755,6 +765,11 @@ public class PropsValues {
 	public static final String[] DL_DISPLAY_VIEWS = PropsUtil.getArray(
 		PropsKeys.DL_DISPLAY_VIEWS);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #VIEW_COUNTS_ENABLED}
+	 */
+	@Deprecated
 	public static final boolean DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(
@@ -3002,6 +3017,9 @@ public class PropsValues {
 	public static final int VERIFY_PROCESS_CONCURRENCY_THRESHOLD =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VERIFY_PROCESS_CONCURRENCY_THRESHOLD));
+
+	public static final boolean VIEW_COUNTS_ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.VIEW_COUNTS_ENABLED));
 
 	public static final String VIRTUAL_HOSTS_DEFAULT_SITE_NAME = PropsUtil.get(
 		PropsKeys.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);

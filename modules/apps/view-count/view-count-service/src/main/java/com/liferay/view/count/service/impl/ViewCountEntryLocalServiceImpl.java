@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
 import com.liferay.view.count.service.base.ViewCountEntryLocalServiceBaseImpl;
@@ -69,9 +70,12 @@ public class ViewCountEntryLocalServiceImpl
 
 	@Override
 	public long getViewCount(long companyId, long classNameId, long classPK) {
-		ViewCountEntry viewCountEntry =
-			viewCountEntryPersistence.fetchByPrimaryKey(
+		ViewCountEntry viewCountEntry = null;
+
+		if (PropsValues.VIEW_COUNTS_ENABLED) {
+			viewCountEntry = viewCountEntryPersistence.fetchByPrimaryKey(
 				new ViewCountEntryPK(companyId, classNameId, classPK));
+		}
 
 		if (viewCountEntry == null) {
 			return 0;
@@ -95,8 +99,10 @@ public class ViewCountEntryLocalServiceImpl
 	public void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment) {
 
-		viewCountEntryFinder.incrementViewCount(
-			companyId, classNameId, classPK, increment);
+		if (PropsValues.VIEW_COUNTS_ENABLED) {
+			viewCountEntryFinder.incrementViewCount(
+				companyId, classNameId, classPK, increment);
+		}
 	}
 
 }

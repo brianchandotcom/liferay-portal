@@ -58,10 +58,6 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 			BufferedIncrementProcessorUtil.getBufferedIncrementProcessor(
 				bufferedIncrement.configuration());
 
-		if (bufferedIncrementProcessor == null) {
-			return null;
-		}
-
 		return new BufferedIncrementContext(
 			bufferedIncrementProcessor, bufferedIncrement.incrementClass());
 	}

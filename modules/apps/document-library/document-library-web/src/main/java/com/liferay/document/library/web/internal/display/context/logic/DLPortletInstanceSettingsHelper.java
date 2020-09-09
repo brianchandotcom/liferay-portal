@@ -158,7 +158,7 @@ public class DLPortletInstanceSettingsHelper {
 	private String[] _getAllEntryColumns() {
 		String allEntryColumns = "name,description,size,status";
 
-		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
+		if (PropsValues.VIEW_COUNTS_ENABLED) {
 			allEntryColumns += ",downloads";
 		}
 

@@ -89,7 +89,6 @@ public class BufferedIncrementConfigurationTest {
 
 	@Test
 	public void testValidSetting() {
-		_properties.put(PropsKeys.BUFFERED_INCREMENT_ENABLED, "false");
 		_properties.put(
 			PropsKeys.BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD, "10");
 		_properties.put(
@@ -101,7 +100,6 @@ public class BufferedIncrementConfigurationTest {
 		BufferedIncrementConfiguration bufferedIncrementConfiguration =
 			new BufferedIncrementConfiguration(StringPool.BLANK);
 
-		Assert.assertFalse(bufferedIncrementConfiguration.isEnabled());
 		Assert.assertEquals(
 			10, bufferedIncrementConfiguration.getStandbyQueueThreshold());
 		Assert.assertEquals(
@@ -153,8 +151,6 @@ public class BufferedIncrementConfigurationTest {
 	}
 
 	private CaptureHandler _testInvalidSetting(Level level) {
-		_properties.put(PropsKeys.BUFFERED_INCREMENT_ENABLED, "false");
-
 		if (level == Level.OFF) {
 			_properties.put(
 				PropsKeys.BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD, "1");
@@ -177,8 +173,6 @@ public class BufferedIncrementConfigurationTest {
 
 		BufferedIncrementConfiguration bufferedIncrementConfiguration =
 			new BufferedIncrementConfiguration(StringPool.BLANK);
-
-		Assert.assertFalse(bufferedIncrementConfiguration.isEnabled());
 
 		if (level == Level.OFF) {
 			Assert.assertEquals(

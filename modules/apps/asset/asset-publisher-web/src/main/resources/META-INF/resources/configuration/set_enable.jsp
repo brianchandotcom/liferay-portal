@@ -74,7 +74,7 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 
 		<aui:input label="comment-ratings" name="preferences--enableCommentRatings--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>" />
 
-		<c:if test="<%= PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED %>">
+		<c:if test="<%= PropsValues.VIEW_COUNTS_ENABLED %>">
 			<aui:input label="view-count-increment" name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableViewCountIncrement() %>" />
 		</c:if>
 

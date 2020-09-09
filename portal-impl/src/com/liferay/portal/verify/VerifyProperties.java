@@ -1879,6 +1879,7 @@ public class VerifyProperties extends VerifyProcess {
 		{"amazon.license.1", "amazon.access.key.id"},
 		{"amazon.license.2", "amazon.access.key.id"},
 		{"amazon.license.3", "amazon.access.key.id"},
+		{"buffered.increment.enabled", "view.counts.enabled"},
 		{"cdn.host", "cdn.host.http"},
 		{"cluster.executor.debug.enabled", "cluster.link.debug.enabled"},
 		{

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.internal.increment;
 
-import java.util.AbstractMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,47 +25,26 @@ public class BufferedIncrementProcessorUtil {
 	public static BufferedIncrementProcessor getBufferedIncrementProcessor(
 		String configuration) {
 
-		Map.Entry<BufferedIncrementConfiguration, BufferedIncrementProcessor>
-			entry = _bufferedIncrementProcessors.computeIfAbsent(
-				configuration,
-				key -> {
-					BufferedIncrementConfiguration
-						bufferedIncrementConfiguration =
-							new BufferedIncrementConfiguration(key);
+		return _bufferedIncrementProcessors.computeIfAbsent(
+			configuration,
+			key -> {
+				BufferedIncrementConfiguration bufferedIncrementConfiguration =
+					new BufferedIncrementConfiguration(key);
 
-					BufferedIncrementProcessor bufferedIncrementProcessor =
-						null;
-
-					if (bufferedIncrementConfiguration.isEnabled()) {
-						bufferedIncrementProcessor =
-							new BufferedIncrementProcessor(
-								bufferedIncrementConfiguration, key);
-					}
-
-					return new AbstractMap.SimpleImmutableEntry<>(
-						bufferedIncrementConfiguration,
-						bufferedIncrementProcessor);
-				});
-
-		return entry.getValue();
+				return new BufferedIncrementProcessor(
+					bufferedIncrementConfiguration, key);
+			});
 	}
 
 	public void destroy() {
-		for (Map.Entry<?, BufferedIncrementProcessor> entry :
+		for (BufferedIncrementProcessor bufferedIncrementProcessor :
 				_bufferedIncrementProcessors.values()) {
 
-			BufferedIncrementProcessor bufferedIncrementProcessor =
-				entry.getValue();
-
-			if (bufferedIncrementProcessor != null) {
-				bufferedIncrementProcessor.destroy();
-			}
+			bufferedIncrementProcessor.destroy();
 		}
 	}
 
-	private static final Map
-		<String,
-		 Map.Entry<BufferedIncrementConfiguration, BufferedIncrementProcessor>>
-			_bufferedIncrementProcessors = new ConcurrentHashMap<>();
+	private static final Map<String, BufferedIncrementProcessor>
+		_bufferedIncrementProcessors = new ConcurrentHashMap<>();
 
 }

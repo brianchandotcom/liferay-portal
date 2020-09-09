@@ -59,34 +59,7 @@ jest.mock(
 				mobile: {label: 'Mobile', sizeId: 'mobile'},
 				tablet: {label: 'Tablet', sizeId: 'tablet'},
 			},
-			commonStyles: [
-				{
-					label: 'margin',
-					styles: [
-						{
-							dataType: 'string',
-							defaultValue: '0',
-							dependencies: [],
-							displaySize: 'small',
-							label: 'margin-top',
-							name: 'marginTop',
-							responsive: true,
-							responsiveTemplate: 'mt{viewport}{value}',
-							type: 'select',
-							validValues: [
-								{
-									label: '0',
-									value: '0',
-								},
-								{
-									label: '1',
-									value: '1',
-								},
-							],
-						},
-					],
-				},
-			],
+			commonStyles: [],
 			defaultSegmentsExperienceId: 0,
 			marginOptions: [],
 			paddingOptions: [],
@@ -106,6 +79,12 @@ describe('ContainerStylesPanel', () => {
 		expect(getByLabelText('container-width')).toBeInTheDocument();
 	});
 
+	it('shows custom styles panel', async () => {
+		const {getByText} = renderComponent({});
+
+		expect(getByText('custom-styles')).toBeInTheDocument();
+	});
+
 	it('calls dispatch method when changing the container width', async () => {
 		const {getByLabelText} = renderComponent();
 
@@ -122,28 +101,5 @@ describe('ContainerStylesPanel', () => {
 				},
 			})
 		);
-	});
-
-	it('allows changing styles for a given viewport', async () => {
-		const {getByLabelText} = renderComponent({
-			selectedViewportSize: 'tablet',
-		});
-		const input = getByLabelText('margin-top');
-
-		await fireEvent.change(input, {
-			target: {value: '1'},
-		});
-
-		expect(updateItemConfig).toHaveBeenCalledWith({
-			itemConfig: {
-				tablet: {
-					styles: {
-						marginTop: '1',
-					},
-				},
-			},
-			itemId: '0',
-			segmentsExperienceId: '0',
-		});
 	});
 });

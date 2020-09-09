@@ -47,7 +47,7 @@ const STATE = {
 };
 
 const renderComponent = ({
-	config = ITEM_CONFIG,
+	config = {},
 	state = STATE,
 	contextState = RESIZE_CONTEXT_STATE,
 	dispatch = () => {},
@@ -81,34 +81,7 @@ jest.mock(
 				desktop: {label: 'Desktop'},
 				tablet: {label: 'tablet'},
 			},
-			commonStyles: [
-				{
-					label: 'margin',
-					styles: [
-						{
-							dataType: 'string',
-							defaultValue: '0',
-							dependencies: [],
-							displaySize: 'small',
-							label: 'margin-top',
-							name: 'marginTop',
-							responsive: true,
-							responsiveTemplate: 'mt{viewport}{value}',
-							type: 'select',
-							validValues: [
-								{
-									label: '0',
-									value: '0',
-								},
-								{
-									label: '1',
-									value: '1',
-								},
-							],
-						},
-					],
-				},
-			],
+			commonStyles: [],
 			responsiveEnabled: true,
 		},
 	})
@@ -130,6 +103,12 @@ describe('RowStylesPanel', () => {
 		config.responsiveEnabled = true;
 		updateItemConfig.mockClear();
 		updateRowColumns.mockClear();
+	});
+
+	it('shows custom styles panel', async () => {
+		const {getByText} = renderComponent({});
+
+		expect(getByText('custom-styles')).toBeInTheDocument();
 	});
 
 	it('allows changing the modules per row', async () => {
@@ -204,7 +183,7 @@ describe('RowStylesPanel', () => {
 		});
 	});
 
-	it('allows changing configuration for a given viewport', async () => {
+	it('allows changing custom styles for a given viewport', async () => {
 		const {getByLabelText} = renderComponent({
 			state: {
 				selectedViewportSize: 'tablet',
@@ -219,29 +198,6 @@ describe('RowStylesPanel', () => {
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {
 				tablet: {modulesPerRow: 1},
-			},
-			itemId: '0',
-			segmentsExperienceId: '0',
-		});
-	});
-
-	it('allows changing styles for a given viewport', async () => {
-		const {getByLabelText} = renderComponent({
-			state: {selectedViewportSize: 'tablet'},
-		});
-		const input = getByLabelText('margin-top');
-
-		await fireEvent.change(input, {
-			target: {value: '1'},
-		});
-
-		expect(updateItemConfig).toHaveBeenCalledWith({
-			itemConfig: {
-				tablet: {
-					styles: {
-						marginTop: '1',
-					},
-				},
 			},
 			itemId: '0',
 			segmentsExperienceId: '0',

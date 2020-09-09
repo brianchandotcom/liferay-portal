@@ -16,6 +16,8 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
 import {VIEWPORT_SIZES} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateItemConfig from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
@@ -23,8 +25,46 @@ import {FragmentStylesPanel} from '../../../../../../../src/main/resources/META-
 
 const FRAGMENT_ENTRY_LINK_ID = '1';
 
+const fragmentEntryLinkWithStyles = {
+	comments: [],
+	configuration: {
+		fieldSets: [
+			{
+				configurationRole: 'style',
+				fields: [
+					{
+						dataType: 'string',
+						defaultValue: '1',
+						description: '',
+						label: 'Custom Style',
+						name: 'customStyle',
+						type: 'select',
+						typeOptions: {
+							validValues: [
+								{label: '0', value: '0'},
+								{label: '1', value: '1'},
+							],
+						},
+					},
+				],
+				label: '',
+			},
+		],
+	},
+	defaultConfigurationValues: {
+		customStyle: '1',
+	},
+	editableValues: {
+		[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
+		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {},
+	},
+	fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID,
+	name: 'Fragment',
+};
+
 const renderComponent = ({
 	dispatch = () => {},
+	fragmentEntryLink = {},
 	selectedViewportSize = VIEWPORT_SIZES.desktop,
 } = {}) =>
 	render(
@@ -32,7 +72,7 @@ const renderComponent = ({
 			dispatch={dispatch}
 			getState={() => ({
 				fragmentEntryLinks: {
-					[FRAGMENT_ENTRY_LINK_ID]: {},
+					[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink,
 				},
 				segmentsExperienceId: '0',
 				selectedViewportSize,
@@ -108,9 +148,23 @@ describe('FragmentStylesPanel', () => {
 		updateItemConfig.mockClear();
 	});
 
-	it('allows changing styles for a given viewport', async () => {
+	it('does not show custom styles panel when there are no custom styles', async () => {
+		const {queryByText} = renderComponent({});
+
+		expect(queryByText('custom-styles')).not.toBeInTheDocument();
+	});
+
+	it('shows custom styles panel when there is at least one custom style', async () => {
+		const {getByText} = renderComponent({
+			fragmentEntryLink: fragmentEntryLinkWithStyles,
+		});
+
+		expect(getByText('custom-styles')).toBeInTheDocument();
+	});
+
+	it('allows changing custom styles for a given viewport', async () => {
 		const {getByLabelText} = renderComponent({
-			selectedViewportSize: 'tablet',
+			selectedViewportSize: VIEWPORT_SIZES.tablet,
 		});
 		const input = getByLabelText('margin-top');
 

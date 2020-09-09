@@ -147,49 +147,27 @@ definition {
 			key_message = "and this is some <em>italic</em> text.</p>",
 			locator1 = "JSFShowcase#RESULT_MESSAGE");
 
-		var TextLength = StringUtil.length("ll");
+		KeyPress(
+			locator1 = "PortalShowcase#WRITEABLE_FIELD",
+			value1 = "\UP");
+
+		Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
+
+		KeyPress(
+			locator1 = "PortalShowcase#WRITEABLE_FIELD",
+			value1 = "\UP");
 
 		var i = "0";
 
-		while ("${i}" != "${TextLength}") {
-			Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
+		while ("${i}" != "7") {
+			KeyPress(
+				locator1 = "PortalShowcase#WRITEABLE_FIELD",
+				value1 = "\LEFT");
 
 			var i = ${i} + 1;
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\UP");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			KeyPress(
-				locator1 = "PortalShowcase#WRITEABLE_FIELD",
-				value1 = "\LEFT");
-
-			RobotType(locator1 = "ld o");
 		}
+
+		RobotType(locator1 = "ld o");
 
 		PortalShowcase.submit();
 

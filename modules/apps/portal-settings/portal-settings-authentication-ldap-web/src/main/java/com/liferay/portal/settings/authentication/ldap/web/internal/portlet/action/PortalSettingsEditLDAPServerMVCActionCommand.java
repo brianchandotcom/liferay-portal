@@ -236,6 +236,7 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		_splitStringArrays(dictionary, LDAPConstants.USER_CUSTOM_MAPPINGS);
 		_splitStringArrays(
 			dictionary, LDAPConstants.USER_DEFAULT_OBJECT_CLASSES);
+		_splitStringArrays(dictionary, LDAPConstants.USER_IGNORE_ATTRIBUTES);
 		_splitStringArrays(dictionary, LDAPConstants.USER_MAPPINGS);
 
 		_ldapServerConfigurationProvider.updateProperties(

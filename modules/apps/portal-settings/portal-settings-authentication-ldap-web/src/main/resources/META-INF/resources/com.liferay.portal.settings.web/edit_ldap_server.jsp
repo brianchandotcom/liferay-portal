@@ -225,6 +225,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 
 			<aui:input cssClass="lfr-textarea" helpMessage="enter-properties-file-synxtax-comma-delimiter" label="custom-contact-mapping" name='<%= "ldap--" + LDAPConstants.CONTACT_CUSTOM_MAPPINGS + "--" %>' type="textarea" value="<%= StringUtil.merge(ldapServerConfiguration.contactCustomMappings(), StringPool.COMMA) %>" />
 
+			<aui:input cssClass="lfr-textarea" helpMessage="enter-properties-file-synxtax-comma-delimiter" label="user-ignore-attributes" name='<%= "ldap--" + LDAPConstants.USER_IGNORE_ATTRIBUTES + "--" %>' type="textarea" value="<%= StringUtil.merge(ldapServerConfiguration.userIgnoreAttributes(), StringPool.COMMA) %>" />
+
 			<aui:input name='<%= "ldap--" + LDAPConstants.USER_MAPPINGS + "--" %>' type="hidden" />
 
 			<aui:input name='<%= "ldap--" + LDAPConstants.CONTACT_MAPPINGS + "--" %>' type="hidden" value="<%= StringUtil.merge(ldapServerConfiguration.contactMappings(), StringPool.COMMA) %>" />

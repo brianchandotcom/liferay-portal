@@ -287,8 +287,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId());
 
-		_assetEntryLocalService.addAssetCategoryAssetEntry(
-			assetCategory.getCategoryId(), assetEntry);
+		_assetCategoryLocalService.addAssetEntryAssetCategory(
+			assetEntry.getEntryId(), assetCategory);
 
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
 			_getInfoFieldValues(assetEntry, assetVocabulary.getName());

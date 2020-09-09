@@ -110,6 +110,17 @@
 	.list-group-title .text-truncate {
 		z-index: 2;
 	}
+
+	.list-group-subtitle .label {
+		flex-shrink: 2;
+
+		.label-item {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
 }
 
 .show-quick-actions-on-hover

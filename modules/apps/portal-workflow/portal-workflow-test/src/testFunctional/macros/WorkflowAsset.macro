@@ -15,15 +15,68 @@ definition {
 		Notifications.gotoNotifications();
 
 		if (isSet(user)) {
-			AssertClick(
-				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-				value1 = "${user} sent you a ${assetType} for review in the workflow.");
+			if (isSet(gotoTranslationsNotifications)) {
+				AssertClick(
+					locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE_2",
+					value1 = "${user} sent you a ${assetType} for review in the workflow.");
+			}
+			else {
+				AssertClick(
+					locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+					value1 = "${user} sent you a ${assetType} for review in the workflow.");
+			}
 		}
 		else {
 			AssertClick(
 				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 				value1 = "sent you a ${assetType} for review in the workflow.");
 		}
+	}
+
+	macro previewTranslatonsBaseFields {
+		AssertElementPresent(
+			key_localizationName = "${currentBaseLocale}",
+			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
+
+		AssertTextEquals(
+			key_titleValue = "${webContentTitle}",
+			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_TITLE",
+			value1 = "${webContentTitle}");
+
+		if (isSet(webContentDescription)) {
+			AssertTextEquals(
+				key_fieldValue = "${webContentDescription}",
+				locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_EDITOR",
+				value1 = "${webContentDescription}");
+		}
+
+		AssertTextEquals(
+			key_fieldValue = "${webContentContent}",
+			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_EDITOR",
+			value1 = "${webContentContent}");
+	}
+
+	macro previewTranslatonsTargetFields {
+		AssertElementPresent(
+			key_localizationName = "${currentTargetLocale}",
+			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
+
+		AssertTextEquals(
+			key_titleValue = "${webContentTitle}",
+			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_TITLE",
+			value1 = "${webContentTitle}");
+
+		if (isSet(webContentDescription)) {
+			AssertTextEquals(
+				key_fieldValue = "${webContentDescription}",
+				locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_EDITOR",
+				value1 = "${webContentDescription}");
+		}
+
+		AssertTextEquals(
+			key_fieldValue = "${webContentContent}",
+			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_EDITOR",
+			value1 = "${webContentContent}");
 	}
 
 	macro previewViewContent {

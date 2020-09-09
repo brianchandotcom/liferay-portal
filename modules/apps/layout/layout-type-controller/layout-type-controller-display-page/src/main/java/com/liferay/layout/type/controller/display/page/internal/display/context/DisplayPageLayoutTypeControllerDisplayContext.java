@@ -56,16 +56,17 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_infoItemServiceTracker = infoItemServiceTracker;
 
-		_infoItem = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-		_infoItemDetails = (InfoItemDetails)httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM_DETAILS);
-
 		long assetEntryId = ParamUtil.getLong(
 			_httpServletRequest, "assetEntryId");
 
-		if ((_infoItem == null) && (_infoItemDetails == null) &&
-			(assetEntryId > 0)) {
+		Object infoItem = httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
+		InfoItemDetails infoItemDetails =
+			(InfoItemDetails)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
+
+		if ((assetEntryId > 0) && (infoItem == null) &&
+			(infoItemDetails == null)) {
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 				assetEntryId);
@@ -86,16 +87,16 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 			infoItemIdentifier.setVersion(InfoItemIdentifier.VERSION_LATEST);
 
-			_infoItem = infoItemObjectProvider.getInfoItem(infoItemIdentifier);
-
-			InfoItemDetailsProvider infoItemDetailsProvider =
-				infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemDetailsProvider.class, className);
+			infoItem = infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 
 			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
 			if (assetRenderer != null) {
-				_infoItemDetails = infoItemDetailsProvider.getInfoItemDetails(
+				InfoItemDetailsProvider infoItemDetailsProvider =
+					infoItemServiceTracker.getFirstInfoItemService(
+						InfoItemDetailsProvider.class, className);
+
+				infoItemDetails = infoItemDetailsProvider.getInfoItemDetails(
 					assetRenderer.getAssetObject());
 			}
 
@@ -107,6 +108,9 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			_httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 		}
+
+		_infoItem = infoItem;
+		_infoItemDetails = infoItemDetails;
 	}
 
 	public AssetRendererFactory<?> getAssetRendererFactory() {
@@ -172,7 +176,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final Object _infoItem;
-	private InfoItemDetails _infoItemDetails;
+	private final InfoItemDetails _infoItemDetails;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 
 }

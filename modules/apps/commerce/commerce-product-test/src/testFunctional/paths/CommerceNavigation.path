@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ENTRY_NAME</td>
-	<td>//div[@class='dataset-display-wrapper' or @class='searchcontainer-content']//a[contains(.,'${key_entryName}')]</td>
+	<td>//div[@class='data-set-display-wrapper' or @class='searchcontainer-content']//a[contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>

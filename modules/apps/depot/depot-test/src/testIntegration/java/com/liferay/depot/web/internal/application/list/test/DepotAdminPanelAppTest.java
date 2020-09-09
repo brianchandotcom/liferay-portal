@@ -16,7 +16,6 @@ package com.liferay.depot.web.internal.application.list.test;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -58,22 +57,10 @@ public class DepotAdminPanelAppTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
 
-		DepotTestUtil.withDepotEnabled(
-			() -> Assert.assertTrue(
-				_depotAdminPanelApp.isShow(
-					permissionChecker,
-					_groupLocalService.getGroup(
-						TestPropsValues.getGroupId()))));
-	}
-
-	@Test
-	public void testIsShowWithDepotDisabled() throws Exception {
-		DepotTestUtil.withDepotDisabled(
-			() -> Assert.assertFalse(
-				_depotAdminPanelApp.isShow(
-					null,
-					_groupLocalService.getGroup(
-						TestPropsValues.getGroupId()))));
+		Assert.assertTrue(
+			_depotAdminPanelApp.isShow(
+				permissionChecker,
+				_groupLocalService.getGroup(TestPropsValues.getGroupId())));
 	}
 
 	@Test
@@ -84,12 +71,10 @@ public class DepotAdminPanelAppTest {
 			PermissionChecker permissionChecker =
 				PermissionCheckerFactoryUtil.create(user);
 
-			DepotTestUtil.withDepotEnabled(
-				() -> Assert.assertFalse(
-					_depotAdminPanelApp.isShow(
-						permissionChecker,
-						_groupLocalService.getGroup(
-							TestPropsValues.getGroupId()))));
+			Assert.assertFalse(
+				_depotAdminPanelApp.isShow(
+					permissionChecker,
+					_groupLocalService.getGroup(TestPropsValues.getGroupId())));
 		}
 		finally {
 			_userLocalService.deleteUser(user);
@@ -116,12 +101,10 @@ public class DepotAdminPanelAppTest {
 			PermissionChecker permissionChecker =
 				PermissionCheckerFactoryUtil.create(user);
 
-			DepotTestUtil.withDepotEnabled(
-				() -> Assert.assertTrue(
-					_depotAdminPanelApp.isShow(
-						permissionChecker,
-						_groupLocalService.getGroup(
-							TestPropsValues.getGroupId()))));
+			Assert.assertTrue(
+				_depotAdminPanelApp.isShow(
+					permissionChecker,
+					_groupLocalService.getGroup(TestPropsValues.getGroupId())));
 		}
 		finally {
 			_userLocalService.deleteUser(user);

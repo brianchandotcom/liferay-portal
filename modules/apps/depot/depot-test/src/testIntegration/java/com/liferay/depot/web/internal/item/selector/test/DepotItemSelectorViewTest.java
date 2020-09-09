@@ -15,7 +15,6 @@
 package com.liferay.depot.web.internal.item.selector.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
@@ -71,13 +70,6 @@ public class DepotItemSelectorViewTest {
 
 		Assert.assertTrue(
 			_depotItemSelectorView.isVisible(groupItemSelectorCriterion, null));
-	}
-
-	@Test
-	public void testIsVisibleWithDepotDisabled() throws Exception {
-		DepotTestUtil.withDepotDisabled(
-			() -> Assert.assertFalse(
-				_depotItemSelectorView.isVisible(null, null)));
 	}
 
 	@Inject(filter = "component.name=*.DepotItemSelectorView")

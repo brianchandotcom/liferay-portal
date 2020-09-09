@@ -18,9 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -107,37 +105,6 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 
 		Assert.assertEquals(_group1.getGroupId(), groupIds[0]);
 		Assert.assertEquals(depotEntry.getGroupId(), groupIds[1]);
-	}
-
-	@Test
-	public void testContributeWithConnectedGroupIdAndDepotDisabled()
-		throws Exception {
-
-		DepotTestUtil.withDepotDisabled(
-			() -> {
-				DepotEntry depotEntry = _addDepotEntry();
-
-				_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-					depotEntry.getDepotEntryId(), _group1.getGroupId());
-
-				PortletSharedSearchSettings portletSharedSearchSettings =
-					_getPortletSharedSearchSettings();
-
-				SearchContext searchContext =
-					portletSharedSearchSettings.getSearchContext();
-
-				searchContext.setGroupIds(new long[] {_group1.getGroupId()});
-
-				_depotSearchBarPortletSharedSearchContributor.contribute(
-					portletSharedSearchSettings);
-
-				long[] groupIds = searchContext.getGroupIds();
-
-				Assert.assertEquals(
-					Arrays.toString(groupIds), 1, groupIds.length);
-
-				Assert.assertEquals(_group1.getGroupId(), groupIds[0]);
-			});
 	}
 
 	@Test
@@ -281,7 +248,7 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 	}
 
 	private PortletSharedSearchSettings _getPortletSharedSearchSettings()
-		throws PortalException {
+		throws Exception {
 
 		SearchContext searchContext = new SearchContext();
 

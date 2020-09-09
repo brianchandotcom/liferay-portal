@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.ComparisonFailure;
 import org.junit.Test;
 
@@ -30,6 +31,10 @@ import org.junit.Test;
  * @author Arthur Chan
  */
 public class SimpleURLPatternMapperTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testGet() {

@@ -1,5 +1,18 @@
 definition {
 
+	macro assertDiscardIsUnavailableForInactivePublication {
+		Click(
+			key_publicationName = "${publicationName}",
+			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME");
+
+		Click(
+			key_changeCategory = "${changeCategory}",
+			key_changeTitle = "${changeTitle}",
+			locator1 = "ChangeListChanges#CHANGES_CHANGE_TITLE");
+
+		AssertElementNotPresent(locator1 = "ChangeListChanges#CHANGES_ELLIPSIS");
+	}
+
 	macro cancelPublicationCreation {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",

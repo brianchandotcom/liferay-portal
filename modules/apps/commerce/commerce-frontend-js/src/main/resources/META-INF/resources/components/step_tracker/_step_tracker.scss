@@ -5,7 +5,6 @@
 
 	.step {
 		align-items: center;
-		background: currentColor;
 		clip-path: polygon(
 			calc(100% - 10px) 0%,
 			calc(100% + 8px) 50%,
@@ -39,7 +38,6 @@
 
 		&:not(:first-child) {
 			&::before {
-				background: currentColor;
 				content: '';
 				height: 100%;
 				position: absolute;
@@ -51,7 +49,6 @@
 
 		&:not(:last-child) {
 			&::after {
-				background: currentColor;
 				content: '';
 				height: 100%;
 				left: 100%;
@@ -62,19 +59,49 @@
 		}
 
 		&.active {
-			color: $step-tracker-active;
+			background-color: $step-tracker-active;
+			color: $step-tracker-active-color;
+
+			&:not(:first-child)::before,
+			&:not(:last-child)::after {
+				background-color: $step-tracker-active;
+			}
+
+			.step-label {
+				color: currentColor;
+			}
 		}
 
 		&.completed {
-			color: $step-tracker-completed;
+			background-color: $step-tracker-completed;
+			color: $step-tracker-completed-color;
+
+			&:not(:first-child)::before,
+			&:not(:last-child)::after {
+				background-color: $step-tracker-completed;
+			}
+
+			.step-label {
+				color: currentColor;
+			}
 		}
 
 		&.inactive {
-			color: $step-tracker-inactive;
+			background-color: $step-tracker-inactive;
+			color: $step-tracker-inactive-color;
+
+			&:not(:first-child)::before,
+			&:not(:last-child)::after {
+				background-color: $step-tracker-inactive;
+			}
+
+			.step-label {
+				color: currentColor;
+			}
 		}
 
 		.step-label {
-			color: white;
+			color: $step-tracker-inactive-color;
 		}
 	}
 }

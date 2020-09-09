@@ -19,7 +19,7 @@ definition {
 
 	@description = "This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions."
 	@priority = "5"
-	test ConfigureFragmentInPageEditorAfterUpgrade721 {
+	test ConfigurePageEditorAfterUpgrade721 {
 		property data.archive.type = "data-archive-page-editor";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ConfigureFragmentInPageEditorAfterUpgrade72101 {
+	test ConfigurePageEditorAfterUpgrade72101 {
 		property data.archive.type = "data-archive-page-editor";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";

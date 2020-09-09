@@ -475,6 +475,10 @@
 				"store": true,
 				"type": "long"
 			},
+			"slaDefinitionIds": {
+				"store": true,
+				"type": "long"
+			},
 			"uid": {
 				"store": true,
 				"type": "keyword"

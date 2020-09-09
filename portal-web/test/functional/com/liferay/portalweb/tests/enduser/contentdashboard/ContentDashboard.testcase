@@ -127,7 +127,7 @@ definition {
 	@priority = "5"
 	test ContentDashboardFilterByTag {
 		property portal.acceptance = "true";
-		
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
@@ -182,7 +182,6 @@ definition {
 
 		Portlet.viewEmptyMessage(message = "There are no tags.");
 	}
-
 
 	@description = "Validate if the user can order by Modification Date"
 	@priority = "5"

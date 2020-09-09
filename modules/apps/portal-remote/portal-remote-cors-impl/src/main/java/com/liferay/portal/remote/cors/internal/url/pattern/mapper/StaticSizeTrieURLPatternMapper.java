@@ -216,13 +216,7 @@ public class StaticSizeTrieURLPatternMapper<T>
 	}
 
 	private int _getFirstSetBitIndex(long bitmask) {
-		int firstSetBitIndex = -1;
-
-		if (bitmask == 0) {
-			return firstSetBitIndex;
-		}
-
-		firstSetBitIndex = 63;
+		int firstSetBitIndex = 63;
 
 		long currentBitmask = bitmask << 32;
 

@@ -44,49 +44,30 @@ public class CommerceAccountUpgradeStepRegistrator
 		}
 
 		registry.register(
-			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
-			new CommerceAccountUpgradeProcess());
+			"1.0.0", "1.1.0", new CommerceAccountUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_1_0, _SCHEMA_VERSION_1_2_0,
+			"1.1.0", "1.2.0",
 			new CommerceAccountGroupCommerceAccountRelUpgradeProcess(),
 			new CommerceAccountGroupRelUpgradeProcess(),
 			new CommerceAccountGroupUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_2_0, _SCHEMA_VERSION_1_3_0,
-			new CommerceAccountNameUpgradeProcess());
+			"1.2.0", "1.3.0", new CommerceAccountNameUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_3_0, _SCHEMA_VERSION_1_4_0,
+			"1.3.0", "1.4.0",
 			new CommerceAccountDefaultAddressesUpgradeProcess());
 
-		registry.register(
-			_SCHEMA_VERSION_1_4_0, _SCHEMA_VERSION_1_5_0,
-			new DummyUpgradeProcess());
+		registry.register("1.4.0", "1.5.0", new DummyUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_5_0, _SCHEMA_VERSION_2_0_0,
-			new CommerceAccountGroupSystemUpgradeProcess());
+			"1.5.0", "2.0.0", new CommerceAccountGroupSystemUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE ACCOUNT UPGRADE STEP REGISTRATOR FINISHED");
 		}
 	}
-
-	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
-
-	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
-
-	private static final String _SCHEMA_VERSION_1_2_0 = "1.2.0";
-
-	private static final String _SCHEMA_VERSION_1_3_0 = "1.3.0";
-
-	private static final String _SCHEMA_VERSION_1_4_0 = "1.4.0";
-
-	private static final String _SCHEMA_VERSION_1_5_0 = "1.5.0";
-
-	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceAccountUpgradeStepRegistrator.class);

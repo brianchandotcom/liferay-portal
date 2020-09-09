@@ -44,24 +44,21 @@ public class CommerceNotificationUpgradeStepRegistrator
 			_log.info("COMMERCE NOTIFICATION UPGRADE STEP REGISTRATOR STARTED");
 		}
 
-		registry.register(
-			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
-			new DummyUpgradeProcess());
+		registry.register("1.0.0", "1.1.0", new DummyUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_1_0, _SCHEMA_VERSION_2_0_0,
+			"1.1.0", "2.0.0",
 			new CommerceNotificationTemplateAccountGroupRelUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_1_0,
+			"2.0.0", "2.1.0",
 			new CommerceNotificationQueueEntryUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_2_1_0, _SCHEMA_VERSION_2_2_0,
-			new CommerceNotificationTemplateUpgradeProcess());
+			"2.1.0", "2.2.0", new CommerceNotificationTemplateUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_2_2_0, _SCHEMA_VERSION_2_2_1,
+			"2.2.0", "2.2.1",
 			new CommerceNotificationTemplateGroupIdUpgradeProcess(
 				_classNameLocalService, _groupLocalService));
 
@@ -70,18 +67,6 @@ public class CommerceNotificationUpgradeStepRegistrator
 				"COMMERCE NOTIFICATION UPGRADE STEP REGISTRATOR FINISHED");
 		}
 	}
-
-	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
-
-	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
-
-	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
-
-	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
-
-	private static final String _SCHEMA_VERSION_2_2_0 = "2.2.0";
-
-	private static final String _SCHEMA_VERSION_2_2_1 = "2.2.1";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceNotificationUpgradeStepRegistrator.class);

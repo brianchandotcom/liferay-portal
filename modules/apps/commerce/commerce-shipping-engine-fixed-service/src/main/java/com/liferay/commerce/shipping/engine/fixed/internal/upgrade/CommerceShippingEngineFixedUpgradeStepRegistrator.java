@@ -39,7 +39,7 @@ public class CommerceShippingEngineFixedUpgradeStepRegistrator
 		}
 
 		registry.register(
-			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
+			"1.0.0", "1.1.0",
 			new CommerceShippingFixedOptionRelUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
@@ -48,10 +48,6 @@ public class CommerceShippingEngineFixedUpgradeStepRegistrator
 					"FINISHED");
 		}
 	}
-
-	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
-
-	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceShippingEngineFixedUpgradeStepRegistrator.class);

@@ -67,21 +67,18 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		}
 
 		registry.register(
-			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
-			new CommerceOrderUpgradeProcess(),
+			"1.0.0", "1.1.0", new CommerceOrderUpgradeProcess(),
 			new CommerceOrderItemUpgradeProcess(),
 			new CommerceOrderNoteUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_1_0, _SCHEMA_VERSION_1_2_0,
-			new CommerceSubscriptionUpgradeProcess());
+			"1.1.0", "1.2.0", new CommerceSubscriptionUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_2_0, _SCHEMA_VERSION_2_0_0,
-			new CommercePaymentMethodUpgradeProcess());
+			"1.2.0", "2.0.0", new CommercePaymentMethodUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_1_0,
+			"2.0.0", "2.1.0",
 			new com.liferay.commerce.internal.upgrade.v2_1_0.
 				CommerceOrderItemUpgradeProcess(
 					_cpDefinitionLocalService, _cpInstanceLocalService),
@@ -91,7 +88,7 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				_cpDefinitionLocalService));
 
 		registry.register(
-			_SCHEMA_VERSION_2_1_0, _SCHEMA_VERSION_2_2_0,
+			"2.1.0", "2.2.0",
 			new com.liferay.commerce.internal.upgrade.v2_2_0.
 				CommerceAccountUpgradeProcess(
 					_commerceAccountLocalService,
@@ -102,17 +99,17 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 					_commerceAccountLocalService, _userLocalService));
 
 		registry.register(
-			_SCHEMA_VERSION_2_2_0, _SCHEMA_VERSION_3_0_0,
+			"2.2.0", "3.0.0",
 			new com.liferay.commerce.internal.upgrade.v3_0_0.
 				CommerceSubscriptionCycleEntryUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_3_0_0, _SCHEMA_VERSION_3_1_0,
+			"3.0.0", "3.1.0",
 			new com.liferay.commerce.internal.upgrade.v3_1_0.
 				CommerceOrderUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_3_1_0, _SCHEMA_VERSION_3_2_0,
+			"3.1.0", "3.2.0",
 			new com.liferay.commerce.internal.upgrade.v3_2_0.
 				CommerceOrderUpgradeProcess(),
 			new com.liferay.commerce.internal.upgrade.v3_2_0.
@@ -124,13 +121,13 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				CPDAvailabilityEstimateUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_3_2_0, _SCHEMA_VERSION_4_0_0,
+			"3.2.0", "4.0.0",
 			new com.liferay.commerce.internal.upgrade.v4_0_0.
 				CommerceOrderItemUpgradeProcess(),
 			new CommerceShipmentItemUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_4_0_0, _SCHEMA_VERSION_4_1_0,
+			"4.0.0", "4.1.0",
 			new CommerceAddressUpgradeProcess(_classNameLocalService),
 			new com.liferay.commerce.internal.upgrade.v4_1_0.
 				CommerceOrderItemUpgradeProcess(),
@@ -138,51 +135,42 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				CommerceCountryUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_4_1_0, _SCHEMA_VERSION_4_1_1,
+			"4.1.0", "4.1.1",
 			new com.liferay.commerce.internal.upgrade.v4_1_1.
 				CommerceAddressUpgradeProcess());
 
-		registry.register(
-			_SCHEMA_VERSION_4_1_1, _SCHEMA_VERSION_4_2_0,
-			new DummyUpgradeProcess());
+		registry.register("4.1.1", "4.2.0", new DummyUpgradeProcess());
+
+		registry.register("4.2.0", "4.2.1", new PrintedNoteUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_4_2_0, _SCHEMA_VERSION_4_2_1,
-			new PrintedNoteUpgradeProcess());
+			"4.2.1", "4.3.0", new CommerceOrderDateUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_4_2_1, _SCHEMA_VERSION_4_3_0,
-			new CommerceOrderDateUpgradeProcess());
-
-		registry.register(
-			_SCHEMA_VERSION_4_3_0, _SCHEMA_VERSION_4_4_0,
+			"4.3.0", "4.4.0",
 			new CommerceOrderManuallyAdjustedUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_4_4_0, _SCHEMA_VERSION_4_5_0,
+			"4.4.0", "4.5.0",
 			new com.liferay.commerce.internal.upgrade.v4_5_0.
 				CommerceAddressUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_4_5_0, _SCHEMA_VERSION_4_5_1,
+			"4.5.0", "4.5.1",
 			new CommerceShippingMethodUpgradeProcess(
 				_classNameLocalService, _groupLocalService));
 
 		registry.register(
-			_SCHEMA_VERSION_4_5_1, _SCHEMA_VERSION_4_6_0,
-			new DummyUpgradeProcess(), new ShipmentUpgradeProcess(),
-			new SubscriptionUpgradeProcess());
+			"4.5.1", "4.6.0", new DummyUpgradeProcess(),
+			new ShipmentUpgradeProcess(), new SubscriptionUpgradeProcess());
+
+		registry.register("4.6.0", "4.7.0", new DummyUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_4_6_0, _SCHEMA_VERSION_4_7_0,
-			new DummyUpgradeProcess());
+			"4.7.0", "4.8.1", new CommerceOrderStatusesUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_4_7_0, _SCHEMA_VERSION_4_8_1,
-			new CommerceOrderStatusesUpgradeProcess());
-
-		registry.register(
-			_SCHEMA_VERSION_4_8_1, _SCHEMA_VERSION_4_9_0,
+			"4.8.1", "4.9.0",
 			new com.liferay.commerce.internal.upgrade.v4_9_0.
 				CommerceOrderUpgradeProcess(),
 			new com.liferay.commerce.internal.upgrade.v4_9_0.
@@ -192,50 +180,6 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			_log.info("COMMERCE UPGRADE STEP REGISTRATOR FINISHED");
 		}
 	}
-
-	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
-
-	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
-
-	private static final String _SCHEMA_VERSION_1_2_0 = "1.2.0";
-
-	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
-
-	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
-
-	private static final String _SCHEMA_VERSION_2_2_0 = "2.2.0";
-
-	private static final String _SCHEMA_VERSION_3_0_0 = "3.0.0";
-
-	private static final String _SCHEMA_VERSION_3_1_0 = "3.1.0";
-
-	private static final String _SCHEMA_VERSION_3_2_0 = "3.2.0";
-
-	private static final String _SCHEMA_VERSION_4_0_0 = "4.0.0";
-
-	private static final String _SCHEMA_VERSION_4_1_0 = "4.1.0";
-
-	private static final String _SCHEMA_VERSION_4_1_1 = "4.1.1";
-
-	private static final String _SCHEMA_VERSION_4_2_0 = "4.2.0";
-
-	private static final String _SCHEMA_VERSION_4_2_1 = "4.2.1";
-
-	private static final String _SCHEMA_VERSION_4_3_0 = "4.3.0";
-
-	private static final String _SCHEMA_VERSION_4_4_0 = "4.4.0";
-
-	private static final String _SCHEMA_VERSION_4_5_0 = "4.5.0";
-
-	private static final String _SCHEMA_VERSION_4_5_1 = "4.5.1";
-
-	private static final String _SCHEMA_VERSION_4_6_0 = "4.6.0";
-
-	private static final String _SCHEMA_VERSION_4_7_0 = "4.7.0";
-
-	private static final String _SCHEMA_VERSION_4_8_1 = "4.8.1";
-
-	private static final String _SCHEMA_VERSION_4_9_0 = "4.9.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceUpgradeStepRegistrator.class);

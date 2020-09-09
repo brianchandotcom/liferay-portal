@@ -39,11 +39,11 @@ public class CommerceDataIntegrationUpgradeStepRegistrator
 		}
 
 		registry.register(
-			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
+			"1.0.0", "1.1.0",
 			new CommerceDataIntegrationProcessLogUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_1_0, _SCHEMA_VERSION_2_0_0,
+			"1.1.0", "2.0.0",
 			new CommerceDataIntegrationProcessSystemUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
@@ -51,12 +51,6 @@ public class CommerceDataIntegrationUpgradeStepRegistrator
 				"COMMERCE DATA INTEGRATION UPGRADE STEP REGISTRATOR FINISHED");
 		}
 	}
-
-	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
-
-	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
-
-	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDataIntegrationUpgradeStepRegistrator.class);

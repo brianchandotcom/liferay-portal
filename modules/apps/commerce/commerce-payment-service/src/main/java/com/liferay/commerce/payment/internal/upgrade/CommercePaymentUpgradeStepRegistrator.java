@@ -40,7 +40,7 @@ public class CommercePaymentUpgradeStepRegistrator
 		}
 
 		registry.register(
-			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_0_1,
+			"1.0.0", "1.0.1",
 			new CommercePaymentMethodGroupRelUpgradeProcess(
 				_classNameLocalService, _groupLocalService));
 
@@ -48,10 +48,6 @@ public class CommercePaymentUpgradeStepRegistrator
 			_log.info("COMMERCE PAYMENT UPGRADE STEP REGISTRATOR FINISHED");
 		}
 	}
-
-	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
-
-	private static final String _SCHEMA_VERSION_1_0_1 = "1.0.1";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePaymentUpgradeStepRegistrator.class);

@@ -39,8 +39,7 @@ public class CommerceProductTypeGroupedUpgradeStepRegistrator
 		}
 
 		registry.register(
-			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
-			new CPDefinitionGroupedEntryUpgradeProcess());
+			"1.0.0", "1.1.0", new CPDefinitionGroupedEntryUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -48,10 +47,6 @@ public class CommerceProductTypeGroupedUpgradeStepRegistrator
 					"FINISHED");
 		}
 	}
-
-	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
-
-	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceProductTypeGroupedUpgradeStepRegistrator.class);

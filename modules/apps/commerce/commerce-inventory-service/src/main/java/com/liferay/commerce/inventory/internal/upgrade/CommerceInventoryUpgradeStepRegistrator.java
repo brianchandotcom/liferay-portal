@@ -41,35 +41,20 @@ public class CommerceInventoryUpgradeStepRegistrator
 		}
 
 		registry.register(
-			_SCHEMA_VERSION_1_0_0, _SCHEMA_VERSION_1_1_0,
+			"1.0.0", "1.1.0",
 			new CommerceInventoryWarehouseItemUpgradeProcess());
 
-		registry.register(
-			_SCHEMA_VERSION_1_1_0, _SCHEMA_VERSION_1_2_0,
-			new DummyUpgradeProcess());
+		registry.register("1.1.0", "1.2.0", new DummyUpgradeProcess());
 
 		registry.register(
-			_SCHEMA_VERSION_1_2_0, _SCHEMA_VERSION_2_0_0,
-			new CommerceInventoryAuditUpgradeProcess());
+			"1.2.0", "2.0.0", new CommerceInventoryAuditUpgradeProcess());
 
-		registry.register(
-			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_1_0,
-			new MVCCUpgradeProcess());
+		registry.register("2.0.0", "2.1.0", new MVCCUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE INVENTORY UPGRADE STEP REGISTRATOR FINISHED");
 		}
 	}
-
-	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
-
-	private static final String _SCHEMA_VERSION_1_1_0 = "1.1.0";
-
-	private static final String _SCHEMA_VERSION_1_2_0 = "1.2.0";
-
-	private static final String _SCHEMA_VERSION_2_0_0 = "2.0.0";
-
-	private static final String _SCHEMA_VERSION_2_1_0 = "2.1.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceInventoryUpgradeStepRegistrator.class);

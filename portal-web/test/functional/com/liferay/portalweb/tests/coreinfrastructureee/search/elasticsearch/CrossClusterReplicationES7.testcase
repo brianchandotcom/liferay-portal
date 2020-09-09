@@ -137,6 +137,31 @@ definition {
 	}
 
 	@priority = "3"
+	test CleanAndReindexWorkflowMetricsInstances {
+		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsInstances";
+
+		CrossClusterReplication.setupCrossClusterReplication();
+
+		CrossClusterReplication.setupWorkflow();
+
+		CrossClusterReplication.cleanWorkflowIndex(workflowIndexName = "workflow-metrics-instances");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE",
+			value1 = "0");
+
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Instances");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE",
+			value1 = "1");
+	}
+
+	@priority = "3"
 	test CleanAndReindexWorkflowMetricsNodes {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsNodes";
 

@@ -27,7 +27,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 <ul class="list-group show-quick-actions-on-hover">
 	<c:if test="<%= Validator.isNotNull(assetEntryResult.getTitle()) %>">
 		<li class="list-group-header">
-			<h3 class="list-group-header-title"><%= assetEntryResult.getTitle() %></h3>
+			<p class="h3 list-group-header-title"><%= assetEntryResult.getTitle() %></p>
 		</li>
 	</c:if>
 
@@ -83,13 +83,13 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<h4 class="list-group-title text-truncate">
+				<p class="h4 list-group-title text-truncate">
 					<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
 					<aui:a href="<%= assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet()) %>">
 						<%= HtmlUtil.escape(assetEntry.getTitle(locale)) %>
 					</aui:a>
-				</h4>
+				</p>
 
 				<%
 				Date displayDate = assetPublisherDisplayContext.isShowCreateDate() ? assetEntry.getCreateDate() : null;

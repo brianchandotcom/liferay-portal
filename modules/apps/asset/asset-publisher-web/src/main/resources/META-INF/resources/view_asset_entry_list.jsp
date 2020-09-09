@@ -56,7 +56,7 @@ for (AssetEntryResult assetEntryResult : assetPublisherDisplayContext.getAssetEn
 		</c:when>
 		<c:when test="<%= StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX) %>">
 			<c:if test="<%= Validator.isNotNull(assetEntryResult.getTitle()) %>">
-				<h3 class="asset-entries-group-label"><%= HtmlUtil.escape(assetEntryResult.getTitle()) %></h3>
+				<p class="asset-entries-group-label h3"><%= HtmlUtil.escape(assetEntryResult.getTitle()) %></p>
 			</c:if>
 
 			<liferay-ddm:template-renderer

@@ -33,9 +33,9 @@ if (stageableGroup.isLayout()) {
 <clay:sheet>
 	<c:if test="<%= Validator.isNotNull(assetEntryResult.getTitle()) %>">
 		<clay:sheet-header>
-			<h4 class="sheet-title">
+			<p class="h4 sheet-title">
 				<%= assetEntryResult.getTitle() %>
-			</h4>
+			</p>
 		</clay:sheet-header>
 	</c:if>
 

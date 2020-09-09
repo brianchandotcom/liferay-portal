@@ -36,8 +36,7 @@ public class CommerceProductOptionClayTableDataSetDisplayView
 			"fieldType", "field-type");
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"skuContributor", "sku-contributor");
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"required", "is-required");
+		clayTableSchemaBuilder.addClayTableSchemaField("required", "required");
 		clayTableSchemaBuilder.addClayTableSchemaField("position", "position");
 		clayTableSchemaBuilder.addClayTableSchemaField("values", "values");
 	}

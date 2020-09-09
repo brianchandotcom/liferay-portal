@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Danny Situ
  */
 @ExtendedObjectClassDefinition(
-	category = "salesforce-talend-job-deployer",
+	category = "salesforce-connector",
 	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(

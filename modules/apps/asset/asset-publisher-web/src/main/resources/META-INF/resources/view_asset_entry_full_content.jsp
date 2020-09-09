@@ -82,10 +82,11 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 					<%= HtmlUtil.escape(title) %>
 				</span>
 			</c:if>
+		</p>
 
-			<c:if test="<%= !print %>">
+		<c:if test="<%= !print %>">
 
-				<%
+			<%
 				String fullContentRedirect = currentURL;
 
 				if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(assetEntry.getCompanyId(), assetEntry.getGroupId(), assetEntry.getClassName())) {
@@ -93,13 +94,12 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 				}
 
 				request.setAttribute("view.jsp-fullContentRedirect", fullContentRedirect);
-				%>
+			%>
 
-				<span class="d-inline-flex">
+			<span class="d-inline-flex">
 					<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
 				</span>
-			</c:if>
-		</p>
+		</c:if>
 	</div>
 
 	<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>

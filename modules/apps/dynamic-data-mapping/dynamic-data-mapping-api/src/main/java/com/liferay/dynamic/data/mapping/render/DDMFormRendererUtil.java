@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,10 +48,8 @@ public class DDMFormRendererUtil {
 
 		StringBundler sb = new StringBundler(ddmFormFields.size());
 
-		Set<String> fieldNamespaceSet = new HashSet<>();
-
 		ddmFormFieldRenderingContext.setProperty(
-			"fieldNamespaceSet", fieldNamespaceSet);
+			"fieldNamespaceSet", new HashSet<String>());
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			if (_isDDMFormFieldSkippable(

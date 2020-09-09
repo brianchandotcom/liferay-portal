@@ -71,6 +71,30 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro discardConflictingChanges {
+		Click(
+			key_entryTitle = "${entryTitle}",
+			locator1 = "ChangeList#CONFICTING_CHANGES_DISCARD_BUTTON",
+			value1 = "Discard");
+
+		Pause(locator1 = "3000");
+
+		AssertElementPresent(locator1 = "ChangeList#DISCARDED_CHANGES_TITLE");
+
+		key_changeCategory = "${changeCategory}";
+		key_changeTitle = "${changeTitle}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ChangeListChanges#CONTEXT_CHANGE_TITLE",
+			value1 = "${changeTitle}");
+
+		Click(
+			key_text = "Discard",
+			locator1 = "Button#ANY");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro enablePublications {
 		Pause(locator1 = "2000");
 

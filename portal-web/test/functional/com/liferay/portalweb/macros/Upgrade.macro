@@ -1886,6 +1886,287 @@ definition {
 		AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
 	}
 
+	macro viewContributedFragmentStyle {
+		task ("Navigate to page in view mode") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			Navigator._gotoPage(pageName = "Test Fragment Content Page");
+
+			Pause(locator1 = "5000");
+
+			Refresh();
+
+			Pause(locator1 = "10000");
+		}
+
+		task ("Assert styles of Container in view mode") {
+			var screenWidth	= selenium.getElementWidth("//body");
+
+			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]");
+
+			TestUtils.assertNotEquals(
+				actual = "${containerWidth}",
+				expected = "${screenWidth}");
+
+			var screenWidth	= selenium.getElementWidth("//body");
+
+			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]");
+
+			TestUtils.assertNotEquals(
+				actual = "${containerWidth}",
+				expected = "${screenWidth}");
+
+			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]",
+				locator2 = "background-color",
+				value1 = "rgba(46, 90, 172, 1)");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]",
+				locator2 = "max-width",
+				value1 = "${containerWidth}px");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'container')][contains(@class,'ml-0')]");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'container')][contains(@class,'mr-0')]");
+		}
+
+		task ("Assert styles of Button in view mode") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "button",
+				size = "lg",
+				type = "link");
+
+			AssertElementPresent(
+				key_alignment = "center",
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_fragmentName = "button",
+				key_marginBottom = "1",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+		}
+
+		task ("Assert styles of Card in view mode") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "card",
+				imageSize = "0");
+
+			AssertElementPresent(
+				key_borderRadius = "lg",
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_boxShadow = "0 1rem 3rem rgba(0, 0, 0, .175)",
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BOX_SHADOW_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_alignment = "center",
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_fragmentName = "card",
+				key_marginBottom = "1",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+		}
+
+		task ("Assert styles of Heading in view mode") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "heading",
+				headingLevel = "h2");
+
+			AssertElementPresent(
+				key_fragmentName = "heading",
+				key_textColor = "#287D3C",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_alignment = "center",
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_fragmentName = "heading",
+				key_marginBottom = "1",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+		}
+
+		task ("Assert styles of HTML in view mode") {
+			AssertElementPresent(
+				key_fragmentName = "html",
+				key_marginBottom = "1",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+		}
+
+		task ("Assert styles of Image in view mode") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "image",
+				imageSize = "0");
+
+			AssertElementPresent(
+				key_alignment = "center",
+				key_fragmentName = "image",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_fragmentName = "image",
+				key_marginBottom = "1",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+		}
+
+		task ("Assert styles of Paragraph in view mode") {
+			AssertElementPresent(
+				key_fragmentName = "paragraph",
+				key_textColor = "#B95000",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_alignment = "center",
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_fragmentName = "paragraph",
+				key_marginBottom = "1",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+		}
+
+		task ("Assert styles of Separator in view mode") {
+			PageEditor.viewFragmentStyle(
+				bottomSpacing = "3",
+				separatorColor = "dark");
+		}
+
+		task ("Assert styles of Spacer in view mode") {
+			PageEditor.viewFragmentStyle(height = "5");
+		}
+
+		task ("Assert styles of Video in view mode") {
+			AssertElementPresent(
+				key_alignment = "center",
+				locator1 = "Fragment#ALIGN");
+
+			AssertElementPresent(
+				key_height = "300px",
+				locator1 = "Fragment#VIDEO_HEIGHT");
+
+			AssertElementPresent(
+				key_width = "300px",
+				locator1 = "Fragment#VIDEO_WIDTH");
+
+			AssertElementPresent(locator1 = "//div[contains(@class,'video')]/parent::div/parent::div/parent::div[contains(@class,'mb-1')]");
+		}
+
+		task ("Navigate to page in edit mode") {
+			ContentPages.clickPencil();
+
+			Pause(locator1 = "10000");
+		}
+
+		task ("Assert styles of Container in edit mode") {
+			PageEditor.viewContainerStyle(
+				containerWidth = "Fixed Width",
+				paddingBottom = "3",
+				paddingTop = "3",
+				position = "1");
+
+			AssertCssValue(
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER",
+				locator2 = "background-color",
+				value1 = "rgba(46, 90, 172, 1)");
+		}
+
+		task ("Assert styles of Button in edit mode") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "button",
+				marginBottom = "1",
+				size = "lg",
+				type = "link");
+		}
+
+		task ("Assert styles of Card in edit mode") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "card",
+				imageSize = "0",
+				marginBottom = "1");
+		}
+
+		task ("Assert styles of Heading in edit mode") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading",
+				headingLevel = "h2",
+				marginBottom = "1");
+
+			AssertElementPresent(
+				key_fragmentName = "heading",
+				key_textColor = "rgb(40, 125, 60)",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
+		}
+
+		task ("Assert styles of HTML in edit mode") {
+			AssertElementPresent(
+				key_fragmentName = "html",
+				key_marginBottom = "1",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+		}
+
+		task ("Assert styles of Image in edit mode") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "image",
+				imageSize = "0",
+				marginBottom = "1");
+		}
+
+		task ("Assert styles of Paragraph in edit mode") {
+			AssertElementPresent(
+				key_fragmentName = "paragraph",
+				key_textColor = "rgb(185, 80, 0)",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "paragraph",
+				marginBottom = "1");
+		}
+
+		task ("Assert styles of Separator in edit mode") {
+			PageEditor.viewFragmentStyle(
+				bottomSpacing = "3",
+				separatorColor = "dark");
+		}
+
+		task ("Assert styles of Spacer in edit mode") {
+			PageEditor.viewFragmentStyle(height = "5");
+		}
+
+		task ("Assert styles of Video in edit mode") {
+			AssertElementPresent(
+				key_alignment = "center",
+				locator1 = "Fragment#ALIGN");
+
+			AssertElementPresent(
+				key_height = "300px",
+				locator1 = "Fragment#VIDEO_HEIGHT");
+
+			AssertElementPresent(
+				key_width = "300px",
+				locator1 = "Fragment#VIDEO_WIDTH");
+
+			AssertElementPresent(locator1 = "//div[contains(@class,'video')]/parent::div/parent::div/parent::div[contains(@class,'mb-1')]");
+		}
+	}
+
 	macro viewDefaultPage {
 		Navigator.openURL();
 

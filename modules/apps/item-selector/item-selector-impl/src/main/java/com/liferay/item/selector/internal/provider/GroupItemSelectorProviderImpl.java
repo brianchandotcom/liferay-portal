@@ -22,11 +22,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -67,9 +73,10 @@ public class GroupItemSelectorProviderImpl
 			).build();
 
 		try {
-			return _groupService.search(
-				companyId, _classNameIds, keywords, groupParams, start, end,
-				null);
+			return _filterGroups(
+				_groupLocalService.search(
+					companyId, _classNameIds, keywords, groupParams, start, end,
+					null));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -111,6 +118,26 @@ public class GroupItemSelectorProviderImpl
 		};
 	}
 
+	private List<Group> _filterGroups(List<Group> groups)
+		throws PortalException {
+
+		List<Group> filteredGroups = new ArrayList<>();
+
+		PermissionChecker permissionChecker =
+			GuestOrUserUtil.getPermissionChecker();
+
+		for (Group group : groups) {
+			if (group.isCompany() ||
+				GroupPermissionUtil.contains(
+					permissionChecker, group, ActionKeys.VIEW)) {
+
+				filteredGroups.add(group);
+			}
+		}
+
+		return filteredGroups;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupItemSelectorProviderImpl.class);
 
@@ -118,6 +145,9 @@ public class GroupItemSelectorProviderImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private GroupService _groupService;

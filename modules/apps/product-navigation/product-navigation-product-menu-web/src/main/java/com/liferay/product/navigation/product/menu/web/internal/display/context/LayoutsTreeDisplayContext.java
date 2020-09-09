@@ -44,6 +44,7 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.WindowStateException;
 
 /**
@@ -226,7 +227,9 @@ public class LayoutsTreeDisplayContext {
 		return _groupId;
 	}
 
-	public Map<String, Object> getLayoutFinderData() {
+	public Map<String, Object> getLayoutFinderData()
+		throws WindowStateException {
+
 		return HashMapBuilder.<String, Object>put(
 			"administrationPortletNamespace",
 			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES)
@@ -247,6 +250,8 @@ public class LayoutsTreeDisplayContext {
 			}
 		).put(
 			"namespace", getNamespace()
+		).put(
+			"productMenuPortletURL", getProductMenuPortletURL()
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).build();
@@ -270,6 +275,19 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"privateLayout", isPrivateLayout()
 		).build();
+	}
+
+	public String getProductMenuPortletURL() throws WindowStateException {
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			_liferayPortletRequest,
+			ProductNavigationProductMenuPortletKeys.
+				PRODUCT_NAVIGATION_PRODUCT_MENU,
+			RenderRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/portlet/product_menu.jsp");
+		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+		return portletURL.toString();
 	}
 
 	public String getViewCollectionItemsURL()

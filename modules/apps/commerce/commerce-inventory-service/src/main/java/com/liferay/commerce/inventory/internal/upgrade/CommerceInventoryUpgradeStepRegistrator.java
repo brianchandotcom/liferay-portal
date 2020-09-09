@@ -37,7 +37,7 @@ public class CommerceInventoryUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE INVENTORY UPGRADE STEP REGISTRATOR STARTED");
+			_log.info("Commerce inventory upgrade step registrator started");
 		}
 
 		registry.register(
@@ -52,7 +52,7 @@ public class CommerceInventoryUpgradeStepRegistrator
 		registry.register("2.0.0", "2.1.0", new MVCCUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE INVENTORY UPGRADE STEP REGISTRATOR FINISHED");
+			_log.info("Commerce inventory upgrade step registrator finished");
 		}
 	}
 

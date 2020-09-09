@@ -36,7 +36,7 @@ public class CommercePaymentUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE PAYMENT UPGRADE STEP REGISTRATOR STARTED");
+			_log.info("Commerce payment upgrade step registrator started");
 		}
 
 		registry.register(
@@ -45,7 +45,7 @@ public class CommercePaymentUpgradeStepRegistrator
 				_classNameLocalService, _groupLocalService));
 
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE PAYMENT UPGRADE STEP REGISTRATOR FINISHED");
+			_log.info("Commerce payment upgrade step registrator finished");
 		}
 	}
 

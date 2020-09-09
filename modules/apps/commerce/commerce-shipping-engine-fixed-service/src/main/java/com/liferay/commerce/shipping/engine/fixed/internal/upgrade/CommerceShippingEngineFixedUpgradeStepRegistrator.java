@@ -34,7 +34,7 @@ public class CommerceShippingEngineFixedUpgradeStepRegistrator
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"COMMERCE SHIPPING ENGINE FIXED UPGRADE STEP REGISTRATOR " +
+				"Commerce shipping engine fixed upgrade step registrator " +
 					"STARTED");
 		}
 
@@ -44,8 +44,8 @@ public class CommerceShippingEngineFixedUpgradeStepRegistrator
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"COMMERCE SHIPPING ENGINE FIXED UPGRADE STEP REGISTRATOR " +
-					"FINISHED");
+				"Commerce shipping engine fixed upgrade step registrator " +
+					"finished");
 		}
 	}
 

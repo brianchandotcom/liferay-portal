@@ -34,7 +34,7 @@ public class CommerceProductTypeVirtualUpgradeStepRegistrator
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"COMMERCE PRODUCT TYPE VIRTUAL UPGRADE STEP REGISTRATOR " +
+				"Commerce product type virtual upgrade step registrator " +
 					"STARTED");
 		}
 
@@ -43,7 +43,7 @@ public class CommerceProductTypeVirtualUpgradeStepRegistrator
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"COMMERCE PRODUCT TYPE VIRTUAL UPGRADE STEP REGISTRATOR " +
+				"Commerce product type virtual upgrade step registrator " +
 					"FINISHED");
 		}
 	}

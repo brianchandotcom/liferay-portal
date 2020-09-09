@@ -40,7 +40,7 @@ public class CommerceDiscountUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE DISCOUNT UPGRADE STEP REGISTRATOR STARTED");
+			_log.info("Commerce discount upgrade step registrator started");
 		}
 
 		registry.register(
@@ -80,7 +80,7 @@ public class CommerceDiscountUpgradeStepRegistrator
 				CommerceDiscountUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE DISCOUNT UPGRADE STEP REGISTRATOR FINISHED");
+			_log.info("Commerce discount upgrade step registrator finished");
 		}
 	}
 

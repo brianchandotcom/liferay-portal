@@ -36,7 +36,7 @@ public class CommerceWishListItemUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE WISH LIST UPGRADE STEP REGISTRATOR STARTED");
+			_log.info("Commerce wish list upgrade step registrator started");
 		}
 
 		registry.register(
@@ -45,7 +45,7 @@ public class CommerceWishListItemUpgradeStepRegistrator
 				_cpDefinitionLocalService, _cpInstanceLocalService));
 
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE WISH LIST UPGRADE STEP REGISTRATOR FINISHED");
+			_log.info("Commerce wish list upgrade step registrator finished");
 		}
 	}
 

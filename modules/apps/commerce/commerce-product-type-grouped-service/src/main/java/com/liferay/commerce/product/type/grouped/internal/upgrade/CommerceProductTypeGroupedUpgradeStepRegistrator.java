@@ -34,8 +34,8 @@ public class CommerceProductTypeGroupedUpgradeStepRegistrator
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"COMMERCE PRODUCT TYPE GROUPED UPGRADE STEP REGISTRATOR " +
-					"STARTED");
+				"Commerce product type grouped upgrade step registrator " +
+					"'started'");
 		}
 
 		registry.register(
@@ -43,8 +43,8 @@ public class CommerceProductTypeGroupedUpgradeStepRegistrator
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"COMMERCE PRODUCT TYPE GROUPED UPGRADE STEP REGISTRATOR " +
-					"FINISHED");
+				"Commerce product type grouped upgrade step registrator " +
+					"'finished'");
 		}
 	}
 

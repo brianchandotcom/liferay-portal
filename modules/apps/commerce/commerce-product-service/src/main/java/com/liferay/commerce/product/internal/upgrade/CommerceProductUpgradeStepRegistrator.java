@@ -66,7 +66,7 @@ public class CommerceProductUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE PRODUCT UPGRADE STEP REGISTRATOR STARTED");
+			_log.info("Commerce product upgrade step registrator started");
 		}
 
 		registry.register("1.0.0", "1.1.0", new DummyUpgradeProcess());
@@ -178,7 +178,7 @@ public class CommerceProductUpgradeStepRegistrator
 				CPFriendlyURLEntryUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE PRODUCT UPGRADE STEP REGISTRATOR FINISHED");
+			_log.info("Commerce product upgrade step registrator finished");
 		}
 	}
 

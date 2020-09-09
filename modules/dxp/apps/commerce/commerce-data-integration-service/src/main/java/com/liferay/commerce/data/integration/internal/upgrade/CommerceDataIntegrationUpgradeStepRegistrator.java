@@ -35,7 +35,7 @@ public class CommerceDataIntegrationUpgradeStepRegistrator
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"COMMERCE DATA INTEGRATION UPGRADE STEP REGISTRATOR STARTED");
+				"Commerce data integration upgrade step registrator started");
 		}
 
 		registry.register(
@@ -48,7 +48,7 @@ public class CommerceDataIntegrationUpgradeStepRegistrator
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"COMMERCE DATA INTEGRATION UPGRADE STEP REGISTRATOR FINISHED");
+				"Commerce data integration upgrade step registrator finished");
 		}
 	}
 

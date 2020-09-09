@@ -34,7 +34,7 @@ public class CommerceCurrencyUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE CURRENCY UPGRADE STEP REGISTRATOR STARTED");
+			_log.info("Commerce currency upgrade step registrator started");
 		}
 
 		registry.register(
@@ -44,7 +44,7 @@ public class CommerceCurrencyUpgradeStepRegistrator
 			"1.1.0", "1.2.0", new CommerceCurrencySymbolUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE CURRENCY UPGRADE STEP REGISTRATOR FINISHED");
+			_log.info("Commerce currency upgrade step registrator finished");
 		}
 	}
 

@@ -40,7 +40,7 @@ public class CommerceAccountUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE ACCOUNT UPGRADE STEP REGISTRATOR STARTED");
+			_log.info("Commerce account upgrade step registrator started");
 		}
 
 		registry.register(
@@ -65,7 +65,7 @@ public class CommerceAccountUpgradeStepRegistrator
 			"1.5.0", "2.0.0", new CommerceAccountGroupSystemUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
-			_log.info("COMMERCE ACCOUNT UPGRADE STEP REGISTRATOR FINISHED");
+			_log.info("Commerce account upgrade step registrator finished");
 		}
 	}
 

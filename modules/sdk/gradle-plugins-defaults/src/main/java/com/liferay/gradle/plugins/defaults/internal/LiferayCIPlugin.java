@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -52,6 +53,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.testing.Test;
 
 /**
  * @author Andrea Di Giorgi
@@ -132,7 +134,17 @@ public class LiferayCIPlugin implements Plugin<Project> {
 				public void execute(
 					TestIntegrationPlugin testIntegrationPlugin) {
 
-					_configureTaskTestIntegration(project);
+					taskContainer.withType(
+						Test.class,
+						new Action<Test>() {
+
+							@Override
+							public void execute(Test test) {
+								_configureTaskTestForTestIntegrationPlugin(
+									project, test);
+							}
+
+						});
 				}
 
 			});
@@ -148,7 +160,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 							@Override
 							public void execute(NpmInstallTask npmInstallTask) {
-								_configureTaskExecuteNodeArgs(
+								_configureTaskNpmInstallAfterEvaluate(
 									project, npmInstallTask);
 							}
 
@@ -183,8 +195,8 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		executeNodeTask.setNpmInstallRetries(_NPM_INSTALL_RETRIES);
 	}
 
-	private void _configureTaskExecuteNodeArgs(
-		Project project, ExecuteNodeTask executeNodeTask) {
+	private void _configureTaskNpmInstallAfterEvaluate(
+		Project project, NpmInstallTask npmInstallTask) {
 
 		String ciSassBinarySite = GradleUtil.getProperty(
 			project, "nodejs.npm.ci.sass.binary.site", (String)null);
@@ -196,7 +208,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		Map<String, String> newArgs = Collections.singletonMap(
 			_SASS_BINARY_SITE_ARG, ciSassBinarySite);
 
-		List<Object> args = executeNodeTask.getArgs();
+		List<Object> args = npmInstallTask.getArgs();
 
 		for (Map.Entry<String, String> entry : newArgs.entrySet()) {
 			String key = entry.getKey();
@@ -221,7 +233,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			}
 		}
 
-		executeNodeTask.setArgs(args);
+		npmInstallTask.setArgs(args);
 	}
 
 	private void _configureTaskExecutePackageManager(
@@ -250,77 +262,86 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		npmInstallTask.setUseNpmCI(Boolean.FALSE);
 	}
 
-	private void _configureTaskTestIntegration(Project project) {
-		Task testIntegrationTask = GradleUtil.getTask(
-			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
+	private void _configureTaskTestForTestIntegrationPlugin(
+		Project project, Test test) {
 
-		Action<Task> action = new Action<Task>() {
+		String taskName = TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME;
 
-			@Override
-			public void execute(Task task) {
-				Project project = task.getProject();
+		if (!Objects.equals(test.getName(), taskName)) {
+			return;
+		}
 
-				Logger logger = project.getLogger();
+		test.doFirst(
+			new Action<Task>() {
 
-				SourceSet sourceSet = GradleUtil.getSourceSet(
-					project,
-					TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
 
-				Configuration configuration = GradleUtil.getConfiguration(
-					project, sourceSet.getCompileConfigurationName());
+					Logger logger = project.getLogger();
 
-				DependencySet dependencySet = configuration.getDependencies();
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						project,
+						TestIntegrationBasePlugin.
+							TEST_INTEGRATION_SOURCE_SET_NAME);
 
-				for (ProjectDependency projectDependency :
-						dependencySet.withType(ProjectDependency.class)) {
+					Configuration configuration = GradleUtil.getConfiguration(
+						project, sourceSet.getCompileConfigurationName());
 
-					Project dependencyProject =
-						projectDependency.getDependencyProject();
+					DependencySet dependencySet =
+						configuration.getDependencies();
 
-					if (CIUtil.isExcludedDependencyProject(
-							project, dependencyProject)) {
+					for (ProjectDependency projectDependency :
+							dependencySet.withType(ProjectDependency.class)) {
 
-						if (logger.isLifecycleEnabled()) {
-							logger.lifecycle(
-								"Excluded project dependency {} for {}",
-								dependencyProject.getPath(), project.getPath());
+						Project dependencyProject =
+							projectDependency.getDependencyProject();
+
+						if (CIUtil.isExcludedDependencyProject(
+								project, dependencyProject)) {
+
+							if (logger.isLifecycleEnabled()) {
+								logger.lifecycle(
+									"Excluded project dependency {} for {}",
+									dependencyProject.getPath(),
+									project.getPath());
+							}
+
+							continue;
 						}
 
-						continue;
-					}
+						File lfrBuildCIFile = dependencyProject.file(
+							".lfrbuild-ci");
+						File lfrBuildCISkipTestIntegrationCheckFile =
+							dependencyProject.file(
+								".lfrbuild-ci-skip-test-integration-check");
+						File lfrBuildPortalDeprecatedFile =
+							dependencyProject.file(
+								".lfrbuild-portal-deprecated");
+						File lfrBuildPortalFile = dependencyProject.file(
+							".lfrbuild-portal");
 
-					File lfrBuildCIFile = dependencyProject.file(
-						".lfrbuild-ci");
-					File lfrBuildCISkipTestIntegrationCheckFile =
-						dependencyProject.file(
-							".lfrbuild-ci-skip-test-integration-check");
-					File lfrBuildPortalDeprecatedFile = dependencyProject.file(
-						".lfrbuild-portal-deprecated");
-					File lfrBuildPortalFile = dependencyProject.file(
-						".lfrbuild-portal");
+						if (lfrBuildCISkipTestIntegrationCheckFile.exists()) {
+							if (lfrBuildCIFile.exists() ||
+								lfrBuildPortalFile.exists()) {
 
-					if (lfrBuildCISkipTestIntegrationCheckFile.exists()) {
-						if (lfrBuildCIFile.exists() ||
-							lfrBuildPortalFile.exists()) {
+								throw new GradleException(
+									"Please delete marker file " +
+										lfrBuildCISkipTestIntegrationCheckFile);
+							}
+						}
+						else if (!lfrBuildCIFile.exists() &&
+								 !lfrBuildPortalDeprecatedFile.exists() &&
+								 !lfrBuildPortalFile.exists()) {
 
 							throw new GradleException(
-								"Please delete marker file " +
-									lfrBuildCISkipTestIntegrationCheckFile);
+								"Please create marker file " +
+									lfrBuildPortalFile);
 						}
 					}
-					else if (!lfrBuildCIFile.exists() &&
-							 !lfrBuildPortalDeprecatedFile.exists() &&
-							 !lfrBuildPortalFile.exists()) {
-
-						throw new GradleException(
-							"Please create marker file " + lfrBuildPortalFile);
-					}
 				}
-			}
 
-		};
-
-		testIntegrationTask.doFirst(action);
+			});
 	}
 
 	private void _configureTaskYarnInstall(YarnInstallTask yarnInstallTask) {

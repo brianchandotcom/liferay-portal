@@ -27,15 +27,15 @@ import {
 	useSelectorCallback,
 } from '../../../../app/store/index';
 import updateFragmentConfiguration from '../../../../app/thunks/updateFragmentConfiguration';
-import updateItemConfig from '../../../../app/thunks/updateItemConfig';
 import {getResponsiveConfig} from '../../../../app/utils/getResponsiveConfig';
 import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
+import {CommonStyles} from './CommonStyles';
 import {FieldSet} from './FieldSet';
 
 export const FragmentStylesPanel = ({item}) => {
 	const dispatch = useDispatch();
 
-	const {availableViewportSizes, commonStyles} = config;
+	const {availableViewportSizes} = config;
 
 	const fragmentEntryLink = useSelectorCallback(
 		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
@@ -48,6 +48,8 @@ export const FragmentStylesPanel = ({item}) => {
 	);
 
 	const viewportSize = availableViewportSizes[selectedViewportSize];
+
+	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 
 	const onCustomStyleValueSelect = useCallback(
 		(name, value) => {
@@ -71,32 +73,6 @@ export const FragmentStylesPanel = ({item}) => {
 		[dispatch, fragmentEntryLink, segmentsExperienceId]
 	);
 
-	const onCommonStylesValueSelect = (name, value) => {
-		let itemConfig = {
-			styles: {
-				[name]: value,
-			},
-		};
-
-		if (selectedViewportSize !== VIEWPORT_SIZES.desktop) {
-			itemConfig = {
-				[selectedViewportSize]: {
-					styles: {
-						[name]: value,
-					},
-				},
-			};
-		}
-
-		dispatch(
-			updateItemConfig({
-				itemConfig,
-				itemId: item.itemId,
-				segmentsExperienceId,
-			})
-		);
-	};
-
 	return (
 		<>
 			<p className="page-editor__row-styles-panel__viewport-label">
@@ -111,14 +87,7 @@ export const FragmentStylesPanel = ({item}) => {
 				/>
 			)}
 
-			<CommonStyles
-				commonStyles={commonStyles}
-				itemConfig={getResponsiveConfig(
-					item.config,
-					selectedViewportSize
-				)}
-				onValueSelect={onCommonStylesValueSelect}
-			/>
+			<CommonStyles commonStylesValues={itemConfig.styles} item={item} />
 		</>
 	);
 };
@@ -156,30 +125,6 @@ const CustomStyles = ({fragmentEntryLink, onValueSelect}) => {
 
 CustomStyles.propTypes = {
 	fragmentEntryLink: PropTypes.object.isRequired,
-	onValueSelect: PropTypes.func.isRequired,
-};
-
-const CommonStyles = ({commonStyles, itemConfig, onValueSelect}) => {
-	return (
-		<div className="page-editor__floating-toolbar__panel__common-styles">
-			{commonStyles.map((fieldSet, index) => {
-				return (
-					<FieldSet
-						fields={fieldSet.styles}
-						key={index}
-						label={fieldSet.label}
-						onValueSelect={onValueSelect}
-						values={itemConfig.styles}
-					/>
-				);
-			})}
-		</div>
-	);
-};
-
-CommonStyles.propTypes = {
-	commonStyles: PropTypes.array.isRequired,
-	itemConfig: PropTypes.object.isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 };
 

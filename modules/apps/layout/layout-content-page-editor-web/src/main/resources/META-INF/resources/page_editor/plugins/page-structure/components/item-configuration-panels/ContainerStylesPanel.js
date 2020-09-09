@@ -24,7 +24,7 @@ import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateItemConfig from '../../../../app/thunks/updateItemConfig';
 import {getResponsiveConfig} from '../../../../app/utils/getResponsiveConfig';
 import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
-import {FieldSet} from './FieldSet';
+import {CommonStyles} from './CommonStyles';
 
 export const ContainerStylesPanel = ({item}) => {
 	const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export const ContainerStylesPanel = ({item}) => {
 	);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const {availableViewportSizes, commonStyles} = config;
+	const {availableViewportSizes} = config;
 
 	const containerConfig = getResponsiveConfig(
 		item.config,
@@ -44,32 +44,6 @@ export const ContainerStylesPanel = ({item}) => {
 
 	const onCustomStyleValueSelect = (name, value) => {
 		const itemConfig = {[name]: value};
-
-		dispatch(
-			updateItemConfig({
-				itemConfig,
-				itemId: item.itemId,
-				segmentsExperienceId,
-			})
-		);
-	};
-
-	const onCommonStyleValueSelect = (name, value) => {
-		let itemConfig = {
-			styles: {
-				[name]: value,
-			},
-		};
-
-		if (selectedViewportSize !== VIEWPORT_SIZES.desktop) {
-			itemConfig = {
-				[selectedViewportSize]: {
-					styles: {
-						[name]: value,
-					},
-				},
-			};
-		}
 
 		dispatch(
 			updateItemConfig({
@@ -114,20 +88,10 @@ export const ContainerStylesPanel = ({item}) => {
 				</div>
 			)}
 
-			<div className="page-editor__container-styles-panel__common-styles">
-				{commonStyles.map((fieldSet, index) => {
-					return (
-						<FieldSet
-							fields={fieldSet.styles}
-							item={item}
-							key={index}
-							label={fieldSet.label}
-							onValueSelect={onCommonStyleValueSelect}
-							values={containerConfig.styles}
-						/>
-					);
-				})}
-			</div>
+			<CommonStyles
+				commonStylesValues={containerConfig.styles}
+				item={item}
+			/>
 		</>
 	);
 };

@@ -31,7 +31,7 @@ import updateRowColumns from '../../../../app/thunks/updateRowColumns';
 import {getResponsiveConfig} from '../../../../app/utils/getResponsiveConfig';
 import {useId} from '../../../../app/utils/useId';
 import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
-import {FieldSet} from './FieldSet';
+import {CommonStyles} from './CommonStyles';
 
 const CUSTOM_ROW = 'custom';
 
@@ -60,7 +60,7 @@ const ROW_STYLE_IDENTIFIERS = {
 };
 
 export const RowStylesPanel = ({item}) => {
-	const {availableViewportSizes, commonStyles} = config;
+	const {availableViewportSizes} = config;
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
@@ -112,32 +112,6 @@ export const RowStylesPanel = ({item}) => {
 		dispatch(
 			updateItemConfig({
 				itemConfig: itemStyles,
-				itemId: item.itemId,
-				segmentsExperienceId,
-			})
-		);
-	};
-
-	const onCommonStylesValueSelect = (name, value) => {
-		let itemConfig = {
-			styles: {
-				[name]: value,
-			},
-		};
-
-		if (selectedViewportSize !== VIEWPORT_SIZES.desktop) {
-			itemConfig = {
-				[selectedViewportSize]: {
-					styles: {
-						[name]: value,
-					},
-				},
-			};
-		}
-
-		dispatch(
-			updateItemConfig({
-				itemConfig,
 				itemId: item.itemId,
 				segmentsExperienceId,
 			})
@@ -207,19 +181,7 @@ export const RowStylesPanel = ({item}) => {
 				/>
 			</div>
 
-			<div className="page-editor__row-styles-panel__common-styles">
-				{commonStyles.map((fieldSet, index) => {
-					return (
-						<FieldSet
-							fields={fieldSet.styles}
-							key={index}
-							label={fieldSet.label}
-							onValueSelect={onCommonStylesValueSelect}
-							values={rowConfig.styles}
-						/>
-					);
-				})}
-			</div>
+			<CommonStyles commonStylesValues={rowConfig.styles} item={item} />
 		</>
 	);
 };

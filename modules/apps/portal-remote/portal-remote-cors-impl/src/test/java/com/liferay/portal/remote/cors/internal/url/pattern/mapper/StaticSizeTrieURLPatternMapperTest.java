@@ -14,13 +14,46 @@
 
 package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class StaticSizeTrieURLPatternMapperTest
 	extends SimpleURLPatternMapperTest {
+
+	@Test
+	public void testFullAddresses() {
+		Map<String, String> map = new HashMap<>();
+
+		for (int i = 0; i < Long.SIZE; i++) {
+			map.put("*.key" + i, "value" + i);
+		}
+
+		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(map);
+
+		for (int i = 0; i < Long.SIZE; i++) {
+			Assert.assertEquals(
+				"value" + i, urlPatternMapper.getValue("*.key" + i));
+		}
+	}
+
+	@Test
+	public void testGetExtensionValueBounds() {
+		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(
+			HashMapBuilder.put(
+				"*.jsp", "*.jsp"
+			).build());
+
+		Assert.assertNull(urlPatternMapper.getValue("jsp"));
+		Assert.assertEquals("*.jsp", urlPatternMapper.getValue(".jsp"));
+	}
 
 	@Override
 	protected URLPatternMapper<String> createURLPatternMapper(

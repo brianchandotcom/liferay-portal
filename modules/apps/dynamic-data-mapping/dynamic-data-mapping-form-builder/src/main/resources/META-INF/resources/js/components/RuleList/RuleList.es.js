@@ -15,6 +15,7 @@
 import 'clay-button';
 
 import 'clay-dropdown';
+import ClayTooltip from 'clay-tooltip';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import Component from 'metal-component';
 import dom from 'metal-dom';
@@ -44,6 +45,12 @@ class RuleList extends Component {
 				true
 			)
 		);
+
+		var tooltip = ClayTooltip.init();
+
+		setTimeout(() => {
+			tooltip.selectors = ['.invalid-rule'];
+		}, 1500);
 	}
 
 	disposeInternal() {
@@ -62,6 +69,7 @@ class RuleList extends Component {
 			...states,
 			rules: rules.map((rule) => {
 				let logicalOperator;
+				let invalidRule = false;
 
 				if (rule['logical-operator']) {
 					logicalOperator = rule['logical-operator'].toLowerCase();
@@ -69,6 +77,8 @@ class RuleList extends Component {
 				else if (rule.logicalOperator) {
 					logicalOperator = rule.logicalOperator.toLowerCase();
 				}
+
+				invalidRule = RulesSupport.findInvalidRule(rule);
 
 				return {
 					...rule,
@@ -125,6 +135,7 @@ class RuleList extends Component {
 							),
 						};
 					}),
+					invalidRule,
 					logicalOperator,
 					rulesCardOptions: this._getRulesCardOptions(rule),
 				};
@@ -412,6 +423,7 @@ RuleList.STATE = {
 		'belongs-to': Liferay.Language.get('belongs-to'),
 		'calculate-field': Liferay.Language.get('calculate-field-x-as-x'),
 		contains: Liferay.Language.get('contains'),
+		'due-to-missing-fields': Liferay.Language.get('due-to-missing-fields'),
 		'equals-to': Liferay.Language.get('is-equal-to'),
 		'greater-than': Liferay.Language.get('is-greater-than'),
 		'greater-than-equals': Liferay.Language.get(

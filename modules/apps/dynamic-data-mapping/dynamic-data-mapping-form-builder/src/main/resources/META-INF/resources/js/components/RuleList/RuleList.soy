@@ -24,7 +24,8 @@
 				outputLabel: ?
 			]>,
 			logicalOperator: string,
-			rulesCardOptions: ?
+			rulesCardOptions: ?,
+			invalidRule: ?
 		]>
 	}
 	{@param spritemap: string}
@@ -71,7 +72,8 @@
 				outputLabel: ?
 			]>,
 			logicalOperator: string,
-			rulesCardOptions: ?
+			rulesCardOptions: ?,
+			invalidRule: ?
 		]>
 	}
 	{@param spritemap: string}
@@ -142,7 +144,23 @@
 						</div>
 
 						<div class="list-group-item-field">
+							{let $titleMessage kind="text"}
+								{msg desc=""}due-to-missing-fields{/msg}
+							{/let}
+							{let $labelMessage kind="text"}
+								{msg desc=""}broken-rule{/msg}
+							{/let}
 							<div class="card-col-field">
+								{if $rule.invalidRule}
+									<div class="invalid-rule" title="{$titleMessage}">
+									{call ClayLabel.render}
+										{param spritemap: $spritemap /}
+										{param style: 'danger' /}
+										{param label: $labelMessage /}
+									{/call}
+									</div>
+								{/if}
+
 								<div class="dropdown dropdown-action">
 									{let $ruleIndex: index($rule) /}
 									{let $isExpanded: $dropdownExpandedIndex == $ruleIndex /}

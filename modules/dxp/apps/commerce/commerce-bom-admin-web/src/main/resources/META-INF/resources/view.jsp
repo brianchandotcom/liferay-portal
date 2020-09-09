@@ -22,11 +22,6 @@ CommerceBOMAdminDisplayContext commerceBOMAdminDisplayContext = (CommerceBOMAdmi
 renderResponse.setTitle(LanguageUtil.get(request, "bill-of-materials"));
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <liferay-frontend:management-bar
 	searchContainerId="commerceBOMAdminSearchContainer"
 >

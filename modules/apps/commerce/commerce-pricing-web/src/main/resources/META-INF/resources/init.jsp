@@ -51,7 +51,6 @@ page import="com.liferay.commerce.pricing.exception.NoSuchPricingClassException"
 page import="com.liferay.commerce.pricing.model.CommercePriceModifier" %><%@
 page import="com.liferay.commerce.pricing.model.CommercePricingClass" %><%@
 page import="com.liferay.commerce.pricing.type.CommercePriceModifierType" %><%@
-page import="com.liferay.commerce.pricing.util.PricingNavigationItemRegistryUtil" %><%@
 page import="com.liferay.commerce.pricing.web.internal.constants.CommerceDiscountScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.pricing.web.internal.constants.CommercePricingClassScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.pricing.web.internal.display.context.AddedAllCommerceDiscountRuleDisplayContext" %><%@

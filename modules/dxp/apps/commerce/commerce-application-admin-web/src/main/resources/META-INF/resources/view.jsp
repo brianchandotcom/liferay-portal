@@ -22,11 +22,6 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
 	searchContainerId="commerceApplicationBrands"

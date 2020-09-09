@@ -37,11 +37,6 @@ else {
 }
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <%@ include file="/navbar_specifications.jspf" %>
 
 <portlet:actionURL name="editProductOptionCategory" var="editProductOptionCategoryActionURL" />

@@ -57,7 +57,6 @@ page import="com.liferay.commerce.price.list.web.internal.display.context.Commer
 page import="com.liferay.commerce.price.list.web.internal.display.context.CommercePriceListDisplayContext" %><%@
 page import="com.liferay.commerce.price.list.web.internal.display.context.CommerceTierPriceEntryDisplayContext" %><%@
 page import="com.liferay.commerce.price.list.web.internal.frontend.CommercePriceListDataSetConstants" %><%@
-page import="com.liferay.commerce.pricing.util.PricingNavigationItemRegistryUtil" %><%@
 page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPInstanceException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCatalogException" %><%@

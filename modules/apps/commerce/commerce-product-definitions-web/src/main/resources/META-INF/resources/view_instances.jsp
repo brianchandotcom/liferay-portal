@@ -26,11 +26,6 @@ PortletURL portletURL = cpInstanceDisplayContext.getPortletURL();
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <%@ include file="/navbar_definitions.jspf" %>
 
 <div class="container-fluid-1280 pt-4" id="<portlet:namespace />productInstancesContainer">

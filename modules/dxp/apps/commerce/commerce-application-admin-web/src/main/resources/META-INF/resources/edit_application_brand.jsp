@@ -24,11 +24,6 @@ CommerceApplicationBrand commerceApplicationBrand = commerceApplicationAdminDisp
 renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <liferay-frontend:screen-navigation
 	containerCssClass="col-md-10"
 	key="<%= CommerceApplicationBrandScreenNavigationConstants.SCREEN_NAVIGATION_KEY %>"

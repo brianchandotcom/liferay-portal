@@ -102,7 +102,6 @@ page import="com.liferay.commerce.product.model.CommerceCatalog" %><%@
 page import="com.liferay.commerce.product.model.CommerceChannel" %><%@
 page import="com.liferay.commerce.product.servlet.taglib.ui.CPDefinitionScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.product.servlet.taglib.ui.CPInstanceScreenNavigationConstants" %><%@
-page import="com.liferay.commerce.product.util.CPNavigationItemRegistryUtil" %><%@
 page import="com.liferay.commerce.stock.activity.CommerceLowStockActivity" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileEntryException" %><%@
 page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@

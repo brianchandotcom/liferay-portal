@@ -20,11 +20,6 @@
 CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePriceListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= PricingNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <div class="pt-4">
 	<aui:form action="<%= currentURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />

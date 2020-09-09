@@ -19,7 +19,6 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -40,7 +39,6 @@ page import="com.liferay.commerce.bom.model.CommerceBOMFolder" %><%@
 page import="com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException" %><%@
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
-page import="com.liferay.commerce.product.util.CPNavigationItemRegistryUtil" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileEntryException" %><%@
 page import="com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

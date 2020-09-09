@@ -20,7 +20,6 @@
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/commerce" prefix="liferay-commerce" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
@@ -49,7 +48,6 @@ page import="com.liferay.commerce.discount.web.internal.display.context.Commerce
 page import="com.liferay.commerce.discount.web.internal.display.context.CommerceDiscountRuleDisplayContext" %><%@
 page import="com.liferay.commerce.discount.web.internal.servlet.taglib.ui.CommerceDiscountScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.pricing.model.CommercePricingClass" %><%@
-page import="com.liferay.commerce.pricing.util.PricingNavigationItemRegistryUtil" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CommerceChannel" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

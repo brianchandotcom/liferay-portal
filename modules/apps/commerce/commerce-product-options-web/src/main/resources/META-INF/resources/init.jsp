@@ -50,7 +50,6 @@ page import="com.liferay.commerce.product.options.web.internal.security.permissi
 page import="com.liferay.commerce.product.options.web.internal.security.permission.resource.CPSpecificationOptionPermission" %><%@
 page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionCategoryFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPSpecificationOptionFormNavigatorConstants" %><%@
-page import="com.liferay.commerce.product.util.CPNavigationItemRegistryUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@
 page import="com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@

@@ -22,11 +22,6 @@ NPMResolver npmResolver = (NPMResolver)request.getAttribute("NPMResolver");
 String cpOptionsEditorRequire = npmResolver.resolveModuleName("commerce-product-options-web/CPOptionsEditor.es") + " as CPOptionsEditor";
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <%
 NavigationItem navigationItem = new NavigationItem();
 

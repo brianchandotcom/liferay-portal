@@ -24,11 +24,6 @@ CommerceApplicationModel commerceApplicationModel = commerceApplicationAdminDisp
 renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <portlet:actionURL name="editCommerceApplicationModel" var="editCommerceApplicationModelActionURL" />
 
 <div class="container-fluid-1280 entry-body">

@@ -24,11 +24,6 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 renderResponse.setTitle(LanguageUtil.get(request, "bill-of-materials"));
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <liferay-frontend:screen-navigation
 	containerCssClass="col-md-10"
 	key="<%= CommerceBOMFolderScreenNavigationConstants.SCREEN_NAVIGATION_KEY %>"

@@ -32,11 +32,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <%@ include file="/navbar_specifications.jspf" %>
 
 <liferay-frontend:management-bar

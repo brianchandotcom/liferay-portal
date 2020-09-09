@@ -22,11 +22,6 @@ CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscoun
 PortletURL portletURL = commerceDiscountDisplayContext.getPortletURL();
 %>
 
-<clay:navigation-bar
-	inverted="<%= false %>"
-	navigationItems="<%= PricingNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
-/>
-
 <div class="pt-4">
 	<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />

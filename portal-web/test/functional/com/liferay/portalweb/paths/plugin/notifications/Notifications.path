@@ -70,6 +70,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_WORKFLOW_TITLE_2</td>
+	<td>//div[@class='user-notifications']//li[2]//div[contains(@data-qa-id,'rowItemContent')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATIONS_CONTENT</td>
 	<td>//div[contains(@class,'content')]//div[@class='body' and contains(.,'${key_contentBody}')]</td>
 	<td></td>

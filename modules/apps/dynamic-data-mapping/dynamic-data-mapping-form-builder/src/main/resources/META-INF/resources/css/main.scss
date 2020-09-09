@@ -277,6 +277,13 @@
 	.modal-dialog {
 		position: relative;
 	}
+
+	.lfr-ddm-forms-delete-rule {
+		.modal-item-last button.btn-primary {
+			background-color: #da1414;
+			border-color: #da1414;
+		}
+	}
 }
 
 @media (min-width: 576px) {

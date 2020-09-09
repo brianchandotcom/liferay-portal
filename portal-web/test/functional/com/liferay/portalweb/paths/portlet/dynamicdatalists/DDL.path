@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_NAME</td>
-	<td>//div[contains(@id,'ddlRecordSearchContainer')]//th[contains(.,'${key_fieldFieldLabel}')]</td>
+	<td>//label[contains(@class,'control-label') and contains(text(),'${key_fieldFieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

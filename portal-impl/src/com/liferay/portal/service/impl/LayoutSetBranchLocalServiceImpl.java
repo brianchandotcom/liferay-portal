@@ -265,12 +265,13 @@ public class LayoutSetBranchLocalServiceImpl
 			LayoutSetBranch layoutSetBranch, boolean includeMaster)
 		throws PortalException {
 
-		//Layout
+		// Layout
 
-		for (long deletablePlid :
-				getDeletablePlids(layoutSetBranch.getLayoutSetBranchId())) {
+		List<Long> deletablePlids = getDeletablePlids(
+			layoutSetBranch.getLayoutSetBranchId());
 
-			Layout layout = layoutLocalService.fetchLayout(deletablePlid);
+		for (long plid : deletablePlids) {
+			Layout layout = layoutLocalService.fetchLayout(plid);
 
 			if (layout != null) {
 				layoutLocalService.deleteLayout(layout);
@@ -350,12 +351,14 @@ public class LayoutSetBranchLocalServiceImpl
 
 	public List<Long> getDeletablePlids(long layoutSetBranchId) {
 		List<Long> deletablePlids = new ArrayList<>();
-		List<Long> relatedPlids = _getRelatedLayoutPlids(layoutSetBranchId);
 
-		for (long relatedPlid : relatedPlids) {
+		List<Long> relatedLayoutPlids = _getRelatedLayoutPlids(
+			layoutSetBranchId);
+
+		for (long plid : relatedLayoutPlids) {
 			boolean deletableLayout = true;
 			List<LayoutRevision> layoutRevisions =
-				layoutRevisionLocalService.getLayoutRevisions(relatedPlid);
+				layoutRevisionLocalService.getLayoutRevisions(plid);
 
 			for (LayoutRevision layoutRevision : layoutRevisions) {
 				if ((layoutRevision.getStatus() !=
@@ -370,7 +373,7 @@ public class LayoutSetBranchLocalServiceImpl
 			}
 
 			if (deletableLayout) {
-				deletablePlids.add(relatedPlid);
+				deletablePlids.add(plid);
 			}
 		}
 
@@ -618,17 +621,17 @@ public class LayoutSetBranchLocalServiceImpl
 	}
 
 	private List<Long> _getRelatedLayoutPlids(long layoutSetBranchId) {
-		List<Long> relatedPlids = new ArrayList<>();
+		List<Long> relatedLayoutPlids = new ArrayList<>();
 
 		List<LayoutBranch> layoutBranches =
 			layoutBranchLocalService.getLayoutSetBranchLayoutBranches(
 				layoutSetBranchId);
 
 		for (LayoutBranch layoutBranch : layoutBranches) {
-			relatedPlids.add(layoutBranch.getPlid());
+			relatedLayoutPlids.add(layoutBranch.getPlid());
 		}
 
-		return relatedPlids;
+		return relatedLayoutPlids;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

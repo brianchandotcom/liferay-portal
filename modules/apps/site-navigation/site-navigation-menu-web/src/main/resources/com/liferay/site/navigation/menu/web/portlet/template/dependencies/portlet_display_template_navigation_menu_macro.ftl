@@ -7,7 +7,7 @@
 		portletDisplay = themeDisplay.getPortletDisplay()
 	/>
 
-	<#list navItem.getBrowsableChildren() as childNavigationItem>
+	<#list navItem.getChildren() as childNavigationItem>
 		<#assign
 			nav_child_css_class = ""
 		/>
@@ -19,7 +19,11 @@
 		</#if>
 
 		<li class="${nav_child_css_class}" id="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" role="presentation">
-			<a aria-labelledby="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
+			<#if childNavigationItem.isBrowsable()>
+				<a aria-labelledby="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
+			<#else>
+				<span class="dropdown-item font-weight-semi-bold navigation-menu__submenu">${childNavigationItem.getName()}</span>
+			</#if>
 		</li>
 
 		<#if childNavigationItem.hasBrowsableChildren() && ((displayDepth == 0) || (navItemLevel < displayDepth))>

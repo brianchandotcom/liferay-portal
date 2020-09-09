@@ -1,6 +1,17 @@
+@import 'atlas-variables';
+
 .portlet-navigation {
 	.nav-link .layout-logo {
 		max-height: 1rem;
 		max-width: 2rem;
+	}
+
+	.navigation-menu__submenu {
+		cursor: default;
+
+		&.dropdown-item:hover {
+			background-color: transparent;
+			color: $gray-600;
+		}
 	}
 }

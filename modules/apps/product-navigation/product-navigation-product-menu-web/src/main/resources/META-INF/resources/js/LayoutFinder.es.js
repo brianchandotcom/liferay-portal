@@ -14,7 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {fetch, objectToFormData} from 'frontend-js-web';
+import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
@@ -93,8 +93,40 @@ function LayoutFinder(props) {
 		Liferay.Util.Session.set(
 			'com.liferay.product.navigation.product.menu.web_pagesTreeState',
 			'closed'
-		).then(() => Liferay.Util.navigate(window.location.href));
-	}, []);
+		).then(() => {
+			fetch(props.productMenuPortletURL)
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error();
+					}
+
+					return response.text();
+				})
+				.then((productMenuContent) => {
+					const sidebar = document.querySelector(
+						'.lfr-product-menu-sidebar .sidebar-body'
+					);
+
+					sidebar.innerHTML = '';
+
+					const range = document.createRange();
+					range.selectNode(sidebar);
+
+					sidebar.appendChild(
+						range.createContextualFragment(productMenuContent)
+					);
+				})
+				.catch(() => {
+					openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					});
+				});
+		});
+	}, [props]);
 
 	return (
 		<div className="layout-finder">
@@ -206,6 +238,7 @@ LayoutFinder.propTypes = {
 	administrationPortletURL: PropTypes.string,
 	findLayoutsURL: PropTypes.string,
 	namespace: PropTypes.string,
+	productMenuPortletURL: PropTypes.string,
 	viewInPageAdministrationURL: PropTypes.string,
 };
 

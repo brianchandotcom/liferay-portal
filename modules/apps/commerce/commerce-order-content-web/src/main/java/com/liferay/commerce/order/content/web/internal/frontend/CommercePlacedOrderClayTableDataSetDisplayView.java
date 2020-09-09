@@ -46,7 +46,8 @@ public class CommercePlacedOrderClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"accountName", "account");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("author", "author");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"author", "submitted-by");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("orderStatus", "status");
 

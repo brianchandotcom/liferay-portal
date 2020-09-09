@@ -46,7 +46,7 @@ public class CommercePendingOrderClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"accountName", "account");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("author", "author");
+		clayTableSchemaBuilder.addClayTableSchemaField("author", "created-by");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
 

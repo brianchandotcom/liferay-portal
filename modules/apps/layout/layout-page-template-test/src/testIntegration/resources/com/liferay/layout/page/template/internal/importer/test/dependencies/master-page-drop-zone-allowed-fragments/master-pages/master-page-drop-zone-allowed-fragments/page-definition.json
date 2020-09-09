@@ -6,10 +6,10 @@
 					"fragmentSettings": {
 						"allowedFragments": [
 							{
-								"key": "test-master-page-fragment-collection-contributor-test-master-page-fragment-entry-1"
+								"key": "test-master-page-fragment-collection-contributor-fragment-entry-1"
 							},
 							{
-								"key": "test-master-page-fragment-collection-contributor-test-master-page-fragment-entry-2"
+								"key": "test-master-page-fragment-collection-contributor-fragment-entry-2"
 							}
 						]
 					}

@@ -455,10 +455,10 @@ public class MasterLayoutsImporterTest {
 			"test-master-page-fragment-collection-contributor";
 
 		public static final String TEST_MASTER_PAGE_FRAGMENT_ENTRY_1 =
-			"test-master-page-fragment-entry-1";
+			"fragment-entry-1";
 
 		public static final String TEST_MASTER_PAGE_FRAGMENT_ENTRY_2 =
-			"test-master-page-fragment-entry-2";
+			"fragment-entry-2";
 
 		@Override
 		public String getFragmentCollectionKey() {

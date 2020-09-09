@@ -2227,15 +2227,18 @@ definition {
 	}
 
 	macro viewSearchResultsCP {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
 		var key_dmRepositoryName = "${dmRepositoryName}";
 
 		if (isSet(dmRepositoryName)) {
 			AssertClick.assertTextClickAtAndPause(
 				locator1 = "DocumentsAndMedia#SEARCH_REPOSITORY_TAB",
 				value1 = "${dmRepositoryName}");
-		}
 
-		var key_dmDocumentTitle = "${dmDocumentTitle}";
+			if (IsElementNotPresent(locator1 = "DocumentsAndMedia#SEARCH_TITLE")) {
+				Click(locator1 = "Icon#BASIC_SEARCH");
+			}
+		}
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "DocumentsAndMedia#SEARCH_TITLE",

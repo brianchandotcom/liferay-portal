@@ -45,7 +45,7 @@ public class CommerceProductDefinitionSpecificationClayTableDataSetDisplayView
 	protected void addFields(ClayTableSchemaBuilder clayTableSchemaBuilder) {
 		clayTableSchemaBuilder.addClayTableSchemaField("value", "value");
 		clayTableSchemaBuilder.addClayTableSchemaField("group", "group");
-		clayTableSchemaBuilder.addClayTableSchemaField("order", "order");
+		clayTableSchemaBuilder.addClayTableSchemaField("order", "position");
 	}
 
 }

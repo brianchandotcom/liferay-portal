@@ -58,7 +58,7 @@ long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionV
 
 			</aui:select>
 
-			<aui:input name="priority" />
+			<aui:input label="position" name="priority" />
 
 			<c:if test="<%= cpDefinitionSpecificationOptionValueDisplayContext.hasCustomAttributesAvailable() %>">
 				<liferay-expando:custom-attribute-list

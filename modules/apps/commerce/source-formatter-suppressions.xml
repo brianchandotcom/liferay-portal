@@ -79,6 +79,8 @@
 		<suppress checks="JavaInternalPackageCheck" files="commerce-product-service/.*" />
 		<suppress checks="JavaInternalPackageCheck" files="commerce-service/.*" />
 		<suppress checks="JavaPackagePathCheck" files=".*" />
+		<suppress checks="JavaUpgradeVersionCheck" files="commerce-product-type-virtual-service/src/main/java/com/liferay/commerce/product/type/virtual/internal/upgrade/CommerceProductTypeVirtualUpgradeStepRegistrator\.java" />
+		<suppress checks="JavaUpgradeVersionCheck" files="commerce-shipping-engine-fixed-service/src/main/java/com/liferay/commerce/shipping/engine/fixed/internal/upgrade/CommerceShippingEngineFixedUpgradeStepRegistrator\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="commerce-product-api/src/main/java/com/liferay/commerce/product/option/CommerceOptionValue\.java" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-cart-taglib/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-frontend-js/package\.json" />

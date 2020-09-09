@@ -57,9 +57,7 @@ public class DynamicSizeTrieURLPatternMapper<T>
 			if (urlPath.charAt(index) == '.') {
 				TrieNode nextTrieNode = currentTrieNode.getNextTrieNode('*');
 
-				if ((nextTrieNode != null) && nextTrieNode.isEnd()) {
-					return nextTrieNode.getValue();
-				}
+				return nextTrieNode.getValue();
 			}
 
 			previousTrieNode = currentTrieNode;

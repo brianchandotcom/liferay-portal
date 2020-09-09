@@ -175,7 +175,9 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 									','
 								);
 
-								var fm = AUI.$('#<portlet:namespace />fm');
+								var fm = window.document.querySelector(
+									'#<portlet:namespace />fm'
+								);
 
 								submitForm(fm);
 							}

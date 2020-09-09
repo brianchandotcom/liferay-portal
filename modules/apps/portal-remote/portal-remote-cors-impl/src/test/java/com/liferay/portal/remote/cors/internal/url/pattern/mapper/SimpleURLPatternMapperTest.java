@@ -118,6 +118,7 @@ public class SimpleURLPatternMapperTest {
 			new KeyValuePair("/documents/user3/folder1/", "/documents/*"),
 			new KeyValuePair("/documents/user3/folder2", "/documents/*"),
 			new KeyValuePair("/documents/user3/folder2/", "/documents/*"),
+			new KeyValuePair("/documents2/a", "/documents2/*"),
 			new KeyValuePair("/test", "/*"), new KeyValuePair("/test/", "/*"),
 			new KeyValuePair("no/leading/slash", ""),
 			new KeyValuePair("no/leading/slash/", ""),

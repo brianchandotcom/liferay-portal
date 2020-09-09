@@ -270,7 +270,7 @@ const DropdownListWithSearch = ({
 
 		setFilteredOptions([emptyOption, ...result]);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [query]);
+	}, [options, query]);
 
 	return (
 		<>

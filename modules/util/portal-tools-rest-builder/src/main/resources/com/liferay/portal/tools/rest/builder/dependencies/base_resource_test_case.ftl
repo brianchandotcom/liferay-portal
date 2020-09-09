@@ -1294,32 +1294,34 @@ public abstract class Base${schemaName}ResourceTestCase {
 							"JSONObject/data",
 							"Object/delete${schemaName}"));
 
-					try (CaptureAppender captureAppender = Log4JLoggerTestUtil.configureLog4JLogger("graphql.execution.SimpleDataFetcherExceptionHandler", Level.WARN)) {
-						JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
-							invokeGraphQLQuery(
-								new GraphQLField(
-									"${schemaName?uncap_first}",
-									new HashMap<String, Object>() {
-										{
-											put(
-												<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-													<#if stringUtil.equals(javaMethodParameter.parameterName, "id") || stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
-														"${javaMethodParameter.parameterName}",
-														<#if stringUtil.equals(properties.id, "String")>
-															"\"" + ${schemaVarName}.getId() + "\""
-														<#else>
-															${schemaVarName}.getId()
+					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
+						try (CaptureAppender captureAppender = Log4JLoggerTestUtil.configureLog4JLogger("graphql.execution.SimpleDataFetcherExceptionHandler", Level.WARN)) {
+							JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+								invokeGraphQLQuery(
+									new GraphQLField(
+										"${schemaName?uncap_first}",
+										new HashMap<String, Object>() {
+											{
+												put(
+													<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+														<#if stringUtil.equals(javaMethodParameter.parameterName, "id") || stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
+															"${javaMethodParameter.parameterName}",
+															<#if stringUtil.equals(properties.id, "String")>
+																"\"" + ${schemaVarName}.getId() + "\""
+															<#else>
+																${schemaVarName}.getId()
+															</#if>
 														</#if>
-													</#if>
-												</#list>
-											);
-										}
-									},
-									new GraphQLField("id"))),
-							"JSONArray/errors");
+													</#list>
+												);
+											}
+										},
+										new GraphQLField("id"))),
+								"JSONArray/errors");
 
-						Assert.assertTrue(errorsJSONArray.length() > 0);
-					}
+							Assert.assertTrue(errorsJSONArray.length() > 0);
+						}
+					</#if>
 				</#if>
 			}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?contains("Page<") && stringUtil.equals(freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures), schemaVarNames)>

@@ -60,6 +60,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_CATEGORY) %>">
 			<liferay-portlet:renderURL var="addProductOptionCategoryURL">
 				<portlet:param name="mvcRenderCommandName" value="editProductOptionCategory" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</liferay-portlet:renderURL>
 
 			<liferay-frontend:add-menu

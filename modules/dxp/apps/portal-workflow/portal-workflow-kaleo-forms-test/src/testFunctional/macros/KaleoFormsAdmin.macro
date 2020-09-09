@@ -201,7 +201,11 @@ definition {
 	macro closeWorkflowModal {
 		SelectFrame(value1 = "relative=top");
 
-		Click(locator1 = "KaleoFormsAdmin#CLOSE_BUTTON");
+		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro deactivateWorkflow {
@@ -492,7 +496,11 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		Click(locator1 = "KaleoFormsAdmin#CLOSE_BUTTON");
+		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro reactivateInactiveWorkflowDefinition {

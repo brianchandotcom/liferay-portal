@@ -1369,6 +1369,32 @@ definition {
 			value1 = "${workflowTask}: ${kfProcessName}");
 	}
 
+	macro viewWebContentWithWorkflowCP {
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "PENDING",
+			webContentTitle = "${webContentTitle}");
+
+		AssertTextEquals(
+			key_status = "Pending",
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Pending");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
+	}
+
+	macro viewWebContentWithWorkflowStatus {
+		AssertTextEquals(
+			key_status = "${webContentStatus}",
+			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+			value1 = "${webContentStatus}");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
+	}
+
 	macro webContentGoToAddCP {
 		Pause(locator1 = "3000");
 

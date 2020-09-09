@@ -573,8 +573,7 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Web Content");
 
-		WebContent.viewWithWorkflowCP(
-			webContentContent = "WC Workflow Content",
+		Workflow.viewWebContentWithWorkflowCP(
 			webContentTitle = "WC Workflow Title",
 			workflowTask = "Review");
 
@@ -612,8 +611,7 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Web Content");
 
-		WebContent.viewWithWorkflowCP(
-			webContentContent = "WC Workflow Content",
+		Workflow.viewWebContentWithWorkflowCP(
 			webContentTitle = "WC Workflow Title",
 			workflowTask = "Review");
 
@@ -634,12 +632,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC Workflow Title");
 
-		WebContent.viewCP(
-			webContentContent = "WC Workflow Content",
-			webContentTitle = "WC Workflow Title");
-
-		WebContent.viewStatus(
-			webContentContent = "WC Workflow Content",
+		Workflow.viewWebContentWithWorkflowStatus(
 			webContentStatus = "Approved",
 			webContentTitle = "WC Workflow Title");
 

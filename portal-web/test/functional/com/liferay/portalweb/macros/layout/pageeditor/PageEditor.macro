@@ -716,6 +716,14 @@ definition {
 			Pause(locator1 = "3000");
 		}
 
+		if (isSet(separatorColor)) {
+			PageEditor.selectColorSwatchItem(
+				colorSwatchItem = "${separatorColor}",
+				fieldLabel = "Separator Color");
+
+			Pause(locator1 = "3000");
+		}
+
 		if (isSet(size)) {
 			Select(
 				key_fieldLabel = "Size",
@@ -2332,6 +2340,12 @@ definition {
 				key_fragmentName = "${fragmentName}",
 				key_paddingTop = "${paddingTop}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_PADDING_TOP");
+		}
+
+		if (isSet(separatorColor)) {
+			AssertElementPresent(
+				key_separatorColor = "${separatorColor}",
+				locator1 = "Fragment#SEPARATOR_COLOR");
 		}
 
 		if (isSet(size)) {

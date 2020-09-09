@@ -30,6 +30,11 @@ public class OrdersConfigurationCategory implements ConfigurationCategory {
 	}
 
 	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
+
+	@Override
 	public String getCategoryKey() {
 		return _CATEGORY_KEY;
 	}
@@ -38,6 +43,8 @@ public class OrdersConfigurationCategory implements ConfigurationCategory {
 	public String getCategorySection() {
 		return _CATEGORY_SECTION;
 	}
+
+	private static final String _CATEGORY_ICON = "list";
 
 	private static final String _CATEGORY_KEY = "orders";
 

@@ -31,7 +31,6 @@ import com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0.DiscountAc
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -49,8 +48,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -79,7 +76,6 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -247,26 +243,6 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscountAccountGroup"));
-
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"graphql.execution.SimpleDataFetcherExceptionHandler",
-					Level.WARN)) {
-
-			JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"discountAccountGroup",
-						new HashMap<String, Object>() {
-							{
-								put("id", discountAccountGroup.getId());
-							}
-						},
-						new GraphQLField("id"))),
-				"JSONArray/errors");
-
-			Assert.assertTrue(errorsJSONArray.length() > 0);
-		}
 	}
 
 	@Test

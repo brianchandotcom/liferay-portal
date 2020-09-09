@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -75,6 +76,17 @@ public class GroupItemSelectorProviderImplTest {
 
 			Assert.assertTrue(groups.contains(company.getGroup()));
 		}
+	}
+
+	@Test
+	public void testGetIcon() {
+		Assert.assertEquals("sites", _groupItemSelectorProvider.getIcon());
+	}
+
+	@Test
+	public void testGetLabel() {
+		Assert.assertEquals(
+			"Site", _groupItemSelectorProvider.getLabel(LocaleUtil.US));
 	}
 
 	@DeleteAfterTestRun

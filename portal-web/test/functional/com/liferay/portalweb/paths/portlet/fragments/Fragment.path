@@ -119,6 +119,27 @@
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[*[name()='svg'][contains(@class,'icon-comments')]]</td>
 	<td></td>
 </tr>
+<!--CUSTOM_FRAGMENT_STYLE-->
+<tr>
+	<td>BOTTOM_SPACING</td>
+	<td>//div[contains(@class,'component-separator')]/hr[contains(@class,'pb-${key_bottomSpacing}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_SIZE</td>
+	<td>//div[contains(@class,'component-button')]/a[contains(@class,'btn-${key_size}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMAGE_SIZE</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]//img[contains(@class,'w-${key_imageSize}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPACER_HEIGHT</td>
+	<td>//div[contains(@id,'fragment')]/div[contains(@class,'py-${key_height}')]</td>
+	<td></td>
+</tr>
 <!--FRAGMENT_CONFIGURAION-->
 <tr>
 	<td>FRAGMENT_CHECKBOX</td>
@@ -143,11 +164,6 @@
 <tr>
 	<td>FRAGMENT_CONFIGURATION_BORDER_RADIUS</td>
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'border-radius: var(--${key_borderRadius})')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_BOTTOM_SPACING</td>
-	<td>//div[contains(@class,'component-${key_fragmentName}')]//hr[contains(@class,'pb-${key_bottomSpacing}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -198,21 +214,6 @@
 <tr>
 	<td>FRAGMENT_CONFIGURATION_HEADER</td>
 	<td>//${key_headingLevel}[contains(@class,'component-${key_fragmentName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_HEIGHT</td>
-	<td>//div[contains(@class,'page-editor__topper__content')]//div//div[contains(@class,'py-${key_height}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_IMAGE_SIZE</td>
-	<td>//div[contains(@class,'component-${key_fragmentName}')]//img[contains(@class,'w-${key_imageSize}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_SIZE</td>
-	<td>//div[contains(@class,'component-${key_fragmentName}')]//a[contains(@class,'-${key_size}')]</td>
 	<td></td>
 </tr>
 <tr>

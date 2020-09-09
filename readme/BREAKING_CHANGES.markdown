@@ -729,6 +729,12 @@ You have to use the new nested document `ddmFieldArray` in your Elasticsearch qu
 
 There are some examples in Liferay code. For example, [DDMIndexerImpl](https://github.com/liferay/liferay-portal/blob/7.3.x/modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/util/DDMIndexerImpl.java) and [AssetHelperImpl](https://github.com/liferay/liferay-portal/blob/master/modules/apps/asset/asset-service/src/main/java/com/liferay/asset/internal/util/AssetHelperImpl.java) use the `DDM_FIELD_ARRAY` constant.
 
+You can also restore the legacy behavior from System Settings and continue using `ddm__keyword__*` and `ddm__text__*` fields.
+
+1. Go to *System Settings* &rarr; *Dynamic Data Mapping* &rarr; *Dynamic Data Mapping Indexer*
+1. Select *Enable Legacy Dynamic Data Mapping Index Fields*
+1. Execute a full reindex.
+
 #### Why was this change made?
 
 This change was made to avoid the *Limit of total fields has been exceeded* Elasticsearch error that occurs if you have too many Dynamic Data Mapping structures.

@@ -80,20 +80,22 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 		_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
 			0, indexEntityNames.length, StringPool.BLANK);
 
-		for (int i = 0; i < indexEntityNames.length; i++) {
+		for (String indexEntityName : indexEntityNames) {
 			WorkflowMetricsIndex workflowMetricsIndex =
-				_workflowMetricsIndexes.getService(indexEntityNames[i]);
+				_workflowMetricsIndexes.getService(indexEntityName);
 
-			workflowMetricsIndex.clearIndex(backgroundTask.getCompanyId());
+			workflowMetricsIndex.removeIndex(backgroundTask.getCompanyId());
 			workflowMetricsIndex.createIndex(backgroundTask.getCompanyId());
+		}
 
+		for (int i = 0; i < indexEntityNames.length; i++) {
 			WorkflowMetricsReindexer workflowMetricsReindexer =
 				_workflowMetricsReindexers.getService(indexEntityNames[i]);
 
 			workflowMetricsReindexer.reindex(backgroundTask.getCompanyId());
 
 			_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
-				i, indexEntityNames.length, StringPool.BLANK);
+				i + 1, indexEntityNames.length, StringPool.BLANK);
 		}
 
 		_sendStatusMessage(

@@ -253,6 +253,124 @@ definition {
 			value1 = "No web content was found.");
 	}
 
+	@priority = "4"
+	test DiscardSubsetsofChangesInPublication {
+		property test.name.skip.portal.instance = "ChangeList#DiscardSubsetsofChangesInPublication";
+
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title 1");
+
+		PortletEntry.publish();
+
+		ChangeList.gotoReviewChanges();
+
+		ChangeList.discardChanges(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeTitle = "WC Structure Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title 2 Edit");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		NavItem.gotoStructures();
+
+		AssertElementNotPresent(
+			key_ddlDataDefinitionName = "WC Structure Name",
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME");
+
+		NavItem.gotoTemplates();
+
+		AssertElementNotPresent(
+			key_ddlTemplateName = "WC Template Name",
+			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME");
+
+		ChangeList.prepareToPublish(publicationName = "Publication Name");
+
+		ChangeList.publishPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title 2 Edit");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		NavItem.gotoStructures();
+
+		AssertElementNotPresent(
+			key_ddlDataDefinitionName = "WC Structure Name",
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME");
+
+		NavItem.gotoTemplates();
+
+		AssertElementNotPresent(
+			key_ddlTemplateName = "WC Template Name",
+			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME");
+	}
+
 	@priority = "5"
 	test PublishParallelPublications {
 		property test.name.skip.portal.instance = "ChangeList#PublishParallelPublications";

@@ -31,6 +31,7 @@ definition {
 		}
 	}
 
+	@priority = "4"
 	test AssertReplicationAfterReindex {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#AssertReplicationAfterReindex";
@@ -71,6 +72,7 @@ definition {
 			searchTerm = "Apple");
 	}
 
+	@priority = "3"
 	test BreakWorkflowSLA {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#BreakWorkflowSLA";
 
@@ -352,6 +354,7 @@ definition {
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
+	@priority = "3"
 	test CreateBlogsEntryWithNewWorkflow {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CreateBlogsEntryWithNewWorkflow";
 
@@ -408,6 +411,7 @@ definition {
 			searchTerm = "Blogs");
 	}
 
+	@priority = "3"
 	test HotDeployApp {
 		property hot.deploy.osgi.app.includes = "portal-search-elasticsearch-cross-cluster-replication";
 		property test.assert.warning.exceptions = "true";
@@ -445,6 +449,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
 	}
 
+	@priority = "3"
 	test SearchWithResultRankings {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithResultRankings";
 
@@ -489,6 +494,7 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@priority = "3"
 	test SearchWithSynonyms {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithSynonyms";
 
@@ -527,6 +533,7 @@ definition {
 		}
 	}
 
+	@priority = "3"
 	test SearchWithVirtualInstance {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithVirtualInstance";
 

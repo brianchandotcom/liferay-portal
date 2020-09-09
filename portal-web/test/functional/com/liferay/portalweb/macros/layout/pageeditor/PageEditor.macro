@@ -2224,12 +2224,9 @@ definition {
 		}
 
 		if (isSet(bottomSpacing)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
 			AssertElementPresent(
 				key_bottomSpacing = "${bottomSpacing}",
-				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BOTTOM_SPACING");
+				locator1 = "Fragment#BOTTOM_SPACING");
 		}
 
 		if (isSet(boxShadow)) {
@@ -2253,7 +2250,7 @@ definition {
 		if (isSet(height)) {
 			AssertElementPresent(
 				key_height = "${height}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEIGHT");
+				locator1 = "Fragment#SPACER_HEIGHT");
 		}
 
 		if (isSet(imageSize)) {
@@ -2262,7 +2259,7 @@ definition {
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_imageSize = "${imageSize}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_IMAGE_SIZE");
+				locator1 = "Fragment#IMAGE_SIZE");
 		}
 
 		if (isSet(marginBottom)) {
@@ -2338,12 +2335,9 @@ definition {
 		}
 
 		if (isSet(size)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
 			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
 				key_size = "${size}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_SIZE");
+				locator1 = "Fragment#BUTTON_SIZE");
 		}
 
 		if (isSet(textColor)) {

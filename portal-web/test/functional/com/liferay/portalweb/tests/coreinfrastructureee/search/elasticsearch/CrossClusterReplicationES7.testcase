@@ -218,6 +218,31 @@ definition {
 	}
 
 	@priority = "3"
+	test CleanAndReindexWorkflowMetricsSLATaskResults {
+		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsSLATaskResults";
+
+		CrossClusterReplication.setupCrossClusterReplication();
+
+		CrossClusterReplication.cleanWorkflowIndex(workflowIndexName = "workflow-metrics-sla-task-results");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertElementNotPresent(
+			key_rowName = "Update",
+			key_rowNumber = "2",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
+
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow SLA Task Results");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertElementPresent(
+			key_rowName = "Update",
+			key_rowNumber = "2",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
+	}
+
+	@priority = "3"
 	test CleanAndReindexWorkflowMetricsTasks {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsTasks";
 

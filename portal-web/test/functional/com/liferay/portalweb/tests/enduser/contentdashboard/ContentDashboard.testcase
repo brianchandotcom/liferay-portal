@@ -18,8 +18,6 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -128,6 +126,8 @@ definition {
 	@description = "Validate if the user can filter by tag"
 	@priority = "5"
 	test ContentDashboardFilterByTag {
+		property portal.acceptance = "true";
+		
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();

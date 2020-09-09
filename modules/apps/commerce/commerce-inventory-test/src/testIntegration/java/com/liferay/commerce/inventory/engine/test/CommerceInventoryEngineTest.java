@@ -840,7 +840,8 @@ public class CommerceInventoryEngineTest {
 		Assert.assertEquals(commerceInventoryWarehouse1, retrievedWarehouse);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse2 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(false, _serviceContext);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				false, _serviceContext);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),
@@ -866,7 +867,8 @@ public class CommerceInventoryEngineTest {
 		Assert.assertEquals(commerceInventoryWarehouse1, retrievedWarehouse);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse3 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true, _serviceContext);
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				true, _serviceContext);
 
 		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(),

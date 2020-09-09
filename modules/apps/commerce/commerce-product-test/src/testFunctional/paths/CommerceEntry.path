@@ -10,7 +10,7 @@
 <tbody>
 	<tr>
 	<td>ANY_MENU_ITEM</td>
-	<td>//div[contains(@class,'show')]//a[contains(.,'${key_menuItem}')]</td>
+	<td>//div[contains(@class,'show')]//button[contains(.,'${key_menuItem}')]</td>
 	<td></td>
 </tr>
 <tr>

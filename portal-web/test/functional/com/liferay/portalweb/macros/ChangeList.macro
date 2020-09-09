@@ -71,11 +71,23 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro discardConflictingChanges {
-		Click(
-			key_entryTitle = "${entryTitle}",
-			locator1 = "ChangeList#CONFICTING_CHANGES_DISCARD_BUTTON",
-			value1 = "Discard");
+	macro discardChanges {
+		if ("${conflictingChanges}" == "true") {
+			Click(
+				key_entryTitle = "${entryTitle}",
+				locator1 = "ChangeList#CONFICTING_CHANGES_DISCARD_BUTTON",
+				value1 = "Discard");
+		}
+		else {
+			Click(
+				key_changeCategory = "${changeCategory}",
+				key_changeTitle = "${changeTitle}",
+				locator1 = "ChangeListChanges#CHANGES_CHANGE_TITLE");
+
+			Click(locator1 = "ChangeListChanges#CHANGES_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Discard");
+		}
 
 		Pause(locator1 = "3000");
 

@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGES_ELLIPSIS</td>
+	<td>//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTEXT_CHANGE_DESCRIPTION</td>
 	<td>//div[contains(@class,'change-list-description') and contains(.,'${key_changeDescription}')]</td>
 	<td></td>

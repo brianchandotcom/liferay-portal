@@ -777,8 +777,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 				ActionKeys.VIEW_SITE_ADMINISTRATION, true, scope,
 				ArrayUtil.filter(
 					groupIds,
-					groupId -> _isDepotGroup(
-						role.getCompanyId(), groupId)));
+					groupId -> _isDepotGroup(role.getCompanyId(), groupId)));
 
 			selResource = Group.class.getName();
 			actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;

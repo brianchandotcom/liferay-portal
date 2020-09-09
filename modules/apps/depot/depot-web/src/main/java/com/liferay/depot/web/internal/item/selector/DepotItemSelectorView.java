@@ -14,7 +14,6 @@
 
 package com.liferay.depot.web.internal.item.selector;
 
-import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.application.list.DepotPanelAppController;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;

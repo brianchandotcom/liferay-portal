@@ -14,7 +14,6 @@
 
 package com.liferay.depot.internal.security.permission.wrapper;
 
-import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;

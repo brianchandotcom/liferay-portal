@@ -14,7 +14,6 @@
 
 package com.liferay.depot.web.internal.servlet.taglib;
 
-import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;

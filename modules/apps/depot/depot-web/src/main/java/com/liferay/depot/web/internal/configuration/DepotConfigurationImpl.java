@@ -15,20 +15,13 @@
 package com.liferay.depot.web.internal.configuration;
 
 import com.liferay.depot.configuration.DepotConfiguration;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	service = DepotConfiguration.class
-)
+@Component(service = DepotConfiguration.class)
 public class DepotConfigurationImpl implements DepotConfiguration {
 
 	@Override

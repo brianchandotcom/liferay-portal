@@ -99,11 +99,11 @@ else {
 
 String headerTitle = LanguageUtil.get(request, "add-message");
 
-if (curParentMessage != null) {
-	headerTitle = LanguageUtil.format(request, "reply-to-x", HtmlUtil.escape(curParentMessage.getSubject()), false);
-}
-else if (message != null) {
+if (message != null) {
 	headerTitle = LanguageUtil.format(request, "edit-x", HtmlUtil.escape(message.getSubject()), false);
+}
+else if (curParentMessage != null) {
+	headerTitle = LanguageUtil.format(request, "reply-to-x", HtmlUtil.escape(curParentMessage.getSubject()), false);
 }
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation")) || Objects.equals(portletDisplay.getPortletResource(), PortletKeys.MY_WORKFLOW_TASK);

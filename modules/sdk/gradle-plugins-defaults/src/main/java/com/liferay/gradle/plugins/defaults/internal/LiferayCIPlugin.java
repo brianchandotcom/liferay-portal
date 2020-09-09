@@ -204,6 +204,32 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		executeNodeTask.setNpmInstallRetries(_NPM_INSTALL_RETRIES);
 	}
 
+	private void _configureTaskExecutePackageManager(
+		ExecutePackageManagerTask executePackageManagerTask) {
+
+		String ciNodeEnv = GradleUtil.getProperty(
+			executePackageManagerTask.getProject(), "nodejs.ci.node.env",
+			(String)null);
+
+		if (Validator.isNotNull(ciNodeEnv)) {
+			executePackageManagerTask.environment("NODE_ENV", ciNodeEnv);
+		}
+
+		String ciRegistry = GradleUtil.getProperty(
+			executePackageManagerTask.getProject(), "nodejs.npm.ci.registry",
+			(String)null);
+
+		if (Validator.isNotNull(ciRegistry)) {
+			executePackageManagerTask.setRegistry(ciRegistry);
+		}
+	}
+
+	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
+		npmInstallTask.setNodeModulesCacheDir(_NODE_MODULES_CACHE_DIR);
+		npmInstallTask.setRemoveShrinkwrappedUrls(Boolean.TRUE);
+		npmInstallTask.setUseNpmCI(Boolean.FALSE);
+	}
+
 	private void _configureTaskNpmInstallAfterEvaluate(
 		Project project, NpmInstallTask npmInstallTask) {
 
@@ -243,32 +269,6 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		}
 
 		npmInstallTask.setArgs(args);
-	}
-
-	private void _configureTaskExecutePackageManager(
-		ExecutePackageManagerTask executePackageManagerTask) {
-
-		String ciNodeEnv = GradleUtil.getProperty(
-			executePackageManagerTask.getProject(), "nodejs.ci.node.env",
-			(String)null);
-
-		if (Validator.isNotNull(ciNodeEnv)) {
-			executePackageManagerTask.environment("NODE_ENV", ciNodeEnv);
-		}
-
-		String ciRegistry = GradleUtil.getProperty(
-			executePackageManagerTask.getProject(), "nodejs.npm.ci.registry",
-			(String)null);
-
-		if (Validator.isNotNull(ciRegistry)) {
-			executePackageManagerTask.setRegistry(ciRegistry);
-		}
-	}
-
-	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
-		npmInstallTask.setNodeModulesCacheDir(_NODE_MODULES_CACHE_DIR);
-		npmInstallTask.setRemoveShrinkwrappedUrls(Boolean.TRUE);
-		npmInstallTask.setUseNpmCI(Boolean.FALSE);
 	}
 
 	private void _configureTaskTestForTestIntegrationPlugin(

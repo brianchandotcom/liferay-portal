@@ -137,6 +137,28 @@ definition {
 	}
 
 	@priority = "3"
+	test CleanAndReindexWorkflowMetricsProcesses {
+		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsProcesses";
+
+		CrossClusterReplication.setupCrossClusterReplication();
+
+		CrossClusterReplication.cleanWorkflowIndex(workflowIndexName = "workflow-metrics-processes");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "Once there are active processes, metrics will appear here.");
+
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Processes");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+	}
+
+	@priority = "3"
 	test CleanAndReindexWorkflowMetricsTasks {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsTasks";
 

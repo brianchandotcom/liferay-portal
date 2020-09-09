@@ -81,24 +81,18 @@ public class SimpleURLPatternMapper<T> extends BaseURLPatternMapper<T> {
 		}
 
 		if (isWildcardURLPattern(urlPattern)) {
-			if (!_wildcardURLPatternValues.containsKey(urlPattern)) {
-				_wildcardURLPatternValues.put(urlPattern, value);
-			}
+			_wildcardURLPatternValues.put(urlPattern, value);
 
 			return;
 		}
 
 		if (isExtensionURLPattern(urlPattern)) {
-			if (!_extensionURLPatternValues.containsKey(urlPattern)) {
-				_extensionURLPatternValues.put(urlPattern, value);
-			}
+			_extensionURLPatternValues.put(urlPattern, value);
 
 			return;
 		}
 
-		if (!_exactURLPatternValues.containsKey(urlPattern)) {
-			_exactURLPatternValues.put(urlPattern, value);
-		}
+		_exactURLPatternValues.put(urlPattern, value);
 	}
 
 	private final Map<String, T> _exactURLPatternValues = new HashMap<>();

@@ -68,7 +68,7 @@ public class StaticSizeTrieURLPatternMapper<T>
 				break;
 			}
 
-			if (character == '.' && ((row + 1) < _maxURLPatternLength)) {
+			if (character == '.') {
 				return _extensionValues.get(
 					_getFirstSetBitIndex(currentBitmask));
 			}
@@ -109,9 +109,7 @@ public class StaticSizeTrieURLPatternMapper<T>
 				break;
 			}
 
-			if (!exact && (character == '/') &&
-				((row + 1) < _maxURLPatternLength)) {
-
+			if (!exact && (character == '/')) {
 				long bitmask =
 					currentBitmask &
 					_wildCardTrieMatrix[1][row + 1][_INDEX_STAR];
@@ -120,10 +118,6 @@ public class StaticSizeTrieURLPatternMapper<T>
 					bestMatchBitmask = bitmask;
 				}
 			}
-		}
-
-		if (row > (_maxURLPatternLength - 1)) {
-			currentBitmask = 0;
 		}
 
 		if (currentBitmask == 0) {

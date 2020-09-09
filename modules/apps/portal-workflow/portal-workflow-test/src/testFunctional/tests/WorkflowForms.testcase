@@ -280,6 +280,8 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Select from List");
 
+		var selectFromListField = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Select");
 
 		FormFields.editOptionsRow(
@@ -290,6 +292,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "2");
 
+		var textField_1 = FormFields.getFieldName();
+
 		Form.editFieldLabelMetal(fieldValue = "Text One");
 
 		Form.closeSidebar();
@@ -297,6 +301,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "3",
 			fieldType = "Single Selection");
+
+		var singleSelectionField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Radio");
 
@@ -307,6 +313,8 @@ definition {
 		Form.closeSidebar();
 
 		Form.addTextField(fieldPositionNumber = "4");
+
+		var textField_2 = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Text Two");
 
@@ -377,28 +385,28 @@ definition {
 
 		FormFields.viewTextFieldNotVisible(
 			fieldLabel = "Text One",
-			fieldName = "TextOne",
+			fieldName = "${textField_1}",
 			fieldValue = "Text One Input");
 
 		FormFields.selectSelectOption(
-			fieldName = "Select",
+			fieldName = "${selectFromListField}",
 			selectOption = "Select 1");
 
 		FormFields.editText(
-			fieldName = "TextOne",
+			fieldName = "${textField_1}",
 			fieldValue = "Text One Input");
 
 		FormFields.viewTextFieldNotVisible(
 			fieldLabel = "Text Two",
-			fieldName = "TextTwo",
+			fieldName = "${textField_2}",
 			fieldValue = "Text Two Input");
 
 		FormFields.selectRadioOption(
-			fieldName = "Radio",
+			fieldName = "${singleSelectionField}",
 			radioOption = "Option 1");
 
 		FormFields.editText(
-			fieldName = "TextTwo",
+			fieldName = "${textField_2}",
 			fieldValue = "Text Two Input");
 
 		Button.clickSubmitForPublication();
@@ -426,25 +434,25 @@ definition {
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "Select",
-			fieldName = "Select",
+			fieldName = "${selectFromListField}",
 			onSitePage = "true",
 			selectOption = "Select 1");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text One",
-			fieldName = "TextOne",
+			fieldName = "${textField_1}",
 			fieldValue = "Text One Input",
 			onSitePage = "true");
 
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "Radio",
-			fieldName = "Radio",
+			fieldName = "${singleSelectionField}",
 			fieldValue = "Option 1",
 			onSitePage = "true");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text Two",
-			fieldName = "TextTwo",
+			fieldName = "${textField_2}",
 			fieldValue = "Text Two Input",
 			onSitePage = "true");
 
@@ -484,22 +492,22 @@ definition {
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "Select",
-			fieldName = "Select",
+			fieldName = "${selectFromListField}",
 			selectOption = "Select 1");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text One",
-			fieldName = "TextOne",
+			fieldName = "${textField_1}",
 			fieldValue = "Text One Input");
 
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "Radio",
-			fieldName = "Radio",
+			fieldName = "${singleSelectionField}",
 			fieldValue = "Option 1");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text Two",
-			fieldName = "TextTwo",
+			fieldName = "${textField_2}",
 			fieldValue = "Text Two Input");
 	}
 

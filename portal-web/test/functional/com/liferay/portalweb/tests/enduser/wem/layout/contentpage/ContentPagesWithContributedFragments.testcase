@@ -688,7 +688,6 @@ definition {
 	@description = "This is a use case for LPS-112360. The asset entries should be ordered by view count from high to low in Collection Display when select Most Viewed Assets as Collection Provider."
 	@priority = "5"
 	test DisplayMostViewedAssetsInCollectionDisplay {
-		property custom.properties = "buffered.increment.enabled=true";
 		property portal.acceptance = "true";
 
 		task ("Add a Web Content Article, a Blogs Entry and a Document") {

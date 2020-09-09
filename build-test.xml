@@ -8455,8 +8455,6 @@ browser.launcher.url=
 
 setup.wizard.enabled=false
 
-buffered.increment.enabled=false
-
 mail.send.blacklist=
 
 mail.session.jndi.name=

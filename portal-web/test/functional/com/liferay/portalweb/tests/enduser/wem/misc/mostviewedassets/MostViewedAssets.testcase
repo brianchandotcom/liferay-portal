@@ -1,7 +1,6 @@
 @component-name = "portal-wcm"
 definition {
 
-	property custom.properties = "buffered.increment.enabled=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Asset Publisher,Most Viewed Assets";

@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface WorkflowMetricsIndex {
 
-	public void clearIndex(long companyId) throws PortalException;
-
 	public void createIndex(long companyId) throws PortalException;
 
 	public String getIndexName(long companyId);

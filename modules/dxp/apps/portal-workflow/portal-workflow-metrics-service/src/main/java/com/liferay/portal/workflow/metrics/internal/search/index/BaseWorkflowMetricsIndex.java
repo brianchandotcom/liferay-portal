@@ -20,13 +20,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
@@ -42,35 +38,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Inácio Nery
  */
 public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
-
-	@Override
-	public void clearIndex(long companyId) throws PortalException {
-		if ((searchEngineAdapter == null) ||
-			!hasIndex(getIndexName(companyId))) {
-
-			return;
-		}
-
-		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-			new DeleteByQueryDocumentRequest(
-				new BooleanQueryImpl() {
-					{
-						setPreBooleanFilter(
-							new BooleanFilter() {
-								{
-									addRequiredTerm("companyId", companyId);
-								}
-							});
-					}
-				},
-				getIndexName(companyId));
-
-		if (PortalRunMode.isTestMode()) {
-			deleteByQueryDocumentRequest.setRefresh(true);
-		}
-
-		searchEngineAdapter.execute(deleteByQueryDocumentRequest);
-	}
 
 	@Override
 	public void createIndex(long companyId) throws PortalException {

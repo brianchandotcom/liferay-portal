@@ -40,7 +40,7 @@ definition {
 	@description = "This is a use case for LPS-62371"
 	@priority = "3"
 	test SubmitPublishedFormWithTextField {
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 
@@ -55,7 +55,9 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField();
+		Form.addTextField(fieldPositionNumber = "1");
+
+		var fieldTextField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
@@ -79,7 +81,7 @@ definition {
 		FormsAdminNavigator.openPublishURL(publishFormURL = "${publishedFormPublicURL}");
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "${fieldTextField}",
 			fieldValue = "Text Field Value");
 
 		Button.clickSubmitForPublication();
@@ -147,7 +149,6 @@ definition {
 	@description = "This is a use case LPS-61197."
 	@priority = "5"
 	test ViewDateAssetDetails {
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 
@@ -162,7 +163,11 @@ definition {
 
 		Form.editDescription();
 
-		Form.gotoAddField(fieldType = "Date");
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Date");
+
+		var fieldDateField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(fieldValue = "Date");
 
@@ -208,13 +213,11 @@ definition {
 
 		FormFields.viewDateLabel(
 			fieldLabel = "Date",
-			fieldName = "Date");
+			fieldName = "${fieldDateField}");
 
 		FormFields.editDate(
-			fieldName = "Date",
+			fieldName = "${fieldDateField}",
 			fieldValue = "02/01/2016");
-
-		Click(locator1 = "FormFields#SELECT_ACTIVE_DATE");
 
 		Button.clickSubmitForPublication();
 
@@ -241,7 +244,7 @@ definition {
 
 		FormFields.viewDateField(
 			fieldLabel = "Date",
-			fieldName = "Date");
+			fieldName = "${fieldDateField}");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -259,7 +262,6 @@ definition {
 	@description = "This is a use case for LPS-65270."
 	@priority = "5"
 	test ViewEntryWithConditionalVisibilityFromSelectAndRadio {
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 
@@ -274,7 +276,9 @@ definition {
 
 		Form.editDescription();
 
-		Form.gotoAddField(fieldType = "Select from List");
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Select from List");
 
 		Form.editFieldLabelMetal(fieldValue = "Select");
 
@@ -284,13 +288,15 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.addTextField();
+		Form.addTextField(fieldPositionNumber = "2");
 
 		Form.editFieldLabelMetal(fieldValue = "Text One");
 
 		Form.closeSidebar();
 
-		Form.gotoAddField(fieldType = "Single Selection");
+		Form.gotoAddField(
+			fieldPositionNumber = "3",
+			fieldType = "Single Selection");
 
 		Form.editFieldLabelMetal(fieldValue = "Radio");
 
@@ -300,7 +306,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.addTextField();
+		Form.addTextField(fieldPositionNumber = "4");
 
 		Form.editFieldLabelMetal(fieldValue = "Text Two");
 

@@ -231,7 +231,7 @@
 </tr>
 <tr>
     <td>SETTINGS_TAB_WORKFLOW_CONFIGURATION</td>
-    <td>//div[@id='clay_dropdown_portal']//li/button[contains(@class,'dropdown-item') and contains(.,'${key_workflowDefinition}')]</td>
+    <td>//div[contains(@class,'dropdown-menu')]//li/button[contains(@class,'dropdown-item') and contains(.,'${key_workflowDefinition}')]</td>
     <td></td>
 </tr>
 <tr>

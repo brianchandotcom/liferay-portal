@@ -6540,8 +6540,8 @@ go</echo>
 				<property location="${analytics.cloud.faro.data.csv}" name="analytics.cloud.faro.data.csv.file.path" />
 
 				<echo file="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration.config">
-pathToUsersCSV=${analytics.cloud.faro.data.csv.file.path}
-virtualHostname=localhost
+pathToUsersCSV="${analytics.cloud.faro.data.csv.file.path}"
+virtualHostname="localhost"
 				</echo>
 
 				<print-file file.name="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration.config" />

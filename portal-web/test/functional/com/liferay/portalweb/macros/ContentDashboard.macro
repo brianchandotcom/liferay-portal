@@ -166,7 +166,23 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro filterByTitle {
+	macro openInfoPanelByDropdownMenu {
+		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
+
+		Click(locator1 = "ContentDashboard#INFO_OPTION");
+	}
+
+	macro orderByModificationDate {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_MODIFICATION_DATE_OPTION");
+	}
+
+	macro orderByTitle {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -174,12 +190,6 @@ definition {
 		}
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_TITLE_OPTION");
-	}
-
-	macro openInfoPanelByDropdownMenu {
-		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
-
-		Click(locator1 = "ContentDashboard#INFO_OPTION");
 	}
 
 	macro searchValue {

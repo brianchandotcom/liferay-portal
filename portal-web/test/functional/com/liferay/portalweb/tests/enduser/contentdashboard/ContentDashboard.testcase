@@ -20,8 +20,6 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -185,9 +183,10 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no tags.");
 	}
 
-	@description = "Validate if the user can filter by title"
+
+	@description = "Validate if the user can order by Modification Date"
 	@priority = "5"
-	test ContentDashboardFilterByTitle {
+	test ContentDashboardOrderByModificationDate {
 		for (var count : list "1,2,3,4,5") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content ${count}",
@@ -202,16 +201,74 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.filterByTitle();
+		ContentDashboard.orderByModificationDate();
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 			value1 = "WC Title 5");
 
+		Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title 1");
+
 		for (var count : list "1,2,3,4,5") {
-			JSONWebcontent.deleteWebContent(
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.viewTitle(webContentTitle = "WC Title ${count}");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.deleteCP(
+				siteURLKey = "test-site-name",
+				webContentTitle = "WC Title ${count}");
+		}
+	}
+
+	@description = "Validate if the user can order by title"
+	@priority = "5"
+	test ContentDashboardOrderByTitle {
+		for (var count : list "1,2,3,4,5") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
 				groupName = "Test Site Name",
 				title = "WC Title ${count}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.orderByTitle();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title 5");
+
+		Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title 1");
+
+		for (var count : list "1,2,3,4,5") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.viewTitle(webContentTitle = "WC Title ${count}");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.deleteCP(
+				siteURLKey = "test-site-name",
+				webContentTitle = "WC Title ${count}");
 		}
 	}
 

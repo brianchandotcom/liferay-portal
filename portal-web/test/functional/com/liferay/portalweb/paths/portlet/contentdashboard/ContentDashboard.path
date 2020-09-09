@@ -68,6 +68,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_BY_MODIFICATION_DATE_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Modified Date')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_BY_TAG_OPTION</td>
 	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Tags')]</td>
 	<td></td>
@@ -100,6 +105,11 @@
 <tr>
 	<td>INFO_PANEL_TITLE</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(text(),'Content Info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVERSE_SORT_DIRECTION_BUTTON</td>
+	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -223,9 +223,10 @@ definition {
 
 		IFrame.closeFrame();
 
-		ChangeList.discardConflictingChanges(
+		ChangeList.discardChanges(
 			changeCategory = "Asset",
 			changeTitle = "WC WebContent Title 2 Edit",
+			conflictingChanges = "true",
 			entryTitle = "Test Test modified a Asset");
 
 		Navigator.openURL();

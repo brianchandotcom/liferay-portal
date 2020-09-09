@@ -139,6 +139,11 @@
 	<td>//div[contains(@class,'site-name')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PRODUCT_MENU_PANEL_TIMES</td>
+	<td>//a[contains(@id,'ProductMenu')][*[name()='svg'][contains(@class,'icon-times')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -1422,18 +1422,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/commons-httpclient.jar</file-name>
-				<version>3.1</version>
-				<project-name>Commons HttpClient</project-name>
-				<project-url>http://hc.apache.org/httpclient-legacy/index.html</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/commons-io.jar</file-name>
 				<version>2.5</version>
 				<project-name>Commons IO</project-name>

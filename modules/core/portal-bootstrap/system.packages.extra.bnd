@@ -209,7 +209,6 @@ Export-Package:\
 	org.apache.commons.collections.map;version='3.2.1',\
 	org.apache.commons.collections.set;version='3.2.1',\
 	org.apache.commons.discovery.*;version='0.4.0',\
-	org.apache.commons.httpclient.*;version='3.1',\
 	org.apache.commons.lang;version='2.6',\
 	org.apache.commons.lang.builder;version='2.6',\
 	org.apache.commons.lang.enum;version='2.6',\
@@ -343,7 +342,6 @@ Provide-Capability:\
 	@../../../lib/portal/commons-codec.jar,\
 	@../../../lib/portal/commons-collections.jar,\
 	@../../../lib/portal/commons-discovery.jar,\
-	@../../../lib/portal/commons-httpclient.jar,\
 	@../../../lib/portal/commons-lang.jar,\
 	@../../../lib/portal/commons-logging.jar,\
 	@../../../lib/portal/dom4j.jar,\

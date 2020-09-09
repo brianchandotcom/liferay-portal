@@ -121,6 +121,11 @@
 </tr>
 <!--CUSTOM_FRAGMENT_STYLE-->
 <tr>
+	<td>ALIGN</td>
+	<td>//div[contains(@class,'video')]/parent::div[contains(@style,'justify-content: ${key_alignment}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BOTTOM_SPACING</td>
 	<td>//div[contains(@class,'component-separator')]/hr[contains(@class,'pb-${key_bottomSpacing}')]</td>
 	<td></td>
@@ -136,8 +141,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEPARATOR_COLOR</td>
+	<td>//div[contains(@class,'component-separator')]/hr[contains(@class,'border-${key_separatorColor}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SPACER_HEIGHT</td>
 	<td>//div[contains(@id,'fragment')]/div[contains(@class,'py-${key_height}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIDEO_HEIGHT</td>
+	<td>//div[contains(@class,'video')][contains(@style,'height: ${key_height}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIDEO_WIDTH</td>
+	<td>//div[contains(@class,'video')][contains(@style,'width: ${key_width}')]</td>
 	<td></td>
 </tr>
 <!--FRAGMENT_CONFIGURAION-->

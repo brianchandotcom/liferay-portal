@@ -177,11 +177,11 @@ definition {
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 
-		AssetListsAdmin.openAssetListsAdmin(
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-import-depot-name");
+
+		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
-			assetTitle = "DM Document Title",
-			assetType = "Document",
-			siteURLKey = "test-import-depot-name");
+			type = "Manual");
 	}
 
 	@description = "This ensures that the user can import the asset library lar to a site."
@@ -247,9 +247,10 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		AssetListsAdmin.openAssetListsAdmin(
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "new-site");
+
+		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
-			siteURLKey = "new-site",
 			type = "Manual");
 	}
 
@@ -314,9 +315,10 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		AssetListsAdmin.openAssetListsAdmin(
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
-			siteURLKey = "test-depot-name",
 			type = "Manual");
 	}
 

@@ -49,7 +49,7 @@ export default function TrafficSources({
 }) {
 	const [highlighted, setHighlighted] = useState(null);
 
-	const [warning, addWarning] = useWarning();
+	const [, addWarning] = useWarning();
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
@@ -70,37 +70,27 @@ export default function TrafficSources({
 				.catch(() => {
 					setTrafficSources([]);
 					if (isMounted()) {
-						if (!warning) {
-							addWarning();
-						}
+						addWarning();
 					}
 				});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dataProvider, validAnalyticsConnection, warning]);
+	}, [addWarning, dataProvider, isMounted, validAnalyticsConnection]);
 
 	const fullPieChart = useMemo(
-		() => trafficSources.some((source) => !!source.value),
-
+		() => trafficSources.some(({value}) => value),
 		[trafficSources]
 	);
 
 	const missingTrafficSourceValue = useMemo(
-		() =>
-			trafficSources.some(
-				(trafficSource) => trafficSource.value === undefined
-			),
+		() => trafficSources.some(({value}) => value === undefined),
 		[trafficSources]
 	);
 
 	useEffect(() => {
 		if (missingTrafficSourceValue) {
-			if (!warning) {
-				addWarning();
-			}
+			addWarning();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [warning, missingTrafficSourceValue]);
+	}, [addWarning, missingTrafficSourceValue]);
 
 	function handleLegendMouseEnter(name) {
 		setHighlighted(name);

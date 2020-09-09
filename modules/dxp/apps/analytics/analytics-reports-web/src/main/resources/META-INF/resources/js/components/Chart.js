@@ -138,7 +138,7 @@ export default function Chart({
 
 	const [{publishedToday}] = useContext(StoreContext);
 
-	const [hasHistoricalWarning, addHistoricalWarning] = useHistoricalWarning();
+	const [, addHistoricalWarning] = useHistoricalWarning();
 
 	const {actions, state: chartState} = useChartState({
 		publishDate,
@@ -184,7 +184,7 @@ export default function Chart({
 							...data[i].value,
 						};
 					}
-					else if (!hasHistoricalWarning) {
+					else {
 						addHistoricalWarning();
 					}
 				}

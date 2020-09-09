@@ -81,7 +81,7 @@ export default function Navigation({
 		setTrafficSourceName(trafficSourceName);
 
 		const trafficSource = trafficSources.find((trafficSource) => {
-			return trafficSource['name'] === trafficSourceName;
+			return trafficSource.name === trafficSourceName;
 		});
 
 		setCurrentPage({
@@ -95,7 +95,7 @@ export default function Navigation({
 
 	const handleTrafficShare = useCallback(() => {
 		const trafficSource = trafficSources.find((trafficSource) => {
-			return trafficSource['name'] === trafficSourceName;
+			return trafficSource.name === trafficSourceName;
 		});
 
 		return Promise.resolve(trafficSource?.share ?? '-');
@@ -103,7 +103,7 @@ export default function Navigation({
 
 	const handleTrafficVolume = useCallback(() => {
 		const trafficSource = trafficSources.find((trafficSource) => {
-			return trafficSource['name'] === trafficSourceName;
+			return trafficSource.name === trafficSourceName;
 		});
 
 		return Promise.resolve(trafficSource?.value ?? '-');

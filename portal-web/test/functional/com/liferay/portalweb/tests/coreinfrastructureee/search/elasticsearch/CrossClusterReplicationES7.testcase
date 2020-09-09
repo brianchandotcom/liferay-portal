@@ -137,6 +137,40 @@ definition {
 	}
 
 	@priority = "3"
+	test CleanAndReindexWorkflowMetricsNodes {
+		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsNodes";
+
+		CrossClusterReplication.setupCrossClusterReplication();
+
+		CrossClusterReplication.cleanWorkflowIndex(workflowIndexName = "workflow-metrics-nodes");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		AssertTextEquals(
+			key_slaDefinitionStart = "No results were found.",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION",
+			value1 = "No results were found.");
+
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Nodes");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:02",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Enters Task: Review");
+	}
+
+	@priority = "3"
 	test CleanAndReindexWorkflowMetricsProcesses {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsProcesses";
 

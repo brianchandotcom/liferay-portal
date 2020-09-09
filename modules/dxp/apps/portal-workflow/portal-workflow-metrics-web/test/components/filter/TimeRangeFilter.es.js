@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, findByTestId, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import TimeRangeFilter from '../../../src/main/resources/META-INF/resources/js/components/filter/TimeRangeFilter.es';
@@ -51,7 +51,7 @@ const wrapper = ({children}) => (
 );
 
 describe('The time range filter component should', () => {
-	let getAllByTestId;
+	let container;
 
 	describe('Render without custom range date option selected', () => {
 		afterEach(cleanup);
@@ -64,11 +64,11 @@ describe('The time range filter component should', () => {
 				{wrapper}
 			);
 
-			getAllByTestId = renderResult.getAllByTestId;
+			container = renderResult.container;
 		});
 
-		test('Be rendered with filter item names', async () => {
-			const filterItems = await getAllByTestId('filterItem');
+		test('Be rendered with filter item names', () => {
+			const filterItems = container.querySelectorAll('.dropdown-item');
 
 			expect(filterItems[0].innerHTML).toContain('custom-range');
 			expect(filterItems[1].innerHTML).toContain('Last 30 Days');
@@ -76,17 +76,9 @@ describe('The time range filter component should', () => {
 		});
 
 		test('Be rendered with active option "Last 7 Days"', async () => {
-			const filterItems = getAllByTestId('filterItem');
+			const activeItem = container.querySelector('.active');
 
-			const activeItem = filterItems.find((item) =>
-				item.className.includes('active')
-			);
-			const activeItemName = await findByTestId(
-				activeItem,
-				'filterItemName'
-			);
-
-			expect(activeItemName).toHaveTextContent('Last 7 Days');
+			expect(activeItem).toHaveTextContent('Last 7 Days');
 		});
 	});
 
@@ -95,7 +87,7 @@ describe('The time range filter component should', () => {
 			dateEndInput,
 			dateStartInput,
 			getAllByPlaceholderText,
-			getByTestId,
+			getAllByText,
 			getByText;
 
 		beforeAll(() => {
@@ -108,13 +100,12 @@ describe('The time range filter component should', () => {
 
 			container = renderResult.container;
 			getAllByPlaceholderText = renderResult.getAllByPlaceholderText;
-			getAllByTestId = renderResult.getAllByTestId;
-			getByTestId = renderResult.getByTestId;
+			getAllByText = renderResult.getAllByText;
 			getByText = renderResult.getByText;
 		});
 
 		test('Show the date the href has as a suggestion', () => {
-			const filterItems = getAllByTestId('filterItem');
+			const filterItems = container.querySelectorAll('.dropdown-item');
 
 			fireEvent.click(filterItems[0]);
 
@@ -173,9 +164,9 @@ describe('The time range filter component should', () => {
 		});
 
 		test('Change the filter value applying a custom time range', () => {
-			const filterName = getByTestId('filterName');
+			const filterName = getAllByText('Last 7 Days')[0];
 
-			expect(filterName).toHaveTextContent('Last 7 Days');
+			expect(filterName).toBeTruthy();
 
 			fireEvent.change(dateStartInput, {target: {value: '12/03/2019'}});
 			fireEvent.blur(dateStartInput);

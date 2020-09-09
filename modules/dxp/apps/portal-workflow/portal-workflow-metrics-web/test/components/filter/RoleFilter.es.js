@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, findByTestId, render} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import RoleFilter from '../../../src/main/resources/META-INF/resources/js/components/filter/RoleFilter.es';
@@ -35,7 +36,7 @@ const wrapper = ({children}) => (
 );
 
 describe('The role filter component should', () => {
-	let getAllByTestId;
+	let container;
 
 	afterEach(cleanup);
 
@@ -44,25 +45,19 @@ describe('The role filter component should', () => {
 			wrapper,
 		});
 
-		getAllByTestId = renderResult.getAllByTestId;
+		container = renderResult.container;
 	});
 
 	test('Be rendered with filter item names', () => {
-		const filterItems = getAllByTestId('filterItem');
+		const filterItems = container.querySelectorAll('.dropdown-item');
 
 		expect(filterItems[0].innerHTML).toContain('Admin');
 		expect(filterItems[1].innerHTML).toContain('User');
 	});
 
 	test('Be rendered with active option "User"', () => {
-		const filterItems = getAllByTestId('filterItem');
+		const activeItem = container.querySelector('.active');
 
-		const activeItem = filterItems.find((item) =>
-			item.className.includes('active')
-		);
-
-		findByTestId(activeItem, 'filterItemName').then((activeItemName) => {
-			expect(activeItemName.innerHTML).toBe('User');
-		});
+		expect(activeItem).toHaveTextContent('User');
 	});
 });

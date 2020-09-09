@@ -9,12 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {
-	cleanup,
-	findAllByTestId,
-	findByTestId,
-	render,
-} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import CompletedItemsCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/CompletedItemsCard.es';
@@ -64,7 +59,7 @@ const timeRangeData = {
 };
 
 describe('The completed items card component should', () => {
-	let getByTestId;
+	let container, getAllByText, getByTestId;
 
 	afterEach(cleanup);
 
@@ -88,22 +83,16 @@ describe('The completed items card component should', () => {
 			{wrapper}
 		);
 
+		container = renderResult.container;
+		getAllByText = renderResult.getAllByText;
 		getByTestId = renderResult.getByTestId;
 	});
 
 	test('Be rendered with time range filter', async () => {
-		const timeRangeFilter = getByTestId('timeRangeFilter');
-		const filterItems = await findAllByTestId(
-			timeRangeFilter,
-			'filterItem'
-		);
-		const activeItem = filterItems.find((item) =>
-			item.className.includes('active')
-		);
-		const activeItemName = await findByTestId(activeItem, 'filterItemName');
+		const activeItem = container.querySelector('.active');
 
-		expect(timeRangeFilter).not.toBeNull();
-		expect(activeItemName).toHaveTextContent('Last 7 Days');
+		expect(getAllByText('Last 7 Days').length).toEqual(2);
+		expect(activeItem).toHaveTextContent('Last 7 Days');
 	});
 
 	test('Be rendered with overdue count "1"', () => {

@@ -62,7 +62,6 @@ const VelocityUnitFilter = ({
 
 	return (
 		<Filter
-			data-testid="velocityUnitFilter"
 			defaultItem={defaultItem}
 			disabled={disabled}
 			elementClasses={className}

@@ -54,11 +54,7 @@ const FilterItem = ({
 
 	return (
 		<>
-			<div
-				className={classes.dropdown}
-				data-testid="filterItem"
-				onClick={onClickFilter}
-			>
+			<div className={classes.dropdown} onClick={onClickFilter}>
 				<div className={classes.control}>
 					<input
 						checked={checked}
@@ -67,10 +63,7 @@ const FilterItem = ({
 					/>
 
 					<span className="custom-control-label">
-						<span
-							className="custom-control-label-text"
-							data-testid="filterItemName"
-						>
+						<span className="custom-control-label-text">
 							{otherProps[labelPropertyName] || name}
 						</span>
 

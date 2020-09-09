@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, findByTestId, render} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import ProcessStepFilter from '../../../src/main/resources/META-INF/resources/js/components/filter/ProcessStepFilter.es';
@@ -35,7 +36,7 @@ const wrapper = ({children}) => (
 );
 
 describe('The process step filter component should', () => {
-	let getAllByTestId;
+	let container;
 
 	afterEach(cleanup);
 
@@ -44,24 +45,19 @@ describe('The process step filter component should', () => {
 			wrapper,
 		});
 
-		getAllByTestId = renderResult.getAllByTestId;
+		container = renderResult.container;
 	});
 
-	test('Be rendered with filter item names', async () => {
-		const filterItems = await getAllByTestId('filterItem');
+	test('Be rendered with filter item names', () => {
+		const filterItems = container.querySelectorAll('.dropdown-item');
 
 		expect(filterItems[0].innerHTML).toContain('Review');
 		expect(filterItems[1].innerHTML).toContain('Update');
 	});
 
-	test('Be rendered with active option "Update"', async () => {
-		const filterItems = getAllByTestId('filterItem');
+	test('Be rendered with active option "Update"', () => {
+		const activeItem = container.querySelector('.active');
 
-		const activeItem = filterItems.find((item) =>
-			item.className.includes('active')
-		);
-		const activeItemName = await findByTestId(activeItem, 'filterItemName');
-
-		expect(activeItemName.innerHTML).toBe('Update');
+		expect(activeItem).toHaveTextContent('Update');
 	});
 });

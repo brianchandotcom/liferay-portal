@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {findAllByTestId, findByTestId, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import CompletionVelocityCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/completion-velocity/CompletionVelocityCard.es';
@@ -83,7 +83,7 @@ const timeRangeData = {
 };
 
 describe('The completion velocity card component should', () => {
-	let getByTestId;
+	let container, getAllByText, getByText;
 
 	beforeAll(() => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
@@ -98,37 +98,25 @@ describe('The completion velocity card component should', () => {
 			</MockRouter>
 		);
 
-		getByTestId = renderResult.getByTestId;
+		container = renderResult.container;
+		getAllByText = renderResult.getAllByText;
+		getByText = renderResult.getByText;
 	});
 
-	test('Be rendered with time range filter', async () => {
-		const timeRangeFilter = getByTestId('timeRangeFilter');
-		const filterItems = await findAllByTestId(
-			timeRangeFilter,
-			'filterItem'
-		);
-		const activeItem = filterItems.find((item) =>
-			item.className.includes('active')
-		);
-		const activeItemName = await findByTestId(activeItem, 'filterItemName');
+	test('Be rendered with time range filter', () => {
+		const timeRangeFilter = getByText('Last 30 Days');
+		const activeItem = container.querySelector('.active');
 
 		expect(timeRangeFilter).not.toBeNull();
-		expect(activeItemName).toHaveTextContent('Last 7 Days');
+		expect(activeItem).toHaveTextContent('Last 7 Days');
 	});
 
-	test('Be rendered with time range filter', async () => {
-		const velocityUnitFilter = await getByTestId('velocityUnitFilter');
-		const filterItems = await findAllByTestId(
-			velocityUnitFilter,
-			'filterItem'
-		);
+	test('Be rendered with velocity unit filter', () => {
+		const velocityUnitFilter = getAllByText('inst-day')[0];
 
-		const activeItem = filterItems.find((item) =>
-			item.className.includes('active')
-		);
-		const activeItemName = await findByTestId(activeItem, 'filterItemName');
+		const activeItem = container.querySelectorAll('.active')[1];
 
 		expect(velocityUnitFilter).not.toBeNull();
-		expect(activeItemName).toHaveTextContent('inst-day');
+		expect(activeItem).toHaveTextContent('inst-day');
 	});
 });

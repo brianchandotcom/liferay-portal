@@ -113,7 +113,7 @@ const ContainerMock = ({children}) => {
 };
 
 describe('The BulkReassignModal component should', () => {
-	let getAllByTestId, getByTestId, getByText, renderResult;
+	let getAllByTestId, getAllByText, getByTestId, getByText, renderResult;
 
 	beforeAll(() => {
 		renderResult = render(<BulkUpdateDueDateModal />, {
@@ -121,6 +121,7 @@ describe('The BulkReassignModal component should', () => {
 		});
 
 		getAllByTestId = renderResult.getAllByTestId;
+		getAllByText = renderResult.getAllByText;
 		getByTestId = renderResult.getByTestId;
 		getByText = renderResult.getByText;
 
@@ -152,7 +153,6 @@ describe('The BulkReassignModal component should', () => {
 		const table = getByTestId('selectTaskStepTable');
 		const checkbox = getAllByTestId('itemCheckbox');
 		const checkAllButton = getByTestId('checkAllButton');
-		const processStepFilter = getByTestId('processStepFilter');
 		const assigneeFilter = getByText('assignee');
 
 		const content = modal.children[0].children[0];
@@ -163,7 +163,7 @@ describe('The BulkReassignModal component should', () => {
 		expect(stepBar.children[0]).toHaveTextContent('select-tasks');
 		expect(stepBar.children[1]).toHaveTextContent('step-x-of-x');
 
-		expect(processStepFilter).not.toBeUndefined();
+		expect(getAllByText('process-step').length).toBe(2);
 		expect(assigneeFilter).not.toBeUndefined();
 
 		expect(cancelBtn).toHaveTextContent('cancel');

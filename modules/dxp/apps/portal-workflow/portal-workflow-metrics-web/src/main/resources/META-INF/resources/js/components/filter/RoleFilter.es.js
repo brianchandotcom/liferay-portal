@@ -50,7 +50,6 @@ const RoleFilter = ({
 
 	return (
 		<Filter
-			data-testid="RoleFilter"
 			elementClasses={className}
 			filterKey={filterKey}
 			items={items}

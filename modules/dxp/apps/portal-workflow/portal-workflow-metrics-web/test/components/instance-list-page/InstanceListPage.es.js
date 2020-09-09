@@ -56,7 +56,7 @@ describe('The instance list card should', () => {
 			.fn()
 			.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
 	};
-	let getByTestId, getAllByTestId;
+	let container, getByTestId, getAllByTestId;
 
 	beforeAll(() => {
 		const renderResult = render(
@@ -66,17 +66,18 @@ describe('The instance list card should', () => {
 			{wrapper: ToasterProvider}
 		);
 
+		container = renderResult.container;
 		getByTestId = renderResult.getByTestId;
 		getAllByTestId = renderResult.getAllByTestId;
 	});
 
 	test('Be rendered with "sla-status", "process-status", "process-step" and "assignee" filters', () => {
-		const filterNames = getAllByTestId('filterName');
+		const filters = container.querySelectorAll('.dropdown-toggle');
 
-		expect(filterNames[0].innerHTML).toBe('sla-status');
-		expect(filterNames[1].innerHTML).toBe('process-status');
-		expect(filterNames[2].innerHTML).toBe('process-step');
-		expect(filterNames[3].innerHTML).toBe('assignee');
+		expect(filters[0]).toHaveTextContent('sla-status');
+		expect(filters[1]).toHaveTextContent('process-status');
+		expect(filters[2]).toHaveTextContent('process-step');
+		expect(filters[3]).toHaveTextContent('assignee');
 	});
 
 	test('Select all page by clicking on check all button', () => {

@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, findByTestId, render} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import ProcessStatusFilter from '../../../src/main/resources/META-INF/resources/js/components/filter/ProcessStatusFilter.es';
@@ -22,7 +23,7 @@ const wrapper = ({children}) => (
 );
 
 describe('The process status filter component should', () => {
-	let getAllByTestId;
+	let container;
 
 	afterEach(cleanup);
 
@@ -31,24 +32,19 @@ describe('The process status filter component should', () => {
 			wrapper,
 		});
 
-		getAllByTestId = renderResult.getAllByTestId;
+		container = renderResult.container;
 	});
 
 	test('Be rendered with filter item names', () => {
-		const filterItems = getAllByTestId('filterItem');
+		const filterItems = container.querySelectorAll('.dropdown-item');
 
 		expect(filterItems[0].innerHTML).toContain('completed');
 		expect(filterItems[1].innerHTML).toContain('pending');
 	});
 
 	test('Be rendered with active option "Completed"', async () => {
-		const filterItems = getAllByTestId('filterItem');
+		const activeItem = container.querySelector('.active');
 
-		const activeItem = filterItems.find((item) =>
-			item.className.includes('active')
-		);
-		const activeItemName = await findByTestId(activeItem, 'filterItemName');
-
-		expect(activeItemName.innerHTML).toBe('completed');
+		expect(activeItem).toHaveTextContent('completed');
 	});
 });

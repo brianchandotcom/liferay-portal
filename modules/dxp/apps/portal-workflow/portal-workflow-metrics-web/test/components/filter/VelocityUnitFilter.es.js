@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, findByTestId, render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import VelocityUnitFilter from '../../../src/main/resources/META-INF/resources/js/components/filter/VelocityUnitFilter.es';
@@ -24,7 +24,7 @@ const wrapper = ({children}) => (
 );
 
 describe('The velocity unit filter component should', () => {
-	let getAllByTestId;
+	let container;
 
 	afterEach(cleanup);
 
@@ -40,11 +40,11 @@ describe('The velocity unit filter component should', () => {
 			{wrapper}
 		);
 
-		getAllByTestId = renderResult.getAllByTestId;
+		container = renderResult.container;
 	});
 
-	test('Be rendered with filter item names', async () => {
-		const filterItems = await getAllByTestId('filterItem');
+	test('Be rendered with filter item names', () => {
+		const filterItems = container.querySelectorAll('.dropdown-item');
 
 		expect(filterItems[0]).toHaveTextContent('inst-day');
 		expect(filterItems[1]).toHaveTextContent('inst-month');
@@ -52,13 +52,8 @@ describe('The velocity unit filter component should', () => {
 	});
 
 	test('Be rendered with active option "Weeks"', async () => {
-		const filterItems = getAllByTestId('filterItem');
+		const activeItem = container.querySelector('.active');
 
-		const activeItem = filterItems.find((item) =>
-			item.className.includes('active')
-		);
-		const activeItemName = await findByTestId(activeItem, 'filterItemName');
-
-		expect(activeItemName.innerHTML).toBe('inst-week');
+		expect(activeItem).toHaveTextContent('inst-week');
 	});
 });

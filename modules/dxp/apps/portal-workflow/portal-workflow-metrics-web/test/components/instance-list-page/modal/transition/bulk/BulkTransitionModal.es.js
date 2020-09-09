@@ -281,14 +281,15 @@ const ContainerMockSecondary = ({children}) => {
 };
 
 describe('The BulkTransitionModal component should', () => {
-	let getAllByTestId, getByTestId;
+	let getAllByTestId, getAllByText, getByTestId;
 
 	beforeAll(() => {
 		const component = render(<BulkTransitionModal />, {
 			wrapper: ContainerMockPrimary,
 		});
-		getByTestId = component.getByTestId;
 		getAllByTestId = component.getAllByTestId;
+		getAllByText = component.getAllByText;
+		getByTestId = component.getByTestId;
 
 		jest.runAllTimers();
 	});
@@ -317,8 +318,6 @@ describe('The BulkTransitionModal component should', () => {
 		const table = getByTestId('selectTaskStepTable');
 		const checkbox = getAllByTestId('itemCheckbox');
 		const checkAllButton = getByTestId('checkAllButton');
-		const processStepFilter = getByTestId('processStepFilter');
-
 		const content = modal.children[0].children[0];
 		const header = content.children[0];
 
@@ -327,7 +326,7 @@ describe('The BulkTransitionModal component should', () => {
 		expect(stepBar.children[0]).toHaveTextContent('select-steps');
 		expect(stepBar.children[1]).toHaveTextContent('step-x-of-x');
 
-		expect(processStepFilter).not.toBeUndefined();
+		expect(getAllByText('process-step').length).toBe(2);
 
 		expect(cancelBtn).toHaveTextContent('cancel');
 		expect(nextBtn).toHaveTextContent('next');

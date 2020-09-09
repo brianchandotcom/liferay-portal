@@ -188,12 +188,7 @@ const Filter = ({
 	}, [applyFilterChanges, expanded, changed]);
 
 	return (
-		<li
-			className={classes.dropdown}
-			data-testid="filterComponent"
-			ref={wrapperRef}
-			{...otherProps}
-		>
+		<li className={classes.dropdown} ref={wrapperRef} {...otherProps}>
 			<button
 				className={classes.custom}
 				disabled={disabled}
@@ -201,12 +196,7 @@ const Filter = ({
 					setExpanded(!expanded);
 				}}
 			>
-				<span
-					className="mr-2 navbar-text-truncate"
-					data-testid="filterName"
-				>
-					{name}
-				</span>
+				<span className="mr-2 navbar-text-truncate">{name}</span>
 
 				<ClayIcon symbol="caret-bottom" />
 			</button>

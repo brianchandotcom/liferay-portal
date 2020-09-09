@@ -9,12 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {
-	cleanup,
-	findAllByTestId,
-	findByTestId,
-	render,
-} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import PerformanceByAssigneeCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/performance-by-assignee-card/PerformanceByAssigneeCard.es';
@@ -94,7 +89,7 @@ const timeRangeData = {
 };
 
 describe('The performance by assignee card component should', () => {
-	let getByTestId;
+	let container, getByTestId, getByText;
 
 	beforeAll(() => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
@@ -120,7 +115,9 @@ describe('The performance by assignee card component should', () => {
 				{wrapper}
 			);
 
+			container = renderResult.container;
 			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Be rendered with "View All Assignees" button and total "(3)"', () => {
@@ -135,40 +132,19 @@ describe('The performance by assignee card component should', () => {
 		});
 
 		test('Be rendered with process step filter', async () => {
-			const processStepFilter = getByTestId('processStepFilter');
-
-			const filterItems = await findAllByTestId(
-				processStepFilter,
-				'filterItem'
-			);
-			const activeItem = filterItems.find((item) =>
-				item.className.includes('active')
-			);
-			const activeItemName = await findByTestId(
-				activeItem,
-				'filterItemName'
-			);
+			const processStepFilter = getByText('all-steps');
+			const activeItem = container.querySelectorAll('.active')[0];
 
 			expect(processStepFilter).not.toBeNull();
-			expect(activeItemName).toHaveTextContent('Update');
+			expect(activeItem).toHaveTextContent('Update');
 		});
 
 		test('Be rendered with time range filter', async () => {
-			const timeRangeFilter = getByTestId('timeRangeFilter');
-			const filterItems = await findAllByTestId(
-				timeRangeFilter,
-				'filterItem'
-			);
-			const activeItem = filterItems.find((item) =>
-				item.className.includes('active')
-			);
-			const activeItemName = await findByTestId(
-				activeItem,
-				'filterItemName'
-			);
+			const timeRangeFilter = getByText('Last 30 Days');
+			const activeItem = container.querySelectorAll('.active')[1];
 
 			expect(timeRangeFilter).not.toBeNull();
-			expect(activeItemName).toHaveTextContent('Last 7 Days');
+			expect(activeItem).toHaveTextContent('Last 7 Days');
 		});
 	});
 

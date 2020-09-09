@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, findByTestId, render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import PerformanceByStepCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/performance-by-step-card/PerformanceByStepCard.es';
@@ -76,7 +76,7 @@ const timeRangeData = {
 };
 
 describe('The performance by step card component should', () => {
-	let getAllByTestId, getByTestId;
+	let container, getAllByText, getByTestId;
 
 	beforeAll(() => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
@@ -99,25 +99,16 @@ describe('The performance by step card component should', () => {
 				{wrapper}
 			);
 
+			container = renderResult.container;
 			getByTestId = renderResult.getByTestId;
-			getAllByTestId = renderResult.getAllByTestId;
+			getAllByText = renderResult.getAllByText;
 		});
 
 		test('Be rendered with time range filter', async () => {
-			const timeRangeFilter = getByTestId('timeRangeFilter');
+			const activeItem = container.querySelector('.active');
 
-			const filterItems = await getAllByTestId('filterItem');
-
-			const activeItem = filterItems.find((item) =>
-				item.className.includes('active')
-			);
-			const activeItemName = await findByTestId(
-				activeItem,
-				'filterItemName'
-			);
-
-			expect(timeRangeFilter).not.toBeNull();
-			expect(activeItemName).toHaveTextContent('Last 7 Days');
+			expect(getAllByText('Last 7 Days').length).toEqual(2);
+			expect(activeItem).toHaveTextContent('Last 7 Days');
 		});
 
 		test('Be rendered with "View All Steps" button and total "(3)"', () => {

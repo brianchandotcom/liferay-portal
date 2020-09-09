@@ -251,7 +251,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		EditDispatchTriggerMVCActionCommand.class);
 
 	@Reference(
-		target = "(destination.name= " + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
+		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
 	)
 	private Destination _destination;
 

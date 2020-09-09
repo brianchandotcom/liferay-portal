@@ -297,11 +297,11 @@ definition {
 			var key_blcount = ${key_blcount} + 1;
 		}
 
-		// JSFSPEC_1433
+		// JSFSPEC-1433
 
 		BridgeIssues.addPageAndPortlet(
 			pageURL = "jsfspec-1433",
-			portletName = "JSFSPEC_1433");
+			portletName = "JSFSPEC-1433");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/jsfspec-1433");
 

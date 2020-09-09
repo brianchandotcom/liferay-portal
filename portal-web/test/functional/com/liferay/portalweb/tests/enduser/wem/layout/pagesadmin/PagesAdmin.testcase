@@ -407,14 +407,18 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
 
 		for (var i : list "1,2,3") {
 			SitePages.gotoPageMenuItem(
 				menuItem = "View Collection Items",
 				pageName = "Content Collection Page Name");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			Pause(locator1 = "5000");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			Page.gotoCollectionEntryEllipsisItem(
 				item = "View Display Page",
@@ -431,10 +435,6 @@ definition {
 			key_pageName = "Content Collection Page Name",
 			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
 
-		Navigator.openSiteURL(
-			pageName = "Content Collection Page Name",
-			siteName = "Test Site Name");
-
 		PagesFinder.goToFindAPage();
 
 		for (var i : list "1,2,3") {
@@ -443,6 +443,8 @@ definition {
 			PagesFinder.gotoPageEllipsisItem(
 				item = "View Collection Items",
 				pageName = "Content Collection Page Name");
+
+			Pause(locator1 = "5000");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -455,7 +457,11 @@ definition {
 				locator1 = "Fragment#FRAGMENT_SECTION_CONTENT",
 				pageName = "Content Collection Page Name");
 
-			Navigator.gotoBack();
+			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+			AssertVisible(
+				key_pageName = "Content Collection Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
 		}
 	}
 
@@ -485,13 +491,78 @@ definition {
 			pageName = "Content Collection Page Name",
 			tabName = "Collection Providers");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		Pause(locator1 = "5000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Page.gotoCollectionEntryEllipsisItem(
+			item = "Edit Content",
+			tableEntry = "Webcontent Title");
+
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+		Navigator.gotoBack();
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		Pause(locator1 = "5000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Page.gotoCollectionEntryEllipsisItem(
+			item = "Edit Content",
+			tableEntry = "Blogs Entry Title");
+
+		AssertTextEquals(
+			key_text = "Title",
+			locator1 = "TextArea#ANY",
+			value1 = "Blogs Entry Title");
+
+		Navigator.gotoBack();
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		Pause(locator1 = "5000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Page.gotoCollectionEntryEllipsisItem(
+			item = "Edit Content",
+			tableEntry = "Document Title");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Document Title");
+
+		Navigator.gotoBack();
+
+		AssertVisible(
+			key_pageName = "Content Collection Page Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+
+		PagesFinder.goToFindAPage();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		PagesFinder.gotoPageEllipsisItem(
+			item = "View Collection Items",
+			pageName = "Content Collection Page Name");
+
+		Pause(locator1 = "5000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Page.gotoCollectionEntryEllipsisItem(
 			item = "Edit Content",
@@ -501,11 +572,19 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "View Collection Items",
+		AssertVisible(
+			key_pageName = "Content Collection Page Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		PagesFinder.gotoPageEllipsisItem(
+			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		Pause(locator1 = "5000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Page.gotoCollectionEntryEllipsisItem(
 			item = "Edit Content",
@@ -518,11 +597,19 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "View Collection Items",
+		AssertVisible(
+			key_pageName = "Content Collection Page Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		PagesFinder.gotoPageEllipsisItem(
+			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		Pause(locator1 = "5000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Page.gotoCollectionEntryEllipsisItem(
 			item = "Edit Content",
@@ -537,65 +624,6 @@ definition {
 		AssertVisible(
 			key_pageName = "Content Collection Page Name",
 			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
-
-		Navigator.openSiteURL(
-			pageName = "Content Collection Page Name",
-			siteName = "Test Site Name");
-
-		PagesFinder.goToFindAPage();
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		PagesFinder.gotoPageEllipsisItem(
-			item = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Page.gotoCollectionEntryEllipsisItem(
-			item = "Edit Content",
-			tableEntry = "Webcontent Title");
-
-		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
-
-		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		PagesFinder.gotoPageEllipsisItem(
-			item = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Page.gotoCollectionEntryEllipsisItem(
-			item = "Edit Content",
-			tableEntry = "Blogs Entry Title");
-
-		AssertTextEquals(
-			key_text = "Title",
-			locator1 = "TextArea#ANY",
-			value1 = "Blogs Entry Title");
-
-		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		PagesFinder.gotoPageEllipsisItem(
-			item = "View Collection Items",
-			pageName = "Content Collection Page Name");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Page.gotoCollectionEntryEllipsisItem(
-			item = "Edit Content",
-			tableEntry = "Document Title");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Document Title");
-
-		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
 		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
 	}

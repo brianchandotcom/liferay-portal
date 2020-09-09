@@ -200,13 +200,27 @@ public abstract class BaseCommerceProductPriceCalculation
 	}
 
 	protected BigDecimal[] getUpdatedPrices(
-			BigDecimal unitPrice, BigDecimal promoPrice, BigDecimal finalPrice,
+			CommerceMoney unitPriceCommerceMoney,
+			CommerceMoney promoPriceCommerceMoney, BigDecimal finalPrice,
 			CommerceContext commerceContext,
 			List<CommerceOptionValue> commerceOptionValues)
 		throws PortalException {
 
 		if ((commerceOptionValues == null) || commerceOptionValues.isEmpty()) {
-			return new BigDecimal[] {unitPrice, promoPrice, finalPrice};
+			return _toPriceArray(
+				unitPriceCommerceMoney, promoPriceCommerceMoney, finalPrice);
+		}
+
+		BigDecimal promoPrice = BigDecimal.ZERO;
+
+		if (!promoPriceCommerceMoney.isEmpty()) {
+			promoPrice = promoPriceCommerceMoney.getPrice();
+		}
+
+		BigDecimal unitPrice = BigDecimal.ZERO;
+
+		if (!unitPriceCommerceMoney.isEmpty()) {
+			unitPrice = unitPriceCommerceMoney.getPrice();
 		}
 
 		for (CommerceOptionValue commerceOptionValue : commerceOptionValues) {
@@ -225,8 +239,7 @@ public abstract class BaseCommerceProductPriceCalculation
 
 					unitPrice = unitPrice.add(optionValuePrice);
 
-					if ((promoPrice != null) &&
-						CommerceBigDecimalUtil.gt(
+					if (CommerceBigDecimalUtil.gt(
 							promoPrice, BigDecimal.ZERO)) {
 
 						promoPrice = promoPrice.add(optionValuePrice);
@@ -255,8 +268,12 @@ public abstract class BaseCommerceProductPriceCalculation
 				CommerceMoney optionValueUnitPromoPriceMoney =
 					optionValueProductPrice.getUnitPromoPrice();
 
-				BigDecimal optionValueUnitPromoPrice =
-					optionValueUnitPromoPriceMoney.getPrice();
+				BigDecimal optionValueUnitPromoPrice = BigDecimal.ZERO;
+
+				if (!optionValueUnitPromoPriceMoney.isEmpty()) {
+					optionValueUnitPromoPrice =
+						optionValueUnitPromoPriceMoney.getPrice();
+				}
 
 				if (CommerceBigDecimalUtil.gt(
 						optionValueUnitPromoPrice, BigDecimal.ZERO) &&
@@ -264,10 +281,8 @@ public abstract class BaseCommerceProductPriceCalculation
 
 					promoPrice = promoPrice.add(unitPrice);
 				}
-				else if (CommerceBigDecimalUtil.isZero(
-							optionValueUnitPromoPrice) &&
-						 CommerceBigDecimalUtil.gt(
-							 promoPrice, BigDecimal.ZERO)) {
+				else if (CommerceBigDecimalUtil.gt(
+							promoPrice, BigDecimal.ZERO)) {
 
 					promoPrice = promoPrice.add(
 						optionValueUnitPrice.multiply(
@@ -328,8 +343,7 @@ public abstract class BaseCommerceProductPriceCalculation
 		}
 		else {
 			commerceProductPriceImpl.setUnitPromoPriceWithTaxAmount(
-				commerceMoneyFactory.create(
-					commerceContext.getCommerceCurrency(), BigDecimal.ZERO));
+				commerceMoneyFactory.emptyCommerceMoney());
 		}
 
 		commerceProductPriceImpl.setUnitPriceWithTaxAmount(
@@ -565,6 +579,25 @@ public abstract class BaseCommerceProductPriceCalculation
 		}
 
 		return false;
+	}
+
+	private BigDecimal[] _toPriceArray(
+		CommerceMoney unitPriceCommerceMoney,
+		CommerceMoney promoPriceCommerceMoney, BigDecimal finalPrice) {
+
+		BigDecimal[] prices = new BigDecimal[3];
+
+		if (!unitPriceCommerceMoney.isEmpty()) {
+			prices[0] = unitPriceCommerceMoney.getPrice();
+		}
+
+		if (!promoPriceCommerceMoney.isEmpty()) {
+			prices[1] = promoPriceCommerceMoney.getPrice();
+		}
+
+		prices[2] = finalPrice;
+
+		return prices;
 	}
 
 	private void _validate(

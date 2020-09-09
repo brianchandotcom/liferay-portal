@@ -714,7 +714,7 @@ The `ddmFieldArray` has several entries with following fields:
 - `ddmFieldValue*`: Contains the indexed data. The name of this field is generated using `DDMIndexer.getValueFieldName` and depends on the field's data type and language.
 - `ddmValueFieldName`: Contains the index field name where the indexed data is stored.
 
- This change is not applied if you are using the SOLR search engine.
+ This change is not applied if you are using the Solr search engine.
 
 #### Who is affected?
 
@@ -728,15 +728,13 @@ There are some examples in Liferay code. For example, [DDMIndexerImpl](https://g
 
 You can also restore the legacy behavior from System Settings and continue using `ddm__keyword__*` and `ddm__text__*` fields.
 
-1. Go to *System Settings* &rarr; *Dynamic Data Mapping* &rarr; *Dynamic Data Mapping Indexer*
-1. Select *Enable Legacy Dynamic Data Mapping Index Fields*
+1. Go to *System Settings* &rarr; *Dynamic Data Mapping* &rarr; *Dynamic Data Mapping Indexer*.
+1. Select *Enable Legacy Dynamic Data Mapping Index Fields*.
 1. Execute a full reindex.
 
 #### Why was this change made?
 
 This change was made to avoid the *Limit of total fields has been exceeded* Elasticsearch error that occurs if you have too many Dynamic Data Mapping structures.
-
-For more information about this error, see [LPS-103224](https://issues.liferay.com/browse/LPS-103224).
 
 ---------------------------------------
 
@@ -757,7 +755,7 @@ The `countByClassNameId`, `findByClassNameId`, and `removeByClassNameId` methods
 
 ### Who is affected
 
-This affects anyone who uses one of these methods.
+This affects anyone who uses any of these methods.
 
 ### How should I update my code?
 
@@ -765,7 +763,7 @@ You can use the other finder and counter methods.
 
 #### Why was this change made?
 
-These methods were removed as part of the solution for https://issues.liferay.com/browse/LPS-108525.
+These methods were removed as part of the solution for [LPS-108525](https://issues.liferay.com/browse/LPS-108525).
 
 ---------------------------------------
 
@@ -779,7 +777,7 @@ The `isShowAddStructureButton` method was removed.
 
 ### Who is affected
 
-This affects anyone who uses one of these methods.
+This affects anyone who uses this method.
 
 ### How should I update my code?
 
@@ -787,20 +785,21 @@ You can use `isShowAddButton(Group scopeGroup)` method instead of this method.
 
 #### Why was this change made?
 
-This method was removed as part of a clean up refactor. See more in https://issues.liferay.com/browse/LPS-103549.
+This method was removed as part of a clean up refactor.
 
 ---------------------------------------
-### Moving lexicon icons path
+
+### Moving Lexicon icons path
 - **Date:** 2020-Aug-17
 - **JIRA Ticket:** [LPS-115812](https://issues.liferay.com/browse/LPS-115812)
 
 ### What changed?
 
-The path for the lexicon icons has been changed from `themeDisplay.getPathThemeImages() + "/lexicon/icons.svg` to `themeDisplay.getPathThemeImages() + "/clay/icons.svg`
+The path for the Lexicon icons has been changed from `themeDisplay.getPathThemeImages() + "/lexicon/icons.svg` to `themeDisplay.getPathThemeImages() + "/clay/icons.svg`
 
 ### Who is affected
 
-This affects custom solutions that use the lexicon icons path directly. The Gradle task for building the icons on the `lexicon` path will be removed.
+This affects custom solutions that use the Lexicon icons path directly. The Gradle task for building the icons on the `lexicon` path will be removed.
 
 ### How should I update my code?
 

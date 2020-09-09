@@ -22,7 +22,7 @@ import com.liferay.content.dashboard.web.internal.display.context.ContentDashboa
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -80,7 +80,8 @@ public class ContentDashboardConfigurationAction
 			getParameter(actionRequest, "assetVocabularyNames"));
 
 		if (ArrayUtil.isEmpty(assetVocabularyNames)) {
-			SessionErrors.add(actionRequest, "emptyAssetVocabularyNames");
+			SessionMessages.add(
+				actionRequest, "emptyAssetVocabularyNames", true);
 
 			return;
 		}

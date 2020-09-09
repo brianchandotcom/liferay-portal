@@ -38,7 +38,13 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 	<aui:input name="preferences--assetVocabularyNames--" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:error key="emptyAssetVocabularyNames" message="select-at-least-one-vocabulary-to-show-on-the-chart" />
+		<c:if test='<%= GetterUtil.getBoolean(SessionMessages.get(renderRequest, "emptyAssetVocabularyNames")) %>'>
+			<clay:alert
+				dismissible="<%= true %>"
+				displayType="warning"
+				message="you-have-not-selected-any-vocabularies"
+			/>
+		</c:if>
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>

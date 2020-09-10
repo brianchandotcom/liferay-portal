@@ -67,6 +67,13 @@ definition {
 			locator1 = "Card#CARD");
 	}
 
+	macro viewCardOrder {
+		AssertElementPresent(
+			key_card = "${card}",
+			key_index = "${index}",
+			locator1 = "Card#CARD_ITEM");
+	}
+
 	macro viewCardPresent {
 		AssertVisible(
 			key_card = "${card}",

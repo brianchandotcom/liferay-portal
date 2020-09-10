@@ -15,6 +15,7 @@
 import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useEffect, useState} from 'react';
 
 import {subscribeQuery, unsubscribeQuery} from '../utils/client.es';
@@ -43,12 +44,20 @@ export default ({question: {id: messageBoardThreadId, subscribed}}) => {
 	};
 
 	return (
-		<ClayButton
-			displayType={subscription ? 'primary' : 'secondary'}
-			monospaced
-			onClick={changeSubscription}
-		>
-			<ClayIcon symbol="bell-on" />
-		</ClayButton>
+		<ClayTooltipProvider>
+			<ClayButton
+				data-tooltip-align="top"
+				displayType={subscription ? 'primary' : 'secondary'}
+				monospaced
+				onClick={changeSubscription}
+				title={
+					subscription
+						? Liferay.Language.get('unsubscribe')
+						: Liferay.Language.get('subscribe')
+				}
+			>
+				<ClayIcon symbol="bell-on" />
+			</ClayButton>
+		</ClayTooltipProvider>
 	);
 };

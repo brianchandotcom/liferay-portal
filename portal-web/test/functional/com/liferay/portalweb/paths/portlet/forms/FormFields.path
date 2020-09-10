@@ -426,17 +426,17 @@
 </tr>
 <tr>
 	<td>UPLOAD_PREDEFINED_VALUE</td>
-	<td>//div[@class='col-md-12']//button[contains(text(),'Select')]</td>	
+	<td>//div[@class='col-md-12']//button[contains(text(),'Select')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>UPLOAD_ON_WIDGET</td>
-	<td>//div[@class='ddm-field'][1]//button[contains(text(),'Select')]</td>	
+	<td>//div[@class='ddm-field'][1]//button[contains(text(),'Select')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>UPLOAD_ON_DUPLICATE_FIELD</td>
-	<td>//div[@class='ddm-field'][2]//button[contains(text(),'Select')]</td>	
+	<td>//div[@class='ddm-field'][2]//button[contains(text(),'Select')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -460,7 +460,7 @@
 	<td>//li[contains(@class,'ddm-fieldtypes-dropdown')]//div[contains(@class,'dropdown')] | //button[contains(@id,'field-type-menu-content')] | //li[contains(@class,'ddm-fieldtypes-dropdown')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>CHANGE_FIELD_TYPE_BUTTON_DROPDOWN</td>
 	<td>//li[contains(@class,'ddm-fieldtypes-dropdown')]//div[contains(@class,'dropdown show')]</td>
 	<td></td>

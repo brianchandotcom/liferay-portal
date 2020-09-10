@@ -1289,6 +1289,7 @@ definition {
 	@description = "This is a use case for LPS-48590."
 	@priority = "4"
 	test ViewSourceXMLNotErasedWhenInvalid {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewSourceXMLNotErasedWhenInvalid";
 
 		ApplicationsMenu.gotoPortlet(
@@ -1300,17 +1301,15 @@ definition {
 
 		KaleoDesigner.editSourceXML(
 			kdSourceXML = " ",
-			line = "22");
-
-		takeScreenshot();
+			line = "27");
 
 		KaleoDesigner.viewViewTab();
 
-		KaleoDesigner.editSourceXML(
-			kdSourceXML = '''<transitions>''',
-			line = "22");
+		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = "EndNode");
 
-		takeScreenshot();
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = '''</transition></transitions>''',
+			line = "27");
 
 		KaleoDesigner.viewViewTab();
 

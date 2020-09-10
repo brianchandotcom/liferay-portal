@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.io.IOException;
 
@@ -58,8 +57,8 @@ public class ChildSitesItemSelectorView
 	implements ItemSelectorView<GroupItemSelectorCriterion> {
 
 	@Override
-	public Class<SiteItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return SiteItemSelectorCriterion.class;
+	public Class<GroupItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return GroupItemSelectorCriterion.class;
 	}
 
 	@Override
@@ -101,7 +100,7 @@ public class ChildSitesItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			GroupItemSelectorCriterion siteItemSelectorCriterion,
+			GroupItemSelectorCriterion groupItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
@@ -109,7 +108,7 @@ public class ChildSitesItemSelectorView
 			childSitesItemSelectorViewDisplayContext =
 				new ChildSitesItemSelectorViewDisplayContext(
 					(HttpServletRequest)servletRequest, _assetPublisherHelper,
-					siteItemSelectorCriterion, itemSelectedEventName,
+					groupItemSelectorCriterion, itemSelectedEventName,
 					portletURL);
 
 		servletRequest.setAttribute(

@@ -20,13 +20,13 @@ import com.liferay.asset.publisher.web.internal.display.context.ParentSitesItemS
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.io.IOException;
 
@@ -54,11 +54,11 @@ import org.osgi.service.component.annotations.Reference;
 	service = ItemSelectorView.class
 )
 public class ParentSitesItemSelectorView
-	implements ItemSelectorView<SiteItemSelectorCriterion> {
+	implements ItemSelectorView<GroupItemSelectorCriterion> {
 
 	@Override
-	public Class<SiteItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return SiteItemSelectorCriterion.class;
+	public Class<GroupItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return GroupItemSelectorCriterion.class;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class ParentSitesItemSelectorView
 
 	@Override
 	public boolean isVisible(
-		SiteItemSelectorCriterion siteItemSelectorCriterion,
+		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
 		Group siteGroup = themeDisplay.getSiteGroup();
@@ -97,7 +97,7 @@ public class ParentSitesItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			SiteItemSelectorCriterion siteItemSelectorCriterion,
+			GroupItemSelectorCriterion groupItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
@@ -105,7 +105,7 @@ public class ParentSitesItemSelectorView
 			parentSitesItemSelectorViewDisplayContext =
 				new ParentSitesItemSelectorViewDisplayContext(
 					(HttpServletRequest)servletRequest, _assetPublisherHelper,
-					siteItemSelectorCriterion, itemSelectedEventName,
+					groupItemSelectorCriterion, itemSelectedEventName,
 					portletURL);
 
 		servletRequest.setAttribute(

@@ -14,7 +14,12 @@
 
 package com.liferay.dispatch.model.impl;
 
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.util.Date;
 
 /**
  * @author Alessio Antonio Rendina
@@ -22,6 +27,30 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 
 	public DispatchTriggerImpl() {
+	}
+
+	@Override
+	public Date getEndDate() throws SchedulerException {
+		if (_endDate == null) {
+			_endDate = SchedulerEngineHelperUtil.getEndTime(
+				String.format("DISPATCH_JOB_%07d", getDispatchTriggerId()),
+				String.format("DISPATCH_GROUP_%07d", getDispatchTriggerId()),
+				StorageType.PERSISTED);
+		}
+
+		return _endDate;
+	}
+
+	@Override
+	public Date getStartDate() throws SchedulerException {
+		if (_startDate == null) {
+			_startDate = SchedulerEngineHelperUtil.getStartTime(
+				String.format("DISPATCH_JOB_%07d", getDispatchTriggerId()),
+				String.format("DISPATCH_GROUP_%07d", getDispatchTriggerId()),
+				StorageType.PERSISTED);
+		}
+
+		return _startDate;
 	}
 
 	@Override
@@ -33,6 +62,16 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 		}
 
 		return _typeSettingsUnicodeProperties;
+	}
+
+	@Override
+	public void setEndDate(Date endDate) {
+		_endDate = endDate;
+	}
+
+	@Override
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
 	}
 
 	@Override
@@ -55,6 +94,8 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 		super.setTypeSettings(_typeSettingsUnicodeProperties.toString());
 	}
 
+	private Date _endDate;
+	private Date _startDate;
 	private transient UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

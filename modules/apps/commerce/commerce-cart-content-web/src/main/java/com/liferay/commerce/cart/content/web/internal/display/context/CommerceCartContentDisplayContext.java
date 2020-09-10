@@ -27,6 +27,7 @@ import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -142,11 +143,13 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public String getCommercePriceDisplayType() throws PortalException {
-		CommerceOrder commerceOrder = getCommerceOrder();
-
 		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
+			_commerceChannelLocalService.fetchCommerceChannel(
+				commerceContext.getCommerceChannelId());
+
+		if (commerceChannel == null) {
+			return CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE;
+		}
 
 		return commerceChannel.getPriceDisplayType();
 	}

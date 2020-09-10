@@ -238,7 +238,7 @@
 </tr>
 <tr>
 	<td>THREAD_TABLE_REPLIES</td>
-	<td>//a[contains(.,'${key_threadSubject}')]/../../div[contains(.,'Replies')]</td>
+	<td>//span[contains(@title,'${key_replyCount} Replies')]</td>
 	<td></td>
 </tr>
 <tr>

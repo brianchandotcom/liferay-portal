@@ -1629,9 +1629,9 @@ definition {
 		var key_threadSubject = "${threadSubject}";
 		var key_userName = "${userName}";
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#THREAD_TABLE_REPLIES",
-			value1 = "0 Replies");
+		AssertElementPresent(
+			key_replyCount = "0",
+			locator1 = "MessageBoards#THREAD_TABLE_REPLIES");
 
 		AssertElementPresent(locator1 = "MessageBoards#THREAD_LIST_LAST_POST");
 

@@ -247,14 +247,15 @@ public class XLIFFInfoFormTranslationImporter
 				return new TranslationSnapshot(
 					_getInfoItemFieldValuesXLIFFv20(
 						groupId, infoItemReference, tempFile, includeSource),
-					sourceLocaleId.toJavaLocale(),
-					targetLocaleId.toJavaLocale());
+					LocaleUtil.fromLanguageId(sourceLocaleId.toString()),
+					LocaleUtil.fromLanguageId(targetLocaleId.toString()));
 			}
 
 			return new TranslationSnapshot(
 				_getInfoItemFieldValuesXLIFFv12(
 					events, infoItemReference, includeSource),
-				sourceLocaleId.toJavaLocale(), targetLocaleId.toJavaLocale());
+				LocaleUtil.fromLanguageId(sourceLocaleId.toString()),
+				LocaleUtil.fromLanguageId(targetLocaleId.toString()));
 		}
 		catch (OkapiIllegalFilterOperationException | XLIFFException
 					exception) {
@@ -424,7 +425,9 @@ public class XLIFFInfoFormTranslationImporter
 
 		for (LocaleId targetLocaleId : targetLocaleIds) {
 			if ((targetLocale != null) &&
-				!Objects.equals(targetLocale, targetLocaleId.toJavaLocale())) {
+				!Objects.equals(
+					targetLocale,
+					LocaleUtil.fromLanguageId(targetLocaleId.toString()))) {
 
 				throw new XLIFFFileException.MustBeWellFormed(
 					"Only one translation language per file is permitted");

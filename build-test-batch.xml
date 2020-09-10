@@ -752,6 +752,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.plugins.war.zip.url" />
 		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
+		<attribute default="" name="test.portal.bundle.elasticsearch.zip.url" />
 		<attribute default="" name="test.portal.bundle.osgi.zip.url" />
 		<attribute default="" name="test.portal.bundle.tools.zip.url" />
 		<attribute default="" name="test.portal.bundle.war.url" />
@@ -768,6 +769,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				<param name="test.build.bundle.zip.url" value="@{test.portal.bundle.zip.url}" />
 				<param name="test.build.fix.pack.zip.url" value="@{test.build.fix.pack.zip.url}" />
 				<param name="test.build.portal.dependencies.zip.url" value="@{test.portal.bundle.dependencies.zip.url}" />
+				<param name="test.build.portal.elasticsearch.zip.url" value="@{test.portal.bundle.elasticsearch.zip.url}" />
 				<param name="test.build.portal.osgi.zip.url" value="@{test.portal.bundle.osgi.zip.url}" />
 				<param name="test.build.portal.tools.zip.url" value="@{test.portal.bundle.tools.zip.url}" />
 				<param name="test.build.portal.war.url" value="@{test.portal.bundle.war.url}" />
@@ -1463,6 +1465,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="" name="test.plugins.war.zip.url" />
 		<attribute default="false" name="test.portal.log.assert" />
 		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
+		<attribute default="" name="test.portal.bundle.elasticsearch.zip.url" />
 		<attribute default="" name="test.portal.bundle.osgi.zip.url" />
 		<attribute default="" name="test.portal.bundle.tools.zip.url" />
 		<attribute default="" name="test.portal.bundle.version" />
@@ -1569,6 +1572,7 @@ app.server.type=@{app.server.type}]]></echo>
 									test.license.xml.url="${test.license.xml.url}"
 									test.plugins.war.zip.url="@{test.plugins.war.zip.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+									test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
 									test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
 									test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
 									test.portal.bundle.war.url="${test.portal.bundle.war.url}"
@@ -2674,6 +2678,7 @@ log.sanitizer.enabled=false</echo>
 		<attribute default="" name="test.fix.pack.base.url" />
 		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
+		<attribute default="" name="test.portal.bundle.elasticsearch.zip.url" />
 		<attribute default="" name="test.portal.bundle.osgi.zip.url" />
 		<attribute default="" name="test.portal.bundle.tools.zip.url" />
 		<attribute default="" name="test.portal.bundle.version" />
@@ -2768,6 +2773,7 @@ log.sanitizer.enabled=false</echo>
 								test.fix.pack.base.url="${test.fix.pack.base.url}"
 								test.license.xml.url="${test.license.xml.url}"
 								test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+								test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
 								test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
 								test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
 								test.portal.bundle.war.url="${test.portal.bundle.war.url}"
@@ -6265,6 +6271,7 @@ ${output.content}</echo>
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+									test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
 									test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
 									test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
 									test.portal.bundle.war.url="${test.portal.bundle.war.url}"

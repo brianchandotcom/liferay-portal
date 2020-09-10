@@ -314,6 +314,28 @@ This change was made because the tag was primarily used internally.
 
 ---------------------------------------
 
+### Removed Add Action methods in Portal Vulcan API
+- **Date:** 2020-Jan-22
+- **JIRA Ticket:** [LPS-98387](https://issues.liferay.com/browse/LPS-98387)
+
+#### What changed?
+
+The `addAction` methods with signature `String, Class, GroupedModel, String, UriInfo` and `String, Class, Long, String, String, Long, UriInfo` were removed.
+
+#### Who is affected?
+
+This affects anyone using the addAction methods removed or with dependencies like `compileOnly group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "[1.0.0, 2.0.0)"`.
+
+#### How should I update my code?
+
+Use addAction methods with signature `String, Class, GroupedModel, String, Object, UriInfo` and `String, Class, Long, String, String, Object, Long, UriInfo`
+
+#### Why was this change made?
+
+This methods were removed as part of a clean up refactor.
+
+---------------------------------------
+
 ### Changed Control Menu and Product Menu Positioning
 - **Date:** 2020-Feb-04
 - **JIRA Ticket:** [LPS-107487](https://issues.liferay.com/browse/LPS-107487)
@@ -420,6 +442,28 @@ Remove any properties prefixed with `layout.parallel.render` from your propertie
 #### Why was this change made?
 
 This feature has been deprecated.
+
+---------------------------------------
+
+### ContentField value Property Name Has Changed to contentFieldValue
+- **Date:** 2020-Mar-18
+- **JIRA Ticket:** [LPS-106886](https://issues.liferay.com/browse/LPS-106886)
+
+#### What changed?
+
+The property name `value` inside ContentField schema in Headless Delivery API has changed to `contentFieldValue`
+
+#### Who is affected?
+
+This affects REST clients depending in the ContentField `value` property name
+
+#### How should I update my code?
+
+Change the property name to `contentFieldValue` in the REST client
+
+#### Why was this change made?
+
+This change restore consistency with all value property names in the Headless APIs, called `{schemaName}+Value`
 
 ---------------------------------------
 

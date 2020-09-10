@@ -75,6 +75,8 @@ definition {
 
 	@priority = "4"
 	test AddMBThreadWithLinkToDocument {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -108,6 +110,8 @@ definition {
 
 	@priority = "4"
 	test AddMBThreadWithLinkToPage {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "${pageName}");

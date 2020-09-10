@@ -59,6 +59,19 @@ const clearAllConditionFieldValues = (condition) => {
 	return condition;
 };
 
+const getFieldOptions = (fieldName, pages) => {
+	let options = [];
+	const visitor = new PagesVisitor(pages);
+
+	const field = visitor.findField((field) => {
+		return field.fieldName === fieldName;
+	});
+
+	options = field ? field.options : [];
+
+	return options;
+}
+
 const formatRules = (pages, rules) => {
 	const visitor = new PagesVisitor(pages);
 
@@ -267,5 +280,6 @@ export default {
 	findInvalidRule,
 	findRuleByFieldName,
 	formatRules,
+	getFieldOptions,
 	syncActions,
 };

@@ -14,13 +14,33 @@
 
 package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Arthur Chan
  */
 public class DynamicSizeTrieURLPatternMapperTest
 	extends SimpleURLPatternMapperTest {
+
+	@Test
+	public void testEnsureCapacity() {
+		Map<String, String> map = new HashMap<>();
+
+		for (int i = 0; i < 2048; i++) {
+			map.put("*.key" + i, "value" + i);
+		}
+
+		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(map);
+
+		for (int i = 0; i < 2048; i++) {
+			Assert.assertEquals(
+				"value" + i, urlPatternMapper.getValue("*.key" + i));
+		}
+	}
 
 	@Override
 	protected URLPatternMapper<String> createURLPatternMapper(

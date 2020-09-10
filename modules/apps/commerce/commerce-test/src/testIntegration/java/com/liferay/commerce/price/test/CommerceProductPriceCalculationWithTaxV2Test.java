@@ -262,6 +262,9 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		CommerceMoney unitPriceMoneyWithTaxAmount =
 			commerceProductPrice.getUnitPriceWithTaxAmount();
 
+		Assert.assertEquals(
+			unitPriceMoney.isEmpty(), unitPriceMoneyWithTaxAmount.isEmpty());
+
 		BigDecimal unitPriceWithTaxAmount =
 			unitPriceMoneyWithTaxAmount.getPrice();
 
@@ -281,16 +284,21 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		CommerceMoney promoPriceMoneyWithTaxAmount =
 			commerceProductPrice.getUnitPromoPriceWithTaxAmount();
 
-		BigDecimal promoPriceWithTaxAmount =
-			promoPriceMoneyWithTaxAmount.getPrice();
-
-		BigDecimal expectedPromoPrice =
-			CommerceTaxTestUtil.getPriceWithTaxAmount(
-				promoPrice, taxRate, roundingMode);
-
 		Assert.assertEquals(
-			expectedPromoPrice.stripTrailingZeros(),
-			promoPriceWithTaxAmount.stripTrailingZeros());
+			promoPriceMoney.isEmpty(), promoPriceMoneyWithTaxAmount.isEmpty());
+
+		if (!promoPriceMoney.isEmpty()) {
+			BigDecimal promoPriceWithTaxAmount =
+				promoPriceMoneyWithTaxAmount.getPrice();
+
+			BigDecimal expectedPromoPrice =
+				CommerceTaxTestUtil.getPriceWithTaxAmount(
+					promoPrice, taxRate, roundingMode);
+
+			Assert.assertEquals(
+				expectedPromoPrice.stripTrailingZeros(),
+				promoPriceWithTaxAmount.stripTrailingZeros());
+		}
 
 		CommerceMoney finaPriceMoney = commerceProductPrice.getFinalPrice();
 

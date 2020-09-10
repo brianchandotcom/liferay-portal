@@ -23,7 +23,7 @@ import java.sql.ResultSet;
 /**
  * @author Alberto Chaparro
  */
-public abstract class BaseNoninstanceablePortletCleanup extends UpgradeProcess {
+public abstract class BaseUpgradeNoninstanceablePortlet extends UpgradeProcess {
 
 	protected void removePortlet(
 			String bundleSymbolicName, String[] oldPortletIds,

@@ -47,37 +47,37 @@ public class DataCleanup implements UpgradeStepRegistrator {
 		try {
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpChatModuleData,
-				"com.liferay.chat.service", ChatCleanup::new);
+				"com.liferay.chat.service", UpgradeChat::new);
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpDictionaryModuleData,
-				"com.liferay.dictionary.web", DictionaryCleanup::new);
+				"com.liferay.dictionary.web", UpgradeDictionary::new);
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpDirectoryModuleData,
-				"com.liferay.directory.web", DirectoryCleanup::new);
+				"com.liferay.directory.web", UpgradeDirectory::new);
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpInvitationModuleData,
-				"com.liferay.invitation.web", InvitationCleanup::new);
+				"com.liferay.invitation.web", UpgradeInvitation::new);
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpMailReaderModuleData,
-				"com.liferay.mail.reader.service", MailReaderCleanup::new);
+				"com.liferay.mail.reader.service", UpgradeMailReader::new);
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpPrivateMessagingModuleData,
 				"com.liferay.social.privatemessaging.service",
-				() -> new PrivateMessagingCleanup(_mbThreadLocalService));
+				() -> new UpgradePrivateMessaging(_mbThreadLocalService));
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpShoppingModuleData,
 				"com.liferay.shopping.service",
-				() -> new ShoppingCleanup(_imageLocalService));
+				() -> new UpgradeShopping(_imageLocalService));
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpTwitterModuleData,
-				"com.liferay.twitter.service", TwitterCleanup::new);
+				"com.liferay.twitter.service", UpgradeTwitter::new);
 		}
 		catch (UpgradeException upgradeException) {
 			ReflectionUtil.throwException(upgradeException);

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Preston Crary
  */
-public class MailReaderCleanup extends UpgradeProcess {
+public class UpgradeMailReader extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

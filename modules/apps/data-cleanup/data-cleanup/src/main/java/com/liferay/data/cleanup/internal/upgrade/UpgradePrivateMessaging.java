@@ -24,9 +24,9 @@ import java.sql.ResultSet;
 /**
  * @author Alejandro Tardín
  */
-public class PrivateMessagingCleanup extends UpgradeProcess {
+public class UpgradePrivateMessaging extends UpgradeProcess {
 
-	public PrivateMessagingCleanup(MBThreadLocalService mbThreadLocalService) {
+	public UpgradePrivateMessaging(MBThreadLocalService mbThreadLocalService) {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 

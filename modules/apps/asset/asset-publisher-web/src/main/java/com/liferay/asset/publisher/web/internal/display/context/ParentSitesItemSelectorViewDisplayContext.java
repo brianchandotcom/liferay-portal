@@ -15,11 +15,11 @@
 package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
@@ -38,12 +38,12 @@ public class ParentSitesItemSelectorViewDisplayContext
 	public ParentSitesItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest,
 		AssetPublisherHelper assetPublisherHelper,
-		SiteItemSelectorCriterion siteItemSelectorCriterion,
+		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		super(
-			httpServletRequest, assetPublisherHelper, siteItemSelectorCriterion,
-			itemSelectedEventName, portletURL);
+			httpServletRequest, assetPublisherHelper,
+			groupItemSelectorCriterion, itemSelectedEventName, portletURL);
 	}
 
 	@Override

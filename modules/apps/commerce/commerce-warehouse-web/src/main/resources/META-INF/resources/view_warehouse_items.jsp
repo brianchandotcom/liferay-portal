@@ -68,9 +68,13 @@ if (Validator.isNotNull(backURL)) {
 							CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = commerceInventoryWarehouseItemsDisplayContext.getCommerceInventoryWarehouseItem(commerceInventoryWarehouse);
 
 							long commerceInventoryWarehouseItemId = 0;
+							long mvccVersion = 0;
+							int quantity = 0;
 
 							if (commerceInventoryWarehouseItem != null) {
 								commerceInventoryWarehouseItemId = commerceInventoryWarehouseItem.getCommerceInventoryWarehouseItemId();
+								mvccVersion = commerceInventoryWarehouseItem.getMvccVersion();
+								quantity = commerceInventoryWarehouseItem.getQuantity();
 							}
 
 							int curIndex = commerceInventoryWarehouses.indexOf(commerceInventoryWarehouse);
@@ -81,10 +85,10 @@ if (Validator.isNotNull(backURL)) {
 									<%= HtmlUtil.escape(commerceInventoryWarehouse.getName()) %>
 								</td>
 								<td>
-									<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" name="commerceInventoryWarehouseItemQuantity" value="<%= commerceInventoryWarehouseItem.getQuantity() %>" wrapperCssClass="m-0" />
+									<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" name="commerceInventoryWarehouseItemQuantity" value="<%= quantity %>" wrapperCssClass="m-0" />
 								</td>
 								<td class="text-center">
-									<aui:button cssClass="btn-primary" name='<%= "saveButton" + curIndex %>' onClick="<%= commerceInventoryWarehouseItemsDisplayContext.getUpdateCommerceInventoryWarehouseItemTaglibOnClick(commerceInventoryWarehouse.getCommerceInventoryWarehouseId(), commerceInventoryWarehouseItemId, commerceInventoryWarehouseItem.getMvccVersion(), curIndex) %>" primary="<%= true %>" value="save" />
+									<aui:button cssClass="btn-primary" name='<%= "saveButton" + curIndex %>' onClick="<%= commerceInventoryWarehouseItemsDisplayContext.getUpdateCommerceInventoryWarehouseItemTaglibOnClick(commerceInventoryWarehouse.getCommerceInventoryWarehouseId(), commerceInventoryWarehouseItemId, mvccVersion, curIndex) %>" primary="<%= true %>" value="save" />
 								</td>
 							</tr>
 

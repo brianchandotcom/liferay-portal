@@ -253,7 +253,7 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@description = "This test covers LLPS-118395. It ensures that a web content in a depot can be selected through the page template."
+	@description = "This test covers LPS-118395. It ensures that a web content in a depot can be selected through the page template."
 	@priority = "4"
 	test SelectDepotContentViaPageTemplate {
 		JSONWebcontent.addWebContent(

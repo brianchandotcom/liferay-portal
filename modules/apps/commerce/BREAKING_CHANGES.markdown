@@ -400,7 +400,7 @@ This was moved to follow Liferay coding pattern.
 ---------------------------------------
 
 ### Destination Names Changed
-- **Date:** 2020-Aug-10
+- **Date:** 2020-Sep-10
 - **JIRA Ticket:** [COMMERCE-4762](https://issues.liferay.com/browse/COMMERCE-4762)
 
 #### What changed?

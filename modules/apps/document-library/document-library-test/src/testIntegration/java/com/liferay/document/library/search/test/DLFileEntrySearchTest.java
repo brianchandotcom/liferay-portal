@@ -245,11 +245,20 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		_ddmStructure = ddmStructure;
 
+		DDMStructure dlFileEntryTypeDDMStructure =
+			DDMStructureTestUtil.addStructure(
+				serviceContext.getScopeGroupId(),
+				DLFileEntryMetadata.class.getName());
+
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				"Structure", StringPool.BLANK,
-				new long[] {ddmStructure.getStructureId()}, serviceContext);
+				null, StringPool.BLANK,
+				new long[] {
+					dlFileEntryTypeDDMStructure.getStructureId(),
+					ddmStructure.getStructureId()
+				},
+				serviceContext);
 
 		String content = "Content: Enterprise. Open Source. For Life.";
 

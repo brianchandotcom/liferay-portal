@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
@@ -77,7 +76,7 @@ public class DLFileEntryTypeUADTestUtil {
 
 	public static void cleanUpDependencies(
 			DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
-			Portal portal, List<DLFileEntryType> dlFileEntryTypes)
+			List<DLFileEntryType> dlFileEntryTypes)
 		throws Exception {
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
@@ -85,14 +84,6 @@ public class DLFileEntryTypeUADTestUtil {
 
 			for (DDMStructure ddmStructure :
 					dlFileEntryType.getDDMStructures()) {
-
-				long classNameId = portal.getClassNameId(
-					"com.liferay.document.library.kernel.model." +
-						"DLFileEntryType");
-
-				DDMStructureLinkManagerUtil.deleteStructureLink(
-					classNameId, dlFileEntryType.getFileEntryTypeId(),
-					ddmStructure.getStructureId());
 
 				DDMStructureManagerUtil.deleteStructure(
 					ddmStructure.getStructureId());

@@ -17,6 +17,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.servlet;
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModulesResolution;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModulesResolver;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -53,15 +54,20 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.http.whiteboard.servlet.pattern=/js_resolve_modules",
 		"service.ranking:Integer=" + Details.MAX_VALUE_LESS_1K
 	},
-	service = {JSResolveModulesServlet.class, Servlet.class}
+	service = {
+		JSResolveModulesServlet.class, NPMRegistryUpdatesListener.class,
+		Servlet.class
+	}
 )
-public class JSResolveModulesServlet extends HttpServlet {
+public class JSResolveModulesServlet
+	extends HttpServlet implements NPMRegistryUpdatesListener {
 
 	public JSResolveModulesServlet() {
-		updateETag();
+		onAfterUpdate();
 	}
 
-	public void updateETag() {
+	@Override
+	public void onAfterUpdate() {
 		_etag = StringBundler.concat(
 			"W/", StringPool.QUOTE, UUID.randomUUID(), StringPool.QUOTE);
 	}

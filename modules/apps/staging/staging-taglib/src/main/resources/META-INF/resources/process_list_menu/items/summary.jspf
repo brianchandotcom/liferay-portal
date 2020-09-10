@@ -17,10 +17,6 @@
 <%
 String processCmd = null;
 
-Map<String, Serializable> contextMap = backgroundTask.getTaskContextMap();
-
-long exportImportConfigurationId = MapUtil.getLong(contextMap, "exportImportConfigurationId");
-
 if (exportImportConfigurationId > 0) {
 	ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 

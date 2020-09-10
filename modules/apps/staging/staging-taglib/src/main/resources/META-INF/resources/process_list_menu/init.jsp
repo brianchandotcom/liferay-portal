@@ -23,6 +23,15 @@ boolean localPublishing = GetterUtil.getBoolean(request.getAttribute("liferay-st
 boolean relaunchMenu = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-list-menu:relaunchMenu"));
 boolean summaryMenu = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-list-menu:summaryMenu"));
 
+Map<String, Serializable> contextMap = backgroundTask.getTaskContextMap();
+
+long exportImportConfigurationId = GetterUtil.getLong(String.valueOf(contextMap.get("exportImportConfigurationId")));
+
+if (exportImportConfigurationId == 0) {
+	relaunchMenu = false;
+	summaryMenu = false;
+}
+
 Date completionDate = backgroundTask.getCompletionDate();
 
 String deleteLabel = LanguageUtil.get(request, ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel");

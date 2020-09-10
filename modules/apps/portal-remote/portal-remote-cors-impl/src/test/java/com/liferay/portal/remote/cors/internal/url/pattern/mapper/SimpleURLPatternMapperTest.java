@@ -85,6 +85,14 @@ public class SimpleURLPatternMapperTest {
 		Assert.assertNull(urlPatternMapper.getValue(null));
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testPutWithEmptyPattern() {
+		createURLPatternMapper(
+			HashMapBuilder.put(
+				"", ""
+			).build());
+	}
+
 	protected URLPatternMapper<String> createURLPatternMapper(
 		Map<String, String> values) {
 

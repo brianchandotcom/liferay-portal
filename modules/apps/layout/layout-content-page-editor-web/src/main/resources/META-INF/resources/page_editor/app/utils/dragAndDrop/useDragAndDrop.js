@@ -324,7 +324,11 @@ function getSiblingPosition(state, parentItem) {
 	if (state.targetPositionWithoutMiddle === TARGET_POSITION.BOTTOM) {
 		return siblingPosition + 1;
 	}
-	else if (dropItemPosition < siblingPosition && siblingPosition > 0) {
+	else if (
+		dropItemPosition != -1 &&
+		dropItemPosition < siblingPosition &&
+		siblingPosition > 0
+	) {
 		return siblingPosition - 1;
 	}
 

@@ -77,7 +77,9 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 	public String getJspPath(
 		HttpServletRequest httpServletRequest, String template) {
 
-		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
+
 			return "/admin/asset/" + template + ".jsp";
 		}
 

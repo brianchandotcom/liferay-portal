@@ -130,8 +130,9 @@ const Row = React.forwardRef(
 							item.config.numberOfColumns === 2 &&
 							modulesPerRow === 1 &&
 							reverseOrder,
-						[`ml-${marginLeft || 0}`]: marginLeft !== '0',
-						[`mr-${marginRight || 0}`]: marginRight !== '0',
+						[`ml-${marginLeft}`]: marginLeft && marginLeft !== '0',
+						[`mr-${marginRight}`]:
+							marginRight && marginRight !== '0',
 						'no-gutters': !item.config.gutters,
 						[textAlign
 							? textAlign.startsWith('text-')

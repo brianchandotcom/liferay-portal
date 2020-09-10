@@ -117,10 +117,12 @@ if (dispatchTrigger != null) {
 	contentEditor.set(STR_VALUE, content);
 
 	Liferay.on('<portlet:namespace />saveTrigger', function (event) {
-		var form = AUI.$('#<portlet:namespace />fm');
+		var form = window.document['<portlet:namespace />fm'];
 
-		form.fm('typeSettings').val(contentEditor.get(STR_VALUE));
+		form['<portlet:namespace />typeSettings'].value = contentEditor.get(
+			STR_VALUE
+		);
 
-		submitForm(form);
+		submitForm(form, '<portlet:actionURL name="editDispatchTrigger" />');
 	});
 </aui:script>

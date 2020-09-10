@@ -14,6 +14,7 @@
 
 import {
 	PagesVisitor,
+	generateInstanceId,
 	normalizeFieldName,
 } from 'dynamic-data-mapping-form-renderer';
 
@@ -59,6 +60,22 @@ export const updateSettingsContextProperty = (
 			}
 
 			return field;
+		}),
+	};
+};
+
+export const updateSettingsContextInstanceId = ({settingsContext}) => {
+	const visitor = new PagesVisitor(settingsContext.pages);
+
+	return {
+		...settingsContext,
+		pages: visitor.mapFields((field) => {
+			const newField = {
+				...field,
+				instanceId: generateInstanceId(8),
+			};
+
+			return newField;
 		}),
 	};
 };

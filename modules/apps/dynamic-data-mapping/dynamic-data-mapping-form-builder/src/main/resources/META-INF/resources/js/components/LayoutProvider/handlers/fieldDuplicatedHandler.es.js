@@ -24,6 +24,7 @@ import {getFieldLocalizedValue} from '../util/fields.es';
 import {
 	getSettingsContextProperty,
 	updateField,
+	updateSettingsContextInstanceId,
 	updateSettingsContextProperty,
 } from '../util/settingsContext.es';
 
@@ -91,6 +92,10 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 			duplicatedField.rows
 		);
 	}
+
+	duplicatedField.settingsContext = updateSettingsContextInstanceId(
+		duplicatedField
+	);
 
 	return updateField(
 		props,

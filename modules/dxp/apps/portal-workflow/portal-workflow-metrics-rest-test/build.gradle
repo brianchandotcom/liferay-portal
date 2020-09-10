@@ -4,7 +4,7 @@ dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.3"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "commons-beanutils", name: "commons-beanutils", version: "1.9.4"
-	testIntegrationCompile group: "commons-codec", name: "commons-codec", version: "1.10"
+	testIntegrationCompile group: "commons-codec", name: "commons-codec", version: "1.13"
 	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "2.6"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile group: "log4j", name: "log4j", version: "1.2.17"

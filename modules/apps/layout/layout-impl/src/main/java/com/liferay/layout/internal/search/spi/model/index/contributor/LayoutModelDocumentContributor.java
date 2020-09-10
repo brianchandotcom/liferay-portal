@@ -170,54 +170,6 @@ public class LayoutModelDocumentContributor
 		}
 	}
 
-	private String _getStagedContent(Layout layout, Locale locale)
-		throws PortalException {
-
-		Group group = _groupLocalService.getGroup(layout.getGroupId());
-
-		Group stagingGroup = null;
-
-		if (ExportImportThreadLocal.isInitialLayoutStagingInProcess()) {
-			stagingGroup = _stagingGroupHelper.fetchLiveGroup(group);
-		}
-		else if (!group.isStaged() || group.isStagingGroup()) {
-			stagingGroup = group;
-		}
-		else {
-			stagingGroup = group.getStagingGroup();
-		}
-
-		Layout stagingLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layout.getUuid(), stagingGroup.getGroupId(),
-			layout.isPrivateLayout());
-
-		SearchContext searchContext = new SearchContext();
-
-		BooleanClause<Query> booleanClause = BooleanClauseFactoryUtil.create(
-			Field.ENTRY_CLASS_PK, String.valueOf(stagingLayout.getPlid()),
-			BooleanClauseOccur.MUST.getName());
-
-		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
-
-		searchContext.setCompanyId(stagingGroup.getCompanyId());
-		searchContext.setEntryClassNames(new String[] {Layout.class.getName()});
-		searchContext.setGroupIds(new long[] {stagingGroup.getGroupId()});
-
-		Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(Layout.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		Document[] documents = hits.getDocs();
-
-		if (documents.length != 1) {
-			return StringPool.BLANK;
-		}
-
-		Document document = documents[0];
-
-		return document.get(Field.getLocalizedName(locale, Field.CONTENT));
-	}
-
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
 

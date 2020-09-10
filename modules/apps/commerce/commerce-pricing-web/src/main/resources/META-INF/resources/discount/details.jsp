@@ -157,6 +157,23 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 		</div>
 	</div>
 
+	<div class="row">
+		<div class="col-12">
+			<c:if test="<%= commerceDiscountDisplayContext.hasCustomAttributesAvailable() %>">
+				<commerce-ui:panel
+					title='<%= LanguageUtil.get(request, "custom-attribute") %>'
+				>
+					<liferay-expando:custom-attribute-list
+						className="<%= CommerceDiscount.class.getName() %>"
+						classPK="<%= (commerceDiscount != null) ? commerceDiscount.getCommerceDiscountId() : 0 %>"
+						editable="<%= true %>"
+						label="<%= true %>"
+					/>
+				</commerce-ui:panel>
+			</c:if>
+		</div>
+	</div>
+
 	<%@ include file="/discount/coupon_code.jspf" %>
 
 	<c:if test="<%= Objects.equals(target, CommerceDiscountConstants.TARGET_PRODUCT) %>">

@@ -825,11 +825,20 @@ definition {
 			webContentTitle = "${webContentTitle}",
 			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "${siteURLKey}");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotRecycleBinAdmin(depotName = "${depotName}");
 
-		RecycleBin.emptyCP();
+			RecycleBin.emptyCP();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}");
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "${siteURLKey}");
+
+			RecycleBin.emptyCP();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}");
+		}
 
 		AssertTextNotPresent(value1 = "${webContentTitle}");
 	}

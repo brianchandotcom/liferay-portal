@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Riccardo Alberti
  */
 @ExtendedObjectClassDefinition(
-	category = "shipping-tax", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "shipping", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.commerce.tax.configuration.CommerceShippingTaxConfiguration",

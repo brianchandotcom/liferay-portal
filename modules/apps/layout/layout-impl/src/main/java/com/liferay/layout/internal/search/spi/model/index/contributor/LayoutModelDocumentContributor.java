@@ -131,10 +131,8 @@ public class LayoutModelDocumentContributor
 					actionException);
 			}
 
-			if (httpServletRequest != null) {
-				httpServletRequest = DynamicServletRequest.addQueryString(
-					httpServletRequest, "p_l_id=" + layout.getPlid(), false);
-			}
+			httpServletRequest = DynamicServletRequest.addQueryString(
+				httpServletRequest, "p_l_id=" + layout.getPlid(), false);
 
 			long[] segmentsExperienceIds = {
 				SegmentsExperienceConstants.ID_DEFAULT

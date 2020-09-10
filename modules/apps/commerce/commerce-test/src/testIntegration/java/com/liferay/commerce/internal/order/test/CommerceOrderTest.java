@@ -84,8 +84,6 @@ import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.frutilla.FrutillaRule;
 

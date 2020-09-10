@@ -48,22 +48,22 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commercePriceEntry, request
 				<label class="control-label" for="<%= liferayPortletResponse.getNamespace() %>discountLevel1"><%= LanguageUtil.get(request, "discount-levels") %></label>
 
 				<div class="d-flex">
-					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="discount-level-1" name="discountLevel1" type="text" value="<%= commercePriceEntry.getDiscountLevel1() %>" wrapperCssClass="pr-2">
+					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="discount-level-1" name="discountLevel1" type="text" value="<%= commercePriceEntry.getDiscountLevel1() %>" wrapperCssClass="discount-label-wrapper">
 						<aui:validator name="min">0</aui:validator>
 						<aui:validator name="number" />
 					</aui:input>
 
-					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="discount-level-2" name="discountLevel2" type="text" value="<%= commercePriceEntry.getDiscountLevel2() %>" wrapperCssClass="pr-2">
+					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="discount-level-2" name="discountLevel2" type="text" value="<%= commercePriceEntry.getDiscountLevel2() %>" wrapperCssClass="discount-label-wrapper">
 						<aui:validator name="min">0</aui:validator>
 						<aui:validator name="number" />
 					</aui:input>
 
-					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="discount-level-3" name="discountLevel3" type="text" value="<%= commercePriceEntry.getDiscountLevel3() %>" wrapperCssClass="pr-2">
+					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="discount-level-3" name="discountLevel3" type="text" value="<%= commercePriceEntry.getDiscountLevel3() %>" wrapperCssClass="discount-label-wrapper">
 						<aui:validator name="min">0</aui:validator>
 						<aui:validator name="number" />
 					</aui:input>
 
-					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="discount-level-4" name="discountLevel4" type="text" value="<%= commercePriceEntry.getDiscountLevel4() %>">
+					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="discount-level-4" name="discountLevel4" type="text" value="<%= commercePriceEntry.getDiscountLevel4() %>" wrapperCssClass="discount-label-wrapper">
 						<aui:validator name="min">0</aui:validator>
 						<aui:validator name="number" />
 					</aui:input>

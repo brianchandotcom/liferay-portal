@@ -104,6 +104,30 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Get the depotId from any existing depot by using depotName"
+	macro _getDepotIdByName {
+		Variables.assertDefined(parameterList = "${depotName}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
+				-u test@liferay.com:test
+		''';
+
+		var depotId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${depotName}')]['classPK']");
+		var depotId = StringUtil.replace("${depotId}", "[&quot;", "");
+		var depotId = StringUtil.replace("${depotId}", "&quot;]", "");
+
+		if ("${depotId}" == "[]") {
+			fail("FAIL. Cannot find group.");
+		}
+
+		return "${depotId}";
+	}
+
 	@summary = "Get the groupId from any existing group by using groupKey"
 	macro _getGroupIdByGroupKey {
 		Variables.assertDefined(parameterList = "${groupKey},${site}");

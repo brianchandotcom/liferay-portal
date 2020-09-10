@@ -44,12 +44,16 @@ boolean neverExpire = true;
 		<%@ include file="/price_lists/tier_price_entry/details.jspf" %>
 
 		<c:if test="<%= commerceTierPriceEntryDisplayContext.hasCustomAttributes() %>">
-			<liferay-expando:custom-attribute-list
-				className="<%= CommerceTierPriceEntry.class.getName() %>"
-				classPK="<%= (commerceTierPriceEntry != null) ? commerceTierPriceEntry.getCommerceTierPriceEntryId() : 0 %>"
-				editable="<%= true %>"
-				label="<%= true %>"
-			/>
+			<commerce-ui:panel
+				title='<%= LanguageUtil.get(request, "custom-attributes") %>'
+			>
+				<liferay-expando:custom-attribute-list
+					className="<%= CommerceTierPriceEntry.class.getName() %>"
+					classPK="<%= (commerceTierPriceEntry != null) ? commerceTierPriceEntry.getCommerceTierPriceEntryId() : 0 %>"
+					editable="<%= true %>"
+					label="<%= true %>"
+				/>
+			</commerce-ui:panel>
 		</c:if>
 	</aui:form>
 </commerce-ui:modal-content>

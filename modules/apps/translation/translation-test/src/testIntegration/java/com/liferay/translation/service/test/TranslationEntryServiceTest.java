@@ -22,6 +22,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -50,6 +51,7 @@ import com.liferay.translation.test.util.TranslationTestUtil;
 
 import java.io.ByteArrayInputStream;
 
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 
 import java.util.HashMap;
@@ -79,6 +81,49 @@ public class TranslationEntryServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddOrUpdateTranslationEntryFailsIfBCP47LanguageId()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		TranslationTestUtil.withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role,
+					TranslationConstants.RESOURCE_NAME + "." +
+						LocaleUtil.toLanguageId(LocaleUtil.SIMPLIFIED_CHINESE),
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(_group.getGroupId()),
+					TranslationActionKeys.TRANSLATE);
+
+				InfoItemReference infoItemReference = new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
+
+				InfoItemFieldValuesProvider<JournalArticle>
+					infoItemFieldValuesProvider =
+						(InfoItemFieldValuesProvider<JournalArticle>)
+							_infoItemServiceTracker.getFirstInfoItemService(
+								InfoItemFieldValuesProvider.class,
+								JournalArticle.class.getName());
+
+				InfoItemFieldValues infoItemFieldValues =
+					infoItemFieldValuesProvider.getInfoItemFieldValues(
+						journalArticle);
+
+				_translationEntry =
+					_translationEntryService.addOrUpdateTranslationEntry(
+						_group.getGroupId(),
+						LocaleUtil.toBCP47LanguageId(
+							LocaleUtil.SIMPLIFIED_CHINESE),
+						infoItemReference, infoItemFieldValues,
+						ServiceContextTestUtil.getServiceContext());
+			});
 	}
 
 	@Test
@@ -346,7 +391,7 @@ public class TranslationEntryServiceTest {
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddOrUpdateTranslationEntryWithoutTranslationPermission()
+	public void testAddOrUpdateTranslationEntryFailsWithoutTranslationPermission()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -442,6 +487,9 @@ public class TranslationEntryServiceTest {
 
 	@Inject
 	private JournalArticleService _journalArticleService;
+
+	@Inject
+	private Language _language;
 
 	@DeleteAfterTestRun
 	private TranslationEntry _translationEntry;

@@ -135,6 +135,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		Map<String, Serializable> attributes = searchContext.getAttributes();
 
 		if (attributes.containsKey(CPField.BASE_PRICE)) {
+			BooleanFilter priceRangeBooleanFilter = new BooleanFilter();
+
 			String[] basePriceRanges = GetterUtil.getStringValues(
 				attributes.get(CPField.BASE_PRICE));
 
@@ -146,9 +148,12 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 					CPField.BASE_PRICE, true, true, basePriceRangeParts[0],
 					basePriceRangeParts[1]);
 
-				contextBooleanFilter.add(
-					rangeTermFilter, BooleanClauseOccur.MUST);
+				priceRangeBooleanFilter.add(
+					rangeTermFilter, BooleanClauseOccur.SHOULD);
 			}
+
+			contextBooleanFilter.add(
+				priceRangeBooleanFilter, BooleanClauseOccur.MUST);
 		}
 
 		if (attributes.containsKey(CPField.PUBLISHED)) {

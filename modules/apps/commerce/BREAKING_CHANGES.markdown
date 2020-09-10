@@ -398,3 +398,32 @@ CommercePricingClassScreenNavigationConstants;`
 This was moved to follow Liferay coding pattern.
 
 ---------------------------------------
+
+### Destination Names Changed
+- **Date:** 2020-Aug-10
+- **JIRA Ticket:** [COMMERCE-4762](https://issues.liferay.com/browse/COMMERCE-4762)
+
+#### What changed?
+
+The prefix commerce_ has been added to the commerce destinations defined in
+`com.liferay.commerce.constants.CommerceDestinationNames`:
+
+- `liferay/commerce_order_status`;
+- `liferay/commerce_payment_status`;
+- `liferay/commerce_order_status`;
+- `liferay/commerce_payment_status`;
+- `liferay/commerce_subscription_status`.
+
+#### Who is affected?
+
+Anyone who references or uses these destinations.
+
+#### How should I update my code?
+
+Update any explicit reference to commerce destinations with the new names.
+
+#### Why was this change made?
+
+This change was introduced to follow Liferay naming pattern.
+
+---------------------------------------

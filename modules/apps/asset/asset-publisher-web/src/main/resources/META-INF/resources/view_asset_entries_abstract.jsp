@@ -66,7 +66,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 %>
 
 		<div class="asset-abstract mb-5 <%= assetPublisherWebHelper.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %> <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
-			<div class="mb-2 d-flex align-items-center">
+			<div class="align-items-center d-flex mb-2">
 				<p class="component-title h4">
 					<c:choose>
 						<c:when test="<%= assetPublisherDisplayContext.isShowContextLink() %>">

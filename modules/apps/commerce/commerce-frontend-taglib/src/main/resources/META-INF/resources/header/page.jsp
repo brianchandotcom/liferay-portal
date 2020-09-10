@@ -138,9 +138,9 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 
 					<div class="col-auto d-lg-none">
 						<clay:button
+							cssClass="navbar-toggler"
 							data-target="#navbarNavAltMarkup"
 							data-toggle="liferay-collapse"
-							elementClasses="navbar-toggler"
 							icon="bars"
 							style="secondary"
 							type="button"

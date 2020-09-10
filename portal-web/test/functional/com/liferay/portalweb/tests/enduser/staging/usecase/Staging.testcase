@@ -1504,6 +1504,8 @@ definition {
 	@description = "This is a use case for LPS-110701."
 	@priority = "3"
 	test PublishWebContentWithUnchangedReferencedContent {
+		property test.name.skip.portal.instance = "Staging#PublishWebContentWithUnchangedReferencedContent";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page",

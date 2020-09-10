@@ -16,7 +16,7 @@
 
 <c:if test="<%= CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), CommercePriceEntry.class.getName(), commercePriceEntryId, null) %>">
 	<commerce-ui:panel
-		title='<%= LanguageUtil.get(request, "custom-attribute") %>'
+		title='<%= LanguageUtil.get(request, "custom-attributes") %>'
 	>
 		<liferay-expando:custom-attribute-list
 			className="<%= CommercePriceEntry.class.getName() %>"

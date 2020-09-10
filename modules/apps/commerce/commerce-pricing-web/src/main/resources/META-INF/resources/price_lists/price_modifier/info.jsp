@@ -107,7 +107,7 @@ if (modifierType.equals(CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE)
 
 	<c:if test="<%= commercePriceListDisplayContext.hasCustomAttributesAvailable(CommercePriceModifier.class.getName(), commercePriceModifierId) %>">
 		<commerce-ui:panel
-			title='<%= LanguageUtil.get(request, "custom-attribute") %>'
+			title='<%= LanguageUtil.get(request, "custom-attributes") %>'
 		>
 			<liferay-expando:custom-attribute-list
 				className="<%= CommercePriceModifier.class.getName() %>"

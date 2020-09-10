@@ -161,7 +161,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 		<div class="col-12">
 			<c:if test="<%= commerceDiscountDisplayContext.hasCustomAttributesAvailable() %>">
 				<commerce-ui:panel
-					title='<%= LanguageUtil.get(request, "custom-attribute") %>'
+					title='<%= LanguageUtil.get(request, "custom-attributes") %>'
 				>
 					<liferay-expando:custom-attribute-list
 						className="<%= CommerceDiscount.class.getName() %>"

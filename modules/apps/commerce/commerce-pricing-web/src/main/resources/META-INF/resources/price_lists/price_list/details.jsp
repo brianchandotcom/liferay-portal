@@ -161,7 +161,7 @@ if ((commercePriceList != null) && (commercePriceList.getExpirationDate() != nul
 
 			<c:if test="<%= commercePriceListDisplayContext.hasCustomAttributesAvailable(CommercePriceList.class.getName(), commercePriceListId) %>">
 				<commerce-ui:panel
-					title='<%= LanguageUtil.get(request, "custom-attribute") %>'
+					title='<%= LanguageUtil.get(request, "custom-attributes") %>'
 				>
 					<liferay-expando:custom-attribute-list
 						className="<%= CommercePriceList.class.getName() %>"

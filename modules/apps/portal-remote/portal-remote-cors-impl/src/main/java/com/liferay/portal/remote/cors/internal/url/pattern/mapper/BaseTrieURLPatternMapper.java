@@ -25,6 +25,10 @@ public abstract class BaseTrieURLPatternMapper<T>
 
 	@Override
 	public T getValue(String urlPath) {
+		if (urlPath == null) {
+			return null;
+		}
+
 		try {
 			T value = getWildcardValue(urlPath);
 

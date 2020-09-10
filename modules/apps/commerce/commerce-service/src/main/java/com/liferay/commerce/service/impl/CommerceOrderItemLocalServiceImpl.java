@@ -1406,7 +1406,7 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceMoney unitPromoMoneyPriceWithTaxAmount =
 			commerceProductPrice.getUnitPromoPriceWithTaxAmount();
 
-		if (unitPromoMoneyPriceWithTaxAmount != null) {
+		if (!unitPromoMoneyPriceWithTaxAmount.isEmpty()) {
 			promoPriceWithTaxAmount =
 				unitPromoMoneyPriceWithTaxAmount.getPrice();
 		}

@@ -14,7 +14,14 @@
 
 package com.liferay.layout.internal.search.util;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.servlet.RequestDispatcherUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.servlet.DirectRequestDispatcher;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -123,7 +130,7 @@ public class SyntheticHttpServletRequest implements HttpServletRequest {
 	}
 
 	@Override
-	public String getHeader(String s) {
+	public String getHeader(String name) {
 		return null;
 	}
 
@@ -133,7 +140,7 @@ public class SyntheticHttpServletRequest implements HttpServletRequest {
 	}
 
 	@Override
-	public Enumeration<String> getHeaders(String s) {
+	public Enumeration<String> getHeaders(String name) {
 		return null;
 	}
 
@@ -174,11 +181,11 @@ public class SyntheticHttpServletRequest implements HttpServletRequest {
 
 	@Override
 	public String getMethod() {
-		return null;
+		return HttpMethods.GET;
 	}
 
 	@Override
-	public String getParameter(String s) {
+	public String getParameter(String name) {
 		return null;
 	}
 
@@ -193,7 +200,7 @@ public class SyntheticHttpServletRequest implements HttpServletRequest {
 	}
 
 	@Override
-	public String[] getParameterValues(String s) {
+	public String[] getParameterValues(String name) {
 		return new String[0];
 	}
 
@@ -258,8 +265,9 @@ public class SyntheticHttpServletRequest implements HttpServletRequest {
 	}
 
 	@Override
-	public RequestDispatcher getRequestDispatcher(String s) {
-		return null;
+	public RequestDispatcher getRequestDispatcher(String path) {
+		return DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+			ServletContextPool.get(StringPool.BLANK), path);
 	}
 
 	@Override
@@ -269,7 +277,7 @@ public class SyntheticHttpServletRequest implements HttpServletRequest {
 
 	@Override
 	public String getRequestURI() {
-		return Portal.PATH_MAIN;
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -353,12 +361,12 @@ public class SyntheticHttpServletRequest implements HttpServletRequest {
 	}
 
 	@Override
-	public boolean isUserInRole(String s) {
+	public boolean isUserInRole(String user) {
 		return false;
 	}
 
 	@Override
-	public void login(String s, String s1) throws ServletException {
+	public void login(String user, String password) throws ServletException {
 	}
 
 	@Override
@@ -372,11 +380,13 @@ public class SyntheticHttpServletRequest implements HttpServletRequest {
 
 	@Override
 	public void setAttribute(String name, Object value) {
-		_attributes.put(name, value);
+		if ((name != null) && (value != null)) {
+			_attributes.put(name, value);
+		}
 	}
 
 	@Override
-	public void setCharacterEncoding(String s)
+	public void setCharacterEncoding(String encoding)
 		throws UnsupportedEncodingException {
 	}
 
@@ -394,7 +404,7 @@ public class SyntheticHttpServletRequest implements HttpServletRequest {
 	}
 
 	@Override
-	public <T extends HttpUpgradeHandler> T upgrade(Class<T> aClass)
+	public <T extends HttpUpgradeHandler> T upgrade(Class<T> clazz)
 		throws IOException, ServletException {
 
 		return null;

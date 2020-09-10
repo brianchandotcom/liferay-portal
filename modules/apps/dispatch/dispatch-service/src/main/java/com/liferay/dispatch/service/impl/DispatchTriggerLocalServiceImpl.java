@@ -307,7 +307,7 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	private String _getPayload(long dispatchTriggerId) {
-		return String.format("{\"dispatchTriggerId\"=%d}", dispatchTriggerId);
+		return String.format("{\"dispatchTriggerId\":%d}", dispatchTriggerId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

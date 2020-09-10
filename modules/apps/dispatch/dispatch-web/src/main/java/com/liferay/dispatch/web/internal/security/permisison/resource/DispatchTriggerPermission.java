@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(immediate = true, service = {})
-public class DispatchPermission {
+public class DispatchTriggerPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker,

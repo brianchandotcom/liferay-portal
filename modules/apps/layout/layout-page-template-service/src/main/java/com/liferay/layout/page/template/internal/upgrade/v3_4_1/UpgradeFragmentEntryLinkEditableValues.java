@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v3_4_1;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -59,6 +60,7 @@ public class UpgradeFragmentEntryLinkEditableValues extends UpgradeProcess {
 
 				_replaceAlign(configurationJSONObject);
 				_replaceBottomSpacing(configurationJSONObject);
+				_replaceBorderRadius(configurationJSONObject);
 				_replaceShadow(configurationJSONObject);
 				_replaceTextColor(configurationJSONObject);
 
@@ -93,6 +95,17 @@ public class UpgradeFragmentEntryLinkEditableValues extends UpgradeProcess {
 
 			break;
 		}
+	}
+
+	private void _replaceBorderRadius(JSONObject configurationJSONObject) {
+		if (!configurationJSONObject.has("borderRadius")) {
+			return;
+		}
+
+		configurationJSONObject.put(
+			"borderRadius",
+			_borderRadiuses.get(
+				configurationJSONObject.remove("borderRadius")));
 	}
 
 	private void _replaceBottomSpacing(JSONObject configurationJSONObject) {
@@ -153,6 +166,14 @@ public class UpgradeFragmentEntryLinkEditableValues extends UpgradeProcess {
 		"buttonAlign", "contentAlign", "imageAlign"
 	};
 
+	private static final Map<String, String> _borderRadiuses =
+		HashMapBuilder.put(
+			"lg", "0.375rem"
+		).put(
+			"none", StringPool.BLANK
+		).put(
+			"sm", "0.1875rem"
+		).build();
 	private static final Map<String, String> _colors = HashMapBuilder.put(
 		"danger", "#DA1414"
 	).put(

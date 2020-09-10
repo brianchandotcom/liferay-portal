@@ -39,10 +39,10 @@ definition {
 			configurationName = "AUI",
 			configurationScope = "System Scope");
 
-		FormFields.viewCheckboxChecked(fieldName = "enableAUIPreload");
+		FormFields.viewCheckboxNotChecked(fieldName = "enableAUIPreload");
 
 		SystemSettings.configureSystemSetting(
-			enableSetting = "false",
+			enableSetting = "true",
 			settingFieldName = "Preload Widely Used AUI Modules");
 
 		ApplicationsMenu.gotoPortlet(
@@ -55,7 +55,7 @@ definition {
 			configurationName = "AUI",
 			configurationScope = "System Scope");
 
-		FormFields.viewCheckboxNotChecked(fieldName = "enableAUIPreload");
+		FormFields.viewCheckboxChecked(fieldName = "enableAUIPreload");
 
 		Navigator.gotoPage(pageName = "Home");
 

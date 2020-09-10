@@ -112,7 +112,7 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
 
 		Depot.viewNoDocumentInFTP(
-			depotName = "test depot name",
+			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document PDF");
 	}
 

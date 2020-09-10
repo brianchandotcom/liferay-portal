@@ -298,7 +298,7 @@ public class SyntheticHttpServletRequest implements HttpServletRequest {
 
 	@Override
 	public ServletContext getServletContext() {
-		return null;
+		return ServletContextPool.get(StringPool.BLANK);
 	}
 
 	@Override

@@ -1013,16 +1013,29 @@ definition {
 	macro viewCompletedTask {
 		Workflow.gotoCompletedFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		if ("${workflowAssetType}" == "Translation") {
+			var key_workflowAssetTitle = "Translation";
+		}
+		else {
+			var key_workflowAssetTitle = "${workflowAssetTitle}";
+		}
+
 		var key_workflowTask = "${workflowTask}";
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK",
 			value1 = "${workflowTask}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+		if ("${workflowAssetType}" == "Translation") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE",
+				value1 = "Translation");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE",
+				value1 = "${workflowAssetTitle}");
+		}
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",

@@ -75,6 +75,16 @@ public class SimpleURLPatternMapperTest {
 		Assert.assertEquals("*.jsp", urlPatternMapper.getValue(".jsp"));
 	}
 
+	@Test
+	public void testGetValueWithNull() {
+		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(
+			HashMapBuilder.put(
+				"*.jsp", "*.jsp"
+			).build());
+
+		Assert.assertNull(urlPatternMapper.getValue(null));
+	}
+
 	protected URLPatternMapper<String> createURLPatternMapper(
 		Map<String, String> values) {
 

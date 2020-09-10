@@ -15,7 +15,6 @@
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
-import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.pricing.exception.NoSuchPriceModifierException;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
@@ -179,7 +178,7 @@ public class EditCommercePriceModifierMVCActionCommand
 			actionRequest, "neverExpire", true);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommercePriceEntry.class.getName(), actionRequest);
+			CommercePriceModifier.class.getName(), actionRequest);
 
 		if (commercePriceModifierId > 0) {
 			return _commercePriceModifierService.updateCommercePriceModifier(

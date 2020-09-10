@@ -134,6 +134,8 @@ $emptyItemMinHeight: 180px;
 	}
 
 	&__editable {
+		min-height: 1rem;
+		min-width: 3ch;
 		transition: box-shadow ease 0.3s;
 
 		$editablesBorderWidth: 1px;

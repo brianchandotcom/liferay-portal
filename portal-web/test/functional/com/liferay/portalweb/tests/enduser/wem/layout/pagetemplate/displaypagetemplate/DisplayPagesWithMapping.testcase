@@ -259,6 +259,137 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120504. View mapped image after sort documents in display page template."
+	@priority = "4"
+	test ViewMappedImageAfterSortDocumentsInDisplayPageTemplate {
+		task ("Add a display page template based on Document and Basic Document") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Document Display Page",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+		}
+
+		task ("Add an Image fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Document Display Page",
+				item = "Edit");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Map File URL of document to editable field of Image") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "File URL",
+				fragmentName = "Image",
+				id = "image-square",
+				source = "Basic Document (Default)");
+		}
+
+		task ("Add a Documents and Media widget below the Image") {
+			PageEditor.addWidget(
+				portletName = "Documents and Media",
+				targetFragmentName = "Image");
+		}
+
+		task ("Mark the display page template as default") {
+			PageEditor.clickPublish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Document Display Page");
+		}
+
+		task ("Add an Asset Publisher to a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Add the first document with an image") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentTitle = "Document Title 1");
+		}
+
+		task ("Add the second document with an image") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_2.jpg",
+				dmDocumentTitle = "Document Title 2");
+		}
+
+		task ("Navigate to display page template related to the first document via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var title : list "Document Title 1,Document Title 2") {
+				AssertTextEquals(
+					key_assetTitle = "${title}",
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "${title}");
+			}
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Document Title 1");
+		}
+
+		task ("Assert the image of the Document Title 1 is shown in Image fragment") {
+			AssertVisible(
+				id = "image-square",
+				key_image = "Document+Title+1.jpg",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
+
+		task ("Assert the order of documents in Documents and Media") {
+			var n = "1";
+
+			for (var title : list "Document Title 2,Document Title 1") {
+				LexiconCard.viewCardOrder(
+					card = "${title}",
+					index = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Reverse Sort Direction in Documents and Media") {
+			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		}
+
+		task ("Assert the order of documents in Documents and Media") {
+			var n = "1";
+
+			for (var title : list "Document Title 1,Document Title 2") {
+				LexiconCard.viewCardOrder(
+					card = "${title}",
+					index = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the image of the Document Title 1 is still shown in Image fragment") {
+			AssertVisible(
+				id = "image-square",
+				key_image = "Document+Title+1.jpg",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+
+		}
+	}
+
 	@description = "This is a test for LPS-118060. The contributed content types and their subtypes are available when creating a display page template."
 	@priority = "5"
 	test ViewTypesDuringCreation {

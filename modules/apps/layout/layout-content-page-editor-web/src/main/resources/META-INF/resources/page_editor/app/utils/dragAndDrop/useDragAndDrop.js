@@ -277,10 +277,18 @@ export const DragAndDropContextProvider = ({children}) => {
 		return null;
 	});
 
+	const dragAndDropContext = useMemo(
+		() => ({
+			dispatch,
+			layoutDataRef,
+			state,
+			targetRefs,
+		}),
+		[dispatch, layoutDataRef, state, targetRefs]
+	);
+
 	return (
-		<DragAndDropContext.Provider
-			value={{dispatch, layoutDataRef, state, targetRefs}}
-		>
+		<DragAndDropContext.Provider value={dragAndDropContext}>
 			{children}
 		</DragAndDropContext.Provider>
 	);

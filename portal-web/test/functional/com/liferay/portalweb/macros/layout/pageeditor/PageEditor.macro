@@ -717,9 +717,10 @@ definition {
 		}
 
 		if (isSet(separatorColor)) {
-			PageEditor.selectColorSwatchItem(
-				colorSwatchItem = "${separatorColor}",
-				fieldLabel = "Separator Color");
+			Click(
+				key_borderBottom = "Separator Color",
+				key_paletteItem = "${separatorColor}",
+				locator1 = "Button#BORDER_BOTTOM_PALETTE_ITEM");
 
 			Pause(locator1 = "3000");
 		}

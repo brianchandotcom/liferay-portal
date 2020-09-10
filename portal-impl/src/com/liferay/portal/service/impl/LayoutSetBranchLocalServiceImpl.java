@@ -352,10 +352,10 @@ public class LayoutSetBranchLocalServiceImpl
 	public List<Long> getDeletablePlids(long layoutSetBranchId) {
 		List<Long> deletablePlids = new ArrayList<>();
 
-		List<Long> relatedLayoutPlids = _getRelatedLayoutPlids(
+		List<Long> relatedPlids = _getRelatedPlids(
 			layoutSetBranchId);
 
-		for (long plid : relatedLayoutPlids) {
+		for (long plid : relatedPlids) {
 			boolean deletableLayout = true;
 			List<LayoutRevision> layoutRevisions =
 				layoutRevisionLocalService.getLayoutRevisions(plid);
@@ -620,18 +620,18 @@ public class LayoutSetBranchLocalServiceImpl
 		}
 	}
 
-	private List<Long> _getRelatedLayoutPlids(long layoutSetBranchId) {
-		List<Long> relatedLayoutPlids = new ArrayList<>();
+	private List<Long> _getRelatedPlids(long layoutSetBranchId) {
+		List<Long> relatedPlids = new ArrayList<>();
 
 		List<LayoutBranch> layoutBranches =
 			layoutBranchLocalService.getLayoutSetBranchLayoutBranches(
 				layoutSetBranchId);
 
 		for (LayoutBranch layoutBranch : layoutBranches) {
-			relatedLayoutPlids.add(layoutBranch.getPlid());
+			relatedPlids.add(layoutBranch.getPlid());
 		}
 
-		return relatedLayoutPlids;
+		return relatedPlids;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -302,7 +302,7 @@ definition {
 			key_questionTabField = "${questionTabField}",
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_questionTabField = "${questionTabField}",
 			locator1 = "Questions#QUESTIONS_LIST_ACTIVE_TAB_FIELD");
 	}

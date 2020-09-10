@@ -33,7 +33,7 @@ definition {
 		}
 	}
 
-	macro previewTranslatonsBaseFields {
+	macro previewTranslationsBaseFields {
 		AssertElementPresent(
 			key_localizationName = "${currentBaseLocale}",
 			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
@@ -56,7 +56,7 @@ definition {
 			value1 = "${webContentContent}");
 	}
 
-	macro previewTranslatonsTargetFields {
+	macro previewTranslationsTargetFields {
 		AssertElementPresent(
 			key_localizationName = "${currentTargetLocale}",
 			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");

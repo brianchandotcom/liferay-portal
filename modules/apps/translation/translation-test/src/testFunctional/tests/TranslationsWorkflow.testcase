@@ -94,13 +94,13 @@ definition {
 			assetType = "Translation",
 			user = "userfn userln");
 
-		WorkflowAsset.previewTranslatonsBaseFields(
+		WorkflowAsset.previewTranslationsBaseFields(
 			currentBaseLocale = "en-us",
 			webContentContent = "WC WebContent Content",
 			webContentDescription = "WC WebContent Description",
 			webContentTitle = "WC WebContent Title");
 
-		WorkflowAsset.previewTranslatonsTargetFields(
+		WorkflowAsset.previewTranslationsTargetFields(
 			currentTargetLocale = "es-es",
 			webContentContent = "WC WebContent Contenido",
 			webContentDescription = "WC WebContent Descripción",
@@ -447,13 +447,13 @@ definition {
 			gotoTranslationsNotifications = "true",
 			user = "userfn userln");
 
-		WorkflowAsset.previewTranslatonsBaseFields(
+		WorkflowAsset.previewTranslationsBaseFields(
 			currentBaseLocale = "en-us",
 			webContentContent = "WC WebContent Content",
 			webContentDescription = "WC WebContent Description",
 			webContentTitle = "WC WebContent Title");
 
-		WorkflowAsset.previewTranslatonsTargetFields(
+		WorkflowAsset.previewTranslationsTargetFields(
 			currentTargetLocale = "es-es",
 			webContentContent = "WC WebContent Contenido",
 			webContentDescription = "WC WebContent Descripción",
@@ -481,13 +481,13 @@ definition {
 			assetType = "Translation",
 			user = "userfn userln");
 
-		WorkflowAsset.previewTranslatonsBaseFields(
+		WorkflowAsset.previewTranslationsBaseFields(
 			currentBaseLocale = "en-us",
 			webContentContent = "WC WebContent Content",
 			webContentDescription = "WC WebContent Description",
 			webContentTitle = "WC WebContent Title");
 
-		WorkflowAsset.previewTranslatonsTargetFields(
+		WorkflowAsset.previewTranslationsTargetFields(
 			currentTargetLocale = "zh-cn",
 			webContentContent = "WC WebContent 内容",
 			webContentDescription = "WC WebContent 描述",

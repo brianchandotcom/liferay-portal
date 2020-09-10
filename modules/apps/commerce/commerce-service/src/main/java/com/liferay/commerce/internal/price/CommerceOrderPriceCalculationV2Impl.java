@@ -326,8 +326,7 @@ public class CommerceOrderPriceCalculationV2Impl
 		throws PortalException {
 
 		if (commerceOrder == null) {
-			return commerceMoneyFactory.create(
-				commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
+			return commerceMoneyFactory.emptyCommerceMoney();
 		}
 
 		if (!commerceOrder.isOpen()) {

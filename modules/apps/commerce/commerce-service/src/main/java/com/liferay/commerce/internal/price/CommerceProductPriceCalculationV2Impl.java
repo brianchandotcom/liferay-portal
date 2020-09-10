@@ -1034,8 +1034,7 @@ public class CommerceProductPriceCalculationV2Impl
 		throws PortalException {
 
 		if (commercePriceListId == 0) {
-			return commerceMoneyFactory.create(
-				commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
+			return commerceMoneyFactory.emptyCommerceMoney();
 		}
 
 		CommercePriceList commercePriceList =

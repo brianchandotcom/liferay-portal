@@ -51,7 +51,6 @@ import com.liferay.translation.test.util.TranslationTestUtil;
 
 import java.io.ByteArrayInputStream;
 
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 
 import java.util.HashMap;
@@ -121,6 +120,48 @@ public class TranslationEntryServiceTest {
 						_group.getGroupId(),
 						LocaleUtil.toBCP47LanguageId(
 							LocaleUtil.SIMPLIFIED_CHINESE),
+						infoItemReference, infoItemFieldValues,
+						ServiceContextTestUtil.getServiceContext());
+			});
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testAddOrUpdateTranslationEntryFailsWithoutTranslationPermission()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		TranslationTestUtil.withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role,
+					TranslationConstants.RESOURCE_NAME + "." +
+						LocaleUtil.toLanguageId(LocaleUtil.US),
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(_group.getGroupId()),
+					TranslationActionKeys.TRANSLATE);
+
+				InfoItemReference infoItemReference = new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey());
+
+				InfoItemFieldValuesProvider<JournalArticle>
+					infoItemFieldValuesProvider =
+						(InfoItemFieldValuesProvider<JournalArticle>)
+							_infoItemServiceTracker.getFirstInfoItemService(
+								InfoItemFieldValuesProvider.class,
+								JournalArticle.class.getName());
+
+				InfoItemFieldValues infoItemFieldValues =
+					infoItemFieldValuesProvider.getInfoItemFieldValues(
+						journalArticle);
+
+				_translationEntry =
+					_translationEntryService.addOrUpdateTranslationEntry(
+						_group.getGroupId(),
+						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 						infoItemReference, infoItemFieldValues,
 						ServiceContextTestUtil.getServiceContext());
 			});
@@ -388,48 +429,6 @@ public class TranslationEntryServiceTest {
 
 		Assert.assertEquals(
 			"newTitle", latestJournalArticle.getTitle(LocaleUtil.SPAIN));
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testAddOrUpdateTranslationEntryFailsWithoutTranslationPermission()
-		throws Exception {
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-
-		TranslationTestUtil.withRegularUser(
-			(user, role) -> {
-				RoleTestUtil.addResourcePermission(
-					role,
-					TranslationConstants.RESOURCE_NAME + "." +
-						LocaleUtil.toLanguageId(LocaleUtil.US),
-					ResourceConstants.SCOPE_GROUP,
-					String.valueOf(_group.getGroupId()),
-					TranslationActionKeys.TRANSLATE);
-
-				InfoItemReference infoItemReference = new InfoItemReference(
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey());
-
-				InfoItemFieldValuesProvider<JournalArticle>
-					infoItemFieldValuesProvider =
-						(InfoItemFieldValuesProvider<JournalArticle>)
-							_infoItemServiceTracker.getFirstInfoItemService(
-								InfoItemFieldValuesProvider.class,
-								JournalArticle.class.getName());
-
-				InfoItemFieldValues infoItemFieldValues =
-					infoItemFieldValuesProvider.getInfoItemFieldValues(
-						journalArticle);
-
-				_translationEntry =
-					_translationEntryService.addOrUpdateTranslationEntry(
-						_group.getGroupId(),
-						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-						infoItemReference, infoItemFieldValues,
-						ServiceContextTestUtil.getServiceContext());
-			});
 	}
 
 	private void _addDraftTranslation(

@@ -55,6 +55,7 @@
 			selectedItems: <%= jsonSerializer.serializeDeep(selectedItems) %>,
 			selectedItemsKey: '<%= GetterUtil.getString(selectedItemsKey) %>',
 			selectionType: '<%= GetterUtil.getString(selectionType) %>',
+			sorting: <%= jsonSerializer.serializeDeep(sortItemList) %>,
 			style: '<%= style %>',
 			views: <%= jsonSerializer.serializeDeep(clayDataSetDisplayViewsContext) %>,
 		},

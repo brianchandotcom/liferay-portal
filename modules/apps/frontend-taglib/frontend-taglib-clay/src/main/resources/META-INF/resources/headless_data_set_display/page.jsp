@@ -62,6 +62,7 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 			style: '<%= style %>',
 			selectionType: '<%= GetterUtil.getString(selectionType) %>',
 			showPagination: <%= showPagination %>,
+			sorting: <%= jsonSerializer.serializeDeep(sortItemList) %>,
 			views: <%= jsonSerializer.serializeDeep(clayDataSetDisplayViewsContext) %>,
 		},
 		document.getElementById('<%= containerId %>')

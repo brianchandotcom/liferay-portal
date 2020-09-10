@@ -23,6 +23,8 @@ import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -149,6 +151,10 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 		return _selectionType;
 	}
 
+	public List<SortItem> getSortItemList() {
+		return _sortItemList;
+	}
+
 	public String getStyle() {
 		return _style;
 	}
@@ -256,6 +262,10 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 		_showSearch = showSearch;
 	}
 
+	public void setSortItemList(SortItemList sortItemList) {
+		_sortItemList = sortItemList;
+	}
+
 	public void setStyle(String style) {
 		_style = style;
 	}
@@ -292,6 +302,7 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 		_showManagementBar = true;
 		_showPagination = true;
 		_showSearch = true;
+		_sortItemList = new SortItemList();
 		_style = "default";
 	}
 
@@ -360,6 +371,8 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 			"clay:headless-data-set-display:showPagination", _showPagination);
 		request.setAttribute(
 			"clay:headless-data-set-display:showSearch", _showSearch);
+		request.setAttribute(
+			"clay:headless-data-set-display:sortItemList", _sortItemList);
 		request.setAttribute("clay:headless-data-set-display:style", _style);
 	}
 
@@ -450,6 +463,7 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	private boolean _showManagementBar = true;
 	private boolean _showPagination = true;
 	private boolean _showSearch = true;
+	private SortItemList _sortItemList = new SortItemList();
 	private String _style = "default";
 
 }

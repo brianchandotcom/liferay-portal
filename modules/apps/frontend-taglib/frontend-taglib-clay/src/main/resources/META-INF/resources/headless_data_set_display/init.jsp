@@ -21,6 +21,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 page import="com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
@@ -59,5 +60,6 @@ String selectionType = (String)request.getAttribute("clay:headless-data-set-disp
 boolean showManagementBar = (boolean)request.getAttribute("clay:headless-data-set-display:showManagementBar");
 boolean showPagination = (boolean)request.getAttribute("clay:headless-data-set-display:showPagination");
 boolean showSearch = (boolean)request.getAttribute("clay:headless-data-set-display:showSearch");
+SortItemList sortItemList = (SortItemList)request.getAttribute("clay:headless-data-set-display:sortItemList");
 String style = (String)request.getAttribute("clay:headless-data-set-display:style");
 %>

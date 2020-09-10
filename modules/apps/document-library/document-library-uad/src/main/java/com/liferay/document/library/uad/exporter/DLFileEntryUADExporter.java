@@ -68,6 +68,9 @@ public class DLFileEntryUADExporter extends BaseDLFileEntryUADExporter {
 	protected void writeToZip(DLFileEntry dlFileEntry, ZipWriter zipWriter)
 		throws Exception {
 
+		zipWriter.addEntry(
+			dlFileEntry.getPrimaryKeyObj() + "-meta.xml", export(dlFileEntry));
+
 		if (dlFileEntry.getSize() > 0) {
 			String dlFileEntryFileName = StringBundler.concat(
 				dlFileEntry.getPrimaryKeyObj(), ".",
@@ -76,9 +79,6 @@ public class DLFileEntryUADExporter extends BaseDLFileEntryUADExporter {
 			zipWriter.addEntry(
 				dlFileEntryFileName, dlFileEntry.getContentStream());
 		}
-
-		zipWriter.addEntry(
-			dlFileEntry.getPrimaryKeyObj() + "-meta.xml", export(dlFileEntry));
 	}
 
 }

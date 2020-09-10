@@ -43,6 +43,48 @@ definition {
 			value1 = "${content}");
 	}
 
+	macro addTextWithLink {
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${displayText}");
+
+		SelectFieldText(locator1 = "CKEditor#BODY");
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
+
+		Click(
+			key_text = "Browse Server",
+			locator1 = "Link#ANY");
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		if (isSet(dmDocumentTitle)) {
+			Navigator.gotoNavItem(navItem = "Documents and Media");
+
+			LexiconCard.clickCard(card = "${dmDocumentTitle}");
+		}
+		else if (isSet(pageName)) {
+			Navigator.gotoNavItem(navItem = "Public Pages");
+
+			Portlet.expandTree();
+
+			AssertClick.assertPartialTextClickAt(
+				key_nodeName = "${pageName}",
+				locator1 = "Treeview#NODE_UNSELECTED",
+				value1 = "${pageName}");
+		}
+
+		Click(locator1 = "CKEditor#OK_BUTTON");
+	}
+
 	macro assertEditorPresent {
 		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD");
 	}

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -41,6 +42,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -81,6 +83,13 @@ public class CallFunction
 				paramsExpression);
 
 			for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+				if (Objects.equals(entry.getKey(), "locale")) {
+					builder = builder.withLocale(
+						LocaleUtil.fromLanguageId(entry.getValue()));
+
+					continue;
+				}
+
 				builder = builder.withParameter(
 					entry.getKey(), entry.getValue());
 			}

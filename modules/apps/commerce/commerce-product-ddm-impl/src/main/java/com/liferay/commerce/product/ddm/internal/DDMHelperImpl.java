@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -111,7 +112,7 @@ public class DDMHelperImpl implements DDMHelper {
 			ddmForm.addDDMFormRule(
 				_createDDMFormRule(
 					ddmForm, groupId, commerceAccountId, cpDefinitionId,
-					companyId, userId));
+					companyId, userId, locale));
 		}
 
 		return ddmForm;
@@ -193,11 +194,11 @@ public class DDMHelperImpl implements DDMHelper {
 
 	private DDMFormRule _createDDMFormRule(
 		DDMForm ddmForm, long groupId, long commerceAccountId,
-		long cpDefinitionId, long companyId, long userId) {
+		long cpDefinitionId, long companyId, long userId, Locale locale) {
 
 		String action = _createDDMFormRuleAction(
 			ddmForm, groupId, commerceAccountId, cpDefinitionId, companyId,
-			userId);
+			userId, locale);
 
 		return new DDMFormRule("TRUE", action);
 	}
@@ -215,7 +216,7 @@ public class DDMHelperImpl implements DDMHelper {
 	 */
 	private String _createDDMFormRuleAction(
 		DDMForm ddmForm, long groupId, long commerceAccountId,
-		long cpDefinitionId, long companyId, long userId) {
+		long cpDefinitionId, long companyId, long userId, Locale locale) {
 
 		String callFunctionStatement =
 			"call('getCPInstanceOptionsValues', concat(%s), '%s')";
@@ -224,13 +225,13 @@ public class DDMHelperImpl implements DDMHelper {
 			callFunctionStatement,
 			_createDDMFormRuleInputMapping(
 				ddmForm, groupId, commerceAccountId, cpDefinitionId, companyId,
-				userId),
+				userId, locale),
 			_createDDMFormRuleOutputMapping(ddmForm));
 	}
 
 	private String _createDDMFormRuleInputMapping(
 		DDMForm ddmForm, long groupId, long commerceAccountId,
-		long cpDefinitionId, long companyId, long userId) {
+		long cpDefinitionId, long companyId, long userId, Locale locale) {
 
 		// The input information will be transformed in parameter request of
 		// DDMDataProviderRequest class and it'll be accessible in the data
@@ -271,6 +272,11 @@ public class DDMHelperImpl implements DDMHelper {
 
 		inputMappingStatementStream = Stream.concat(
 			Stream.of(String.format("'userId=%s'", String.valueOf(userId))),
+			inputMappingStatementStream);
+
+		inputMappingStatementStream = Stream.concat(
+			Stream.of(
+				String.format("'locale=%s'", LocaleUtil.toLanguageId(locale))),
 			inputMappingStatementStream);
 
 		return inputMappingStatementStream.collect(

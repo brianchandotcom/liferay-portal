@@ -16,7 +16,6 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import {config} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateItemConfig from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import {CommonStyles} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/CommonStyles';
@@ -122,7 +121,6 @@ jest.mock(
 describe('CommonStyles', () => {
 	afterEach(() => {
 		cleanup();
-		config.responsiveEnabled = true;
 		updateItemConfig.mockClear();
 	});
 

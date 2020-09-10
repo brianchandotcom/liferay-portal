@@ -112,6 +112,17 @@ public class CommerceShippingFixedOptionServiceUtil {
 			commerceShippingMethodId, start, end, orderByComparator);
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.shipping.engine.fixed.model.
+			CommerceShippingFixedOption> getCommerceShippingFixedOptions(
+					long companyId, long groupId, long commerceShippingMethodId,
+					String keywords, int start, int end)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceShippingFixedOptions(
+			companyId, groupId, commerceShippingMethodId, keywords, start, end);
+	}
+
 	public static int getCommerceShippingFixedOptionsCount(
 			long commerceShippingMethodId)
 		throws com.liferay.portal.kernel.exception.PortalException {

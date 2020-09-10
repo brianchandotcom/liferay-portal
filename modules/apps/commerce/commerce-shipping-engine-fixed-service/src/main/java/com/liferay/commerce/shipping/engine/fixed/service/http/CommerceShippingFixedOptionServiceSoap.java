@@ -225,6 +225,31 @@ public class CommerceShippingFixedOptionServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.shipping.engine.fixed.model.
+		CommerceShippingFixedOptionSoap[] getCommerceShippingFixedOptions(
+				long companyId, long groupId, long commerceShippingMethodId,
+				String keywords, int start, int end)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.shipping.engine.fixed.model.
+					CommerceShippingFixedOption> returnValue =
+						CommerceShippingFixedOptionServiceUtil.
+							getCommerceShippingFixedOptions(
+								companyId, groupId, commerceShippingMethodId,
+								keywords, start, end);
+
+			return com.liferay.commerce.shipping.engine.fixed.model.
+				CommerceShippingFixedOptionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getCommerceShippingFixedOptionsCount(
 			long commerceShippingMethodId)
 		throws RemoteException {

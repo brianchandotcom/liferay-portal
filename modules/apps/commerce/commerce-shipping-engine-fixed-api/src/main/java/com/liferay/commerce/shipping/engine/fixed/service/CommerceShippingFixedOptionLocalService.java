@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -265,6 +267,12 @@ public interface CommerceShippingFixedOptionLocalService
 		long commerceShippingMethodId, int start, int end,
 		OrderByComparator<CommerceShippingFixedOption> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
+			long companyId, long groupId, long commerceShippingMethodId,
+			String keywords, int start, int end)
+		throws PortalException;
+
 	/**
 	 * Returns the number of commerce shipping fixed options.
 	 *
@@ -293,6 +301,11 @@ public interface CommerceShippingFixedOptionLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceShippingFixedOption>
+			searchCommerceShippingFixedOption(SearchContext searchContext)
 		throws PortalException;
 
 	/**

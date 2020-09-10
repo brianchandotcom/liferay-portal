@@ -59,17 +59,15 @@ DispatchLogDisplayContext dispatchLogDisplayContext = (DispatchLogDisplayContext
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-logs" />'
 			)
 		) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var form = window.document['<portlet:namespace />fm'];
 
-			form.attr('method', 'post');
+			form.setAttibute('method', 'post');
 
-			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('redirect').val('<%= currentURL %>');
-			form.fm('deleteDispatchLogIds').val(
-				Liferay.Util.listCheckedExcept(
-					form,
-					'<portlet:namespace />allRowIds'
-				)
+			form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
+			form['redirect'].value = '<%= currentURL %>';
+			form['deleteDispatchLogIds'].value = Liferay.Util.listCheckedExcept(
+				form,
+				'<portlet:namespace />allRowIds'
 			);
 
 			submitForm(form, '<portlet:actionURL name="editDispatchLog" />');

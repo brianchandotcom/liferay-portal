@@ -29,7 +29,7 @@ definition {
 	@description = "This ensures that a web content folder can be deleted in a depot."
 	@priority = "4"
 	test DeleteFolder {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
@@ -51,7 +51,7 @@ definition {
 				title = "WC WebContent Title ${i}");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -73,7 +73,7 @@ definition {
 	@description = "This test deletes template and structure in a depot."
 	@priority = "5"
 	test DeleteTemplateAndStructure {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoStructures();
 
@@ -88,7 +88,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoTemplates();
 
@@ -98,7 +98,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoTemplates();
 
@@ -108,7 +108,7 @@ definition {
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no templates.");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoStructures();
 
@@ -122,7 +122,7 @@ definition {
 	@description = "This ensures that a web content folder can be edited in a depot."
 	@priority = "3"
 	test EditFolder {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
@@ -145,7 +145,7 @@ definition {
 	@description = "This test edits template and structure in a depot."
 	@priority = "5"
 	test EditTemplateAndStructure {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoStructures();
 
@@ -160,7 +160,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoTemplates();
 
@@ -170,7 +170,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoTemplates();
 
@@ -182,7 +182,7 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.editSubstructureDefaultValuesCP(
-			depotName = "test-depot-name",
+			depotName = "Test Depot Name",
 			editSubstructureFieldNames = "Text",
 			substructureName = "WC Structure Name");
 	}
@@ -229,11 +229,11 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.expireCP(webContentTitleList = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -255,11 +255,11 @@ definition {
 
 		LAR.exportPortlet(larFileName = "ExportWebContent.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		LAR.importPortlet(larFileName = "ExportWebContent.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
 	}
@@ -273,7 +273,7 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
@@ -293,7 +293,7 @@ definition {
 	@description = "This ensures that web content with structure can be restored to a depot."
 	@priority = "5"
 	test RestoreWebContentWithStructure {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoStructures();
 
@@ -308,7 +308,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoTemplates();
 
@@ -318,7 +318,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -332,7 +332,7 @@ definition {
 			assetType = "Web Content Article",
 			webContentTitle = "WC WebContent Title");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
 
 		RecycleBin.viewCP(
 			assetName = "WC WebContent Title",
@@ -344,7 +344,7 @@ definition {
 			assetRestoreLocation = "Home",
 			assetType = "Web Content Article");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",

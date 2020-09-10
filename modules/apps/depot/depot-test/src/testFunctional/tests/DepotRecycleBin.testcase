@@ -36,7 +36,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -46,7 +46,7 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		Check(
 			key_webContentTitle = "WC WebContent Title",
@@ -95,7 +95,7 @@ definition {
 
 		Depot.configureRecycleBin(recycleBin = "Disabled");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -129,7 +129,7 @@ definition {
 
 		Depot.configureRecycleBin(recycleBin = "Disabled");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		AssertElementNotPresent(
 			key_category = "Recycle Bin",
@@ -141,7 +141,7 @@ definition {
 	@description = "This ensures that the documents can be restored from recycle bin."
 	@priority = "5"
 	test RestoreDocuments {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
 
@@ -172,14 +172,14 @@ definition {
 			assetRestoreLocation = "Home",
 			assetType = "Document");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		for (var dmDocumentTitle : list "Document_1.doc,Document_2.jpg") {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 			DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
 	}
 
@@ -194,7 +194,7 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -211,7 +211,7 @@ definition {
 			assetRestoreLocation = "Home",
 			assetType = "Web Content Article");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 

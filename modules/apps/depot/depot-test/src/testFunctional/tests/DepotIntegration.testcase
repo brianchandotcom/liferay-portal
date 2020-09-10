@@ -333,7 +333,7 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -669,7 +669,7 @@ definition {
 
 		Depot.connectSite(siteList = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -700,7 +700,7 @@ definition {
 
 		Depot.connectSite(siteList = "Child Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
 

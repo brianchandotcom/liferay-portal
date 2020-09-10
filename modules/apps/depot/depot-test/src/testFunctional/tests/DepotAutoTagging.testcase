@@ -56,7 +56,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_4.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
@@ -74,14 +74,14 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.05");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			dmDocumentTitle = "DM Document PDF");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document PDF");
 
@@ -105,7 +105,7 @@ definition {
 			site = "false",
 			title = "Digital Transformation or Digital Experience?");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
 
@@ -132,7 +132,7 @@ definition {
 			site = "false",
 			title = "Digital Transformation or Digital Experience?");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
 
@@ -143,10 +143,10 @@ definition {
 			locator1 = "AssetCategorization#TAG",
 			value1 = "dxp");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.deleteCP(
-			siteURLKey = "test-depot-name",
+			depotName = "Test Depot Name",
 			webContentTitle = "Digital Transformation or Digital Experience?");
 	}
 
@@ -170,7 +170,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_4.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
@@ -194,14 +194,14 @@ definition {
 
 		Depot.configureAutoTagging(autoTagging = "Disabled");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			dmDocumentTitle = "DM Document PDF");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document PDF");
 
@@ -231,7 +231,7 @@ definition {
 			site = "false",
 			title = "Digital Transformation or Digital Experience?");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
 
@@ -253,7 +253,7 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -267,7 +267,7 @@ definition {
 		AutoTagging.assertAutoTagPresent(tagName = "adventures");
 		AutoTagging.assertAutoTagPresent(tagName = "alice");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.removeTag(removeTag = "alice");
 

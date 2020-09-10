@@ -43,7 +43,7 @@ definition {
 	@description = "This ensures that the approved image from a depot is available to use in its connected site."
 	@priority = "5"
 	test ApproveImage {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
@@ -99,7 +99,7 @@ definition {
 			workflowAssetType = "Document",
 			workflowTask = "Review");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -134,7 +134,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Web Content Article");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -197,7 +197,7 @@ definition {
 			workflowAssetType = "Web Content Article",
 			workflowTask = "Review");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "Approved",
@@ -265,7 +265,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Web Content Article");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -312,7 +312,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "Approved",
@@ -333,7 +333,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Web Content Article");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -341,7 +341,7 @@ definition {
 			webContentContent = "Depot WebContent Content",
 			webContentTitle = "Depot WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WorkflowAsset.gotoViaNotification(
 			assetType = "Web Content Article",
@@ -361,7 +361,7 @@ definition {
 			workflowAssetType = "Web Content Article",
 			workflowTask = "Review");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "Approved",
@@ -371,7 +371,7 @@ definition {
 	@description = "This ensures that the approved WC article in folder from a depot is available to use in its connected site."
 	@priority = "5"
 	test ApproveWCInFolder {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
@@ -448,7 +448,7 @@ definition {
 			workflowAssetType = "Web Content Article",
 			workflowTask = "Review");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
@@ -477,7 +477,7 @@ definition {
 	@description = "This ensures that the resubmitted document from a depot is available to use in its connected site."
 	@priority = "5"
 	test RejectAndResubmitDocument {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
@@ -544,7 +544,7 @@ definition {
 			workflowAssetType = "Document",
 			workflowTask = "Review");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -607,7 +607,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Web Content Article");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -666,7 +666,7 @@ definition {
 			workflowAssetType = "Web Content Article",
 			workflowTask = "Review");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "Approved",
@@ -725,7 +725,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Web Content Article");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -747,7 +747,7 @@ definition {
 			workflowAssetType = "Web Content Article",
 			workflowTask = "Review");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "Pending",
@@ -786,7 +786,7 @@ definition {
 			workflowAssetType = "Web Content Article",
 			workflowTask = "Review");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "Approved",
@@ -841,7 +841,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Web Content Article");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -876,7 +876,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "Pending",
@@ -902,7 +902,7 @@ definition {
 			key_rowEntry = "Blogs Entry",
 			locator1 = "Button#EDIT_ROW");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
 

@@ -370,7 +370,7 @@ definition {
 			webContentContent = "WC WebContent Content Edit",
 			webContentTitle = "WC WebContent Title Edit");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -599,7 +599,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		DepotNavigator.openDepotMembershipsAdmin(depotURLKey = "test-depot-name");
+		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
 		LexiconCard.clickEllipsisItem(
 			card = "userfn userln",

@@ -253,7 +253,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		Pause(locator1 = "3000");
 
@@ -265,7 +265,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name-2");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name 2");
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 
@@ -620,7 +620,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Site DM Document Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Depot DM Document Title");
 

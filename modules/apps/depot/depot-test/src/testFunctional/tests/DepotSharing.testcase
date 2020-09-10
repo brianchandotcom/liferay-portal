@@ -45,7 +45,7 @@ definition {
 	@description = "This test asserts that users get the proper notification based on depot sharing permissions granted to him."
 	@priority = "5"
 	test AssertNotifications {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_1.png,Document_1.odt");
 
@@ -57,7 +57,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
@@ -72,7 +72,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -87,7 +87,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -140,7 +140,7 @@ definition {
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -171,7 +171,7 @@ definition {
 			dmDocumentTitle = "Document_1.txt",
 			groupName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -190,7 +190,7 @@ definition {
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.doc");
 
@@ -200,7 +200,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
 
@@ -247,7 +247,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
 
@@ -310,7 +310,7 @@ definition {
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.doc");
 
@@ -319,7 +319,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.doc");
 
@@ -328,7 +328,7 @@ definition {
 			userEmailAddress = "userea2@liferay.com",
 			userName = "userfn2 userln2");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
 
@@ -336,7 +336,7 @@ definition {
 
 		DMDocumentSharing.viewCollaborators(collaboratorList = "userfn,userfn2");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
 

@@ -29,7 +29,7 @@ definition {
 	@description = "This ensures that the user can import the asset library lar to an asset library."
 	@priority = "5"
 	test ImportDepotLARToDepot {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoStructures();
 
@@ -44,7 +44,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoTemplates();
 
@@ -54,7 +54,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -68,7 +68,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoMetadataSets();
 
@@ -86,7 +86,7 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "DM Metadata Set Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document with DM Document Type Description",
@@ -109,13 +109,13 @@ definition {
 			site = "false",
 			title = "Depot Manual Asset List");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
 			type = "Manual");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.selectAsset(
 			assetListName = "Depot Manual Asset List",
@@ -130,7 +130,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Export");
 
-		LAR.exportSiteCP(siteScopeName = "Test Depot Name");
+		LAR.exportSiteCP(depotName = "Test Depot Name");
 
 		var larFileName = LAR.getLarFileName();
 
@@ -147,10 +147,10 @@ definition {
 			portlet = "Import");
 
 		LAR.importSiteCP(
-			larFileName = "${larFileName}",
-			siteName = "Test Import Depot Name");
+			depotName = "Test Import Depot Name",
+			larFileName = "${larFileName}");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-import-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Import Depot Name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -165,19 +165,19 @@ definition {
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-import-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Import Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-import-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Import Depot Name");
 
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-import-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Import Depot Name");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
@@ -193,7 +193,7 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -202,7 +202,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -213,7 +213,7 @@ definition {
 			site = "false",
 			title = "Depot Manual Asset List");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
@@ -225,7 +225,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Export");
 
-		LAR.exportSiteCP(siteScopeName = "Test Depot Name");
+		LAR.exportSiteCP(depotName = "Test Depot Name");
 
 		var larFileName = LAR.getLarFileName();
 
@@ -302,20 +302,20 @@ definition {
 			portlet = "Import");
 
 		LAR.importSiteCP(
-			larFileName = "${larFileName}",
-			siteName = "Test Depot Name");
+			depotName = "Test Depot Name",
+			larFileName = "${larFileName}");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",

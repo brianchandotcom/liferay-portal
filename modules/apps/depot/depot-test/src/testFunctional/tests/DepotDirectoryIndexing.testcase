@@ -74,14 +74,14 @@ definition {
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
 		Depot.viewDocumentInFTP(
-			depotName = "test depot name",
+			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document JPG");
 	}
 
@@ -104,10 +104,10 @@ definition {
 			groupName = "Test Depot Name");
 
 		Depot.viewDocumentInFTP(
-			depotName = "test depot name",
+			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document PDF");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
 
@@ -135,23 +135,23 @@ definition {
 			groupName = "Test Depot Name");
 
 		Depot.viewDocumentInFTP(
-			depotName = "test depot name",
+			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document TXT");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.editCP(
 			dmDocumentTitle = "DM Document TXT",
 			dmDocumentTitleEdit = "DM Document TXT Edit");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document TXT Edit");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document TXT Edit");
 
 		Depot.viewDocumentInFTP(
-			depotName = "test depot name",
+			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document TXT Edit");
 	}
 
@@ -168,7 +168,7 @@ definition {
 
 		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
@@ -180,7 +180,7 @@ definition {
 			folderName = "DM Folder Name",
 			groupName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.gotoEntry(dmFolderName = "DM Folder Name");
 
@@ -189,7 +189,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document DOC");
 
 		Depot.viewDocumentInFTP(
-			depotName = "test depot name",
+			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document DOC",
 			dmFolderName = "DM Folder Name");
 	}
@@ -207,7 +207,7 @@ definition {
 
 		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
@@ -225,7 +225,7 @@ definition {
 			dmDocumentTitle = "DM Document XLS");
 
 		Depot.viewNoDocumentInFTP(
-			depotName = "test depot name",
+			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document XLS",
 			dmFolderName = "DM Folder Name");
 
@@ -244,7 +244,7 @@ definition {
 			workflowTask = "Review");
 
 		Depot.viewDocumentInFTP(
-			depotName = "test depot name",
+			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document XLS",
 			dmFolderName = "DM Folder Name");
 	}
@@ -267,7 +267,7 @@ definition {
 			dmDocumentTitle = "DM Document SVG",
 			groupName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document SVG");
 
@@ -276,7 +276,7 @@ definition {
 			roleList = "Guest");
 
 		Depot.viewDocumentInFTP(
-			depotName = "test depot name",
+			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document SVG");
 
 		Navigator.openURL();
@@ -284,7 +284,7 @@ definition {
 		User.logoutPG();
 
 		Depot.viewNoDocumentInFTP(
-			depotName = "test depot name",
+			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document SVG");
 
 		User.loginPG();

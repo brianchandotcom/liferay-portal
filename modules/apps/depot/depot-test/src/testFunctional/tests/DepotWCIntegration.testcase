@@ -92,7 +92,7 @@ definition {
 	@description = "This ensures that web content using a structure stored in AL can be removed on a connected site."
 	@priority = "4"
 	test RemoveCustomizedWC {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoStructures();
 
@@ -107,7 +107,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoTemplates();
 
@@ -145,7 +145,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.deleteCP(
 			structureName = "WC Structure Name",
@@ -165,7 +165,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Page Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoStructures();
 
@@ -180,7 +180,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoTemplates();
 
@@ -618,7 +618,7 @@ definition {
 		}
 
 		for (var count : list "1,2") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name${count}");
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name${count}");
 
 			NavItem.gotoStructures();
 
@@ -633,7 +633,7 @@ definition {
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name${count}");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name${count}");
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name${count}");
 
 			NavItem.gotoTemplates();
 
@@ -701,7 +701,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Page Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoStructures();
 
@@ -716,7 +716,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoTemplates();
 
@@ -789,7 +789,7 @@ definition {
 		}
 
 		for (var i : list "1,2,3") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name${i}");
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name${i}");
 
 			NavItem.gotoStructures();
 
@@ -804,7 +804,7 @@ definition {
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name${i}");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name${i}");
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name${i}");
 
 			NavItem.gotoTemplates();
 

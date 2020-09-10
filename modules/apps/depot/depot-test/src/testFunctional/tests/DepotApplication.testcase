@@ -42,13 +42,13 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpeg");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.addManualSelection(
 			assetListTitle = "Depot Manual Asset List",
 			depotName = "Test Depot Name");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.selectAsset(
 			assetListName = "Depot Manual Asset List",
@@ -56,7 +56,7 @@ definition {
 			assetType = "Basic Document",
 			itemType = "All Types");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.selectAsset(
 			assetListName = "Depot Manual Asset List",
@@ -73,14 +73,14 @@ definition {
 			applicationList = "Web Content,Documents and Media",
 			status = "Disabled");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.viewContent(
 			assetListTitle = "Depot Manual Asset List",
 			assetTitle = "WC WebContent Title",
 			assetType = "Web Content Article");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.viewContent(
 			assetListTitle = "Depot Manual Asset List",
@@ -145,11 +145,11 @@ definition {
 	@description = "This ensures that the Collections application can be viewed after reactivating in a depot."
 	@priority = "5"
 	test ViewCollectionsAfterReactivating {
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
 
@@ -192,7 +192,7 @@ definition {
 			applicationList = "Collections",
 			depotName = "Test Depot Name");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.viewAssetList(
 			assetListTitle = "Depot Manual Asset List",
@@ -462,7 +462,7 @@ definition {
 			applicationList = "Documents and Media",
 			depotName = "Test Depot Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -517,7 +517,7 @@ definition {
 			applicationList = "Web Content",
 			depotName = "Test Depot Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}

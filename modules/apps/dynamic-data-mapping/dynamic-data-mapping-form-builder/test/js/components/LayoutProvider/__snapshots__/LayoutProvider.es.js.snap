@@ -343,6 +343,7 @@ Array [
                               "fields": Array [
                                 Object {
                                   "fieldName": "label",
+                                  "instanceId": "Any<String>",
                                   "localizable": true,
                                   "localizedValue": Object {
                                     "en_US": "Radio Field",
@@ -361,16 +362,20 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "name",
+                                  "instanceId": "Any<String>",
                                   "value": "Liferay",
                                 },
                                 Object {
                                   "fieldName": "required",
+                                  "instanceId": "Any<String>",
                                 },
                                 Object {
                                   "fieldName": "type",
+                                  "instanceId": "Any<String>",
                                 },
                                 Object {
                                   "fieldName": "validation",
+                                  "instanceId": "Any<String>",
                                   "value": Object {},
                                 },
                               ],
@@ -426,6 +431,7 @@ Array [
                               "fields": Array [
                                 Object {
                                   "fieldName": "label",
+                                  "instanceId": "Any<String>",
                                   "localizable": true,
                                   "localizedValue": Object {
                                     "en_US": "copy-of-x",
@@ -445,16 +451,20 @@ Array [
                                 },
                                 Object {
                                   "fieldName": "name",
+                                  "instanceId": "Any<String>",
                                   "value": "Liferay",
                                 },
                                 Object {
                                   "fieldName": "required",
+                                  "instanceId": "Any<String>",
                                 },
                                 Object {
                                   "fieldName": "type",
+                                  "instanceId": "Any<String>",
                                 },
                                 Object {
                                   "fieldName": "validation",
+                                  "instanceId": "Any<String>",
                                   "validation": Object {
                                     "fieldName": "Any<String>",
                                   },

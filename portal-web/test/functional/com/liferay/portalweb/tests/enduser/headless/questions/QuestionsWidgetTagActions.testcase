@@ -220,6 +220,8 @@ definition {
 		for (var num : list "1,2") {
 			Navigator.gotoPage(pageName = "Questions Page");
 
+			Questions.gotoTab(questionTabField = "Questions");
+
 			Questions.addRootTopic(
 				rootTopicDescription = "Description",
 				rootTopicName = "Question ValidateTagsOccurrences${num}");
@@ -263,11 +265,9 @@ definition {
 
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
-		Questions.gotoTab(questionTabField = "Tags");
+		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionTabField = "Tags",
-			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+		Questions.gotoTab(questionTabField = "Tags");
 
 		Questions.viewTags(
 			amountOfUsedTimes = "3",

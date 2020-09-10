@@ -78,6 +78,9 @@ definition {
 					elasticsearchTasks = JSONCurlUtil.get("${curl}");
 				}
 			}
+			else if (contains("${searchEngineVendor}", "Solr") && contains("${actionsDescription}", "spell check")) {
+				Pause.pauseNoSPARefresh(locator1 = "60000");
+			}
 			else if (contains("${searchEngineVendor}", "Solr")) {
 				while ((IsElementNotPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexStartTime}" != "60")) {
 					Pause.pauseNoSPARefresh(locator1 = "5000");

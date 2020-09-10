@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -26,8 +27,12 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.test.rule.ExpectedLog;
+import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
@@ -74,6 +79,32 @@ public class DLFileEntryUADExporterTest
 		List<String> entries = zipReader.getEntries();
 
 		Assert.assertEquals(entries.toString(), 2, entries.size());
+	}
+
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "com.liferay.document.library.kernel.exception.NoSuchFileException",
+				expectedType = ExpectedType.CONTAINS
+			)
+		},
+		level = "ERROR", loggerClass = DynamicQueryUADExporter.class
+	)
+	@Test
+	public void testExportWithMissingBinary() throws Exception {
+		DLFileEntry dlFileEntry = addBaseModel(user.getUserId());
+
+		DLStoreUtil.deleteFile(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName());
+
+		File file = _uadExporter.exportAll(user.getUserId());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		List<String> entries = zipReader.getEntries();
+
+		Assert.assertEquals(entries.toString(), 1, entries.size());
 	}
 
 	@Override

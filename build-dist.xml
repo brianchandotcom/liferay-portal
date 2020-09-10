@@ -2946,6 +2946,33 @@ plugins.includes=</echo>
 		</zip>
 	</target>
 
+	<target name="zip-portal-elasticsearch">
+		<tstamp>
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+		</tstamp>
+
+		<mkdir dir="${tstamp.value}" />
+
+		<copy
+			todir="${tstamp.value}"
+		>
+			<fileset
+				dir="${liferay.home}/elasticsearch7"
+			/>
+		</copy>
+
+		<zip
+			destfile="dist/liferay-portal-elasticsearch-${lp.version}.zip"
+		>
+			<zipfileset
+				dir="${tstamp.value}"
+				prefix="liferay-portal-elasticsearch-${lp.version}/elasticsearch7"
+			/>
+		</zip>
+
+		<delete dir="${tstamp.value}" />
+	</target>
+
 	<target name="zip-portal-tools">
 		<tstamp>
 			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />

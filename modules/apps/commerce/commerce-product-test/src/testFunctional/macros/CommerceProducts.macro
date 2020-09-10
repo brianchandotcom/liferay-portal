@@ -1,8 +1,6 @@
 definition {
 
 	macro addEntry {
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Products");
-
 		Click(locator1 = "Button#PLUS");
 
 		Click(

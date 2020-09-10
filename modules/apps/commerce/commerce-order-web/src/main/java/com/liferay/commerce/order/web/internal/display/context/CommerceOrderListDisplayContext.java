@@ -20,6 +20,8 @@ import com.liferay.commerce.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -126,6 +128,19 @@ public class CommerceOrderListDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	public SortItemList getSortItemList() {
+		SortItemList sortItemList = new SortItemList();
+
+		SortItem sortItem = new SortItem();
+
+		sortItem.setDirection("desc");
+		sortItem.setKey("createDate");
+
+		sortItemList.add(sortItem);
+
+		return sortItemList;
 	}
 
 	private final CommerceOrderNoteService _commerceOrderNoteService;

@@ -29,5 +29,6 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= commerceOrderListDisplayContext.getPortletURL() %>"
+	sortItemList="<%= commerceOrderListDisplayContext.getSortItemList() %>"
 	style="fluid"
 />

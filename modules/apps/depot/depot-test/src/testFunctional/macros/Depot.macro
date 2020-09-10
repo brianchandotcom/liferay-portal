@@ -713,7 +713,9 @@ definition {
 	macro viewDocumentInFTP {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/documents/${depotName}");
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/asset-library-${depotId}");
 
 		if (isSet(dmFolderName)) {
 			Click(
@@ -855,7 +857,9 @@ definition {
 	macro viewNoDocumentInFTP {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/documents/${depotName}");
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/asset-library-${depotId}");
 
 		if (isSet(dmFolderName)) {
 			Click(

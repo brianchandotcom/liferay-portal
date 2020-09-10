@@ -1,38 +1,8 @@
 {
-	"csfConfig": {
-		"js": {
-			"lint": {
-				"env": {
-					"browser": true,
-					"es6": true,
-					"jest": true,
-					"node": true
-				},
-				"extends": "liferay",
-				"parser": "babel-eslint",
-				"parserOptions": {
-					"ecmaVersion": 7
-				},
-				"plugins": [
-					"./node_modules/eslint-plugin-react"
-				],
-				"rules": {
-					"react/jsx-handler-names": [
-						2,
-						{
-							"eventHandlerPrefix": "_handle"
-						}
-					]
-				}
-			}
-		}
-	},
 	"dependencies": {
 		"frontend-js-react-web": "*",
 		"history": "^4.9.0",
-		"react": "16.12.0",
-		"react-dom": "16.12.0",
-		"redux": "^4.0.1"
+		"react": "16.12.0"
 	},
 	"description": "",
 	"main": "js/index.es.js",

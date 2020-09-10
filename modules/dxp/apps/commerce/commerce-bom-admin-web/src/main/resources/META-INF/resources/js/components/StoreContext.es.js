@@ -10,7 +10,6 @@
  */
 
 import React, {createContext, useReducer} from 'react';
-import {combineReducers} from 'redux';
 
 import {actions as appActions} from '../actions/app.es';
 import {actions as areaActions} from '../actions/area.es';
@@ -19,6 +18,7 @@ import appReducer, {initialState as initialAppState} from '../reducers/app.es';
 import areaReducer, {
 	initialState as initialAreaState,
 } from '../reducers/area.es';
+import {combineReducers} from './utilities/combineReducers.es';
 
 export const StoreContext = createContext();
 

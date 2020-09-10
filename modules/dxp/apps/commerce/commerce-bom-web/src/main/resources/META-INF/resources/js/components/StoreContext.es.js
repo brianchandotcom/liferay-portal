@@ -10,7 +10,6 @@
  */
 
 import React, {createContext, useReducer} from 'react';
-import {combineReducers} from 'redux';
 
 import {actions as appActions} from '../actions/app.es';
 import {actions as areaActions} from '../actions/area.es';
@@ -23,6 +22,7 @@ import areaReducer, {
 import folderReducer, {
 	initialState as initialFolderState,
 } from '../reducers/folder.es';
+import {combineReducers} from './utilities/combineReducers.es';
 
 export const StoreContext = createContext();
 

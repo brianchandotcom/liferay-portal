@@ -37,6 +37,23 @@ export const actionDefinition = {
 	UPDATE_FORM_VALUE: 'updateFormValue',
 };
 
+export function getAcceptLanguageHeaderParam() {
+	const browserLang = navigator.language || navigator.userLanguage;
+	const themeLang = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
+
+	if (browserLang === themeLang) {
+		return browserLang;
+	}
+
+	return `${browserLang}, ${themeLang};q=0.8`;
+}
+
+export const fetchHeaders = new Headers({
+	Accept: 'application/json',
+	'Accept-Language': getAcceptLanguageHeaderParam(),
+	'Content-Type': 'application/json',
+});
+
 const highlightDetail = (dispatch) => (number, showFirstResume = false) =>
 	dispatch({
 		payload: {
@@ -126,17 +143,15 @@ const updateFormValue = (dispatch) => (key, value) =>
 	});
 
 const submitNewSpot = (dispatch) => (endpoint, areaId, formData) => {
-	const {...data} = formData;
+	const {number, position, productId} = formData;
 
 	dispatch({
 		type: actionDefinition.SUBMIT_NEW_SPOT_PENDING,
 	});
 
 	return fetch(endpoint + '/' + areaId + '/spot', {
-		body: JSON.stringify(data),
-		headers: new Headers({
-			'Content-Type': 'application/json',
-		}),
+		body: JSON.stringify({number, position, productId}),
+		headers: fetchHeaders,
 		method: 'POST',
 	})
 		.then(() => {
@@ -186,9 +201,7 @@ const submitSpotChanges = (dispatch) => (endpoint, areaId, formData) => {
 
 	return fetch(endpoint + '/' + areaId + '/spot/' + id, {
 		body: JSON.stringify(data),
-		headers: new Headers({
-			'Content-Type': 'application/json',
-		}),
+		headers: fetchHeaders,
 		method: 'PUT',
 	})
 		.then(() => {

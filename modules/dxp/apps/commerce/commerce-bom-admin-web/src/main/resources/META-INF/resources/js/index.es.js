@@ -15,10 +15,11 @@ import React from 'react';
 import App from './App.es';
 import {StoreProvider} from './components/StoreContext.es';
 
-export default function (componentId, id, props) {
-	const portletFrame = window.document.getElementById(id);
-	let instance = null;
-	render(
+// eslint-disable-next-line no-unused-vars
+let instance = null;
+
+function BOMAdmin(props) {
+	return (
 		<StoreProvider>
 			<App
 				ref={(component) => {
@@ -26,12 +27,12 @@ export default function (componentId, id, props) {
 				}}
 				{...props}
 			/>
-		</StoreProvider>,
-		portletFrame
+		</StoreProvider>
 	);
-	if (window.Liferay) {
-		window.Liferay.component(componentId, instance);
-	}
+}
 
-	return instance;
+export default function (componentId, id, props) {
+	const portletFrame = window.document.getElementById(id);
+
+	render(BOMAdmin, props, portletFrame);
 }

@@ -350,20 +350,12 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (!permissionChecker.isSignedIn()) {
-			_setGuestCommerceOrder(
-				commerceOrder, httpServletRequest, themeDisplay.getResponse());
-
+		if (permissionChecker.isSignedIn()) {
 			return;
 		}
 
-		httpServletRequest = _portal.getOriginalServletRequest(
-			httpServletRequest);
-
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		httpSession.setAttribute(
-			getCookieName(commerceOrder.getGroupId()), commerceOrder.getUuid());
+		_setGuestCommerceOrder(
+			commerceOrder, httpServletRequest, themeDisplay.getResponse());
 	}
 
 	@Reference(

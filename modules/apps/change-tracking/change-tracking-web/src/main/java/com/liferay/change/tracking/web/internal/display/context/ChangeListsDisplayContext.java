@@ -171,7 +171,18 @@ public class ChangeListsDisplayContext {
 				navigationItem.setActive(false);
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/change_lists/view_history");
+					"/change_lists/view_scheduled", "displayStyle",
+					getDisplayStyle());
+				navigationItem.setLabel(
+					_language.get(_httpServletRequest, "scheduled"));
+			}
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(false);
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/change_lists/view_history", "displayStyle",
+					getDisplayStyle());
 				navigationItem.setLabel(
 					_language.get(_httpServletRequest, "history"));
 			}

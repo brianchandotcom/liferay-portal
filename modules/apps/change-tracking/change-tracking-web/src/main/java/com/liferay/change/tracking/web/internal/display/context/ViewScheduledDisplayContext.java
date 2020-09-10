@@ -15,22 +15,16 @@
 package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTProcess;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTProcessService;
-import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
+import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
-import com.liferay.portal.background.task.model.BackgroundTask;
-import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -38,7 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -48,20 +42,18 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Samuel Trong Tran
  */
-public class ViewHistoryDisplayContext {
+public class ViewScheduledDisplayContext {
 
-	public ViewHistoryDisplayContext(
-		BackgroundTaskLocalService backgroundTaskLocalService,
-		CTCollectionLocalService ctCollectionLocalService,
-		CTProcessService ctProcessService,
+	public ViewScheduledDisplayContext(
+		CTCollectionService ctCollectionService,
 		HttpServletRequest httpServletRequest, Language language,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		PublishScheduler publishScheduler, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
-		_backgroundTaskLocalService = backgroundTaskLocalService;
-		_ctCollectionLocalService = ctCollectionLocalService;
-		_ctProcessService = ctProcessService;
+		_ctCollectionService = ctCollectionService;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_publishScheduler = publishScheduler;
 
 		_renderRequest = renderRequest;
 
@@ -71,78 +63,48 @@ public class ViewHistoryDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public CTCollection getCtCollection(CTProcess ctProcess)
-		throws PortalException {
-
-		return _ctCollectionLocalService.getCTCollection(
-			ctProcess.getCtCollectionId());
-	}
-
 	public String getDisplayStyle() {
 		return ParamUtil.getString(_renderRequest, "displayStyle", "list");
 	}
 
-	public SearchContainer<CTProcess> getSearchContainer() {
+	public SearchContainer<CTCollection> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
 
-		SearchContainer<CTProcess> searchContainer = new SearchContainer<>(
+		SearchContainer<CTCollection> searchContainer = new SearchContainer<>(
 			_renderRequest, new DisplayTerms(_renderRequest), null,
 			SearchContainer.DEFAULT_CUR_PARAM, 5,
 			PortletURLUtil.getCurrent(_renderRequest, _renderResponse), null,
 			_language.get(
-				_httpServletRequest, "no-publication-has-been-published-yet"));
+				_httpServletRequest, "no-publication-has-been-scheduled-yet"));
 
 		searchContainer.setDeltaConfigurable(false);
-		searchContainer.setId("history");
+		searchContainer.setId("scheduled");
 		searchContainer.setOrderByCol(_getOrderByCol());
 		searchContainer.setOrderByType(_getOrderByType());
 
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
-		List<CTProcess> results = _ctProcessService.getCTProcesses(
-			_themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
-			displayTerms.getKeywords(), _getStatus(_getFilterByStatus()), 0, 5,
-			_getOrderByComparator(_getOrderByCol(), _getOrderByType()));
+		List<CTCollection> results = _ctCollectionService.getCTCollections(
+			_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_SCHEDULED,
+			displayTerms.getKeywords(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, _getOrderByComparator());
 
-		searchContainer.setResults(results);
 		searchContainer.setTotal(results.size());
+
+		int end = searchContainer.getEnd();
+
+		if (end > results.size()) {
+			end = results.size();
+		}
+
+		searchContainer.setResults(
+			results.subList(searchContainer.getStart(), end));
 
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
-	}
-
-	public int getStatus(CTProcess ctProcess) {
-		BackgroundTask backgroundTask =
-			_backgroundTaskLocalService.fetchBackgroundTask(
-				ctProcess.getBackgroundTaskId());
-
-		if (backgroundTask == null) {
-			return -1;
-		}
-
-		return backgroundTask.getStatus();
-	}
-
-	public String getStatusLabel(int status) {
-		if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
-			return "published";
-		}
-
-		return BackgroundTaskConstants.getStatusLabel(status);
-	}
-
-	public String getStatusStyle(int status) {
-		if (status == BackgroundTaskConstants.STATUS_IN_PROGRESS) {
-			return "warning";
-		}
-		else if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
-			return "success";
-		}
-
-		return "danger";
 	}
 
 	public List<NavigationItem> getViewNavigationItems() {
@@ -155,7 +117,7 @@ public class ViewHistoryDisplayContext {
 			}
 		).add(
 			navigationItem -> {
-				navigationItem.setActive(false);
+				navigationItem.setActive(true);
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "mvcRenderCommandName",
 					"/change_lists/view_scheduled", "displayStyle",
@@ -165,7 +127,7 @@ public class ViewHistoryDisplayContext {
 			}
 		).add(
 			navigationItem -> {
-				navigationItem.setActive(true);
+				navigationItem.setActive(false);
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "mvcRenderCommandName",
 					"/change_lists/view_history", "displayStyle",
@@ -176,29 +138,18 @@ public class ViewHistoryDisplayContext {
 		).build();
 	}
 
-	private String _getFilterByStatus() {
-		return ParamUtil.getString(_renderRequest, "status", "all");
-	}
-
 	private String _getOrderByCol() {
 		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"published-date");
+			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "name");
 	}
 
-	private OrderByComparator<CTProcess> _getOrderByComparator(
-		String orderByCol, String orderByType) {
+	private OrderByComparator<CTCollection> _getOrderByComparator() {
+		OrderByComparator<CTCollection> orderByComparator = null;
 
-		OrderByComparator<CTProcess> orderByComparator = null;
-
-		if (orderByCol.equals("name")) {
+		if (Objects.equals(_getOrderByCol(), "name")) {
 			orderByComparator = OrderByComparatorFactoryUtil.create(
-				"CTCollection",
-				new Object[] {orderByCol, orderByType.equals("asc")});
-		}
-		else if (orderByCol.equals("published-date")) {
-			orderByComparator = OrderByComparatorFactoryUtil.create(
-				"CTProcess", "createDate", orderByType.equals("asc"));
+				"CTCollection", _getOrderByCol(),
+				Objects.equals(_getOrderByType(), "asc"));
 		}
 
 		return orderByComparator;
@@ -210,28 +161,13 @@ public class ViewHistoryDisplayContext {
 			"desc");
 	}
 
-	private int _getStatus(String type) {
-		return _statuses.getOrDefault(type, 0);
-	}
-
-	private static final Map<String, Integer> _statuses = HashMapBuilder.put(
-		"all", WorkflowConstants.STATUS_ANY
-	).put(
-		"failed", BackgroundTaskConstants.STATUS_FAILED
-	).put(
-		"in-progress", BackgroundTaskConstants.STATUS_IN_PROGRESS
-	).put(
-		"published", BackgroundTaskConstants.STATUS_SUCCESSFUL
-	).build();
-
-	private final BackgroundTaskLocalService _backgroundTaskLocalService;
-	private final CTCollectionLocalService _ctCollectionLocalService;
-	private final CTProcessService _ctProcessService;
+	private final CTCollectionService _ctCollectionService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final PublishScheduler _publishScheduler;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private SearchContainer<CTProcess> _searchContainer;
+	private SearchContainer<CTCollection> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 
 }

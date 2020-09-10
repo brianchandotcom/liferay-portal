@@ -184,6 +184,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 									<c:choose>
 										<c:when test="<%= html %>">
 											<liferay-editor:editor
+												configKey="translateEditor"
 												contents="<%= targetContent %>"
 												contentsLanguageId="<%= journalTranslateDisplayContext.getTargetLanguageId() %>"
 												name="<%= id %>"

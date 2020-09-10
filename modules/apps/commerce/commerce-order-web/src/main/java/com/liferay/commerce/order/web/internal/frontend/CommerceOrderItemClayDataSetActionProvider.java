@@ -79,6 +79,7 @@ public class CommerceOrderItemClayDataSetActionProvider
 						orderItem.getOrderItemId(), httpServletRequest));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));
+				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
 			() -> _commerceOrderPermission.contains(
@@ -90,6 +91,7 @@ public class CommerceOrderItemClayDataSetActionProvider
 						orderItem.getOrderItemId(), httpServletRequest));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setTarget("async");
 			}
 		).build();
 	}

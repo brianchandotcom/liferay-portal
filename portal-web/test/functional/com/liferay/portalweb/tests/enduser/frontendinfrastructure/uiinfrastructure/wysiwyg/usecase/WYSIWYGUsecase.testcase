@@ -74,6 +74,71 @@ definition {
 	}
 
 	@priority = "4"
+	test AddMBThreadWithLinkToDocument {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Thread");
+
+		Type(
+			locator1 = "TextInput#SUBJECT",
+			value1 = "MB Thread Message Subject");
+
+		CKEditor.addTextWithLink(
+			displayText = "Link to Document",
+			dmDocumentTitle = "Document_1.jpg",
+			fieldLabel = "Body");
+
+		PortletEntry.publish();
+
+		Click(
+			key_text = "Link to Document",
+			locator1 = "Link#ANY");
+
+		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
+	}
+
+	@priority = "4"
+	test AddMBThreadWithLinkToPage {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "${pageName}");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Thread");
+
+		Type(
+			locator1 = "TextInput#SUBJECT",
+			value1 = "MB Thread Message Subject");
+
+		CKEditor.addTextWithLink(
+			displayText = "Link to Page",
+			fieldLabel = "Body",
+			pageName = "${pageName}");
+
+		PortletEntry.publish();
+
+		Click(
+			key_text = "Link to Page",
+			locator1 = "Link#ANY");
+
+		AssertVisible(
+			key_pageName = "${pageName}",
+			locator1 = "Home#PAGE_ACTIVE");
+	}
+
+	@priority = "4"
 	test AddWebContentArticleCopyPasteContent {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";

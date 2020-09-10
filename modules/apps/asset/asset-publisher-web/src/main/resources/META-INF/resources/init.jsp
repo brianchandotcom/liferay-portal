@@ -66,7 +66,6 @@ page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
 page import="com.liferay.info.list.provider.InfoListProvider" %><%@
 page import="com.liferay.item.selector.ItemSelector" %><%@
-page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
 page import="com.liferay.item.selector.criteria.GroupItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@

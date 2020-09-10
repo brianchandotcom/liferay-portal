@@ -123,11 +123,17 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 <%
 ItemSelector itemSelector = (ItemSelector)request.getAttribute(AssetPublisherWebKeys.ITEM_SELECTOR);
 
-ItemSelectorCriterion itemSelectorCriterion = new GroupItemSelectorCriterion(layout.isPrivateLayout());
+GroupItemSelectorCriterion groupItemSelectorCriterion = new GroupItemSelectorCriterion(layout.isPrivateLayout());
 
-itemSelectorCriterion.setDesiredItemSelectorReturnTypes(new GroupItemSelectorReturnType());
+groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new GroupItemSelectorReturnType());
+groupItemSelectorCriterion.setIncludeChildSites(true);
+groupItemSelectorCriterion.setIncludeSitesThatIAdminister(true);
+groupItemSelectorCriterion.setIncludeLayoutScopes(true);
+groupItemSelectorCriterion.setIncludeMySites(false);
+groupItemSelectorCriterion.setIncludeParentSites(true);
+groupItemSelectorCriterion.setIncludeRecentSites(false);
 
-PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, itemSelectorCriterion);
+PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, groupItemSelectorCriterion);
 
 itemSelectorURL.setParameter("plid", String.valueOf(layout.getPlid()));
 itemSelectorURL.setParameter("groupId", String.valueOf(layout.getGroupId()));

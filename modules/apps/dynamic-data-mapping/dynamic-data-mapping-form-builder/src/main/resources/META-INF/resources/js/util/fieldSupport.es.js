@@ -148,6 +148,19 @@ export const getFieldProperties = (
 					properties[fieldName] = value[editingLanguageId];
 				}
 			}
+			else if (type == 'validation') {
+				if (!value.errorMessage[editingLanguageId]) {
+					value.errorMessage[editingLanguageId] =
+						value.errorMessage[defaultLanguageId];
+				}
+
+				if (!value.parameter[editingLanguageId]) {
+					value.parameter[editingLanguageId] =
+						value.parameter[defaultLanguageId];
+				}
+
+				properties[fieldName] = value;
+			}
 			else {
 				properties[fieldName] = value;
 			}

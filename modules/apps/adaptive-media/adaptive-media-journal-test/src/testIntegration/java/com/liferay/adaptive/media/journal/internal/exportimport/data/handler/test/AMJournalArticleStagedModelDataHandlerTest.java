@@ -245,7 +245,7 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		throws Exception {
 
 		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
-			"content", "string", "text", true, "text_area",
+			"content", "string", "text", true, "textarea",
 			new Locale[] {LocaleUtil.getSiteDefault()},
 			LocaleUtil.getSiteDefault());
 

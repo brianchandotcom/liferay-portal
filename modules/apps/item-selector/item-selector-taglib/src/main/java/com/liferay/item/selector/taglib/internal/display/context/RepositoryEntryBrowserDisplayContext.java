@@ -16,8 +16,12 @@ package com.liferay.item.selector.taglib.internal.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -36,7 +40,7 @@ public class RepositoryEntryBrowserDisplayContext {
 	}
 
 	public String getGroupCssIcon(long groupId) throws PortalException {
-		Group group = GroupServiceUtil.getGroup(groupId);
+		Group group = _getGroup(groupId);
 
 		return group.getIconCssClass();
 	}
@@ -44,7 +48,7 @@ public class RepositoryEntryBrowserDisplayContext {
 	public String getGroupLabel(long groupId, Locale locale)
 		throws PortalException {
 
-		Group group = GroupServiceUtil.getGroup(groupId);
+		Group group = _getGroup(groupId);
 
 		return group.getDescriptiveName(locale);
 	}
@@ -65,6 +69,23 @@ public class RepositoryEntryBrowserDisplayContext {
 		}
 
 		return _searchEverywhere;
+	}
+
+	private Group _getGroup(long groupId) throws PortalException {
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isCompany()) {
+			return group;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		GroupPermissionUtil.check(
+			themeDisplay.getPermissionChecker(), group, ActionKeys.VIEW);
+
+		return group;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

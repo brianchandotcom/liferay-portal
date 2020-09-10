@@ -18,11 +18,24 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.service.base.CommerceShippingFixedOptionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.math.BigDecimal;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -127,11 +140,52 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
+			long companyId, long groupId, long commerceShippingMethodId,
+			String keywords, int start, int end)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, commerceShippingMethodId, keywords, start, end);
+
+		BaseModelSearchResult<CommerceShippingFixedOption>
+			baseModelSearchResult = searchCommerceShippingFixedOption(
+				searchContext);
+
+		return baseModelSearchResult.getBaseModels();
+	}
+
+	@Override
 	public int getCommerceShippingFixedOptionsCount(
 		long commerceShippingMethodId) {
 
 		return commerceShippingFixedOptionPersistence.
 			countByCommerceShippingMethodId(commerceShippingMethodId);
+	}
+
+	@Override
+	public BaseModelSearchResult<CommerceShippingFixedOption>
+			searchCommerceShippingFixedOption(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceShippingFixedOption> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				CommerceShippingFixedOption.class.getName());
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext);
+
+			List<CommerceShippingFixedOption> commerceShippingFixedOptions =
+				getCommerceShippingFixedOptions(hits);
+
+			if (commerceShippingFixedOptions != null) {
+				return new BaseModelSearchResult<>(
+					commerceShippingFixedOptions, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	@Override
@@ -152,6 +206,72 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 
 		return commerceShippingFixedOptionPersistence.update(
 			commerceShippingFixedOption);
+	}
+
+	protected SearchContext buildSearchContext(
+			long companyId, long groupId, long commerceShippingMethodId,
+			String keywords, int start, int end)
+		throws PortalException {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setKeywords(keywords);
+		searchContext.setStart(start);
+
+		searchContext.setAttribute(
+			"commerceShippingMethodId", commerceShippingMethodId);
+
+		Sort sort = SortFactoryUtil.getSort(
+			CommerceShippingFixedOption.class, Sort.LONG_TYPE,
+			Field.CREATE_DATE, "DESC");
+
+		searchContext.setSorts(sort);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		return searchContext;
+	}
+
+	protected List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
+			Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
+			new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long commerceShippingFixedOptionId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceShippingFixedOption commerceShippingFixedOption =
+				fetchCommerceShippingFixedOption(commerceShippingFixedOptionId);
+
+			if (commerceShippingFixedOption == null) {
+				commerceShippingFixedOption = null;
+
+				Indexer<CommerceShippingFixedOption> indexer =
+					IndexerRegistryUtil.getIndexer(
+						CommerceShippingFixedOption.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (commerceShippingFixedOptions != null) {
+				commerceShippingFixedOptions.add(commerceShippingFixedOption);
+			}
+		}
+
+		return commerceShippingFixedOptions;
 	}
 
 }

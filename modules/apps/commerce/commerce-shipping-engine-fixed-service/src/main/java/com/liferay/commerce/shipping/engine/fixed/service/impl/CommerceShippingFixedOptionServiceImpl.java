@@ -138,6 +138,18 @@ public class CommerceShippingFixedOptionServiceImpl
 	}
 
 	@Override
+	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
+			long companyId, long groupId, long commerceShippingMethodId,
+			String keywords, int start, int end)
+		throws PortalException {
+
+		return commerceShippingFixedOptionLocalService.
+			getCommerceShippingFixedOptions(
+				companyId, groupId, commerceShippingMethodId, keywords, start,
+				end);
+	}
+
+	@Override
 	public int getCommerceShippingFixedOptionsCount(
 			long commerceShippingMethodId)
 		throws PortalException {

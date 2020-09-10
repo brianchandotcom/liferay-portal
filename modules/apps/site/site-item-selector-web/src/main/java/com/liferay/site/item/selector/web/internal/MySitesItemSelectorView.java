@@ -19,6 +19,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -69,6 +70,18 @@ public class MySitesItemSelectorView
 	public String getTitle(Locale locale) {
 		return ResourceBundleUtil.getString(
 			_portal.getResourceBundle(locale), "my-sites");
+	}
+
+	@Override
+	public boolean isVisible(
+		SiteItemSelectorCriterion siteItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
+		if (siteItemSelectorCriterion.isIncludeMySites()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -69,6 +70,18 @@ public class MyGroupItemSelectorView
 	public String getTitle(Locale locale) {
 		return ResourceBundleUtil.getString(
 			_portal.getResourceBundle(locale), "my-sites");
+	}
+
+	@Override
+	public boolean isVisible(
+		GroupItemSelectorCriterion groupItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
+		if (groupItemSelectorCriterion.isIncludeRecentSites()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

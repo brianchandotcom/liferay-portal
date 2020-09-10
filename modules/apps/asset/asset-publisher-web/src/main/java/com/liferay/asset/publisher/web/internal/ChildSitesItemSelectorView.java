@@ -77,6 +77,10 @@ public class ChildSitesItemSelectorView
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
+		if (!groupItemSelectorCriterion.isIncludeChildSites()) {
+			return false;
+		}
+
 		Group siteGroup = themeDisplay.getSiteGroup();
 
 		if (siteGroup.isLayoutPrototype()) {

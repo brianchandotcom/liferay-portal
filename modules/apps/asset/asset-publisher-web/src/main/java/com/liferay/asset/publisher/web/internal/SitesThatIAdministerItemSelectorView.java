@@ -78,6 +78,10 @@ public class SitesThatIAdministerItemSelectorView
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
+		if (!groupItemSelectorCriterion.isIncludeSitesThatIAdminister()) {
+			return false;
+		}
+
 		Group siteGroup = themeDisplay.getSiteGroup();
 
 		if (siteGroup.isLayoutPrototype()) {

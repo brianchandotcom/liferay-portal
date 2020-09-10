@@ -77,6 +77,10 @@ public class LayoutScopesItemSelectorView
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
+		if (!groupItemSelectorCriterion.isIncludeLayoutScopes()) {
+			return false;
+		}
+
 		Layout layout = themeDisplay.getLayout();
 
 		int groupsCount = _groupLocalService.getGroupsCount(

@@ -339,7 +339,7 @@ public class DLFileEntryTypeServiceTest {
 
 		DDMForm ddmForm = new DDMForm();
 
-		ddmForm.addDDMFormField(new DDMFormField("text", "Text"));
+		ddmForm.addDDMFormField(new DDMFormField("text", "text"));
 		ddmForm.setAvailableLocales(
 			Collections.singleton(LocaleUtil.getDefault()));
 		ddmForm.setDefaultLocale(LocaleUtil.getDefault());

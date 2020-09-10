@@ -1316,7 +1316,7 @@ definition {
 		Workflow.webContentGoToAddCP();
 
 		WebContent.addWithWorkflowCP(
-			webContentContent = '''&lt;script&gt;alert(123);&lt;/script&gt;''',
+			webContentContent = '''<script>alert(123);</script>''',
 			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewWithWorkflowCP(
@@ -1326,14 +1326,6 @@ definition {
 			workflowTask = "Review");
 
 		AssertAlertNotPresent();
-
-		var actualScript = '''<script>alert(123);</script>''';
-
-		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
-
-		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
-
-		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -1385,14 +1377,6 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		AssertAlertNotPresent();
-
-		var actualScript = '''<script>alert(123);</script>''';
-
-		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
-
-		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
-
-		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",

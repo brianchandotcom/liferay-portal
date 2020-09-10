@@ -35,6 +35,7 @@ import selectSegmentsExperienceId from '../../../app/selectors/selectSegmentsExp
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 import moveItem from '../../../app/thunks/moveItem';
+import {deepEqual} from '../../../app/utils/checkDeepEqual';
 import checkAllowedChild from '../../../app/utils/dragAndDrop/checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from '../../../app/utils/dragAndDrop/constants/dragDropTargetType';
 import {TARGET_POSITION} from '../../../app/utils/dragAndDrop/constants/targetPosition';
@@ -49,26 +50,55 @@ import {
 
 const HOVER_EXPAND_DELAY = 1000;
 
-const nodeIsHovered = (nodeId, hoveredItemId) =>
-	nodeId === fromControlsId(hoveredItemId);
-const nodeIsSelected = (nodeId, activeItemId) =>
-	nodeId === fromControlsId(activeItemId);
-
 export default function StructureTreeNode({node}) {
 	const activationOrigin = useActivationOrigin();
 	const activeItemId = useActiveItemId();
+	const hoveredItemId = useHoveredItemId();
+	const isSelected = node.id === fromControlsId(activeItemId);
+
+	return (
+		<MemoizedStructureTreeNodeContent
+			activationOrigin={isSelected ? activationOrigin : null}
+			isActive={node.activable && isSelected}
+			isHovered={node.id === fromControlsId(hoveredItemId)}
+			isSelected={isSelected}
+			node={node}
+		/>
+	);
+}
+
+StructureTreeNodeContent.propTypes = {
+	node: PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+		removable: PropTypes.bool,
+	}).isRequired,
+};
+
+const MemoizedStructureTreeNodeContent = React.memo(
+	StructureTreeNodeContent,
+	(prevProps, nextProps) =>
+		deepEqual(
+			{...prevProps, node: {...prevProps.node, children: []}},
+			{...nextProps, node: {...nextProps.node, children: []}}
+		)
+);
+
+function StructureTreeNodeContent({
+	activationOrigin,
+	isActive,
+	isHovered,
+	isSelected,
+	node,
+}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
-	const hoveredItemId = useHoveredItemId();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-
+	const isDisabled = !node.activable || node.disabled;
 	const nodeRef = useRef();
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectItem = useSelectItem();
 	const toControlsId = useToControlsId();
-
-	const isActive = node.activable && nodeIsSelected(node.id, activeItemId);
-	const isDisabled = !node.activable || node.disabled;
 
 	const item = {
 		children: node.children,
@@ -141,30 +171,19 @@ export default function StructureTreeNode({node}) {
 				'page-editor__page-structure__tree-node--activable':
 					node.activable && node.itemType !== ITEM_TYPES.editable,
 				'page-editor__page-structure__tree-node--active': isActive,
-				'page-editor__page-structure__tree-node--hovered': nodeIsHovered(
-					node.id,
-					hoveredItemId
-				),
+				'page-editor__page-structure__tree-node--hovered': isHovered,
 			})}
 			onMouseLeave={(event) => {
-				event.stopPropagation();
-
-				if (isDraggingSource) {
-					return;
-				}
-
-				if (nodeIsHovered(node.id, hoveredItemId)) {
+				if (!isDraggingSource && isHovered) {
+					event.stopPropagation();
 					hoverItem(null);
 				}
 			}}
 			onMouseOver={(event) => {
-				event.stopPropagation();
-
-				if (isDraggingSource) {
-					return;
+				if (!isDraggingSource) {
+					event.stopPropagation();
+					hoverItem(node.id);
 				}
-
-				hoverItem(node.id);
 			}}
 			ref={targetRef}
 		>
@@ -190,58 +209,33 @@ export default function StructureTreeNode({node}) {
 			/>
 
 			<NameLabel
-				activable={node.activable}
 				disabled={node.disabled}
 				icon={node.icon}
-				id={node.id}
+				isActive={isActive}
 				name={node.name}
 				ref={nodeRef}
 			/>
 
 			{node.removable && canUpdatePageStructure && (
-				<RemoveButton
-					node={node}
-					visible={
-						nodeIsHovered(node.id, hoveredItemId) ||
-						nodeIsSelected(node.id, activeItemId)
-					}
-				/>
+				<RemoveButton node={node} visible={isHovered || isSelected} />
 			)}
 		</div>
 	);
 }
 
-StructureTreeNode.propTypes = {
-	node: PropTypes.shape({
-		id: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		removable: PropTypes.bool,
-	}).isRequired,
-};
+const NameLabel = React.forwardRef(({disabled, icon, isActive, name}, ref) => (
+	<div
+		className={classNames('page-editor__page-structure__tree-node__name', {
+			'page-editor__page-structure__tree-node__name--active': isActive,
+			'page-editor__page-structure__tree-node__name--disabled': disabled,
+		})}
+		ref={ref}
+	>
+		{icon && <ClayIcon symbol={icon || ''} />}
 
-const NameLabel = React.forwardRef(
-	({activable, disabled, icon, id, name}, ref) => {
-		const activeItemId = useActiveItemId();
-
-		return (
-			<div
-				className={classNames(
-					'page-editor__page-structure__tree-node__name',
-					{
-						'page-editor__page-structure__tree-node__name--active':
-							activable && nodeIsSelected(id, activeItemId),
-						'page-editor__page-structure__tree-node__name--disabled': disabled,
-					}
-				)}
-				ref={ref}
-			>
-				{icon && <ClayIcon symbol={icon || ''} />}
-
-				{name || Liferay.Language.get('element')}
-			</div>
-		);
-	}
-);
+		{name || Liferay.Language.get('element')}
+	</div>
+));
 
 const RemoveButton = ({node, visible}) => {
 	const dispatch = useDispatch();

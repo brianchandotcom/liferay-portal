@@ -18,9 +18,13 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.internal.search.util.LayoutPageTemplateStructureRenderUtil;
+import com.liferay.layout.internal.search.util.SyntheticHttpServletRequest;
+import com.liferay.layout.internal.search.util.SyntheticHttpServletResponse;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -38,14 +42,16 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.staging.StagingGroupHelper;
 
@@ -104,35 +110,42 @@ public class LayoutModelDocumentContributor
 			return;
 		}
 
-		HttpServletRequest httpServletRequest = null;
-		HttpServletResponse httpServletResponse = null;
+		try {
+			HttpServletRequest httpServletRequest =
+				new SyntheticHttpServletRequest();
+			HttpServletResponse httpServletResponse =
+				new SyntheticHttpServletResponse();
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+			httpServletRequest.setAttribute(
+				WebKeys.USER_ID, layout.getUserId());
 
-		if ((serviceContext != null) && (serviceContext.getRequest() != null)) {
-			httpServletRequest = DynamicServletRequest.addQueryString(
-				serviceContext.getRequest(), "p_l_id=" + layout.getPlid(),
-				false);
-			httpServletResponse = serviceContext.getResponse();
-		}
-
-		long[] segmentsExperienceIds = {SegmentsExperienceConstants.ID_DEFAULT};
-
-		Set<Locale> locales = LanguageUtil.getAvailableLocales(
-			layout.getGroupId());
-
-		for (Locale locale : locales) {
 			try {
-				String content = StringPool.BLANK;
+				EventsProcessorUtil.process(
+					PropsKeys.SERVLET_SERVICE_EVENTS_PRE,
+					PropsValues.SERVLET_SERVICE_EVENTS_PRE, httpServletRequest,
+					httpServletResponse);
+			}
+			catch (ActionException actionException) {
+				throw new RuntimeException(
+					"Unable to initialize syntetic request and response",
+					actionException);
+			}
 
-				if ((httpServletRequest == null) ||
-					(httpServletResponse == null)) {
+			if (httpServletRequest != null) {
+				httpServletRequest = DynamicServletRequest.addQueryString(
+					httpServletRequest, "p_l_id=" + layout.getPlid(), false);
+			}
 
-					content = _getStagedContent(layout, locale);
-				}
-				else {
-					content =
+			long[] segmentsExperienceIds = {
+				SegmentsExperienceConstants.ID_DEFAULT
+			};
+
+			Set<Locale> locales = LanguageUtil.getAvailableLocales(
+				layout.getGroupId());
+
+			for (Locale locale : locales) {
+				try {
+					String content =
 						LayoutPageTemplateStructureRenderUtil.
 							renderLayoutContent(
 								_fragmentRendererController, httpServletRequest,
@@ -140,19 +153,22 @@ public class LayoutModelDocumentContributor
 								layoutPageTemplateStructure,
 								FragmentEntryLinkConstants.VIEW,
 								new HashMap<>(), locale, segmentsExperienceIds);
-				}
 
-				if (Validator.isNull(content)) {
-					continue;
-				}
+					if (Validator.isNull(content)) {
+						continue;
+					}
 
-				document.addText(
-					Field.getLocalizedName(locale, Field.CONTENT),
-					HtmlUtil.stripHtml(content));
+					document.addText(
+						Field.getLocalizedName(locale, Field.CONTENT),
+						HtmlUtil.stripHtml(content));
+				}
+				catch (PortalException portalException) {
+					throw new SystemException(portalException);
+				}
 			}
-			catch (PortalException portalException) {
-				throw new SystemException(portalException);
-			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 

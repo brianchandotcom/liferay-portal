@@ -471,8 +471,12 @@ definition {
 	}
 
 	macro exportSiteCP {
-		LAR.openExportAdmin(siteScopeName = "${siteScopeName}");
-
+		if (isSet(depotName)) {
+			LAR.openDepotExportAdmin(depotName = "${depotName}");
+		}
+		else {
+			LAR.openExportAdmin(siteScopeName = "${siteScopeName}");
+		}
 		Click(locator1 = "SitePagesExport#CUSTOM_EXPORT_BUTTON");
 
 		if ("${privateLayout}" == "true") {
@@ -556,9 +560,16 @@ definition {
 	}
 
 	macro importSiteCP {
-		LAR.openImportAdmin(
-			baseURL = "${baseURL}",
-			siteName = "${siteName}");
+		if (isSet(depotName)) {
+			LAR.openDepotImportAdmin(
+				baseURL = "${baseURL}",
+				depotName = "${depotName}");
+		}
+		else {
+			LAR.openImportAdmin(
+				baseURL = "${baseURL}",
+				siteName = "${siteName}");
+		}
 
 		LAR._selectImportFileSite(
 			importCampaignValidationError = "${importCampaignValidationError}",
@@ -601,6 +612,28 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Move to Recycle Bin");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	macro openDepotExportAdmin {
+		var baseURL = "${baseURL}";
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		Open(locator1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
+	}
+
+	macro openDepotImportAdmin {
+		var baseURL = "${baseURL}";
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		Open(locator1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
 	}
 
 	macro openExportAdmin {

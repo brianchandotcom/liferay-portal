@@ -181,7 +181,7 @@ definition {
 			locator1 = "Questions#ASK_QUESTION_SEARCH_QUESTION");
 	}
 
-	@description = "Validate if the user can search by tags in the tags search field"
+	@description = "This test covers LPS-119780. It ensures that the user can search by tags in the tags search field."
 	@priority = "4"
 	test ValidateSearchByQuestionTags {
 		JSONMBMessage.addCategory(
@@ -189,29 +189,51 @@ definition {
 			categoryName = "Question ValidateSearchByQuestionTags",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
-			bodyField = "Body ValidateSearchByQuestionTags",
-			categoryName = "Question ValidateSearchByQuestionTags",
-			tagField = "tagvalidatesearchbyquestiontags",
-			titleField = "Title ValidateSearchByQuestionTags");
+		for (var num : list "1,2,3") {
+			Questions.addQuestionByAPI(
+				bodyField = "Question Body ${num}",
+				categoryName = "Question ValidateSearchByQuestionTags",
+				tagField = "tag${num}",
+				titleField = "Question ${num}");
+		}
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "Question ValidateSearchByQuestionTags");
-
-		Pause(locator = "3000");
-
-		Click(
-			key_questionTabField = "Tags",
-			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+		Questions.gotoTab(questionTabField = "Tags");
 
 		Questions.search(
-			searchKey = "tagvalidatesearchbyquestiontags",
+			searchKey = "tag1",
 			searchTag = "true");
 
 		Pause(locator = "3000");
 
-		Questions.viewTags(tagName = "tagvalidatesearchbyquestiontags");
+		Questions.viewTags(tagName = "tag1");
+
+		Questions.viewNoTags(tagsList = "tag2,tag3");
+
+		Click(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+
+		for (var tagName : list "tag1,tag2,tag3") {
+			Questions.viewTags(tagName = "${tagName}");
+		}
+
+		Questions.configureTagsFilter(filterBy = "Latest Created");
+
+		Questions.search(
+			searchKey = "tag2",
+			searchTag = "true");
+
+		Pause(locator = "3000");
+
+		Questions.viewTags(tagName = "tag2");
+
+		Questions.viewNoTags(tagsList = "tag1,tag3");
+
+		Click(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+
+		for (var tagName : list "tag1,tag2,tag3") {
+			Questions.viewTags(tagName = "${tagName}");
+		}
 	}
 
 	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"

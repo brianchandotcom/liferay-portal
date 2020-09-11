@@ -28,10 +28,12 @@ const pages = [
 							{
 								fieldName: 'text1',
 								label: 'label text 1',
+								type: 'text',
 							},
 							{
 								fieldName: 'text2',
 								label: 'label text 2',
+								type: 'text',
 							},
 						],
 					},
@@ -40,6 +42,51 @@ const pages = [
 		],
 	},
 ];
+
+const brokenRuleConfig = {
+	pages,
+	rules: [
+		{
+			actions: [
+				{
+					action: 'require',
+					label: 'label text 1',
+					target: 'text1',
+				},
+			],
+			conditions: [
+				{
+					operands: [
+						{
+							type: 'field',
+							value: 'text1',
+						},
+						{
+							type: '',
+							value: '',
+						},
+					],
+					operator: 'contains',
+				},
+				{
+					operands: [
+						{
+							type: 'field',
+							value: 'text1',
+						},
+						{
+							type: 'field',
+							value: 'text2',
+						},
+					],
+					operator: 'equals-to',
+				},
+			],
+			['logical-operator']: 'OR',
+		},
+	],
+	spritemap,
+};
 
 const configDefault = {
 	pages,
@@ -151,6 +198,12 @@ describe('RuleList', () => {
 
 	it('shows rule list', () => {
 		component = new RuleList(configDefault);
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('shows the label broken rule when a rule is incomplete', () => {
+		component = new RuleList(brokenRuleConfig);
 
 		expect(component).toMatchSnapshot();
 	});

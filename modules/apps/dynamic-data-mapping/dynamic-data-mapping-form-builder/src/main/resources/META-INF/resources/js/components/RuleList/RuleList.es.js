@@ -14,6 +14,8 @@
 
 import 'clay-button';
 
+import 'clay-label';
+
 import 'clay-dropdown';
 import ClayTooltip from 'clay-tooltip';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';

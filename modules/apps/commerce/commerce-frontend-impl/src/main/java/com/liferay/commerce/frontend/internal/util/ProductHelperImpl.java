@@ -223,20 +223,21 @@ public class ProductHelperImpl implements ProductHelper {
 		PriceModel priceModel = new PriceModel(
 			unitPriceWithTaxAmountMoney.format(locale));
 
+		BigDecimal unitPriceWithTax = unitPriceWithTaxAmountMoney.getPrice();
+
 		CommerceMoney unitPromoPriceWithTaxAmountMoney =
 			commerceProductPrice.getUnitPromoPriceWithTaxAmount();
 
-		BigDecimal unitPromoPriceWithTaxAmount =
-			unitPromoPriceWithTaxAmountMoney.getPrice();
+		if (!unitPromoPriceWithTaxAmountMoney.isEmpty()) {
+			BigDecimal unitPromoPriceWithTaxAmount =
+				unitPromoPriceWithTaxAmountMoney.getPrice();
 
-		BigDecimal unitPriceWithTax = unitPriceWithTaxAmountMoney.getPrice();
+			if ((unitPromoPriceWithTaxAmount.compareTo(BigDecimal.ZERO) > 0) &&
+				(unitPromoPriceWithTaxAmount.compareTo(unitPriceWithTax) < 0)) {
 
-		if ((unitPromoPriceWithTaxAmount != null) &&
-			(unitPromoPriceWithTaxAmount.compareTo(BigDecimal.ZERO) > 0) &&
-			(unitPromoPriceWithTaxAmount.compareTo(unitPriceWithTax) < 0)) {
-
-			priceModel.setPromoPrice(
-				unitPromoPriceWithTaxAmountMoney.format(locale));
+				priceModel.setPromoPrice(
+					unitPromoPriceWithTaxAmountMoney.format(locale));
+			}
 		}
 
 		CommerceDiscountValue discountValue =

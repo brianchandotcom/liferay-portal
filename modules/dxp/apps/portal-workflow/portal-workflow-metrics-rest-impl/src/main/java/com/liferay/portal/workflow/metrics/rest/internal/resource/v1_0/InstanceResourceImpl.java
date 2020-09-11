@@ -28,18 +28,14 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
-import com.liferay.portal.search.aggregation.bucket.Order;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
@@ -52,7 +48,6 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.script.Scripts;
-import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -78,7 +73,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -334,38 +328,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return assignee;
 	}
 
-	private BooleanQuery _createAssigneeIdsTermsBooleanQuery(
-		Long[] assigneeIds) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		TermsQuery termsQuery = _queries.terms("assigneeIds");
-
-		termsQuery.addValues(
-			Stream.of(
-				assigneeIds
-			).filter(
-				assigneeId -> assigneeId > 0
-			).map(
-				String::valueOf
-			).toArray(
-				Object[]::new
-			));
-
-		return booleanQuery.addMustQueryClauses(termsQuery);
-	}
-
-	private BooleanQuery _createAssigneeTypeBooleanQuery(Long[] assigneeIds) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		if (ArrayUtil.contains(assigneeIds, -1L)) {
-			booleanQuery.addMustQueryClauses(
-				_queries.term("assigneeType", Role.class.getName()));
-		}
-
-		return booleanQuery;
-	}
-
 	private BooleanQuery _createBooleanQuery(long processId) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -402,70 +364,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			tasksBooleanQuery, transitionsBooleanQuery);
 	}
 
-	private BooleanQuery _createBooleanQuery(
-		Long[] assigneeIds, Long[] classPKs, Boolean completed,
-		long processId, String[] slaStatuses) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.setMinimumShouldMatch(1);
-
-		BooleanQuery instancesBooleanQuery = _queries.booleanQuery();
-
-		instancesBooleanQuery.addFilterQueryClauses(
-			_queries.term(
-				"_index",
-				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
-					contextCompany.getCompanyId())));
-		instancesBooleanQuery.addMustQueryClauses(
-			_createInstancesBooleanQuery(
-				classPKs, completed, processId, slaStatuses));
-
-		BooleanQuery tasksBooleanQuery = _queries.booleanQuery();
-
-		tasksBooleanQuery.addFilterQueryClauses(
-			_queries.term(
-				"_index",
-				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
-					contextCompany.getCompanyId())));
-		tasksBooleanQuery.addMustQueryClauses(
-			_createTasksBooleanQuery(assigneeIds, processId));
-
-		return booleanQuery.addShouldQueryClauses(
-			instancesBooleanQuery, tasksBooleanQuery);
-	}
-
-	private BucketSelectorPipelineAggregation
-		_createBucketSelectorPipelineAggregation() {
-
-		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
-			_aggregations.bucketSelector(
-				"bucketSelector", _scripts.script("params.instanceCount > 0"));
-
-		bucketSelectorPipelineAggregation.addBucketPath(
-			"instanceCount", "instanceCount.value");
-
-		return bucketSelectorPipelineAggregation;
-	}
-
-	private BucketSortPipelineAggregation _createBucketSortPipelineAggregation(
-		Pagination pagination) {
-
-		BucketSortPipelineAggregation bucketSortPipelineAggregation =
-			_aggregations.bucketSort("bucketSort");
-
-		FieldSort keyFieldSort = _sorts.field("_key");
-
-		keyFieldSort.setSortOrder(SortOrder.ASC);
-
-		bucketSortPipelineAggregation.addSortFields(keyFieldSort);
-
-		bucketSortPipelineAggregation.setFrom(pagination.getStartPosition());
-		bucketSortPipelineAggregation.setSize(pagination.getPageSize());
-
-		return bucketSortPipelineAggregation;
-	}
-
 	private Instance _createInstance(Document document) {
 		Instance instance = new Instance() {
 			{
@@ -486,31 +384,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		_populateWithTasks(document, instance);
 
 		return instance;
-	}
-
-	private Instance _createInstance(Map<String, Object> sourcesMap) {
-		return new Instance() {
-			{
-				assetTitle = GetterUtil.getString(
-					sourcesMap.get(_getLocalizedName("assetTitle")));
-				assetType = GetterUtil.getString(
-					sourcesMap.get(_getLocalizedName("assetType")));
-				classPK = GetterUtil.getLong(sourcesMap.get("classPK"));
-				completed = GetterUtil.getBoolean(sourcesMap.get("completed"));
-				creator = _toCreator(
-					GetterUtil.getLong(sourcesMap.get("userId")));
-				dateCompletion = _parseDate(
-					GetterUtil.getString(sourcesMap.get("completionDate")));
-				dateCreated = _parseDate(
-					GetterUtil.getString(sourcesMap.get("createDate")));
-				dateModified = _parseDate(
-					GetterUtil.getString(sourcesMap.get("modifiedDate")));
-				id = GetterUtil.getLong(sourcesMap.get("instanceId"));
-				processId = GetterUtil.getLong(sourcesMap.get("processId"));
-				slaStatus = Instance.SLAStatus.create(
-					GetterUtil.getString(sourcesMap.get("slaStatus")));
-			}
-		};
 	}
 
 	private BooleanQuery _createInstancesBooleanQuery(
@@ -593,19 +466,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("processId", processId));
 	}
 
-	private BooleanQuery _createSLAInstanceResultsBooleanQuery(long processId) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustNotQueryClauses(
-			_queries.term("slaDefinitionId", 0),
-			_queries.term("status", WorkflowMetricsSLAStatus.NEW.name()));
-
-		return booleanQuery.addMustQueryClauses(
-			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", Boolean.FALSE),
-			_queries.term("processId", processId));
-	}
-
 	private SLAResult _createSLAResult(Map<String, Object> sourcesMap) {
 		return new SLAResult() {
 			{
@@ -637,26 +497,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("completed", Boolean.FALSE),
 			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("instanceId", instanceId),
-			_queries.term("processId", processId));
-	}
-
-	private BooleanQuery _createTasksBooleanQuery(
-		Long[] assigneeIds, long processId) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
-
-		if (assigneeIds.length > 0) {
-			booleanQuery.addShouldQueryClauses(
-				_createAssigneeIdsTermsBooleanQuery(assigneeIds),
-				_createAssigneeTypeBooleanQuery(assigneeIds));
-		}
-
-		return booleanQuery.addMustQueryClauses(
-			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("completed", Boolean.FALSE),
-			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId));
 	}
 
@@ -1011,22 +851,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		).collect(
 			Collectors.toList()
 		);
-	}
-
-	private boolean _isOnTime(Bucket bucket) {
-		if (_resourceHelper.getOnTimeInstanceCount(bucket) > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isOverdue(Bucket bucket) {
-		if (_resourceHelper.getOverdueInstanceCount(bucket) > 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private Date _parseDate(String dateString) {

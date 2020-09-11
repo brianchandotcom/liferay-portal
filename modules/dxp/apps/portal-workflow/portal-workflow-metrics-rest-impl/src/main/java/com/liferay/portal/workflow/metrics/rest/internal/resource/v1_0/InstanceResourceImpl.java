@@ -41,6 +41,8 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -238,11 +240,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			String[] slaStatuses, String[] taskNames, Pagination pagination)
 		throws Exception {
 
-		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(
+		long instanceCount = _getInstanceCount(
 			assigneeIds, classPKs, completed, dateEnd, dateStart, processId,
 			slaStatuses, taskNames);
-
-		int instanceCount = _getInstanceCount(searchSearchResponse);
 
 		if (instanceCount > 0) {
 			return Page.of(
@@ -724,16 +724,29 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		}
 	}
 
-	private int _getInstanceCount(SearchSearchResponse searchSearchResponse) {
-		Map<String, AggregationResult> aggregationResultsMap =
-			searchSearchResponse.getAggregationResultsMap();
+	private long _getInstanceCount(
+		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
+		Date dateStart, long processId, String[] slaStatuses,
+		String[] taskNames) {
 
-		ScriptedMetricAggregationResult scriptedMetricAggregationResult =
-			(ScriptedMetricAggregationResult)aggregationResultsMap.get(
-				"instanceCount");
+		CountSearchRequest countSearchRequest = new CountSearchRequest();
 
-		return GetterUtil.getInteger(
-			scriptedMetricAggregationResult.getValue());
+		countSearchRequest.setIndexNames(
+			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		countSearchRequest.setQuery(
+			booleanQuery.addFilterQueryClauses(
+				_createInstancesBooleanQuery(
+					assigneeIds, classPKs, completed, dateEnd, dateStart,
+					processId, slaStatuses, null, taskNames)));
+
+		CountSearchResponse countSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(countSearchRequest);
+
+		return countSearchResponse.getCount();
 	}
 
 	private Collection<Instance> _getInstances(
@@ -932,29 +945,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		).collect(
 			Collectors.toCollection(ArrayList::new)
 		);
-	}
-
-	private SearchSearchResponse _getSearchSearchResponse(
-		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
-		Date dateStart, long processId, String[] slaStatuses,
-		String[] taskNames) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.addAggregation(
-			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.fromArray(assigneeIds), completed, dateEnd, dateStart,
-				ListUtil.fromArray(taskNames)));
-		searchSearchRequest.setIndexNames(
-			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
-				contextCompany.getCompanyId()),
-			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
-				contextCompany.getCompanyId()));
-		searchSearchRequest.setQuery(
-			_createBooleanQuery(
-				assigneeIds, classPKs, completed, processId, slaStatuses));
-
-		return _searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 	}
 
 	private String _getSLAName(long slaDefinitionId) {

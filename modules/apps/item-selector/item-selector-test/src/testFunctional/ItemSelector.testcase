@@ -175,7 +175,8 @@ definition {
 		ItemSelector.viewCurrentSiteFilterResults(
 			imageFileName = "Document_2.jpg",
 			navTab = "Documents and Media",
-			noImageFileName = "Document_1.jpg");
+			noImageFileName = "Document_1.jpg",
+			viewNoLocationInfo = "Site Name");
 	}
 
 	@description = "This test ensures that web contents can filter by the current site in the item selector."
@@ -234,6 +235,7 @@ definition {
 
 		ItemSelector.viewWCCurrentSiteFilterResults(
 			noWebContentTitle = "Web Content From Depot",
+			viewNoLocationInfo = "Site Name",
 			webContentTitle = "Web Content From Site");
 	}
 

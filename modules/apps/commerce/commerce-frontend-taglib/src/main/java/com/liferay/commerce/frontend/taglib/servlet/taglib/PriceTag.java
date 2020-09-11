@@ -95,11 +95,11 @@ public class PriceTag extends ComponentRendererTag {
 
 			putValue("prices", priceModel);
 
+			boolean netPrice = true;
+
 			CommerceChannel commerceChannel =
 				_commerceChannelService.fetchCommerceChannel(
 					commerceContext.getCommerceChannelId());
-
-			boolean netPrice = true;
 
 			if ((commerceChannel != null) &&
 				Objects.equals(
@@ -166,10 +166,10 @@ public class PriceTag extends ComponentRendererTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		_productHelper = ServletContextUtil.getProductHelper();
-		_configurationProvider = ServletContextUtil.getConfigurationProvider();
 		_commerceChannelService =
 			ServletContextUtil.getCommerceChannelService();
+		_configurationProvider = ServletContextUtil.getConfigurationProvider();
+		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
 	public void setQuantity(String quantity) {

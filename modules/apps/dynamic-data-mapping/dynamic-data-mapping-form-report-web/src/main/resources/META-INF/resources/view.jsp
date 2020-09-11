@@ -20,13 +20,13 @@
 int totalItems = ddmFormReportDisplayContext.getTotalItems();
 %>
 
-<div class="ddm-form-report hide">
-	<div class="ddm-form-report-header">
+<div class="portlet-ddm-form-report hide">
+	<div class="portlet-ddm-form-report-header">
 		<clay:container-fluid>
 			<clay:content-row
 				cssClass="align-items-center"
 			>
-				<span class="ddm-form-report-header-title text-truncate">
+				<span class="portlet-ddm-form-report-header-title text-truncate">
 					<c:choose>
 						<c:when test="<%= totalItems == 1 %>">
 							<liferay-ui:message arguments="<%= totalItems %>" key="x-entry" />
@@ -41,7 +41,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 			<clay:content-row
 				cssClass="align-items-center"
 			>
-				<span class="ddm-form-report-header-subtitle text-truncate">
+				<span class="portlet-ddm-form-report-header-subtitle text-truncate">
 					<c:choose>
 						<c:when test="<%= totalItems > 0 %>">
 							<%= ddmFormReportDisplayContext.getLastModifiedDate() %>
@@ -56,7 +56,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 	</div>
 
 	<clay:navigation-bar
-		cssClass="ddm-form-report-tabs"
+		cssClass="portlet-ddm-form-report-tabs"
 		navigationItems='<%=
 			new JSPNavigationItemList(pageContext) {
 				{
@@ -79,7 +79,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 
 <aui:script require="metal-dom/src/dom as dom">
 	dom.delegate(
-		document.querySelector('.ddm-form-report-tabs'),
+		document.querySelector('.portlet-ddm-form-report-tabs'),
 		'click',
 		'li',
 		function (event) {
@@ -88,7 +88,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 			var navLink = navItem.querySelector('.nav-link');
 
 			document
-				.querySelector('.ddm-form-report-tabs li > .active')
+				.querySelector('.portlet-ddm-form-report-tabs li > .active')
 				.classList.remove('active');
 			navLink.classList.add('active');
 

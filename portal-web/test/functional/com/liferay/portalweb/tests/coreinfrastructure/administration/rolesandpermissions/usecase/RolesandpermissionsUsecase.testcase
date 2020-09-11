@@ -586,9 +586,10 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test RolesPermissionsDynamicDataLists {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONRole.addSiteRole(

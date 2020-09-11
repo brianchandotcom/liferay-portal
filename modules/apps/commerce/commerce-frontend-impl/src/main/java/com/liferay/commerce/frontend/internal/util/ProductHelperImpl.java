@@ -195,24 +195,25 @@ public class ProductHelperImpl implements ProductHelper {
 			CommerceDiscountValue discountValue =
 				commerceProductPrice.getDiscountValue();
 
-			if (discountValue != null) {
-				CommerceMoney discountAmount =
-					discountValue.getDiscountAmount();
-
-				priceModel.setDiscount(discountAmount.format(locale));
-
-				priceModel.setDiscountPercentage(
-					_commercePriceFormatter.format(
-						discountValue.getDiscountPercentage(), locale));
-
-				priceModel.setDiscountPercentages(
-					_getFormattedDiscountPercentages(
-						discountValue.getPercentages(), locale));
-
-				CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
-
-				priceModel.setFinalPrice(finalPrice.format(locale));
+			if (discountValue == null) {
+				return priceModel;
 			}
+
+			CommerceMoney discountAmount = discountValue.getDiscountAmount();
+
+			priceModel.setDiscount(discountAmount.format(locale));
+
+			priceModel.setDiscountPercentage(
+				_commercePriceFormatter.format(
+					discountValue.getDiscountPercentage(), locale));
+
+			priceModel.setDiscountPercentages(
+				_getFormattedDiscountPercentages(
+					discountValue.getPercentages(), locale));
+
+			CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
+
+			priceModel.setFinalPrice(finalPrice.format(locale));
 
 			return priceModel;
 		}
@@ -243,24 +244,26 @@ public class ProductHelperImpl implements ProductHelper {
 		CommerceDiscountValue discountValue =
 			commerceProductPrice.getDiscountValueWithTaxAmount();
 
-		if (discountValue != null) {
-			CommerceMoney discountAmount = discountValue.getDiscountAmount();
-
-			priceModel.setDiscount(discountAmount.format(locale));
-
-			priceModel.setDiscountPercentage(
-				_commercePriceFormatter.format(
-					discountValue.getDiscountPercentage(), locale));
-
-			priceModel.setDiscountPercentages(
-				_getFormattedDiscountPercentages(
-					discountValue.getPercentages(), locale));
-
-			CommerceMoney finalPriceWithTaxAmount =
-				commerceProductPrice.getFinalPriceWithTaxAmount();
-
-			priceModel.setFinalPrice(finalPriceWithTaxAmount.format(locale));
+		if (discountValue == null) {
+			return priceModel;
 		}
+
+		CommerceMoney discountAmount = discountValue.getDiscountAmount();
+
+		priceModel.setDiscount(discountAmount.format(locale));
+
+		priceModel.setDiscountPercentage(
+			_commercePriceFormatter.format(
+				discountValue.getDiscountPercentage(), locale));
+
+		priceModel.setDiscountPercentages(
+			_getFormattedDiscountPercentages(
+				discountValue.getPercentages(), locale));
+
+		CommerceMoney finalPriceWithTaxAmount =
+			commerceProductPrice.getFinalPriceWithTaxAmount();
+
+		priceModel.setFinalPrice(finalPriceWithTaxAmount.format(locale));
 
 		return priceModel;
 	}

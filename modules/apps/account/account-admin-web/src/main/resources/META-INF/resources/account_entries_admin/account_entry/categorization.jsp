@@ -29,10 +29,15 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 		<%= LanguageUtil.get(request, "more-information") %>
 	</h3>
 
+	<%
+	Group controlPanelGroup = themeDisplay.getControlPanelGroup();
+	%>
+
 	<div class="form-group">
 		<liferay-asset:asset-categories-selector
 			className="<%= AccountEntry.class.getName() %>"
 			classPK="<%= accountEntryDisplay.getAccountEntryId() %>"
+			groupIds="<%= new long[] {controlPanelGroup.getGroupId()} %>"
 			visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
 		/>
 	</div>

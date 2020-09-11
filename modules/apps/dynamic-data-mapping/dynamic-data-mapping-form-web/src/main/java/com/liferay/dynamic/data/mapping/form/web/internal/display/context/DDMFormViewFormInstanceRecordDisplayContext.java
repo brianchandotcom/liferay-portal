@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -104,6 +105,8 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		DDMFormValues formValues = getDDMFormValues(
 			renderRequest, formInstanceRecord, structureVersion);
 
+		formRenderingContext.setContainerId(
+			"ddmForm".concat(StringUtil.randomString()));
 		formRenderingContext.setDDMFormValues(formValues);
 		formRenderingContext.setLocale(formValues.getDefaultLocale());
 

@@ -176,9 +176,9 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 	</clay:col>
 </clay:row>
 
-<portlet:renderURL var="verifyPasswordURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<liferay-portlet:renderURL portletName="<%= UsersAdminPortletKeys.USERS_ADMIN %>" var="verifyPasswordURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/user/password_verification.jsp" />
-</portlet:renderURL>
+</liferay-portlet:renderURL>
 
 <c:if test="<%= selUser != null %>">
 	<aui:script use="liferay-form">

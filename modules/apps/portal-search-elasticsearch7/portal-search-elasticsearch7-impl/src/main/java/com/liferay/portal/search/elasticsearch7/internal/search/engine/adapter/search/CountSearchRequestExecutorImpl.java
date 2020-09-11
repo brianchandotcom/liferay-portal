@@ -58,6 +58,7 @@ public class CountSearchRequestExecutorImpl
 
 		searchSourceBuilder.size(0);
 		searchSourceBuilder.trackScores(false);
+		searchSourceBuilder.trackTotalHits(true);
 
 		SearchResponse searchResponse = getSearchResponse(
 			searchRequest, countSearchRequest);

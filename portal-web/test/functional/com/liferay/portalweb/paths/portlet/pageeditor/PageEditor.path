@@ -679,7 +679,7 @@
 </tr>
 <tr>
 	<td>MANAGEMENT_BAR</td>
-	<td>//div[contains(@class,'management-bar')]</td>
+	<td>//div[contains(@class,'management-bar')][not(contains(@class,'btn'))]</td>
 	<td></td>
 </tr>
 <tr>

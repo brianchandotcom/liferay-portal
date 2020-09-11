@@ -1,0 +1,122 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.product.navigation.applications.menu.web.internal.portlet.action;
+
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.image.ImageToolImpl;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.util.PropsUtil;
+import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
+
+import java.io.InputStream;
+
+import java.net.URL;
+
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Eudaldo Alonso
+ */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + ProductNavigationApplicationsMenuPortletKeys.PRODUCT_NAVIGATION_APPLICATIONS_MENU,
+		"mvc.command.name=/applications_menu/liferay_logo"
+	},
+	service = MVCResourceCommand.class
+)
+public class ApplicationsMenuLiferayLogoMVCResourceCommand
+	extends BaseMVCResourceCommand {
+
+	@Override
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		PortletResponseUtil.write(
+			resourceResponse,
+			_getApplicationsMenuDefaultLiferayLogoInputStream());
+	}
+
+	private InputStream _getApplicationsMenuDefaultLiferayLogoInputStream() {
+		ClassLoader classLoader = ImageToolImpl.class.getClassLoader();
+
+		try {
+			InputStream inputStream = null;
+
+			String imageDefaultCompanyLogo = PropsUtil.get(
+				PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO);
+
+			int index = imageDefaultCompanyLogo.indexOf(CharPool.SEMICOLON);
+
+			if (index == -1) {
+				inputStream = classLoader.getResourceAsStream(
+					PropsUtil.get(
+						PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO));
+			}
+			else {
+				String bundleIdString = imageDefaultCompanyLogo.substring(
+					0, index);
+
+				int bundleId = GetterUtil.getInteger(bundleIdString, -1);
+
+				String name = imageDefaultCompanyLogo.substring(index + 1);
+
+				if (bundleId < 0) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Fallback to portal class loader because of " +
+								"invalid bundle ID " + bundleIdString);
+					}
+
+					inputStream = classLoader.getResourceAsStream(name);
+				}
+				else {
+					URL url = ModuleFrameworkUtilAdapter.getBundleResource(
+						bundleId, name);
+
+					inputStream = url.openStream();
+				}
+			}
+
+			if (inputStream == null) {
+				_log.error("Default liferay logo is not available");
+			}
+
+			return inputStream;
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to configure the default liferay logo: " +
+					exception.getMessage());
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ApplicationsMenuLiferayLogoMVCResourceCommand.class);
+
+}

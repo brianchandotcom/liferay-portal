@@ -21,7 +21,7 @@ DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDi
 
 DispatchTrigger dispatchTrigger = dispatchTriggerDisplayContext.getDispatchTrigger();
 
-String title = LanguageUtil.get(request, "add-process");
+String title = LanguageUtil.get(request, "add-trigger");
 
 if (dispatchTrigger != null) {
 	title = dispatchTrigger.getName();
@@ -32,7 +32,7 @@ portletDisplay.setURLBack(backURL);
 portletDisplay.setTitle(title);
 %>
 
-<div id="<portlet:namespace />editProcessContainer">
+<div id="<portlet:namespace />editDispatchTriggerContainer">
 	<liferay-frontend:screen-navigation
 		containerCssClass="col-md-10"
 		key="<%= DispatchConstants.SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL %>"

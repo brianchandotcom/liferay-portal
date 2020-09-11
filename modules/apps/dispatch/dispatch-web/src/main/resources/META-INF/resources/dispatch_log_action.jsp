@@ -31,7 +31,7 @@ DispatchLog dispatchLog = (DispatchLog)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= DispatchPermission.contains(permissionChecker, dispatchLogDisplayContext.getDispatchTrigger(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= DispatchTriggerPermission.contains(permissionChecker, dispatchLogDisplayContext.getDispatchTrigger(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="viewURL">
 			<portlet:param name="mvcRenderCommandName" value="viewDispatchLog" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

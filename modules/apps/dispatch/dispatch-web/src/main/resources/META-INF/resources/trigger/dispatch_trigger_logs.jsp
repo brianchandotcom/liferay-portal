@@ -27,18 +27,18 @@ portletURL.setParameter("searchContainerId", "dispatchLogs");
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<liferay-util:include page="/process_log_toolbar.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/dispatch_log_toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="dispatchLogs" />
 </liferay-util:include>
 
-<div id="<portlet:namespace />processLogsContainer">
+<div id="<portlet:namespace />triggerLogsContainer">
 	<div class="closed container-fluid-1280" id="<portlet:namespace />infoPanelId">
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 			<aui:input name="deleteDispatchLogIds" type="hidden" />
 
-			<div class="process-lists-container" id="<portlet:namespace />entriesContainer">
+			<div class="trigger-lists-container" id="<portlet:namespace />entriesContainer">
 				<liferay-ui:search-container
 					id="dispatchLogs"
 					searchContainer="<%= dispatchLogDisplayContext.getSearchContainer() %>"
@@ -75,7 +75,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-content"
-							name="process"
+							name="trigger"
 							value="<%= HtmlUtil.escape(dispatchTrigger.getName()) %>"
 						/>
 
@@ -89,7 +89,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 						<liferay-ui:search-container-column-jsp
 							cssClass="entry-action-column"
-							path="/process_log_action.jsp"
+							path="/dispatch_log_action.jsp"
 						/>
 					</liferay-ui:search-container-row>
 

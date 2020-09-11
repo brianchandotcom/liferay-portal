@@ -220,14 +220,18 @@ class LiferayApp extends App {
 
 	/**
 	 * @inheritDoc
-	 * Overrides Senna's default `onDocClickDelegate_ handler` and
-	 * halts SPA behavior if the click target is inside a blacklisted
-	 * portlet
+	 * Overrides Senna's default `onDocClickDelegate_ handler`. Halts
+	 * SPA behavior if the click target is inside a blacklisted portlet.
+	 * Reduces navigations from multiple clicks to a single navigation.
+	 *
 	 * @param  {!Event} event The event object
 	 */
 
 	onDocClickDelegate_(event) {
-		if (this.isInPortletBlacklist(event.delegateTarget)) {
+		if (
+			this.isInPortletBlacklist(event.delegateTarget) ||
+			event.detail > 1
+		) {
 			return;
 		}
 

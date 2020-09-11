@@ -14,6 +14,7 @@
 		<field name="classPK" type="long" />
 		<field name="fileEntryId" type="long" />
 		<field name="url" type="String">
+			<hint name="max-length">255</hint>
 			<validator name="url" />
 		</field>
 		<field name="activationStatus" type="int" />
@@ -24,6 +25,7 @@
 		<field name="useSample" type="boolean" />
 		<field name="sampleFileEntryId" type="long" />
 		<field name="sampleUrl" type="String">
+			<hint name="max-length">255</hint>
 			<validator name="url" />
 		</field>
 		<field name="termsOfUseRequired" type="boolean" />

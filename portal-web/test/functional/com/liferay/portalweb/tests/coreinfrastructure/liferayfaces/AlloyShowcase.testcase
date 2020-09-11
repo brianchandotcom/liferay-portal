@@ -117,7 +117,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/server-events");
 
-		AlloyShowcase.viewEventPaginator(
+		AlloyShowcase.viewServerEvents(
 			screenName1 = "John",
 			screenName2 = "Philip",
 			screenName3 = "George",
@@ -126,7 +126,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/sort-multiple-columns");
 
-		AlloyShowcase.viewMultipleColumnSortPaginator(
+		AlloyShowcase.viewMultipleColumnSort(
 			screenName1 = "John",
 			screenName2 = "Philip",
 			screenName3 = "George",
@@ -134,7 +134,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/sort-single-column");
 
-		AlloyShowcase.viewSingleColumnSortPaginator(
+		AlloyShowcase.viewSingleColumnSort(
 			screenName1 = "John",
 			screenName2 = "Philip",
 			screenName3 = "George",

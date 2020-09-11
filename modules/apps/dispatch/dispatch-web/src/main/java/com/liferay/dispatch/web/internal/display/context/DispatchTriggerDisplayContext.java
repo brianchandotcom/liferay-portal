@@ -14,7 +14,6 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
-import com.liferay.dispatch.ScheduledTaskExecutorServiceTypeRegistry;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.web.internal.display.context.util.DispatchRequestHelper;
@@ -32,6 +31,7 @@ import java.text.Format;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -43,13 +43,11 @@ import javax.portlet.RenderRequest;
 public class DispatchTriggerDisplayContext {
 
 	public DispatchTriggerDisplayContext(
-		ScheduledTaskExecutorServiceTypeRegistry
-			scheduledTaskExecutorServiceTypeRegistry,
+		Set<String> scheduledTaskExecutorServiceTypes,
 		DispatchTriggerLocalService dispatchTriggerLocalService,
 		RenderRequest renderRequest) {
 
-		_scheduledTaskExecutorServiceTypeRegistry =
-			scheduledTaskExecutorServiceTypeRegistry;
+		_scheduledTaskExecutorServiceTypes = scheduledTaskExecutorServiceTypes;
 		_dispatchTriggerLocalService = dispatchTriggerLocalService;
 
 		_dispatchRequestHelper = new DispatchRequestHelper(renderRequest);
@@ -117,9 +115,8 @@ public class DispatchTriggerDisplayContext {
 		return _rowChecker;
 	}
 
-	public List<String> getScheduledTaskExecutorServiceTypes() {
-		return _scheduledTaskExecutorServiceTypeRegistry.
-			getScheduledTaskExecutorServiceTypes();
+	public Set<String> getScheduledTaskExecutorServiceTypes() {
+		return _scheduledTaskExecutorServiceTypes;
 	}
 
 	public SearchContainer<DispatchTrigger> getSearchContainer()
@@ -159,8 +156,7 @@ public class DispatchTriggerDisplayContext {
 	private final DispatchRequestHelper _dispatchRequestHelper;
 	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
 	private RowChecker _rowChecker;
-	private final ScheduledTaskExecutorServiceTypeRegistry
-		_scheduledTaskExecutorServiceTypeRegistry;
+	private final Set<String> _scheduledTaskExecutorServiceTypes;
 	private SearchContainer<DispatchTrigger> _searchContainer;
 
 }

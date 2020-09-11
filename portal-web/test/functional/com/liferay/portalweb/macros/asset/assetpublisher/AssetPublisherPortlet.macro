@@ -1282,20 +1282,6 @@ definition {
 			value1 = "There are no results.");
 	}
 
-	macro viewMultipleAssetOrderPGViaAP {
-		AssertTextEquals(
-			locator1 = "AP#ASSET_ABSTRACT_GENERIC_TITLE_1",
-			value1 = "${assetTitle1}");
-
-		AssertTextEquals(
-			locator1 = "AP#ASSET_ABSTRACT_GENERIC_TITLE_2",
-			value1 = "${assetTitle2}");
-
-		AssertTextEquals(
-			locator1 = "AP#ASSET_ABSTRACT_GENERIC_TITLE_3",
-			value1 = "${assetTitle3}");
-	}
-
 	macro viewMultipleDDLRecordsViaAP {
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_DDL_RECORD_1",
@@ -1352,20 +1338,6 @@ definition {
 		Click(locator1 = "AP#ASSET_ABSTRACT_EDIT");
 
 		AssertElementNotPresent(locator1 = "AP#ASSET_EDIT");
-	}
-
-	macro viewOrderedFieldPG {
-		AssertTextEquals(
-			locator1 = "AP#ASSET_ABSTRACT_GENERIC_TITLE_1",
-			value1 = "${firstAsset}");
-
-		AssertTextEquals(
-			locator1 = "AP#ASSET_ABSTRACT_GENERIC_TITLE_2",
-			value1 = "${secondAsset}");
-
-		AssertTextEquals(
-			locator1 = "AP#ASSET_ABSTRACT_GENERIC_TITLE_3",
-			value1 = "${thirdAsset}");
 	}
 
 	macro viewPaginatedAssetsPG {

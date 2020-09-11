@@ -232,12 +232,25 @@ const Options = ({
 			const existingValue = normalizedValue[languageId].find(
 				({value}) => value === field.value
 			);
-			const newValue = {
-				...field,
-				label: field.value,
-			};
 
-			return existingValue || newValue;
+			if (existingValue) {
+				const {copyFrom} = existingValue;
+
+				if (copyFrom && copyFrom === editingLanguageId) {
+					return {
+						...existingValue,
+						label: field.label,
+					};
+				}
+
+				return existingValue;
+			}
+
+			return {
+				...field,
+				copyFrom: editingLanguageId,
+				label: field.label,
+			};
 		});
 	};
 
@@ -292,6 +305,10 @@ const Options = ({
 		fields[index][property] = value;
 		fields[index]['edited'] =
 			edited || (value && value !== label && property === 'value');
+
+		if (property === 'label') {
+			fields[index]['copyFrom'] = undefined;
+		}
 
 		return [fields, index, property, value];
 	};

@@ -247,6 +247,24 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			slaStatuses, taskNames);
 
 		if (instanceCount > 0) {
+			long startInstanceId = 0;
+
+			if (pagination.getEndPosition() > 10000) {
+				int endPosition = pagination.getEndPosition();
+
+				while (endPosition > 10000) {
+					startInstanceId = _getInstanceId(
+						assigneeIds, classPKs, completed, dateEnd, dateStart,
+						processId, slaStatuses, startInstanceId, taskNames);
+
+					endPosition = endPosition - 10000;
+				}
+
+				pagination = Pagination.of(
+					endPosition / pagination.getPageSize(),
+					pagination.getPageSize());
+			}
+
 			return Page.of(
 				_getInstances(
 					assigneeIds, classPKs, completed, dateEnd, dateStart,
@@ -753,6 +771,48 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_searchRequestExecutor.executeSearchRequest(countSearchRequest);
 
 		return countSearchResponse.getCount();
+	}
+
+	private long _getInstanceId(
+		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
+		Date dateStart, long processId, String[] slaStatuses,
+		long startInstanceId, String[] taskNames) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.addSorts(_sorts.field("instanceId", SortOrder.ASC));
+		searchSearchRequest.setSelectedFieldNames("instanceId");
+		searchSearchRequest.setIndexNames(
+			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		searchSearchRequest.setQuery(
+			booleanQuery.addFilterQueryClauses(
+				_createInstancesBooleanQuery(
+					assigneeIds, classPKs, completed, dateEnd, dateStart,
+					processId, slaStatuses, startInstanceId, taskNames)));
+
+		searchSearchRequest.setSize(1);
+		searchSearchRequest.setStart(9999);
+
+		return Stream.of(
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).mapToLong(
+			document -> document.getLong("instanceId")
+		).findFirst(
+		).orElse(
+			startInstanceId
+		);
 	}
 
 	private Collection<Instance> _getInstances(

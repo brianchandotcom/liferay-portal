@@ -256,7 +256,7 @@ public class ButtonTag extends BaseContainerTag {
 
 	@Override
 	protected String getHydratedModuleName() {
-		if ((getAdditionalProps() != null) && (getPropsTransformer() != null)) {
+		if ((getAdditionalProps() != null) || (getPropsTransformer() != null)) {
 			return "frontend-taglib-clay/Button";
 		}
 

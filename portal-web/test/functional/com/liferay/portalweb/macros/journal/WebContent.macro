@@ -1433,7 +1433,12 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		LexiconCard.clickCardWithConfirmation(card = "${templateName}");
+		if (isSet(confirm)) {
+			LexiconCard.clickCard(card = "${templateName}");
+		}
+		else {
+			LexiconCard.clickCardWithConfirmation(card = "${templateName}");
+		}
 
 		IFrame.selectTopFrame();
 

@@ -25,16 +25,16 @@ const handleFocusedFieldEvaluationEnded = (
 	instanceId,
 	settingsContext
 ) => {
+	if (changedEditingLanguage) {
+		return state;
+	}
+
 	const fieldName = getField(settingsContext.pages, 'name');
 	const {focusedField} = state;
 	const focusedFieldName = getField(
 		focusedField.settingsContext.pages,
 		'name'
 	);
-
-	if (changedEditingLanguage) {
-		return state;
-	}
 
 	if (
 		fieldName.instanceId !== focusedFieldName.instanceId &&

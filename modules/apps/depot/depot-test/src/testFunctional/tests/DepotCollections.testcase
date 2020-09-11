@@ -258,6 +258,84 @@ definition {
 			dynamicSelection = "true");
 	}
 
+	@description = "This ensures that user can not select the collection in depot after disabling Collctions."
+	@priority = "5"
+	test DisableCollctions {
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Manual Asset List");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Collections",
+			status = "Disabled");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Asset Publisher Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Asset Publisher",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Navigator.gotoNavTab(navTab = "Asset Selection");
+
+		Panel.expandPanel(panel = "Asset Selection");
+
+		Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
+
+		Panel.expandPanel(panel = "Select Collection");
+
+		Button.clickSelect();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#ASSET_LIST_DIALOG");
+
+		AssertClick(
+			key_breadcrumbName = "Sites and Libraries",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			value1 = "Sites and Libraries");
+
+		AssertClick(
+			key_groupTab = "Asset Library",
+			locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+			value1 = "Asset Library");
+
+		Click(
+			key_card = "Test Depot Name",
+			locator1 = "Card#CARD_TITLE");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Info:This application is not supported for Asset Libraries. Please, go back to scope selection.");
+	}
+
 	@description = "This ensures that only the asset types related to web content will be displayed after disabling DM."
 	@priority = "5"
 	test DisableDM {

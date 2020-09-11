@@ -173,7 +173,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 									<liferay-ui:message key="assigned-to" />:
 								</span>
 
-								<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
+								<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" onclick="<portlet:namespace/>toggleDropdown()" type="button">
 									<liferay-ui:message key="<%= assignee %>" />
 
 									<clay:icon
@@ -181,7 +181,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 									/>
 								</button>
 
-								<div class="dropdown-menu dropdown-menu-right">
+								<div class="dropdown-menu dropdown-menu-right" id="<portlet:namespace/>commerce-dropdown-assigned-to">
 									<c:if test="<%= !assignedToCurrentUser %>">
 										<clay:button
 											elementClasses="dropdown-item transition-link"
@@ -257,6 +257,21 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 										function <%= myWorkflowTasksPortletNamespace %>refreshPortlet() {
 											window.location.reload();
 										}
+
+										Liferay.provide(window, '<portlet:namespace />toggleDropdown', function () {
+											var dropdownElement = window.document.querySelector(
+												'#<portlet:namespace/>commerce-dropdown-assigned-to'
+											);
+
+											if (dropdownElement) {
+												if (dropdownElement.classList.contains('show')) {
+													dropdownElement.classList.remove('show');
+												}
+												else {
+													dropdownElement.classList.add('show');
+												}
+											}
+										});
 									</aui:script>
 								</div>
 							</small>

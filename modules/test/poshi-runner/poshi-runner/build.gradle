@@ -19,7 +19,6 @@ dependencies {
 	compile group: "io.appium", name: "java-client", version: "3.2.0"
 	compile group: "junit", name: "junit", version: "4.12"
 	compile group: "net.lightbody.bmp", name: "browsermob-core", version: "2.1.5"
-	compile group: "org.apache.ivy", name: "ivy", version: "2.4.0"
 	compile group: "org.bytedeco.javacpp-presets", name: "opencv", version: "2.4.10-0.10"
 	compile group: "org.codehaus.groovy", name: "groovy", version: "2.4.5"
 	compile group: "org.dom4j", name: "dom4j", version: "2.1.3"

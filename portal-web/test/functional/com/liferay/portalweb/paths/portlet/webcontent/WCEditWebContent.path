@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ANY</td>
+	<td>//button[contains(@id,'${key_filedName}')]/span[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FEATURED_IMAGE_TYPE</td>
 	<td>//div[contains(@class,'input-select-wrapper')]/select[contains(@id,'smallImageSource')]</td>
 	<td></td>

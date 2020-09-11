@@ -1,4 +1,4 @@
-# What are the Breaking Changes for Liferay Commerce 2.1?
+# What are the Breaking Changes for Liferay Commerce 3.0?
 
 This document presents a chronological list of changes that break existing
 functionality, APIs, or contracts with third party Liferay Commerce developers or users.
@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `0a185c9`.*
+*This document has been reviewed through commit .*
 
 ## Breaking Changes Contribution Guidelines
 

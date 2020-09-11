@@ -46,13 +46,13 @@ public class SimpleURLPatternMapperTest {
 		for (KeyValuePair keyValuePair : keyValuePairs) {
 			String value = urlPatternMapper.getValue(keyValuePair.getKey());
 
-			if (value == null) {
-				Assert.assertEquals("", keyValuePair.getValue());
-
-				continue;
-			}
-
 			try {
+				if (value == null) {
+					Assert.assertEquals("", keyValuePair.getValue());
+
+					continue;
+				}
+
 				Assert.assertEquals(keyValuePair.getValue(), value);
 			}
 			catch (ComparisonFailure comparisonFailure) {

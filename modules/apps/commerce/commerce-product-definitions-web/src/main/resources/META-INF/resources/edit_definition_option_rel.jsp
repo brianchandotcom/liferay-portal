@@ -55,7 +55,10 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 				</div>
 
 				<div class="col-6">
-					<aui:input label="position" name="priority" />
+					<aui:input label="position" name="priority">
+						<aui:validator name="min">[0]</aui:validator>
+						<aui:validator name="number" />
+					</aui:input>
 				</div>
 
 				<div class="col-4">

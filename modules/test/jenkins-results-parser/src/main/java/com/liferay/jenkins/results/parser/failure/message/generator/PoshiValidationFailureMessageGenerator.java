@@ -43,6 +43,6 @@ public class PoshiValidationFailureMessageGenerator
 	}
 
 	private static final Pattern _poshiFailurePattern = Pattern.compile(
-		"\\n(.*errors in POSHI[\\s\\S]+?FAILED)");
+		"\\n(.*errors in (Poshi|POSHI)[\\s\\S]+?FAILED)");
 
 }

@@ -14,9 +14,9 @@
 
 package com.liferay.dispatch.web.internal.portlet.action;
 
+import com.liferay.dispatch.ScheduledTaskExecutorServiceTypeRegistry;
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.task.type.DispatchTaskTypeRegistry;
 import com.liferay.dispatch.web.internal.display.context.DispatchTriggerDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,8 +48,8 @@ public class EditDispatchTriggerMVCRenderCommand implements MVCRenderCommand {
 
 		DispatchTriggerDisplayContext dispatchTriggerDisplayContext =
 			new DispatchTriggerDisplayContext(
-				_dispatchTaskTypeRegistry, _dispatchTriggerLocalService,
-				renderRequest);
+				_scheduledTaskExecutorServiceTypeRegistry,
+				_dispatchTriggerLocalService, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, dispatchTriggerDisplayContext);
@@ -58,9 +58,10 @@ public class EditDispatchTriggerMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private DispatchTaskTypeRegistry _dispatchTaskTypeRegistry;
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	@Reference
-	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+	private ScheduledTaskExecutorServiceTypeRegistry
+		_scheduledTaskExecutorServiceTypeRegistry;
 
 }

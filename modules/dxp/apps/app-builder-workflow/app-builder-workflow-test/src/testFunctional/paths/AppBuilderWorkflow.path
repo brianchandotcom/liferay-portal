@@ -8,14 +8,48 @@
 <tr><td rowspan="1" colspan="3">AppBuilderWorkflow</td></tr>
 </thead>
 <tbody>
-
 <!--APPS_LISTING_SCREEN-->
 <tr>
 	<td>COLUMN_ITEM</td>
 	<td>//table[contains(@class,'table')]//th[contains(text(),'${value1}')]</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>SELECT_OBJECT_BUTTON</td>
+	<td>//button[contains(@aria-labelledby,'select-object')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BOX_OBJECT_DISABLED</td>
+	<td>//div[contains(@class,'dropdown-section')]//input[contains(@placeholder,'Search') and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BOX_OBJECT</td>
+	<td>//div[contains(@class,'dropdown-section')]//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BOX_OBJECT_NO_RESULT_MESSAGE</td>
+	<td>//span[contains(text(),'There were no objects found with this name.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OBJECT_ITEM</td>
+	<td>//span[contains(@title,'${key_objectName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLUS_BUTTON</td>
+	<td>//button[contains(@class,'nav-btn')]</td>
+	<td></td>
+</tr>
+<!--APPS_TABS-->
+<tr>
+	<td>APP_TAB</td>
+	<td>//a[contains(@class,'nav-link') and contains (@href,'${key_tabName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

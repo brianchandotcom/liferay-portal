@@ -1,6 +1,7 @@
 definition {
 
 	macro validateColumns {
+
 		AssertTextEquals(
 			locator1 = "AppBuilderWorkflow#COLUMN_ITEM",
 			value1 = "Name");
@@ -27,9 +28,83 @@ definition {
 	}
 
 	macro validateSearchItemCount {
+
 		AssertTextEquals(
 			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
 			value1 = "${itemCount} Results for ${itemName}");
 	}
 
+	macro validateTabsPresent {
+
+		AssertTextEquals.assertPartialText(
+			key_tabName = "standard",
+			locator1 = "AppBuilderWorkflow#APP_TAB",
+			value1 = "Standard");
+
+		AssertTextEquals.assertPartialText(
+			key_tabName = "workflow",
+			locator1 = "AppBuilderWorkflow#APP_TAB",
+			value1 = "Workflow Powered");
+	}
+
+	macro validateObjectSearchBoxDisabled {
+
+		Button.click(button = "Create New App");
+
+		AppBuilderWorkflow.clickOnSelectObject();
+
+		AssertElementPresent(locator1 = "AppBuilderWorkflow#SEARCH_BOX_OBJECT_DISABLED");
+	}
+
+	macro clickOnSelectObject {
+
+		Click(locator1 = "AppBuilderWorkflow#SELECT_OBJECT_BUTTON");
+	}
+
+	macro searchObject {
+
+		Type(
+			locator1 = "AppBuilderWorkflow#SEARCH_BOX_OBJECT",
+			value1 = "${objectName}");
+	}
+
+	macro validateNoObjectResultMessage {
+
+		AssertElementPresent(locator1 = "AppBuilderWorkflow#SEARCH_BOX_OBJECT_NO_RESULT_MESSAGE");
+	}
+
+	macro validateObjectResultPresent {
+
+		AssertElementPresent(
+			key_objectName = "${objectName}",
+			locator1 = "AppBuilderWorkflow#OBJECT_ITEM");
+	}
+
+	macro validateObjectResultNotPresent {
+
+		AssertElementNotPresent(
+			key_objectName = "${objectName}",
+			locator1 = "AppBuilderWorkflow#OBJECT_ITEM");
+	}
+
+	macro selectObject {
+
+		Click(
+			key_objectName = "${objectName}",
+			locator1 = "AppBuilderWorkflow#OBJECT_ITEM");
+
+		Button.click(button = "Continue");
+	}
+
+	macro clickOnPlusButton {
+
+		Click(locator1 = "AppBuilderWorkflow#PLUS_BUTTON");
+	}
+
+	macro validateCreateNewAppButtonPresent {
+
+		AssertElementPresent(
+			key_text = "Create New App",
+			locator1 = "Button#ANY");
+	}
 }

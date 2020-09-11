@@ -28,6 +28,119 @@ definition {
 		}
 	}
 
+	@description = "Create a App through the 'Apps' portlet"
+	@priority = "5"
+	test CreateStandardApp {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderWorkflow.validateTabsPresent();
+
+		AppBuilderWorkflow.validateObjectSearchBoxDisabled();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "test object",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		Button.click(button = "Create New App");
+		AppBuilderWorkflow.clickOnSelectObject();
+		AppBuilderWorkflow.searchObject(objectName = "Not Existent Object");
+		AppBuilderWorkflow.validateNoObjectResultMessage();
+
+		AppBuilderWorkflow.searchObject(objectName = "my custom object");
+		AppBuilderWorkflow.validateObjectResultPresent(objectName = "my custom object");
+		AppBuilderWorkflow.validateObjectResultNotPresent(objectName = "test object");
+
+		AppBuilderWorkflow.selectObject(objectName = "my custom object");
+		Button.click(button = "Cancel");
+		AppBuilderWorkflow.validateCreateNewAppButtonPresent();
+
+		Button.click(button = "Create New App");
+		AppBuilderWorkflow.clickOnSelectObject();
+		AppBuilderWorkflow.searchObject(objectName = "my custom object");
+		AppBuilderWorkflow.selectObject(objectName = "my custom object");
+		AppBuilderStandardApp.clickOnStandardBackButton();
+		AppBuilderWorkflow.validateCreateNewAppButtonPresent();
+
+		Button.click(button = "Create New App");
+		AppBuilderWorkflow.clickOnSelectObject();
+		AppBuilderWorkflow.searchObject(objectName = "my custom object");
+		AppBuilderWorkflow.selectObject(objectName = "my custom object");
+
+		AppBuilderStandardApp.add(
+			appTitle = "Standard App 1",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		AppBuilderWorkflow.clickOnPlusButton();
+		AppBuilderWorkflow.clickOnSelectObject();
+		AppBuilderWorkflow.searchObject(objectName = "my custom object");
+		AppBuilderWorkflow.selectObject(objectName = "my custom object");
+
+		AppBuilderStandardApp.add(
+			appTitle = "Standard App 2",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Standard App 1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Standard App 2");
+
+		Refresh();
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Standard App 1");
+
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content Test 1");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content Test 2");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content Test 1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content Test 2");
+	}
+
 	@description = "Filter and order the apps created using App Builder"
 	@priority = "5"
 	test FilterAndOrderApps {

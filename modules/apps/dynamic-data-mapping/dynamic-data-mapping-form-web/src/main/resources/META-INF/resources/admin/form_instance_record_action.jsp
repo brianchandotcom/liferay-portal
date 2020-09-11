@@ -46,19 +46,16 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 	</c:if>
 
 	<c:if test="<%= formInstancePermissionCheckerHelper.isShowEditIcon(ddmFormAdminDisplayContext.getDDMFormInstance()) %>">
-
-		<%
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM, 0, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/display/edit_form_instance_record.jsp");
-		portletURL.setParameter("redirect", currentURL);
-		portletURL.setParameter("formInstanceRecordId", String.valueOf(formInstanceRecord.getFormInstanceRecordId()));
-		portletURL.setParameter("formInstanceId", String.valueOf(formInstanceRecord.getFormInstanceId()));
-		%>
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcPath" value="/admin/edit_form_instance_record.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="formInstanceRecordId" value="<%= String.valueOf(formInstanceRecord.getFormInstanceRecordId()) %>" />
+			<portlet:param name="formInstanceId" value="<%= String.valueOf(formInstanceRecord.getFormInstanceId()) %>" />
+		</portlet:renderURL>
 
 		<liferay-ui:icon
 			message="edit"
-			url="<%= portletURL.toString() %>"
+			url="<%= editURL %>"
 		/>
 	</c:if>
 

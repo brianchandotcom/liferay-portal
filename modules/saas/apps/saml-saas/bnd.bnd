@@ -8,3 +8,4 @@ Provide-Capability:\
 		resource.bundle.base.name="content.Language";\
 		service.ranking="2";\
 		servlet.context.name=saml-web
+Web-ContextPath: /saml-saas

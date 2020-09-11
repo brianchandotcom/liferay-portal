@@ -53,6 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + DispatchPortletKeys.DISPATCH,
 		"mvc.command.name=editDispatchTrigger"
@@ -201,7 +202,8 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		String processType = ParamUtil.getString(actionRequest, "processType");
+		String dispatchTriggerType = ParamUtil.getString(
+			actionRequest, "dispatchTriggerType");
 
 		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
 			true);
@@ -217,7 +219,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			dispatchTrigger = _dispatchTriggerService.addDispatchTrigger(
-				_portal.getUserId(actionRequest), name, processType,
+				_portal.getUserId(actionRequest), name, dispatchTriggerType,
 				typeSettingsUnicodeProperties);
 		}
 

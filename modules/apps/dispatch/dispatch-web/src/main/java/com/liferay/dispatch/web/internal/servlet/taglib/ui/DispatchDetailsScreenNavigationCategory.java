@@ -77,7 +77,7 @@ public class DispatchDetailsScreenNavigationCategory
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/process/details.jsp");
+			httpServletRequest, httpServletResponse, "/trigger/details.jsp");
 	}
 
 	@Reference

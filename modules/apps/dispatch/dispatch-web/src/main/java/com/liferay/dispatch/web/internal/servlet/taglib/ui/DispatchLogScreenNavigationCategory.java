@@ -104,7 +104,7 @@ public class DispatchLogScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/process/process_logs.jsp");
+			"/trigger/dispatch_trigger_logs.jsp");
 	}
 
 	@Reference

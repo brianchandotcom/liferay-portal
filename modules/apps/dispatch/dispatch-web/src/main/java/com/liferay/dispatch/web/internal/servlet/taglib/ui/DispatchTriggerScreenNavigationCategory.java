@@ -52,7 +52,7 @@ public class DispatchTriggerScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return DispatchConstants.CATEGORY_KEY_DISPATCH_TASK;
+		return DispatchConstants.CATEGORY_KEY_DISPATCH_TRIGGER;
 	}
 
 	@Override
@@ -89,7 +89,8 @@ public class DispatchTriggerScreenNavigationCategory
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/process/trigger.jsp");
+			httpServletRequest, httpServletResponse,
+			"/trigger/dispatch_trigger.jsp");
 	}
 
 	@Reference(

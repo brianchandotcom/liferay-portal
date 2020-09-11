@@ -12,6 +12,31 @@ definition {
 	var title4 = "Lightweight";
 	var title5 = "Open Source";
 
+	macro clickAndVerifyRowDeselection {
+		KeyPress.keyDown(
+			key_num = "${num}",
+			locator1 = "AlloyShowcase#SELECTION_CHECKBOX",
+			value1 = "\COMMAND");
+
+		Click(
+			key_num = "${num}",
+			locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+
+		KeyPress.keyUp(
+			key_num = "${num}",
+			locator1 = "AlloyShowcase#SELECTION_CHECKBOX",
+			value1 = "\COMMAND");
+
+		AssertNotChecked(
+			key_num = "${num}",
+			locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
+
+		AssertElementNotPresent(
+			key_firstName = "${firstName}",
+			key_lastName = "${lastName}",
+			locator1 = "AlloyShowcase#SELECTED_ROW");
+	}
+
 	macro clickButton {
 		if ("${buttonRow}" == "true") {
 			AssertElementPresent(locator1 = "Button#SAVE");
@@ -157,6 +182,11 @@ definition {
 			modalDialogResult = "John Adams",
 			num = "0");
 
+		AlloyShowcase.clickAndVerifyRowDeselection(
+			firstName = "John",
+			lastName = "Adams",
+			num = "0");
+
 		AlloyShowcase.clickRadioAndVerifyRowSelection(
 			feedBackResult = "Carter Braxton",
 			firstName = "Carter",
@@ -256,6 +286,92 @@ definition {
 					locator1 = "JSFShowcase#MODEL_RESULT",
 					value1 = "${menuItems}");
 			}
+		}
+	}
+
+	macro verifyDataTableSort {
+		Click(
+			key_columnName = "${columnName}",
+			locator1 = "AlloyShowcase#TABLE_COLUMN_NAME");
+
+		AssertElementPresent(
+			key_columnName = "${columnName}",
+			locator1 = "AlloyShowcase#TABLE_ARROW_ASCEND");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+			value1 = "${firstNameAsc}");
+
+		if (isSet(columnName2)) {
+			KeyPress.keyDown(
+				key_pageNum = "«",
+				locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED",
+				value1 = "\COMMAND");
+
+			Click(
+				key_columnName = "${columnName2}",
+				locator1 = "AlloyShowcase#TABLE_COLUMN_NAME");
+
+			KeyPress.keyUp(
+				key_pageNum = "«",
+				locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED",
+				value1 = "\COMMAND");
+
+			AssertElementPresent(
+				key_columnName = "${columnName}",
+				locator1 = "AlloyShowcase#TABLE_ARROW_ASCEND");
+
+			AssertElementPresent(
+				key_columnName = "${columnName2}",
+				locator1 = "AlloyShowcase#TABLE_ARROW_ASCEND");
+
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+				value1 = "${firstNameAsc2}");
+		}
+
+		Click(
+			key_columnName = "${columnName}",
+			locator1 = "AlloyShowcase#TABLE_COLUMN_NAME");
+
+		AssertElementPresent(
+			key_columnName = "${columnName}",
+			locator1 = "AlloyShowcase#TABLE_ARROW_DESCEND");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+			value1 = "${firstNameDesc}");
+
+		if (isSet(columnName2)) {
+			KeyPress.keyDown(
+				key_pageNum = "«",
+				locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED",
+				value1 = "\COMMAND");
+
+			Click(
+				key_columnName = "${columnName2}",
+				locator1 = "AlloyShowcase#TABLE_COLUMN_NAME");
+
+			Click(
+				key_columnName = "${columnName2}",
+				locator1 = "AlloyShowcase#TABLE_COLUMN_NAME");
+
+			KeyPress.keyUp(
+				key_pageNum = "«",
+				locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED",
+				value1 = "\COMMAND");
+
+			AssertElementPresent(
+				key_columnName = "${columnName}",
+				locator1 = "AlloyShowcase#TABLE_ARROW_DESCEND");
+
+			AssertElementPresent(
+				key_columnName = "${columnName2}",
+				locator1 = "AlloyShowcase#TABLE_ARROW_DESCEND");
+
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+				value1 = "${firstNameDesc2}");
 		}
 	}
 
@@ -564,6 +680,18 @@ definition {
 			lastName = "Adams",
 			modalDialogResult = "John Adams",
 			num = "0");
+
+		AlloyShowcase.clickAndVerifyRowDeselection(
+			firstName = "John",
+			lastName = "Adams",
+			num = "0");
+
+		AlloyShowcase.clickRadioAndVerifyRowSelection(
+			feedBackResult = "John Adams",
+			firstName = "John",
+			lastName = "Adams",
+			modalDialogResult = "John Adams",
+			num = "0");
 	}
 
 	macro viewMultipleColumnSortPaginator {
@@ -577,21 +705,13 @@ definition {
 
 		AlloyShowcase.selectRowsPerPage();
 
-		Click(locator1 = "AlloyShowcase#TABLE_LAST_NAME");
-
-		AssertElementPresent(locator1 = "AlloyShowcase#TABLE_LAST_NAME_ARROW");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "John");
-
-		Click(locator1 = "AlloyShowcase#TABLE_DATE_OF_BIRTH");
-
-		AssertElementPresent(locator1 = "AlloyShowcase#TABLE_DATE_OF_BIRTH_ARROW");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "John");
+		AlloyShowcase.verifyDataTableSort(
+			columnName = "Last Name",
+			columnName2 = "Date of Birth",
+			firstNameAsc = "John",
+			firstNameAsc2 = "Samuel",
+			firstNameDesc = "Benjamin",
+			firstNameDesc2 = "Benjamin");
 	}
 
 	macro viewPaginator {
@@ -708,21 +828,20 @@ definition {
 
 		AlloyShowcase.selectRowsPerPage();
 
-		Click(locator1 = "AlloyShowcase#TABLE_LAST_NAME");
+		AlloyShowcase.verifyDataTableSort(
+			columnName = "Last Name",
+			firstNameAsc = "John",
+			firstNameDesc = "Benjamin");
 
-		AssertElementPresent(locator1 = "AlloyShowcase#TABLE_LAST_NAME_ARROW");
+		AlloyShowcase.verifyDataTableSort(
+			columnName = "First Name",
+			firstNameAsc = "Adoniram",
+			firstNameDesc = "William");
 
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "John");
-
-		Click(locator1 = "AlloyShowcase#TABLE_DATE_OF_BIRTH");
-
-		AssertElementPresent(locator1 = "AlloyShowcase#TABLE_DATE_OF_BIRTH_ARROW");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "John");
+		AlloyShowcase.verifyDataTableSort(
+			columnName = "Date of Birth",
+			firstNameAsc = "John",
+			firstNameDesc = "Thomas");
 	}
 
 }

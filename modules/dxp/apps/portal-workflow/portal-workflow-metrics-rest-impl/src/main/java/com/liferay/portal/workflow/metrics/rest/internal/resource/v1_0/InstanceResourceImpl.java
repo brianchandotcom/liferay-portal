@@ -710,7 +710,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"nodeId", "nodeId");
 
-		termsAggregation.setSize(100000);
+		termsAggregation.setSize(10000);
 
 		FilterAggregation countFilterAggregation = _aggregations.filter(
 			"countFilter",
@@ -732,7 +732,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsAggregation nameTermsAggregation = _aggregations.terms(
 			"name", "name");
 
-		nameTermsAggregation.setSize(100000);
+		nameTermsAggregation.setSize(10000);
 
 		nameFilterAggregation.addChildAggregation(nameTermsAggregation);
 

@@ -1271,6 +1271,29 @@ definition {
 		}
 	}
 
+	macro tearDownNoCloseMessage {
+		if ("${marketplace}" == "true") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			SitePages.addPublicPage(pageName = "Marketplace Calendar Testing");
+
+			Navigator.gotoPage(pageName = "Marketplace Calendar Testing");
+
+			Portlet.addPG(
+				i = "${i}",
+				pageName = "Marketplace Calendar Testing",
+				portletName = "Calendar");
+
+			Navigator.gotoPage(pageName = "Marketplace Calendar Testing");
+		}
+
+		CalendarEvent.delete();
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+	}
+
 	macro view {
 		var eventTitle = "${eventTitle}";
 

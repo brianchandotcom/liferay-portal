@@ -231,7 +231,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
-							name="final-price"
+							name="total"
 						>
 							<c:if test="<%= commerceProductPrice != null %>">
 

@@ -131,7 +131,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					%>
 
 					<liferay-ui:search-container-column-text
-						name="unit-price"
+						name="list-price"
 					>
 						<c:if test="<%= commerceCartContentDisplayContext.hasViewPricePermission() %>">
 
@@ -158,7 +158,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						name="price"
+						name="total"
 					>
 						<c:if test="<%= commerceCartContentDisplayContext.hasViewPricePermission() %>">
 

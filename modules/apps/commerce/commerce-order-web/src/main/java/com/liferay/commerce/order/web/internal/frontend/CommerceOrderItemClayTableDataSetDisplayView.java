@@ -63,7 +63,8 @@ public class CommerceOrderItemClayTableDataSetDisplayView
 			"deliveryGroup", "delivery-group");
 
 		ClayTableSchemaField priceField =
-			clayTableSchemaBuilder.addClayTableSchemaField("price", "price");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"price", "list-price");
 
 		priceField.setContentRenderer("commerceTableCellSubscription");
 

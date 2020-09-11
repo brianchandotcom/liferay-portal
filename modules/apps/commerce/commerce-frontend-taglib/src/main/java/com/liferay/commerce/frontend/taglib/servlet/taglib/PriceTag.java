@@ -22,6 +22,9 @@ import com.liferay.commerce.frontend.model.PriceModel;
 import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.frontend.util.ProductHelper;
+import com.liferay.commerce.pricing.constants.CommercePricingConstants;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
@@ -34,6 +37,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.jsp.PageContext;
 
@@ -90,6 +94,22 @@ public class PriceTag extends ComponentRendererTag {
 				commercePriceConfiguration.displayDiscountLevels());
 
 			putValue("prices", priceModel);
+
+			CommerceChannel commerceChannel =
+				_commerceChannelService.fetchCommerceChannel(
+					commerceContext.getCommerceChannelId());
+
+			boolean netPrice = true;
+
+			if ((commerceChannel != null) &&
+				Objects.equals(
+					commerceChannel.getPriceDisplayType(),
+					CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+
+				netPrice = false;
+			}
+
+			putValue("netPrice", netPrice);
 
 			setTemplateNamespace("Price.render");
 		}
@@ -148,6 +168,8 @@ public class PriceTag extends ComponentRendererTag {
 
 		_productHelper = ServletContextUtil.getProductHelper();
 		_configurationProvider = ServletContextUtil.getConfigurationProvider();
+		_commerceChannelService =
+			ServletContextUtil.getCommerceChannelService();
 	}
 
 	public void setQuantity(String quantity) {
@@ -156,6 +178,7 @@ public class PriceTag extends ComponentRendererTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(PriceTag.class);
 
+	private CommerceChannelService _commerceChannelService;
 	private ConfigurationProvider _configurationProvider;
 	private ProductHelper _productHelper;
 

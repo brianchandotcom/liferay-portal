@@ -46,7 +46,7 @@ public class AllSkusClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"productName", "product");
 		clayTableSchemaBuilder.addClayTableSchemaField("options", "options");
-		clayTableSchemaBuilder.addClayTableSchemaField("price", "price");
+		clayTableSchemaBuilder.addClayTableSchemaField("price", "list-price");
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"availableQuantity", "available-quantity");
 

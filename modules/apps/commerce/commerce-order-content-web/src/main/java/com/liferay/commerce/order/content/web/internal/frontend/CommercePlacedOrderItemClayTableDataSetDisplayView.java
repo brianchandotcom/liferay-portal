@@ -47,7 +47,8 @@ public class CommercePlacedOrderItemClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
 		ClayTableSchemaField priceField =
-			clayTableSchemaBuilder.addClayTableSchemaField("price", "price");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"price", "list-price");
 
 		priceField.setContentRenderer("commerceTablePrice");
 

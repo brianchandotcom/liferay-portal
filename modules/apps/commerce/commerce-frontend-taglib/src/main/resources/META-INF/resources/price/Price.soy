@@ -14,6 +14,7 @@
 	{@param? additionalDiscountClasses: string}
 	{@param? additionalPromoPriceClasses: string}
 	{@param? displayDiscountLevels: bool}
+	{@param? netPrice: bool}
 
 	{let $inactiveClass kind="text"}
 		{if isNonnull($prices.promoPrice) or
@@ -49,6 +50,7 @@
 				{param percentage: $prices.discountPercentage /}
 				{param percentages: $prices.discountPercentages /}
 				{param displayDiscountLevels: $displayDiscountLevels /}
+				{param netPrice: $netPrice /}
 				{param finalPrice: $prices.finalPrice /}
 				{param additionalDiscountClasses: $additionalDiscountClasses /}
 			{/call}
@@ -64,7 +66,7 @@
 	{@param? additionalPromoPriceClasses: string}
 
 	<span class="price-label">
-		{msg desc="Promo Price"}promo-price{/msg}
+		{msg desc="Sale Price"}sale-price{/msg}
 	</span>
 	<span class="price-value price-value-promo {$additionalPromoPriceClasses}">
 		{$promoPrice}
@@ -80,6 +82,7 @@
 	{@param? percentages: ? }
 	{@param? additionalDiscountClasses: string}
 	{@param? displayDiscountLevels: bool}
+	{@param? netPrice: bool}
 
 	<span class="price-label">
 		{msg desc="Discount"}discount{/msg}
@@ -94,7 +97,11 @@
 		{/if}
 	</span>
 	<span class="price-label">
-		{msg desc="Final Price"}final-price{/msg}
+		{if $netPrice == true}
+			{msg desc="Net Price"}net-price{/msg}
+		{else}
+			{msg desc="Gross Price"}gross-price{/msg}
+		{/if}
 	</span>
 	<span class="price-value price-value-final {$additionalDiscountClasses}">
 		{$finalPrice}
@@ -109,7 +116,7 @@
 	{@param? additionalPriceClasses: string}
 
 	<span class="price-label">
-		{msg desc="Catalog Price"}catalog-price{/msg}
+		{msg desc="List Price"}list-price{/msg}
 	</span>
 	<span class="price-value {$additionalPriceClasses}">
 		{$price}

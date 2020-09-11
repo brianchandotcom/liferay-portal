@@ -368,7 +368,7 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 						CommerceMoney totalDiscountAmount = totalDiscountValue.getDiscountAmount();
 						%>
 
-						<dt><liferay-ui:message key="delivery-discount" /></dt>
+						<dt><liferay-ui:message key="total-discount" /></dt>
 						<dd class="text-right"><%= HtmlUtil.escape(totalDiscountAmount.format(locale)) %></dd>
 						<dt></dt>
 						<dd class="text-right"><%= HtmlUtil.escape(commerceOrderContentDisplayContext.getLocalizedPercentage(totalDiscountValue.getDiscountPercentage(), locale)) %></dd>

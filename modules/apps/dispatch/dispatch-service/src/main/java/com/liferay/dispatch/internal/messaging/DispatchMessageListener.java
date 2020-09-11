@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matija Petanjek
  */
 @Component(
-	immediate = true,
 	property = "destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME,
 	service = MessageListener.class
 )

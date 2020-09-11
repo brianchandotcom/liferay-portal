@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matija Petanjek
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.dispatch.model.DispatchTrigger",
 	service = ModelResourcePermission.class
 )

@@ -6,3 +6,12 @@ Export-Package:\
 	com.liferay.petra.salesforce.client.bulk,\
 	com.liferay.petra.salesforce.client.partner,\
 	com.liferay.petra.salesforce.client.streaming
+Import-Package:\
+	!com.google.appengine.api.urlfetch,\
+	\
+	!org.apache.avalon.framework.logger,\
+	!org.apache.log,\
+	\
+	!org.eclipse.jetty.jmx,\
+	\
+	*

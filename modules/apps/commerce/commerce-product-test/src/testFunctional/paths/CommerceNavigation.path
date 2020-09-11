@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ENTRY_NAME_N</td>
-	<td>xpath=(//div[@class='dataset-display-wrapper' or @class='searchcontainer-content']//a)[${key_rowNumber}]</td>
+	<td>xpath=(//div[@class='data-set-display-wrapper' or @class='searchcontainer-content']//a)[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>

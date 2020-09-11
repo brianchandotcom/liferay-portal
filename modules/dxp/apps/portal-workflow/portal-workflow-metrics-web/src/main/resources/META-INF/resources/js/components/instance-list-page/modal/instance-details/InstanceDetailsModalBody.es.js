@@ -13,6 +13,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useMemo} from 'react';
 
 import ContentView from '../../../../shared/components/content-view/ContentView.es';
@@ -157,18 +158,23 @@ const Body = ({
 					/>
 				)}
 
-				<a
-					className="btn btn-secondary btn-sm font-weight-medium mb-1 mt-3"
-					data-testid="submissionPageButton"
-					href={`/group/control_panel/manage/-/workflow_instance/view/${id}`}
-					target="_blank"
-				>
-					{Liferay.Language.get('go-to-submission-page')}
+				<ClayTooltipProvider>
+					<a
+						className="btn btn-secondary btn-sm font-weight-medium mb-1 mt-3"
+						data-testid="submissionPageButton"
+						data-tooltip-align="bottom"
+						data-tooltip-delay="0"
+						href={`/group/control_panel/manage/-/workflow_instance/view/${id}`}
+						target="_blank"
+						title={Liferay.Language.get('open-page-in-a-new-tab')}
+					>
+						{Liferay.Language.get('go-to-submission-page')}
 
-					<span className="inline-item inline-item-after">
-						<ClayIcon symbol="shortcut" />
-					</span>
-				</a>
+						<span className="inline-item inline-item-after">
+							<ClayIcon symbol="shortcut" />
+						</span>
+					</a>
+				</ClayTooltipProvider>
 			</ContentView>
 		</ClayModal.Body>
 	);

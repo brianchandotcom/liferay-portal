@@ -1,23 +1,23 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
-package com.liferay.commerce.data.integration.web.internal.servlet.taglib.ui;
+package com.liferay.dispatch.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.data.integration.constants.CommerceDataIntegrationConstants;
-import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
-import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLogService;
-import com.liferay.commerce.data.integration.web.internal.display.context.CommerceDataIntegrationProcessLogDisplayContext;
+import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchLogService;
+import com.liferay.dispatch.web.internal.display.context.DispatchLogDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -50,14 +50,13 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class CommerceDataIntegrationLogScreenNavigationEntry
+public class DispatchLogScreenNavigationCategory
 	implements ScreenNavigationCategory,
-			   ScreenNavigationEntry<CommerceDataIntegrationProcess> {
+			   ScreenNavigationEntry<DispatchTrigger> {
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceDataIntegrationConstants.
-			CATEGORY_KEY_COMMERCE_DATA_INTEGRATION_LOGS;
+		return DispatchConstants.CATEGORY_KEY_DISPATCH_LOGS;
 	}
 
 	@Override
@@ -75,16 +74,12 @@ public class CommerceDataIntegrationLogScreenNavigationEntry
 
 	@Override
 	public String getScreenNavigationKey() {
-		return CommerceDataIntegrationConstants.
-			SCREEN_NAVIGATION_KEY_COMMERCE_DATA_INTEGRATION_GENERAL;
+		return DispatchConstants.SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL;
 	}
 
 	@Override
-	public boolean isVisible(
-		User user,
-		CommerceDataIntegrationProcess commerceDataIntegrationProcess) {
-
-		if (commerceDataIntegrationProcess == null) {
+	public boolean isVisible(User user, DispatchTrigger dispatchTrigger) {
+		if (dispatchTrigger == null) {
 			return false;
 		}
 
@@ -101,14 +96,11 @@ public class CommerceDataIntegrationLogScreenNavigationEntry
 			(RenderRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		CommerceDataIntegrationProcessLogDisplayContext
-			commerceDataIntegrationProcessLogDisplayContext =
-				new CommerceDataIntegrationProcessLogDisplayContext(
-					_commerceDataIntegrationProcessLogService, renderRequest);
+		DispatchLogDisplayContext dispatchLogDisplayContext =
+			new DispatchLogDisplayContext(_dispatchLogService, renderRequest);
 
 		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceDataIntegrationProcessLogDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, dispatchLogDisplayContext);
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
@@ -116,8 +108,7 @@ public class CommerceDataIntegrationLogScreenNavigationEntry
 	}
 
 	@Reference
-	private CommerceDataIntegrationProcessLogService
-		_commerceDataIntegrationProcessLogService;
+	private DispatchLogService _dispatchLogService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

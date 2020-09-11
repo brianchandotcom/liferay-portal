@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ASSET_ROW_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'asset-abstract')][${key_rowNumber}]//h4[@class='component-title']/a</td>
+	<td>xPath=(//a[contains(@class,'asset-title')])[${rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>

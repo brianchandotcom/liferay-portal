@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.web.internal.portlet;
 
+import com.liferay.dispatch.ScheduledTaskExecutorServiceTypeRegistry;
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.constants.DispatchWebKeys;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -83,6 +84,7 @@ public class DispatchPortlet extends MVCPortlet {
 
 		DispatchTriggerDisplayContext dispatchTriggerDisplayContext =
 			new DispatchTriggerDisplayContext(
+				_scheduledTaskExecutorServiceTypeRegistry,
 				_dispatchTriggerLocalService, renderRequest);
 
 		renderRequest.setAttribute(
@@ -96,5 +98,9 @@ public class DispatchPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ScheduledTaskExecutorServiceTypeRegistry
+		_scheduledTaskExecutorServiceTypeRegistry;
 
 }

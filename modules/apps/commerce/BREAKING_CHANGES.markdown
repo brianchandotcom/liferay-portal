@@ -405,7 +405,7 @@ This was moved to follow Liferay coding pattern.
 
 #### What changed?
 
-The prefix commerce_ has been added to the commerce destinations defined in
+The prefix `commerce_` has been added to the Commerce destinations defined in
 `com.liferay.commerce.constants.CommerceDestinationNames`:
 
 - `liferay/commerce_order_status`;
@@ -424,6 +424,6 @@ Update any explicit reference to commerce destinations with the new names.
 
 #### Why was this change made?
 
-This change was introduced to follow Liferay naming pattern.
+This change was introduced to follow the Liferay naming pattern.
 
 ---------------------------------------

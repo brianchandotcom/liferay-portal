@@ -30,6 +30,7 @@ export default class UnsafeHTML extends React.PureComponent {
 
 	componentDidUpdate(prevProps) {
 		if (this.state.ref) {
+			this.state.ref.removeAttribute('style');
 			this._syncRefProps();
 
 			if (

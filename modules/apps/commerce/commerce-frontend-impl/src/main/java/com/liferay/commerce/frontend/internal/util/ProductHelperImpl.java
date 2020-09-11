@@ -183,13 +183,15 @@ public class ProductHelperImpl implements ProductHelper {
 			CommerceMoney unitPromoPriceMoney =
 				commerceProductPrice.getUnitPromoPrice();
 
-			BigDecimal unitPromoPrice = unitPromoPriceMoney.getPrice();
+			if (!unitPromoPriceMoney.isEmpty()) {
+				BigDecimal unitPromoPrice = unitPromoPriceMoney.getPrice();
 
-			if ((unitPromoPrice != null) &&
-				(unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-				(unitPromoPrice.compareTo(unitPriceMoney.getPrice()) < 0)) {
+				if ((unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
+					(unitPromoPrice.compareTo(unitPriceMoney.getPrice()) < 0)) {
 
-				priceModel.setPromoPrice(unitPromoPriceMoney.format(locale));
+					priceModel.setPromoPrice(
+						unitPromoPriceMoney.format(locale));
+				}
 			}
 
 			return _updatePriceModelDiscount(
@@ -203,8 +205,6 @@ public class ProductHelperImpl implements ProductHelper {
 		PriceModel priceModel = new PriceModel(
 			unitPriceWithTaxAmountMoney.format(locale));
 
-		BigDecimal unitPriceWithTax = unitPriceWithTaxAmountMoney.getPrice();
-
 		CommerceMoney unitPromoPriceWithTaxAmountMoney =
 			commerceProductPrice.getUnitPromoPriceWithTaxAmount();
 
@@ -213,7 +213,8 @@ public class ProductHelperImpl implements ProductHelper {
 				unitPromoPriceWithTaxAmountMoney.getPrice();
 
 			if ((unitPromoPriceWithTaxAmount.compareTo(BigDecimal.ZERO) > 0) &&
-				(unitPromoPriceWithTaxAmount.compareTo(unitPriceWithTax) < 0)) {
+				(unitPromoPriceWithTaxAmount.compareTo(
+					unitPriceWithTaxAmountMoney.getPrice()) < 0)) {
 
 				priceModel.setPromoPrice(
 					unitPromoPriceWithTaxAmountMoney.format(locale));

@@ -114,7 +114,12 @@ public class PoshiRunnerValidation {
 	}
 
 	protected static String getPrimaryAttributeName(
-		Element element, List<String> primaryAttributeNames, String filePath) {
+		Element element, List<String> multiplePrimaryAttributeNames,
+		List<String> primaryAttributeNames, String filePath) {
+
+		validateHasPrimaryAttributeName(
+			element, multiplePrimaryAttributeNames, primaryAttributeNames,
+			filePath);
 
 		for (String primaryAttributeName : primaryAttributeNames) {
 			if (Validator.isNotNull(
@@ -125,6 +130,13 @@ public class PoshiRunnerValidation {
 		}
 
 		return null;
+	}
+
+	protected static String getPrimaryAttributeName(
+		Element element, List<String> primaryAttributeNames, String filePath) {
+
+		return getPrimaryAttributeName(
+			element, null, primaryAttributeNames, filePath);
 	}
 
 	protected static void parseElements(Element element, String filePath) {

@@ -134,6 +134,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 		<aui:input name="threadId" type="hidden" value="<%= threadId %>" />
 		<aui:input name="parentMessageId" type="hidden" value="<%= parentMessageId %>" />
+		<aui:input name="portletResource" type="hidden" value="<%= portletDisplay.getPortletResource() %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 		<liferay-ui:error exception="<%= AntivirusScannerException.class %>">

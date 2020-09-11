@@ -128,7 +128,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 			while (true) {
 				long nextInstanceId = _processInstances(
-					null, false, instanceId, null, startNodeId,
+					false, null, instanceId, null, startNodeId,
 					workflowMetricsSLADefinitionVersion);
 
 				if (nextInstanceId == instanceId) {
@@ -154,7 +154,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 			while (true) {
 				long nextInstanceId = _processInstances(
-					endDate, true, instanceId,
+					true, endDate, instanceId,
 					workflowMetricsSLADefinition.getCreateDate(), startNodeId,
 					workflowMetricsSLADefinitionVersion);
 
@@ -489,7 +489,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 				while (true) {
 					long nextInstanceId = _processInstances(
-						endDate, true, instanceId, startDate, startNodeId,
+						true, endDate, instanceId, startDate, startNodeId,
 						workflowMetricsSLADefinitionVersion);
 
 					if (nextInstanceId == instanceId) {
@@ -507,7 +507,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private long _processInstances(
-		Date endDate, boolean completed, long instanceId, Date startDate,
+		boolean completed, Date endDate, long instanceId, Date startDate,
 		long startNodeId,
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion) {

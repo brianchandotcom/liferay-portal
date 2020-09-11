@@ -82,6 +82,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -447,7 +449,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private Instance _createInstance(Document document) {
-		return new Instance() {
+		Instance instance = new Instance() {
 			{
 				assetTitle = document.getString(
 					_getLocalizedName("assetTitle"));
@@ -462,6 +464,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				processId = document.getLong("processId");
 			}
 		};
+
+		_populateWithTasks(document, instance);
+
+		return instance;
 	}
 
 	private Instance _createInstance(Map<String, Object> sourcesMap) {
@@ -977,92 +983,75 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		}
 	}
 
-	private void _populateWithTasks(
-		Long[] assigneeIds, Map<Long, Instance> instances, Long processId) {
+	private void _populateWithTasks(Document document, Instance instance) {
+		SortedSet<Assignee> assignees = new TreeSet<>(
+			Comparator.comparing(
+				Assignee::getName,
+				Comparator.nullsLast(String::compareToIgnoreCase)));
 
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+		SortedSet<String> taskNames = new TreeSet<>();
 
-		TermsAggregation termsAggregation = _aggregations.terms(
-			"instanceId", "instanceId");
+		for (Object taskObject : document.getValues("tasks")) {
+			Map<String, Object> task = (Map<String, Object>)taskObject;
 
-		FilterAggregation tasksIndexFilterAggregation = _aggregations.filter(
-			"tasksIndex",
-			_queries.term(
-				"_index",
-				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
-					contextCompany.getCompanyId())));
+			if (Objects.equals(
+					task.get("assigneeType"), User.class.getName())) {
 
-		TermsAggregation assigneeTypeTermsAggregation = _aggregations.terms(
-			"assigneeType", "assigneeType");
+				for (String assigneeId :
+						(List<String>)task.get("assigneeIds")) {
 
-		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
-			"assigneeId", "assigneeIds");
+					Assignee assignee = AssigneeUtil.toAssignee(
+						_language, _portal,
+						ResourceBundleUtil.getModuleAndPortalResourceBundle(
+							contextAcceptLanguage.getPreferredLocale(),
+							InstanceResourceImpl.class),
+						GetterUtil.getLong(assigneeId),
+						_userLocalService::fetchUser);
 
-		assigneeIdTermsAggregation.setSize(10000);
-
-		assigneeTypeTermsAggregation.addChildAggregation(
-			assigneeIdTermsAggregation);
-
-		tasksIndexFilterAggregation.addChildAggregation(
-			assigneeTypeTermsAggregation);
-
-		TermsAggregation taskNameTermsAggregation = _aggregations.terms(
-			"name", "name");
-
-		taskNameTermsAggregation.setSize(10000);
-
-		termsAggregation.addChildrenAggregations(
-			tasksIndexFilterAggregation, taskNameTermsAggregation);
-
-		termsAggregation.setSize(instances.size());
-
-		searchSearchRequest.addAggregation(termsAggregation);
-
-		searchSearchRequest.setIndexNames(
-			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
-				contextCompany.getCompanyId()));
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		TermsQuery termsQuery = _queries.terms("instanceId");
-
-		termsQuery.addValues(
-			Stream.of(
-				instances.keySet()
-			).flatMap(
-				Collection::stream
-			).map(
-				String::valueOf
-			).toArray(
-				Object[]::new
-			));
-
-		booleanQuery.addMustQueryClauses(
-			termsQuery, _createTasksBooleanQuery(assigneeIds, processId));
-
-		searchSearchRequest.setQuery(booleanQuery);
-
-		Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getAggregationResultsMap
-		).map(
-			aggregationResultsMap ->
-				(TermsAggregationResult)aggregationResultsMap.get("instanceId")
-		).map(
-			TermsAggregationResult::getBuckets
-		).flatMap(
-			Collection::stream
-		).forEach(
-			bucket -> {
-				Instance instance = instances.get(
-					GetterUtil.getLong(bucket.getKey()));
-
-				_setAssignees(bucket, instance);
-				_setTaskNames(bucket, instance);
-				_setTransitions(instance);
+					if (assignee != null) {
+						assignees.add(assignee);
+					}
+				}
 			}
-		);
+			else if (Objects.equals(
+						task.get("assigneeType"), Role.class.getName())) {
+
+				boolean reviewer = false;
+
+				for (String assigneeId :
+						(List<String>)task.get("assigneeIds")) {
+
+					if (ArrayUtil.contains(
+							contextUser.getRoleIds(),
+							GetterUtil.getLong(assigneeId))) {
+
+						reviewer = true;
+
+						break;
+					}
+				}
+
+				assignees.add(_createAssignee(reviewer));
+			}
+
+			taskNames.add(
+				_language.get(
+					ResourceBundleUtil.getModuleAndPortalResourceBundle(
+						contextAcceptLanguage.getPreferredLocale(),
+						InstanceResourceImpl.class),
+					(String)task.get("taskName")));
+		}
+
+		instance.setAssignees(assignees.toArray(new Assignee[0]));
+		instance.setTaskNames(taskNames.toArray(new String[0]));
+
+		if ((assignees.size() == 1) && (taskNames.size() == 1)) {
+			Assignee assignee = assignees.first();
+
+			if (Objects.equals(assignee.getId(), contextUser.getUserId())) {
+				instance.setTransitions(_toTransitions(instance));
+			}
+		}
 	}
 
 	private void _setAssignees(Bucket bucket, Instance instance) {

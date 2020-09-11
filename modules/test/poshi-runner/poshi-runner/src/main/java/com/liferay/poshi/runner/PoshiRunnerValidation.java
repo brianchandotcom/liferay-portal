@@ -114,12 +114,7 @@ public class PoshiRunnerValidation {
 	}
 
 	protected static String getPrimaryAttributeName(
-		Element element, List<String> multiplePrimaryAttributeNames,
-		List<String> primaryAttributeNames, String filePath) {
-
-		validateHasPrimaryAttributeName(
-			element, multiplePrimaryAttributeNames, primaryAttributeNames,
-			filePath);
+		Element element, List<String> primaryAttributeNames, String filePath) {
 
 		for (String primaryAttributeName : primaryAttributeNames) {
 			if (Validator.isNotNull(
@@ -130,13 +125,6 @@ public class PoshiRunnerValidation {
 		}
 
 		return null;
-	}
-
-	protected static String getPrimaryAttributeName(
-		Element element, List<String> primaryAttributeNames, String filePath) {
-
-		return getPrimaryAttributeName(
-			element, null, primaryAttributeNames, filePath);
 	}
 
 	protected static void parseElements(Element element, String filePath) {
@@ -495,35 +483,24 @@ public class PoshiRunnerValidation {
 	protected static void validateExecuteElement(
 		Element element, String filePath) {
 
-		List<String> multiplePrimaryAttributeNames = null;
-
 		List<String> primaryAttributeNames = Arrays.asList(
-			"function", "groovy-script", "macro", "macro-desktop",
-			"macro-mobile", "method", "selenium", "test-case");
+			"function", "groovy-script", "macro", "method", "selenium",
+			"test-case");
 
 		if (filePath.endsWith(".function")) {
 			primaryAttributeNames = Arrays.asList("function", "selenium");
 		}
 		else if (filePath.endsWith(".macro")) {
-			multiplePrimaryAttributeNames = Arrays.asList(
-				"macro-desktop", "macro-mobile");
-
 			primaryAttributeNames = Arrays.asList(
-				"function", "groovy-script", "macro", "macro-desktop",
-				"macro-mobile", "method");
+				"function", "groovy-script", "macro", "method");
 		}
 		else if (filePath.endsWith(".testcase")) {
-			multiplePrimaryAttributeNames = Arrays.asList(
-				"macro-desktop", "macro-mobile");
-
 			primaryAttributeNames = Arrays.asList(
-				"function", "groovy-script", "macro", "macro-desktop",
-				"macro-mobile", "method", "test-case");
+				"function", "groovy-script", "macro", "method", "test-case");
 		}
 
 		String primaryAttributeName = getPrimaryAttributeName(
-			element, multiplePrimaryAttributeNames, primaryAttributeNames,
-			filePath);
+			element, primaryAttributeNames, filePath);
 
 		if (primaryAttributeName == null) {
 			return;
@@ -555,24 +532,6 @@ public class PoshiRunnerValidation {
 
 			validateMacroContext(element, "macro", filePath);
 		}
-		else if (primaryAttributeName.equals("macro-desktop")) {
-			List<String> possibleAttributeNames = Arrays.asList(
-				"line-number", "macro-desktop", "macro-mobile");
-
-			validatePossibleAttributeNames(
-				element, possibleAttributeNames, filePath);
-
-			validateMacroContext(element, "macro-desktop", filePath);
-		}
-		else if (primaryAttributeName.equals("macro-mobile")) {
-			List<String> possibleAttributeNames = Arrays.asList(
-				"line-number", "macro-desktop", "macro-mobile");
-
-			validatePossibleAttributeNames(
-				element, possibleAttributeNames, filePath);
-
-			validateMacroContext(element, "macro-mobile", filePath);
-		}
 		else if (primaryAttributeName.equals("method")) {
 			validateMethodExecuteElement(element, filePath);
 		}
@@ -598,12 +557,11 @@ public class PoshiRunnerValidation {
 
 		if (!childElements.isEmpty()) {
 			primaryAttributeNames = Arrays.asList(
-				"function", "groovy-script", "macro", "macro-desktop",
-				"macro-mobile", "method", "selenium", "test-case");
+				"function", "groovy-script", "macro", "method", "selenium",
+				"test-case");
 
 			validateHasPrimaryAttributeName(
-				element, multiplePrimaryAttributeNames, primaryAttributeNames,
-				filePath);
+				element, primaryAttributeNames, filePath);
 
 			List<String> possibleChildElementNames = Arrays.asList(
 				"arg", "prose", "return", "var");

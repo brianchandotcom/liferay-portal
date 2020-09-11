@@ -18,7 +18,6 @@ import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
-import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.util.HashMap;
@@ -253,22 +252,6 @@ public abstract class SyntaxLogger {
 						loggerElement.addChildLoggerElement(
 							getMacroExecuteLoggerElement(
 								childElement, "macro"));
-					}
-					else if (Validator.isNotNull(
-								childElement.attributeValue("macro-desktop")) &&
-							 !PropsValues.MOBILE_BROWSER) {
-
-						loggerElement.addChildLoggerElement(
-							getMacroExecuteLoggerElement(
-								childElement, "macro-desktop"));
-					}
-					else if (Validator.isNotNull(
-								childElement.attributeValue("macro-mobile")) &&
-							 PropsValues.MOBILE_BROWSER) {
-
-						loggerElement.addChildLoggerElement(
-							getMacroExecuteLoggerElement(
-								childElement, "macro-mobile"));
 					}
 					else if (childElement.attributeValue("method") != null) {
 						loggerElement.addChildLoggerElement(
@@ -531,10 +514,7 @@ public abstract class SyntaxLogger {
 	}
 
 	protected boolean isExecutingMacro(Element element) {
-		if ((element.attributeValue("macro") != null) ||
-			(element.attributeValue("macro-desktop") != null) ||
-			(element.attributeValue("macro-mobile") != null)) {
-
+		if (element.attributeValue("macro") != null) {
 			return true;
 		}
 

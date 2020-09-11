@@ -110,6 +110,8 @@ definition {
 
 		// FACES-1478
 
+		SitePages.openPagesAdmin(siteURLKey = "Bridge Issues");
+
 		BridgeIssues.addPageAndPortlet(
 			pageURL = "faces-1478",
 			portletName = "FACES-1478");

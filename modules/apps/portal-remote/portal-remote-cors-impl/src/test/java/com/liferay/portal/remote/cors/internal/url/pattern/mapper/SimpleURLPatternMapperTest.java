@@ -103,6 +103,8 @@ public class SimpleURLPatternMapperTest {
 		return new KeyValuePair[] {
 			new KeyValuePair("/", "//*"), new KeyValuePair("/*", "/*/*"),
 			new KeyValuePair("/*/", "/*//*"),
+			new KeyValuePair("/a/*/c/d", "/a/*/c/*"),
+			new KeyValuePair("/a/b", "/*"), new KeyValuePair("/a", "/*"),
 			new KeyValuePair("/c/portal/j_login", "/c/portal/j_login"),
 			new KeyValuePair("/documents", "/documents/*"),
 			new KeyValuePair("/documents/", "/documents/*"),

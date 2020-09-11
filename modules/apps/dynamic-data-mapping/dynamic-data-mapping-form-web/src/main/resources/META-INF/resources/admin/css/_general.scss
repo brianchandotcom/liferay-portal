@@ -158,6 +158,19 @@ td.lfr-name-column {
 	}
 }
 
+.editing-form-entry-admin {
+	background-color: white;
+	.ddm-form-basic-info {
+		padding-bottom: 8px;
+		padding-left: 20px;
+		padding-top: 15px;
+		.ddm-form-name {
+			font-weight: bold !important;
+			padding-top: 0 !important;
+		}
+	}
+}
+
 .form-builder-page-manager-popover-header {
 	.popover-content {
 		left: -16px;

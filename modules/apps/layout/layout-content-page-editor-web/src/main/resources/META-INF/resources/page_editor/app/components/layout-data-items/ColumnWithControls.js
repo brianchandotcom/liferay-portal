@@ -428,9 +428,8 @@ const ColumnWithControls = React.forwardRef(
 					ref={ref}
 				>
 					{(canUpdatePageStructure || canUpdateItemConfiguration) &&
-					parentItemIsActive &&
-					columnIndex !== 0 ? (
-						<>
+						parentItemIsActive &&
+						columnIndex !== 0 && (
 							<button
 								className={classNames(
 									'btn-primary page-editor__col__resizer',
@@ -442,11 +441,9 @@ const ColumnWithControls = React.forwardRef(
 								title={Liferay.Language.get('resize-column')}
 								type="button"
 							/>
-							{children}
-						</>
-					) : (
-						children
-					)}
+						)}
+
+					{children}
 				</Column>
 			</TopperEmpty>
 		);

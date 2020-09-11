@@ -429,15 +429,17 @@ definition {
 
 		var numberOfEntriesAfterDeletion = MathUtil.difference("${numberOfEntries}", "1");
 
-		paginationResults = StringUtil.replace("${paginationResults}", "${numberOfEntries}", "${numberOfEntriesAfterDeletion}");
-
 		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		CommerceEntry.clickNoError(menuItem = "Delete");
 
-		AssertTextEquals(
-			locator1 = "CommerceEntry#PAGINATION_RESULTS",
-			value1 = "${paginationResults}");
+		if ("${numberOfEntriesAfterDeletion}" != "0") {
+			paginationResults = StringUtil.replace("${paginationResults}", "${numberOfEntries}", "${numberOfEntriesAfterDeletion}");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#PAGINATION_RESULTS",
+				value1 = "${paginationResults}");
+		}
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 

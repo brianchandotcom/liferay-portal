@@ -31,9 +31,7 @@ definition {
 				category = "Produt Management",
 				portlet = "Catalogs");
 
-			if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-				CommerceProducts.deleteProductsEntry();
-			}
+			CommerceConfiguration.commerceCatalogsTearDown();
 		}
 	}
 

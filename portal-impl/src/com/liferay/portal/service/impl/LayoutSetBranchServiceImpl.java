@@ -60,6 +60,18 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteLayoutSetBranch(
+			long currentLayoutPlid, long layoutSetBranchId)
+		throws PortalException {
+
+		LayoutSetBranchPermissionUtil.check(
+			getPermissionChecker(), layoutSetBranchId, ActionKeys.DELETE);
+
+		layoutSetBranchLocalService.deleteLayoutSetBranch(
+			currentLayoutPlid, layoutSetBranchId);
+	}
+
+	@Override
 	public List<LayoutSetBranch> getLayoutSetBranches(
 		long groupId, boolean privateLayout) {
 

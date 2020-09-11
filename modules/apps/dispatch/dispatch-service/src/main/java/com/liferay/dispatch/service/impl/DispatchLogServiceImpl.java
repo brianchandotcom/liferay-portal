@@ -14,8 +14,16 @@
 
 package com.liferay.dispatch.service.impl;
 
+import com.liferay.dispatch.model.DispatchLog;
+import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.base.DispatchLogServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,4 +38,60 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class DispatchLogServiceImpl extends DispatchLogServiceBaseImpl {
+
+	@Override
+	public void deleteDispatchLog(long dispatchLogId) throws PortalException {
+		DispatchLog dispatchLog = dispatchLogLocalService.getDispatchLog(
+			dispatchLogId);
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchLog.getDispatchTriggerId(),
+			ActionKeys.UPDATE);
+
+		dispatchLogLocalService.deleteDispatchLog(dispatchLog);
+	}
+
+	@Override
+	public DispatchLog getDispatchLog(long dispatchLogId)
+		throws PortalException {
+
+		DispatchLog dispatchLog = dispatchLogLocalService.getDispatchLog(
+			dispatchLogId);
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchLog.getDispatchTriggerId(),
+			ActionKeys.VIEW);
+
+		return dispatchLog;
+	}
+
+	@Override
+	public List<DispatchLog> getDispatchLogs(
+			long dispatchTriggerId, int start, int end)
+		throws PortalException {
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchTriggerId, ActionKeys.VIEW);
+
+		return dispatchLogLocalService.getDispatchLogs(
+			dispatchTriggerId, start, end);
+	}
+
+	@Override
+	public int getDispatchLogsCount(long dispatchTriggerId)
+		throws PortalException {
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchTriggerId, ActionKeys.VIEW);
+
+		return dispatchLogLocalService.getDispatchLogsCount(dispatchTriggerId);
+	}
+
+	private static volatile ModelResourcePermission<DispatchTrigger>
+		_dispatchTriggerModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DispatchTriggerServiceImpl.class,
+				"_dispatchTriggerModelResourcePermission",
+				DispatchTrigger.class);
+
 }

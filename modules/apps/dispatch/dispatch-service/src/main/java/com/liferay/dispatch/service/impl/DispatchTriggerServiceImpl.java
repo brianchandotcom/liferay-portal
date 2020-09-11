@@ -14,8 +14,16 @@
 
 package com.liferay.dispatch.service.impl;
 
+import com.liferay.dispatch.constants.DispatchActionKeys;
+import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.base.DispatchTriggerServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,4 +38,66 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
+
+	@Override
+	public DispatchTrigger addDispatchTrigger(
+			long userId, String name, String type,
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(), DispatchActionKeys.ADD_DISPATCH_TRIGGER);
+
+		return dispatchTriggerLocalService.addDispatchTrigger(
+			userId, name, false, type, typeSettingsUnicodeProperties);
+	}
+
+	@Override
+	public void deleteDispatchTrigger(long dispatchTriggerId)
+		throws PortalException {
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchTriggerId, ActionKeys.DELETE);
+
+		dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTriggerId);
+	}
+
+	@Override
+	public DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, boolean active, String cronExpression,
+			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+			int endDateMinute, boolean neverEnd, int startDateMonth,
+			int startDateDay, int startDateYear, int startDateHour,
+			int startDateMinute)
+		throws PortalException {
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchTriggerId, ActionKeys.UPDATE);
+
+		return dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTriggerId, active, cronExpression, endDateMonth, endDateDay,
+			endDateYear, endDateHour, endDateMinute, neverEnd, startDateMonth,
+			startDateDay, startDateYear, startDateHour, startDateMinute);
+	}
+
+	@Override
+	public DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, String name,
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws PortalException {
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchTriggerId, ActionKeys.UPDATE);
+
+		return dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTriggerId, name, typeSettingsUnicodeProperties);
+	}
+
+	private static volatile ModelResourcePermission<DispatchTrigger>
+		_dispatchTriggerModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DispatchTriggerServiceImpl.class,
+				"_dispatchTriggerModelResourcePermission",
+				DispatchTrigger.class);
+
 }

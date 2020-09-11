@@ -689,7 +689,7 @@ definition {
 		for (var count : list "1,2") {
 			AssertTextEquals.assertPartialText(
 				key_assetTitle = "Web Content Title${count}",
-				locator1 = "APAsset#ASSET_TITLE",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
 				value1 = "Web Content Title${count}");
 		}
 	}

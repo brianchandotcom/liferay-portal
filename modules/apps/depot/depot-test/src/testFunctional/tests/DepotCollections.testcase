@@ -216,7 +216,7 @@ definition {
 
 		AssertTextEquals(
 			key_assetTitle = "WC WebContent Title",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "WC WebContent Title");
 	}
 
@@ -425,7 +425,7 @@ definition {
 
 		AssertTextEquals(
 			key_assetTitle = "Document Title",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "Document Title");
 	}
 
@@ -502,7 +502,7 @@ definition {
 
 		AssertTextEquals(
 			key_assetTitle = "Web Content Title",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "Web Content Title");
 	}
 

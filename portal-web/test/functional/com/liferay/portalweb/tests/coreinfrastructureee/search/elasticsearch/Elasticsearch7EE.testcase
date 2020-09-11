@@ -963,7 +963,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			key_assetTitle = "Similar Results WC Title 1",
-			locator1 = "APAsset#ASSET_TITLE",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "Similar Results WC Title 1");
 
 		AssertClick.assertPartialTextClickAt(
@@ -973,7 +973,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			key_assetTitle = "Similar Results WC Title 2",
-			locator1 = "APAsset#ASSET_TITLE",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "Similar Results WC Title 2");
 	}
 

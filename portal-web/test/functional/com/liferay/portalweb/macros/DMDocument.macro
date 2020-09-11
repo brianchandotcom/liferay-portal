@@ -2164,7 +2164,7 @@ definition {
 				value1 = "Read More");
 
 			AssertTextEquals(
-				locator1 = "APAsset#ASSET_TITLE",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
 				value1 = "${dmDocumentTitle}");
 
 			AssertTextEquals.assertPartialText(

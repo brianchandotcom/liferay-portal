@@ -1881,11 +1881,11 @@ definition {
 	macro viewLinkedAssetPGViaAP {
 		AssertClick.assertPartialTextClickAt(
 			key_assetTitle = "${webContentTitle}",
-			locator1 = "APAsset#ASSET_TITLE",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "APAsset#ASSET_TITLE_HEADER",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
@@ -1942,7 +1942,7 @@ definition {
 	macro viewNoEditWCViaAP {
 		AssertElementPresent(
 			key_assetTitle = "${assetTitle}",
-			locator1 = "APAsset#ASSET_TITLE");
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
 		AssertElementNotPresent(
 			key_assetTitle = "${assetTitle}",
@@ -2009,7 +2009,7 @@ definition {
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "APAsset#ASSET_TITLE_HEADER",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(

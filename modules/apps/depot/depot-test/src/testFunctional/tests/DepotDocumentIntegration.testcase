@@ -391,7 +391,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			key_assetTitle = "Document_1.jpg",
-			locator1 = "APAsset#ASSET_TITLE",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "Document_1.jpg");
 
 		DMDocument.viewPG(

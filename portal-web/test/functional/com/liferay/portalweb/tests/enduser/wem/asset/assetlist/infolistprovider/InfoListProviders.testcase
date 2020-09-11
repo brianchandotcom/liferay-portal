@@ -151,7 +151,7 @@ definition {
 		task ("Click the title of Web Content Article on Asset Publisher in Column 1") {
 			AssertClick(
 				key_assetTitle = "Web Content Title",
-				locator1 = "APAsset#ASSET_TITLE",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
 				value1 = "Web Content Title");
 		}
 

@@ -110,7 +110,7 @@ public class PriceCPContentContributor implements CPContentContributor {
 
 		CommerceMoney unitPrice = commerceProductPrice.getUnitPrice();
 
-		if (unitPrice == null) {
+		if (unitPrice.isEmpty()) {
 			return jsonObject;
 		}
 
@@ -121,7 +121,7 @@ public class PriceCPContentContributor implements CPContentContributor {
 
 		CommerceMoney unitPromoPrice = commerceProductPrice.getUnitPromoPrice();
 
-		if (unitPromoPrice == null) {
+		if (unitPromoPrice.isEmpty()) {
 			return jsonObject;
 		}
 

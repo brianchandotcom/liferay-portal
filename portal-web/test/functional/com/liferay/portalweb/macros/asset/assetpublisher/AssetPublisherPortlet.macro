@@ -38,7 +38,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
-		Navigator.gotoNavTab(navTab = "My Sites");
+		Navigator.gotoNavTab(navTab = "Sites That I Administer");
 
 		SiteSelector.viewSite(site = "${siteName}");
 	}
@@ -71,7 +71,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
-			Navigator.gotoNavTab(navTab = "My Sites");
+			Navigator.gotoNavTab(navTab = "Sites That I Administer");
 
 			SiteSelector.selectSite(site = "${otherSite}");
 		}
@@ -507,7 +507,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
-			Navigator.gotoNavTab(navTab = "My Sites");
+			Navigator.gotoNavTab(navTab = "Sites That I Administer");
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -1015,7 +1015,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
-			Navigator.gotoNavTab(navTab = "My Sites");
+			Navigator.gotoNavTab(navTab = "Sites That I Administer");
 
 			var key_siteName = "${liferaySiteName}";
 

@@ -23,7 +23,8 @@ public class DispatchConstants {
 
 	public static final String CATEGORY_KEY_DISPATCH_LOGS = "logs";
 
-	public static final String CATEGORY_KEY_DISPATCH_TASK = "dispatch-task";
+	public static final String CATEGORY_KEY_DISPATCH_TRIGGER =
+		"dispatch-trigger";
 
 	public static final String EXECUTOR_DESTINATION_NAME =
 		"liferay/dispatch/executor";

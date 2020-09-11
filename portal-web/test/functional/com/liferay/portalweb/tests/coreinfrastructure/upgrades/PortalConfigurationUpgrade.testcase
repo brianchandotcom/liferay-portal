@@ -55,6 +55,39 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade720 {
+		property data.archive.type = "data-archive-portal-settings";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.0";
+
+		Upgrade.viewInstanceSettings();
+
+		Upgrade.viewSystemSettings();
+	}
+
+	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade721 {
+		property data.archive.type = "data-archive-portal-settings";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		Upgrade.viewInstanceSettings();
+
+		Upgrade.viewSystemSettings();
+	}
+
+	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade730 {
+		property data.archive.type = "data-archive-portal-settings";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.0";
+
+		Upgrade.viewInstanceSettings();
+
+		Upgrade.viewSystemSettings();
+	}
+
+	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal-settings";
 		property portal.version = "7.1.10";
@@ -65,9 +98,31 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade7210 {
+		property data.archive.type = "data-archive-portal-settings";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.2.10";
+
+		Upgrade.viewInstanceSettings();
+
+		Upgrade.viewSystemSettings();
+	}
+
+	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade70106 {
 		property data.archive.type = "data-archive-portal-settings";
 		property portal.version = "7.0.10.6";
+
+		Upgrade.viewInstanceSettings();
+
+		Upgrade.viewSystemSettings();
+	}
+
+	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade72101 {
+		property data.archive.type = "data-archive-portal-settings";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.2.10.1";
 
 		Upgrade.viewInstanceSettings();
 

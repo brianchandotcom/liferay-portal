@@ -197,6 +197,12 @@
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description></description>
+			<name>additionalProps</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Deprecated as of 7.3.0, with no direct replacement.</description>
 			<name>ariaLabel</name>
 			<required>false</required>
@@ -295,6 +301,12 @@
 		<attribute>
 			<description>Deprecated as of 7.3.0, with no direct replacement.</description>
 			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>propsTransformer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

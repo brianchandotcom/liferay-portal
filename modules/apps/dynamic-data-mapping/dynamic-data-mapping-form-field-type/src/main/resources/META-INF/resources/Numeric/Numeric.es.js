@@ -79,10 +79,10 @@ const Numeric = ({
 	useEffect(() => {
 		let maskInstance = null;
 
-		if (inputRef.current && value) {
+		if (inputRef.current) {
 			let newValue = value;
 
-			if (dataType === 'integer') {
+			if (dataType === 'integer' && value) {
 				newValue = String(
 					Math.round(newValue.replace(symbols.decimalSymbol, '.'))
 				);
@@ -95,7 +95,7 @@ const Numeric = ({
 				mask,
 			});
 
-			if (newValue !== '') {
+			if (newValue !== inputRef.current.value) {
 				setCurrentValue(newValue);
 			}
 		}

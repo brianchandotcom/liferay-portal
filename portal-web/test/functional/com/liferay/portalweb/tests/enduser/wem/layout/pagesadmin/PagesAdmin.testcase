@@ -412,6 +412,8 @@ definition {
 			portlet = "Pages");
 
 		for (var i : list "1,2,3") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
 			SitePages.gotoPageMenuItem(
 				menuItem = "View Collection Items",
 				pageName = "Content Collection Page Name");
@@ -495,6 +497,8 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		SitePages.gotoPageMenuItem(
 			menuItem = "View Collection Items",
 			pageName = "Content Collection Page Name");
@@ -510,6 +514,8 @@ definition {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		Navigator.gotoBack();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "View Collection Items",
@@ -529,6 +535,8 @@ definition {
 			value1 = "Blogs Entry Title");
 
 		Navigator.gotoBack();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "View Collection Items",
@@ -1172,6 +1180,8 @@ definition {
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
+		Pause(locator1 = "5000");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
@@ -1196,11 +1206,15 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		SitePages.gotoPageMenuItem(
 			menuItem = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		Pause(locator1 = "5000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
 			AssertElementPresent(
@@ -1240,11 +1254,15 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		SitePages.gotoPageMenuItem(
 			menuItem = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		Pause(locator1 = "5000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var rowNumber : list "1,2,3,4,5") {
 			Page.viewCollectionItem(

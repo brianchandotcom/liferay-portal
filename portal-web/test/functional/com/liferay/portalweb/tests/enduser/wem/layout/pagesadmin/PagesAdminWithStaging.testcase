@@ -172,6 +172,8 @@ definition {
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
+		Pause(locator1 = "5000");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
@@ -196,9 +198,13 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		SitePages.gotoPageMenuItem(
 			menuItem = "View Collection Items",
 			pageName = "Content Collection Page Name");
+
+		Pause(locator1 = "5000");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

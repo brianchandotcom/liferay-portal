@@ -20,9 +20,12 @@ import java.math.BigDecimal;
 
 import java.util.Locale;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface CommerceMoney {
 
 	public String format(Locale locale) throws PortalException;

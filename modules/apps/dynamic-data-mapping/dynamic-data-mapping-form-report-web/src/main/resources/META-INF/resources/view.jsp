@@ -20,7 +20,7 @@
 int totalItems = ddmFormReportDisplayContext.getTotalItems();
 %>
 
-<div class="portlet-ddm-form-report hide">
+<div class="hide portlet-ddm-form-report" id="container-portlet-ddm-form-report">
 	<div class="portlet-ddm-form-report-header">
 		<clay:container-fluid>
 			<clay:content-row

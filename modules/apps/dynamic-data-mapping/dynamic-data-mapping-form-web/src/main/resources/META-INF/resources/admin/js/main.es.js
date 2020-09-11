@@ -1026,7 +1026,9 @@ class Form extends Component {
 	}
 
 	_toggleReport(show) {
-		const formReport = document.querySelector('.ddm-form-report');
+		const formReport = document.querySelector(
+			'#container-portlet-ddm-form-report'
+		);
 
 		if (!formReport) {
 			return;

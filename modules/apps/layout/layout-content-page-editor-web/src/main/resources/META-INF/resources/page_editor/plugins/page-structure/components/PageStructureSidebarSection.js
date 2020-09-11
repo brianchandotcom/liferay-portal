@@ -16,8 +16,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {NotDraggableArea} from '../../../app/utils/dragAndDrop/useDragAndDrop';
-
 const MIN_HEIGHT = 100;
 
 export default function PageStructureSidebarSection({
@@ -84,17 +82,15 @@ export default function PageStructureSidebarSection({
 	return (
 		<>
 			{resizable && (
-				<NotDraggableArea>
-					<div
-						className={classNames(
-							'page-editor__page-structure__section__resize-handler',
-							{
-								active: resizing,
-							}
-						)}
-						ref={setHandlerElement}
-					/>
-				</NotDraggableArea>
+				<div
+					className={classNames(
+						'page-editor__page-structure__section__resize-handler',
+						{
+							active: resizing,
+						}
+					)}
+					ref={setHandlerElement}
+				/>
 			)}
 
 			<div

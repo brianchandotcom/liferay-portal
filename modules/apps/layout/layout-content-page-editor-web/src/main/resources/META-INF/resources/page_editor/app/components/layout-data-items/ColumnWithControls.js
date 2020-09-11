@@ -26,7 +26,6 @@ import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStr
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import resizeColumns from '../../thunks/resizeColumns';
-import {NotDraggableArea} from '../../utils/dragAndDrop/useDragAndDrop';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {useIsActive} from '../Controls';
 import {useGlobalContext} from '../GlobalContext';
@@ -431,7 +430,7 @@ const ColumnWithControls = React.forwardRef(
 					{(canUpdatePageStructure || canUpdateItemConfiguration) &&
 					parentItemIsActive &&
 					columnIndex !== 0 ? (
-						<NotDraggableArea>
+						<>
 							<button
 								className={classNames(
 									'btn-primary page-editor__col__resizer',
@@ -444,7 +443,7 @@ const ColumnWithControls = React.forwardRef(
 								type="button"
 							/>
 							{children}
-						</NotDraggableArea>
+						</>
 					) : (
 						children
 					)}

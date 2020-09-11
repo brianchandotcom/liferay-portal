@@ -407,6 +407,14 @@ definition {
 		}
 	}
 
+	macro viewNoTags {
+		for (var tagName : list "${tagsList}") {
+			AssertElementNotPresent(
+				key_tagName = "${tagName}",
+				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+		}
+	}
+
 	macro viewPaginationResults {
 		AssertTextEquals(
 			locator1 = "Questions#PAGINATION_RESULTS",

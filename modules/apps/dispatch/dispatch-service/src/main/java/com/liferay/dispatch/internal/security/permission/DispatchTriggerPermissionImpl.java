@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matija Petanjek
  */
-@Component(immediate = true, service = DispatchTriggerPermission.class)
+@Component(service = DispatchTriggerPermission.class)
 public class DispatchTriggerPermissionImpl
 	implements DispatchTriggerPermission {
 

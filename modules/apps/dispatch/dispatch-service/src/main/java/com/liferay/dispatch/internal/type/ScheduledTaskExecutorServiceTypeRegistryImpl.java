@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Matija Petanjek
  */
-@Component(
-	immediate = true, service = ScheduledTaskExecutorServiceTypeRegistry.class
-)
+@Component(service = ScheduledTaskExecutorServiceTypeRegistry.class)
 public class ScheduledTaskExecutorServiceTypeRegistryImpl
 	implements ScheduledTaskExecutorServiceTypeRegistry {
 

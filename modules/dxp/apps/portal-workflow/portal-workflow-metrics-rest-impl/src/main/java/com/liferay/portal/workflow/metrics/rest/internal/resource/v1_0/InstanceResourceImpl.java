@@ -173,8 +173,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 
-		BooleanQuery booleanQuery = _createBooleanQuery(
-			new Long[0], new Long[0], null, processId, new String[0]);
+		BooleanQuery booleanQuery = _createInstancesBooleanQuery(
+			new Long[0], new Long[0], null, null, null, processId,
+			new String[0], null, new String[0]);
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
@@ -489,12 +490,29 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private BooleanQuery _createInstancesBooleanQuery(
-		Long[] classPKs, Boolean completed, long processId,
-		String[] slaStatuses) {
+		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
+		Date dateStart, long processId, String[] slaStatuses,
+		Long startInstanceId, String[] taskNames) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", 0));
+
+		if (assigneeIds.length > 0) {
+			TermsQuery termsQuery = _queries.terms("tasks.assigneeIds");
+
+			termsQuery.addValues(
+				Stream.of(
+					assigneeIds
+				).map(
+					String::valueOf
+				).toArray(
+					Object[]::new
+				));
+
+			booleanQuery.addMustQueryClauses(
+				_queries.nested("tasks", termsQuery));
+		}
 
 		if (ArrayUtil.isNotEmpty(classPKs)) {
 			TermsQuery termsQuery = _queries.terms("classPK");
@@ -516,6 +534,19 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				_queries.term("completed", completed));
 		}
 
+		if ((dateEnd != null) && (dateStart != null)) {
+			booleanQuery.addMustQueryClauses(
+				_queries.dateRangeTerm(
+					"completionDate", true, true, _getDate(dateStart),
+					_getDate(dateEnd)));
+		}
+
+		if (startInstanceId != null) {
+			booleanQuery.addMustQueryClauses(
+				_queries.rangeTerm(
+					"instanceId", false, false, startInstanceId, null));
+		}
+
 		if (ArrayUtil.isNotEmpty(slaStatuses)) {
 			TermsQuery termsQuery = _queries.terms("slaStatus");
 
@@ -524,8 +555,16 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			booleanQuery.addMustQueryClauses(termsQuery);
 		}
 
+		if (ArrayUtil.isNotEmpty(taskNames)) {
+			TermsQuery termsQuery = _queries.terms("tasks.taskName");
+
+			termsQuery.addValues(taskNames);
+
+			booleanQuery.addMustQueryClauses(
+				_queries.nested("tasks", termsQuery));
+		}
+
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId));
 	}
@@ -669,6 +708,20 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		}
 
 		return assignees;
+	}
+
+	private String _getDate(Date date) {
+		try {
+			return DateUtil.getDate(
+				date, "yyyyMMddHHmmss", LocaleUtil.getDefault());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
+			return null;
+		}
 	}
 
 	private int _getInstanceCount(SearchSearchResponse searchSearchResponse) {

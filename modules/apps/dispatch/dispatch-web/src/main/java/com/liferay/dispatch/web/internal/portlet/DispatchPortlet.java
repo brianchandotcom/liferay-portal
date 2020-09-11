@@ -14,12 +14,14 @@
 
 package com.liferay.dispatch.web.internal.portlet;
 
-import com.liferay.dispatch.ScheduledTaskExecutorServiceTypeRegistry;
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.constants.DispatchWebKeys;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.service.ScheduledTaskExecutorService;
 import com.liferay.dispatch.web.internal.display.context.DispatchTriggerDisplayContext;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -32,7 +34,10 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -83,7 +88,7 @@ public class DispatchPortlet extends MVCPortlet {
 
 		DispatchTriggerDisplayContext dispatchTriggerDisplayContext =
 			new DispatchTriggerDisplayContext(
-				_scheduledTaskExecutorServiceTypeRegistry,
+				_scheduledTaskExecutorServiceTrackerMap.keySet(),
 				_dispatchTriggerLocalService, renderRequest);
 
 		renderRequest.setAttribute(
@@ -92,14 +97,26 @@ public class DispatchPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_scheduledTaskExecutorServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ScheduledTaskExecutorService.class,
+				"scheduled.task.executor.service.type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_scheduledTaskExecutorServiceTrackerMap.close();
+	}
+
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private ScheduledTaskExecutorServiceTypeRegistry
-		_scheduledTaskExecutorServiceTypeRegistry;
+	private ServiceTrackerMap<String, ScheduledTaskExecutorService>
+		_scheduledTaskExecutorServiceTrackerMap;
 
 }

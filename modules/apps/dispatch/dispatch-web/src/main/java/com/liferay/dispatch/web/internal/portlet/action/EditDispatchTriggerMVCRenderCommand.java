@@ -14,10 +14,12 @@
 
 package com.liferay.dispatch.web.internal.portlet.action;
 
-import com.liferay.dispatch.ScheduledTaskExecutorServiceTypeRegistry;
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.service.ScheduledTaskExecutorService;
 import com.liferay.dispatch.web.internal.display.context.DispatchTriggerDisplayContext;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -25,7 +27,10 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -47,7 +52,7 @@ public class EditDispatchTriggerMVCRenderCommand implements MVCRenderCommand {
 
 		DispatchTriggerDisplayContext dispatchTriggerDisplayContext =
 			new DispatchTriggerDisplayContext(
-				_scheduledTaskExecutorServiceTypeRegistry,
+				_scheduledTaskExecutorServiceTrackerMap.keySet(),
 				_dispatchTriggerLocalService, renderRequest);
 
 		renderRequest.setAttribute(
@@ -56,11 +61,23 @@ public class EditDispatchTriggerMVCRenderCommand implements MVCRenderCommand {
 		return "/edit_dispatch_trigger.jsp";
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_scheduledTaskExecutorServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ScheduledTaskExecutorService.class,
+				"scheduled.task.executor.service.type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_scheduledTaskExecutorServiceTrackerMap.close();
+	}
+
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
-	@Reference
-	private ScheduledTaskExecutorServiceTypeRegistry
-		_scheduledTaskExecutorServiceTypeRegistry;
+	private ServiceTrackerMap<String, ScheduledTaskExecutorService>
+		_scheduledTaskExecutorServiceTrackerMap;
 
 }

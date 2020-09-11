@@ -41,6 +41,11 @@ public class CommerceProductTypeVirtualUpgradeStepRegistrator
 		registry.register(
 			"1.0.0", "1.1.0", new CPDefinitionVirtualSettingUpgradeProcess());
 
+		registry.register(
+			"1.1.0", "1.1.1",
+			new com.liferay.commerce.product.type.virtual.internal.upgrade.
+				v1_1_1.CPDefinitionVirtualSettingUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Commerce product type virtual upgrade step registrator " +

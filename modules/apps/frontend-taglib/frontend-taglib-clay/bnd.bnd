@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Taglib Clay
 Bundle-SymbolicName: com.liferay.frontend.taglib.clay
-Bundle-Version: 6.1.3
+Bundle-Version: 6.2.0
 Export-Package:\
 	com.liferay.frontend.taglib.clay.data,\
 	com.liferay.frontend.taglib.clay.data.set,\

@@ -30,7 +30,6 @@ export default class UnsafeHTML extends React.PureComponent {
 
 	componentDidUpdate(prevProps) {
 		if (this.state.ref) {
-			this.state.ref.removeAttribute('style');
 			this._syncRefProps();
 
 			if (
@@ -109,6 +108,8 @@ export default class UnsafeHTML extends React.PureComponent {
 	_syncRefProps() {
 		const ref = this.state.ref;
 		ref.className = this.props.className;
+
+		ref.removeAttribute('style');
 
 		Object.keys(this.props.style).forEach((key) => {
 			ref.style[key] = this.props.style[key];

@@ -54,13 +54,7 @@ public class SeleniumUtil extends PropsValues {
 
 		WebDriver webDriver = WebDriverUtil.getWebDriver();
 
-		if (BROWSER_TYPE.equals("android")) {
-			_selenium = new AndroidMobileDriverImpl(portalURL, webDriver);
-		}
-		else if (BROWSER_TYPE.equals("androidchrome")) {
-			_selenium = new ChromeMobileDriverImpl(portalURL, webDriver);
-		}
-		else if (BROWSER_TYPE.equals("chrome")) {
+		if (BROWSER_TYPE.equals("chrome")) {
 			_selenium = new ChromeWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("edge") &&
@@ -90,9 +84,6 @@ public class SeleniumUtil extends PropsValues {
 
 			_selenium = new InternetExplorerRemoteWebDriverImpl(
 				portalURL, webDriver);
-		}
-		else if (BROWSER_TYPE.equals("iossafari")) {
-			_selenium = new IOSMobileDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("safari")) {
 			_selenium = new SafariWebDriverImpl(portalURL, webDriver);

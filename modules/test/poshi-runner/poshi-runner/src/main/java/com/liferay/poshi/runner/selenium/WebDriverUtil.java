@@ -21,9 +21,6 @@ import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -46,7 +43,6 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
@@ -68,49 +64,6 @@ public class WebDriverUtil extends PropsValues {
 
 	public static void stopWebDriver() {
 		_webDriverUtil._stopWebDriver();
-	}
-
-	private WebDriver _getAndroidDriver() {
-		DesiredCapabilities desiredCapabilities = DesiredCapabilities.android();
-
-		desiredCapabilities.setCapability("browserName", "Browser");
-		desiredCapabilities.setCapability("deviceName", "deviceName");
-		desiredCapabilities.setCapability(
-			"newCommandTimeout", PropsValues.TIMEOUT_EXPLICIT_WAIT);
-		desiredCapabilities.setCapability("platformName", "Android");
-		desiredCapabilities.setCapability("platformVersion", "4.4");
-
-		URL url = null;
-
-		try {
-			url = new URL("http://0.0.0.0:4723/wd/hub/");
-		}
-		catch (MalformedURLException malformedURLException) {
-		}
-
-		return new AndroidDriver(url, desiredCapabilities);
-	}
-
-	private WebDriver _getChromeAndroidDriver() {
-		DesiredCapabilities desiredCapabilities = DesiredCapabilities.android();
-
-		desiredCapabilities.setCapability("browserName", "Chrome");
-		desiredCapabilities.setCapability(
-			"deviceName", PropsValues.MOBILE_DEVICE_NAME);
-		desiredCapabilities.setCapability(
-			"newCommandTimeout", PropsValues.TIMEOUT_EXPLICIT_WAIT);
-		desiredCapabilities.setCapability("platformName", "Android");
-		desiredCapabilities.setCapability("platformVersion", "5.0.1");
-
-		URL url = null;
-
-		try {
-			url = new URL("http://0.0.0.0:4723/wd/hub/");
-		}
-		catch (MalformedURLException malformedURLException) {
-		}
-
-		return new AndroidDriver(url, desiredCapabilities);
 	}
 
 	private WebDriver _getChromeDriver() {
@@ -280,28 +233,6 @@ public class WebDriverUtil extends PropsValues {
 		return new RemoteWebDriver(url, internetExplorerOptions);
 	}
 
-	private WebDriver _getIOSMobileDriver() {
-		DesiredCapabilities desiredCapabilities = DesiredCapabilities.iphone();
-
-		desiredCapabilities.setCapability("browserName", "Safari");
-		desiredCapabilities.setCapability("deviceName", "iPhone 5s");
-		desiredCapabilities.setCapability(
-			"newCommandTimeout", PropsValues.TIMEOUT_EXPLICIT_WAIT);
-		desiredCapabilities.setCapability("platformName", "iOS");
-		desiredCapabilities.setCapability(
-			"platformVersion", PropsValues.BROWSER_VERSION);
-
-		URL url = null;
-
-		try {
-			url = new URL("http://0.0.0.0:4723/wd/hub/");
-		}
-		catch (Exception exception) {
-		}
-
-		return new IOSDriver(url, desiredCapabilities);
-	}
-
 	private WebDriver _getSafariDriver() {
 		SafariOptions safariOptions = new SafariOptions();
 
@@ -325,13 +256,7 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private void _startWebDriver() {
-		if (BROWSER_TYPE.equals("android")) {
-			_webDriver = _getAndroidDriver();
-		}
-		else if (BROWSER_TYPE.equals("androidchrome")) {
-			_webDriver = _getChromeAndroidDriver();
-		}
-		else if (BROWSER_TYPE.equals("chrome")) {
+		if (BROWSER_TYPE.equals("chrome")) {
 			_webDriver = _getChromeDriver();
 		}
 		else if (BROWSER_TYPE.equals("edge") &&
@@ -367,9 +292,6 @@ public class WebDriverUtil extends PropsValues {
 				 SELENIUM_REMOTE_DRIVER_ENABLED) {
 
 			_webDriver = _getInternetExplorerRemoteDriver();
-		}
-		else if (BROWSER_TYPE.equals("iossafari")) {
-			_webDriver = _getIOSMobileDriver();
 		}
 		else if (BROWSER_TYPE.equals("safari")) {
 			_webDriver = _getSafariDriver();

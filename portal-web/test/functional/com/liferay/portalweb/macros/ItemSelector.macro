@@ -360,6 +360,14 @@ definition {
 			key_imageFileName = "${noImageFileName}",
 			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 
+		if (isSet(viewNoLocationInfo)) {
+			AssertElementNotPresent(
+				key_locationName = "${viewNoLocationInfo}",
+				key_title = "${imageFileName}",
+				locator1 = "ItemSelector#LOCATION_INFO_CARDS",
+				value1 = "${viewNoLocationInfo}");
+		}
+
 		Click(locator1 = "Link#CLEAR");
 
 		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
@@ -515,6 +523,14 @@ definition {
 		AssertElementNotPresent(
 			key_rowEntry = "${noWebContentTitle}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		if (isSet(viewNoLocationInfo)) {
+			AssertElementNotPresent(
+				key_locationName = "${viewNoLocationInfo}",
+				key_title = "${webContentTitle}",
+				locator1 = "ItemSelector#LOCATION_INFO_CARDS_2",
+				value1 = "${viewNoLocationInfo}");
+		}
 
 		Click(locator1 = "Link#CLEAR");
 

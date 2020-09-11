@@ -157,11 +157,11 @@ definition {
 
 		task ("Assert Blogs Entry and Document are shown on Asset Publisher in Column 2") {
 			AssertTextEquals(
-				locator1 = "//div[@id='column-2']//section[contains(@id,'AssetPublisher')]//h4/*[contains(@class,'asset-title')][contains(.,'Blogs Entry Title')]",
+				locator1 = "//div[@id='column-2']//section[contains(@id,'AssetPublisher')]//*[contains(@class,'asset-title')][normalize-space(text())='Blogs Entry Title']",
 				value1 = "Blogs Entry Title");
 
 			AssertTextEquals(
-				locator1 = "//div[@id='column-2']//section[contains(@id,'AssetPublisher')]//h4/*[contains(@class,'asset-title')][contains(.,'Document_1.png')]",
+				locator1 = "//div[@id='column-2']//section[contains(@id,'AssetPublisher')]//*[contains(@class,'asset-title')][normalize-space(text())='Document_1.png']",
 				value1 = "Document_1.png");
 		}
 	}

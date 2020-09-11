@@ -179,23 +179,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TABLE_DATE_OF_BIRTH</td>
-	<td>//a[contains(text(),'Date of Birth')]</td>
+	<td>TABLE_ARROW_ASCEND</td>
+	<td>//th[not (contains(@class,'table-sorted-desc'))]//a[contains(text(),'${key_columnName}')]//span[@class='table-sort-indicator']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ARROW_DESCEND</td>
+	<td>//th[contains(@class,'table-sorted-desc')]//a[contains(text(),'${key_columnName}')]//span[@class='table-sort-indicator']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_COLUMN_NAME</td>
+	<td>//a[contains(text(),'${key_columnName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TABLE_DATE_OF_BIRTH_ARROW</td>
 	<td>//a[contains(text(),'Date of Birth')]//span[@class='table-sort-indicator']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TABLE_LAST_NAME</td>
-	<td>//a[contains(text(),'Last Name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TABLE_LAST_NAME_ARROW</td>
-	<td>//a[contains(text(),'Last Name')]//span[@class='table-sort-indicator']</td>
 	<td></td>
 </tr>
 </tbody>

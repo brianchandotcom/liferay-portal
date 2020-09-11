@@ -192,30 +192,9 @@ public class ProductHelperImpl implements ProductHelper {
 				priceModel.setPromoPrice(unitPromoPriceMoney.format(locale));
 			}
 
-			CommerceDiscountValue discountValue =
-				commerceProductPrice.getDiscountValue();
-
-			if (discountValue == null) {
-				return priceModel;
-			}
-
-			CommerceMoney discountAmount = discountValue.getDiscountAmount();
-
-			priceModel.setDiscount(discountAmount.format(locale));
-
-			priceModel.setDiscountPercentage(
-				_commercePriceFormatter.format(
-					discountValue.getDiscountPercentage(), locale));
-
-			priceModel.setDiscountPercentages(
-				_getFormattedDiscountPercentages(
-					discountValue.getPercentages(), locale));
-
-			CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
-
-			priceModel.setFinalPrice(finalPrice.format(locale));
-
-			return priceModel;
+			return _updatePriceModelDiscount(
+				priceModel, commerceProductPrice.getDiscountValue(),
+				commerceProductPrice.getFinalPrice(), locale);
 		}
 
 		CommerceMoney unitPriceWithTaxAmountMoney =
@@ -241,29 +220,34 @@ public class ProductHelperImpl implements ProductHelper {
 			}
 		}
 
-		CommerceDiscountValue discountValue =
-			commerceProductPrice.getDiscountValueWithTaxAmount();
+		return _updatePriceModelDiscount(
+			priceModel, commerceProductPrice.getDiscountValueWithTaxAmount(),
+			commerceProductPrice.getFinalPriceWithTaxAmount(), locale);
+	}
 
-		if (discountValue == null) {
+	private PriceModel _updatePriceModelDiscount(
+			PriceModel priceModel, CommerceDiscountValue commerceDiscountValue,
+			CommerceMoney finalPriceCommerceMoney, Locale locale)
+		throws PortalException {
+
+		if (commerceDiscountValue == null) {
 			return priceModel;
 		}
 
-		CommerceMoney discountAmount = discountValue.getDiscountAmount();
+		CommerceMoney discountAmount =
+			commerceDiscountValue.getDiscountAmount();
 
 		priceModel.setDiscount(discountAmount.format(locale));
 
 		priceModel.setDiscountPercentage(
 			_commercePriceFormatter.format(
-				discountValue.getDiscountPercentage(), locale));
+				commerceDiscountValue.getDiscountPercentage(), locale));
 
 		priceModel.setDiscountPercentages(
 			_getFormattedDiscountPercentages(
-				discountValue.getPercentages(), locale));
+				commerceDiscountValue.getPercentages(), locale));
 
-		CommerceMoney finalPriceWithTaxAmount =
-			commerceProductPrice.getFinalPriceWithTaxAmount();
-
-		priceModel.setFinalPrice(finalPriceWithTaxAmount.format(locale));
+		priceModel.setFinalPrice(finalPriceCommerceMoney.format(locale));
 
 		return priceModel;
 	}

@@ -248,8 +248,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			return Page.of(
 				_getInstances(
 					assigneeIds, classPKs, completed, dateEnd, dateStart,
-					searchSearchResponse.getCount(), pagination, processId,
-					slaStatuses, taskNames),
+					pagination, processId, slaStatuses, startInstanceId,
+					taskNames),
 				pagination, instanceCount);
 		}
 
@@ -751,97 +751,44 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private Collection<Instance> _getInstances(
 		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
-		Date dateStart, long instanceCount, Pagination pagination,
-		long processId, String[] slaStatuses, String[] taskNames) {
+		Date dateStart, Pagination pagination, long processId,
+		String[] slaStatuses, Long startInstanceId, String[] taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		TermsAggregation termsAggregation = _aggregations.terms(
-			"instanceId", "instanceId");
-
-		FilterAggregation instancesIndexFilterAggregation =
-			_aggregations.filter(
-				"instanceIndex",
-				_queries.term(
-					"_index",
-					_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
-						contextCompany.getCompanyId())));
-
-		instancesIndexFilterAggregation.addChildAggregation(
-			_aggregations.topHits("topHits"));
-
-		termsAggregation.addChildrenAggregations(
-			instancesIndexFilterAggregation,
-			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.fromArray(assigneeIds), completed, dateEnd, dateStart,
-				ListUtil.fromArray(taskNames)));
-
-		termsAggregation.addOrders(Order.key(true));
-		termsAggregation.addPipelineAggregations(
-			_createBucketSelectorPipelineAggregation(),
-			_createBucketSortPipelineAggregation(pagination));
-
-		termsAggregation.setSize(GetterUtil.getInteger(instanceCount));
-
-		searchSearchRequest.addAggregation(termsAggregation);
-
+		searchSearchRequest.addSorts(_sorts.field("instanceId", SortOrder.ASC));
+		searchSearchRequest.setFetchSource(true);
+		searchSearchRequest.setSelectedFieldNames("");
 		searchSearchRequest.setIndexNames(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
-				contextCompany.getCompanyId()),
-			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addFilterQueryClauses(
-				_createBooleanQuery(
-					assigneeIds, classPKs, completed, processId, slaStatuses)));
+				_createInstancesBooleanQuery(
+					assigneeIds, classPKs, completed, dateEnd, dateStart,
+					processId, slaStatuses, startInstanceId, taskNames)));
 
-		Map<Long, Instance> instances = Stream.of(
+		searchSearchRequest.setSize(pagination.getPageSize());
+		searchSearchRequest.setStart(pagination.getStartPosition());
+
+		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
 		).map(
-			SearchSearchResponse::getAggregationResultsMap
+			SearchSearchResponse::getSearchHits
 		).map(
-			aggregationResultsMap ->
-				(TermsAggregationResult)aggregationResultsMap.get("instanceId")
-		).map(
-			TermsAggregationResult::getBuckets
+			SearchHits::getSearchHits
 		).flatMap(
-			Collection::stream
+			List::stream
 		).map(
-			bucket -> Stream.of(
-				(FilterAggregationResult)bucket.getChildAggregationResult(
-					"instanceIndex")
-			).map(
-				filterAggregationResult ->
-					(TopHitsAggregationResult)
-						filterAggregationResult.getChildAggregationResult(
-							"topHits")
-			).map(
-				TopHitsAggregationResult::getSearchHits
-			).map(
-				SearchHits::getSearchHits
-			).flatMap(
-				List::stream
-			).map(
-				SearchHit::getSourcesMap
-			).findFirst(
-			).map(
-				this::_createInstance
-			).orElseGet(
-				Instance::new
-			)
+			SearchHit::getDocument
+		).map(
+			this::_createInstance
 		).collect(
-			LinkedHashMap::new,
-			(map, instance) -> map.put(instance.getId(), instance), Map::putAll
+			Collectors.toList()
 		);
-
-		if (!instances.isEmpty()) {
-			_populateWithTasks(assigneeIds, instances, processId);
-		}
-
-		return instances.values();
 	}
 
 	private String _getLocalizedName(String name) {

@@ -1949,7 +1949,7 @@ definition {
 				imageSize = "0");
 
 			AssertElementPresent(
-				key_borderRadius = "lg",
+				key_borderRadius = "0.375rem",
 				key_fragmentName = "card",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS_IN_VIEW_MODE");
 
@@ -2091,6 +2091,16 @@ definition {
 				fragmentName = "card",
 				imageSize = "0",
 				marginBottom = "1");
+
+			AssertElementPresent(
+				key_borderRadius = "0.375rem",
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_boxShadow = "rgba(0, 0, 0, 0.176) 0px 1rem 3rem",
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BOX_SHADOW_IN_VIEW_MODE");
 		}
 
 		task ("Assert styles of Heading in edit mode") {

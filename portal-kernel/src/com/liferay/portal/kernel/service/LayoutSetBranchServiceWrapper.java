@@ -50,6 +50,15 @@ public class LayoutSetBranchServiceWrapper
 	}
 
 	@Override
+	public void deleteLayoutSetBranch(
+			long currentLayoutPlid, long layoutSetBranchId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_layoutSetBranchService.deleteLayoutSetBranch(
+			currentLayoutPlid, layoutSetBranchId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutSetBranch>
 		getLayoutSetBranches(long groupId, boolean privateLayout) {
 

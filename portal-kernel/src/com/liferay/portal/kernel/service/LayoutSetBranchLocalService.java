@@ -129,6 +129,15 @@ public interface LayoutSetBranchLocalService
 	public LayoutSetBranch deleteLayoutSetBranch(long layoutSetBranchId)
 		throws PortalException;
 
+	public LayoutSetBranch deleteLayoutSetBranch(
+			long currentLayoutPlid, LayoutSetBranch layoutSetBranch,
+			boolean includeMaster)
+		throws PortalException;
+
+	public LayoutSetBranch deleteLayoutSetBranch(
+			long currentLayoutPlid, long layoutSetBranchId)
+		throws PortalException;
+
 	public void deleteLayoutSetBranches(long groupId, boolean privateLayout)
 		throws PortalException;
 
@@ -221,9 +230,6 @@ public interface LayoutSetBranchLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Long> getDeletablePlids(long layoutSetBranchId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

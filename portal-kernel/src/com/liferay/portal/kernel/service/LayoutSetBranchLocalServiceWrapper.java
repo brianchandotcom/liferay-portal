@@ -138,6 +138,28 @@ public class LayoutSetBranchLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.LayoutSetBranch
+			deleteLayoutSetBranch(
+				long currentLayoutPlid,
+				com.liferay.portal.kernel.model.LayoutSetBranch layoutSetBranch,
+				boolean includeMaster)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutSetBranchLocalService.deleteLayoutSetBranch(
+			currentLayoutPlid, layoutSetBranch, includeMaster);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.LayoutSetBranch
+			deleteLayoutSetBranch(
+				long currentLayoutPlid, long layoutSetBranchId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutSetBranchLocalService.deleteLayoutSetBranch(
+			currentLayoutPlid, layoutSetBranchId);
+	}
+
+	@Override
 	public void deleteLayoutSetBranches(long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -283,14 +305,6 @@ public class LayoutSetBranchLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _layoutSetBranchLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public java.util.List<java.lang.Long> getDeletablePlids(
-		long layoutSetBranchId) {
-
-		return _layoutSetBranchLocalService.getDeletablePlids(
-			layoutSetBranchId);
 	}
 
 	@Override

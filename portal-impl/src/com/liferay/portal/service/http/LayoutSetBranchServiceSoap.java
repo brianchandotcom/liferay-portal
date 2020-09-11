@@ -99,6 +99,21 @@ public class LayoutSetBranchServiceSoap {
 		}
 	}
 
+	public static void deleteLayoutSetBranch(
+			long currentLayoutPlid, long layoutSetBranchId)
+		throws RemoteException {
+
+		try {
+			LayoutSetBranchServiceUtil.deleteLayoutSetBranch(
+				currentLayoutPlid, layoutSetBranchId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.LayoutSetBranchSoap[]
 			getLayoutSetBranches(long groupId, boolean privateLayout)
 		throws RemoteException {

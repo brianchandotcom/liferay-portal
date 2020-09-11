@@ -53,6 +53,14 @@ public class LayoutSetBranchServiceUtil {
 		getService().deleteLayoutSetBranch(layoutSetBranchId);
 	}
 
+	public static void deleteLayoutSetBranch(
+			long currentLayoutPlid, long layoutSetBranchId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteLayoutSetBranch(
+			currentLayoutPlid, layoutSetBranchId);
+	}
+
 	public static java.util.List
 		<com.liferay.portal.kernel.model.LayoutSetBranch> getLayoutSetBranches(
 			long groupId, boolean privateLayout) {

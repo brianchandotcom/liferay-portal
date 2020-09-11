@@ -59,6 +59,10 @@ public interface LayoutSetBranchService extends BaseService {
 	public void deleteLayoutSetBranch(long layoutSetBranchId)
 		throws PortalException;
 
+	public void deleteLayoutSetBranch(
+			long currentLayoutPlid, long layoutSetBranchId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutSetBranch> getLayoutSetBranches(
 		long groupId, boolean privateLayout);

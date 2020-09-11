@@ -242,12 +242,6 @@ public abstract class SyntaxLogger {
 						loggerElement.addChildLoggerElement(
 							getFunctionExecuteLoggerElement(childElement));
 					}
-					else if (childElement.attributeValue("groovy-script") !=
-								null) {
-
-						loggerElement.addChildLoggerElement(
-							getGroovyScriptLoggerElement(childElement));
-					}
 					else if (childElement.attributeValue("macro") != null) {
 						loggerElement.addChildLoggerElement(
 							getMacroExecuteLoggerElement(
@@ -314,10 +308,6 @@ public abstract class SyntaxLogger {
 
 	protected LoggerElement getFunctionExecuteLoggerElement(Element element) {
 		return getLineGroupLoggerElement("function", element);
-	}
-
-	protected LoggerElement getGroovyScriptLoggerElement(Element element) {
-		return getLineGroupLoggerElement("groovy-script", element);
 	}
 
 	protected abstract LoggerElement getIfLoggerElement(Element element)
@@ -476,7 +466,6 @@ public abstract class SyntaxLogger {
 		List<Element> childElements = element.elements();
 
 		if ((!childElements.isEmpty() && !isExecutingFunction(element) &&
-			 !isExecutingGroovyScript(element) &&
 			 !isExecutingMethod(element)) ||
 			isExecutingMacro(element) || isExecutingTestCase(element)) {
 
@@ -487,9 +476,8 @@ public abstract class SyntaxLogger {
 	}
 
 	protected boolean isExecuting(Element element) {
-		if (isExecutingFunction(element) || isExecutingGroovyScript(element) ||
-			isExecutingMacro(element) || isExecutingMethod(element) ||
-			isExecutingTestCase(element)) {
+		if (isExecutingFunction(element) || isExecutingMacro(element) ||
+			isExecutingMethod(element) || isExecutingTestCase(element)) {
 
 			return true;
 		}
@@ -499,14 +487,6 @@ public abstract class SyntaxLogger {
 
 	protected boolean isExecutingFunction(Element element) {
 		if (element.attributeValue("function") != null) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isExecutingGroovyScript(Element element) {
-		if (element.attributeValue("groovy-script") != null) {
 			return true;
 		}
 

@@ -18,19 +18,13 @@ import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
-import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
-import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.TableUtil;
 import com.liferay.poshi.runner.util.Validator;
 import com.liferay.poshi.runner.var.type.BaseTable;
 import com.liferay.poshi.runner.var.type.TableFactory;
-
-import groovy.lang.Binding;
-
-import groovy.util.GroovyScriptEngine;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -175,9 +169,6 @@ public class PoshiRunnerExecutor {
 			else if (childElementName.equals("execute")) {
 				if (childElement.attributeValue("function") != null) {
 					runFunctionExecuteElement(childElement);
-				}
-				else if (childElement.attributeValue("groovy-script") != null) {
-					runGroovyScriptElement(childElement);
 				}
 				else if (childElement.attributeValue("macro") != null) {
 					runMacroExecuteElement(childElement, "macro");
@@ -584,57 +575,6 @@ public class PoshiRunnerExecutor {
 
 			_functionExecuteElement = null;
 			_functionWarningMessage = null;
-		}
-	}
-
-	public void runGroovyScriptElement(Element executeElement)
-		throws Exception {
-
-		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
-
-		List<Element> executeArgElements = executeElement.elements("arg");
-
-		Binding binding = new Binding();
-
-		if (!executeArgElements.isEmpty()) {
-			List<String> arguments = new ArrayList<>();
-
-			for (Element executeArgElement : executeArgElements) {
-				arguments.add(
-					PoshiRunnerVariablesUtil.getReplacedCommandVarsString(
-						executeArgElement.attributeValue("value")));
-			}
-
-			binding.setVariable("args", arguments.toArray(new String[0]));
-		}
-
-		String status = "fail";
-
-		try {
-			String fileName =
-				PoshiRunnerVariablesUtil.getReplacedCommandVarsString(
-					executeElement.attributeValue("groovy-script"));
-
-			String fileSeparator = FileUtil.getSeparator();
-
-			GroovyScriptEngine groovyScriptEngine = new GroovyScriptEngine(
-				LiferaySeleniumUtil.getSourceDirFilePath(
-					fileSeparator + PropsValues.TEST_DEPENDENCIES_DIR_NAME +
-						fileSeparator + fileName));
-
-			Object result = groovyScriptEngine.run(fileName, binding);
-
-			String returnVariable = executeElement.attributeValue("return");
-
-			if (returnVariable != null) {
-				PoshiRunnerVariablesUtil.putIntoCommandMap(
-					returnVariable, result.toString());
-			}
-
-			status = "pass";
-		}
-		finally {
-			_poshiLogger.updateStatus(executeElement, status);
 		}
 	}
 

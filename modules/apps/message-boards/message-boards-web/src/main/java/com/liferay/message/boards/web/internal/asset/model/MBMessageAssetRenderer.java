@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -306,6 +307,12 @@ public class MBMessageAssetRenderer
 		long groupId, ThemeDisplay themeDisplay) {
 
 		try {
+			Layout layout = themeDisplay.getLayout();
+
+			if (layout.isTypeControlPanel()) {
+				return true;
+			}
+
 			PortletLayoutFinder portletLayoutFinder =
 				PortletLayoutFinderRegistryUtil.getPortletLayoutFinder(
 					getClassName());

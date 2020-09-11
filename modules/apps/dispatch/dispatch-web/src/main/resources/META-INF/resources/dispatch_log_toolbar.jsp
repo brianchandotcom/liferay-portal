@@ -41,7 +41,7 @@ DispatchLogDisplayContext dispatchLogDisplayContext = (DispatchLogDisplayContext
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<c:if test="<%= DispatchPermission.contains(permissionChecker, dispatchLogDisplayContext.getDispatchTrigger(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= DispatchTriggerPermission.contains(permissionChecker, dispatchLogDisplayContext.getDispatchTrigger(), ActionKeys.UPDATE) %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
 				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteDispatchLogs();" %>'

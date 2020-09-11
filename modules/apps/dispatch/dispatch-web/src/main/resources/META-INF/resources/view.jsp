@@ -26,11 +26,11 @@ portletURL.setParameter("searchContainerId", "dispatchTriggers");
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<liferay-util:include page="/process_toolbar.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/dispatch_trigger_toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="dispatchTriggers" />
 </liferay-util:include>
 
-<div id="<portlet:namespace />processesContainer">
+<div id="<portlet:namespace />dispatchTriggerContainer">
 	<div class="closed container-fluid-1280" id="<portlet:namespace />infoPanelId">
 		<div class="container">
 			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -38,7 +38,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 				<aui:input name="deleteDispatchTriggerIds" type="hidden" />
 
-				<div class="process-lists-container" id="<portlet:namespace />entriesContainer">
+				<div class="dispatch-trigger-lists-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
 						id="dispatchTriggers"
 						searchContainer="<%= dispatchTriggerDisplayContext.getSearchContainer() %>"
@@ -83,12 +83,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 							<liferay-ui:search-container-column-jsp
 								cssClass="table-cell-content"
-								path="/process/buttons.jsp"
+								path="/trigger/buttons.jsp"
 							/>
 
 							<liferay-ui:search-container-column-jsp
 								cssClass="entry-action-column"
-								path="/process_action.jsp"
+								path="/dispatch_trigger_action.jsp"
 							/>
 						</liferay-ui:search-container-row>
 

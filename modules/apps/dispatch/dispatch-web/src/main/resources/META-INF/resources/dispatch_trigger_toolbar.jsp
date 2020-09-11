@@ -31,11 +31,37 @@ DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDi
 			selectedDisplayStyle="list"
 		/>
 
-		<liferay-portlet:renderURL var="addProcessURL">
+		<liferay-portlet:renderURL var="addDispatchTriggerURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 			<portlet:param name="mvcRenderCommandName" value="editDispatchTrigger" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:renderURL>
+
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+
+			<%
+			for (String scheduledTaskExecutorServiceType : dispatchTriggerDisplayContext.getScheduledTaskExecutorServiceTypes()) {
+			%>
+
+				<liferay-portlet:renderURL var="addDispatchTriggerURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+					<portlet:param name="mvcRenderCommandName" value="editDispatchTrigger" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
+					<portlet:param name="dispatchTriggerType" value="<%= scheduledTaskExecutorServiceType %>" />
+				</liferay-portlet:renderURL>
+
+				<liferay-frontend:add-menu-item
+					title="<%= scheduledTaskExecutorServiceType %>"
+					url="<%= addDispatchTriggerURL %>"
+				/>
+
+			<%
+			}
+			%>
+
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>

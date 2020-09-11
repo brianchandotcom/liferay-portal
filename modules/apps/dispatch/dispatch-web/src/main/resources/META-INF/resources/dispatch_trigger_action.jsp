@@ -29,7 +29,7 @@ DispatchTrigger dispatchTrigger = (DispatchTrigger)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= DispatchPermission.contains(permissionChecker, dispatchTrigger, ActionKeys.UPDATE) %>">
+	<c:if test="<%= DispatchTriggerPermission.contains(permissionChecker, dispatchTrigger, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editDispatchTrigger" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -42,7 +42,7 @@ DispatchTrigger dispatchTrigger = (DispatchTrigger)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DispatchPermission.contains(permissionChecker, dispatchTrigger, ActionKeys.DELETE) && !dispatchTrigger.isSystem() %>">
+	<c:if test="<%= DispatchTriggerPermission.contains(permissionChecker, dispatchTrigger, ActionKeys.DELETE) && !dispatchTrigger.isSystem() %>">
 		<portlet:actionURL name="editDispatchTrigger" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

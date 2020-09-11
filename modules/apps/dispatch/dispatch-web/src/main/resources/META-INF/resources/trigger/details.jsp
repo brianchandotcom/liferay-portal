@@ -23,13 +23,13 @@ long dispatchTriggerId = 0;
 
 DispatchTrigger dispatchTrigger = dispatchTriggerDisplayContext.getDispatchTrigger();
 
-String processType = ParamUtil.getString(request, "processType");
+String dispatchTriggerType = ParamUtil.getString(request, "dispatchTriggerType");
 
 String typeSettings = StringPool.BLANK;
 
 if (dispatchTrigger != null) {
 	dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
-	processType = dispatchTrigger.getType();
+	dispatchTriggerType = dispatchTrigger.getType();
 	typeSettings = dispatchTrigger.getTypeSettings();
 }
 %>
@@ -39,7 +39,7 @@ if (dispatchTrigger != null) {
 <div class="closed container-fluid-1280" id="<portlet:namespace />editDispatchTriggerId">
 	<div class="container main-content-body sheet">
 		<liferay-ui:error exception="<%= NoSuchLogException.class %>" message="the-log-could-not-be-found" />
-		<liferay-ui:error exception="<%= NoSuchTriggerException.class %>" message="the-process-could-not-be-found" />
+		<liferay-ui:error exception="<%= NoSuchTriggerException.class %>" message="the-trigger-could-not-be-found" />
 
 		<liferay-ui:error-principal />
 
@@ -47,7 +47,7 @@ if (dispatchTrigger != null) {
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTriggerId) %>" />
-			<aui:input name="processType" type="hidden" value="<%= processType %>" />
+			<aui:input name="dispatchTriggerType" type="hidden" value="<%= dispatchTriggerType %>" />
 			<aui:input name="typeSettings" type="hidden" />
 
 			<div class="lfr-form-content">
@@ -62,7 +62,7 @@ if (dispatchTrigger != null) {
 				<aui:button-row>
 
 					<%
-					String taglibSaveOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveProcess');";
+					String taglibSaveOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTrigger');";
 					%>
 
 					<aui:button onClick="<%= taglibSaveOnClick %>" value="save" />
@@ -116,7 +116,7 @@ if (dispatchTrigger != null) {
 
 	contentEditor.set(STR_VALUE, content);
 
-	Liferay.on('<portlet:namespace />saveProcess', function (event) {
+	Liferay.on('<portlet:namespace />saveTrigger', function (event) {
 		var form = AUI.$('#<portlet:namespace />fm');
 
 		form.fm('typeSettings').val(contentEditor.get(STR_VALUE));

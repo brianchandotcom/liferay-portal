@@ -697,10 +697,15 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		AssetPublisherPortlet.viewMultipleAssetOrderPGViaAP(
-			assetTitle1 = "WebContent Title 1",
-			assetTitle2 = "WebContent Title 2",
-			assetTitle3 = "WebContent Title 3");
+		var n = "1";
+
+		for (var title : list "WebContent Title 1,WebContent Title 2,WebContent Title 3") {
+			AssetPublisherPortlet.viewDisplayOrderPG(
+				assetTitle = "${title}",
+				rowNumber = "${n}");
+
+			var n = ${n} + 1;
+		}
 
 		AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "WebContent Title 1");
 
@@ -714,10 +719,15 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		AssetPublisherPortlet.viewMultipleAssetOrderPGViaAP(
-			assetTitle1 = "WebContent Title 2",
-			assetTitle2 = "WebContent Title 3",
-			assetTitle3 = "WebContent Title 1 Edit");
+		var n = "1";
+
+		for (var title : list "WebContent Title 2,WebContent Title 3,WebContent Title 1 Edit") {
+			AssetPublisherPortlet.viewDisplayOrderPG(
+				assetTitle = "${title}",
+				rowNumber = "${n}");
+
+			var n = ${n} + 1;
+		}
 	}
 
 	@priority = "3"
@@ -759,10 +769,15 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		AssetPublisherPortlet.viewMultipleAssetOrderPGViaAP(
-			assetTitle1 = "WebContent Title 1",
-			assetTitle2 = "WebContent Title 2",
-			assetTitle3 = "WebContent Title 3");
+		var n = "1";
+
+		for (var title : list "WebContent Title 1,WebContent Title 2,WebContent Title 3") {
+			AssetPublisherPortlet.viewDisplayOrderPG(
+				assetTitle = "${title}",
+				rowNumber = "${n}");
+
+			var n = ${n} + 1;
+		}
 
 		AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "WebContent Title 1");
 
@@ -776,10 +791,15 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		AssetPublisherPortlet.viewMultipleAssetOrderPGViaAP(
-			assetTitle1 = "WebContent Title 2",
-			assetTitle2 = "WebContent Title 3",
-			assetTitle3 = "WebContent Title 1 Edit");
+		var n = "1";
+
+		for (var title : list "WebContent Title 2,WebContent Title 3,WebContent Title 1 Edit") {
+			AssetPublisherPortlet.viewDisplayOrderPG(
+				assetTitle = "${title}",
+				rowNumber = "${n}");
+
+			var n = ${n} + 1;
+		}
 	}
 
 	@priority = "4"
@@ -910,10 +930,15 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		AssetPublisherPortlet.viewMultipleAssetOrderPGViaAP(
-			assetTitle1 = "WebContent Title 1",
-			assetTitle2 = "WebContent Title 2",
-			assetTitle3 = "WebContent Title 3");
+		var n = "1";
+
+		for (var title : list "WebContent Title 1,WebContent Title 2,WebContent Title 3") {
+			AssetPublisherPortlet.viewDisplayOrderPG(
+				assetTitle = "${title}",
+				rowNumber = "${n}");
+
+			var n = ${n} + 1;
+		}
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",

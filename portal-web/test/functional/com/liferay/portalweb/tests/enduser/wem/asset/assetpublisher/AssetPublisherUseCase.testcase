@@ -579,10 +579,15 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		AssetPublisherPortlet.viewOrderedFieldPG(
-			firstAsset = "Web Content2 Title",
-			secondAsset = "Web Content1 Title",
-			thirdAsset = "Web Content3 Title");
+		var n = "1";
+
+		for (var title : list "Web Content2 Title,Web Content1 Title,Web Content3 Title") {
+			AssetPublisherPortlet.viewDisplayOrderPG(
+				assetTitle = "${title}",
+				rowNumber = "${n}");
+
+			var n = ${n} + 1;
+		}
 
 		Portlet.addPG(portletName = "Language Selector");
 
@@ -594,10 +599,15 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		AssetPublisherPortlet.viewOrderedFieldPG(
-			firstAsset = "Netz Inhalt1 Titel",
-			secondAsset = "Netz Inhalt3 Titel",
-			thirdAsset = "Netz Inhalt2 Titel");
+		var n = "1";
+
+		for (var title : list "Netz Inhalt1 Titel,Netz Inhalt3 Titel,Netz Inhalt2 Titel") {
+			AssetPublisherPortlet.viewDisplayOrderPG(
+				assetTitle = "${title}",
+				rowNumber = "${n}");
+
+			var n = ${n} + 1;
+		}
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
@@ -663,10 +673,15 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		AssetPublisherPortlet.viewOrderedFieldPG(
-			firstAsset = "Web Content1 Title",
-			secondAsset = "Web Content2 Title",
-			thirdAsset = "Web Content3 Title");
+		var n = "1";
+
+		for (var title : list "Web Content1 Title,Web Content2 Title,Web Content3 Title") {
+			AssetPublisherPortlet.viewDisplayOrderPG(
+				assetTitle = "${title}",
+				rowNumber = "${n}");
+
+			var n = ${n} + 1;
+		}
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Web Content4 Content",

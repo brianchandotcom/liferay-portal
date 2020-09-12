@@ -1163,7 +1163,7 @@ definition {
 				value1 = "${text}");
 		}
 
-		Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 
 		PageEditor.waitForAutoSave();
 	}

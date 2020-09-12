@@ -190,7 +190,7 @@ definition {
 
 			AssertElementPresent(locator1 = "//*[contains(@class,'component-heading') and contains(@data-lfr-editable-id,'element-text')]/div[contains(@class,'cke_editable_inline')]");
 
-			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+			Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 		}
 
 		task ("Assert can select mapped content of Paragraph fragment") {
@@ -209,7 +209,7 @@ definition {
 
 			AssertVisible(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON");
 
-			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+			Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 		}
 
 		task ("Assert can edit editable field of Image fragment") {
@@ -221,7 +221,7 @@ definition {
 				imageFileName = "Document Title",
 				navTab = "Documents and Media");
 
-			Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+			Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 		}
 
 		task ("Assert ellipsis button of Asset Publisher present") {

@@ -55,9 +55,14 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		PortletResponseUtil.write(
-			resourceResponse,
-			_getApplicationsMenuDefaultLiferayLogoInputStream());
+		InputStream inputStream =
+			_getApplicationsMenuDefaultLiferayLogoInputStream();
+
+		if (inputStream == null) {
+			return;
+		}
+
+		PortletResponseUtil.write(resourceResponse, inputStream);
 	}
 
 	private InputStream _getApplicationsMenuDefaultLiferayLogoInputStream() {

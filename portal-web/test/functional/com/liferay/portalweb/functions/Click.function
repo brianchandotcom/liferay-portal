@@ -23,7 +23,7 @@ definition {
 
 		selenium.mouseOver();
 
-		selenium.clickAt();
+		selenium.clickAt("${locator1}", "${value1}");
 
 		selenium.assertJavaScriptErrors();
 

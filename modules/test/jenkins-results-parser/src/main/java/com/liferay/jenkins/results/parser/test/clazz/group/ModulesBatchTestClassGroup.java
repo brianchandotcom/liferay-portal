@@ -40,7 +40,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 	public static class ModulesBatchTestClass extends BaseTestClass {
 
-		protected ModulesBatchTestClass(TestClassFile moduleBaseDir) {
+		protected ModulesBatchTestClass(File moduleBaseDir) {
 			super(moduleBaseDir);
 		}
 

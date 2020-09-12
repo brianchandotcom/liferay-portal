@@ -52,13 +52,10 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 			return new PluginsBatchTestClass(
 				batchName,
-				new TestClassFile(
-					JenkinsResultsParserUtil.getCanonicalPath(pluginDir)));
+				new File(JenkinsResultsParserUtil.getCanonicalPath(pluginDir)));
 		}
 
-		protected PluginsBatchTestClass(
-			String batchName, TestClassFile testClassFile) {
-
+		protected PluginsBatchTestClass(String batchName, File testClassFile) {
 			super(testClassFile);
 
 			addTestClassMethod(batchName);

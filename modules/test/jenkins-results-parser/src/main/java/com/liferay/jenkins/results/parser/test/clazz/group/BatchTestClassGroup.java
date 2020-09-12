@@ -106,16 +106,14 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			String batchName,
 			PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
-			TestClassFile testClassFile = new TestClassFile(
+			File testClassFile = new File(
 				portalGitWorkingDirectory.getWorkingDirectory(),
 				"build-test-batch.xml");
 
 			return new BatchTestClass(batchName, testClassFile);
 		}
 
-		protected BatchTestClass(
-			String batchName, TestClassFile testClassFile) {
-
+		protected BatchTestClass(String batchName, File testClassFile) {
 			super(testClassFile);
 
 			addTestClassMethod(batchName);

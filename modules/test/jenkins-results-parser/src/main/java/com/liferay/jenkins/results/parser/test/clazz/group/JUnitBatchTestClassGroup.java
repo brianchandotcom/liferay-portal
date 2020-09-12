@@ -75,11 +75,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		for (JUnitBatchTestClassGroup.JunitBatchTestClass junitBatchTestClass :
 				junitTestClasses.values()) {
 
-			TestClass.TestClassFile testClassFile =
-				junitBatchTestClass.getTestClassFile();
+			File testClassFile = junitBatchTestClass.getTestClassFile();
 
-			String testClassFileRelativePath = testClassFile.getRelativePath(
-				junitBatchTestClass.getWorkingDirectory());
+			String testClassFileRelativePath = _getRelativePath(
+				testClassFile, junitBatchTestClass.getWorkingDirectory());
 
 			String className = testClassFile.getName();
 
@@ -130,6 +129,22 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		protected static JunitBatchTestClass getInstance(
+			File testClassFile, GitWorkingDirectory gitWorkingDirectory,
+			File javaFile) {
+
+			if (_junitTestClasses.containsKey(testClassFile)) {
+				return _junitTestClasses.get(testClassFile);
+			}
+
+			JunitBatchTestClass junitTestClass = new JunitBatchTestClass(
+				testClassFile, gitWorkingDirectory, javaFile);
+
+			_junitTestClasses.put(testClassFile, junitTestClass);
+
+			return junitTestClass;
+		}
+
+		protected static JunitBatchTestClass getInstance(
 			String fullClassName, GitWorkingDirectory gitWorkingDirectory) {
 
 			File javaFile = gitWorkingDirectory.getJavaFileFromFullClassName(
@@ -146,8 +161,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 			packagePath = packagePath + ".class";
 
-			TestClassGroup.TestClass.TestClassFile testClassFile =
-				new TestClass.TestClassFile(packagePath);
+			File testClassFile = new File(packagePath);
 
 			if (_junitTestClasses.containsKey(testClassFile)) {
 				return _junitTestClasses.get(testClassFile);
@@ -156,29 +170,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return getInstance(testClassFile, gitWorkingDirectory, javaFile);
 		}
 
-		protected static JunitBatchTestClass getInstance(
-			TestClassFile testClassFile,
-			GitWorkingDirectory gitWorkingDirectory, File javaFile) {
-
-			if (_junitTestClasses.containsKey(testClassFile)) {
-				return _junitTestClasses.get(testClassFile);
-			}
-
-			JunitBatchTestClass junitTestClass = new JunitBatchTestClass(
-				testClassFile, gitWorkingDirectory, javaFile);
-
-			_junitTestClasses.put(testClassFile, junitTestClass);
-
-			return junitTestClass;
-		}
-
 		protected static Map<File, JunitBatchTestClass> getJunitTestClasses() {
 			return _junitTestClasses;
 		}
 
 		protected JunitBatchTestClass(
-			TestClassFile testClassFile,
-			GitWorkingDirectory gitWorkingDirectory, File srcFile) {
+			File testClassFile, GitWorkingDirectory gitWorkingDirectory,
+			File srcFile) {
 
 			super(testClassFile);
 
@@ -532,8 +530,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 				axisTestClassGroup.addTestClass(
 					JunitBatchTestClass.getInstance(
-						new TestClass.TestClassFile(filePath),
-						portalGitWorkingDirectory, autoBalanceTestFile));
+						new File(filePath), portalGitWorkingDirectory,
+						autoBalanceTestFile));
 			}
 		}
 	}
@@ -588,14 +586,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 							String packagePath = matcher.group("packagePath");
 
 							return JunitBatchTestClass.getInstance(
-								new TestClass.TestClassFile(
+								new File(
 									packagePath.replace(".java", ".class")),
 								portalGitWorkingDirectory, path.toFile());
 						}
 
 						return JunitBatchTestClass.getInstance(
-							new TestClass.TestClassFile(
-								filePath.replace(".java", ".class")),
+							new File(filePath.replace(".java", ".class")),
 							portalGitWorkingDirectory, path.toFile());
 					}
 
@@ -659,6 +656,19 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		new ArrayList<>();
 	protected final List<PathMatcher> testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
+
+	private String _getRelativePath(File file, File parentFile) {
+		String filePath = JenkinsResultsParserUtil.getCanonicalPath(file);
+		String parentFilePath = JenkinsResultsParserUtil.getCanonicalPath(
+			parentFile);
+
+		if (!filePath.startsWith(parentFilePath)) {
+			throw new IllegalArgumentException(
+				"Working directory does not contain this file");
+		}
+
+		return filePath.replaceAll(parentFilePath, "");
+	}
 
 	private String _getTestClassNamesExcludesPropertyValue(
 		String testSuiteName, boolean useRequiredVariant) {

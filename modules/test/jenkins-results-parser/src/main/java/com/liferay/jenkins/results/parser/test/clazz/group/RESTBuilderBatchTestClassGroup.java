@@ -66,13 +66,13 @@ public class RESTBuilderBatchTestClassGroup extends ModulesBatchTestClassGroup {
 			List<File> modulesProjectDirs) {
 
 			return new RESTBuilderBatchTestClass(
-				new TestClassFile(
+				new File(
 					JenkinsResultsParserUtil.getCanonicalPath(moduleBaseDir)),
 				modulesDir, modulesProjectDirs);
 		}
 
 		protected RESTBuilderBatchTestClass(
-			TestClassFile testClassFile, File modulesDir,
+			File testClassFile, File modulesDir,
 			List<File> modulesProjectDirs) {
 
 			super(testClassFile);

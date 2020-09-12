@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +30,8 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 	}
 
 	@Override
-	public List<TestClass.TestClassFile> getTestClassFiles() {
-		List<TestClass.TestClassFile> testClassFiles = new ArrayList<>();
+	public List<File> getTestClassFiles() {
+		List<File> testClassFiles = new ArrayList<>();
 
 		for (TestClassGroup.TestClass testClass : testClasses) {
 			testClassFiles.add(testClass.getTestClassFile());
@@ -51,7 +53,7 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 		}
 
 		@Override
-		public TestClassFile getTestClassFile() {
+		public File getTestClassFile() {
 			return _testClassFile;
 		}
 
@@ -62,7 +64,7 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 			return _testClassMethods;
 		}
 
-		protected BaseTestClass(TestClassFile testClassFile) {
+		protected BaseTestClass(File testClassFile) {
 			_testClassFile = testClassFile;
 		}
 
@@ -83,7 +85,7 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 			_testClassMethods.add(testClassMethod);
 		}
 
-		private final TestClassFile _testClassFile;
+		private final File _testClassFile;
 		private final List<TestClassMethod> _testClassMethods =
 			new ArrayList<>();
 

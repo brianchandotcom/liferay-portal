@@ -49,13 +49,10 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 			return new TCKBatchTestClass(
 				batchName,
-				new TestClassFile(
-					JenkinsResultsParserUtil.getCanonicalPath(warFile)));
+				new File(JenkinsResultsParserUtil.getCanonicalPath(warFile)));
 		}
 
-		protected TCKBatchTestClass(
-			String batchName, TestClassFile testClassFile) {
-
+		protected TCKBatchTestClass(String batchName, File testClassFile) {
 			super(testClassFile);
 
 			addTestClassMethod(batchName);

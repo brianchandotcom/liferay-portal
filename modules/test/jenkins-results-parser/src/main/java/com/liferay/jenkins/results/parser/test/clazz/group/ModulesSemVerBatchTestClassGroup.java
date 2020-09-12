@@ -53,13 +53,13 @@ public class ModulesSemVerBatchTestClassGroup
 			List<File> modulesProjectDirs) {
 
 			return new ModulesSemVerBatchTestClass(
-				new TestClassFile(
+				new File(
 					JenkinsResultsParserUtil.getCanonicalPath(moduleBaseDir)),
 				modulesDir, modulesProjectDirs);
 		}
 
 		protected ModulesSemVerBatchTestClass(
-			TestClassFile moduleBaseDir, File modulesDir,
+			File moduleBaseDir, File modulesDir,
 			List<File> modulesProjectDirs) {
 
 			super(moduleBaseDir);
@@ -170,7 +170,7 @@ public class ModulesSemVerBatchTestClassGroup
 			if (!modulesProjectDirs.isEmpty()) {
 				testClasses.add(
 					ModulesSemVerBatchTestClass.getInstance(
-						new TestClass.TestClassFile(
+						new File(
 							JenkinsResultsParserUtil.getCanonicalPath(
 								moduleDir)),
 						portalModulesBaseDir, modulesProjectDirs));

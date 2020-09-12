@@ -792,12 +792,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void clickAt(String locator, String coordString) {
-		clickAt(locator, coordString, true);
-	}
-
-	public void clickAt(
-		String locator, String coordString, boolean scrollIntoView) {
-
 		int offsetX = 0;
 		int offsetY = 0;
 
@@ -812,51 +806,24 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			click(locator);
 		}
 		else {
-			WebElement bodyWebElement = getWebElement("//body");
-
-			WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-			WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-			WebDriver.Options options = webDriver.manage();
-
-			WebDriver.Window window = options.window();
-
-			Point windowPoint = window.getPosition();
-
-			WebElement webElement = getWebElement(locator);
-
-			Point webElementPoint = webElement.getLocation();
-
-			int clickDestinationX = 0;
-			int clickDestinationY = 0;
-
-			if (scrollIntoView) {
-				scrollWebElementIntoView(webElement);
-
-				clickDestinationX =
-					windowPoint.getX() + webElementPoint.getX() + offsetX;
-				clickDestinationY = windowPoint.getY() + offsetY;
-			}
-			else {
-				clickDestinationX =
-					windowPoint.getX() + webElementPoint.getX() + offsetX;
-				clickDestinationY =
-					windowPoint.getY() + webElementPoint.getY() + offsetY;
-			}
-
 			try {
-				Robot robot = new Robot();
+				WebElement webElement = getWebElement(locator);
 
-				robot.mouseMove(clickDestinationX, clickDestinationY);
+				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
-				robot.mousePress(KeyEvent.BUTTON1_MASK);
+				WebDriver webDriver = wrapsDriver.getWrappedDriver();
 
-				robot.delay(1500);
+				Actions actions = new Actions(webDriver);
 
-				robot.mouseRelease(KeyEvent.BUTTON1_MASK);
+				actions.moveToElement(webElement, offsetX, offsetY);
 
-				robot.delay(1500);
+				actions.pause(1500);
+
+				actions.click();
+
+				Action action = actions.build();
+
+				action.perform();
 			}
 			catch (Exception exception) {
 			}

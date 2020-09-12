@@ -71,15 +71,14 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 		try {
 			InputStream inputStream = null;
 
-			String imageDefaultLiferayLogo = PropsUtil.get(
-				PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO);
+			String imageDefaultLiferayLogo =
+				_getApplicationsMenuDefualtLiferayLogo();
 
 			int index = imageDefaultLiferayLogo.indexOf(CharPool.SEMICOLON);
 
 			if (index == -1) {
 				inputStream = classLoader.getResourceAsStream(
-					PropsUtil.get(
-						PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO));
+					_getApplicationsMenuDefualtLiferayLogo());
 			}
 			else {
 				String bundleIdString = imageDefaultLiferayLogo.substring(
@@ -119,6 +118,12 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 		}
 
 		return null;
+	}
+
+	private String _getApplicationsMenuDefualtLiferayLogo() {
+		return GetterUtil.getString(
+			PropsUtil.get(PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO),
+			"com/liferay/portal/dependencies/liferay_logo.png");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

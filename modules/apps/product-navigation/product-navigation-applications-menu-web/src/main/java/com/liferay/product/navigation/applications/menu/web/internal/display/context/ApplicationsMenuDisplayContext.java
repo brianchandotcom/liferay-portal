@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -70,7 +71,9 @@ public class ApplicationsMenuDisplayContext {
 				return applicationsMenuLiferayLogoURL.toString();
 			}
 		).put(
-			"liferayName", PropsValues.APPLICATIONS_MENU_DEFAULT_LIFERAY_NAME
+			"liferayName",
+			GetterUtil.getString(
+				PropsValues.APPLICATIONS_MENU_DEFAULT_LIFERAY_NAME, "Liferay")
 		).put(
 			"panelAppsURL",
 			() -> {

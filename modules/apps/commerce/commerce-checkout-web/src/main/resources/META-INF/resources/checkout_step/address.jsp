@@ -120,6 +120,10 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="city" placeholder="city" wrapperCssClass="form-group-item" />
 
 		<aui:select disabled="<%= commerceAddressId > 0 %>" label="" name="commerceRegionId" placeholder="region" title="region" wrapperCssClass="form-group-item" />
+
+		<aui:input disabled="<%= commerceAddressId > 0 %>" id="commerceRegionIdInput" label="" name="commerceRegionId" placeholder="regionId" title="region" wrapperCssClass="d-none form-group-item" />
+
+		<aui:input disabled="<%= commerceAddressId > 0 %>" id="commerceRegionIdName" label="" name="commerceRegionId" placeholder="regionName" title="region" wrapperCssClass="d-none form-group-item" />
 	</div>
 
 	<div class="form-group-autofit">
@@ -222,6 +226,33 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 
 			Liferay.Util.toggleDisabled(A.all('.address-fields input'), state);
 			Liferay.Util.toggleDisabled(A.all('.address-fields select'), state);
+
+			var commerceRegionIdSelect = A.one(
+				'#<portlet:namespace/>commerceRegionId'
+			).getDOMNode();
+			var commerceRegionIdInput = A.one(
+				'#<portlet:namespace/>commerceRegionIdInput'
+			).getDOMNode();
+			var commerceRegionIdName = A.one(
+				'#<portlet:namespace/>commerceRegionIdName'
+			).getDOMNode();
+
+			commerceRegionIdSelect.setAttribute(
+				'name',
+				'<portlet:namespace/>commerceRegionId'
+			);
+			commerceRegionIdSelect.parentElement.classList.remove('d-none');
+
+			commerceRegionIdInput.setAttribute(
+				'name',
+				'commerceRegionIdInputDisabled'
+			);
+			commerceRegionIdInput.parentElement.classList.add('d-none');
+			commerceRegionIdName.setAttribute(
+				'name',
+				'commerceRegionIdInputDisabled'
+			);
+			commerceRegionIdName.parentElement.classList.add('d-none');
 		},
 		['aui-base']
 	);
@@ -246,9 +277,15 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 				var commerceCountryId = A.one(
 					'#<portlet:namespace />commerceCountryId'
 				);
-				var commerceRegionId = A.one(
-					'#<portlet:namespace />commerceRegionId'
-				);
+				var commerceRegionIdInput = A.one(
+					'#<portlet:namespace />commerceRegionIdInput'
+				).getDOMNode();
+				var commerceRegionIdName = A.one(
+					'#<portlet:namespace/>commerceRegionIdName'
+				).getDOMNode();
+				var commerceRegionIdSelect = A.one(
+					'#<portlet:namespace/>commerceRegionId'
+				).getDOMNode();
 				var name = A.one('#<portlet:namespace />name');
 				var phoneNumber = A.one('#<portlet:namespace />phoneNumber');
 				var street1 = A.one('#<portlet:namespace />street1');
@@ -259,7 +296,9 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 				if (
 					city &&
 					commerceCountryId &&
-					commerceRegionId &&
+					commerceRegionIdInput &&
+					commerceRegionIdSelect &&
+					commerceRegionIdName &&
 					name &&
 					phoneNumber &&
 					street1 &&
@@ -267,16 +306,12 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 					street3 &&
 					zip
 				) {
-					var originalFn = Liferay.component(
-						'<portlet:namespace />countrySelects'
-					).array[1].selectData;
 					var selectedOption = commerceAddress
 						.get('options')
 						.item(selectedVal);
 
 					city.val(selectedOption.getData('city'));
 					commerceCountryId.val(selectedOption.getData('country'));
-					commerceRegionId.val(selectedOption.getData('region'));
 					name.val(selectedOption.getData('name'));
 					phoneNumber.val(selectedOption.getData('phone-number'));
 					street1.val(selectedOption.getData('street-1'));
@@ -284,24 +319,47 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 					street3.val(selectedOption.getData('street-3'));
 					zip.val(selectedOption.getData('zip'));
 
-					Liferay.component(
-						'<portlet:namespace />countrySelects'
-					).array[1].selectData = function newSelectData(
-						callback,
-						selectKey
-					) {
-						originalFn(function newCallback(list) {
-							callback(list);
+					commerceRegionIdSelect.setAttribute(
+						'name',
+						'commerceRegionIdSelectIgnore'
+					);
+					commerceRegionIdSelect.parentElement.classList.add('d-none');
 
-							commerceRegionId.val(selectedOption.getData('region'));
-							Liferay.component(
-								'<portlet:namespace />countrySelects'
-							).array[1].selectData = originalFn;
-						}, selectKey);
-					};
-					Liferay.component(
-						'<portlet:namespace />countrySelects'
-					)._callSelectData(0);
+					commerceRegionIdInput.value = selectedOption.getData('region');
+					commerceRegionIdInput.setAttribute(
+						'name',
+						'<portlet:namespace/>commerceRegionId'
+					);
+					commerceRegionIdInput.parentElement.classList.add('d-none');
+
+					commerceRegionIdName.setAttribute(
+						'name',
+						'commerceRegionIdNameIgnore'
+					);
+					commerceRegionIdName.parentElement.classList.remove('d-none');
+
+					Liferay.Service(
+						'/commerce.commerceregion/get-commerce-regions',
+						{
+							commerceCountryId: parseInt(
+								selectedOption.getData('country'),
+								10
+							),
+							active: true,
+						},
+						function setUIOnlyInputRegionName(regions) {
+							for (var i = 0; i < regions.length; i++) {
+								if (
+									regions[i].commerceRegionId ===
+									selectedOption.getData('region')
+								) {
+									commerceRegionIdName.value = regions[i].name;
+
+									break;
+								}
+							}
+						}
+					);
 				}
 			}
 		},
@@ -309,7 +367,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 	);
 </aui:script>
 
-<aui:script use="liferay-dynamic-select">
+<aui:script>
 	Liferay.component(
 		'<portlet:namespace />countrySelects',
 		new Liferay.DynamicSelect([

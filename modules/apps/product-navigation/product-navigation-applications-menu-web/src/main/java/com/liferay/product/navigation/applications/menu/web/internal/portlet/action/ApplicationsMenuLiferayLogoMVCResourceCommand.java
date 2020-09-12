@@ -89,8 +89,8 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 				String name = imageDefaultLiferayLogo.substring(index + 1);
 
 				if (bundleId < 0) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
+					if (_log.isDebugEnabled()) {
+						_log.debug(
 							"Fallback to portal class loader because of " +
 								"invalid bundle ID " + bundleIdString);
 					}
@@ -106,15 +106,19 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 			}
 
 			if (inputStream == null) {
-				_log.error("Default Liferay logo is not available");
+				if (_log.isDebugEnabled()) {
+					_log.debug("Default Liferay logo is not available");
+				}
 			}
 
 			return inputStream;
 		}
 		catch (Exception exception) {
-			_log.error(
-				"Unable to configure the default Liferay logo: " +
-					exception.getMessage());
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to configure the default Liferay logo: " +
+						exception.getMessage());
+			}
 		}
 
 		return null;

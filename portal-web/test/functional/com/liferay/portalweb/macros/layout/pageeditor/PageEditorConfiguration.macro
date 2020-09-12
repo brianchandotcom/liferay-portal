@@ -64,7 +64,9 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		Click(locator1 = "PageEditor#MANAGEMENT_BAR");
+		Click(
+			key_sidebarButton = "Selection",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		PageEditor.waitForAutoSave();
 	}

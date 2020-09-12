@@ -678,11 +678,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MANAGEMENT_BAR</td>
-	<td>//div[contains(@class,'management-bar')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>UNDO_HISTORY</td>
 	<td>//button[contains(@aria-label,'History')]</td>
 	<td></td>

@@ -306,6 +306,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_BODY</td>
+	<td>//div[@class='page-editor__sidebar']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_TAB_COLLAPSED</td>
 	<td>//button[@*='${key_tabName}' and contains(@aria-pressed,'false')]</td>
 	<td></td>

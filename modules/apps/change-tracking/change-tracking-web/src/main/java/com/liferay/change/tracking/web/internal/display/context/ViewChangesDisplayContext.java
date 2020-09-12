@@ -26,7 +26,10 @@ import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
+import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,10 +43,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,6 +57,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
+
+import java.text.Format;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -88,8 +95,8 @@ public class ViewChangesDisplayContext {
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
 		GroupLocalService groupLocalService, Language language, Portal portal,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		UserLocalService userLocalService) {
+		PublishScheduler publishScheduler, RenderRequest renderRequest,
+		RenderResponse renderResponse, UserLocalService userLocalService) {
 
 		_activeCTCollectionId = activeCTCollectionId;
 		_basePersistenceRegistry = basePersistenceRegistry;
@@ -101,6 +108,7 @@ public class ViewChangesDisplayContext {
 		_groupLocalService = groupLocalService;
 		_language = language;
 		_portal = portal;
+		_publishScheduler = publishScheduler;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_userLocalService = userLocalService;
@@ -406,6 +414,43 @@ public class ViewChangesDisplayContext {
 		).build();
 	}
 
+	public String getScheduledDescription() throws PortalException {
+		for (ScheduledPublishInfo scheduledPublishInfo :
+				_publishScheduler.getScheduledPublishInfos()) {
+
+			CTCollection ctCollection = scheduledPublishInfo.getCTCollection();
+
+			if (ctCollection.getCtCollectionId() ==
+					_ctCollection.getCtCollectionId()) {
+
+				Format format = FastDateFormatFactoryUtil.getDateTime(
+					_themeDisplay.getLocale(), _themeDisplay.getTimeZone());
+
+				String description = _language.format(
+					_httpServletRequest, "publishing-x",
+					new Object[] {
+						format.format(scheduledPublishInfo.getStartDate())
+					},
+					false);
+
+				User user = _userLocalService.fetchUser(
+					scheduledPublishInfo.getUserId());
+
+				if (user != null) {
+					return StringBundler.concat(
+						description, " | ",
+						_language.format(
+							_httpServletRequest, "scheduled-by-x",
+							new Object[] {user.getFullName()}, false));
+				}
+
+				return description;
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public String getStatusLabel(int status) {
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			return "published";
@@ -415,6 +460,9 @@ public class ViewChangesDisplayContext {
 		}
 		else if (status == WorkflowConstants.STATUS_DENIED) {
 			return "failed";
+		}
+		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
+			return "scheduled";
 		}
 
 		return StringPool.BLANK;
@@ -765,6 +813,7 @@ public class ViewChangesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
+	private final PublishScheduler _publishScheduler;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;

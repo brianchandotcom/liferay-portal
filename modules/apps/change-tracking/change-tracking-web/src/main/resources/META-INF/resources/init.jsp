@@ -44,6 +44,7 @@ page import="com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay
 page import="com.liferay.change.tracking.web.internal.display.context.ChangeListsConfigurationDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ChangeListsDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ChangeListsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.change.tracking.web.internal.display.context.SchedulePublicationDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.SelectChangeListManagementToolbarDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewDiscardDisplayContext" %><%@
@@ -73,7 +74,8 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
 <%@ page import="java.text.Format" %>
 
-<%@ page import="java.util.Date" %><%@
+<%@ page import="java.util.Calendar" %><%@
+page import="java.util.Date" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@

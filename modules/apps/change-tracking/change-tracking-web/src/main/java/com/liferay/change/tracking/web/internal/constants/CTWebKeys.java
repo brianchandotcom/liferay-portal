@@ -46,4 +46,7 @@ public interface CTWebKeys {
 	public static final String VIEW_HISTORY_DISPLAY_CONTEXT =
 		"VIEW_HISTORY_DISPLAY_CONTEXT";
 
+	public static final String VIEW_SCHEDULED_DISPLAY_CONTEXT =
+		"VIEW_SCHEDULED_DISPLAY_CONTEXT";
+
 }

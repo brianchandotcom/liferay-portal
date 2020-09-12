@@ -68,15 +68,27 @@ CTCollection ctCollection = (CTCollection)row.getObject();
 	<c:if test="<%= changeListsDisplayContext.isPublishEnabled(ctCollection.getCtCollectionId()) && CTCollectionPermission.contains(permissionChecker, ctCollection, CTActionKeys.PUBLISH) %>">
 		<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 
-		<liferay-portlet:renderURL var="conflictsURL">
+		<liferay-portlet:renderURL var="publishURL">
 			<portlet:param name="mvcRenderCommandName" value="/change_lists/view_conflicts" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			message="prepare-to-publish"
-			url="<%= conflictsURL %>"
+			message="publish"
+			url="<%= publishURL %>"
+		/>
+
+		<liferay-portlet:renderURL var="scheduleURL">
+			<portlet:param name="mvcRenderCommandName" value="/change_lists/view_conflicts" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
+			<portlet:param name="schedule" value="<%= Boolean.TRUE.toString() %>" />
+		</liferay-portlet:renderURL>
+
+		<liferay-ui:icon
+			message="schedule"
+			url="<%= scheduleURL %>"
 		/>
 	</c:if>
 

@@ -17,21 +17,29 @@ package com.liferay.change.tracking.web.internal.display.context;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
+import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.RenderRequest;
@@ -67,6 +75,12 @@ public class ViewScheduledDisplayContext {
 		return ParamUtil.getString(_renderRequest, "displayStyle", "list");
 	}
 
+	public Date getPublishingDate(long ctCollectionId) throws PortalException {
+		Map<Long, Date> publishingDateMap = _getPublishingDateMap();
+
+		return publishingDateMap.get(ctCollectionId);
+	}
+
 	public SearchContainer<CTCollection> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
@@ -74,7 +88,7 @@ public class ViewScheduledDisplayContext {
 
 		SearchContainer<CTCollection> searchContainer = new SearchContainer<>(
 			_renderRequest, new DisplayTerms(_renderRequest), null,
-			SearchContainer.DEFAULT_CUR_PARAM, 5,
+			SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA,
 			PortletURLUtil.getCurrent(_renderRequest, _renderResponse), null,
 			_language.get(
 				_httpServletRequest, "no-publication-has-been-scheduled-yet"));
@@ -88,10 +102,45 @@ public class ViewScheduledDisplayContext {
 
 		List<CTCollection> results = _ctCollectionService.getCTCollections(
 			_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_SCHEDULED,
-			displayTerms.getKeywords(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, _getOrderByComparator());
+			displayTerms.getKeywords(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			_getOrderByComparator());
 
 		searchContainer.setTotal(results.size());
+
+		if (Objects.equals(_getOrderByCol(), "publishing")) {
+			results = ListUtil.copy(results);
+
+			results.sort(
+				(c1, c2) -> {
+					try {
+						Date date1 = getPublishingDate(c1.getCtCollectionId());
+						Date date2 = getPublishingDate(c2.getCtCollectionId());
+
+						if (date1.before(date2)) {
+							if (Objects.equals(_getOrderByType(), "asc")) {
+								return 1;
+							}
+
+							return -1;
+						}
+						else if (date1.after(date2)) {
+							if (Objects.equals(_getOrderByType(), "asc")) {
+								return -1;
+							}
+
+							return 1;
+						}
+						else {
+							return 0;
+						}
+					}
+					catch (PortalException portalException) {
+						_log.error(portalException, portalException);
+
+						return 0;
+					}
+				});
+		}
 
 		int end = searchContainer.getEnd();
 
@@ -146,7 +195,12 @@ public class ViewScheduledDisplayContext {
 	private OrderByComparator<CTCollection> _getOrderByComparator() {
 		OrderByComparator<CTCollection> orderByComparator = null;
 
-		if (Objects.equals(_getOrderByCol(), "name")) {
+		if (Objects.equals(_getOrderByCol(), "modified-date")) {
+			orderByComparator = OrderByComparatorFactoryUtil.create(
+				"CTCollection", "modifiedDate",
+				Objects.equals(_getOrderByType(), "asc"));
+		}
+		else if (Objects.equals(_getOrderByCol(), "name")) {
 			orderByComparator = OrderByComparatorFactoryUtil.create(
 				"CTCollection", _getOrderByCol(),
 				Objects.equals(_getOrderByType(), "asc"));
@@ -161,9 +215,35 @@ public class ViewScheduledDisplayContext {
 			"desc");
 	}
 
+	private Map<Long, Date> _getPublishingDateMap() throws PortalException {
+		if (_publishingDateMap != null) {
+			return _publishingDateMap;
+		}
+
+		Map<Long, Date> publishingDateMap = new HashMap<>();
+
+		for (ScheduledPublishInfo scheduledPublishInfo :
+				_publishScheduler.getScheduledPublishInfos()) {
+
+			CTCollection ctCollection = scheduledPublishInfo.getCTCollection();
+
+			publishingDateMap.put(
+				ctCollection.getCtCollectionId(),
+				scheduledPublishInfo.getStartDate());
+		}
+
+		_publishingDateMap = publishingDateMap;
+
+		return _publishingDateMap;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewScheduledDisplayContext.class);
+
 	private final CTCollectionService _ctCollectionService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private Map<Long, Date> _publishingDateMap;
 	private final PublishScheduler _publishScheduler;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

@@ -1,3 +1,26 @@
+#changeListsFooter {
+	padding-right: 18px;
+}
+
+#changeListsHeader {
+	padding-bottom: 6px;
+	padding-right: 18px;
+	padding-top: 6px;
+
+	h5 {
+		margin-bottom: 0;
+	}
+}
+
+#changeListsInputDate {
+	padding-right: 0;
+}
+
+#changeListInputTime {
+	padding-left: 0;
+	padding-right: 0;
+}
+
 .change-lists-conflicts-table {
 	.autofit-col {
 		padding-left: 0;
@@ -103,6 +126,15 @@
 			margin-left: 0.5rem;
 			vertical-align: middle;
 		}
+	}
+}
+
+.change-lists-time-zone {
+	display: inline-block;
+	vertical-align: middle;
+
+	h5 {
+		margin-bottom: 0;
 	}
 }
 

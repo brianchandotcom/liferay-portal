@@ -78,7 +78,7 @@ public class ViewScheduledManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"name"};
+		return new String[] {"modified-date", "name", "publishing"};
 	}
 
 	private final ViewScheduledDisplayContext _viewScheduledDisplayContext;

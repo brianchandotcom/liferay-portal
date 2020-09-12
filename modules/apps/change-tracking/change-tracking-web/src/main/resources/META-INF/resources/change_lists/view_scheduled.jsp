@@ -17,11 +17,13 @@
 <%@ include file="/change_lists/init.jsp" %>
 
 <%
-ViewScheduledDisplayContext viewScheduledDisplayContext = (ViewScheduledDisplayContext)request.getAttribute(CTWebKeys.VIEW_HISTORY_DISPLAY_CONTEXT);
+ViewScheduledDisplayContext viewScheduledDisplayContext = (ViewScheduledDisplayContext)request.getAttribute(CTWebKeys.VIEW_SCHEDULED_DISPLAY_CONTEXT);
 
 SearchContainer<CTCollection> searchContainer = viewScheduledDisplayContext.getSearchContainer();
 
 ViewScheduledManagementToolbarDisplayContext viewScheduledManagementToolbarDisplayContext = new ViewScheduledManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer, viewScheduledDisplayContext);
+
+Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <clay:navigation-bar
@@ -53,6 +55,19 @@ ViewScheduledManagementToolbarDisplayContext viewScheduledManagementToolbarDispl
 							/>
 						</span>
 					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="autofit-col-expand"
+						href="<%= changeListsDisplayContext.getReviewChangesURL(ctCollection.getCtCollectionId()) %>"
+					>
+						<div class="change-list-name <%= (changeListsDisplayContext.getCtCollectionId() == ctCollection.getCtCollectionId()) ? "font-italic" : StringPool.BLANK %>">
+							<%= ctCollection.getName() %>
+						</div>
+
+						<div class="change-list-description <%= (changeListsDisplayContext.getCtCollectionId() == ctCollection.getCtCollectionId()) ? "font-italic" : StringPool.BLANK %>">
+							<%= ctCollection.getDescription() %>
+						</div>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
@@ -68,11 +83,51 @@ ViewScheduledManagementToolbarDisplayContext viewScheduledManagementToolbarDispl
 							<%= ctCollection.getDescription() %>
 						</div>
 					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller"
+						name="publishing"
+					>
+						<%= format.format(viewScheduledDisplayContext.getPublishingDate(ctCollection.getCtCollectionId())) %>
+					</liferay-ui:search-container-column-text>
+
+					<%
+					Date modifiedDate = ctCollection.getModifiedDate();
+					%>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller"
+						name="last-modified"
+					>
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					</liferay-ui:search-container-column-text>
+
+					<%
+					Date createDate = ctCollection.getCreateDate();
+					%>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller"
+						name="created"
+					>
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest text-center"
+						name="owner"
+					>
+						<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(ctCollection.getUserName()) %>">
+							<liferay-ui:user-portrait
+								userId="<%= ctCollection.getUserId() %>"
+							/>
+						</span>
+					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>
 
 			<liferay-ui:search-container-column-jsp
-				path="/change_lists/ct_collection_action.jsp"
+				path="/change_lists/scheduled_publication_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

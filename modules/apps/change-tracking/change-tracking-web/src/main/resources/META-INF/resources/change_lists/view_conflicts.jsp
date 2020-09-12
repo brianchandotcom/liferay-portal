@@ -20,7 +20,9 @@
 Map<Long, List<ConflictInfo>> conflictInfoMap = (Map<Long, List<ConflictInfo>>)request.getAttribute(CTWebKeys.CONFLICT_INFO_MAP);
 CTCollection ctCollection = (CTCollection)request.getAttribute(CTWebKeys.CT_COLLECTION);
 
-renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"), ": ", ctCollection.getName()));
+boolean schedule = ParamUtil.getBoolean(request, "schedule");
+
+renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, schedule ? "schedule-to-publish-later" : "publish"), ": ", ctCollection.getName()));
 %>
 
 <liferay-portlet:renderURL var="backURL">
@@ -38,6 +40,25 @@ portletDisplay.setURLBack(backURL);
 >
 	<div class="sheet-lg table-responsive">
 		<table class="change-lists-conflicts-table table table-autofit table-list">
+			<tr>
+				<td class="text-muted" id="changeListsHeader">
+					<div class="autofit-row">
+						<div class="autofit-col autofit-col-expand">
+							<span>
+								<h5>
+									<liferay-ui:message key="resolve-any-conflicts" />
+								</h5>
+							</span>
+						</div>
+
+						<div class="autofit-col">
+							<span>
+								<h5><liferay-ui:message arguments="<%= new Object[] {1, schedule ? 2 : 1} %>" key="step-x-of-x" translateArguments="<%= false %>" /></h5>
+							</span>
+						</div>
+					</div>
+				</td>
+			</tr>
 			<tr>
 				<td>
 					<h2><liferay-ui:message key="conflicting-changes" /></h2>
@@ -289,15 +310,38 @@ portletDisplay.setURLBack(backURL);
 			}
 			%>
 
-			<liferay-portlet:actionURL name="/change_lists/publish_ct_collection" var="publishURL">
-				<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-				<portlet:param name="name" value="<%= ctCollection.getName() %>" />
-			</liferay-portlet:actionURL>
+			<tr><td id="changeListsFooter">
+				<div class="autofit-row">
+					<div class="autofit-col autofit-col-expand">
+						<span>
+							<aui:button href="<%= backURL %>" type="cancel" />
+						</span>
+					</div>
 
-			<tr><td>
-				<aui:button disabled="<%= unresolved %>" href="<%= publishURL %>" primary="true" value="publish" />
+					<div class="autofit-col">
+						<span>
+							<c:choose>
+								<c:when test="<%= schedule %>">
+									<liferay-portlet:renderURL var="scheduleURL">
+										<portlet:param name="mvcRenderCommandName" value="/change_lists/schedule_publication" />
+										<portlet:param name="redirect" value="<%= backURL %>" />
+										<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
+									</liferay-portlet:renderURL>
 
-				<aui:button href="<%= backURL %>" type="cancel" />
+									<aui:button disabled="<%= unresolved %>" href="<%= scheduleURL %>" primary="true" value="next" />
+								</c:when>
+								<c:otherwise>
+									<liferay-portlet:actionURL name="/change_lists/publish_ct_collection" var="publishURL">
+										<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
+										<portlet:param name="name" value="<%= ctCollection.getName() %>" />
+									</liferay-portlet:actionURL>
+
+									<aui:button disabled="<%= unresolved %>" href="<%= publishURL %>" primary="true" value="publish" />
+								</c:otherwise>
+							</c:choose>
+						</span>
+					</div>
+				</div>
 			</td></tr>
 		</table>
 	</div>

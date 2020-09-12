@@ -27,6 +27,7 @@ import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext;
+import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -111,8 +112,8 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 				activeCtCollectionId, _basePersistenceRegistry,
 				_ctClosureFactory, ctCollection, _ctConfiguration,
 				_ctDisplayRendererRegistry, _ctEntryLocalService,
-				_groupLocalService, _language, _portal, renderRequest,
-				renderResponse, _userLocalService);
+				_groupLocalService, _language, _portal, _publishScheduler,
+				renderRequest, renderResponse, _userLocalService);
 
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT, viewChangesDisplayContext);
@@ -164,6 +165,9 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PublishScheduler _publishScheduler;
 
 	@Reference
 	private UserLocalService _userLocalService;

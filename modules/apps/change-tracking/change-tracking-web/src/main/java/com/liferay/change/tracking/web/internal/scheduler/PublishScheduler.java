@@ -15,11 +15,14 @@
 package com.liferay.change.tracking.web.internal.scheduler;
 
 import com.liferay.change.tracking.constants.CTActionKeys;
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTDestinationNames;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -152,7 +155,12 @@ public class PublishScheduler {
 
 		ctCollection.setStatus(WorkflowConstants.STATUS_SCHEDULED);
 
-		_ctCollectionLocalService.updateCTCollection(ctCollection);
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
+			_ctCollectionLocalService.updateCTCollection(ctCollection);
+		}
 
 		_ctPreferencesLocalService.resetCTPreferences(ctCollectionId);
 

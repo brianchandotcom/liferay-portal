@@ -1885,6 +1885,7 @@ definition {
 			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
+			key_assetTitle = "${webContentTitle}",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "${webContentTitle}");
 

@@ -28,13 +28,12 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Search");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
-
-			SearchPortlets.addWidgets(searchPortletList = "Search Results");
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
-
-			Portlet.addPG(portletName = "Type Facet");
+			for (var widgetName : list "Search Results,Type Facet") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Search",
+					widgetName = "${widgetName}");
+			}
 		}
 
 		task ("Import test fragments from dependencies folder") {

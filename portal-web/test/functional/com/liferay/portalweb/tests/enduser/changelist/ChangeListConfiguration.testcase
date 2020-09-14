@@ -19,10 +19,10 @@ definition {
 		}
 	}
 
-	@description = "Change list cannot be enabled when staging is turned on"
-	@ignore = "true"
 	@priority = "5"
-	test CannotEnableChangeListWhenStagingIsTurnedOn {
+	test CannotEnablePublicationsWhenStagingIsTurnedOn {
+		property test.name.skip.portal.instance = "ChangeListConfiguration#CannotEnablePublicationsWhenStagingIsTurnedOn";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
@@ -37,7 +37,11 @@ definition {
 			panel = "Applications",
 			portlet = "Settings");
 
-		Alert.viewWarningSpecific(warningMessage = "Staging is enabled for at least one site in the current virtual instance. Staging and change lists cannot be used together.");
+		Check.checkToggleSwitch(locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH");
+
+		Click(locator1 = "Button#SUBMIT");
+
+		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site in the current virtual instance. Publications and staging cannot be used together.");
 	}
 
 	@description = "Enable Change List and go to Overview"

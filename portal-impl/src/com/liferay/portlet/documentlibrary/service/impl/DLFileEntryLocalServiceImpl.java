@@ -639,8 +639,6 @@ public class DLFileEntryLocalServiceImpl
 
 		// WebDAVProps
 
-		// Temporary fix until sharing is CT enabled. See LPS-119611.
-
 		String fileName = dlFileEntry.getFileName();
 
 		if (!fileName.contains(TempFileEntryUtil.TEMP_RANDOM_SUFFIX)) {

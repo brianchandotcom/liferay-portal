@@ -15,7 +15,6 @@
 package com.liferay.sharing.document.library.internal.model.listener;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -32,11 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DLFileEntryModelListener extends BaseModelListener<DLFileEntry> {
 
 	@Override
-	public void onBeforeRemove(DLFileEntry dlFileEntry)
-		throws ModelListenerException {
-
-		// Temporary fix until sharing is CT enabled. See LPS-119611.
-
+	public void onBeforeRemove(DLFileEntry dlFileEntry) {
 		String fileName = dlFileEntry.getFileName();
 
 		if (!fileName.contains(TempFileEntryUtil.TEMP_RANDOM_SUFFIX)) {

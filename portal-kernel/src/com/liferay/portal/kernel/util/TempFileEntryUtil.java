@@ -16,8 +16,10 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
@@ -213,7 +215,9 @@ public class TempFileEntryUtil {
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
-		try {
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(0)) {
+
 			DLAppHelperThreadLocal.setEnabled(false);
 
 			repository = RepositoryLocalServiceUtil.addRepository(

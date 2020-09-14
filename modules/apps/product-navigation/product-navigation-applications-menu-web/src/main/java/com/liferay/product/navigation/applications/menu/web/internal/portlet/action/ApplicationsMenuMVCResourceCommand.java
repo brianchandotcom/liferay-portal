@@ -21,7 +21,6 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
+import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.site.util.RecentGroupManager;
 
@@ -314,20 +314,16 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 	private String _getViewAllURL(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-		GroupItemSelectorCriterion groupItemSelectorCriterion =
-			new GroupItemSelectorCriterion();
+		SiteItemSelectorCriterion siteItemSelectorCriterion =
+			new SiteItemSelectorCriterion();
 
-		groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new URLItemSelectorReturnType());
-
-		groupItemSelectorCriterion.setIncludeAllVisibleGroups(true);
-		groupItemSelectorCriterion.setIncludeMySites(true);
-		groupItemSelectorCriterion.setIncludeRecentSites(true);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(resourceRequest),
 			resourceResponse.getNamespace() + "selectSite",
-			groupItemSelectorCriterion);
+			siteItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
 	}

@@ -15,9 +15,9 @@
 package com.liferay.dispatch.internal.messaging;
 
 import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.executor.ScheduledTaskExecutor;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.service.ScheduledTaskExecutorService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONException;
@@ -64,11 +64,11 @@ public class DispatchMessageListener implements MessageListener {
 				_dispatchTriggerLocalService.getDispatchTrigger(
 					dispatchTriggerId);
 
-			ScheduledTaskExecutorService scheduledTaskExecutorService =
+			ScheduledTaskExecutor scheduledTaskExecutor =
 				_scheduledTaskExecutorServiceTrackerMap.getService(
 					dispatchTrigger.getType());
 
-			scheduledTaskExecutorService.runProcess(dispatchTriggerId);
+			scheduledTaskExecutor.execute(dispatchTriggerId);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -81,8 +81,8 @@ public class DispatchMessageListener implements MessageListener {
 	protected void activate(BundleContext bundleContext) {
 		_scheduledTaskExecutorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ScheduledTaskExecutorService.class,
-				"scheduled.task.executor.service.type");
+				bundleContext, ScheduledTaskExecutor.class,
+				"scheduled.task.executor.type");
 	}
 
 	@Deactivate
@@ -96,7 +96,7 @@ public class DispatchMessageListener implements MessageListener {
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
-	private ServiceTrackerMap<String, ScheduledTaskExecutorService>
+	private ServiceTrackerMap<String, ScheduledTaskExecutor>
 		_scheduledTaskExecutorServiceTrackerMap;
 
 }

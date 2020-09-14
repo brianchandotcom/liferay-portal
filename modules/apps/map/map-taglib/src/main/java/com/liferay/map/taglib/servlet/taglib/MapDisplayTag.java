@@ -17,7 +17,9 @@ package com.liferay.map.taglib.servlet.taglib;
 import com.liferay.map.MapProvider;
 import com.liferay.map.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.map.util.MapProviderHelperUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -114,7 +116,9 @@ public class MapDisplayTag extends IncludeTag {
 			"liferay-map:map:longitude", _longitude);
 		httpServletRequest.setAttribute(
 			"liferay-map:map:mapProvider", _getMapProvider());
-		httpServletRequest.setAttribute("liferay-map:map:name", _name);
+		httpServletRequest.setAttribute(
+			"liferay-map:map:name",
+			StringUtil.randomId() + StringPool.UNDERLINE + _name);
 		httpServletRequest.setAttribute("liferay-map:map:points", _points);
 	}
 

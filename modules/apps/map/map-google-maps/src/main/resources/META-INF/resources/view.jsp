@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String namespace = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse);
-
 String protocol = HttpUtil.getProtocol(request);
 
 String bootstrapRequire = (String)request.getAttribute("liferay-map:map:bootstrapRequire");
@@ -27,8 +25,6 @@ double latitude = (Double)request.getAttribute("liferay-map:map:latitude");
 double longitude = (Double)request.getAttribute("liferay-map:map:longitude");
 String name = (String)request.getAttribute("liferay-map:map:name");
 String points = (String)request.getAttribute("liferay-map:map:points");
-
-name = namespace + name;
 %>
 
 <liferay-util:html-top

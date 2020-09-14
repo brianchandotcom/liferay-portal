@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>METRICS_SLA_DURATION_MESSAGE</td>
-	<td>//div[contains(@data-testid, 'durationDescription')]</td>
+	<td>//div[contains(text(), 'Define the SLA duration')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>SLA_FORM_DURATION_FIELD</td>
-	<td>//label[contains(@data-testid,'duration')]</td>
+	<td>//label[contains(text(),'DURATION')]</td>
 	<td></td>
 </tr>
 <tr>

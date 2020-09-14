@@ -18,7 +18,8 @@ function resize() {
 			const boundingClientRect = content.getBoundingClientRect();
 
 			const width = configuration.width || boundingClientRect.width;
-			const height = configuration.height || width * 0.5625;
+			const height =
+				configuration.height || width.toString().replace('px', '') * 0.5625;
 
 			content.style.height = isPixelUnit(height) ? height : height + 'px';
 			content.style.width = isPixelUnit(width) ? width : width + 'px';

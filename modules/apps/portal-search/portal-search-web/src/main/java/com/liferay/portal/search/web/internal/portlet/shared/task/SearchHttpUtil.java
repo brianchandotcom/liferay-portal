@@ -37,19 +37,10 @@ public class SearchHttpUtil {
 	public static String getCompleteOriginalURL(
 		HttpServletRequest httpServletRequest) {
 
-		boolean forwarded = false;
-
-		Object requestURLObject = httpServletRequest.getAttribute(
-			JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI);
-
-		if (requestURLObject != null) {
-			forwarded = true;
-		}
-
 		String requestURL = null;
 		String queryString = null;
 
-		if (forwarded) {
+		if (_portal.isForwarded(httpServletRequest)) {
 			requestURL = _portal.getAbsoluteURL(
 				httpServletRequest,
 				(String)httpServletRequest.getAttribute(

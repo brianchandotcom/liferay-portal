@@ -807,9 +807,14 @@ public class KaleoDesignerDisplayContext {
 				_kaleoDesignerRequestHelper.getPermissionChecker(),
 				_themeDisplay.getCompanyGroupId()));
 
+		KaleoDefinitionVersionActiveComparator
+			kaleoDefinitionVersionActiveComparator =
+				new KaleoDefinitionVersionActiveComparator();
+
 		Collections.sort(
 			kaleoDefinitionVersions,
-			new KaleoDefinitionVersionActiveComparator());
+			kaleoDefinitionVersionActiveComparator.thenComparing(
+				searchContainer.getOrderByComparator()));
 
 		searchContainer.setTotal(kaleoDefinitionVersions.size());
 

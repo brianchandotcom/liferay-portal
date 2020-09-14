@@ -96,8 +96,12 @@ definition {
 	}
 
 	macro viewPG {
-		if (IsElementPresent(locator1 = "Relatedassets#ASSET_TITLE_IMAGE_1")) {
-			AssertVisible(locator1 = "Relatedassets#ASSET_TITLE_IMAGE_1");
+		if (!(isSet(rowNumber))) {
+			var rowNumber = "1";
+		}
+
+		if (IsElementPresent(locator1 = "Relatedassets#ASSET_ENTRY_STICKER")) {
+			AssertVisible(locator1 = "Relatedassets#ASSET_ENTRY_STICKER");
 		}
 
 		AssertTextEquals(

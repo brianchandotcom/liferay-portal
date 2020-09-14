@@ -17,7 +17,7 @@ package com.liferay.saml.saas.internal.constants;
 /**
  * @author Marta Medio
  */
-public class JSONKeys {
+public class SamlSaasJSONKeys {
 
 	public static final String EXPANDO_VALUES = "expandoValues";
 

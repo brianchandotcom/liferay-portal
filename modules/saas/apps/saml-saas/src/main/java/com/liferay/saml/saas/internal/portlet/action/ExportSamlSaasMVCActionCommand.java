@@ -37,7 +37,7 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
 import com.liferay.saml.saas.internal.configuration.SamlSaasConfiguration;
-import com.liferay.saml.saas.internal.constants.JSONKeys;
+import com.liferay.saml.saas.internal.constants.SamlSaasJSONKeys;
 import com.liferay.saml.saas.internal.util.SymmetricEncryptor;
 
 import java.io.ByteArrayOutputStream;
@@ -126,8 +126,8 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 			if (json != null) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
-				if (JSONKeys.RESULT_ERROR.equals(
-						jsonObject.get(JSONKeys.RESULT))) {
+				if (SamlSaasJSONKeys.RESULT_ERROR.equals(
+						jsonObject.get(SamlSaasJSONKeys.RESULT))) {
 
 					SessionErrors.add(actionRequest, "exportError");
 				}
@@ -146,7 +146,8 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject;
 
 		try {
-			jsonObject = JSONUtil.put(JSONKeys.SAML_KEYSTORE, _getKeyStore());
+			jsonObject = JSONUtil.put(
+				SamlSaasJSONKeys.SAML_KEYSTORE, _getKeyStore());
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -157,10 +158,11 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		jsonObject.put(
-			JSONKeys.SAML_PROVIDER_CONFIGURATION,
+			SamlSaasJSONKeys.SAML_PROVIDER_CONFIGURATION,
 			_getSamlProviderConfiguration()
 		).put(
-			JSONKeys.SAML_SP_IDP_CONNECTIONS, _getSpIdpConnections(companyId)
+			SamlSaasJSONKeys.SAML_SP_IDP_CONNECTIONS,
+			_getSpIdpConnections(companyId)
 		);
 
 		try {
@@ -265,7 +267,7 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 
 			samlSpIdpConnectionsJsonArray.put(
 				JSONUtil.put(
-					JSONKeys.EXPANDO_VALUES,
+					SamlSaasJSONKeys.EXPANDO_VALUES,
 					_getSpIdpConnectionExpandoValues(samlSpIdpConnection)
 				).put(
 					"assertionSignatureRequired",

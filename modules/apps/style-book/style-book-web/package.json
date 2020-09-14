@@ -1,6 +1,19 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
+		"@clayui/button": "3.4.0",
+		"@clayui/color-picker": "3.3.3",
+		"@clayui/drop-down": "3.7.0",
+		"@clayui/form": "3.11.1",
+		"@clayui/icon": "3.0.5",
+		"@clayui/loading-indicator": "3.1.0",
+		"@clayui/popover": "3.4.7",
+		"classnames": "2.2.6",
+		"frontend-js-web": "*",
+		"metal-dom": "2.16.8",
+		"metal-position": "2.1.2",
+		"metal-state": "2.16.8",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"name": "style-book-web",
 	"scripts": {

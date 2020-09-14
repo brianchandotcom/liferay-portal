@@ -34,6 +34,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -72,6 +74,11 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		}
 
 		return super.generateLockKey(backgroundTask);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 	}
 
 	@Override
@@ -130,5 +137,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReindexSingleIndexerBackgroundTaskExecutor.class);
+
+	private BundleContext _bundleContext;
 
 }

@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SELECT_BUTTON</td>
-	<td>//div[contains(@role,'button') and contains(.,'Select')]</td>
+	<td>//div[contains(@class,'enabled') and contains(@role,'button') and contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

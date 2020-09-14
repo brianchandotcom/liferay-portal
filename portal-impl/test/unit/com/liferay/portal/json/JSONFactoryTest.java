@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -203,12 +203,12 @@ public class JSONFactoryTest {
 		Object object = JSONFactoryUtil.looseDeserialize(
 			"{\"class\":\"java.lang.Thread\"}");
 
-		Assert.assertEquals(HashMap.class, object.getClass());
+		Assert.assertEquals(LinkedHashMap.class, object.getClass());
 
 		object = JSONFactoryUtil.looseDeserialize(
 			"{\"\u0063lass\":\"java.lang.Thread\"}");
 
-		Assert.assertEquals(HashMap.class, object.getClass());
+		Assert.assertEquals(LinkedHashMap.class, object.getClass());
 
 		Map<?, ?> map = (Map<?, ?>)object;
 

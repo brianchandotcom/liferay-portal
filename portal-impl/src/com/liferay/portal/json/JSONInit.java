@@ -41,10 +41,11 @@ import java.io.OutputStream;
 import javax.portlet.PortletURL;
 
 import jodd.introspector.CachingIntrospector;
-import jodd.introspector.JoddIntrospector;
+import jodd.introspector.ClassIntrospector;
 
-import jodd.json.JoddJson;
+import jodd.json.JsonSerializer;
 import jodd.json.TypeJsonSerializerMap;
+import jodd.json.meta.JsonAnnotationManager;
 
 /**
  * @author Igor Spasic
@@ -67,20 +68,25 @@ public class JSONInit {
 	}
 
 	private static void _registerDefaultTransformers() throws Exception {
-		JoddIntrospector.introspector = new CachingIntrospector(
+		ClassIntrospector classIntrospector = new CachingIntrospector(
 			true, true, true, new String[] {"_"});
 
-		JoddJson.jsonAnnotation = JSON.class;
+		ClassIntrospector.Implementation.set(classIntrospector);
 
-		JoddJson.excludedTypes = new Class<?>[] {
+		JsonAnnotationManager.get(
+		).setJsonAnnotation(
+			JSON.class
+		);
+
+		JsonSerializer.Defaults.excludedTypes = new Class<?>[] {
 			ExpandoBridge.class, InputStream.class, LiferayPortletRequest.class,
 			LiferayPortletResponse.class, OutputStream.class,
 			PortletDisplayModel.class, PortletURL.class
 		};
 
-		JoddJson.excludedTypeNames = new String[] {"javax.*"};
+		JsonSerializer.Defaults.excludedTypeNames = new String[] {"javax.*"};
 
-		TypeJsonSerializerMap typeSerializerMap = JoddJson.defaultSerializers;
+		TypeJsonSerializerMap typeSerializerMap = TypeJsonSerializerMap.get();
 
 		Class<?>[][] classesArray = new Class<?>[][] {
 			new Class<?>[] {Company.class, CompanyJSONTransformer.class},

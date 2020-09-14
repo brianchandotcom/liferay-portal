@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.registry.Registry;
@@ -58,8 +59,7 @@ import jodd.bean.BeanUtil;
 import jodd.typeconverter.TypeConversionException;
 import jodd.typeconverter.TypeConverterManager;
 
-import jodd.util.NameValue;
-import jodd.util.ReflectUtil;
+import jodd.util.ClassUtil;
 
 /**
  * @author Igor Spasic
@@ -121,7 +121,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return;
 		}
 
-		if (!ReflectUtil.isTypeOf(parameterType, targetClass)) {
+		if (!ClassUtil.isTypeOf(parameterType, targetClass)) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"Unmatched argument type ", parameterTypeName,
@@ -194,8 +194,15 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		Object outputObject = null;
 
 		try {
-			outputObject = TypeConverterManager.convertType(
-				inputObject, targetType);
+			if (targetType == Locale.class) {
+				inputObject = LocaleUtil.toBCP47LanguageId(
+					inputObject.toString());
+			}
+
+			outputObject = TypeConverterManager.get(
+			).convertType(
+				inputObject, targetType
+			);
 		}
 		catch (TypeConversionException typeConversionException) {
 			if (inputObject instanceof Map) {
@@ -467,17 +474,17 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return;
 		}
 
-		List<NameValue<String, Object>> innerParameters =
+		List<ObjectValuePair<String, Object>> innerParameters =
 			_jsonWebServiceActionParameters.getInnerParameters(parameterName);
 
 		if (innerParameters == null) {
 			return;
 		}
 
-		for (NameValue<String, Object> innerParameter : innerParameters) {
+		for (ObjectValuePair<String, Object> innerParameter : innerParameters) {
 			try {
-				BeanUtil.setProperty(
-					parameterValue, innerParameter.getName(),
+				BeanUtil.pojo.setProperty(
+					parameterValue, innerParameter.getKey(),
 					innerParameter.getValue());
 			}
 			catch (Exception exception) {
@@ -485,7 +492,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					_log.debug(
 						StringBundler.concat(
 							"Unable to set inner parameter ", parameterName,
-							".", innerParameter.getName()),
+							".", innerParameter.getKey()),
 						exception);
 				}
 			}

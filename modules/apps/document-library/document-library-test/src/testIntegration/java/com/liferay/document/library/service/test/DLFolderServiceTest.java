@@ -51,7 +51,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.ArrayList;
 import java.util.List;
 
-import jodd.util.MimeTypes;
+import jodd.net.MimeTypes;
 
 import org.junit.Assert;
 import org.junit.Before;

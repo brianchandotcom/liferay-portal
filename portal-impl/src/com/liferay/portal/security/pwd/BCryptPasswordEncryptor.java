@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jodd.util.BCrypt;
+import jodd.crypt.BCrypt;
 
 /**
  * @author Michael C. Han

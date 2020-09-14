@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -49,8 +50,6 @@ import jodd.json.JsonSerializer;
 
 import jodd.servlet.ServletUtil;
 
-import jodd.util.NameValue;
-
 /**
  * @author Igor Spasic
  * @author Eduardo Lundgren
@@ -64,7 +63,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		if (command == null) {
 			try {
-				command = ServletUtil.readRequestBody(httpServletRequest);
+				command = ServletUtil.readRequestBodyFromReader(
+					httpServletRequest);
 			}
 			catch (IOException ioException) {
 				throw new IllegalArgumentException(ioException);
@@ -527,7 +527,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 				Flag flag = new Flag();
 
-				flag.setName(key.substring(1));
+				flag.setKey(key.substring(1));
 				flag.setValue(value);
 
 				flags.add(flag);
@@ -632,20 +632,20 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 					Map<String, Object> parameterMap =
 						statement.getParameterMap();
 
-					Object propertyValue = BeanUtil.getDeclaredProperty(
+					Object propertyValue = BeanUtil.declared.getProperty(
 						object, value.substring(name.length()));
 
-					parameterMap.put(flag.getName(), propertyValue);
+					parameterMap.put(flag.getKey(), propertyValue);
 				}
 				else if (statement.isPushed() && value.startsWith(pushedName)) {
 					Map<String, Object> parameterMap =
 						statement.getParameterMap();
 
-					Object propertyValue = BeanUtil.getDeclaredProperty(
+					Object propertyValue = BeanUtil.declared.getProperty(
 						statement._pushTarget,
 						value.substring(pushedName.length()));
 
-					parameterMap.put(flag.getName(), propertyValue);
+					parameterMap.put(flag.getKey(), propertyValue);
 				}
 			}
 		}
@@ -658,7 +658,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	private List<String> _includes;
 	private final List<Statement> _statements = new ArrayList<>();
 
-	private static class Flag extends NameValue<String, String> {
+	private static class Flag extends ObjectValuePair<String, String> {
 	}
 
 	private static class Statement {
@@ -726,7 +726,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 			setName(beanName + StringPool.PERIOD + getName());
 
-			BeanUtil.setDeclaredProperty(_pushTarget, beanName, result);
+			BeanUtil.declared.setProperty(_pushTarget, beanName, result);
 
 			result = _pushTarget;
 
@@ -750,7 +750,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 			String beanName = variableName.substring(0, index);
 
-			result = BeanUtil.getDeclaredProperty(result, beanName);
+			result = BeanUtil.declared.getProperty(result, beanName);
 
 			statement.setName(
 				statement.getName() + StringPool.PERIOD + beanName);

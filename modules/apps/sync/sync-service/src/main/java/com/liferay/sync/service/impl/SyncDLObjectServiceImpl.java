@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -109,8 +110,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import jodd.bean.BeanUtil;
-
-import jodd.util.NameValue;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -1605,15 +1604,17 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 		serviceContext.setRequest(serviceContextThreadLocal.getRequest());
 
-		List<NameValue<String, Object>> innerParameters =
+		List<ObjectValuePair<String, Object>> innerParameters =
 			jsonWebServiceActionParametersMap.getInnerParameters(
 				"serviceContext");
 
 		if (innerParameters != null) {
-			for (NameValue<String, Object> innerParameter : innerParameters) {
+			for (ObjectValuePair<String, Object> innerParameter :
+					innerParameters) {
+
 				try {
-					BeanUtil.setProperty(
-						serviceContext, innerParameter.getName(),
+					BeanUtil.pojo.setProperty(
+						serviceContext, innerParameter.getKey(),
 						innerParameter.getValue());
 				}
 				catch (Exception exception) {

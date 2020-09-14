@@ -84,7 +84,10 @@ public class WorkflowTaskPermissionChecker {
 					).build());
 
 		if (hasAssetViewPermission(workflowTask, permissionChecker) &&
-			((userNotificationEventsCount > 0) || workflowTask.isCompleted())) {
+			((userNotificationEventsCount > 0) ||
+			 (workflowTask.isCompleted() &&
+			  (workflowTask.getAssigneeUserId() ==
+				  permissionChecker.getUserId())))) {
 
 			return true;
 		}

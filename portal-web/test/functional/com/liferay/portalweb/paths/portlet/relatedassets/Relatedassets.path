@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ASSET_EDIT</td>
+	<td>xpath=(//section[contains(@id,'RelatedAssetsPortlet')]//span[contains(@class,'visible-interaction')]//a)[${rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_TITLE_IMAGE_1</td>
 	<td>xpath=(//div[contains(.,'Related Assets')]//ul[contains(@class,'list-unstyled')]/li/a)[1]</td>
 	<td></td>

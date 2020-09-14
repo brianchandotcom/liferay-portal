@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//section[contains(@id,'RelatedAssetsPortlet')]//h4/a[contains(.,'${key_assetTitle}')]</td>
+	<td>//section[contains(@id,'RelatedAssetsPortlet')]//a[normalize-space(text())='${key_assetTitle}']</td>
 	<td></td>
 </tr>
 <tr>

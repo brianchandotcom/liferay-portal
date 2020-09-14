@@ -126,8 +126,10 @@ if (deliveryMaxSubscriptionCycles > 0) {
 					<aui:validator name="digits" />
 
 					<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 1) %>' name="custom">
-						function(val, fieldNode, ruleValue) {
-							if (window.document.querySelector('#<portlet:namespace />neverEnds')[0].checked) {
+						function(val) {
+							var subscriptionNeverEndsCheckbox = window.document.querySelector('#<portlet:namespace />neverEnds');
+
+							if (subscriptionNeverEndsCheckbox && subscriptionNeverEndsCheckbox.checked) {
 								return true;
 							}
 
@@ -186,8 +188,10 @@ if (deliveryMaxSubscriptionCycles > 0) {
 					<aui:validator name="digits" />
 
 					<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 1) %>' name="custom">
-						function(val, fieldNode, ruleValue) {
-							if (window.document.querySelector('#<portlet:namespace />deliveryNeverEnds')[0].checked) {
+						function(val) {
+							var deliveryNeverEndsCheckbox = window.document.querySelector('#<portlet:namespace />deliveryNeverEnds');
+
+							if (deliveryNeverEndsCheckbox && deliveryNeverEndsCheckbox.checked) {
 								return true;
 							}
 

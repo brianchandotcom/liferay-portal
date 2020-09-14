@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ROW_ENTRY_TITLE</td>
+	<td>xPath=(//*[contains(@class,'list-group-title')]//a)[${rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_TITLE_IMAGE_1</td>
 	<td>xpath=(//div[contains(.,'Related Assets')]//ul[contains(@class,'list-unstyled')]/li/a)[1]</td>
 	<td></td>

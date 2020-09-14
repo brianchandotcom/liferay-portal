@@ -41,8 +41,8 @@ Developers can submit Javadoc **with** code if certain precautions are followed
     Submit your Javadoc following your typical code review process.
 
 3.  Notify your team's tech writer (a KM team member) that Javadoc is waiting
-    for review. If you're not sure whom to notify, contact Cody Hoag
-    (cody.hoag@liferay.com).
+    for review. If you're not sure whom to notify, contact Alec Shay
+    (Alec.Shay@liferay.com).
 
 The tech writer will track the Javadoc and review it as soon as possible.
 
@@ -57,8 +57,8 @@ published:
 
 2.  Send a pull request containing the new Javadoc to your team's tech writer 
     (a KM team member). If you're unsure who should receive the pull request, 
-    send it to Cody Hoag (Github handle:
-    [`codyhoag`](https://github.com/codyhoag)).
+    send it to Alec Shay (Github handle:
+    [`Alec-Shay`](https://github.com/Alec-Shay)).
 
 The tech writer will review the Javadoc as soon as possible.
 
@@ -74,7 +74,7 @@ below to contribute:
     writing Javadoc to ensure comprehensive descriptions and consistent style.
 
 2.  Send a pull request containing the new Javadoc to
-    [`codyhoag`](https://github.com/codyhoag).
+    [`Alec-Shay`](https://github.com/Alec-Shay).
 
 The pull request will be reviewed by a subject matter expert for accuracy and
 published.
@@ -107,7 +107,7 @@ to complete to ensure Javadoc is properly formatted and ready for submission:
 
 When finished reviewing, send your edits in a pull request to the repository
 gate keeper. If you're editing Javadoc for `liferay-portal`, send your edits to
-[`codyhoag`](https://github.com/codyhoag).
+[`Alec-Shay`](https://github.com/Alec-Shay).
 
 **Note:** Sending reference documentation updates in a project managed in a
 Github subrepo should be sent to the subrepo, not `liferay-portal`. For example,

@@ -120,7 +120,8 @@ public class LayoutModelDocumentContributor
 			}
 			catch (ActionException actionException) {
 				throw new RuntimeException(
-					"Unable to initialize synthetic request and response",
+					"Unable to initialize synthetic HTTP servlet request " +
+						"and HTTP servlet response",
 					actionException);
 			}
 

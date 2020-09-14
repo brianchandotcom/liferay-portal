@@ -102,14 +102,15 @@ public class LayoutModelDocumentContributor
 		try {
 			HttpServletRequest httpServletRequest =
 				new SyntheticHttpServletRequest();
-			HttpServletResponse httpServletResponse =
-				new SyntheticHttpServletResponse();
 
 			httpServletRequest.setAttribute(
 				WebKeys.USER_ID, layout.getUserId());
 
 			httpServletRequest = DynamicServletRequest.addQueryString(
 				httpServletRequest, "p_l_id=" + layout.getPlid(), false);
+
+			HttpServletResponse httpServletResponse =
+				new SyntheticHttpServletResponse();
 
 			try {
 				EventsProcessorUtil.process(

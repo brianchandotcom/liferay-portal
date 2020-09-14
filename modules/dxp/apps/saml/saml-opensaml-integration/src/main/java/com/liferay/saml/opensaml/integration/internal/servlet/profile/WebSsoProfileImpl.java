@@ -198,11 +198,85 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
+		MessageContext<?> messageContext = null;
+
 		try {
-			doProcessResponse(httpServletRequest, httpServletResponse);
+			messageContext = decodeSamlMessage(
+				httpServletRequest, httpServletResponse,
+				getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI), true);
+
+			doProcessResponse(
+				messageContext, httpServletRequest, httpServletResponse);
 		}
-		catch (Exception exception) {
-			ExceptionHandlerUtil.handleException(exception);
+		catch (Exception exception1) {
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(httpServletRequest);
+
+			HttpSession httpSession = originalHttpServletRequest.getSession();
+
+			if (messageContext != null) {
+				SAMLSubjectNameIdentifierContext
+					samlSubjectNameIdentifierContext =
+						messageContext.getSubcontext(
+							SAMLSubjectNameIdentifierContext.class);
+
+				if (samlSubjectNameIdentifierContext != null) {
+					NameID nameID =
+						samlSubjectNameIdentifierContext.
+							getSAML2SubjectNameID();
+
+					if (nameID != null) {
+						httpSession.setAttribute(
+							SamlWebKeys.SAML_SUBJECT_NAME_ID,
+							nameID.getValue());
+					}
+				}
+			}
+
+			String error = StringPool.BLANK;
+
+			if (exception1 instanceof ContactNameException) {
+				error = ContactNameException.class.getSimpleName();
+			}
+			else if (exception1 instanceof SubjectException) {
+				error = SubjectException.class.getSimpleName();
+			}
+			else if (exception1 instanceof MustNotUseCompanyMx) {
+				error = MustNotUseCompanyMx.class.getSimpleName();
+			}
+			else if (exception1 instanceof UserEmailAddressException) {
+				error = UserEmailAddressException.class.getSimpleName();
+			}
+			else if (exception1 instanceof UserScreenNameException) {
+				error = UserScreenNameException.class.getSimpleName();
+			}
+			else {
+				Class<?> clazz = exception1.getClass();
+
+				httpSession.setAttribute(
+					SamlWebKeys.SAML_SSO_ERROR, clazz.getSimpleName());
+
+				ExceptionHandlerUtil.handleException(exception1);
+			}
+
+			httpSession.setAttribute(SamlWebKeys.SAML_SSO_ERROR, error);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception1, exception1);
+			}
+			else {
+				if (!(exception1 instanceof SubjectException)) {
+					_log.error(exception1.getMessage());
+				}
+			}
+
+			try {
+				httpServletResponse.sendRedirect(
+					getAuthRedirectURL(messageContext, httpServletRequest));
+			}
+			catch (Exception exception2) {
+				ExceptionHandlerUtil.handleException(exception2);
+			}
 		}
 	}
 
@@ -615,13 +689,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void doProcessResponse(
+			MessageContext<?> messageContext,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
-
-		MessageContext<?> messageContext = decodeSamlMessage(
-			httpServletRequest, httpServletResponse,
-			getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI), true);
 
 		InOutOperationContext<Response, ?> inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class);
@@ -756,65 +827,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
-		try {
-			User user = _userResolver.resolveUser(
-				new UserResolverSAMLContextImpl(
-					(MessageContext<Response>)messageContext),
-				serviceContext);
+		User user = _userResolver.resolveUser(
+			new UserResolverSAMLContextImpl(
+				(MessageContext<Response>)messageContext),
+			serviceContext);
 
-			serviceContext.setUserId(user.getUserId());
-		}
-		catch (PortalException portalException) {
-			HttpServletRequest originalHttpServletRequest =
-				_portal.getOriginalServletRequest(httpServletRequest);
-
-			HttpSession httpSession = originalHttpServletRequest.getSession();
-
-			httpSession.setAttribute(
-				SamlWebKeys.SAML_SUBJECT_NAME_ID, nameID.getValue());
-
-			String error = StringPool.BLANK;
-
-			if (portalException instanceof ContactNameException) {
-				error = ContactNameException.class.getSimpleName();
-			}
-			else if (portalException instanceof SubjectException) {
-				error = SubjectException.class.getSimpleName();
-			}
-			else if (portalException instanceof MustNotUseCompanyMx) {
-				error = MustNotUseCompanyMx.class.getSimpleName();
-			}
-			else if (portalException instanceof UserEmailAddressException) {
-				error = UserEmailAddressException.class.getSimpleName();
-			}
-			else if (portalException instanceof UserScreenNameException) {
-				error = UserScreenNameException.class.getSimpleName();
-			}
-			else {
-				Class<?> clazz = portalException.getClass();
-
-				httpSession.setAttribute(
-					SamlWebKeys.SAML_SSO_ERROR, clazz.getSimpleName());
-
-				throw portalException;
-			}
-
-			httpSession.setAttribute(SamlWebKeys.SAML_SSO_ERROR, error);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-			else {
-				if (!(portalException instanceof SubjectException)) {
-					_log.error(portalException.getMessage());
-				}
-			}
-
-			httpServletResponse.sendRedirect(
-				getAuthRedirectURL(messageContext, httpServletRequest));
-
-			return;
-		}
+		serviceContext.setUserId(user.getUserId());
 
 		SamlSpSession samlSpSession = getSamlSpSession(httpServletRequest);
 		HttpSession httpSession = httpServletRequest.getSession();

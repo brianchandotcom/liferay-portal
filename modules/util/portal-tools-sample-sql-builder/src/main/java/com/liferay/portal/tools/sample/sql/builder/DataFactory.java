@@ -160,6 +160,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.model.AccountModel;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -256,6 +257,9 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
+import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.impl.SegmentsEntryImpl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityModel;
@@ -3791,6 +3795,51 @@ public class DataFactory {
 		return newUserModel(
 			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
 			_SAMPLE_USER_NAME, false);
+	}
+
+	public List<SegmentsEntry> newSegmentsEntries(long groupId) {
+		List<SegmentsEntry> segmentsEntries = new ArrayList<>(
+			BenchmarksPropsValues.MAX_SEGMENTS_ENTRY_COUNT);
+
+		for (int i = 0; i < BenchmarksPropsValues.MAX_SEGMENTS_ENTRY_COUNT;
+			 i++) {
+
+			segmentsEntries.add(newSegmentsEntry(groupId, i));
+		}
+
+		return segmentsEntries;
+	}
+
+	public SegmentsEntry newSegmentsEntry(long groupId, int index) {
+		SegmentsEntry segmentsEntry = new SegmentsEntryImpl();
+
+		segmentsEntry.setActive(true);
+		segmentsEntry.setCriteria(
+			JSONUtil.put(
+				"criteria",
+				JSONUtil.put(
+					"user",
+					JSONUtil.put(
+						"conjunction", "and"
+					).put(
+						"filterString",
+						"(firstName eq ''" + _SAMPLE_USER_NAME + "'')"
+					))
+			).toString());
+		segmentsEntry.setSegmentsEntryId(_counter.get());
+		segmentsEntry.setGroupId(groupId);
+		segmentsEntry.setCompanyId(_companyId);
+		segmentsEntry.setCreateDate(new Date());
+		segmentsEntry.setModifiedDate(new Date());
+		segmentsEntry.setSegmentsEntryKey(_counter.getString());
+		segmentsEntry.setName("SegmentName-" + index);
+		segmentsEntry.setSource(SegmentsEntryConstants.SOURCE_DEFAULT);
+		segmentsEntry.setType(User.class.getName());
+		segmentsEntry.setUuid(SequentialUUID.generate());
+		segmentsEntry.setUserId(_sampleUserId);
+		segmentsEntry.setUserName(_SAMPLE_USER_NAME);
+
+		return segmentsEntry;
 	}
 
 	public SocialActivityModel newSocialActivityModel(

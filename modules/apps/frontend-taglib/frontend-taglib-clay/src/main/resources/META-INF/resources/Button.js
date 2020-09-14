@@ -26,15 +26,13 @@ export default function Button({
 	portletNamespace: _portletNamespace,
 	...otherProps
 }) {
-	return icon ? (
+	return (
 		<ClayButton className={cssClass} {...otherProps}>
-			<span className="inline-item inline-item-before">
-				<ClayIcon symbol={icon} />
-			</span>
-			{label}
-		</ClayButton>
-	) : (
-		<ClayButton className={cssClass} {...otherProps}>
+			{icon && (
+				<span className="inline-item inline-item-before">
+					<ClayIcon symbol={icon} />
+				</span>
+			)}
 			{label}
 		</ClayButton>
 	);

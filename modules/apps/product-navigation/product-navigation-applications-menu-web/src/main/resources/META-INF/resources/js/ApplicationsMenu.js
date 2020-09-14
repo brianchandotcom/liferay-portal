@@ -161,9 +161,7 @@ const Sites = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 									navigate(selectedItem.url);
 								},
 								selectEventName: `${portletNamespace}selectSite`,
-								title: Liferay.Language.get(
-									'select-site-or-asset-library'
-								),
+								title: Liferay.Language.get('select-site'),
 								url: viewAllURL,
 							});
 						}}

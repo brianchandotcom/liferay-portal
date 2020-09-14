@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React from 'react';
 
 export default function Button({
@@ -29,7 +30,11 @@ export default function Button({
 	return (
 		<ClayButton className={cssClass} {...otherProps}>
 			{icon && (
-				<span className="inline-item inline-item-before">
+				<span
+					className={classNames('inline-item', {
+						'inline-item-before': label,
+					})}
+				>
 					<ClayIcon symbol={icon} />
 				</span>
 			)}

@@ -95,7 +95,10 @@ public class PublishScheduler {
 			long ctCollectionId, long userId, Date startDate)
 		throws PortalException {
 
-		try {
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> _schedulePublish(ctCollectionId, userId, startDate));
@@ -155,12 +158,7 @@ public class PublishScheduler {
 
 		ctCollection.setStatus(WorkflowConstants.STATUS_SCHEDULED);
 
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
-
-			_ctCollectionLocalService.updateCTCollection(ctCollection);
-		}
+		_ctCollectionLocalService.updateCTCollection(ctCollection);
 
 		_ctPreferencesLocalService.resetCTPreferences(ctCollectionId);
 

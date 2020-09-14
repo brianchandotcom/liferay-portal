@@ -76,6 +76,7 @@ describe('The SLAFormPage component should', () => {
 			durationHoursInput,
 			getAllByTestId,
 			getByTestId,
+			getByText,
 			nameField,
 			nameInput,
 			renderResult,
@@ -158,72 +159,60 @@ describe('The SLAFormPage component should', () => {
 			container = renderResult.container;
 			getAllByTestId = renderResult.getAllByTestId;
 			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Be rendered correctly', () => {
-			durationDaysField = getByTestId('daysField');
-			durationHoursField = getByTestId('hoursField');
+			durationDaysField = getByText('days').parentNode;
+			durationHoursField = getByText('hours').parentNode;
 			durationHoursInput = container.querySelector('#slaDurationHours');
-			nameField = getByTestId('nameField');
+			nameField = getByText('name').parentNode;
 			nameInput = container.querySelector('#slaName');
-			saveButton = getByTestId('saveButton');
-			startField = getByTestId('startField');
-			stopField = getByTestId('stopField');
+			saveButton = getByText('save');
+			startField = getByText('start').parentNode;
+			stopField = getByText('stop').parentNode;
 
-			const bodySheetTitle = getByTestId('sheetTitle');
+			const bodySheetTitle = getByText('sla-definition');
 			const calendar = container.querySelector('#slaCalendarKey');
-			const cancelButton = getByTestId('cancelButton');
-			const descriptionField = getByTestId('descriptionField');
+			const cancelButton = getByText('cancel');
+			const descriptionField = getByText('description').parentNode;
 			const descriptionInput = container.querySelector('#slaDescription');
-			const daysFieldDescription = getByTestId('daysFieldDescription');
+			const daysFieldDescription = getByText('enter-a-whole-number');
 			const durationDaysInput = container.querySelector(
 				'#slaDurationDays'
 			);
-			const durationDescription = getByTestId('durationDescription');
-			const durationLabel = getByTestId('duration');
-			const pauseDescription = getByTestId('pauseDescription');
-			const pauseField = getByTestId('pauseField');
-			const startDescription = getByTestId('startDescription');
-			const stopDescription = getByTestId('stopDescription');
-			const timeFrameDescription = getByTestId('timeFrameDescription');
-			const timeFrameLabel = getByTestId('timeFrame');
+			const durationDescription = getByText(
+				'define-the-sla-duration-and-calendar-format'
+			);
+			const durationLabel = getByText('DURATION');
+			const pauseDescription = getByText('time-wont-be-considered-when');
+			const pauseField = getByText('pause');
+			const startDescription = getByText('time-will-begin-counting-when');
+			const stopDescription = getByText('time-will-stop-counting-when');
+			const timeFrameDescription = getByText(
+				'define-when-time-should-be-tracked-based-on-workflow-steps'
+			);
+			const timeFrameLabel = getByText('TIME-FRAME');
 
-			expect(bodySheetTitle).toHaveTextContent('sla-definition');
-			expect(nameField).toHaveTextContent('name');
+			expect(bodySheetTitle).toBeTruthy();
 			expect(nameInput.value).toBe('');
 			expect(descriptionField).toHaveTextContent('description');
 			expect(descriptionInput.value).toBe('');
-			expect(timeFrameLabel).toHaveTextContent('TIME-FRAME');
-			expect(timeFrameDescription).toHaveTextContent(
-				'define-when-time-should-be-tracked-based-on-workflow-steps'
-			);
-			expect(startField).toHaveTextContent('start');
-			expect(startDescription).toHaveTextContent(
-				'time-will-begin-counting-when'
-			);
-			expect(pauseField).toHaveTextContent('pause');
-			expect(pauseDescription).toHaveTextContent(
-				'time-wont-be-considered-when'
-			);
-			expect(stopDescription).toHaveTextContent(
-				'time-will-stop-counting-when'
-			);
+			expect(timeFrameLabel).toBeTruthy();
+			expect(timeFrameDescription).toBeTruthy();
+			expect(startDescription).toBeTruthy();
+			expect(pauseField).toBeTruthy();
+			expect(pauseDescription).toBeTruthy();
+			expect(stopDescription).toBeTruthy();
 			expect(stopField).toHaveTextContent('stop');
-			expect(durationLabel).toHaveTextContent('DURATION');
-			expect(durationDaysField).toHaveTextContent('days');
+			expect(durationLabel).toBeTruthy();
 			expect(durationDaysInput.value).toBe('');
-			expect(durationDescription).toHaveTextContent(
-				'define-the-sla-duration'
-			);
-			expect(daysFieldDescription).toHaveTextContent(
-				'enter-a-whole-number'
-			);
-			expect(durationHoursField).toHaveTextContent('hours');
+			expect(durationDescription).toBeTruthy();
+			expect(daysFieldDescription).toBeTruthy();
 			expect(calendar.value).toBe('dummy');
 			expect(calendar.children[0]).toHaveTextContent('Dummy');
 			expect(calendar.children[1]).toHaveTextContent('24/7');
-			expect(saveButton).toHaveTextContent('save');
-			expect(cancelButton).toHaveTextContent('cancel');
+			expect(cancelButton).toBeTruthy();
 			expect(nameField.classList).not.toContain('has-error');
 			expect(startField.classList).not.toContain('has-error');
 			expect(stopField.classList).not.toContain('has-error');
@@ -234,7 +223,7 @@ describe('The SLAFormPage component should', () => {
 		test('Display errors when submitting the form with empty values', () => {
 			fireEvent.click(saveButton);
 
-			alertMessage = getByTestId('alertMessage');
+			alertMessage = getByText('please-fill-in-the-required-fields');
 
 			expect(nameField).toHaveTextContent('a-name-is-required');
 			expect(startField).toHaveTextContent(
@@ -249,9 +238,7 @@ describe('The SLAFormPage component should', () => {
 			expect(durationHoursField).toHaveTextContent(
 				'a-duration-time-is-required'
 			);
-			expect(alertMessage).toHaveTextContent(
-				'please-fill-in-the-required-fields'
-			);
+			expect(alertMessage).toBeTruthy();
 		});
 
 		test('Display a field error when the duration receives an invalid value', () => {
@@ -321,7 +308,7 @@ describe('The SLAFormPage component should', () => {
 	});
 
 	describe('Edit a SLA', () => {
-		let container, getAllByTestId, getByTestId, renderResult;
+		let container, getAllByTestId, getByText, renderResult;
 
 		const data = {
 			calendarKey: 'default',
@@ -386,25 +373,24 @@ describe('The SLAFormPage component should', () => {
 
 			container = renderResult.container;
 			getAllByTestId = renderResult.getAllByTestId;
-			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Render form in edit mode with correct data', () => {
 			const calendar = container.querySelector('#slaCalendarKey');
-			const durationDaysField = getByTestId('daysField');
-			const durationHoursField = getByTestId('hoursField');
+			const durationDaysField = getByText('days').parentNode;
+			const durationHoursField = getByText('hours').parentNode;
 			const durationHoursInput = container.querySelector(
 				'#slaDurationHours'
 			);
 			const multiSelectItems = getAllByTestId('multiSelectItem');
-			const nameField = getByTestId('nameField');
+			const nameField = getByText('name').parentNode;
 			const nameInput = container.querySelector('#slaName');
-			const startField = getByTestId('startField');
-			const stopField = getByTestId('stopField');
-			const saveButton = getByTestId('saveButton');
+			const startField = getByText('start').parentNode;
+			const stopField = getByText('stop').parentNode;
+			const updateButton = getByText('update');
 
 			expect(nameInput.value).toBe('SLA');
-			expect(saveButton).toHaveTextContent('update');
 			expect(multiSelectItems[0]).toHaveTextContent('process-begins');
 			expect(multiSelectItems[1]).toHaveTextContent('process-ends');
 			expect(durationHoursInput.value).toBe('00:01');
@@ -415,7 +401,7 @@ describe('The SLAFormPage component should', () => {
 			expect(durationDaysField.classList).not.toContain('has-error');
 			expect(durationHoursField.classList).not.toContain('has-error');
 
-			fireEvent.click(saveButton);
+			fireEvent.click(updateButton);
 		});
 
 		test('Redirect to SLAListPage after successful submit', async () => {
@@ -425,7 +411,7 @@ describe('The SLAFormPage component should', () => {
 	});
 
 	describe('Edit a Blocked SLA', () => {
-		let getByTestId, renderResult;
+		let getByTestId, getByText, renderResult;
 
 		const nodes = [
 			{
@@ -496,12 +482,13 @@ describe('The SLAFormPage component should', () => {
 			);
 
 			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Handle errors at start and stop node keys', () => {
 			const alertChange = getByTestId('alertChange');
-			const startField = getByTestId('startField');
-			const stopField = getByTestId('stopField');
+			const startField = getByText('start').parentNode;
+			const stopField = getByText('stop').parentNode;
 
 			expect(alertChange).toHaveTextContent(
 				'the-time-frame-options-changed-in-the-workflow-definition'

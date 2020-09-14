@@ -21,7 +21,7 @@ import {MockRouter} from '../../../mock/MockRouter.es';
 
 describe('The SLAListPage component should', () => {
 	describe('Be rendered correctly with no items', () => {
-		let getByTestId;
+		let getByTestId, getByTitle;
 
 		const clientMock = {
 			get: jest.fn().mockResolvedValue({data: {items: []}}),
@@ -43,14 +43,14 @@ describe('The SLAListPage component should', () => {
 			);
 
 			getByTestId = renderResult.getByTestId;
+			getByTitle = renderResult.getByTitle;
 		});
 
 		test('Show navbar with New SLA button with correct link', () => {
-			const childLink = getByTestId('newSLALink');
-			const newSLAButton = getByTestId('newSLA');
+			const newSLAButton = getByTitle('new-sla');
+			const childLink = newSLAButton.children[0];
 
 			expect(childLink.getAttribute('href')).toContain('/sla/36001/new');
-			expect(newSLAButton.title).toBe('new-sla');
 		});
 
 		test('Display empty state', () => {
@@ -63,7 +63,7 @@ describe('The SLAListPage component should', () => {
 	});
 
 	describe('Be rendered correctly with items', () => {
-		let getAllByTestId, getByTestId;
+		let container, getAllByTestId, getByTestId, getByText;
 
 		const data = {
 			actions: {},
@@ -104,37 +104,39 @@ describe('The SLAListPage component should', () => {
 				</MockRouter>
 			);
 
+			container = renderResult.container;
 			getAllByTestId = renderResult.getAllByTestId;
 			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Show table columns', () => {
-			const slaDateModifiedHead = getByTestId('slaDateModifiedHead');
-			const slaDescriptionHead = getByTestId('slaDescriptionHead');
-			const slaDurationHead = getByTestId('slaDurationHead');
-			const slaNameHead = getByTestId('slaNameHead');
-			const slaStatusHead = getByTestId('slaStatusHead');
+			const slaDateModifiedHead = getByText('last-modified');
+			const slaDescriptionHead = getByText('description');
+			const slaDurationHead = getByText('duration');
+			const slaNameHead = getByText('sla-name');
+			const slaStatusHead = getByText('status');
 
-			expect(slaDateModifiedHead).toHaveTextContent('last-modified');
-			expect(slaDescriptionHead).toHaveTextContent('description');
-			expect(slaDurationHead).toHaveTextContent('duration');
-			expect(slaNameHead).toHaveTextContent('sla-name');
-			expect(slaStatusHead).toHaveTextContent('status');
+			expect(slaDateModifiedHead).toBeTruthy();
+			expect(slaDescriptionHead).toBeTruthy();
+			expect(slaDurationHead).toBeTruthy();
+			expect(slaNameHead).toBeTruthy();
+			expect(slaStatusHead).toBeTruthy();
 		});
 
 		test('Show items info and kebab menu', () => {
 			const kebab = getByTestId('kebab');
-			const slaDateModified = getByTestId('slaDateModified');
-			const slaDescription = getByTestId('slaDescription');
-			const slaDuration = getByTestId('slaDuration');
-			const slaName = getByTestId('slaName');
-			const slaStatus = getByTestId('slaStatus');
+			const slaDateModified = getByText('Apr 03');
+			const slaDescription = slaDateModified.parentNode.children[1];
+			const slaDuration = getByText('1min');
+			const slaName = container.querySelector('.table-list-title');
+			const slaStatus = getByText('running');
 
 			expect(slaName).toHaveTextContent('SLA');
 			expect(slaDescription).toHaveTextContent('');
-			expect(slaStatus).toHaveTextContent('running');
-			expect(slaDuration).toHaveTextContent('1min');
-			expect(slaDateModified).toHaveTextContent('Apr 03');
+			expect(slaStatus).toBeTruthy();
+			expect(slaDuration).toBeTruthy();
+			expect(slaDateModified).toBeTruthy();
 			fireEvent.click(kebab);
 
 			const dropDownItems = getAllByTestId('kebabDropItems');
@@ -148,15 +150,15 @@ describe('The SLAListPage component should', () => {
 		});
 
 		test('Display modal after clicking on delete option of kebab menu', () => {
-			const cancelButton = getByTestId('cancelButton');
-			const deleteButton = getByTestId('deleteButton');
-			const deleteModal = getByTestId('deleteModal');
-
-			expect(deleteModal).toHaveTextContent(
+			const cancelButton = getByText('cancel');
+			const deleteButton = getByText('ok');
+			const deleteModal = getByText(
 				'deleting-slas-will-reflect-on-report-data'
 			);
-			expect(cancelButton).toHaveTextContent('cancel');
-			expect(deleteButton).toHaveTextContent('ok');
+
+			expect(deleteModal).toBeTruthy();
+			expect(cancelButton).toBeTruthy();
+			expect(deleteButton).toBeTruthy();
 
 			fireEvent.click(deleteButton);
 		});
@@ -164,7 +166,7 @@ describe('The SLAListPage component should', () => {
 		test('Display toast when failure occur while trying to confirm item delete', () => {
 			const alertToast = getByTestId('alertToast');
 			const alertClose = alertToast.children[1];
-			const deleteButton = getByTestId('deleteButton');
+			const deleteButton = getByText('ok');
 
 			expect(alertToast).toHaveTextContent('your-request-has-failed');
 
@@ -191,7 +193,7 @@ describe('The SLAListPage component should', () => {
 		});
 
 		test('Display info alert and toast after a SLA is created or updated', () => {
-			const updateAlert = getByTestId('updateAlert');
+			const updateAlert = container.querySelector('.alert-info');
 
 			expect(updateAlert).toHaveTextContent(
 				'one-or-more-slas-are-being-updated'
@@ -204,7 +206,7 @@ describe('The SLAListPage component should', () => {
 	});
 
 	describe('Be rendered correctly with blocked items', () => {
-		let container, getAllByTestId, getByTestId;
+		let container, getByText;
 
 		const data = {
 			actions: {},
@@ -285,16 +287,15 @@ describe('The SLAListPage component should', () => {
 			);
 
 			container = renderResult.container;
-			getAllByTestId = renderResult.getAllByTestId;
-			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Show alert error', () => {
-			const alertBlockedSLA = getByTestId('alertBlockedSLA');
-
-			expect(alertBlockedSLA).toHaveTextContent(
+			const alertBlockedSLA = getByText(
 				'fix-blocked-slas-to-resume-accurate-reporting'
 			);
+
+			expect(alertBlockedSLA).toBeTruthy();
 
 			const alertClose = container.querySelector('button.close');
 
@@ -302,20 +303,22 @@ describe('The SLAListPage component should', () => {
 		});
 
 		test('Show dividers', () => {
-			const slaBlockedDivider = getByTestId('slaBlockedDivider');
-			const slaRunningDivider = getByTestId('slaRunningDivider');
+			const slaBlockedDivider = getByText('BLOCKED');
+			const slaRunningDivider = getByText('RUNNING');
 
-			expect(slaBlockedDivider).toHaveTextContent('BLOCKED');
-			expect(slaRunningDivider).toHaveTextContent('RUNNING');
+			expect(slaBlockedDivider).toBeTruthy();
+			expect(slaRunningDivider).toBeTruthy();
 		});
 
 		test('Show blocked items info correctly', () => {
-			const slaNames = getAllByTestId('slaName');
-			const slaStatus = getAllByTestId('slaStatus');
+			const dangerIcon = container.querySelector(
+				'.lexicon-icon-exclamation-full'
+			);
+			const slaStatusBlocked = getByText('blocked');
 
-			expect(slaNames[0].children[0].children.length).toBe(2);
-			expect(slaStatus[0]).toHaveTextContent('blocked');
-			expect(slaStatus[0].classList).toContain('text-danger');
+			expect(dangerIcon).toBeTruthy();
+			expect(dangerIcon.classList).toContain('text-danger');
+			expect(slaStatusBlocked.classList).toContain('text-danger');
 		});
 	});
 });

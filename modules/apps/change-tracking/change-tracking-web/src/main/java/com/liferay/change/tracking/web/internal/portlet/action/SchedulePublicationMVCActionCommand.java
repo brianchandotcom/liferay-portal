@@ -15,9 +15,7 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
-import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -102,17 +100,7 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "ctCollectionId");
 
 		if (!actionName.equals("/change_lists/schedule_publication")) {
-			for (ScheduledPublishInfo scheduledPublishInfo :
-					_publishScheduler.getScheduledPublishInfos()) {
-
-				CTCollection ctCollection =
-					scheduledPublishInfo.getCTCollection();
-
-				if (ctCollection.getCtCollectionId() == ctCollectionId) {
-					_publishScheduler.unschedulePublish(
-						scheduledPublishInfo.getJobName());
-				}
-			}
+			_publishScheduler.unschedulePublish(ctCollectionId);
 		}
 
 		if (publishDate != null) {

@@ -202,19 +202,7 @@ public class SchedulePublicationDisplayContext {
 
 		PublishScheduler publishScheduler = _getPublishScheduler();
 
-		for (ScheduledPublishInfo scheduledPublishInfo :
-				publishScheduler.getScheduledPublishInfos()) {
-
-			CTCollection ctCollection = scheduledPublishInfo.getCTCollection();
-
-			if (ctCollection.getCtCollectionId() ==
-					_ctCollection.getCtCollectionId()) {
-
-				return scheduledPublishInfo;
-			}
-		}
-
-		return null;
+		return publishScheduler.getScheduledPublishInfo(_ctCollection);
 	}
 
 	private final CTCollection _ctCollection;

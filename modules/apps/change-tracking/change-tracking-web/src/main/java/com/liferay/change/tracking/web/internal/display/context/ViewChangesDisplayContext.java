@@ -415,37 +415,32 @@ public class ViewChangesDisplayContext {
 	}
 
 	public String getScheduledDescription() throws PortalException {
-		for (ScheduledPublishInfo scheduledPublishInfo :
-				_publishScheduler.getScheduledPublishInfos()) {
+		ScheduledPublishInfo scheduledPublishInfo =
+			_publishScheduler.getScheduledPublishInfo(_ctCollection);
 
-			CTCollection ctCollection = scheduledPublishInfo.getCTCollection();
+		if (scheduledPublishInfo != null) {
+			Format format = FastDateFormatFactoryUtil.getDateTime(
+				_themeDisplay.getLocale(), _themeDisplay.getTimeZone());
 
-			if (ctCollection.getCtCollectionId() ==
-					_ctCollection.getCtCollectionId()) {
+			String description = _language.format(
+				_httpServletRequest, "publishing-x",
+				new Object[] {
+					format.format(scheduledPublishInfo.getStartDate())
+				},
+				false);
 
-				Format format = FastDateFormatFactoryUtil.getDateTime(
-					_themeDisplay.getLocale(), _themeDisplay.getTimeZone());
+			User user = _userLocalService.fetchUser(
+				scheduledPublishInfo.getUserId());
 
-				String description = _language.format(
-					_httpServletRequest, "publishing-x",
-					new Object[] {
-						format.format(scheduledPublishInfo.getStartDate())
-					},
-					false);
-
-				User user = _userLocalService.fetchUser(
-					scheduledPublishInfo.getUserId());
-
-				if (user != null) {
-					return StringBundler.concat(
-						description, " | ",
-						_language.format(
-							_httpServletRequest, "scheduled-by-x",
-							new Object[] {user.getFullName()}, false));
-				}
-
-				return description;
+			if (user != null) {
+				return StringBundler.concat(
+					description, " | ",
+					_language.format(
+						_httpServletRequest, "scheduled-by-x",
+						new Object[] {user.getFullName()}, false));
 			}
+
+			return description;
 		}
 
 		return StringPool.BLANK;

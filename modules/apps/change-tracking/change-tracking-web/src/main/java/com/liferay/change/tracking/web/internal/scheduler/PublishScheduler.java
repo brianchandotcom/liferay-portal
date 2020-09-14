@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -51,6 +50,28 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PublishScheduler.class)
 public class PublishScheduler {
+
+	public ScheduledPublishInfo getScheduledPublishInfo(
+			CTCollection ctCollection)
+		throws PortalException {
+
+		SchedulerResponse schedulerResponse =
+			_schedulerEngineHelper.getScheduledJob(
+				String.valueOf(ctCollection.getCtCollectionId()),
+				CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
+				StorageType.PERSISTED);
+
+		if (schedulerResponse == null) {
+			return null;
+		}
+
+		Message message = schedulerResponse.getMessage();
+
+		return new ScheduledPublishInfo(
+			ctCollection, message.getLong("userId"),
+			schedulerResponse.getJobName(),
+			_schedulerEngineHelper.getStartTime(schedulerResponse));
+	}
 
 	public List<ScheduledPublishInfo> getScheduledPublishInfos()
 		throws PortalException {
@@ -111,7 +132,9 @@ public class PublishScheduler {
 		}
 	}
 
-	public void unschedulePublish(String jobName) throws PortalException {
+	public void unschedulePublish(long ctCollectionId) throws PortalException {
+		String jobName = String.valueOf(ctCollectionId);
+
 		SchedulerResponse schedulerResponse =
 			_schedulerEngineHelper.getScheduledJob(
 				jobName, CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
@@ -169,7 +192,7 @@ public class PublishScheduler {
 
 		_schedulerEngineHelper.schedule(
 			_triggerFactory.createTrigger(
-				PortalUUIDUtil.generate(),
+				String.valueOf(ctCollectionId),
 				CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH, startDate,
 				null, 0, null),
 			StorageType.PERSISTED, String.valueOf(ctCollectionId),

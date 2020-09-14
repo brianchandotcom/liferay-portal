@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Describes parent and child relationships for a given table using joins.
- * Implementations are required for complete CT integration of a service builder
+ * Implementations are required for complete change tracking integration of a service builder
  * service that has a base persistence.
  *
  * @author Preston Crary
@@ -29,26 +29,28 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 public interface TableReferenceDefinition<T extends Table<T>> {
 
 	/**
-	 * Define child rows using inner joins on the table. A child row is defined
-	 * as a row required by the parent table to function correctly. Typically,
-	 * children have their parent's primary keys contained in one of child's
-	 * columns. AssetEntry and ResourcePermission are common children of many
+	 * Defines child rows using inner joins on the table.
+	 *
+	 * A child row is defined as a row required by the parent table to function correctly. Typically,
+	 * children have their parents' primary keys contained in one of the child's
+	 * columns. {@link com.liferay.asset.kernel.model.AssetEntry} and {@link com.liferay.portal.kernel.model.ResourcePermission} are common children of many
 	 * tables.
 	 *
-	 * @param childTableReferenceInfoBuilder used to define child relationships
-	 *        for this TableReferenceDefinition
+	 * @param childTableReferenceInfoBuilder the builder object used to define child relationships
+	 *        for this table reference definition
 	 */
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<T> childTableReferenceInfoBuilder);
 
 	/**
-	 * Define parent rows using inner joins on the table. A parent row is
-	 * defined as a row that when deleted triggers it's children to be deleted.
-	 * Typically, children have their parent's primary keys contained in one of
-	 * child's columns. Company and Group are common parents of many tables.
+	 * Defines parent rows using inner joins on the table.
 	 *
-	 * @param parentTableReferenceInfoBuilder used to define parent
-	 *        relationships for this TableReferenceDefinition
+	 * A parent row is defined as a row that triggers its children for deletion when it is deleted.
+	 * Typically, children have their parents' primary keys contained in one of
+	 * the child's columns. {@link com.liferay.portal.kernel.model.Company} and {@link com.liferay.portal.kernel.model.Group} are common parents of many tables.
+	 *
+	 * @param parentTableReferenceInfoBuilder the builder object used to define parent
+	 *        relationships for this table reference definition
 	 */
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<T> parentTableReferenceInfoBuilder);
@@ -64,7 +66,7 @@ public interface TableReferenceDefinition<T extends Table<T>> {
 	/**
 	 * Returns the table being described by this table reference definition.
 	 *
-	 * @return the table
+	 * @return the table being described by this table reference definition
 	 */
 	public T getTable();
 

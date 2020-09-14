@@ -24,8 +24,8 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Display renderer used to describe and render models of a given type. If a
- * exception occurs during rendering the default renderer is used instead.
+ * Display renderer used to describe and render models of a given type. If an
+ * exception occurs during rendering, the default renderer is used instead.
  *
  * @author Samuel Trong Tran
  * @see    DisplayContext
@@ -48,7 +48,7 @@ public interface CTDisplayRenderer<T> {
 	}
 
 	/**
-	 * Returns the edit URL for the model (optionally <code>null</code>)
+	 * Returns the edit URL for the model (optionally <code>null</code>).
 	 *
 	 * @param  httpServletRequest the request
 	 * @param  model the model to be edited
@@ -61,7 +61,7 @@ public interface CTDisplayRenderer<T> {
 	/**
 	 * Returns the model class for this display renderer.
 	 *
-	 * @return the model class
+	 * @return the model class for this display renderer
 	 */
 	public Class<T> getModelClass();
 
@@ -69,7 +69,7 @@ public interface CTDisplayRenderer<T> {
 	 * Returns the title for the model.
 	 *
 	 * @param  locale to use for translation
-	 * @param  model the model
+	 * @param  model the model for this display renderer
 	 * @return the title for the model
 	 * @throws PortalException if a portal exception occurred
 	 */
@@ -79,17 +79,16 @@ public interface CTDisplayRenderer<T> {
 	 * Returns the translated type name for the model type.
 	 *
 	 * @param  locale to use for translation
-	 * @return the type name
+	 * @return the type name for the model type
 	 */
 	public String getTypeName(Locale locale);
 
 	/**
-	 * Returns if the model should be hidden by default. Hidden models may be
+	 * Returns whether the model may be hidden by default. Hidden models may be
 	 * filtered out in some views.
 	 *
 	 * @param  model the model to be shown or hidden by default
-	 * @return <code>true</code> if the model may be hidden; <code>false</code>
-	 *         otherwise
+	 * @return whether the model may be hidden by default
 	 */
 	public default boolean isHideable(T model) {
 		return false;
@@ -99,7 +98,7 @@ public interface CTDisplayRenderer<T> {
 	 * Renders the model with the display context.
 	 *
 	 * @param  displayContext the context for rendering the model
-	 * @throws Exception if a exception occurred
+	 * @throws Exception if an exception occurred
 	 */
 	public void render(DisplayContext<T> displayContext) throws Exception;
 

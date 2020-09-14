@@ -29,10 +29,10 @@ import java.util.function.Function;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Used to define parent relationships for a TableReferenceDefinition.
+ * Used to define parent relationships for a {@link com.liferay.change.tracking.spi.reference.TableReferenceDefinition}.
  *
  * @author Preston Crary
- * @see    TableReferenceDefinition#defineParentTableReferences(
+ * @see    com.liferay.change.tracking.spi.reference.TableReferenceDefinition#defineParentTableReferences(
  *         ParentTableReferenceInfoBuilder)
  */
 @ProviderType

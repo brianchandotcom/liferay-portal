@@ -22,8 +22,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * Constraint resolvers may be used to automatically resolve unique database
- * constraints between different CT collections or to describe the conflict for
+ * Constraint resolvers are used to automatically resolve unique database
+ * constraints between different change tracking collections, or to describe the conflict for
  * users attempting to publish.
  *
  * @author Preston Crary
@@ -31,16 +31,16 @@ import java.util.ResourceBundle;
 public interface ConstraintResolver<T extends CTModel<T>> {
 
 	/**
-	 * Returns the language key to describe the conflict.
+	 * Returns the language key that describes the conflict.
 	 *
-	 * @return the language key.
+	 * @return the language key that describes the conflict
 	 */
 	public String getConflictDescriptionKey();
 
 	/**
 	 * Returns the model class for this constraint resolver.
 	 *
-	 * @return the model class
+	 * @return the model class for this constraint resolver
 	 */
 	public Class<T> getModelClass();
 
@@ -48,7 +48,7 @@ public interface ConstraintResolver<T extends CTModel<T>> {
 	 * Returns the language key for steps taken (or steps needed) to resolve the
 	 * unique constraint conflict.
 	 *
-	 * @return the language key.
+	 * @return the language key
 	 */
 	public String getResolutionDescriptionKey();
 
@@ -64,8 +64,8 @@ public interface ConstraintResolver<T extends CTModel<T>> {
 	public ResourceBundle getResourceBundle(Locale locale);
 
 	/**
-	 * Returns aan array of column names for the unique index, excluding the
-	 * ctCollectionId column.
+	 * Returns an array of column names for the unique index, excluding the
+	 * <code>ctCollectionId</code> column.
 	 *
 	 * @return the unique index column names
 	 * @see    com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence#getUniqueIndexColumnNames(
@@ -75,11 +75,13 @@ public interface ConstraintResolver<T extends CTModel<T>> {
 
 	/**
 	 * Called when publishing would cause a constraint violation with both rows
-	 * involved accessible from the context. It is not required to resolve the
-	 * conflict if the goal is only to describe it for the user. This method is
-	 * always called from the source model's CT collection.
+	 * involved accessible from the context.
 	 *
-	 * @param constraintResolverContext used in automatically resolving
+	 * It is not required to resolve the
+	 * conflict if the goal is only to describe it for the user. This method is
+	 * always called from the source model's change tracking collection.
+	 *
+	 * @param constraintResolverContext the context used in automatically resolving
 	 *        constraint conflicts between the source and target models
 	 */
 	public void resolveConflict(

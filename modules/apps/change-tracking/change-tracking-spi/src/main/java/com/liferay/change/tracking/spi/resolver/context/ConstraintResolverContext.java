@@ -31,7 +31,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ConstraintResolverContext<T extends CTModel<T>> {
 
 	/**
-	 * Returns the result of the unsafe supplier from within the target CT
+	 * Returns the result of the unsafe supplier from within the target change tracking
 	 * collection.
 	 *
 	 * @param  unsafeSupplier the unsafe supplier to call
@@ -42,36 +42,34 @@ public interface ConstraintResolverContext<T extends CTModel<T>> {
 		throws E;
 
 	/**
-	 * Returns the source CT model has a unique constraint conflict with the
-	 * target CT model.
+	 * Returns the source change tracking model has a unique constraint conflict with the
+	 * target change tracking model.
 	 *
-	 * @return the source CT model
+	 * @return the source change tracking model
 	 */
 	public T getSourceCTModel();
 
 	/**
-	 * Returns the target CT model has a unique constraint conflict with the
-	 * source CT model.
+	 * Returns the target change tracking model that has a unique constraint conflict with the
+	 * source change tracking model.
 	 *
-	 * @return the target CT model
+	 * @return the target change tracking model
 	 */
 	public T getTargetCTModel();
 
 	/**
-	 * Returns if the CT model is from source.
+	 * Returns whether the change tracking model is from the source.
 	 *
-	 * @param  ctModel the model
-	 * @return <code>true</code> if the model is from source; <code>false</code>
-	 *         otherwise
+	 * @param  ctModel the change tracking model to check
+	 * @return whether the model is from the source
 	 */
 	public boolean isSourceCTModel(CTModel<?> ctModel);
 
 	/**
-	 * Returns if the CT model is from target.
+	 * Returns whether the change tracking model is from the target.
 	 *
-	 * @param  ctModel the model
-	 * @return <code>true</code> if the model is from target; <code>false</code>
-	 *         otherwise
+	 * @param  ctModel the change tracking model to check
+	 * @return whether the model is from the target
 	 */
 	public boolean isTargetCTModel(CTModel<?> ctModel);
 

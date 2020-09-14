@@ -73,7 +73,6 @@ public class SchedulePublicationMVCRenderCommand implements MVCRenderCommand {
 					new SchedulePublicationDisplayContext(
 						ctCollection,
 						_portal.getHttpServletRequest(renderRequest),
-						_portal.getLiferayPortletResponse(renderResponse),
 						_publishScheduler.getScheduledPublishInfo(
 							ctCollection));
 

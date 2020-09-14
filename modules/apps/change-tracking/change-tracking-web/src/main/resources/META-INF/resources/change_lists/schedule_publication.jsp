@@ -17,25 +17,62 @@
 <%@ include file="/change_lists/init.jsp" %>
 
 <%
+boolean scheduled = ParamUtil.getBoolean(request, "scheduled");
+
+Calendar calendar = null;
+CTCollection ctCollection = null;
+
 SchedulePublicationDisplayContext schedulePublicationDisplayContext = (SchedulePublicationDisplayContext)request.getAttribute(CTWebKeys.SCHEDULE_PUBLICATION_DISPLAY_CONTEXT);
 
-CTCollection ctCollection = schedulePublicationDisplayContext.getCTCollection();
+if (schedulePublicationDisplayContext != null) {
+	calendar = schedulePublicationDisplayContext.getCalendar();
+	ctCollection = schedulePublicationDisplayContext.getCTCollection();
+	scheduled = schedulePublicationDisplayContext.isScheduled();
+}
+else {
+	int day = ParamUtil.getInteger(request, "publishTimeDay");
+	int minute = ParamUtil.getInteger(request, "publishTimeMinute");
+	int month = ParamUtil.getInteger(request, "publishTimeMonth");
+	int year = ParamUtil.getInteger(request, "publishTimeYear");
 
-portletDisplay.setURLBack(schedulePublicationDisplayContext.getRedirect());
+	int hour = ParamUtil.getInteger(request, "publishTimeHour");
+
+	if (ParamUtil.getInteger(request, "publishTimeAmPm") == Calendar.PM) {
+		hour += 12;
+	}
+
+	calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+	calendar.setTime(PortalUtil.getDate(month, day, year, hour, minute, timeZone, PortalException.class));
+
+	long ctCollectionId = ParamUtil.getLong(request, "ctCollectionId");
+
+	ctCollection = CTCollectionLocalServiceUtil.getCTCollection(ctCollectionId);
+}
+
+String redirect = ParamUtil.getString(request, "redirect");
+
+portletDisplay.setURLBack(redirect);
+
 portletDisplay.setShowBackIcon(true);
 
-renderResponse.setTitle(schedulePublicationDisplayContext.getTitle());
+renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, scheduled ? "reschedule" : "schedule-to-publish-later"), ": ", ctCollection.getName()));
 %>
 
 <clay:container-fluid
 	cssClass="container-form-lg"
 >
-	<aui:form action="<%= schedulePublicationDisplayContext.getSubmitURL() %>" method="post" name="schedulePublicationFm">
+	<liferay-portlet:actionURL name='<%= scheduled ? "/change_lists/reschedule_publication" : "/change_lists/schedule_publication" %>' var="submitURL">
+		<portlet:param name="redirect" value="<%= redirect %>" />
+	</liferay-portlet:actionURL>
+
+	<aui:form action="<%= submitURL %>" method="post" name="schedulePublicationFm">
 		<aui:input name="ctCollectionId" type="hidden" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
+		<aui:input name="scheduled" type="hidden" value="<%= String.valueOf(scheduled) %>" />
 
 		<div class="sheet-lg table-responsive">
 			<table class="table table-autofit table-list">
-				<c:if test="<%= !schedulePublicationDisplayContext.isScheduled() %>">
+				<c:if test="<%= !scheduled %>">
 					<tr>
 						<td class="text-muted" id="changeListsHeader">
 							<div class="autofit-row">
@@ -63,10 +100,6 @@ renderResponse.setTitle(schedulePublicationDisplayContext.getTitle());
 
 						<aui:field-wrapper>
 							<label><liferay-ui:message key="date-and-time" /></label>
-
-							<%
-							Calendar calendar = schedulePublicationDisplayContext.getCalendar();
-							%>
 
 							<div class="autofit-row">
 								<div class="autofit-col" id="changeListsInputDate">
@@ -99,7 +132,18 @@ renderResponse.setTitle(schedulePublicationDisplayContext.getTitle());
 								</div>
 
 								<div class="autofit-col">
-									<span class="change-lists-time-zone"><h5 class="text-secondary"><%= schedulePublicationDisplayContext.getTimeZoneDisplay() %></h5></span>
+
+									<%
+									String timeZoneDisplay = StringPool.OPEN_PARENTHESIS + StringPool.UTC + StringPool.CLOSE_PARENTHESIS;
+
+									if (!Objects.equals(timeZone.getID(), StringPool.UTC)) {
+										Instant instant = Instant.now();
+
+										timeZoneDisplay = StringBundler.concat(StringPool.OPEN_PARENTHESIS, timeZone.getDisplayName(false, TimeZone.SHORT, locale), StringPool.SPACE, String.format("%tz", instant.atZone(timeZone.toZoneId())), StringPool.CLOSE_PARENTHESIS);
+									}
+									%>
+
+									<span class="change-lists-time-zone"><h5 class="text-secondary"><%= timeZoneDisplay %></h5></span>
 								</div>
 							</div>
 						</aui:field-wrapper>
@@ -109,16 +153,16 @@ renderResponse.setTitle(schedulePublicationDisplayContext.getTitle());
 					<div class="autofit-row">
 						<div class="autofit-col autofit-col-expand">
 							<span>
-								<aui:button href="<%= schedulePublicationDisplayContext.getRedirect() %>" type="cancel" />
+								<aui:button href="<%= redirect %>" type="cancel" />
 							</span>
 						</div>
 
 						<c:choose>
-							<c:when test="<%= schedulePublicationDisplayContext.isScheduled() %>">
+							<c:when test="<%= scheduled %>">
 								<div class="autofit-col">
 									<span>
 										<liferay-portlet:actionURL name="/change_lists/unschedule_publication" var="unscheduleURL">
-											<portlet:param name="redirect" value="<%= schedulePublicationDisplayContext.getRedirect() %>" />
+											<portlet:param name="redirect" value="<%= redirect %>" />
 											<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 										</liferay-portlet:actionURL>
 
@@ -131,7 +175,7 @@ renderResponse.setTitle(schedulePublicationDisplayContext.getTitle());
 									<span>
 										<liferay-portlet:renderURL var="conflictsURL">
 											<portlet:param name="mvcRenderCommandName" value="/change_lists/view_conflicts" />
-											<portlet:param name="redirect" value="<%= schedulePublicationDisplayContext.getRedirect() %>" />
+											<portlet:param name="redirect" value="<%= redirect %>" />
 											<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 											<portlet:param name="schedule" value="<%= Boolean.TRUE.toString() %>" />
 										</liferay-portlet:renderURL>

@@ -4198,6 +4198,16 @@ public class JournalArticleLocalServiceImpl
 			article.setContent(content);
 		}
 
+		// Friendly URL
+
+		FriendlyURLEntry friendlyURLEntry =
+			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				article.getGroupId(), JournalArticle.class,
+				article.getUrlTitle());
+
+		friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
+			friendlyURLEntry.getFriendlyURLEntryId(), languageId);
+
 		return journalArticlePersistence.update(article);
 	}
 

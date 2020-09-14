@@ -96,7 +96,7 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 
 			@Override
 			public BigDecimal getPrice() {
-				throw new UnsupportedOperationException();
+				return BigDecimal.ZERO;
 			}
 
 			@Override

@@ -20,13 +20,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_BOX_OBJECT_DISABLED</td>
-	<td>//div[contains(@class,'dropdown-section')]//input[contains(@placeholder,'Search') and @disabled]</td>
+	<td>SEARCH_BOX_DISABLED</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//input[contains(@placeholder,'Search') and @disabled]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_BOX_OBJECT</td>
-	<td>//div[contains(@class,'dropdown-section')]//input[contains(@placeholder,'Search')]</td>
+	<td>SEARCH_BOX</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//input[contains(@placeholder,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

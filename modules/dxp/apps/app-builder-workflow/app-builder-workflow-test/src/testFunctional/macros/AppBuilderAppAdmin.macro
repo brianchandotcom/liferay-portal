@@ -25,20 +25,17 @@ definition {
 
 		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "${workflowAppName}");
 		AppBuilderWorkflow.selectStartStepDataAndViews(
-			customObjectName = "${customObjectName}",
 			formViewName = "${formViewName}",
+			objectName = "${objectName}",
 			tableViewName = "${tableViewName}");
 
 		Button.click(button = "Deploy");
 
 		App.toggleDeploy(deployOption = "${deployOption}");
+
 		Button.click(button = "Done");
 
-		WaitForElementPresent(
-			key_tabName = "workflow",
-			locator1 = "AppBuilderAppAdmin#APP_TAB");
-
-		Refresh();
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
 	}
 
 	macro goToStandardTab {
@@ -55,11 +52,11 @@ definition {
 			locator1 = "AppBuilderAppAdmin#APP_TAB");
 	}
 
-	macro searchObject {
+	macro searchItem {
 
 		Type(
-			locator1 = "AppBuilderAppAdmin#SEARCH_BOX_OBJECT",
-			value1 = "${objectName}");
+			locator1 = "AppBuilderAppAdmin#SEARCH_BOX",
+			value1 = "${itemName}");
 	}
 
 	macro selectObject {
@@ -103,7 +100,7 @@ definition {
 
 		AppBuilderAppAdmin.clickOnSelectObject();
 
-		AssertElementPresent(locator1 = "AppBuilderAppAdmin#SEARCH_BOX_OBJECT_DISABLED");
+		AssertElementPresent(locator1 = "AppBuilderAppAdmin#SEARCH_BOX_DISABLED");
 	}
 
 	macro validateSearchItemCount {

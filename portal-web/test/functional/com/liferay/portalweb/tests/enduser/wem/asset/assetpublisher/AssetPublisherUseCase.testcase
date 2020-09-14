@@ -1262,11 +1262,21 @@ definition {
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
 
-		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_TITLE_IMAGE_2");
+		AssertElementPresent(
+			locator1 = "Relatedassets#ASSET_ENTRY_STICKER",
+			rowNumber = "1");
 
-		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_TITLE_2");
+		AssertElementNotPresent(
+			locator1 = "Relatedassets#ASSET_ENTRY_STICKER",
+			rowNumber = "2");
 
-		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_EDIT_2");
+		AssertElementNotPresent(
+			locator1 = "Relatedassets#ASSET_TITLE",
+			rowNumber = "2");
+
+		AssertElementNotPresent(
+			locator1 = "Relatedassets#ASSET_EDIT",
+			rowNumber = "2");
 
 		Navigator.gotoSitePage(
 			pageName = "Blogs Page",
@@ -1285,11 +1295,21 @@ definition {
 			assetType = "Blogs Entry",
 			entryTitle = "Blogs Entry2 Title");
 
-		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_TITLE_IMAGE_2");
+		AssertElementPresent(
+			locator1 = "Relatedassets#ASSET_ENTRY_STICKER",
+			rowNumber = "1");
 
-		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_TITLE_2");
+		AssertElementNotPresent(
+			locator1 = "Relatedassets#ASSET_ENTRY_STICKER",
+			rowNumber = "2");
 
-		AssertElementNotPresent(locator1 = "Relatedassets#ASSET_EDIT_2");
+		AssertElementNotPresent(
+			locator1 = "Relatedassets#ASSET_TITLE",
+			rowNumber = "2");
+
+		AssertElementNotPresent(
+			locator1 = "Relatedassets#ASSET_EDIT",
+			rowNumber = "2");
 	}
 
 	@priority = "4"

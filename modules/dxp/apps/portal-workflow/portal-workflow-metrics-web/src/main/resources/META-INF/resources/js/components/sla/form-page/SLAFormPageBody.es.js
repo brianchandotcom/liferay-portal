@@ -188,7 +188,7 @@ const Body = ({history, id, processId, query}) => {
 			<ClayForm>
 				<ClayLayout.Sheet size="lg">
 					<ClayLayout.SheetHeader className="mb-0">
-						<h2 className="sheet-title" data-testid="sheetTitle">
+						<h2 className="sheet-title">
 							{Liferay.Language.get('sla-definition')}
 						</h2>
 					</ClayLayout.SheetHeader>
@@ -198,7 +198,6 @@ const Body = ({history, id, processId, query}) => {
 							<ClayLayout.Col sm="5">
 								<FormGroupWithStatus
 									className="form-group"
-									data-testid="nameField"
 									error={errors[NAME]}
 									htmlFor="slaName"
 									label={Liferay.Language.get('name')}
@@ -222,7 +221,6 @@ const Body = ({history, id, processId, query}) => {
 							<ClayLayout.Col sm="7">
 								<FormGroupWithStatus
 									className="form-group"
-									data-testid="descriptionField"
 									htmlFor="slaDescription"
 									label={Liferay.Language.get('description')}
 								>
@@ -246,17 +244,13 @@ const Body = ({history, id, processId, query}) => {
 
 					<ClayLayout.SheetFooter className="sheet-footer-btn-block-sm-down">
 						<ClayButton.Group spaced>
-							<ClayButton
-								data-testid="saveButton"
-								onClick={handleSubmit}
-							>
+							<ClayButton onClick={handleSubmit}>
 								{id
 									? Liferay.Language.get('update')
 									: Liferay.Language.get('save')}
 							</ClayButton>
 
 							<ClayButton
-								data-testid="cancelButton"
 								displayType="secondary"
 								onClick={() => history.goBack()}
 							>

@@ -55,13 +55,12 @@ const TimeFrameSection = () => {
 		<>
 			<h3 className="sheet-subtitle">
 				<FieldLabel
-					data-testid="timeFrame"
 					htmlFor="slaTimeStart"
 					text={Liferay.Language.get('time-frame').toUpperCase()}
 				/>
 			</h3>
 
-			<div className="sheet-text" data-testid="timeFrameDescription">
+			<div className="sheet-text">
 				{Liferay.Language.get(
 					'define-when-time-should-be-tracked-based-on-workflow-steps'
 				)}
@@ -71,16 +70,12 @@ const TimeFrameSection = () => {
 				<ClayLayout.Col>
 					<FormGroupWithStatus
 						className="form-group"
-						data-testid="startField"
 						error={errors[START_NODE_KEYS]}
 						htmlFor="slaTimeStart"
 						label={Liferay.Language.get('start')}
 						requiredLabel
 					>
-						<div
-							className="form-text"
-							data-testid="startDescription"
-						>
+						<div className="form-text">
 							{Liferay.Language.get(
 								'time-will-begin-counting-when'
 							)}
@@ -108,14 +103,10 @@ const TimeFrameSection = () => {
 				<ClayLayout.Col>
 					<FormGroupWithStatus
 						className="form-group"
-						data-testid="pauseField"
 						htmlFor="slaTimePause"
 						label={Liferay.Language.get('pause')}
 					>
-						<div
-							className="form-text"
-							data-testid="pauseDescription"
-						>
+						<div className="form-text">
 							{Liferay.Language.get(
 								'time-wont-be-considered-when'
 							)}
@@ -142,16 +133,12 @@ const TimeFrameSection = () => {
 				<ClayLayout.Col>
 					<FormGroupWithStatus
 						className="form-group"
-						data-testid="stopField"
 						error={errors[STOP_NODE_KEYS]}
 						htmlFor="slaTimeStop"
 						label={Liferay.Language.get('stop')}
 						requiredLabel
 					>
-						<div
-							className="form-text"
-							data-testid="stopDescription"
-						>
+						<div className="form-text">
 							{Liferay.Language.get(
 								'time-will-stop-counting-when'
 							)}

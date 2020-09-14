@@ -30,7 +30,6 @@ const BlockedSLAInfo = ({processId}) => {
 		data.totalCount > 0 &&
 		visible && (
 			<ClayAlert
-				data-testid="alertBlockedSLA"
 				displayType="danger"
 				onClose={() => setVisible(false)}
 				title={Liferay.Language.get('error')}

@@ -32,11 +32,7 @@ const AlertChange = () => {
 };
 
 const AlertMessage = ({message}) => (
-	<ClayAlert
-		data-testid="alertMessage"
-		displayType="danger"
-		title={Liferay.Language.get('error')}
-	>
+	<ClayAlert displayType="danger" title={Liferay.Language.get('error')}>
 		{message}
 	</ClayAlert>
 );

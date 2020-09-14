@@ -62,7 +62,6 @@ const SLAListPage = ({page, pageSize, processId}) => {
 
 				{SLAUpdated && (
 					<ClayAlert
-						data-testid="updateAlert"
 						displayType="info"
 						onClose={() => setSLAUpdated(false)}
 						title={Liferay.Language.get('info')}

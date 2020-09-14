@@ -85,13 +85,12 @@ const DurationSection = ({onChangeHandler}) => {
 		<>
 			<h3 className="sheet-subtitle">
 				<FieldLabel
-					data-testid="duration"
 					required
 					text={Liferay.Language.get('duration').toUpperCase()}
 				/>
 			</h3>
 
-			<div className="sheet-text" data-testid="durationDescription">
+			<div className="sheet-text">
 				{calendars.length > 1
 					? Liferay.Language.get(
 							'define-the-sla-duration-and-calendar-format'
@@ -109,7 +108,6 @@ const DurationSection = ({onChangeHandler}) => {
 						error={errors[DURATION]}
 						htmlFor="slaDurationDays"
 						label={Liferay.Language.get('days')}
-						testid="daysField"
 					>
 						<MaskedInput
 							className="form-control"
@@ -126,7 +124,6 @@ const DurationSection = ({onChangeHandler}) => {
 				<ClayLayout.Col sm="3">
 					<FormGroupWithStatus
 						className="form-group"
-						data-testid="hoursField"
 						error={errors[DURATION] || errors[HOURS]}
 						htmlFor="slaDurationHours"
 						label={Liferay.Language.get('hours')}

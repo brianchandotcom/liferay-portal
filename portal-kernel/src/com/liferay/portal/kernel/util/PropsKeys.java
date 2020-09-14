@@ -2701,6 +2701,9 @@ public interface PropsKeys {
 	public static final String RESOURCE_ACTIONS_READ_PORTLET_RESOURCES =
 		"resource.actions.read.portlet.resources";
 
+	public static final String RESOURCE_ACTIONS_STRICT_MODE_ENABLED =
+		"resource.actions.strict.mode.enabled";
+
 	public static final String RESOURCE_REPOSITORIES_ROOT =
 		"resource.repositories.root";
 

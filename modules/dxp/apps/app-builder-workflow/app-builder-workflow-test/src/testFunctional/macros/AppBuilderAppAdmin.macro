@@ -1,0 +1,137 @@
+definition {
+
+	macro clickOnPlusButton {
+
+		Click(locator1 = "AppBuilderAppAdmin#PLUS_BUTTON");
+	}
+
+	macro clickOnSelectObject {
+
+		Click(locator1 = "AppBuilderAppAdmin#SELECT_OBJECT_BUTTON");
+	}
+
+	macro searchObject {
+
+		Type(
+			locator1 = "AppBuilderAppAdmin#SEARCH_BOX_OBJECT",
+			value1 = "${objectName}");
+	}
+
+	macro selectObject {
+
+		Click(
+			key_objectName = "${objectName}",
+			locator1 = "AppBuilderAppAdmin#OBJECT_ITEM");
+
+		Button.click(button = "Continue");
+	}
+
+	macro validateColumns {
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Name");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Object");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Deployed As");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Create Date");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Modified Date");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Status");
+	}
+
+	macro validateCreateNewAppButtonPresent {
+
+		AssertElementPresent(
+			key_text = "Create New App",
+			locator1 = "Button#ANY");
+	}
+
+	macro validateNoObjectResultMessage {
+
+		AssertElementPresent(locator1 = "AppBuilderAppAdmin#SEARCH_BOX_OBJECT_NO_RESULT_MESSAGE");
+	}
+
+	macro validateObjectResultNotPresent {
+
+		AssertElementNotPresent(
+			key_objectName = "${objectName}",
+			locator1 = "AppBuilderAppAdmin#OBJECT_ITEM");
+	}
+
+	macro validateObjectResultPresent {
+
+		AssertElementPresent(
+			key_objectName = "${objectName}",
+			locator1 = "AppBuilderAppAdmin#OBJECT_ITEM");
+	}
+
+	macro validateObjectSearchBoxDisabled {
+
+		Button.click(button = "Create New App");
+
+		AppBuilderAppAdmin.clickOnSelectObject();
+
+		AssertElementPresent(locator1 = "AppBuilderAppAdmin#SEARCH_BOX_OBJECT_DISABLED");
+	}
+
+	macro validateSearchItemCount {
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
+			value1 = "${itemCount} Results for ${itemName}");
+	}
+
+	macro validateTabsPresent {
+
+		AssertTextEquals.assertPartialText(
+			key_tabName = "standard",
+			locator1 = "AppBuilderAppAdmin#APP_TAB",
+			value1 = "Standard");
+
+		AssertTextEquals.assertPartialText(
+			key_tabName = "workflow",
+			locator1 = "AppBuilderAppAdmin#APP_TAB",
+			value1 = "Workflow Powered");
+	}
+
+	macro goToWorkflowPoweredTab {
+
+		Click(
+			key_tabName = "workflow",
+			locator1 = "AppBuilderAppAdmin#APP_TAB")
+	}
+
+	macro goToStandardTab {
+
+		Click(
+			key_tabName = "standard",
+			locator1 = "AppBuilderAppAdmin#APP_TAB")
+	}
+
+	macro createWorkflowApp {
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+
+		if ("${isCreatingViaPlusIcon}" == "true") {
+
+			AppBuilderAppAdmin.clickOnPlusButton();
+		} else {
+
+			Button.click(button = "Create New App");
+		}
+	}
+}

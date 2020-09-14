@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend;
 
-import com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys;
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.commerce.pricing.web.internal.model.PricingClassPriceList;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
@@ -78,8 +78,7 @@ public class CommercePricingClassPriceListDataSetActionProvider
 		long commercePriceListId, HttpServletRequest httpServletRequest) {
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest,
-			CommercePriceListPortletKeys.COMMERCE_PRICE_LIST,
+			httpServletRequest, CommercePricingPortletKeys.COMMERCE_PRICE_LIST,
 			PortletRequest.RENDER_PHASE);
 
 		String redirect = ParamUtil.getString(

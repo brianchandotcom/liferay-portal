@@ -53,6 +53,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_AND_ORDER_DROPDOWN</td>
 	<td>//*[contains(@class, 'dropdown-toggle btn nav-link btn-unstyled')]</td>
 	<td></td>

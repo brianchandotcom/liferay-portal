@@ -4,6 +4,22 @@ definition {
 		Click(locator1 = "ContentDashboard#CLEAR_FILTERS_BUTTON");
 	}
 
+	macro editWebContent {
+		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
+
+		Click(locator1 = "ContentDashboard#EDIT_OPTION");
+
+		Pause(locator1 = "3000");
+
+		if (isSet(webContentTitle)) {
+			Click(locator1 = "TextInput#TITLE");
+
+			PortletEntry.inputTitle(title = "${webContentTitle}");
+		}
+
+		Button.clickPublish();
+	}
+
 	macro filterByAuthorCard {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(

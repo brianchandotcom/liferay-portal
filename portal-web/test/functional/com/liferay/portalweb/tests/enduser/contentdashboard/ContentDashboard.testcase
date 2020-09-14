@@ -23,6 +23,38 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can edit a web content through the Edit option"
+	@priority = "5"
+	test ContentDashboardEditWebContent {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.editWebContent(webContentTitle = "WC Title Edited");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title Edited");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title Edited");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title Edited");
+	}
+
 	@description = "Validate if the user can filter by Author, using different display types"
 	@priority = "5"
 	test ContentDashboardFilterByAuthor {

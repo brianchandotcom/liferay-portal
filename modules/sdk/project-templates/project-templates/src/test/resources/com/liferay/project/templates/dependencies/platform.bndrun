@@ -1,0 +1,50 @@
+##
+## This file allows each module to be resolved against the target version of
+## Liferay. Invoke the operation using the following command:
+##
+## `./gradlew resolve`
+##
+## SUCCESS: The succesful result is a list of all the artifacts needed to run
+## without any resolution errors.
+##
+## FAILURE: A failure will indicate missing a requirement. Correct the missing
+## requirement and rerun the task.
+##
+# This defines the current module being resolved.
+# DO NOT EDIT
+-distro: ${targetPlatformDistro};x-whitelist=osgi.wiring.host
+# This tells the resolver to also check requirements having `active`
+# effectivness (e.g. services).
+# DO NOT EDIT
+-resolve.effective: active
+# This is a list of capabilities the portal does not properly declare. This list
+# can be tuned when a capability that the portal actually does provide is not
+# found in the distro.
+-runprovidedcapabilities:\
+	osgi.service;objectClass:List<String>='com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence',\
+	osgi.service;objectClass:List<String>='com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.configuration.Configuration',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.dao.orm.SessionFactory',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.json.JSONFactory',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.language.Language',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.model.Portlet',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.portlet.PortletPreferencesFactory',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.portlet.PortletURLFactory',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.service.persistence.LayoutSetPersistence',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.File',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Html',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Http',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.MimeTypes',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Portal',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.PrefsProps',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Props',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.xml.SAXReader',\
+	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.zip.ZipReaderFactory',\
+	osgi.service;objectClass:List<String>='javax.servlet.ServletContext',\
+	osgi.service;objectClass:List<String>='javax.sql.DataSource',\
+	osgi.wiring.package;osgi.wiring.package=com.sun.nio.file
+-runrequires: osgi.identity;filter:='(osgi.identity=${project.bundle.Bundle-SymbolicName})'
+# This is a reference to the Liferay distro matching the target platform version
+# specified in gradle.properties via `liferay.workspace.target.platform.version`.
+# DO NOT EDIT

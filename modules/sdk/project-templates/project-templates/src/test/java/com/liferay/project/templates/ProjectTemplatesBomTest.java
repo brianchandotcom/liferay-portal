@@ -57,6 +57,22 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
+	public void resolveProject(String projectName, File workspaceDir)
+		throws IOException {
+
+		String content = FileTestUtil.read(
+			BaseProjectTemplatesTestCase.class.getClassLoader(),
+			"com/liferay/project/templates/dependencies/platform.bndrun");
+
+		File platformBndRun = new File(workspaceDir, "platform.bndrun");
+
+		Files.write(platformBndRun.toPath(), content.getBytes());
+
+		executeGradle(
+			workspaceDir, _gradleDistribution,
+			":modules:" + projectName + "test" + _GRADLE_TASK_PATH_RESOLVE);
+	}
+
 	@Test
 	public void testBomVersion() throws Exception {
 		Assume.assumeTrue(_isBomTest());
@@ -177,10 +193,16 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 			modulesDir, template, template + "test");
 
 		testOutput(apiProjectDir, template, workspaceDir);
+
+		if (!template.contains("war")) {
+			resolveProject(template, workspaceDir);
+		}
 	}
 
 	private static final String _BOM_VERSION = System.getProperty(
 		"project.templates.bom.version");
+
+	private static final String _GRADLE_TASK_PATH_RESOLVE = ":resolve";
 
 	private static URI _gradleDistribution;
 

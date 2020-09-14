@@ -264,6 +264,31 @@ definition {
 	}
 
 	@priority = "4"
+	test ViewSourceCodeFormattedInTextView {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+			value1 = "<h1>Sample Header 1</h1><p>sample text</p>");
+
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		AssertElementPresent(locator1 = "//h1[normalize-space(text())='Sample Header 1']");
+
+		AssertElementPresent(locator1 = "//p[normalize-space(text())='sample text']");
+	}
+
+	@priority = "4"
 	test ViewWikiFrontPageLeftToRight {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

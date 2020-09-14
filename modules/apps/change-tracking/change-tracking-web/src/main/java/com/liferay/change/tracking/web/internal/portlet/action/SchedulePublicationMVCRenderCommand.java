@@ -23,7 +23,7 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Máté Thurzó
+ * @author Samuel Trong Tran
  */
 @Component(
 	immediate = true,

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Máté Thurzó
+ * @author Samuel Trong Tran
  */
 @Component(
 	immediate = true,

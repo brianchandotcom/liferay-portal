@@ -46,7 +46,8 @@ public class CommercePricingClassPriceListClayTableDataSetDisplayView
 
 		nameField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("catalog", "catalog");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"catalogName", "catalog");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"createDate", "create-date");

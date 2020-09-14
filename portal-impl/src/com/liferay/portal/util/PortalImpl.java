@@ -6197,6 +6197,18 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public boolean isForwarded(HttpServletRequest httpServletRequest) {
+		String forwardedRequestURI = (String)httpServletRequest.getAttribute(
+			JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI);
+
+		if (forwardedRequestURI != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isForwardedSecure(HttpServletRequest httpServletRequest) {
 		if (PropsValues.WEB_SERVER_FORWARDED_PROTOCOL_ENABLED) {
 			String forwardedProtocol = httpServletRequest.getHeader(

@@ -44,57 +44,6 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site in the current virtual instance. Publications and staging cannot be used together.");
 	}
 
-	@description = "Enable Change List and go to Overview"
-	@ignore = "true"
-	@priority = "5"
-	test EnableChangeListAndGoToOverview {
-		property portal.acceptance = "true";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Settings");
-
-		ChangeList.enablePublications(gotoOverview = "true");
-
-		AssertTextEquals(
-			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
-			value1 = "Publications");
-
-		AssertElementPresent(
-			locator1 = "ChangeList#PRODUCTION_CARD_TITLE",
-			value1 = "Work on Production");
-
-		AssertElementPresent(locator1 = "ChangeList#INDICATOR");
-
-		ChangeList.viewNoStagingMenuitemsNotAvailable(site = "Guest");
-
-		ChangeList.viewWarningOnSiteExportImport(portletName = "Export");
-
-		ChangeList.viewWarningOnSiteExportImport(portletName = "Import");
-
-		ChangeList.viewWarningOnPortletExport(
-			portletName = "Web Content",
-			site = "Guest");
-
-		ChangeList.viewWarningOnPortletImport(
-			portletName = "Web Content",
-			site = "Guest");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Settings",
-			site = "Guest");
-
-		ChangeList.disablePublications();
-
-		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
-
-		AssertElementNotPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-	}
-
-	@description = "Enable and Disable Change List"
 	@priority = "5"
 	test EnableDisablePublications {
 		property test.name.skip.portal.instance = "ChangeListConfiguration#EnableDisablePublications";
@@ -114,6 +63,47 @@ definition {
 		ChangeList.disablePublications();
 
 		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
+	}
+
+	@priority = "5"
+	test EnablePublicationsAndGoToOverview {
+		property test.name.skip.portal.instance = "ChangeListConfiguration#EnablePublicationsAndGoToOverview";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Settings");
+
+		ChangeList.enablePublications(gotoOverview = "true");
+
+		AssertTextEquals(
+			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
+			value1 = "Publications");
+
+		AssertTextPresent(
+			key_publicationName = "Production",
+			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
+			value1 = "Production");
+
+		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
+
+		for (var menuItem : list "Select a Publication,Create New Publication") {
+			MenuItem.viewPresent(menuItem = "${menuItem}");
+		}
+
+		for (var menuItem : list "Review Changes,Prepare to Publish") {
+			MenuItem.viewNotPresent(menuItem = "${menuItem}");
+		}
+
+		Navigator.openURL();
+
+		ProductMenuHelper.openProductMenu();
+
+		ProductMenuHelper.expandCategory(category = "Publishing");
+
+		AssertElementNotPresent(
+			key_portlet = "Staging",
+			locator1 = "ProductMenu#PORTLET");
 	}
 
 }

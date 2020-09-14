@@ -1,5 +1,26 @@
 # Poshi Runner Change Log
 
+## 1.0.280
+
+### Runner
+
+* [POSHI-104](https://issues.liferay.com/browse/POSHI-104) - Throw Poshi Script syntax errors before running a test
+* [POSHI-105](https://issues.liferay.com/browse/POSHI-105) - Clean up Poshi dependencies
+
+### Script
+
+* [POSHI-99](https://issues.liferay.com/browse/POSHI-99) - Update Poshi Runner to use dom4j 2.1.3
+
+### Utils
+
+* [POSHI-103](https://issues.liferay.com/browse/POSHI-103) - As a test engineer, I should be able to generate a TOTP to test MFA
+
+### WebDriver
+
+* [POSHI-106](https://issues.liferay.com/browse/POSHI-106) - Code Clean Up: Appium & Mobile Driver stuff
+* [POSHI-91](https://issues.liferay.com/browse/POSHI-91) - As an Edge browser tester, I would like to use the new built-in webdriver
+* [POSHI-108](https://issues.liferay.com/browse/POSHI-108) - Modify clickat to make it friendly
+
 ## 1.0.274
 
 ### Utils

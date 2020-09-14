@@ -17,7 +17,7 @@
 <%@ include file="/change_lists/init.jsp" %>
 
 <%
-SchedulePublicationDisplayContext schedulePublicationDisplayContext = new SchedulePublicationDisplayContext(request, liferayPortletResponse);
+SchedulePublicationDisplayContext schedulePublicationDisplayContext = (SchedulePublicationDisplayContext)request.getAttribute(CTWebKeys.SCHEDULE_PUBLICATION_DISPLAY_CONTEXT);
 
 CTCollection ctCollection = schedulePublicationDisplayContext.getCTCollection();
 

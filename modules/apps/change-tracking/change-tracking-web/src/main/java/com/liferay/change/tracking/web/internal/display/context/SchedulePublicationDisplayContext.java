@@ -15,10 +15,7 @@
 package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
-import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,29 +40,20 @@ import javax.portlet.ActionURL;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * @author Samuel Trong Tran
  */
 public class SchedulePublicationDisplayContext {
 
 	public SchedulePublicationDisplayContext(
-			HttpServletRequest httpServletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException {
+		CTCollection ctCollection, HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		ScheduledPublishInfo scheduledPublishInfo) {
 
+		_ctCollection = ctCollection;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-
-		long ctCollectionId = ParamUtil.getLong(
-			_httpServletRequest, "ctCollectionId");
-
-		_ctCollection = CTCollectionLocalServiceUtil.getCTCollection(
-			ctCollectionId);
-
-		_scheduledPublishInfo = _getScheduledPublishInfo();
+		_scheduledPublishInfo = scheduledPublishInfo;
 	}
 
 	public Calendar getCalendar() throws PortalException {
@@ -193,25 +181,9 @@ public class SchedulePublicationDisplayContext {
 		return false;
 	}
 
-	private PublishScheduler _getPublishScheduler() {
-		return _serviceTracker.getService();
-	}
-
-	private ScheduledPublishInfo _getScheduledPublishInfo()
-		throws PortalException {
-
-		PublishScheduler publishScheduler = _getPublishScheduler();
-
-		return publishScheduler.getScheduledPublishInfo(_ctCollection);
-	}
-
 	private final CTCollection _ctCollection;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ScheduledPublishInfo _scheduledPublishInfo;
-	private final ServiceTracker<PublishScheduler, PublishScheduler>
-		_serviceTracker = ServiceTrackerFactory.open(
-			FrameworkUtil.getBundle(SchedulePublicationDisplayContext.class),
-			PublishScheduler.class);
 
 }

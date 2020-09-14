@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_PREVIEW_BUTTON</td>
+	<td>//a[contains(@class,'cke_button') and contains(@class,'expand')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_SOURCE_BUTTON</td>
 	<td>//a[contains(@class,'cke_button') and contains(@class,'source')]</td>
 	<td></td>
@@ -151,6 +156,17 @@
 <tr>
 	<td>VIDEO_URL</td>
 	<td>//div[label[contains(.,'Video')]]//input</td>
+	<td></td>
+</tr>
+<!--SOURCE_CODE_PREVIEW-->
+<tr>
+	<td>CODE_PREVIEW_IFRAME</td>
+	<td>//*[contains(@class,'code_preview')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_CODE_DIALOG</td>
+	<td>//*[contains(@class,'cke_dialog_contents')]//*[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -34,6 +34,7 @@ Import-Package:\
 	\
 	!org.apache.axis.*,\
 	!org.apache.commons.configuration,\
+	!org.apache.commons.httpclient.*,\
 	!org.apache.commons.ssl,\
 	!org.apache.log.*,\
 	!org.apache.oro.*,\

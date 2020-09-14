@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Push Notifications Sender Apple
 Bundle-SymbolicName: com.liferay.push.notifications.sender.apple
 Bundle-Version: 4.0.12
+Import-Package:\
+	!org.apache.commons.httpclient.*,\
+	\
+	*

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.extender.internal.bean;
 
+import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -38,7 +39,6 @@ import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.annotation.AnnotationUtils;
 
 /**
  * @author Miguel Pastor
@@ -132,7 +132,7 @@ public class ApplicationContextServicePublisherUtil {
 			}
 		}
 
-		OSGiBeanProperties osgiBeanProperties = AnnotationUtils.findAnnotation(
+		OSGiBeanProperties osgiBeanProperties = AnnotationLocator.locate(
 			clazz, OSGiBeanProperties.class);
 
 		Set<String> names = OSGiBeanProperties.Service.interfaceNames(

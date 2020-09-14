@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.web.internal.util.comparator;
 import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 
 import java.text.Collator;
@@ -58,10 +59,10 @@ public class WorkflowDefinitionTitleComparator
 			workflowDefinition1.isActive(), workflowDefinition2.isActive());
 
 		if (value == 0) {
-			String workflowDefinitionTitle1 = workflowDefinition1.getTitle(
-				_languageId);
-			String workflowDefinitionTitle2 = workflowDefinition2.getTitle(
-				_languageId);
+			String workflowDefinitionTitle1 = StringUtil.toLowerCase(
+				workflowDefinition1.getTitle(_languageId));
+			String workflowDefinitionTitle2 = StringUtil.toLowerCase(
+				workflowDefinition2.getTitle(_languageId));
 
 			value = _collator.compare(
 				workflowDefinitionTitle1, workflowDefinitionTitle2);

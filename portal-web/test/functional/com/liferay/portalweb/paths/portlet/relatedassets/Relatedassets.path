@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ENTRY_STICKER</td>
+	<td>xpath=(//div[contains(.,'Related Assets')]//li[contains(@class,'list-group-item')]//span[contains(@class,'sticker-overlay')])[${rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ROW_ENTRY_TITLE</td>
 	<td>xPath=(//*[contains(@class,'list-group-title')]//a)[${rowNumber}]</td>
 	<td></td>

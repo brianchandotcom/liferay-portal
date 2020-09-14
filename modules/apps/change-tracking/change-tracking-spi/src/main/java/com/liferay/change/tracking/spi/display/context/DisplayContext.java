@@ -20,7 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The DisplayContext used by {@link com.liferay.change.tracking.spi.display.CTDisplayRenderer} for rendering a
+ * The DisplayContext used by {@link
+ * com.liferay.change.tracking.spi.display.CTDisplayRenderer} for rendering a
  * model.
  *
  * @author Preston Crary
@@ -31,7 +32,8 @@ public interface DisplayContext<T> {
 
 	/**
 	 * Creates a download URL for use while rendering. This is only used for
-	 * {@link com.liferay.portal.kernel.model.change.tracking.CTModel} renderers.
+	 * {@link com.liferay.portal.kernel.model.change.tracking.CTModel}
+	 * renderers.
 	 *
 	 * @param  key to be passed to {@link
 	 *         com.liferay.change.tracking.spi.display.CTDisplayRenderer#getDownloadInputStream(

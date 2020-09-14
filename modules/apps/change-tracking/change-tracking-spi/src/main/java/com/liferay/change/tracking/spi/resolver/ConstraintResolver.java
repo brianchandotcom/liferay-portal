@@ -23,8 +23,8 @@ import java.util.ResourceBundle;
 
 /**
  * Constraint resolvers are used to automatically resolve unique database
- * constraints between different change tracking collections, or to describe the conflict for
- * users attempting to publish.
+ * constraints between different change tracking collections, or to describe the
+ * conflict for users attempting to publish.
  *
  * @author Preston Crary
  */
@@ -81,8 +81,9 @@ public interface ConstraintResolver<T extends CTModel<T>> {
 	 * conflict if the goal is only to describe it for the user. This method is
 	 * always called from the source model's change tracking collection.
 	 *
-	 * @param constraintResolverContext the context used in automatically resolving
-	 *        constraint conflicts between the source and target models
+	 * @param constraintResolverContext the context used in automatically
+	 *        resolving constraint conflicts between the source and target
+	 *        models
 	 */
 	public void resolveConflict(
 			ConstraintResolverContext<T> constraintResolverContext)

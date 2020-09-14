@@ -31,8 +31,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ConstraintResolverContext<T extends CTModel<T>> {
 
 	/**
-	 * Returns the result of the unsafe supplier from within the target change tracking
-	 * collection.
+	 * Returns the result of the unsafe supplier from within the target change
+	 * tracking collection.
 	 *
 	 * @param  unsafeSupplier the unsafe supplier to call
 	 * @return the result from the unsafe supplier
@@ -42,16 +42,16 @@ public interface ConstraintResolverContext<T extends CTModel<T>> {
 		throws E;
 
 	/**
-	 * Returns the source change tracking model has a unique constraint conflict with the
-	 * target change tracking model.
+	 * Returns the source change tracking model has a unique constraint conflict
+	 * with the target change tracking model.
 	 *
 	 * @return the source change tracking model
 	 */
 	public T getSourceCTModel();
 
 	/**
-	 * Returns the target change tracking model that has a unique constraint conflict with the
-	 * source change tracking model.
+	 * Returns the target change tracking model that has a unique constraint
+	 * conflict with the source change tracking model.
 	 *
 	 * @return the target change tracking model
 	 */

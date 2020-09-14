@@ -30,7 +30,8 @@ import java.util.function.Function;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Used to define child relationships for a {@link com.liferay.change.tracking.spi.reference.TableReferenceDefinition}.
+ * Used to define child relationships for a {@link
+ * com.liferay.change.tracking.spi.reference.TableReferenceDefinition}.
  *
  * @author Preston Crary
  * @see    com.liferay.change.tracking.spi.reference.TableReferenceDefinition#defineChildTableReferences(

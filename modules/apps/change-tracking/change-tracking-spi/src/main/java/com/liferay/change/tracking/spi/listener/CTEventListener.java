@@ -29,10 +29,10 @@ public interface CTEventListener {
 	 * Called after copying the source CTCollection into the target
 	 * CTCollection.
 	 *
-	 * @param  sourceCTCollectionId the change tracking collection ID of the source
-	 *         {@link com.liferay.change.tracking.model.CTCollection}
-	 * @param  targetCTCollectionId the change tracking collection ID of the target
-	 *         {@link com.liferay.change.tracking.model.CTCollection}
+	 * @param  sourceCTCollectionId the change tracking collection ID of the
+	 *         source {@link com.liferay.change.tracking.model.CTCollection}
+	 * @param  targetCTCollectionId the change tracking collection ID of the
+	 *         target {@link com.liferay.change.tracking.model.CTCollection}
 	 * @throws CTEventException if a exception occurred
 	 */
 	public default void onAfterCopy(
@@ -41,9 +41,11 @@ public interface CTEventListener {
 	}
 
 	/**
-	 * Called after checking conflicts and publishing the {@link com.liferay.change.tracking.model.CTCollection}.
+	 * Called after checking conflicts and publishing the {@link
+	 * com.liferay.change.tracking.model.CTCollection}.
 	 *
-	 * @param  ctCollectionId the collection ID of the {@link com.liferay.change.tracking.model.CTCollection} being published
+	 * @param  ctCollectionId the collection ID of the {@link
+	 *         com.liferay.change.tracking.model.CTCollection} being published
 	 * @throws CTEventException if an exception occurred
 	 */
 	public default void onAfterPublish(long ctCollectionId)
@@ -51,9 +53,11 @@ public interface CTEventListener {
 	}
 
 	/**
-	 * Called before checking conflicts and publishing the {@link com.liferay.change.tracking.model.CTCollection}.
+	 * Called before checking conflicts and publishing the {@link
+	 * com.liferay.change.tracking.model.CTCollection}.
 	 *
-	 * @param  ctCollectionId the collection ID of the {@link com.liferay.change.tracking.model.CTCollection} being published
+	 * @param  ctCollectionId the collection ID of the {@link
+	 *         com.liferay.change.tracking.model.CTCollection} being published
 	 * @throws CTEventException if an exception occurred
 	 */
 	public default void onBeforePublish(long ctCollectionId)
@@ -61,9 +65,11 @@ public interface CTEventListener {
 	}
 
 	/**
-	 * Called before deleting a {@link com.liferay.change.tracking.model.CTCollection}.
+	 * Called before deleting a {@link
+	 * com.liferay.change.tracking.model.CTCollection}.
 	 *
-	 * @param  ctCollectionId the collection ID of the {@link com.liferay.change.tracking.model.CTCollection} being deleted
+	 * @param  ctCollectionId the collection ID of the {@link
+	 *         com.liferay.change.tracking.model.CTCollection} being deleted
 	 * @throws CTEventException if an exception occurred
 	 */
 	public default void onBeforeRemove(long ctCollectionId)

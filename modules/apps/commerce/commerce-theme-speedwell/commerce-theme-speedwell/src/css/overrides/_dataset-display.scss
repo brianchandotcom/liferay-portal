@@ -1,11 +1,11 @@
-.dataset-display {
-	&-stacked .dataset-display-management-bar-wrapper {
+.data-set-display {
+	&-stacked .data-set-display-management-bar-wrapper {
 		border: none !important;
 		border-radius: 8px;
 		overflow: hidden;
 	}
 
-	.dataset-sub-item {
+	.data-set-sub-item {
 		font-size: 13px;
 		height: auto;
 		transform: scale(0.98);

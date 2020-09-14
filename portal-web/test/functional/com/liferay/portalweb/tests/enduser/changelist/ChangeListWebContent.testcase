@@ -200,6 +200,7 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/-/friendlyUrl");
 
 		AssertTextEquals.assertPartialText(
+			key_assetTitle = "WC WebContent Title",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "WC WebContent Title");
 
@@ -219,6 +220,7 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/-/friendlyUrl");
 
 		AssertTextEquals.assertPartialText(
+			key_assetTitle = "WC WebContent Title",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "WC WebContent Title");
 	}

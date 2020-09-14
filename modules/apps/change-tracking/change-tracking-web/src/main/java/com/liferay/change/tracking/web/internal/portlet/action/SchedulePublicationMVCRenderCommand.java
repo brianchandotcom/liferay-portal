@@ -22,8 +22,12 @@ import com.liferay.change.tracking.web.internal.display.context.SchedulePublicat
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -50,12 +54,19 @@ public class SchedulePublicationMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			long ctCollectionId = ParamUtil.getLong(
 				renderRequest, "ctCollectionId");
 
 			CTCollection ctCollection =
 				_ctCollectionLocalService.getCTCollection(ctCollectionId);
+
+			_ctCollectionModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), ctCollection,
+				ActionKeys.VIEW);
 
 			SchedulePublicationDisplayContext
 				schedulePublicationDisplayContext =
@@ -79,6 +90,12 @@ public class SchedulePublicationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
+	)
+	private ModelResourcePermission<CTCollection>
+		_ctCollectionModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

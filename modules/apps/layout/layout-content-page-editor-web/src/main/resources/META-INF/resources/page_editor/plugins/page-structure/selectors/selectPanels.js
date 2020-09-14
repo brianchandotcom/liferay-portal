@@ -166,6 +166,7 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 		panelsIds = {
 			[PANEL_IDS.fragmentStyles]: canUpdateItemConfiguration,
 			[PANEL_IDS.fragmentGeneral]:
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				canUpdateItemConfiguration &&
 				fieldSets.some(
 					(fieldSet) =>

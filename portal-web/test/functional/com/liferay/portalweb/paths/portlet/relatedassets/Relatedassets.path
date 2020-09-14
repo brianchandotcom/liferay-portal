@@ -24,33 +24,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_TITLE_IMAGE_1</td>
-	<td>xpath=(//div[contains(.,'Related Assets')]//ul[contains(@class,'list-unstyled')]/li/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TITLE_IMAGE_2</td>
-	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/span/a/i)[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_TITLE</td>
 	<td>//section[contains(@id,'RelatedAssetsPortlet')]//a[normalize-space(text())='${key_assetTitle}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TITLE_1</td>
-	<td>xpath=(//section[contains(@id,'RelatedAssetsPortlet')]//h4/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TITLE_2</td>
-	<td>xpath=(//section[contains(@id,'RelatedAssetsPortlet')]//h4/a)[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_EDIT_2</td>
-	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/div/span/a)[2]</td>
 	<td></td>
 </tr>
 </tbody>

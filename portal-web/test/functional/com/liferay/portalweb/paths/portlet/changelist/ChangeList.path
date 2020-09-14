@@ -69,11 +69,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INDICATOR</td>
-	<td>//li[contains(@class,'nav-item')]//span/*[name()='svg'][contains(@class,'change-list')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANGE_PUBLICATIONS_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>
@@ -96,11 +91,6 @@
 <tr>
 	<td>LIST_PUBLICATION_ELLIPSIS</td>
 	<td>//li[@data-qa-id='row'][contains(.,'${key_publicationName}')]//a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCTION_CARD_TITLE</td>
-	<td>//span[contains(@class,'work-on-production')]</td>
 	<td></td>
 </tr>
 <tr>

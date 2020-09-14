@@ -320,17 +320,6 @@ definition {
 		AssertVisible(locator1 = "ChangeList#DISABLED_PUBLISH_BUTTON");
 	}
 
-	macro viewNoStagingMenuitemsNotAvailable {
-		AssertElementNotPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Staging",
-			site = "${site}");
-
-		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Staging and change lists cannot be used together.");
-	}
-
 	macro viewPublishedPublicationDetails {
 		key_publicationName = "${publicationName}";
 
@@ -341,47 +330,6 @@ definition {
 		AssertElementPresent(
 			key_publicationPublishedBy = "${publicationPublishedBy}",
 			locator1 = "ChangeList#PUBLICATIONS_PUBLISHED_BY");
-	}
-
-	macro viewWarningOnPortletExport {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "${portletName}",
-			site = "${site}");
-
-		LAR._gotoExportImport();
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
-
-		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Export/Import and change lists cannot be used together.");
-
-		IFrame.closeFrame();
-	}
-
-	macro viewWarningOnPortletImport {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "${portletName}",
-			site = "${site}");
-
-		LAR._gotoExportImport();
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
-
-		NavItem.click(navItem = "Import");
-
-		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Export/Import and change lists cannot be used together.");
-
-		IFrame.closeFrame();
-	}
-
-	macro viewWarningOnSiteExportImport {
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "${portletName}",
-			site = "${site}");
-
-		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Export/Import and change lists cannot be used together.");
 	}
 
 	macro workOnProduction {

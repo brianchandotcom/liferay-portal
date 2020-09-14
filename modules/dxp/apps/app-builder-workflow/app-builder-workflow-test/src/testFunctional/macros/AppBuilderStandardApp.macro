@@ -25,7 +25,7 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
-	macro clickOnStandardBackButton {
+	macro clickBackButton {
 
 		Click(locator1 = "AppBuilderStandardApp#BACK_BUTTON");
 	}

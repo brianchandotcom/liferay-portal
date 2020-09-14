@@ -28,6 +28,63 @@ definition {
 		}
 	}
 
+	@description = "Create a Basic Workflow App with different deployment options"
+	@priority = "4"
+	test createBasicWorkflowAppWithDifferentDeployments {
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 1",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View 1",
+			tableViewName = "My Table View 1");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View 2",
+			tableViewName = "My Table View 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 2",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View From Object 2",
+			tableViewName = "My Table View From Object 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		Button.click(button = "Create New App");
+		AppBuilderWorkflow.clickBackButton();
+		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
+
+		Button.click(button = "Create New App");
+		Button.click(button = "Cancel");
+		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
+
+		Button.click(button = "Create New App");
+		AppBuilderWorkflow.selectDataAndViews();
+	}
+
 	@description = "Create a Basic Workflow App"
 	@priority = "5"
 	test CreateBasicWorkflowApp {
@@ -148,7 +205,7 @@ definition {
 		AppBuilderAppAdmin.clickOnSelectObject();
 		AppBuilderAppAdmin.searchObject(objectName = "my custom object");
 		AppBuilderAppAdmin.selectObject(objectName = "my custom object");
-		AppBuilderStandardApp.clickOnStandardBackButton();
+		AppBuilderStandardApp.clickBackButton();
 		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
 
 		Button.click(button = "Create New App");

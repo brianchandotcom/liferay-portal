@@ -54,4 +54,8 @@ definition {
 			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
 	}
 
+	macro clickBackButton {
+
+		Click(locator1 = "AppBuilderWorkflow#BACK_BUTTON");
+	}
 }

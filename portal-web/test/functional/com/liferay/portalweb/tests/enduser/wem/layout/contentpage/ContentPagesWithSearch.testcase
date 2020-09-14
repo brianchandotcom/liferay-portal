@@ -82,7 +82,7 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			ContentPagesNavigator.openViewContentPage(
+			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 		}
@@ -148,7 +148,9 @@ definition {
 		}
 
 		task ("Navigate to the search page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+			Navigator.gotoSitePage(
+				pageName = "Search",
+				siteName = "Test Site Name");
 		}
 
 		task ("Search for created category") {
@@ -199,7 +201,7 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			ContentPagesNavigator.openViewContentPage(
+			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 		}
@@ -274,7 +276,7 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			ContentPagesNavigator.openViewContentPage(
+			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 		}

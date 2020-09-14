@@ -31,12 +31,11 @@ String eventName = liferayPortletResponse.getNamespace() + "selectSite";
 
 ItemSelector itemSelector = (ItemSelector)request.getAttribute(SiteAdministrationWebKeys.ITEM_SELECTOR);
 
-GroupItemSelectorCriterion groupItemSelectorCriterion = new GroupItemSelectorCriterion();
+SiteItemSelectorCriterion siteItemSelectorCriterion = new SiteItemSelectorCriterion();
 
-groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new URLItemSelectorReturnType());
-groupItemSelectorCriterion.setIncludeAllVisibleGroups(true);
+siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new URLItemSelectorReturnType());
 
-PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), eventName, groupItemSelectorCriterion);
+PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), eventName, siteItemSelectorCriterion);
 %>
 
 <script>
@@ -53,8 +52,7 @@ PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortle
 						Liferay.Util.navigate(selectedItem.url);
 					},
 					selectEventName: '<%= eventName %>',
-					title:
-						'<liferay-ui:message key="select-site-or-asset-library" />',
+					title: '<liferay-ui:message key="select-site" />',
 					url: '<%= itemSelectorURL.toString() %>',
 				});
 			});

@@ -5,6 +5,10 @@ let videoContainer = null;
 let errorMessage = null;
 let loadingIndicator = null;
 
+function isPixelUnit(value) {
+	return /px$/.test(value);
+}
+
 function resize() {
 	content.style.width = '';
 	content.style.height = '';
@@ -16,8 +20,8 @@ function resize() {
 			const width = configuration.width || boundingClientRect.width;
 			const height = configuration.height || width * 0.5625;
 
-			content.style.height = height + 'px';
-			content.style.width = width +'px';
+			content.style.height = isPixelUnit(height) ? height : height + 'px';
+			content.style.width = isPixelUnit(width) ? width : width + 'px';
 		} catch (error) {
 			window.removeEventListener('resize', resize);
 		}

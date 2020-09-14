@@ -28,6 +28,65 @@ definition {
 		}
 	}
 
+	@description = "Create a Basic Workflow App"
+	@priority = "5"
+	test CreateBasicWorkflowApp {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.createBasicWorkflowApp(
+			customObjectName = "my custom object",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			isCreatingViaPlusIcon = "false",
+			tableViewName = "My Table View",
+			workflowAppName = "My Workflow App 1");
+
+		AppBuilderAppAdmin.createBasicWorkflowApp(
+			customObjectName = "my custom object",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			isCreatingViaPlusIcon = "true",
+			tableViewName = "My Table View",
+			workflowAppName = "My Workflow App 2");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "My Workflow App 1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "My Workflow App 2");
+
+		AppBuilderAppAdmin.goToStandardTab();
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "My Workflow App 1");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "My Workflow App 2");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.validateWorkflowAppColumns();
+
+		AppBuilderAdmin.undeployApp(itemName = "My Workflow App 2");
+
+		AppBuilderAdmin.deleteApp(itemName = "My Workflow App 2");
+
+		AppBuilderAdmin.undeployApp(itemName = "My Workflow App 1");
+		AppBuilderAdmin.deployApp(itemName = "My Workflow App 1");
+	}
+
 	@description = "Create an App through the 'Apps' portlet"
 	@priority = "5"
 	test CreateStandardApp {
@@ -139,39 +198,6 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content Test 1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content Test 2");
-	}
-
-	@description = "Create a Workflow App"
-	@priority = "5"
-	test CreateWorkflowApp {
-		property portal.acceptance = "true";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Objects");
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text",
-			formViewName = "My Form View",
-			tableViewName = "My Table View");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Apps");
-
-		AppBuilderAppAdmin.createWorkflowApp(
-			isCreatingViaPlusIcon = "false",
-			workflowAppName = "My Workflow App",
-			customObjectName = "my custom object",
-			formViewName = "My Form View",
-			tableViewName = "My Table View");
 	}
 
 	@description = "Filter and order the apps created using App Builder"
@@ -401,7 +427,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Standalone App");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Widget App");
 
-		AppBuilderAppAdmin.validateColumns();
+		AppBuilderAppAdmin.validateStandardAppColumns();
 
 		AppBuilderAdmin.undeployApp(itemName = "My App");
 

@@ -13,6 +13,41 @@
 	<td>//a[contains(@href,'workflow')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WORKFLOW_APP_NAME_FIELD</td>
+	<td>//input[contains(@placeholder,'Untitled App')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_AND_VIEWS_BUTTON</td>
+	<td>//button//span[contains(text(),'Data and Views')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_OBJECT_BUTTON</td>
+	<td>//button[contains(@aria-labelledby,'select-object')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OBJECT_ITEM</td>
+	<td>//span[contains(@title,'${key_customObjectName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FORM_VIEW_BUTTON</td>
+	<td>//button[contains(@aria-labelledby,'form-view')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_TABLE_VIEW_BUTTON</td>
+	<td>//button[contains(@aria-labelledby,'table-view')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_OR_TABLE_VIEW_ITEM</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(text(),'${key_itemName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

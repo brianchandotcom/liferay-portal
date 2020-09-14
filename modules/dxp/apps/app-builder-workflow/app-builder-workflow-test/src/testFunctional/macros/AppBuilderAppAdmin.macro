@@ -10,6 +10,51 @@ definition {
 		Click(locator1 = "AppBuilderAppAdmin#SELECT_OBJECT_BUTTON");
 	}
 
+	macro createBasicWorkflowApp {
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+
+		if ("${isCreatingViaPlusIcon}" == "true") {
+
+			AppBuilderAppAdmin.clickOnPlusButton();
+		}
+		else {
+
+			Button.click(button = "Create New App");
+		}
+
+		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "${workflowAppName}");
+		AppBuilderWorkflow.selectStartStepDataAndViews(
+			customObjectName = "${customObjectName}",
+			formViewName = "${formViewName}",
+			tableViewName = "${tableViewName}");
+
+		Button.click(button = "Deploy");
+
+		App.toggleDeploy(deployOption = "${deployOption}");
+		Button.click(button = "Done");
+
+		WaitForElementPresent(
+			key_tabName = "workflow",
+			locator1 = "AppBuilderAppAdmin#APP_TAB");
+
+		Refresh();
+	}
+
+	macro goToStandardTab {
+
+		Click(
+			key_tabName = "standard",
+			locator1 = "AppBuilderAppAdmin#APP_TAB");
+	}
+
+	macro goToWorkflowPoweredTab {
+
+		Click(
+			key_tabName = "workflow",
+			locator1 = "AppBuilderAppAdmin#APP_TAB");
+	}
+
 	macro searchObject {
 
 		Type(
@@ -24,33 +69,6 @@ definition {
 			locator1 = "AppBuilderAppAdmin#OBJECT_ITEM");
 
 		Button.click(button = "Continue");
-	}
-
-	macro validateColumns {
-
-		AssertTextEquals(
-			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
-			value1 = "Name");
-
-		AssertTextEquals(
-			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
-			value1 = "Object");
-
-		AssertTextEquals(
-			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
-			value1 = "Deployed As");
-
-		AssertTextEquals(
-			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
-			value1 = "Create Date");
-
-		AssertTextEquals(
-			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
-			value1 = "Modified Date");
-
-		AssertTextEquals(
-			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
-			value1 = "Status");
 	}
 
 	macro validateCreateNewAppButtonPresent {
@@ -95,6 +113,33 @@ definition {
 			value1 = "${itemCount} Results for ${itemName}");
 	}
 
+	macro validateStandardAppColumns {
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Name");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Object");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Deployed As");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Create Date");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Modified Date");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Status");
+	}
+
 	macro validateTabsPresent {
 
 		AssertTextEquals.assertPartialText(
@@ -108,30 +153,35 @@ definition {
 			value1 = "Workflow Powered");
 	}
 
-	macro goToWorkflowPoweredTab {
+	macro validateWorkflowAppColumns {
 
-		Click(
-			key_tabName = "workflow",
-			locator1 = "AppBuilderAppAdmin#APP_TAB")
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Name");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Object");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Deployed As");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Create Date");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Modified Date");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Version");
+
+		AssertTextEquals(
+			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
+			value1 = "Status");
 	}
 
-	macro goToStandardTab {
-
-		Click(
-			key_tabName = "standard",
-			locator1 = "AppBuilderAppAdmin#APP_TAB")
-	}
-
-	macro createWorkflowApp {
-
-		AppBuilderAppAdmin.goToWorkflowPoweredTab();
-
-		if ("${isCreatingViaPlusIcon}" == "true") {
-
-			AppBuilderAppAdmin.clickOnPlusButton();
-		} else {
-
-			Button.click(button = "Create New App");
-		}
-	}
 }

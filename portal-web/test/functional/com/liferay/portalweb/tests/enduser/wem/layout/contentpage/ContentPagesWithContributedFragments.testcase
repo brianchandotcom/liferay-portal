@@ -1852,7 +1852,7 @@ definition {
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR",
 				value1 = "Modified Text");
 
-			Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
+			PageEditor.clickManagementBar();
 
 			PageEditor.waitForAutoSave();
 		}

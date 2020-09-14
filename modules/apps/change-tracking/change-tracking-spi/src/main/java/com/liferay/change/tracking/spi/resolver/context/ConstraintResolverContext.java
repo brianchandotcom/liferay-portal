@@ -42,8 +42,8 @@ public interface ConstraintResolverContext<T extends CTModel<T>> {
 		throws E;
 
 	/**
-	 * Returns the source change tracking model has a unique constraint conflict
-	 * with the target change tracking model.
+	 * Returns the source change tracking model that has a unique constraint
+	 * conflict with the target change tracking model.
 	 *
 	 * @return the source change tracking model
 	 */

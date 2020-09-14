@@ -29,13 +29,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -100,17 +100,18 @@ public class ViewScheduledDisplayContext {
 
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
-		List<CTCollection> results = _ctCollectionService.getCTCollections(
-			_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_SCHEDULED,
-			displayTerms.getKeywords(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			_getOrderByComparator());
+		List<CTCollection> ctCollections =
+			_ctCollectionService.getCTCollections(
+				_themeDisplay.getCompanyId(),
+				WorkflowConstants.STATUS_SCHEDULED, displayTerms.getKeywords(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, _getOrderByComparator());
 
-		searchContainer.setTotal(results.size());
+		searchContainer.setTotal(ctCollections.size());
 
 		if (Objects.equals(_getOrderByCol(), "publishing")) {
-			results = ListUtil.copy(results);
+			ctCollections = new ArrayList<>(ctCollections);
 
-			results.sort(
+			ctCollections.sort(
 				(c1, c2) -> {
 					try {
 						Date date1 = getPublishingDate(c1.getCtCollectionId());
@@ -123,33 +124,31 @@ public class ViewScheduledDisplayContext {
 
 							return -1;
 						}
-						else if (date1.after(date2)) {
+
+						if (date1.after(date2)) {
 							if (Objects.equals(_getOrderByType(), "asc")) {
 								return -1;
 							}
 
 							return 1;
 						}
-						else {
-							return 0;
-						}
 					}
 					catch (PortalException portalException) {
 						_log.error(portalException, portalException);
-
-						return 0;
 					}
+
+					return 0;
 				});
 		}
 
 		int end = searchContainer.getEnd();
 
-		if (end > results.size()) {
-			end = results.size();
+		if (end > ctCollections.size()) {
+			end = ctCollections.size();
 		}
 
 		searchContainer.setResults(
-			results.subList(searchContainer.getStart(), end));
+			ctCollections.subList(searchContainer.getStart(), end));
 
 		_searchContainer = searchContainer;
 

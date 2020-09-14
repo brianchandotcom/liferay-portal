@@ -124,21 +124,10 @@
 			return pictureEl;
 		},
 
-		_isEmptySelection(editor) {
-			var selection = editor.getSelection();
-
-			var ranges = selection.getRanges();
-
-			return (
-				selection.getType() === CKEDITOR.SELECTION_NONE ||
-				(ranges.length === 1 && (ranges[0].collapsed || IE9AndLater))
-			);
-		},
-
 		_onSelectedImageChange(editor, imageSrc, selectedItem) {
 			var instance = this;
 
-			var el;
+			var element;
 
 			var fileEntryAttributeName =
 				editor.config.adaptiveMediaFileEntryAttributeName;
@@ -146,54 +135,45 @@
 			if (
 				selectedItem.returnType === STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE
 			) {
-				el = instance._getPictureElement(
+				element = instance._getPictureElement(
 					selectedItem,
 					fileEntryAttributeName
 				);
 			}
 			else {
-				el = instance._getImgElement(
+				element = instance._getImgElement(
 					imageSrc,
 					selectedItem,
 					fileEntryAttributeName
 				);
 			}
 
-			var elementOuterHtml = el.getOuterHtml();
+			var elementOuterHtml = element.getOuterHtml();
 
-			editor.insertHtml(elementOuterHtml);
+			if (IE9AndLater) {
+				if (!editor.window.$.AlloyEditor) {
+					var emptySelectionMarkup = '&nbsp;';
 
-			if (instance._isEmptySelection(editor)) {
-				if (IE9AndLater) {
-					var usingAlloyEditor =
-						typeof editor.window.$.AlloyEditor === 'undefined';
-
-					if (!usingAlloyEditor) {
-						var emptySelectionMarkup = '&nbsp;';
-
-						emptySelectionMarkup =
-							elementOuterHtml + emptySelectionMarkup;
-
-						editor.insertHtml(emptySelectionMarkup);
-					}
-
-					var element = new CKEDITOR.dom.element('br');
-
-					editor.insertElement(element);
-					editor.getSelection();
-
-					editor.fire('editorInteraction', {
-						nativeEvent: {},
-						selectionData: {
-							element,
-							region: element.getClientRect(),
-						},
-					});
+					editor.insertHtml(elementOuterHtml + emptySelectionMarkup);
 				}
 				else {
-					editor.execCommand('enter');
+					editor.insertElement(element);
+
+					element = new CKEDITOR.dom.element('br');
+					editor.insertElement(element);
 				}
 			}
+			else {
+				editor.insertHtml(elementOuterHtml);
+			}
+
+			editor.fire('editorInteraction', {
+				nativeEvent: {},
+				selectionData: {
+					element,
+					region: element.getClientRect(),
+				},
+			});
 		},
 
 		init(editor) {

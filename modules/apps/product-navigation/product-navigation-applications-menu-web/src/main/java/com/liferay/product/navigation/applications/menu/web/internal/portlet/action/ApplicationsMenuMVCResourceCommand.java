@@ -319,8 +319,10 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 
 		groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new URLItemSelectorReturnType());
+
 		groupItemSelectorCriterion.setIncludeAllVisibleGroups(true);
-		groupItemSelectorCriterion.setIncludeRecentSites(false);
+		groupItemSelectorCriterion.setIncludeMySites(true);
+		groupItemSelectorCriterion.setIncludeRecentSites(true);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(resourceRequest),

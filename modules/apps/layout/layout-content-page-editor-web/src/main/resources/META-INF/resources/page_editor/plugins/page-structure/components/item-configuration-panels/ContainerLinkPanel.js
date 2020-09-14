@@ -55,17 +55,23 @@ ContainerLinkPanel.propTypes = {
 			link: PropTypes.oneOfType([
 				PropTypes.shape({
 					href: PropTypes.string,
-					target: PropTypes.oneOf(TARGET_OPTIONS),
+					target: PropTypes.oneOf(
+						TARGET_OPTIONS.map((option) => option.value)
+					),
 				}),
 				PropTypes.shape({
 					classNameId: PropTypes.string,
 					classPK: PropTypes.string,
 					fieldId: PropTypes.string,
-					target: PropTypes.oneOf(TARGET_OPTIONS),
+					target: PropTypes.oneOf(
+						TARGET_OPTIONS.map((option) => option.value)
+					),
 				}),
 				PropTypes.shape({
 					mappedField: PropTypes.string,
-					target: PropTypes.oneOf(TARGET_OPTIONS),
+					target: PropTypes.oneOf(
+						TARGET_OPTIONS.map((option) => option.value)
+					),
 				}),
 			]),
 		}),

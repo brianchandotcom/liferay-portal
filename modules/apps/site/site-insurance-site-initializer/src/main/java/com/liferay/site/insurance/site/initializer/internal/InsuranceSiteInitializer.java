@@ -14,6 +14,7 @@
 
 package com.liferay.site.insurance.site.initializer.internal;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -28,20 +29,26 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.insurance.site.initializer.internal.util.ImagesImporterUtil;
+
+import java.io.File;
 
 import java.net.URL;
 
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
@@ -91,6 +98,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			_addDDMStructures();
 			_addDDMTemplates();
+
+			_addImages();
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -157,6 +166,16 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addImages() throws Exception {
+		URL url = _bundle.getEntry("/images.zip");
+
+		File file = FileUtil.createTempFile(url.openStream());
+
+		_fileEntries = ImagesImporterUtil.importFile(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			file);
+	}
+
 	private void _createServiceContext(long groupId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -200,6 +219,11 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
+
+	private List<FileEntry> _fileEntries;
 
 	@Reference
 	private Portal _portal;

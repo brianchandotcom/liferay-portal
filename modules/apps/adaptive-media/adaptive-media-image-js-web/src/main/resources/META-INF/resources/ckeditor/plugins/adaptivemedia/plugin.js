@@ -168,7 +168,6 @@
 			editor.insertElement(element);
 			editor.getSelection();
 
-
 			editor.fire('editorInteraction', {
 				nativeEvent: {},
 				selectionData: {

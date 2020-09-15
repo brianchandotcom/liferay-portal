@@ -25,6 +25,7 @@ import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.servlet.taglib.clay.DepotDashboardApplicationHorizontalCard;
 import com.liferay.depot.web.internal.servlet.taglib.clay.DepotDashboardApplicationVerticalCard;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -157,6 +158,10 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 			DepotPortletKeys.DEPOT_SETTINGS, "cog"
 		).put(
 			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, "documents-and-media"
+		).put(
+			ExportImportPortletKeys.EXPORT, "download"
+		).put(
+			ExportImportPortletKeys.IMPORT, "upload"
 		).put(
 			JournalPortletKeys.JOURNAL, "web-content"
 		).put(

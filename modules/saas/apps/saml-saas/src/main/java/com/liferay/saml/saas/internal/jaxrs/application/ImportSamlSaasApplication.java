@@ -16,6 +16,7 @@ package com.liferay.saml.saas.internal.jaxrs.application;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -25,6 +26,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -120,9 +124,15 @@ public class ImportSamlSaasApplication extends Application {
 			_generateSamlProviderConfiguration(
 				(JSONObject)jsonObject.get("samlProviderConfiguration"));
 
-			_generateSamlSpIdpConnections(
-				httpServletRequest,
-				(JSONArray)jsonObject.get("samlSpIdpConnections"));
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					_generateSamlSpIdpConnections(
+						httpServletRequest,
+						(JSONArray)jsonObject.get("samlSpIdpConnections"));
+
+					return null;
+				});
 
 			_generateKeystore((String)jsonObject.get("samlKeystore"));
 		}
@@ -132,6 +142,9 @@ public class ImportSamlSaasApplication extends Application {
 			return JSONUtil.put(
 				"result", "resultError"
 			).toString();
+		}
+		catch (Throwable throwable) {
+			ReflectionUtil.throwException(throwable);
 		}
 
 		return JSONUtil.put(
@@ -326,6 +339,17 @@ public class ImportSamlSaasApplication extends Application {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportSamlSaasApplication.class);
+
+	private static final TransactionConfig _transactionConfig;
+
+	static {
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+
+		builder.setPropagation(Propagation.REQUIRES_NEW);
+		builder.setRollbackForClasses(Exception.class);
+
+		_transactionConfig = builder.build();
+	}
 
 	@Reference
 	private CounterLocalService _counterLocalService;

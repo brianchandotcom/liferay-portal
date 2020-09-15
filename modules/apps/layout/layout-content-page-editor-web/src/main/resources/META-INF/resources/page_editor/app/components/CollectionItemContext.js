@@ -107,7 +107,7 @@ const useGetContent = (fragmentEntryLink, segmentsExperienceId) => {
 };
 
 const useGetFieldValue = () => {
-	const context = useContext(CollectionItemContext);
+	const {collectionItem} = useContext(CollectionItemContext);
 
 	const getFromServer = useCallback(
 		({classNameId, classPK, fieldId, languageId}) =>
@@ -127,14 +127,14 @@ const useGetFieldValue = () => {
 
 	const getFromCollectionItem = useCallback(
 		({collectionFieldId}) =>
-			context.collectionItem[collectionFieldId] !== null &&
-			context.collectionItem[collectionFieldId] !== undefined
-				? Promise.resolve(context.collectionItem[collectionFieldId])
+			collectionItem[collectionFieldId] !== null &&
+			collectionItem[collectionFieldId] !== undefined
+				? Promise.resolve(collectionItem[collectionFieldId])
 				: Promise.reject(),
-		[context.collectionItem]
+		[collectionItem]
 	);
 
-	if (context.collectionItem) {
+	if (collectionItem) {
 		return getFromCollectionItem;
 	}
 	else {

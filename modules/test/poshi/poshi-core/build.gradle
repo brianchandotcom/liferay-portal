@@ -1,0 +1,3 @@
+liferay {
+	deployDir = project.properties["sdk.dir"] + "/dependencies/com.liferay.poshi.core/lib"
+}

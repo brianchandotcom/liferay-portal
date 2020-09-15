@@ -158,14 +158,16 @@
 				}
 				else {
 					editor.insertElement(element);
-
-					element = new CKEDITOR.dom.element('br');
-					editor.insertElement(element);
 				}
 			}
 			else {
 				editor.insertHtml(elementOuterHtml);
 			}
+
+			element = new CKEDITOR.dom.element('br');
+			editor.insertElement(element);
+			editor.getSelection();
+
 
 			editor.fire('editorInteraction', {
 				nativeEvent: {},

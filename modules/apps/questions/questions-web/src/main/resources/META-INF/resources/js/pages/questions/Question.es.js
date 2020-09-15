@@ -229,7 +229,13 @@ export default withRouter(
 											!!question.messageBoardSection
 												.numberOfMessageBoardSections && (
 												<Link
-													to={`/questions/${sectionTitle}`}
+													to={`/questions/${
+														context.useTopicNamesInURL
+															? sectionTitle
+															: question
+																	.messageBoardSection
+																	.id
+													}`}
 												>
 													<SectionLabel
 														section={

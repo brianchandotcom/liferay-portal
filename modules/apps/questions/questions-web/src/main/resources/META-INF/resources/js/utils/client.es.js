@@ -357,6 +357,7 @@ export const getThreadQuery = gql`
 			id
 			keywords
 			messageBoardSection {
+				id
 				numberOfMessageBoardSections
 				parentMessageBoardSectionId
 				title
@@ -983,6 +984,7 @@ export const getUserActivityQuery = gql`
 				id
 				keywords
 				messageBoardSection {
+					id
 					numberOfMessageBoardSections
 					parentMessageBoardSectionId
 					title
@@ -1128,6 +1130,7 @@ export const getSubscriptionsQuery = gql`
 						id
 						keywords
 						messageBoardSection {
+							id
 							numberOfMessageBoardSections
 							parentMessageBoardSectionId
 							title

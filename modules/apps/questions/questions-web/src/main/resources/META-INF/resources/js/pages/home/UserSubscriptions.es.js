@@ -16,9 +16,10 @@ import {useMutation, useQuery} from '@apollo/client';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
+import {AppContext} from '../../AppContext.es';
 import Alert from '../../components/Alert.es';
 import DeleteQuestion from '../../components/DeleteQuestion.es';
 import Link from '../../components/Link.es';
@@ -34,6 +35,8 @@ export default withRouter(({history}) => {
 	const [entity, setEntity] = useState({});
 	const [info, setInfo] = useState({});
 	const [questionToDelete, setQuestionToDelete] = useState({});
+
+	const context = useContext(AppContext);
 
 	const {data: threads, refetch: refetchThreads} = useQuery(
 		getSubscriptionsQuery,
@@ -111,7 +114,11 @@ export default withRouter(({history}) => {
 				label: 'Edit',
 				onClick: () => {
 					historyPushParser(
-						`/questions/${question.messageBoardSection.title}/${data.graphQLNode.friendlyUrlPath}/edit`
+						`/questions/${
+							context.useTopicNamesInURL
+								? question.messageBoardSection.title
+								: question.messageBoardSection.id
+						}/${data.graphQLNode.friendlyUrlPath}/edit`
 					);
 				},
 			});
@@ -122,7 +129,11 @@ export default withRouter(({history}) => {
 				label: 'Reply',
 				onClick: () => {
 					historyPushParser(
-						`/questions/${question.messageBoardSection.title}/${question.friendlyUrlPath}`
+						`/questions/${
+							context.useTopicNamesInURL
+								? question.messageBoardSection.title
+								: question.messageBoardSection.id
+						}/${question.friendlyUrlPath}`
 					);
 				},
 			});
@@ -163,7 +174,15 @@ export default withRouter(({history}) => {
 																data.graphQLNode
 																	.title
 															}
-															to={`/questions/${data.graphQLNode.title}`}
+															to={`/questions/${
+																context.useTopicNamesInURL
+																	? data
+																			.graphQLNode
+																			.title
+																	: data
+																			.graphQLNode
+																			.id
+															}`}
 														>
 															<div className="autofit-section">
 																<div className="card-title">
@@ -217,6 +236,20 @@ export default withRouter(({history}) => {
 								(data) => (
 									<div key={data.id}>
 										<QuestionRow
+											currentSection={
+												context.useTopicNamesInURL
+													? data.graphQLNode
+															.messageBoardSection &&
+													  data.graphQLNode
+															.messageBoardSection
+															.title
+													: (data.graphQLNode
+															.messageBoardSection &&
+															data.graphQLNode
+																.messageBoardSection
+																.id) ||
+													  context.rootTopicId
+											}
 											items={actions(data)}
 											question={data.graphQLNode}
 											showSectionLabel={true}

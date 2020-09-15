@@ -52,7 +52,11 @@ export default ({
 										onClick={() => {
 											setActive(false);
 										}}
-										to={'/questions/' + section.title}
+										to={`/questions/${
+											context.useTopicNamesInURL
+												? section.title
+												: section.id
+										}`}
 									>
 										{ui || section.title}
 									</Link>
@@ -70,7 +74,11 @@ export default ({
 										onClick={() => {
 											setActive(false);
 										}}
-										to={'/questions/' + section.title}
+										to={`/questions/${
+											context.useTopicNamesInURL
+												? section.title
+												: section.id
+										}`}
 									>
 										<ClayDropDown.Item key={i}>
 											{section.title}

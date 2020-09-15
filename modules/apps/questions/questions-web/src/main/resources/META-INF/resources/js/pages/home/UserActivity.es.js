@@ -143,6 +143,17 @@ export default withRouter(
 							>
 								{(question) => (
 									<QuestionRow
+										currentSection={
+											context.useTopicNamesInURL
+												? question.messageBoardSection &&
+												  question.messageBoardSection
+														.title
+												: (question.messageBoardSection &&
+														question
+															.messageBoardSection
+															.id) ||
+												  context.rootTopicId
+										}
 										key={question.id}
 										question={question}
 										showSectionLabel={true}

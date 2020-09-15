@@ -112,7 +112,11 @@ export default withRouter(({history}) => {
 									>
 										<Link
 											className="questions-card text-decoration-none text-secondary"
-											to={`/questions/${section.title}`}
+											to={`/questions/${
+												context.useTopicNamesInURL
+													? section.title
+													: section.id
+											}`}
 										>
 											<ClayCard>
 												<ClayCard.Body>

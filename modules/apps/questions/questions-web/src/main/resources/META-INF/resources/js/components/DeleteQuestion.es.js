@@ -26,9 +26,10 @@
  * details.
  */
 import {useMutation} from '@apollo/client';
-import React from 'react';
+import React, {useContext} from 'react';
 import {withRouter} from 'react-router-dom';
 
+import {AppContext} from '../AppContext.es';
 import {deleteMessageBoardThreadQuery} from '../utils/client.es';
 import {historyPushWithSlug} from '../utils/utils.es';
 import Modal from './Modal.es';
@@ -36,11 +37,16 @@ import Modal from './Modal.es';
 export default withRouter(
 	({deleteModalVisibility, history, question, setDeleteModalVisibility}) => {
 		const historyPushParser = historyPushWithSlug(history.push);
+		const context = useContext(AppContext);
 
 		const [deleteThread] = useMutation(deleteMessageBoardThreadQuery, {
 			onCompleted() {
 				historyPushParser(
-					`/questions/${question.messageBoardSection.title}`
+					`/questions/${
+						context.useTopicNamesInURL
+							? question.messageBoardSection.title
+							: question.messageBoardSection.id
+					}`
 				);
 			},
 			update(proxy) {

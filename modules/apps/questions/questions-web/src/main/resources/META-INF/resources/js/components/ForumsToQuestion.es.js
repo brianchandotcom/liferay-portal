@@ -37,7 +37,13 @@ export default withRouter(
 			onCompleted({messageBoardThreads}) {
 				if (messageBoardThreads.items) {
 					historyPushParser(
-						`/questions/${messageBoardThreads.items[0].messageBoardSection.title}/${messageBoardThreads.items[0].friendlyUrlPath}`
+						`/questions/${
+							context.useTopicNamesInURL
+								? messageBoardThreads.items[0]
+										.messageBoardSection.title
+								: messageBoardThreads.items[0]
+										.messageBoardSection.id
+						}/${messageBoardThreads.items[0].friendlyUrlPath}`
 					);
 				}
 			},

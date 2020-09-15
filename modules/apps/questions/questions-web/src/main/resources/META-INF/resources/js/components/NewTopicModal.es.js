@@ -30,7 +30,9 @@ export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
 	const [createNewSubTopic] = useMutation(createSubTopicQuery, {
 		onCompleted(data) {
 			onCreateNavigateTo(
-				data.createMessageBoardSectionMessageBoardSection.title
+				context.useTopicNamesInURL
+					? data.createMessageBoardSectionMessageBoardSection.title
+					: data.createMessageBoardSectionMessageBoardSection.id
 			);
 		},
 		update(proxy) {
@@ -41,7 +43,11 @@ export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
 
 	const [createNewTopic] = useMutation(createTopicQuery, {
 		onCompleted(data) {
-			onCreateNavigateTo(data.createSiteMessageBoardSection.title);
+			onCreateNavigateTo(
+				context.useTopicNamesInURL
+					? data.createMessageBoardSectionMessageBoardSection.title
+					: data.createMessageBoardSectionMessageBoardSection.id
+			);
 		},
 		update(proxy) {
 			deleteCacheVariables(proxy, 'MessageBoardSection');

@@ -47,7 +47,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 		const sections = breadcrumbNodes
 			.slice(1, breadcrumbNodes.length - 1)
 			.map((section) => {
-				return {title: section.title};
+				return {id: section.id, title: section.title};
 			});
 
 		return {subSections: sections, title: ''};
@@ -64,6 +64,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 	const buildBreadcrumbNodesData = useCallback(
 		(rootSection, section, acc = []) => {
 			acc.push({
+				id: section.id,
 				subSections: getSubSections(section),
 				title: section.title,
 			});
@@ -94,6 +95,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 							rootSection
 						).then((data) => {
 							acc.push({
+								id: data.id,
 								subSections: data.messageBoardSections.items,
 								title: rootSection,
 							});
@@ -133,9 +135,9 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 					<NewTopicModal
 						currentSectionId={section && section.id}
 						onClose={() => setVisible(false)}
-						onCreateNavigateTo={(topicName) =>
+						onCreateNavigateTo={(topic) =>
 							historyPushParser(
-								`/questions/${stringToSlug(topicName)}`
+								`/questions/${stringToSlug(topic)}`
 							)
 						}
 						visible={visible}

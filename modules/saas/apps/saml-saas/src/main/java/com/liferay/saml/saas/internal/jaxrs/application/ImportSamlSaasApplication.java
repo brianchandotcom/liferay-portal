@@ -91,12 +91,11 @@ public class ImportSamlSaasApplication extends Application {
 	public String importSamlConfiguration(
 		String data, @Context HttpServletRequest httpServletRequest) {
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
-
 		try {
 			SamlSaasConfiguration samlSaasConfiguration =
 				ConfigurationProviderUtil.getCompanyConfiguration(
-					SamlSaasConfiguration.class, companyId);
+					SamlSaasConfiguration.class,
+					_portal.getCompanyId(httpServletRequest));
 
 			if (!samlSaasConfiguration.productionEnvironment()) {
 				_log.error(
@@ -114,11 +113,9 @@ public class ImportSamlSaasApplication extends Application {
 				throw new WebApplicationException(Response.Status.NOT_FOUND);
 			}
 
-			String decryptedData = SymmetricEncryptor.decryptData(
-				samlSaasConfiguration.preSharedKey(), data);
-
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				decryptedData);
+				SymmetricEncryptor.decryptData(
+					samlSaasConfiguration.preSharedKey(), data));
 
 			_generateSamlProviderConfiguration(
 				(JSONObject)jsonObject.get("samlProviderConfiguration"));

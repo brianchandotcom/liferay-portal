@@ -4,7 +4,7 @@
 	<checkstyle>
 		<suppress checks="CamelCaseNameCheck" files="jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/.*" />
 		<suppress checks="CamelCaseNameCheck" files="jenkins-results-parser/src/test/java/com/liferay/jenkins/results/parser/.*" />
-		<suppress checks="ChainingCheck" files="poshi-runner/poshi-runner/src/main/java/com/liferay/poshi/runner/util/StringUtil\.java" />
+		<suppress checks="ChainingCheck" files="poshi/poshi-runner/src/main/java/com/liferay/poshi/runner/util/StringUtil\.java" />
 		<suppress checks="ConstantNameCheck" files="jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/AxisBuild\.java" />
 		<suppress checks="ParsePrimitiveTypeCheck" files="arquillian-extension-junit-bridge/src/main/java/com/liferay/arquillian/extension/junit/bridge/server/TestBundleActivator\.java" />
 	</checkstyle>

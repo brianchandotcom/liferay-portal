@@ -134,7 +134,7 @@ const useGetFieldValue = () => {
 		[context.collectionItem]
 	);
 
-	if (context.collectionFields !== null && context.collectionItem !== null) {
+	if (context.collectionItem) {
 		return getFromCollectionItem;
 	}
 	else {

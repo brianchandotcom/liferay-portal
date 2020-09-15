@@ -34,7 +34,7 @@ const FieldTypeWrapper = ({expanded, fieldType, showArrows, ...otherProps}) => {
 export default ({
 	deleteLabel,
 	emptyState,
-	fieldTypes: fieldTypeList,
+	fieldTypes,
 	keywords,
 	onClick,
 	onDelete,
@@ -45,7 +45,7 @@ export default ({
 		keywords.replace(new RegExp(/[^\w+ ]/g), ''),
 		'ig'
 	);
-	const fieldTypes = fieldTypeList
+	const filteredFieldTypes = fieldTypes
 		.filter(({system}) => !system)
 		.filter(({description, label}) => {
 			if (!keywords) {
@@ -55,11 +55,11 @@ export default ({
 			return regex.test(description) || regex.test(label);
 		});
 
-	if (showEmptyState && !fieldTypes.length) {
+	if (showEmptyState && !filteredFieldTypes.length) {
 		return <EmptyState emptyState={emptyState} keywords={keywords} small />;
 	}
 
-	return fieldTypes.map((fieldType, index) => {
+	return filteredFieldTypes.map((fieldType, index) => {
 		const {isFieldSet, nestedDataDefinitionFields = []} = fieldType;
 
 		const handleOnClick = (props) => {

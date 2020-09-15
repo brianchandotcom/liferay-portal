@@ -105,7 +105,7 @@ public class CommerceOrganizationClayTableDataSetDisplayView
 					_getViewOrganizationDetailURL(
 						organization.getOrganizationId(), httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "view-detail"));
+					LanguageUtil.get(httpServletRequest, "view-details"));
 			}
 		).add(
 			() -> OrganizationPermissionUtil.contains(

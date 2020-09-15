@@ -112,7 +112,7 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 					callback(selectedItem);
 				}
 			},
-			selectedEventName: this.ns('selectCollections'),
+			selectEventName: this.ns('selectCollections'),
 			title: dialogTitle,
 			url: dialogURL,
 		});

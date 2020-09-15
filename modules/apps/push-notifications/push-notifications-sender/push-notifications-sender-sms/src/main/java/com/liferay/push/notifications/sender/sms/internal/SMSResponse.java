@@ -15,31 +15,37 @@
 package com.liferay.push.notifications.sender.sms.internal;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.sender.BaseResponse;
 
-import com.twilio.sdk.resource.instance.Sms;
+import com.twilio.rest.api.v2010.account.Message;
+
+import java.math.BigDecimal;
 
 /**
  * @author Bruno Farache
  */
 public class SMSResponse extends BaseResponse {
 
-	public SMSResponse(Sms sms, JSONObject payloadJSONObject) {
+	public SMSResponse(Message message, JSONObject payloadJSONObject) {
 		super(SMSPushNotificationsSender.PLATFORM);
 
-		accountSid = sms.getAccountSid();
-		id = sms.getSid();
+		accountSid = message.getAccountSid();
+		id = message.getSid();
 		payload = payloadJSONObject.toString();
-		price = sms.getPrice();
 
-		status = sms.getStatus();
+		BigDecimal priceBigDecimal = message.getPrice();
 
-		if (Validator.isNotNull(status) && status.equals("queued")) {
+		price = priceBigDecimal.toPlainString();
+
+		Message.Status messageStatus = message.getStatus();
+
+		status = messageStatus.toString();
+
+		if (Message.Status.QUEUED.equals(messageStatus)) {
 			succeeded = true;
 		}
 
-		token = sms.getTo();
+		token = message.getTo();
 	}
 
 	public String getAccountSid() {

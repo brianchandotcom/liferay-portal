@@ -19,7 +19,7 @@ export default ({hexColor}) => (
 		<div className="col-md-1">
 			<div
 				className="color-viewer"
-				style={{backgroundColor: `#${hexColor}`}}
+				style={{backgroundColor: hexColor}}
 			></div>
 		</div>
 		<div className="color-text">{hexColor}</div>

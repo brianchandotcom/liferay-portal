@@ -31,6 +31,10 @@ public class StaticSizeTrieURLPatternMapper<T>
 		for (Map.Entry<String, T> entry : values.entrySet()) {
 			String urlPattern = entry.getKey();
 
+			if ((urlPattern == null) || (urlPattern.length() == 0)) {
+				throw new IllegalArgumentException("URL pattern is blank");
+			}
+
 			if (urlPattern.length() > maxURLPatternLength) {
 				maxURLPatternLength = urlPattern.length();
 			}

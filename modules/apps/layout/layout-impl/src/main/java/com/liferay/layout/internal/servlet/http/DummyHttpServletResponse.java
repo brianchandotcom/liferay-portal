@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.search.util;
+package com.liferay.layout.internal.servlet.http;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Pavel Savinov
  */
-public class SyntheticHttpServletResponse implements HttpServletResponse {
+public class DummyHttpServletResponse implements HttpServletResponse {
 
 	@Override
 	public void addCookie(Cookie cookie) {

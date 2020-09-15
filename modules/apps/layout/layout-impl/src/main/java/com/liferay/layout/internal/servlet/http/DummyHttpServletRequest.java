@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.search.util;
+package com.liferay.layout.internal.servlet.http;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
@@ -52,7 +52,7 @@ import javax.servlet.http.Part;
 /**
  * @author Pavel Savinov
  */
-public class SyntheticHttpServletRequest implements HttpServletRequest {
+public class DummyHttpServletRequest implements HttpServletRequest {
 
 	@Override
 	public boolean authenticate(HttpServletResponse httpServletResponse)

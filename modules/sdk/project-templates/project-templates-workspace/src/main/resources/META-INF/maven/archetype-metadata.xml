@@ -12,6 +12,7 @@
 				<include>build.gradle</include>
 				<include>gradle.properties</include>
 				<include>gradle-local.properties</include>
+				<include>platform.bndrun</include>
 				<include>settings.gradle</include>
 			</includes>
 		</fileSet>

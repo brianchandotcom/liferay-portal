@@ -26,20 +26,26 @@ import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceRequest;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.option.CommerceOptionValue;
+import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -72,23 +78,70 @@ public class ProductHelperImpl implements ProductHelper {
 				cpDefinitionMinimumPrice.format(locale), false));
 	}
 
+	/**
+	 * @param      cpInstanceId
+	 * @param      quantity
+	 * @param      commerceContext
+	 * @param      locale
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 *             #getPriceModel(long, int, CommerceContext, String, Locale)}
+	 */
+	@Deprecated
 	@Override
 	public PriceModel getPriceModel(
 			long cpInstanceId, int quantity, CommerceContext commerceContext,
 			Locale locale)
 		throws PortalException {
 
+		return getPriceModel(
+			cpInstanceId, quantity, commerceContext, StringPool.BLANK, locale);
+	}
+
+	@Override
+	public PriceModel getPriceModel(
+			long cpInstanceId, int quantity, CommerceContext commerceContext,
+			String commerceOptionValuesJSON, Locale locale)
+		throws PortalException {
+
+		final CommerceProductPriceRequest commerceProductPriceRequest =
+			new CommerceProductPriceRequest();
+
+		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);
+		commerceProductPriceRequest.setQuantity(quantity);
+		commerceProductPriceRequest.setCommerceContext(commerceContext);
+		commerceProductPriceRequest.setCommerceOptionValues(
+			_getCommerceOptionValues(cpInstanceId, commerceOptionValuesJSON));
+		commerceProductPriceRequest.setSecure(true);
+
+		boolean taxIncludedInPrice = _isTaxIncludedInPrice(
+			commerceContext.getCommerceChannelId());
+
+		commerceProductPriceRequest.setCalculateTax(taxIncludedInPrice);
+
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstanceId, quantity, true, commerceContext);
+				commerceProductPriceRequest);
 
 		if (commerceProductPrice == null) {
 			return null;
 		}
 
+		if (taxIncludedInPrice) {
+			return _getPriceModel(
+				commerceProductPrice.getFinalPriceWithTaxAmount(),
+				commerceProductPrice.getUnitPriceWithTaxAmount(),
+				commerceProductPrice.getUnitPromoPriceWithTaxAmount(),
+				commerceProductPrice.getDiscountValueWithTaxAmount(), locale);
+		}
+
 		return _getPriceModel(
-			commerceContext.getCommerceChannelId(), commerceProductPrice,
-			locale);
+			commerceProductPrice.getFinalPrice(),
+			commerceProductPrice.getUnitPrice(),
+			commerceProductPrice.getUnitPromoPrice(),
+			commerceProductPrice.getDiscountValue(), locale);
 	}
 
 	@Override
@@ -144,6 +197,21 @@ public class ProductHelperImpl implements ProductHelper {
 		return productSettingsModel;
 	}
 
+	private List<CommerceOptionValue> _getCommerceOptionValues(
+			long cpInstanceId, String ddmFormValues)
+		throws PortalException {
+
+		if (Validator.isNull(ddmFormValues)) {
+			return Collections.emptyList();
+		}
+
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		return _commerceOptionValueHelper.getCPDefinitionCommerceOptionValues(
+			cpInstance.getCPDefinitionId(), ddmFormValues);
+	}
+
 	private String[] _getFormattedDiscountPercentages(
 			BigDecimal[] discountPercentages, Locale locale)
 		throws PortalException {
@@ -188,9 +256,7 @@ public class ProductHelperImpl implements ProductHelper {
 			priceModel, commerceDiscountValue, finalPriceCommerceMoney, locale);
 	}
 
-	private PriceModel _getPriceModel(
-			long commerceChannelId, CommerceProductPrice commerceProductPrice,
-			Locale locale)
+	private boolean _isTaxIncludedInPrice(long commerceChannelId)
 		throws PortalException {
 
 		CommerceChannel commerceChannel =
@@ -199,20 +265,12 @@ public class ProductHelperImpl implements ProductHelper {
 		String priceDisplayType = commerceChannel.getPriceDisplayType();
 
 		if (priceDisplayType.equals(
-				CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE)) {
+				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 
-			return _getPriceModel(
-				commerceProductPrice.getFinalPrice(),
-				commerceProductPrice.getUnitPrice(),
-				commerceProductPrice.getUnitPromoPrice(),
-				commerceProductPrice.getDiscountValue(), locale);
+			return true;
 		}
 
-		return _getPriceModel(
-			commerceProductPrice.getFinalPriceWithTaxAmount(),
-			commerceProductPrice.getUnitPriceWithTaxAmount(),
-			commerceProductPrice.getUnitPromoPriceWithTaxAmount(),
-			commerceProductPrice.getDiscountValueWithTaxAmount(), locale);
+		return false;
 	}
 
 	private PriceModel _updatePriceModelDiscount(
@@ -244,6 +302,9 @@ public class ProductHelperImpl implements ProductHelper {
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceOptionValueHelper _commerceOptionValueHelper;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

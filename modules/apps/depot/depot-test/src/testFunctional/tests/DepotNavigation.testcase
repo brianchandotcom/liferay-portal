@@ -57,20 +57,25 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This ensures that a user can redirect to the repository via Space icon."
+	@description = "This test covers LPS-120834. It ensures that a user can not redirect to the depot via Space icon."
 	@priority = "5"
-	test AccessViaSiteNavigation {
+	test CannotAccessDepotViaSite {
 		property portal.acceptance = "true";
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
 
 		Navigator.openURL();
 
-		DepotNavigator.gotoDepotViaSpaceIcon(depotName = "Test Depot Name");
+		ProductMenuHelper.openProductMenu();
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+		ProductMenuHelper.openWorkspace();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Pause(locator1 = "3000");
+
+		AssertElementNotPresent(
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			navItem = "Asset Libraries",
+			value1 = "Asset Libraries");
 	}
 
 	@description = "This test covers LPS-104832. It ensures that the repositories can not connect to repositories."

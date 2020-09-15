@@ -145,18 +145,22 @@ public class CommerceCatalogLocalServiceImpl
 
 		validate(commerceCatalog);
 
+		long groupId = commerceCatalog.getGroupId();
+
+		// Commerce catalog
+
+		commerceCatalogPersistence.remove(commerceCatalog);
+
 		// Group
 
-		groupLocalService.deleteGroup(commerceCatalog.getGroupId());
+		groupLocalService.deleteGroup(groupId);
 
 		// Resources
 
 		resourceLocalService.deleteResource(
 			commerceCatalog, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		// Commerce catalog
-
-		return commerceCatalogPersistence.remove(commerceCatalog);
+		return commerceCatalog;
 	}
 
 	@Override

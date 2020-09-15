@@ -38,15 +38,12 @@ import java.util.Optional;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Rafael Praxedes
  */
-@RunWith(PowerMockRunner.class)
 public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 	@BeforeClass

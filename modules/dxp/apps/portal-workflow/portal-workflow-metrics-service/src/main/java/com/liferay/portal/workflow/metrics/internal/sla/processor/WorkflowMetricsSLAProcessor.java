@@ -84,7 +84,7 @@ public class WorkflowMetricsSLAProcessor {
 				workflowMetricsSLADefinitionVersion.getCalendarKey());
 		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch =
 			_createWorkflowMetricsSLAStopwatch(
-				documents, createLocalDateTime, lastCheckLocalDateTime,
+				createLocalDateTime, documents, lastCheckLocalDateTime,
 				startNodeId, workflowMetricsSLADefinitionVersion,
 				workflowMetricsSLAStatus);
 
@@ -313,7 +313,7 @@ public class WorkflowMetricsSLAProcessor {
 	}
 
 	private WorkflowMetricsSLAStopwatch _createWorkflowMetricsSLAStopwatch(
-		List<Document> documents, LocalDateTime createDateLocalDateTime,
+		LocalDateTime createDateLocalDateTime, List<Document> documents,
 		LocalDateTime lastCheckLocalDateTime, long startNodeId,
 		WorkflowMetricsSLADefinitionVersion workflowMetricsSLADefinitionVersion,
 		WorkflowMetricsSLAStatus workflowMetricsSLAStatus) {

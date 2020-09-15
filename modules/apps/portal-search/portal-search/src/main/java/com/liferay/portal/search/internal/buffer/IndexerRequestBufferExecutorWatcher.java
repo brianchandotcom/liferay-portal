@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.buffer.IndexerRequestBufferExecutor;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 
 import java.util.Map;

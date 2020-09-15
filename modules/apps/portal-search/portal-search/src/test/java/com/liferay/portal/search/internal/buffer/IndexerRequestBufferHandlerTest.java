@@ -16,9 +16,6 @@ package com.liferay.portal.search.internal.buffer;
 
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.buffer.IndexerRequest;
-import com.liferay.portal.search.buffer.IndexerRequestBuffer;
-import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 
 import java.lang.reflect.Method;
@@ -30,8 +27,6 @@ import java.util.List;
 import org.junit.Test;
 
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 /**
  * @author Bryan Engler
@@ -131,17 +126,10 @@ public class IndexerRequestBufferHandlerTest {
 		Indexer<?> indexer = Mockito.mock(Indexer.class);
 
 		Mockito.doAnswer(
-			new Answer<Object>() {
+			invocationOnMock -> {
+				deepReindex();
 
-				@Override
-				public Object answer(InvocationOnMock invocationOnMock)
-					throws Exception {
-
-					deepReindex();
-
-					return null;
-				}
-
+				return null;
 			}
 		).when(
 			indexer

@@ -30,11 +30,11 @@ import java.util.Locale;
 @ProviderType
 public interface ProductHelper {
 
-	public PriceModel getMinPrice(
+	public PriceModel getMinPriceModel(
 			long cpDefinitionId, CommerceContext commerceContext, Locale locale)
 		throws PortalException;
 
-	public PriceModel getPrice(
+	public PriceModel getPriceModel(
 			long cpInstanceId, int quantity, CommerceContext commerceContext,
 			Locale locale)
 		throws PortalException;

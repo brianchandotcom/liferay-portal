@@ -36,7 +36,6 @@ import com.liferay.saml.runtime.configuration.SamlConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
 import com.liferay.saml.saas.internal.configuration.SamlSaasConfiguration;
-import com.liferay.saml.saas.internal.constants.JSONKeys;
 import com.liferay.saml.saas.internal.util.SymmetricEncryptor;
 
 import java.io.ByteArrayInputStream;
@@ -122,25 +121,24 @@ public class ImportSamlSaasApplication extends Application {
 				decryptedData);
 
 			_generateSamlProviderConfiguration(
-				(JSONObject)jsonObject.get(
-					JSONKeys.SAML_PROVIDER_CONFIGURATION));
+				(JSONObject)jsonObject.get("samlProviderConfiguration"));
 
 			_generateSamlSpIdpConnections(
 				httpServletRequest,
-				(JSONArray)jsonObject.get(JSONKeys.SAML_SP_IDP_CONNECTIONS));
+				(JSONArray)jsonObject.get("samlSpIdpConnections"));
 
-			_generateKeystore((String)jsonObject.get(JSONKeys.SAML_KEYSTORE));
+			_generateKeystore((String)jsonObject.get("samlKeystore"));
 		}
 		catch (Exception exception) {
 			_log.error("Unable to import SAML configuration data", exception);
 
 			return JSONUtil.put(
-				JSONKeys.RESULT, JSONKeys.RESULT_ERROR
+				"result", "resultError"
 			).toString();
 		}
 
 		return JSONUtil.put(
-			JSONKeys.RESULT, JSONKeys.RESULT_SUCCESS
+			"result", "resultSuccess"
 		).toString();
 	}
 
@@ -315,8 +313,7 @@ public class ImportSamlSaasApplication extends Application {
 			samlSpIdpConnection.setUserAttributeMappings(userAttributeMappings);
 
 			JSONObject expandoValuesJsonObject =
-				samlSpIdpConnectionJsonObject.getJSONObject(
-					JSONKeys.EXPANDO_VALUES);
+				samlSpIdpConnectionJsonObject.getJSONObject("expandoValues");
 			ExpandoBridge expandoBridge =
 				samlSpIdpConnection.getExpandoBridge();
 

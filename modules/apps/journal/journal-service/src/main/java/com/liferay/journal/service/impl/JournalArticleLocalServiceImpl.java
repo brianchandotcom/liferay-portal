@@ -41,6 +41,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
@@ -4205,8 +4206,18 @@ public class JournalArticleLocalServiceImpl
 				article.getGroupId(), JournalArticle.class,
 				article.getUrlTitle());
 
-		friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
-			friendlyURLEntry.getFriendlyURLEntryId(), languageId);
+		if (friendlyURLEntry == null) {
+			return article;
+		}
+
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
+				friendlyURLEntry.getFriendlyURLEntryId(), languageId);
+
+		if (friendlyURLEntryLocalization != null) {
+			friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
+				friendlyURLEntry.getFriendlyURLEntryId(), languageId);
+		}
 
 		return article;
 	}

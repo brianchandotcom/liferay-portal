@@ -17,6 +17,7 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -31,6 +32,7 @@ import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,10 +110,24 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 				ctCollectionId, themeDisplay.getUserId(), publishDate);
 		}
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		if (Validator.isNotNull(redirect)) {
-			sendRedirect(actionRequest, actionResponse, redirect);
+		if (actionName.equals("/change_lists/unschedule_publication")) {
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+		}
+		else {
+			LiferayPortletResponse liferayPortletResponse =
+				_portal.getLiferayPortletResponse(actionResponse);
+
+			PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+			redirectURL.setParameter(
+				"mvcRenderCommandName", "/change_lists/view_scheduled");
+
+			sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 		}
 	}
 

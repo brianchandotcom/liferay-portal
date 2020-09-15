@@ -2069,6 +2069,12 @@ definition {
 			value1 = "${relatedAssetTitle}");
 	}
 
+	macro viewRepeatedField {
+		AssertElementPresent(locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)");
+
+		AssertElementPresent(locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)");
+	}
+
 	macro viewRTLLayout {
 		AssertCssValue(
 			locator1 = "TextInput#TITLE",

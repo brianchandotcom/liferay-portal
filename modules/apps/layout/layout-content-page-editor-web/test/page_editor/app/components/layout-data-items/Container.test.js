@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, waitForElement} from '@testing-library/react';
 import React from 'react';
 
 import Container from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/Container';
@@ -57,13 +57,15 @@ const renderContainer = (config) => {
 describe('Container', () => {
 	afterEach(cleanup);
 
-	it('wraps the container inside a link if configuration is specified', () => {
+	it('wraps the container inside a link if configuration is specified', async () => {
 		const link = renderContainer({
 			link: {
 				href: 'https://sandro.vero.victor.com',
 				target: '_blank',
 			},
 		}).getByRole('link');
+
+		await waitForElement(() => link);
 
 		expect(link.href).toBe('https://sandro.vero.victor.com/');
 		expect(link.target).toBe('_blank');

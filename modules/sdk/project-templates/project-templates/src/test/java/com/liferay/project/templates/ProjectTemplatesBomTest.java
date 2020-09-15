@@ -57,14 +57,6 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
-	private void _resolveProject(String projectName, File workspaceDir)
-		throws IOException {
-
-		executeGradle(
-			workspaceDir, _gradleDistribution,
-			":modules:" + projectName + "test" + _GRADLE_TASK_PATH_RESOLVE);
-	}
-
 	@Test
 	public void testBomVersion() throws Exception {
 		Assume.assumeTrue(_isBomTest());
@@ -189,6 +181,12 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		if (!template.contains("war")) {
 			_resolveProject(template, workspaceDir);
 		}
+	}
+
+	private void _resolveProject(String projectName, File workspaceDir) {
+		executeGradle(
+			workspaceDir, _gradleDistribution,
+			":modules:" + projectName + "test" + _GRADLE_TASK_PATH_RESOLVE);
 	}
 
 	private static final String _BOM_VERSION = System.getProperty(

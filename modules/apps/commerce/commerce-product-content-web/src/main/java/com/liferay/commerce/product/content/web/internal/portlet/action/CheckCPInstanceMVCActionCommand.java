@@ -27,6 +27,7 @@ import com.liferay.commerce.frontend.model.PriceModel;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
@@ -135,7 +136,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 				PriceModel priceModel = _productHelper.getPriceModel(
 					cpInstance.getCPInstanceId(), quantity, commerceContext,
-					themeDisplay.getLocale());
+					ddmFormValues, themeDisplay.getLocale());
 
 				jsonObject.put(
 					"prices",
@@ -205,6 +206,9 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckCPInstanceMVCActionCommand.class);
+
+	@Reference
+	private CommerceOptionValueHelper _commerceOptionValueHelper;
 
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;

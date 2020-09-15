@@ -109,15 +109,16 @@ public class UpstreamFailureUtil {
 		}
 
 		try {
-			if (!_isBuildFailingInUpstreamJob(build)) {
-				return false;
+			List<TestResult> testResults = new ArrayList<>();
+
+			testResults.addAll(build.getTestResults("FAILED"));
+			testResults.addAll(build.getTestResults("REGRESSION"));
+
+			if (testResults.isEmpty()) {
+				return _isBuildFailingInUpstreamJob(build);
 			}
 
-			for (TestResult testResult : build.getTestResults(null)) {
-				if (!testResult.isFailing()) {
-					continue;
-				}
-
+			for (TestResult testResult : testResults) {
 				if (testResult.isUniqueFailure()) {
 					return false;
 				}

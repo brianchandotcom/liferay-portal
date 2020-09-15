@@ -17,6 +17,7 @@ package com.liferay.commerce.theme.minium.full.site.initializer.internal;
 import com.liferay.commerce.theme.minium.SiteInitializerDependencyResolver;
 import com.liferay.commerce.theme.minium.SiteInitializerDependencyResolverThreadLocal;
 import com.liferay.commerce.theme.minium.full.site.initializer.internal.importer.CommerceMLForecastImporter;
+import com.liferay.commerce.theme.minium.full.site.initializer.internal.importer.CommerceMLRecommendationImporter;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -90,6 +91,8 @@ public class MiniumFullSiteInitializer implements SiteInitializer {
 
 			_importCommerceMLForecasts(groupId);
 
+			_importCommerceMLRecommendations(groupId);
+
 			fixDLFileEntryPermissions(groupId);
 		}
 		catch (InitializationException initializationException) {
@@ -148,11 +151,25 @@ public class MiniumFullSiteInitializer implements SiteInitializer {
 			jsonArray, groupId, user.getUserId());
 	}
 
+	private void _importCommerceMLRecommendations(long groupId)
+		throws Exception {
+
+		JSONArray jsonArray = _getJSONArray("recommendations.json");
+
+		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
+
+		_commerceMLRecommendationImporter.importCommerceMLRecommendations(
+			jsonArray, "MIN", groupId, user.getUserId());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MiniumFullSiteInitializer.class);
 
 	@Reference
 	private CommerceMLForecastImporter _commerceMLForecastImporter;
+
+	@Reference
+	private CommerceMLRecommendationImporter _commerceMLRecommendationImporter;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

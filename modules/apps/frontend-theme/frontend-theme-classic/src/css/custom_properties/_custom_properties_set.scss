@@ -53,7 +53,9 @@ body,
 
 @each $key, $map in $custom-properties-button-maps {
 	.btn-#{$key} {
-		@include clay-button-variant($map);
+		&:not(.btn-outline-borderless) {
+			@include clay-button-variant($map);
+		}
 	}
 }
 

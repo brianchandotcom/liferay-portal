@@ -93,6 +93,15 @@ public class SimpleURLPatternMapperTest {
 			).build());
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testPutWithNullPattern() {
+		HashMap<String, String> map = new HashMap<>();
+
+		map.put(null, "null");
+
+		createURLPatternMapper(map);
+	}
+
 	protected URLPatternMapper<String> createURLPatternMapper(
 		Map<String, String> values) {
 

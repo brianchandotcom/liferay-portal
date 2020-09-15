@@ -14,8 +14,6 @@
 
 package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
-import com.liferay.portal.kernel.util.Validator;
-
 /**
  * @author Carlos Sierra Andrés
  * @author Arthur Chan
@@ -53,7 +51,7 @@ public abstract class BaseTrieURLPatternMapper<T>
 	protected void put(String urlPattern, T value)
 		throws IllegalArgumentException {
 
-		if (Validator.isBlank(urlPattern)) {
+		if ((urlPattern == null) || (urlPattern.length() == 0)) {
 			throw new IllegalArgumentException("URL pattern is blank");
 		}
 

@@ -110,7 +110,6 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 				ctCollectionId, themeDisplay.getUserId(), publishDate);
 		}
 
-
 		if (actionName.equals("/change_lists/unschedule_publication")) {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

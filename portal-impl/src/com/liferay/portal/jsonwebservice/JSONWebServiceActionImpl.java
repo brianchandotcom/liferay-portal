@@ -199,10 +199,11 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					inputObject.toString());
 			}
 
-			outputObject = TypeConverterManager.get(
-			).convertType(
-				inputObject, targetType
-			);
+			TypeConverterManager typeConverterManager =
+				TypeConverterManager.get();
+
+			outputObject = typeConverterManager.convertType(
+				inputObject, targetType);
 		}
 		catch (TypeConversionException typeConversionException) {
 			if (inputObject instanceof Map) {

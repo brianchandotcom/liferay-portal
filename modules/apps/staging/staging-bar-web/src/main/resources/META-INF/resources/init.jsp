@@ -73,7 +73,6 @@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.util.comparator.LayoutRevisionCreateDateComparator" %><%@
-page import="com.liferay.portal.kernel.util.comparator.LayoutRevisionIdComparator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@

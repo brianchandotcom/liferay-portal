@@ -15,7 +15,9 @@
 package com.liferay.product.navigation.product.menu.web.internal.servlet.taglib;
 
 import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
@@ -41,6 +43,7 @@ import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,6 +85,10 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 		if ((_isApplicationsMenuApp(themeDisplay) || scopeGroup.isDepot()) &&
 			_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
 
+			return;
+		}
+
+		if (!_hasPanelApps(themeDisplay)) {
 			return;
 		}
 
@@ -144,6 +151,27 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 	@Modified
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	private boolean _hasPanelApps(ThemeDisplay themeDisplay) {
+		List<PanelCategory> childPanelCategories =
+			_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup());
+
+		if (!_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
+			childPanelCategories.addAll(
+				_panelCategoryRegistry.getChildPanelCategories(
+					PanelCategoryKeys.APPLICATIONS_MENU,
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroup()));
+		}
+
+		if (childPanelCategories.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isApplicationsMenuApp(ThemeDisplay themeDisplay) {

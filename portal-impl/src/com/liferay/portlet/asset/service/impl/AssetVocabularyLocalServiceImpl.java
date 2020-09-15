@@ -373,6 +373,13 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetVocabulary> getGroupVocabularies(
+		long[] groupIds, int[] visibilityTypes) {
+
+		return assetVocabularyPersistence.findByG_V(groupIds, visibilityTypes);
+	}
+
+	@Override
 	public int getGroupVocabulariesCount(long[] groupIds) {
 		return assetVocabularyPersistence.countByGroupId(groupIds);
 	}

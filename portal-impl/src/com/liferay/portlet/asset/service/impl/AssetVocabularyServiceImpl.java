@@ -273,6 +273,14 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	}
 
 	@Override
+	public List<AssetVocabulary> getGroupVocabularies(
+		long[] groupIds, int[] visibilityTypes) {
+
+		return assetVocabularyLocalService.getGroupVocabularies(
+			groupIds, visibilityTypes);
+	}
+
+	@Override
 	public int getGroupVocabulariesCount(long groupId) {
 		return assetVocabularyPersistence.filterCountByGroupId(groupId);
 	}

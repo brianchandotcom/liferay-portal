@@ -121,7 +121,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarEvent.delete();
+		CalendarEvent.tearDownNoCloseMessage();
 
 		Calendar.tearDown();
 

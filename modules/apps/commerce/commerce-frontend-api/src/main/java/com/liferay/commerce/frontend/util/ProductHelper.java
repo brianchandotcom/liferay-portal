@@ -26,6 +26,7 @@ import java.util.Locale;
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 @ProviderType
 public interface ProductHelper {
@@ -34,9 +35,26 @@ public interface ProductHelper {
 			long cpDefinitionId, CommerceContext commerceContext, Locale locale)
 		throws PortalException;
 
+	/**
+	 * @param      cpInstanceId
+	 * @param      quantity
+	 * @param      commerceContext
+	 * @param      locale
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 *             #getPriceModel(long, int, CommerceContext, String, Locale)}
+	 */
+	@Deprecated
 	public PriceModel getPriceModel(
 			long cpInstanceId, int quantity, CommerceContext commerceContext,
 			Locale locale)
+		throws PortalException;
+
+	public PriceModel getPriceModel(
+			long cpInstanceId, int quantity, CommerceContext commerceContext,
+			String commerceOptionValuesJSON, Locale locale)
 		throws PortalException;
 
 	public ProductSettingsModel getProductSettingsModel(long cpInstanceId)

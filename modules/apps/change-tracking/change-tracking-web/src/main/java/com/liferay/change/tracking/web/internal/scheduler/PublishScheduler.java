@@ -25,6 +25,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
@@ -163,9 +164,13 @@ public class PublishScheduler {
 
 		_ctCollectionLocalService.updateCTCollection(ctCollection);
 
-		_schedulerEngineHelper.delete(
-			jobName, CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
-			StorageType.PERSISTED);
+		try (SafeClosable safeClosable =
+				ProxyModeThreadLocal.setWithSafeClosable(true)) {
+
+			_schedulerEngineHelper.delete(
+				jobName, CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
+				StorageType.PERSISTED);
+		}
 	}
 
 	private Void _schedulePublish(

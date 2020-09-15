@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Site Insurance Site Initializer
+Bundle-SymbolicName: com.liferay.site.insurance.site.initializer
+Bundle-Version: 1.0.0
+Web-ContextPath: /site-insurance-site-initializer

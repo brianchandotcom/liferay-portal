@@ -91,23 +91,15 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		if (isSet(depotName)) {
-			Navigator.gotoNavItem(navItem = "Asset Libraries");
+		Navigator.gotoNavItem(navItem = "My Sites");
 
-			LexiconCard.clickCard(card = "${depotName}");
-		}
-		else {
+		SiteSelector.selectSite(site = "${site}");
 
-			Navigator.gotoNavItem(navItem = "My Sites");
+		ProductMenuHelper.openProductMenu();
 
-			SiteSelector.selectSite(site = "${site}");
-
-			ProductMenuHelper.openProductMenu();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-				value1 = "${site}");
-		}
+		AssertTextEquals.assertPartialText(
+			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
+			value1 = "${site}");
 	}
 
 	@summary = "Navigate to ${site} via the 'Home' link"

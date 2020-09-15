@@ -96,8 +96,8 @@ public class Sidecar {
 	}
 
 	public void start() {
-		if (_log.isInfoEnabled()) {
-			_log.info("Starting sidecar Elasticsearch");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Sidecar Elasticsearch liferay started");
 		}
 
 		_installElasticsearchIfNeeded();
@@ -115,7 +115,7 @@ public class Sidecar {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Sidecar Elasticsearch ", getNodeName(), " is at ",
+					"Sidecar Elasticsearch ", getNodeName(), " started at ",
 					address));
 		}
 
@@ -558,8 +558,8 @@ public class Sidecar {
 
 		sb.setStringAt(StringPool.CLOSE_CURLY_BRACE, sb.index() - 1);
 
-		if (_log.isInfoEnabled()) {
-			_log.info(sb.toString());
+		if (_log.isDebugEnabled()) {
+			_log.debug(sb.toString());
 		}
 
 		return arguments.toArray(new String[0]);

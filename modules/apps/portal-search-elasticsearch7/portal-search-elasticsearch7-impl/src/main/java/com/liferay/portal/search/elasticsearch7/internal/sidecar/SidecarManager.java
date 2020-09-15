@@ -95,7 +95,7 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 				ConnectionConstants.SIDECAR_CONNECTION_ID);
 		}
 		else {
-			if (_log.isWarnEnabled()) {
+			if (_log.isDebugEnabled()) {
 				StringBundler sb = new StringBundler(8);
 
 				sb.append("Liferay is configured to use Elasticsearch engine ");
@@ -107,7 +107,7 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 				sb.append("sidecar. Remote Elasticsearch connections can be ");
 				sb.append("configured in the Control Panel.");
 
-				_log.warn(sb.toString());
+				_log.debug(sb.toString());
 			}
 
 			if (_sidecar != null) {

@@ -38,6 +38,8 @@ if (Validator.isNotNull(layoutUuid)) {
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 %>
 
+<p class="text-secondary"><liferay-ui:message key="changing-the-display-page-template-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft" /></p>
+
 <c:if test="<%= Validator.isNotNull(layoutUuid) && (articleLayout == null) %>">
 	<div class="alert alert-warning">
 		<liferay-ui:message arguments="<%= layoutUuid %>" key="this-article-is-configured-to-use-a-display-page-that-does-not-exist-on-the-current-site" />

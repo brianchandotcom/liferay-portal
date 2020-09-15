@@ -157,7 +157,7 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 		jsonObject.put(
 			"samlProviderConfiguration", _getSamlProviderConfiguration()
 		).put(
-			"samlSpIdpConnections", _getSpIdpConnections(companyId)
+			"samlSpIdpConnections", _getSamlSpIdpConnections(companyId)
 		);
 
 		try {
@@ -232,25 +232,7 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 		);
 	}
 
-	private JSONObject _getSpIdpConnectionExpandoValues(
-		SamlSpIdpConnection samlSpIdpConnection) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		ExpandoBridge expandoBridge = samlSpIdpConnection.getExpandoBridge();
-
-		Enumeration<String> enumeration = expandoBridge.getAttributeNames();
-
-		while (enumeration.hasMoreElements()) {
-			String name = enumeration.nextElement();
-
-			jsonObject.put(name, expandoBridge.getAttribute(name, false));
-		}
-
-		return jsonObject;
-	}
-
-	private JSONArray _getSpIdpConnections(long companyId) {
+	private JSONArray _getSamlSpIdpConnections(long companyId) {
 		JSONArray samlSpIdpConnectionsJsonArray =
 			JSONFactoryUtil.createJSONArray();
 
@@ -301,6 +283,24 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return samlSpIdpConnectionsJsonArray;
+	}
+
+	private JSONObject _getSpIdpConnectionExpandoValues(
+		SamlSpIdpConnection samlSpIdpConnection) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		ExpandoBridge expandoBridge = samlSpIdpConnection.getExpandoBridge();
+
+		Enumeration<String> enumeration = expandoBridge.getAttributeNames();
+
+		while (enumeration.hasMoreElements()) {
+			String name = enumeration.nextElement();
+
+			jsonObject.put(name, expandoBridge.getAttribute(name, false));
+		}
+
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

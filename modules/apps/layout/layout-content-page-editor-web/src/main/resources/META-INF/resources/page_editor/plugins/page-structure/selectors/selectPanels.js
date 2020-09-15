@@ -149,13 +149,17 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.collection) {
 		panelsIds = {
-			[PANEL_IDS.collectionGeneral]: canUpdateItemConfiguration,
+			[PANEL_IDS.collectionGeneral]:
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
+				canUpdateItemConfiguration,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
 		panelsIds = {
 			[PANEL_IDS.containerStyles]: canUpdateItemConfiguration,
-			[PANEL_IDS.containerLink]: canUpdateItemConfiguration,
+			[PANEL_IDS.containerLink]:
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
+				canUpdateItemConfiguration,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.fragment) {

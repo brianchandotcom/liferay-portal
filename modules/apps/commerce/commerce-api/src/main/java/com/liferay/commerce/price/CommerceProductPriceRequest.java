@@ -17,7 +17,10 @@ package com.liferay.commerce.price;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.option.CommerceOptionValue;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Riccardo Alberti
@@ -59,7 +62,9 @@ public class CommerceProductPriceRequest {
 	public void setCommerceOptionValues(
 		List<CommerceOptionValue> commerceOptionValues) {
 
-		_commerceOptionValues = commerceOptionValues;
+		Objects.requireNonNull(commerceOptionValues);
+
+		_commerceOptionValues = new ArrayList<>(commerceOptionValues);
 	}
 
 	public void setCpInstanceId(long cpInstanceId) {
@@ -76,7 +81,8 @@ public class CommerceProductPriceRequest {
 
 	private boolean _calculateTax;
 	private CommerceContext _commerceContext;
-	private List<CommerceOptionValue> _commerceOptionValues;
+	private List<CommerceOptionValue> _commerceOptionValues =
+		Collections.emptyList();
 	private long _cpInstanceId;
 	private int _quantity;
 	private boolean _secure;

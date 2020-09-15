@@ -377,15 +377,22 @@ function MappingFieldSelect({fieldSets, fieldType, onValueSelect, value}) {
 						/>
 
 						{fieldSets.map((fieldSet, index) => {
-							const Wrapper = fieldSet.label
-								? ClaySelect.OptGroup
-								: React.Fragment;
+							const key = `${fieldSet.label || ''}${index}`;
+
+							const Wrapper = ({children, props}) => {
+								return fieldSet.label ? (
+									<ClaySelect.OptGroup {...props}>
+										{children}
+									</ClaySelect.OptGroup>
+								) : (
+									<React.Fragment key={key}>
+										{children}
+									</React.Fragment>
+								);
+							};
 
 							return (
-								<Wrapper
-									key={`${fieldSet.label || ''}${index}`}
-									label={fieldSet.label}
-								>
+								<Wrapper key={key} label={fieldSet.label}>
 									{fieldSet.fields.map((field) => (
 										<ClaySelect.Option
 											key={field.key}

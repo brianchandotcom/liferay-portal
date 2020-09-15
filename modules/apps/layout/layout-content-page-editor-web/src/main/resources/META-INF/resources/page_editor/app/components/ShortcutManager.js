@@ -24,6 +24,7 @@ import {
 	Z_KEYCODE,
 } from '../config/constants/keycodes';
 import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
+import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
@@ -58,6 +59,8 @@ export default function ShortcutManager() {
 	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
 	const selectItem = useSelectItem();
+
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 
@@ -152,6 +155,7 @@ export default function ShortcutManager() {
 		duplicate: {
 			action: duplicate,
 			canBeExecuted: () =>
+				canUpdatePageStructure &&
 				!!layoutData.items[activeItemId] &&
 				canBeDuplicated(
 					fragmentEntryLinks,
@@ -165,6 +169,7 @@ export default function ShortcutManager() {
 		move: {
 			action: move,
 			canBeExecuted: (event) =>
+				canUpdatePageStructure &&
 				!!layoutData.items[activeItemId] &&
 				!isEditableField(event.target) &&
 				!isInteractiveElement(event.target),
@@ -175,6 +180,7 @@ export default function ShortcutManager() {
 		remove: {
 			action: remove,
 			canBeExecuted: (event) =>
+				canUpdatePageStructure &&
 				!!layoutData.items[activeItemId] &&
 				canBeRemoved(layoutData.items[activeItemId], layoutData) &&
 				!isEditableField(event.target) &&
@@ -184,6 +190,7 @@ export default function ShortcutManager() {
 		save: {
 			action: save,
 			canBeExecuted: () =>
+				canUpdatePageStructure &&
 				!!layoutData.items[activeItemId] &&
 				canBeSaved(layoutData.items[activeItemId], layoutData),
 			isKeyCombination: (event) =>

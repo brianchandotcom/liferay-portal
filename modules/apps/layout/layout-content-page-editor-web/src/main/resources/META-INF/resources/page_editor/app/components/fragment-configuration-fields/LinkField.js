@@ -22,6 +22,7 @@ import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import InfoItemService from '../../services/InfoItemService';
 import {useSelector} from '../../store/index';
+import isMapped from '../../utils/isMapped';
 import {useId} from '../../utils/useId';
 
 const SOURCE_OPTIONS = {
@@ -63,7 +64,7 @@ export default function LinkField({field, onValueSelect, value}) {
 	const languageId = useSelector((state) => state.languageId);
 
 	const [source, setSource] = useState(
-		value.fieldId || value.mappedField
+		isMapped(value)
 			? SOURCE_OPTIONS.fromContentField.value
 			: SOURCE_OPTIONS.manual.value
 	);

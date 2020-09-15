@@ -58,9 +58,9 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Riccardo Alberti
@@ -257,7 +257,9 @@ public class CommerceProductPriceCalculationV2Impl
 			commerceMoneyFactory.create(
 				commerceContext.getCommerceCurrency(), finalPrice));
 
-		if (commerceProductPriceRequest.isCalculateTax()) {
+		if (commerceProductPriceRequest.isCalculateTax() ||
+			_hasGrossPricePriceList(cpInstanceId, commerceContext)) {
+
 			setCommerceProductPriceWithTaxAmount(
 				cpInstanceId, finalPriceWithTaxAmount, commerceProductPriceImpl,
 				commerceContext, commerceDiscountValue,
@@ -273,40 +275,6 @@ public class CommerceProductPriceCalculationV2Impl
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		boolean calculateTax = false;
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannel(
-				commerceContext.getCommerceChannelId());
-
-		if (commerceChannel != null) {
-			calculateTax = Objects.equals(
-				commerceChannel.getPriceDisplayType(),
-				CommercePricingConstants.TAX_INCLUDED_IN_PRICE);
-		}
-
-		long commercePriceListId = _getCommercePriceListId(
-			cpInstanceId, commerceContext);
-
-		if (commercePriceListId > 0) {
-			CommercePriceList commercePriceList =
-				_commercePriceListLocalService.getCommercePriceList(
-					commercePriceListId);
-
-			calculateTax = calculateTax || !commercePriceList.isNetPrice();
-		}
-
-		long commercePromoPriceListId = _getCommercePromoPriceListId(
-			cpInstanceId, commerceContext);
-
-		if (commercePromoPriceListId > 0) {
-			CommercePriceList commercePromotion =
-				_commercePriceListLocalService.getCommercePriceList(
-					commercePromoPriceListId);
-
-			calculateTax = calculateTax || !commercePromotion.isNetPrice();
-		}
-
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
 
@@ -314,8 +282,8 @@ public class CommerceProductPriceCalculationV2Impl
 		commerceProductPriceRequest.setQuantity(quantity);
 		commerceProductPriceRequest.setSecure(secure);
 		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(null);
-		commerceProductPriceRequest.setCalculateTax(calculateTax);
+		commerceProductPriceRequest.setCommerceOptionValues(
+			Collections.emptyList());
 
 		return getCommerceProductPrice(commerceProductPriceRequest);
 	}
@@ -1086,6 +1054,31 @@ public class CommerceProductPriceCalculationV2Impl
 		return _getCommerceMoney(
 			commercePriceListId, commerceContext.getCommerceCurrency(),
 			unitPrice);
+	}
+
+	private boolean _hasGrossPricePriceList(
+			long cpInstanceId, CommerceContext commerceContext)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			_commercePriceListLocalService.fetchCommercePriceList(
+				_getCommercePriceListId(cpInstanceId, commerceContext));
+
+		if ((commercePriceList != null) && !commercePriceList.isNetPrice()) {
+			return true;
+		}
+
+		CommercePriceList commercePromoPriceList =
+			_commercePriceListLocalService.fetchCommercePriceList(
+				_getCommercePromoPriceListId(cpInstanceId, commerceContext));
+
+		if ((commercePromoPriceList != null) &&
+			!commercePromoPriceList.isNetPrice()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);

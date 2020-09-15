@@ -51,6 +51,8 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 				"tagSelectorURL", renderRequest.getAttribute(QuestionsWebKeys.TAG_SELECTOR_URL)
 			).put(
 				"userId", String.valueOf(themeDisplay.getUserId())
+			).put(
+				"useTopicNamesInURL", questionsConfiguration.useTopicNamesInURL()
 			).build()
 		%>'
 	/>

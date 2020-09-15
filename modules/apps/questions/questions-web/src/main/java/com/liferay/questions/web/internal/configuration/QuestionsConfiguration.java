@@ -42,6 +42,9 @@ public interface QuestionsConfiguration {
 	)
 	public boolean showCardsForTopicNavigation();
 
+	@Meta.AD(deflt = "true", name = "use-topic-names-in-url", required = false)
+	public boolean useTopicNamesInURL();
+
 	@Meta.AD(
 		deflt = "0",
 		description = "specify-the-message-boards-category-id-that-acts-as-the-root-topic",

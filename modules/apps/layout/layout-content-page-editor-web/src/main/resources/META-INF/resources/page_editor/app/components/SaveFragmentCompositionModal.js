@@ -153,7 +153,7 @@ const SaveFragmentCompositionModal = ({onCloseModal, open}) => {
 									placeholder={Liferay.Language.get('name')}
 									required
 									type="text"
-									value={name}
+									value={name || ''}
 								/>
 
 								{name === '' && (

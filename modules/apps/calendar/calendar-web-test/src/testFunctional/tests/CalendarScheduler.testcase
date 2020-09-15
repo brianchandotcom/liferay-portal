@@ -109,7 +109,7 @@ definition {
 				eventTitle = "Calendar Event ${minutes} Minutes Title",
 				minutes = "${minutes}");
 
-			CalendarEvent.delete();
+			CalendarEvent.tearDownNoCloseMessage();
 		}
 	}
 

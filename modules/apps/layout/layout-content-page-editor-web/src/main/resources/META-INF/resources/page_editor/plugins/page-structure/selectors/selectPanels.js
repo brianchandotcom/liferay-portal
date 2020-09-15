@@ -12,7 +12,6 @@
  * details.
  */
 
-import isMapped from '../../../app/components/fragment-content/isMapped';
 import {EDITABLE_TYPES} from '../../../app/config/constants/editableTypes';
 import {FRAGMENT_CONFIGURATION_ROLES} from '../../../app/config/constants/fragmentConfigurationRoles';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
@@ -21,6 +20,7 @@ import {VIEWPORT_SIZES} from '../../../app/config/constants/viewportSizes';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
 import selectEditableValue from '../../../app/selectors/selectEditableValue';
+import isMapped from '../../../app/utils/isMapped';
 import {CollectionGeneralPanel} from '../components/item-configuration-panels/CollectionGeneralPanel';
 import ContainerLinkPanel from '../components/item-configuration-panels/ContainerLinkPanel';
 import {ContainerStylesPanel} from '../components/item-configuration-panels/ContainerStylesPanel';

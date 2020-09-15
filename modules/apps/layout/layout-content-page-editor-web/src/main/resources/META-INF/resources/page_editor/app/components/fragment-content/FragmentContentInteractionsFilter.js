@@ -23,6 +23,7 @@ import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import {useSelector, useSelectorCallback} from '../../store/index';
 import {deepEqual} from '../../utils/checkDeepEqual';
+import isMapped from '../../utils/isMapped';
 import {useToControlsId} from '../CollectionItemContext';
 import {
 	useActivationOrigin,
@@ -36,7 +37,6 @@ import {
 } from '../Controls';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import {getEditableElement} from './getEditableElement';
-import isMapped from './isMapped';
 
 const EDITABLE_CLASS_NAMES = {
 	active: 'page-editor__editable--active',

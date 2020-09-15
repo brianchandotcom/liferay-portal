@@ -15,13 +15,13 @@
 import React from 'react';
 
 import {useCollectionConfig} from '../../../../app/components/CollectionItemContext';
-import isMapped from '../../../../app/components/fragment-content/isMapped';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
 import selectEditableValue from '../../../../app/selectors/selectEditableValue';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValues from '../../../../app/thunks/updateEditableValues';
+import isMapped from '../../../../app/utils/isMapped';
 import MappingSelector from '../../../../common/components/MappingSelector';
 import {getEditableItemPropTypes} from '../../../../prop-types/index';
 

@@ -133,7 +133,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 					"displayDiscountLevels",
 					commercePriceConfiguration.displayDiscountLevels());
 
-				PriceModel priceModel = _productHelper.getPrice(
+				PriceModel priceModel = _productHelper.getPriceModel(
 					cpInstance.getCPInstanceId(), quantity, commerceContext,
 					themeDisplay.getLocale());
 

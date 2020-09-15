@@ -222,7 +222,7 @@ public class MiniumCPContentListEntryRenderer
 			ProductSettingsModel productSettingsModel =
 				_productHelper.getProductSettingsModel(cpSku.getCPInstanceId());
 
-			PriceModel priceModel = _productHelper.getPrice(
+			PriceModel priceModel = _productHelper.getPriceModel(
 				cpSku.getCPInstanceId(), productSettingsModel.getMinQuantity(),
 				commerceContext, themeDisplay.getLocale());
 
@@ -268,7 +268,7 @@ public class MiniumCPContentListEntryRenderer
 			}
 		}
 		else if (hasChildCPDefinitions) {
-			PriceModel priceModel = _productHelper.getMinPrice(
+			PriceModel priceModel = _productHelper.getMinPriceModel(
 				cpCatalogEntry.getCPDefinitionId(), commerceContext,
 				themeDisplay.getLocale());
 

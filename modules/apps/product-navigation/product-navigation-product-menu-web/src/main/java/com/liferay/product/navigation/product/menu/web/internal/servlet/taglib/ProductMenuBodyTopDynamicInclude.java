@@ -88,7 +88,7 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		if (!_hasPanelApps(themeDisplay)) {
+		if (!_hasPanelCategories(themeDisplay)) {
 			return;
 		}
 
@@ -153,25 +153,29 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 		_bundleContext = bundleContext;
 	}
 
-	private boolean _hasPanelApps(ThemeDisplay themeDisplay) {
+	private boolean _hasPanelCategories(ThemeDisplay themeDisplay) {
 		List<PanelCategory> childPanelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
 				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
 
+		if (!childPanelCategories.isEmpty()) {
+			return true;
+		}
+
 		if (!_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
-			childPanelCategories.addAll(
+			childPanelCategories =
 				_panelCategoryRegistry.getChildPanelCategories(
 					PanelCategoryKeys.APPLICATIONS_MENU,
 					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroup()));
+					themeDisplay.getScopeGroup());
+
+			if (!childPanelCategories.isEmpty()) {
+				return true;
+			}
 		}
 
-		if (childPanelCategories.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	private boolean _isApplicationsMenuApp(ThemeDisplay themeDisplay) {

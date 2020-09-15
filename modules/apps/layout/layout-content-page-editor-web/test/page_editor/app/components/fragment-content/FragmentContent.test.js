@@ -140,6 +140,7 @@ const renderFragmentContent = ({
 					<FragmentContent
 						elementRef={ref}
 						fragmentEntryLinkId={FRAGMENT_ENTRY_LINK_ID}
+						getPortals={() => []}
 						item={item}
 					/>
 				</ControlsProvider>

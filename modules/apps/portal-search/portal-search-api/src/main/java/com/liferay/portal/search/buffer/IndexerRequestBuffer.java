@@ -14,49 +14,25 @@
 
 package com.liferay.portal.search.buffer;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
-
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of Athanasius (7.3.x)
  */
+@Deprecated
 public class IndexerRequestBuffer {
 
 	public static IndexerRequestBuffer create() {
-		List<IndexerRequestBuffer> indexerRequestBuffers =
-			_indexerRequestBuffersThreadLocal.get();
-
-		IndexerRequestBuffer indexerRequestBuffer = new IndexerRequestBuffer();
-
-		indexerRequestBuffers.add(indexerRequestBuffer);
-
-		return indexerRequestBuffer;
+		throw new UnsupportedOperationException();
 	}
 
 	public static IndexerRequestBuffer get() {
-		List<IndexerRequestBuffer> indexerRequestBuffers =
-			_indexerRequestBuffersThreadLocal.get();
-
-		if (indexerRequestBuffers.isEmpty()) {
-			return null;
-		}
-
-		return indexerRequestBuffers.get(indexerRequestBuffers.size() - 1);
+		throw new UnsupportedOperationException();
 	}
 
 	public static IndexerRequestBuffer remove() {
-		List<IndexerRequestBuffer> indexerRequestBuffers =
-			_indexerRequestBuffersThreadLocal.get();
-
-		if (indexerRequestBuffers.isEmpty()) {
-			return null;
-		}
-
-		return indexerRequestBuffers.remove(indexerRequestBuffers.size() - 1);
+		throw new UnsupportedOperationException();
 	}
 
 	public void add(
@@ -64,38 +40,27 @@ public class IndexerRequestBuffer {
 		IndexerRequestBufferOverflowHandler indexerRequestBufferOverflowHandler,
 		int maxBufferSize) {
 
-		_indexerRequests.put(indexerRequest, indexerRequest);
-
-		indexerRequestBufferOverflowHandler.bufferOverflowed(
-			this, maxBufferSize);
+		throw new UnsupportedOperationException();
 	}
 
 	public void clear() {
-		_indexerRequests.clear();
+		throw new UnsupportedOperationException();
 	}
 
 	public Collection<IndexerRequest> getIndexerRequests() {
-		return _indexerRequests.values();
+		throw new UnsupportedOperationException();
 	}
 
 	public boolean isEmpty() {
-		return _indexerRequests.isEmpty();
+		throw new UnsupportedOperationException();
 	}
 
 	public void remove(IndexerRequest indexerRequest) {
-		_indexerRequests.remove(indexerRequest);
+		throw new UnsupportedOperationException();
 	}
 
 	public int size() {
-		return _indexerRequests.size();
+		throw new UnsupportedOperationException();
 	}
-
-	private static final ThreadLocal<List<IndexerRequestBuffer>>
-		_indexerRequestBuffersThreadLocal = new CentralizedThreadLocal<>(
-			IndexerRequestBuffer.class + "._indexerRequestBuffersThreadLocal",
-			ArrayList::new);
-
-	private final LinkedHashMap<IndexerRequest, IndexerRequest>
-		_indexerRequests = new LinkedHashMap<>();
 
 }

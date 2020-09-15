@@ -26,54 +26,44 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Collection;
-import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of Athanasius (7.3.x)
  */
+@Deprecated
 public class NoAutoCommitIndexer<T> implements Indexer<T> {
 
 	public NoAutoCommitIndexer(Indexer<T> indexer) {
-		_indexer = indexer;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void delete(long companyId, String uid) throws SearchException {
-		_indexer.delete(companyId, uid);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void delete(T object) throws SearchException {
-		_indexer.delete(object);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof NoAutoCommitIndexer<?>)) {
-			return false;
-		}
-
-		NoAutoCommitIndexer<?> noAutoCommitIndexer =
-			(NoAutoCommitIndexer<?>)object;
-
-		return Objects.equals(_indexer, noAutoCommitIndexer._indexer);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getClassName() {
-		return _indexer.getClassName();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Document getDocument(T object) throws SearchException {
-		return _indexer.getDocument(object);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -81,34 +71,34 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 			String className, SearchContext searchContext)
 		throws Exception {
 
-		return _indexer.getFacetBooleanFilter(className, searchContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public BooleanQuery getFullQuery(SearchContext searchContext)
 		throws SearchException {
 
-		return _indexer.getFullQuery(searchContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IndexerPostProcessor[] getIndexerPostProcessors() {
-		return _indexer.getIndexerPostProcessors();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String[] getSearchClassNames() {
-		return _indexer.getSearchClassNames();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getSearchEngineId() {
-		return _indexer.getSearchEngineId();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getSortField(String orderByCol) {
-		return _indexer.getSortField(orderByCol);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -117,13 +107,12 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 			PortletResponse portletResponse)
 		throws SearchException {
 
-		return _indexer.getSummary(
-			document, snippet, portletRequest, portletResponse);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int hashCode() {
-		return _indexer.hashCode();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -132,38 +121,37 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		return _indexer.hasPermission(
-			permissionChecker, entryClassName, entryClassPK, actionId);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isCommitImmediately() {
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isFilterSearch() {
-		return _indexer.isFilterSearch();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isIndexerEnabled() {
-		return _indexer.isIndexerEnabled();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isPermissionAware() {
-		return _indexer.isPermissionAware();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isStagingAware() {
-		return _indexer.isStagingAware();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isVisible(long classPK, int status) throws Exception {
-		return _indexer.isVisible(classPK, status);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -171,8 +159,7 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		_indexer.postProcessContextBooleanFilter(
-			contextBooleanFilter, searchContext);
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -186,7 +173,7 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
-		_indexer.postProcessContextQuery(contextQuery, searchContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -195,8 +182,7 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 			SearchContext searchContext)
 		throws Exception {
 
-		_indexer.postProcessSearchQuery(
-			searchQuery, fullQueryBooleanFilter, searchContext);
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -210,39 +196,39 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		_indexer.postProcessSearchQuery(searchQuery, searchContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void registerIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor) {
 
-		_indexer.registerIndexerPostProcessor(indexerPostProcessor);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void reindex(Collection<T> objects) throws SearchException {
-		_indexer.reindex(objects);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void reindex(String className, long classPK) throws SearchException {
-		_indexer.reindex(className, classPK);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void reindex(String[] ids) throws SearchException {
-		_indexer.reindex(ids);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void reindex(T object) throws SearchException {
-		_indexer.reindex(object);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
-		return _indexer.search(searchContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -250,28 +236,26 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 			SearchContext searchContext, String... selectedFieldNames)
 		throws SearchException {
 
-		return _indexer.search(searchContext, selectedFieldNames);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public long searchCount(SearchContext searchContext)
 		throws SearchException {
 
-		return _indexer.searchCount(searchContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void setIndexerEnabled(boolean indexerEnabled) {
-		_indexer.setIndexerEnabled(indexerEnabled);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor) {
 
-		_indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
+		throw new UnsupportedOperationException();
 	}
-
-	private final Indexer<T> _indexer;
 
 }

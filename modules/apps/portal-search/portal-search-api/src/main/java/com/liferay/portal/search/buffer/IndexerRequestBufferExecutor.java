@@ -18,7 +18,9 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of Athanasius (7.3.x)
  */
+@Deprecated
 @ProviderType
 public interface IndexerRequestBufferExecutor {
 

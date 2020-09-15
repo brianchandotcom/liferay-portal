@@ -405,8 +405,8 @@
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
 		<finder name="G_V" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="visibilityType" />
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column arrayable-operator="OR" name="visibilityType" />
 		</finder>
 
 		<!-- References -->

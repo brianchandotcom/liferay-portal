@@ -311,15 +311,14 @@ public class ImportSamlSaasApplication extends Application {
 			samlSpIdpConnection.setEnabled(enabled);
 			samlSpIdpConnection.setForceAuthn(forceAuthn);
 			samlSpIdpConnection.setLdapImportEnabled(ldapImportEnabled);
+			samlSpIdpConnection.setMetadataUpdatedDate(new Date());
 			samlSpIdpConnection.setMetadataUrl(metadataUrl);
 			samlSpIdpConnection.setMetadataXml(metadataXml);
-			samlSpIdpConnection.setMetadataUpdatedDate(new Date());
-			samlSpIdpConnection.setUnknownUsersAreStrangers(
-				unknownUsersAreStrangers);
-			samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
 			samlSpIdpConnection.setName(name);
 			samlSpIdpConnection.setNameIdFormat(nameIdFormat);
 			samlSpIdpConnection.setSignAuthnRequest(signAuthnRequest);
+			samlSpIdpConnection.setUnknownUsersAreStrangers(
+				unknownUsersAreStrangers);
 			samlSpIdpConnection.setUserAttributeMappings(userAttributeMappings);
 
 			JSONObject expandoValuesJsonObject =

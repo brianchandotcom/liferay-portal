@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class CTStoreFactoryUtil {
 
 	public static Store createCTStore(Store store, String storeType) {

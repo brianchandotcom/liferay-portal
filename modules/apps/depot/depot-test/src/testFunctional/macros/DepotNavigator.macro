@@ -126,28 +126,6 @@ definition {
 		}
 	}
 
-	macro gotoDepotViaSpaceIcon {
-		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			ApplicationsMenu.gotoSite(site = "Guest");
-		}
-
-		ProductMenuHelper.openProductMenu();
-
-		ProductMenuHelper.openWorkspace();
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Pause(locator1 = "3000");
-
-		Navigator.gotoNavItem(navItem = "Asset Libraries");
-
-		SiteSelector.selectSite(site = "${depotName}");
-
-		Click(
-			key_breadcrumbName = "Asset Libraries",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
-	}
-
 	macro gotoEdit {
 		var key_card = "${depotName}";
 

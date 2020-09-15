@@ -3489,10 +3489,10 @@ alloy-ui@^3.1.0-deprecated.40:
   resolved "https://registry.yarnpkg.com/alloy-ui/-/alloy-ui-3.1.0.tgz#95842e4c793abbfe84aa8abfc5a637cd36dda823"
   integrity sha1-lYQuTHk6u/6Eqoq/xaY3zTbdqCM=
 
-alloyeditor@2.11.13:
-  version "2.11.13"
-  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.11.13.tgz#0f5b88161e53c0188924307cdf9319f6ce5ca1ef"
-  integrity sha512-KzNqntLUugMZR9P4ron8HGOi4j8/4AS1bHWMyQ+QNyzZSq1F60uGoiwd6PuiNaVurvJ31Kw6Jd2uCitj9SBZdg==
+alloyeditor@2.11.14:
+  version "2.11.14"
+  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.11.14.tgz#8c5fd73a4b3420041c94229ffdacb090d910caa7"
+  integrity sha512-5zgdfVRub2Ynsmm9hYgMTGEiGMbf8Gz1L2h5B0yoI6cJZTunja4DHzgJ1Rhp1HEYKVIbpLEUvstYm0hOIgIPPA==
   dependencies:
     clay-css "^2.11.1"
     prop-types "^15.6.2"
@@ -4347,17 +4347,6 @@ babel-plugin-minify-type-constructors@^0.4.3:
   integrity sha1-G8bxW4f3qxCF1CszC3F2V6IVZQA=
   dependencies:
     babel-helper-is-void-0 "^0.4.3"
-
-babel-plugin-module-resolver@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-module-resolver/-/babel-plugin-module-resolver-3.2.0.tgz#ddfa5e301e3b9aa12d852a9979f18b37881ff5a7"
-  integrity sha512-tjR0GvSndzPew/Iayf4uICWZqjBwnlMWjSx6brryfQ81F9rxBVqwDJtFCV8oOs0+vJeefK9TmdZtkIFdFe1UnA==
-  dependencies:
-    find-babel-config "^1.1.0"
-    glob "^7.1.2"
-    pkg-up "^2.0.0"
-    reselect "^3.0.1"
-    resolve "^1.4.0"
 
 babel-plugin-name-amd-modules@2.18.4:
   version "2.18.4"
@@ -8814,14 +8803,6 @@ finalhandler@~1.1.2:
     parseurl "~1.3.3"
     statuses "~1.5.0"
     unpipe "~1.0.0"
-
-find-babel-config@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/find-babel-config/-/find-babel-config-1.2.0.tgz#a9b7b317eb5b9860cda9d54740a8c8337a2283a2"
-  integrity sha512-jB2CHJeqy6a820ssiqwrKMeyC6nNdmrcgkKWJWmpoxpE8RKciYJXCcXRq1h2AzCo5I5BJeN2tkGEO3hLTuePRA==
-  dependencies:
-    json5 "^0.5.1"
-    path-exists "^3.0.0"
 
 find-cache-dir@^2.0.0, find-cache-dir@^2.1.0:
   version "2.1.0"
@@ -16709,11 +16690,6 @@ requizzle@^0.2.3:
   integrity sha512-YanoyJjykPxGHii0fZP0uUPEXpvqfBDxWV7s6GKAiiOsiqhX6vHNyW3Qzdmqp/iq/ExbhaGbVrjB4ruEVSM4GQ==
   dependencies:
     lodash "^4.17.14"
-
-reselect@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/reselect/-/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
-  integrity sha1-79qpjqdFEyTQkrKyFjpqHXqaIUc=
 
 reselect@^4.0.0:
   version "4.0.0"

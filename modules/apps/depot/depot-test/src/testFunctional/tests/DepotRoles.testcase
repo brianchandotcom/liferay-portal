@@ -316,8 +316,8 @@ definition {
 			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
 			roleTitle = "Depot Regrole Name");
 
 		ApplicationsMenu.gotoPortlet(
@@ -343,9 +343,9 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		ProductMenu.gotoSite(depotName = "Test Depot Name");
+		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoPortlet(
+		DepotNavigator.gotoDepotPortlet(
 			depotName = "Test Depot Name",
 			portlet = "Web Content");
 
@@ -437,8 +437,8 @@ definition {
 			userLoginFullName = "Test Test");
 
 		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
 			roleTitle = "Depot Regrole Name");
 
 		ApplicationsMenu.gotoPortlet(
@@ -464,9 +464,9 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		ProductMenu.gotoSite(depotName = "Test Depot Name");
+		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoPortlet(
+		DepotNavigator.gotoDepotPortlet(
 			depotName = "Test Depot Name",
 			portlet = "Documents and Media");
 

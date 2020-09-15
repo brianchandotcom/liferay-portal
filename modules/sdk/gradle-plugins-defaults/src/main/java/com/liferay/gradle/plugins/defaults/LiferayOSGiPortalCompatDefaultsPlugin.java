@@ -117,7 +117,7 @@ public class LiferayOSGiPortalCompatDefaultsPlugin
 		GradleUtil.addDependency(
 			project, BYTECODE_TRANSFORMER_CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.portal.tools.portal.compat.bytecode.transformer",
-			"1.0.2");
+			"1.0.3");
 	}
 
 	@SuppressWarnings("serial")

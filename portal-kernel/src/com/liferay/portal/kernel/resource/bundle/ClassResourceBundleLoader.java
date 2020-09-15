@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.resource.bundle;
 
 import com.liferay.portal.kernel.language.UTF8Control;
 
@@ -21,11 +21,7 @@ import java.util.ResourceBundle;
 
 /**
  * @author Adolfo Pérez
- *
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *             com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader}
  */
-@Deprecated
 public class ClassResourceBundleLoader implements ResourceBundleLoader {
 
 	public ClassResourceBundleLoader(String baseName, Class<?> clazz) {

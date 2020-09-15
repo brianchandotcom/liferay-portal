@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.resource.bundle;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +27,7 @@ import java.util.ResourceBundle;
 
 /**
  * @author Carlos Sierra Andrés
- *
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *             com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader}
  */
-@Deprecated
 public class AggregateResourceBundleLoader implements ResourceBundleLoader {
 
 	public AggregateResourceBundleLoader(

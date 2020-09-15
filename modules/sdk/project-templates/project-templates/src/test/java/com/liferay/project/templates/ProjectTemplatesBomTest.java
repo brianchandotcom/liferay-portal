@@ -57,16 +57,8 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
-	public void resolveProject(String projectName, File workspaceDir)
+	private void _resolveProject(String projectName, File workspaceDir)
 		throws IOException {
-
-		String content = FileTestUtil.read(
-			BaseProjectTemplatesTestCase.class.getClassLoader(),
-			"com/liferay/project/templates/dependencies/platform.bndrun");
-
-		File platformBndRun = new File(workspaceDir, "platform.bndrun");
-
-		Files.write(platformBndRun.toPath(), content.getBytes());
 
 		executeGradle(
 			workspaceDir, _gradleDistribution,
@@ -195,7 +187,7 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		testOutput(apiProjectDir, template, workspaceDir);
 
 		if (!template.contains("war")) {
-			resolveProject(template, workspaceDir);
+			_resolveProject(template, workspaceDir);
 		}
 	}
 

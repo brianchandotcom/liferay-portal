@@ -88,6 +88,22 @@ public class CommerceCatalogModelListener
 		}
 	}
 
+	@Override
+	public void onBeforeRemove(CommerceCatalog commerceCatalog) {
+		try {
+			_deleteCommerceCatalogBasePriceList(
+				commerceCatalog, CommercePriceListConstants.TYPE_PRICE_LIST);
+
+			_deleteCommerceCatalogBasePriceList(
+				commerceCatalog, CommercePriceListConstants.TYPE_PROMOTION);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+		}
+	}
+
 	private void _addCommerceCatalogBasePriceList(
 			CommerceCatalog commerceCatalog, String type, String name,
 			ServiceContext serviceContext)
@@ -108,6 +124,21 @@ public class CommerceCatalogModelListener
 				commerceCatalog.getGroupId(), serviceContext.getUserId(),
 				commerceCurrency.getCommerceCurrencyId(), type, name,
 				serviceContext);
+		}
+	}
+
+	private void _deleteCommerceCatalogBasePriceList(
+			CommerceCatalog commerceCatalog, String type)
+		throws PortalException {
+
+		CommercePriceList commerceCatalogBasePriceList =
+			_commercePriceListLocalService.
+				fetchCommerceCatalogBasePriceListByType(
+					commerceCatalog.getGroupId(), type);
+
+		if (commerceCatalogBasePriceList != null) {
+			_commercePriceListLocalService.deleteCommercePriceList(
+				commerceCatalogBasePriceList);
 		}
 	}
 

@@ -40,6 +40,7 @@ import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -158,8 +159,11 @@ public class CTCollectionLocalServiceImpl
 						}
 
 						return new CTConflictChecker<>(
-							_ctEntryLocalService, ctService, modelClassNameId,
-							_serviceTrackerMap,
+							_classNameLocalService, _ctEntryLocalService,
+							ctService, modelClassNameId,
+							_constraintResolverServiceTrackerMap,
+							_ctDisplayRendererServiceTrackerMap,
+							_tableReferenceDefinitionManager,
 							ctCollection.getCtCollectionId(),
 							CTConstants.CT_COLLECTION_ID_PRODUCTION);
 					});
@@ -273,7 +277,7 @@ public class CTCollectionLocalServiceImpl
 					CharPool.COMMA);
 
 				ConstraintResolver<?> constraintResolver =
-					_serviceTrackerMap.getService(
+					_constraintResolverServiceTrackerMap.getService(
 						new ConstraintResolverKey(
 							className.getValue(),
 							uniqueIndexes.toArray(new String[0])));
@@ -709,24 +713,42 @@ public class CTCollectionLocalServiceImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<ConstraintResolver<?>>)(Class<?>)ConstraintResolver.class,
-			null,
-			(serviceReference, emitter) -> {
-				ConstraintResolver<?> constraintResolver =
-					bundleContext.getService(serviceReference);
+		_constraintResolverServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext,
+				(Class<ConstraintResolver<?>>)
+					(Class<?>)ConstraintResolver.class,
+				null,
+				(serviceReference, emitter) -> {
+					ConstraintResolver<?> constraintResolver =
+						bundleContext.getService(serviceReference);
 
-				emitter.emit(
-					new ConstraintResolverKey(
-						constraintResolver.getModelClass(),
-						constraintResolver.getUniqueIndexColumnNames()));
-			});
+					emitter.emit(
+						new ConstraintResolverKey(
+							constraintResolver.getModelClass(),
+							constraintResolver.getUniqueIndexColumnNames()));
+				});
+
+		_ctDisplayRendererServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext,
+				(Class<CTDisplayRenderer<?>>)(Class<?>)CTDisplayRenderer.class,
+				null,
+				(serviceReference, emitter) -> {
+					CTDisplayRenderer<?> ctDisplayRenderer =
+						bundleContext.getService(serviceReference);
+
+					Class<?> modelClass = ctDisplayRenderer.getModelClass();
+
+					emitter.emit(modelClass.getName());
+				});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_constraintResolverServiceTrackerMap.close();
+
+		_ctDisplayRendererServiceTrackerMap.close();
 	}
 
 	private void _validate(String name, String description)
@@ -760,11 +782,17 @@ public class CTCollectionLocalServiceImpl
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
+	private ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver<?>>
+		_constraintResolverServiceTrackerMap;
+
 	@Reference
 	private CTAutoResolutionInfoPersistence _ctAutoResolutionInfoPersistence;
 
 	@Reference
 	private CTClosureFactory _ctClosureFactory;
+
+	private ServiceTrackerMap<String, CTDisplayRenderer<?>>
+		_ctDisplayRendererServiceTrackerMap;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
@@ -780,9 +808,6 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
-
-	private ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver<?>>
-		_serviceTrackerMap;
 
 	@Reference
 	private TableReferenceDefinitionManager _tableReferenceDefinitionManager;

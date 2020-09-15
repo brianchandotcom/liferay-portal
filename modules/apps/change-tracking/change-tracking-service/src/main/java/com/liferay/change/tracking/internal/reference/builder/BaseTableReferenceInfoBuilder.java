@@ -35,10 +35,11 @@ public abstract class BaseTableReferenceInfoBuilder<T extends Table<T>> {
 
 	public BaseTableReferenceInfoBuilder(
 		TableReferenceDefinition<T> tableReferenceDefinition,
-		Column<T, Long> primaryKeyColumn) {
+		Column<T, Long> primaryKeyColumn, boolean parent) {
 
 		_tableReferenceDefinition = tableReferenceDefinition;
 		_primaryKeyColumn = primaryKeyColumn;
+		_parent = parent;
 	}
 
 	public Map<Table<?>, List<TableJoinHolder>> getTableJoinHoldersMap() {
@@ -49,7 +50,8 @@ public abstract class BaseTableReferenceInfoBuilder<T extends Table<T>> {
 		Function<FromStep, JoinStep> joinFunction) {
 
 		TableJoinHolder tableJoinHolder = TableJoinHolderFactory.create(
-			_tableReferenceDefinition, _primaryKeyColumn, joinFunction);
+			_tableReferenceDefinition, _primaryKeyColumn, _parent,
+			joinFunction);
 
 		Column<?, Long> parentPKColumn = tableJoinHolder.getParentPKColumn();
 
@@ -60,6 +62,7 @@ public abstract class BaseTableReferenceInfoBuilder<T extends Table<T>> {
 		tableJoinHolders.add(tableJoinHolder);
 	}
 
+	private final boolean _parent;
 	private final Column<T, Long> _primaryKeyColumn;
 	private final Map<Table<?>, List<TableJoinHolder>> _tableJoinHoldersMap =
 		new HashMap<>();

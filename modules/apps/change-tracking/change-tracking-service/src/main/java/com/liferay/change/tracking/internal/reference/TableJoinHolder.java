@@ -15,8 +15,10 @@
 package com.liferay.change.tracking.internal.reference;
 
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.petra.sql.dsl.query.WhereStep;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.function.Function;
@@ -30,14 +32,20 @@ public class TableJoinHolder {
 		return new TableJoinHolder(
 			tableJoinHolder.getChildPKColumn(),
 			tableJoinHolder.getParentPKColumn(),
+			tableJoinHolder.getMissingRequirementWhereStep(),
+			tableJoinHolder.getMissingRequirementWherePredicate(),
 			tableJoinHolder.getJoinFunction(), !tableJoinHolder.isReversed());
 	}
 
 	public TableJoinHolder(
 		Column<?, Long> parentPKColumn, Column<?, Long> childPKColumn,
+		WhereStep missingRequirementWhereStep,
+		Predicate missingRequirementWherePredicate,
 		Function<FromStep, JoinStep> joinFunction) {
 
-		this(parentPKColumn, childPKColumn, joinFunction, false);
+		this(
+			parentPKColumn, childPKColumn, missingRequirementWhereStep,
+			missingRequirementWherePredicate, joinFunction, false);
 	}
 
 	public Column<?, Long> getChildPKColumn() {
@@ -46,6 +54,14 @@ public class TableJoinHolder {
 
 	public Function<FromStep, JoinStep> getJoinFunction() {
 		return _joinFunction;
+	}
+
+	public Predicate getMissingRequirementWherePredicate() {
+		return _missingRequirementWherePredicate;
+	}
+
+	public WhereStep getMissingRequirementWhereStep() {
+		return _missingRequirementWhereStep;
 	}
 
 	public Column<?, Long> getParentPKColumn() {
@@ -60,22 +76,30 @@ public class TableJoinHolder {
 	public String toString() {
 		return StringBundler.concat(
 			"{childPKColumn=", _childPKColumn, ", joinFunction=", _joinFunction,
-			", parentPKColumn=", _parentPKColumn, ", reversed=", _reversed,
-			"}");
+			", missingParentWhereStep", _missingRequirementWhereStep,
+			", _missingRequirementWherePredicate",
+			_missingRequirementWherePredicate, ", parentPKColumn=",
+			_parentPKColumn, ", reversed=", _reversed, "}");
 	}
 
 	private TableJoinHolder(
 		Column<?, Long> parentPKColumn, Column<?, Long> childPKColumn,
+		WhereStep missingRequirementWhereStep,
+		Predicate missingRequirementWherePredicate,
 		Function<FromStep, JoinStep> joinFunction, boolean reversed) {
 
 		_parentPKColumn = parentPKColumn;
 		_childPKColumn = childPKColumn;
+		_missingRequirementWhereStep = missingRequirementWhereStep;
+		_missingRequirementWherePredicate = missingRequirementWherePredicate;
 		_joinFunction = joinFunction;
 		_reversed = reversed;
 	}
 
 	private final Column<?, Long> _childPKColumn;
 	private final Function<FromStep, JoinStep> _joinFunction;
+	private final Predicate _missingRequirementWherePredicate;
+	private final WhereStep _missingRequirementWhereStep;
 	private final Column<?, Long> _parentPKColumn;
 	private final boolean _reversed;
 

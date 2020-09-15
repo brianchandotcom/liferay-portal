@@ -16,26 +16,35 @@ package com.liferay.change.tracking.internal.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.petra.sql.dsl.query.WhereStep;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.sql.dsl.spi.query.From;
 import com.liferay.petra.sql.dsl.spi.query.Join;
 import com.liferay.petra.sql.dsl.spi.query.JoinType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -48,7 +57,7 @@ public class TableJoinHolderFactory {
 
 	public static <T extends Table<T>> TableJoinHolder create(
 		TableReferenceDefinition<T> tableReferenceDefinition,
-		Column<T, Long> primaryKeyColumn,
+		Column<T, Long> primaryKeyColumn, boolean parent,
 		Function<FromStep, JoinStep> joinFunction) {
 
 		JoinStep joinStep = joinFunction.apply(_validationFromStep);
@@ -142,8 +151,92 @@ public class TableJoinHolderFactory {
 					joinStep, "\""));
 		}
 
+		WhereStep missingRequirementWhereStep = null;
+		Predicate missingRequirementWherePredicate = null;
+
+		if (parent) {
+			Table<?> parentTable = fromPKColumn.getTable();
+
+			FromStep fromStep = DSLQueryFactoryUtil.select(
+				primaryKeyColumn, new Scalar<>(parentTable.getTableName()));
+
+			List<Column<?, ?>> childPredicateColumns = new ArrayList<>();
+
+			Deque<Map.Entry<Table<?>, PredicateASTNodeListener>> joinEntries =
+				new LinkedList<>();
+
+			ASTNode astNode = joinFunction.apply(fromStep);
+
+			while (astNode instanceof Join) {
+				Join join = (Join)astNode;
+
+				PredicateASTNodeListener predicateASTNodeListener =
+					new PredicateASTNodeListener(
+						primaryKeyColumn.getTable(), childPredicateColumns);
+
+				Predicate predicate = join.getOnPredicate();
+
+				predicate.toSQL(_emptyStringConsumer, predicateASTNodeListener);
+
+				Table<?> table = join.getTable();
+
+				if (table == primaryKeyColumn.getTable()) {
+					table = parentTable;
+				}
+
+				joinEntries.push(
+					new AbstractMap.SimpleImmutableEntry<>(
+						table, predicateASTNodeListener));
+
+				astNode = join.getChild();
+			}
+
+			Predicate wherePredicate = fromPKColumn.isNull();
+
+			joinStep = fromStep.from(primaryKeyColumn.getTable());
+
+			for (Map.Entry<Table<?>, PredicateASTNodeListener> entry :
+					joinEntries) {
+
+				Table<?> table = entry.getKey();
+				PredicateASTNodeListener predicateASTNodeListener =
+					entry.getValue();
+
+				joinStep = joinStep.leftJoinOn(
+					table, predicateASTNodeListener._joinPredicate);
+
+				if (predicateASTNodeListener._wherePredicate != null) {
+					wherePredicate = wherePredicate.and(
+						predicateASTNodeListener._wherePredicate);
+				}
+			}
+
+			missingRequirementWhereStep = joinStep;
+
+			for (Column<?, ?> column : childPredicateColumns) {
+				wherePredicate = wherePredicate.and(column.isNotNull());
+
+				Class<?> clazz = column.getJavaType();
+
+				if (clazz == String.class) {
+					Column<?, String> stringColumn = (Column<?, String>)column;
+
+					wherePredicate = wherePredicate.and(
+						stringColumn.neq(StringPool.BLANK));
+				}
+				else if (clazz == Long.class) {
+					Column<?, Long> longColumn = (Column<?, Long>)column;
+
+					wherePredicate = wherePredicate.and(longColumn.neq(0L));
+				}
+			}
+
+			missingRequirementWherePredicate = wherePredicate;
+		}
+
 		return new TableJoinHolder(
-			fromPKColumn, primaryKeyColumn, joinFunction);
+			fromPKColumn, primaryKeyColumn, missingRequirementWhereStep,
+			missingRequirementWherePredicate, joinFunction);
 	}
 
 	private static final Consumer<String> _emptyStringConsumer = string -> {
@@ -234,6 +327,66 @@ public class TableJoinHolderFactory {
 		private final T _table;
 		private Set<Table<?>> _tables = Collections.newSetFromMap(
 			new IdentityHashMap<>());
+
+	}
+
+	private static class PredicateASTNodeListener implements ASTNodeListener {
+
+		@Override
+		public void process(ASTNode astNode) {
+			if (!(astNode instanceof DefaultPredicate)) {
+				return;
+			}
+
+			DefaultPredicate defaultPredicate = (DefaultPredicate)astNode;
+
+			if (defaultPredicate.getOperand() == Operand.AND) {
+				return;
+			}
+
+			Expression<?> leftExpression = defaultPredicate.getLeftExpression();
+			Expression<?> rightExpression =
+				defaultPredicate.getRightExpression();
+
+			if ((leftExpression instanceof Column<?, ?>) &&
+				(rightExpression instanceof Column<?, ?>)) {
+
+				Column<?, ?> leftColumn = (Column<?, ?>)leftExpression;
+				Column<?, ?> rightColumn = (Column<?, ?>)rightExpression;
+
+				if (leftColumn.getTable() == _childTable) {
+					_childPredicateColumns.add(leftColumn);
+				}
+				else if (rightColumn.getTable() == _childTable) {
+					_childPredicateColumns.add(rightColumn);
+				}
+
+				if (_joinPredicate == null) {
+					_joinPredicate = defaultPredicate;
+				}
+				else {
+					_joinPredicate = _joinPredicate.and(defaultPredicate);
+				}
+			}
+			else if (_wherePredicate == null) {
+				_wherePredicate = defaultPredicate;
+			}
+			else {
+				_wherePredicate = _wherePredicate.and(defaultPredicate);
+			}
+		}
+
+		private PredicateASTNodeListener(
+			Table<?> childTable, List<Column<?, ?>> childPredicateColumns) {
+
+			_childTable = childTable;
+			_childPredicateColumns = childPredicateColumns;
+		}
+
+		private final List<Column<?, ?>> _childPredicateColumns;
+		private final Table<?> _childTable;
+		private Predicate _joinPredicate;
+		private Predicate _wherePredicate;
 
 	}
 

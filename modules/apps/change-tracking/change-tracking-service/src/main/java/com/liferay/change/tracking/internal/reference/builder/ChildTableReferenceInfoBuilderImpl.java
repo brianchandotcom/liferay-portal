@@ -34,7 +34,7 @@ public class ChildTableReferenceInfoBuilderImpl<T extends Table<T>>
 		TableReferenceDefinition<T> tableReferenceDefinition,
 		Column<T, Long> primaryKeyColumn) {
 
-		super(tableReferenceDefinition, primaryKeyColumn);
+		super(tableReferenceDefinition, primaryKeyColumn, false);
 	}
 
 	@Override

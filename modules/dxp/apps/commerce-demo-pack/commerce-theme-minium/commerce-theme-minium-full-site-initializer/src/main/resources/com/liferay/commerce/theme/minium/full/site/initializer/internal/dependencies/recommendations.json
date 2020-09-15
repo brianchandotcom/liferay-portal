@@ -1,0 +1,7021 @@
+[
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.049472905,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93015",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.0938142738,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38800",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.0594127499,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.1817115603,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.1179606235,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.0859361958,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.1094593877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.0310341234,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.0695394454,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.0640561741,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.0471816622,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.0900928115,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.0770665197,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.0859361958,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38800",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.0561526909,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.1179606235,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.076802321,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.1271953907,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.0733356929,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9066318578,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.0517191088,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.0661672643,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.1562152294,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.1851731616,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.087941266,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.3150802896,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.0681462532,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.282367397,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.0752332173,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.0783544605,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.0770665197,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.0507683927,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.2022875252,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.0660689055,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.0900756063,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.0852671162,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.0752332173,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.1021113991,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.0976688122,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.2103473787,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.2468341391,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.0944485122,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.2166788977,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.0503681164,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.0749902998,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.0879868112,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.1016393204,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38800",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.0624580075,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.1817115603,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.0594127499,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.1271953907,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.0598202821,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.3735955772,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.1402714591,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.0924565319,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.0322667816,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.0726488519,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.1094593877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.0847698283,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.0500909026,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.0697063453,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.3150802896,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.0921697192,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.0951527096,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.2328785682,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.1010719984,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.2519345937,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.5717868828,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.1988749882,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.0539135196,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.0768671409,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.0660812473,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.0639275855,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.1179606235,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38800",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.0762983742,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.0953818071,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.0606544835,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.0588652933,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9066318578,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.0933816684,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.0701684958,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.0488179113,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.0611838446,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.1851731616,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.1562152294,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.0624580075,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.1086194487,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.0986168421,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.2937173155,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.1094593877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93015",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.1086194487,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.0850479859,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.0850479859,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38800",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.2044999641,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.1094593877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.0695394454,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.1147569873,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.1406737503,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.1094593877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.0783544605,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.1094593877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77822",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.0897457984,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.1406737503,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.0855156608,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.0594127499,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.0591135764,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.0808175304,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.0808175304,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.0713848605,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.0699578174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.0726488519,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.2095922098,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.0953818071,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.0475426826,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.0747495869,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.0594127499,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.0929736051,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.0808175304,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.1031050877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.1094593877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.0953818071,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.1086194487,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77822",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.3083462165,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.282367397,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.1010719984,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.0798964754,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.1868082154,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.5717868828,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.0840285886,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.1988749882,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.0529755068,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.4094836416,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55860",
+		"score": 0.2022875252,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55860",
+		"score": 0.125095742,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.0900756063,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.1084847183,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.1851731616,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.1562152294,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9283162139,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.087941266,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.0570383213,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.0852671162,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.0512633773,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.0900928115,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.0578275482,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.0783544605,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.1605895423,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.2103473787,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.0522251883,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.0681462532,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.1010719984,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.0840285886,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.0475426826,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.2937173155,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.0607085317,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.0607085317,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.0660689055,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.1247986051,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.0522251883,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.1562152294,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.1851731616,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.9283162139,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.137144842,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.2633560645,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.0834257207,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.1001797563,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.1785773756,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.0833429052,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.1016393204,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.0894616418,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.0879868112,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.0799078741,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.0749902998,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.1031050877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.2166788977,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.1402714591,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.1016393204,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.0833429052,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0938142738,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1195868381,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1124923945,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0921697192,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93015",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1235571174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0938142738,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0938142738,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0566506413,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1540903419,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1557825591,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0739357893,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1016393204,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0972688913,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1094593877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0310341234,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0938142738,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.087941266,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.0780075708,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.087086528,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77822",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.131561034,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.1667885544,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.047284908,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.0879868112,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.0917745725,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.1174120765,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.1124655716,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.2592421507,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.2519345937,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.1557825591,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93015",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.1174120765,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.0917745725,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.0917745725,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38800",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.0570210438,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.1446489719,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.1988749882,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.0917745725,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.5941463915,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.120860457,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.0739357893,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.0820424412,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.0972688913,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.120860457,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77822",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.0972688913,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.120860457,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.087086528,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.1164482307,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.1350315615,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.1195868381,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93015",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.091038334,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38800",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.0566415706,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.9045776893,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.091756719,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.1001797563,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.7386697995,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.087086528,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.1164482307,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.9045776893,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.105184601,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.1540903419,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93015",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.1164482307,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.091038334,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.1446489719,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.091038334,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.091756719,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.1001797563,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.7386697995,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.1195868381,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77822",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.0964422575,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.1195868381,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.0833429052,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.0681462532,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.1123976811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.0770665197,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.118982566,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.0770665197,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.0444688333,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.1470767088,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.5288289655,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.2633560645,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.0779903727,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.1142992165,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.0894616418,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.082061473,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.0868677702,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.1350315615,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.2328785682,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.1124923945,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.0868677702,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38800",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.0544720704,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.105184601,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.2592421507,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.1868082154,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.2086389313,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.0768671409,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.0879868112,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1235571174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.087086528,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0921697192,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0749902998,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93015",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0938142738,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0749902998,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0566506413,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1195868381,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.120860457,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0739357893,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1235571174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1016393204,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1094593877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0310341234,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0512633773,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77822",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.131561034,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.047284908,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0471816622,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.0471816622,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "77822",
+		"score": 0.1031050877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "77822",
+		"score": 0.131561034,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "77822",
+		"score": 0.0749902998,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "77822",
+		"score": 0.0808175304,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "77822",
+		"score": 0.0850479859,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "77822",
+		"score": 0.1031050877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "77822",
+		"score": 0.0747495869,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "77822",
+		"score": 0.3083462165,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "77822",
+		"score": 0.131561034,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "77822",
+		"score": 0.131561034,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93015",
+		"score": 0.098123578,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93015",
+		"score": 0.091038334,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93015",
+		"score": 0.1235571174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93015",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93015",
+		"score": 0.1164482307,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93015",
+		"score": 0.1174120765,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93015",
+		"score": 0.0775011233,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93015",
+		"score": 0.1086194487,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93015",
+		"score": 0.0667593358,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.098123578,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.1031050877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.1031050877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.1235571174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77822",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.1031050877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1142992165,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.087086528,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1124923945,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.0749902998,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93015",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1235571174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.0938142738,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.0749902998,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.098123578,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1195868381,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.0634761792,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.120860457,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1402714591,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.131561034,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1406737503,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.0310341234,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.087941266,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77822",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1667885544,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.1402714591,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.0813733337,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1142992165,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.087086528,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.0749902998,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1667885544,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93015",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.0938142738,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.0938142738,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.0769879949,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1195868381,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.120860457,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1016393204,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.131561034,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1667885544,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1406737503,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.0310341234,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1123976811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77822",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.131561034,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.1016393204,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.047284908,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00681",
+		"score": 0.5288289655,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00681",
+		"score": 0.1785773756,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.1470767088,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.087086528,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.0921697192,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.1235571174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.0749902998,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.0566506413,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.0739357893,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.1094593877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.047284908,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.087941266,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.087086528,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.0512633773,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.1291235766,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.1016393204,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.0471816622,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.0471816622,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.118982566,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.0808175304,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.0808175304,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.0666852826,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.1031050877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.3735955772,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.131561034,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.1147569873,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.0747495869,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.1086194487,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.131561034,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.1123976811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.0775011233,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.0405766051,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.1235571174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.0667593358,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.2194201604,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.0918418585,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.0944485122,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.0421773102,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.1065663615,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.098833516,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.0987904978,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38800",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.0570383213,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.2095922098,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.0946657536,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.2468341391,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.0933816684,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.1065663615,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.051180092,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.0481467883,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.0985094481,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.0976688122,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.0946657536,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.0918418585,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.1247986051,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.1084847183,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.049472905,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38800",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.0808175304,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.0938142738,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.0624580075,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.1016393204,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.0859361958,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.0987904978,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.1179606235,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.0544720704,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.0310341234,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.0695394454,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.0640561741,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.0471816622,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.0987904978,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.091756719,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.2086389313,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.1988749882,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.0775011233,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.5941463915,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.4094836416,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.0672743215,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.7386697995,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.7386697995,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.06161846,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.1164482307,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.0951527096,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.0769879949,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.0808175304,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.1164482307,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.1174120765,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.0798964754,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.0987904978,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.0834257207,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.0667593358,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.087086528,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.0921697192,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.1010719984,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.137144842,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.1016393204,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93015",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.098123578,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.0964619811,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.098123578,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.1086194487,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.1235571174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77822",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.1031050877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38800",
+		"score": 0.0808175304,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38800",
+		"score": 0.0570383213,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38800",
+		"score": 0.0762983742,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38800",
+		"score": 0.2044999641,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38800",
+		"score": 0.0494063051,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.0808175304,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.0640561741,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.0689609485,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.1025504973,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.1235571174,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.0695079393,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.0985094481,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.1021113991,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.1605895423,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.098833516,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.2194201604,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "19999",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.0325710381,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.125095742,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 0.1031050877,
+		"type": "product-content-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00673",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.9999999952,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.9999999966,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38797",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.9999999963,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.9999999976,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.9999999948,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77823",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.9999999964,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.9999999976,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.9999999948,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93022",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.9999999964,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.9999999976,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.9999999948,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38798",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999987,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93021",
+		"score": 0.9999999987,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999811,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999974,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999984,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999876,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00675",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999812,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999974,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999984,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999961,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999877,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93024",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999988,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999988,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999988,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38796",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00677",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93018",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.9999999988,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.9999999988,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999994,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999975,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999994,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999994,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999981,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 0.9999999994,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999967,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999974,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38795",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00683",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.9999998469,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.999999938,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.9999941343,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.9999987994,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.9999999812,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55857",
+		"score": 0.999998125,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.9999997207,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.9999999875,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.999993451,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.9999984799,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.9999999812,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.9999999392,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55856",
+		"score": 0.9999977305,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.9999995902,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.9999999762,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.9999928667,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.999998192,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.999999938,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.9999999818,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.9999999875,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55855",
+		"score": 0.9999973814,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.9999995038,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.9999982412,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55859",
+		"score": 0.9999999252,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999993994,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999999815,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999999888,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999999818,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999921287,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999978114,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999998528,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999999392,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999999773,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55854",
+		"score": 0.9999969271,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999993689,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999999864,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999999926,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999999762,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999920192,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999977535,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999998375,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999999293,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999999828,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "55853",
+		"score": 0.9999968586,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999992245,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999999926,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999999965,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999999422,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999915246,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999974876,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999997606,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999999927,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999999888,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.999999876,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38801",
+		"score": 0.9999965455,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999991698,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999999864,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999999266,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.999991346,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999973899,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999997298,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999999815,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999998536,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38802",
+		"score": 0.9999964311,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38804",
+		"score": 0.9999991432,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38804",
+		"score": 0.9999999828,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38804",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38804",
+		"score": 0.999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38804",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38804",
+		"score": 0.9999999185,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38804",
+		"score": 0.9999997145,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38804",
+		"score": 0.9999999984,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38804",
+		"score": 0.9999999773,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38804",
+		"score": 0.9999998422,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55858",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999991168,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999999789,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999999965,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999999944,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999999102,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999996992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999999728,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999998308,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38805",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 0.9999999988,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93019",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00681",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.9999999988,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.9999999998,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93016",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "93025",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00682",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "93017",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.9999999705,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.9999999927,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.9999999964,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.9999999977,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.9999998937,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.9999996695,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.9999999634,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.9999998084,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38803",
+		"score": 0.9999999984,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.9999999516,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.9999999894,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.9999999821,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.9999999944,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55855",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.9999998601,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.9999999977,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.9999999427,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55856",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.999999764,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "38799",
+		"score": 0.9999999921,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.9999999464,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.9999999868,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.9999999789,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.9999999926,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.9999999964,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55854",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.999999937,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.9999999983,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "93026",
+		"score": 0.9999999899,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55853",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.9999999411,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.9999999842,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.9999999755,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.9999999905,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.9999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.9999999984,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.999999995,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.9999999876,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00676",
+		"score": 0.9999999984,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.9999999966,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00673",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38797",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 7,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00674",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.9999999992,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 8,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.9999999996,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00677",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77823",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38802",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999755,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38801",
+		"rank": 11,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.999999965,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38805",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999836,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93026",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999983,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00676",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999991,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93022",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38799",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999971,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00675",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38803",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999897,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38798",
+		"rank": 9,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38804",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999798,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93024",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00674",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93025",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93017",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00678",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93020",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38794",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00679",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "38796",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93023",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93018",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.9999999999,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93021",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 0.9999999997,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "00680",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00681",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77825",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00681",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "93027",
+		"rank": 10,
+		"recommendedProductExternalReferenceCode": "00681",
+		"score": 0.9999999993,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "77824",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "00681",
+		"score": 1.0,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55860",
+		"score": 0.999998892,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 2,
+		"recommendedProductExternalReferenceCode": "55860",
+		"score": 0.9999999252,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55861",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.9999958765,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.9999995038,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55857",
+		"rank": 5,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.9999998469,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 3,
+		"recommendedProductExternalReferenceCode": "55858",
+		"score": 0.9999990435,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55859",
+		"rank": 6,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.9999982412,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"productExternalReferenceCode": "55860",
+		"rank": 4,
+		"recommendedProductExternalReferenceCode": "55861",
+		"score": 0.999998892,
+		"type": "product-interaction-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "00681",
+		"score": 1.0238866,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "00681",
+		"score": 1.0238904,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 1.0238799,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "77824",
+		"score": 1.0238837,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 1.0238588,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "00680",
+		"score": 1.0238626,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 1.0238587,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "77825",
+		"score": 1.0238625,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 1.0238585,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "93027",
+		"score": 1.0238624,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 1.0238512,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "38795",
+		"score": 1.023855,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 1.0238512,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "00683",
+		"score": 1.023855,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 1.023851,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "93016",
+		"score": 1.0238549,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 1.023851,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "93019",
+		"score": 1.0238549,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 1.0238357,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "93020",
+		"score": 1.0238395,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 1.023828,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "00678",
+		"score": 1.0238318,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 1.0238198,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "00679",
+		"score": 1.0238235,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 1.0238194,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "93023",
+		"score": 1.0238233,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 1.0238194,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "38794",
+		"score": 1.0238233,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "s-auto-service",
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 1.0238192,
+		"type": "user-recommendation"
+	},
+	{
+		"accountExternalReferenceCode": "leo-auto-parts-distributor",
+		"recommendedProductExternalReferenceCode": "00682",
+		"score": 1.023823,
+		"type": "user-recommendation"
+	}
+]

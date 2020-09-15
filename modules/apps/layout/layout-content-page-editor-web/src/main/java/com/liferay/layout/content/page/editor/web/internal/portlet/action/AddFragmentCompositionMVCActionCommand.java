@@ -154,6 +154,8 @@ public class AddFragmentCompositionMVCActionCommand
 		).put(
 			"groupId", fragmentComposition.getGroupId()
 		).put(
+			"icon", "edit-layout"
+		).put(
 			"imagePreviewURL",
 			fragmentComposition.getImagePreviewURL(themeDisplay)
 		).put(

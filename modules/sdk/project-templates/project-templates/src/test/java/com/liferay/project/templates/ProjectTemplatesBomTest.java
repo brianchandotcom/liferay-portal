@@ -183,7 +183,9 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		}
 	}
 
-	private void _resolveProject(String projectName, File workspaceDir) {
+	private void _resolveProject(String projectName, File workspaceDir)
+		throws IOException {
+
 		executeGradle(
 			workspaceDir, _gradleDistribution,
 			":modules:" + projectName + "test" + _GRADLE_TASK_PATH_RESOLVE);

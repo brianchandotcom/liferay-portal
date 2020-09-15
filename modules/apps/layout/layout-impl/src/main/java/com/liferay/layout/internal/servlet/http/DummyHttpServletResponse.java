@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.search.util;
+package com.liferay.layout.internal.servlet.http;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -30,46 +30,46 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Pavel Savinov
  */
-public class SyntheticHttpServletResponse implements HttpServletResponse {
+public class DummyHttpServletResponse implements HttpServletResponse {
 
 	@Override
 	public void addCookie(Cookie cookie) {
 	}
 
 	@Override
-	public void addDateHeader(String s, long l) {
+	public void addDateHeader(String name, long value) {
 	}
 
 	@Override
-	public void addHeader(String s, String s1) {
+	public void addHeader(String name, String value) {
 	}
 
 	@Override
-	public void addIntHeader(String s, int i) {
+	public void addIntHeader(String name, int value) {
 	}
 
 	@Override
-	public boolean containsHeader(String s) {
+	public boolean containsHeader(String name) {
 		return false;
 	}
 
 	@Override
-	public String encodeRedirectUrl(String s) {
+	public String encodeRedirectUrl(String url) {
 		return null;
 	}
 
 	@Override
-	public String encodeRedirectURL(String s) {
+	public String encodeRedirectURL(String url) {
 		return null;
 	}
 
 	@Override
-	public String encodeUrl(String s) {
+	public String encodeUrl(String url) {
 		return null;
 	}
 
 	@Override
-	public String encodeURL(String s) {
+	public String encodeURL(String url) {
 		return null;
 	}
 
@@ -93,7 +93,7 @@ public class SyntheticHttpServletResponse implements HttpServletResponse {
 	}
 
 	@Override
-	public String getHeader(String s) {
+	public String getHeader(String name) {
 		return null;
 	}
 
@@ -103,7 +103,7 @@ public class SyntheticHttpServletResponse implements HttpServletResponse {
 	}
 
 	@Override
-	public Collection<String> getHeaders(String s) {
+	public Collection<String> getHeaders(String name) {
 		return null;
 	}
 
@@ -141,47 +141,47 @@ public class SyntheticHttpServletResponse implements HttpServletResponse {
 	}
 
 	@Override
-	public void sendError(int i) throws IOException {
+	public void sendError(int error) throws IOException {
 	}
 
 	@Override
-	public void sendError(int i, String s) throws IOException {
+	public void sendError(int error, String message) throws IOException {
 	}
 
 	@Override
-	public void sendRedirect(String s) throws IOException {
+	public void sendRedirect(String location) throws IOException {
 	}
 
 	@Override
-	public void setBufferSize(int i) {
+	public void setBufferSize(int size) {
 	}
 
 	@Override
-	public void setCharacterEncoding(String s) {
+	public void setCharacterEncoding(String encoding) {
 	}
 
 	@Override
-	public void setContentLength(int i) {
+	public void setContentLength(int contentLength) {
 	}
 
 	@Override
-	public void setContentLengthLong(long l) {
+	public void setContentLengthLong(long contentLength) {
 	}
 
 	@Override
-	public void setContentType(String s) {
+	public void setContentType(String contentType) {
 	}
 
 	@Override
-	public void setDateHeader(String s, long l) {
+	public void setDateHeader(String name, long value) {
 	}
 
 	@Override
-	public void setHeader(String s, String s1) {
+	public void setHeader(String name, String value) {
 	}
 
 	@Override
-	public void setIntHeader(String s, int i) {
+	public void setIntHeader(String name, int value) {
 	}
 
 	@Override
@@ -189,11 +189,11 @@ public class SyntheticHttpServletResponse implements HttpServletResponse {
 	}
 
 	@Override
-	public void setStatus(int i) {
+	public void setStatus(int status) {
 	}
 
 	@Override
-	public void setStatus(int i, String s) {
+	public void setStatus(int status, String message) {
 	}
 
 	private final UnsyncPrintWriter _unsyncPrintWriter = new UnsyncPrintWriter(

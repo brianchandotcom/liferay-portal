@@ -771,7 +771,7 @@ definition {
 
 		CalendarEvent.view(eventTitle = "Calendar Event Today Day");
 
-		CalendarEvent.delete();
+		CalendarEvent.tearDownNoCloseMessage();
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -783,7 +783,7 @@ definition {
 
 		CalendarEvent.view(eventTitle = "Calendar Event Today Week");
 
-		CalendarEvent.delete();
+		CalendarEvent.tearDownNoCloseMessage();
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 

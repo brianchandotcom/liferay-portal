@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.portlet.filter;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -68,6 +69,13 @@ public class AccountUsersAdminPortletFilter
 			actionName.startsWith("/users_admin/")) {
 
 			_portlet.processAction(actionRequest, actionResponse);
+
+			if (actionName.equals("/users_admin/edit_user") &&
+				!SessionErrors.isEmpty(actionRequest)) {
+
+				actionResponse.setRenderParameter(
+					"mvcPath", "/account_users_admin/edit_account_user.jsp");
+			}
 
 			return;
 		}

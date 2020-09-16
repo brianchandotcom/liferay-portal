@@ -206,7 +206,7 @@ public abstract class BaseCommerceProductPriceCalculation
 			List<CommerceOptionValue> commerceOptionValues)
 		throws PortalException {
 
-		if ((commerceOptionValues == null) || commerceOptionValues.isEmpty()) {
+		if (commerceOptionValues.isEmpty()) {
 			return _toPriceArray(
 				unitPriceCommerceMoney, promoPriceCommerceMoney, finalPrice);
 		}

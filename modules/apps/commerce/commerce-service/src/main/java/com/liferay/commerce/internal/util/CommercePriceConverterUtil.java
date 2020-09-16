@@ -77,7 +77,7 @@ public class CommercePriceConverterUtil {
 				commerceChannelGroupId, cpInstanceId, commerceBillingAddressId,
 				commerceShippingAddressId, price, includeTax);
 
-		if ((commerceTaxValues == null) || commerceTaxValues.isEmpty()) {
+		if (commerceTaxValues.isEmpty()) {
 			return price;
 		}
 

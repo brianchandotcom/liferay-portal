@@ -166,8 +166,8 @@ const MillerColumnsItem = ({
 						onClick &&
 						onClick({
 							actionURL: action.url,
-							namespace,
 							childCount: action.childCount,
+							namespace
 						}),
 					href: onClick ? null : action.url,
 				});

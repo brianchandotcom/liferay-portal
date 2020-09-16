@@ -34,6 +34,23 @@ definition {
 			item = "${item}");
 	}
 
+	macro gotoExportCollection {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "internetexplorer") {
+			Click(locator1 = "NavNested#NAV_NESTED_ELLIPSIS_IE");
+		}
+		else {
+			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
+		}
+
+		DropdownMenuItem.click(menuItem = "Export");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+	}
+
 	macro gotoImportCollection {
 		var browserType = PropsUtil.get("browser.type");
 

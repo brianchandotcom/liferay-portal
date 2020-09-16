@@ -231,13 +231,13 @@ public class CommercePriceListServiceImpl
 	}
 
 	@Override
-	public CommercePriceList fetchCommerceCatalogBasePriceListByType(
+	public CommercePriceList fetchCatalogBaseCommercePriceListByType(
 			long groupId, String type)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
 			commercePriceListLocalService.
-				fetchCommerceCatalogBasePriceListByType(groupId, type);
+				fetchCatalogBaseCommercePriceListByType(groupId, type);
 
 		if (commercePriceList != null) {
 			_commercePriceListModelResourcePermission.check(
@@ -245,6 +245,19 @@ public class CommercePriceListServiceImpl
 		}
 
 		return commercePriceList;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommercePriceList fetchCommerceCatalogBasePriceListByType(
+			long groupId, String type)
+		throws PortalException {
+
+		return commercePriceListService.fetchCatalogBaseCommercePriceListByType(
+			groupId, type);
 	}
 
 	@Override

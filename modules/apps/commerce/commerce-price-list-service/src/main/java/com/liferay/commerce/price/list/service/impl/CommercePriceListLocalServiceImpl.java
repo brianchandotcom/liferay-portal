@@ -92,7 +92,7 @@ public class CommercePriceListLocalServiceImpl
 	extends CommercePriceListLocalServiceBaseImpl {
 
 	@Override
-	public CommercePriceList addCommerceCatalogBasePriceList(
+	public CommercePriceList addCatalogBaseCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId, String type,
 			String name, ServiceContext serviceContext)
 		throws PortalException {
@@ -113,6 +113,20 @@ public class CommercePriceListLocalServiceImpl
 			calendar.get(Calendar.YEAR), displayDateHour,
 			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, null, true,
 			serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommercePriceList addCommerceCatalogBasePriceList(
+			long groupId, long userId, long commerceCurrencyId, String type,
+			String name, ServiceContext serviceContext)
+		throws PortalException {
+
+		return commercePriceListLocalService.addCatalogBaseCommercePriceList(
+			groupId, userId, commerceCurrencyId, type, name, serviceContext);
 	}
 
 	@Override
@@ -498,7 +512,7 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public CommercePriceList fetchCommerceCatalogBasePriceList(long groupId)
+	public CommercePriceList fetchCatalogBaseCommercePriceList(long groupId)
 		throws PortalException {
 
 		return commercePriceListPersistence.fetchByG_C_T(
@@ -506,15 +520,40 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public CommercePriceList fetchCommerceCatalogBasePriceListByType(
+	public CommercePriceList fetchCatalogBaseCommercePriceListByType(
 			long groupId, String type)
 		throws PortalException {
 
 		return commercePriceListPersistence.fetchByG_C_T(groupId, true, type);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
-	public CommercePriceList getCommerceCatalogBasePriceList(long groupId)
+	public CommercePriceList fetchCommerceCatalogBasePriceList(long groupId)
+		throws PortalException {
+
+		return commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
+			groupId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommercePriceList fetchCommerceCatalogBasePriceListByType(
+			long groupId, String type)
+		throws PortalException {
+
+		return commercePriceListLocalService.
+			fetchCatalogBaseCommercePriceListByType(groupId, type);
+	}
+
+	@Override
+	public CommercePriceList getCatalogBaseCommercePriceList(long groupId)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
@@ -529,7 +568,7 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public CommercePriceList getCommerceCatalogBasePriceListByType(
+	public CommercePriceList getCatalogBaseCommercePriceListByType(
 			long groupId, String type)
 		throws PortalException {
 
@@ -541,6 +580,31 @@ public class CommercePriceListLocalServiceImpl
 		}
 
 		return commercePriceList;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommercePriceList getCommerceCatalogBasePriceList(long groupId)
+		throws PortalException {
+
+		return commercePriceListLocalService.getCatalogBaseCommercePriceList(
+			groupId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public CommercePriceList getCommerceCatalogBasePriceListByType(
+			long groupId, String type)
+		throws PortalException {
+
+		return commercePriceListLocalService.
+			getCatalogBaseCommercePriceListByType(groupId, type);
 	}
 
 	@Override

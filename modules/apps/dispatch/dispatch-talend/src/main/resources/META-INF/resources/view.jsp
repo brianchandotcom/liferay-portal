@@ -2,37 +2,37 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 --%>
 
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceDataIntegrationProcess commerceDataIntegrationProcess = (CommerceDataIntegrationProcess)request.getAttribute(CommerceDataIntegrationWebKeys.COMMERCE_DATA_INTEGRATION_PROCESS);
-TalendProcessTypeHelper talendProcessTypeHelper = (TalendProcessTypeHelper)request.getAttribute("talendProcessTypeHelper");
+DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(DispatchWebKeys.DISPATCH_TRIGGER);
+TalendScheduledTaskExecutorHelper talendScheduledTaskExecutorHelper = (TalendScheduledTaskExecutorHelper)request.getAttribute("talendScheduledTaskExecutorHelper");
 %>
 
-<liferay-portlet:actionURL name="editTalendCommerceDataIntegrationProcess" portletName="<%= CommerceDataIntegrationPortletKeys.COMMERCE_DATA_INTEGRATION %>" var="editTalendCommerceDataIntegrationProcessActionURL" />
+<liferay-portlet:actionURL name="editTalendDispatchTrigger" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editTalendDispatchTriggerActionURL" />
 
-<div class="closed container-fluid-1280" id="<portlet:namespace />editCommerceDataIntegrationProcessId">
+<div class="closed container-fluid-1280" id="<portlet:namespace />editDispatchTriggerId">
 	<div class="container main-content-body sheet">
-		<aui:form action="<%= editTalendCommerceDataIntegrationProcessActionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
+		<aui:form action="<%= editTalendDispatchTriggerActionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="commerceDataIntegrationProcessId" type="hidden" value="<%= String.valueOf(commerceDataIntegrationProcess.getCommerceDataIntegrationProcessId()) %>" />
+			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTrigger.getDispatchTriggerId()) %>" />
 
-			<aui:model-context bean="<%= commerceDataIntegrationProcess %>" model="<%= CommerceDataIntegrationProcess.class %>" />
+			<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
 
 			<%
-			FileEntry fileEntry = talendProcessTypeHelper.getFileEntry(commerceDataIntegrationProcess.getCommerceDataIntegrationProcessId());
+			FileEntry fileEntry = talendScheduledTaskExecutorHelper.getFileEntry(dispatchTrigger.getDispatchTriggerId());
 			%>
 
 			<p class="<%= (fileEntry != null) ? "text-default" : "hide text-default" %>" id="<portlet:namespace />fileEntryName">
@@ -48,9 +48,9 @@ TalendProcessTypeHelper talendProcessTypeHelper = (TalendProcessTypeHelper)reque
 				</span>
 			</p>
 
-			<c:if test="<%= (commerceDataIntegrationProcess == null) || !commerceDataIntegrationProcess.isSystem() %>">
+			<c:if test="<%= (dispatchTrigger == null) || !dispatchTrigger.isSystem() %>">
 				<div class="<%= (fileEntry != null) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />fileEntry">
-					<aui:input name="srcArchive" required="<%= true %>" type="file" />
+					<aui:input name="jobArchive" required="<%= true %>" type="file" />
 				</div>
 			</c:if>
 
@@ -64,14 +64,15 @@ TalendProcessTypeHelper talendProcessTypeHelper = (TalendProcessTypeHelper)reque
 </div>
 
 <aui:script>
-	$('#<portlet:namespace />fileEntryRemove').on(
-		'click',
-		function(event) {
+	AUI().ready(function (A) {
+		A.one('#<portlet:namespace />fileEntryRemove').on('click', function (
+			event
+		) {
 			event.preventDefault();
 
-			$('#<portlet:namespace />fileEntry').removeClass('hide');
+			A.one('#<portlet:namespace />fileEntry').removeClass('hide');
 
-			$('#<portlet:namespace />fileEntryName').addClass('hide');
-		}
-	);
+			A.one('#<portlet:namespace />fileEntryName').addClass('hide');
+		});
+	});
 </aui:script>

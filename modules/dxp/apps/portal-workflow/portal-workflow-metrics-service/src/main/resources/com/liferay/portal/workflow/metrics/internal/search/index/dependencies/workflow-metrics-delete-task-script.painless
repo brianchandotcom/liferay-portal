@@ -1,0 +1,3 @@
+if (ctx._source.containsKey("tasks")) {
+	ctx._source.tasks.removeIf(task -> task.taskId == params.taskId);
+}

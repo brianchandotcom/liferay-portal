@@ -1,0 +1,8 @@
+if (ctx._source.containsKey("tasks")) {
+	def task = ctx._source.tasks.find(task -> task.taskId == params.taskId);
+
+	if (task != null) {
+		task.assigneeIds = params.assigneeIds;
+		task.assigneeType = params.assigneeType;
+	}
+}

@@ -170,6 +170,22 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro configureFilterByField {
+		Check.checkToggleSwitch(locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX");
+
+		Pause(locator1 = "3000");
+
+		Click(locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Check(
+			key_fieldName = "${fieldName}",
+			locator1 = "APConfigurationFilterbyfield#FIELD_FILTER_RADIO_BUTTON");
+	}
+
 	macro configureItemTypeInManualCollection {
 		if (isSet(itemType)) {
 			Select(

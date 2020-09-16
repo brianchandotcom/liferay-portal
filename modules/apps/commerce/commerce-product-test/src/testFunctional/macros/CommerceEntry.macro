@@ -751,6 +751,74 @@ definition {
 			value1 = "${discountLevel}");
 	}
 
+	macro viewEntryEligibility {
+		if (isSet(accountGroupsEligibility)) {
+			var title = "Add Account Groups";
+
+			AssertChecked(
+				key_radioOption = "Specific Account Groups",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertElementPresent(
+				key_title = "${title}",
+				locator1 = "CommerceEntry#ADD_RELATION_FIELD");
+
+			for (var accountGroup : list "${accountGroupsEligibility}") {
+				AssertElementPresent(
+					key_entryName = "${accountGroup}",
+					key_table = "Account Groups",
+					locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+			}
+		}
+		else if (isSet(accountsEligibility)) {
+			var title = "Add Accounts";
+
+			AssertChecked(
+				key_radioOption = "Specific Accounts",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertElementPresent(
+				key_title = "${title}",
+				locator1 = "CommerceEntry#ADD_RELATION_FIELD");
+
+			for (var account : list "${accountsEligibility}") {
+				AssertElementPresent(
+					key_entryName = "${account}",
+					key_table = "Accounts",
+					locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+			}
+		}
+		else {
+			AssertChecked(
+				key_radioOption = "All Accounts",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		if (isSet(channelsEligibility)) {
+			var title = "Add Channels";
+
+			AssertChecked(
+				key_radioOption = "Specific Channels",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertElementPresent(
+				key_title = "${title}",
+				locator1 = "CommerceEntry#ADD_RELATION_FIELD");
+
+			for (var channel : list "${channelsEligibility}") {
+				AssertElementPresent(
+					key_entryName = "${channel}",
+					key_table = "Channels",
+					locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+			}
+		}
+		else {
+			AssertChecked(
+				key_radioOption = "All Channels",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+	}
+
 	macro viewOptionsEntry {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",

@@ -22,6 +22,7 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassNameTable;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.SystemEventTable;
 
@@ -95,6 +96,9 @@ public interface ChildTableReferenceInfoBuilder<T extends Table<T>> {
 				).and(
 					ResourcePermissionTable.INSTANCE.name.eq(
 						modelClass.getName())
+				).and(
+					ResourcePermissionTable.INSTANCE.scope.eq(
+						ResourceConstants.SCOPE_INDIVIDUAL)
 				).and(
 					pkColumn.eq(ResourcePermissionTable.INSTANCE.primKeyId)
 				)

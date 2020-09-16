@@ -119,13 +119,11 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 			boolean includeTax)
 		throws PortalException {
 
-		List<CommerceTaxValue> commerceTaxValues = new ArrayList<>();
-
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			cpInstanceId);
 
 		if (cpInstance == null) {
-			return commerceTaxValues;
+			return Collections.emptyList();
 		}
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
@@ -133,7 +131,7 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 		if (cpDefinition.isTaxExempt() ||
 			(cpDefinition.getCPTaxCategoryId() <= 0)) {
 
-			return commerceTaxValues;
+			return Collections.emptyList();
 		}
 
 		return _getCommerceTaxValues(

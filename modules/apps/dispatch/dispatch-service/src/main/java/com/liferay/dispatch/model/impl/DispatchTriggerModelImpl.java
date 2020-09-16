@@ -77,8 +77,7 @@ public class DispatchTriggerModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
-		{"cronExpression", Types.VARCHAR}, {"endDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"startDate", Types.TIMESTAMP},
+		{"cronExpression", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"system_", Types.BOOLEAN}, {"type_", Types.VARCHAR},
 		{"typeSettings", Types.CLOB}
 	};
@@ -96,16 +95,14 @@ public class DispatchTriggerModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("cronExpression", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("endDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,endDate DATE null,name VARCHAR(75) null,startDate DATE null,system_ BOOLEAN,type_ VARCHAR(75) null,typeSettings TEXT null)";
+		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,name VARCHAR(75) null,system_ BOOLEAN,type_ VARCHAR(75) null,typeSettings TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchTrigger";
 
@@ -184,9 +181,7 @@ public class DispatchTriggerModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setActive(soapModel.isActive());
 		model.setCronExpression(soapModel.getCronExpression());
-		model.setEndDate(soapModel.getEndDate());
 		model.setName(soapModel.getName());
-		model.setStartDate(soapModel.getStartDate());
 		model.setSystem(soapModel.isSystem());
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
@@ -389,19 +384,10 @@ public class DispatchTriggerModelImpl
 			"cronExpression",
 			(BiConsumer<DispatchTrigger, String>)
 				DispatchTrigger::setCronExpression);
-		attributeGetterFunctions.put("endDate", DispatchTrigger::getEndDate);
-		attributeSetterBiConsumers.put(
-			"endDate",
-			(BiConsumer<DispatchTrigger, Date>)DispatchTrigger::setEndDate);
 		attributeGetterFunctions.put("name", DispatchTrigger::getName);
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<DispatchTrigger, String>)DispatchTrigger::setName);
-		attributeGetterFunctions.put(
-			"startDate", DispatchTrigger::getStartDate);
-		attributeSetterBiConsumers.put(
-			"startDate",
-			(BiConsumer<DispatchTrigger, Date>)DispatchTrigger::setStartDate);
 		attributeGetterFunctions.put("system", DispatchTrigger::getSystem);
 		attributeSetterBiConsumers.put(
 			"system",
@@ -608,21 +594,6 @@ public class DispatchTriggerModelImpl
 
 	@JSON
 	@Override
-	public Date getEndDate() {
-		return _endDate;
-	}
-
-	@Override
-	public void setEndDate(Date endDate) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_endDate = endDate;
-	}
-
-	@JSON
-	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -648,21 +619,6 @@ public class DispatchTriggerModelImpl
 	@Deprecated
 	public String getOriginalName() {
 		return getColumnOriginalValue("name");
-	}
-
-	@JSON
-	@Override
-	public Date getStartDate() {
-		return _startDate;
-	}
-
-	@Override
-	public void setStartDate(Date startDate) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_startDate = startDate;
 	}
 
 	@JSON
@@ -798,9 +754,7 @@ public class DispatchTriggerModelImpl
 		dispatchTriggerImpl.setModifiedDate(getModifiedDate());
 		dispatchTriggerImpl.setActive(isActive());
 		dispatchTriggerImpl.setCronExpression(getCronExpression());
-		dispatchTriggerImpl.setEndDate(getEndDate());
 		dispatchTriggerImpl.setName(getName());
-		dispatchTriggerImpl.setStartDate(getStartDate());
 		dispatchTriggerImpl.setSystem(isSystem());
 		dispatchTriggerImpl.setType(getType());
 		dispatchTriggerImpl.setTypeSettings(getTypeSettings());
@@ -929,30 +883,12 @@ public class DispatchTriggerModelImpl
 			dispatchTriggerCacheModel.cronExpression = null;
 		}
 
-		Date endDate = getEndDate();
-
-		if (endDate != null) {
-			dispatchTriggerCacheModel.endDate = endDate.getTime();
-		}
-		else {
-			dispatchTriggerCacheModel.endDate = Long.MIN_VALUE;
-		}
-
 		dispatchTriggerCacheModel.name = getName();
 
 		String name = dispatchTriggerCacheModel.name;
 
 		if ((name != null) && (name.length() == 0)) {
 			dispatchTriggerCacheModel.name = null;
-		}
-
-		Date startDate = getStartDate();
-
-		if (startDate != null) {
-			dispatchTriggerCacheModel.startDate = startDate.getTime();
-		}
-		else {
-			dispatchTriggerCacheModel.startDate = Long.MIN_VALUE;
 		}
 
 		dispatchTriggerCacheModel.system = isSystem();
@@ -1056,9 +992,7 @@ public class DispatchTriggerModelImpl
 	private boolean _setModifiedDate;
 	private boolean _active;
 	private String _cronExpression;
-	private Date _endDate;
 	private String _name;
-	private Date _startDate;
 	private boolean _system;
 	private String _type;
 	private String _typeSettings;
@@ -1101,9 +1035,7 @@ public class DispatchTriggerModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("active_", _active);
 		_columnOriginalValues.put("cronExpression", _cronExpression);
-		_columnOriginalValues.put("endDate", _endDate);
 		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("startDate", _startDate);
 		_columnOriginalValues.put("system_", _system);
 		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("typeSettings", _typeSettings);
@@ -1150,17 +1082,13 @@ public class DispatchTriggerModelImpl
 
 		columnBitmasks.put("cronExpression", 256L);
 
-		columnBitmasks.put("endDate", 512L);
+		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("system_", 1024L);
 
-		columnBitmasks.put("startDate", 2048L);
+		columnBitmasks.put("type_", 2048L);
 
-		columnBitmasks.put("system_", 4096L);
-
-		columnBitmasks.put("type_", 8192L);
-
-		columnBitmasks.put("typeSettings", 16384L);
+		columnBitmasks.put("typeSettings", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

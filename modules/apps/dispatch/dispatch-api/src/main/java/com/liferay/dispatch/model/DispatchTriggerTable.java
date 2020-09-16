@@ -54,12 +54,8 @@ public class DispatchTriggerTable extends BaseTable<DispatchTriggerTable> {
 	public final Column<DispatchTriggerTable, String> cronExpression =
 		createColumn(
 			"cronExpression", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<DispatchTriggerTable, Date> endDate = createColumn(
-		"endDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<DispatchTriggerTable, Date> startDate = createColumn(
-		"startDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, Boolean> system = createColumn(
 		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, String> type = createColumn(

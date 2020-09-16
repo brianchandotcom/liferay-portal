@@ -78,7 +78,7 @@ public class DispatchTriggerCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,12 +98,8 @@ public class DispatchTriggerCacheModel
 		sb.append(active);
 		sb.append(", cronExpression=");
 		sb.append(cronExpression);
-		sb.append(", endDate=");
-		sb.append(endDate);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", startDate=");
-		sb.append(startDate);
 		sb.append(", system=");
 		sb.append(system);
 		sb.append(", type=");
@@ -154,25 +150,11 @@ public class DispatchTriggerCacheModel
 			dispatchTriggerImpl.setCronExpression(cronExpression);
 		}
 
-		if (endDate == Long.MIN_VALUE) {
-			dispatchTriggerImpl.setEndDate(null);
-		}
-		else {
-			dispatchTriggerImpl.setEndDate(new Date(endDate));
-		}
-
 		if (name == null) {
 			dispatchTriggerImpl.setName("");
 		}
 		else {
 			dispatchTriggerImpl.setName(name);
-		}
-
-		if (startDate == Long.MIN_VALUE) {
-			dispatchTriggerImpl.setStartDate(null);
-		}
-		else {
-			dispatchTriggerImpl.setStartDate(new Date(startDate));
 		}
 
 		dispatchTriggerImpl.setSystem(system);
@@ -213,9 +195,7 @@ public class DispatchTriggerCacheModel
 
 		active = objectInput.readBoolean();
 		cronExpression = objectInput.readUTF();
-		endDate = objectInput.readLong();
 		name = objectInput.readUTF();
-		startDate = objectInput.readLong();
 
 		system = objectInput.readBoolean();
 		type = objectInput.readUTF();
@@ -251,16 +231,12 @@ public class DispatchTriggerCacheModel
 			objectOutput.writeUTF(cronExpression);
 		}
 
-		objectOutput.writeLong(endDate);
-
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
-
-		objectOutput.writeLong(startDate);
 
 		objectOutput.writeBoolean(system);
 
@@ -288,9 +264,7 @@ public class DispatchTriggerCacheModel
 	public long modifiedDate;
 	public boolean active;
 	public String cronExpression;
-	public long endDate;
 	public String name;
-	public long startDate;
 	public boolean system;
 	public String type;
 	public String typeSettings;

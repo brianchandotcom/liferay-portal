@@ -51,9 +51,7 @@ public class DispatchTriggerWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("active", isActive());
 		attributes.put("cronExpression", getCronExpression());
-		attributes.put("endDate", getEndDate());
 		attributes.put("name", getName());
-		attributes.put("startDate", getStartDate());
 		attributes.put("system", isSystem());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
@@ -117,22 +115,10 @@ public class DispatchTriggerWrapper
 			setCronExpression(cronExpression);
 		}
 
-		Date endDate = (Date)attributes.get("endDate");
-
-		if (endDate != null) {
-			setEndDate(endDate);
-		}
-
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
 			setName(name);
-		}
-
-		Date startDate = (Date)attributes.get("startDate");
-
-		if (startDate != null) {
-			setStartDate(startDate);
 		}
 
 		Boolean system = (Boolean)attributes.get("system");
@@ -204,13 +190,10 @@ public class DispatchTriggerWrapper
 		return model.getDispatchTriggerId();
 	}
 
-	/**
-	 * Returns the end date of this dispatch trigger.
-	 *
-	 * @return the end date of this dispatch trigger
-	 */
 	@Override
-	public Date getEndDate() {
+	public Date getEndDate()
+		throws com.liferay.portal.kernel.scheduler.SchedulerException {
+
 		return model.getEndDate();
 	}
 
@@ -254,13 +237,10 @@ public class DispatchTriggerWrapper
 		return model.getPrimaryKey();
 	}
 
-	/**
-	 * Returns the start date of this dispatch trigger.
-	 *
-	 * @return the start date of this dispatch trigger
-	 */
 	@Override
-	public Date getStartDate() {
+	public Date getStartDate()
+		throws com.liferay.portal.kernel.scheduler.SchedulerException {
+
 		return model.getStartDate();
 	}
 
@@ -406,11 +386,6 @@ public class DispatchTriggerWrapper
 		model.setDispatchTriggerId(dispatchTriggerId);
 	}
 
-	/**
-	 * Sets the end date of this dispatch trigger.
-	 *
-	 * @param endDate the end date of this dispatch trigger
-	 */
 	@Override
 	public void setEndDate(Date endDate) {
 		model.setEndDate(endDate);
@@ -456,11 +431,6 @@ public class DispatchTriggerWrapper
 		model.setPrimaryKey(primaryKey);
 	}
 
-	/**
-	 * Sets the start date of this dispatch trigger.
-	 *
-	 * @param startDate the start date of this dispatch trigger
-	 */
 	@Override
 	public void setStartDate(Date startDate) {
 		model.setStartDate(startDate);

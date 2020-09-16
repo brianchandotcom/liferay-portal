@@ -223,20 +223,6 @@ public interface DispatchTriggerModel
 	public void setCronExpression(String cronExpression);
 
 	/**
-	 * Returns the end date of this dispatch trigger.
-	 *
-	 * @return the end date of this dispatch trigger
-	 */
-	public Date getEndDate();
-
-	/**
-	 * Sets the end date of this dispatch trigger.
-	 *
-	 * @param endDate the end date of this dispatch trigger
-	 */
-	public void setEndDate(Date endDate);
-
-	/**
 	 * Returns the name of this dispatch trigger.
 	 *
 	 * @return the name of this dispatch trigger
@@ -250,20 +236,6 @@ public interface DispatchTriggerModel
 	 * @param name the name of this dispatch trigger
 	 */
 	public void setName(String name);
-
-	/**
-	 * Returns the start date of this dispatch trigger.
-	 *
-	 * @return the start date of this dispatch trigger
-	 */
-	public Date getStartDate();
-
-	/**
-	 * Sets the start date of this dispatch trigger.
-	 *
-	 * @param startDate the start date of this dispatch trigger
-	 */
-	public void setStartDate(Date startDate);
 
 	/**
 	 * Returns the system of this dispatch trigger.

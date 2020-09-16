@@ -42,9 +42,7 @@ public class DispatchTriggerSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setActive(model.isActive());
 		soapModel.setCronExpression(model.getCronExpression());
-		soapModel.setEndDate(model.getEndDate());
 		soapModel.setName(model.getName());
-		soapModel.setStartDate(model.getStartDate());
 		soapModel.setSystem(model.isSystem());
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
@@ -183,28 +181,12 @@ public class DispatchTriggerSoap implements Serializable {
 		_cronExpression = cronExpression;
 	}
 
-	public Date getEndDate() {
-		return _endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		_endDate = endDate;
-	}
-
 	public String getName() {
 		return _name;
 	}
 
 	public void setName(String name) {
 		_name = name;
-	}
-
-	public Date getStartDate() {
-		return _startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		_startDate = startDate;
 	}
 
 	public boolean getSystem() {
@@ -244,9 +226,7 @@ public class DispatchTriggerSoap implements Serializable {
 	private Date _modifiedDate;
 	private boolean _active;
 	private String _cronExpression;
-	private Date _endDate;
 	private String _name;
-	private Date _startDate;
 	private boolean _system;
 	private String _type;
 	private String _typeSettings;

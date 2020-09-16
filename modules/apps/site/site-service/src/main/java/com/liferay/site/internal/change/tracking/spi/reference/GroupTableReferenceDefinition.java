@@ -20,6 +20,8 @@ import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInf
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 
@@ -42,6 +44,21 @@ public class GroupTableReferenceDefinition
 			GroupTable.INSTANCE.groupId, Group.class
 		).resourcePermissionReference(
 			GroupTable.INSTANCE.groupId, Group.class
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				ResourcePermissionTable.INSTANCE
+			).innerJoinON(
+				GroupTable.INSTANCE,
+				GroupTable.INSTANCE.companyId.eq(
+					ResourcePermissionTable.INSTANCE.companyId
+				).and(
+					ResourcePermissionTable.INSTANCE.scope.eq(
+						ResourceConstants.SCOPE_GROUP)
+				).and(
+					GroupTable.INSTANCE.groupId.eq(
+						ResourcePermissionTable.INSTANCE.primKeyId)
+				)
+			)
 		);
 	}
 

@@ -1524,14 +1524,13 @@ definition {
 
 		var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
 
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Site Name",
-			title = "Web Content Title");
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addViaCKEditor(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 

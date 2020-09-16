@@ -65,7 +65,7 @@ definition {
 			-d -orderByComparator=
 		''';
 
-		var collectionId = JSONCurlUtil.post("${curl}", "$..fragmentCollectionId");
+		var collectionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${collectionName}')]['fragmentCollectionId']");
 		var collectionId = StringUtil.replace("${collectionId}", "[&quot;", "");
 		var collectionId = StringUtil.replace("${collectionId}", "&quot;]", "");
 

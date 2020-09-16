@@ -19,7 +19,8 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.talend.internal.TalendScheduledTaskExecutor;
 import com.liferay.dispatch.talend.internal.configuration.DispatchTalendConfiguration;
-import com.liferay.dispatch.talend.internal.exception.FileEntryValidationException;
+import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -132,13 +133,12 @@ public class TalendScheduledTaskExecutorHelper {
 	}
 
 	private void _validateFile(String fileName, long size)
-		throws FileEntryValidationException {
+		throws FileExtensionException, FileSizeException {
 
 		if ((_dispatchTalendConfiguration.imageMaxSize() > 0) &&
 			(size > _dispatchTalendConfiguration.imageMaxSize())) {
 
-			throw new FileEntryValidationException(
-				"File size exceeds configured limit");
+			throw new FileSizeException("File size exceeds configured limit");
 		}
 
 		String extension = FileUtil.getExtension(fileName);
@@ -154,8 +154,8 @@ public class TalendScheduledTaskExecutorHelper {
 			}
 		}
 
-		throw new FileEntryValidationException(
-			"Invalid image for file name " + fileName);
+		throw new FileExtensionException(
+			"Invalid file extension for " + fileName);
 	}
 
 	@Reference

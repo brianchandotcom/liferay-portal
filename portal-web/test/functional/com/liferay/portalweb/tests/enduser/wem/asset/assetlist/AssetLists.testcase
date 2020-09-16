@@ -85,8 +85,7 @@ definition {
 	@description = "Assert that the UI works correctly for deleting Asset Lists."
 	@priority = "5"
 	test DeleteAssetList {
-		property osgi.app.includes = "bookmarks";
-		property osgi.app.includes = "document-library-google-docs";
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Create a manual asset list") {
@@ -221,8 +220,7 @@ definition {
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
 	@priority = "4"
 	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {
-		property osgi.app.includes = "bookmarks";
-		property osgi.app.includes = "document-library-google-docs";
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
 
 		task ("Create public page") {
 			JSONLayout.addPublicLayout(
@@ -488,8 +486,7 @@ definition {
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on keywords displayed correctly in Asset Publisher."
 	@priority = "5"
 	test ViewWebContentViaAssetPublisherWithAssetListBasedOnKeywords {
-		property osgi.app.includes = "bookmarks";
-		property osgi.app.includes = "document-library-google-docs";
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Create public page") {

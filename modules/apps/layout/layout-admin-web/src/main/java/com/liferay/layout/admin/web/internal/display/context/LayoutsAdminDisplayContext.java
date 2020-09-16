@@ -1538,6 +1538,27 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
+	public boolean isShowViewLayoutAction(Layout layout) {
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (layout.isDenied() || layout.isPending()) {
+			return true;
+		}
+
+		boolean published = true;
+
+		if (draftLayout != null) {
+			published = GetterUtil.getBoolean(
+				draftLayout.getTypeSettingsProperty("published"));
+		}
+
+		if (!layout.isTypeContent() || published) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected long getActiveLayoutSetBranchId() throws PortalException {
 		if (_activeLayoutSetBranchId != null) {
 			return _activeLayoutSetBranchId;

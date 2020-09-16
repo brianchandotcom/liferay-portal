@@ -29,10 +29,12 @@ Layout curLayout = (Layout)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-ui:icon
-		message="view"
-		url="<%= layoutsAdminDisplayContext.getViewLayoutURL(curLayout) %>"
-	/>
+	<c:if test="<%= layoutsAdminDisplayContext.isShowViewLayoutAction(curLayout) %>">
+		<liferay-ui:icon
+			message="view"
+			url="<%= layoutsAdminDisplayContext.getViewLayoutURL(curLayout) %>"
+		/>
+	</c:if>
 
 	<%
 	String editLayoutURL = layoutsAdminDisplayContext.getEditLayoutURL(curLayout);

@@ -62,13 +62,12 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		CommerceEntry.addNewDiscountsEntry(
-			channelsEntryName = "Liferay",
-			discountLevel = "15",
-			discountTarget = "Apply to Product",
-			entryTitle = "New Discount",
+			channelsEligibility = "Test Channel",
+			discountAmount = "15",
+			discountName = "Test Discount",
+			discountTarget = "Products",
+			discountType = "Percentage",
 			maximumDiscountAmount = "10");
-
-		Button.clickPublish();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
@@ -76,13 +75,14 @@ definition {
 			category = "Pricing",
 			portlet = "Discounts");
 
-		CommerceNavigator.gotoEntry(entryName = "New Discount");
+		CommerceNavigator.gotoEntry(entryName = "Test Discount");
 
 		CommerceEntry.viewDiscountsEntry(
-			channelsEntryName = "Liferay",
-			discountLevel = "15.00",
-			discountTarget = "Apply to Product",
-			entryTitle = "New Discount",
+			channelsEligibility = "Test Channel",
+			discountAmount = "15.00",
+			discountName = "Test Discount",
+			discountTarget = "Products",
+			discountType = "Percentage",
 			maximumDiscountAmount = "10.00");
 	}
 

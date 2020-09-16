@@ -1,24 +1,23 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
-package com.liferay.commerce.data.integration.talend.internal.servlet.taglib.ui;
+package com.liferay.dispatch.talend.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.data.integration.constants.CommerceDataIntegrationConstants;
-import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
-import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLogService;
-import com.liferay.commerce.data.integration.talend.TalendProcessTypeHelper;
-import com.liferay.commerce.data.integration.talend.internal.process.type.TalendProcessType;
+import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.talend.internal.TalendScheduledTaskExecutor;
+import com.liferay.dispatch.talend.internal.helper.TalendScheduledTaskExecutorHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -48,13 +47,13 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class TalendScreenNavigationEntry
+public class TalendScreenNavigationCategory
 	implements ScreenNavigationCategory,
-			   ScreenNavigationEntry<CommerceDataIntegrationProcess> {
+			   ScreenNavigationEntry<DispatchTrigger> {
 
 	@Override
 	public String getCategoryKey() {
-		return TalendProcessType.KEY;
+		return TalendScheduledTaskExecutor.SCHEDULED_TASK_EXECUTOR_TYPE_TALEND;
 	}
 
 	@Override
@@ -72,23 +71,21 @@ public class TalendScreenNavigationEntry
 
 	@Override
 	public String getScreenNavigationKey() {
-		return CommerceDataIntegrationConstants.
-			SCREEN_NAVIGATION_KEY_COMMERCE_DATA_INTEGRATION_GENERAL;
+		return DispatchConstants.SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL;
 	}
 
 	@Override
-	public boolean isVisible(
-		User user,
-		CommerceDataIntegrationProcess commerceDataIntegrationProcess) {
-
-		if (commerceDataIntegrationProcess == null) {
+	public boolean isVisible(User user, DispatchTrigger dispatchTrigger) {
+		if (dispatchTrigger == null) {
 			return false;
 		}
 
-		String processType = commerceDataIntegrationProcess.getType();
+		String scheduledTaskExecutorType = dispatchTrigger.getType();
 
-		if (processType.equals(TalendProcessType.KEY) &&
-			!commerceDataIntegrationProcess.isSystem()) {
+		if (scheduledTaskExecutorType.equals(
+				TalendScheduledTaskExecutor.
+					SCHEDULED_TASK_EXECUTOR_TYPE_TALEND) &&
+			!dispatchTrigger.isSystem()) {
 
 			return true;
 		}
@@ -103,7 +100,8 @@ public class TalendScreenNavigationEntry
 		throws IOException {
 
 		httpServletRequest.setAttribute(
-			"talendProcessTypeHelper", _talendProcessTypeHelper);
+			"talendScheduledTaskExecutorHelper",
+			_talendScheduledTaskExecutorHelper);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
@@ -111,18 +109,13 @@ public class TalendScreenNavigationEntry
 	}
 
 	@Reference
-	private CommerceDataIntegrationProcessLogService
-		_commerceDataIntegrationProcessLogService;
-
-	@Reference
 	private JSPRenderer _jspRenderer;
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.data.integration.talend)"
-	)
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.dispatch.talend)")
 	private ServletContext _servletContext;
 
 	@Reference
-	private TalendProcessTypeHelper _talendProcessTypeHelper;
+	private TalendScheduledTaskExecutorHelper
+		_talendScheduledTaskExecutorHelper;
 
 }

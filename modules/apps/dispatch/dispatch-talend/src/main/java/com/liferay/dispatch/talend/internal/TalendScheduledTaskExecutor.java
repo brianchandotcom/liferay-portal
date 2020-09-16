@@ -57,31 +57,20 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 	public static final String SCHEDULED_TASK_EXECUTOR_TYPE_TALEND = "talend";
 
 	@Override
-	public void execute(long dispatchTriggerId)
-		throws IOException, PortalException {
-
-		DispatchTrigger dispatchTrigger = null;
+	public void execute(long dispatchTriggerId) throws PortalException {
 		DispatchLog dispatchLog = null;
+		DispatchTrigger dispatchTrigger = null;
 
-		Date startDate = new Date();
+		File error = null;
+		File log = null;
 
 		String rootDirectoryName = null;
 
+		Date startDate = new Date();
+
 		File tempFile = null;
-		File log = null;
-		File error = null;
 
 		try {
-			dispatchTrigger = _dispatchTriggerLocalService.getDispatchTrigger(
-				dispatchTriggerId);
-
-			Date lastRunStateDate =
-				_dispatchTriggerLocalService.getPreviousFireDate(
-					dispatchTriggerId);
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				dispatchTrigger.getTypeSettingsProperties();
-
 			FileEntry fileEntry =
 				_talendScheduledTaskExecutorHelper.getFileEntry(
 					dispatchTriggerId);
@@ -96,64 +85,30 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 
 			rootDirectoryName = tempFolder.getAbsolutePath();
 
-			String[] strings = FileUtil.find(
-				rootDirectoryName, "**\\*.sh", null);
+			String shFileName = _getSHFileName(rootDirectoryName);
 
-			String sh = strings[0];
+			_addExecutePermission(shFileName);
 
-			log = FileUtil.createTempFile();
+			dispatchTrigger = _dispatchTriggerLocalService.getDispatchTrigger(
+				dispatchTriggerId);
+
+			ProcessBuilder processBuilder = new ProcessBuilder(
+				_getCommands(dispatchTrigger, rootDirectoryName, shFileName));
+
 			error = FileUtil.createTempFile();
+			log = FileUtil.createTempFile();
 
-			ProcessBuilder oerm = new ProcessBuilder("chmod", "+x", sh);
-
-			oerm.start();
-
-			List<String> params = new ArrayList<>();
-
-			params.add(sh);
-
-			params.add(
-				"--context_param companyId=" + dispatchTrigger.getCompanyId());
-
-			if (lastRunStateDate != null) {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-				params.add(
-					"--context_param lastRunStartDate=" +
-						simpleDateFormat.format(lastRunStateDate));
-			}
-
-			params.add("--context_param jobWorkDirectory=" + rootDirectoryName);
-
-			if (typeSettingsUnicodeProperties != null) {
-				for (Map.Entry<String, String> propEntry :
-						typeSettingsUnicodeProperties.entrySet()) {
-
-					StringBundler contextSB = new StringBundler(4);
-
-					contextSB.append("--context_param ");
-					contextSB.append(propEntry.getKey());
-					contextSB.append(StringPool.EQUAL);
-					contextSB.append(propEntry.getValue());
-
-					params.add(contextSB.toString());
-				}
-			}
-
-			ProcessBuilder pb = new ProcessBuilder(params);
-
-			pb.redirectError(error);
-			pb.redirectOutput(log);
+			processBuilder.redirectError(error);
+			processBuilder.redirectOutput(log);
 
 			dispatchLog = _dispatchLogLocalService.addDispatchLog(
 				dispatchTrigger.getUserId(),
 				dispatchTrigger.getDispatchTriggerId(), null, null, null,
 				startDate, BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
-			Process pr = pb.start();
+			Process process = processBuilder.start();
 
-			pr.waitFor();
+			process.waitFor();
 
 			_dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
@@ -188,6 +143,66 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 	@Override
 	public String getName() {
 		return SCHEDULED_TASK_EXECUTOR_TYPE_TALEND;
+	}
+
+	private void _addExecutePermission(String shFileName) throws IOException {
+		ProcessBuilder processBuilder = new ProcessBuilder(
+			"chmod", "+x", shFileName);
+
+		processBuilder.start();
+	}
+
+	private List<String> _getCommands(
+		DispatchTrigger dispatchTrigger, String rootDirectoryName,
+		String shFileName) {
+
+		List<String> commands = new ArrayList<>();
+
+		commands.add(shFileName);
+
+		commands.add(
+			"--context_param companyId=" + dispatchTrigger.getCompanyId());
+
+		Date lastRunStateDate =
+			_dispatchTriggerLocalService.getPreviousFireDate(
+				dispatchTrigger.getDispatchTriggerId());
+
+		if (lastRunStateDate != null) {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+			commands.add(
+				"--context_param lastRunStartDate=" +
+					simpleDateFormat.format(lastRunStateDate));
+		}
+
+		commands.add("--context_param jobWorkDirectory=" + rootDirectoryName);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			dispatchTrigger.getTypeSettingsProperties();
+
+		if (typeSettingsUnicodeProperties != null) {
+			for (Map.Entry<String, String> propEntry :
+					typeSettingsUnicodeProperties.entrySet()) {
+
+				StringBundler contextSB = new StringBundler(4);
+
+				contextSB.append("--context_param ");
+				contextSB.append(propEntry.getKey());
+				contextSB.append(StringPool.EQUAL);
+				contextSB.append(propEntry.getValue());
+
+				commands.add(contextSB.toString());
+			}
+		}
+
+		return commands;
+	}
+
+	private String _getSHFileName(String rootDirectoryName) {
+		String[] strings = FileUtil.find(rootDirectoryName, "**\\*.sh", null);
+
+		return strings[0];
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

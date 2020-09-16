@@ -561,6 +561,71 @@ definition {
 		}
 	}
 
+	macro setEntryEligibility {
+		if (isSet(accountGroupsEligibility)) {
+			var title = "Add Account Groups";
+
+			Click(
+				key_radioOption = "Specific Account Groups",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			for (var accountGroup : list "${accountGroupsEligibility}") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = "${accountGroup}",
+					title = "${title}");
+
+				Click(
+					key_title = "${title}",
+					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+			}
+		}
+		else if (isSet(accountsEligibility)) {
+			var title = "Add Accounts";
+
+			Click(
+				key_radioOption = "Specific Accounts",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			for (var account : list "${accountsEligibility}") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = "${account}",
+					title = "${title}");
+
+				Click(
+					key_title = "${title}",
+					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+			}
+		}
+		else {
+			Click(
+				key_radioOption = "All Accounts",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		if (isSet(channelsEligibility)) {
+			var title = "Add Channels";
+
+			Click(
+				key_radioOption = "Specific Channels",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			for (var channel : list "${channelsEligibility}") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = "${channel}",
+					title = "${title}");
+
+				Click(
+					key_title = "${title}",
+					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+			}
+		}
+		else {
+			Click(
+				key_radioOption = "All Channels",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+	}
+
 	macro uploadCatalogEntrySingleImage {
 		AssertClick(
 			locator1 = "CommerceEntry#PRODUCT_IMAGE_SELECT_FILE",

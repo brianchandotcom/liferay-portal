@@ -14,7 +14,7 @@
 
 package com.liferay.depot.web.internal.portlet.action;
 
-import com.liferay.depot.exception.StagedGroupException;
+import com.liferay.depot.exception.DepotEntryGroupRelStagedGroupException;
 import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,9 +59,10 @@ public class ConnectSiteMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			Throwable throwable = exception.getCause();
 
-			if (throwable instanceof StagedGroupException) {
+			if (throwable instanceof DepotEntryGroupRelStagedGroupException) {
 				SessionErrors.add(
-					actionRequest, StagedGroupException.class, throwable);
+					actionRequest, DepotEntryGroupRelStagedGroupException.class,
+					throwable);
 
 				hideDefaultErrorMessage(actionRequest);
 

@@ -100,7 +100,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DepotEntryGroupRelStagedGroup</exception>
 		<exception>DepotEntryName</exception>
-		<exception>StagedGroup</exception>
 	</exceptions>
 </service-builder>

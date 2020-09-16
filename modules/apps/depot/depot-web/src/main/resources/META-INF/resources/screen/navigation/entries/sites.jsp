@@ -46,7 +46,7 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 		</clay:content-col>
 	</clay:content-row>
 
-	<liferay-ui:error exception="<%= StagedGroupException.class %>">
+	<liferay-ui:error exception="<%= DepotEntryGroupRelStagedGroupException.class %>">
 		<liferay-ui:message key="an-asset-library-cannot-be-connected-to-a-staged-site" />
 	</liferay-ui:error>
 

@@ -19,20 +19,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class StagedGroupException extends PortalException {
+public class DepotEntryGroupRelStagedGroupException extends PortalException {
 
-	public StagedGroupException() {
+	public DepotEntryGroupRelStagedGroupException() {
 	}
 
-	public StagedGroupException(String msg) {
+	public DepotEntryGroupRelStagedGroupException(String msg) {
 		super(msg);
 	}
 
-	public StagedGroupException(String msg, Throwable throwable) {
+	public DepotEntryGroupRelStagedGroupException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public StagedGroupException(Throwable throwable) {
+	public DepotEntryGroupRelStagedGroupException(Throwable throwable) {
 		super(throwable);
 	}
 

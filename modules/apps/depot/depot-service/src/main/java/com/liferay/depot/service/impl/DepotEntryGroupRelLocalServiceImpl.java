@@ -14,7 +14,7 @@
 
 package com.liferay.depot.service.impl;
 
-import com.liferay.depot.exception.StagedGroupException;
+import com.liferay.depot.exception.DepotEntryGroupRelStagedGroupException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.base.DepotEntryGroupRelLocalServiceBaseImpl;
@@ -145,7 +145,7 @@ public class DepotEntryGroupRelLocalServiceImpl
 			Group group = _groupLocalService.getGroup(toGroupId);
 
 			if (group.isStaged()) {
-				throw new StagedGroupException(
+				throw new DepotEntryGroupRelStagedGroupException(
 					"Asset library cannot be connected to a staged group");
 			}
 		}

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_RESULTS_SCOPE</td>
+	<td>//span[contains(@class,'label-item')]//div[contains(@class,'label-section') and contains(.,'${key_filterScope}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAVBAR_TEXT</td>
 	<td>//nav[contains(@class,'management-bar')]//span[contains(@class,'navbar-text')]</td>
 	<td></td>

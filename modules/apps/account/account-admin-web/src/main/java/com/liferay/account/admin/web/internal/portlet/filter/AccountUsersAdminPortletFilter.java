@@ -91,7 +91,7 @@ public class AccountUsersAdminPortletFilter
 
 		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
 
-		if (Validator.isNotNull(mvcPath) && mvcPath.startsWith("/common/")) {
+		if (mvcPath.startsWith("/common/") || mvcPath.startsWith("/user/")) {
 			_jspRenderer.renderJSP(
 				_servletContext, _portal.getHttpServletRequest(renderRequest),
 				_portal.getHttpServletResponse(renderResponse), mvcPath);

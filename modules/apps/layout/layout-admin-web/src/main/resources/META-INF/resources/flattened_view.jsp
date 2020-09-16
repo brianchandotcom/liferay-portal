@@ -29,20 +29,9 @@
 		keyProperty="plid"
 		modelVar="layout"
 	>
-
-		<%
-		PortletURL portletURL = null;
-
-		if (layoutsAdminDisplayContext.isLayoutReachable(layout)) {
-			portletURL = layoutsAdminDisplayContext.getPortletURL();
-
-			portletURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
-		}
-		%>
-
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-200 table-title"
-			href="<%= portletURL %>"
+			href="<%= layoutsAdminDisplayContext.isShowViewLayoutAction(layout) ? layoutsAdminDisplayContext.getViewLayoutURL(layout) : StringPool.BLANK %>"
 			name="title"
 			value="<%= layout.getName(locale) %>"
 		/>

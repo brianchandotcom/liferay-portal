@@ -21,6 +21,8 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "users");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
+String backURL = ParamUtil.getString(request, "backURL", redirect);
+
 long roleId = ParamUtil.getLong(request, "roleId");
 
 Role role = RoleServiceUtil.fetchRole(roleId);
@@ -43,7 +45,7 @@ SearchContainer<?> searchContainer = editRoleAssignmentsManagementToolbarDisplay
 PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPortletURL();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(role.getTitle(locale));
 %>

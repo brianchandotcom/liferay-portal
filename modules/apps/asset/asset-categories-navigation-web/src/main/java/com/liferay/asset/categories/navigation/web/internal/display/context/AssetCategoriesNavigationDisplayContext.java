@@ -16,6 +16,7 @@ package com.liferay.asset.categories.navigation.web.internal.display.context;
 
 import com.liferay.asset.categories.navigation.web.internal.configuration.AssetCategoriesNavigationPortletInstanceConfiguration;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -94,7 +95,8 @@ public class AssetCategoriesNavigationDisplayContext {
 		}
 
 		_assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
-			groupIds);
+			groupIds,
+			new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
 
 		return _assetVocabularies;
 	}

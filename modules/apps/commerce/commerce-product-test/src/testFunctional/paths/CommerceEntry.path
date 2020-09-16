@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISCOUNT_AMOUNT</td>
+	<td>//div/input[contains(@id,'amount')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISCOUNT_LEVEL_1_FIELD</td>
 	<td>//div/input[contains(@id,'level1')]</td>
 	<td></td>

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.workflow.metrics.internal.sla.WorkflowMetricsInstanceSLAStatus;
 import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
 
@@ -99,6 +100,8 @@ public class InstanceWorkflowMetricsIndexerImpl
 			"userId", userId
 		).setString(
 			"userName", userName
+		).setString(
+			"slaStatus", WorkflowMetricsInstanceSLAStatus.UNTRACKED.getValue()
 		).setString(
 			"version", processVersion
 		);

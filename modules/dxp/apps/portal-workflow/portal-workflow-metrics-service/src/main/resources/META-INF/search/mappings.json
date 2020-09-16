@@ -479,6 +479,10 @@
 				"store": true,
 				"type": "long"
 			},
+			"slaStatus": {
+				"store": true,
+				"type": "keyword"
+			},
 			"uid": {
 				"store": true,
 				"type": "keyword"

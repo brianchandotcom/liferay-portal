@@ -64,11 +64,13 @@ definition {
 
 		Portlet.addPG(
 			pageName = "Calendar Page",
-			portletName = "Language");
+			portletName = "Language Selector");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "es_ES",
 			textIcon = "español-España");
+
+		CalendarNavigator.gotoView(viewType = "Week");
 
 		CalendarScheduler.addLocalizedEvent(
 			eventTitle = "Calendar Event Title",

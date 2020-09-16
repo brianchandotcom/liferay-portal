@@ -219,7 +219,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHECKOUT_SHIPPING_OPTION_RADIO</td>
+	<td>RADIO_BUTTON</td>
 	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio']</td>
 	<td></td>
 </tr>

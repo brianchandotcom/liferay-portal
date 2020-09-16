@@ -375,8 +375,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						"symbolLeft", "change"
 					));
 
-				publishURL.setParameter(
-					"ctCollectionId", Boolean.TRUE.toString());
+				publishURL.setParameter("schedule", Boolean.TRUE.toString());
 
 				jsonArray.put(
 					JSONUtil.put(

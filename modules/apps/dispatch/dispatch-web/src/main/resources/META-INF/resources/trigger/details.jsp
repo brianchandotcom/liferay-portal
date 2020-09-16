@@ -23,13 +23,13 @@ long dispatchTriggerId = 0;
 
 DispatchTrigger dispatchTrigger = dispatchTriggerDisplayContext.getDispatchTrigger();
 
-String dispatchTriggerType = ParamUtil.getString(request, "dispatchTriggerType");
+String type = ParamUtil.getString(request, "type");
 
 String typeSettings = StringPool.BLANK;
 
 if (dispatchTrigger != null) {
 	dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
-	dispatchTriggerType = dispatchTrigger.getType();
+	type = dispatchTrigger.getType();
 	typeSettings = dispatchTrigger.getTypeSettings();
 }
 %>
@@ -47,7 +47,7 @@ if (dispatchTrigger != null) {
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTriggerId) %>" />
-			<aui:input name="dispatchTriggerType" type="hidden" value="<%= dispatchTriggerType %>" />
+			<aui:input name="type" type="hidden" value="<%= type %>" />
 			<aui:input name="typeSettings" type="hidden" />
 
 			<div class="lfr-form-content">

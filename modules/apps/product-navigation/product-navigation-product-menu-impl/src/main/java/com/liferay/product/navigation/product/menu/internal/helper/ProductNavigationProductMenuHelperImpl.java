@@ -89,19 +89,23 @@ public class ProductNavigationProductMenuHelperImpl
 				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
 
-		if (!enableApplicationsMenu) {
-			childPanelCategories.addAll(
+		if (!childPanelCategories.isEmpty()) {
+			return true;
+		}
+
+		if (!_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
+			childPanelCategories =
 				_panelCategoryRegistry.getChildPanelCategories(
 					PanelCategoryKeys.APPLICATIONS_MENU,
 					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroup()));
+					themeDisplay.getScopeGroup());
+
+			if (!childPanelCategories.isEmpty()) {
+				return true;
+			}
 		}
 
-		if (childPanelCategories.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	private boolean _isApplicationsMenuApp(ThemeDisplay themeDisplay) {

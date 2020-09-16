@@ -15,10 +15,8 @@
 package com.liferay.account.admin.web.internal.portlet.filter;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
@@ -35,8 +33,6 @@ import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.PortletFilter;
 import javax.portlet.filter.RenderFilter;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -92,9 +88,7 @@ public class AccountUsersAdminPortletFilter
 		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
 
 		if (mvcPath.startsWith("/common/") || mvcPath.startsWith("/user/")) {
-			_jspRenderer.renderJSP(
-				_servletContext, _portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse), mvcPath);
+			_portlet.render(renderRequest, renderResponse);
 
 			return;
 		}
@@ -106,19 +100,10 @@ public class AccountUsersAdminPortletFilter
 	public void init(FilterConfig filterConfig) {
 	}
 
-	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Portal _portal;
-
 	@Reference(
 		target = "(javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN + ")",
 		unbind = "-"
 	)
 	private Portlet _portlet;
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.users.admin.web)")
-	private ServletContext _servletContext;
 
 }

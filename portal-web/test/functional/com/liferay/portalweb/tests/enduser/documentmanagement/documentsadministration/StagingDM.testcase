@@ -188,6 +188,37 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "No value defined for field name");
 	}
 
+	@description = "This test covers LPS-119234. It ensures that a document type can be published to live via SAP."
+	@priority = "4"
+	test PublishDocumentTypeViaSAP {
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish to live?",
+			entry = "DM Document Type Name");
+
+		ProductMenu.gotoLiveSite(site = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoMetadataSets();
+
+		AssertElementNotPresent(
+			key_tableEntry = "DM Document Type Name",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
+	}
+
 	@description = "This test covers LPS-82539."
 	@priority = "5"
 	test PublishFolderWithWorkflow {

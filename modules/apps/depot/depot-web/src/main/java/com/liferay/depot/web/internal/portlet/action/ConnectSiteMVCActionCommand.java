@@ -14,12 +14,16 @@
 
 package com.liferay.depot.web.internal.portlet.action;
 
+import com.liferay.depot.exception.StagedGroupException;
 import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -43,13 +47,31 @@ public class ConnectSiteMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
+		throws IOException, PortalException {
 
 		long depotEntryId = ParamUtil.getLong(actionRequest, "depotEntryId");
 		long toGroupId = ParamUtil.getLong(actionRequest, "toGroupId");
 
-		_depotEntryGroupRelService.addDepotEntryGroupRel(
-			depotEntryId, toGroupId);
+		try {
+			_depotEntryGroupRelService.addDepotEntryGroupRel(
+				depotEntryId, toGroupId);
+		}
+		catch (Exception exception) {
+			Throwable throwable = exception.getCause();
+
+			if (throwable instanceof StagedGroupException) {
+				SessionErrors.add(
+					actionRequest, StagedGroupException.class, throwable);
+
+				hideDefaultErrorMessage(actionRequest);
+
+				actionResponse.sendRedirect(
+					ParamUtil.getString(actionRequest, "redirect"));
+			}
+			else {
+				throw exception;
+			}
+		}
 	}
 
 	@Reference

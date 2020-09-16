@@ -225,7 +225,7 @@ public class ResourceHelper {
 	public ScriptedMetricAggregation
 		creatInstanceCountScriptedMetricAggregation(
 			List<Long> assigneeIds, Boolean completed, Date dateEnd,
-			Date dateStart, List<String> slaStatuses, List<String> taskNames) {
+			Date dateStart, List<String> taskNames) {
 
 		ScriptedMetricAggregation scriptedMetricAggregation =
 			_aggregations.scriptedMetric("instanceCount");
@@ -264,15 +264,6 @@ public class ResourceHelper {
 					dateEnd
 				).map(
 					Date::getTime
-				).orElseGet(
-					() -> null
-				)
-			).put(
-				"slaStatuses",
-				() -> Optional.ofNullable(
-					slaStatuses
-				).filter(
-					ListUtil::isNotEmpty
 				).orElseGet(
 					() -> null
 				)

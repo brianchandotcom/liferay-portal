@@ -174,7 +174,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _createBooleanQuery(
-			new Long[0], new Long[0], null, processId);
+			new Long[0], new Long[0], null, processId, new String[0]);
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
@@ -217,7 +217,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					bucket -> {
 						_setAssignees(bucket, instance);
 						_setSLAResults(bucket, instance);
-						_setSLAStatus(bucket, instance);
 						_setTaskNames(bucket, instance);
 						_setTransitions(instance);
 					}
@@ -384,7 +383,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private BooleanQuery _createBooleanQuery(
 		Long[] assigneeIds, Long[] classPKs, Boolean completed,
-		long processId) {
+		long processId, String[] slaStatuses) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -398,17 +397,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
 		instancesBooleanQuery.addMustQueryClauses(
-			_createInstancesBooleanQuery(classPKs, completed, processId));
-
-		BooleanQuery slaInstanceResultsBooleanQuery = _queries.booleanQuery();
-
-		slaInstanceResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term(
-				"_index",
-				_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
-					contextCompany.getCompanyId())));
-		slaInstanceResultsBooleanQuery.addMustQueryClauses(
-			_createSLAInstanceResultsBooleanQuery(processId));
+			_createInstancesBooleanQuery(
+				classPKs, completed, processId, slaStatuses));
 
 		BooleanQuery tasksBooleanQuery = _queries.booleanQuery();
 
@@ -421,8 +411,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_createTasksBooleanQuery(assigneeIds, processId));
 
 		return booleanQuery.addShouldQueryClauses(
-			instancesBooleanQuery, slaInstanceResultsBooleanQuery,
-			tasksBooleanQuery);
+			instancesBooleanQuery, tasksBooleanQuery);
 	}
 
 	private BucketSelectorPipelineAggregation
@@ -493,12 +482,15 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					GetterUtil.getString(sourcesMap.get("modifiedDate")));
 				id = GetterUtil.getLong(sourcesMap.get("instanceId"));
 				processId = GetterUtil.getLong(sourcesMap.get("processId"));
+				slaStatus = Instance.SLAStatus.create(
+					GetterUtil.getString(sourcesMap.get("slaStatus")));
 			}
 		};
 	}
 
 	private BooleanQuery _createInstancesBooleanQuery(
-		Long[] classPKs, Boolean completed, long processId) {
+		Long[] classPKs, Boolean completed, long processId,
+		String[] slaStatuses) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -522,6 +514,14 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		if (completed != null) {
 			booleanQuery.addMustQueryClauses(
 				_queries.term("completed", completed));
+		}
+
+		if (ArrayUtil.isNotEmpty(slaStatuses)) {
+			TermsQuery termsQuery = _queries.terms("slaStatus");
+
+			termsQuery.addValues(slaStatuses);
+
+			booleanQuery.addMustQueryClauses(termsQuery);
 		}
 
 		return booleanQuery.addMustQueryClauses(
@@ -704,24 +704,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		instancesIndexFilterAggregation.addChildAggregation(
 			_aggregations.topHits("topHits"));
 
-		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime", _resourceHelper.createMustNotBooleanQuery());
-
-		onTimeFilterAggregation.addChildAggregation(
-			_resourceHelper.createOnTimeScriptedMetricAggregation());
-
-		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue", _resourceHelper.createMustNotBooleanQuery());
-
-		overdueFilterAggregation.addChildAggregation(
-			_resourceHelper.createOverdueScriptedMetricAggregation());
-
 		termsAggregation.addChildrenAggregations(
-			instancesIndexFilterAggregation, onTimeFilterAggregation,
-			overdueFilterAggregation, _aggregations.topHits("topHits"),
+			instancesIndexFilterAggregation,
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				ListUtil.fromArray(assigneeIds), completed, dateEnd, dateStart,
-				ListUtil.fromArray(slaStatuses),
 				ListUtil.fromArray(taskNames)));
 
 		termsAggregation.addOrders(Order.key(true));
@@ -736,13 +722,15 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.setIndexNames(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()),
-			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
-				contextCompany.getCompanyId()),
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
 		searchSearchRequest.setQuery(
-			_createBooleanQuery(assigneeIds, classPKs, completed, processId));
+			booleanQuery.addFilterQueryClauses(
+				_createBooleanQuery(
+					assigneeIds, classPKs, completed, processId, slaStatuses)));
 
 		Map<Long, Instance> instances = Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -775,8 +763,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			).findFirst(
 			).map(
 				this::_createInstance
-			).map(
-				instance -> _setSLAStatus(bucket, instance)
 			).orElseGet(
 				Instance::new
 			)
@@ -785,7 +771,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			(map, instance) -> map.put(instance.getId(), instance), Map::putAll
 		);
 
-		_populateWithTasks(assigneeIds, instances, processId);
+		if (!instances.isEmpty()) {
+			_populateWithTasks(assigneeIds, instances, processId);
+		}
 
 		return instances.values();
 	}
@@ -903,17 +891,15 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.addAggregation(
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				ListUtil.fromArray(assigneeIds), completed, dateEnd, dateStart,
-				ListUtil.fromArray(slaStatuses),
 				ListUtil.fromArray(taskNames)));
 		searchSearchRequest.setIndexNames(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()),
-			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
-				contextCompany.getCompanyId()),
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
-			_createBooleanQuery(assigneeIds, classPKs, completed, processId));
+			_createBooleanQuery(
+				assigneeIds, classPKs, completed, processId, slaStatuses));
 
 		return _searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 	}
@@ -1129,20 +1115,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			).toArray(
 				SLAResult[]::new
 			));
-	}
-
-	private Instance _setSLAStatus(Bucket bucket, Instance instance) {
-		if (_isOverdue(bucket)) {
-			instance.setSLAStatus(Instance.SLAStatus.OVERDUE);
-		}
-		else if (_isOnTime(bucket)) {
-			instance.setSLAStatus(Instance.SLAStatus.ON_TIME);
-		}
-		else {
-			instance.setSLAStatus(Instance.SLAStatus.UNTRACKED);
-		}
-
-		return instance;
 	}
 
 	private void _setTaskNames(Bucket bucket, Instance instance) {

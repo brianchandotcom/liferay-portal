@@ -10,26 +10,6 @@ if (doc.uid.value.startsWith("WorkflowMetricsTask") &&
 	state.assigneeIdInstanceIds.add(instanceId);
 }
 
-if (doc.uid.value.startsWith("WorkflowMetricsSLAInstanceResult")) {
-	state.slaStatusMap.compute(
-		instanceId,
-		(key, oldSLAStatus) -> {
-			if (((oldSLAStatus == null) || oldSLAStatus.equals("untracked")) &&
-				(doc.elapsedTime.value == 0)) {
-
-				return "untracked";
-			}
-			else if (((oldSLAStatus == null) ||
-					  !oldSLAStatus.equals("overdue")) &&
-					 doc.onTime.value) {
-
-				return "onTime";
-			}
-
-			return "overdue";
-		});
-}
-
 if (doc.uid.value.startsWith("WorkflowMetricsInstance") &&
 	((state.completed == null) ||
 	 (state.completed == doc.completed.value)) &&
@@ -39,10 +19,6 @@ if (doc.uid.value.startsWith("WorkflowMetricsInstance") &&
 	  (doc.completionDate.value.getMillis() >= state.startDate)))) {
 
 	state.completedInstanceIds.add(instanceId);
-
-	state.slaStatusMap.compute(
-		instanceId,
-		(key, slaStatus) -> (slaStatus == null) ? "untracked" : slaStatus);
 }
 
 if (doc.uid.value.startsWith("WorkflowMetricsTask") &&

@@ -521,7 +521,7 @@ public class AxisBuild extends BaseBuild {
 			}
 		}
 		catch (DocumentException documentException) {
-			throw new RuntimeException(documentException);
+			warningMessages.add("Could not parse poshi warnings");
 		}
 
 		return warningMessages;

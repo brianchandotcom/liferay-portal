@@ -50,6 +50,22 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
 	}
 
+	macro exportMultipleCollections {
+		for (var collectionName : list "${collectionNameList}") {
+			Check(
+				key_tableEntry = "${collectionName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+			Pause(locator1 = "3000");
+		}
+
+		SelectFrameTop();
+
+		Button.click(button = "Export");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro importCollectionFromDependenciesFolder {
 		FragmentsAdminNavigator.gotoImportCollection();
 

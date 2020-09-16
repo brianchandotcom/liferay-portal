@@ -148,10 +148,9 @@
 				);
 			}
 
-			var elementOuterHtml = element.getOuterHtml();
-
 			if (IE9AndLater) {
 				if (!editor.window.$.AlloyEditor) {
+					var elementOuterHtml = element.getOuterHtml();
 					var emptySelectionMarkup = '&nbsp;';
 
 					editor.insertHtml(elementOuterHtml + emptySelectionMarkup);
@@ -161,7 +160,7 @@
 				}
 			}
 			else {
-				editor.insertHtml(elementOuterHtml);
+				editor.insertElement(element);
 			}
 
 			element = new CKEDITOR.dom.element('br');

@@ -25,7 +25,16 @@ definition {
 				portlet = "Discounts");
 
 			if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-				CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected discounts?");
+				CommerceEntry.deleteCommerceEntry();
+			}
+
+			CommerceNavigator.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				CommerceEntry.deleteCommerceEntry();
 			}
 		}
 	}

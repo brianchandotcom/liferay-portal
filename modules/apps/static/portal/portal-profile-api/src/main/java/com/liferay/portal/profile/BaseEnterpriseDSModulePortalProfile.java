@@ -15,9 +15,11 @@
 package com.liferay.portal.profile;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.util.Dictionary;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
@@ -31,7 +33,24 @@ public class BaseEnterpriseDSModulePortalProfile implements PortalProfile {
 
 	@Override
 	public void activate() {
-		_componentContext.enableComponent(null);
+		if (!_DXP_RELEASE_BUILD) {
+			_componentContext.enableComponent(null);
+
+			return;
+		}
+
+		BundleContext bundleContext = _componentContext.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (Objects.equals(
+					bundle.getSymbolicName(),
+					"com.liferay.portal.license.enterprise.app")) {
+
+				_componentContext.enableComponent(null);
+
+				return;
+			}
+		}
 	}
 
 	@Override
@@ -69,6 +88,27 @@ public class BaseEnterpriseDSModulePortalProfile implements PortalProfile {
 		}
 
 		_supportedPortalProfileNames.add(bundle.getSymbolicName());
+	}
+
+	private static final boolean _DXP_RELEASE_BUILD;
+
+	static {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		boolean dxpReleaseBuild = false;
+
+		try {
+			Class<?> clazz = classLoader.loadClass(
+				"com.liferay.portal.license.LicenseManager");
+
+			clazz.getDeclaredMethod("checkUserLicense");
+
+			dxpReleaseBuild = true;
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+		}
+
+		_DXP_RELEASE_BUILD = dxpReleaseBuild;
 	}
 
 	private ComponentContext _componentContext;

@@ -525,6 +525,103 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-119553. It ensures that the assets in the connected site can not be filtered out after navigating to the depot through the breadcrumb."
+	@priority = "4"
+	test ViewFilterResultsInSpecificBreadcrumb {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Web Content Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Depot",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC WebContent From Depot");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Site",
+			groupName = "Site Name",
+			title = "WC WebContent From Site");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		AssertClick(
+			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
+			value1 = "Select");
+
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertClick(
+			key_breadcrumbName = "Sites and Libraries",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			value1 = "Sites and Libraries");
+
+		AssertClick(
+			key_groupTab = "Asset Library",
+			locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+			value1 = "Asset Library");
+
+		Click(
+			key_card = "Test Depot Name",
+			locator1 = "Card#CARD_TITLE");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Everywhere");
+
+		AssertElementPresent(
+			key_filterScope = "Scope: Everywhere",
+			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
+
+		AssertVisible(
+			key_rowEntry = "WC WebContent From Depot",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		AssertElementNotPresent(
+			key_rowEntry = "WC WebContent From Site",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Current Asset Library");
+
+		AssertElementPresent(
+			key_filterScope = "Scope: Current Asset Library",
+			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
+
+		AssertVisible(
+			key_rowEntry = "WC WebContent From Depot",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		AssertElementNotPresent(
+			key_rowEntry = "WC WebContent From Site",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+	}
+
 	@description = "This test covers LPS-118808. It ensures that an image in the depot folder can be viewed through everywhere filter on a connected site."
 	@priority = "4"
 	test ViewFolderImageViaFilterResults {

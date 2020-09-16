@@ -361,11 +361,15 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		// Show site name
 
-		updateShowSiteName(portletDataContext, importedStagedLayoutSet);
+		updateLayoutSetSettingsProperties(
+			portletDataContext, importedStagedLayoutSet,
+			Sites.SHOW_SITE_NAME, Boolean.TRUE.toString());
 
 		// Show search header
 
-		updateShowSearchHeader(portletDataContext, importedStagedLayoutSet);
+		updateLayoutSetSettingsProperties(
+			portletDataContext, importedStagedLayoutSet,
+			"lfr-theme:regular:show-header-search", Boolean.TRUE.toString());
 
 		// Last merge time
 
@@ -894,87 +898,6 @@ public class StagedLayoutSetStagedModelDataHandler
 			}
 
 			if (changed) {
-				_layoutSetLocalService.updateLayoutSet(layoutSet);
-			}
-		}
-	}
-
-	protected void updateShowSearchHeader(
-			PortletDataContext portletDataContext,
-			StagedLayoutSet importedLayoutSet)
-		throws PortalException {
-
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			portletDataContext.getGroupId(),
-			portletDataContext.isPrivateLayout());
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		String mergeFailFriendlyURLLayouts =
-			settingsUnicodeProperties.getProperty(
-				Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
-
-		if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
-			LayoutSet stagedLayoutSet = importedLayoutSet.getLayoutSet();
-
-			UnicodeProperties importedSettingsUnicodeProperties =
-				stagedLayoutSet.getSettingsProperties();
-
-			boolean showSearchHeader = GetterUtil.getBoolean(
-				settingsUnicodeProperties.getProperty(
-					"lfr-theme:regular:show-header-search"),
-				true);
-
-			boolean importedShowSearchHeader = GetterUtil.getBoolean(
-				importedSettingsUnicodeProperties.getProperty(
-					"lfr-theme:regular:show-header-search"),
-				true);
-
-			if (showSearchHeader != importedShowSearchHeader) {
-				settingsUnicodeProperties.setProperty(
-					"lfr-theme:regular:show-header-search",
-					String.valueOf(importedShowSearchHeader));
-
-				_layoutSetLocalService.updateLayoutSet(layoutSet);
-			}
-		}
-	}
-
-	protected void updateShowSiteName(
-			PortletDataContext portletDataContext,
-			StagedLayoutSet importedLayoutSet)
-		throws PortalException {
-
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			portletDataContext.getGroupId(),
-			portletDataContext.isPrivateLayout());
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		String mergeFailFriendlyURLLayouts =
-			settingsUnicodeProperties.getProperty(
-				Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
-
-		if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
-			LayoutSet stagedLayoutSet = importedLayoutSet.getLayoutSet();
-
-			UnicodeProperties importedSettingsUnicodeProperties =
-				stagedLayoutSet.getSettingsProperties();
-
-			boolean showSiteName = GetterUtil.getBoolean(
-				settingsUnicodeProperties.getProperty(
-					Sites.SHOW_SITE_NAME, Boolean.TRUE.toString()));
-
-			boolean importedShowSiteName = GetterUtil.getBoolean(
-				importedSettingsUnicodeProperties.getProperty(
-					Sites.SHOW_SITE_NAME, Boolean.TRUE.toString()));
-
-			if (showSiteName != importedShowSiteName) {
-				settingsUnicodeProperties.setProperty(
-					Sites.SHOW_SITE_NAME, String.valueOf(importedShowSiteName));
-
 				_layoutSetLocalService.updateLayoutSet(layoutSet);
 			}
 		}

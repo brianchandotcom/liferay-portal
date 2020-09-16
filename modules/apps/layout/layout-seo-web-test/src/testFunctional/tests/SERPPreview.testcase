@@ -47,12 +47,12 @@ definition {
 			fieldLabel = "HTML Title",
 			text = "Page HTML Title");
 
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
-			text = "Page Description");
+		PortletEntry.inputText(
+			fieldLabel = "Description",
+			text = "Description");
 
 		Page.viewPreview(
-			description = "Page Description",
+			description = "Description",
 			htmlTitle = "Page HTML Title - ${siteName}",
 			pageName = "Test Page",
 			portalURL = "${portalURL}");
@@ -64,7 +64,7 @@ definition {
 		Navigator.gotoNavTab(navTab = "SEO");
 
 		Page.viewPreview(
-			description = "Page Description",
+			description = "Description",
 			htmlTitle = "Page HTML Title - ${siteName}",
 			pageName = "Test Page",
 			portalURL = "${portalURL}");

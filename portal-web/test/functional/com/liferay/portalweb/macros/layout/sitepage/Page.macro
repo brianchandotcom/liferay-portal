@@ -300,7 +300,7 @@ definition {
 			value1 = "${HTMLTitle}");
 
 		Type.typeClickAt(
-			locator1 = "TextArea#SEO_META_TAGS_DESCRIPTION",
+			locator1 = "TextInput#SEO_META_TAGS_DESCRIPTION",
 			value1 = "${metaTagsDescription}");
 
 		Type.typeClickAt(
@@ -902,7 +902,7 @@ definition {
 			value1 = "${HTMLTitle}");
 
 		AssertTextEquals(
-			locator1 = "TextArea#SEO_META_TAGS_DESCRIPTION",
+			locator1 = "TextInput#SEO_META_TAGS_DESCRIPTION",
 			value1 = "${metaTagsDescription}");
 
 		AssertTextEquals(

@@ -458,6 +458,13 @@ public class AppBuilderAppLocalServiceUtil {
 			groupId, companyId, ddmStructureId);
 	}
 
+	public static int getAppBuilderAppsCount(
+		long groupId, long companyId, long ddmStructureId, String scope) {
+
+		return getService().getAppBuilderAppsCount(
+			groupId, companyId, ddmStructureId, scope);
+	}
+
 	public static int getAppBuilderAppsCount(long groupId, String scope) {
 		return getService().getAppBuilderAppsCount(groupId, scope);
 	}

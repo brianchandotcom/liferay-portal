@@ -489,6 +489,14 @@ public class AppBuilderAppLocalServiceWrapper
 	}
 
 	@Override
+	public int getAppBuilderAppsCount(
+		long groupId, long companyId, long ddmStructureId, String scope) {
+
+		return _appBuilderAppLocalService.getAppBuilderAppsCount(
+			groupId, companyId, ddmStructureId, scope);
+	}
+
+	@Override
 	public int getAppBuilderAppsCount(long groupId, String scope) {
 		return _appBuilderAppLocalService.getAppBuilderAppsCount(
 			groupId, scope);

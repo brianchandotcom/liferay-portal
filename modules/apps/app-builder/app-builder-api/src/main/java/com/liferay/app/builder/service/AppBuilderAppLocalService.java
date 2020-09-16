@@ -357,6 +357,10 @@ public interface AppBuilderAppLocalService
 		long groupId, long companyId, long ddmStructureId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAppBuilderAppsCount(
+		long groupId, long companyId, long ddmStructureId, String scope);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAppBuilderAppsCount(long groupId, String scope);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

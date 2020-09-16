@@ -222,7 +222,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		CommercePriceList discoveredPriceList =

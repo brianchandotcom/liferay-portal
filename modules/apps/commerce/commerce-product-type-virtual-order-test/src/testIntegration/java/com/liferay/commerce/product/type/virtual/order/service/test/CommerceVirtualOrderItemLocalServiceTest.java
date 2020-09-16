@@ -139,7 +139,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				cpDefinition.getGroupId());
 
 		for (CPInstance cpInstance : cpDefinition.getCPInstances()) {
@@ -227,7 +227,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 		int subscriptionLength = 1;
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				cpDefinition.getGroupId());
 
 		for (CPInstance cpInstance : cpDefinition.getCPInstances()) {

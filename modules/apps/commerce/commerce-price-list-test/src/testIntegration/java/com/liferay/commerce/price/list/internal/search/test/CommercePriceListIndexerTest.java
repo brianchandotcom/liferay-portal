@@ -147,7 +147,7 @@ public class CommercePriceListIndexerTest {
 			if (retrievedCommercePriceList.isCatalogBasePriceList()) {
 				CommercePriceList basePriceList =
 					_commercePriceListLocalService.
-						fetchCommerceCatalogBasePriceListByType(
+						fetchCatalogBaseCommercePriceListByType(
 							commerceCatalog.getGroupId(),
 							retrievedCommercePriceList.getType());
 

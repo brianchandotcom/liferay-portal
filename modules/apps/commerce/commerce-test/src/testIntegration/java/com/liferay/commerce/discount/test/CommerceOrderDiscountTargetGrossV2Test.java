@@ -181,7 +181,7 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
@@ -304,7 +304,7 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 		CPDefinition cpDefinitionPlan = cpInstancePlain.getCPDefinition();
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		CommercePriceEntry commercePriceEntryDiscount =
@@ -472,7 +472,7 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 		CPDefinition cpDefinitionPlan = cpInstancePlain.getCPDefinition();
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		CommercePriceEntry commercePriceEntryDiscount =

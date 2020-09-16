@@ -270,7 +270,7 @@ public class CommerceSubscriptionEntryTest {
 			_commerceCurrency);
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				cpDefinition.getGroupId());
 
 		List<CPInstance> cpInstances =

@@ -155,7 +155,7 @@ public class CommerceDiscountV2Test {
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		CommercePriceEntry commercePriceEntry =
@@ -233,7 +233,7 @@ public class CommerceDiscountV2Test {
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		CommercePriceEntry commercePriceEntry =
@@ -312,7 +312,7 @@ public class CommerceDiscountV2Test {
 		CPDefinition cpDefinition5 = cpInstance5.getCPDefinition();
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		CommercePriceEntry commercePriceEntry1 =
@@ -519,7 +519,7 @@ public class CommerceDiscountV2Test {
 		CPDefinition cpDefinition5 = cpInstance5.getCPDefinition();
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		CommercePriceEntry commercePriceEntry1 =
@@ -776,7 +776,7 @@ public class CommerceDiscountV2Test {
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		CommercePriceEntry commercePriceEntry =

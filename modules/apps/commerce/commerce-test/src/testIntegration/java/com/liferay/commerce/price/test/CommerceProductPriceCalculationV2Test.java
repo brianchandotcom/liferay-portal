@@ -1045,7 +1045,7 @@ public class CommerceProductPriceCalculationV2Test {
 				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
 
 		CommercePriceList basePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		CommercePriceList commercePriceList =

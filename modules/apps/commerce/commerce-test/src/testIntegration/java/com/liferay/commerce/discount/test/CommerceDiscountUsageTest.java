@@ -170,7 +170,7 @@ public class CommerceDiscountUsageTest {
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		BigDecimal priceEntryPrice = BigDecimal.valueOf(35);
@@ -304,7 +304,7 @@ public class CommerceDiscountUsageTest {
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		BigDecimal priceEntryPrice = BigDecimal.valueOf(35);
@@ -489,7 +489,7 @@ public class CommerceDiscountUsageTest {
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				catalog.getGroupId());
 
 		BigDecimal priceEntryPrice = BigDecimal.valueOf(35);

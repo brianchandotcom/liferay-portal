@@ -347,7 +347,7 @@ public class CommerceCheckoutTest {
 			}
 
 			CommercePriceList commercePriceList =
-				_commercePriceListLocalService.getCommerceCatalogBasePriceList(
+				_commercePriceListLocalService.getCatalogBaseCommercePriceList(
 					cpInstance.getGroupId());
 
 			CommercePriceEntry commercePriceEntry =

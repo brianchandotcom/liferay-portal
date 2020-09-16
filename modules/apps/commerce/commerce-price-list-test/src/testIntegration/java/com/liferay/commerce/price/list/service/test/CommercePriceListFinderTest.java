@@ -492,7 +492,7 @@ public class CommercePriceListFinderTest {
 		);
 
 		CommercePriceList baseCommercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				_commerceCatalog.getGroupId());
 
 		Assert.assertEquals(

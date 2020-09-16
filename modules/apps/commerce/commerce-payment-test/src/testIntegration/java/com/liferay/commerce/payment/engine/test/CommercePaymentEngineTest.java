@@ -154,7 +154,7 @@ public class CommercePaymentEngineTest {
 				LocaleUtil.toLanguageId(LocaleUtil.US), null, _serviceContext);
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				commerceCatalog.getGroupId());
 
 		CPInstance cpInstance =
@@ -245,7 +245,7 @@ public class CommercePaymentEngineTest {
 				ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				commerceCatalog.getGroupId());
 
 		CPInstance cpInstance =

@@ -498,7 +498,7 @@ public class CommerceOrderItemLocalServiceTest {
 			bundleCPDefinition.getCPDefinitionId(), _toValueKey(option2Key));
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				bundleCPInstance.getGroupId());
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
@@ -926,7 +926,7 @@ public class CommerceOrderItemLocalServiceTest {
 				_commerceCatalog.getGroupId());
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				optionSKU1.getGroupId());
 
 		CPDefinition option1CPDefinition = optionSKU1.getCPDefinition();
@@ -1164,7 +1164,7 @@ public class CommerceOrderItemLocalServiceTest {
 				bundleCPInstances, cpInstance1);
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				bundleCPInstanceWithUnavailableChildSKU.getGroupId());
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
@@ -1224,7 +1224,7 @@ public class CommerceOrderItemLocalServiceTest {
 				_commerceCatalog.getGroupId());
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				optionSKU1.getGroupId());
 
 		CPDefinition option1CPDefinition = optionSKU1.getCPDefinition();

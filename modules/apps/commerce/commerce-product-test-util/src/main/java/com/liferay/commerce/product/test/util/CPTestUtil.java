@@ -688,7 +688,7 @@ public class CPTestUtil {
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
-			CommercePriceListLocalServiceUtil.fetchCommerceCatalogBasePriceList(
+			CommercePriceListLocalServiceUtil.fetchCatalogBaseCommercePriceList(
 				cpInstance.getGroupId());
 
 		if (commercePriceList == null) {

@@ -84,32 +84,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		}
 	}
 
-	@Override
-	public String getURL() {
-		SpiraProject spiraProject = getSpiraProject();
-
-		return JenkinsResultsParserUtil.combine(
-			SPIRA_BASE_URL, String.valueOf(spiraProject.getID()), "/Build/",
-			String.valueOf(getID()), ".aspx");
-	}
-
-	public static enum Status {
-
-		ABORTED(4), FAILED(1), SUCCEEDED(2), UNSTABLE(3);
-
-		public Integer getID() {
-			return _id;
-		}
-
-		private Status(Integer id) {
-			_id = id;
-		}
-
-		private final Integer _id;
-
-	}
-
-	protected static List<SpiraReleaseBuild> getSpiraReleaseBuilds(
+	public static List<SpiraReleaseBuild> getSpiraReleaseBuilds(
 		final SpiraProject spiraProject, final SpiraRelease spiraRelease,
 		final SearchQuery.SearchParameter... searchParameters) {
 
@@ -133,6 +108,39 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 			},
 			searchParameters);
+	}
+
+	public String getBuildStatusName() {
+		return jsonObject.getString("BuildStatusName");
+	}
+
+	public String getCreationDate() {
+		return jsonObject.getString("CreationDate");
+	}
+
+	@Override
+	public String getURL() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, String.valueOf(spiraProject.getID()), "/Build/",
+			String.valueOf(getID()), ".aspx");
+	}
+
+	public static enum Status {
+
+		ABORTED(4), FAILED(1), SUCCEEDED(2), UNSTABLE(3);
+
+		public Integer getID() {
+			return _id;
+		}
+
+		private Status(Integer id) {
+			_id = id;
+		}
+
+		private final Integer _id;
+
 	}
 
 	protected static final String ARTIFACT_TYPE_NAME = "build";

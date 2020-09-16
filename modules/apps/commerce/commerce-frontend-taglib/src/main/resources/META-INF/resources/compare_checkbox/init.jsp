@@ -18,11 +18,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
-
-<%@ page import="java.util.List" %>
 
 <liferay-theme:defineObjects />
 
@@ -32,8 +28,6 @@ Boolean inCompare = (Boolean)request.getAttribute("liferay-commerce:compare-chec
 long itemId = (long)request.getAttribute("liferay-commerce:compare-checkbox:itemId");
 String label = (String)request.getAttribute("liferay-commerce:compare-checkbox:label");
 String pictureUrl = (String)request.getAttribute("liferay-commerce:compare-checkbox:pictureUrl");
-
-JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_compare-checkbox") + StringPool.UNDERLINE;
 

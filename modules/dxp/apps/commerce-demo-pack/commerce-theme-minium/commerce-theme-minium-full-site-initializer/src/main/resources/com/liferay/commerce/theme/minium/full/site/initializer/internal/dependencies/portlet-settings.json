@@ -30,7 +30,8 @@
 		"instanceId": "catalog",
 		"layoutFriendlyURL": "/catalog",
 		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet",
-		"portletPreferences": {}
+		"portletPreferences": {
+		}
 	},
 	{
 		"instanceId": "minium",
@@ -57,7 +58,8 @@
 		"instanceId": "product_detail",
 		"layoutFriendlyURL": "/product-detail",
 		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet",
-		"portletPreferences": {}
+		"portletPreferences": {
+		}
 	},
 	{
 		"instanceId": "minium",

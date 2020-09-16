@@ -78,7 +78,7 @@ class CompareCheckbox extends Component {
 			this.inCompare ? 'addItemToCompare' : 'removeItemFromCompare',
 			{
 				id: this.productId,
-				thumbnail: this.pictureUrl || null
+				thumbnail: this.pictureUrl || null,
 			}
 		);
 	}

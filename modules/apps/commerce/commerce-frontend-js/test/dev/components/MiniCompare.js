@@ -22,41 +22,41 @@ miniCompareLauncher('miniCompare', 'mini-compare-root', {
 	editCompareProductActionURL: '#',
 	itemsLimit: 4,
 	portletNamespace: 'portletNamespace',
-	spritemap: './assets/icons.svg'
+	spritemap: './assets/icons.svg',
 });
 
 compareCheckboxLauncher('miniCompare1', 'compare-checkbox-root-1', {
 	itemId: '001',
 	label: 'Compare',
-	pictureUrl: 'https://via.placeholder.com/150'
+	pictureUrl: 'https://via.placeholder.com/150',
 });
 
 compareCheckboxLauncher('miniCompare2', 'compare-checkbox-root-2', {
 	itemId: '002',
 	label: 'Compare',
-	pictureUrl: 'https://via.placeholder.com/150'
+	pictureUrl: 'https://via.placeholder.com/150',
 });
 
 compareCheckboxLauncher('miniCompare3', 'compare-checkbox-root-3', {
 	itemId: '003',
 	label: 'Compare',
-	pictureUrl: 'https://via.placeholder.com/150'
+	pictureUrl: 'https://via.placeholder.com/150',
 });
 
 compareCheckboxLauncher('miniCompare4', 'compare-checkbox-root-4', {
 	itemId: '004',
 	label: 'Compare',
-	pictureUrl: 'https://via.placeholder.com/150'
+	pictureUrl: 'https://via.placeholder.com/150',
 });
 
 compareCheckboxLauncher('miniCompare5', 'compare-checkbox-root-5', {
 	itemId: '005',
 	label: 'Compare',
-	pictureUrl: 'https://via.placeholder.com/150'
+	pictureUrl: 'https://via.placeholder.com/150',
 });
 
 compareCheckboxLauncher('miniCompare6', 'compare-checkbox-root-6', {
 	itemId: '006',
 	label: 'Compare',
-	pictureUrl: 'https://via.placeholder.com/150'
+	pictureUrl: 'https://via.placeholder.com/150',
 });

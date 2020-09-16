@@ -30,6 +30,7 @@ import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -44,6 +45,8 @@ public interface CPCompareContentHelper {
 
 	public String getClearCompareProductsURL(
 		RenderRequest renderRequest, RenderResponse renderResponse);
+
+	public String getCompareContentPortletNamespace();
 
 	public String getCompareProductsURL(ThemeDisplay themeDisplay)
 		throws PortalException;
@@ -73,12 +76,11 @@ public interface CPCompareContentHelper {
 	public String getDimensionCPMeasurementUnitName(
 		long groupId, Locale locale);
 
+	public String getEditCompareProductActionURL(
+		HttpServletRequest httpServletRequest);
+
 	public int getProductsLimit(PortletDisplay portletDisplay)
 		throws PortalException;
-
-	public String getEditCompareProductActionURL(HttpServletRequest httpServletRequest);
-
-	public String getCompareContentPortletNamespace();
 
 	public boolean hasCategorizedCPDefinitionSpecificationOptionValues(
 			CPDataSourceResult cpDataSourceResult, long cpOptionCategoryId)

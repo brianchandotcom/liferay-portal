@@ -21,16 +21,12 @@ import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.util.CPCompareHelperUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -42,7 +38,7 @@ import javax.servlet.jsp.PageContext;
 public class CompareCheckboxTag extends IncludeTag {
 
 	@Override
-	public int doStartTag()  throws JspException {
+	public int doStartTag() throws JspException {
 		try {
 			CPDefinition cpDefinition =
 				CPDefinitionLocalServiceUtil.getCPDefinition(_cpDefinitionId);
@@ -78,12 +74,20 @@ public class CompareCheckboxTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public void setLabel(String label) {
-		_label = label;
+	public long getCPDefinitionId() {
+		return _cpDefinitionId;
+	}
+
+	public String getLabel() {
+		return _label;
 	}
 
 	public void setCPDefinitionId(long cpDefinitionId) {
 		_cpDefinitionId = cpDefinitionId;
+	}
+
+	public void setLabel(String label) {
+		_label = label;
 	}
 
 	@Override
@@ -97,9 +101,9 @@ public class CompareCheckboxTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_cpDefinitionId = 0;
 		_disabled = false;
 		_inCompare = false;
-		_cpDefinitionId = 0;
 		_label = "";
 		_pictureUrl = null;
 	}
@@ -110,12 +114,17 @@ public class CompareCheckboxTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-commerce:compare-checkbox:disabled", _disabled);
-		request.setAttribute("liferay-commerce:compare-checkbox:inCompare", _inCompare);
-		request.setAttribute("liferay-commerce:compare-checkbox:itemId", _cpDefinitionId);
-		request.setAttribute("liferay-commerce:compare-checkbox:label", _label);
-		request.setAttribute("liferay-commerce:compare-checkbox:pictureUrl", _pictureUrl);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-commerce:compare-checkbox:disabled", _disabled);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:compare-checkbox:inCompare", _inCompare);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:compare-checkbox:itemId", _cpDefinitionId);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:compare-checkbox:label", _label);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:compare-checkbox:pictureUrl", _pictureUrl);
 	}
 
 	private static final String _PAGE = "/compare_checkbox/page.jsp";
@@ -123,9 +132,10 @@ public class CompareCheckboxTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompareCheckboxTag.class);
 
-	private boolean _disabled = false;
-	private boolean _inCompare = false;
-	private long _cpDefinitionId = 0;
+	private long _cpDefinitionId;
+	private boolean _disabled;
+	private boolean _inCompare;
 	private String _label = "";
 	private String _pictureUrl;
+
 }

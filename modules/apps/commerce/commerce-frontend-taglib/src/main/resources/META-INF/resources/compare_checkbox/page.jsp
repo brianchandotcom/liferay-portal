@@ -24,6 +24,6 @@
 		inCompare: <%= inCompare %>,
 		itemId: '<%= itemId %>',
 		label: '<%= label %>',
-		pictureUrl: '<%= pictureUrl %>'
+		pictureUrl: '<%= pictureUrl %>',
 	});
 </aui:script>

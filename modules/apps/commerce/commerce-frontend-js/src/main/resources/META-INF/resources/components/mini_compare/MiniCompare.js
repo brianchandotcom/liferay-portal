@@ -16,15 +16,16 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
+import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
+	ADD_ITEM_TO_COMPARE,
 	COMPARE_IS_AVAILABLE,
 	COMPARE_IS_UNAVAILABLE,
-	ADD_ITEM_TO_COMPARE,
+	ITEM_REMOVED_FROM_COMPARE,
 	REMOVE_ITEM_FROM_COMPARE,
-	ITEM_REMOVED_FROM_COMPARE
 } from '../../utilities/eventsDefinitions';
 
 function toggleRemoteStatus(id, toggle, actionUrl, nameSpace) {
@@ -38,7 +39,7 @@ function toggleRemoteStatus(id, toggle, actionUrl, nameSpace) {
 		body: formData,
 		credentials: 'include',
 		headers: new Headers({'x-csrf-token': Liferay.authToken}),
-		method: 'post'
+		method: 'post',
 	});
 }
 
@@ -69,19 +70,20 @@ function MiniCompare(props) {
 		function toggleItem({id, thumbnail}) {
 			const newItem = {
 				id,
-				thumbnail
+				thumbnail,
 			};
 
-			return updateItems(items => {
-				const included = items.find(el => el.id === id);
+			return updateItems((items) => {
+				const included = items.find((el) => el.id === id);
 				toggleRemoteStatus(
 					id,
-					!Boolean(included),
+					!included,
 					props.editCompareProductActionURL,
 					props.portletNamespace
 				);
+
 				return included
-					? items.filter(i => i.id !== id)
+					? items.filter((i) => i.id !== id)
 					: items.concat(newItem);
 			});
 		}
@@ -96,13 +98,14 @@ function MiniCompare(props) {
 	}, [
 		props.editCompareProductActionURL,
 		props.itemsLimit,
-		props.portletNamespace
+		props.portletNamespace,
 	]);
 
 	useEffect(() => {
 		if (items.length < props.itemsLimit) {
 			Liferay.fire(COMPARE_IS_AVAILABLE);
-		} else {
+		}
+		else {
 			Liferay.fire(COMPARE_IS_UNAVAILABLE);
 		}
 	}, [items, props.itemsLimit]);
@@ -116,15 +119,16 @@ function MiniCompare(props) {
 					.fill(null)
 					.map((_el, i) => {
 						const currentItem = items[i] || {};
+
 						return (
 							<Item
 								{...currentItem}
 								key={i}
-								onDelete={e => {
+								onDelete={(e) => {
 									e.preventDefault();
 									updateItems(
 										items.filter(
-											v => v.id !== currentItem.id
+											(v) => v.id !== currentItem.id
 										)
 									);
 									toggleRemoteStatus(
@@ -156,17 +160,17 @@ MiniCompare.propTypes = {
 		PropTypes.shape({
 			id: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 				.isRequired,
-			thumbnail: PropTypes.string
+			thumbnail: PropTypes.string,
 		})
 	),
 	itemsLimit: PropTypes.number,
 	portletNamespace: PropTypes.string.isRequired,
-	spritemap: PropTypes.string
+	spritemap: PropTypes.string,
 };
 
 MiniCompare.defaultProps = {
 	items: [],
-	itemsLimit: 5
+	itemsLimit: 5,
 };
 
 export default MiniCompare;

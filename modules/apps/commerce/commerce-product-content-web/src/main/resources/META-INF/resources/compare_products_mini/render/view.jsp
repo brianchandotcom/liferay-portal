@@ -37,16 +37,21 @@ List<CPCatalogEntry> cpCatalogEntries = CPCompareHelperUtil.getCPCatalogEntries(
 
 <aui:script require="commerce-frontend-js/components/mini_compare/entry as MiniCompare">
 	MiniCompare.default('mini-compare', 'mini-compare-root', {
-		compareProductsURL: '<%= cpCompareContentHelper.getCompareProductsURL(themeDisplay) %>',
-		editCompareProductActionURL: '<%= cpCompareContentHelper.getEditCompareProductActionURL(request) %>',
-		items: <%= jsonSerializer.serializeDeep(cpCatalogEntries) %>.map(function(item){
+		compareProductsURL:
+			'<%= cpCompareContentHelper.getCompareProductsURL(themeDisplay) %>',
+		editCompareProductActionURL:
+			'<%= cpCompareContentHelper.getEditCompareProductActionURL(request) %>',
+		items: <%= jsonSerializer.serializeDeep(cpCatalogEntries) %>.map(function (
+			item
+		) {
 			return {
-			id: item.CPDefinitionId,
-			thumbnail: item.defaultImageFileUrl
-			}
-			}),
+				id: item.CPDefinitionId,
+				thumbnail: item.defaultImageFileUrl,
+			};
+		}),
 		itemsLimit: <%= cpCompareContentHelper.getProductsLimit(portletDisplay) %>,
-		portletNamespace: '<%= cpCompareContentHelper.getCompareContentPortletNamespace() %>',
-		spritemap: '<%= themeDisplay.getPathThemeImages() + "/icons.svg" %>'
+		portletNamespace:
+			'<%= cpCompareContentHelper.getCompareContentPortletNamespace() %>',
+		spritemap: '<%= themeDisplay.getPathThemeImages() + "/icons.svg" %>',
 	});
 </aui:script>

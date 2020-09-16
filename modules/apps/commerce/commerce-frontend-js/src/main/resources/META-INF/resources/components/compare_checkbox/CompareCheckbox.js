@@ -14,14 +14,14 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {
 	ADD_ITEM_TO_COMPARE,
 	COMPARE_IS_AVAILABLE,
 	COMPARE_IS_UNAVAILABLE,
 	ITEM_REMOVED_FROM_COMPARE,
-	REMOVE_ITEM_FROM_COMPARE
+	REMOVE_ITEM_FROM_COMPARE,
 } from '../../utilities/eventsDefinitions';
 
 function CompareCheckbox(props) {
@@ -32,7 +32,7 @@ function CompareCheckbox(props) {
 		if (props.onUpdate) {
 			props.onUpdate({
 				disabled,
-				inCompare
+				inCompare,
 			});
 		}
 	}, [disabled, inCompare, props]);
@@ -48,7 +48,7 @@ function CompareCheckbox(props) {
 	}, [updateParent]);
 
 	const removeFromCompare = useCallback(
-		data => {
+		(data) => {
 			if (data.id === props.itemId) {
 				setInCompare(false);
 			}
@@ -58,11 +58,12 @@ function CompareCheckbox(props) {
 	);
 
 	function handleCheckboxClick(_e) {
-		setInCompare(v => {
+		setInCompare((v) => {
 			Liferay.fire(v ? ADD_ITEM_TO_COMPARE : REMOVE_ITEM_FROM_COMPARE, {
 				id: props.itemId,
-				thumbnail: props.pictureUrl || null
+				thumbnail: props.pictureUrl || null,
 			});
+
 			return !v;
 		});
 	}
@@ -99,7 +100,7 @@ CompareCheckbox.propTypes = {
 		.isRequired,
 	label: PropTypes.string,
 	onUpdate: PropTypes.func,
-	pictureUrl: PropTypes.string
+	pictureUrl: PropTypes.string,
 };
 
 export default CompareCheckbox;

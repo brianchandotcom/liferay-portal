@@ -144,28 +144,6 @@ export function getRandomId() {
 	return Math.random().toString(36).substr(2, 9);
 }
 
-export function getAcceptLanguageHeaderParam() {
-	const browserLang = navigator.language || navigator.userLanguage;
-	const themeLang = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
-
-	if (browserLang === themeLang) {
-		return browserLang;
-	}
-
-	return `${browserLang}, ${themeLang};q=0.8`;
-}
-
-export const fetchHeaders = new Headers({
-	Accept: 'application/json',
-	'Accept-Language': getAcceptLanguageHeaderParam(),
-	'Content-Type': 'application/json',
-});
-
-export const fetchParams = {
-	credentials: 'include',
-	headers: Liferay.staticEnvHeaders || fetchHeaders
-};
-
 export function createSortingString(values) {
 	if (!values.length) {
 		return null;

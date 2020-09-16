@@ -20,6 +20,7 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
+import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 
 import java.util.Date;
@@ -219,7 +220,10 @@ public class ProcessWorkflowMetricsIndexerImpl
 		).setLong(
 			"processId", processId
 		).setString(
-			"uid", digest(companyId, processId)
+			"uid",
+			WorkflowMetricsIndexerUtil.digest(
+				_instanceWorkflowMetricsIndex.getIndexType(), companyId,
+				processId)
 		);
 
 		return documentBuilder.build();

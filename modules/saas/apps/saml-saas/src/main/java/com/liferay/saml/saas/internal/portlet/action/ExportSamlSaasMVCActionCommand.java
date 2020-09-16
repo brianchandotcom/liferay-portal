@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + SamlPortletKeys.SAML_ADMIN,
-		"mvc.command.name=/admin/saas/saml/export"
+		"mvc.command.name=/saml/saas/admin/export"
 	},
 	service = MVCActionCommand.class
 )

@@ -11,16 +11,16 @@ let width = configuration.videoWidth ?
 	configuration.videoWidth.replace('px', '') : configuration.videoWidth;
 
 function resize() {
-	content.style.width = '';
 	content.style.height = '';
+	content.style.width = '';
 
 	requestAnimationFrame(function() {
 		try {
 			const boundingClientRect = content.getBoundingClientRect();
 
-			const contentHeight =
-				height ||contentWidth * 0.5625;
 			const contentWidth = width || boundingClientRect.width;
+			const contentHeight =
+				height || contentWidth * 0.5625;
 
 			content.style.height = contentHeight + 'px';
 			content.style.width = contentWidth + 'px';

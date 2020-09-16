@@ -72,6 +72,15 @@ public interface CommercePriceListLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.price.list.service.impl.CommercePriceListLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce price list local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommercePriceListLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public CommercePriceList addCatalogBaseCommercePriceList(
+			long groupId, long userId, long commerceCurrencyId, String type,
+			String name, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public CommercePriceList addCommerceCatalogBasePriceList(
 			long groupId, long userId, long commerceCurrencyId, String type,
 			String name, ServiceContext serviceContext)
@@ -323,9 +332,26 @@ public interface CommercePriceListLocalService
 		long companyId, String externalReferenceCode);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList fetchCatalogBaseCommercePriceList(long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList fetchCatalogBaseCommercePriceListByType(
+			long groupId, String type)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList fetchCommerceCatalogBasePriceList(long groupId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList fetchCommerceCatalogBasePriceListByType(
 			long groupId, String type)
@@ -360,9 +386,26 @@ public interface CommercePriceListLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList getCatalogBaseCommercePriceList(long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList getCatalogBaseCommercePriceListByType(
+			long groupId, String type)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList getCommerceCatalogBasePriceList(long groupId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList getCommerceCatalogBasePriceListByType(
 			long groupId, String type)

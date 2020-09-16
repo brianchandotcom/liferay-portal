@@ -200,6 +200,18 @@ public class CommercePriceListServiceUtil {
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceList
+			fetchCatalogBaseCommercePriceListByType(long groupId, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchCatalogBaseCommercePriceListByType(
+			groupId, type);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.price.list.model.CommercePriceList
 			fetchCommerceCatalogBasePriceListByType(long groupId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -38,6 +38,21 @@ public class CommercePriceListLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.price.list.service.impl.CommercePriceListLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.price.list.model.CommercePriceList
+			addCatalogBaseCommercePriceList(
+				long groupId, long userId, long commerceCurrencyId, String type,
+				String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCatalogBaseCommercePriceList(
+			groupId, userId, commerceCurrencyId, type, name, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.price.list.model.CommercePriceList
 			addCommerceCatalogBasePriceList(
 				long groupId, long userId, long commerceCurrencyId, String type,
 				String name,
@@ -442,12 +457,35 @@ public class CommercePriceListLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceList
+			fetchCatalogBaseCommercePriceList(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchCatalogBaseCommercePriceList(groupId);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceList
+			fetchCatalogBaseCommercePriceListByType(long groupId, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchCatalogBaseCommercePriceListByType(
+			groupId, type);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.price.list.model.CommercePriceList
 			fetchCommerceCatalogBasePriceList(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().fetchCommerceCatalogBasePriceList(groupId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceList
 			fetchCommerceCatalogBasePriceListByType(long groupId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -498,12 +536,35 @@ public class CommercePriceListLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceList
+			getCatalogBaseCommercePriceList(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCatalogBaseCommercePriceList(groupId);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceList
+			getCatalogBaseCommercePriceListByType(long groupId, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCatalogBaseCommercePriceListByType(
+			groupId, type);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static com.liferay.commerce.price.list.model.CommercePriceList
 			getCommerceCatalogBasePriceList(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCommerceCatalogBasePriceList(groupId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceList
 			getCommerceCatalogBasePriceListByType(long groupId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {

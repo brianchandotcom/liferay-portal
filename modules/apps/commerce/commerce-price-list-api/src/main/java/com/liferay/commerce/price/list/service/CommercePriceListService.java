@@ -148,6 +148,15 @@ public interface CommercePriceListService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList fetchCatalogBaseCommercePriceListByType(
+			long groupId, String type)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList fetchCommerceCatalogBasePriceListByType(
 			long groupId, String type)
 		throws PortalException;

@@ -35,6 +35,22 @@ public class CommercePriceListLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
+			addCatalogBaseCommercePriceList(
+				long groupId, long userId, long commerceCurrencyId, String type,
+				String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListLocalService.addCatalogBaseCommercePriceList(
+			groupId, userId, commerceCurrencyId, type, name, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
 			addCommerceCatalogBasePriceList(
 				long groupId, long userId, long commerceCurrencyId, String type,
 				String name,
@@ -469,6 +485,28 @@ public class CommercePriceListLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
+			fetchCatalogBaseCommercePriceList(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
+			groupId);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
+			fetchCatalogBaseCommercePriceListByType(long groupId, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListLocalService.
+			fetchCatalogBaseCommercePriceListByType(groupId, type);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
 			fetchCommerceCatalogBasePriceList(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -476,6 +514,10 @@ public class CommercePriceListLocalServiceWrapper
 			groupId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			fetchCommerceCatalogBasePriceListByType(long groupId, String type)
@@ -534,6 +576,28 @@ public class CommercePriceListLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
+			getCatalogBaseCommercePriceList(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListLocalService.getCatalogBaseCommercePriceList(
+			groupId);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
+			getCatalogBaseCommercePriceListByType(long groupId, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListLocalService.
+			getCatalogBaseCommercePriceListByType(groupId, type);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
 			getCommerceCatalogBasePriceList(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -541,6 +605,10 @@ public class CommercePriceListLocalServiceWrapper
 			groupId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			getCommerceCatalogBasePriceListByType(long groupId, String type)

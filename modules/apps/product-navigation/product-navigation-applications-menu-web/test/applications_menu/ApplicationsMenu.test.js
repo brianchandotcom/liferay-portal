@@ -94,6 +94,7 @@ const renderApplicationsMenu = () => {
 
 describe('ApplicationsMenu', () => {
 	beforeEach(() => {
+		global.Liferay.Browser = {isMac: () => true};
 		jest.useFakeTimers();
 		fetch.mockResponseOnce(JSON.stringify(mockedData));
 	});

@@ -1238,21 +1238,6 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
-	public boolean isLayoutReachable(Layout layout) throws PortalException {
-		List<Layout> ancestorLayouts = layout.getAncestors();
-
-		for (Layout ancestorLayout : ancestorLayouts) {
-			if (!LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), ancestorLayout,
-					ActionKeys.VIEW)) {
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	public boolean isPrivateLayout() {
 		if (_privateLayout != null) {
 			return _privateLayout;

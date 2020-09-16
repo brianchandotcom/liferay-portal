@@ -1,5 +1,10 @@
 definition {
 
+	macro addNewStep {
+
+		Click(locator1 = "AppBuilderWorkflow#NEW_STEP_BUTTON");
+	}
+
 	macro addWorkflowAppName {
 
 		Type(
@@ -12,6 +17,45 @@ definition {
 		AssertVisible(
 			key_text = "${buttonName}",
 			locator1 = "Button#ANY_DISABLED");
+	}
+
+	macro assertFieldDisabled {
+
+		AssertVisible(
+			key_fieldName = "${fieldName}",
+			locator1 = "AppBuilderWorkflow#TEXT_FIELD_DISABLED");
+	}
+
+	macro assignEntry {
+
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+
+		while (IsElementNotPresent(key_menuItem = "Assign to", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+
+			Pause(locator1 = "1000");
+			Refresh();
+			Click(
+				key_itemName = "${itemName}",
+				locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+		}
+
+		MenuItem.clickNoError(menuItem = "Assign to");
+
+		Click(locator1 = "AppBuilderWorkflow#SELECT_NEW_ASSIGNEE_BUTTON");
+
+		Type(
+			locator1 = "AppBuilderWorkflow#SELECT_NEW_ASSIGNEE_SEARCH_FIELD",
+			value1 = "${assigneeName}");
+
+		Click(
+			key_assignee = "${assigneeName}",
+			locator1 = "AppBuilderWorkflow#SELECT_NEW_ASSIGNEE");
+
+		Button.click(button = "Done");
+
+		Refresh();
 	}
 
 	macro clickBackButton {
@@ -67,11 +111,51 @@ definition {
 		AppBuilderWorkflow.selectTableView(tableViewName = "${tableViewName}");
 	}
 
+	macro selectStep {
+
+		Click(
+			key_stepNumber = "${stepNumber}",
+			locator1 = "AppBuilderWorkflow#STEP_CARD");
+	}
+
+	macro selectStepAssignee {
+
+		AppBuilderWorkflow.selectStep(stepNumber = "${stepNumber}");
+
+		Type(
+			locator1 = "AppBuilderWorkflow#SELECT_ASSIGNEE_FIELD",
+			value1 = "${assigneeName}");
+
+		Click(locator1 = "AppBuilderWorkflow#ASSIGNEE_FIRST_ITEM");
+	}
+
+	macro selectStepSingleFormView {
+
+		AppBuilderWorkflow.selectStep(stepNumber = "${stepNumber}");
+
+		AppBuilderWorkflow.selectDataAndViews();
+
+		if (!(IsTextEqual.isPartialText(locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON_TEXT", value1 = "${formViewName}"))) {
+			AppBuilderWorkflow.clickOnSelectFormView();
+			AppBuilderWorkflow.selectFormView(formViewName = "${formViewName}");
+		}
+
+		Click.clickNoMouseOverNoWaitForVisible(
+			key_formViewMode = "${formViewMode}",
+			locator1 = "AppBuilderWorkflow#FORM_VIEW_MODE");
+	}
+
 	macro selectTableView {
 
 		Click(
 			key_itemName = "${tableViewName}",
 			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
+	}
+
+	macro submit {
+		Button.click(button = "Submit");
+
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Submit");
 	}
 
 	macro validateFormOrTableViewResultNotPresent {

@@ -543,6 +543,106 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Fourth App");
 	}
 
+	@description = "Validete Form View in 'Read-Only' and 'Editable' mode'"
+	@priority = "4"
+	test ValidateFormViewModes {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "AppBuilderWorkflow#ValidateFormViewModes";
+
+		var formViewName = "My Form View";
+		var tableViewName = "My Table View";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "${formViewName}",
+			tableViewName = "${tableViewName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+
+		Button.click(button = "Create New App");
+
+		AppBuilderWorkflow.selectStartStepDataAndViews(
+			formViewName = "${formViewName}",
+			objectName = "my custom object",
+			tableViewName = "${tableViewName}");
+
+		AppBuilderWorkflow.addNewStep();
+
+		AppBuilderWorkflow.selectStepAssignee(
+			assigneeName = "Administrator",
+			stepNumber = "1");
+
+		AppBuilderWorkflow.selectStepSingleFormView(
+			formViewMode = "Editable",
+			formViewName = "${formViewName}",
+			stepNumber = "1");
+
+		AppBuilderWorkflow.addNewStep();
+
+		AppBuilderWorkflow.selectStepAssignee(
+			assigneeName = "Administrator",
+			stepNumber = "2");
+
+		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
+		Button.click(button = "Deploy");
+		App.toggleDeploy(deployOption = "Product Menu");
+		Button.click(button = "Done");
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
+		Refresh();
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content");
+
+		AppBuilderWorkflow.submit();
+
+		Refresh();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content");
+
+		AppBuilderWorkflow.assignEntry(
+			assigneeName = "Test Test",
+			itemName = "Content");
+
+		AppBuilderAdmin.editItem(itemName = "Content");
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Edited Content");
+
+		AppBuilderWorkflow.submit();
+		Refresh();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Content");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Content");
+
+		AppBuilderWorkflow.assignEntry(
+			assigneeName = "Test Test",
+			itemName = "Edited Content");
+
+		AppBuilderAdmin.editItem(itemName = "Edited Content");
+
+		AppBuilderWorkflow.assertFieldDisabled(fieldName = "Text");
+	}
+
 	@description = "Automate LPS-111262 & LPS-111681"
 	@priority = "5"
 	test ValidateListOfStandardApps {

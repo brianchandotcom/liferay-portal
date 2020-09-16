@@ -233,6 +233,14 @@ public class AppBuilderAppLocalServiceImpl
 	}
 
 	@Override
+	public int getAppBuilderAppsCount(
+		long groupId, long companyId, long ddmStructureId, String scope) {
+
+		return appBuilderAppPersistence.filterCountByG_C_DDMSI_S(
+			groupId, companyId, ddmStructureId, scope);
+	}
+
+	@Override
 	public int getAppBuilderAppsCount(long groupId, String scope) {
 		return appBuilderAppPersistence.countByG_S(groupId, scope);
 	}

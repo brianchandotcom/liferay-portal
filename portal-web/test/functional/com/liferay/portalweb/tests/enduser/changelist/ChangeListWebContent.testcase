@@ -88,7 +88,7 @@ definition {
 			expiredContent = "true",
 			webContentTitle = "WC WebContent Title");
 
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
+		ChangeList.gotoPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 
@@ -139,7 +139,7 @@ definition {
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content");
 
-		ChangeList.prepareToPublish(
+		ChangeList.gotoPublish(
 			gotoManagePublications = "true",
 			publicationName = "Publication Name");
 
@@ -213,7 +213,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
+		ChangeList.gotoPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 
@@ -300,7 +300,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
+		ChangeList.gotoPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 

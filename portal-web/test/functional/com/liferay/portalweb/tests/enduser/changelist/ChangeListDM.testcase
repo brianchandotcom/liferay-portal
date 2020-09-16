@@ -73,7 +73,7 @@ definition {
 
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "2.0");
 
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
+		ChangeList.gotoPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 
@@ -159,7 +159,7 @@ definition {
 			changeDescription = "Test Test added a Documents Folder in Guest",
 			changeTitle = "DM Folder Name");
 
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
+		ChangeList.gotoPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 
@@ -233,7 +233,7 @@ definition {
 			changeDescription = "Test Test added a Document in Guest",
 			changeTitle = "DM Document Title");
 
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
+		ChangeList.gotoPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 

@@ -82,7 +82,7 @@ definition {
 			changeDescription = "Test Test deleted a Page in Guest",
 			changeTitle = "Test Page");
 
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
+		ChangeList.gotoPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 
@@ -149,7 +149,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
+		ChangeList.gotoPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 
@@ -196,7 +196,7 @@ definition {
 
 		ChangeList.selectPublication(publicationName = "Publication Name");
 
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
+		ChangeList.gotoPublish(publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 

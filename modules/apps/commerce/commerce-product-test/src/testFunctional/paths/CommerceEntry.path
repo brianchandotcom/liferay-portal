@@ -440,6 +440,11 @@
 	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ADD_RELATION_CLEAN_INPUT_BUTTON</td>
+	<td>//div[h4[contains(.,'${key_title}')]]//span</td>
+	<td></td>
+</tr>
 <!--IFRAME-->
 <tr>
 	<td>IFRAME_SIDE_PANEL</td>

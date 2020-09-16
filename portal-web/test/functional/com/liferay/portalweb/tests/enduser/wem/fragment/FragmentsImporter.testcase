@@ -541,6 +541,91 @@ definition {
 			value1 = "Heading Example");
 	}
 
+	@description = "This is a test case for LPS-120957. Export and Import multiple collections."
+	@priority = "4"
+	test ExportImportMultipleCollections {
+		task ("Add three collections") {
+			for (var collectionName : list "Collection Name 1,Collection Name 2,Collection Name 3") {
+				JSONFragment.addFragmentCollection(
+					groupName = "Test Site Name",
+					name = "${collectionName}");
+			}
+		}
+
+		task ("Add a new fragment in each collection") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name 1",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Checkbox Fragment Example");
+
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "colorPalette_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "colorPalette_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name 2",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "ColorPalette Fragment Example");
+
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "placeholder_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name 3",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Text Fragment Example");
+		}
+
+		task ("Export three new collections") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoExportCollection();
+
+			FragmentsAdmin.exportMultipleCollections(collectionNameList = "Collection Name 1,Collection Name 2,Collection Name 3");
+
+			DownloadTempFile();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Navigate to fragments admin in the new site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+		}
+
+		task ("Import the fragment collection into the new site") {
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Assert collections and fragments are imported") {
+			var n = "1";
+
+			for (var fragmentName : list "Checkbox Fragment Example,ColorPalette Fragment Example,Text Fragment Example") {
+				FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name ${n}");
+
+				FragmentsAdmin.viewEntryWorkflowStatus(
+					entry = "${fragmentName}",
+					workflowStatus = "Approved");
+
+				var n = ${n} + 1;
+
+				Pause(locator1 = "3000");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
 	@priority = "5"
 	test ExportImportSavedCompositionWithoutSaveInlineContent {

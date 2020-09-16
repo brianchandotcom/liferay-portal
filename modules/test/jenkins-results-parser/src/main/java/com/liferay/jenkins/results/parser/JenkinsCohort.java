@@ -225,7 +225,7 @@ public class JenkinsCohort {
 
 		sb.append(";");
 
-		JenkinsResultsParserUtil.write(filePath + "/data.js", sb.toString());
+		JenkinsResultsParserUtil.write(filePath, sb.toString());
 	}
 
 	private static JSONArray _createJSONArray(Object... items) {

@@ -1,0 +1,94 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Asset Lists";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-115236. Configure Filter by Field."
+	@priority = "4"
+	test ConfigureFilterByField {
+		task ("Add a web content structure with a Select field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DynamicDataMapping.addField(
+				field = "Select",
+				fieldFieldLabel = "Select",
+				fieldName = "Select");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a Dynamic Collection based on Web Content Article and new structure") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			Panel.expandPanel(panel = "Source");
+
+			Select(
+				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
+				value1 = "Web Content Article");
+
+			Pause(locator1 = "3000");
+
+			Select(
+				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
+				value1 = "WC Structure Name");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Enable Filter by Field and Choose Select field") {
+			AssetListsAdmin.configureFilterByField(fieldName = "Select");
+
+			Select(
+				key_fieldLabel = "Select",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "option 2");
+
+			Pause(locator1 = "3000");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Select",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "option 2");
+
+			Button.click(button = "Apply");
+
+			SelectFrameTop();
+
+			PortletEntry.save();
+		}
+
+		task ("Assert the selected info is shown above the Select button") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
+				value1 = "Select: value 2");
+		}
+	}
+
+}

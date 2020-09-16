@@ -33,7 +33,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FragmentPortletConfiguration {
 
 	@Meta.AD(
-		deflt = ".gif,.jpeg,.jpg,.png",
+		deflt = ".gif,.jpeg,.jpg,.png,.svg",
 		name = "allowed-thumbnail-file-extensions", required = false
 	)
 	public String[] thumbnailExtensions();

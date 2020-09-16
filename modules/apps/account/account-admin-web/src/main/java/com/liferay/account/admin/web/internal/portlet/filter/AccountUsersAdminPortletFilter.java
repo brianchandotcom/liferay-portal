@@ -15,6 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.filter;
 
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,11 +29,14 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.PortletFilter;
 import javax.portlet.filter.RenderFilter;
+import javax.portlet.filter.ResourceFilter;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletFilter.class
 )
 public class AccountUsersAdminPortletFilter
-	implements ActionFilter, RenderFilter {
+	implements ActionFilter, RenderFilter, ResourceFilter {
 
 	@Override
 	public void destroy() {
@@ -94,6 +98,25 @@ public class AccountUsersAdminPortletFilter
 		}
 
 		filterChain.doFilter(renderRequest, renderResponse);
+	}
+
+	@Override
+	public void doFilter(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			FilterChain filterChain)
+		throws IOException, PortletException {
+
+		String resourceID = resourceRequest.getResourceID();
+
+		if (resourceID.startsWith("/users_admin/")) {
+			MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
+
+			mvcPortlet.serveResource(resourceRequest, resourceResponse);
+
+			return;
+		}
+
+		filterChain.doFilter(resourceRequest, resourceResponse);
 	}
 
 	@Override

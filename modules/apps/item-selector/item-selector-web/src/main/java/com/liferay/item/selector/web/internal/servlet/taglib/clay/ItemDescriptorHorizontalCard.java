@@ -16,6 +16,7 @@ package com.liferay.item.selector.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseHorizontalCard;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 
 import javax.portlet.RenderRequest;
 
@@ -26,9 +27,9 @@ public class ItemDescriptorHorizontalCard extends BaseHorizontalCard {
 
 	public ItemDescriptorHorizontalCard(
 		ItemSelectorViewDescriptor.ItemDescriptor itemDescriptor,
-		RenderRequest renderRequest) {
+		RenderRequest renderRequest, RowChecker rowChecker) {
 
-		super(null, renderRequest, null);
+		super(null, renderRequest, rowChecker);
 
 		_itemDescriptor = itemDescriptor;
 	}
@@ -41,6 +42,11 @@ public class ItemDescriptorHorizontalCard extends BaseHorizontalCard {
 	@Override
 	public String getIcon() {
 		return _itemDescriptor.getIcon();
+	}
+
+	@Override
+	public String getInputValue() {
+		return null;
 	}
 
 	@Override

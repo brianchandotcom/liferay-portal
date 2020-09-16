@@ -71,12 +71,12 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptor.getSearchCo
 						<c:choose>
 							<c:when test="<%= itemDescriptor.isCompact() %>">
 								<clay:horizontal-card
-									horizontalCard="<%= new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest) %>"
+									horizontalCard="<%= new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker()) %>"
 								/>
 							</c:when>
 							<c:otherwise>
 								<clay:vertical-card
-									verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest) %>"
+									verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker()) %>"
 								/>
 							</c:otherwise>
 						</c:choose>

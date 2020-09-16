@@ -57,11 +57,9 @@ public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 	}
 
 	@Override
-	public void clickAt(
-		String locator, String coordString, boolean scrollIntoView) {
-
+	public void clickAt(String locator, String coordString) {
 		try {
-			super.clickAt(locator, coordString, scrollIntoView);
+			super.clickAt(locator, coordString);
 		}
 		catch (WebDriverException webDriverException) {
 			String message = webDriverException.getMessage();

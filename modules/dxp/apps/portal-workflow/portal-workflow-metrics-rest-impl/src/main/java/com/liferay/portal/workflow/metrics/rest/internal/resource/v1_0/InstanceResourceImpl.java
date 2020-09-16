@@ -378,6 +378,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				dateModified = _parseDate(document.getDate("modifiedDate"));
 				id = document.getLong("instanceId");
 				processId = document.getLong("processId");
+				slaStatus = Instance.SLAStatus.create(
+					document.getString("slaStatus"));
 			}
 		};
 
@@ -396,19 +398,30 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", 0));
 
 		if (assigneeIds.length > 0) {
+			BooleanQuery nestedBooleanQuery = _queries.booleanQuery();
+
 			TermsQuery termsQuery = _queries.terms("tasks.assigneeIds");
 
 			termsQuery.addValues(
 				Stream.of(
 					assigneeIds
+				).filter(
+					assigneeId -> assigneeId > 0
 				).map(
 					String::valueOf
 				).toArray(
 					Object[]::new
 				));
 
+			nestedBooleanQuery.addShouldQueryClauses(termsQuery);
+
+			if (ArrayUtil.contains(assigneeIds, -1L)) {
+				nestedBooleanQuery.addShouldQueryClauses(
+					_queries.term("tasks.assigneeType", Role.class.getName()));
+			}
+
 			booleanQuery.addMustQueryClauses(
-				_queries.nested("tasks", termsQuery));
+				_queries.nested("tasks", nestedBooleanQuery));
 		}
 
 		if (ArrayUtil.isNotEmpty(classPKs)) {
@@ -881,9 +894,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			if (Objects.equals(
 					task.get("assigneeType"), User.class.getName())) {
 
-				for (String assigneeId :
-						(List<String>)task.get("assigneeIds")) {
-
+				for (Object assigneeId : (List<?>)task.get("assigneeIds")) {
 					Assignee assignee = AssigneeUtil.toAssignee(
 						_language, _portal,
 						ResourceBundleUtil.getModuleAndPortalResourceBundle(
@@ -902,9 +913,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 				boolean reviewer = false;
 
-				for (String assigneeId :
-						(List<String>)task.get("assigneeIds")) {
-
+				for (Object assigneeId : (List<?>)task.get("assigneeIds")) {
 					if (ArrayUtil.contains(
 							contextUser.getRoleIds(),
 							GetterUtil.getLong(assigneeId))) {

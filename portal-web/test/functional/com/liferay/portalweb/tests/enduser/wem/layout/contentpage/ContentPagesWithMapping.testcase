@@ -1014,6 +1014,8 @@ definition {
 	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with multiple itemTypes, the Item Type label will be shown in mapping label."
 	@priority = "4"
 	test ViewItemTypeLabelMappedInCollectionWithMultipleItemTypes {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Test Site Name",
@@ -1129,6 +1131,8 @@ definition {
 	@description = "This is a use case for LPS-112749. When mapping asset field fragment in Collection Display based on collection with single itemType and specific subType, the Item Type and Item Subtype label will be shown in mapping panel."
 	@priority = "4"
 	test ViewItemTypeLabelMappedInCollectionWithSingleAndSpecificItemType {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Test Site Name",
@@ -1223,6 +1227,8 @@ definition {
 	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with single itemType, the Item Type label will be shown in mapping panel."
 	@priority = "4"
 	test ViewItemTypeLabelMappedInCollectionWithSingleItemType {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Test Site Name",

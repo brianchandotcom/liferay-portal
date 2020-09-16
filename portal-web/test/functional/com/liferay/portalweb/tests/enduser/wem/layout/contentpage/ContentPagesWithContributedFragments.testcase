@@ -32,6 +32,8 @@ definition {
 	@description = "This is a test for LPS-112249. The Content Flags, Content Ratings and Content Display are compatible and consistent in the same cell of Collection Display."
 	@priority = "4"
 	test AddAllThreeContentFragmentsInCollectionDisplayOneCell {
+		property osgi.app.includes = "bookmarks,document-library-google-docs";
+
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content ${i}",

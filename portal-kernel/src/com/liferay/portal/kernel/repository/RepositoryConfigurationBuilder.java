@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.repository;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -31,7 +31,29 @@ import java.util.ResourceBundle;
 public class RepositoryConfigurationBuilder {
 
 	public RepositoryConfigurationBuilder() {
-		this(LanguageUtil.getPortalResourceBundleLoader());
+		this(LanguageUtil.getResourceBundleLoader());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #RepositoryConfigurationBuilder(ResourceBundleLoader, String[])}
+	 */
+	@Deprecated
+	public RepositoryConfigurationBuilder(
+		com.liferay.portal.kernel.util.ResourceBundleLoader
+			resourceBundleLoader,
+		String... names) {
+
+		this(
+			new ResourceBundleLoader() {
+
+				@Override
+				public ResourceBundle loadResourceBundle(Locale locale) {
+					return resourceBundleLoader.loadResourceBundle(locale);
+				}
+
+			},
+			names);
 	}
 
 	public RepositoryConfigurationBuilder(

@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.language.LanguageBuilderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UTF8Control;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -91,6 +93,28 @@ public class ResourceBundleUtil {
 		return _getBundle(
 			baseName, locale, classLoader,
 			registry.getSymbolicName(classLoader));
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getLocalizationMap(ResourceBundleLoader, String)}
+	 */
+	@Deprecated
+	public static Map<Locale, String> getLocalizationMap(
+		com.liferay.portal.kernel.util.ResourceBundleLoader
+			resourceBundleLoader,
+		String key) {
+
+		return getLocalizationMap(
+			new ResourceBundleLoader() {
+
+				@Override
+				public ResourceBundle loadResourceBundle(Locale locale) {
+					return resourceBundleLoader.loadResourceBundle(locale);
+				}
+
+			},
+			key);
 	}
 
 	public static Map<Locale, String> getLocalizationMap(

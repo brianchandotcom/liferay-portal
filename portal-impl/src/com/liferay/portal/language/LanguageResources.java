@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.language.LanguageBuilderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,7 +56,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class LanguageResources {
 
-	public static ResourceBundleLoader RESOURCE_BUNDLE_LOADER =
+	public static ResourceBundleLoader PORTAL_RESOURCE_BUNDLE_LOADER =
 		new ResourceBundleLoader() {
 
 			@Override
@@ -65,6 +65,22 @@ public class LanguageResources {
 			}
 
 		};
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #PORTAL_RESOURCE_BUNDLE_LOADER}
+	 */
+	@Deprecated
+	public static com.liferay.portal.kernel.util.ResourceBundleLoader
+		RESOURCE_BUNDLE_LOADER =
+			new com.liferay.portal.kernel.util.ResourceBundleLoader() {
+
+				@Override
+				public ResourceBundle loadResourceBundle(Locale locale) {
+					return LanguageResources.getResourceBundle(locale);
+				}
+
+			};
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -146,7 +162,7 @@ public class LanguageResources {
 		_serviceTracker.open();
 
 		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
-			RESOURCE_BUNDLE_LOADER);
+			PORTAL_RESOURCE_BUNDLE_LOADER);
 	}
 
 	public void setConfig(String config) {

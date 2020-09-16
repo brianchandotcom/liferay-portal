@@ -37,6 +37,21 @@ import java.util.Set;
  */
 public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #upgradeLocalizedColumn(ResourceBundleLoader, Class, String,
+	 *             String, String, String, long[])}
+	 */
+	@Deprecated
+	protected void upgradeLocalizedColumn(
+			com.liferay.portal.kernel.util.ResourceBundleLoader
+				resourceBundleLoader,
+			Class<?> tableClass, String columnName, String originalContent,
+			String localizationMapKey, String localizationXMLKey,
+			long[] companyIds)
+		throws SQLException {
+	}
+
 	protected void upgradeLocalizedColumn(
 			ResourceBundleLoader resourceBundleLoader, Class<?> tableClass,
 			String columnName, String originalContent,

@@ -145,7 +145,15 @@ public interface Language {
 
 	public Locale getLocale(String languageCode);
 
-	public ResourceBundleLoader getPortalResourceBundleLoader();
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getResourceBundleLoader}
+	 */
+	@Deprecated
+	public com.liferay.portal.kernel.util.ResourceBundleLoader
+		getPortalResourceBundleLoader();
+
+	public ResourceBundleLoader getResourceBundleLoader();
 
 	public Set<Locale> getSupportedLocales();
 

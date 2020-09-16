@@ -261,8 +261,19 @@ public class LanguageUtil {
 		return getLanguage().getLocale(languageCode);
 	}
 
-	public static ResourceBundleLoader getPortalResourceBundleLoader() {
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getResourceBundleLoader}
+	 */
+	@Deprecated
+	public static com.liferay.portal.kernel.util.ResourceBundleLoader
+		getPortalResourceBundleLoader() {
+
 		return getLanguage().getPortalResourceBundleLoader();
+	}
+
+	public static ResourceBundleLoader getResourceBundleLoader() {
+		return getLanguage().getResourceBundleLoader();
 	}
 
 	public static Set<Locale> getSupportedLocales() {

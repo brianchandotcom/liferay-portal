@@ -301,7 +301,7 @@ public class AppResourceImpl
 				pagination,
 				_appBuilderAppLocalService.getAppBuilderAppsCount(
 					ddmStructure.getGroupId(), contextCompany.getCompanyId(),
-					ddmStructure.getStructureId()));
+					ddmStructure.getStructureId(), scope));
 		}
 
 		return Page.of(

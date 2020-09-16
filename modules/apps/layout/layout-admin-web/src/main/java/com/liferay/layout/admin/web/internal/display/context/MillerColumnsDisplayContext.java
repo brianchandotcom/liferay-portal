@@ -651,8 +651,12 @@ public class MillerColumnsDisplayContext {
 		}
 
 		if (_layoutsAdminDisplayContext.isShowDeleteAction(layout)) {
+			List<Layout> allChildren = layout.getAllChildren();
+
 			jsonArray.put(
 				JSONUtil.put(
+					"childCount", allChildren.size()
+				).put(
 					"id", "delete"
 				).put(
 					"label", LanguageUtil.get(_httpServletRequest, "delete")

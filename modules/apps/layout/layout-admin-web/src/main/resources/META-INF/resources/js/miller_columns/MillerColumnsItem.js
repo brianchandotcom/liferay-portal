@@ -163,7 +163,12 @@ const MillerColumnsItem = ({
 				dropdownActions.push({
 					...action,
 					handler: () =>
-						onClick && onClick({actionURL: action.url, namespace}),
+						onClick &&
+						onClick({
+							actionURL: action.url,
+							namespace,
+							childCount: action.childCount,
+						}),
 					href: onClick ? null : action.url,
 				});
 			}

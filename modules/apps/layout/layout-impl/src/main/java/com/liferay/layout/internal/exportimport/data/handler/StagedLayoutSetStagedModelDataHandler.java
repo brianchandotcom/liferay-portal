@@ -359,41 +359,14 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		checkLayoutSetPrototypeLayouts(portletDataContext, modifiedLayouts);
 
-		// Show site name
-
 		updateLayoutSetSettingsProperties(
-			portletDataContext, importedStagedLayoutSet,
-			Sites.SHOW_SITE_NAME, Boolean.TRUE.toString());
-
-		// Show footer
-
-		updateLayoutSetSettingsProperties(
-			portletDataContext, importedStagedLayoutSet,
-			"lfr-theme:regular:show-footer", Boolean.TRUE.toString());
-
-		// Show header
-
-		updateLayoutSetSettingsProperties(
-			portletDataContext, importedStagedLayoutSet,
-			"lfr-theme:regular:show-header", Boolean.TRUE.toString());
-
-		// Show search header
-
-		updateLayoutSetSettingsProperties(
-			portletDataContext, importedStagedLayoutSet,
-			"lfr-theme:regular:show-header-search", Boolean.TRUE.toString());
-
-		// Show Maximize/Minimize Application Links
-
-		updateLayoutSetSettingsProperties(
-			portletDataContext, importedStagedLayoutSet,
+			portletDataContext, importedStagedLayoutSet, Sites.SHOW_SITE_NAME,
+			Boolean.TRUE.toString(), "lfr-theme:regular:show-footer",
+			Boolean.TRUE.toString(), "lfr-theme:regular:show-header",
+			Boolean.TRUE.toString(), "lfr-theme:regular:show-header-search",
+			Boolean.TRUE.toString(),
 			"lfr-theme:regular:show-maximize-minimize-application-links",
-			Boolean.FALSE.toString());
-
-		// Wrap Widget Page Content
-
-		updateLayoutSetSettingsProperties(
-			portletDataContext, importedStagedLayoutSet,
+			Boolean.FALSE.toString(),
 			"lfr-theme:regular:wrap-widget-page-content",
 			Boolean.TRUE.toString());
 

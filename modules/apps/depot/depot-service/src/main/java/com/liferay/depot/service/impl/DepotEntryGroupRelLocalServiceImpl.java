@@ -14,15 +14,20 @@
 
 package com.liferay.depot.service.impl;
 
+import com.liferay.depot.exception.StagedGroupException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.base.DepotEntryGroupRelLocalServiceBaseImpl;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,6 +49,8 @@ public class DepotEntryGroupRelLocalServiceImpl
 	@Override
 	public DepotEntryGroupRel addDepotEntryGroupRel(
 		long depotEntryId, long toGroupId, boolean searchable) {
+
+		_validate(toGroupId);
 
 		DepotEntryGroupRel depotEntryGroupRel =
 			depotEntryGroupRelPersistence.fetchByD_TGI(depotEntryId, toGroupId);
@@ -132,5 +139,22 @@ public class DepotEntryGroupRelLocalServiceImpl
 
 		return depotEntryGroupRelPersistence.update(depotEntryGroupRel);
 	}
+
+	private void _validate(long toGroupId) {
+		try {
+			Group group = _groupLocalService.getGroup(toGroupId);
+
+			if (group.isStaged()) {
+				throw new StagedGroupException(
+					"Asset library cannot be connected to a staged group");
+			}
+		}
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
+		}
+	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

@@ -226,7 +226,7 @@ public class CommerceProductPriceCalculationV2Impl
 		// fill data
 
 		CommerceProductPriceImpl commerceProductPriceImpl =
-			new CommerceProductPriceImpl();
+			_getCommerceProductPriceImpl();
 
 		commerceProductPriceImpl.setCommercePriceListId(commercePriceListId);
 		commerceProductPriceImpl.setUnitPrice(
@@ -901,6 +901,20 @@ public class CommerceProductPriceCalculationV2Impl
 		}
 
 		return _getBasePriceListId(cpInstance);
+	}
+
+	private CommerceProductPriceImpl _getCommerceProductPriceImpl() {
+		CommerceProductPriceImpl commerceProductPriceImpl =
+			new CommerceProductPriceImpl();
+
+		commerceProductPriceImpl.setFinalPriceWithTaxAmount(
+			commerceMoneyFactory.emptyCommerceMoney());
+		commerceProductPriceImpl.setUnitPriceWithTaxAmount(
+			commerceMoneyFactory.emptyCommerceMoney());
+		commerceProductPriceImpl.setUnitPromoPriceWithTaxAmount(
+			commerceMoneyFactory.emptyCommerceMoney());
+
+		return commerceProductPriceImpl;
 	}
 
 	private long _getCommercePromoPriceListId(

@@ -14,7 +14,6 @@
 
 package com.liferay.journal.web.internal.layout.display.page;
 
-import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,7 +27,7 @@ public class DefaultJournalArticleLayoutDisplayPageProvider
 
 	@Override
 	public String getURLSeparator() {
-		return JournalArticleConstants.CANONICAL_URL_SEPARATOR;
+		return "/w/";
 	}
 
 }

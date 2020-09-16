@@ -25,6 +25,10 @@ List<CPOptionCategory> cpOptionCategories = cpDefinitionSpecificationOptionValue
 CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 
 long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionValue, request, "CPOptionCategoryId");
+
+NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
+
+decimalFormat.setMinimumFractionDigits(0);
 %>
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition_specification_option_value" var="editProductDefinitionSpecificationOptionValueActionURL" />
@@ -40,9 +44,7 @@ long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionV
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="cpDefinitionSpecificationOptionValueId" type="hidden" value="<%= String.valueOf(cpDefinitionSpecificationOptionValue.getCPDefinitionSpecificationOptionValueId()) %>" />
 
-			<aui:model-context bean="<%= cpDefinitionSpecificationOptionValue %>" model="<%= CPDefinitionSpecificationOptionValue.class %>" />
-
-			<aui:input defaultLanguageId="<%= cpDefinitionSpecificationOptionValueDisplayContext.getCatalogDefaultLanguageId() %>" name="value" />
+			<aui:input defaultLanguageId="<%= cpDefinitionSpecificationOptionValueDisplayContext.getCatalogDefaultLanguageId() %>" name="value" value="<%= cpDefinitionSpecificationOptionValue.getValue(cpDefinitionSpecificationOptionValueDisplayContext.getCatalogDefaultLanguageId()) %>" />
 
 			<aui:select label="group" name="CPOptionCategoryId" showEmptyOption="<%= true %>">
 
@@ -58,7 +60,10 @@ long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionV
 
 			</aui:select>
 
-			<aui:input label="position" name="priority" />
+			<aui:input label="position" name="priority" value="<%= decimalFormat.format(cpDefinitionSpecificationOptionValue.getPriority()) %>">
+				<aui:validator name="min">[0]</aui:validator>
+				<aui:validator name="number" />
+			</aui:input>
 
 			<c:if test="<%= cpDefinitionSpecificationOptionValueDisplayContext.hasCustomAttributesAvailable() %>">
 				<liferay-expando:custom-attribute-list

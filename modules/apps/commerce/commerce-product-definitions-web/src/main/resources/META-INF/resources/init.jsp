@@ -129,6 +129,8 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
 <%@ page import="java.math.BigDecimal" %>
 
+<%@ page import="java.text.NumberFormat" %>
+
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@
 page import="java.util.List" %><%@

@@ -16,6 +16,7 @@ package com.liferay.asset.taglib.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -117,7 +118,8 @@ public class AssetCategoriesNavigationDisplayContext {
 		if (_vocabularyIds == null) {
 			_vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					_themeDisplay.getScopeGroupId()));
+					_themeDisplay.getScopeGroupId()),
+				new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
 
 			return _vocabularies;
 		}

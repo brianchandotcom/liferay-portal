@@ -958,6 +958,8 @@ public interface Portal {
 
 	public PreferencesValidator getPreferencesValidator(Portlet portlet);
 
+	public String getQueryString(HttpServletRequest httpServletRequest);
+
 	public String getRelativeHomeURL(HttpServletRequest httpServletRequest)
 		throws PortalException;
 

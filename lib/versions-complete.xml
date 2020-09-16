@@ -4118,7 +4118,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!hibernate-validator.jar</file-name>
-				<version>6.0.15.Final</version>
+				<version>6.1.5.Final</version>
 				<project-name>Hibernate Validator Engine</project-name>
 				<licenses>
 					<license>
@@ -5432,7 +5432,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/mysql.jar</file-name>
-				<version>8.0.16</version>
+				<version>8.0.21</version>
 				<project-name>MySQL Connector/J</project-name>
 				<project-url>http://www.mysql.com/products/connector/j</project-url>
 				<licenses>

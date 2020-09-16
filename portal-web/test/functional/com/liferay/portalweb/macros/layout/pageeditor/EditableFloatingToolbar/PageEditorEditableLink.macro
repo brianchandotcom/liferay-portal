@@ -19,6 +19,8 @@ definition {
 		Click(
 			key_card = "${entryTitle}",
 			locator1 = "Card#CARD_TITLE");
+
+		Pause(locator1 = "3000");
 	}
 
 	macro _selectField {

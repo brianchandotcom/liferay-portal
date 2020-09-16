@@ -27,6 +27,7 @@ import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
+import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
@@ -41,42 +42,50 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public void createIndex(long companyId) throws PortalException {
-		if ((searchEngineAdapter == null) ||
-			hasIndex(getIndexName(companyId))) {
+		workflowMetricsPortalExecutor.execute(
+			() -> {
+				if ((searchEngineAdapter == null) ||
+					hasIndex(getIndexName(companyId))) {
 
-			return;
-		}
+					return;
+				}
 
-		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
-			getIndexName(companyId));
+				CreateIndexRequest createIndexRequest = new CreateIndexRequest(
+					getIndexName(companyId));
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			StringUtil.read(getClass(), "/META-INF/search/mappings.json"));
-
-		createIndexRequest.setSource(
-			JSONUtil.put(
-				"mappings",
-				JSONUtil.put(getIndexType(), jsonObject.get(getIndexType()))
-			).put(
-				"settings",
-				JSONFactoryUtil.createJSONObject(
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					StringUtil.read(
-						getClass(), "/META-INF/search/settings.json"))
-			).toString());
+						getClass(), "/META-INF/search/mappings.json"));
 
-		searchEngineAdapter.execute(createIndexRequest);
+				createIndexRequest.setSource(
+					JSONUtil.put(
+						"mappings",
+						JSONUtil.put(
+							getIndexType(), jsonObject.get(getIndexType()))
+					).put(
+						"settings",
+						JSONFactoryUtil.createJSONObject(
+							StringUtil.read(
+								getClass(), "/META-INF/search/settings.json"))
+					).toString());
+
+				searchEngineAdapter.execute(createIndexRequest);
+			});
 	}
 
 	@Override
 	public void removeIndex(long companyId) throws PortalException {
-		if ((searchEngineAdapter == null) ||
-			!hasIndex(getIndexName(companyId))) {
+		workflowMetricsPortalExecutor.execute(
+			() -> {
+				if ((searchEngineAdapter == null) ||
+					!hasIndex(getIndexName(companyId))) {
 
-			return;
-		}
+					return;
+				}
 
-		searchEngineAdapter.execute(
-			new DeleteIndexRequest(getIndexName(companyId)));
+				searchEngineAdapter.execute(
+					new DeleteIndexRequest(getIndexName(companyId)));
+			});
 	}
 
 	@Activate
@@ -117,5 +126,8 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 		target = "(search.engine.impl=Elasticsearch)"
 	)
 	protected volatile SearchEngineAdapter searchEngineAdapter;
+
+	@Reference
+	protected WorkflowMetricsPortalExecutor workflowMetricsPortalExecutor;
 
 }

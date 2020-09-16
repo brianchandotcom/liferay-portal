@@ -191,7 +191,7 @@ definition {
 		CommerceEntry.setEntryEligibility(
 			accountGroupsEligibility = "${accountGroupsEligibility}",
 			accountsEligibility = "${accountsEligibility}",
-			channelsEligibility ="${channelsEligibility}");
+			channelsEligibility = "${channelsEligibility}");
 
 		Button.clickPublish();
 	}
@@ -759,7 +759,7 @@ definition {
 		CommerceEntry.viewEntryEligibility(
 			accountGroupsEligibility = "${accountGroupsEligibility}",
 			accountsEligibility = "${accountsEligibility}",
-			channelsEligibility ="${channelsEligibility}");
+			channelsEligibility = "${channelsEligibility}");
 	}
 
 	macro viewEntryEligibility {

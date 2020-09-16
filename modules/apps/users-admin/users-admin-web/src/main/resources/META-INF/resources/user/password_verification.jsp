@@ -69,7 +69,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		var form = document.<portlet:namespace />fm;
 
 		Liferay.Util.fetch(
-			'<liferay-portlet:resourceURL id="/users_admin/authenticate_user" />',
+			'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/users_admin/authenticate_user" />',
 			{
 				body: new FormData(form),
 				method: 'POST',

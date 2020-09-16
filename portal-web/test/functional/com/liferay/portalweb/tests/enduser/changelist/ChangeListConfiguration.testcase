@@ -91,7 +91,7 @@ definition {
 			MenuItem.viewPresent(menuItem = "${menuItem}");
 		}
 
-		for (var menuItem : list "Review Changes,Prepare to Publish") {
+		for (var menuItem : list "Review Changes,Schedule,Publish") {
 			MenuItem.viewNotPresent(menuItem = "${menuItem}");
 		}
 

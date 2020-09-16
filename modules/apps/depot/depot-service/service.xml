@@ -101,5 +101,6 @@
 	</entity>
 	<exceptions>
 		<exception>DepotEntryName</exception>
+		<exception>StagedGroup</exception>
 	</exceptions>
 </service-builder>

@@ -29,6 +29,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.price.list.test.util.CommercePriceEntryTestUtil;
 import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
+import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -36,6 +37,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.test.util.CommerceTaxTestUtil;
@@ -166,13 +168,12 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
 
+		commerceProductPriceRequest.setCalculateTax(true);
+		commerceProductPriceRequest.setCommerceContext(commerceContext);
 		commerceProductPriceRequest.setCpInstanceId(
 			cpInstance.getCPInstanceId());
 		commerceProductPriceRequest.setQuantity(quantity);
 		commerceProductPriceRequest.setSecure(false);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(null);
-		commerceProductPriceRequest.setCalculateTax(true);
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
@@ -185,14 +186,34 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 	@Test
 	public void testGetGrossProductPriceFromNetPriceList() throws Exception {
+		CommerceChannel commerceTaxIncludedChannel =
+			CommerceTestUtil.addCommerceChannel(
+				_group.getGroupId(), _commerceCurrency.getCode());
+
+		commerceTaxIncludedChannel =
+			CommerceChannelLocalServiceUtil.updateCommerceChannel(
+				commerceTaxIncludedChannel.getCommerceChannelId(),
+				commerceTaxIncludedChannel.getSiteGroupId(),
+				commerceTaxIncludedChannel.getName(),
+				commerceTaxIncludedChannel.getType(),
+				commerceTaxIncludedChannel.getTypeSettingsProperties(),
+				commerceTaxIncludedChannel.getCommerceCurrencyCode(),
+				CommercePricingConstants.TAX_INCLUDED_IN_PRICE,
+				commerceTaxIncludedChannel.isDiscountsTargetNetPrice());
+
 		long cpTaxCategoryId = CommerceTaxTestUtil.addTaxCategoryId(
 			_user.getGroupId());
+
+		CommerceTaxMethod commerceTaxMethod =
+			CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
+				_user.getUserId(), commerceTaxIncludedChannel.getGroupId(),
+				true);
 
 		double rate = Double.valueOf(RandomTestUtil.randomInt(0, 40));
 
 		CommerceTaxTestUtil.setCommerceMethodTaxRate(
-			_user.getUserId(), _commerceChannel.getGroupId(), cpTaxCategoryId,
-			_commerceTaxMethod.getCommerceTaxMethodId(), rate);
+			_user.getUserId(), commerceTaxIncludedChannel.getGroupId(),
+			cpTaxCategoryId, commerceTaxMethod.getCommerceTaxMethodId(), rate);
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
@@ -202,6 +223,11 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
 				catalog.getGroupId(), 0.0);
+
+		commercePriceList.setNetPrice(true);
+
+		CommercePriceListLocalServiceUtil.updateCommercePriceList(
+			commercePriceList);
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
@@ -221,7 +247,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 			commercePriceList.getCommercePriceListId(), "", price);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, _commerceChannel, _user, _group,
+			_commerceCurrency, commerceTaxIncludedChannel, _user, _group,
 			_commerceAccount, null);
 
 		int quantity = 1;
@@ -229,13 +255,12 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
 
+		commerceProductPriceRequest.setCalculateTax(true);
+		commerceProductPriceRequest.setCommerceContext(commerceContext);
 		commerceProductPriceRequest.setCpInstanceId(
 			cpInstance.getCPInstanceId());
 		commerceProductPriceRequest.setQuantity(quantity);
 		commerceProductPriceRequest.setSecure(false);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(null);
-		commerceProductPriceRequest.setCalculateTax(true);
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(

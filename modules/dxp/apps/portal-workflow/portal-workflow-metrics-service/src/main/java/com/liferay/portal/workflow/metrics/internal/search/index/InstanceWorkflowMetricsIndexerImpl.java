@@ -111,7 +111,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 
 		Document document = documentBuilder.build();
 
-		workflowMetricsPortalExecutor.execute(() -> addDocument(document));
+		workflowMetricsPortalExecutor.execute(() -> updateDocument(document));
 
 		return document;
 	}

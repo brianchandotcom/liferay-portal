@@ -140,37 +140,79 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptor.getSearchCo
 	</liferay-ui:search-container>
 </clay:container-fluid>
 
-<aui:script require="metal-dom/src/all/dom as dom">
-	var selectItemHandler = dom.delegate(
-		document.querySelector('#<portlet:namespace/>entriesContainer'),
-		'click',
-		'.entry',
-		function (event) {
-			dom.removeClasses(
-				document.querySelectorAll('.form-check-card.active'),
-				'active'
-			);
-			dom.addClasses(
-				dom.closest(event.delegateTarget, '.form-check-card'),
-				'active'
+<c:choose>
+	<c:when test="<%= itemSelectorViewDescriptor.isMultipleSelection() %>">
+		<aui:script use="liferay-search-container">
+			var searchContainer = Liferay.SearchContainer.get(
+				'<portlet:namespace />entries'
 			);
 
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName() %>',
-				{
-					data: {
-						returnType:
-							'<%= itemSelectorViewDescriptorRendererDisplayContext.getReturnType() %>',
-						value: event.delegateTarget.dataset.value,
-					},
+			searchContainer.on('rowToggled', function (event) {
+				var searchContainerItems = event.elements.allSelectedElements;
+
+				var arr = [];
+
+				searchContainerItems.each(function() {
+					var domElement = this.ancestor('li');
+
+					if (domElement == null) {
+						domElement = this.ancestor('tr');
+					}
+
+					if (domElement != null) {
+						var itemValue = domElement.getDOM().dataset.value;
+
+						arr.push(itemValue);
+					}
+				});
+
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName() %>',
+					{
+						data: {
+							returnType:
+								'<%= itemSelectorViewDescriptorRendererDisplayContext.getReturnType() %>',
+							value: arr,
+						},
+					}
+				);
+			});
+		</aui:script>
+	</c:when>
+	<c:otherwise>
+		<aui:script require="metal-dom/src/all/dom as dom">
+			var selectItemHandler = dom.delegate(
+				document.querySelector('#<portlet:namespace/>entriesContainer'),
+				'click',
+				'.entry',
+				function (event) {
+					dom.removeClasses(
+						document.querySelectorAll('.form-check-card.active'),
+						'active'
+					);
+					dom.addClasses(
+						dom.closest(event.delegateTarget, '.form-check-card'),
+						'active'
+					);
+
+					Liferay.Util.getOpener().Liferay.fire(
+						'<%= itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName() %>',
+						{
+							data: {
+								returnType:
+									'<%= itemSelectorViewDescriptorRendererDisplayContext.getReturnType() %>',
+								value: event.delegateTarget.dataset.value,
+							},
+						}
+					);
 				}
 			);
-		}
-	);
 
-	Liferay.on('destroyPortlet', function removeListener() {
-		selectItemHandler.removeListener();
+			Liferay.on('destroyPortlet', function removeListener() {
+				selectItemHandler.removeListener();
 
-		Liferay.detach('destroyPortlet', removeListener);
-	});
-</aui:script>
+				Liferay.detach('destroyPortlet', removeListener);
+			});
+		</aui:script>
+	</c:otherwise>
+</c:choose>

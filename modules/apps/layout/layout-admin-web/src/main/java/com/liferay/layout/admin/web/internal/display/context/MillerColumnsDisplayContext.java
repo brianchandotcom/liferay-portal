@@ -238,11 +238,13 @@ public class MillerColumnsDisplayContext {
 			portletURL.setParameter(
 				"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
-			layoutJSONObject.put(
-				"url", portletURL.toString()
-			).put(
-				"viewUrl", _layoutsAdminDisplayContext.getViewLayoutURL(layout)
-			);
+			layoutJSONObject.put("url", portletURL.toString());
+
+			if (_layoutsAdminDisplayContext.isShowViewLayoutAction(layout)) {
+				layoutJSONObject.put(
+					"viewUrl",
+					_layoutsAdminDisplayContext.getViewLayoutURL(layout));
+			}
 
 			layoutsJSONArray.put(layoutJSONObject);
 		}

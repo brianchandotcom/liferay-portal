@@ -330,9 +330,13 @@ const MillerColumnsItem = ({
 
 			<ClayLayout.ContentCol expand>
 				<h4 className="list-group-title text-truncate-inline">
-					<a className="text-truncate" href={viewUrl}>
-						{title}
-					</a>
+					{viewUrl ? (
+						<ClayLink className="text-truncate" href={viewUrl}>
+							{title}
+						</ClayLink>
+					) : (
+						<span className="text-truncate">{title}</span>
+					)}
 				</h4>
 
 				{description && (

@@ -141,11 +141,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHECKOUT_SHIPPING_OPTION_RADIO</td>
-	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CHECKOUT_SUMMARY_DELIVERY</td>
 	<td>//li[contains(@class,'commerce-delivery')]//div[contains(@class,'commerce-value') and contains (.,'${key_deliveryValue}')]</td>
 	<td></td>

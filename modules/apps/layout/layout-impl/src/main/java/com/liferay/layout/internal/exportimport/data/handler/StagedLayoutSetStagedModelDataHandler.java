@@ -365,11 +365,37 @@ public class StagedLayoutSetStagedModelDataHandler
 			portletDataContext, importedStagedLayoutSet,
 			Sites.SHOW_SITE_NAME, Boolean.TRUE.toString());
 
+		// Show footer
+
+		updateLayoutSetSettingsProperties(
+			portletDataContext, importedStagedLayoutSet,
+			"lfr-theme:regular:show-footer", Boolean.TRUE.toString());
+
+		// Show header
+
+		updateLayoutSetSettingsProperties(
+			portletDataContext, importedStagedLayoutSet,
+			"lfr-theme:regular:show-header", Boolean.TRUE.toString());
+
 		// Show search header
 
 		updateLayoutSetSettingsProperties(
 			portletDataContext, importedStagedLayoutSet,
 			"lfr-theme:regular:show-header-search", Boolean.TRUE.toString());
+
+		// Show Maximize/Minimize Application Links
+
+		updateLayoutSetSettingsProperties(
+			portletDataContext, importedStagedLayoutSet,
+			"lfr-theme:regular:show-maximize-minimize-application-links",
+			Boolean.FALSE.toString());
+
+		// Wrap Widget Page Content
+
+		updateLayoutSetSettingsProperties(
+			portletDataContext, importedStagedLayoutSet,
+			"lfr-theme:regular:wrap-widget-page-content",
+			Boolean.TRUE.toString());
 
 		// Last merge time
 

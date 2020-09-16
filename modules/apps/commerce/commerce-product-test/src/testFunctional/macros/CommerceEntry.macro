@@ -731,24 +731,35 @@ definition {
 
 	macro viewDiscountsEntry {
 		AssertTextEquals(
-			locator1 = "CommerceEntry#TITLE_FIELD",
-			value1 = "${entryTitle}");
+			locator1 = "TextInput#NAME",
+			value1 = "${discountName}");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
 
 		AssertSelectedLabel(
-			locator1 = "CommerceEntry#DISCOUNT_TARGET_SELECT",
+			key_fieldLabel = "Type",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${discountType}");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Apply To",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${discountTarget}");
 
-		AssertChecked(
-			checkboxName = "${channelsEntryName}",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		AssertValue(
+			locator1 = "CommerceEntry#DISCOUNT_AMOUNT",
+			value1 = "${discountAmount}");
 
 		AssertValue(
 			locator1 = "CommerceEntry#MAXIMUM_DISCOUNT_AMOUNT_FIELD",
 			value1 = "${maximumDiscountAmount}");
 
-		AssertValue(
-			locator1 = "CommerceEntry#DISCOUNT_LEVEL_1_FIELD",
-			value1 = "${discountLevel}");
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+		CommerceEntry.viewEntryEligibility(
+			accountGroupsEligibility = "${accountGroupsEligibility}",
+			accountsEligibility = "${accountsEligibility}",
+			channelsEligibility ="${channelsEligibility}");
 	}
 
 	macro viewEntryEligibility {

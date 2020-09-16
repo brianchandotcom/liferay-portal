@@ -373,7 +373,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.
-				getCommerceCatalogBasePriceListByType(
+				getCatalogBaseCommercePriceListByType(
 					cpInstance.getGroupId(), type);
 
 		CommercePriceEntry commercePriceEntry =

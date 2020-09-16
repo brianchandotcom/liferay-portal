@@ -73,12 +73,12 @@ public class CommercePriceEntriesImporter {
 			return;
 		}
 
-		CommercePriceList commerceCatalogBasePriceList =
+		CommercePriceList catalogBaseCommercePriceList =
 			_commercePriceListLocalService.
-				fetchCommerceCatalogBasePriceListByType(
+				fetchCatalogBaseCommercePriceListByType(
 					commerceCatalog.getGroupId(), priceListType);
 
-		if (commerceCatalogBasePriceList == null) {
+		if (catalogBaseCommercePriceList == null) {
 			if (_log.isWarnEnabled()) {
 				if (priceListType.equals(
 						CommercePriceListConstants.TYPE_PRICE_LIST)) {
@@ -103,7 +103,7 @@ public class CommercePriceEntriesImporter {
 
 		for (CPDefinition cpDefinition : cpDefinitions) {
 			_importBaseCommercePriceListEntries(
-				cpDefinition, commerceCatalogBasePriceList, serviceContext);
+				cpDefinition, catalogBaseCommercePriceList, serviceContext);
 		}
 	}
 

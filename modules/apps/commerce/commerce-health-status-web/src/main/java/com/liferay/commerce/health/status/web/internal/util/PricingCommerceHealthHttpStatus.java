@@ -144,7 +144,7 @@ public class PricingCommerceHealthHttpStatus
 			for (CommerceCatalog commerceCatalog : commerceCatalogs) {
 				CommercePriceList commercePriceList =
 					_commercePriceListLocalService.
-						fetchCommerceCatalogBasePriceListByType(
+						fetchCatalogBaseCommercePriceListByType(
 							commerceCatalog.getGroupId(),
 							CommercePriceListConstants.TYPE_PRICE_LIST);
 
@@ -154,7 +154,7 @@ public class PricingCommerceHealthHttpStatus
 
 				commercePriceList =
 					_commercePriceListLocalService.
-						fetchCommerceCatalogBasePriceListByType(
+						fetchCatalogBaseCommercePriceListByType(
 							commerceCatalog.getGroupId(),
 							CommercePriceListConstants.TYPE_PROMOTION);
 
@@ -192,14 +192,14 @@ public class PricingCommerceHealthHttpStatus
 		}
 	}
 
-	private void _addCommerceCatalogBasePriceList(
+	private void _addCatalogBaseCommercePriceList(
 			CommerceCatalog commerceCatalog, String type, String name,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.
-				fetchCommerceCatalogBasePriceListByType(
+				fetchCatalogBaseCommercePriceListByType(
 					commerceCatalog.getGroupId(), type);
 
 		if (commercePriceList == null) {
@@ -209,7 +209,7 @@ public class PricingCommerceHealthHttpStatus
 					commerceCatalog.getCommerceCurrencyCode());
 
 			commercePriceList =
-				_commercePriceListLocalService.addCommerceCatalogBasePriceList(
+				_commercePriceListLocalService.addCatalogBaseCommercePriceList(
 					commerceCatalog.getGroupId(), serviceContext.getUserId(),
 					commerceCurrency.getCommerceCurrencyId(), type, name,
 					serviceContext);
@@ -275,7 +275,7 @@ public class PricingCommerceHealthHttpStatus
 						_serviceContext.getCompanyId());
 
 				for (CommerceCatalog commerceCatalog : commerceCatalogs) {
-					_addCommerceCatalogBasePriceList(
+					_addCatalogBaseCommercePriceList(
 						commerceCatalog,
 						CommercePriceListConstants.TYPE_PRICE_LIST,
 						LanguageUtil.format(
@@ -284,7 +284,7 @@ public class PricingCommerceHealthHttpStatus
 							"x-base-price-list", commerceCatalog.getName(),
 							false),
 						_serviceContext);
-					_addCommerceCatalogBasePriceList(
+					_addCatalogBaseCommercePriceList(
 						commerceCatalog,
 						CommercePriceListConstants.TYPE_PROMOTION,
 						LanguageUtil.format(

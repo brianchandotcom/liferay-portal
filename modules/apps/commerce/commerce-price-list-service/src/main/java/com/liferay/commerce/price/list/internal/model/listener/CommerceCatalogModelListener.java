@@ -65,14 +65,14 @@ public class CommerceCatalogModelListener
 				serviceContext.setUserId(commerceCatalog.getUserId());
 				serviceContext.setCompanyId(commerceCatalog.getCompanyId());
 
-				_addCommerceCatalogBasePriceList(
+				_addCatalogBaseCommercePriceList(
 					commerceCatalog, CommercePriceListConstants.TYPE_PRICE_LIST,
 					LanguageUtil.format(
 						LocaleUtil.fromLanguageId(
 							commerceCatalog.getCatalogDefaultLanguageId()),
 						"x-base-price-list", commerceCatalog.getName(), false),
 					serviceContext);
-				_addCommerceCatalogBasePriceList(
+				_addCatalogBaseCommercePriceList(
 					commerceCatalog, CommercePriceListConstants.TYPE_PROMOTION,
 					LanguageUtil.format(
 						LocaleUtil.fromLanguageId(
@@ -91,10 +91,10 @@ public class CommerceCatalogModelListener
 	@Override
 	public void onBeforeRemove(CommerceCatalog commerceCatalog) {
 		try {
-			_deleteCommerceCatalogBasePriceList(
+			_deleteCatalogBaseCommercePriceList(
 				commerceCatalog, CommercePriceListConstants.TYPE_PRICE_LIST);
 
-			_deleteCommerceCatalogBasePriceList(
+			_deleteCatalogBaseCommercePriceList(
 				commerceCatalog, CommercePriceListConstants.TYPE_PROMOTION);
 		}
 		catch (PortalException portalException) {
@@ -104,41 +104,41 @@ public class CommerceCatalogModelListener
 		}
 	}
 
-	private void _addCommerceCatalogBasePriceList(
+	private void _addCatalogBaseCommercePriceList(
 			CommerceCatalog commerceCatalog, String type, String name,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePriceList commerceCatalogBasePriceList =
+		CommercePriceList catalogBaseCommercePriceList =
 			_commercePriceListLocalService.
-				fetchCommerceCatalogBasePriceListByType(
+				fetchCatalogBaseCommercePriceListByType(
 					commerceCatalog.getGroupId(), type);
 
-		if (commerceCatalogBasePriceList == null) {
+		if (catalogBaseCommercePriceList == null) {
 			CommerceCurrency commerceCurrency =
 				_commerceCurrencyLocalService.getCommerceCurrency(
 					serviceContext.getCompanyId(),
 					commerceCatalog.getCommerceCurrencyCode());
 
-			_commercePriceListLocalService.addCommerceCatalogBasePriceList(
+			_commercePriceListLocalService.addCatalogBaseCommercePriceList(
 				commerceCatalog.getGroupId(), serviceContext.getUserId(),
 				commerceCurrency.getCommerceCurrencyId(), type, name,
 				serviceContext);
 		}
 	}
 
-	private void _deleteCommerceCatalogBasePriceList(
+	private void _deleteCatalogBaseCommercePriceList(
 			CommerceCatalog commerceCatalog, String type)
 		throws PortalException {
 
-		CommercePriceList commerceCatalogBasePriceList =
+		CommercePriceList catalogBaseCommercePriceList =
 			_commercePriceListLocalService.
-				fetchCommerceCatalogBasePriceListByType(
+				fetchCatalogBaseCommercePriceListByType(
 					commerceCatalog.getGroupId(), type);
 
-		if (commerceCatalogBasePriceList != null) {
+		if (catalogBaseCommercePriceList != null) {
 			_commercePriceListLocalService.deleteCommercePriceList(
-				commerceCatalogBasePriceList);
+				catalogBaseCommercePriceList);
 		}
 	}
 

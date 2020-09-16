@@ -119,7 +119,7 @@ public class CommerceCatalogDisplayContext {
 		CommerceCatalog commerceCatalog = getCommerceCatalog();
 
 		return _commercePriceListService.
-			fetchCommerceCatalogBasePriceListByType(
+			fetchCatalogBaseCommercePriceListByType(
 				commerceCatalog.getGroupId(), type);
 	}
 

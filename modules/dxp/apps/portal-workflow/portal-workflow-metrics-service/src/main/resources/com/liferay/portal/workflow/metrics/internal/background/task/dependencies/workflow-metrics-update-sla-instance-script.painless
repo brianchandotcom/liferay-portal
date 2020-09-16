@@ -1,0 +1,3 @@
+if (!ctx._source.slaStatus.equals("Overdue")) {
+ 	ctx._source.slaStatus = params.slaStatus;
+}

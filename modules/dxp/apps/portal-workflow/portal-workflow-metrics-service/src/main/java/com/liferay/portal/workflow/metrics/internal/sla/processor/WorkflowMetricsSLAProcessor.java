@@ -36,7 +36,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -50,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = WorkflowMetricsSLAProcessor.class)
 public class WorkflowMetricsSLAProcessor {
 
-	public Optional<WorkflowMetricsSLAInstanceResult> process(
+	public WorkflowMetricsSLAInstanceResult process(
 		LocalDateTime completionLocalDateTime,
 		LocalDateTime createLocalDateTime, List<Document> documents,
 		long instanceId, LocalDateTime nowLocalDateTime, long startNodeId,
@@ -75,7 +74,7 @@ public class WorkflowMetricsSLAProcessor {
 					workflowMetricsSLAStatus,
 					WorkflowMetricsSLAStatus.COMPLETED)) {
 
-				return Optional.empty();
+				return null;
 			}
 		}
 
@@ -137,13 +136,11 @@ public class WorkflowMetricsSLAProcessor {
 			}
 		}
 
-		return Optional.of(
-			_createWorkflowMetricsSLAInstanceResult(
-				workflowMetricsSLADefinitionVersion.getCompanyId(),
-				completionLocalDateTime, documents, elapsedTime,
-				endLocalDateTime, instanceId, nowLocalDateTime,
-				workflowMetricsSLACalendar, workflowMetricsSLADefinitionVersion,
-				workflowMetricsSLAStatus));
+		return _createWorkflowMetricsSLAInstanceResult(
+			workflowMetricsSLADefinitionVersion.getCompanyId(),
+			completionLocalDateTime, documents, elapsedTime, endLocalDateTime,
+			instanceId, nowLocalDateTime, workflowMetricsSLACalendar,
+			workflowMetricsSLADefinitionVersion, workflowMetricsSLAStatus);
 	}
 
 	protected boolean isBreached(

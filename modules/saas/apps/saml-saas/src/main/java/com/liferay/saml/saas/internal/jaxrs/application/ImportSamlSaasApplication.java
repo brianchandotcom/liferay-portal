@@ -121,7 +121,7 @@ public class ImportSamlSaasApplication extends Application {
 				SymmetricEncryptor.decryptData(
 					samlSaasConfiguration.preSharedKey(), data));
 
-			_generateSamlProviderConfiguration(
+			_updateSamlProviderConfiguration(
 				(JSONObject)jsonObject.get("samlProviderConfiguration"));
 
 			TransactionInvokerUtil.invoke(
@@ -168,86 +168,6 @@ public class ImportSamlSaasApplication extends Application {
 			keyStorePassword.toCharArray());
 
 		_keyStoreManager.saveKeyStore(keyStore);
-	}
-
-	private void _generateSamlProviderConfiguration(
-			JSONObject samlProviderConfigurationJsonObject)
-		throws Exception {
-
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-		unicodeProperties.put(
-			"saml.entity.id",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get("saml.entity.id")));
-		unicodeProperties.put(
-			"saml.idp.assertion.lifetime",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get(
-					"saml.idp.assertion.lifetime")));
-		unicodeProperties.put(
-			"saml.idp.authn.request.signature.required",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get(
-					"saml.idp.authn.request.signature.required")));
-		unicodeProperties.put(
-			"saml.idp.session.maximum.age",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get(
-					"saml.idp.session.maximum.age")));
-		unicodeProperties.put(
-			"saml.idp.session.timeout",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get(
-					"saml.idp.session.timeout")));
-		unicodeProperties.put(
-			"saml.keystore.credential.password",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get(
-					"saml.keystore.credential.password")));
-		unicodeProperties.put(
-			"saml.keystore.encryption.credential.password",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get(
-					"saml.keystore.encryption.credential.password")));
-		unicodeProperties.put(
-			"saml.role",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get("saml.role")));
-		unicodeProperties.put(
-			"saml.sign.metadata",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get("saml.sign.metadata")));
-		unicodeProperties.put(
-			"saml.sp.allow.showing.the.login.portlet",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get(
-					"saml.sp.allow.showing.the.login.portlet")));
-		unicodeProperties.put(
-			"saml.sp.assertion.signature.required",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get(
-					"saml.sp.assertion.signature.required")));
-		unicodeProperties.put(
-			"saml.sp.clock.skew",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get("saml.sp.clock.skew")));
-		unicodeProperties.put(
-			"saml.sp.ldap.import.enabled",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get(
-					"saml.sp.ldap.import.enabled")));
-		unicodeProperties.put(
-			"saml.sp.sign.authn.request",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get(
-					"saml.sp.sign.authn.request")));
-		unicodeProperties.put(
-			"saml.ssl.required",
-			String.valueOf(
-				samlProviderConfigurationJsonObject.get("saml.ssl.required")));
-
-		_samlProviderConfigurationHelper.updateProperties(unicodeProperties);
 	}
 
 	private void _generateSamlSpIdpConnections(
@@ -334,6 +254,86 @@ public class ImportSamlSaasApplication extends Application {
 			_samlSpIdpConnectionLocalService.updateSamlSpIdpConnection(
 				samlSpIdpConnection);
 		}
+	}
+
+	private void _updateSamlProviderConfiguration(
+			JSONObject samlProviderConfigurationJsonObject)
+		throws Exception {
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+		unicodeProperties.put(
+			"saml.entity.id",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get("saml.entity.id")));
+		unicodeProperties.put(
+			"saml.idp.assertion.lifetime",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get(
+					"saml.idp.assertion.lifetime")));
+		unicodeProperties.put(
+			"saml.idp.authn.request.signature.required",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get(
+					"saml.idp.authn.request.signature.required")));
+		unicodeProperties.put(
+			"saml.idp.session.maximum.age",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get(
+					"saml.idp.session.maximum.age")));
+		unicodeProperties.put(
+			"saml.idp.session.timeout",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get(
+					"saml.idp.session.timeout")));
+		unicodeProperties.put(
+			"saml.keystore.credential.password",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get(
+					"saml.keystore.credential.password")));
+		unicodeProperties.put(
+			"saml.keystore.encryption.credential.password",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get(
+					"saml.keystore.encryption.credential.password")));
+		unicodeProperties.put(
+			"saml.role",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get("saml.role")));
+		unicodeProperties.put(
+			"saml.sign.metadata",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get("saml.sign.metadata")));
+		unicodeProperties.put(
+			"saml.sp.allow.showing.the.login.portlet",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get(
+					"saml.sp.allow.showing.the.login.portlet")));
+		unicodeProperties.put(
+			"saml.sp.assertion.signature.required",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get(
+					"saml.sp.assertion.signature.required")));
+		unicodeProperties.put(
+			"saml.sp.clock.skew",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get("saml.sp.clock.skew")));
+		unicodeProperties.put(
+			"saml.sp.ldap.import.enabled",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get(
+					"saml.sp.ldap.import.enabled")));
+		unicodeProperties.put(
+			"saml.sp.sign.authn.request",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get(
+					"saml.sp.sign.authn.request")));
+		unicodeProperties.put(
+			"saml.ssl.required",
+			String.valueOf(
+				samlProviderConfigurationJsonObject.get("saml.ssl.required")));
+
+		_samlProviderConfigurationHelper.updateProperties(unicodeProperties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

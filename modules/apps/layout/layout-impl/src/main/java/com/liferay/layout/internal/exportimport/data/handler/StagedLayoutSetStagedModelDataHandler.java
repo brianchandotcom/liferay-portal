@@ -72,6 +72,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -843,6 +844,57 @@ public class StagedLayoutSetStagedModelDataHandler
 
 					_layoutLocalService.updateLayout(layout);
 				}
+			}
+		}
+	}
+
+	protected void updateLayoutSetSettingsProperties(
+			PortletDataContext portletDataContext,
+			StagedLayoutSet importedLayoutSet, String... defaultsArray)
+		throws PortalException {
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			portletDataContext.getGroupId(),
+			portletDataContext.isPrivateLayout());
+
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSet.getSettingsProperties();
+
+		String mergeFailFriendlyURLLayouts =
+			settingsUnicodeProperties.getProperty(
+				Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
+
+		if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
+			Map<String, String> defaultsMap = MapUtil.fromArray(defaultsArray);
+
+			LayoutSet stagedLayoutSet = importedLayoutSet.getLayoutSet();
+
+			UnicodeProperties importedSettingsUnicodeProperties =
+				stagedLayoutSet.getSettingsProperties();
+
+			boolean changed = false;
+
+			for (Map.Entry<String, String> entry : defaultsMap.entrySet()) {
+				String keyProperty = entry.getKey();
+				String defaultValue = entry.getValue();
+
+				String currentValue = settingsUnicodeProperties.getProperty(
+					keyProperty, defaultValue);
+
+				String importedValue =
+					importedSettingsUnicodeProperties.getProperty(
+						keyProperty, defaultValue);
+
+				if (!Objects.equals(currentValue, importedValue)) {
+					settingsUnicodeProperties.setProperty(
+						keyProperty, importedValue);
+
+					changed = true;
+				}
+			}
+
+			if (changed) {
+				_layoutSetLocalService.updateLayoutSet(layoutSet);
 			}
 		}
 	}

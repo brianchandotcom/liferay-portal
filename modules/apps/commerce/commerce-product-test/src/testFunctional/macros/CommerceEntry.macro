@@ -156,39 +156,44 @@ definition {
 	}
 
 	macro addNewDiscountsEntry {
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 		Type(
-			locator1 = "CommerceEntry#TITLE_FIELD",
-			value1 = "${entryTitle}");
+			locator1 = "TextInput#NAME",
+			value1 = "${discountName}");
 
 		Select(
-			locator1 = "CommerceEntry#DISCOUNT_TARGET_SELECT",
+			key_fieldLabel = "Type",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${discountType}");
+
+		Select(
+			key_fieldLabel = "Apply To",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${discountTarget}");
 
-		Check.checkToggleSwitch(
-			checkboxName = "${channelsEntryName}",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		Button.click(button = "Submit");
 
-		if (isSet(accountGroup)) {
-			AssertClick(
-				locator1 = "Button#SELECT",
-				value1 = "Select");
-
-			CommerceItemSelector.selectEntry(entryName = "${accountGroup}");
-
-			Click(
-				locator1 = "ItemSelector#ADD_BUTTON",
-				value1 = "Add");
-		}
+		Type(
+			locator1 = "CommerceEntry#DISCOUNT_AMOUNT",
+			value1 = "${discountAmount}");
 
 		Type(
 			locator1 = "CommerceEntry#MAXIMUM_DISCOUNT_AMOUNT_FIELD",
 			value1 = "${maximumDiscountAmount}");
 
-		Type(
-			locator1 = "CommerceEntry#DISCOUNT_LEVEL_1_FIELD",
-			value1 = "${discountLevel}");
-
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Button.clickPublish();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(
+			accountGroupsEligibility = "${accountGroupsEligibility}",
+			accountsEligibility = "${accountsEligibility}",
+			channelsEligibility ="${channelsEligibility}");
+
+		Button.clickPublish();
 	}
 
 	macro addNewNotificationTemplate {

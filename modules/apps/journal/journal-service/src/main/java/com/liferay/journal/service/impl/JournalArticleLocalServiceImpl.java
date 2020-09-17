@@ -4186,8 +4186,14 @@ public class JournalArticleLocalServiceImpl
 				"Default article localization is required");
 		}
 
-		journalArticleLocalizationPersistence.removeByA_L(
-			article.getId(), languageId);
+		JournalArticleLocalization journalArticleLocalization =
+			journalArticleLocalizationPersistence.fetchByA_L(
+				article.getId(), languageId);
+
+		if (journalArticleLocalization != null) {
+			journalArticleLocalizationPersistence.removeByA_L(
+				article.getId(), languageId);
+		}
 
 		Document document = article.getDocument();
 

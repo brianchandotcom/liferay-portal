@@ -17,10 +17,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {
-	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
@@ -29,7 +26,7 @@ import loadBackgroundImage from '../../utils/loadBackgroundImage';
 import {useCustomRowContext} from '../ResizeContext';
 
 const Row = React.forwardRef(
-	({children, className, item, layoutData, withinTopper = false}, ref) => {
+	({children, className, item, withinTopper = false}, ref) => {
 		const customRow = useCustomRowContext();
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
@@ -118,13 +115,6 @@ const Row = React.forwardRef(
 					`pr-${paddingRight || 0}`,
 					`pt-${paddingTop || 0}`,
 					{
-						empty:
-							!height &&
-							(!item.children.some(
-								(childId) =>
-									layoutData.items[childId]?.children.length
-							) ||
-								item.config.numberOfColumns !== modulesPerRow),
 						'flex-column': customRow && modulesPerRow === 1,
 						'flex-column-reverse':
 							item.config.numberOfColumns === 2 &&
@@ -180,7 +170,6 @@ Row.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({gutters: PropTypes.bool}),
 	}).isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 function getItemParent(item, itemLayoutData) {

@@ -238,6 +238,13 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			portletURL.setParameter("mvcPath", mvcPath);
 		}
 
+		String navigation = ParamUtil.getString(
+			_liferayPortletRequest, "navigation");
+
+		if (Validator.isNotNull(navigation)) {
+			portletURL.setParameter("navigation", navigation);
+		}
+
 		String tabs1 = ParamUtil.getString(_liferayPortletRequest, "tabs1");
 
 		if (Validator.isNotNull(tabs1)) {

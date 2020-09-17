@@ -28,73 +28,73 @@ import {ResizeContextProvider} from '../ResizeContext';
 import Topper from '../Topper';
 import Row from './Row';
 
-const RowWithControls = React.forwardRef(
-	({children, item, layoutData}, ref) => {
-		const rowConfig = item.config;
-		const [resizing, setResizing] = useState(false);
-		const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
-		const [customRow, setCustomRow] = useState(false);
+const RowWithControls = React.forwardRef(({children, item}, ref) => {
+	const rowConfig = item.config;
+	const [resizing, setResizing] = useState(false);
+	const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
+	const [customRow, setCustomRow] = useState(false);
 
-		const canUpdateItemConfiguration = useSelector(
-			selectCanUpdateItemConfiguration
-		);
+	const canUpdateItemConfiguration = useSelector(
+		selectCanUpdateItemConfiguration
+	);
 
-		const selectedViewportSize = useSelector(
-			(state) => state.selectedViewportSize
-		);
+	const layoutData = useSelector((state) => state.layoutData);
 
-		const rowResponsiveConfig = getResponsiveConfig(
-			rowConfig,
-			selectedViewportSize
-		);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
-		const [setRef, itemElement] = useSetRef(ref);
-		const {modulesPerRow, verticalAlignment} = rowResponsiveConfig;
+	const rowResponsiveConfig = getResponsiveConfig(
+		rowConfig,
+		selectedViewportSize
+	);
 
-		const {height, maxWidth, minWidth, width} = item.config.styles;
+	const [setRef, itemElement] = useSetRef(ref);
+	const {modulesPerRow, verticalAlignment} = rowResponsiveConfig;
 
-		const style = {};
+	const {height, maxWidth, minWidth, width} = item.config.styles;
 
-		style.maxWidth = maxWidth;
-		style.minWidth = minWidth;
-		style.width = width;
+	const style = {};
 
-		return (
-			<Topper item={item} itemElement={itemElement} style={style}>
-				<Row
-					className={classNames({
-						'align-bottom': verticalAlignment === 'bottom',
-						'align-middle': verticalAlignment === 'middle',
-						empty:
-							item.config.numberOfColumns === modulesPerRow &&
-							!item.children.some(
-								(childId) =>
-									layoutData.items[childId].children.length
-							) &&
-							!height,
-						'page-editor__row': canUpdateItemConfiguration,
-						'page-editor__row-overlay-grid': resizing,
-					})}
-					item={item}
-					ref={setRef}
+	style.maxWidth = maxWidth;
+	style.minWidth = minWidth;
+	style.width = width;
+
+	return (
+		<Topper item={item} itemElement={itemElement} style={style}>
+			<Row
+				className={classNames({
+					'align-bottom': verticalAlignment === 'bottom',
+					'align-middle': verticalAlignment === 'middle',
+					empty:
+						item.config.numberOfColumns === modulesPerRow &&
+						!item.children.some(
+							(childId) =>
+								layoutData.items[childId].children.length
+						) &&
+						!height,
+					'page-editor__row': canUpdateItemConfiguration,
+					'page-editor__row-overlay-grid': resizing,
+				})}
+				item={item}
+				ref={setRef}
+			>
+				<ResizeContextProvider
+					value={{
+						customRow,
+						resizing,
+						setCustomRow,
+						setResizing,
+						setUpdatedLayoutData,
+						updatedLayoutData,
+					}}
 				>
-					<ResizeContextProvider
-						value={{
-							customRow,
-							resizing,
-							setCustomRow,
-							setResizing,
-							setUpdatedLayoutData,
-							updatedLayoutData,
-						}}
-					>
-						{children}
-					</ResizeContextProvider>
-				</Row>
-			</Topper>
-		);
-	}
-);
+					{children}
+				</ResizeContextProvider>
+			</Row>
+		</Topper>
+	);
+});
 
 RowWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes({

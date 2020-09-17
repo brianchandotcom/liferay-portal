@@ -45,6 +45,10 @@
 			/>
 			<fileset
 				dir="${sdk.dir}/dist"
+				includes="com.liferay.segments.*.jar"
+			/>
+			<fileset
+				dir="${sdk.dir}/dist"
 				includes="com.liferay.subscription.*.jar"
 			/>
 

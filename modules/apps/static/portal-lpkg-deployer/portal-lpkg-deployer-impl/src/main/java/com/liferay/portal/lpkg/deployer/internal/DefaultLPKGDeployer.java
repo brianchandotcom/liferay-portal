@@ -15,6 +15,7 @@
 package com.liferay.portal.lpkg.deployer.internal;
 
 import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
@@ -26,10 +27,8 @@ import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -383,42 +382,28 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 					continue;
 				}
 
-				Path tempFilePath = Files.createTempFile(null, ".xml");
-
 				try (InputStream inputStream = zipFile.getInputStream(
 						zipEntry)) {
 
-					Files.copy(
-						inputStream, tempFilePath,
-						StandardCopyOption.REPLACE_EXISTING);
+					String content = StreamUtil.toString(inputStream);
 
-					File tempFile = tempFilePath.toFile();
+					Document document = SAXReaderUtil.read(content);
 
-					try {
-						String content = FileUtil.read(tempFile);
+					Element rootElement = document.getRootElement();
 
-						Document document = SAXReaderUtil.read(content);
+					String rootElementName = rootElement.getName();
 
-						Element rootElement = document.getRootElement();
+					if (!rootElementName.equals("license") &&
+						!rootElementName.equals("licenses")) {
 
-						String rootElementName = rootElement.getName();
-
-						if (!rootElementName.equals("license") &&
-							!rootElementName.equals("licenses")) {
-
-							continue;
-						}
-
-						JSONObject jsonObject = JSONUtil.put(
-							"licenseXML", content);
-
-						LicenseManagerUtil.registerLicense(jsonObject);
+						continue;
 					}
-					catch (Exception exception) {
-					}
+
+					JSONObject jsonObject = JSONUtil.put("licenseXML", content);
+
+					LicenseManagerUtil.registerLicense(jsonObject);
 				}
-				finally {
-					Files.delete(tempFilePath);
+				catch (Exception exception) {
 				}
 			}
 		}

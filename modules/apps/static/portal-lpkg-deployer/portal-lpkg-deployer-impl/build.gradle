@@ -8,6 +8,7 @@ dependencies {
 	compileOnly project(":apps:static:portal-file-install:portal-file-install-api")
 	compileOnly project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-api")
 	compileOnly project(":core:petra:petra-concurrent")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-process")
 	compileOnly project(":core:petra:petra-reflect")

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -180,6 +181,10 @@ public class FreeMarkerFragmentEntryProcessor
 			if (serviceContext != null) {
 				httpServletRequest = serviceContext.getRequest();
 				httpServletResponse = serviceContext.getResponse();
+			}
+
+			if (httpServletResponse == null) {
+				httpServletResponse = new DummyHttpServletResponse();
 			}
 
 			if ((httpServletRequest != null) &&

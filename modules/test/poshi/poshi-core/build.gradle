@@ -1,3 +1,7 @@
+dependencies {
+	compile group: "org.apache.commons", name: "commons-lang3", version: "3.0"
+}
+
 liferay {
 	deployDir = project.properties["sdk.dir"] + "/dependencies/com.liferay.poshi.core/lib"
 }

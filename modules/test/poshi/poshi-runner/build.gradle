@@ -25,6 +25,8 @@ dependencies {
 	compile group: "org.seleniumhq.selenium", name: "selenium-java", version: "3.8.1"
 	compile group: "org.sikuli", name: "sikuli-api", version: "1.2.0"
 	compile group: "xml-apis", name: "xml-apis", version: "1.4.01"
+
+	compileInclude group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.1"
 }
 
 deploy {
@@ -34,4 +36,8 @@ deploy {
 
 liferay {
 	deployDir = project.properties["sdk.dir"] + "/dependencies/com.liferay.poshi.runner/lib"
+}
+
+liferayOSGi {
+	expandCompileInclude = true
 }

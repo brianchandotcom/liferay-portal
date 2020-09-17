@@ -20,6 +20,10 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.talend.internal.helper.TalendScheduledTaskExecutorHelper;
+import com.liferay.petra.process.CollectorOutputProcessor;
+import com.liferay.petra.process.ConsumerOutputProcessor;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.process.ProcessUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -31,8 +35,9 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
 
 import java.text.SimpleDateFormat;
 
@@ -40,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,9 +66,6 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 	public void execute(long dispatchTriggerId) throws PortalException {
 		DispatchLog dispatchLog = null;
 		DispatchTrigger dispatchTrigger = null;
-
-		File error = null;
-		File log = null;
 
 		String rootDirectoryName = null;
 
@@ -92,27 +95,21 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 			dispatchTrigger = _dispatchTriggerLocalService.getDispatchTrigger(
 				dispatchTriggerId);
 
-			ProcessBuilder processBuilder = new ProcessBuilder(
-				_getCommands(dispatchTrigger, rootDirectoryName, shFileName));
-
-			error = FileUtil.createTempFile();
-			log = FileUtil.createTempFile();
-
-			processBuilder.redirectError(error);
-			processBuilder.redirectOutput(log);
-
 			dispatchLog = _dispatchLogLocalService.addDispatchLog(
 				dispatchTrigger.getUserId(),
 				dispatchTrigger.getDispatchTriggerId(), null, null, null,
 				startDate, BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
-			Process process = processBuilder.start();
+			Future<Map.Entry<byte[], byte[]>> future = ProcessUtil.execute(
+				CollectorOutputProcessor.INSTANCE,
+				_getArguments(dispatchTrigger, rootDirectoryName, shFileName));
 
-			process.waitFor();
+			Map.Entry<byte[], byte[]> entry = future.get();
 
 			_dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
-				FileUtil.read(error), FileUtil.read(log),
+				new String(entry.getValue(), StandardCharsets.UTF_8),
+				new String(entry.getKey(), StandardCharsets.UTF_8),
 				BackgroundTaskConstants.STATUS_SUCCESSFUL);
 		}
 		catch (Exception exception) {
@@ -126,14 +123,6 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 		finally {
 			FileUtil.deltree(rootDirectoryName);
 
-			if (error != null) {
-				FileUtil.delete(error);
-			}
-
-			if (log != null) {
-				FileUtil.delete(log);
-			}
-
 			if (tempFile != null) {
 				FileUtil.delete(tempFile);
 			}
@@ -145,22 +134,22 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 		return SCHEDULED_TASK_EXECUTOR_TYPE_TALEND;
 	}
 
-	private void _addExecutePermission(String shFileName) throws IOException {
-		ProcessBuilder processBuilder = new ProcessBuilder(
-			"chmod", "+x", shFileName);
+	private void _addExecutePermission(String shFileName)
+		throws ProcessException {
 
-		processBuilder.start();
+		ProcessUtil.execute(
+			ConsumerOutputProcessor.INSTANCE, "chmod", "+x", shFileName);
 	}
 
-	private List<String> _getCommands(
+	private List<String> _getArguments(
 		DispatchTrigger dispatchTrigger, String rootDirectoryName,
 		String shFileName) {
 
-		List<String> commands = new ArrayList<>();
+		List<String> arguments = new ArrayList<>();
 
-		commands.add(shFileName);
+		arguments.add(shFileName);
 
-		commands.add(
+		arguments.add(
 			"--context_param companyId=" + dispatchTrigger.getCompanyId());
 
 		Date lastRunStateDate =
@@ -171,12 +160,12 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-			commands.add(
+			arguments.add(
 				"--context_param lastRunStartDate=" +
 					simpleDateFormat.format(lastRunStateDate));
 		}
 
-		commands.add("--context_param jobWorkDirectory=" + rootDirectoryName);
+		arguments.add("--context_param jobWorkDirectory=" + rootDirectoryName);
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			dispatchTrigger.getTypeSettingsProperties();
@@ -192,11 +181,11 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 				contextSB.append(StringPool.EQUAL);
 				contextSB.append(propEntry.getValue());
 
-				commands.add(contextSB.toString());
+				arguments.add(contextSB.toString());
 			}
 		}
 
-		return commands;
+		return arguments;
 	}
 
 	private String _getSHFileName(String rootDirectoryName) {

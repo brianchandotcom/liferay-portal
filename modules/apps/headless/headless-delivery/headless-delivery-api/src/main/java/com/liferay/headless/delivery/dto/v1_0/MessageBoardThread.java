@@ -475,6 +475,36 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@Schema(description = "A flag that indicates whether this thread is locked")
+	public Boolean getLocked() {
+		return locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+
+	@JsonIgnore
+	public void setLocked(
+		UnsafeSupplier<Boolean, Exception> lockedUnsafeSupplier) {
+
+		try {
+			locked = lockedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "A flag that indicates whether this thread is locked"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean locked;
+
 	@Schema
 	public Long getMessageBoardSectionId() {
 		return messageBoardSectionId;
@@ -1087,6 +1117,16 @@ public class MessageBoardThread {
 			}
 
 			sb.append("]");
+		}
+
+		if (locked != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"locked\": ");
+
+			sb.append(locked);
 		}
 
 		if (messageBoardSectionId != null) {

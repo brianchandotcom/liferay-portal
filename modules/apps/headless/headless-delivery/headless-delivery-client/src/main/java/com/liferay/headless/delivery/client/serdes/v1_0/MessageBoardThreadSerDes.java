@@ -261,6 +261,16 @@ public class MessageBoardThreadSerDes {
 			sb.append("]");
 		}
 
+		if (messageBoardThread.getLocked() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"locked\": ");
+
+			sb.append(messageBoardThread.getLocked());
+		}
+
 		if (messageBoardThread.getMessageBoardSectionId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -587,6 +597,13 @@ public class MessageBoardThreadSerDes {
 				"keywords", String.valueOf(messageBoardThread.getKeywords()));
 		}
 
+		if (messageBoardThread.getLocked() == null) {
+			map.put("locked", null);
+		}
+		else {
+			map.put("locked", String.valueOf(messageBoardThread.getLocked()));
+		}
+
 		if (messageBoardThread.getMessageBoardSectionId() == null) {
 			map.put("messageBoardSectionId", null);
 		}
@@ -813,6 +830,11 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setKeywords(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "locked")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setLocked((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

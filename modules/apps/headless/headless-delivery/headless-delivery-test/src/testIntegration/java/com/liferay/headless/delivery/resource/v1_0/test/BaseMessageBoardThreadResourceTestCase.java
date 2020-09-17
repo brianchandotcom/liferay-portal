@@ -1942,6 +1942,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("locked", additionalAssertFieldName)) {
+				if (messageBoardThread.getLocked() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"messageBoardSectionId", additionalAssertFieldName)) {
 
@@ -2376,6 +2384,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardThread1.getKeywords(),
 						messageBoardThread2.getKeywords())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("locked", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread1.getLocked(),
+						messageBoardThread2.getLocked())) {
 
 					return false;
 				}
@@ -2847,6 +2866,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("locked")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("messageBoardSectionId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2971,6 +2995,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				headline = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				locked = RandomTestUtil.randomBoolean();
 				messageBoardSectionId = RandomTestUtil.randomLong();
 				numberOfMessageBoardAttachments = RandomTestUtil.randomInt();
 				numberOfMessageBoardMessages = RandomTestUtil.randomInt();

@@ -386,6 +386,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getKeywords());
 		}
 
+		if (messageBoardThread.getLocked() != null) {
+			existingMessageBoardThread.setLocked(
+				messageBoardThread.getLocked());
+		}
+
 		if (messageBoardThread.getMessageBoardSectionId() != null) {
 			existingMessageBoardThread.setMessageBoardSectionId(
 				messageBoardThread.getMessageBoardSectionId());

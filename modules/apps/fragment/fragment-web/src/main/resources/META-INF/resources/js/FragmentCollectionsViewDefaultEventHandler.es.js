@@ -67,15 +67,15 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 	 * @review
 	 */
 	exportCollections() {
+		const fragmentCollectionsForm = document.getElementById(
+			this.ns('fragmentCollectionsFm')
+		);
+
 		this._openFragmentCollectionsItemSelector(
 			Liferay.Language.get('export'),
 			Liferay.Language.get('export-collection'),
 			this.viewExportFragmentCollectionsURL,
 			(selectedItems) => {
-				const fragmentCollectionsForm = document.getElementById(
-					this.ns('fragmentCollectionsFm')
-				);
-
 				selectedItems.forEach((item) => {
 					fragmentCollectionsForm.appendChild(item.cloneNode(true));
 				});
@@ -84,6 +84,23 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 					fragmentCollectionsForm,
 					this.exportFragmentCollectionsURL
 				);
+
+				fragmentCollectionsForm.dataset.processed = true;
+			},
+			() => {
+				if (fragmentCollectionsForm.dataset.processed) {
+					Liferay.Util.openToast({
+						message: Liferay.Language.get(
+							'your-request-processed-successfully'
+						),
+						toastProps: {
+							autoClose: 5000,
+						},
+						type: 'success',
+					});
+
+					delete fragmentCollectionsForm.dataset['processed'];
+				}
 			}
 		);
 	}
@@ -102,11 +119,13 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 		dialogButtonLabel,
 		dialogTitle,
 		dialogURL,
-		callback
+		callback,
+		onClose
 	) {
 		openSelectionModal({
 			buttonAddLabel: dialogButtonLabel,
 			multiple: true,
+			onClose,
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					callback(selectedItem);

@@ -12,11 +12,29 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
-import {AppLayout} from './AppLayout';
-import {Toolbar} from './Toolbar';
+import {useToggleSidebar} from './AppLayout';
 
-export function App() {
-	return <AppLayout toolbarChildren={<Toolbar />} />;
-}
+export const Toolbar = () => {
+	const toggleSidebar = useToggleSidebar();
+
+	return (<>
+		<li className="tbar-item tbar-item-expand" />
+
+		<li className="tbar-item">
+			<ClayButtonWithIcon
+				displayType="unstyled"
+				monospaced
+				onClick={() => toggleSidebar()}
+				small
+				symbol="cog"
+			/>
+		</li>
+
+		<li className="tbar-item">
+			<ClayButtonWithIcon monospaced small symbol="plus" />
+		</li>
+	</>);
+};

@@ -258,9 +258,9 @@ definition {
 			dynamicSelection = "true");
 	}
 
-	@description = "This ensures that user can not select the collection in depot after disabling Collctions."
+	@description = "This ensures that user can not select the collection in depot after disabling Collections."
 	@priority = "5"
-	test DisableCollctions {
+	test DisableCollections {
 		JSONAssetlist.addManualAssetListEntry(
 			groupName = "Test Depot Name",
 			site = "false",

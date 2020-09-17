@@ -138,7 +138,7 @@ long organizationGroupId = organization.getGroupId();
 			<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ADD_ORGANIZATION) %>">
 				<portlet:renderURL var="addSuborganizationURL">
 					<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
-					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="backURL" value="<%= redirect %>" />
 					<portlet:param name="parentOrganizationSearchContainerPrimaryKeys" value="<%= String.valueOf(organizationId) %>" />
 					<portlet:param name="type" value="<%= childrenType %>" />
 				</portlet:renderURL>

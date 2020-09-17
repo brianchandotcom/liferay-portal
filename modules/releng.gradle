@@ -252,6 +252,8 @@ deployPublishedArtifacts {
 			File downloadedFile = new File(deployDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
 
 			downloadedFile.renameTo(new File(deployDir, fileName))
+
+			logger.lifecycle "Deployed {}", fileName
 		}
 	}
 

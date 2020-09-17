@@ -14,14 +14,15 @@
 
 package com.liferay.journal.web.internal.util;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 
 import javax.portlet.PortletResponse;
 
 /**
  * @author Pavel Savinov
  */
-public class JournalArticleTranslationRowChecker extends RowChecker {
+public class JournalArticleTranslationRowChecker
+	extends EmptyOnClickRowChecker {
 
 	public JournalArticleTranslationRowChecker(
 		PortletResponse portletResponse) {

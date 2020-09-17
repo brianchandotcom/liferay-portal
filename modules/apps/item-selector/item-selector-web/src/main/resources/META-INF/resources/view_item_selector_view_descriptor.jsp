@@ -152,7 +152,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 
 				var arr = [];
 
-				searchContainerItems.each(function() {
+				searchContainerItems.each(function () {
 					var domElement = this.ancestor('li');
 
 					if (domElement == null) {

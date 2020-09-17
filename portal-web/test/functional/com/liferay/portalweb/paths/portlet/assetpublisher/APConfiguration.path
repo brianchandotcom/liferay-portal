@@ -131,7 +131,7 @@
 </tr>
 <tr>
 	<td>SOURCE_SCOPE_FIELD_FILTER_AND_VALUE</td>
-	<td>//span[@class='asset-subtypefields-message']</td>
+	<td>//span[@class='asset-subtypefields-message'][contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -81,12 +81,12 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 					selectedItems.forEach((item) => {
 						document.hrefFm.appendChild(item);
 					});
-				}
 
-				submitForm(
-					document.hrefFm,
-					itemData.deleteArticleTranslationsURL
-				);
+					submitForm(
+						document.hrefFm,
+						itemData.deleteArticleTranslationsURL
+					);
+				}
 			}
 		);
 	}

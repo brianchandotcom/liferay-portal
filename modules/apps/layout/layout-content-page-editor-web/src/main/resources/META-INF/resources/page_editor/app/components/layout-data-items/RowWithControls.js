@@ -17,10 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
-import {
-	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../store/index';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -99,7 +96,6 @@ RowWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({gutters: PropTypes.bool}),
 	}).isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default RowWithControls;

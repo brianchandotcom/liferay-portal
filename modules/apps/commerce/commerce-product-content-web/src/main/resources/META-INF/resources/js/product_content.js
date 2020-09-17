@@ -15,12 +15,12 @@
 AUI.add(
 	'liferay-commerce-product-content',
 	(A) => {
-		var STR_DDM_FORM_EVENT = 'DDMForm:render';
-
 		var CP_CONTENT_WEB_PORTLET_KEY =
 			'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet';
 
 		var CP_INSTANCE_CHANGE_EVENT = 'CPInstance:change';
+
+		var DDM_FORM_HANDLER_MODULE = 'commerce-frontend-js/utilities/forms/DDMFormHandler';
 
 		var ProductContent = A.Component.create({
 			ATTRS: {
@@ -51,48 +51,56 @@ AUI.add(
 
 					var cpDefinitionId = instance.get('cpDefinitionId');
 
-					var form = Liferay.component(
-						'ProductOptions' + cpDefinitionId + 'DDMForm'
+					var DDMFormInstance = Liferay.component(
+						'ProductOptions' + cpDefinitionId
 					);
 
-					if (form) {
-						form.after(
-							'*:valueChange',
-							instance._ddmFormChange,
-							instance
-						);
+					if (DDMFormInstance) {
+						Liferay.Loader.require(
+							DDM_FORM_HANDLER_MODULE,
+							function(module) {
+								var DDMFormHandler = module.default;
+
+								var FormHandlerConfiguration = {
+									actionURL: checkCPInstanceActionURL,
+									addToCartId: 'addToCartId',
+									DDMFormInstance: DDMFormInstance,
+									portletId: CP_CONTENT_WEB_PORTLET_KEY,
+								};
+
+								new DDMFormHandler(FormHandlerConfiguration);
+							});
 					}
 
 					eventHandles.push(
 						Liferay.on(
-							'ProductOptions' +
-								cpDefinitionId +
-								STR_DDM_FORM_EVENT,
-							instance._ddmFormRender,
+							'product-instance-changed',
+							instance._ddmFormChange,
 							instance
 						)
 					);
 
 					instance._eventHandles = eventHandles;
 				},
-				_ddmFormChange(_valueChangeEvent) {
+				_ddmFormChange(dispatchedPayload) {
 					var instance = this;
 
 					var cpDefinitionId = instance.get('cpDefinitionId');
 
-					instance._renderImages();
+					var cpInstance = dispatchedPayload.cpInstance;
 
-					instance.checkCPInstance();
-				},
-				_ddmFormRender(event) {
-					var instance = this;
+					var originalDDMFormValues = dispatchedPayload.formFields;
 
-					var form = event.form;
+					instance._renderImages(originalDDMFormValues);
+					instance._renderCPInstance(cpInstance);
+					instance.set(
+						'cpInstanceId',
+						cpInstance.cpInstanceId
+					);
 
-					form.after(
-						'*:valueChange',
-						instance._ddmFormChange,
-						instance
+					Liferay.fire(
+						cpDefinitionId + CP_INSTANCE_CHANGE_EVENT,
+						cpInstance
 					);
 				},
 				_getThumbsContainer() {
@@ -236,11 +244,11 @@ AUI.add(
 						);
 					});
 				},
-				_renderImages() {
+				_renderImages(originalDDMFormValues) {
 					var instance = this;
 
 					var ddmFormValues = JSON.stringify(
-						instance.getFormValues()
+						originalDDMFormValues
 					);
 
 					var data = {};
@@ -307,59 +315,6 @@ AUI.add(
 								instance.get('cpDefinitionId')
 							);
 						});
-				},
-				checkCPInstance() {
-					var instance = this;
-
-					var cpDefinitionId = instance.get('cpDefinitionId');
-
-					var productContentAuthToken = instance.get(
-						'productContentAuthToken'
-					);
-
-					var portletURL = Liferay.PortletURL.createActionURL();
-
-					portletURL.setPortletId(CP_CONTENT_WEB_PORTLET_KEY);
-					portletURL.setName('checkCPInstance');
-					portletURL.setParameter('cpDefinitionId', cpDefinitionId);
-					portletURL.setParameter('p_auth', Liferay.authToken);
-					portletURL.setParameter(
-						'p_p_auth',
-						productContentAuthToken
-					);
-
-					var ddmFormValues = JSON.stringify(
-						instance.getFormValues()
-					);
-
-					var data = {};
-
-					data[
-						'_' + CP_CONTENT_WEB_PORTLET_KEY + '_ddmFormValues'
-					] = ddmFormValues;
-					data.groupId = themeDisplay.getScopeGroupId();
-
-					A.io.request(portletURL.toString(), {
-						data,
-						on: {
-							success(event, id, obj) {
-								var response = JSON.parse(obj.response);
-
-								if (response.cpInstanceExist) {
-									instance._renderCPInstance(response);
-									instance.set(
-										'cpInstanceId',
-										response.cpInstanceId
-									);
-								}
-
-								Liferay.fire(
-									cpDefinitionId + CP_INSTANCE_CHANGE_EVENT,
-									response
-								);
-							},
-						},
-					});
 				},
 				destructor() {
 					var instance = this;

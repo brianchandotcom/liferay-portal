@@ -19,7 +19,7 @@
 	<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" />
 </liferay-portlet:actionURL>
 
-<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as eventsDefinitions">
+<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as eventsDefinitions, commerce-frontend-js/utilities/forms/DDMFormHandler as DDMFormHandler">
 
 	var cpDefinitionId = <%= cpDefinitionId %>;
 	var CP_CONTENT_WEB_PORTLET_KEY = 'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet';
@@ -32,69 +32,10 @@
 		}
 	}
 
-	function checkCPInstance(portletURL) {
-		var formData = JSON.stringify(getFormData())
-		var requestBody = new FormData();
+	function updateAddToCart(cpInstance, formValues) {
+		var productExists = cpInstance.cpInstanceExist;
+		var cpInstanceId = cpInstance.cpInstanceId;
 
-		requestBody.append(
-			'_' + CP_CONTENT_WEB_PORTLET_KEY + '_ddmFormValues',
-			formData
-		)
-
-		return fetch(
-			portletURL,
-			{
-				body: requestBody,
-				credentials: 'include',
-				headers: new Headers({ 'x-csrf-token': Liferay.authToken }),
-				method: 'post'
-			}
-		)
-		.then(function(response){ return response.json() })
-		.then(function(jsonResponse) {
-			return Object.assign(
-				jsonResponse,
-				{
-					formData: formData
-				}
-			)
-		})
-	}
-
-	function getFormValues(form) {
-		return !form ? [] : form.getImmediateFields().map(
-			function(field) {
-				var value = field.getValue();
-
-				return {
-					key: field.get('fieldName'),
-					value: Array.isArray(value) ? value : [value]
-				};
-			}
-		);
-	}
-
-	function getFormData() {
-		var form = Liferay.component('ProductOptions' + cpDefinitionId);
-
-		try {
-			var formValuesRefs = form.props.pages[0].rows;
-
-			return formValuesRefs.map(function(valueRef) {
-				var optionKey = valueRef.columns[0].fields[0].fieldName,
-					optionValue = valueRef.columns[0].fields[0].value;
-
-				return {
-					key: optionKey,
-					value: optionValue
-				}
-			});
-		} catch(ignore) {
-			return [];
-		}
-	}
-
-	function updateAddToCart(productExists, cpInstanceId, formValues) {
 		Liferay.fire(
 			eventsDefinitions.CURRENT_PRODUCT_STATUS_CHANGED,
 			productExists
@@ -116,9 +57,9 @@
 		)
 	}
 
-	function updateGallery(productsData) {
+	function updateGallery(formFields) {
 		var formData = new FormData();
-		formData.append('<portlet:namespace />ddmFormValues', productsData.formData);
+		formData.append('<portlet:namespace />ddmFormValues', formFields);
 		formData.append('groupId', themeDisplay.getScopeGroupId());
 
 		fetch(
@@ -180,21 +121,36 @@
 	}
 
 	function updateView(productsData) {
-		updateAddToCart(productsData.cpInstanceExist, productsData.cpInstanceId, productsData.formData);
-		updateGallery(productsData);
-		updateProductFields(productsData);
+		var cpInstance = productsData.cpInstance;
+		var formFields = productsData.formFields;
+
+		updateAddToCart(cpInstance, formFields);
+		updateGallery(formFields);
+		updateProductFields(cpInstance);
 	}
 
 	Liferay.componentReady('ProductOptions' + cpDefinitionId)
-		.then(function(form) {
+		.then(function(DDMFormInstance) {
 			initialiseOrderDetails();
 
-			form.on('fieldEdited',
-				function() {
-					return checkCPInstance('<%= checkCPInstanceURL %>')
-						.then(updateView)
-				}
-			)
-		})
+			if (DDMFormInstance) {
+				var FormHandler = DDMFormHandler.default;
+
+				var FormHandlerConfiguration = {
+					actionURL: '<%= checkCPInstanceURL %>',
+					addToCartId: '<%= addToCartId %>',
+					cpDefinitionId: '<%= cpDefinitionId %>',
+					DDMFormInstance: DDMFormInstance,
+					portletId: CP_CONTENT_WEB_PORTLET_KEY,
+				};
+
+				new FormHandler(FormHandlerConfiguration);
+
+				Liferay.on(
+					eventsDefinitions.CP_INSTANCE_CHANGED,
+					updateView
+				);
+			}
+		});
 
 </aui:script>

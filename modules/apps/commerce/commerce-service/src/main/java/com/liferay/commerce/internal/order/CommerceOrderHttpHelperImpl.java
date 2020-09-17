@@ -468,9 +468,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		String cookieName = getCookieName(commerceChannel.getGroupId());
 
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		String commerceOrderUuid = (String)httpSession.getAttribute(cookieName);
+		String commerceOrderUuid = CookieKeys.getCookie(
+			httpServletRequest, cookieName, true);
 
 		if (commerceAccount.getCommerceAccountId() !=
 				CommerceAccountConstants.ACCOUNT_ID_GUEST) {

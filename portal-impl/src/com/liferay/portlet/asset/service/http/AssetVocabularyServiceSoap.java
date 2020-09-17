@@ -437,6 +437,25 @@ public class AssetVocabularyServiceSoap {
 		}
 	}
 
+	public static com.liferay.asset.kernel.model.AssetVocabularySoap[]
+			getGroupVocabularies(long[] groupIds, int[] visibilityTypes)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.asset.kernel.model.AssetVocabulary>
+				returnValue = AssetVocabularyServiceUtil.getGroupVocabularies(
+					groupIds, visibilityTypes);
+
+			return com.liferay.asset.kernel.model.AssetVocabularySoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getGroupVocabulariesCount(long groupId)
 		throws RemoteException {
 

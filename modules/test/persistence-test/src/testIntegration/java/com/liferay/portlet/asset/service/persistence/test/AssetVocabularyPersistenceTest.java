@@ -285,6 +285,13 @@ public class AssetVocabularyPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_VArrayable() throws Exception {
+		_persistence.countByG_V(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			new int[] {RandomTestUtil.nextInt(), 0});
+	}
+
+	@Test
 	public void testCountByC_ERC() throws Exception {
 		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
 

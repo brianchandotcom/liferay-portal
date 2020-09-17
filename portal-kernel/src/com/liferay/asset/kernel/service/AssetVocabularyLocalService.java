@@ -409,6 +409,10 @@ public interface AssetVocabularyLocalService
 	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabulary> getGroupVocabularies(
+		long[] groupIds, int[] visibilityTypes);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupVocabulariesCount(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

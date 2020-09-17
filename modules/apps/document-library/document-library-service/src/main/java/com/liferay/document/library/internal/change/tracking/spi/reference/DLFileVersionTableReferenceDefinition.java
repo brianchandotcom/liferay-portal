@@ -47,6 +47,10 @@ public class DLFileVersionTableReferenceDefinition
 			fromStep -> fromStep.from(
 				CTSContentTable.INSTANCE
 			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DLFileVersionTable.INSTANCE.version.eq(
+					CTSContentTable.INSTANCE.version)
+			).innerJoinON(
 				DLFileEntryTable.INSTANCE,
 				DLFileEntryTable.INSTANCE.companyId.eq(
 					CTSContentTable.INSTANCE.companyId
@@ -59,19 +63,18 @@ public class DLFileVersionTableReferenceDefinition
 				).and(
 					DLFileEntryTable.INSTANCE.name.eq(
 						CTSContentTable.INSTANCE.path)
-				)
-			).innerJoinON(
-				DLFileVersionTable.INSTANCE,
-				DLFileVersionTable.INSTANCE.fileEntryId.eq(
-					DLFileEntryTable.INSTANCE.fileEntryId
 				).and(
-					DLFileVersionTable.INSTANCE.version.eq(
-						CTSContentTable.INSTANCE.version)
+					DLFileEntryTable.INSTANCE.fileEntryId.eq(
+						DLFileVersionTable.INSTANCE.fileEntryId)
 				)
 			)
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				CTSContentTable.INSTANCE
+			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DLFileVersionTable.INSTANCE.version.eq(
+					CTSContentTable.INSTANCE.version)
 			).innerJoinON(
 				DLFileEntryTable.INSTANCE,
 				DLFileEntryTable.INSTANCE.companyId.eq(
@@ -82,19 +85,18 @@ public class DLFileVersionTableReferenceDefinition
 				).and(
 					DLFileEntryTable.INSTANCE.name.eq(
 						CTSContentTable.INSTANCE.path)
-				)
-			).innerJoinON(
-				DLFileVersionTable.INSTANCE,
-				DLFileVersionTable.INSTANCE.fileEntryId.eq(
-					DLFileEntryTable.INSTANCE.fileEntryId
 				).and(
-					DLFileVersionTable.INSTANCE.version.eq(
-						CTSContentTable.INSTANCE.version)
+					DLFileEntryTable.INSTANCE.fileEntryId.eq(
+						DLFileVersionTable.INSTANCE.fileEntryId)
 				)
 			)
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				DLContentTable.INSTANCE
+			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DLFileVersionTable.INSTANCE.version.eq(
+					DLContentTable.INSTANCE.version)
 			).innerJoinON(
 				DLFileEntryTable.INSTANCE,
 				DLFileEntryTable.INSTANCE.companyId.eq(
@@ -105,14 +107,9 @@ public class DLFileVersionTableReferenceDefinition
 				).and(
 					DLFileEntryTable.INSTANCE.name.eq(
 						DLContentTable.INSTANCE.path)
-				)
-			).innerJoinON(
-				DLFileVersionTable.INSTANCE,
-				DLFileVersionTable.INSTANCE.fileEntryId.eq(
-					DLFileEntryTable.INSTANCE.fileEntryId
 				).and(
-					DLFileVersionTable.INSTANCE.version.eq(
-						DLContentTable.INSTANCE.version)
+					DLFileEntryTable.INSTANCE.fileEntryId.eq(
+						DLFileVersionTable.INSTANCE.fileEntryId)
 				)
 			)
 		);

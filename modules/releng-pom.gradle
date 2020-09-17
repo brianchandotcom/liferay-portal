@@ -58,6 +58,7 @@ generatePomCompileOnly {
 	doFirst {
 		assert project.properties["portalArtifactsJarVersion"] : "Provide a value for the project property 'portalArtifactsJarVersion'"
 	}
+
 	doLast {
 		Model model = _getModel(pomCompileOnlyArtifactId)
 

@@ -15,6 +15,6 @@
 		<suppress checks="JavaXMLSecurityCheck" files=".*" />
 		<suppress checks="LocaleUtilCheck" files="poshi-runner/src/main/java/com/liferay/poshi/runner/util/LocaleUtil\.java" />
 		<suppress checks="MarkdownWhitespaceCheck" files="poshi-script\.markdown" />
-		<suppress checks="StringMethodsCheck" files="poshi-runner/src/main/java/com/liferay/poshi/runner/util/StringUtil\.java" />
+		<suppress checks="StringMethodsCheck" files="poshi-core/src/main/java/com/liferay/poshi/core/util/StringUtil\.java" />
 	</source-check>
 </suppressions>

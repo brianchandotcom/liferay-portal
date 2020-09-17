@@ -24,6 +24,7 @@ AUI.add(
 
 		var ProductContent = A.Component.create({
 			ATTRS: {
+				checkCPInstanceActionURL: {},
 				cpDefinitionId: {},
 				fullImageSelector: {},
 				productContentAuthToken: {},
@@ -43,6 +44,10 @@ AUI.add(
 					var instance = this;
 
 					var eventHandles = [];
+
+					var checkCPInstanceActionURL = instance.get(
+						'checkCPInstanceActionURL'
+					);
 
 					var cpDefinitionId = instance.get('cpDefinitionId');
 
@@ -72,6 +77,8 @@ AUI.add(
 				},
 				_ddmFormChange(_valueChangeEvent) {
 					var instance = this;
+
+					var cpDefinitionId = instance.get('cpDefinitionId');
 
 					instance._renderImages();
 

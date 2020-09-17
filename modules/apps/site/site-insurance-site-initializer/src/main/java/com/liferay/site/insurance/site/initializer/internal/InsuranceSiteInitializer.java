@@ -29,9 +29,13 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,11 +54,16 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.insurance.site.initializer.internal.util.ImagesImporterUtil;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.net.URL;
 
@@ -121,6 +130,11 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			_addJournalArticles();
 
 			_addFragments();
+
+			_addSiteNavigationMenus();
+
+			_addMasterPages();
+			_addDisplayPageTemplates();
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -185,6 +199,47 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				_readFile(jsonObject.getString("contentPath")), false, false,
 				null, null, _serviceContext);
 		}
+	}
+
+	private void _addDisplayPageTemplates() throws Exception {
+		Map<String, String> valuesMap = new HashMap<>();
+
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getStructures(
+				_serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(JournalArticle.class.getName()));
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			valuesMap.put(
+				StringUtil.toUpperCase(ddmStructure.getStructureKey()),
+				String.valueOf(ddmStructure.getStructureId()));
+		}
+
+		File file = _generateZipFile(
+			"display-page-templates",
+			LayoutPageTemplateExportImportConstants.
+				FILE_NAME_DISPLAY_PAGE_TEMPLATE,
+			valuesMap);
+
+		_layoutPageTemplatesImporter.importFile(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			file, false);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_serviceContext.getScopeGroupId(), "policy",
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_serviceContext.getScopeGroupId(), "claim",
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
 	}
 
 	private void _addFragments() throws Exception {
@@ -290,6 +345,56 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addMasterPages() throws Exception {
+		File file = _generateZipFile(
+			"master-pages",
+			LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE,
+			HashMapBuilder.put(
+				"CUSTOMER_PORTAL_SITE_NAVIGATION_MENU_ID",
+				String.valueOf(
+					_customerPortalSiteNavigationMenu.getSiteNavigationMenuId())
+			).put(
+				"PUBLIC_SITE_NAVIGATION_MENU_ID",
+				String.valueOf(
+					_publicSiteNavigationMenu.getSiteNavigationMenuId())
+			).put(
+				"SCOPE_GROUP_ID",
+				String.valueOf(_customerPortalSiteNavigationMenu.getGroupId())
+			).build());
+
+		_layoutPageTemplatesImporter.importFile(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			file, false);
+	}
+
+	private void _addSiteNavigationMenus() throws PortalException {
+		_customerPortalSiteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				_CUSTOMER_PORTAL_SITE_NAVIGATION_NAME, _serviceContext);
+
+		_publicSiteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				_PUBLIC_SITE_NAVIGATION_NAME, _serviceContext);
+	}
+
+	private void _addZipWriterEntry(
+			ZipWriter zipWriter, URL url, Map<String, String> valuesMap)
+		throws IOException {
+
+		String entryPath = url.getPath();
+
+		String zipPath = StringUtil.removeSubstring(entryPath, _PATH);
+
+		String content = StringUtil.read(url.openStream());
+
+		zipWriter.addEntry(
+			zipPath,
+			StringUtil.replace(
+				content, StringPool.DOLLAR, StringPool.DOLLAR, valuesMap));
+	}
+
 	private void _createServiceContext(long groupId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -307,6 +412,34 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		serviceContext.setUserId(user.getUserId());
 
 		_serviceContext = serviceContext;
+	}
+
+	private File _generateZipFile(
+			String path, String type, Map<String, String> valuesMap)
+		throws Exception {
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		StringBuilder sb = new StringBuilder(3);
+
+		sb.append(_PATH + StringPool.FORWARD_SLASH + path);
+		sb.append(StringPool.FORWARD_SLASH);
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			sb.toString(), type, true);
+
+		try {
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+
+				_populateZipWriter(zipWriter, url, valuesMap);
+			}
+
+			return zipWriter.getFile();
+		}
+		catch (Exception exception) {
+			throw new Exception(exception);
+		}
 	}
 
 	private long _getDefaultLayoutPageTemplateEntryId(
@@ -344,16 +477,39 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		return fileEntriesMap;
 	}
 
+	private void _populateZipWriter(
+			ZipWriter zipWriter, URL url, Map<String, String> valuesMap)
+		throws IOException {
+
+		String zipPath = StringUtil.removeSubstring(url.getFile(), _PATH);
+
+		zipWriter.addEntry(zipPath, url.openStream());
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			FileUtil.getPath(url.getPath()), StringPool.STAR, true);
+
+		while (enumeration.hasMoreElements()) {
+			URL elementUrl = enumeration.nextElement();
+
+			_addZipWriterEntry(zipWriter, elementUrl, valuesMap);
+		}
+	}
+
 	private String _readFile(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(clazz.getClassLoader(), _PATH + fileName);
 	}
 
+	private static final String _CUSTOMER_PORTAL_SITE_NAVIGATION_NAME =
+		"Customer Portal Menu";
+
 	private static final String _NAME = "Insurance Demo Site";
 
 	private static final String _PATH =
 		"com/liferay/site/insurance/site/initializer/internal/dependencies";
+
+	private static final String _PUBLIC_SITE_NAVIGATION_NAME = "Public Menu";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InsuranceSiteInitializer.class);
@@ -363,6 +519,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		_assetDisplayPageEntryLocalService;
 
 	private Bundle _bundle;
+	private SiteNavigationMenu _customerPortalSiteNavigationMenu;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
@@ -390,17 +547,28 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private List<JournalFolder> _journalFolders;
 
 	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryLocalService _layoutPageTemplateEntryService;
+
+	@Reference
+	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
 
 	@Reference
 	private Portal _portal;
 
+	private SiteNavigationMenu _publicSiteNavigationMenu;
 	private ServiceContext _serviceContext;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.insurance.site.initializer)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

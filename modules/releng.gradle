@@ -76,6 +76,7 @@ task buildFixPackChangeLog(type: BuildChangeLogTask)
 task cherryPickArtifacts
 task cleanReleng
 task cleanVersionOverride
+task deployPublishedArtifacts
 task lockDependencyVersion
 task lockPrivateDependencyVersions
 task portalArtifactsJar(type: ShadowJar)
@@ -172,6 +173,85 @@ cleanVersionOverride {
 
 		delete bndBndFileTree.collect {
 			new File(gitRepoDir.parentFile, ".version-override-${it.parentFile.name}.properties")
+		}
+	}
+
+	group = "releng"
+}
+
+deployPublishedArtifacts {
+	description = "Download the published artifacts to the deploy directory."
+
+	doLast {
+		File releasePropertiesFile = file("../release.profile-dxp.properties")
+
+		if (!releasePropertiesFile.exists()) {
+			excludes.add("/dxp/**")
+		}
+
+		fileTree(dir: file(".releng"), excludes: ["/sdk/**", "**/test/**", "/third-party/**", "/util/**"], include: "**/*.properties").each {
+			File relengFile ->
+
+			String relativePath = FileUtil.relativize(relengFile.parentFile, file(".releng"))
+
+			if (Validator.isNull(relativePath)) {
+				return
+			}
+
+			File relengIgnoreMarkerDir = GradleUtil.getRootDir(file(relativePath), ".lfrbuild-releng-ignore")
+
+			if (relengIgnoreMarkerDir) {
+				return
+			}
+
+			if (!_exists(file(relativePath), ".lfrbuild-portal")) {
+				return
+			}
+
+			Properties relengProperties = GUtil.loadProperties(relengFile)
+
+			String artifactURL = relengProperties.getProperty("artifact.url")
+
+			if (!artifactURL || !artifactURL.endsWith(".jar")) {
+				return
+			}
+
+			if (_exists(file(relativePath), ".lfrbuild-app-server-lib")) {
+				return
+			}
+
+			File buildGradleFile = new File(file(relativePath), "build.gradle")
+
+			String buildGradleContent = buildGradleFile.getText("UTF-8")
+
+			if (buildGradleContent.contains('deployDir = appServerLibGlobalDir')) {
+				return
+			}
+
+			String fileName = artifactURL.substring(artifactURL.lastIndexOf("/") + 1, artifactURL.lastIndexOf("-")) + ".jar"
+
+			File deployDir = file(project.properties["liferay.home"] + "/osgi/modules")
+
+			if (buildGradleContent.contains('deployDir = file("${liferayHome}/osgi/core")')) {
+				deployDir = file(project.properties["liferay.home"] + "/osgi/core")
+			}
+			else if (buildGradleContent.contains('deployDir = file("${liferayHome}/osgi/test")')) {
+				deployDir = file(project.properties["liferay.home"] + "/osgi/test")
+			}
+			else if (_exists(file(relativePath), ".lfrbuild-static")) {
+				deployDir = file(project.properties["liferay.home"] + "/osgi/static")
+			}
+			else if (fileName.startsWith("com.liferay.portal.")) {
+				deployDir = file(project.properties["liferay.home"] + "/osgi/portal")
+			}
+
+			delete new File(deployDir, fileName)
+
+			_downloadFile(deployDir, artifactURL)
+
+			File downloadedFile = new File(deployDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
+
+			downloadedFile.renameTo(new File(deployDir, fileName))
 		}
 	}
 

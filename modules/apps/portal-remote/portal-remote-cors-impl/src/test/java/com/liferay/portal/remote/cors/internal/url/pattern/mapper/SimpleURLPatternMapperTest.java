@@ -111,10 +111,10 @@ public class SimpleURLPatternMapperTest {
 	private KeyValuePair[] _createKeyValuePairs() {
 		return new KeyValuePair[] {
 			new KeyValuePair("/", "//*"), new KeyValuePair("/*", "/*/*"),
-			new KeyValuePair("/*/", "/*//*"),
+			new KeyValuePair("/*/", "/*//*"), new KeyValuePair("/a", "/*"),
 			new KeyValuePair("/a/*/c/d", "/a/*/c/*"),
-			new KeyValuePair("/a/b", "/*"), new KeyValuePair("/a", "/*"),
-			new KeyValuePair("/b/c", "/b/c"), new KeyValuePair("/b", "/*"),
+			new KeyValuePair("/a/b", "/*"), new KeyValuePair("/b", "/*"),
+			new KeyValuePair("/b/c", "/b/c"),
 			new KeyValuePair("/c/portal/j_login", "/c/portal/j_login"),
 			new KeyValuePair("/documents", "/documents/*"),
 			new KeyValuePair("/documents/", "/documents/*"),
@@ -154,11 +154,11 @@ public class SimpleURLPatternMapperTest {
 			new KeyValuePair("no/leading/slash/", ""),
 			new KeyValuePair("no/leading/slash/*", "no/leading/slash/*"),
 			new KeyValuePair("no/leading/slash/test", ""),
+			new KeyValuePair("nonexisting.extension", ""),
 			new KeyValuePair("test", ""), new KeyValuePair("test.jsp", "*.jsp"),
 			new KeyValuePair("test.jspf/", ""), new KeyValuePair("test/", ""),
 			new KeyValuePair("test/main.jsp/*", ""),
-			new KeyValuePair("test/main.jspf", "*.jspf"),
-			new KeyValuePair("nonexisting.extension", "")
+			new KeyValuePair("test/main.jspf", "*.jspf")
 		};
 	}
 

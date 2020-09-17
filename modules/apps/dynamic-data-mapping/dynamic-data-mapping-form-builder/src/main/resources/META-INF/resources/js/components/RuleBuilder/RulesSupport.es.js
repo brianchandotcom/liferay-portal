@@ -245,7 +245,7 @@ const getFieldType = (fieldName, pages) => {
 
 const optionBelongsToRule = (condition, options) => {
 	return options.some(
-		(option) => option.label == condition.operands[1].value
+		(option) => option.value == condition.operands[1].value
 	);
 };
 

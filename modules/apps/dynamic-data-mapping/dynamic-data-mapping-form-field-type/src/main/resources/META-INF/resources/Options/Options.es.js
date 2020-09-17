@@ -393,7 +393,7 @@ const Options = ({
 				>
 					<Option
 						disabled={disabled}
-						onClick={() => handleConfirmDelete(index, option.label)}
+						onClick={() => handleConfirmDelete(index, option.value)}
 						showCloseButton={
 							!(fields.length - 1 === index) && !disabled
 						}

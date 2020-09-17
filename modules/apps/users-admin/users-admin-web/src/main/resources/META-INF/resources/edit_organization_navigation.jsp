@@ -24,6 +24,7 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 
 <aui:form action="<%= editOrganizationActionURL %>" cssClass="portlet-users-admin-edit-organization" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="backURL" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" />
 	<aui:input name="organizationId" type="hidden" value="<%= organizationScreenNavigationDisplayContext.getOrganizationId() %>" />
 
 	<clay:sheet>

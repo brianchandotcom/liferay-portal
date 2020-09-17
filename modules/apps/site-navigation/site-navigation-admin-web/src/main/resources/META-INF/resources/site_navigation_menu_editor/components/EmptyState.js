@@ -14,15 +14,22 @@
 
 import React from 'react';
 
-import {AppLayout} from './AppLayout';
-import {EmptyState} from './EmptyState';
-import {Toolbar} from './Toolbar';
+export const EmptyState = () => (
+	<div className="p-3 taglib-empty-result-message text-center">
+		<div className="taglib-empty-state" />
 
-export function App() {
-	return (
-		<AppLayout
-			contentChildren={<EmptyState />}
-			toolbarChildren={<Toolbar />}
-		/>
-	);
-}
+		<h1 className="taglib-empty-result-message-title">
+			{Liferay.Language.get('no-element-yet')}
+		</h1>
+
+		<p className="taglib-empty-result-message-description">
+			{Liferay.Language.get(
+				'fortunately-it-is-very-easy-to-add-new-ones'
+			)}
+		</p>
+
+		<div className="taglib-empty-result-message-actionDropdownItems">
+			<div className="dropdown"></div>
+		</div>
+	</div>
+);

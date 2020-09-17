@@ -168,14 +168,12 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 									unitPriceMoney = commerceProductPrice.getUnitPriceWithTaxAmount();
 									unitPromoPriceMoney = commerceProductPrice.getUnitPromoPriceWithTaxAmount();
 								}
-
-								BigDecimal promoPrice = unitPromoPriceMoney.getPrice();
 								%>
 
 								<div class="value-section">
 									<span class="price">
 										<c:choose>
-											<c:when test="<%= (unitPromoPriceMoney != null) && (promoPrice.compareTo(BigDecimal.ZERO) > 0) %>">
+											<c:when test="<%= !unitPromoPriceMoney.isEmpty() && CommerceBigDecimalUtil.gt(unitPromoPriceMoney.getPrice(), BigDecimal.ZERO) %>">
 												<span class="price-value price-value-promo">
 													<%= HtmlUtil.escape(unitPromoPriceMoney.format(locale)) %>
 												</span>

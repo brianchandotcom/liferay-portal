@@ -117,7 +117,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_dmDocumentTitle = "Add Excel Sheet Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Add Excel Sheet Title");
@@ -152,7 +152,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_dmDocumentTitle = "Add PowerPoint Presentation Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Add PowerPoint Presentation Title");
@@ -187,7 +187,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_dmDocumentTitle = "Add Word Doc Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Add Word Doc Title");

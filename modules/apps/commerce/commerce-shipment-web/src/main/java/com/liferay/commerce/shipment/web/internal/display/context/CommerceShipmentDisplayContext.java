@@ -401,7 +401,6 @@ public class CommerceShipmentDisplayContext
 
 		searchContext.setCompanyId(cpRequestHelper.getCompanyId());
 		searchContext.setEnd(QueryUtil.ALL_POS);
-		searchContext.setStart(QueryUtil.ALL_POS);
 
 		long[] commerceChannelGroupIds = _getCommerceChannelGroupIds();
 
@@ -410,6 +409,8 @@ public class CommerceShipmentDisplayContext
 
 			searchContext.setGroupIds(commerceChannelGroupIds);
 		}
+
+		searchContext.setStart(QueryUtil.ALL_POS);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

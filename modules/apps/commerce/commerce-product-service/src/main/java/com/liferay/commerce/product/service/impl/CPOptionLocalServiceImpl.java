@@ -293,20 +293,21 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
-		searchContext.setStart(start);
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);
 		}
 
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
 
 		return searchContext;
 	}

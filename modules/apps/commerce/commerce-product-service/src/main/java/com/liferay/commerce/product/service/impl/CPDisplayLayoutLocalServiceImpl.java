@@ -234,7 +234,6 @@ public class CPDisplayLayoutLocalServiceImpl
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setStart(start);
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);
@@ -243,6 +242,8 @@ public class CPDisplayLayoutLocalServiceImpl
 		if (sort != null) {
 			searchContext.setSorts(sort);
 		}
+
+		searchContext.setStart(start);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

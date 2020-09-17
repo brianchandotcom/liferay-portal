@@ -464,16 +464,17 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		searchContext.setCompanyId(cpDefinition.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {cpDefinition.getGroupId()});
+
+		Sort prioritySort = SortFactoryUtil.create(Field.PRIORITY, false);
+
+		searchContext.setSorts(prioritySort);
+
 		searchContext.setStart(start);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		Sort prioritySort = SortFactoryUtil.create(Field.PRIORITY, false);
-
-		searchContext.setSorts(prioritySort);
 
 		queryConfig.addSelectedFieldNames(Field.ENTRY_CLASS_PK);
 

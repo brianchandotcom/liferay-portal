@@ -1774,12 +1774,13 @@ public class CommerceOrderLocalServiceImpl
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {commerceChannelGroupId});
 		searchContext.setKeywords(keywords);
-		searchContext.setStart(start);
 
 		Sort sort = SortFactoryUtil.getSort(
 			CommerceOrder.class, Sort.LONG_TYPE, Field.CREATE_DATE, "DESC");
 
 		searchContext.setSorts(sort);
+
+		searchContext.setStart(start);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

@@ -175,13 +175,12 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		searchContext.setAttribute("secure", Boolean.TRUE);
 
 		searchContext.setEnd(end);
+		searchContext.setSorts(_getSorts(cpQuery));
+		searchContext.setStart(start);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setSorts(_getSorts(cpQuery));
-		searchContext.setStart(start);
 
 		return cpDefinitionSearcher;
 	}

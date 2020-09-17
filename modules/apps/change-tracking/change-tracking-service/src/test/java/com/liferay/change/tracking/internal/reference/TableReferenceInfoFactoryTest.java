@@ -189,29 +189,11 @@ public class TableReferenceInfoFactoryTest {
 
 		Function<FromStep, JoinStep> selfJoinFunction2 =
 			fromStep -> fromStep.from(
-				ReferenceExampleTable.INSTANCE
-			).innerJoinON(
-				aliasReferenceExampleTable,
-				aliasReferenceExampleTable.referenceExampleId.eq(
-					ReferenceExampleTable.INSTANCE.parentReferenceExampleId)
-			);
-
-		Function<FromStep, JoinStep> selfJoinFunction3 =
-			fromStep -> fromStep.from(
 				aliasReferenceExampleTable
 			).innerJoinON(
 				ReferenceExampleTable.INSTANCE,
 				ReferenceExampleTable.INSTANCE.parentReferenceExampleId.eq(
 					aliasReferenceExampleTable.referenceExampleId)
-			);
-
-		Function<FromStep, JoinStep> selfJoinFunction4 =
-			fromStep -> fromStep.from(
-				ReferenceExampleTable.INSTANCE
-			).innerJoinON(
-				aliasReferenceExampleTable,
-				aliasReferenceExampleTable.parentReferenceExampleId.eq(
-					ReferenceExampleTable.INSTANCE.referenceExampleId)
 			);
 
 		TableReferenceDefinition<ReferenceExampleTable>
@@ -225,10 +207,7 @@ public class TableReferenceInfoFactoryTest {
 							childTableReferenceInfoBuilder) {
 
 						childTableReferenceInfoBuilder.referenceInnerJoin(
-							selfJoinFunction1
-						).referenceInnerJoin(
-							selfJoinFunction2
-						);
+							selfJoinFunction1);
 					}
 
 					@Override
@@ -239,9 +218,7 @@ public class TableReferenceInfoFactoryTest {
 						parentTableReferenceInfoBuilder.referenceInnerJoin(
 							parentJoinFunction
 						).referenceInnerJoin(
-							selfJoinFunction3
-						).referenceInnerJoin(
-							selfJoinFunction4
+							selfJoinFunction2
 						);
 					}
 
@@ -269,7 +246,7 @@ public class TableReferenceInfoFactoryTest {
 			childTableJoinHoldersMap.get(ReferenceExampleTable.INSTANCE);
 
 		Assert.assertEquals(
-			childTableJoinHolders.toString(), 2, childTableJoinHolders.size());
+			childTableJoinHolders.toString(), 1, childTableJoinHolders.size());
 
 		TableJoinHolder childJoinHolder = childTableJoinHolders.get(0);
 
@@ -281,18 +258,6 @@ public class TableReferenceInfoFactoryTest {
 
 		Assert.assertSame(
 			ReferenceExampleTable.INSTANCE.referenceExampleId,
-			childJoinHolder.getChildPKColumn());
-
-		childJoinHolder = childTableJoinHolders.get(1);
-
-		Assert.assertSame(selfJoinFunction2, childJoinHolder.getJoinFunction());
-
-		Assert.assertSame(
-			ReferenceExampleTable.INSTANCE.referenceExampleId,
-			childJoinHolder.getParentPKColumn());
-
-		Assert.assertSame(
-			aliasReferenceExampleTable.referenceExampleId,
 			childJoinHolder.getChildPKColumn());
 
 		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
@@ -326,12 +291,12 @@ public class TableReferenceInfoFactoryTest {
 			ReferenceExampleTable.INSTANCE);
 
 		Assert.assertEquals(
-			parentTableJoinHolders.toString(), 2,
+			parentTableJoinHolders.toString(), 1,
 			parentTableJoinHolders.size());
 
 		childJoinHolder = parentTableJoinHolders.get(0);
 
-		Assert.assertSame(selfJoinFunction3, childJoinHolder.getJoinFunction());
+		Assert.assertSame(selfJoinFunction2, childJoinHolder.getJoinFunction());
 
 		Assert.assertSame(
 			aliasReferenceExampleTable.referenceExampleId,
@@ -340,19 +305,6 @@ public class TableReferenceInfoFactoryTest {
 		Assert.assertSame(
 			ReferenceExampleTable.INSTANCE.referenceExampleId,
 			childJoinHolder.getChildPKColumn());
-
-		parentJoinHolder = parentTableJoinHolders.get(1);
-
-		Assert.assertSame(
-			selfJoinFunction4, parentJoinHolder.getJoinFunction());
-
-		Assert.assertSame(
-			ReferenceExampleTable.INSTANCE.referenceExampleId,
-			parentJoinHolder.getParentPKColumn());
-
-		Assert.assertSame(
-			aliasReferenceExampleTable.referenceExampleId,
-			parentJoinHolder.getChildPKColumn());
 
 		Assert.assertEquals(
 			ReferenceExampleTable.CLASS_NAME_ID,
@@ -460,7 +412,7 @@ public class TableReferenceInfoFactoryTest {
 						childTableReferenceInfoBuilder.referenceInnerJoin(
 							fromStep -> fromStep.from(
 								MainExampleTable.INSTANCE
-							).leftJoinOn(
+							).innerJoinON(
 								ReferenceExampleTable.INSTANCE,
 								ReferenceExampleTable.INSTANCE.mainExampleId.eq(
 									MainExampleTable.INSTANCE.mainExampleId)
@@ -471,9 +423,9 @@ public class TableReferenceInfoFactoryTest {
 					catch (IllegalArgumentException illegalArgumentException) {
 						Assert.assertEquals(
 							StringBundler.concat(
-								"Invalid join type \"left\" for join step ",
-								"\"... from MainExample left join ",
-								"ReferenceExample on ",
+								"First join must be on table \"MainExample\" ",
+								"for join step \"... from MainExample inner ",
+								"join ReferenceExample on ",
 								"ReferenceExample.mainExampleId = ",
 								"MainExample.mainExampleId\""),
 							illegalArgumentException.getMessage());
@@ -482,9 +434,32 @@ public class TableReferenceInfoFactoryTest {
 					try {
 						childTableReferenceInfoBuilder.referenceInnerJoin(
 							fromStep -> fromStep.from(
-								MainExampleTable.INSTANCE
+								ReferenceExampleTable.INSTANCE
+							).leftJoinOn(
+								MainExampleTable.INSTANCE,
+								ReferenceExampleTable.INSTANCE.mainExampleId.eq(
+									MainExampleTable.INSTANCE.mainExampleId)
+							));
+
+						Assert.fail();
+					}
+					catch (IllegalArgumentException illegalArgumentException) {
+						Assert.assertEquals(
+							StringBundler.concat(
+								"Invalid join type \"left\" for join step ",
+								"\"... from ReferenceExample left join ",
+								"MainExample on ",
+								"ReferenceExample.mainExampleId = ",
+								"MainExample.mainExampleId\""),
+							illegalArgumentException.getMessage());
+					}
+
+					try {
+						childTableReferenceInfoBuilder.referenceInnerJoin(
+							fromStep -> fromStep.from(
+								ReferenceExampleTable.INSTANCE
 							).innerJoinON(
-								ReferenceExampleTable.INSTANCE,
+								MainExampleTable.INSTANCE,
 								ReferenceExampleTable.INSTANCE.mainExampleId.
 									neq(
 										MainExampleTable.INSTANCE.mainExampleId
@@ -502,8 +477,8 @@ public class TableReferenceInfoFactoryTest {
 						Assert.assertEquals(
 							StringBundler.concat(
 								"Invalid predicate operand \"!=\" for join ",
-								"step \"... from MainExample inner join ",
-								"ReferenceExample on ",
+								"step \"... from ReferenceExample inner join ",
+								"MainExample on ",
 								"ReferenceExample.mainExampleId != ",
 								"MainExample.mainExampleId and ",
 								"MainExample.mainExampleId >= ",
@@ -514,10 +489,9 @@ public class TableReferenceInfoFactoryTest {
 					try {
 						childTableReferenceInfoBuilder.referenceInnerJoin(
 							fromStep -> fromStep.from(
-								MainExampleTable.INSTANCE
+								MainExampleTable.INSTANCE.as("aliasMainExample")
 							).innerJoinON(
-								MainExampleTable.INSTANCE.as(
-									"aliasMainExample"),
+								MainExampleTable.INSTANCE,
 								ReferenceExampleTable.INSTANCE.mainExampleId.eq(
 									MainExampleTable.INSTANCE.mainExampleId)
 							));
@@ -530,8 +504,8 @@ public class TableReferenceInfoFactoryTest {
 								"Predicate column tables [MainExample, ",
 								"ReferenceExample] do not match join tables ",
 								"[MainExample, MainExample aliasMainExample] ",
-								"for join step \"... from MainExample inner ",
-								"join MainExample aliasMainExample on ",
+								"for join step \"... from MainExample ",
+								"aliasMainExample inner join MainExample on ",
 								"ReferenceExample.mainExampleId = ",
 								"MainExample.mainExampleId\""),
 							illegalArgumentException.getMessage());
@@ -555,27 +529,6 @@ public class TableReferenceInfoFactoryTest {
 								"from InvalidTable inner join MainExample on ",
 								"MainExample.mainExampleId = ",
 								"InvalidTable.mainExampleId\""),
-							illegalArgumentException.getMessage());
-					}
-
-					try {
-						childTableReferenceInfoBuilder.referenceInnerJoin(
-							fromStep -> fromStep.from(
-								MainExampleTable.INSTANCE
-							).innerJoinON(
-								ReferenceExampleTable.INSTANCE,
-								ReferenceExampleTable.INSTANCE.mainExampleId.eq(
-									MainExampleTable.INSTANCE.mainExampleId)
-							));
-					}
-					catch (IllegalArgumentException illegalArgumentException) {
-						Assert.assertEquals(
-							StringBundler.concat(
-								"From table should be a different table than ",
-								"\"MainExample\" for join step \"... from ",
-								"MainExample inner join ReferenceExample on ",
-								"ReferenceExample.mainExampleId = ",
-								"MainExample.mainExampleId\""),
 							illegalArgumentException.getMessage());
 					}
 

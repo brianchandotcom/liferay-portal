@@ -142,22 +142,8 @@ public class TableJoinHolderFactory {
 					joinStep, "\""));
 		}
 
-		Column<T, Long> joinPKColumn =
-			joinStepASTNodeListener._aliasPrimaryKeyColumn;
-
-		if (joinPKColumn == null) {
-			joinPKColumn = primaryKeyColumn;
-		}
-
-		if (fromPKColumn == joinPKColumn) {
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"From table should be a different table than \"",
-					tableReferenceDefinition.getTable(), "\" for join step \"",
-					joinStep, "\""));
-		}
-
-		return new TableJoinHolder(fromPKColumn, joinPKColumn, joinFunction);
+		return new TableJoinHolder(
+			fromPKColumn, primaryKeyColumn, joinFunction);
 	}
 
 	private static final Consumer<String> _emptyStringConsumer = string -> {
@@ -229,13 +215,6 @@ public class TableJoinHolderFactory {
 					_invalidJoin = join;
 				}
 
-				if (table.equals(_table) &&
-					!Objects.equals(table.getName(), _table.getName())) {
-
-					_aliasPrimaryKeyColumn = TableUtil.getPrimaryKeyColumn(
-						(T)table);
-				}
-
 				_tables.add(table);
 			}
 		}
@@ -244,7 +223,6 @@ public class TableJoinHolderFactory {
 			_table = table;
 		}
 
-		private Column<T, Long> _aliasPrimaryKeyColumn;
 		private Set<Table<?>> _columnTables = Collections.newSetFromMap(
 			new IdentityHashMap<>());
 		private Table<?> _fromTable;

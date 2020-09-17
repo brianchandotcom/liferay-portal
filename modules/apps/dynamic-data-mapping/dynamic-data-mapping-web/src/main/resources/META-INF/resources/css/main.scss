@@ -218,3 +218,7 @@ textarea.script {
 		width: 100%;
 	}
 }
+
+.has-control-menu > .basecelleditor {
+	z-index: 9999 !important;
+}

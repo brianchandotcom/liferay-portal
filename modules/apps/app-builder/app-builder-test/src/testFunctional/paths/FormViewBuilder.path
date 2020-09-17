@@ -292,7 +292,7 @@
 <!--DELETE_OBJECT-->
 <tr>
 	<td>DELETE_OBJECT_LABEL_CANCEL_BUTTON</td>
-	<td>//div[@class='btn-group-item']//*[contains(text(),'Cancel')]</td>
+	<td>//div[contains(@class,'modal d-block show')]//div[@class='btn-group-item']//*[contains(text(),'Cancel')]</td>
 	<td></td>
 </tr>
 

@@ -605,11 +605,14 @@ public class PoshiRunnerGetterUtil {
 					ClassPath classPath = ClassPath.from(
 						PropsUtil.class.getClassLoader());
 
-					for (ClassPath.ClassInfo classInfo :
-							classPath.getTopLevelClasses(
-								"com.liferay.poshi.runner.util")) {
+					for (String packageName :
+							PoshiRunnerValidation.UTIL_PACKAGE_NAMES) {
 
-						put(classInfo.getSimpleName(), classInfo.getName());
+						for (ClassPath.ClassInfo classInfo :
+								classPath.getTopLevelClasses(packageName)) {
+
+							put(classInfo.getSimpleName(), classInfo.getName());
+						}
 					}
 				}
 				catch (IOException ioException) {

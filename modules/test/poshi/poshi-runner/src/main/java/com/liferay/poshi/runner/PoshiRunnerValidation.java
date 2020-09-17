@@ -1014,14 +1014,32 @@ public class PoshiRunnerValidation {
 
 		Class<?> clazz = null;
 
+		String fullClassName = null;
+
 		if (className.matches("[\\w]*")) {
-			className = "com.liferay.poshi.runner.util." + className;
+			for (String packageName : UTIL_PACKAGE_NAMES) {
+				try {
+					clazz = Class.forName(packageName + "." + className);
+
+					fullClassName = packageName + "." + className;
+
+					break;
+				}
+				catch (Exception exception) {
+				}
+			}
+		}
+		else {
+			try {
+				clazz = Class.forName(className);
+
+				fullClassName = className;
+			}
+			catch (Exception exception) {
+			}
 		}
 
-		try {
-			clazz = Class.forName(className);
-		}
-		catch (Exception exception) {
+		if (fullClassName == null) {
 			_exceptions.add(
 				new ValidationException(
 					element, "Unable to find class ", className, "\n",
@@ -1031,7 +1049,7 @@ public class PoshiRunnerValidation {
 		}
 
 		try {
-			validateUtilityClassName(element, filePath, className);
+			validateUtilityClassName(element, filePath, fullClassName);
 		}
 		catch (Exception exception) {
 			_exceptions.add(exception);
@@ -1056,7 +1074,7 @@ public class PoshiRunnerValidation {
 		if (possibleMethods.isEmpty()) {
 			_exceptions.add(
 				new ValidationException(
-					element, "Unable to find method ", className, "#",
+					element, "Unable to find method ", fullClassName, "#",
 					methodName, "\n", filePath));
 		}
 	}
@@ -1745,6 +1763,10 @@ public class PoshiRunnerValidation {
 			}
 		}
 	}
+
+	protected static final String[] UTIL_PACKAGE_NAMES = {
+		"com.liferay.poshi.core.util", "com.liferay.poshi.runner.util"
+	};
 
 	private static void _throwExceptions() throws Exception {
 		StringBuilder sb = new StringBuilder();

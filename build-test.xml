@@ -6527,6 +6527,14 @@ go</echo>
 		<if>
 			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />
 			<then>
+				<ant dir="portal-kernel" target="clean" />
+
+				<ant dir="portal-kernel" target="compile" />
+
+				<ant dir="portal-kernel" target="deploy" />
+
+				<ant dir="portal-kernel" target="install-portal-snapshot" />
+
 				<mirrors-get
 					dest="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.api.jar"
 					src="${baseline.jar.url}/com/liferay/com.liferay.analytics.demo.data.creator.api/${analytics.cloud.faro.data.creator.api}/com.liferay.analytics.demo.data.creator.api-${analytics.cloud.faro.data.creator.api}.jar"

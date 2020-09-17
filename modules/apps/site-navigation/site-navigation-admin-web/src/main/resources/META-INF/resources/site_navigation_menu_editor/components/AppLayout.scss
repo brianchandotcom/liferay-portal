@@ -1,0 +1,62 @@
+@import 'atlas-variables';
+
+$controlMenuDesktopHeight: 56px;
+$controlMenuHeight: 48px;
+$toolbarHeight: 56px;
+$sidebarWidth: 320px;
+
+#wrapper .portlet-layout.row,
+#wrapper .portlet-layout.row .portlet {
+	margin: 0;
+}
+
+.site_navigation_menu_editor_AppLayout {
+	&-content,
+	&-sidebar {
+		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+		overflow-x: hidden;
+		overflow-y: auto;
+
+		@include media-breakpoint-up(sm) {
+			height: calc(100vh - #{$controlMenuDesktopHeight + $toolbarHeight});
+		}
+	}
+
+	&-content {
+		padding-right: 0;
+		transition: padding-right ease 0.5s;
+		will-change: padding-right;
+
+		@include media-breakpoint-up(md) {
+			&--with-sidebar {
+				padding-right: $sidebarWidth;
+			}
+		}
+	}
+
+	&-sidebar {
+		background: $white;
+		border-left: 1px solid $secondary-l3;
+		box-sizing: border-box;
+		position: fixed;
+		right: 0;
+		top: $controlMenuHeight + $toolbarHeight;
+		transform: translateX($sidebarWidth);
+		transition: transform ease 0.5s, box-shadow ease 0.5s;
+		width: $sidebarWidth;
+		will-change: transform, box-shadow;
+
+		&--visible {
+			box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+			transform: translateX(0);
+
+			@include media-breakpoint-up(md) {
+				box-shadow: none;
+			}
+		}
+
+		@include media-breakpoint-up(sm) {
+			top: $controlMenuDesktopHeight + $toolbarHeight;
+		}
+	}
+}

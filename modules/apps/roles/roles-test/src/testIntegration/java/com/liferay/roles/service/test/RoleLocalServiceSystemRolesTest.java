@@ -16,15 +16,19 @@ package com.liferay.roles.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -38,6 +42,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -112,14 +117,65 @@ public class RoleLocalServiceSystemRolesTest {
 		}
 	}
 
+	@Test
+	public void testCheckSystemnRole() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+		long groupId = TestPropsValues.getGroupId();
+		_user = UserTestUtil.addUser();
+
+		Role powerUserRole = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.POWER_USER);
+
+		Role userRole = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
+		boolean hasViewPermission = permissionChecker.hasPermission(
+			groupId, Role.class.getName(), powerUserRole.getRoleId(),
+			ActionKeys.VIEW);
+
+		try {
+			_resourcePermissionLocalService.removeResourcePermission(
+				companyId, Role.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(powerUserRole.getRoleId()), userRole.getRoleId(),
+				ActionKeys.VIEW);
+
+			_roleLocalService.checkSystemRoles(companyId);
+
+			boolean testViewPermission = permissionChecker.hasPermission(
+				groupId, Role.class.getName(), powerUserRole.getRoleId(),
+				ActionKeys.VIEW);
+
+			Assert.assertFalse(testViewPermission);
+		}
+		finally {
+			if (hasViewPermission) {
+				_resourcePermissionLocalService.setResourcePermissions(
+					companyId, Role.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(powerUserRole.getRoleId()),
+					userRole.getRoleId(), new String[] {ActionKeys.VIEW});
+			}
+		}
+	}
+
 	@Inject
 	private AuditEventService _auditEventService;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private GroupService _groupService;
 
 	@DeleteAfterTestRun
 	private Organization _organization;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

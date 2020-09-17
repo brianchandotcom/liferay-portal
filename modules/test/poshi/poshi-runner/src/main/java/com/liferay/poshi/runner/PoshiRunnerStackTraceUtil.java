@@ -14,7 +14,7 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.runner.util.Validator;
+import com.liferay.poshi.core.util.Validator;
 
 import java.util.Stack;
 

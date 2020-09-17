@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.util.StringUtil;
+
 import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.StringReader;

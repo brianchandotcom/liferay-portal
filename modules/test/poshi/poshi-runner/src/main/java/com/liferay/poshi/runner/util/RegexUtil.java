@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.util.GetterUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

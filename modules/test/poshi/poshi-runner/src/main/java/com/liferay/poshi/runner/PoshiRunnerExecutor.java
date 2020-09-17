@@ -14,15 +14,15 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.core.selenium.LiferaySelenium;
+import com.liferay.poshi.core.util.GetterUtil;
+import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
-import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
-import com.liferay.poshi.runner.util.GetterUtil;
-import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.TableUtil;
-import com.liferay.poshi.runner.util.Validator;
 import com.liferay.poshi.runner.var.type.BaseTable;
 import com.liferay.poshi.runner.var.type.TableFactory;
 

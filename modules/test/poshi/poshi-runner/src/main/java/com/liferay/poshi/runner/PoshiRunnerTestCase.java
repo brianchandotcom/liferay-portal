@@ -14,9 +14,9 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.core.util.PropsUtil;
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
-import com.liferay.poshi.runner.util.PropsUtil;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.io.File;
 

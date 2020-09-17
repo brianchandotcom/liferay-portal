@@ -14,11 +14,11 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.core.util.PropsUtil;
+import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.elements.PoshiElement;
 import com.liferay.poshi.runner.util.OSDetector;
-import com.liferay.poshi.runner.util.PropsUtil;
-import com.liferay.poshi.runner.util.StringUtil;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.lang.reflect.Method;
 

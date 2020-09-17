@@ -14,6 +14,10 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.util.GetterUtil;
+import com.liferay.poshi.core.util.StringPool;
+import com.liferay.poshi.core.util.StringUtil;
+
 import java.net.InetAddress;
 
 import java.util.ArrayList;

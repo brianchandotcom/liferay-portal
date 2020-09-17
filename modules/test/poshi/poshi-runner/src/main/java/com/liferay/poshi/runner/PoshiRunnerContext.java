@@ -18,17 +18,17 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
+import com.liferay.poshi.core.selenium.LiferaySelenium;
+import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.pql.PQLEntity;
 import com.liferay.poshi.runner.pql.PQLEntityFactory;
 import com.liferay.poshi.runner.prose.PoshiProseMatcher;
 import com.liferay.poshi.runner.script.PoshiScriptParserException;
-import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.MathUtil;
 import com.liferay.poshi.runner.util.OSDetector;
-import com.liferay.poshi.runner.util.PropsValues;
-import com.liferay.poshi.runner.util.StringUtil;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.io.File;
 import java.io.FileWriter;

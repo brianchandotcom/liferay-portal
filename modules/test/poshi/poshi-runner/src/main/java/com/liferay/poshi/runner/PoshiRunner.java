@@ -14,12 +14,12 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.FileUtil;
-import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.ProxyUtil;
 
 import java.io.File;

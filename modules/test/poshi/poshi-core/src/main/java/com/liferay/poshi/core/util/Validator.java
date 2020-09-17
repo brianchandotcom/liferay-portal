@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner.util;
+package com.liferay.poshi.core.util;
 
 /**
  * Provides utility methods related to data validation and format checking.

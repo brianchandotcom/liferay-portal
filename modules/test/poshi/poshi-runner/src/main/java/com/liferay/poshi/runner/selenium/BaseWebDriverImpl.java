@@ -16,22 +16,23 @@ package com.liferay.poshi.runner.selenium;
 
 import com.deque.axe.AXE;
 
+import com.liferay.poshi.core.selenium.LiferaySelenium;
+import com.liferay.poshi.core.util.CharPool;
+import com.liferay.poshi.core.util.GetterUtil;
+import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.StringPool;
+import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.exception.ElementNotFoundPoshiRunnerException;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.ArchiveUtil;
-import com.liferay.poshi.runner.util.CharPool;
 import com.liferay.poshi.runner.util.EmailCommands;
 import com.liferay.poshi.runner.util.FileUtil;
-import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.OSDetector;
-import com.liferay.poshi.runner.util.PropsValues;
-import com.liferay.poshi.runner.util.StringPool;
-import com.liferay.poshi.runner.util.StringUtil;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;

@@ -14,7 +14,7 @@
 
 package com.liferay.poshi.runner.pql;
 
-import com.liferay.poshi.runner.util.ListUtil;
+import com.liferay.poshi.core.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.List;

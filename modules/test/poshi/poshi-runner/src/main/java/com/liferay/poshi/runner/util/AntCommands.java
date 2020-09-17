@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 
 import java.io.BufferedReader;

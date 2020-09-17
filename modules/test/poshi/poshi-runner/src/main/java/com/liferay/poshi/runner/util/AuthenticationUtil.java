@@ -14,6 +14,9 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.util.CharPool;
+import com.liferay.poshi.core.util.StringUtil;
+
 import java.math.BigInteger;
 
 import java.security.InvalidKeyException;

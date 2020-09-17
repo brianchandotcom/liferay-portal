@@ -14,8 +14,8 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.runner.elements.PoshiElement;
-import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.List;
 

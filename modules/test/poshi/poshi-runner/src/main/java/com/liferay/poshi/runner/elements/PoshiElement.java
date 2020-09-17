@@ -14,14 +14,14 @@
 
 package com.liferay.poshi.runner.elements;
 
+import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.script.PoshiScriptParserException;
 import com.liferay.poshi.runner.script.UnbalancedCodeException;
 import com.liferay.poshi.runner.util.Dom4JUtil;
-import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RegexUtil;
-import com.liferay.poshi.runner.util.StringUtil;
 
 import java.net.URL;
 

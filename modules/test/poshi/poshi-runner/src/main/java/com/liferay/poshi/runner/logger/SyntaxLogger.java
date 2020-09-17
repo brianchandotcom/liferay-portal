@@ -14,11 +14,11 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.util.HashMap;
 import java.util.List;

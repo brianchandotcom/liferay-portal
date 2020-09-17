@@ -14,10 +14,10 @@
 
 package com.liferay.poshi.runner.script;
 
+import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.elements.PoshiElement;
 import com.liferay.poshi.runner.elements.PoshiNode;
-import com.liferay.poshi.runner.util.StringUtil;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.net.URL;
 

@@ -14,8 +14,8 @@
 
 package com.liferay.poshi.runner.logger;
 
-import com.liferay.poshi.runner.util.StringUtil;
-import com.liferay.poshi.runner.util.Validator;
+import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.poshi.core.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner.selenium;
+package com.liferay.poshi.core.selenium;
 
 /**
  * @author Brian Wing Shun Chan

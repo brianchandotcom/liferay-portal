@@ -17,7 +17,7 @@ package com.liferay.poshi.runner.util.oauth;
 import com.github.scribejava.core.builder.api.DefaultApi10a;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 
-import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.poshi.core.util.StringUtil;
 
 /**
  * @author Leslie Wong

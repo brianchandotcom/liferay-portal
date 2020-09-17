@@ -14,8 +14,8 @@
 
 package com.liferay.poshi.runner.elements;
 
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.script.PoshiScriptParserException;
-import com.liferay.poshi.runner.util.Validator;
 
 import org.dom4j.Attribute;
 import org.dom4j.tree.DefaultAttribute;

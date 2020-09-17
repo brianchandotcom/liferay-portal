@@ -14,6 +14,9 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.poshi.core.util.Validator;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;

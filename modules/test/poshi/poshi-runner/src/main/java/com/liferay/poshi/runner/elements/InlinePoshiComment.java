@@ -14,8 +14,8 @@
 
 package com.liferay.poshi.runner.elements;
 
+import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.runner.script.PoshiScriptParserException;
-import com.liferay.poshi.runner.util.StringUtil;
 
 import org.dom4j.Comment;
 

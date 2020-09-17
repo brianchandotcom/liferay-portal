@@ -14,9 +14,9 @@
 
 package com.liferay.poshi.runner.elements;
 
+import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.runner.script.PoshiScriptParserException;
 import com.liferay.poshi.runner.util.RegexUtil;
-import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.List;
 import java.util.regex.Pattern;

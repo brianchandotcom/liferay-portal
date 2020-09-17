@@ -16,6 +16,11 @@ package com.liferay.poshi.runner;
 
 import com.google.common.reflect.ClassPath;
 
+import com.liferay.poshi.core.util.GetterUtil;
+import com.liferay.poshi.core.util.PropsUtil;
+import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.elements.PoshiElement;
 import com.liferay.poshi.runner.elements.PoshiNode;
 import com.liferay.poshi.runner.elements.PoshiNodeFactory;
@@ -24,12 +29,7 @@ import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.Dom4JUtil;
 import com.liferay.poshi.runner.util.ExternalMethod;
 import com.liferay.poshi.runner.util.FileUtil;
-import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.OSDetector;
-import com.liferay.poshi.runner.util.PropsUtil;
-import com.liferay.poshi.runner.util.PropsValues;
-import com.liferay.poshi.runner.util.StringUtil;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

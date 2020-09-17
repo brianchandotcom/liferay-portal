@@ -14,7 +14,7 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.poshi.core.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;

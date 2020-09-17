@@ -14,10 +14,10 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.util.List;
 

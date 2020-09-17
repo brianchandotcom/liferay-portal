@@ -29,7 +29,6 @@ import Topper from '../Topper';
 import Row from './Row';
 
 const RowWithControls = React.forwardRef(({children, item}, ref) => {
-	const rowConfig = item.config;
 	const [resizing, setResizing] = useState(false);
 	const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
 	const [customRow, setCustomRow] = useState(false);
@@ -45,7 +44,7 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 	);
 
 	const rowResponsiveConfig = getResponsiveConfig(
-		rowConfig,
+		item.config,
 		selectedViewportSize
 	);
 

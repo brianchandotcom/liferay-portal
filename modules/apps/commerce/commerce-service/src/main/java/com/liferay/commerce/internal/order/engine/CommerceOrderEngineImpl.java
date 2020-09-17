@@ -598,7 +598,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			(_commerceShippingMethodLocalService.
 				getCommerceShippingMethodsCount(
 					commerceOrder.getGroupId(), true) > 0) &&
-			_commerceShippingHelper.isShippable(commerceOrder)) {
+			_commerceShippingHelper.isShippable(commerceOrder) &&
+			!_commerceShippingHelper.isFreeShipping(commerceOrder)) {
 
 			throw new CommerceOrderShippingMethodException();
 		}

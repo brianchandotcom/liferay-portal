@@ -223,16 +223,20 @@
 .questions-container {
 	word-break: break-word;
 
-	.cke_contents {
-		border: 1px solid #e7e7ed;
-	}
-
 	blockquote {
 		border-color: #ccc;
 		border-style: solid;
 		border-width: 0 0 0 5px;
 		padding-left: 20px;
 		padding-right: 8px;
+	}
+
+	.cke_contents {
+		border: 1px solid #e7e7ed;
+	}
+
+	.cke_readonly img {
+		max-width: 100%;
 	}
 
 	.nav-item a {

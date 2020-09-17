@@ -84,6 +84,14 @@ public class TableJoinHolderFactory {
 					"\", ensure table alias is used for self joins"));
 		}
 
+		if (joinStepASTNodeListener._invalidJoinOrder) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"First join must be on table \"",
+					tableReferenceDefinition.getTable(), "\" for join step \"",
+					joinStep, "\""));
+		}
+
 		if (joinStepASTNodeListener._invalidJoinType != null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
@@ -211,6 +219,10 @@ public class TableJoinHolderFactory {
 
 				Table<?> table = join.getTable();
 
+				if ((_tables.size() == 1) && (table != _table)) {
+					_invalidJoinOrder = true;
+				}
+
 				if (table.equals(_fromTable) &&
 					Objects.equals(_fromTable.getName(), table.getName())) {
 
@@ -238,6 +250,7 @@ public class TableJoinHolderFactory {
 		private Table<?> _fromTable;
 		private boolean _hasRequiredTable;
 		private Join _invalidJoin;
+		private boolean _invalidJoinOrder;
 		private JoinType _invalidJoinType;
 		private Operand _invalidOperand;
 		private final T _table;

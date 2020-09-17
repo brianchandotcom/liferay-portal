@@ -75,11 +75,11 @@ public class PriceTag extends ComponentRendererTag {
 
 			if (cpInstanceId > 0) {
 				priceModel = _productHelper.getPriceModel(
-					cpInstanceId, quantity, commerceContext,
+					cpInstanceId, quantity, commerceContext, StringPool.BLANK,
 					themeDisplay.getLocale());
 			}
 			else {
-				priceModel = _productHelper.getMinPriceModel(
+				priceModel = _productHelper.getMinPrice(
 					cpDefinitionId, commerceContext, themeDisplay.getLocale());
 			}
 

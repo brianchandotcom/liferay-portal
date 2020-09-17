@@ -344,9 +344,9 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(fieldValue)) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
-				value1 = "${fieldFilter}: ${fieldValue}");
+			AssertElementPresent(
+				key_text = "${fieldFilter}: ${fieldValue}",
+				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE");
 		}
 
 		PortletEntry.save();

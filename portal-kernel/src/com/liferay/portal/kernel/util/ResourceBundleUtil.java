@@ -139,8 +139,13 @@ public class ResourceBundleUtil {
 			getBundle(locale, clazz), PortalUtil.getResourceBundle(locale));
 	}
 
-	public static ResourceBundleLoader getResourceBundleLoader(
-		final String baseName, final ClassLoader classLoader) {
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static com.liferay.portal.kernel.util.ResourceBundleLoader
+		getResourceBundleLoader(
+			final String baseName, final ClassLoader classLoader) {
 
 		return new ClassResourceBundleLoader(baseName, classLoader);
 	}

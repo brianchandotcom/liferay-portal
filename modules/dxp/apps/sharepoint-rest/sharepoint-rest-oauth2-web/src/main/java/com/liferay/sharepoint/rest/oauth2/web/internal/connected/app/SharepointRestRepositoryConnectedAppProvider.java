@@ -19,7 +19,7 @@ import com.liferay.connected.app.ConnectedAppProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.sharepoint.rest.oauth2.service.SharepointOAuth2TokenEntryLocalService;
 
 import java.util.Locale;

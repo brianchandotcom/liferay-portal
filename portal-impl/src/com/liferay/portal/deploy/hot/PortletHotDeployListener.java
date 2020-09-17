@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.portlet.CustomUserAttributes;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
+import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
@@ -42,8 +44,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -125,7 +125,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleUtil.getResourceBundleLoader(
+			new ClassResourceBundleLoader(
 				portlet.getResourceBundle(), classLoader);
 
 		_resourceBundleLoaderServiceRegistrations.put(

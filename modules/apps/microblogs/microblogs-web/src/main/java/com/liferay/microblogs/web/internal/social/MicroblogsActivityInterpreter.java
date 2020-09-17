@@ -21,12 +21,12 @@ import com.liferay.microblogs.service.MicroblogsEntryLocalService;
 import com.liferay.microblogs.web.internal.util.MicroblogsWebUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
@@ -53,6 +53,11 @@ public class MicroblogsActivityInterpreter
 	}
 
 	@Override
+	protected ResourceBundleLoader acquireResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
+	@Override
 	protected String getBody(
 		SocialActivity activity, ServiceContext serviceContext) {
 
@@ -64,11 +69,6 @@ public class MicroblogsActivityInterpreter
 		SocialActivity activity, ServiceContext serviceContext) {
 
 		return StringPool.BLANK;
-	}
-
-	@Override
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return _resourceBundleLoader;
 	}
 
 	@Override

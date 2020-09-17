@@ -17,11 +17,11 @@ package com.liferay.journal.web.internal.social;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.web.internal.util.JournalResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -47,6 +47,11 @@ public class JournalFolderActivityInterpreter
 	}
 
 	@Override
+	protected ResourceBundleLoader acquireResourceBundleLoader() {
+		return JournalResourceBundleLoader.INSTANCE;
+	}
+
+	@Override
 	protected String getLink(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -62,11 +67,6 @@ public class JournalFolderActivityInterpreter
 		}
 
 		return getViewEntryURL(className, classPK, serviceContext);
-	}
-
-	@Override
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return JournalResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

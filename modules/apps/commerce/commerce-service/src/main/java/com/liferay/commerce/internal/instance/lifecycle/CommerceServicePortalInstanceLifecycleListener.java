@@ -27,10 +27,11 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageResources;
@@ -99,9 +100,9 @@ public class CommerceServicePortalInstanceLifecycleListener
 
 		ResourceBundleLoader resourceBundleLoader =
 			new AggregateResourceBundleLoader(
-				ResourceBundleUtil.getResourceBundleLoader(
+				new ClassResourceBundleLoader(
 					"content.Language", clazz.getClassLoader()),
-				LanguageResources.RESOURCE_BUNDLE_LOADER);
+				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER);
 
 		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
 			String sapEntryName = sapEntryObjectArray[0];

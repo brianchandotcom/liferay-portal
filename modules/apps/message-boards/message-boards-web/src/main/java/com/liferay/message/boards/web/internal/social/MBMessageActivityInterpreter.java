@@ -21,10 +21,10 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -50,6 +50,11 @@ public class MBMessageActivityInterpreter
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
+	}
+
+	@Override
+	protected ResourceBundleLoader acquireResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	@Override
@@ -86,11 +91,6 @@ public class MBMessageActivityInterpreter
 
 		return "/message_boards/find_message?messageId=" +
 			activity.getClassPK();
-	}
-
-	@Override
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return _resourceBundleLoader;
 	}
 
 	@Override

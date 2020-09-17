@@ -23,10 +23,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
@@ -75,10 +76,10 @@ public class CalendarSAPEntryActivator {
 
 		ResourceBundleLoader resourceBundleLoader =
 			new AggregateResourceBundleLoader(
-				ResourceBundleUtil.getResourceBundleLoader(
+				new ClassResourceBundleLoader(
 					"content.Language",
 					CalendarSAPEntryActivator.class.getClassLoader()),
-				LanguageResources.RESOURCE_BUNDLE_LOADER);
+				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER);
 
 		Map<Locale, String> titleMap = ResourceBundleUtil.getLocalizationMap(
 			resourceBundleLoader,

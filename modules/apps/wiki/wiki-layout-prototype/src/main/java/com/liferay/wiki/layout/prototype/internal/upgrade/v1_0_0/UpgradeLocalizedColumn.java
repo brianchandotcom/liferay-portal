@@ -29,12 +29,12 @@ public class UpgradeLocalizedColumn extends BaseUpgradeLocalizedColumn {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		upgradeLocalizedColumn(
-			LanguageResources.RESOURCE_BUNDLE_LOADER,
+			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
 			LayoutPrototypeTable.class, "name", _NAME,
 			"layout-prototype-wiki-title", "Name", companyIds);
 
 		upgradeLocalizedColumn(
-			LanguageResources.RESOURCE_BUNDLE_LOADER,
+			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
 			LayoutPrototypeTable.class, "description", _DESCRIPTION,
 			"layout-prototype-wiki-description", "Description", companyIds);
 	}

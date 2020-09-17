@@ -15,8 +15,8 @@
 package com.liferay.oauth2.provider.scope.internal.spi.scope.descriptor;
 
 import com.liferay.oauth2.provider.scope.spi.scope.descriptor.ScopeDescriptor;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;

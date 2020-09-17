@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -54,7 +54,7 @@ public abstract class BaseJSPAssetRenderer<T>
 			return false;
 		}
 
-		ResourceBundleLoader resourceBundleLoader =
+		ResourceBundleLoader originalResourceBundleLoader =
 			(ResourceBundleLoader)httpServletRequest.getAttribute(
 				WebKeys.RESOURCE_BUNDLE_LOADER);
 
@@ -63,9 +63,21 @@ public abstract class BaseJSPAssetRenderer<T>
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(jspPath);
 
+		ResourceBundleLoader resourceBundleLoader =
+			new AggregateResourceBundleLoader(
+				new ClassResourceBundleLoader("content.Language", getClass()),
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+
+		if (_servletContext != null) {
+			resourceBundleLoader =
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByServletContextName(
+						_servletContext.getServletContextName());
+		}
+
 		try {
 			httpServletRequest.setAttribute(
-				WebKeys.RESOURCE_BUNDLE_LOADER, getResourceBundleLoader());
+				WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 
@@ -79,7 +91,7 @@ public abstract class BaseJSPAssetRenderer<T>
 		}
 		finally {
 			httpServletRequest.setAttribute(
-				WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
+				WebKeys.RESOURCE_BUNDLE_LOADER, originalResourceBundleLoader);
 		}
 	}
 
@@ -87,7 +99,7 @@ public abstract class BaseJSPAssetRenderer<T>
 		_servletContext = servletContext;
 	}
 
-	protected ResourceBundleLoader getResourceBundleLoader() {
+	protected ResourceBundleLoader acquireResourceBundleLoader() {
 		if (_servletContext != null) {
 			return ResourceBundleLoaderUtil.
 				getResourceBundleLoaderByServletContextName(
@@ -97,6 +109,20 @@ public abstract class BaseJSPAssetRenderer<T>
 		return new AggregateResourceBundleLoader(
 			new ClassResourceBundleLoader("content.Language", getClass()),
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #acquireResourceBundleLoader}
+	 */
+	@Deprecated
+	protected com.liferay.portal.kernel.util.ResourceBundleLoader
+		getResourceBundleLoader() {
+
+		ResourceBundleLoader resourceBundleLoader =
+			acquireResourceBundleLoader();
+
+		return locale -> resourceBundleLoader.loadResourceBundle(locale);
 	}
 
 	protected ServletContext getServletContext() {

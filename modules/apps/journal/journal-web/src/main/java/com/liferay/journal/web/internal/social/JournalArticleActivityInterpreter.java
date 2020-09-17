@@ -29,13 +29,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -59,6 +59,11 @@ public class JournalArticleActivityInterpreter
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
+	}
+
+	@Override
+	protected ResourceBundleLoader acquireResourceBundleLoader() {
+		return JournalResourceBundleLoader.INSTANCE;
 	}
 
 	@Override
@@ -110,11 +115,6 @@ public class JournalArticleActivityInterpreter
 		catch (NoSuchArticleException noSuchArticleException) {
 			return null;
 		}
-	}
-
-	@Override
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return JournalResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

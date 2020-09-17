@@ -16,8 +16,8 @@ package com.liferay.portal.language.extender.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.ArrayList;
 import java.util.List;

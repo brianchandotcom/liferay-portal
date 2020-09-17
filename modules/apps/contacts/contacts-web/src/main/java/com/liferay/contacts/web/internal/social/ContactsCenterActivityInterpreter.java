@@ -17,9 +17,9 @@ package com.liferay.contacts.web.internal.social;
 import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
@@ -46,15 +46,15 @@ public class ContactsCenterActivityInterpreter
 	}
 
 	@Override
+	protected ResourceBundleLoader acquireResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
+	@Override
 	protected String getLink(
 		SocialActivity activity, ServiceContext serviceContext) {
 
 		return getUserName(activity.getReceiverUserId(), serviceContext);
-	}
-
-	@Override
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return _resourceBundleLoader;
 	}
 
 	@Override

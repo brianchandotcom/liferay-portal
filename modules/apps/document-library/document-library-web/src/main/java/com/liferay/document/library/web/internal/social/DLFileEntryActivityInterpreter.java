@@ -25,10 +25,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
@@ -58,6 +58,11 @@ public class DLFileEntryActivityInterpreter
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
+	}
+
+	@Override
+	protected ResourceBundleLoader acquireResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	@Override
@@ -125,11 +130,6 @@ public class DLFileEntryActivityInterpreter
 
 		return "/document_library/find_file_entry?fileEntryId=" +
 			activity.getClassPK();
-	}
-
-	@Override
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return _resourceBundleLoader;
 	}
 
 	@Override

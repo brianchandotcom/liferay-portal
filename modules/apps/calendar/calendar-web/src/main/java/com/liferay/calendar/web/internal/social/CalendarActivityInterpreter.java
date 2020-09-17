@@ -21,12 +21,12 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.social.CalendarActivityKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -57,6 +57,11 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
+	protected ResourceBundleLoader acquireResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
+	@Override
 	protected String getPath(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -79,11 +84,6 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 
 		return portletURL.toString();
-	}
-
-	@Override
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return _resourceBundleLoader;
 	}
 
 	@Override

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 
 import java.util.Collection;

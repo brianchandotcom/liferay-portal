@@ -16,7 +16,7 @@ package com.liferay.frontend.editor.lang.internal;
 
 import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

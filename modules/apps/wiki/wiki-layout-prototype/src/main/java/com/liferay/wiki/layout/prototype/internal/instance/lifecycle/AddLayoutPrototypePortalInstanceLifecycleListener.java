@@ -25,13 +25,14 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -72,9 +73,9 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 
 		ResourceBundleLoader resourceBundleLoader =
 			new AggregateResourceBundleLoader(
-				ResourceBundleUtil.getResourceBundleLoader(
+				new ClassResourceBundleLoader(
 					"content.Language", getClassLoader()),
-				LanguageResources.RESOURCE_BUNDLE_LOADER);
+				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER);
 
 		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
 			resourceBundleLoader, "layout-prototype-wiki-title");

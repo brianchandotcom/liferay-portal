@@ -21,10 +21,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -149,7 +149,7 @@ public class RegistrationUtil {
 		}
 
 		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleUtil.getResourceBundleLoader(
+			new ClassResourceBundleLoader(
 				resourceBundle, servletContext.getClassLoader());
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();

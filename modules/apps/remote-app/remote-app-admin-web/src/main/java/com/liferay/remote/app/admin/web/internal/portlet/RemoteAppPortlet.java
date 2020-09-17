@@ -17,8 +17,8 @@ package com.liferay.remote.app.admin.web.internal.portlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.io.IOException;

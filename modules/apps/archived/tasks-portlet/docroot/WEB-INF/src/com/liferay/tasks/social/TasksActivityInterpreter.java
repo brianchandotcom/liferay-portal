@@ -18,11 +18,11 @@
 package com.liferay.tasks.social;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.tasks.model.TasksEntry;
@@ -37,6 +37,11 @@ public class TasksActivityInterpreter extends BaseSocialActivityInterpreter {
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
+	}
+
+	@Override
+	protected ResourceBundleLoader acquireResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	@Override
@@ -56,11 +61,6 @@ public class TasksActivityInterpreter extends BaseSocialActivityInterpreter {
 		SocialActivity activity, ServiceContext serviceContext) {
 
 		return StringPool.BLANK;
-	}
-
-	@Override
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return _resourceBundleLoader;
 	}
 
 	@Override

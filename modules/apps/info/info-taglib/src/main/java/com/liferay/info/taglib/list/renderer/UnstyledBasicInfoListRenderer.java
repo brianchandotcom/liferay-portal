@@ -16,8 +16,8 @@ package com.liferay.info.taglib.list.renderer;
 
 import com.liferay.info.taglib.internal.list.renderer.BasicListInfoListStyle;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.language.extender.internal;
 
-import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.CacheResourceBundleLoader;
 
 import java.util.ResourceBundle;
 

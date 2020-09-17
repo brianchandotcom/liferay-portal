@@ -15,7 +15,7 @@
 package com.liferay.analytics.reports.web.internal.item.action;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;

@@ -24,14 +24,15 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.language.LanguageResources;
@@ -202,12 +203,13 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		Class<?> clazz = getClass();
 
 		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleUtil.getResourceBundleLoader(
+			new ClassResourceBundleLoader(
 				"content.Language", clazz.getClassLoader());
 
 		AggregateResourceBundleLoader aggregateResourceBundleLoader =
 			new AggregateResourceBundleLoader(
-				resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
+				resourceBundleLoader,
+				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER);
 
 		return ResourceBundleUtil.getLocalizationMap(
 			aggregateResourceBundleLoader, key);

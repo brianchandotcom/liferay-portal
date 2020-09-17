@@ -30,11 +30,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletQName;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -97,7 +97,8 @@ public class CommerceOrderAssetRenderer
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
+		ResourceBundleLoader resourceBundleLoader =
+			acquireResourceBundleLoader();
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);

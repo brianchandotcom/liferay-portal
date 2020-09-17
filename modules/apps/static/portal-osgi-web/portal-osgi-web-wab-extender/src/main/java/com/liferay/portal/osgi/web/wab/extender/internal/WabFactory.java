@@ -26,6 +26,7 @@ import com.liferay.portal.profile.PortalProfile;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
 import org.osgi.framework.Bundle;
@@ -139,11 +140,33 @@ public class WabFactory
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
 
-		_bundleTracker.open();
+		_futureTask = new FutureTask<>(
+			() -> {
+				_bundleTracker.open();
+
+				return null;
+			});
+
+		Thread serviceTrackerOpenerThread = new Thread(
+			_futureTask, WabFactory.class.getName() + "-ServiceTrackerOpener");
+
+		serviceTrackerOpenerThread.setDaemon(true);
+
+		serviceTrackerOpenerThread.start();
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		try {
+			_futureTask.get(
+				_wabExtenderConfiguration.stopTimeout(), TimeUnit.MILLISECONDS);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Error on waiting service tracker opener thread to finish",
+				exception);
+		}
+
 		_bundleTracker.close();
 
 		_webBundleDeployer.close();
@@ -154,6 +177,7 @@ public class WabFactory
 	private static final Log _log = LogFactoryUtil.getLog(WabFactory.class);
 
 	private BundleTracker<?> _bundleTracker;
+	private FutureTask<Void> _futureTask;
 
 	@Reference
 	private JSPServletFactory _jspServletFactory;

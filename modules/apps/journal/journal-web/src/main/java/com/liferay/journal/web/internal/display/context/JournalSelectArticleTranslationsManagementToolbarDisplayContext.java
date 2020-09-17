@@ -79,6 +79,11 @@ public class JournalSelectArticleTranslationsManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSearchContainerId() {
+		return "articleTranslations";
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list"};
 	}

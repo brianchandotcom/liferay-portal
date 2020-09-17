@@ -29,10 +29,10 @@ public class StaticSizeTrieURLPatternMapperTest
 	extends SimpleURLPatternMapperTest {
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testExtensionMaximumCount() {
+	public void testConstructor() {
 		Map<String, String> map = new HashMap<>();
 
-		for (int i = 0; i < (Long.SIZE + 1); i++) {
+		for (int i = 0; i < 65; i++) {
 			map.put("*.key" + i, "value" + i);
 		}
 

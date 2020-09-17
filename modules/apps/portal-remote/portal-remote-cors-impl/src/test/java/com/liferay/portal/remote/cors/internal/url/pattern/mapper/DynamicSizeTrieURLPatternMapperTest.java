@@ -27,16 +27,16 @@ public class DynamicSizeTrieURLPatternMapperTest
 	extends SimpleURLPatternMapperTest {
 
 	@Test
-	public void testEnsureCapacity() {
+	public void testConstructor() {
 		Map<String, String> map = new HashMap<>();
 
-		for (int i = 0; i < 2048; i++) {
+		for (int i = 0; i < 65; i++) {
 			map.put("*.key" + i, "value" + i);
 		}
 
 		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(map);
 
-		for (int i = 0; i < 2048; i++) {
+		for (int i = 0; i < 65; i++) {
 			Assert.assertEquals(
 				"value" + i, urlPatternMapper.getValue("*.key" + i));
 		}

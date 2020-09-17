@@ -17,6 +17,7 @@ package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Arthur Chan
@@ -31,7 +32,7 @@ public class StaticSizeTrieURLPatternMapper<T>
 		for (Map.Entry<String, T> entry : values.entrySet()) {
 			String urlPattern = entry.getKey();
 
-			if ((urlPattern == null) || (urlPattern.length() == 0)) {
+			if (Objects.isNull(urlPattern) || (urlPattern.length() == 0)) {
 				throw new IllegalArgumentException("URL pattern is blank");
 			}
 

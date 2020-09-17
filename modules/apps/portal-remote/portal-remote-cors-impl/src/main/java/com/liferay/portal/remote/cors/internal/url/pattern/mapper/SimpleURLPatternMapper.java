@@ -16,6 +16,7 @@ package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Arthur Chan
@@ -32,19 +33,19 @@ public class SimpleURLPatternMapper<T> extends BaseURLPatternMapper<T> {
 
 	@Override
 	public T getValue(String urlPath) {
-		if (urlPath == null) {
+		if (Objects.isNull(urlPath)) {
 			return null;
 		}
 
 		T value = _exactURLPatternValues.get(urlPath);
 
-		if (value != null) {
+		if (Objects.nonNull(value)) {
 			return value;
 		}
 
 		value = _wildcardURLPatternValues.get(urlPath + "/*");
 
-		if (value != null) {
+		if (Objects.nonNull(value)) {
 			return value;
 		}
 
@@ -62,7 +63,7 @@ public class SimpleURLPatternMapper<T> extends BaseURLPatternMapper<T> {
 			value = _wildcardURLPatternValues.get(
 				urlPath.substring(0, i) + "*");
 
-			if (value != null) {
+			if (Objects.nonNull(value)) {
 				return value;
 			}
 		}
@@ -74,7 +75,7 @@ public class SimpleURLPatternMapper<T> extends BaseURLPatternMapper<T> {
 	protected void put(String urlPattern, T value)
 		throws IllegalArgumentException {
 
-		if ((urlPattern == null) || (urlPattern.length() == 0)) {
+		if (Objects.isNull(urlPattern) || (urlPattern.length() == 0)) {
 			throw new IllegalArgumentException("URL pattern is blank");
 		}
 

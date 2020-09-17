@@ -47,6 +47,11 @@ public class AssetVocabularyGroupLocalizedTitleComparator
 
 			value = -1;
 		}
+		else if ((assetVocabulary1.getGroupId() != _groupId) &&
+			(assetVocabulary2.getGroupId() == _groupId)) {
+
+			value = 1;
+		}
 		else if ((_groupId == 0) ||
 				 (assetVocabulary1.getGroupId() == _groupId)) {
 

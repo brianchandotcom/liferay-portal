@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -47,7 +48,7 @@ public class SimpleURLPatternMapperTest {
 			String value = urlPatternMapper.getValue(keyValuePair.getKey());
 
 			try {
-				if (value == null) {
+				if (Objects.isNull(value)) {
 					Assert.assertEquals("", keyValuePair.getValue());
 
 					continue;

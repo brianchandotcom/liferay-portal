@@ -14,6 +14,8 @@
 
 package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
+import java.util.Objects;
+
 /**
  * @author Carlos Sierra Andrés
  * @author Arthur Chan
@@ -23,14 +25,14 @@ public abstract class BaseTrieURLPatternMapper<T>
 
 	@Override
 	public T getValue(String urlPath) {
-		if (urlPath == null) {
+		if (Objects.isNull(urlPath)) {
 			return null;
 		}
 
 		try {
 			T value = getWildcardValue(urlPath);
 
-			if (value != null) {
+			if (Objects.nonNull(value)) {
 				return value;
 			}
 
@@ -51,11 +53,11 @@ public abstract class BaseTrieURLPatternMapper<T>
 	protected void put(String urlPattern, T value)
 		throws IllegalArgumentException {
 
-		if ((urlPattern == null) || (urlPattern.length() == 0)) {
+		if (Objects.isNull(urlPattern) || (urlPattern.length() == 0)) {
 			throw new IllegalArgumentException("URL pattern is blank");
 		}
 
-		if (value == null) {
+		if (Objects.isNull(value)) {
 			throw new IllegalArgumentException("Value is null");
 		}
 

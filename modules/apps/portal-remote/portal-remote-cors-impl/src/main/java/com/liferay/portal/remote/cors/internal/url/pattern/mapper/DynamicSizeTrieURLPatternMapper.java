@@ -17,6 +17,7 @@ package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Arthur Chan
@@ -50,7 +51,7 @@ public class DynamicSizeTrieURLPatternMapper<T>
 
 			currentTrieNode = previousTrieNode.getNextTrieNode(character);
 
-			if (currentTrieNode == null) {
+			if (Objects.isNull(currentTrieNode)) {
 				break;
 			}
 
@@ -89,14 +90,14 @@ public class DynamicSizeTrieURLPatternMapper<T>
 			currentTrieNode = previousTrieNode.getNextTrieNode(
 				urlPath.charAt(i));
 
-			if (currentTrieNode == null) {
+			if (Objects.isNull(currentTrieNode)) {
 				break;
 			}
 
 			if (!exact && (urlPath.charAt(i) == '/')) {
 				TrieNode nextTrieNode = currentTrieNode.getNextTrieNode('*');
 
-				if ((nextTrieNode != null) && nextTrieNode.isEnd()) {
+				if (Objects.nonNull(nextTrieNode) && nextTrieNode.isEnd()) {
 					value = nextTrieNode.getValue();
 				}
 			}
@@ -104,7 +105,7 @@ public class DynamicSizeTrieURLPatternMapper<T>
 			previousTrieNode = currentTrieNode;
 		}
 
-		if (currentTrieNode != null) {
+		if (Objects.nonNull(currentTrieNode)) {
 			if (exact) {
 				if (!currentTrieNode.isEnd()) {
 					return null;
@@ -119,10 +120,12 @@ public class DynamicSizeTrieURLPatternMapper<T>
 
 			currentTrieNode = currentTrieNode.getNextTrieNode('/');
 
-			if (currentTrieNode != null) {
+			if (Objects.nonNull(currentTrieNode)) {
 				currentTrieNode = currentTrieNode.getNextTrieNode('*');
 
-				if ((currentTrieNode != null) && currentTrieNode.isEnd()) {
+				if (Objects.nonNull(currentTrieNode) &&
+					currentTrieNode.isEnd()) {
+
 					value = currentTrieNode.getValue();
 				}
 			}
@@ -154,7 +157,7 @@ public class DynamicSizeTrieURLPatternMapper<T>
 			currentTrieNode = previousTrieNode.getNextTrieNode(
 				urlPattern.charAt(index));
 
-			if (currentTrieNode == null) {
+			if (Objects.isNull(currentTrieNode)) {
 				TrieNode nextTrieNode = _trieNodeHeap.nextAvailableTrieNode();
 
 				currentTrieNode = previousTrieNode.setNextTrieNode(
@@ -190,7 +193,7 @@ public class DynamicSizeTrieURLPatternMapper<T>
 		}
 
 		public boolean isEnd() {
-			if (_value != null) {
+			if (Objects.nonNull(_value)) {
 				return true;
 			}
 

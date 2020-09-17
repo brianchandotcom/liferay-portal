@@ -146,6 +146,11 @@
 
 	// ---------- Input group ----------
 
+	.input-group .form-validator-stack {
+		order: 10;
+		width: 100%;
+	}
+
 	.input-group-addon {
 		align-items: center;
 		background-color: $input-group-addon-bg;

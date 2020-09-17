@@ -19,10 +19,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {
-	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../prop-types/index';
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
@@ -269,7 +266,6 @@ function TopperContent({
 TopperContent.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
 	itemElement: PropTypes.object,
-	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 class TopperErrorBoundary extends React.Component {

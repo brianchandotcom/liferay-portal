@@ -15,34 +15,24 @@
 import React from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
-import {
-	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import Topper from '../Topper';
 import Collection from './Collection';
 
-const CollectionWithControls = React.forwardRef(
-	({children, item, layoutData}, ref) => {
-		const [setRef, itemElement] = useSetRef(ref);
+const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
+	const [setRef, itemElement] = useSetRef(ref);
 
-		return (
-			<Topper
-				item={item}
-				itemElement={itemElement}
-				layoutData={layoutData}
-			>
-				<Collection item={item} ref={setRef}>
-					{children}
-				</Collection>
-			</Topper>
-		);
-	}
-);
+	return (
+		<Topper item={item} itemElement={itemElement}>
+			<Collection item={item} ref={setRef}>
+				{children}
+			</Collection>
+		</Topper>
+	);
+});
 
 CollectionWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default CollectionWithControls;

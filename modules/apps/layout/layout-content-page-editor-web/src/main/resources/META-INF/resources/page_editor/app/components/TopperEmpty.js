@@ -15,10 +15,7 @@
 import classNames from 'classnames';
 import React, {useRef} from 'react';
 
-import {
-	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../prop-types/index';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {useSelector} from '../store/index';
 import {TARGET_POSITION} from '../utils/dragAndDrop/constants/targetPosition';
@@ -105,5 +102,4 @@ function TopperEmpty({children, item}) {
 
 TopperEmpty.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };

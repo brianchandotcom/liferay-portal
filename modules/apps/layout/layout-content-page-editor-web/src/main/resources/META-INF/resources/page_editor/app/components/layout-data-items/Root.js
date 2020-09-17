@@ -15,15 +15,12 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import {
-	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import TopperEmpty from '../TopperEmpty';
 
-const Root = React.forwardRef(({children, item, layoutData}, ref) => {
+const Root = React.forwardRef(({children, item}, ref) => {
 	return (
-		<TopperEmpty item={item} layoutData={layoutData}>
+		<TopperEmpty item={item}>
 			<div className={classNames('page-editor__root')} ref={ref}>
 				{React.Children.count(children) ? (
 					children
@@ -47,7 +44,6 @@ Root.displayName = 'Root';
 
 Root.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default Root;

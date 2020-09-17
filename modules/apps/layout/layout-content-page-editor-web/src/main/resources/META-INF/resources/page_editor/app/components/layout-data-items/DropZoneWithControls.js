@@ -15,23 +15,15 @@
 import React from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
-import {
-	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import ManageAllowedFragmentButton from '../ManageAllowedFragmentButton';
 import Topper from '../Topper';
 
-const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
+const DropZoneWithControls = React.forwardRef(({item}, ref) => {
 	const [setRef, itemElement] = useSetRef(ref);
 
 	return (
-		<Topper
-			active
-			item={item}
-			itemElement={itemElement}
-			layoutData={layoutData}
-		>
+		<Topper active item={item} itemElement={itemElement}>
 			<div className="page-editor__drop-zone" ref={setRef}>
 				<p>{Liferay.Language.get('drop-zone')}</p>
 
@@ -49,7 +41,6 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 DropZoneWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default DropZoneWithControls;

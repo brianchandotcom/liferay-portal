@@ -41,7 +41,7 @@ const ZOOM_LEVELS_REVERSED = ZOOM_LEVELS.slice().reverse();
  * Component that create an image preview to allow zoom
  * @review
  */
-const ImagePreviewer = ({imageURL}) => {
+const ImagePreviewer = ({alt, imageURL}) => {
 	const [currentZoom, setCurrentZoom] = useState(1);
 	const [imageHeight, setImageHeight] = useState(null);
 	const [imageWidth, setImageWidth] = useState(null);
@@ -167,6 +167,7 @@ const ImagePreviewer = ({imageURL}) => {
 				ref={imageContainer}
 			>
 				<img
+					alt={alt}
 					className="preview-file-image"
 					onLoad={handleImageLoad}
 					ref={image}

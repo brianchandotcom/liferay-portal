@@ -21,7 +21,6 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.currency.util.PriceFormat;
 import com.liferay.commerce.discount.CommerceDiscountValue;
-import com.liferay.commerce.internal.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.internal.util.CommercePriceConverterUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceProductOptionValueRelativePriceRequest;
@@ -36,6 +35,7 @@ import com.liferay.commerce.product.option.CommerceOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;

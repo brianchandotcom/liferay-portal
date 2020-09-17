@@ -28,6 +28,7 @@ import com.liferay.commerce.price.CommerceOrderPriceImpl;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
@@ -319,7 +320,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 		BigDecimal level3, BigDecimal level4) {
 
 		if ((discountAmount == null) || (amount == null) ||
-			(amount.compareTo(BigDecimal.ZERO) <= 0)) {
+			CommerceBigDecimalUtil.lte(amount, BigDecimal.ZERO)) {
 
 			return new CommerceDiscountValue(
 				0,
@@ -347,11 +348,11 @@ public abstract class BaseCommerceOrderPriceCalculation
 	}
 
 	private boolean _equalsZero(BigDecimal value) {
-		if ((value == null) || (value.compareTo(BigDecimal.ZERO) != 0)) {
-			return false;
+		if ((value != null) || CommerceBigDecimalUtil.isZero(value)) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private CommerceOrderItemPrice _getCommerceOrderItemPrice(
@@ -490,7 +491,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 	private BigDecimal _getDiscountPercentage(
 		BigDecimal amount, BigDecimal discount, RoundingMode roundingMode) {
 
-		if ((amount == null) || (amount.compareTo(BigDecimal.ZERO) == 0)) {
+		if ((amount == null) || CommerceBigDecimalUtil.isZero(amount)) {
 			return BigDecimal.ZERO;
 		}
 
@@ -521,11 +522,13 @@ public abstract class BaseCommerceOrderPriceCalculation
 	}
 
 	private boolean _greaterThanZero(BigDecimal value) {
-		if ((value == null) || (value.compareTo(BigDecimal.ZERO) <= 0)) {
-			return false;
+		if ((value != null) ||
+			CommerceBigDecimalUtil.gt(value, BigDecimal.ZERO)) {
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private void _updateDiscounts(
@@ -541,8 +544,9 @@ public abstract class BaseCommerceOrderPriceCalculation
 
 		CommerceMoney promoPrice = commerceOrderItemPrice.getPromoPrice();
 
-		if ((promoPrice != null) && _greaterThanZero(promoPrice.getPrice()) &&
-			(unitPrice.compareTo(promoPrice.getPrice()) > 0)) {
+		if (!promoPrice.isEmpty() &&
+			CommerceBigDecimalUtil.gt(promoPrice.getPrice(), BigDecimal.ZERO) &&
+			CommerceBigDecimalUtil.gt(unitPrice, promoPrice.getPrice())) {
 
 			activePrice = promoPrice.getPrice();
 		}

@@ -80,12 +80,20 @@ definition {
 			Button.click(button = "Apply");
 
 			SelectFrameTop();
-
-			PortletEntry.save();
 		}
 
 		task ("Assert the selected info is shown above the Select button") {
 			AssertTextEquals.assertPartialText(
+				key_text = "Select: value 2",
+				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
+				value1 = "Select: value 2");
+		}
+
+		task ("Assert the selected info is still shown above the Select button") {
+			PortletEntry.save();
+
+			AssertTextEquals.assertPartialText(
+				key_text = "Select: value 2",
 				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
 				value1 = "Select: value 2");
 		}

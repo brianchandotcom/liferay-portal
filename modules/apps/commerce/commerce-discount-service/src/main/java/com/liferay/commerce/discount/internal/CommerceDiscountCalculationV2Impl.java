@@ -35,6 +35,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListDiscountRelLocal
 import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -237,7 +238,7 @@ public class CommerceDiscountCalculationV2Impl
 		throws PortalException {
 
 		if ((commerceDiscountValue == null) ||
-			(commercePrice.compareTo(BigDecimal.ZERO) == 0)) {
+			CommerceBigDecimalUtil.isZero(commercePrice)) {
 
 			return null;
 		}
@@ -255,8 +256,10 @@ public class CommerceDiscountCalculationV2Impl
 			BigDecimal maximumDiscountAmount =
 				commerceDiscount.getMaximumDiscountAmount();
 
-			if ((maximumDiscountAmount.compareTo(BigDecimal.ZERO) > 0) &&
-				(discountAmount.compareTo(maximumDiscountAmount) > 0)) {
+			if (CommerceBigDecimalUtil.gt(
+					maximumDiscountAmount, BigDecimal.ZERO) &&
+				CommerceBigDecimalUtil.gt(
+					discountAmount, maximumDiscountAmount)) {
 
 				discountAmount = commerceDiscount.getMaximumDiscountAmount();
 			}
@@ -264,7 +267,9 @@ public class CommerceDiscountCalculationV2Impl
 		else {
 			discountAmount = commerceDiscountValue;
 
-			if (commerceDiscountValue.compareTo(commercePrice) > 0) {
+			if (CommerceBigDecimalUtil.gt(
+					commerceDiscountValue, commercePrice)) {
+
 				discountAmount = commercePrice;
 			}
 		}
@@ -278,7 +283,8 @@ public class CommerceDiscountCalculationV2Impl
 			discountedAmount, commercePrice, roundingMode);
 
 		if ((currentDiscountLevel == null) ||
-			(discountPercentage.compareTo(currentDiscountLevel) > 0)) {
+			CommerceBigDecimalUtil.gt(
+				discountPercentage, currentDiscountLevel)) {
 
 			if (usePercentage) {
 				return commerceDiscountValue;
@@ -379,7 +385,9 @@ public class CommerceDiscountCalculationV2Impl
 			CommerceContext commerceContext, String discountType)
 		throws PortalException {
 
-		if ((amount == null) || (amount.compareTo(BigDecimal.ZERO) <= 0)) {
+		if ((amount == null) ||
+			CommerceBigDecimalUtil.lte(amount, BigDecimal.ZERO)) {
+
 			return null;
 		}
 
@@ -455,7 +463,7 @@ public class CommerceDiscountCalculationV2Impl
 		currentDiscountAmount = currentDiscountAmount.setScale(
 			_SCALE, roundingMode);
 
-		if (currentDiscountAmount.compareTo(BigDecimal.ZERO) == 0) {
+		if (CommerceBigDecimalUtil.isZero(currentDiscountAmount)) {
 			return null;
 		}
 

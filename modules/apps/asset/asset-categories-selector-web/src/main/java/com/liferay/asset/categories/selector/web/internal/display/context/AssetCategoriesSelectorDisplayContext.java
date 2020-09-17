@@ -42,10 +42,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
+import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -189,8 +192,41 @@ public class AssetCategoriesSelectorDisplayContext {
 			return _vocabularyIds;
 		}
 
-		_vocabularyIds = StringUtil.split(
+		long[] vocabularyIds = StringUtil.split(
 			ParamUtil.getString(_httpServletRequest, "vocabularyIds"), 0L);
+
+		List<AssetVocabulary> assetVocabularies = new ArrayList<>();
+
+		for (long vocabularyId : vocabularyIds) {
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+					vocabularyId);
+
+			if (assetVocabulary != null) {
+				assetVocabularies.add(assetVocabulary);
+			}
+		}
+
+		if (assetVocabularies.isEmpty()) {
+			_vocabularyIds = new long[0];
+
+			return _vocabularyIds;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		assetVocabularies.sort(
+			new AssetVocabularyGroupLocalizedTitleComparator(
+				themeDisplay.getScopeGroupId(), themeDisplay.getLocale(),
+				true));
+
+		Stream<AssetVocabulary> assetVocabulariesStream =
+			assetVocabularies.stream();
+
+		_vocabularyIds = assetVocabulariesStream.mapToLong(
+			assetVocabulary -> assetVocabulary.getVocabularyId()
+		).toArray();
 
 		return _vocabularyIds;
 	}

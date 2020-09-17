@@ -76,7 +76,6 @@ const RowWithControls = React.forwardRef(
 						'page-editor__row-overlay-grid': resizing,
 					})}
 					item={item}
-					layoutData={layoutData}
 					ref={setRef}
 				>
 					<ResizeContextProvider

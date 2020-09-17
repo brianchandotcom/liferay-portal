@@ -29,12 +29,11 @@ import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
-
-import java.math.BigDecimal;
 
 import java.util.List;
 
@@ -121,7 +120,7 @@ public class CommerceCheckoutStepHelper {
 
 		CommerceMoney orderPriceTotal = commerceOrderPrice.getTotal();
 
-		if (BigDecimal.ZERO.compareTo(orderPriceTotal.getPrice()) == 0) {
+		if (CommerceBigDecimalUtil.isZero(orderPriceTotal.getPrice())) {
 			return false;
 		}
 

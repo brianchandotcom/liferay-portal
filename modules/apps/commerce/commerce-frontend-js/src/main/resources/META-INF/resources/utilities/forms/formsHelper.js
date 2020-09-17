@@ -43,3 +43,43 @@ export function toJSON(formData) {
 
 	return json;
 }
+
+function toArray(value) {
+	return Array.isArray(value) ? [...value] : [value];
+}
+
+export function getDefaultFieldsShape(formInstance) {
+	try {
+		const options = formInstance.props.pages[0].rows;
+		const fields = options.map((option) => option.columns[0].fields[0]);
+
+		return fields.map((field) => {
+			const {fieldName: key, predefinedValue} = field;
+
+			return {
+				key,
+				value: toArray(predefinedValue),
+			};
+		});
+	}
+	catch (_ignore) {
+		return [];
+	}
+}
+
+export function updateFields(currentFields, nextField) {
+	return currentFields.reduce((nextFields, currentField) => {
+		const {key} = currentField;
+		const {fieldInstance, value: nextValue} = nextField;
+		const {fieldName} = fieldInstance;
+
+		if (fieldName === key) {
+			nextFields.push({key: fieldName, value: toArray(nextValue)});
+		}
+		else {
+			nextFields.push(currentField);
+		}
+
+		return nextFields;
+	}, []);
+}

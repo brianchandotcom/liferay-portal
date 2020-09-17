@@ -22,10 +22,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 import com.liferay.users.admin.web.internal.display.context.OrganizationScreenNavigationDisplayContext;
 
@@ -33,6 +37,9 @@ import java.io.IOException;
 
 import java.util.Locale;
 import java.util.function.BiFunction;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,12 +96,41 @@ public class OrganizationScreenNavigationEntry
 		organizationScreenNavigationDisplayContext.setActionName(
 			_mvcActionCommandName);
 
-		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
+		String backURL = ParamUtil.getString(httpServletRequest, "backURL");
 
-		String backURL = ParamUtil.getString(
-			httpServletRequest, "backURL", redirect);
+		if (Validator.isNull(backURL)) {
+			PortletURL viewOrganizationsURL = PortletURLFactoryUtil.create(
+				httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
+				PortletRequest.RENDER_PHASE);
+
+			viewOrganizationsURL.setParameter(
+				"toolbarItem", "view-all-organizations");
+			viewOrganizationsURL.setParameter(
+				"usersListView", UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
+
+			backURL = viewOrganizationsURL.toString();
+		}
 
 		organizationScreenNavigationDisplayContext.setBackURL(backURL);
+
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			PortletURL editOrganizationURL = PortletURLFactoryUtil.create(
+				httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
+				PortletRequest.RENDER_PHASE);
+
+			editOrganizationURL.setParameter(
+				"mvcRenderCommandName", "/users_admin/edit_organization");
+			editOrganizationURL.setParameter("backURL", backURL);
+			editOrganizationURL.setParameter(
+				"organizationId",
+				ParamUtil.getString(httpServletRequest, "organizationId"));
+
+			redirect = editOrganizationURL.toString();
+		}
+
+		organizationScreenNavigationDisplayContext.setRedirect(redirect);
 
 		organizationScreenNavigationDisplayContext.setFormLabel(
 			getLabel(httpServletRequest.getLocale()));

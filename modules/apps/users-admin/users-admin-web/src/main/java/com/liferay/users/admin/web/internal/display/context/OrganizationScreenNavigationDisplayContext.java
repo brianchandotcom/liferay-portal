@@ -45,6 +45,10 @@ public class OrganizationScreenNavigationDisplayContext {
 		return _organizationId;
 	}
 
+	public String getRedirect() {
+		return _redirect;
+	}
+
 	public boolean isShowControls() {
 		return _showControls;
 	}
@@ -77,6 +81,10 @@ public class OrganizationScreenNavigationDisplayContext {
 		_organizationId = organizationId;
 	}
 
+	public void setRedirect(String redirect) {
+		_redirect = redirect;
+	}
+
 	public void setShowControls(boolean showControls) {
 		_showControls = showControls;
 	}
@@ -91,6 +99,7 @@ public class OrganizationScreenNavigationDisplayContext {
 	private String _jspPath;
 	private Organization _organization;
 	private long _organizationId;
+	private String _redirect;
 	private boolean _showControls;
 	private boolean _showTitle;
 

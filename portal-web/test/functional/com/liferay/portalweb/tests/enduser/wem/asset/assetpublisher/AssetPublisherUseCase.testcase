@@ -565,6 +565,7 @@ definition {
 		AssetPublisherPortlet.configureFilterByFieldPG(
 			assetSubtype = "WC Structure Name",
 			fieldFilter = "Integer",
+			fieldValue = "",
 			selectedAsset = "Web Content Article");
 
 		Navigator.gotoSitePage(

@@ -471,9 +471,6 @@ AUI.add(
 								body,
 								method: 'POST',
 							})
-								.then((response) => {
-									return response.json();
-								})
 								.then((data) => {
 									instance._oldContent = content;
 									instance._oldSubtitle = subtitle;

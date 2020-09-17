@@ -215,7 +215,7 @@
 </tr>
 <tr>
 	<td>FIELD_FILTER_INPUT</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//input</td>
 	<td></td>
 </tr>
 <tr>

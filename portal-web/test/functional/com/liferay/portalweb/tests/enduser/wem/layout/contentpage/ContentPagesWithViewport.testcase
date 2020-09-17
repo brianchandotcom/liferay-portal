@@ -285,9 +285,9 @@ definition {
 
 		AssertVisible(locator1 = "PageEditor#VIEWPORT_HANDLE");
 
-		DragAndDrop.DragAndDropObject(
+		DragAndDrop.dragAndDrop(
 			locator1 = "PageEditor#VIEWPORT_HANDLE",
-			position = "200,0");
+			value1 = "200,0");
 
 		AssertElementPresent(
 			key_style = "992px",
@@ -299,9 +299,9 @@ definition {
 
 		AssertVisible(locator1 = "PageEditor#VIEWPORT_HANDLE");
 
-		DragAndDrop.DragAndDropObject(
+		DragAndDrop.dragAndDrop(
 			locator1 = "PageEditor#VIEWPORT_HANDLE",
-			position = "200,0");
+			value1 = "200,0");
 
 		AssertElementPresent(
 			key_style = "576px",

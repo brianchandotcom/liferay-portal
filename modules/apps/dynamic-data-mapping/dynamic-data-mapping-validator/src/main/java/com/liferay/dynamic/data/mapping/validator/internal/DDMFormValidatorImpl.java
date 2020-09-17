@@ -289,6 +289,14 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			throw new MustSetFieldType(ddmFormField.getName());
 		}
 
+		Matcher matcher = _ddmFormFieldTypePattern.matcher(
+			ddmFormField.getType());
+
+		if (!matcher.matches()) {
+			throw new MustSetValidCharactersForFieldType(
+				ddmFormField.getType());
+		}
+
 		Set<String> ddmFormFieldTypeNames = new HashSet<>(
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeNames());
 
@@ -297,14 +305,6 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 		if (!ddmFormFieldTypeNames.contains(ddmFormField.getType())) {
 			throw new MustSetValidType(ddmFormField.getType());
-		}
-
-		Matcher matcher = _ddmFormFieldTypePattern.matcher(
-			ddmFormField.getType());
-
-		if (!matcher.matches()) {
-			throw new MustSetValidCharactersForFieldType(
-				ddmFormField.getType());
 		}
 	}
 

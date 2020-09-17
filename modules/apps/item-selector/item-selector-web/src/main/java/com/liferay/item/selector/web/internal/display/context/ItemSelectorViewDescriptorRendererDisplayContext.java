@@ -16,6 +16,8 @@ package com.liferay.item.selector.web.internal.display.context;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -89,6 +91,24 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		return itemSelectorReturnTypeClass.getName();
 	}
 
+	public SearchContainer<Object> getSearchContainer() throws PortalException {
+		if (_searchContainer == null) {
+			_searchContainer = _itemSelectorViewDescriptor.getSearchContainer();
+
+			if (_itemSelectorViewDescriptor.isMultipleSelection()) {
+				if (_searchContainer.getRowChecker() == null) {
+					_searchContainer.setRowChecker(
+						new EmptyOnClickRowChecker(_liferayPortletResponse));
+				}
+			}
+			else {
+				_searchContainer.setRowChecker(null);
+			}
+		}
+
+		return _searchContainer;
+	}
+
 	public boolean isIconDisplayStyle() {
 		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;
@@ -142,5 +162,6 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 	private final ItemSelectorViewDescriptor<Object>
 		_itemSelectorViewDescriptor;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private SearchContainer<Object> _searchContainer;
 
 }

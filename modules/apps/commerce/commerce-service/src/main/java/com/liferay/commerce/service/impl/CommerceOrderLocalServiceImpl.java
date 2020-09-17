@@ -147,6 +147,16 @@ public class CommerceOrderLocalServiceImpl
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(groupId);
+
+		if (userId == 0) {
+			Group group = groupLocalService.getGroup(groupId);
+
+			User defaultUser = _userLocalService.getDefaultUser(
+				group.getCompanyId());
+
+			userId = defaultUser.getUserId();
+		}
+
 		serviceContext.setUserId(userId);
 
 		if (hasWorkflowDefinition(

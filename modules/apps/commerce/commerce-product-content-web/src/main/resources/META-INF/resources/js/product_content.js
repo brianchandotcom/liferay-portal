@@ -20,7 +20,8 @@ AUI.add(
 
 		var CP_INSTANCE_CHANGE_EVENT = 'CPInstance:change';
 
-		var DDM_FORM_HANDLER_MODULE = 'commerce-frontend-js/utilities/forms/DDMFormHandler';
+		var DDM_FORM_HANDLER_MODULE =
+			'commerce-frontend-js/utilities/forms/DDMFormHandler';
 
 		var ProductContent = A.Component.create({
 			ATTRS: {
@@ -58,18 +59,19 @@ AUI.add(
 					if (DDMFormInstance) {
 						Liferay.Loader.require(
 							DDM_FORM_HANDLER_MODULE,
-							function(module) {
+							(module) => {
 								var DDMFormHandler = module.default;
 
 								var FormHandlerConfiguration = {
+									DDMFormInstance,
 									actionURL: checkCPInstanceActionURL,
 									addToCartId: 'addToCartId',
-									DDMFormInstance: DDMFormInstance,
 									portletId: CP_CONTENT_WEB_PORTLET_KEY,
 								};
 
 								new DDMFormHandler(FormHandlerConfiguration);
-							});
+							}
+						);
 					}
 
 					eventHandles.push(
@@ -93,10 +95,7 @@ AUI.add(
 
 					instance._renderImages(originalDDMFormValues);
 					instance._renderCPInstance(cpInstance);
-					instance.set(
-						'cpInstanceId',
-						cpInstance.cpInstanceId
-					);
+					instance.set('cpInstanceId', cpInstance.cpInstanceId);
 
 					Liferay.fire(
 						cpDefinitionId + CP_INSTANCE_CHANGE_EVENT,
@@ -247,9 +246,7 @@ AUI.add(
 				_renderImages(originalDDMFormValues) {
 					var instance = this;
 
-					var ddmFormValues = JSON.stringify(
-						originalDDMFormValues
-					);
+					var ddmFormValues = JSON.stringify(originalDDMFormValues);
 
 					var data = {};
 

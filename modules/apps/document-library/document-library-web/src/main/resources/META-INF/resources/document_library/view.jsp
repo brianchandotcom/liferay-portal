@@ -174,8 +174,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 			List<AssetVocabulary> assetVocabularies = new ArrayList<>();
 
 			assetVocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId)));
-
-			Collections.sort(assetVocabularies, new AssetVocabularyGroupLocalizedTitleComparator(scopeGroupId, themeDisplay.getLocale(), true));
+			assetVocabularies.sort(new AssetVocabularyGroupLocalizedTitleComparator(scopeGroupId, themeDisplay.getLocale(), true));
 
 			if (!assetVocabularies.isEmpty()) {
 				long classNameId = ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName());

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.workflow.metrics.internal.background.task.constants.WorkflowMetricsReindexBackgroundTaskConstants;
+import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
@@ -90,13 +91,21 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 		}
 
 		for (int i = 0; i < indexEntityNames.length; i++) {
-			WorkflowMetricsReindexer workflowMetricsReindexer =
-				_workflowMetricsReindexers.getService(indexEntityNames[i]);
+			String indexEntityName = indexEntityNames[i];
+			int count = i + 1;
 
-			workflowMetricsReindexer.reindex(backgroundTask.getCompanyId());
+			_workflowMetricsPortalExecutor.execute(
+				() -> {
+					WorkflowMetricsReindexer workflowMetricsReindexer =
+						_workflowMetricsReindexers.getService(indexEntityName);
 
-			_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
-				i + 1, indexEntityNames.length, StringPool.BLANK);
+					workflowMetricsReindexer.reindex(
+						backgroundTask.getCompanyId());
+
+					_workflowMetricsReindexStatusMessageSender.
+						sendStatusMessage(
+							count, indexEntityNames.length, StringPool.BLANK);
+				});
 		}
 
 		_sendStatusMessage(
@@ -183,6 +192,10 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 
 	private ServiceTrackerMap<String, WorkflowMetricsIndex>
 		_workflowMetricsIndexes;
+
+	@Reference
+	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;
+
 	private ServiceTrackerMap<String, WorkflowMetricsReindexer>
 		_workflowMetricsReindexers;
 

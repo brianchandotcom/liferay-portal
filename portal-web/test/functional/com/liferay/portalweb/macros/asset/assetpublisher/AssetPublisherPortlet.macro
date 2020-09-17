@@ -507,18 +507,20 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
-			Navigator.gotoNavTab(navTab = "Sites That I Administer");
-
-			LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
 			if ("${siteScopeType}" == "Child Site") {
-				Type(
-					locator1 = "TextInput#SITE_SEARCH_KEYWORDS",
-					value1 = "${siteName}");
+				Navigator.gotoNavTab(navTab = "Child Sites");
 
-				KeyPress(
-					locator1 = "TextInput#SEARCH",
-					value1 = "\RETURN");
+				LexiconEntry.changeDisplayStyle(displayStyle = "table");
+			}
+			else if ("${siteScopeType}" == "Parent Site") {
+				Navigator.gotoNavTab(navTab = "Parent Sites");
+
+				LexiconEntry.changeDisplayStyle(displayStyle = "table");
+			}
+			else {
+				Navigator.gotoNavTab(navTab = "Sites That I Administer");
+
+				LexiconEntry.changeDisplayStyle(displayStyle = "table");
 			}
 
 			AssertTextEquals(

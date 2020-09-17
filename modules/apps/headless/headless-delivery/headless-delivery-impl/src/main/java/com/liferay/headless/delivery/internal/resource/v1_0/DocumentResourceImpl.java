@@ -118,9 +118,21 @@ public class DocumentResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return getSiteDocumentsPage(
-			assetLibraryId, flatten, search, aggregation, filter, pagination,
-			sorts);
+		return _getDocumentsPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					"ADD_DOCUMENT", "postAssetLibraryDocument",
+					"com.liferay.document.library", assetLibraryId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getAssetLibraryDocumentsPage",
+					"com.liferay.document.library", assetLibraryId)
+			).build(),
+			_createDocumentsPageBooleanQueryUnsafeConsumer(
+				assetLibraryId, flatten),
+			search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -203,25 +215,7 @@ public class DocumentResourceImpl
 					"VIEW", "getSiteDocumentsPage",
 					"com.liferay.document.library", siteId)
 			).build(),
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				if (!GetterUtil.getBoolean(flatten)) {
-					booleanFilter.add(
-						new TermFilter(
-							Field.FOLDER_ID,
-							String.valueOf(
-								DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)),
-						BooleanClauseOccur.MUST);
-				}
-
-				if (siteId != null) {
-					booleanFilter.add(
-						new TermFilter(Field.GROUP_ID, String.valueOf(siteId)),
-						BooleanClauseOccur.MUST);
-				}
-			},
+			_createDocumentsPageBooleanQueryUnsafeConsumer(siteId, flatten),
 			search, aggregation, filter, pagination, sorts);
 	}
 
@@ -405,6 +399,30 @@ public class DocumentResourceImpl
 				_getServiceContext(
 					() -> new Long[0], () -> new String[0], documentFolderId,
 					documentOptional, groupId)));
+	}
+
+	private UnsafeConsumer<BooleanQuery, Exception>
+		_createDocumentsPageBooleanQueryUnsafeConsumer(
+			Long siteId, Boolean flatten) {
+
+		return booleanQuery -> {
+			BooleanFilter booleanFilter = booleanQuery.getPreBooleanFilter();
+
+			if (!GetterUtil.getBoolean(flatten)) {
+				booleanFilter.add(
+					new TermFilter(
+						Field.FOLDER_ID,
+						String.valueOf(
+							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)),
+					BooleanClauseOccur.MUST);
+			}
+
+			if (siteId != null) {
+				booleanFilter.add(
+					new TermFilter(Field.GROUP_ID, String.valueOf(siteId)),
+					BooleanClauseOccur.MUST);
+			}
+		};
 	}
 
 	private Optional<DLFileEntryType> _getDLFileEntryTypeOptional(

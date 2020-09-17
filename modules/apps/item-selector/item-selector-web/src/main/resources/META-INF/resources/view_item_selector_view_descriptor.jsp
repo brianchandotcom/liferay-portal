@@ -141,7 +141,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 </clay:container-fluid>
 
 <c:choose>
-	<c:when test="<%= itemSelectorViewDescriptor.isMultipleSelection() %>">
+	<c:when test="<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() %>">
 		<aui:script use="liferay-search-container">
 			var searchContainer = Liferay.SearchContainer.get(
 				'<portlet:namespace />entries'

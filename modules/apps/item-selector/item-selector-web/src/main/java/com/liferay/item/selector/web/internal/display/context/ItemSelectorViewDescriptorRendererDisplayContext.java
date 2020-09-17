@@ -95,7 +95,7 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		if (_searchContainer == null) {
 			_searchContainer = _itemSelectorViewDescriptor.getSearchContainer();
 
-			if (_itemSelectorViewDescriptor.isMultipleSelection()) {
+			if (isMultipleSelection()) {
 				if (_searchContainer.getRowChecker() == null) {
 					_searchContainer.setRowChecker(
 						new EmptyOnClickRowChecker(_liferayPortletResponse));
@@ -115,6 +115,10 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isMultipleSelection() {
+		return ParamUtil.getBoolean(_httpServletRequest, "multipleSelection");
 	}
 
 	private BreadcrumbEntry _getCurrentGroupBreadcrumbEntry(

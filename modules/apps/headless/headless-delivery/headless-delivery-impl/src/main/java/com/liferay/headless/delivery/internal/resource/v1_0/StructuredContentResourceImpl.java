@@ -151,9 +151,20 @@ public class StructuredContentResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return getSiteStructuredContentsPage(
-			assetLibraryId, flatten, search, aggregation, filter, pagination,
-			sorts);
+		return _getStructuredContentsPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					"ADD_ARTICLE", "postAssetLibraryStructuredContent",
+					"com.liferay.journal", assetLibraryId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getAssetLibraryStructuredContentsPage",
+					"com.liferay.journal", assetLibraryId)
+			).build(),
+			_createStructuredContentsPageBooleanQueryUnsafeConsumer(flatten),
+			assetLibraryId, search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -258,20 +269,7 @@ public class StructuredContentResourceImpl
 					"VIEW", "getSiteStructuredContentsPage",
 					"com.liferay.journal", siteId)
 			).build(),
-			booleanQuery -> {
-				if (!GetterUtil.getBoolean(flatten)) {
-					BooleanFilter booleanFilter =
-						booleanQuery.getPreBooleanFilter();
-
-					booleanFilter.add(
-						new TermFilter(
-							com.liferay.portal.kernel.search.Field.FOLDER_ID,
-							String.valueOf(
-								JournalFolderConstants.
-									DEFAULT_PARENT_FOLDER_ID)),
-						BooleanClauseOccur.MUST);
-				}
-			},
+			_createStructuredContentsPageBooleanQueryUnsafeConsumer(flatten),
 			siteId, search, aggregation, filter, pagination, sorts);
 	}
 
@@ -698,6 +696,25 @@ public class StructuredContentResourceImpl
 		finally {
 			LocaleThreadLocal.setSiteDefaultLocale(originalSiteDefaultLocale);
 		}
+	}
+
+	private UnsafeConsumer<BooleanQuery, Exception>
+		_createStructuredContentsPageBooleanQueryUnsafeConsumer(
+			Boolean flatten) {
+
+		return booleanQuery -> {
+			if (!GetterUtil.getBoolean(flatten)) {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						com.liferay.portal.kernel.search.Field.FOLDER_ID,
+						String.valueOf(
+							JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)),
+					BooleanClauseOccur.MUST);
+			}
+		};
 	}
 
 	private DDMFormField _getDDMFormField(

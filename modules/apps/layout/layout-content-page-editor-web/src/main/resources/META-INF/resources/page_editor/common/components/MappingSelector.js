@@ -379,7 +379,7 @@ function MappingFieldSelect({fieldSets, fieldType, onValueSelect, value}) {
 						{fieldSets.map((fieldSet, index) => {
 							const key = `${fieldSet.label || ''}${index}`;
 
-							const Wrapper = ({children, props}) =>
+							const Wrapper = ({children, ...props}) =>
 								fieldSet.label ? (
 									<ClaySelect.OptGroup {...props}>
 										{children}

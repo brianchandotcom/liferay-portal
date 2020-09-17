@@ -169,8 +169,11 @@ public class LayoutAction implements Action {
 				plid = layout.getPlid();
 			}
 
-			return processLayout(
-				actionMapping, httpServletRequest, httpServletResponse, plid);
+			if (!layout.isTypeLinkToLayout()) {
+				return processLayout(
+					actionMapping, httpServletRequest, httpServletResponse,
+					plid);
+			}
 		}
 
 		try {

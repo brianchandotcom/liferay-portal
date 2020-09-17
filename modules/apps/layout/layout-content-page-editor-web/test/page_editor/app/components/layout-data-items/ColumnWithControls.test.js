@@ -100,6 +100,7 @@ const renderColumn = ({
 			<ControlsProvider>
 				<StoreAPIContextProvider
 					getState={() => ({
+						layoutData,
 						permissions: {
 							LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,
 							UPDATE: hasUpdatePermissions,
@@ -110,7 +111,6 @@ const renderColumn = ({
 					<AutoSelect />
 					<ColumnWithControls
 						item={columnIndex ? columnB : columnA}
-						layoutData={layoutData}
 					/>
 				</StoreAPIContextProvider>
 			</ControlsProvider>

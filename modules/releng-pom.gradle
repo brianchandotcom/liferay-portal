@@ -72,8 +72,6 @@ generatePomCompileOnly {
 			dependenciesProperties.load(it)
 		}
 
-		List<String> duplicateIdentifiers = []
-
 		dependenciesProperties.each {
 			String[] dependencyInfo = it.value.split(":")
 

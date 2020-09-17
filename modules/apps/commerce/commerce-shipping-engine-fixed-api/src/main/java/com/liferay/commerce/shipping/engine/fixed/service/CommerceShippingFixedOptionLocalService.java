@@ -83,6 +83,7 @@ public interface CommerceShippingFixedOptionLocalService
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
 		CommerceShippingFixedOption commerceShippingFixedOption);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
 			long userId, long groupId, long commerceShippingMethodId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -303,6 +304,7 @@ public interface CommerceShippingFixedOptionLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceShippingFixedOption>
 			searchCommerceShippingFixedOption(SearchContext searchContext)

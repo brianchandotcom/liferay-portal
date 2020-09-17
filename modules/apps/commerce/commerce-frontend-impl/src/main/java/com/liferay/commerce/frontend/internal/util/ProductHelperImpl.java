@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ProductHelperImpl implements ProductHelper {
 
 	@Override
-	public PriceModel getMinPriceModel(
+	public PriceModel getMinPrice(
 			long cpDefinitionId, CommerceContext commerceContext, Locale locale)
 		throws PortalException {
 
@@ -91,7 +91,7 @@ public class ProductHelperImpl implements ProductHelper {
 	 */
 	@Deprecated
 	@Override
-	public PriceModel getPriceModel(
+	public PriceModel getPrice(
 			long cpInstanceId, int quantity, CommerceContext commerceContext,
 			Locale locale)
 		throws PortalException {

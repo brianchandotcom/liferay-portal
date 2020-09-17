@@ -22,7 +22,11 @@ describe('document-library-preview-image', () => {
 
 	it('renders an image previewer', () => {
 		const {asFragment} = render(
-			<ImagePreviewer imageURL="image.jpg" spritemap="icons.svg" />
+			<ImagePreviewer
+				alt="alt text"
+				imageURL="image.jpg"
+				spritemap="icons.svg"
+			/>
 		);
 
 		expect(asFragment()).toMatchSnapshot();

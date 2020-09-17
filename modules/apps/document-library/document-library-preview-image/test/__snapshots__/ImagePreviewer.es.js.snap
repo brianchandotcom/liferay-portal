@@ -9,6 +9,7 @@ exports[`document-library-preview-image renders an image previewer 1`] = `
       class="preview-file-container preview-file-max-height"
     >
       <img
+        alt="alt text"
         class="preview-file-image"
         src="image.jpg"
         style="margin: auto auto;"

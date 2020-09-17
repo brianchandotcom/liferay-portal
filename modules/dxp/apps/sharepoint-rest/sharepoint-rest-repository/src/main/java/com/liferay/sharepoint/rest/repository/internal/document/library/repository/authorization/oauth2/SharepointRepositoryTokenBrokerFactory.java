@@ -52,7 +52,7 @@ public class SharepointRepositoryTokenBrokerFactory {
 		try {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
-					"(service.factoryPID=" +
+					"(service.factoryPid=" +
 						SharepointRepositoryConfiguration.class.getName() +
 							")");
 

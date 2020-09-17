@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.internal.util;
+package com.liferay.commerce.util;
 
 import java.math.BigDecimal;
 
@@ -20,6 +20,14 @@ import java.math.BigDecimal;
  * @author Igor Beslic
  */
 public class CommerceBigDecimalUtil {
+
+	public static boolean eq(BigDecimal value1, BigDecimal value2) {
+		if (value1.compareTo(value2) == 0) {
+			return true;
+		}
+
+		return false;
+	}
 
 	public static boolean gt(BigDecimal value1, BigDecimal value2) {
 		if (value1.compareTo(value2) > 0) {

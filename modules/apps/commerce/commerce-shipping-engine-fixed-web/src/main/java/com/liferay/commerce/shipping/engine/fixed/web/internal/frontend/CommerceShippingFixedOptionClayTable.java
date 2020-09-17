@@ -32,6 +32,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuild
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -174,8 +175,12 @@ public class CommerceShippingFixedOptionClayTable
 		long commerceShippingMethodId = ParamUtil.getLong(
 			httpServletRequest, "commerceShippingMethodId");
 
-		return _commerceShippingFixedOptionService.
-			getCommerceShippingFixedOptionsCount(commerceShippingMethodId);
+		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
+			_commerceShippingFixedOptionService.getCommerceShippingFixedOptions(
+				commerceShippingMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		return commerceShippingFixedOptions.size();
 	}
 
 	private String _getShippingFixedOptionDeleteURL(

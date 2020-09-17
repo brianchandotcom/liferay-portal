@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -46,6 +48,7 @@ import java.util.Map;
 public class CommerceShippingFixedOptionLocalServiceImpl
 	extends CommerceShippingFixedOptionLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
 			long userId, long groupId, long commerceShippingMethodId,
@@ -94,6 +97,7 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 				priority);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceShippingFixedOption deleteCommerceShippingFixedOption(
 		CommerceShippingFixedOption commerceShippingFixedOption) {
@@ -163,6 +167,7 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 			countByCommerceShippingMethodId(commerceShippingMethodId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BaseModelSearchResult<CommerceShippingFixedOption>
 			searchCommerceShippingFixedOption(SearchContext searchContext)

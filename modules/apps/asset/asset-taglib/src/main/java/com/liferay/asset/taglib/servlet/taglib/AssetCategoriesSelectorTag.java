@@ -326,7 +326,13 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				continue;
 			}
 
-			String selectedCategoryIds = categoryIdsTitles.get(i)[0];
+			int index = i;
+
+			if (Validator.isNull(_className)) {
+				index = 0;
+			}
+
+			String selectedCategoryIds = categoryIdsTitles.get(index)[0];
 
 			Map<String, Object> vocabularyMap =
 				HashMapBuilder.<String, Object>put(
@@ -352,7 +358,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 				String[] categoryIds = selectedCategoryIds.split(",");
 
-				String selectedCategoryIdTitles = categoryIdsTitles.get(i)[1];
+				String selectedCategoryIdTitles =
+					categoryIdsTitles.get(index)[1];
 
 				String[] categoryTitles = selectedCategoryIdTitles.split(
 					AssetCategoryUtil.CATEGORY_SEPARATOR);

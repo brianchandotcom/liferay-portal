@@ -16,6 +16,7 @@ package com.liferay.commerce.product.asset.categories.navigation.web.internal.di
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.commerce.media.CommerceMediaResolver;
@@ -122,7 +123,8 @@ public class CPAssetCategoriesNavigationDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		_assetVocabularies = _assetVocabularyService.getGroupVocabularies(
-			themeDisplay.getCompanyGroupId());
+			themeDisplay.getCompanyGroupId(),
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
 		return _assetVocabularies;
 	}

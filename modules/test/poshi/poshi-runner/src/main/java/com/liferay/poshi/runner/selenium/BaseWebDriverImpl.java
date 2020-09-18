@@ -806,27 +806,23 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			click(locator);
 		}
 		else {
-			try {
-				WebElement webElement = getWebElement(locator);
+			WebElement webElement = getWebElement(locator);
 
-				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
-				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+			WebDriver webDriver = wrapsDriver.getWrappedDriver();
 
-				Actions actions = new Actions(webDriver);
+			Actions actions = new Actions(webDriver);
 
-				actions.moveToElement(webElement, offsetX, offsetY);
+			actions.moveToElement(webElement, offsetX, offsetY);
 
-				actions.pause(1500);
+			actions.pause(1500);
 
-				actions.click();
+			actions.click();
 
-				Action action = actions.build();
+			Action action = actions.build();
 
-				action.perform();
-			}
-			catch (Exception exception) {
-			}
+			action.perform();
 		}
 	}
 

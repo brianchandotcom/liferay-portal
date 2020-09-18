@@ -95,6 +95,12 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 						/>
 					</c:if>
 
+					<c:if test="<%= Validator.isNotNull(itemDescriptor.getImageURL()) %>">
+						<liferay-ui:search-container-column-image
+							src="<%= itemDescriptor.getImageURL() %>"
+						/>
+					</c:if>
+
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>

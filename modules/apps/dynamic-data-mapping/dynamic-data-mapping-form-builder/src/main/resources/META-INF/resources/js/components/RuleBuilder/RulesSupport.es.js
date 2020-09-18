@@ -327,5 +327,6 @@ export default {
 	findRuleByFieldName,
 	formatRules,
 	getFieldOptions,
-	syncActions,
+	getFieldType,
+	syncActions
 };

@@ -157,12 +157,6 @@ class RuleList extends Component {
 		return getFieldProperty(pages, fieldName, 'label') || fieldName;
 	}
 
-	_getFieldType(fieldName) {
-		const pages = this.pages;
-
-		return getFieldProperty(pages, fieldName, 'type');
-	}
-
 	_getJumpToPageLabel(rule, action) {
 		const {pages} = this;
 		let pageLabel = '';
@@ -192,7 +186,7 @@ class RuleList extends Component {
 			label = Liferay.Language.get('user');
 		}
 		else if (operand.type !== 'field') {
-			const fieldType = this._getFieldType(operands[0].value);
+			const fieldType = RulesSupport.getFieldType(operands[0].value, this.pages);
 
 			if (
 				fieldType === 'checkbox_multiple' ||

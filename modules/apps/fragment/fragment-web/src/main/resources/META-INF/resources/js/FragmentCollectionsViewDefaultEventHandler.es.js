@@ -67,15 +67,17 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 	 * @review
 	 */
 	exportCollections() {
-		const fragmentCollectionsForm = document.getElementById(
-			this.ns('fragmentCollectionsFm')
-		);
+		let processed = false;
 
 		this._openFragmentCollectionsItemSelector(
 			Liferay.Language.get('export'),
 			Liferay.Language.get('export-collection'),
 			this.viewExportFragmentCollectionsURL,
 			(selectedItems) => {
+				const fragmentCollectionsForm = document.getElementById(
+					this.ns('fragmentCollectionsFm')
+				);
+
 				selectedItems.forEach((item) => {
 					fragmentCollectionsForm.appendChild(item.cloneNode(true));
 				});
@@ -85,10 +87,10 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 					this.exportFragmentCollectionsURL
 				);
 
-				fragmentCollectionsForm.dataset.processed = true;
+				processed = true;
 			},
 			() => {
-				if (fragmentCollectionsForm.dataset.processed) {
+				if (processed) {
 					Liferay.Util.openToast({
 						message: Liferay.Language.get(
 							'your-request-processed-successfully'
@@ -98,8 +100,6 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 						},
 						type: 'success',
 					});
-
-					delete fragmentCollectionsForm.dataset['processed'];
 				}
 			}
 		);

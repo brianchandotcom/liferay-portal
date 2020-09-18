@@ -81,6 +81,18 @@ export default function MultiPanelSidebar({
 		[panel, sidebarOpen, sidebarPanelId]
 	);
 
+	const changeAlertClassName = (styleName) => {
+		const formBuilderMessage = document.querySelector(
+			'.data-engine-form-builder-messages'
+		);
+		const className = formBuilderMessage.className;
+
+		formBuilderMessage.className = className.replace(
+			formBuilderMessage.className,
+			styleName
+		);
+	};
+
 	useEffect(() => {
 		const sideNavigation = Liferay.SideNavigation.instance(
 			document.querySelector('.product-menu-toggle')
@@ -88,6 +100,10 @@ export default function MultiPanelSidebar({
 
 		if (sideNavigation) {
 			const onCloseSidebar = () => {
+				if (sidebarOpen) {
+					changeAlertClassName('data-engine-form-builder-messages');
+				}
+
 				dispatch({
 					payload: {
 						sidebarOpen: false,
@@ -131,6 +147,15 @@ export default function MultiPanelSidebar({
 
 		if (productMenuToggle && !sidebarOpen) {
 			Liferay.SideNavigation.hide(productMenuToggle);
+		}
+
+		if (open) {
+			changeAlertClassName(
+				'data-engine-form-builder-messages data-engine-form-builder-messages--collapsed'
+			);
+		}
+		else {
+			changeAlertClassName('data-engine-form-builder-messages');
 		}
 
 		dispatch({

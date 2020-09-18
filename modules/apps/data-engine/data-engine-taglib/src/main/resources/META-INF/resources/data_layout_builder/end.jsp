@@ -52,7 +52,7 @@ Map<String, Object> props = HashMapBuilder.<String, Object>put(
 ).build();
 %>
 
-<div class="data-engine-form-builder-messages">
+<div class="data-engine-form-builder-messages data-engine-form-builder-messages--collapsed">
 	<liferay-ui:error exception="<%= DataDefinitionValidationException.class %>" message="please-enter-a-valid-form-definition" />
 
 	<liferay-ui:error exception="<%= DataDefinitionValidationException.MustNotDuplicateFieldName.class %>">

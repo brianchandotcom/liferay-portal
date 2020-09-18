@@ -70,8 +70,13 @@ $baseline: 24px;
 }
 
 .data-engine-form-builder-messages {
+	transition: padding ease 0.5s;
+
+	&--collapsed {
+		padding-right: $sidebarMainWidth + $sidebarMiniWidth;
+	}
+
 	.alert {
-		margin-top: 60px;
 		z-index: 1000;
 	}
 }

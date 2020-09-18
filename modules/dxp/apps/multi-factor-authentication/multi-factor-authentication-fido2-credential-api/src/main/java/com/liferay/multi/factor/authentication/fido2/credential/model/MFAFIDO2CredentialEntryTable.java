@@ -44,14 +44,17 @@ public class MFAFIDO2CredentialEntryTable
 	public final Column<MFAFIDO2CredentialEntryTable, Long> companyId =
 		createColumn(
 			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<MFAFIDO2CredentialEntryTable, Long> userId =
+		createColumn("userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<MFAFIDO2CredentialEntryTable, String> userName =
+		createColumn(
+			"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MFAFIDO2CredentialEntryTable, Date> createDate =
 		createColumn(
 			"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<MFAFIDO2CredentialEntryTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<MFAFIDO2CredentialEntryTable, Long> userId =
-		createColumn("userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<MFAFIDO2CredentialEntryTable, String> credentialId =
 		createColumn(
 			"credentialId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

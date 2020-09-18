@@ -15,6 +15,7 @@
 package com.liferay.multi.factor.authentication.fido2.credential.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface MFAFIDO2CredentialEntryModel
-	extends BaseModel<MFAFIDO2CredentialEntry>, MVCCModel, ShardedModel {
+	extends AuditedModel, BaseModel<MFAFIDO2CredentialEntry>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -105,38 +107,11 @@ public interface MFAFIDO2CredentialEntryModel
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the create date of this mfafido2 credential entry.
-	 *
-	 * @return the create date of this mfafido2 credential entry
-	 */
-	public Date getCreateDate();
-
-	/**
-	 * Sets the create date of this mfafido2 credential entry.
-	 *
-	 * @param createDate the create date of this mfafido2 credential entry
-	 */
-	public void setCreateDate(Date createDate);
-
-	/**
-	 * Returns the modified date of this mfafido2 credential entry.
-	 *
-	 * @return the modified date of this mfafido2 credential entry
-	 */
-	public Date getModifiedDate();
-
-	/**
-	 * Sets the modified date of this mfafido2 credential entry.
-	 *
-	 * @param modifiedDate the modified date of this mfafido2 credential entry
-	 */
-	public void setModifiedDate(Date modifiedDate);
-
-	/**
 	 * Returns the user ID of this mfafido2 credential entry.
 	 *
 	 * @return the user ID of this mfafido2 credential entry
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -144,6 +119,7 @@ public interface MFAFIDO2CredentialEntryModel
 	 *
 	 * @param userId the user ID of this mfafido2 credential entry
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
@@ -151,6 +127,7 @@ public interface MFAFIDO2CredentialEntryModel
 	 *
 	 * @return the user uuid of this mfafido2 credential entry
 	 */
+	@Override
 	public String getUserUuid();
 
 	/**
@@ -158,7 +135,57 @@ public interface MFAFIDO2CredentialEntryModel
 	 *
 	 * @param userUuid the user uuid of this mfafido2 credential entry
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this mfafido2 credential entry.
+	 *
+	 * @return the user name of this mfafido2 credential entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this mfafido2 credential entry.
+	 *
+	 * @param userName the user name of this mfafido2 credential entry
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this mfafido2 credential entry.
+	 *
+	 * @return the create date of this mfafido2 credential entry
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this mfafido2 credential entry.
+	 *
+	 * @param createDate the create date of this mfafido2 credential entry
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this mfafido2 credential entry.
+	 *
+	 * @return the modified date of this mfafido2 credential entry
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this mfafido2 credential entry.
+	 *
+	 * @param modifiedDate the modified date of this mfafido2 credential entry
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the credential ID of this mfafido2 credential entry.

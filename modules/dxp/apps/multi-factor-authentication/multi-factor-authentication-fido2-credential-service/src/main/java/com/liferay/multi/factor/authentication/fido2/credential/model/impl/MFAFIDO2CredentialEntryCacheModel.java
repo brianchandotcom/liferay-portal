@@ -78,7 +78,7 @@ public class MFAFIDO2CredentialEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -86,12 +86,14 @@ public class MFAFIDO2CredentialEntryCacheModel
 		sb.append(mfaFIDO2CredentialEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", userId=");
-		sb.append(userId);
 		sb.append(", credentialId=");
 		sb.append(credentialId);
 		sb.append(", credentialType=");
@@ -116,6 +118,14 @@ public class MFAFIDO2CredentialEntryCacheModel
 		mfaFIDO2CredentialEntryImpl.setMfaFIDO2CredentialEntryId(
 			mfaFIDO2CredentialEntryId);
 		mfaFIDO2CredentialEntryImpl.setCompanyId(companyId);
+		mfaFIDO2CredentialEntryImpl.setUserId(userId);
+
+		if (userName == null) {
+			mfaFIDO2CredentialEntryImpl.setUserName("");
+		}
+		else {
+			mfaFIDO2CredentialEntryImpl.setUserName(userName);
+		}
 
 		if (createDate == Long.MIN_VALUE) {
 			mfaFIDO2CredentialEntryImpl.setCreateDate(null);
@@ -130,8 +140,6 @@ public class MFAFIDO2CredentialEntryCacheModel
 		else {
 			mfaFIDO2CredentialEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
-
-		mfaFIDO2CredentialEntryImpl.setUserId(userId);
 
 		if (credentialId == null) {
 			mfaFIDO2CredentialEntryImpl.setCredentialId("");
@@ -164,10 +172,11 @@ public class MFAFIDO2CredentialEntryCacheModel
 		mfaFIDO2CredentialEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
-		createDate = objectInput.readLong();
-		modifiedDate = objectInput.readLong();
 
 		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 		credentialId = objectInput.readUTF();
 
 		credentialType = objectInput.readInt();
@@ -185,10 +194,18 @@ public class MFAFIDO2CredentialEntryCacheModel
 		objectOutput.writeLong(mfaFIDO2CredentialEntryId);
 
 		objectOutput.writeLong(companyId);
-		objectOutput.writeLong(createDate);
-		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 
 		if (credentialId == null) {
 			objectOutput.writeUTF("");
@@ -214,9 +231,10 @@ public class MFAFIDO2CredentialEntryCacheModel
 	public long mvccVersion;
 	public long mfaFIDO2CredentialEntryId;
 	public long companyId;
+	public long userId;
+	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long userId;
 	public String credentialId;
 	public int credentialType;
 	public String publicKeyCose;

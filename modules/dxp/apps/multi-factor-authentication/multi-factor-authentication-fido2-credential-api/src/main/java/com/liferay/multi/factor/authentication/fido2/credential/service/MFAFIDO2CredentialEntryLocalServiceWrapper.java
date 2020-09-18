@@ -370,11 +370,13 @@ public class MFAFIDO2CredentialEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void updateAttempts(
-			long userId, String credentialId, String ip, long signatureCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public com.liferay.multi.factor.authentication.fido2.credential.model.
+		MFAFIDO2CredentialEntry updateAttempts(
+				long userId, String credentialId, String ip,
+				long signatureCount)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
-		_mfaFIDO2CredentialEntryLocalService.updateAttempts(
+		return _mfaFIDO2CredentialEntryLocalService.updateAttempts(
 			userId, credentialId, ip, signatureCount);
 	}
 

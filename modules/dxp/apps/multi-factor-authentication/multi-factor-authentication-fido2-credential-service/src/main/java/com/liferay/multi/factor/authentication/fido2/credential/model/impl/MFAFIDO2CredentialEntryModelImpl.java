@@ -70,11 +70,11 @@ public class MFAFIDO2CredentialEntryModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT},
 		{"mfaFIDO2CredentialEntryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"userId", Types.BIGINT},
-		{"credentialId", Types.VARCHAR}, {"credentialType", Types.INTEGER},
-		{"publicKeyCose", Types.VARCHAR}, {"signatureCount", Types.BIGINT},
-		{"failedAttempts", Types.INTEGER}
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"credentialId", Types.VARCHAR},
+		{"credentialType", Types.INTEGER}, {"publicKeyCose", Types.VARCHAR},
+		{"signatureCount", Types.BIGINT}, {"failedAttempts", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -84,9 +84,10 @@ public class MFAFIDO2CredentialEntryModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mfaFIDO2CredentialEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("credentialId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("credentialType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("publicKeyCose", Types.VARCHAR);
@@ -95,7 +96,7 @@ public class MFAFIDO2CredentialEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MFAFIDO2CredentialEntry (mvccVersion LONG default 0 not null,mfaFIDO2CredentialEntryId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,userId LONG,credentialId VARCHAR(128) null,credentialType INTEGER,publicKeyCose VARCHAR(128) null,signatureCount LONG,failedAttempts INTEGER)";
+		"create table MFAFIDO2CredentialEntry (mvccVersion LONG default 0 not null,mfaFIDO2CredentialEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,credentialId VARCHAR(128) null,credentialType INTEGER,publicKeyCose VARCHAR(128) null,signatureCount LONG,failedAttempts INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table MFAFIDO2CredentialEntry";
@@ -295,6 +296,18 @@ public class MFAFIDO2CredentialEntryModelImpl
 			(BiConsumer<MFAFIDO2CredentialEntry, Long>)
 				MFAFIDO2CredentialEntry::setCompanyId);
 		attributeGetterFunctions.put(
+			"userId", MFAFIDO2CredentialEntry::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<MFAFIDO2CredentialEntry, Long>)
+				MFAFIDO2CredentialEntry::setUserId);
+		attributeGetterFunctions.put(
+			"userName", MFAFIDO2CredentialEntry::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<MFAFIDO2CredentialEntry, String>)
+				MFAFIDO2CredentialEntry::setUserName);
+		attributeGetterFunctions.put(
 			"createDate", MFAFIDO2CredentialEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
@@ -306,12 +319,6 @@ public class MFAFIDO2CredentialEntryModelImpl
 			"modifiedDate",
 			(BiConsumer<MFAFIDO2CredentialEntry, Date>)
 				MFAFIDO2CredentialEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"userId", MFAFIDO2CredentialEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<MFAFIDO2CredentialEntry, Long>)
-				MFAFIDO2CredentialEntry::setUserId);
 		attributeGetterFunctions.put(
 			"credentialId", MFAFIDO2CredentialEntry::getCredentialId);
 		attributeSetterBiConsumers.put(
@@ -392,40 +399,6 @@ public class MFAFIDO2CredentialEntryModelImpl
 	}
 
 	@Override
-	public Date getCreateDate() {
-		return _createDate;
-	}
-
-	@Override
-	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_createDate = createDate;
-	}
-
-	@Override
-	public Date getModifiedDate() {
-		return _modifiedDate;
-	}
-
-	public boolean hasSetModifiedDate() {
-		return _setModifiedDate;
-	}
-
-	@Override
-	public void setModifiedDate(Date modifiedDate) {
-		_setModifiedDate = true;
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_modifiedDate = modifiedDate;
-	}
-
-	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -462,6 +435,59 @@ public class MFAFIDO2CredentialEntryModelImpl
 	@Deprecated
 	public long getOriginalUserId() {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
+	}
+
+	@Override
+	public String getUserName() {
+		if (_userName == null) {
+			return "";
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_userName = userName;
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createDate = createDate;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_modifiedDate = modifiedDate;
 	}
 
 	@Override
@@ -613,9 +639,10 @@ public class MFAFIDO2CredentialEntryModelImpl
 		mfaFIDO2CredentialEntryImpl.setMfaFIDO2CredentialEntryId(
 			getMfaFIDO2CredentialEntryId());
 		mfaFIDO2CredentialEntryImpl.setCompanyId(getCompanyId());
+		mfaFIDO2CredentialEntryImpl.setUserId(getUserId());
+		mfaFIDO2CredentialEntryImpl.setUserName(getUserName());
 		mfaFIDO2CredentialEntryImpl.setCreateDate(getCreateDate());
 		mfaFIDO2CredentialEntryImpl.setModifiedDate(getModifiedDate());
-		mfaFIDO2CredentialEntryImpl.setUserId(getUserId());
 		mfaFIDO2CredentialEntryImpl.setCredentialId(getCredentialId());
 		mfaFIDO2CredentialEntryImpl.setCredentialType(getCredentialType());
 		mfaFIDO2CredentialEntryImpl.setPublicKeyCose(getPublicKeyCose());
@@ -709,6 +736,16 @@ public class MFAFIDO2CredentialEntryModelImpl
 
 		mfaFIDO2CredentialEntryCacheModel.companyId = getCompanyId();
 
+		mfaFIDO2CredentialEntryCacheModel.userId = getUserId();
+
+		mfaFIDO2CredentialEntryCacheModel.userName = getUserName();
+
+		String userName = mfaFIDO2CredentialEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			mfaFIDO2CredentialEntryCacheModel.userName = null;
+		}
+
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -727,8 +764,6 @@ public class MFAFIDO2CredentialEntryModelImpl
 		else {
 			mfaFIDO2CredentialEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
-
-		mfaFIDO2CredentialEntryCacheModel.userId = getUserId();
 
 		mfaFIDO2CredentialEntryCacheModel.credentialId = getCredentialId();
 
@@ -832,10 +867,11 @@ public class MFAFIDO2CredentialEntryModelImpl
 	private long _mvccVersion;
 	private long _mfaFIDO2CredentialEntryId;
 	private long _companyId;
+	private long _userId;
+	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _userId;
 	private String _credentialId;
 	private int _credentialType;
 	private String _publicKeyCose;
@@ -873,9 +909,10 @@ public class MFAFIDO2CredentialEntryModelImpl
 		_columnOriginalValues.put(
 			"mfaFIDO2CredentialEntryId", _mfaFIDO2CredentialEntryId);
 		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("credentialId", _credentialId);
 		_columnOriginalValues.put("credentialType", _credentialType);
 		_columnOriginalValues.put("publicKeyCose", _publicKeyCose);
@@ -900,21 +937,23 @@ public class MFAFIDO2CredentialEntryModelImpl
 
 		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("createDate", 8L);
+		columnBitmasks.put("userId", 8L);
 
-		columnBitmasks.put("modifiedDate", 16L);
+		columnBitmasks.put("userName", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("credentialId", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("credentialType", 128L);
+		columnBitmasks.put("credentialId", 128L);
 
-		columnBitmasks.put("publicKeyCose", 256L);
+		columnBitmasks.put("credentialType", 256L);
 
-		columnBitmasks.put("signatureCount", 512L);
+		columnBitmasks.put("publicKeyCose", 512L);
 
-		columnBitmasks.put("failedAttempts", 1024L);
+		columnBitmasks.put("signatureCount", 1024L);
+
+		columnBitmasks.put("failedAttempts", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

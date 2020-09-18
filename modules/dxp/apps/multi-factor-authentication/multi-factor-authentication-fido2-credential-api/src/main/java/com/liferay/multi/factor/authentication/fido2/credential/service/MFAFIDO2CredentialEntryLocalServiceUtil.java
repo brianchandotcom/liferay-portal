@@ -348,11 +348,15 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void updateAttempts(
-			long userId, String credentialId, String ip, long signatureCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static
+		com.liferay.multi.factor.authentication.fido2.credential.model.
+			MFAFIDO2CredentialEntry updateAttempts(
+					long userId, String credentialId, String ip,
+					long signatureCount)
+				throws com.liferay.portal.kernel.exception.PortalException {
 
-		getService().updateAttempts(userId, credentialId, ip, signatureCount);
+		return getService().updateAttempts(
+			userId, credentialId, ip, signatureCount);
 	}
 
 	/**

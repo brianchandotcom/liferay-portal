@@ -48,9 +48,10 @@ public class MFAFIDO2CredentialEntryWrapper
 		attributes.put(
 			"mfaFIDO2CredentialEntryId", getMfaFIDO2CredentialEntryId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("userId", getUserId());
 		attributes.put("credentialId", getCredentialId());
 		attributes.put("credentialType", getCredentialType());
 		attributes.put("publicKeyCose", getPublicKeyCose());
@@ -81,6 +82,18 @@ public class MFAFIDO2CredentialEntryWrapper
 			setCompanyId(companyId);
 		}
 
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
 		Date createDate = (Date)attributes.get("createDate");
 
 		if (createDate != null) {
@@ -91,12 +104,6 @@ public class MFAFIDO2CredentialEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
 		}
 
 		String credentialId = (String)attributes.get("credentialId");
@@ -251,6 +258,16 @@ public class MFAFIDO2CredentialEntryWrapper
 	}
 
 	/**
+	 * Returns the user name of this mfafido2 credential entry.
+	 *
+	 * @return the user name of this mfafido2 credential entry
+	 */
+	@Override
+	public String getUserName() {
+		return model.getUserName();
+	}
+
+	/**
 	 * Returns the user uuid of this mfafido2 credential entry.
 	 *
 	 * @return the user uuid of this mfafido2 credential entry
@@ -383,6 +400,16 @@ public class MFAFIDO2CredentialEntryWrapper
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user name of this mfafido2 credential entry.
+	 *
+	 * @param userName the user name of this mfafido2 credential entry
+	 */
+	@Override
+	public void setUserName(String userName) {
+		model.setUserName(userName);
 	}
 
 	/**

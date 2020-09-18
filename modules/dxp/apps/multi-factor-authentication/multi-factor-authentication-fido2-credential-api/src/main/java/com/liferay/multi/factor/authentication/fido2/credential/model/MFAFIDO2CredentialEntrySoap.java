@@ -40,9 +40,10 @@ public class MFAFIDO2CredentialEntrySoap implements Serializable {
 		soapModel.setMfaFIDO2CredentialEntryId(
 			model.getMfaFIDO2CredentialEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setUserId(model.getUserId());
 		soapModel.setCredentialId(model.getCredentialId());
 		soapModel.setCredentialType(model.getCredentialType());
 		soapModel.setPublicKeyCose(model.getPublicKeyCose());
@@ -135,6 +136,22 @@ public class MFAFIDO2CredentialEntrySoap implements Serializable {
 		_companyId = companyId;
 	}
 
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -149,14 +166,6 @@ public class MFAFIDO2CredentialEntrySoap implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-	}
-
-	public long getUserId() {
-		return _userId;
-	}
-
-	public void setUserId(long userId) {
-		_userId = userId;
 	}
 
 	public String getCredentialId() {
@@ -202,9 +211,10 @@ public class MFAFIDO2CredentialEntrySoap implements Serializable {
 	private long _mvccVersion;
 	private long _mfaFIDO2CredentialEntryId;
 	private long _companyId;
+	private long _userId;
+	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _userId;
 	private String _credentialId;
 	private int _credentialType;
 	private String _publicKeyCose;

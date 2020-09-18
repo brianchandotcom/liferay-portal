@@ -275,7 +275,7 @@ public interface MFAFIDO2CredentialEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void updateAttempts(
+	public MFAFIDO2CredentialEntry updateAttempts(
 			long userId, String credentialId, String ip, long signatureCount)
 		throws PortalException;
 

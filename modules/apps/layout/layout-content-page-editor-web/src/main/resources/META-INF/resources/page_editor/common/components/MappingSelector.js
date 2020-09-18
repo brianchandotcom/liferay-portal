@@ -27,6 +27,7 @@ import InfoItemService from '../../app/services/InfoItemService';
 import {useDispatch, useSelector} from '../../app/store/index';
 import isMapped from '../../app/utils/isMapped';
 import {useId} from '../../app/utils/useId';
+import useControlledState from '../../core/hooks/useControlledState';
 import ItemSelector from './ItemSelector';
 
 const MAPPING_SOURCE_TYPE_IDS = {
@@ -169,8 +170,9 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	const {selectedMappingTypes} = config;
 
 	const [fieldSets, setFieldSets] = useState(null);
-	const [selectedItem, setSelectedItem] = useState(mappedItem);
-	const [selectedSourceTypeId, setSelectedSourceTypeId] = useState(
+	const [selectedItem, setSelectedItem] = useControlledState(mappedItem);
+
+	const [selectedSourceTypeId, setSelectedSourceTypeId] = useControlledState(
 		mappedItem.mappedField || config.layoutType === LAYOUT_TYPES.display
 			? MAPPING_SOURCE_TYPE_IDS.structure
 			: MAPPING_SOURCE_TYPE_IDS.content
@@ -251,7 +253,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 			...mappedItem,
 			...selectedItem,
 		}));
-	}, [mappedItem, mappedInfoItems]);
+	}, [mappedItem, mappedInfoItems, setSelectedItem]);
 
 	useEffect(() => {
 		const data =

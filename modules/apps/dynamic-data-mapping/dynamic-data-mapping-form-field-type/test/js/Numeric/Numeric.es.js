@@ -272,4 +272,21 @@ describe('Field Numeric', () => {
 
 		expect(input.value).toBe('4');
 	});
+
+	it('round up value when changing from decimal to integer when symbol of language is comma', () => {
+		const {container} = render(
+			<NumericWithProvider
+				{...defaultNumericConfig}
+				dataType="integer"
+				onChange={jest.fn()}
+				value="22,82"
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(container.querySelector('input').value).toBe('23');
+	});
 });

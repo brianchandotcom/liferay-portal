@@ -20,7 +20,7 @@ import React from 'react';
 import {deleteMessageQuery} from '../utils/client.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 
-export default ({comment, commentChange}) => {
+export default ({comment, commentChange, editable = true}) => {
 	const [deleteMessage] = useMutation(deleteMessageQuery, {
 		onCompleted() {
 			if (commentChange) {
@@ -46,7 +46,7 @@ export default ({comment, commentChange}) => {
 					/>
 				</div>
 
-				{comment.actions.delete && (
+				{editable && comment.actions.delete && (
 					<ClayButton
 						className="c-mt-3 font-weight-bold text-secondary"
 						displayType="unstyled"

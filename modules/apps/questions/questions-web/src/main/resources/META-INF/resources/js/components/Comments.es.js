@@ -28,6 +28,7 @@ export default withRouter(
 	({
 		comments,
 		commentsChange,
+		editable = true,
 		entityId,
 		match: {
 			params: {questionId, sectionTitle},
@@ -68,11 +69,12 @@ export default withRouter(
 					<Comment
 						comment={comment}
 						commentChange={_commentChange}
+						editable={editable}
 						key={comment.id}
 					/>
 				))}
 
-				{showNewComment && (
+				{editable && showNewComment && (
 					<>
 						<ClayForm.Group small>
 							<QuestionsEditor

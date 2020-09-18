@@ -213,6 +213,7 @@ export default withRouter(
 							<div className="col-md-1 text-md-center">
 								<Rating
 									aggregateRating={question.aggregateRating}
+									disabled={!!question.locked}
 									entityId={question.id}
 									myRating={
 										question.myRating &&
@@ -250,6 +251,12 @@ export default withRouter(
 											)}
 										>
 											{question.headline}
+
+											{!!question.locked && (
+												<span className="c-ml-2">
+													<ClayIcon symbol="lock" />
+												</span>
+											)}
 										</h1>
 
 										<p className="c-mb-0 small text-secondary">
@@ -274,58 +281,60 @@ export default withRouter(
 										</p>
 									</div>
 
-									<div className="col-md-4 text-right">
-										<ClayButton.Group
-											className="questions-actions"
-											spaced={true}
-										>
-											{question.actions.subscribe && (
-												<Subscription
-													question={question}
-												/>
-											)}
-
-											{question.actions.delete && (
-												<>
-													<DeleteQuestion
-														deleteModalVisibility={
-															showDeleteModalPanel
-														}
+									{!question.locked && (
+										<div className="col-md-4 text-right">
+											<ClayButton.Group
+												className="questions-actions"
+												spaced={true}
+											>
+												{question.actions.subscribe && (
+													<Subscription
 														question={question}
-														setDeleteModalVisibility={
-															setShowDeleteModalPanel
-														}
 													/>
-													<ClayTooltipProvider>
-														<ClayButton
-															data-tooltip-align="top"
-															displayType="secondary"
-															onClick={() =>
-																setShowDeleteModalPanel(
-																	true
-																)
-															}
-															title={Liferay.Language.get(
-																'delete'
-															)}
-														>
-															<ClayIcon symbol="trash" />
-														</ClayButton>
-													</ClayTooltipProvider>
-												</>
-											)}
+												)}
 
-											{question.actions.replace && (
-												<Link to={`${url}/edit`}>
-													<ClayButton displayType="secondary">
-														{Liferay.Language.get(
-															'edit'
-														)}
-													</ClayButton>
-												</Link>
-											)}
-										</ClayButton.Group>
-									</div>
+												{question.actions.delete && (
+													<>
+														<DeleteQuestion
+															deleteModalVisibility={
+																showDeleteModalPanel
+															}
+															question={question}
+															setDeleteModalVisibility={
+																setShowDeleteModalPanel
+															}
+														/>
+														<ClayTooltipProvider>
+															<ClayButton
+																data-tooltip-align="top"
+																displayType="secondary"
+																onClick={() =>
+																	setShowDeleteModalPanel(
+																		true
+																	)
+																}
+																title={Liferay.Language.get(
+																	'delete'
+																)}
+															>
+																<ClayIcon symbol="trash" />
+															</ClayButton>
+														</ClayTooltipProvider>
+													</>
+												)}
+
+												{question.actions.replace && (
+													<Link to={`${url}/edit`}>
+														<ClayButton displayType="secondary">
+															{Liferay.Language.get(
+																'edit'
+															)}
+														</ClayButton>
+													</Link>
+												)}
+											</ClayButton.Group>
+										</div>
+									)}
 								</div>
 
 								<div className="c-mt-4">
@@ -406,9 +415,11 @@ export default withRouter(
 												answer={answer}
 												answerChange={answerChange}
 												canMarkAsAnswer={
+													!question.locked &&
 													!!question.actions.replace
 												}
 												deleteAnswer={deleteAnswer}
+												editable={!question.locked}
 												key={answer.id}
 											/>
 										)}
@@ -416,6 +427,7 @@ export default withRouter(
 								</div>
 
 								{question &&
+									!question.locked &&
 									question.actions &&
 									question.actions['reply-to-thread'] && (
 										<div className="c-mt-5">

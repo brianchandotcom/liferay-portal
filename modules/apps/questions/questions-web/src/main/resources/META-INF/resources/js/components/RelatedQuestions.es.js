@@ -13,6 +13,7 @@
  */
 
 import {useQuery} from '@apollo/client';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useContext} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -99,6 +100,12 @@ export default withRouter(
 												)}
 											>
 												{relatedQuestion.headline}
+
+												{!!relatedQuestion.locked && (
+													<span className="c-ml-2">
+														<ClayIcon symbol="lock" />
+													</span>
+												)}
 											</h3>
 										</Link>
 

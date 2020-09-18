@@ -23,7 +23,13 @@ import {
 } from '../utils/client.es';
 import {normalize, normalizeRating} from '../utils/utils.es';
 
-export default ({aggregateRating, entityId, myRating, type}) => {
+export default ({
+	aggregateRating,
+	disabled = false,
+	entityId,
+	myRating,
+	type,
+}) => {
 	const [userRating, setUserRating] = useState(0);
 	const [rating, setRating] = useState(0);
 
@@ -73,6 +79,7 @@ export default ({aggregateRating, entityId, myRating, type}) => {
 				className={
 					'text-reset' + (userRating === 1 ? ' text-primary' : '')
 				}
+				disabled={disabled}
 				displayType="unstyled"
 				monospaced
 				onClick={() => voteChange(1)}
@@ -86,6 +93,7 @@ export default ({aggregateRating, entityId, myRating, type}) => {
 				className={
 					'text-reset' + (userRating === -1 ? ' text-primary' : '')
 				}
+				disabled={disabled}
 				displayType="unstyled"
 				monospaced
 				onClick={() => voteChange(-1)}

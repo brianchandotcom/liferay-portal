@@ -33,19 +33,15 @@ public class URLPatternMapperFactoryTest {
 			map.put("*.key" + i, "value" + i);
 		}
 
-		URLPatternMapper<String> urlPatternMapper1 =
-			URLPatternMapperFactory.create(map);
-
 		Assert.assertTrue(
-			urlPatternMapper1 instanceof StaticSizeTrieURLPatternMapper<?>);
+			URLPatternMapperFactory.create(map) instanceof
+				StaticSizeTrieURLPatternMapper<?>);
 
 		map.put("*.key" + 64, "value" + 64);
 
-		URLPatternMapper<String> urlPatternMapper2 =
-			URLPatternMapperFactory.create(map);
-
 		Assert.assertTrue(
-			urlPatternMapper2 instanceof DynamicSizeTrieURLPatternMapper<?>);
+			URLPatternMapperFactory.create(map) instanceof
+				DynamicSizeTrieURLPatternMapper<?>);
 	}
 
 }

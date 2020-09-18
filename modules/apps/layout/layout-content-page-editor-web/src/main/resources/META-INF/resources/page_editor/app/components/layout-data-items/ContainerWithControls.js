@@ -16,10 +16,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
-import {
-	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../store/index';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
@@ -27,72 +24,65 @@ import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import Topper from '../Topper';
 import Container from './Container';
 
-const ContainerWithControls = React.forwardRef(
-	({children, item, layoutData}, ref) => {
-		const canUpdateItemConfiguration = useSelector(
-			selectCanUpdateItemConfiguration
-		);
-		const selectedViewportSize = useSelector(
-			(state) => state.selectedViewportSize
-		);
+const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
+	const canUpdateItemConfiguration = useSelector(
+		selectCanUpdateItemConfiguration
+	);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
-		const [setRef, itemElement] = useSetRef(ref);
+	const [setRef, itemElement] = useSetRef(ref);
 
-		const itemConfig = getResponsiveConfig(
-			item.config,
-			selectedViewportSize
-		);
+	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 
-		const {widthType} = itemConfig;
+	const {widthType} = itemConfig;
 
-		const {
-			height,
-			marginLeft,
-			marginRight,
-			maxWidth,
-			minWidth,
-			shadow,
-			width,
-		} = itemConfig.styles;
+	const {
+		height,
+		marginLeft,
+		marginRight,
+		maxWidth,
+		minWidth,
+		shadow,
+		width,
+	} = itemConfig.styles;
 
-		const style = {};
+	const style = {};
 
-		style.boxShadow = getFrontendTokenValue(shadow);
-		style.maxWidth = maxWidth;
-		style.minWidth = minWidth;
-		style.width = width;
+	style.boxShadow = getFrontendTokenValue(shadow);
+	style.maxWidth = maxWidth;
+	style.minWidth = minWidth;
+	style.width = width;
 
-		return (
-			<Topper
+	return (
+		<Topper
+			className={classNames({
+				container: widthType === 'fixed',
+				[`ml-${marginLeft}`]: widthType !== 'fixed',
+				[`mr-${marginRight}`]: widthType !== 'fixed',
+				'p-0': widthType === 'fixed',
+			})}
+			item={item}
+			itemElement={itemElement}
+			style={style}
+		>
+			<Container
 				className={classNames({
-					container: widthType === 'fixed',
-					[`ml-${marginLeft}`]: widthType !== 'fixed',
-					[`mr-${marginRight}`]: widthType !== 'fixed',
-					'p-0': widthType === 'fixed',
+					empty: !item.children.length && !height,
+					'page-editor__container': canUpdateItemConfiguration,
 				})}
 				item={item}
-				itemElement={itemElement}
-				layoutData={layoutData}
-				style={style}
+				ref={setRef}
 			>
-				<Container
-					className={classNames({
-						empty: !item.children.length && !height,
-						'page-editor__container': canUpdateItemConfiguration,
-					})}
-					item={item}
-					ref={setRef}
-				>
-					{children}
-				</Container>
-			</Topper>
-		);
-	}
-);
+				{children}
+			</Container>
+		</Topper>
+	);
+});
 
 ContainerWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default ContainerWithControls;

@@ -60,12 +60,7 @@ const RowWithControls = React.forwardRef(
 		style.width = width;
 
 		return (
-			<Topper
-				item={item}
-				itemElement={itemElement}
-				layoutData={layoutData}
-				style={style}
-			>
+			<Topper item={item} itemElement={itemElement} style={style}>
 				<Row
 					className={classNames({
 						'align-bottom': verticalAlignment === 'bottom',

@@ -15,17 +15,14 @@
 import React, {useCallback} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
-import {
-	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import Layout from '../Layout';
 import Topper from '../Topper';
 import FragmentContent from '../fragment-content/FragmentContent';
 import FragmentContentInteractionsFilter from '../fragment-content/FragmentContentInteractionsFilter';
 import FragmentContentProcessor from '../fragment-content/FragmentContentProcessor';
 
-const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
+const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	const [setRef, itemElement] = useSetRef(ref);
 
 	const getPortals = useCallback(
@@ -50,7 +47,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	);
 
 	return (
-		<Topper item={item} itemElement={itemElement} layoutData={layoutData}>
+		<Topper item={item} itemElement={itemElement}>
 			<FragmentContentInteractionsFilter
 				fragmentEntryLinkId={item.config.fragmentEntryLinkId}
 				itemId={item.itemId}
@@ -76,7 +73,6 @@ FragmentWithControls.displayName = 'FragmentWithControls';
 
 FragmentWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default FragmentWithControls;

@@ -415,7 +415,7 @@ const ColumnWithControls = React.forwardRef(
 		const firstColumnOfRow = isFirstColumnOfRow(columnIndex);
 
 		return (
-			<TopperEmpty item={item} layoutData={layoutData}>
+			<TopperEmpty item={item}>
 				<Column
 					className={classNames('page-editor__col', {
 						'page-editor__row-overlay-grid__border':

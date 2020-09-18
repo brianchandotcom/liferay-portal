@@ -436,7 +436,10 @@ public class GroupImpl extends GroupBaseImpl {
 			}
 		}
 
-		if ((logoId == 0) && !useDefault) {
+		if ((logoId == 0) && !useDefault &&
+			(!isCompany() || isCompanyStagingGroup()) && !isControlPanel() &&
+			!isGuest()) {
+
 			return null;
 		}
 

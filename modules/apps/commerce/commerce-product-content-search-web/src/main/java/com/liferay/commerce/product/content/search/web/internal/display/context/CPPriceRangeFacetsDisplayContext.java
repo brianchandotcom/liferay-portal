@@ -44,12 +44,14 @@ public class CPPriceRangeFacetsDisplayContext {
 	public CPPriceRangeFacetsDisplayContext(
 			CommercePriceFormatter commercePriceFormatter,
 			RenderRequest renderRequest, Facet facet,
+			String paginationStartParameterName,
 			PortletSharedSearchResponse portletSharedSearchResponse)
 		throws PortalException {
 
 		_commercePriceFormatter = commercePriceFormatter;
 		_renderRequest = renderRequest;
 		_facet = facet;
+		_paginationStartParameterName = paginationStartParameterName;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
 
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
@@ -75,6 +77,10 @@ public class CPPriceRangeFacetsDisplayContext {
 
 	public Facet getFacet() {
 		return _facet;
+	}
+
+	public String getPaginationStartParameterName() {
+		return _paginationStartParameterName;
 	}
 
 	public String getPriceRangeLabel(String facetTerm) throws PortalException {
@@ -146,6 +152,7 @@ public class CPPriceRangeFacetsDisplayContext {
 	private final CPPriceRangeFacetsPortletInstanceConfiguration
 		_cpPriceRangeFacetsPortletInstanceConfiguration;
 	private final Facet _facet;
+	private final String _paginationStartParameterName;
 	private final PortletSharedSearchResponse _portletSharedSearchResponse;
 	private final RenderRequest _renderRequest;
 	private final ThemeDisplay _themeDisplay;

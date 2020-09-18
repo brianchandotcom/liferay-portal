@@ -493,6 +493,25 @@ public class DataDefinitionResourceTest
 			Assert.assertEquals("MustSetValidName", problem.getType());
 		}
 
+		// MustSetValidType
+
+		try {
+			dataDefinitionResource.postDataDefinitionByContentType(
+				_CONTENT_TYPE,
+				DataDefinition.toDTO(
+					DataDefinitionTestUtil.read(
+						"data-definition-must-set-valid-field-type.json")));
+
+			Assert.fail("An exception must be thrown");
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("string", problem.getDetail());
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals("MustSetValidType", problem.getType());
+		}
+
 		// Fill the data layout name with the data definition's name when no
 		// name is set
 

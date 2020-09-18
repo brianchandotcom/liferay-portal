@@ -171,6 +171,14 @@ message.
 		</for>
 	</target>
 
+	<target name="bom-all">
+		<gradle-execute setupbinariescache="false" task="lockBOMDependencyVersion">
+			<arg value="--build-file=${project.dir}/modules/releng.gradle" />
+		</gradle-execute>
+
+		<antcall target="all" />
+	</target>
+
 	<target name="clean">
 		<gradle-stop-daemon />
 

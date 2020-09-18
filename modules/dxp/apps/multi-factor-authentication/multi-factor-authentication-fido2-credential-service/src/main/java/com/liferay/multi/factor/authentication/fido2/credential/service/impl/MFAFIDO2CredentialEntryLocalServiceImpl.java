@@ -96,7 +96,7 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 	}
 
 	@Override
-	public void updateAttempts(
+	public MFAFIDO2CredentialEntry updateAttempts(
 			long userId, String credentialId, String ip, long signatureCount)
 		throws PortalException {
 
@@ -118,7 +118,8 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 			mfaFIDO2CredentialEntry.setFailedAttempts(0);
 		}
 
-		mfaFIDO2CredentialEntryPersistence.update(mfaFIDO2CredentialEntry);
+		return mfaFIDO2CredentialEntryPersistence.update(
+			mfaFIDO2CredentialEntry);
 	}
 
 }

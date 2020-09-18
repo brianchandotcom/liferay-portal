@@ -547,7 +547,6 @@ definition {
 	@priority = "4"
 	test ValidateFormViewModes {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilderWorkflow#ValidateFormViewModes";
 
 		var formViewName = "My Form View";
 		var tableViewName = "My Table View";

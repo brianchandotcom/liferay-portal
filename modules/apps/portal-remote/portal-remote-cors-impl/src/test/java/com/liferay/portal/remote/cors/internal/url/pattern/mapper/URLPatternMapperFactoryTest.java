@@ -26,7 +26,7 @@ import org.junit.Test;
 public class URLPatternMapperFactoryTest {
 
 	@Test
-	public void testCreateMapper() {
+	public void testCreate() {
 		Map<String, String> map = new HashMap<>();
 
 		for (int i = 0; i < 64; i++) {

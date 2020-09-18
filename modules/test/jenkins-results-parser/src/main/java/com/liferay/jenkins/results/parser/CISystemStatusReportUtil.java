@@ -24,6 +24,7 @@ import java.text.DecimalFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
@@ -174,7 +175,7 @@ public class CISystemStatusReportUtil {
 
 		successRateDataJSONArray.put(titlesJSONArray);
 
-		LocalDateTime currentLocalDateTime = LocalDateTime.now();
+		LocalDateTime currentLocalDateTime = LocalDateTime.now(ZoneOffset.UTC);
 
 		successRateDataJSONArray.put(
 			_getSuccessRateJSONArray(
@@ -280,7 +281,7 @@ public class CISystemStatusReportUtil {
 		_recentSpiraReleaseBuilds =
 			new HashMap<LocalDate, List<SpiraReleaseBuild>>() {
 				{
-					LocalDate localDate = LocalDate.now();
+					LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
 
 					for (int i = 0; i < _DAYS_AGO; i++) {
 						put(

@@ -808,6 +808,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		else {
 			WebElement webElement = getWebElement(locator);
 
+			scrollWebElementIntoView(webElement);
+
 			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 			WebDriver webDriver = wrapsDriver.getWrappedDriver();

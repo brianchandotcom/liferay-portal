@@ -163,7 +163,7 @@ export default withRouter(({history}) => {
 								))) || (
 								<ClayEmptyState
 									description={Liferay.Language.get(
-										'there-are-no-topics-in-this-page-create-the-first-topic'
+										'there-are-no-topics-in-this-page-be-the-first-to-create-a-topic'
 									)}
 									imgSrc={
 										context.includeContextPath +

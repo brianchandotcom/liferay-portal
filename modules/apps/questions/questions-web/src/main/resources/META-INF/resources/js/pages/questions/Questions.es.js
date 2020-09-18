@@ -297,12 +297,16 @@ export default withRouter(
 								emptyState={
 									!search && !filter ? (
 										<ClayEmptyState
-											description="There are no questions inside this topic. Be the first to ask something!"
+											description={Liferay.Language.get(
+												'there-are-no-questions-inside-this-topic-be-the-first-to-ask-something'
+											)}
 											imgSrc={
 												context.includeContextPath +
 												'/assets/empty_questions_list.png'
 											}
-											title="This topic is empty."
+											title={Liferay.Language.get(
+												'this-topic-is-empty'
+											)}
 										>
 											<ClayButton
 												displayType="primary"

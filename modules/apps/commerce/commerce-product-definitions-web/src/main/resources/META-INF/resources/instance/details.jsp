@@ -107,14 +107,14 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	>
 		<div class="row">
 			<div class="col-4">
-				<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= cpInstanceDisplayContext.getPrice() %>">
+				<aui:input label="base-price" name="price" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= cpInstanceDisplayContext.getPrice() %>">
 					<aui:validator name="min">0</aui:validator>
 					<aui:validator name="number" />
 				</aui:input>
 			</div>
 
 			<div class="col-4">
-				<aui:input name="promoPrice" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= cpInstanceDisplayContext.getPromoPrice() %>">
+				<aui:input label="sale-price" name="promoPrice" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= cpInstanceDisplayContext.getPromoPrice() %>">
 					<aui:validator name="min">0</aui:validator>
 					<aui:validator name="number" />
 				</aui:input>

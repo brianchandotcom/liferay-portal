@@ -29,16 +29,28 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.ProductDTOConverter;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.ProductDTOConverterContext;
+import com.liferay.headless.commerce.delivery.catalog.internal.odata.entity.v1_0.ProductEntityModel;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.io.Serializable;
 
@@ -47,6 +59,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,7 +74,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/product.properties",
 	scope = ServiceScope.PROTOTYPE, service = ProductResource.class
 )
-public class ProductResourceImpl extends BaseProductResourceImpl {
+public class ProductResourceImpl
+	extends BaseProductResourceImpl implements EntityModelResource {
 
 	@Override
 	public Product getChannelProduct(
@@ -121,6 +136,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		cpQuery.setOrderByType1("ASC");
 		cpQuery.setOrderByType2("DESC");
 
+		BooleanClause<Query> booleanClause = _getBooleanClause(
+			booleanQuery -> booleanQuery.getPreBooleanFilter(), filter);
+
+		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
+
 		CPDataSourceResult cpDataSourceResult = _cpDefinitionHelper.search(
 			commerceChannel.getGroupId(), searchContext, cpQuery,
 			pagination.getStartPosition(), pagination.getEndPosition());
@@ -128,6 +148,36 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		return Page.of(
 			_toProducts(cpDataSourceResult), pagination,
 			cpDataSourceResult.getLength());
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
+
+	private static BooleanClause<Query> _getBooleanClause(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter)
+		throws Exception {
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl() {
+			{
+				add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+
+				BooleanFilter booleanFilter = new BooleanFilter();
+
+				if (filter != null) {
+					booleanFilter.add(filter, BooleanClauseOccur.MUST);
+				}
+
+				setPreBooleanFilter(booleanFilter);
+			}
+		};
+
+		booleanQueryUnsafeConsumer.accept(booleanQuery);
+
+		return BooleanClauseFactoryUtil.create(
+			booleanQuery, BooleanClauseOccur.MUST.getName());
 	}
 
 	private Long _getAccountId(Long accountId, CommerceChannel commerceChannel)
@@ -177,6 +227,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		return products;
 	}
+
+	private static final EntityModel _entityModel = new ProductEntityModel();
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

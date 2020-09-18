@@ -15,23 +15,25 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
+import {AppLayout} from './AppLayout';
+
 export const Toolbar = () => {
 	return (
 		<>
-			<li className="tbar-item tbar-item-expand" />
+			<AppLayout.ToolbarItem expand />
 
-			<li className="tbar-item">
+			<AppLayout.ToolbarItem>
 				<ClayButtonWithIcon
 					displayType="unstyled"
 					monospaced
 					small
 					symbol="cog"
 				/>
-			</li>
+			</AppLayout.ToolbarItem>
 
-			<li className="tbar-item">
+			<AppLayout.ToolbarItem>
 				<ClayButtonWithIcon monospaced small symbol="plus" />
-			</li>
+			</AppLayout.ToolbarItem>
 		</>
 	);
 };

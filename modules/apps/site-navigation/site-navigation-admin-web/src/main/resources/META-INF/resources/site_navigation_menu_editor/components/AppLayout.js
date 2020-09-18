@@ -105,6 +105,19 @@ AppLayout.propTypes = {
 	toolbarChildren: PropTypes.node,
 };
 
+AppLayout.ToolbarItem = ({children, expand}) => {
+	return (
+		<li className={classNames('tbar-item', {'tbar-item-expand': expand})}>
+			{children}
+		</li>
+	);
+};
+
+AppLayout.ToolbarItem.propTypes = {
+	children: PropTypes.node,
+	expand: PropTypes.bool,
+};
+
 function closeProductMenu() {
 	Liferay.SideNavigation.hide(document.querySelector('.product-menu-toggle'));
 }

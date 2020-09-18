@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner.pql;
+package com.liferay.poshi.core.pql;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,40 +24,40 @@ import org.junit.Test;
 /**
  * @author Michael Hashimoto
  */
-public class PQLOperatorFactoryTest extends TestCase {
+public class PQLModifierFactoryTest extends TestCase {
 
 	@Test
-	public void testNewPQLOperator() throws Exception {
-		Set<String> availableOperators = PQLOperator.getAvailableOperators();
+	public void testNewPQLModifier() throws Exception {
+		Set<String> availableModifiers = PQLModifier.getAvailableModifiers();
 
-		for (String operator : availableOperators) {
-			PQLOperatorFactory.newPQLOperator(operator);
+		for (String modifier : availableModifiers) {
+			PQLModifierFactory.newPQLModifier(modifier);
 		}
 	}
 
 	@Test
-	public void testNewPQLOperatorError() throws Exception {
-		Set<String> operators = new HashSet<>();
+	public void testNewPQLModifierError() throws Exception {
+		Set<String> modifiers = new HashSet<>();
 
-		operators.add(null);
-		operators.add("bad");
-		operators.add("bad value");
-		operators.addAll(PQLModifier.getAvailableModifiers());
+		modifiers.add(null);
+		modifiers.add("bad");
+		modifiers.add("bad value");
+		modifiers.addAll(PQLOperator.getAvailableOperators());
 
-		for (String operator : operators) {
-			_validateNewPQLOperatorError(
-				operator, "Invalid operator: " + operator);
+		for (String modifier : modifiers) {
+			_validateNewPQLModifierError(
+				modifier, "Invalid modifier: " + modifier);
 		}
 	}
 
-	private void _validateNewPQLOperatorError(
-			String operator, String expectedError)
+	private void _validateNewPQLModifierError(
+			String modifier, String expectedError)
 		throws Exception {
 
 		String actualError = null;
 
 		try {
-			PQLOperatorFactory.newPQLOperator(operator);
+			PQLModifierFactory.newPQLModifier(modifier);
 		}
 		catch (Exception exception) {
 			actualError = exception.getMessage();
@@ -65,7 +65,7 @@ public class PQLOperatorFactoryTest extends TestCase {
 			if (!actualError.equals(expectedError)) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.append("Mismatched error thrown for new PQL operators:");
+				sb.append("Mismatched error thrown for new PQL modifiers:");
 				sb.append("\n* Actual:   ");
 				sb.append(actualError);
 				sb.append("\n* Expected: ");
@@ -77,7 +77,7 @@ public class PQLOperatorFactoryTest extends TestCase {
 		finally {
 			if (actualError == null) {
 				throw new Exception(
-					"No error thrown for the following operator: " + operator);
+					"No error thrown for the following modifier: " + modifier);
 			}
 		}
 	}

@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.poshi.runner.pql;
+package com.liferay.poshi.core.pql;
 
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -25,7 +23,7 @@ import org.junit.Test;
 /**
  * @author Michael Hashimoto
  */
-public class PQLValueTest extends TestCase {
+public class PQLVariableTest extends TestCase {
 
 	@Test
 	public void testGetPQLResult() throws Exception {
@@ -57,67 +55,41 @@ public class PQLValueTest extends TestCase {
 
 	@Test
 	public void testGetPQLResultError() throws Exception {
-		Set<String> pqls = new HashSet<>();
-
-		pqls.add("test == test");
-		pqls.add("test test");
-		pqls.add("true AND true");
-
-		for (String pql : pqls) {
-			_validateGetPQLResultError(pql, "Invalid value: " + pql);
-		}
+		_validateGetPQLResultError(
+			"invalid.property", "Invalid testcase property: invalid.property");
+		_validateGetPQLResultError(null, "Invalid variable: null");
+		_validateGetPQLResultError(
+			"test == test", "Invalid value: test == test");
+		_validateGetPQLResultError(
+			"test OR test", "Invalid value: test OR test");
 	}
 
-	@Test
-	public void testGetPQLResultModifier() throws Exception {
-		_validateGetPQLResult("NOT true", Boolean.FALSE);
-		_validateGetPQLResult("NOT false", Boolean.TRUE);
-	}
-
-	@Test
-	public void testGetPQLResultModifierError() throws Exception {
-		_validateGetPQLResultError(
-			"NOT 3.2", "Modifier must be used with a boolean value: NOT");
-		_validateGetPQLResultError(
-			"NOT 2016", "Modifier must be used with a boolean value: NOT");
-		_validateGetPQLResultError(
-			"NOT test", "Modifier must be used with a boolean value: NOT");
-		_validateGetPQLResultError(
-			"NOT 'test test'",
-			"Modifier must be used with a boolean value: NOT");
-	}
-
-	@Test
-	public void testGetPQLResultNull() throws Exception {
-		_validateGetPQLResultNull(null);
-		_validateGetPQLResultNull("'null'");
-		_validateGetPQLResultNull("\"null\"");
-	}
-
-	private void _validateGetPQLResult(String pql, Object expectedResult)
+	private void _validateGetPQLResult(String pql, Object expectedPQLResult)
 		throws Exception {
 
 		Properties properties = new Properties();
 
-		Class<?> clazz = expectedResult.getClass();
+		properties.put("portal.smoke", pql);
 
-		PQLValue pqlValue = new PQLValue(pql);
+		Class<?> clazz = expectedPQLResult.getClass();
 
-		Object actualResult = pqlValue.getPQLResult(properties);
+		PQLVariable pqlVariable = new PQLVariable("portal.smoke");
 
-		if (!clazz.isInstance(actualResult)) {
+		Object actualPQLResult = pqlVariable.getPQLResult(properties);
+
+		if (!clazz.isInstance(actualPQLResult)) {
 			throw new Exception(pql + " should be of type: " + clazz.getName());
 		}
 
-		if (!actualResult.equals(expectedResult)) {
+		if (!actualPQLResult.equals(expectedPQLResult)) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Mismatched PQL result within the following PQL:\n");
 			sb.append(pql);
 			sb.append("\n* Actual:   ");
-			sb.append(actualResult);
+			sb.append(actualPQLResult);
 			sb.append("\n* Expected: ");
-			sb.append(expectedResult);
+			sb.append(expectedPQLResult);
 
 			throw new Exception(sb.toString());
 		}
@@ -129,9 +101,9 @@ public class PQLValueTest extends TestCase {
 		String actualError = null;
 
 		try {
-			PQLValue pqlValue = new PQLValue(pql);
+			PQLVariable pqlVariable = new PQLVariable(pql);
 
-			pqlValue.getPQLResult(new Properties());
+			pqlVariable.getPQLResult(new Properties());
 		}
 		catch (Exception exception) {
 			actualError = exception.getMessage();
@@ -139,7 +111,7 @@ public class PQLValueTest extends TestCase {
 			if (!actualError.equals(expectedError)) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.append("Mismatched error for the following PQL:\n");
+				sb.append("Mismatched error within the following PQL:\n");
 				sb.append(pql);
 				sb.append("\n* Actual:   ");
 				sb.append(actualError);
@@ -154,29 +126,6 @@ public class PQLValueTest extends TestCase {
 				throw new Exception(
 					"No error thrown for the following PQL: " + pql);
 			}
-		}
-	}
-
-	private void _validateGetPQLResultNull(String pql) throws Exception {
-		Properties properties = new Properties();
-
-		PQLValue pqlValue = new PQLValue(pql);
-
-		Object actualResult = pqlValue.getPQLResult(properties);
-
-		if (actualResult != null) {
-			Object expectedResult = null;
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Mismatched PQL result within the following PQL:\n");
-			sb.append(pql);
-			sb.append("\n* Actual:   ");
-			sb.append(actualResult);
-			sb.append("\n* Expected: ");
-			sb.append(expectedResult);
-
-			throw new Exception(sb.toString());
 		}
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner.pql;
+package com.liferay.poshi.core.pql;
 
 import java.util.Properties;
 import java.util.Set;
@@ -25,10 +25,10 @@ import org.junit.Test;
 /**
  * @author Michael Hashimoto
  */
-public class PQLQueryTest extends TestCase {
+public class PQLEntityFactoryTest extends TestCase {
 
 	@Test
-	public void testGetPQLResultComparativeOperator() throws Exception {
+	public void testPQLQueryGetPQLResultComparativeOperator() throws Exception {
 		Properties properties = new Properties();
 
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
@@ -80,7 +80,9 @@ public class PQLQueryTest extends TestCase {
 	}
 
 	@Test
-	public void testGetPQLResultComparativeOperatorError() throws Exception {
+	public void testPQLQueryGetPQLResultComparativeOperatorError()
+		throws Exception {
+
 		Properties properties = new Properties();
 
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
@@ -88,17 +90,17 @@ public class PQLQueryTest extends TestCase {
 		properties.setProperty("priority", "5");
 
 		_validateGetPQLResultError(
-			"true ==", "Invalid query: true ==", properties);
+			"true ==", "Invalid value: true ==", properties);
 		_validateGetPQLResultError(
-			"false ==", "Invalid query: false ==", properties);
+			"false ==", "Invalid value: false ==", properties);
 		_validateGetPQLResultError(
-			"== true", "Invalid query: == true", properties);
+			"== true", "Invalid value: == true", properties);
 		_validateGetPQLResultError(
-			"== false", "Invalid query: == false", properties);
+			"== false", "Invalid value: == false", properties);
 	}
 
 	@Test
-	public void testGetPQLResultConditionalOperator() throws Exception {
+	public void testPQLQueryGetPQLResultConditionalOperator() throws Exception {
 		Properties properties = new Properties();
 
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
@@ -135,7 +137,9 @@ public class PQLQueryTest extends TestCase {
 	}
 
 	@Test
-	public void testGetPQLResultConditionalOperatorError() throws Exception {
+	public void testPQLQueryGetPQLResultConditionalOperatorError()
+		throws Exception {
+
 		Properties properties = new Properties();
 
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
@@ -143,26 +147,26 @@ public class PQLQueryTest extends TestCase {
 		properties.setProperty("priority", "5");
 
 		_validateGetPQLResultError(
-			"AND true == true", "Invalid query: AND true == true", properties);
+			"AND true == true", "Invalid value: AND true == true", properties);
 		_validateGetPQLResultError(
-			"true == true AND", "Invalid query: true == true AND", properties);
+			"true == true AND", "Invalid value: true == true AND", properties);
 		_validateGetPQLResultError(
-			"OR true == true", "Invalid query: OR true == true", properties);
+			"OR true == true", "Invalid value: OR true == true", properties);
 		_validateGetPQLResultError(
-			"true == true OR", "Invalid query: true == true OR", properties);
+			"true == true OR", "Invalid value: true == true OR", properties);
 		_validateGetPQLResultError(
 			"true == true AND AND false == false",
 			"Invalid value: AND false == false", properties);
 		_validateGetPQLResultError(
-			"(true == true) AND", "Invalid query: (true == true) AND",
+			"(true == true) AND", "Invalid value: (true == true) AND",
 			properties);
 		_validateGetPQLResultError(
-			"(true == true) OR", "Invalid query: (true == true) OR",
+			"(true == true) OR", "Invalid value: (true == true) OR",
 			properties);
 	}
 
 	@Test
-	public void testGetPQLResultModifier() throws Exception {
+	public void testPQLQueryGetPQLResultModifier() throws Exception {
 		Properties properties = new Properties();
 
 		properties.setProperty("portal.smoke", "true");
@@ -174,7 +178,7 @@ public class PQLQueryTest extends TestCase {
 	}
 
 	@Test
-	public void testGetPQLResultModifierError() throws Exception {
+	public void testPQLQueryGetPQLResultModifierError() throws Exception {
 		_validateGetPQLResultError(
 			"portal.smoke == true NOT", "Invalid value: true NOT");
 		_validateGetPQLResultError(
@@ -186,7 +190,7 @@ public class PQLQueryTest extends TestCase {
 	}
 
 	@Test
-	public void testGetPQLResultParenthesis() throws Exception {
+	public void testPQLQueryGetPQLResultParenthesis() throws Exception {
 		Properties properties = new Properties();
 
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
@@ -222,13 +226,115 @@ public class PQLQueryTest extends TestCase {
 		}
 	}
 
+	@Test
+	public void testPQLQueryGetPQLResultUnbalancedSyntax() throws Exception {
+		String query = "(portal.smoke == true)( OR false";
+
+		_validateGetPQLResultError(
+			query, "Invalid PQL: Unmatched opening boundary '('\n" + query);
+
+		query = "(portal.smoke == true)) OR false";
+
+		_validateGetPQLResultError(
+			query, "Invalid PQL: Unexpected closing boundary ')'\n" + query);
+
+		query = "portal.smoke == \"string";
+
+		_validateGetPQLResultError(
+			query, "Invalid PQL: Unmatched opening boundary '\"'\n" + query);
+
+		_validateGetPQLResult("portal.smoke == \"(string\"", Boolean.FALSE);
+	}
+
+	@Test
+	public void testPQLValueGetPQLResult() throws Exception {
+		_validateGetPQLResult("false", Boolean.FALSE);
+		_validateGetPQLResult("'false'", Boolean.FALSE);
+		_validateGetPQLResult("\"false\"", Boolean.FALSE);
+		_validateGetPQLResult("true", Boolean.TRUE);
+		_validateGetPQLResult("'true'", Boolean.TRUE);
+		_validateGetPQLResult("\"true\"", Boolean.TRUE);
+
+		_validateGetPQLResult("3.2", 3.2D);
+		_validateGetPQLResult("'3.2'", 3.2D);
+		_validateGetPQLResult("\"3.2\"", 3.2D);
+		_validateGetPQLResult("2016.0", 2016D);
+		_validateGetPQLResult("'2016.0'", 2016D);
+		_validateGetPQLResult("\"2016.0\"", 2016D);
+
+		_validateGetPQLResult("2016", 2016);
+		_validateGetPQLResult("'2016'", 2016);
+		_validateGetPQLResult("\"2016\"", 2016);
+
+		_validateGetPQLResult("test", "test");
+		_validateGetPQLResult("'test'", "test");
+		_validateGetPQLResult("\"test\"", "test");
+
+		_validateGetPQLResult("'test test'", "test test");
+		_validateGetPQLResult("\"test test\"", "test test");
+	}
+
+	@Test
+	public void testPQLValueGetPQLResultModifier() throws Exception {
+		_validateGetPQLResult("NOT true", Boolean.FALSE);
+		_validateGetPQLResult("NOT false", Boolean.TRUE);
+	}
+
+	@Test
+	public void testPQLValueGetPQLResultModifierError() throws Exception {
+		_validateGetPQLResultError(
+			"NOT 3.2", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT 2016", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT test", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT 'test test'",
+			"Modifier must be used with a boolean value: NOT");
+	}
+
+	@Test
+	public void testPQLVariableGetPQLResult() throws Exception {
+		_validateGetPQLResultFromVariable("false", Boolean.FALSE);
+		_validateGetPQLResultFromVariable("'false'", Boolean.FALSE);
+		_validateGetPQLResultFromVariable("\"false\"", Boolean.FALSE);
+		_validateGetPQLResultFromVariable("true", Boolean.TRUE);
+		_validateGetPQLResultFromVariable("'true'", Boolean.TRUE);
+		_validateGetPQLResultFromVariable("\"true\"", Boolean.TRUE);
+
+		_validateGetPQLResultFromVariable("3.2", 3.2D);
+		_validateGetPQLResultFromVariable("'3.2'", 3.2D);
+		_validateGetPQLResultFromVariable("\"3.2\"", 3.2D);
+		_validateGetPQLResultFromVariable("2016.0", 2016D);
+		_validateGetPQLResultFromVariable("'2016.0'", 2016D);
+		_validateGetPQLResultFromVariable("\"2016.0\"", 2016D);
+
+		_validateGetPQLResultFromVariable("2016", 2016);
+		_validateGetPQLResultFromVariable("'2016'", 2016);
+		_validateGetPQLResultFromVariable("\"2016\"", 2016);
+
+		_validateGetPQLResultFromVariable("test", "test");
+		_validateGetPQLResultFromVariable("'test'", "test");
+		_validateGetPQLResultFromVariable("\"test\"", "test");
+
+		_validateGetPQLResultFromVariable("'test test'", "test test");
+		_validateGetPQLResultFromVariable("\"test test\"", "test test");
+	}
+
+	private static void _validateGetPQLResult(
+			String pql, Object expectedPQLResult)
+		throws Exception {
+
+		_validateGetPQLResult(pql, expectedPQLResult, new Properties());
+	}
+
 	private static void _validateGetPQLResult(
 			String pql, Object expectedPQLResult, Properties properties)
 		throws Exception {
 
-		PQLQuery pqlQuery = new PQLQuery(pql);
+		PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(pql);
 
-		Object actualPQLResult = pqlQuery.getPQLResult(properties);
+		Object actualPQLResult = pqlEntity.getPQLResult(properties);
 
 		if (!actualPQLResult.equals(expectedPQLResult)) {
 			StringBuilder sb = new StringBuilder();
@@ -258,9 +364,9 @@ public class PQLQueryTest extends TestCase {
 		String actualError = null;
 
 		try {
-			PQLQuery pqlQuery = new PQLQuery(pql);
+			PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(pql);
 
-			pqlQuery.getPQLResult(properties);
+			pqlEntity.getPQLResult(properties);
 		}
 		catch (Exception exception) {
 			actualError = exception.getMessage();
@@ -284,6 +390,17 @@ public class PQLQueryTest extends TestCase {
 					"No error thrown for the following PQL: " + pql);
 			}
 		}
+	}
+
+	private static void _validateGetPQLResultFromVariable(
+			String pql, Object expectedPQLResult)
+		throws Exception {
+
+		Properties properties = new Properties();
+
+		properties.put("portal.smoke", pql);
+
+		_validateGetPQLResult("portal.smoke", expectedPQLResult, properties);
 	}
 
 }

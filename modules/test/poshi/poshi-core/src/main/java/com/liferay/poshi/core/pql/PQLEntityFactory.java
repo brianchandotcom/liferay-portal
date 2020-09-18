@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner.pql;
+package com.liferay.poshi.core.pql;
 
 import java.util.HashMap;
 import java.util.Map;

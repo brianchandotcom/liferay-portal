@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.poshi.runner.pql;
+package com.liferay.poshi.core.pql;
 
-import com.liferay.poshi.runner.PoshiRunnerContext;
+import com.liferay.poshi.core.PoshiProperties;
 
 import java.util.List;
 import java.util.Properties;
@@ -29,7 +29,10 @@ public class PQLVariable extends PQLValue {
 			return false;
 		}
 
-		if (_availablePropertyNames.contains(variable)) {
+		List<String> poshiPropertyNames =
+			PoshiProperties.getPoshiPropertiesNames();
+
+		if (poshiPropertyNames.contains(variable)) {
 			return true;
 		}
 
@@ -73,8 +76,5 @@ public class PQLVariable extends PQLValue {
 			throw new Exception("Invalid testcase property: " + variable);
 		}
 	}
-
-	private static final List<String> _availablePropertyNames =
-		PoshiRunnerContext.getTestCaseAvailablePropertyNames();
 
 }

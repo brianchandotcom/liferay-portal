@@ -55,7 +55,7 @@ const VelocityChart = ({timeRange, velocityData = {}, velocityUnit}) => {
 	}
 
 	return (
-		<div className="velocity-chart" data-testid="velocity-chart">
+		<div className="velocity-chart">
 			{histograms.length > 0 && (
 				<LineChart
 					axis={{

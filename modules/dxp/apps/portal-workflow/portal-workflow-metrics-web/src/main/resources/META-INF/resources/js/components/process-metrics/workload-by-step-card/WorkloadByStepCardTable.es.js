@@ -22,10 +22,7 @@ const Table = ({items, processId}) => {
 
 	return (
 		<div className="table-responsive">
-			<table
-				className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list"
-				data-testid="workloadByStepTable"
-			>
+			<table className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list">
 				<thead>
 					<tr>
 						<th className="table-cell-expand table-head-title">

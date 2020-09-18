@@ -46,7 +46,6 @@ const HeaderKebab = ({kebabItems = []}) => {
 					trigger={
 						<ClayButton
 							className="component-action"
-							data-testid="headerKebabButton"
 							displayType="unstyled"
 							monospaced
 						>
@@ -70,11 +69,7 @@ const Item = ({action = () => {}, label, link}) => {
 	return (
 		<ClayDropDown.ItemList>
 			<li>
-				<DropDownItem
-					className="dropdown-item"
-					data-testid="headerKebabItem"
-					{...props}
-				>
+				<DropDownItem className="dropdown-item" {...props}>
 					{label}
 				</DropDownItem>
 			</li>

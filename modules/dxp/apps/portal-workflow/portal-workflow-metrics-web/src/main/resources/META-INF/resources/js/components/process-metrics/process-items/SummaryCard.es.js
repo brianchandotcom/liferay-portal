@@ -77,7 +77,6 @@ const SummaryCard = ({
 			className={`${
 				disabled ? 'disabled' : ''
 			} process-dashboard-summary-card`}
-			data-testid="childLink"
 			onMouseOut={() => setHovered(false)}
 			onMouseOver={() => setHovered(true)}
 			query={{filters: filtersQuery}}
@@ -92,27 +91,22 @@ const SummaryCard = ({
 							<span className="inline-item">
 								<ClayIcon
 									className={`text-${iconColor}`}
-									data-testid="instanceIcon"
 									symbol={iconName}
 								/>
 							</span>
 						</span>
 					)}
 
-					<span data-testid="instanceTitle">{title}</span>
+					<span>{title}</span>
 				</div>
 
 				{!disabled && (
 					<>
-						<div
-							className="body"
-							data-testid="formattedValue"
-							title={value}
-						>
+						<div className="body" title={value}>
 							{formattedValue}
 						</div>
 
-						<div className="footer" data-testid="footer">
+						<div className="footer">
 							<span
 								className={`${
 									hovered ? 'highlight-hover' : ''

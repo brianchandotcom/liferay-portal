@@ -69,7 +69,7 @@ const Footer = ({processId, timeRange, totalCount}) => {
 					query={viewAllStepsQuery}
 					to={viewAllStepsUrl}
 				>
-					<span className="mr-2" data-testid="viewAllSteps">
+					<span className="mr-2">
 						{`${Liferay.Language.get(
 							'view-all-steps'
 						)} (${totalCount})`}

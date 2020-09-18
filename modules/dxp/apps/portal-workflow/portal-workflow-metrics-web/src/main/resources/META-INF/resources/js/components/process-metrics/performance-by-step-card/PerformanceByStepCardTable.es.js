@@ -31,20 +31,16 @@ const Item = ({
 
 	return (
 		<tr>
-			<td className="table-cell-expand" data-testid="stepName">
-				{label}
-			</td>
+			<td className="table-cell-expand">{label}</td>
 
-			<td className="text-right" data-testid="slaBreached">
+			<td className="text-right">
 				{isValidNumber(breachedInstanceCount)
 					? breachedInstanceCount
 					: 0}{' '}
 				({formattedPercentage})
 			</td>
 
-			<td className="text-right" data-testid="avgCompletionTime">
-				{formattedDuration}
-			</td>
+			<td className="text-right">{formattedDuration}</td>
 		</tr>
 	);
 };

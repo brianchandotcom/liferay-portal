@@ -16,13 +16,10 @@ const LoadingState = ({
 	message,
 	messageClassName = '',
 }) => (
-	<div className={className} data-testid="loadingState">
+	<div className={className}>
 		<span aria-hidden="true" className="loading-animation" />
 		{message && (
-			<span
-				className={`text-center text-truncate ${messageClassName}`}
-				data-testid="loadingStateMsg"
-			>
+			<span className={`text-center text-truncate ${messageClassName}`}>
 				{message}
 			</span>
 		)}

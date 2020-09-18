@@ -26,25 +26,13 @@ const EmptyState = ({
 	}result-message-header`;
 
 	return (
-		<div
-			className={`${className} taglib-empty-result-message`}
-			data-testid="emptyState"
-		>
-			{!hideAnimation && (
-				<div
-					className={animationClassName}
-					data-testid="emptyStateAnimation"
-				/>
-			)}
+		<div className={`${className} taglib-empty-result-message`}>
+			{!hideAnimation && <div className={animationClassName} />}
 
-			{title && (
-				<h3 className="text-center" data-testid="emptyStateTitle">
-					{title}
-				</h3>
-			)}
+			{title && <h3 className="text-center">{title}</h3>}
 
 			<div className="sheet-text text-center">
-				<p className={messageClassName} data-testid="emptyStateMsg">
+				<p className={messageClassName}>
 					{filtered ? filteredMessage : message}
 				</p>
 

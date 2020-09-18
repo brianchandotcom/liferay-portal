@@ -19,27 +19,17 @@ const Item = ({assignee: {image, name}, durationTaskAvg, id, taskCount}) => {
 
 	return (
 		<tr>
-			<td
-				className="assignee-name border-0"
-				data-testid="assigneeProfileInfo"
-			>
+			<td className="assignee-name border-0">
 				<UserAvatar className="mr-3" image={image} />
 
-				<span data-testid="assigneeName">{name || id}</span>
+				<span>{name || id}</span>
 			</td>
 
 			<td className="border-0 text-right">
-				<span className="task-count-value" data-testid="taskCount">
-					{taskCount}
-				</span>
+				<span className="task-count-value">{taskCount}</span>
 			</td>
 			<td className="border-0 text-right">
-				<span
-					className="task-count-value"
-					data-testid="durationTaskAvg"
-				>
-					{formattedDuration}
-				</span>
+				<span className="task-count-value">{formattedDuration}</span>
 			</td>
 		</tr>
 	);

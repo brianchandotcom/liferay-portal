@@ -13,11 +13,7 @@ import React from 'react';
 
 const RetryButton = (props) => {
 	return (
-		<button
-			className="btn btn-link btn-sm"
-			data-testid="retryButton"
-			{...props}
-		>
+		<button className="btn btn-link btn-sm" {...props}>
 			{Liferay.Language.get('retry')}
 		</button>
 	);

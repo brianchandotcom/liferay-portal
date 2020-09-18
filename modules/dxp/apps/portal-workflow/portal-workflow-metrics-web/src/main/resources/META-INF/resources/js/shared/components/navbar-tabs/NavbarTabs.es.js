@@ -25,7 +25,6 @@ const Item = ({active, name, params, path}) => {
 		<ClayNavigationBar.Item active={active}>
 			<Link
 				className="nav-link"
-				data-testid="tabLink"
 				to={{
 					pathname: getPathname(params, path),
 					search,

@@ -32,7 +32,6 @@ const HeaderReindexStatus = ({container}) => {
 							<span
 								aria-hidden="true"
 								className="loading-animation loading-animation-sm m-0"
-								data-testid="statusLoading"
 								data-tooltip-align="bottom"
 								title={Liferay.Language.get(
 									'the-workflow-metrics-data-is-currently-reindexing'

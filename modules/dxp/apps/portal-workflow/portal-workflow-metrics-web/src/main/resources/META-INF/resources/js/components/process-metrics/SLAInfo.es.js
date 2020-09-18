@@ -74,7 +74,6 @@ const SLAInfo = ({processId}) => {
 				<ClayLayout.ContainerFluid>
 					<ClayAlert
 						className="mb-0"
-						data-testid="slaInfoAlert"
 						displayType="warning"
 						onClose={() => setAlert()}
 						title={Liferay.Language.get('warning')}
@@ -82,7 +81,6 @@ const SLAInfo = ({processId}) => {
 						{alert.content}{' '}
 						<ChildLink
 							className="font-weight-bold"
-							data-testid="slaInfoLink"
 							query={{slaInfoLink: true}}
 							to={alert.link}
 						>

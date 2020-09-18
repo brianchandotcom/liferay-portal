@@ -62,29 +62,21 @@ const Item = ({
 
 	return (
 		<tr>
-			<td
-				className="assignee-name border-0"
-				data-testid="workloadByAssigneeCardItem"
-			>
+			<td className="assignee-name border-0">
 				<ChildLink
 					className={'workload-by-assignee-link'}
 					query={{filters}}
 					to={instancesListPath}
 				>
-					<span data-testid="assigneeName">{name}</span>
+					<span>{name}</span>
 				</ChildLink>
 			</td>
 
-			<td className="border-0 text-right" data-testid="taskCount">
-				<span className="task-count-value" data-testid="taskCountValue">
-					{counts[currentTab]}
-				</span>
+			<td className="border-0 text-right">
+				<span className="task-count-value">{counts[currentTab]}</span>
 
 				{currentTab !== 'total' && (
-					<span
-						className="task-count-percentage"
-						data-testid="taskCountPercentage"
-					>
+					<span className="task-count-percentage">
 						{' / '}
 
 						{formattedPercentage}

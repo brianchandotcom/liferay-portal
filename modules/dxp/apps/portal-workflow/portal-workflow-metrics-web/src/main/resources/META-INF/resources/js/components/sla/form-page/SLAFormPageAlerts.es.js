@@ -18,7 +18,6 @@ const AlertChange = () => {
 	return (
 		visible && (
 			<ClayAlert
-				data-testid="alertChange"
 				displayType="danger"
 				onClose={() => setVisible(false)}
 				title={Liferay.Language.get('error')}

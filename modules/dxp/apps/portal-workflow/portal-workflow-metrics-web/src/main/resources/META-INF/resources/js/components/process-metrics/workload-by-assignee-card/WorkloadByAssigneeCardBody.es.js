@@ -102,7 +102,7 @@ const Footer = ({processId, processStepKey, totalCount}) => {
 				query={viewAllAssigneesQuery}
 				to={viewAllAssigneesUrl}
 			>
-				<span className="mr-2" data-testid="viewAllAssignees">
+				<span className="mr-2">
 					{`${Liferay.Language.get(
 						'view-all-assignees'
 					)} (${totalCount})`}

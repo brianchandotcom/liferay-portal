@@ -30,7 +30,6 @@ const FilterSearch = ({
 						<div className="input-group-item">
 							<input
 								className="form-control input-group-inset input-group-inset-after"
-								data-testid="filterSearch"
 								onChange={onChange}
 								placeholder={Liferay.Language.get('search-for')}
 								type="text"

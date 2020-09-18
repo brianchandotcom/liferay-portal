@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -104,6 +105,15 @@ public class CPSearchResultsPortlet
 
 		try {
 			_contribute(portletSharedSearchSettings);
+
+			SearchRequestBuilder searchRequestBuilder =
+				portletSharedSearchSettings.getSearchRequestBuilder();
+
+			Optional<String> paginationStartParameterNameOptional =
+				portletSharedSearchSettings.getPaginationStartParameterName();
+
+			searchRequestBuilder.paginationStartParameterName(
+				paginationStartParameterNameOptional.get());
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);

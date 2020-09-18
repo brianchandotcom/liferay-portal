@@ -135,6 +135,65 @@ definition {
 		NavigationMenusAdmin.viewItem(itemName = "Test Page Name 2");
 	}
 
+	@description = "This test covers LPS-119899, It ensures that the search results can clear after filtering everywhere in the item selector."
+	@priority = "4"
+	test ClearFilterResults {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content From Depot",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Web Content From Depot");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Site",
+			groupName = "Site Name",
+			title = "WC WebContent From Site");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Web Content",
+			fieldFieldLabel = "Web Content",
+			fieldName = "WebContent");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		AssertClick(
+			key_fieldName = "WebContent",
+			locator1 = "Button#SELECT_CONTENT",
+			value1 = "Select");
+
+		ItemSelector.viewWCEverywhereFilterResults(webContentTitle = "Web Content From Depot,WC WebContent From Site");
+
+		ItemSelector.clearFilterResults(
+			currentSiteWebContentTitle = "WC WebContent From Site",
+			webContentTitle = "Web Content From Depot");
+	}
+
 	@description = "This test ensures that documents can filter by the current site in the item selector."
 	@priority = "5"
 	test FilterByCurrentSite {

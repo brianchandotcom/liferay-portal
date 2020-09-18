@@ -21,11 +21,15 @@ const HEADERS = {
 };
 
 export const addItem = (endpoint, item) => {
-	return fetch(getURL(endpoint), {
-		body: JSON.stringify(item),
-		headers: HEADERS,
-		method: 'POST',
-	}).then((response) => response.json());
+	return new Promise((resolve, reject) => {
+		fetch(getURL(endpoint), {
+			body: JSON.stringify(item),
+			headers: HEADERS,
+			method: 'POST',
+		})
+			.then((response) => resolve(response.json()))
+			.catch((error) => reject(error));
+	});
 };
 
 export const confirmDelete = (endpoint) => (item) =>

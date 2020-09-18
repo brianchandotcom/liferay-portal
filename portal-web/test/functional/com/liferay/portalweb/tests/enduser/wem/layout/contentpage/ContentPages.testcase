@@ -1367,6 +1367,184 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121078. Resize module of Grid."
+	@priority = "4"
+	test ResizeModuleOfGrid {
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Add a Heading fragment to the second module of Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "2",
+				fragmentName = "Heading",
+				navTab = "Fragments");
+		}
+
+		task ("Configure the Heading's style") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			PageEditor.configureFragment(
+				alignment = "Center",
+				textColor = "Success");
+
+			PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+			PageEditor.configureFragment(headingLevel = "H2");
+		}
+
+		task ("View the Heading's style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading",
+				headingLevel = "h2",
+				textColor = "success");
+		}
+
+		task ("Add a Button fragment above the Grid") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			DragAndDrop.javaScriptDragAndDropToUp(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				key_targetFragmentName = "Grid",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Configure the Button's style") {
+			PageEditor.gotoConfiguration(fragmentName = "Button");
+
+			PageEditor.configureFragment(type = "Link");
+
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			PageEditor.configureFragment(
+				alignment = "Center",
+				size = "Large");
+		}
+
+		task ("View the Button's style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "button",
+				size = "lg",
+				type = "link");
+		}
+
+		task ("Resize the modules") {
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Grid",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			DragAndDrop.dragAndDrop(
+				key_position = "3",
+				locator1 = "PageEditor#GRID_COLUMN_RESIZER",
+				value1 = "100,0");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Assert the width of modules") {
+			PageEditor.viewGridStyle(
+				columnCount = "3",
+				position = "1");
+
+			AssertElementPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][1]");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][2]");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')][3]");
+
+			var thirdModuleWidth = selenium.getElementWidth("xpath=(//div[contains(@class,'page-editor__col__border')])[3]");
+
+			TestUtils.assertNotEquals(
+				actual = "${thirdModuleWidth}",
+				expected = "0");
+		}
+
+		task ("View the Heading's style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading",
+				headingLevel = "h2",
+				textColor = "success");
+		}
+
+		task ("View the Button's style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "button",
+				size = "lg",
+				type = "link");
+		}
+
+		task ("Assert the width of modules in view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			for (var n : list "1,2,3") {
+				AssertElementPresent(locator1 = "//div[contains(@class,'container-fluid')]/div[contains(@class,'row')]//div[contains(@class,'col')][${n}]");
+			}
+
+			AssertElementPresent(locator1 = "//div[contains(@class,'col-4')][1]");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-4')][2]");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-4')][3]");
+
+			var thirdModuleWidth = selenium.getElementWidth("//div[contains(@class,'container-fluid')]/div[contains(@class,'row')]//div[contains(@class,'col')][3]");
+
+			TestUtils.assertNotEquals(
+				actual = "${thirdModuleWidth}",
+				expected = "0");
+		}
+
+		task ("View the Heading's style in view mode") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "heading",
+				headingLevel = "h2");
+
+			AssertElementPresent(
+				key_fragmentName = "heading",
+				key_textColor = "var(--success)",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
+
+			AssertElementPresent(
+				key_alignment = "center",
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
+
+		}
+
+		task ("View the Button's style in view mode") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "button",
+				size = "lg",
+				type = "link");
+
+			AssertElementPresent(
+				key_alignment = "center",
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT_IN_VIEW_MODE");
+		}
+	}
+
 	@description = "This is a test for LPS-107285. When the Container fragment is duplicated, the configuration of it and its components should also be duplicated."
 	@priority = "4"
 	test ViewConfigurationDuplicatedWhenDuplicateSectionWithHeading {

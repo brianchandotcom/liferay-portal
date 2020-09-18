@@ -63,7 +63,7 @@ public class ItemSelectorViewDescriptorRendererDisplayContextTest {
 						}
 
 					},
-					null);
+					null, null);
 
 		Assert.assertEquals(
 			"icon",
@@ -106,7 +106,7 @@ public class ItemSelectorViewDescriptorRendererDisplayContextTest {
 						}
 
 					},
-					null);
+					null, null);
 
 		Assert.assertEquals(
 			"descriptive",
@@ -144,7 +144,7 @@ public class ItemSelectorViewDescriptorRendererDisplayContextTest {
 						}
 
 					},
-					null);
+					null, null);
 
 		Assert.assertEquals(
 			"descriptive",

@@ -1609,6 +1609,17 @@ public class DataDefinitionResourceImpl
 		}
 
 		if (ddmFormValidationException instanceof
+				DDMFormValidationException.MustSetValidType) {
+
+			DDMFormValidationException.MustSetValidType mustSetValidType =
+				(DDMFormValidationException.MustSetValidType)
+					ddmFormValidationException;
+
+			return new DataDefinitionValidationException.MustSetValidType(
+				mustSetValidType.getFieldType());
+		}
+
+		if (ddmFormValidationException instanceof
 				DDMFormValidationException.MustSetValidValidationExpression) {
 
 			DDMFormValidationException.MustSetValidValidationExpression

@@ -67,6 +67,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 											</li>
 											<li>
 												<clay:dropdown-actions
+													cssClass="pt-2"
 													defaultEventHandler="FragmentCollectionsViewDefaultEventHandler"
 													dropdownItems="<%= fragmentDisplayContext.getCollectionsDropdownItems() %>"
 												/>

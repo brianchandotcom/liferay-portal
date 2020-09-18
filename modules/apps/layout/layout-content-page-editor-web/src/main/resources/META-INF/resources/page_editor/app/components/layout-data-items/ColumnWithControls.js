@@ -441,7 +441,6 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 
 ColumnWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default ColumnWithControls;

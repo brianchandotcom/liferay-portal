@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -46,7 +47,8 @@ public class CISystemStatusReportUtil {
 		throws IOException {
 
 		JenkinsCohort jenkinsCohort = new JenkinsCohort(
-			_DEFAULT_JENKINS_COHORT);
+			_buildProperties.getProperty(
+				"ci.system.status.report.jenkins.cohort"));
 
 		jenkinsCohort.writeDataJavaScriptFile(filePath);
 	}
@@ -55,10 +57,11 @@ public class CISystemStatusReportUtil {
 		throws IOException {
 
 		SpiraProject spiraProject = SpiraProject.getSpiraProjectByID(
-			_LIFERAY_DXP_PROJECT_ID);
+			SpiraProject.getID("dxp"));
 
 		SpiraRelease spiraRelease = spiraProject.getSpiraReleaseByID(
-			_LIFERAY_DXP_73_PULL_REQUEST_RELEVANT_SUITE_RELEASE_ID);
+			SpiraRelease.getID(
+				"test-portal-acceptance-pullrequest(master)", "relevant"));
 
 		List<SpiraReleaseBuild> spiraReleaseBuilds =
 			SpiraReleaseBuild.getSpiraReleaseBuilds(spiraProject, spiraRelease);
@@ -265,30 +268,37 @@ public class CISystemStatusReportUtil {
 		return successRateJSONArray;
 	}
 
-	private static final int _DAYS_AGO = 28;
-
-	private static final String _DEFAULT_JENKINS_COHORT = "test-1";
-
-	private static final int
-		_LIFERAY_DXP_73_PULL_REQUEST_RELEVANT_SUITE_RELEASE_ID = 1312;
-
-	private static final int _LIFERAY_DXP_PROJECT_ID = 16;
-
+	private static final Properties _buildProperties;
 	private static final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-
 	private static final HashMap<LocalDate, List<SpiraReleaseBuild>>
+		_recentSpiraReleaseBuilds;
+
+	static {
+		try {
+			_buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build.properties", ioException);
+		}
+
 		_recentSpiraReleaseBuilds =
 			new HashMap<LocalDate, List<SpiraReleaseBuild>>() {
 				{
 					LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
 
-					for (int i = 0; i < _DAYS_AGO; i++) {
+					int spiraHistoryLength = Integer.parseInt(
+						_buildProperties.getProperty(
+							"ci.system.status.report.spira.history.length"));
+
+					for (int i = 0; i < spiraHistoryLength; i++) {
 						put(
 							localDate.minusDays(i),
 							new ArrayList<SpiraReleaseBuild>());
 					}
 				}
 			};
+	}
 
 }

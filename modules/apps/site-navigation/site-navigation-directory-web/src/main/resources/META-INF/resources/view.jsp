@@ -55,9 +55,23 @@
 											</liferay-ui:search-container-column-text>
 										</c:when>
 										<c:otherwise>
-											<liferay-ui:search-container-column-image
-												src="<%= childGroup.getLogoURL(themeDisplay, true) %>"
-											/>
+
+											<%
+											String logoURL = childGroup.getLogoURL(themeDisplay, false);
+											%>
+
+											<c:choose>
+												<c:when test="<%= Validator.isNotNull(logoURL) %>">
+													<liferay-ui:search-container-column-image
+														src="<%= logoURL %>"
+													/>
+												</c:when>
+												<c:otherwise>
+													<liferay-ui:search-container-column-icon
+														icon="sites"
+													/>
+												</c:otherwise>
+											</c:choose>
 
 											<liferay-ui:search-container-column-text
 												colspan="<%= 2 %>"

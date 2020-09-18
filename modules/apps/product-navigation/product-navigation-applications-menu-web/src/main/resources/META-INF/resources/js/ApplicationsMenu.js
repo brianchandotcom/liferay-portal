@@ -13,6 +13,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayModal, {useModal} from '@clayui/modal';
@@ -99,7 +100,11 @@ const Site = ({current, label, logoURL, url}) => {
 				<ClayLayout.ContentRow verticalAlign="center">
 					<ClayLayout.ContentCol>
 						<ClaySticker size="sm">
-							<img alt="" height="20px" src={logoURL} />
+							{logoURL ? (
+								<img alt="" height="20px" src={logoURL} />
+							) : (
+								<ClayIcon symbol="sites" />
+							)}
 						</ClaySticker>
 					</ClayLayout.ContentCol>
 

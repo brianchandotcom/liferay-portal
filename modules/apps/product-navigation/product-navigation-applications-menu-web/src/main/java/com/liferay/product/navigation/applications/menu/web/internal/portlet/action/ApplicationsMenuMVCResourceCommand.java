@@ -237,7 +237,7 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"label", group.getDescriptiveName(themeDisplay.getLocale())
 				).put(
-					"logoURL", group.getLogoURL(themeDisplay, true)
+					"logoURL", group.getLogoURL(themeDisplay, false)
 				).put(
 					"url", _groupURLProvider.getGroupURL(group, resourceRequest)
 				));

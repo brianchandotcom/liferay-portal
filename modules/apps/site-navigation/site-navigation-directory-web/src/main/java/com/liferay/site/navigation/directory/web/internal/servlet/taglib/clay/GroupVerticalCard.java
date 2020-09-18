@@ -50,8 +50,13 @@ public class GroupVerticalCard implements VerticalCard {
 	}
 
 	@Override
+	public String getIcon() {
+		return "sites";
+	}
+
+	@Override
 	public String getImageSrc() {
-		return _group.getLogoURL(_themeDisplay, true);
+		return _group.getLogoURL(_themeDisplay, false);
 	}
 
 	@Override

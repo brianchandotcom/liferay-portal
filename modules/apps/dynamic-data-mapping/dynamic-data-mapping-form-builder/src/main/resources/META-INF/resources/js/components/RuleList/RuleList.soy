@@ -6,14 +6,6 @@
 {template .render}
 	{@param? dropdownExpandedIndex: number}
 	{@param rules: list<[
-			conditions: list<[
-				operator: string,
-				operands: list<[
-					type: string,
-					label: string,
-					value: string
-				]>
-			]>,
 			actions: list<[
 				action: string,
 				dataProviderName: ?,
@@ -23,9 +15,17 @@
 				label: string,
 				outputLabel: ?
 			]>,
+			conditions: list<[
+				operator: string,
+				operands: list<[
+					type: string,
+					label: string,
+					value: string
+				]>
+			]>,
+			invalidRule: ?,
 			logicalOperator: string,
-			rulesCardOptions: ?,
-			invalidRule: ?
+			rulesCardOptions: ?
 		]>
 	}
 	{@param spritemap: string}
@@ -54,14 +54,6 @@
  */
 {template .rule_list}
 	{@param rules: list<[
-			conditions: list<[
-				operator: string,
-				operands: list<[
-					type: string,
-					label: string,
-					value: ?
-				]>
-			]>,
 			actions: list<[
 				action: string,
 				dataProviderName: ?,
@@ -71,9 +63,17 @@
 				label: string,
 				outputLabel: ?
 			]>,
+			conditions: list<[
+				operator: string,
+				operands: list<[
+					type: string,
+					label: string,
+					value: ?
+				]>
+			]>,
+			invalidRule: ?,
 			logicalOperator: string,
-			rulesCardOptions: ?,
-			invalidRule: ?
+			rulesCardOptions: ?
 		]>
 	}
 	{@param spritemap: string}

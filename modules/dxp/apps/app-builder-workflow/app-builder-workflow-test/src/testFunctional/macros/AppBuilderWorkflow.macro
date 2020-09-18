@@ -34,8 +34,8 @@ definition {
 
 		while (IsElementNotPresent(key_menuItem = "Assign to", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 
-			Pause(locator1 = "1000");
 			Refresh();
+			Pause(locator1 = "3000");
 			Click(
 				key_itemName = "${itemName}",
 				locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
@@ -47,10 +47,10 @@ definition {
 
 		Type(
 			locator1 = "AppBuilderWorkflow#SELECT_NEW_ASSIGNEE_SEARCH_FIELD",
-			value1 = "${assigneeName}");
+			value1 = "${assignee}");
 
 		Click(
-			key_assignee = "${assigneeName}",
+			key_assignee = "${assignee}",
 			locator1 = "AppBuilderWorkflow#SELECT_NEW_ASSIGNEE");
 
 		Button.click(button = "Done");
@@ -122,11 +122,11 @@ definition {
 
 		AppBuilderWorkflow.selectStep(stepNumber = "${stepNumber}");
 
-		Type(
-			locator1 = "AppBuilderWorkflow#SELECT_ASSIGNEE_FIELD",
-			value1 = "${assigneeName}");
+		Click(locator1 = "AppBuilderWorkflow#SELECT_ASSIGNEE_FIELD");
 
-		Click(locator1 = "AppBuilderWorkflow#ASSIGNEE_FIRST_ITEM");
+		Click(
+			key_assignee = "${assignee}",
+			locator1 = "AppBuilderWorkflow#ASSIGNEE_ITEM");
 	}
 
 	macro selectStepSingleFormView {

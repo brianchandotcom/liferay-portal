@@ -75,8 +75,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNEE_FIRST_ITEM</td>
-	<td>xpath=(//span[contains(@class,'dropdown-item')])[1]</td>
+	<td>ASSIGNEE_ITEM</td>
+	<td>//span[contains(@class,'dropdown-item') and (text()="${key_assignee}")]</td>
 	<td></td>
 </tr>
 <!--APP_RUNNING-->

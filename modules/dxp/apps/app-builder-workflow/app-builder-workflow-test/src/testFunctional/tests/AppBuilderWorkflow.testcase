@@ -583,7 +583,7 @@ definition {
 		AppBuilderWorkflow.addNewStep();
 
 		AppBuilderWorkflow.selectStepAssignee(
-			assigneeName = "Administrator",
+			assignee = "Administrator",
 			stepNumber = "1");
 
 		AppBuilderWorkflow.selectStepSingleFormView(
@@ -594,7 +594,7 @@ definition {
 		AppBuilderWorkflow.addNewStep();
 
 		AppBuilderWorkflow.selectStepAssignee(
-			assigneeName = "Administrator",
+			assignee = "Administrator",
 			stepNumber = "2");
 
 		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
@@ -619,7 +619,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content");
 
 		AppBuilderWorkflow.assignEntry(
-			assigneeName = "Test Test",
+			assignee = "Test Test",
 			itemName = "Content");
 
 		AppBuilderAdmin.editItem(itemName = "Content");
@@ -634,7 +634,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Content");
 
 		AppBuilderWorkflow.assignEntry(
-			assigneeName = "Test Test",
+			assignee = "Test Test",
 			itemName = "Edited Content");
 
 		AppBuilderAdmin.editItem(itemName = "Edited Content");

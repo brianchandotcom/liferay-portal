@@ -37,7 +37,10 @@ export default function canBeDuplicated(
 
 			const widget = portletId && getWidget(widgets, portletId);
 
-			return !widget || widget.instanceable;
+			return (
+				(!widget || widget.instanceable) &&
+				!hasDropZoneChild(item, layoutData)
+			);
 		}
 
 		default:

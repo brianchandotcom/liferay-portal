@@ -86,7 +86,7 @@ public class CISystemStatusReportUtil {
 
 		sb.append(relevantSuiteBuildDataJSONObject.toString());
 
-		sb.append(";\n var successRateData = ");
+		sb.append(";\nvar successRateData = ");
 
 		JSONArray successRateTableDataJSONArray =
 			_getSuccessRateDataJSONArray();

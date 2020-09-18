@@ -729,6 +729,7 @@ class Sidebar extends Component {
 			});
 		}
 	}
+
 	_handleSettingsFormAttached() {
 		const reactForm = this.refs.evaluableForm.reactComponentRef.current;
 		const {editingLanguageId} = this.props;

@@ -328,5 +328,5 @@ export default {
 	formatRules,
 	getFieldOptions,
 	getFieldType,
-	syncActions
+	syncActions,
 };

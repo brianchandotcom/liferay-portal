@@ -1215,7 +1215,10 @@ class RuleEditor extends Component {
 			const {operands} = newCondition;
 
 			if (operands[1] && operands[1].type !== 'field') {
-				const fieldType = RulesSupport.getFieldType(operands[0].value, pages);
+				const fieldType = RulesSupport.getFieldType(
+					operands[0].value,
+					pages
+				);
 
 				if (
 					fieldType === 'checkbox_multiple' ||

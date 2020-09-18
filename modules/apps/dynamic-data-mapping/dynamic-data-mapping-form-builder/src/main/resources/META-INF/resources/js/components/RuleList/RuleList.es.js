@@ -186,7 +186,10 @@ class RuleList extends Component {
 			label = Liferay.Language.get('user');
 		}
 		else if (operand.type !== 'field') {
-			const fieldType = RulesSupport.getFieldType(operands[0].value, this.pages);
+			const fieldType = RulesSupport.getFieldType(
+				operands[0].value,
+				this.pages
+			);
 
 			if (
 				fieldType === 'checkbox_multiple' ||

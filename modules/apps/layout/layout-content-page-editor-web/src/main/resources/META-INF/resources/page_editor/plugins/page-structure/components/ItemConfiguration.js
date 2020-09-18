@@ -119,10 +119,12 @@ function ItemConfigurationContent() {
 							id={`${panelIdPrefix}-${panel.panelId}`}
 							key={panel.panelId}
 						>
-							<ItemConfigurationComponent
-								Component={panel.component}
-								item={activeItem}
-							/>
+							{panel.panelId === activePanelId && (
+								<ItemConfigurationComponent
+									Component={panel.component}
+									item={activeItem}
+								/>
+							)}
 						</ClayTabs.TabPane>
 					))}
 				</ClayTabs.Content>

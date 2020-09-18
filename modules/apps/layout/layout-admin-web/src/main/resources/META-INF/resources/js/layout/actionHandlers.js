@@ -23,17 +23,17 @@ const actionHandlers = {
 		});
 	},
 
-	delete: ({actionURL, childCount}) => {
+	delete: ({actionURL, hasChildren}) => {
 		let deleteMessage = Liferay.Language.get(
 			'are-you-sure-you-want-to-delete-this-page'
 		);
 
-		if (childCount !== 0) {
+		if (hasChildren) {
 			deleteMessage = Liferay.Util.sub(
 				Liferay.Language.get(
-					'this-page-has-x-child-pages-that-will-also-be-removed'
+					'this-page-has-child-pages-that-will-also-be-removed-are-you-sure-you-want-to-delete-this-page'
 				),
-				childCount
+				hasChildren
 			);
 		}
 

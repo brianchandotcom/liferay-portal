@@ -98,9 +98,7 @@ Layout curLayout = (Layout)row.getObject();
 		String confirmation = "are-you-sure-you-want-to-delete-this-page";
 
 		if (curLayout.hasChildren()) {
-			List<Layout> curLayoutAllChildren = curLayout.getAllChildren();
-
-			confirmation = LanguageUtil.format(request, "this-page-has-x-child-pages-that-will-also-be-removed", new String[] {String.valueOf(curLayoutAllChildren.size())});
+			confirmation = "this-page-has-child-pages-that-will-also-be-removed-are-you-sure-you-want-to-delete-this-page";
 		}
 		%>
 

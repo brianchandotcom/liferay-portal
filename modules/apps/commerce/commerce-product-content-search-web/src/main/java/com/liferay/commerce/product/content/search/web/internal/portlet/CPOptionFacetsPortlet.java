@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -190,6 +192,8 @@ public class CPOptionFacetsPortlet
 			CPOptionFacetsDisplayContext cpOptionFacetsDisplayContext =
 				new CPOptionFacetsDisplayContext(
 					_cpOptionLocalService, renderRequest, filledFacets,
+					getPaginationStartParameterName(
+						portletSharedSearchResponse),
 					portletSharedSearchResponse);
 
 			renderRequest.setAttribute(
@@ -305,6 +309,17 @@ public class CPOptionFacetsPortlet
 		}
 
 		return facets;
+	}
+
+	protected String getPaginationStartParameterName(
+		PortletSharedSearchResponse portletSharedSearchResponse) {
+
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
+		SearchRequest request = searchResponse.getRequest();
+
+		return request.getPaginationStartParameterName();
 	}
 
 	@Reference

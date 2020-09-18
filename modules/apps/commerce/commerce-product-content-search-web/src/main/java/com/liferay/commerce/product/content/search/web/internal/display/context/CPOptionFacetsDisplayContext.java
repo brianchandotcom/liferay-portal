@@ -38,12 +38,13 @@ public class CPOptionFacetsDisplayContext {
 
 	public CPOptionFacetsDisplayContext(
 		CPOptionLocalService cpOptionLocalService, RenderRequest renderRequest,
-		List<Facet> facets,
+		List<Facet> facets, String paginationStartParameterName,
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		_cpOptionLocalService = cpOptionLocalService;
 		_renderRequest = renderRequest;
 		_facets = facets;
+		_paginationStartParameterName = paginationStartParameterName;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
 
 		_locale = _renderRequest.getLocale();
@@ -84,6 +85,10 @@ public class CPOptionFacetsDisplayContext {
 		return _facets;
 	}
 
+	public String getPaginationStartParameterName() {
+		return _paginationStartParameterName;
+	}
+
 	public boolean hasCommerceChannel() throws PortalException {
 		CommerceContext commerceContext =
 			(CommerceContext)_renderRequest.getAttribute(
@@ -120,6 +125,7 @@ public class CPOptionFacetsDisplayContext {
 	private final CPOptionLocalService _cpOptionLocalService;
 	private final List<Facet> _facets;
 	private final Locale _locale;
+	private final String _paginationStartParameterName;
 	private final PortletSharedSearchResponse _portletSharedSearchResponse;
 	private final RenderRequest _renderRequest;
 

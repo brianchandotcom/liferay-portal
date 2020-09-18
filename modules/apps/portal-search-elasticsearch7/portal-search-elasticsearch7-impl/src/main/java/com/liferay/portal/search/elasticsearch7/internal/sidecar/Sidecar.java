@@ -97,7 +97,7 @@ public class Sidecar {
 
 	public void start() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Sidecar Elasticsearch liferay started");
+			_log.debug("Sidecar Elasticsearch starting");
 		}
 
 		_installElasticsearchIfNeeded();

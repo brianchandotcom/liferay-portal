@@ -16,10 +16,7 @@ import classNames from 'classnames';
 import {useEventListener} from 'frontend-js-react-web';
 import React, {useMemo, useRef, useState} from 'react';
 
-import {
-	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
@@ -441,7 +438,6 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 
 ColumnWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default ColumnWithControls;

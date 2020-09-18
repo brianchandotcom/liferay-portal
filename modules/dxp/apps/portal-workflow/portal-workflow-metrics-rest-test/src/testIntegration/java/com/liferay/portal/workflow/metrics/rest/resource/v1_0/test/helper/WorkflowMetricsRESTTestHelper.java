@@ -40,6 +40,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Creator;
@@ -66,6 +67,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -502,6 +505,23 @@ public class WorkflowMetricsRESTTestHelper {
 			instance.getId(), "processId", task.getProcessId(), "nodeId",
 			task.getNodeId(), "name", task.getName(), "taskId", task.getId());
 
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				_assertCount(
+					booleanQuery -> booleanQuery.addMustQueryClauses(
+						_queries.nested(
+							"tasks",
+							_queries.term("tasks.taskId", task.getId()))),
+					1,
+					_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+						companyId),
+					"companyId", companyId, "deleted", false, "instanceId",
+					instance.getId(), "processId", task.getProcessId());
+
+				return null;
+			});
+
 		if (assigneeIds != null) {
 			_taskWorkflowMetricsIndexer.updateTask(
 				_createLocalizationMap(task.getAssetTitle()),
@@ -697,7 +717,8 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private void _assertCount(
-			long expectedCount, String indexName, Object... parameters)
+			Consumer<BooleanQuery> booleanQueryConsumer, long expectedCount,
+			String indexName, Object... parameters)
 		throws Exception {
 
 		if (_searchEngineAdapter == null) {
@@ -725,12 +746,24 @@ public class WorkflowMetricsRESTTestHelper {
 					String.valueOf(parameters[i]), parameters[i + 1]));
 		}
 
+		booleanQueryConsumer.accept(booleanQuery);
+
 		countSearchRequest.setQuery(booleanQuery);
 
 		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
 			countSearchRequest);
 
 		Assert.assertEquals(expectedCount, countSearchResponse.getCount());
+	}
+
+	private void _assertCount(
+			long expectedCount, String indexName, Object... parameters)
+		throws Exception {
+
+		_assertCount(
+			booleanQuery -> {
+			},
+			expectedCount, indexName, parameters);
 	}
 
 	private void _assertCount(String indexName, Object... parameters)

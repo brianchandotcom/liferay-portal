@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -35,6 +36,22 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class SpiraProject extends BaseSpiraArtifact {
+
+	public static int getID(String projectName) {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+
+			return Integer.parseInt(
+				buildProperties.getProperty(
+					"spira.project.id[" + projectName + "]"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build.properties", ioException);
+		}
+	}
 
 	public static SpiraProject getSpiraProjectByID(int projectID) {
 		List<SpiraProject> spiraProjects = _getSpiraProjects(

@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -149,6 +150,22 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 		for (SpiraRelease spiraRelease : spiraReleases) {
 			deleteSpiraReleaseByID(spiraProject, spiraRelease.getID());
+		}
+	}
+
+	public static int getID(String jobName, String suiteName) {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+
+			return Integer.parseInt(
+				buildProperties.getProperty(
+					"spira.release.id[" + jobName + "][" + suiteName + "]"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build.properties", ioException);
 		}
 	}
 

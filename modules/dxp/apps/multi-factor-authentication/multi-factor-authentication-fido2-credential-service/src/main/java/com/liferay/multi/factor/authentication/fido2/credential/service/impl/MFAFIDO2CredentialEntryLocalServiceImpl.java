@@ -51,14 +51,17 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 				"User ID " + userId);
 		}
 
-		User user = userLocalService.getUserById(userId);
-
 		mfaFIDO2CredentialEntry = mfaFIDO2CredentialEntryPersistence.create(
 			counterLocalService.increment());
 
+		User user = userLocalService.getUserById(userId);
+
 		mfaFIDO2CredentialEntry.setCompanyId(user.getCompanyId());
-		mfaFIDO2CredentialEntry.setCreateDate(new Date());
+
 		mfaFIDO2CredentialEntry.setUserId(userId);
+		mfaFIDO2CredentialEntry.setUserName(user.getFullName());
+
+		mfaFIDO2CredentialEntry.setCreateDate(new Date());
 		mfaFIDO2CredentialEntry.setCredentialId(credentialId);
 		mfaFIDO2CredentialEntry.setCredentialType(credentialType);
 		mfaFIDO2CredentialEntry.setPublicKeyCose(publicKeyCose);

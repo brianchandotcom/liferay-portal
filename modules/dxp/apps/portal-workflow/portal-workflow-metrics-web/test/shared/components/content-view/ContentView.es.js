@@ -20,37 +20,37 @@ describe('The ContentView component should', () => {
 	afterEach(cleanup);
 
 	test('Be rendered with children', () => {
-		const {getByTestId} = render(
+		const {getByText} = render(
 			<ContentView>
-				<div data-testid="test">Lorem Ipsum</div>
+				<div>Lorem Ipsum</div>
 			</ContentView>
 		);
 
-		expect(getByTestId('test')).toHaveTextContent('Lorem Ipsum');
+		expect(getByText('Lorem Ipsum')).toBeTruthy();
 	});
 
 	test('Be rendered with empty state and the expected message', () => {
-		const {getByTestId} = render(
+		const {getByText} = render(
 			<ContentView emptyProps={{message: 'No results were found.'}} />
 		);
 
-		expect(getByTestId('emptyState')).toHaveTextContent(
-			'No results were found.'
-		);
+		expect(getByText('No results were found.')).toBeTruthy();
 	});
 
 	test('Be rendered with loading state', async () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<PromisesResolver promises={[new Promise(() => {})]}>
 				<ContentView />
 			</PromisesResolver>
 		);
 
-		expect(getByTestId('loadingState')).not.toBeNull();
+		expect(
+			container.querySelector('span.loading-animation')
+		).not.toBeNull();
 	});
 
 	describe('Be rendered with error state', () => {
-		let getByTestId;
+		let getByText;
 
 		beforeAll(() => {
 			const renderResult = render(
@@ -67,13 +67,11 @@ describe('The ContentView component should', () => {
 				</PromisesResolver>
 			);
 
-			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Be rendered with expected message', () => {
-			expect(getByTestId('emptyState')).toHaveTextContent(
-				'Unable to retrieve data'
-			);
+			expect(getByText('Unable to retrieve data')).toBeTruthy();
 		});
 	});
 });

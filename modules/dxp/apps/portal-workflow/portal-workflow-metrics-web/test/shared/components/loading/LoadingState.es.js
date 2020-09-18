@@ -20,23 +20,18 @@ describe('The LoadingState component should', () => {
 	afterEach(cleanup);
 
 	test('Be render with default props', () => {
-		const {getByTestId} = render(<LoadingState />);
+		const {container} = render(<LoadingState />);
 
-		const loading = getByTestId('loadingState');
+		const loading = container.querySelector('span.loading-animation');
 
-		expect(loading.children.length).toEqual(1);
-		expect(loading.children[0].className).toBe('loading-animation');
+		expect(loading).toBeTruthy();
 	});
 
 	test('Be render with loading message', () => {
-		const {getByTestId} = render(
-			<LoadingState message="fetching data..." />
-		);
+		const {getByText} = render(<LoadingState message="fetching data..." />);
 
-		const loading = getByTestId('loadingState');
-		const loadingMsg = getByTestId('loadingStateMsg');
+		const loadingMessage = getByText('fetching data...');
 
-		expect(loading.children.length).toEqual(2);
-		expect(loadingMsg).toHaveTextContent('fetching data...');
+		expect(loadingMessage).toBeTruthy();
 	});
 });

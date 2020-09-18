@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render, waitForElement} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {AppContext} from '../../../../src/main/resources/META-INF/resources/js/components/AppContext.es';
@@ -47,7 +48,7 @@ const items = [
 ];
 
 describe('The performance by step body component should', () => {
-	let getAllByTestId;
+	let cells, container, getAllByRole;
 
 	afterEach(cleanup);
 
@@ -65,33 +66,26 @@ describe('The performance by step body component should', () => {
 			{wrapper}
 		);
 
-		getAllByTestId = renderResult.getAllByTestId;
+		container = renderResult.container;
+		getAllByRole = renderResult.getAllByRole;
 	});
 
-	test('Be rendered with "Review" and "Update" names', async () => {
-		const stepNames = await waitForElement(() =>
-			getAllByTestId('stepName')
-		);
+	test('Be rendered with "Review" and "Update" names', () => {
+		const stepNames = container.querySelectorAll('.table-cell-expand');
 
-		expect(stepNames[0].innerHTML).toBe('Review');
-		expect(stepNames[1].innerHTML).toBe('Update');
+		expect(stepNames[0]).toHaveTextContent('Review');
+		expect(stepNames[1]).toHaveTextContent('Update');
 	});
 
-	test('Be rendered with "30%" and "22.58%" percentages', async () => {
-		const percentages = await waitForElement(() =>
-			getAllByTestId('slaBreached')
-		);
+	test('Be rendered with "30%" and "22.58%" percentages', () => {
+		cells = getAllByRole('cell');
 
-		expect(percentages[0].innerHTML).toBe('3 (30%)');
-		expect(percentages[1].innerHTML).toBe('7 (22.58%)');
+		expect(cells[1]).toHaveTextContent('3 (30%)');
+		expect(cells[4]).toHaveTextContent('7 (22.58%)');
 	});
 
-	test('Be rendered with "3h" and "5d 12h" durations', async () => {
-		const durations = await waitForElement(() =>
-			getAllByTestId('avgCompletionTime')
-		);
-
-		expect(durations[0].innerHTML).toBe('3h');
-		expect(durations[1].innerHTML).toBe('5d 12h');
+	test('Be rendered with "3h" and "5d 12h" durations', () => {
+		expect(cells[2]).toHaveTextContent('3h');
+		expect(cells[5]).toHaveTextContent('5d 12h');
 	});
 });

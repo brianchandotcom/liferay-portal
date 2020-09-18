@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import {waitForElement} from '@testing-library/dom';
 import {render} from '@testing-library/react';
 import React from 'react';
 
@@ -19,7 +18,7 @@ import VelocityChart from '../../../../src/main/resources/META-INF/resources/js/
 import '@testing-library/jest-dom/extend-expect';
 
 describe('The velocity chart should', () => {
-	test('Be rendered in document', async () => {
+	test('Be rendered in document', () => {
 		const velocityData = {
 			histograms: [
 				{
@@ -54,7 +53,7 @@ describe('The velocity chart should', () => {
 			value: 0.0,
 		};
 
-		const {getByTestId} = render(
+		const {container} = render(
 			<AppContext.Provider value={{isAmPm: true}}>
 				<VelocityChart
 					timeRange={{
@@ -67,11 +66,9 @@ describe('The velocity chart should', () => {
 			</AppContext.Provider>
 		);
 
-		const velocityChat = await waitForElement(() =>
-			getByTestId('velocity-chart')
-		);
+		const velocityChart = container.querySelector('.velocity-chart');
 
-		expect(velocityChat).toBeInTheDocument();
+		expect(velocityChart).toBeInTheDocument();
 	});
 
 	describe('Be render tooltip', () => {

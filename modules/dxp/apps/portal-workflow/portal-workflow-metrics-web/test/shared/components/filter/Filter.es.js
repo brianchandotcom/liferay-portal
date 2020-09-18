@@ -85,7 +85,7 @@ describe('The filter component should', () => {
 			});
 		}
 
-		const {container, getByTestId} = render(
+		const {container, getByPlaceholderText} = render(
 			<MockRouter>
 				<Filter
 					defaultItem={mappedItems[0]}
@@ -101,7 +101,7 @@ describe('The filter component should', () => {
 
 		fireEvent.click(filterBtn);
 
-		const filterSearch = getByTestId('filterSearch');
+		const filterSearch = getByPlaceholderText('search-for');
 		let filterItems = container.querySelectorAll('.dropdown-item');
 
 		filterItems.forEach((item, index) => {

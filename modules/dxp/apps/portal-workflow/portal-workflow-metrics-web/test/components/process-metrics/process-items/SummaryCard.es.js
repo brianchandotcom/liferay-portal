@@ -19,7 +19,7 @@ import SummaryCard from '../../../../src/main/resources/META-INF/resources/js/co
 import {MockRouter} from '../../../mock/MockRouter.es';
 
 describe('The SummaryCard component should', () => {
-	let getByTestId, renderResult;
+	let container, getByText, renderResult;
 
 	const props = {
 		getTitle: () => 'Overdue',
@@ -41,32 +41,37 @@ describe('The SummaryCard component should', () => {
 			</MockRouter>
 		);
 
-		getByTestId = renderResult.getByTestId;
+		container = renderResult.container;
+		getByText = renderResult.getByText;
 	});
 
 	test('Render correct icon and title', () => {
-		const instanceIcon = getByTestId('instanceIcon');
-		const instanceTitle = getByTestId('instanceTitle');
+		const instanceIcon = container.querySelector(
+			'.lexicon-icon-exclamation-circle'
+		);
+		const instanceTitle = getByText('Overdue');
 
-		expect([...instanceIcon.classList][1]).toContain('exclamation-circle');
-		expect(instanceTitle).toHaveTextContent('Overdue');
+		expect(instanceIcon).toBeTruthy();
+		expect(instanceTitle).toBeTruthy();
 	});
 
 	test('Render formatted percentage', () => {
-		const footer = getByTestId('footer');
+		const footer = container.querySelector('.footer');
 
 		expect(footer).toHaveTextContent('18.23%');
 	});
 
 	test('Render formatted value for values with more than 3 digits', () => {
-		const formattedValue = getByTestId('formattedValue');
+		const formattedValue = container.querySelector('.body');
 
 		expect(formattedValue).toHaveTextContent('156.4K');
 	});
 
 	test('Show see items only when item is hovered', () => {
-		const childLink = getByTestId('childLink');
-		const footer = getByTestId('footer');
+		const childLink = container.querySelector(
+			'a.process-dashboard-summary-card'
+		);
+		const footer = container.querySelector('.footer');
 
 		fireEvent.mouseOver(childLink);
 
@@ -79,7 +84,7 @@ describe('The SummaryCard component should', () => {
 });
 
 describe('The SummaryCard component should', () => {
-	let getByTestId, renderResult;
+	let container, renderResult;
 
 	const props = {
 		completed: true,
@@ -104,23 +109,25 @@ describe('The SummaryCard component should', () => {
 			</MockRouter>
 		);
 
-		getByTestId = renderResult.getByTestId;
+		container = renderResult.container;
 	});
 
 	test('Not render formatted percentage for total item', () => {
-		const footer = getByTestId('footer');
+		const footer = container.querySelector('.footer');
 
 		expect(footer).toHaveTextContent('');
 	});
 
 	test('Not render formatted value for values with 3 or less digits', () => {
-		const formattedValue = getByTestId('formattedValue');
+		const formattedValue = container.querySelector('.body');
 
 		expect(formattedValue).toHaveTextContent('310');
 	});
 
 	test('Render with correct link', () => {
-		const childLink = getByTestId('childLink');
+		const childLink = container.querySelector(
+			'a.process-dashboard-summary-card'
+		);
 
 		const href = childLink.getAttribute('href');
 
@@ -132,7 +139,7 @@ describe('The SummaryCard component should', () => {
 });
 
 describe('The SummaryCard component should', () => {
-	let getByTestId, renderResult;
+	let container, renderResult;
 
 	const props = {
 		getTitle: () => 'On Time',
@@ -154,11 +161,13 @@ describe('The SummaryCard component should', () => {
 			</MockRouter>
 		);
 
-		getByTestId = renderResult.getByTestId;
+		container = renderResult.container;
 	});
 
 	test('Render component with disabled state', () => {
-		const childLink = getByTestId('childLink');
+		const childLink = container.querySelector(
+			'a.process-dashboard-summary-card'
+		);
 
 		expect([childLink.classList][0]).toContain('disabled');
 	});

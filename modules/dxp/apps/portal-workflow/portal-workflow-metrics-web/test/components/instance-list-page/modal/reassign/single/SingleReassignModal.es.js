@@ -44,7 +44,7 @@ const ContainerMock = ({children}) => {
 };
 
 describe('The SingleReassignModal component should', () => {
-	let getByTestId;
+	let getByTestId, getByText;
 
 	const items = [
 		{
@@ -92,18 +92,18 @@ describe('The SingleReassignModal component should', () => {
 			}
 		);
 		getByTestId = renderResult.getByTestId;
+		getByText = renderResult.getByText;
 
 		jest.runAllTimers();
 	});
 
 	test('Render modal with error message and retry', () => {
 		const alertError = getByTestId('alertError');
-		const emptyState = getByTestId('emptyState');
-		const retryBtn = getByTestId('retryButton');
+		const emptyStateMessage = getByText('unable-to-retrieve-data');
+		const retryBtn = getByText('retry');
 
 		expect(alertError).toHaveTextContent('your-request-has-failed');
-		expect(retryBtn).toHaveTextContent('retry');
-		expect(emptyState).toHaveTextContent('unable-to-retrieve-data');
+		expect(emptyStateMessage).toBeTruthy();
 
 		fireEvent.click(retryBtn);
 	});

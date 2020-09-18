@@ -76,7 +76,7 @@ const timeRangeData = {
 };
 
 describe('The performance by step card component should', () => {
-	let container, getAllByText, getByTestId;
+	let container, getAllByText, getByText;
 
 	beforeAll(() => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
@@ -100,8 +100,8 @@ describe('The performance by step card component should', () => {
 			);
 
 			container = renderResult.container;
-			getByTestId = renderResult.getByTestId;
 			getAllByText = renderResult.getAllByText;
+			getByText = renderResult.getByText;
 		});
 
 		test('Be rendered with time range filter', async () => {
@@ -112,9 +112,9 @@ describe('The performance by step card component should', () => {
 		});
 
 		test('Be rendered with "View All Steps" button and total "(3)"', () => {
-			const viewAllSteps = getByTestId('viewAllSteps');
+			const viewAllSteps = getByText('view-all-steps (3)');
 
-			expect(viewAllSteps).toHaveTextContent('view-all-steps (3)');
+			expect(viewAllSteps).toBeTruthy();
 			expect(viewAllSteps.parentNode.getAttribute('href')).toContain(
 				'filters.dateEnd=2019-12-09T00%3A00%3A00Z&filters.dateStart=2019-12-03T00%3A00%3A00Z&filters.timeRange%5B0%5D=7'
 			);
@@ -142,15 +142,15 @@ describe('The performance by step card component should', () => {
 				{wrapper}
 			);
 
-			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Be rendered with empty state view', () => {
-			const emptyStateDiv = getByTestId('emptyState');
-
-			expect(emptyStateDiv.children[0].children[0]).toHaveTextContent(
+			const emptyStateMessage = getByText(
 				'there-is-no-data-at-the-moment'
 			);
+
+			expect(emptyStateMessage).toBeTruthy();
 		});
 	});
 });

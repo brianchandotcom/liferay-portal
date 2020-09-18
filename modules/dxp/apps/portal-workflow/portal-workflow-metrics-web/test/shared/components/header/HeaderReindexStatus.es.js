@@ -50,7 +50,7 @@ describe('The HeaderTitle component should', () => {
 	});
 
 	test('Render with statuses and show loading status', () => {
-		const {getByTestId} = render(
+		const {getByTestId, getByTitle} = render(
 			<MockRouter
 				initialReindexStatuses={[{completionPercentage: 0, key: 'All'}]}
 			>
@@ -61,11 +61,11 @@ describe('The HeaderTitle component should', () => {
 		);
 
 		const wrapper = getByTestId('wrapper');
-		const statusLoading = getByTestId('statusLoading');
-
-		expect(wrapper.children.length).toBe(2);
-		expect(statusLoading.getAttribute('title')).toBe(
+		const statusLoading = getByTitle(
 			'the-workflow-metrics-data-is-currently-reindexing'
 		);
+
+		expect(wrapper.children.length).toBe(2);
+		expect(statusLoading).toBeTruthy();
 	});
 });

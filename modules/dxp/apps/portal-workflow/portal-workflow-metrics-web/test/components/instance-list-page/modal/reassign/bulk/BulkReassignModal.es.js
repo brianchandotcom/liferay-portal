@@ -177,17 +177,13 @@ describe('The BulkReassignModal component should', () => {
 	});
 
 	test('Render "Select tasks" step with fetch error and retrying', () => {
-		const emptyState = getByTestId('emptyState');
 		const alertError = getByTestId('alertError');
-
-		const retryBtn = emptyState.children[0].children[1];
+		const emptyStateMessage = getByText('unable-to-retrieve-data');
+		const retryBtn = getByText('retry');
 
 		expect(alertError).toHaveTextContent('your-request-has-failed');
 
-		expect(emptyState.children[0].children[1]).toHaveTextContent('retry');
-		expect(emptyState.children[0].children[0]).toHaveTextContent(
-			'unable-to-retrieve-data'
-		);
+		expect(emptyStateMessage).toBeTruthy();
 
 		fireEvent.click(retryBtn);
 	});
@@ -304,17 +300,13 @@ describe('The BulkReassignModal component should', () => {
 	});
 
 	test('Render "Select assignees" step with fetch error and retrying', () => {
-		const emptyState = getByTestId('emptyState');
 		const alertError = getByTestId('alertError');
-
-		const retryBtn = emptyState.children[0].children[1];
+		const emptyStateMessage = getByText('failed-to-retrieve-assignees');
+		const retryBtn = getByText('retry');
 
 		expect(alertError).toHaveTextContent('your-request-has-failed');
 
-		expect(emptyState.children[0].children[1]).toHaveTextContent('retry');
-		expect(emptyState.children[0].children[0]).toHaveTextContent(
-			'failed-to-retrieve-assignees'
-		);
+		expect(emptyStateMessage).toBeTruthy();
 
 		fireEvent.click(retryBtn);
 	});

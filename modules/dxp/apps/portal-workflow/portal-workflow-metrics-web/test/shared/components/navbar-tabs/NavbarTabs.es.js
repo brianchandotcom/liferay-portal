@@ -18,7 +18,7 @@ import NavbarTabs from '../../../../src/main/resources/META-INF/resources/js/sha
 import {MockRouter} from '../../../mock/MockRouter.es';
 
 describe('The NavbarTabs component should', () => {
-	let getAllByTestId, renderResult;
+	let container, renderResult;
 
 	const tabs = [
 		{
@@ -62,11 +62,11 @@ describe('The NavbarTabs component should', () => {
 			</MockRouter>
 		);
 
-		getAllByTestId = renderResult.getAllByTestId;
+		container = renderResult.container;
 	});
 
 	test('Render components with correct link', () => {
-		const tabLinks = getAllByTestId('tabLink');
+		const tabLinks = container.querySelectorAll('a.nav-link');
 
 		expect(tabLinks.length).toBe(4);
 		expect(tabLinks[0]).toHaveTextContent('Lorem Ipsum 1');

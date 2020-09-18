@@ -89,7 +89,7 @@ const timeRangeData = {
 };
 
 describe('The performance by assignee card component should', () => {
-	let container, getByTestId, getByText;
+	let container, getByText;
 
 	beforeAll(() => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
@@ -116,16 +116,13 @@ describe('The performance by assignee card component should', () => {
 			);
 
 			container = renderResult.container;
-			getByTestId = renderResult.getByTestId;
 			getByText = renderResult.getByText;
 		});
 
 		test('Be rendered with "View All Assignees" button and total "(3)"', () => {
-			const viewAllAssignees = getByTestId('viewAllAssignees');
+			const viewAllAssignees = getByText('view-all-assignees (3)');
 
-			expect(viewAllAssignees).toHaveTextContent(
-				'view-all-assignees (3)'
-			);
+			expect(viewAllAssignees).toBeTruthy();
 			expect(viewAllAssignees.parentNode.getAttribute('href')).toContain(
 				'filters.dateEnd=2019-12-09T00%3A00%3A00Z&filters.dateStart=2019-12-03T00%3A00%3A00Z&filters.timeRange%5B0%5D=7&filters.taskNames%5B0%5D=update'
 			);
@@ -163,20 +160,15 @@ describe('The performance by assignee card component should', () => {
 				</MockRouter>
 			);
 
-			const renderResult = render(
-				<PerformanceByAssigneeCard routeParams={{processId}} />,
-				{wrapper}
-			);
-
-			getByTestId = renderResult.getByTestId;
+			render(<PerformanceByAssigneeCard routeParams={{processId}} />, {
+				wrapper,
+			});
 		});
 
 		test('Be rendered with empty state view', () => {
-			const emptyStateDiv = getByTestId('emptyState');
+			const emptyStateMessage = getByText('no-results-were-found');
 
-			expect(emptyStateDiv.children[0].children[0]).toHaveTextContent(
-				'no-results-were-found'
-			);
+			expect(emptyStateMessage).toBeTruthy();
 		});
 	});
 });

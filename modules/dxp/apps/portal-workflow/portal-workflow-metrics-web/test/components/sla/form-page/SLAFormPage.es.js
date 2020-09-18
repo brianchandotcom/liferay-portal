@@ -411,7 +411,7 @@ describe('The SLAFormPage component should', () => {
 	});
 
 	describe('Edit a Blocked SLA', () => {
-		let getByTestId, getByText, renderResult;
+		let getByText, renderResult;
 
 		const nodes = [
 			{
@@ -481,18 +481,17 @@ describe('The SLAFormPage component should', () => {
 				</MockRouter>
 			);
 
-			getByTestId = renderResult.getByTestId;
 			getByText = renderResult.getByText;
 		});
 
 		test('Handle errors at start and stop node keys', () => {
-			const alertChange = getByTestId('alertChange');
+			const alertChange = getByText(
+				'the-time-frame-options-changed-in-the-workflow-definition'
+			);
 			const startField = getByText('start').parentNode;
 			const stopField = getByText('stop').parentNode;
 
-			expect(alertChange).toHaveTextContent(
-				'the-time-frame-options-changed-in-the-workflow-definition'
-			);
+			expect(alertChange).toBeTruthy();
 			expect(startField).toHaveTextContent(
 				'selected-option-is-no-longer-available'
 			);

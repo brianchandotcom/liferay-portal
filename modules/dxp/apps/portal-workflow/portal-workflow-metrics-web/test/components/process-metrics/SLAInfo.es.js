@@ -18,7 +18,7 @@ import {MockRouter} from '../../mock/MockRouter.es';
 import '@testing-library/jest-dom/extend-expect';
 
 describe('The SLAInfo component should', () => {
-	let container, getByTestId;
+	let container, getByText;
 
 	describe('SLA count 0', () => {
 		const clientMock = {
@@ -35,19 +35,19 @@ describe('The SLAInfo component should', () => {
 			);
 
 			container = renderResult.container;
-			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Show alert with correct data', () => {
-			const slaInfoAlert = getByTestId('slaInfoAlert');
-			const slaInfoLink = getByTestId('slaInfoLink');
+			const slaInfoAlert = getByText(
+				'no-slas-are-defined-for-this-process'
+			);
+			const slaInfoLink = getByText('add-a-new-sla');
 
 			expect(slaInfoLink.getAttribute('href')).toContain('/sla/1/new');
-			expect(slaInfoAlert).toHaveTextContent(
-				'no-slas-are-defined-for-this-process add-a-new-sla'
-			);
+			expect(slaInfoAlert).toBeTruthy();
 
-			fireEvent.click(slaInfoAlert.children[1]);
+			fireEvent.click(container.querySelector('button.close'));
 
 			expect(container.innerHTML).toBe('');
 
@@ -70,21 +70,21 @@ describe('The SLAInfo component should', () => {
 			);
 
 			container = renderResult.container;
-			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Show alert with correct data', () => {
-			const slaInfoAlert = getByTestId('slaInfoAlert');
-			const slaInfoLink = getByTestId('slaInfoLink');
+			const slaInfoAlert = getByText(
+				'x-sla-is-blocked fix-the-sla-configuration-to-resume-accurate-reporting'
+			);
+			const slaInfoLink = getByText('set-up-slas');
 
 			expect(slaInfoLink.getAttribute('href')).toContain(
 				'/sla/1/list/20/1'
 			);
-			expect(slaInfoAlert).toHaveTextContent(
-				'x-sla-is-blocked fix-the-sla-configuration-to-resume-accurate-reporting set-up-slas'
-			);
+			expect(slaInfoAlert).toBeTruthy();
 
-			fireEvent.click(slaInfoAlert.children[1]);
+			fireEvent.click(container.querySelector('button.close'));
 
 			expect(container.innerHTML).toBe('');
 		});
@@ -105,21 +105,21 @@ describe('The SLAInfo component should', () => {
 			);
 
 			container = renderResult.container;
-			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 		});
 
 		test('Show alert with correct data', () => {
-			const slaInfoAlert = getByTestId('slaInfoAlert');
-			const slaInfoLink = getByTestId('slaInfoLink');
+			const slaInfoAlert = getByText(
+				'x-slas-are-blocked fix-the-sla-configuration-to-resume-accurate-reporting'
+			);
+			const slaInfoLink = getByText('set-up-slas');
 
 			expect(slaInfoLink.getAttribute('href')).toContain(
 				'/sla/1/list/20/1'
 			);
-			expect(slaInfoAlert).toHaveTextContent(
-				'x-slas-are-blocked fix-the-sla-configuration-to-resume-accurate-reporting set-up-slas'
-			);
+			expect(slaInfoAlert).toBeTruthy();
 
-			fireEvent.click(slaInfoAlert.children[1]);
+			fireEvent.click(container.querySelector('button.close'));
 
 			expect(container.innerHTML).toBe('');
 		});

@@ -28,7 +28,7 @@ describe('The IndexesPage component should', () => {
 	describe('Render and dispatch actions', () => {
 		jest.runAllTimers();
 
-		let getAllByTestId, getByTestId;
+		let container, getAllByTestId, getByTestId, getByText;
 
 		const items = [
 			{
@@ -62,8 +62,10 @@ describe('The IndexesPage component should', () => {
 				</MockRouter>
 			);
 
+			container = renderResult.container;
 			getAllByTestId = renderResult.getAllByTestId;
 			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 
 			window.location.hash = '/settings/indexes';
 		});
@@ -80,13 +82,11 @@ describe('The IndexesPage component should', () => {
 			fireEvent.click(reindexAllBtn);
 		});
 
-		test('Render error toast when dispatch any reindex action with error', async () => {
-			const alertToast = await getByTestId('alertToast');
-			const alertClose = alertToast.children[1];
+		test('Render error toast when dispatch any reindex action with error', () => {
+			const alertToast = getByText('your-request-has-failed');
+			const alertClose = container.querySelector('button.close');
 
-			expect(alertToast).toHaveTextContent(
-				'error:your-request-has-failed'
-			);
+			expect(alertToast).toBeTruthy();
 
 			fireEvent.click(alertClose);
 		});
@@ -136,11 +136,9 @@ describe('The IndexesPage component should', () => {
 				document.querySelector('div.progress')
 			);
 
-			let alertToast = getByTestId('alertToast');
+			let alertToast = getByText('all-x-have-reindexed-successfully');
 
-			expect(alertToast).toHaveTextContent(
-				'success:all-x-have-reindexed-successfully'
-			);
+			expect(alertToast).toBeTruthy();
 
 			expect(indexActions[0].children[0]).not.toBeDisabled();
 			expect(indexActions[1].children[0]).not.toBeDisabled();
@@ -167,11 +165,9 @@ describe('The IndexesPage component should', () => {
 				document.querySelector('div.progress')
 			);
 
-			alertToast = getByTestId('alertToast');
+			alertToast = getByText('all-x-have-reindexed-successfully');
 
-			expect(alertToast).toHaveTextContent(
-				'success:all-x-have-reindexed-successfully'
-			);
+			expect(alertToast).toBeTruthy();
 
 			expect(indexActions[0].children[0]).not.toBeDisabled();
 			expect(indexActions[1].children[0]).not.toBeDisabled();
@@ -193,11 +189,9 @@ describe('The IndexesPage component should', () => {
 				document.querySelector('div.progress')
 			);
 
-			alertToast = getByTestId('alertToast');
+			alertToast = getByText('x-has-reindexed-successfully');
 
-			expect(alertToast).toHaveTextContent(
-				'success:x-has-reindexed-successfully'
-			);
+			expect(alertToast).toBeTruthy();
 
 			expect(indexActions[0].children[0]).not.toBeDisabled();
 			expect(indexActions[1].children[0]).not.toBeDisabled();

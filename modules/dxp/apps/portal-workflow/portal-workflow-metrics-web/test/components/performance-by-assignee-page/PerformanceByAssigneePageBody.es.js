@@ -73,19 +73,17 @@ describe('The subcomponents from workload by assignee page body should', () => {
 	afterEach(cleanup);
 
 	test('Be rendered with empty view and no content message', async () => {
-		const {getByTestId} = render(
+		const {getByText} = render(
 			<PerformanceByAssigneePage.Body items={[]} totalCount={0} />
 		);
 
-		const emptyStateDiv = getByTestId('emptyState');
+		const emptyStateMessage = getByText('there-is-no-data-at-the-moment');
 
-		expect(emptyStateDiv.children[1].children[0].innerHTML).toBe(
-			'there-is-no-data-at-the-moment'
-		);
+		expect(emptyStateMessage).toBeTruthy();
 	});
 
 	test('Be rendered with empty view and no results message', async () => {
-		const {getByTestId} = render(
+		const {getByText} = render(
 			<PerformanceByAssigneePage.Body
 				filtered={true}
 				items={[]}
@@ -93,10 +91,8 @@ describe('The subcomponents from workload by assignee page body should', () => {
 			/>
 		);
 
-		const emptyStateDiv = getByTestId('emptyState');
+		const emptyStateMessage = getByText('no-results-were-found');
 
-		expect(emptyStateDiv.children[1].children[0].innerHTML).toBe(
-			'no-results-were-found'
-		);
+		expect(emptyStateMessage).toBeTruthy();
 	});
 });

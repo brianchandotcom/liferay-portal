@@ -19,47 +19,43 @@ describe('The EmptyState component should', () => {
 	afterEach(cleanup);
 
 	test('Be render with message only', () => {
-		const {getByTestId} = render(<EmptyState filtered hideAnimation />);
+		const {getByText} = render(<EmptyState filtered hideAnimation />);
 
-		const emptyState = getByTestId('emptyState');
-		const message = getByTestId('emptyStateMsg');
+		const message = getByText('no-results-were-found');
 
-		expect(emptyState.children.length).toEqual(1);
-		expect(message).toHaveTextContent('no-results-were-found');
+		expect(message).toBeTruthy();
 	});
 
 	test('Be render with message and animation', () => {
-		const {getByTestId} = render(<EmptyState filtered />);
+		const {container, getByText} = render(<EmptyState filtered />);
 
-		const animation = getByTestId('emptyStateAnimation');
-		const emptyState = getByTestId('emptyState');
-		const message = getByTestId('emptyStateMsg');
-
-		expect(animation.className).toBe(
-			'taglib-empty-search-result-message-header'
+		const animation = container.querySelector(
+			'.taglib-empty-search-result-message-header'
 		);
-		expect(emptyState.children.length).toEqual(2);
-		expect(message).toHaveTextContent('no-results-were-found');
+		const message = getByText('no-results-were-found');
+
+		expect(animation).toBeTruthy();
+		expect(message).toBeTruthy();
 	});
 
 	test('Be render with message, title and animation', () => {
-		const {getByTestId} = render(<EmptyState title="No data" />);
+		const {container, getByText} = render(<EmptyState title="No data" />);
 
-		const animation = getByTestId('emptyStateAnimation');
-		const emptyState = getByTestId('emptyState');
-		const message = getByTestId('emptyStateMsg');
-		const title = getByTestId('emptyStateTitle');
+		const animation = container.querySelector(
+			'.taglib-empty-result-message-header'
+		);
+		const message = getByText('there-is-no-data-at-the-moment');
+		const title = getByText('No data');
 
-		expect(animation.className).toBe('taglib-empty-result-message-header');
-		expect(emptyState.children.length).toEqual(3);
-		expect(message).toHaveTextContent('there-is-no-data-at-the-moment');
-		expect(title).toHaveTextContent('No data');
+		expect(animation).toBeTruthy();
+		expect(message).toBeTruthy();
+		expect(title).toBeTruthy();
 	});
 
 	test('Be render with message and action button', () => {
 		const mockClick = jest.fn();
 
-		const {getByTestId} = render(
+		const {getByText} = render(
 			<EmptyState
 				actionButton={<button onClick={mockClick}>Reload</button>}
 				hideAnimation
@@ -67,14 +63,12 @@ describe('The EmptyState component should', () => {
 			/>
 		);
 
-		const emptyState = getByTestId('emptyState');
-		const message = getByTestId('emptyStateMsg');
-		const button = emptyState.children[0].children[1];
-
-		expect(message).toHaveTextContent(
+		const button = getByText('Reload');
+		const message = getByText(
 			"Failed to retrieve data, click on 'Reload' to retrying."
 		);
-		expect(button).toHaveTextContent('Reload');
+
+		expect(message).toBeTruthy();
 
 		fireEvent.click(button);
 

@@ -25,6 +25,8 @@ const mockProps = {
 };
 
 describe('The WorkloadByStepCard component should', () => {
+	let container;
+
 	afterAll(cleanup);
 
 	const data = {
@@ -41,8 +43,6 @@ describe('The WorkloadByStepCard component should', () => {
 		totalCount: 1,
 	};
 
-	let getByTestId;
-
 	const clientMock = {
 		get: jest.fn().mockResolvedValue({data}),
 	};
@@ -54,11 +54,11 @@ describe('The WorkloadByStepCard component should', () => {
 			</MockRouter>
 		);
 
-		getByTestId = renderResult.getByTestId;
+		container = renderResult.container;
 	});
 
 	test('Load table component with request data and navigation links', () => {
-		const workloadByStepTable = getByTestId('workloadByStepTable');
+		const workloadByStepTable = container.querySelector('.table');
 		const tableItems = workloadByStepTable.children[1].children[0].children;
 
 		expect(tableItems[0]).toHaveTextContent('Node Name');

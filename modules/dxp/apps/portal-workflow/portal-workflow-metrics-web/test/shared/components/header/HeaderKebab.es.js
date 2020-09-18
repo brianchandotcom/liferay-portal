@@ -49,17 +49,18 @@ describe('The HeaderKebab component should', () => {
 			},
 		];
 
-		const {getAllByTestId, getByTestId} = render(
+		render(
 			<MockRouter>
 				<HeaderKebab kebabItems={kebabItems} />
 			</MockRouter>
 		);
 
-		const button = getByTestId('headerKebabButton');
+		const button = document.getElementById('headerKebab').children[0]
+			.children[0].children[0];
 
 		fireEvent.click(button);
 
-		const dropDownItems = getAllByTestId('headerKebabItem');
+		const dropDownItems = document.querySelectorAll('.dropdown-item');
 
 		expect(dropDownItems[0]).toHaveTextContent('test');
 

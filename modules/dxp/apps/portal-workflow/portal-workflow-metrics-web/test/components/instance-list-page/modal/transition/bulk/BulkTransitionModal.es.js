@@ -281,7 +281,7 @@ const ContainerMockSecondary = ({children}) => {
 };
 
 describe('The BulkTransitionModal component should', () => {
-	let getAllByTestId, getAllByText, getByTestId;
+	let getAllByTestId, getAllByText, getByTestId, getByText;
 
 	beforeAll(() => {
 		const component = render(<BulkTransitionModal />, {
@@ -290,21 +290,19 @@ describe('The BulkTransitionModal component should', () => {
 		getAllByTestId = component.getAllByTestId;
 		getAllByText = component.getAllByText;
 		getByTestId = component.getByTestId;
+		getByText = component.getByText;
 
 		jest.runAllTimers();
 	});
 
 	test('Render "Select tasks" step with fetch error and retrying', () => {
 		const alertError = getByTestId('alertError');
-		const emptyState = getByTestId('emptyState');
-		const retryButton = getByTestId('retryButton');
+		const emptyStateMessage = getByText('unable-to-retrieve-data');
+		const retryButton = getByText('retry');
 
 		expect(alertError).toHaveTextContent('your-request-has-failed');
 
-		expect(emptyState.children[0].children[1]).toHaveTextContent('retry');
-		expect(emptyState.children[0].children[0]).toHaveTextContent(
-			'unable-to-retrieve-data'
-		);
+		expect(emptyStateMessage).toBeTruthy();
 
 		fireEvent.click(retryButton);
 	});
@@ -518,8 +516,8 @@ describe('The BulkTransitionModal component should', () => {
 
 		await fireEvent.click(nextBtn);
 
-		const loadingState = getByTestId('loadingState');
+		const loadingState = document.querySelector('span.loading-animation');
 
-		expect(loadingState.children[0]).toHaveClass('loading-animation');
+		expect(loadingState).toBeTruthy();
 	});
 });

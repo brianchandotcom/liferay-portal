@@ -21,7 +21,7 @@ import {MockRouter} from '../../../mock/MockRouter.es';
 
 describe('The SLAListPage component should', () => {
 	describe('Be rendered correctly with no items', () => {
-		let getByTestId, getByTitle;
+		let getByTitle, getByText;
 
 		const clientMock = {
 			get: jest.fn().mockResolvedValue({data: {items: []}}),
@@ -42,7 +42,7 @@ describe('The SLAListPage component should', () => {
 				</MockRouter>
 			);
 
-			getByTestId = renderResult.getByTestId;
+			getByText = renderResult.getByText;
 			getByTitle = renderResult.getByTitle;
 		});
 
@@ -54,11 +54,11 @@ describe('The SLAListPage component should', () => {
 		});
 
 		test('Display empty state', () => {
-			const emptyStateMessage = getByTestId('emptyStateMsg');
-
-			expect(emptyStateMessage).toHaveTextContent(
+			const emptyStateMessage = getByText(
 				'sla-allows-to-define-and-measure-process-performance'
 			);
+
+			expect(emptyStateMessage).toBeTruthy();
 		});
 	});
 

@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -843,7 +844,7 @@ public class PoshiRunnerValidation {
 		Element element, String filePath) {
 
 		List<String> requiredPropertyNames = new ArrayList<>(
-			PoshiRunnerContext.getTestCaseRequiredPropertyNames());
+			PoshiProperties.getRequiredPoshiPropertiesNames());
 
 		List<Element> propertyElements = element.elements("property");
 

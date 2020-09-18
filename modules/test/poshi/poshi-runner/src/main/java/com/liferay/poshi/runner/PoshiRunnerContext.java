@@ -18,12 +18,13 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
+import com.liferay.poshi.core.PoshiProperties;
+import com.liferay.poshi.core.pql.PQLEntity;
+import com.liferay.poshi.core.pql.PQLEntityFactory;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
-import com.liferay.poshi.runner.pql.PQLEntity;
-import com.liferay.poshi.runner.pql.PQLEntityFactory;
 import com.liferay.poshi.runner.prose.PoshiProseMatcher;
 import com.liferay.poshi.runner.script.PoshiScriptParserException;
 import com.liferay.poshi.runner.util.FileUtil;
@@ -271,10 +272,6 @@ public class PoshiRunnerContext {
 		return _seleniumParameterCounts.get(commandName);
 	}
 
-	public static List<String> getTestCaseAvailablePropertyNames() {
-		return _testCaseAvailablePropertyNames;
-	}
-
 	public static Element getTestCaseCommandElement(
 		String classCommandName, String namespace) {
 
@@ -288,10 +285,6 @@ public class PoshiRunnerContext {
 
 	public static String getTestCaseNamespacedClassCommandName() {
 		return _testCaseNamespacedClassCommandName;
-	}
-
-	public static List<String> getTestCaseRequiredPropertyNames() {
-		return _testCaseRequiredPropertyNames;
 	}
 
 	public static Element getTestCaseRootElement(
@@ -428,6 +421,9 @@ public class PoshiRunnerContext {
 
 		Properties properties = new Properties();
 
+		List<String> poshiPropertyNames =
+			PoshiProperties.getPoshiPropertiesNames();
+
 		List<Element> rootPropertyElements = rootElement.elements("property");
 
 		for (Element propertyElement : rootPropertyElements) {
@@ -436,8 +432,8 @@ public class PoshiRunnerContext {
 
 			properties.setProperty(propertyName, propertyValue);
 
-			if (!_testCaseAvailablePropertyNames.contains(propertyName)) {
-				_testCaseAvailablePropertyNames.add(propertyName);
+			if (!poshiPropertyNames.contains(propertyName)) {
+				poshiPropertyNames.add(propertyName);
 			}
 		}
 
@@ -450,8 +446,8 @@ public class PoshiRunnerContext {
 
 			properties.setProperty(propertyName, propertyValue);
 
-			if (!_testCaseAvailablePropertyNames.contains(propertyName)) {
-				_testCaseAvailablePropertyNames.add(propertyName);
+			if (!poshiPropertyNames.contains(propertyName)) {
+				poshiPropertyNames.add(propertyName);
 			}
 		}
 
@@ -1631,8 +1627,6 @@ public class PoshiRunnerContext {
 		Collections.synchronizedMap(new HashMap<>());
 	private static final Map<String, Integer> _seleniumParameterCounts =
 		Collections.synchronizedMap(new HashMap<>());
-	private static final List<String> _testCaseAvailablePropertyNames =
-		Collections.synchronizedList(new ArrayList<>());
 	private static final Map<String, String> _testCaseDescriptions =
 		Collections.synchronizedMap(new HashMap<>());
 	private static String _testCaseNamespacedClassCommandName;
@@ -1640,33 +1634,6 @@ public class PoshiRunnerContext {
 		Collections.synchronizedList(new ArrayList<>());
 	private static final List<String> _testCaseNamespacedClassNames =
 		Collections.synchronizedList(new ArrayList<>());
-	private static final List<String> _testCaseRequiredPropertyNames =
-		Collections.synchronizedList(new ArrayList<>());
-
-	static {
-		String testCaseAvailablePropertyNames =
-			PropsValues.TEST_CASE_AVAILABLE_PROPERTY_NAMES;
-
-		if (Validator.isNotNull(testCaseAvailablePropertyNames)) {
-			Collections.addAll(
-				_testCaseAvailablePropertyNames,
-				StringUtil.split(testCaseAvailablePropertyNames));
-		}
-
-		_testCaseAvailablePropertyNames.add("ignored");
-		_testCaseAvailablePropertyNames.add("known-issues");
-		_testCaseAvailablePropertyNames.add("priority");
-		_testCaseAvailablePropertyNames.add("test.run.environment");
-
-		String testCaseRequiredPropertyNames =
-			PropsValues.TEST_CASE_REQUIRED_PROPERTY_NAMES;
-
-		if (Validator.isNotNull(testCaseRequiredPropertyNames)) {
-			Collections.addAll(
-				_testCaseRequiredPropertyNames,
-				StringUtil.split(testCaseRequiredPropertyNames));
-		}
-	}
 
 	private static class PoshiFileCallable implements Callable<URL> {
 

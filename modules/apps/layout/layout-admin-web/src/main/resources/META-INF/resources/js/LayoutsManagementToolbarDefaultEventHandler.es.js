@@ -30,7 +30,9 @@ class LayoutsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedPages(itemData) {
 		if (
 			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-delete-the-selected-pages-if-the-selected-pages-have-child-pages-they-will-also-be-removed'
+				)
 			)
 		) {
 			this._send(itemData.deleteLayoutURL);

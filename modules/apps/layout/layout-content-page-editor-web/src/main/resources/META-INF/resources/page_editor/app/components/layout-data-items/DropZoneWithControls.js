@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import ManageAllowedFragmentButton from '../ManageAllowedFragmentButton';
 import Topper from '../Topper';
@@ -38,7 +39,7 @@ DropZone.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
 };
 
-const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
+const DropZoneWithControls = React.forwardRef(({item}, ref) => {
 	const [setRef, itemElement] = useSetRef(ref);
 
 	return (

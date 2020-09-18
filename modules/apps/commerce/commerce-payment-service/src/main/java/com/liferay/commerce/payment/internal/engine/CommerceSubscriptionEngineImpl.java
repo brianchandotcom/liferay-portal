@@ -14,10 +14,12 @@
 
 package com.liferay.commerce.payment.internal.engine;
 
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.request.CommercePaymentRequest;
@@ -28,6 +30,8 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Portal;
@@ -218,14 +222,24 @@ public class CommerceSubscriptionEngineImpl
 			commercePaymentMethod.completeRecurringPayment(
 				commercePaymentRequest);
 
-		_commerceOrderLocalService.updatePaymentStatusAndTransactionId(
-			commerceOrder.getUserId(), commerceOrderId,
-			commercePaymentResult.getNewPaymentStatus(),
-			commercePaymentResult.getAuthTransactionId());
+		int paymentStatus = commercePaymentResult.getNewPaymentStatus();
+
+		commerceOrder =
+			_commerceOrderLocalService.updatePaymentStatusAndTransactionId(
+				commerceOrder.getUserId(), commerceOrderId, paymentStatus,
+				transactionId);
 
 		_commerceOrderPaymentLocalService.addCommerceOrderPayment(
-			commerceOrderId, commercePaymentResult.getNewPaymentStatus(),
-			StringPool.BLANK);
+			commerceOrderId, paymentStatus, StringPool.BLANK);
+
+		if (paymentStatus == CommerceOrderConstants.PAYMENT_STATUS_PAID) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			_commerceOrderEngine.transitionCommerceOrder(
+				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING,
+				permissionChecker.getUserId());
+		}
 
 		return commercePaymentResult;
 	}
@@ -380,6 +394,9 @@ public class CommerceSubscriptionEngineImpl
 
 		return suspendSubscription;
 	}
+
+	@Reference
+	private CommerceOrderEngine _commerceOrderEngine;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

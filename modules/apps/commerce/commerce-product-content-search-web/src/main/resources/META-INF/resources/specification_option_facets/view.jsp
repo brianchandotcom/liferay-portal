@@ -64,6 +64,7 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 						>
 							<aui:form method="post" name='<%= "assetEntriesFacetForm_" + facet.getFieldName() %>'>
 								<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= cpSpecificationOptionFacetsDisplayContext.getCPSpecificationOptionKey(facet.getFieldName()) %>" />
+								<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= cpSpecificationOptionFacetsDisplayContext.getPaginationStartParameterName() %>" />
 
 								<aui:fieldset>
 								<ul class="asset-type list-unstyled">

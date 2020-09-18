@@ -39,11 +39,13 @@ public class CPSpecificationOptionFacetsDisplayContext {
 	public CPSpecificationOptionFacetsDisplayContext(
 		CPSpecificationOptionLocalService cpSpecificationOptionLocalService,
 		RenderRequest renderRequest, List<Facet> facets,
+		String paginationStartParameterName,
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
 		_cpSpecificationOptionLocalService = cpSpecificationOptionLocalService;
 		_renderRequest = renderRequest;
 		_facets = facets;
+		_paginationStartParameterName = paginationStartParameterName;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
 
 		_locale = _renderRequest.getLocale();
@@ -80,6 +82,10 @@ public class CPSpecificationOptionFacetsDisplayContext {
 
 	public List<Facet> getFacets() {
 		return _facets;
+	}
+
+	public String getPaginationStartParameterName() {
+		return _paginationStartParameterName;
 	}
 
 	public boolean hasCommerceChannel() throws PortalException {
@@ -120,6 +126,7 @@ public class CPSpecificationOptionFacetsDisplayContext {
 		_cpSpecificationOptionLocalService;
 	private final List<Facet> _facets;
 	private final Locale _locale;
+	private final String _paginationStartParameterName;
 	private final PortletSharedSearchResponse _portletSharedSearchResponse;
 	private final RenderRequest _renderRequest;
 

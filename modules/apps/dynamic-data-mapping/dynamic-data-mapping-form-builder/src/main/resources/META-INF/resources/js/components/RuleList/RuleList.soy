@@ -144,14 +144,15 @@
 						</div>
 
 						<div class="list-group-item-field">
-							{let $titleMessage kind="text"}
-								{msg desc=""}due-to-missing-fields{/msg}
-							{/let}
-							{let $labelMessage kind="text"}
-								{msg desc=""}broken-rule{/msg}
-							{/let}
 							<div class="card-col-field">
 								{if $rule.invalidRule}
+									{let $titleMessage kind="text"}
+										{msg desc=""}due-to-missing-fields{/msg}
+									{/let}
+									{let $labelMessage kind="text"}
+										{msg desc=""}broken-rule{/msg}
+									{/let}
+
 									<div class="invalid-rule" title="{$titleMessage}">
 									{call ClayLabel.render}
 										{param spritemap: $spritemap /}

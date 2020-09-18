@@ -838,7 +838,7 @@ definition {
 	@priority = "5"
 	test ImportLAR {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 		property testray.component.names = "Training";
 
 		JSONGroup.addGroup(groupName = "Site Name 2");

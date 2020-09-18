@@ -21,7 +21,6 @@ import React, {Component} from 'react';
 
 import ThemeContext from '../../ThemeContext.es';
 import {
-	SOURCES,
 	SUPPORTED_CONJUNCTIONS,
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
@@ -374,13 +373,10 @@ class SegmentEdit extends Component {
 			defaultLanguageId,
 			hasUpdatePermission,
 			portletNamespace,
-			source,
 			values,
 		} = this.props;
 
 		const {contributors, disabledSave, editing, validTitle} = this.state;
-
-		const {assetsPath} = this.context;
 
 		const disabledSaveButton = disabledSave || !validTitle;
 
@@ -413,25 +409,6 @@ class SegmentEdit extends Component {
 								portletNamespace={portletNamespace}
 								readOnly={!editing}
 							/>
-
-							<div className="align-self-center">
-								<img
-									className="lfr-portal-tooltip source-icon"
-									data-testid="source-icon"
-									src={
-										source ===
-										SOURCES.ASAH_FARO_BACKEND.name
-											? `${assetsPath}${SOURCES.ASAH_FARO_BACKEND.icon}`
-											: `${assetsPath}${SOURCES.DEFAULT.icon}`
-									}
-									title={
-										source ===
-										SOURCES.ASAH_FARO_BACKEND.name
-											? SOURCES.ASAH_FARO_BACKEND.label
-											: SOURCES.DEFAULT.label
-									}
-								/>
-							</div>
 						</div>
 
 						{hasUpdatePermission && (

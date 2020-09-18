@@ -14,45 +14,54 @@
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
-const ToggleSidebarContext = React.createContext(() => {});
-export const useToggleSidebar = () => useContext(ToggleSidebarContext);
+const DEFAULT_SIDEBAR_PANELS = [];
+
+const SetSidebarPanelIdContext = React.createContext(() => {});
+
+export const useSetSidebarPanelId = () => {
+	return useContext(SetSidebarPanelIdContext);
+};
 
 export const AppLayout = ({
-	autoOpenSidebar = true,
 	contentChildren,
-	sidebarChildren,
+	initialSidebarPanelId = null,
+	sidebarPanels = DEFAULT_SIDEBAR_PANELS,
 	toolbarChildren,
 }) => {
-	const [showSidebar, setShowSidebar] = useState(autoOpenSidebar);
+	const [sidebarPanelId, setSidebarPanelId] = useState(initialSidebarPanelId);
 
-	const toggleSidebar = useCallback(
-		(force) =>
-			setShowSidebar((show) =>
-				typeof force === 'undefined' ? !show : !!force
-			),
-		[]
+	const SidebarPanel = useMemo(
+		() =>
+			sidebarPanels?.find(
+				(sidebarPanel) => sidebarPanel.sidebarPanelId === sidebarPanelId
+			)?.component,
+		[sidebarPanels, sidebarPanelId]
 	);
 
 	useEffect(() => {
 		const {removeListener} = onProductMenuOpen(() => {
-			toggleSidebar(false);
+			setSidebarPanelId(null);
 		});
 
 		return () => {
 			removeListener();
 		};
-	}, [toggleSidebar]);
+	}, []);
 
 	useEffect(() => {
-		if (showSidebar) {
+		setSidebarPanelId(null);
+	}, [sidebarPanels]);
+
+	useEffect(() => {
+		if (SidebarPanel) {
 			closeProductMenu();
 		}
-	}, [showSidebar]);
+	}, [SidebarPanel]);
 
 	return (
-		<ToggleSidebarContext.Provider value={toggleSidebar}>
+		<SetSidebarPanelIdContext.Provider value={setSidebarPanelId}>
 			<div className="bg-white component-tbar tbar">
 				<div className="container-fluid container-fluid-max-xl">
 					<div className="px-1 tbar-nav">{toolbarChildren}</div>
@@ -63,7 +72,7 @@ export const AppLayout = ({
 				className={classNames(
 					'align-items-stretch d-flex site_navigation_menu_editor_AppLayout-content',
 					{
-						'site_navigation_menu_editor_AppLayout-content--with-sidebar': showSidebar,
+						'site_navigation_menu_editor_AppLayout-content--with-sidebar': !!SidebarPanel,
 					}
 				)}
 			>
@@ -73,21 +82,26 @@ export const AppLayout = ({
 					className={classNames(
 						'site_navigation_menu_editor_AppLayout-sidebar',
 						{
-							'site_navigation_menu_editor_AppLayout-sidebar--visible': showSidebar,
+							'site_navigation_menu_editor_AppLayout-sidebar--visible': !!SidebarPanel,
 						}
 					)}
 				>
-					{sidebarChildren}
+					{SidebarPanel && <SidebarPanel />}
 				</div>
 			</div>
-		</ToggleSidebarContext.Provider>
+		</SetSidebarPanelIdContext.Provider>
 	);
 };
 
 AppLayout.propTypes = {
-	autoOpenSidebar: PropTypes.bool,
 	contentChildren: PropTypes.node,
-	sidebarChildren: PropTypes.node,
+	initialSidebarPanelId: PropTypes.string,
+	sidebarPanels: PropTypes.arrayOf(
+		PropTypes.shape({
+			component: PropTypes.func.isRequired,
+			sidebarPanelId: PropTypes.string.isRequired,
+		})
+	),
 	toolbarChildren: PropTypes.node,
 };
 

@@ -15,26 +15,23 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
-import {useToggleSidebar} from './AppLayout';
-
 export const Toolbar = () => {
-	const toggleSidebar = useToggleSidebar();
+	return (
+		<>
+			<li className="tbar-item tbar-item-expand" />
 
-	return (<>
-		<li className="tbar-item tbar-item-expand" />
+			<li className="tbar-item">
+				<ClayButtonWithIcon
+					displayType="unstyled"
+					monospaced
+					small
+					symbol="cog"
+				/>
+			</li>
 
-		<li className="tbar-item">
-			<ClayButtonWithIcon
-				displayType="unstyled"
-				monospaced
-				onClick={() => toggleSidebar()}
-				small
-				symbol="cog"
-			/>
-		</li>
-
-		<li className="tbar-item">
-			<ClayButtonWithIcon monospaced small symbol="plus" />
-		</li>
-	</>);
+			<li className="tbar-item">
+				<ClayButtonWithIcon monospaced small symbol="plus" />
+			</li>
+		</>
+	);
 };

@@ -75,6 +75,20 @@ definition {
 			value1 = "${workspacesType}");
 	}
 
+	macro clearFilterResults {
+		Click(locator1 = "Link#CLEAR");
+
+		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
+
+		AssertVisible(
+			key_rowEntry = "${currentSiteWebContentTitle}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		AssertElementNotPresent(
+			key_rowEntry = "${webContentTitle}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+	}
+
 	macro gotoItemSelectorViaAlloyEditor {
 		AlloyEditor.clickContentField();
 
@@ -551,6 +565,23 @@ definition {
 		AssertVisible(
 			key_rowEntry = "${webContentTitle}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		if (isSet(draft)) {
+			AssertElementNotPresent(
+				key_rowEntry = "${webContentTitle}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No web content was found.");
+		}
+		else {
+			for (var webContentTitle : list "${webContentTitle}") {
+				AssertVisible(
+					key_rowEntry = "${webContentTitle}",
+					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+			}
+		}
 
 		if (isSet(viewFolderWC)) {
 			Click(

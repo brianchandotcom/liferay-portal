@@ -48,11 +48,7 @@ class RuleList extends Component {
 			)
 		);
 
-		var tooltip = ClayTooltip.init();
-
-		setTimeout(() => {
-			tooltip.selectors = ['.invalid-rule'];
-		}, 1500);
+		ClayTooltip.init();
 	}
 
 	disposeInternal() {

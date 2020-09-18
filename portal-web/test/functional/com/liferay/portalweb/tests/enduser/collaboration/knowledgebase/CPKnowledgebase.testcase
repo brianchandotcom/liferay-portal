@@ -252,15 +252,15 @@ definition {
 			configurationName = "Upload Servlet Request",
 			configurationScope = "System Scope");
 
-		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "2048");
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "65536");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCPWithInvalidAttachmentSize(
-			kbArticleAttachment = "Document_1.png",
+			kbArticleAttachment = "high_resolution_photo.jpg",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			maxFileSize = "2");
+			maxFileSize = "64");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

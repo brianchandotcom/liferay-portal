@@ -166,7 +166,7 @@ public class JenkinsCohort {
 	public void writeDataJavaScriptFile(String filePath) throws IOException {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("var date = new Date(");
+		sb.append("var jenkinsDataGeneratedDate = new Date(");
 		sb.append(System.currentTimeMillis());
 		sb.append(");\nvar nodeData = ");
 

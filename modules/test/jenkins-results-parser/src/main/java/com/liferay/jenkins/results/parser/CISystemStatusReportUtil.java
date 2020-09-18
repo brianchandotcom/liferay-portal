@@ -89,7 +89,9 @@ public class CISystemStatusReportUtil {
 
 		sb.append(relevantSuiteBuildDataJSONObject.toString());
 
-		sb.append(";\nvar successRateData = ");
+		sb.append("\nvar spiraDataGeneratedDate = new Date(");
+		sb.append(System.currentTimeMillis());
+		sb.append(");\nvar successRateData = ");
 
 		JSONArray successRateTableDataJSONArray =
 			_getSuccessRateDataJSONArray();

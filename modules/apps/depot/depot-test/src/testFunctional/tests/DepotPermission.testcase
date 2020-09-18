@@ -395,6 +395,72 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
+	@description = "This test covers LPS-120011. This ensures that no asset libraries be returned when a user without view permission searches the asset library."
+	@priority = "4"
+	test SearchAssetLibraryWithoutViewPermissions {
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Depot Regrole Name",
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test",
+			userScreenName = "usersn1");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Depot Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+			roleTitle = "Depot Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
+
+		DepotNavigator.openDepotAdmin();
+
+		Pause(locator1 = "3000");
+
+		Search.searchCP(searchTerm = "Depot");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "0 Results for Depot");
+
+		AssertElementNotPresent(
+			key_card = "Test Depot Name",
+			locator1 = "Card#CARD_TITLE");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+			roleTitle = "Depot Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.depot.model.DepotEntry",
+			roleTitle = "Depot Regrole Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Pause(locator1 = "3000");
+
+		Search.searchCP(searchTerm = "Depot");
+
+		Depot.viewSearchResult(
+			includedResults = "Test Depot Name",
+			resultCount = "1",
+			searchTerm = "Depot");
+	}
+
 	@description = "This ensures that able to select specific asset libraries scope from Collections permissions."
 	@priority = "5"
 	test SelectDepotFromCollectionsPermissions {

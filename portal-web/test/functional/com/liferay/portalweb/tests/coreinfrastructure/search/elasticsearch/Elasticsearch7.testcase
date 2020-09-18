@@ -232,7 +232,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 
-		AssertConsoleTextPresent(value1 = "Sidecar Elasticsearch liferay is at 127.0.0.1:9201");
+		AssertConsoleTextPresent(value1 = "Sidecar Elasticsearch liferay started at 127.0.0.1:9201");
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -255,11 +255,11 @@ definition {
 		Clustering.viewClusterStatusInConsole();
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Sidecar Elasticsearch liferay is at 127.0.0.1:9201",
+			expectedText = "Sidecar Elasticsearch liferay started at 127.0.0.1:9201",
 			nodePort = "8080");
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Sidecar Elasticsearch liferay is at 127.0.0.1:9202",
+			expectedText = "Sidecar Elasticsearch liferay started at 127.0.0.1:9202",
 			nodePort = "9080");
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(

@@ -369,18 +369,6 @@ definition {
 
 			StyleBooks.waitForAutoSave();
 
-			Pause(locator1 = "3000");
-
-			StyleBooks.expandSection(sectionName = "Button Outline Secondary");
-
-			Type(
-				key_fieldLabel = "Color",
-				key_groupLabel = "Button Outline Secondary",
-				locator1 = "TextInput#GROUPED_TEXT_INPUT",
-				value1 = "#0000FF");
-
-			StyleBooks.waitForAutoSave();
-
 			StyleBooks.clickPublish();
 		}
 
@@ -440,12 +428,6 @@ definition {
 				locator1 = "Button#ANY",
 				locator2 = "color",
 				value1 = "rgba(255, 0, 0, 1)");
-
-			AssertCssValue(
-				key_text = "RSS",
-				locator1 = "Button#ANY",
-				locator2 = "color",
-				value1 = "rgba(0, 0, 255, 1)");
 		}
 
 		task ("Change to default style book via Look and Feel") {
@@ -482,13 +464,11 @@ definition {
 				locator2 = "background-color",
 				value1 = "rgba(11, 95, 255, 1)");
 
-			for (var buttonName : list "RSS,Subscribe") {
-				AssertCssValue(
-					key_text = "${buttonName}",
-					locator1 = "Button#ANY",
-					locator2 = "color",
-					value1 = "rgba(107, 108, 126, 1)");
-			}
+			AssertCssValue(
+				key_text = "Subscribe",
+				locator1 = "Button#ANY",
+				locator2 = "color",
+				value1 = "rgba(107, 108, 126, 1)");
 		}
 	}
 

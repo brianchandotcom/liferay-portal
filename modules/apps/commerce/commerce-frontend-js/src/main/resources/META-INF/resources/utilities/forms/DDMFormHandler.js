@@ -45,8 +45,8 @@ class DDMFormHandler {
 		AJAX.POST(this.actionURL, null, {
 			body: fieldsParam,
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-		}).then(({cpInstanceExist, ...cpInstance}) => {
-			if (cpInstanceExist) {
+		}).then((cpInstance) => {
+			if (cpInstance.cpInstanceExist) {
 				const dispatchedPayload = {
 					addToCartId: this.addToCartId,
 					cpInstance,

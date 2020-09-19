@@ -109,7 +109,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 
 			autocomplete.default('autocomplete', 'autocomplete-root', {
 				apiUrl:
-					'/o/headless-commerce-admin-catalog/v1.0/skus?filter=hasChildCPDefinitions eq false',
+					'/o/headless-commerce-admin-catalog/v1.0/skus?filter=(catalogId eq <%= cpDefinitionOptionValueRelDisplayContext.getCommerceCatalogId() %>) and (hasChildCPDefinitions eq false)',
 				initialLabel: '<%= cpInstanceLabel %>',
 				initialValue: '<%= cpInstanceId %>',
 				inputId: 'skuId',

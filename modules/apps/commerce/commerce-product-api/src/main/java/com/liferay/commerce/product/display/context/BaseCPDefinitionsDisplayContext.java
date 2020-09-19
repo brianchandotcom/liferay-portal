@@ -90,6 +90,16 @@ public abstract class BaseCPDefinitionsDisplayContext {
 		return _commerceCatalog;
 	}
 
+	public long getCommerceCatalogId() throws PortalException {
+		CommerceCatalog commerceCatalog = getCommerceCatalog();
+
+		if (commerceCatalog == null) {
+			return 0;
+		}
+
+		return commerceCatalog.getCommerceCatalogId();
+	}
+
 	public CPDefinition getCPDefinition() throws PortalException {
 		if (_cpDefinition != null) {
 			return _cpDefinition;

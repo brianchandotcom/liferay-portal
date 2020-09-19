@@ -1399,7 +1399,7 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceMoney unitPromoPriceMoney =
 			commerceProductPrice.getUnitPromoPrice();
 
-		if (unitPromoPriceMoney != null) {
+		if (!unitPromoPriceMoney.isEmpty()) {
 			promoPrice = unitPromoPriceMoney.getPrice();
 		}
 

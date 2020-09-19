@@ -907,9 +907,15 @@ public class CommerceProductPriceCalculationV2Impl
 		CommerceProductPriceImpl commerceProductPriceImpl =
 			new CommerceProductPriceImpl();
 
+		commerceProductPriceImpl.setFinalPrice(
+			commerceMoneyFactory.emptyCommerceMoney());
 		commerceProductPriceImpl.setFinalPriceWithTaxAmount(
 			commerceMoneyFactory.emptyCommerceMoney());
+		commerceProductPriceImpl.setUnitPrice(
+			commerceMoneyFactory.emptyCommerceMoney());
 		commerceProductPriceImpl.setUnitPriceWithTaxAmount(
+			commerceMoneyFactory.emptyCommerceMoney());
+		commerceProductPriceImpl.setUnitPromoPrice(
 			commerceMoneyFactory.emptyCommerceMoney());
 		commerceProductPriceImpl.setUnitPromoPriceWithTaxAmount(
 			commerceMoneyFactory.emptyCommerceMoney());

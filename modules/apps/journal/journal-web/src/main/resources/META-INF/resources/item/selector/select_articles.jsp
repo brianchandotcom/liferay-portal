@@ -163,7 +163,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand table-cell-minw-200"
+								cssClass="table-cell-expand table-cell-minw-200 text-truncate"
 								name="description"
 								value="<%= StringUtil.shorten(HtmlUtil.stripHtml(curArticle.getDescription(locale)), 200) %>"
 							/>
@@ -311,7 +311,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand table-cell-minw-200"
+								cssClass="table-cell-expand table-cell-minw-200 text-truncate"
 								name="description"
 								value="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
 							/>

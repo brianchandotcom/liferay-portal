@@ -153,11 +153,11 @@ definition {
 		task ("Edit the style book and Publish it") {
 			StyleBooks.selectForm(formName = "Buttons");
 
-			StyleBooks.expandSection(sectionName = "Button Primary");
+			StyleBooks.expandSection(sectionName = "Button Outline Secondary");
 
 			Type(
-				key_fieldLabel = "Background Color",
-				key_groupLabel = "Button Primary",
+				key_fieldLabel = "Color",
+				key_groupLabel = "Button Outline Secondary",
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#00FF00");
 
@@ -168,7 +168,7 @@ definition {
 			StyleBooks.expandSection(sectionName = "Headings");
 
 			Type(
-				key_fieldLabel = "Heading 1 Font Size",
+				key_fieldLabel = "Heading 5 Font Size",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "2rem");
 
@@ -184,14 +184,41 @@ definition {
 				type = "content");
 		}
 
-		task ("Add a Banner Center fragment to page") {
+		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-				collectionName = "Featured Content",
-				fragmentName = "Banner Center");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Configure the Heading Level of Heading as H5") {
+			PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+			PageEditor.configureFragment(headingLevel = "H5");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "heading",
+				headingLevel = "h5");
+		}
+
+		task ("Add a Button fragment below the Heading") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Configure the Type of Heading as Button Outline Secondary") {
+			PageEditor.gotoConfiguration(fragmentName = "Button");
+
+			PageEditor.configureFragment(type = "Outline Secondary");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "button",
+				type = "outline-secondary");
 		}
 
 		task ("Change to the new style book via Look and Feel") {
@@ -224,14 +251,14 @@ definition {
 
 			AssertCssValue(
 				id = "link",
-				key_fragmentName = "Banner Center",
+				key_fragmentName = "Button",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
-				locator2 = "background-color",
+				locator2 = "color",
 				value1 = "rgba(0, 255, 0, 1)");
 
 			AssertCssValue(
-				id = "title",
-				key_fragmentName = "Banner Center",
+				id = "element-text",
+				key_fragmentName = "Heading",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
 				locator2 = "font-size",
 				value1 = "32px");
@@ -250,14 +277,14 @@ definition {
 				key_id = "link",
 				key_type = "link",
 				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
-				locator2 = "background-color",
+				locator2 = "color",
 				value1 = "rgba(0, 255, 0, 1)");
 
 			AssertCssValue(
-				key_content = "Banner Title Example",
-				key_element = "h1",
-				key_id = "title",
-				key_type = "rich-text",
+				key_content = "Heading Example",
+				key_element = "h5",
+				key_id = "element-text",
+				key_type = "text",
 				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
 				locator2 = "font-size",
 				value1 = "32px");
@@ -295,17 +322,17 @@ definition {
 
 			AssertCssValue(
 				id = "link",
-				key_fragmentName = "Banner Center",
+				key_fragmentName = "Button",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
-				locator2 = "background-color",
-				value1 = "rgba(11, 95, 255, 1)");
+				locator2 = "color",
+				value1 = "rgba(107, 108, 126, 1)");
 
 			AssertCssValue(
-				id = "title",
-				key_fragmentName = "Banner Center",
+				id = "element-text",
+				key_fragmentName = "Heading",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
 				locator2 = "font-size",
-				value1 = "26px");
+				value1 = "14px");
 
 			PageEditor.clickPublish();
 		}
@@ -321,17 +348,17 @@ definition {
 				key_id = "link",
 				key_type = "link",
 				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
-				locator2 = "background-color",
-				value1 = "rgba(11, 95, 255, 1)");
+				locator2 = "color",
+				value1 = "rgba(107, 108, 126, 1)");
 
 			AssertCssValue(
-				key_content = "Banner Title Example",
-				key_element = "h1",
-				key_id = "title",
-				key_type = "rich-text",
+				key_content = "Heading Example",
+				key_element = "h5",
+				key_id = "element-text",
+				key_type = "text",
 				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
 				locator2 = "font-size",
-				value1 = "26px");
+				value1 = "14px");
 		}
 	}
 

@@ -42,7 +42,7 @@
 			? {
 				addToCartId: "<%= addToCartId %>",
 				productId: cpInstanceId,
-				options: formValues,
+				options: JSON.stringify(formValues),
 				quantity: 0,
 				settings: {
 					maxQuantity: 1000,
@@ -59,7 +59,7 @@
 
 	function updateGallery(formFields) {
 		var formData = new FormData();
-		formData.append('<portlet:namespace />ddmFormValues', formFields);
+		formData.append('<portlet:namespace />ddmFormValues', JSON.stringify(formFields));
 		formData.append('groupId', themeDisplay.getScopeGroupId());
 
 		fetch(

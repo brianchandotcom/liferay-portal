@@ -348,7 +348,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 	}
 
 	private boolean _equalsZero(BigDecimal value) {
-		if ((value != null) || CommerceBigDecimalUtil.isZero(value)) {
+		if ((value != null) && CommerceBigDecimalUtil.isZero(value)) {
 			return true;
 		}
 

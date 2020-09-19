@@ -25,6 +25,7 @@ class DDMFormHandler {
 		this.fields = getDefaultFieldsShape(DDMFormInstance);
 
 		this._bindEventListeners();
+		this.checkCPInstance();
 	}
 
 	_bindEventListeners() {

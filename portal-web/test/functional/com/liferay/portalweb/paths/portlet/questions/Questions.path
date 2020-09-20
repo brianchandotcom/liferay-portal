@@ -214,6 +214,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROOT_TOPIC_ID_VALUE</td>
+	<td>//input[contains(@value,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VOTE_BUTTON</td>
 	<td>//button[contains(@class,'text-reset')]//*[name()='svg'][contains(@class,'${key_caretName}')]</td>
 	<td></td>
@@ -236,6 +241,11 @@
 <tr>
 	<td>SEARCH_RESULTS_CLEAR_BUTTON</td>
 	<td>//div[contains(@class,'input-group-item')]//button[contains(@class,'btn-monospaced')]//*[name()='svg'][contains(@class,'times-circle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SElECT_CATEGORY</td>
+	<td>//tr[@data-qa-id='row' and contains(.,'${key_categoryName}')]//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

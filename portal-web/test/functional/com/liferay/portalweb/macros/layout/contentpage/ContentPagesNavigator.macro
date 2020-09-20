@@ -18,7 +18,7 @@ definition {
 			var pageFriendlyUrl = ContentPagesNavigator._convertNameToKey(name = "${pageName}");
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${pageFriendlyUrl}1?p_l_mode=edit");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${pageFriendlyUrl}?p_l_mode=edit");
 
 		PageEditor.assertFragmentSidebarLoaded();
 	}

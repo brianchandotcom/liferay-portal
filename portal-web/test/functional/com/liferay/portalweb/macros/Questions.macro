@@ -242,6 +242,54 @@ definition {
 		Pause(locator1 = "1000");
 	}
 
+	macro configureRootTopic {
+		Portlet.gotoPortletOptions(
+			portletName = "Questions",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Button.clickSelect();
+
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_breadcrumbName = "Categories",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+
+		if (isSet(subCategoryName)) {
+			LexiconTable.clickTableEntryTitle(tableEntry = "${parentCategoryName}");
+
+			Click(
+				key_categoryName = "${subCategoryName}",
+				locator1 = "Questions#SElECT_CATEGORY");
+		}
+		else {
+			Click(
+				key_categoryName = "${categoryName}",
+				locator1 = "Questions#SElECT_CATEGORY");
+		}
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.save();
+
+		if (isSet(subCategoryName)) {
+			AssertElementPresent(
+				key_categoryName = "${subCategoryName}",
+				locator1 = "Questions#ROOT_TOPIC_ID_VALUE");
+		}
+		else {
+			AssertElementPresent(
+				key_categoryName = "${categoryName}",
+				locator1 = "Questions#ROOT_TOPIC_ID_VALUE");
+		}
+	}
+
 	macro configureTagsFilter {
 		Click(locator1 = "Questions#QUESTIONS_TAGS_SELECT_FILTER");
 
@@ -305,6 +353,18 @@ definition {
 		AssertVisible(
 			key_questionTabField = "${questionTabField}",
 			locator1 = "Questions#QUESTIONS_LIST_ACTIVE_TAB_FIELD");
+	}
+
+	macro removeRootTopicConfiguration {
+		Portlet.gotoPortletOptions(
+			portletName = "Questions",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Button.clickRemove();
+
+		PortletEntry.save();
 	}
 
 	macro search {

@@ -14,7 +14,6 @@
 
 package com.liferay.asset.publisher.web.internal.portlet;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -51,7 +50,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -98,9 +96,6 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_getLayoutDisplayPageObjectProvider(journalArticle);
 
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)requestContext.get("request");
-
 		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
 			(layoutDisplayPageObjectProvider != null) &&
 			AssetDisplayPageUtil.hasAssetDisplayPage(
@@ -108,26 +103,13 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 				layoutDisplayPageObjectProvider.getClassPK(),
 				layoutDisplayPageObjectProvider.getClassTypeId())) {
 
-			ThemeDisplay themeDisplay = new ThemeDisplay();
-
-			themeDisplay.setScopeGroupId(groupId);
-			themeDisplay.setSiteGroupId(groupId);
-
-			String assetFriendlyURL =
-				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					_portal.getClassName(
-						layoutDisplayPageObjectProvider.getClassNameId()),
-					layoutDisplayPageObjectProvider.getClassPK(),
-					_portal.getLocale(httpServletRequest), themeDisplay);
-
-			if (Validator.isNotNull(assetFriendlyURL)) {
-				return assetFriendlyURL;
-			}
-
 			return super.getActualURL(
 				companyId, groupId, privateLayout, mainPath, friendlyURL,
 				params, requestContext);
 		}
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
 
 		return _getBasicLayoutURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
@@ -521,10 +503,6 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 		return 0;
 	}
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

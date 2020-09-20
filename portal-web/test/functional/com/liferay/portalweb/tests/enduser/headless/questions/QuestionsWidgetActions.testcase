@@ -483,6 +483,76 @@ definition {
 		AssertElementNotPresent(locator1 = "Questions#NEW_TOPIC");
 	}
 
+	@description = "Validate if the user can setup the root topic for the widget."
+	@priority = "4"
+	test ConfigureRootTopic {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Questions Page");
+
+		Navigator.gotoPage(pageName = "Test Questions Page");
+
+		Portlet.addPG(portletName = "Questions");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "Description",
+			rootTopicName = "Questions Test Category");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.addSubTopic(
+			subTopicDescription = "Description",
+			subTopicName = "Questions Test SubCategory");
+
+		Questions.configureRootTopic(categoryName = "Questions Test Category");
+
+		Navigator.gotoPage(pageName = "Test Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		AssertElementNotPresent(
+			key_card = "Questions Test Category",
+			locator1 = "Card#CARD_TITLE");
+
+		AssertElementPresent(
+			key_card = "Questions Test SubCategory",
+			locator1 = "Card#CARD_TITLE");
+
+		Questions.configureRootTopic(
+			parentCategoryName = "Questions Test Category",
+			subCategoryName = "Questions Test SubCategory");
+
+		Navigator.gotoPage(pageName = "Test Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		for (var topicName : list "Questions Test Category,Questions Test SubCategory") {
+			AssertElementNotPresent(
+				key_card = "${topicName}",
+				locator1 = "Card#CARD_TITLE");
+		}
+
+		Questions.addRootTopic(
+			rootTopicDescription = "Description",
+			rootTopicName = "New Questions Test SubCategory");
+
+		Questions.removeRootTopicConfiguration();
+
+		Navigator.gotoPage(pageName = "Test Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category",
+			subTopicName = "Questions Test SubCategory");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test SubCategory",
+			subTopicName = "New Questions Test SubCategory");
+	}
+
 	@description = "Validate if the user can search for the questions."
 	@priority = "4"
 	test SearchForQuestions {

@@ -223,29 +223,17 @@ definition {
 	}
 
 	macro commerceStoreFrontSetUp {
+
 		CommerceNavigator.gotoPortlet(
 			category = "Settings",
 			portlet = "Health Check");
 
 		for (var buttonRowNumber : list "1,2,3,4,5") {
-			if (!(IsElementPresent(locator1 = "CommerceEntry#FIX_ISSUE_BUTTON", key_buttonStatus = "disabled"))) {
+			if (!(IsElementPresent(locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_N", key_buttonStatus = "disabled"))) {
 				Click(
 					key_buttonRowNumber = "${buttonRowNumber}",
 					key_buttonStatus = "",
-					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
-			}
-		}
-
-		CommerceNavigator.gotoPortlet(
-			category = "Settings",
-			portlet = "Health Check");
-
-		for (var buttonRowNumber : list "1,2,3,4") {
-			if (!(IsElementPresent(locator1 = "CommerceEntry#FIX_ISSUE_BUTTON", key_buttonStatus = "disabled"))) {
-				Click(
-					key_buttonRowNumber = "${buttonRowNumber}",
-					key_buttonStatus = "",
-					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
+					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_N");
 			}
 		}
 

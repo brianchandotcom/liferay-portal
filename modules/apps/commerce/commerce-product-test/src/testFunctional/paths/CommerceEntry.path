@@ -475,7 +475,7 @@
 <!--IMAGES-->
 <tr>
 	<td>IMAGES_PLUS_BUTTON</td>
-	<td>//div[(@class = 'card d-flex')]/h4[contains(.,'Images')]//..//button[contains(@class,'btn-primary')]</td>
+	<td>//h4[contains(.,'Images')]//..//button[contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
 <!--PRODUCT-->

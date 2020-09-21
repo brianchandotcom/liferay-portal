@@ -98,8 +98,8 @@ describe('EditFormView', () => {
 		window.Liferay = {
 			...window.Liferay,
 			componentReady,
-        };
-        
+		};
+
 		jest.useFakeTimers();
 	});
 
@@ -170,8 +170,8 @@ describe('EditFormView', () => {
 
 		expect(formName.value).toBe('FormView');
 
-        fireEvent.change(formName, {target: {value: 'My Form View'}});
-        
+		fireEvent.change(formName, {target: {value: 'My Form View'}});
+
 		expect(
 			dataLayoutBuilderProps.dispatchAction.mock.calls[2][0]
 		).toStrictEqual({

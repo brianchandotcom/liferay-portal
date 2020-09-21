@@ -40,7 +40,7 @@ describe('ListFormViews', () => {
 			...window.Liferay,
 			Util: {
 				...window.Liferay.Util,
-                PortletURL,
+				PortletURL,
 				navigate,
 			},
 		};

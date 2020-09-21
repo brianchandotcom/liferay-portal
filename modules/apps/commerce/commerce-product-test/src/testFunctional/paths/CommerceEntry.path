@@ -170,7 +170,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_SELECT_LIST</td>
-	<td>//div[@class='dropdown-menu']//..//a[contains(., '${key_selectValue}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//button[contains(.,'${key_selectValue}')]</td>
 	<td></td>
 </tr>
 <tr>

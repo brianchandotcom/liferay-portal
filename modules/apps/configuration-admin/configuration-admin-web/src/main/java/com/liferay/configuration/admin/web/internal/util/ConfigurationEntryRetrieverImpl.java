@@ -194,15 +194,6 @@ public class ConfigurationEntryRetrieverImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_configurationCategoriesServiceTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, ConfigurationCategory.class, null,
-				(serviceReference, emitter) -> {
-					ConfigurationCategory configurationCategory =
-						bundleContext.getService(serviceReference);
-
-					emitter.emit(configurationCategory.getCategorySection());
-				});
 		_configurationCategoryServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ConfigurationCategory.class, null,
@@ -235,7 +226,6 @@ public class ConfigurationEntryRetrieverImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_configurationCategoriesServiceTrackerMap.close();
 		_configurationCategoryServiceTrackerMap.close();
 		_configurationScreenServiceTrackerMap.close();
 		_configurationScreensServiceTrackerMap.close();
@@ -315,8 +305,6 @@ public class ConfigurationEntryRetrieverImpl
 	}
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<String, List<ConfigurationCategory>>
-		_configurationCategoriesServiceTrackerMap;
 	private final Set<ServiceRegistration<ConfigurationCategory>>
 		_configurationCategoryServiceRegistrations = new HashSet<>();
 	private ServiceTrackerMap<String, ConfigurationCategory>

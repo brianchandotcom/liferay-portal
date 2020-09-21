@@ -183,7 +183,10 @@ export default function Sidebar() {
 
 	return createPortal(
 		<ClayTooltipProvider>
-			<div className="page-editor__sidebar" ref={dropClearRef}>
+			<div
+				className="page-editor__sidebar page-editor__theme-adapter-forms"
+				ref={dropClearRef}
+			>
 				<div
 					className={classNames('page-editor__sidebar__buttons', {
 						light: true,

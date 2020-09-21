@@ -174,7 +174,11 @@ function ToolbarBody() {
 	}
 
 	return (
-		<ClayLayout.ContainerFluid onClick={deselectItem} ref={dropClearRef}>
+		<ClayLayout.ContainerFluid
+			className="page-editor__theme-adapter-buttons"
+			onClick={deselectItem}
+			ref={dropClearRef}
+		>
 			<ul className="navbar-nav responsive-mode" onClick={deselectItem}>
 				{config.toolbarPlugins.map(
 					({loadingPlaceholder, pluginEntryPoint}) => {

@@ -80,7 +80,7 @@ const PreviewModal = ({observer}) => {
 			<ClayModal.Header>
 				<ClayLayout.ContainerFluid size={false}>
 					<ClayModal.Title className="pb-3 pt-3">
-						<div className="d-flex justify-content-between responsive-mode">
+						<div className="d-flex justify-content-between page-editor__theme-adapter-buttons responsive-mode">
 							<ul className="navbar-nav page-editor__preview-modal__part">
 								{availableSegmentsExperiences && (
 									<li className="mr-2 nav-item">

@@ -16,9 +16,9 @@ import handleFieldAdded from '../../../../../src/main/resources/META-INF/resourc
 import handleFieldEdited from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldEditedHandler.es';
 import {generateFieldName} from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/fields.es';
 import * as settingsContextUtil from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/settingsContext.es';
+import {DEFAULT_FIELD_NAME_REGEX} from '../../../../../src/main/resources/META-INF/resources/js/util/regex.es';
 import mockFieldTypes from '../../../__mock__/mockFieldTypes.es';
 import mockPages from '../../../__mock__/mockPages.es';
-import {DEFAULT_FIELD_NAME_REGEX} from '../../util/regex.es';
 
 describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 	describe('handleFieldEdited(props, state, event)', () => {

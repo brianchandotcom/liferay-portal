@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>H3_HEADER</td>
-	<td>//h3[@class='header-title']/span</td>
+	<td>//h3[@class='header-title']/span | //span[contains(@class,'title')]</td>
 	<td></td>
 </tr>
 <tr>

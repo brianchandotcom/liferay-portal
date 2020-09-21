@@ -18,8 +18,7 @@ import {generateFieldName} from '../../../../../src/main/resources/META-INF/reso
 import * as settingsContextUtil from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/settingsContext.es';
 import mockFieldTypes from '../../../__mock__/mockFieldTypes.es';
 import mockPages from '../../../__mock__/mockPages.es';
-
-const DEFAULT_FIELD_NAME_REGEX = /^Field[0-9]{8}$/;
+import {DEFAULT_FIELD_NAME_REGEX} from '../../util/regex.es';
 
 describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 	describe('handleFieldEdited(props, state, event)', () => {

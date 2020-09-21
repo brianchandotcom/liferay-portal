@@ -16,13 +16,12 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {JSXComponent} from 'metal-jsx';
 
 import LayoutProvider from '../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/LayoutProvider.es';
+import {DEFAULT_FIELD_NAME_REGEX} from '../../../../src/main/resources/META-INF/resources/js/util/regex.es';
 import mockFieldType from '../../__mock__/mockFieldType.es';
 import mockPages from '../../__mock__/mockPages.es';
 
 let component;
 let liferayLanguageSpy;
-
-const DEFAULT_FIELD_NAME_REGEX = /^Field[0-9]{8}$/;
 
 const changeField = ({settingsContext}, fieldName, value) => {
 	const visitor = new PagesVisitor(settingsContext.pages);

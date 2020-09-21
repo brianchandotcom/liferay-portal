@@ -850,14 +850,14 @@ definition {
 			requestNumber = "2");
 
 		Redirect.viewOrderedURLs(
-			entry1 = "2",
-			entry2 = "1");
+			entry1 = "1",
+			entry2 = "2");
 
 		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 
 		Redirect.viewOrderedURLs(
-			entry1 = "1",
-			entry2 = "2");
+			entry1 = "2",
+			entry2 = "1");
 	}
 
 	@description = "This ensures that accessing a nonexistent URL redirects the user to the home of the current site."

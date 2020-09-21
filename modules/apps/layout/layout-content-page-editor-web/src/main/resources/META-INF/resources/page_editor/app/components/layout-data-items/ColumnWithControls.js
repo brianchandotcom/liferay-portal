@@ -28,7 +28,6 @@ import {useIsActive} from '../Controls';
 import {useGlobalContext} from '../GlobalContext';
 import {
 	useResizeContext,
-	useSetCustomRowContext,
 	useSetResizeContext,
 	useSetUpdatedLayoutDataContext,
 	useUpdatedLayoutDataContext,
@@ -93,7 +92,6 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 	);
 
 	const resizing = useResizeContext();
-	const setCustomRow = useSetCustomRowContext();
 	const setResizing = useSetResizeContext();
 	const setUpdatedLayoutData = useSetUpdatedLayoutDataContext();
 	const updatedLayoutData = useUpdatedLayoutDataContext();
@@ -166,7 +164,6 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 	const handleMouseDown = (event) => {
 		setColumnSelected(item);
 		setResizing(true);
-		setCustomRow(true);
 
 		let columns = null;
 		const leftColumn =

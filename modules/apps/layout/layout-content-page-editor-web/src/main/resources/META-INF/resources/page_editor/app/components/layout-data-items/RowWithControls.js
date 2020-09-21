@@ -28,7 +28,6 @@ import Row from './Row';
 const RowWithControls = React.forwardRef(({children, item}, ref) => {
 	const [resizing, setResizing] = useState(false);
 	const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
-	const [customRow, setCustomRow] = useState(false);
 
 	const canUpdateItemConfiguration = useSelector(
 		selectCanUpdateItemConfiguration
@@ -79,9 +78,7 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 			>
 				<ResizeContextProvider
 					value={{
-						customRow,
 						resizing,
-						setCustomRow,
 						setResizing,
 						setUpdatedLayoutData,
 						updatedLayoutData,

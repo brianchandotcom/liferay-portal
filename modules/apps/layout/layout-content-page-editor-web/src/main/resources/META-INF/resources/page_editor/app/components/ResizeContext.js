@@ -15,7 +15,6 @@
 import React, {useContext} from 'react';
 
 const INITIAL_STATE = {
-	customRow: false,
 	resizing: false,
 	setCustomRow: () => null,
 	setResizing: () => null,
@@ -43,14 +42,6 @@ const useUpdatedLayoutDataContext = () => {
 	return useContext(ResizeContext).updatedLayoutData;
 };
 
-const useCustomRowContext = () => {
-	return useContext(ResizeContext).customRow;
-};
-
-const useSetCustomRowContext = () => {
-	return useContext(ResizeContext).setCustomRow;
-};
-
 export {
 	ResizeContext,
 	ResizeContextProvider,
@@ -58,6 +49,4 @@ export {
 	useSetResizeContext,
 	useSetUpdatedLayoutDataContext,
 	useUpdatedLayoutDataContext,
-	useCustomRowContext,
-	useSetCustomRowContext,
 };

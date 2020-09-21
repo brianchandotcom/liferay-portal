@@ -23,11 +23,9 @@ import {useSelector} from '../../store/index';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import loadBackgroundImage from '../../utils/loadBackgroundImage';
-import {useCustomRowContext} from '../ResizeContext';
 
 const Row = React.forwardRef(
 	({children, className, item, withinTopper = false}, ref) => {
-		const customRow = useCustomRowContext();
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
 		);
@@ -115,7 +113,6 @@ const Row = React.forwardRef(
 					`pr-${paddingRight || 0}`,
 					`pt-${paddingTop || 0}`,
 					{
-						'flex-column': customRow && modulesPerRow === 1,
 						'flex-column-reverse':
 							item.config.numberOfColumns === 2 &&
 							modulesPerRow === 1 &&

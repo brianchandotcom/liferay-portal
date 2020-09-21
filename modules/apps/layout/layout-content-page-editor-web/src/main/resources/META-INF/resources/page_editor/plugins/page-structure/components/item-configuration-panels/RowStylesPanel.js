@@ -15,13 +15,8 @@
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useMemo} from 'react';
 
-import {
-	useCustomRowContext,
-	useSetCustomRowContext,
-	useSetUpdatedLayoutDataContext,
-} from '../../../../app/components/ResizeContext';
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../app/config/index';
 import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
@@ -66,14 +61,8 @@ export const RowStylesPanel = ({item}) => {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-	const setUpdatedLayoutData = useSetUpdatedLayoutDataContext();
-	const setCustomRow = useSetCustomRowContext();
-	const customRow = useCustomRowContext();
 
 	const onCustomStylesValueSelect = (identifier, value) => {
-		setCustomRow(false);
-		setUpdatedLayoutData(null);
-
 		let itemStyles = {[identifier]: value};
 
 		if (
@@ -126,7 +115,10 @@ export const RowStylesPanel = ({item}) => {
 
 	const rowConfig = getResponsiveConfig(item.config, selectedViewportSize);
 	const viewportSize = availableViewportSizes[selectedViewportSize];
-	const modulesPerRowOptions = customRow
+
+	const isCustomRow = useMemo(() => {}, []);
+
+	const modulesPerRowOptions = isCustomRow
 		? MODULES_PER_ROW_OPTIONS_WITH_CUSTOM
 		: MODULES_PER_ROW_OPTIONS;
 
@@ -159,7 +151,7 @@ export const RowStylesPanel = ({item}) => {
 								  ),
 						value: option,
 					}))}
-					value={customRow ? CUSTOM_ROW : rowConfig.modulesPerRow}
+					value={isCustomRow ? CUSTOM_ROW : rowConfig.modulesPerRow}
 				/>
 
 				{rowConfig.numberOfColumns === 2 &&

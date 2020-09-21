@@ -16,10 +16,6 @@ import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {
-	useSetCustomRowContext,
-	useSetUpdatedLayoutDataContext,
-} from '../../../../app/components/ResizeContext';
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
 import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../../../app/store/index';
@@ -42,13 +38,8 @@ export const RowGeneralPanel = ({item}) => {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-	const setUpdatedLayoutData = useSetUpdatedLayoutDataContext();
-	const setCustomRow = useSetCustomRowContext();
 
 	const handleConfigurationValueChanged = (identifier, value) => {
-		setCustomRow(false);
-		setUpdatedLayoutData(null);
-
 		let itemConfig = {[identifier]: value};
 
 		if (

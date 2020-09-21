@@ -12,6 +12,8 @@
  * details.
  */
 
+import {fetch, openToast} from 'frontend-js-web';
+
 const APPS_TO_IDS = new Map();
 
 const APP_IDS = new Set();
@@ -121,7 +123,7 @@ function receiveMessage(event) {
 					const resource = data.resource;
 					const init = data.init;
 
-					Liferay.Util.fetch(resource, init)
+					fetch(resource, init)
 						.then((response) => {
 							RESPONSES[requestID] = response;
 
@@ -300,7 +302,7 @@ function receiveMessage(event) {
 
 						// example of dealing with untrusted input
 
-						Liferay.Util.openToast({
+						openToast({
 							message: escape(message),
 							type: escape(type),
 						});

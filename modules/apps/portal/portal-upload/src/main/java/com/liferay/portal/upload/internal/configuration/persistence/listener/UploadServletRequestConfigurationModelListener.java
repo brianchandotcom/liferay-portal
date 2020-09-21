@@ -60,7 +60,7 @@ public class UploadServletRequestConfigurationModelListener
 
 		long maxSize = (long)properties.get("maxSize");
 
-		if (maxSize < 102400) {
+		if (maxSize < _MINIMUM_MAX_SIZE) {
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
@@ -89,5 +89,7 @@ public class UploadServletRequestConfigurationModelListener
 		return ResourceBundleUtil.getBundle(
 			LocaleThreadLocal.getThemeDisplayLocale(), getClass());
 	}
+
+	private static final long _MINIMUM_MAX_SIZE = 1024 * 100;
 
 }

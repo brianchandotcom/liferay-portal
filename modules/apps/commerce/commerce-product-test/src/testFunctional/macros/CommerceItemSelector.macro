@@ -27,7 +27,7 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		AssertClick(
 			locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE",
@@ -41,7 +41,7 @@ definition {
 			locator1 = "ItemSelector#FILE_UPLOAD_CAPTION",
 			value1 = "${uploadFileName}");
 
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
+		SelectFrame.selectFrameNoLoading(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
 
 		AssertClick(
 			locator1 = "ItemSelector#ADD_BUTTON",

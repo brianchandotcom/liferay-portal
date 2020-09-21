@@ -27,7 +27,35 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			CommerceConfiguration.commerceStoreFrontTearDown();
+
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				panel = "Commerce",
+				portlet = "Options");
+
+			ClickNoError.clickNoMouseOver(
+				key_text = "Delete",
+				locator1 = "Button#ANY");
+
+			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete the selected option?");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				CommerceEntry.deleteCommerceEntry();
+			}
+
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				panel = "Commerce",
+				portlet = "Products");
+
+			while (IsElementPresent(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS") && (maxIterations = "50")) {
+				CommerceEntry.deleteCommerceEntry();
+			}
 		}
 	}
 

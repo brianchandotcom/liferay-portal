@@ -361,7 +361,7 @@ class LayoutProvider extends Component {
 	_handleDeleteFieldModalButtonClicked(event) {
 		const {activePage, fieldName} = this.refs.existingRuleModal.data;
 
-		if (event.target.innerText == 'Delete') {
+		if (event.target.classList.contains('btn-primary')) {
 			this.dispatch('fieldDeleted', {activePage, fieldName});
 		}
 	}

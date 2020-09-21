@@ -18,6 +18,7 @@ import com.liferay.multi.factor.authentication.fido2.credential.exception.Duplic
 import com.liferay.multi.factor.authentication.fido2.credential.exception.NoSuchMFAFIDO2CredentialEntryException;
 import com.liferay.multi.factor.authentication.fido2.credential.model.MFAFIDO2CredentialEntry;
 import com.liferay.multi.factor.authentication.fido2.credential.service.base.MFAFIDO2CredentialEntryLocalServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -49,7 +50,9 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 
 		if (mfaFIDO2CredentialEntry != null) {
 			throw new DuplicateMFAFIDO2CredentialEntryException(
-				"{credentialKey=" + credentialKey + ", userId=" + userId + "}");
+				StringBundler.concat(
+					"{credentialKey=", credentialKey, ", userId=", userId,
+					"}"));
 		}
 
 		mfaFIDO2CredentialEntry = mfaFIDO2CredentialEntryPersistence.create(
@@ -106,7 +109,9 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 
 		if (mfaFIDO2CredentialEntry == null) {
 			throw new NoSuchMFAFIDO2CredentialEntryException(
-				"{credentialKey=" + credentialKey + ", userId=" + userId + "}");
+				StringBundler.concat(
+					"{credentialKey=", credentialKey, ", userId=", userId,
+					"}"));
 		}
 
 		if (signatureCount < 1) {

@@ -91,7 +91,9 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Options");
 
-		CommerceRelations.assignSingleRelationToProductsEntry(entryName = "Color");
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "Color",
+			title = "Add Options");
 
 		echo("Creating SKUs...");
 
@@ -101,7 +103,7 @@ definition {
 
 		echo("Adding Product Images...");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Images");
+		CommerceEntry.gotoMenuTab(menuTab = "Media");
 
 		CommerceProductImages.addProductImages(optionValuesList = "Black,Blue,White");
 

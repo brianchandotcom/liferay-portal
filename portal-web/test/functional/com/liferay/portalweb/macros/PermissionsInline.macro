@@ -145,7 +145,7 @@ definition {
 			pageName = "${pageName}",
 			siteName = "${siteName}");
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			key_threadSubject = "${threadSubject}",
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");

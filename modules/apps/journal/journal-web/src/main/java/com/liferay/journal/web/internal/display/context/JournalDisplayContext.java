@@ -772,22 +772,25 @@ public class JournalDisplayContext {
 			return _orderByCol;
 		}
 
-		if (!isSearch()) {
-			_portalPreferences.setValue(
-				JournalPortletKeys.JOURNAL, "order-by-col", null);
-		}
-
 		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
 
 		if (Validator.isNull(_orderByCol)) {
-			String defaultOrderByCol = "modified-date";
-
 			if (isSearch()) {
-				defaultOrderByCol = "relevance";
+				_orderByCol = _portalPreferences.getValue(
+					JournalPortletKeys.JOURNAL, "order-by-col", "relevance");
 			}
+			else {
+				_orderByCol = _portalPreferences.getValue(
+					JournalPortletKeys.JOURNAL, "order-by-col",
+					"modified-date");
 
-			_orderByCol = _portalPreferences.getValue(
-				JournalPortletKeys.JOURNAL, "order-by-col", defaultOrderByCol);
+				if (Objects.equals(_orderByCol, "relevance")) {
+					_orderByCol = "modified-date";
+
+					_portalPreferences.setValue(
+						JournalPortletKeys.JOURNAL, "order-by-col", null);
+				}
+			}
 		}
 		else {
 			_portalPreferences.setValue(

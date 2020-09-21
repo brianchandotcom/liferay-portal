@@ -54,7 +54,7 @@ const PaginatedList = ({
 				<>
 					{data.items && data.items.map((data) => children(data))}
 
-					{data.totalCount > deltaValues[0] && (
+					{totalItems > deltaValues[0] && (
 						<ClayPaginationBarWithBasicItems
 							activeDelta={activeDelta}
 							activePage={activePage}

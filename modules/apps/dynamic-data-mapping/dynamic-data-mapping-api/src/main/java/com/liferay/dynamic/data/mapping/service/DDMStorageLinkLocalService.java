@@ -83,8 +83,9 @@ public interface DDMStorageLinkLocalService
 	public DDMStorageLink addDDMStorageLink(DDMStorageLink ddmStorageLink);
 
 	public DDMStorageLink addStorageLink(
-		long classNameId, long classPK, long structureVersionId,
-		ServiceContext serviceContext);
+			long classNameId, long classPK, long structureVersionId,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Creates a new ddm storage link with the primary key. Does not add the ddm storage link to the database.

@@ -11,6 +11,13 @@ definition {
 		User.firstLoginPG();
 
 		CommerceConfiguration.commerceStoreFrontSetUp();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
 	tearDown {

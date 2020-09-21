@@ -59,6 +59,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 													<clay:link
 														borderless="<%= true %>"
+														cssClass="component-action"
 														href="<%= editFragmentCollectionURL %>"
 														icon="plus"
 														type="button"
@@ -67,7 +68,6 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 											</li>
 											<li>
 												<clay:dropdown-actions
-													cssClass="pt-2"
 													defaultEventHandler="FragmentCollectionsViewDefaultEventHandler"
 													dropdownItems="<%= fragmentDisplayContext.getCollectionsDropdownItems() %>"
 												/>

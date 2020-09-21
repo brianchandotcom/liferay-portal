@@ -288,6 +288,9 @@
 	<td>//tr/td[contains(.,'${key_fixIssueButtonName}')]/..//td[@class='data-set-item-actions-wrapper' or contains(@class,'entry-action-column')]/*</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FIX_ISSUE_BUTTON_N</td>
+	<td>//tr[contains (@data-qa-id,'row')]//td/button[contains (@id,'fixIssueButton${key_buttonRowNumber}')and contains(@class,'${key_buttonStatus}')]</td>
 	<td></td>
 </tr>
 <tr>

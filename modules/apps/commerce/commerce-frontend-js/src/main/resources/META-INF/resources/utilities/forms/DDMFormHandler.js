@@ -24,11 +24,11 @@ class DDMFormHandler {
 		this.portletId = portletId;
 		this.fields = getDefaultFieldsShape(DDMFormInstance);
 
-		this._bindEventListeners();
+		this._attachFormListener();
 		this.checkCPInstance();
 	}
 
-	_bindEventListeners() {
+	_attachFormListener() {
 		this.DDMFormInstance.on('fieldEdited', (field) => {
 			this.fields = updateFields(this.fields, field);
 			this.checkCPInstance();

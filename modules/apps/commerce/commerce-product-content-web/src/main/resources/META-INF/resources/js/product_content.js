@@ -91,11 +91,16 @@ AUI.add(
 
 					var cpInstance = dispatchedPayload.cpInstance;
 
-					var originalDDMFormValues = dispatchedPayload.formFields;
+					var ddmFormValues = dispatchedPayload.formFields;
 
-					instance._renderImages(originalDDMFormValues);
-					instance._renderCPInstance(cpInstance);
 					instance.set('cpInstanceId', cpInstance.cpInstanceId);
+
+					if (ddmFormValues) {
+						instance.set('ddmFormValues', ddmFormValues);
+					}
+
+					instance._renderImages();
+					instance._renderCPInstance(cpInstance);
 
 					Liferay.fire(
 						cpDefinitionId + CP_INSTANCE_CHANGE_EVENT,
@@ -243,16 +248,16 @@ AUI.add(
 						);
 					});
 				},
-				_renderImages(originalDDMFormValues) {
+				_renderImages() {
 					var instance = this;
 
-					var ddmFormValues = JSON.stringify(originalDDMFormValues);
+					var ddmFormValues = instance.get('ddmFormValues');
 
 					var data = {};
 
 					data[
 						instance.get('namespace') + 'ddmFormValues'
-					] = ddmFormValues;
+					] = JSON.stringify(ddmFormValues);
 					data.groupId = themeDisplay.getScopeGroupId();
 
 					A.io.request(instance.get('viewAttachmentURL'), {
@@ -327,42 +332,7 @@ AUI.add(
 				getFormValues() {
 					var instance = this;
 
-					var cpDefinitionId = instance.get('cpDefinitionId');
-
-					var ddmForm = Liferay.component(
-						'ProductOptions' + cpDefinitionId + 'DDMForm'
-					);
-
-					if (!ddmForm) {
-						return [];
-					}
-
-					var fields = ddmForm.getImmediateFields();
-
-					var fieldValues = [];
-
-					fields.forEach((field) => {
-						var fieldValue = {};
-
-						fieldValue.key = field.get('fieldName');
-
-						var value = field.getValue();
-
-						var arrValue = [];
-
-						if (Array.isArray(value)) {
-							arrValue = value;
-						}
-						else {
-							arrValue.push(value);
-						}
-
-						fieldValue.value = arrValue;
-
-						fieldValues.push(fieldValue);
-					});
-
-					return fieldValues;
+					return instance.get('ddmFormValues');
 				},
 				getProductContent() {
 					var instance = this;

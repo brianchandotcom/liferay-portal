@@ -30,11 +30,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
@@ -8458,9 +8460,14 @@ public class JournalArticleLocalServiceImpl
 			ddmTemplateKey, true);
 
 		if (incrementVersion) {
+			DDMStructureVersion ddmStructureVersion =
+				_ddmStructureVersionLocalService.getStructureVersion(
+					ddmStructure.getStructureId(), ddmStructure.getVersion());
+
 			ddmStorageLinkLocalService.addStorageLink(
 				ddmStructure.getClassNameId(), id,
-				ddmStructure.getStructureId(), new ServiceContext());
+				ddmStructureVersion.getStructureVersionId(),
+				new ServiceContext());
 
 			ddmStructureLinkLocalService.addStructureLink(
 				classNameLocalService.getClassNameId(JournalArticle.class), id,
@@ -9081,6 +9088,9 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

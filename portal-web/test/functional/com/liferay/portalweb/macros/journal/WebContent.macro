@@ -830,7 +830,7 @@ definition {
 
 			RecycleBin.emptyCP();
 
-			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+			DepotNavigator.openDepotWebContentAdmin(depotName = "${depotName}");
 		}
 		else {
 			RecycleBin.openRecycleBinAdmin(siteURLKey = "${siteURLKey}");

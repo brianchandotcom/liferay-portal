@@ -153,6 +153,10 @@ definition {
 	}
 
 	macro submit {
+
+		while (IsElementNotPresent(key_text = "Submit", locator1 = "Button#ANY")) {
+			Pause(locator1 = "3000");
+		}
 		Button.click(button = "Submit");
 
 		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Submit");

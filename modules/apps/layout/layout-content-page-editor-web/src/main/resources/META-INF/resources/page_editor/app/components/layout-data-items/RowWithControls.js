@@ -25,6 +25,8 @@ import {ResizeContextProvider} from '../ResizeContext';
 import Topper from '../Topper';
 import Row from './Row';
 
+const ROW_SIZE = 12;
+
 const RowWithControls = React.forwardRef(({children, item}, ref) => {
 	const [resizing, setResizing] = useState(false);
 	const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
@@ -64,11 +66,16 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 					'align-bottom': verticalAlignment === 'bottom',
 					'align-middle': verticalAlignment === 'middle',
 					empty:
-						item.config.numberOfColumns === modulesPerRow &&
-						!item.children.some(
-							(childId) =>
-								layoutData.items[childId].children.length
-						) &&
+						(item.config.numberOfColumns !== modulesPerRow ||
+							item.children.some(
+								(childId) =>
+									layoutData.items[childId].config.size ===
+									ROW_SIZE
+							) ||
+							!item.children.some(
+								(childId) =>
+									layoutData.items[childId].children.length
+							)) &&
 						!height,
 					'page-editor__row': canUpdateItemConfiguration,
 					'page-editor__row-overlay-grid': resizing,

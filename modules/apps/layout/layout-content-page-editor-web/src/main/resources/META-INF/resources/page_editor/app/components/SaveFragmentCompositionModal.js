@@ -111,7 +111,7 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 
 	return (
 		<ClayModal
-			className="page-editor__save-fragment-composition-modal"
+			className="page-editor__save-fragment-composition-modal page-editor__theme-adapter-buttons page-editor__theme-adapter-forms"
 			observer={observer}
 			size="lg"
 		>

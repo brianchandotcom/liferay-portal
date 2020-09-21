@@ -675,7 +675,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				@Override
 				public String call() throws Exception {
 					return LiferayRelengUtil.getArtifactRemoteURL(
-						project, publishArtifact, false);
+						project, publishArtifact, true);
 				}
 
 			});

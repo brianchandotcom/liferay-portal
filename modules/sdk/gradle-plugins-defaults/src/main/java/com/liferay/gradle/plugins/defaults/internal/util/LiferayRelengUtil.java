@@ -402,8 +402,8 @@ public class LiferayRelengUtil {
 		String url = (String)getUrlMethod.invoke(repository);
 
 		if (cdn) {
-			url = url.replace("http://", "http://cdn.");
-			url = url.replace("https://", "https://cdn.");
+			url = url.replace(
+				"repository.liferay.com", "repository-cdn.liferay.com");
 		}
 
 		StringBuilder sb = new StringBuilder(url);

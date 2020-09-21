@@ -17,7 +17,7 @@ package com.liferay.dispatch.talend.internal.helper;
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.talend.internal.TalendScheduledTaskExecutor;
+import com.liferay.dispatch.talend.internal.DispatchTalendScheduledTaskExecutor;
 import com.liferay.dispatch.talend.internal.configuration.DispatchTalendConfiguration;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -50,9 +50,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.dispatch.talend.internal.configuration.DispatchTalendConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL,
-	service = TalendScheduledTaskExecutorHelper.class
+	service = DispatchTalendScheduledTaskExecutorHelper.class
 )
-public class TalendScheduledTaskExecutorHelper {
+public class DispatchTalendScheduledTaskExecutorHelper {
 
 	public FileEntry addFileEntry(
 			long companyId, long userId, long dispatchTriggerId,
@@ -127,7 +127,8 @@ public class TalendScheduledTaskExecutorHelper {
 		return PortletFileRepositoryUtil.addPortletFolder(
 			userId, repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			TalendScheduledTaskExecutor.SCHEDULED_TASK_EXECUTOR_TYPE_TALEND,
+			DispatchTalendScheduledTaskExecutor.
+				SCHEDULED_TASK_EXECUTOR_TYPE_TALEND,
 			serviceContext);
 	}
 

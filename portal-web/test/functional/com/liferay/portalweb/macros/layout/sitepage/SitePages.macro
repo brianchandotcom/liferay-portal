@@ -45,14 +45,6 @@ definition {
 		}
 
 		Button.click(button = "Save");
-
-		WaitForSPARefresh();
-
-		// TODO find a better fix as we should not be navigating like this for every test. Workaround caused by LPS-104246
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
 	}
 
 	@summary = "Add newly created pages to specified navigation menus or assert that the option to add the pages to navigation menus is missing."

@@ -109,8 +109,8 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 							dropdownItem.setHref(
 								_renderResponse.createRenderURL(),
 								"mvcRenderCommandName",
-								"/users_admin/edit_organization", "redirect",
-								_getViewUsersURL(), "type", organizationType);
+								"/users_admin/edit_organization", "type",
+								organizationType);
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, organizationType));
@@ -318,20 +318,6 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "type"));
 			}
 		).build();
-	}
-
-	private String _getViewUsersURL() {
-		String toolbarItem = ParamUtil.getString(
-			_httpServletRequest, "toolbarItem", "view-all-organizations");
-		String usersListView = (String)_httpServletRequest.getAttribute(
-			"view.jsp-usersListView");
-
-		PortletURL viewUsersURL = _renderResponse.createRenderURL();
-
-		viewUsersURL.setParameter("toolbarItem", toolbarItem);
-		viewUsersURL.setParameter("usersListView", usersListView);
-
-		return viewUsersURL.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

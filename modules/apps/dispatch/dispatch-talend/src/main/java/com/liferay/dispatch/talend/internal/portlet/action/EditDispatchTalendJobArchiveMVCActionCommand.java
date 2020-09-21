@@ -15,7 +15,7 @@
 package com.liferay.dispatch.talend.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
-import com.liferay.dispatch.talend.internal.helper.TalendScheduledTaskExecutorHelper;
+import com.liferay.dispatch.talend.internal.helper.DispatchTalendScheduledTaskExecutorHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,11 +38,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + DispatchPortletKeys.DISPATCH,
-		"mvc.command.name=editTalendDispatchTrigger"
+		"mvc.command.name=editDispatchTalendJobArchive"
 	},
 	service = MVCActionCommand.class
 )
-public class EditTalendDispatchTriggerMVCActionCommand
+public class EditDispatchTalendJobArchiveMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -57,7 +57,7 @@ public class EditTalendDispatchTriggerMVCActionCommand
 			long dispatchTriggerId = ParamUtil.getLong(
 				uploadPortletRequest, "dispatchTriggerId");
 
-			_talendScheduledTaskExecutorHelper.addFileEntry(
+			_dispatchTalendScheduledTaskExecutorHelper.addFileEntry(
 				_portal.getCompanyId(actionRequest),
 				_portal.getUserId(actionRequest), dispatchTriggerId,
 				uploadPortletRequest.getFileName("jobArchive"),
@@ -73,13 +73,13 @@ public class EditTalendDispatchTriggerMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditTalendDispatchTriggerMVCActionCommand.class);
+		EditDispatchTalendJobArchiveMVCActionCommand.class);
+
+	@Reference
+	private DispatchTalendScheduledTaskExecutorHelper
+		_dispatchTalendScheduledTaskExecutorHelper;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TalendScheduledTaskExecutorHelper
-		_talendScheduledTaskExecutorHelper;
 
 }

@@ -19,7 +19,7 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.talend.internal.helper.TalendScheduledTaskExecutorHelper;
+import com.liferay.dispatch.talend.internal.helper.DispatchTalendScheduledTaskExecutorHelper;
 import com.liferay.petra.process.CollectorOutputProcessor;
 import com.liferay.petra.process.ConsumerOutputProcessor;
 import com.liferay.petra.process.ProcessException;
@@ -55,10 +55,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "scheduled.task.executor.type=" + TalendScheduledTaskExecutor.SCHEDULED_TASK_EXECUTOR_TYPE_TALEND,
+	property = "scheduled.task.executor.type=" + DispatchTalendScheduledTaskExecutor.SCHEDULED_TASK_EXECUTOR_TYPE_TALEND,
 	service = ScheduledTaskExecutor.class
 )
-public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
+public class DispatchTalendScheduledTaskExecutor
+	implements ScheduledTaskExecutor {
 
 	public static final String SCHEDULED_TASK_EXECUTOR_TYPE_TALEND = "talend";
 
@@ -75,7 +76,7 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 
 		try {
 			FileEntry fileEntry =
-				_talendScheduledTaskExecutorHelper.getFileEntry(
+				_dispatchTalendScheduledTaskExecutorHelper.getFileEntry(
 					dispatchTriggerId);
 
 			InputStream inputStream = fileEntry.getContentStream();
@@ -195,16 +196,16 @@ public class TalendScheduledTaskExecutor implements ScheduledTaskExecutor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TalendScheduledTaskExecutor.class);
+		DispatchTalendScheduledTaskExecutor.class);
 
 	@Reference
 	private DispatchLogLocalService _dispatchLogLocalService;
 
 	@Reference
-	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+	private DispatchTalendScheduledTaskExecutorHelper
+		_dispatchTalendScheduledTaskExecutorHelper;
 
 	@Reference
-	private TalendScheduledTaskExecutorHelper
-		_talendScheduledTaskExecutorHelper;
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 }

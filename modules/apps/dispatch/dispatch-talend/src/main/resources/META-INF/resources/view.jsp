@@ -18,21 +18,21 @@
 
 <%
 DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(DispatchWebKeys.DISPATCH_TRIGGER);
-TalendScheduledTaskExecutorHelper talendScheduledTaskExecutorHelper = (TalendScheduledTaskExecutorHelper)request.getAttribute("talendScheduledTaskExecutorHelper");
+DispatchTalendScheduledTaskExecutorHelper dispatchTalendScheduledTaskExecutorHelper = (DispatchTalendScheduledTaskExecutorHelper)request.getAttribute("dispatchTalendScheduledTaskExecutorHelper");
 %>
 
-<liferay-portlet:actionURL name="editTalendDispatchTrigger" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editTalendDispatchTriggerActionURL" />
+<liferay-portlet:actionURL name="editDispatchTalendJobArchive" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editDispatchTalendJobArchiveActionURL" />
 
 <div class="closed container-fluid-1280" id="<portlet:namespace />editDispatchTriggerId">
 	<div class="container main-content-body sheet">
-		<aui:form action="<%= editTalendDispatchTriggerActionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
+		<aui:form action="<%= editDispatchTalendJobArchiveActionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTrigger.getDispatchTriggerId()) %>" />
 
 			<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
 
 			<%
-			FileEntry fileEntry = talendScheduledTaskExecutorHelper.getFileEntry(dispatchTrigger.getDispatchTriggerId());
+			FileEntry fileEntry = dispatchTalendScheduledTaskExecutorHelper.getFileEntry(dispatchTrigger.getDispatchTriggerId());
 			%>
 
 			<p class="<%= (fileEntry != null) ? "text-default" : "hide text-default" %>" id="<portlet:namespace />fileEntryName">

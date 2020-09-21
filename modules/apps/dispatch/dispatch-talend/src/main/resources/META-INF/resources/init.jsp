@@ -27,7 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.dispatch.constants.DispatchPortletKeys" %><%@
 page import="com.liferay.dispatch.constants.DispatchWebKeys" %><%@
 page import="com.liferay.dispatch.model.DispatchTrigger" %><%@
-page import="com.liferay.dispatch.talend.internal.helper.TalendScheduledTaskExecutorHelper" %><%@
+page import="com.liferay.dispatch.talend.internal.helper.DispatchTalendScheduledTaskExecutorHelper" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %>
 

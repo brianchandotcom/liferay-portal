@@ -148,6 +148,7 @@ const dataDefinitionField = {
 		placeholder: {
 			en_US: '',
 		},
+		rows: '[]',
 		tooltip: {
 			en_US: '',
 		},
@@ -210,4 +211,106 @@ export const DATA_DEFINITION_RESPONSES = {
 			},
 		],
 	},
+};
+
+const fieldTypes = [
+	{
+		label: 'Date',
+		name: 'date',
+		scope: 'app-builder,forms',
+	},
+	{
+		label: 'Select from List',
+		name: 'select',
+		scope: 'app-builder,forms',
+	},
+	{
+		label: 'Fields Group',
+		name: 'fieldset',
+		scope: 'app-builder,forms',
+	},
+	{
+		label: 'Numeric',
+		name: 'numeric',
+		scope: 'app-builder,forms',
+	},
+	{
+		label: 'Multiple Selection',
+		name: 'checkbox_multiple',
+		scope: 'app-builder,forms',
+	},
+	{
+		label: 'Single Selection',
+		name: 'radio',
+		scope: 'app-builder,forms',
+	},
+	{
+		label: 'Text',
+		name: 'text',
+		scope: 'app-builder,forms',
+	},
+	{
+		label: 'Upload',
+		name: 'document_library',
+		scope: 'app-builder,forms',
+	},
+];
+
+export const dataLayoutBuilderConfig = {
+	config: {
+		allowFieldSets: true,
+		allowMultiplePages: false,
+		allowRules: false,
+		allowSuccessPage: false,
+		disabledProperties: ['predefinedValue'],
+		disabledTabs: ['Autocomplete'],
+		unimplementedProperties: [
+			'fieldNamespace',
+			'indexType',
+			'readOnly',
+			'validation',
+			'visibilityExpression',
+		],
+	},
+	context: {},
+	dataLayoutBuilderId:
+		'_com_liferay_journal_web_portlet_JournalPortlet_dataLayoutBuilder',
+	fieldTypes: [],
+	localizable: true,
+	portletNamespace: 'com_liferay_journal_web_portlet_JournalPortlet',
+};
+
+export const formViewContext = {
+	appProps: {},
+	config: {
+		allowFieldSets: false,
+		allowNestedFields: true,
+		allowRules: false,
+		disabledProperties: [],
+		disabledTabs: [],
+		multiPage: true,
+		ruleSettings: {},
+		unimplementedProperties: [],
+	},
+	dataDefinition: DATA_DEFINITION_RESPONSES.ONE_ITEM,
+	dataDefinitionId: 0,
+	dataLayout: {
+		dataLayoutPages: [],
+		dataRules: [],
+		name: {
+			en_US: 'FormView',
+		},
+		paginationMode: 'wizard',
+	},
+	dataLayoutId: 0,
+	editingDataDefinitionId: 0,
+	editingLanguageId: themeDisplay.getLanguageId(),
+	fieldSets: [],
+	fieldTypes,
+	focusedCustomObjectField: {},
+	focusedField: {},
+	hoveredField: {},
+	sidebarOpen: true,
+	sidebarPanelId: 'fields',
+	spritemap: 'icons.svg',
 };

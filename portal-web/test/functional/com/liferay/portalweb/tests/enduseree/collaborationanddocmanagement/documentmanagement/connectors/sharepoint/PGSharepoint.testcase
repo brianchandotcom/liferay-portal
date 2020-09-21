@@ -69,7 +69,9 @@ definition {
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryName = "Documents",
 			dmRepositoryName = "Sharepoint",
-			dmRepositorySiteURL = "http://${sharepointVMHostName}");
+			dmRepositorySiteURL = "http://${sharepointVMHostName}",
+			permissionDefinitionKey = "ACCESS",
+			roleTitle = "Guest");
 
 		PortletEntry.save();
 

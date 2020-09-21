@@ -72,6 +72,12 @@ definition {
 	}
 
 	macro addPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
 		var key_breadcrumbName="Pages";
 
 		Pause(locator1 = "3000");
@@ -117,6 +123,12 @@ definition {
 	}
 
 	macro addPrivatePage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
 		var key_breadcrumbName="Pages";
 
 		Pause(locator1 = "3000");
@@ -150,6 +162,12 @@ definition {
 	}
 
 	macro addPublicCollectionPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
 		Pause(locator1 = "3000");
 
 		LexiconEntry.gotoAdd();

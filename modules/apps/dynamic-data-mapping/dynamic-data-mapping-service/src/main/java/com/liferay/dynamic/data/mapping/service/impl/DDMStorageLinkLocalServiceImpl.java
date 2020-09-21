@@ -21,10 +21,9 @@ import com.liferay.dynamic.data.mapping.service.base.DDMStorageLinkLocalServiceB
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -114,30 +113,20 @@ public class DDMStorageLinkLocalServiceImpl
 
 	@Override
 	public List<DDMStorageLink> getStructureStorageLinks(long structureId) {
-		List<DDMStructureVersion> structureVersions =
-			_ddmStructureVersionLocalService.getStructureVersions(structureId);
-
-		Stream<DDMStructureVersion> stream = structureVersions.stream();
-
-		LongStream structureVersionIdLongStream = stream.mapToLong(
-			structureVersion -> structureVersion.getStructureVersionId());
-
 		return ddmStorageLinkPersistence.findByStructureVersionId(
-			structureVersionIdLongStream.toArray());
+			ListUtil.toLongArray(
+				_ddmStructureVersionLocalService.getStructureVersions(
+					structureId),
+				DDMStructureVersion::getStructureVersionId));
 	}
 
 	@Override
 	public int getStructureStorageLinksCount(long structureId) {
-		List<DDMStructureVersion> structureVersions =
-			_ddmStructureVersionLocalService.getStructureVersions(structureId);
-
-		Stream<DDMStructureVersion> stream = structureVersions.stream();
-
-		LongStream structureVersionIdLongStream = stream.mapToLong(
-			structureVersion -> structureVersion.getStructureVersionId());
-
 		return ddmStorageLinkPersistence.countByStructureVersionId(
-			structureVersionIdLongStream.toArray());
+			ListUtil.toLongArray(
+				_ddmStructureVersionLocalService.getStructureVersions(
+					structureId),
+				DDMStructureVersion::getStructureVersionId));
 	}
 
 	@Override

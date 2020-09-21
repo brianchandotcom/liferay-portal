@@ -79,7 +79,7 @@ export default ({
 				className={
 					'text-reset' + (userRating === 1 ? ' text-primary' : '')
 				}
-				disabled={disabled}
+				disabled={disabled || !Liferay.ThemeDisplay.isSignedIn()}
 				displayType="unstyled"
 				monospaced
 				onClick={() => voteChange(1)}
@@ -93,7 +93,7 @@ export default ({
 				className={
 					'text-reset' + (userRating === -1 ? ' text-primary' : '')
 				}
-				disabled={disabled}
+				disabled={disabled || !Liferay.ThemeDisplay.isSignedIn()}
 				displayType="unstyled"
 				monospaced
 				onClick={() => voteChange(-1)}

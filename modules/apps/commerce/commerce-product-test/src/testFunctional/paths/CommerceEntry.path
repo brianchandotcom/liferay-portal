@@ -285,7 +285,9 @@
 </tr>
 <tr>
 	<td>FIX_ISSUE_BUTTON</td>
-	<td>//tr/td[contains(.,'${key_fixIssueButtonName}')]/..//td[@class='dataset-item-actions-wrapper']/a</td>
+	<td>//tr/td[contains(.,'${key_fixIssueButtonName}')]/..//td[@class='data-set-item-actions-wrapper' or contains(@class,'entry-action-column')]/*</td>
+	<td></td>
+</tr>
 	<td></td>
 </tr>
 <tr>

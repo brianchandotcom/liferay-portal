@@ -514,8 +514,22 @@ public class PortletPreferencesFactoryImpl
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
 		}
 
-		if ((ownerType == 0) || ((ownerId == 0) && (plid == 0))) {
-			return null;
+		StringBuilder sb = new StringBuilder(256);
+
+		sb.append(originalPortletId);
+		sb.append(
+			" has wrong properties or data handler settings, resulting in ");
+
+		if (ownerType == 0) {
+			sb.append("ownerType = 0");
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+
+		if ((ownerId == 0) && (plid == 0)) {
+			sb.append("ownerId = 0 and plid = 0");
+
+			throw new IllegalArgumentException(sb.toString());
 		}
 
 		return new PortletPreferencesIds(

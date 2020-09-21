@@ -18,6 +18,7 @@ import Answer from '../../../src/main/resources/META-INF/resources/js/components
 
 import '@testing-library/jest-dom/extend-expect';
 import {waitForElementToBeRemoved} from '@testing-library/dom';
+import {cleanup} from '@testing-library/react';
 
 import {markAsAnswerMessageBoardMessageQuery} from '../../../src/main/resources/META-INF/resources/js/utils/client.es';
 import {renderComponent} from '../../helpers.es';
@@ -97,7 +98,11 @@ const apolloMocks = [
 ];
 
 describe('Answer', () => {
+	afterEach(cleanup);
+
 	it('Show as a valid answer in the case that it is', async () => {
+		const mockIsSignedIn = jest.fn();
+		window.Liferay.ThemeDisplay.isSignedIn = mockIsSignedIn;
 		const {getByTestId} = renderComponent({
 			apolloMocks,
 			ui: (

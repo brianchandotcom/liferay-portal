@@ -21,15 +21,19 @@ definition {
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM",
 				value1 = "${key_menuItem}");
 
-			SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceEntry.addSKUsEntry(
 				optionValue = "${optionValue}",
 				productSKU = "${optionValueUppercase}SKU");
 
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Purchasable",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
 			CommerceSKUs.addPriceToSKU(price = "${price}");
 
-			CommerceEntry.publishEntry();
+			Button.clickPublish();
 
 			AssertVisible(locator1 = "Message#SUCCESS");
 

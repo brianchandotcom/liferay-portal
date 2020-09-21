@@ -139,7 +139,7 @@ export default ({newCustomObject, showTranslationManager}) => {
 			)}
 
 			<UpperToolbar.Input
-				onInput={onDataLayoutNameChange}
+				onChange={onDataLayoutNameChange}
 				onKeyDown={onKeyDown}
 				placeholder={Liferay.Language.get('untitled-form-view')}
 				value={dataLayout.name[editingLanguageId] || ''}

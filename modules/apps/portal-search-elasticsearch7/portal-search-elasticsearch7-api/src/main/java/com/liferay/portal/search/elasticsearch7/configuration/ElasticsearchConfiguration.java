@@ -260,7 +260,7 @@ public interface ElasticsearchConfiguration {
 	public boolean sidecarDebug();
 
 	@Meta.AD(
-		deflt = "-agentlib:jdwp\\=transport\\=dt_socket\\,address\\=8001\\,server\\=y\\,suspend\\=y\\,quiet\\=y",
+		deflt = "-agentlib:jdwp=transport=dt_socket,address=8001,server=y,suspend=y,quiet=y",
 		description = "sidecar-debug-settings-help",
 		name = "sidecar-debug-settings", required = false
 	)

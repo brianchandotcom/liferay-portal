@@ -65,6 +65,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 												<li>
 													<clay:link
 														borderless="<%= true %>"
+														cssClass="component-action"
 														href="<%= editLayoutPageTemplateCollectionURL.toString() %>"
 														icon="plus"
 														type="button"

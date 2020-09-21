@@ -3823,7 +3823,7 @@ public class DataFactory {
 						"conjunction", "and"
 					).put(
 						"filterString",
-						"(firstName eq ''" + _SAMPLE_USER_NAME + "'')"
+						"(firstName eq ''" + "Another User" + "'')"
 					))
 			).toString());
 		segmentsEntry.setSegmentsEntryId(_counter.get());

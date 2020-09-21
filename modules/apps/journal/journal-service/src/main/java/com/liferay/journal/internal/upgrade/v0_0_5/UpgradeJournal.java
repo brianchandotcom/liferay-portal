@@ -15,6 +15,7 @@
 package com.liferay.journal.internal.upgrade.v0_0_5;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
@@ -151,8 +152,15 @@ public class UpgradeJournal extends UpgradeProcess {
 			long ddmStructureId = getDDMStructureId(
 				entry.getKey(), entry.getValue());
 
+			DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+				ddmStructureId);
+
+			DDMStructureVersion ddmStructureVersion =
+				ddmStructure.getStructureVersion();
+
 			_ddmStorageLinkLocalService.addStorageLink(
-				journalArticleClassNameId, entry.getKey(), ddmStructureId,
+				journalArticleClassNameId, entry.getKey(),
+				ddmStructureVersion.getStructureVersionId(),
 				new ServiceContext());
 		}
 	}

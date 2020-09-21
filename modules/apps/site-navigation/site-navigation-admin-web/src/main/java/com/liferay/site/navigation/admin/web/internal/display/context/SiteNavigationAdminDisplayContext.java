@@ -20,6 +20,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -37,6 +40,8 @@ import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKey
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationMenuPermission;
 import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPortletUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 import com.liferay.site.navigation.type.DefaultSiteNavigationMenuItemTypeContext;
@@ -297,6 +302,8 @@ public class SiteNavigationAdminDisplayContext {
 		).put(
 			"siteNavigationMenuId", getSiteNavigationMenuId()
 		).put(
+			"siteNavigationMenuItems", _getSiteNavigationMenuItemsJSONArray(0)
+		).put(
 			"siteNavigationMenuName", getSiteNavigationMenuName()
 		).build();
 	}
@@ -412,6 +419,49 @@ public class SiteNavigationAdminDisplayContext {
 		}
 
 		return addURL.toString();
+	}
+
+	private JSONArray _getSiteNavigationMenuItemsJSONArray(
+		long parentSiteNavigationMenuItemId) {
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
+				getSiteNavigationMenuId(), parentSiteNavigationMenuItemId);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		JSONArray siteNavigationMenuItemsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			long siteNavigationMenuItemId =
+				siteNavigationMenuItem.getSiteNavigationMenuItemId();
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				_siteNavigationMenuItemTypeRegistry.
+					getSiteNavigationMenuItemType(
+						siteNavigationMenuItem.getType());
+
+			siteNavigationMenuItemsJSONArray.put(
+				JSONUtil.put(
+					"children",
+					_getSiteNavigationMenuItemsJSONArray(
+						siteNavigationMenuItemId)
+				).put(
+					"siteNavigationMenuItemId", siteNavigationMenuItemId
+				).put(
+					"title",
+					siteNavigationMenuItemType.getTitle(
+						siteNavigationMenuItem, themeDisplay.getLocale())
+				).put(
+					"type", siteNavigationMenuItemType
+				));
+		}
+
+		return siteNavigationMenuItemsJSONArray;
 	}
 
 	private String _displayStyle;

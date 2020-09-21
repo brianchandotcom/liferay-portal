@@ -544,6 +544,7 @@
 
 		<!-- References -->
 
+		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Repository" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />

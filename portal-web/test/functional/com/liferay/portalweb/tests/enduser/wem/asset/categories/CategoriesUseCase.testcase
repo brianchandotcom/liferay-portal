@@ -1236,10 +1236,6 @@ definition {
 				vocabularyName = "Vocabulary Name");
 		}
 
-		task ("Assert there is a success message") {
-			Alert.viewSuccessMessage();
-		}
-
 		task ("Navigate to the Pages Administration") {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",

@@ -33,15 +33,27 @@ const ITEM_CONFIG = {
 };
 
 const RESIZE_CONTEXT_STATE = {
-	customRow: false,
 	resizing: false,
-	setCustomRow: () => null,
 	setResizing: () => null,
 	setUpdatedLayoutData: () => null,
 	updatedLayoutData: null,
 };
 
 const STATE = {
+	layoutData: {
+		items: {
+			'item-1': {
+				config: {
+					size: 6,
+				},
+			},
+			'item-2': {
+				config: {
+					size: 6,
+				},
+			},
+		},
+	},
 	segmentsExperienceId: '0',
 	selectedViewportSize: 'desktop',
 };
@@ -62,7 +74,7 @@ const renderComponent = ({
 			>
 				<RowStylesPanel
 					item={{
-						children: [],
+						children: ['item-1', 'item-2'],
 						config: {...ITEM_CONFIG, ...config},
 						itemId: '0',
 						parentId: '',
@@ -129,22 +141,34 @@ describe('RowStylesPanel', () => {
 	});
 
 	it('allows custom value in modules per row when row is customized', async () => {
+		const {getByLabelText} = renderComponent({});
+		const input = getByLabelText('layout');
+
+		expect(input).toHaveValue('2');
+	});
+
+	it('allows custom value in modules per row when row is customized', async () => {
 		const {getByLabelText} = renderComponent({
-			contextState: {customRow: true},
+			state: {
+				layoutData: {
+					items: {
+						'item-1': {
+							config: {
+								size: 5,
+							},
+						},
+						'item-2': {
+							config: {
+								size: 7,
+							},
+						},
+					},
+				},
+			},
 		});
 		const input = getByLabelText('layout');
 
-		await fireEvent.change(input, {
-			target: {value: '0'},
-		});
-
-		expect(updateItemConfig).toHaveBeenCalledWith({
-			itemConfig: {
-				modulesPerRow: 'custom',
-			},
-			itemId: '0',
-			segmentsExperienceId: '0',
-		});
+		expect(input).toHaveValue('custom');
 	});
 
 	it('allows changing the vertical alignment', async () => {

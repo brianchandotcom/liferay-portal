@@ -19,6 +19,8 @@
 <%
 int index = GetterUtil.getInteger(request.getAttribute("liferay-comment:discussion:index"));
 int initialIndex = GetterUtil.getInteger(request.getAttribute("liferay-comment:discussion:index"));
+String originalNamespace = ParamUtil.getString(request, "namespace");
+String randomNamespace = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:randomNamespace"));
 int rootIndexPage = GetterUtil.getInteger(request.getAttribute("liferay-comment:discussion:rootIndexPage"));
 
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
@@ -38,6 +40,7 @@ if (discussionCommentIterator != null) {
 			break;
 		}
 
+		request.setAttribute("aui:form:portletNamespace", originalNamespace + randomNamespace);
 		request.setAttribute("liferay-comment:discussion:depth", 0);
 		request.setAttribute("liferay-comment:discussion:discussion", discussion);
 		request.setAttribute("liferay-comment:discussion:discussionComment", discussionCommentIterator.next());
@@ -52,14 +55,16 @@ if (discussionCommentIterator != null) {
 %>
 
 <script>
-	var indexInput = document.getElementById('<%= namespace %>index');
+	var indexInput = document.getElementById(
+		'<%= originalNamespace + randomNamespace %>index'
+	);
 
 	if (indexInput) {
 		indexInput.value = '<%= String.valueOf(index) %>';
 	}
 
 	var rootIndexPageInput = document.getElementById(
-		'<%= namespace %>rootIndexPage'
+		'<%= originalNamespace + randomNamespace %>rootIndexPage'
 	);
 
 	if (rootIndexPageInput) {
@@ -68,7 +73,7 @@ if (discussionCommentIterator != null) {
 
 	<c:if test="<%= (rootDiscussionComment != null) && (discussion.getDiscussionCommentsCount() <= index) %>">
 		var moreCommentsContainer = document.getElementById(
-			'<%= namespace %>moreCommentsContainer'
+			'<%= HtmlUtil.escape(originalNamespace) %>moreCommentsContainer'
 		);
 
 		if (moreCommentsContainer) {

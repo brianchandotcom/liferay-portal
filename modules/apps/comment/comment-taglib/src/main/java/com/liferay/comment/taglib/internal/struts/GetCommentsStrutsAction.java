@@ -49,9 +49,6 @@ public class GetCommentsStrutsAction implements StrutsAction {
 			new NamespaceServletRequest(
 				httpServletRequest, StringPool.BLANK, namespace);
 
-		namespacedHttpServletRequest.setAttribute(
-			"aui:form:portletNamespace", namespace);
-
 		String className = ParamUtil.getString(
 			namespacedHttpServletRequest, "className");
 

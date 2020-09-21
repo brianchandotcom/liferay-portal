@@ -142,6 +142,11 @@ public class CommerceCheckoutTest {
 
 		User user = _company.getDefaultUser();
 
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.getGuestCommerceAccount(
 				_company.getCompanyId());
@@ -278,6 +283,11 @@ public class CommerceCheckoutTest {
 
 			User user = _company.getDefaultUser();
 
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			PrincipalThreadLocal.setName(user.getUserId());
+
 			CommerceAccount commerceAccount =
 				_commerceAccountLocalService.getGuestCommerceAccount(
 					_company.getCompanyId());
@@ -320,6 +330,11 @@ public class CommerceCheckoutTest {
 		).then(
 			"The price list with the highest priority should be retrieved"
 		);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		PrincipalThreadLocal.setName(_user.getUserId());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), _commerceChannel.getGroupId(),

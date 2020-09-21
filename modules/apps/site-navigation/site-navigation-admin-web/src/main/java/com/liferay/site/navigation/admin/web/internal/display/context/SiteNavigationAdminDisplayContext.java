@@ -27,8 +27,10 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
@@ -46,7 +48,9 @@ import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -241,6 +245,60 @@ public class SiteNavigationAdminDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
+	}
+
+	public Map<String, Object> getSiteNavigationContext() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"addFragmentEntryLinkCommentURL",
+			() -> {
+				PortletURL actionURL =
+					_liferayPortletResponse.createActionURL();
+
+				actionURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/navigation_menu/edit_site_navigation_menu_item_parent");
+
+				actionURL.setParameter(
+					"redirect",
+					PortalUtil.getCurrentURL(_liferayPortletRequest));
+
+				return actionURL.toString();
+			}
+		).put(
+			"editSiteNavigationMenuItemURL",
+			() -> {
+				PortletURL renderURL =
+					_liferayPortletResponse.createRenderURL();
+
+				renderURL.setParameter(
+					"mvcPath", "/edit_site_navigation_menu_item.jsp");
+
+				renderURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+				return renderURL.toString();
+			}
+		).put(
+			"editSiteNavigationMenuSettingsURL",
+			() -> {
+				PortletURL renderURL =
+					_liferayPortletResponse.createRenderURL();
+
+				renderURL.setParameter(
+					"mvcPath", "/site_navigation_menu_settings.jsp");
+
+				renderURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+				return renderURL.toString();
+			}
+		).put(
+			"id", _liferayPortletResponse.getNamespace() + "sidebar"
+		).put(
+			"redirect", PortalUtil.getCurrentURL(_liferayPortletRequest)
+		).put(
+			"siteNavigationMenuId", getSiteNavigationMenuId()
+		).put(
+			"siteNavigationMenuName", getSiteNavigationMenuName()
+		).build();
 	}
 
 	public SiteNavigationMenu getSiteNavigationMenu() throws PortalException {

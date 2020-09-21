@@ -135,6 +135,8 @@ public class JournalManagementToolbarDisplayContext
 		clearResultsURL.setParameter("navigation", StringPool.BLANK);
 		clearResultsURL.setParameter("ddmStructureKey", StringPool.BLANK);
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("orderByCol", StringPool.BLANK);
+		clearResultsURL.setParameter("orderByType", StringPool.BLANK);
 		clearResultsURL.setParameter(
 			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
 

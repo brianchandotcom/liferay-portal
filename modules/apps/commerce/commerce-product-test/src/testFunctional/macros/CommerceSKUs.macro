@@ -2,7 +2,7 @@ definition {
 
 	macro addPriceToSKU {
 		Type(
-			locator1 = "CommerceEntry#INPUT_PRICE",
+			locator1 = "CommerceEntry#PRICE_FIELD",
 			value1 = "${price}");
 	}
 

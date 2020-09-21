@@ -799,6 +799,25 @@ public class ModulesStructureTest {
 		return ":" + projectPathPrefix;
 	}
 
+	private boolean _hasGitCommitMarkerFile(Path dirPath) {
+		while (dirPath != null) {
+			if (dirPath.equals(_modulesDirPath)) {
+				return false;
+			}
+
+			Path gitRepoPath = dirPath.resolve(
+				"git-commit-" + String.valueOf(dirPath.getFileName()));
+
+			if (Files.exists(gitRepoPath)) {
+				return true;
+			}
+
+			dirPath = dirPath.getParent();
+		}
+
+		return false;
+	}
+
 	private boolean _isEmptyGitRepo(Path dirPath) {
 		File dir = dirPath.toFile();
 
@@ -930,6 +949,7 @@ public class ModulesStructureTest {
 
 		if (_isInModulesRootDir(dirPath, "sdk", "third-party", "util") ||
 			Files.exists(dirPath.resolve(".lfrbuild-ci")) ||
+			_hasGitCommitMarkerFile(dirPath) ||
 			_isInGitRepoReadOnly(dirPath) ||
 			_isInPrivateModulesCheckoutDir(dirPath)) {
 

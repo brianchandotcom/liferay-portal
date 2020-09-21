@@ -40,6 +40,23 @@ export default ({data, height, totalEntries, width}) => {
 		setActiveIndex(index);
 	};
 
+	const CustomizedYAxisTick = ({payload, x, y}) => {
+		return (
+			<g transform={`translate(${x},${y})`}>
+				<text
+					className={`${
+						activeIndex !== null && activeIndex !== payload.index
+							? 'dim'
+							: ''
+					}`}
+					x={-22}
+				>
+					{`${payload.value}`}
+				</text>
+			</g>
+		);
+	};
+
 	return (
 		<ResponsiveContainer height={height || '99%'} width={width || '99%'}>
 			<BarChart
@@ -62,7 +79,7 @@ export default ({data, height, totalEntries, width}) => {
 				<YAxis
 					dataKey="label"
 					stroke={blueDark}
-					tick={{fontSize: 14}}
+					tick={CustomizedYAxisTick}
 					tickLine={false}
 					tickMargin={16}
 					type="category"

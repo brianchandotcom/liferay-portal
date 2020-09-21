@@ -35,7 +35,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -147,21 +146,26 @@ public class ConfigurationEntryRetrieverImpl
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		Set<ConfigurationScreen> configurationScreens = getConfigurationScreens(
-			configurationCategory);
+		List<ConfigurationScreen> configurationScreens =
+			_configurationScreensServiceTrackerMap.getService(
+				configurationCategory);
 
-		for (ConfigurationScreen configurationScreen : configurationScreens) {
-			if (!scope.equals(configurationScreen.getScope()) ||
-				!configurationScreen.isVisible()) {
+		if (configurationScreens != null) {
+			for (ConfigurationScreen configurationScreen :
+					configurationScreens) {
 
-				continue;
+				if (!scope.equals(configurationScreen.getScope()) ||
+					!configurationScreen.isVisible()) {
+
+					continue;
+				}
+
+				ConfigurationEntry configurationEntry =
+					new ConfigurationScreenConfigurationEntry(
+						configurationScreen, locale);
+
+				configurationEntries.add(configurationEntry);
 			}
-
-			ConfigurationEntry configurationEntry =
-				new ConfigurationScreenConfigurationEntry(
-					configurationScreen, locale);
-
-			configurationEntries.add(configurationEntry);
 		}
 
 		Set<ConfigurationModel> configurationModels =
@@ -237,23 +241,6 @@ public class ConfigurationEntryRetrieverImpl
 
 	protected Comparator<ConfigurationEntry> getConfigurationEntryComparator() {
 		return new ConfigurationEntryComparator();
-	}
-
-	protected Set<ConfigurationScreen> getConfigurationScreens(
-		String configurationCategoryKey) {
-
-		Set<ConfigurationScreen> configurationCategoriesSet =
-			Collections.emptySet();
-
-		List<ConfigurationScreen> configurationCategories =
-			_configurationScreensServiceTrackerMap.getService(
-				configurationCategoryKey);
-
-		if (configurationCategories != null) {
-			configurationCategoriesSet = new HashSet<>(configurationCategories);
-		}
-
-		return configurationCategoriesSet;
 	}
 
 	private void _populateConfigurationCategorySectionDisplay(

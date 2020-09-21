@@ -24,9 +24,11 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,6 +54,7 @@ import com.liferay.portal.workflow.kaleo.definition.UserRecipient;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.export.DefinitionExporter;
 import com.liferay.portal.workflow.kaleo.definition.export.builder.DefinitionBuilder;
+import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -76,10 +79,17 @@ public class AppWorkflowResourceHelper {
 
 		String content = _definitionExporter.export(definition);
 
-		return _workflowDefinitionManager.deployWorkflowDefinition(
-			appBuilderApp.getCompanyId(), userId, appBuilderApp.getName(),
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAttribute("checkPermission", Boolean.FALSE);
+		serviceContext.setCompanyId(appBuilderApp.getCompanyId());
+		serviceContext.setUserId(userId);
+
+		return _workflowEngine.deployWorkflowDefinition(
+			appBuilderApp.getName(),
 			String.valueOf(appBuilderApp.getAppBuilderAppId()),
-			AppBuilderApp.class.getSimpleName(), content.getBytes());
+			AppBuilderApp.class.getSimpleName(),
+			new UnsyncByteArrayInputStream(content.getBytes()), serviceContext);
 	}
 
 	public Definition getDefinition(long appId, long companyId)
@@ -323,5 +333,8 @@ public class AppWorkflowResourceHelper {
 
 	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;
+
+	@Reference
+	private WorkflowEngine _workflowEngine;
 
 }

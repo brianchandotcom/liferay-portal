@@ -1183,8 +1183,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			dlFolder.getFolderId());
 
 		if (webDAVProps != null) {
-			webDAVPropsLocalService.deleteWebDAVProps(
-				DLFolder.class.getName(), dlFolder.getFolderId());
+			webDAVPropsLocalService.deleteWebDAVProps(webDAVProps);
 		}
 
 		// File entries

@@ -644,8 +644,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getFileEntryId());
 
 		if (webDAVProps != null) {
-			webDAVPropsLocalService.deleteWebDAVProps(
-				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+			webDAVPropsLocalService.deleteWebDAVProps(webDAVProps);
 		}
 
 		// File entry metadata

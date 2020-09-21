@@ -469,7 +469,7 @@
 <!--PRICE-->
 <tr>
 	<td>INPUT_PRICE</td>
-	<td>//div[label[(text() = ' Price ' )]]//input[@type='text']</td>
+	<td>//div/label[contains(.,'Price') and not(contains(.,'Promo'))]/..//input</td>
 	<td></td>
 </tr>
 <!--IMAGES-->

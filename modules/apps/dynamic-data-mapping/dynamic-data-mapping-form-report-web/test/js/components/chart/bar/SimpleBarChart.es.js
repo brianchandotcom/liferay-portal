@@ -32,9 +32,11 @@ describe('SimpleBarChart', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {
-		const {queryByText} = render(<SimpleBarChart {...props} />);
+		const {queryAllByText, queryByText} = render(
+			<SimpleBarChart {...props} />
+		);
 
-		expect(queryByText('Option 1')).toBeTruthy();
+		expect(queryAllByText('Option 1')).toBeTruthy();
 		expect(queryByText('Option 2')).toBeTruthy();
 		expect(queryByText('Option 3')).toBeTruthy();
 	});

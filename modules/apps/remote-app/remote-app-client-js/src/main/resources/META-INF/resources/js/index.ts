@@ -858,6 +858,13 @@ const SDK = Object.freeze({
 				log(...messages);
 			},
 
+			navigate(url: string) {
+				postMessage({
+					command: 'navigate',
+					url,
+				});
+			},
+
 			on(
 				event: string,
 				subscriber: (event: SDKEvent) => void

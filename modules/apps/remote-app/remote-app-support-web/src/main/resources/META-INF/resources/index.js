@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, navigate, openToast} from 'frontend-js-web';
 
 const APPS_TO_IDS = new Map();
 
@@ -291,7 +291,15 @@ function receiveMessage(event) {
 				}
 				break;
 
-			// just a demo of a higher-level command
+			case 'navigate':
+				{
+					const url = getString(data, 'url');
+
+					if (url) {
+						navigate(url);
+					}
+				}
+				break;
 
 			case 'openToast':
 				{

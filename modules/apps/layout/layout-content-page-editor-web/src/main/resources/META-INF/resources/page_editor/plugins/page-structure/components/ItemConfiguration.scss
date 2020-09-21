@@ -2,32 +2,34 @@
 
 @import '../../../app/components/variables';
 
-.page-editor__page-structure__item-configuration {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	overflow: hidden;
+.page-editor__sidebar {
+	.page-editor__page-structure__item-configuration {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		overflow: hidden;
 
-	.tab-content {
-		overflow: auto;
-	}
+		.tab-content {
+			overflow: auto;
+		}
 
-	&-tab {
-		font-size: 0.75rem;
-	}
+		&-tab {
+			font-size: 0.75rem;
+		}
 
-	label {
-		font-size: 12px;
-	}
+		label {
+			font-size: 12px;
+		}
 
-	.btn,
-	.btn-group,
-	.form-group,
-	.form-group-autofit {
-		margin-bottom: $pageEditorSpacing * 2;
+		.btn,
+		.btn-group,
+		.form-group,
+		.form-group-autofit {
+			margin-bottom: $pageEditorSpacing * 2;
 
-		&:last-child {
-			margin: 0;
+			&:last-child {
+				margin: 0;
+			}
 		}
 	}
 }

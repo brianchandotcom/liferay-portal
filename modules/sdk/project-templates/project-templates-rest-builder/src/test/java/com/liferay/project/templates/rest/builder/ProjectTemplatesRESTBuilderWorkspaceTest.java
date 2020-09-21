@@ -117,8 +117,7 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 		if (_name.contains("sample")) {
 			testContains(
 				gradleProjectDir, "sample-impl/build.gradle",
-				"compileOnly project(\":modules:nested:path:sample:" +
-					"sample-api\")");
+				"compile project(\":modules:nested:path:sample:sample-api\")");
 		}
 
 		if (_liferayVersion.startsWith("7.1")) {

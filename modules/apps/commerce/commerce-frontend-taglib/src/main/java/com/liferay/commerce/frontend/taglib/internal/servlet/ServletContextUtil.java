@@ -17,7 +17,7 @@ package com.liferay.commerce.frontend.taglib.internal.servlet;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.content.util.CPContentHelper;
-import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -38,8 +38,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ServletContextUtil {
 
-	public static final CommerceChannelService getCommerceChannelService() {
-		return _servletContextUtil._getCommerceChannelService();
+	public static final CommerceChannelLocalService
+		getCommerceChannelLocalService() {
+
+		return _servletContextUtil._getCommerceChannelLocalService();
 	}
 
 	public static final CommerceOrderHttpHelper getCommerceOrderHttpHelper() {
@@ -83,10 +85,10 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setCommerceChannelService(
-		CommerceChannelService commerceChannelService) {
+	protected void setCommerceChannelLocalService(
+		CommerceChannelLocalService commerceChannelLocalService) {
 
-		_commerceChannelService = commerceChannelService;
+		_commerceChannelLocalService = commerceChannelLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -133,8 +135,8 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private CommerceChannelService _getCommerceChannelService() {
-		return _commerceChannelService;
+	private CommerceChannelLocalService _getCommerceChannelLocalService() {
+		return _commerceChannelLocalService;
 	}
 
 	private CommerceOrderHttpHelper _getCommerceOrderHttpHelper() {
@@ -167,7 +169,7 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _servletContextUtil;
 
-	private CommerceChannelService _commerceChannelService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private ConfigurationProvider _configurationProvider;
 	private CPContentHelper _cpContentHelper;

@@ -24,7 +24,7 @@ import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
@@ -98,7 +98,7 @@ public class PriceTag extends ComponentRendererTag {
 			boolean netPrice = true;
 
 			CommerceChannel commerceChannel =
-				_commerceChannelService.fetchCommerceChannel(
+				_commerceChannelLocalService.fetchCommerceChannel(
 					commerceContext.getCommerceChannelId());
 
 			if ((commerceChannel != null) &&
@@ -166,8 +166,8 @@ public class PriceTag extends ComponentRendererTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		_commerceChannelService =
-			ServletContextUtil.getCommerceChannelService();
+		_commerceChannelLocalService =
+			ServletContextUtil.getCommerceChannelLocalService();
 		_configurationProvider = ServletContextUtil.getConfigurationProvider();
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
@@ -178,7 +178,7 @@ public class PriceTag extends ComponentRendererTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(PriceTag.class);
 
-	private CommerceChannelService _commerceChannelService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 	private ConfigurationProvider _configurationProvider;
 	private ProductHelper _productHelper;
 

@@ -20,23 +20,23 @@
 
 		<!-- Other fields -->
 
-		<column name="credentialId" type="String" />
+		<column name="credentialKey" type="String" />
 		<column name="credentialType" type="int" />
+		<column name="failedAttempts" type="int" />
 		<column name="publicKeyCose" type="String" />
 		<column name="signatureCount" type="long" />
-		<column name="failedAttempts" type="int" />
 
 		<!-- Finder methods -->
 
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
-		<finder name="CredentialId" return-type="Collection">
-			<finder-column name="credentialId" />
+		<finder name="CredentialKey" return-type="Collection">
+			<finder-column name="credentialKey" />
 		</finder>
 		<finder name="U_C" return-type="MFAFIDO2Credential" unique="true">
 			<finder-column name="userId" />
-			<finder-column name="credentialId" />
+			<finder-column name="credentialKey" />
 		</finder>
 
 		<!-- References -->

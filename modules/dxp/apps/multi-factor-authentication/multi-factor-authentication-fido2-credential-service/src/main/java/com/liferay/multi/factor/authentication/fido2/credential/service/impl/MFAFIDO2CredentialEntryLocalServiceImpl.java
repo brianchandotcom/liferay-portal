@@ -39,12 +39,13 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 
 	@Override
 	public MFAFIDO2CredentialEntry addMFAFIDO2CredentialEntry(
-			long userId, String credentialId, int credentialType,
+			long userId, String credentialKey, int credentialType,
 			String publicKeyCose)
 		throws PortalException {
 
 		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry =
-			mfaFIDO2CredentialEntryPersistence.fetchByU_C(userId, credentialId);
+			mfaFIDO2CredentialEntryPersistence.fetchByU_C(
+				userId, credentialKey);
 
 		if (mfaFIDO2CredentialEntry != null) {
 			throw new DuplicateMFAFIDO2CredentialEntryException(
@@ -62,7 +63,7 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 		mfaFIDO2CredentialEntry.setUserName(user.getFullName());
 
 		mfaFIDO2CredentialEntry.setCreateDate(new Date());
-		mfaFIDO2CredentialEntry.setCredentialId(credentialId);
+		mfaFIDO2CredentialEntry.setCredentialKey(credentialKey);
 		mfaFIDO2CredentialEntry.setCredentialType(credentialType);
 		mfaFIDO2CredentialEntry.setPublicKeyCose(publicKeyCose);
 		mfaFIDO2CredentialEntry.setSignatureCount(0);
@@ -73,19 +74,19 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 
 	@Override
 	public MFAFIDO2CredentialEntry
-		fetchMFAFIDO2CredentialEntryByUserIdAndCredentialId(
-			long userId, String credentialId) {
+		fetchMFAFIDO2CredentialEntryByUserIdAndCredentialKey(
+			long userId, String credentialKey) {
 
 		return mfaFIDO2CredentialEntryPersistence.fetchByU_C(
-			userId, credentialId);
+			userId, credentialKey);
 	}
 
 	@Override
 	public List<MFAFIDO2CredentialEntry>
-		getMFAFIDO2CredentialEntriesByCredentialId(String credentialId) {
+		getMFAFIDO2CredentialEntriesByCredentialKey(String credentialKey) {
 
-		return mfaFIDO2CredentialEntryPersistence.findByCredentialId(
-			credentialId);
+		return mfaFIDO2CredentialEntryPersistence.findByCredentialKey(
+			credentialKey);
 	}
 
 	@Override
@@ -97,11 +98,12 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 
 	@Override
 	public MFAFIDO2CredentialEntry updateAttempts(
-			long userId, String credentialId, String ip, long signatureCount)
+			long userId, String credentialKey, String ip, long signatureCount)
 		throws PortalException {
 
 		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry =
-			mfaFIDO2CredentialEntryPersistence.fetchByU_C(userId, credentialId);
+			mfaFIDO2CredentialEntryPersistence.fetchByU_C(
+				userId, credentialKey);
 
 		if (mfaFIDO2CredentialEntry == null) {
 			throw new NoSuchMFAFIDO2CredentialEntryException(
@@ -109,13 +111,13 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 		}
 
 		if (signatureCount < 1) {
-			mfaFIDO2CredentialEntry.setSignatureCount(0);
 			mfaFIDO2CredentialEntry.setFailedAttempts(
 				mfaFIDO2CredentialEntry.getFailedAttempts() + 1);
+			mfaFIDO2CredentialEntry.setSignatureCount(0);
 		}
 		else {
-			mfaFIDO2CredentialEntry.setSignatureCount(signatureCount);
 			mfaFIDO2CredentialEntry.setFailedAttempts(0);
+			mfaFIDO2CredentialEntry.setSignatureCount(signatureCount);
 		}
 
 		return mfaFIDO2CredentialEntryPersistence.update(

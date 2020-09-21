@@ -25,8 +25,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_GROUP_ITEM_CHECKBOX</td>
+	<td>//li[contains(.,'${key_pageName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_CHILD_INDICATOR</td>
+	<td>//li[contains(.,'${key_pageName}')]//*[contains(@class,'child-indicator')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_GROUP_ITEM_DEPTH</td>
 	<td>//ul[${key_depth}]/li[contains(@class,'list-group-item')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_DRAG_HANDLER</td>
+	<td>//div[contains(@class,'miller-columns')]//li[contains(.,'${key_pageName}')]/div[contains(@class,'drag-handler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_DROP_TARGET</td>
+	<td>//li[contains(.,'${key_pageNameTo}')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,26 +62,6 @@
 <tr>
 	<td>LIST_GROUP_ITEM_ENTRY_TITLE</td>
 	<td>//li[contains(@class,'list-group-item')][contains(.,'${key_pageName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_GROUP_ITEM_CHECKBOX</td>
-	<td>//li[contains(.,'${key_pageName}')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_GROUP_ITEM_CHILD_INDICATOR</td>
-	<td>//li[contains(.,'${key_pageName}')]//*[contains(@class,'child-indicator')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_GROUP_ITEM_DRAG_HANDLER</td>
-	<td>//div[contains(@class,'miller-columns')]//li[contains(.,'${key_pageName}')]/div[contains(@class,'drag-handler')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_GROUP_ITEM_DROP_TARGET</td>
-	<td>//li[contains(.,'${key_pageNameTo}')]/a</td>
 	<td></td>
 </tr>
 <tr>

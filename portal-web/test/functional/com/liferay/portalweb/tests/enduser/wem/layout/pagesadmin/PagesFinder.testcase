@@ -251,8 +251,8 @@ definition {
 				portlet = "Pages");
 
 			AssertVisible(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
 		}
 
 		task ("Configure page via Page Tree panel") {
@@ -271,8 +271,8 @@ definition {
 			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
 			AssertVisible(
-				key_pageName = "New Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+				key_itemName = "New Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
 		}
 
 		task ("View the renamed page is shown in Page Tree panel") {

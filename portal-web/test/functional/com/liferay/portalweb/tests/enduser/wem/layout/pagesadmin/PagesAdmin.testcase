@@ -433,8 +433,8 @@ definition {
 		}
 
 		AssertVisible(
-			key_pageName = "Content Collection Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+			key_itemName = "Content Collection Page Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM");
 
 		PagesFinder.goToFindAPage();
 
@@ -461,8 +461,8 @@ definition {
 			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
 			AssertVisible(
-				key_pageName = "Content Collection Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+				key_itemName = "Content Collection Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
 		}
 	}
 
@@ -557,7 +557,7 @@ definition {
 
 		AssertVisible(
 			key_pageName = "Content Collection Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
 
 		PagesFinder.goToFindAPage();
 
@@ -581,7 +581,7 @@ definition {
 
 		AssertVisible(
 			key_pageName = "Content Collection Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -606,7 +606,7 @@ definition {
 
 		AssertVisible(
 			key_pageName = "Content Collection Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -630,7 +630,7 @@ definition {
 
 		AssertVisible(
 			key_pageName = "Content Collection Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
 
 		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
 	}
@@ -689,8 +689,8 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_pageName = "Test Content Page Name 1",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+			key_itemName = "Test Content Page Name 1",
+			locator1 = "SitePages#LIST_GROUP_ITEM");
 
 		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 

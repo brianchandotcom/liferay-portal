@@ -463,6 +463,12 @@ public class PullRequest {
 	public void setTestSuiteStatus(
 		TestSuiteStatus testSuiteStatus, String targetURL) {
 
+		setTestSuiteStatus(testSuiteStatus, targetURL, null);
+	}
+
+	public void setTestSuiteStatus(
+		TestSuiteStatus testSuiteStatus, String targetURL, String senderSHA) {
+
 		_testSuiteStatus = testSuiteStatus;
 
 		StringBuilder sb = new StringBuilder();
@@ -520,6 +526,12 @@ public class PullRequest {
 
 		GitHubRemoteGitCommit gitHubRemoteGitCommit =
 			getGitHubRemoteGitCommit();
+
+		if ((senderSHA != null) && senderSHA.matches("[0-9a-f]{7,40}")) {
+			gitHubRemoteGitCommit = GitCommitFactory.newGitHubRemoteGitCommit(
+				getOwnerUsername(), getGitHubRemoteGitRepositoryName(),
+				senderSHA);
+		}
 
 		GitHubRemoteGitCommit.Status status =
 			GitHubRemoteGitCommit.Status.valueOf(testSuiteStatus.toString());

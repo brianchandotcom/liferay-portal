@@ -42,8 +42,13 @@ public class DDMStorageLinkLocalServiceImpl
 
 	@Override
 	public DDMStorageLink addStorageLink(
-		long classNameId, long classPK, long structureVersionId,
-		ServiceContext serviceContext) {
+			long classNameId, long classPK, long structureVersionId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructureVersion ddmStructureVersion =
+			_ddmStructureVersionLocalService.getDDMStructureVersion(
+				structureVersionId);
 
 		long storageLinkId = counterLocalService.increment();
 
@@ -52,6 +57,7 @@ public class DDMStorageLinkLocalServiceImpl
 
 		storageLink.setClassNameId(classNameId);
 		storageLink.setClassPK(classPK);
+		storageLink.setStructureId(ddmStructureVersion.getStructureId());
 		storageLink.setStructureVersionId(structureVersionId);
 
 		return ddmStorageLinkPersistence.update(storageLink);

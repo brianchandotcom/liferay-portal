@@ -6,11 +6,11 @@ definition {
 
 			Click(locator1 = "CommerceEntry#IMAGES_PLUS_BUTTON");
 
-			SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceEntry.uploadCatalogEntrySingleImage(uploadFileName = "Commerce_${optionValues}.jpg");
 
-			SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValues}");
 

@@ -38,7 +38,6 @@ definition {
 	@priority = "5"
 	test CreateBasicWorkflowApp {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilderWorkflow#CreateBasicWorkflowApp";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
@@ -97,7 +96,6 @@ definition {
 	@description = "Create a Basic Workflow App with different deployment options"
 	@priority = "4"
 	test CreateBasicWorkflowAppWithDifferentDeployments {
-		property test.name.skip.portal.instance = "AppBuilderWorkflow#CreateBasicWorkflowAppWithDifferentDeployments";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
@@ -548,7 +546,6 @@ definition {
 	@priority = "4"
 	test ValidateFormViewModes {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilderWorkflow#ValidateFormViewModes";
 
 		var formViewName = "My Form View";
 		var tableViewName = "My Table View";

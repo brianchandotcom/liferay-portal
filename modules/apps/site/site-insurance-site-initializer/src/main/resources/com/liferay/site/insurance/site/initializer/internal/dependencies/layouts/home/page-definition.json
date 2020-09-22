@@ -1,0 +1,479 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "home-cover"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "cover-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "action-button",
+							"value": {
+								"fragmentLink": {
+									"href": {
+										"value": "#"
+									}
+								}
+							}
+						},
+						{
+							"id": "home-cover-title",
+							"value": {
+							}
+						},
+						{
+							"id": "home-cover-subtitle",
+							"value": {
+							}
+						}
+					],
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "product-actions"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "01-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "04-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "02-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "03-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "8",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "9",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "products-list"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "01-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "01-text",
+							"value": {
+							}
+						},
+						{
+							"id": "04-text",
+							"value": {
+							}
+						},
+						{
+							"id": "02-title",
+							"value": {
+							}
+						},
+						{
+							"id": "02-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "claim-text",
+							"value": {
+							}
+						},
+						{
+							"id": "01-title",
+							"value": {
+							}
+						},
+						{
+							"id": "03-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "list-title",
+							"value": {
+							}
+						},
+						{
+							"id": "05-title",
+							"value": {
+							}
+						},
+						{
+							"id": "04-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "05-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "claim-heading",
+							"value": {
+							}
+						},
+						{
+							"id": "02-text",
+							"value": {
+							}
+						},
+						{
+							"id": "03-text",
+							"value": {
+							}
+						},
+						{
+							"id": "04-title",
+							"value": {
+							}
+						},
+						{
+							"id": "06-text",
+							"value": {
+							}
+						},
+						{
+							"id": "06-title",
+							"value": {
+							}
+						},
+						{
+							"id": "05-text",
+							"value": {
+							}
+						},
+						{
+							"id": "06-image",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "03-title",
+							"value": {
+							}
+						}
+					],
+					"fragmentStyle": {
+						"backgroundColor": "gray100Color",
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "9",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "9",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "section-video"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "10",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "10",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"pageElements": [
+					{
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-video"
+									},
+									"fragmentConfig": {
+										"align": "flex-start",
+										"autoPlay": false,
+										"height": "",
+										"hideControls": false,
+										"loop": false,
+										"mute": true,
+										"url": "https://youtu.be/p7IsXbpBf3E",
+										"width": ""
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"backgroundFragmentImage": {
+										},
+										"borderRadius": "",
+										"borderWidth": "0",
+										"fontFamily": "",
+										"fontSize": "",
+										"fontWeight": "",
+										"height": "",
+										"marginBottom": "",
+										"marginLeft": "",
+										"marginRight": "",
+										"marginTop": "",
+										"maxHeight": "",
+										"maxWidth": "",
+										"minHeight": "",
+										"minWidth": "",
+										"opacity": "100",
+										"overflow": "",
+										"paddingBottom": "",
+										"paddingLeft": "",
+										"paddingRight": "",
+										"paddingTop": "",
+										"shadow": "boxShadowLg",
+										"textAlign": "",
+										"width": ""
+									}
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					}
+				],
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "section-subscription"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"fragmentStyle": {
+						"backgroundColor": "gray800Color",
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "0",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "10",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "10",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "public"
+		}
+	}
+}

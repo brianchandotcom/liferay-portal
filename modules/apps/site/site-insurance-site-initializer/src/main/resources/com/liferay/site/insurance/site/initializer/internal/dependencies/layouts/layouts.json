@@ -1,0 +1,32 @@
+[
+	{
+		"contentPath": "/layouts/home"
+	},
+	{
+		"contentPath": "/layouts/product"
+	},
+	{
+		"contentPath": "/layouts/news"
+	},
+	{
+		"contentPath": "/layouts/contact"
+	},
+	{
+		"contentPath": "/layouts/dashboard"
+	},
+	{
+		"contentPath": "/layouts/documents"
+	},
+	{
+		"contentPath": "/layouts/sign-in"
+	},
+	{
+		"contentPath": "/layouts/policies"
+	},
+	{
+		"contentPath": "/layouts/claims"
+	},
+	{
+		"contentPath": "/layouts/search"
+	}
+]

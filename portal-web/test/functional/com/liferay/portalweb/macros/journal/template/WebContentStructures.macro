@@ -78,6 +78,30 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro copyCP {
+		var key_ddlDataDefinitionName = "${structureName}";
+
+		Click(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Copy");
+
+		if (isSet(structureCopyName)) {
+			PortletEntry.inputName(name = "${structureCopyName}");
+		}
+
+		if ("${copyTemplates}" == "true") {
+			Check(
+				checkboxName = "Copy Templates",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		AssertClick(
+			locator1 = "Button#COPY",
+			value1 = "Copy");
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+	}
+
 	macro deleteCP {
 		Navigator.gotoNavItem(navItem = "Structures");
 

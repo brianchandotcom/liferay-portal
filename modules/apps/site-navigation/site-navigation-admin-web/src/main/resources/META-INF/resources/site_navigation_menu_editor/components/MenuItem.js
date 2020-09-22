@@ -49,6 +49,10 @@ export const MenuItem = ({item}) => {
 							<ClayCard.Description displayType="title">
 								{item.title}
 							</ClayCard.Description>
+
+							<ClayCard.Description displayType="subtitle">
+								{item.type}
+							</ClayCard.Description>
 						</ClayLayout.ContentCol>
 
 						<ClayLayout.ContentCol gutters>

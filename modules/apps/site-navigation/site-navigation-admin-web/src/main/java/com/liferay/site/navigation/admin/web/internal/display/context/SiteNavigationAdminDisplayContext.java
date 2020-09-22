@@ -457,7 +457,9 @@ public class SiteNavigationAdminDisplayContext {
 					siteNavigationMenuItemType.getTitle(
 						siteNavigationMenuItem, themeDisplay.getLocale())
 				).put(
-					"type", siteNavigationMenuItemType
+					"type",
+					siteNavigationMenuItemType.getLabel(
+						themeDisplay.getLocale())
 				));
 		}
 

@@ -951,13 +951,15 @@ definition {
 			key_assetTitle = "MB Thread Message Subject Apple",
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_TITLE");
 
+		var assetName = "MB Thread Message Subject Apple";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		SelectWindow(locator1 = "title=Result Rankings - ${siteName}");
+		SelectWindow(locator1 = "title=${assetName} - ${assetName} - Control Panel - ${siteName}");
 
 		AssertVisible(
-			key_assetTitle = "MB Thread Message Subject Apple",
-			locator1 = "SearchTuning#RESULT_RANKINGS_ASSET_DETAILS_TITLE");
+			locator1 = "ControlMenu#HEADING",
+			value1 = "${assetName}");
 
 		AssertVisible(
 			key_threadBody = "banana, red apple, blueberry!",

@@ -66,7 +66,14 @@ definition {
 				key_portletName = "${portletName}",
 				locator1 = "Language#DROPDOWN");
 
-			MenuItem.click(menuItem = "${textIcon}");
+			// Workaround for LPS-87409
+
+			if (("${locale}" == "ar_SA") && (IsElementNotPresent(locator1 = "MenuItem#ANY_MENU_ITEM", key_menuItem = "${textIcon}"))) {
+				MenuItem.click(menuItem = "العربية-المملكة العربية السعودية");
+			}
+			else {
+				MenuItem.click(menuItem = "${textIcon}");
+			}
 		}
 	}
 

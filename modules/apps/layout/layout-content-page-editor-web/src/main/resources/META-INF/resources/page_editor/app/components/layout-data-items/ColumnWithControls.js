@@ -24,6 +24,7 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import {useDispatch, useSelector} from '../../store/index';
 import resizeColumns from '../../thunks/resizeColumns';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
+import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {useIsActive} from '../Controls';
 import {useGlobalContext} from '../GlobalContext';
 import {
@@ -398,6 +399,11 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 
 	const firstColumnOfRow = isFirstColumnOfRow(columnIndex);
 
+	const responsiveRowConfig = getResponsiveConfig(
+		parentItem.config,
+		selectedViewportSize
+	);
+
 	return (
 		<TopperEmpty item={item}>
 			<Column
@@ -413,7 +419,8 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 			>
 				{(canUpdatePageStructure || canUpdateItemConfiguration) &&
 					parentItemIsActive &&
-					columnIndex !== 0 && (
+					columnIndex !== 0 &&
+					!responsiveRowConfig.reverseOrder && (
 						<button
 							className={classNames(
 								'btn-primary page-editor__col__resizer',

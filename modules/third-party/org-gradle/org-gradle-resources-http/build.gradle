@@ -1,4 +1,4 @@
-task jar(type: Jar, overwrite: true)
+task jarOverwrite(type: Jar)
 
 String gradleVersion = version.substring(0, version.lastIndexOf('.'))
 
@@ -15,6 +15,12 @@ dependencies {
 }
 
 jar {
+	finalizedBy jarOverwrite
+
+	enabled = false
+}
+
+jarOverwrite {
 	baseName = "gradle-resources-http"
 	duplicatesStrategy = "exclude"
 	from sourceSets.main.output

@@ -179,7 +179,8 @@ export const RowStylesPanel = ({item}) => {
 				/>
 
 				{rowConfig.numberOfColumns === 2 &&
-					rowConfig.modulesPerRow === 1 && (
+					rowConfig.modulesPerRow === 1 &&
+					!isCustomRow && (
 						<ClayCheckbox
 							checked={rowConfig.reverseOrder}
 							label={Liferay.Language.get('inverse-order')}

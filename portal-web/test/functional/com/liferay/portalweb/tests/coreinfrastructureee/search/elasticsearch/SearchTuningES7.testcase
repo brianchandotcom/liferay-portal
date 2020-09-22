@@ -957,7 +957,7 @@ definition {
 
 		SelectWindow(locator1 = "title=${assetName} - ${assetName} - Control Panel - ${siteName}");
 
-		AssertVisible(
+		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
 			value1 = "${assetName}");
 

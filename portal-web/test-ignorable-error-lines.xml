@@ -232,6 +232,10 @@
 			<contains>IX_14E638B0</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-105385 - temporarily ignore until fixed">
+			<contains>Unable to deserialize com.liferay.portal.kernel.util.EscapableLocalizableFunction due to security restrictions</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-111433 - temporarily ignore until fixed">
 			<contains>IX_EE41CBEB</contains>
 			<matches></matches>

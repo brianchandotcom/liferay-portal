@@ -23,7 +23,7 @@
 		<column name="credentialKey" type="String" />
 		<column name="credentialType" type="int" />
 		<column name="failedAttempts" type="int" />
-		<column name="publicKeyCode" type="String" />
+		<column name="publicKeyCOSE" type="String" />
 		<column name="signatureCount" type="long" />
 
 		<!-- Finder methods -->

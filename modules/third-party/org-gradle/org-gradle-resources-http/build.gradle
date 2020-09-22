@@ -21,7 +21,7 @@ jar {
 }
 
 jarOverwrite {
-	baseName = "gradle-resources-http"
+	baseName = "org-gradle-resources-http"
 	duplicatesStrategy = "exclude"
 	from sourceSets.main.output
 

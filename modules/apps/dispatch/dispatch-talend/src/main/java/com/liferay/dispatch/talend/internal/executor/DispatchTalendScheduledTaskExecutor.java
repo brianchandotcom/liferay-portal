@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dispatch.talend.internal;
+package com.liferay.dispatch.talend.internal.executor;
 
 import com.liferay.dispatch.executor.ScheduledTaskExecutor;
 import com.liferay.dispatch.model.DispatchLog;

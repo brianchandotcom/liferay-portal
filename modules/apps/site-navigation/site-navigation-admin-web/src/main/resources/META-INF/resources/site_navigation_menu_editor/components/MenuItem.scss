@@ -1,0 +1,17 @@
+@import 'atlas-variables';
+
+.site_navigation_menu_editor_MenuItem {
+	width: 40ch;
+
+	&--selected .card {
+		background: $primary-l3;
+	}
+
+	.custom-control-input,
+	.custom-control-label {
+		left: -99999px;
+		opacity: 0;
+		position: absolute;
+		top: -99999px;
+	}
+}

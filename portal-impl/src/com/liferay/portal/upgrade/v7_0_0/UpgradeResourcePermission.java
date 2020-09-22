@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -28,7 +29,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -88,10 +88,22 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 						}
 					}
 
-					List<String[]> stringPrimkKeyBatches = _getPrimKeyBatches(
-						stringPrimKeys);
+					String[][] stringPrimKeysArray;
 
-					_updatePrimKeyIdsByName(name, stringPrimkKeyBatches);
+					DB db = DBManagerUtil.getDB();
+
+					if ((db.getDBType() == DBType.ORACLE) &&
+						(stringPrimKeys.size() > 1000)) {
+
+						stringPrimKeysArray = (String[][])ArrayUtil.split(
+							stringPrimKeys.toArray(), 1000);
+					}
+					else {
+						stringPrimKeysArray = (String[][])ArrayUtil.split(
+							stringPrimKeys.toArray(), stringPrimKeys.size());
+					}
+
+					_updatePrimKeyIdsByName(name, stringPrimKeysArray);
 				}
 			}
 		}
@@ -109,47 +121,6 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		sb.append(")");
 
 		return sb.toString();
-	}
-
-	private List<String[]> _getPrimKeyBatches(List<String> primKeys)
-		throws Exception {
-
-		List<String[]> primKeyBatches = new LinkedList<>();
-
-		if (primKeys.isEmpty()) {
-			return primKeyBatches;
-		}
-
-		DB db = DBManagerUtil.getDB();
-
-		if ((db.getDBType() == DBType.ORACLE) && (primKeys.size() > 1000)) {
-			int iteration = primKeys.size() / 1000;
-
-			for (int i = 0; i <= iteration; i++) {
-				int start = i * 1000;
-
-				int end = start + 1000;
-
-				if (end > primKeys.size()) {
-					end = primKeys.size();
-				}
-
-				String[] batch = new String[end - start];
-
-				int offset = start;
-
-				for (int j = 0; j < (end - start); j++) {
-					batch[j] = primKeys.get(j + offset);
-				}
-
-				primKeyBatches.add(batch);
-			}
-		}
-		else {
-			primKeyBatches.add(primKeys.toArray(new String[0]));
-		}
-
-		return primKeyBatches;
 	}
 
 	private void _updatePrimKeyIds(String sql, String name, String[] primKeys)
@@ -170,11 +141,10 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		}
 	}
 
-	private void _updatePrimKeyIdsByName(
-			String name, List<String[]> primKeyBatches)
+	private void _updatePrimKeyIdsByName(String name, String[][] primKeyBatches)
 		throws Exception {
 
-		if (primKeyBatches.isEmpty()) {
+		if (ArrayUtil.isEmpty(primKeyBatches)) {
 			_updatePrimKeyIds(
 				"update ResourcePermission set primKeyId = CAST_LONG(" +
 					"primKey) where name = ? and primKey not like '%_LAYOUT_%'",

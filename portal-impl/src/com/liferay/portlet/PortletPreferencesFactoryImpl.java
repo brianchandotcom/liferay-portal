@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -514,22 +515,19 @@ public class PortletPreferencesFactoryImpl
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
 		}
 
-		StringBuilder sb = new StringBuilder(256);
-
-		sb.append(originalPortletId);
-		sb.append(
-			" has wrong properties or data handler settings, resulting in ");
-
 		if (ownerType == 0) {
-			sb.append("ownerType = 0");
-
-			throw new IllegalArgumentException(sb.toString());
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Portlet ", originalPortletId, "has wrong properties or ",
+					"data handler settings, resulting in ownerType = 0"));
 		}
 
 		if ((ownerId == 0) && (plid == 0)) {
-			sb.append("ownerId = 0 and plid = 0");
-
-			throw new IllegalArgumentException(sb.toString());
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Portlet ", originalPortletId, "has wrong properties or ",
+					"data handler settings, resulting in ownerId = 0 and plid ",
+					"= 0"));
 		}
 
 		return new PortletPreferencesIds(

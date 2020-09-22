@@ -470,6 +470,128 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>RULE_BUILDER_FORM_VIEW_NAME</td>
+	<td>//input[contains(@placeholder,'Untitled Form View')]</td>
+	<td></td>
+</tr>
+
+<!--TABS-->
+
+<tr>
+	<td>RULES_TAB</td>
+	<td>//button[@id='rules']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FIELDS_TAB</td>
+	<td>//button[@id='fields']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_NAME_TEXT_FIELD</td>
+	<td>//input[@placeholder='Untitled Rule']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_ADD_BUTTON</td>
+	<td>//div[contains(@class,'multi-panel-sidebar')]//button[@class='btn btn-monospaced btn-primary']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_NAME</td>
+	<td>//input[@placeholder='Untitled Rule']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CREATE_NEW_RULE_BUTTON</td>
+	<td>//button[contains(text(),'Create New Rule')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>EDIT_RULE_COLLAPSE</td>
+	<td>//button[contains(@class,'collapse') and contains(@aria-expanded,'false')]//span[contains(.,'${ruleName}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>EDIT_RULE_EXPANDED</td>
+	<td>//button[contains(@class,'collapse') and contains(@aria-expanded,'true')]//span[contains(.,'${ruleName}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>EDIT_RULE</td>
+	<td>xpath=(//div[contains(@class,'panel-body')]//button[contains(@class,'btn-unstyled')])[${rowNumber}]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_FIRST_FIELD</td>
+	<td>//div[contains(@class,'panel-body')]//span[contains(.,'${key_firstField}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_SECOND_FIELD</td>
+	<td>//div[contains(@class,'panel-body')]//span[contains(.,'${key_secondField}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_CONDITION</td>
+	<td>//div[contains(@class,'panel-body')]//span[contains(.,'${key_condition}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_ACTION</td>
+	<td>//div[contains(@class,'panel-body')]//span[contains(.,'${key_action}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_SAVE_BUTTON</td>
+	<td>xpath=(//div[contains(@class, 'modal-item-last')]//button[contains(@class,'btn-primary')])[3]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SAVE_FORM_BUTTON</td>
+	<td>//div[contains(@class, 'input-group-item')]//button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_CANCEL_BUTTON</td>
+	<td>xpath=(//div[contains(@class, 'modal-item-last')]//button[contains(@class,'btn-secondary')])[3]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_DEFAULT_EDIT</td>
+	<td>xpath=(//div[contains(@class, 'collapse-icon-options')]//button[contains(@class, 'dropdown-toggle')])[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>ASSERT_FORM</td>
+	<td>//td[contains(@class,'table-cell-expand') and contains(.,'${key_formViewName}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_EDIT</td>
+	<td>xpath=(//button[contains(text(),'Edit')])[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

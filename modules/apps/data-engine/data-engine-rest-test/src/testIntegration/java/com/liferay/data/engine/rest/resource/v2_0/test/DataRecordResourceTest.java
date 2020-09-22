@@ -71,6 +71,92 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetDataDefinitionDataRecordsPageWithSortInteger()
+		throws Exception {
+
+		super.testGetDataDefinitionDataRecordsPageWithSortInteger();
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				DataDefinition.toDTO(
+					DataDefinitionTestUtil.read("data-definition.json")),
+				testGroup.getGroupId());
+
+		_dataDefinitionId = dataDefinition.getId();
+
+		DataRecordCollectionResource.Builder
+			dataRecordCollectionResourceBuilder =
+				DataRecordCollectionResource.builder();
+
+		DataRecordCollectionResource dataRecordCollectionResource =
+			dataRecordCollectionResourceBuilder.authentication(
+				"test@liferay.com", "test"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		DataRecordCollection dataDefinitionDataRecordCollection =
+			dataRecordCollectionResource.getDataDefinitionDataRecordCollection(
+				_dataDefinitionId);
+
+		_dataRecordCollectionId = dataDefinitionDataRecordCollection.getId();
+
+		Long dataRecordCollectionId =
+			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
+
+		DataRecord dataRecord1 =
+			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
+				dataRecordCollectionId,
+				new DataRecord() {
+					{
+						dataRecordCollectionId = _dataRecordCollectionId;
+						dataRecordValues = HashMapBuilder.<String, Object>put(
+							"Numeric",
+							HashMapBuilder.put(
+								"en_US", new String[] {"10"}
+							).build()
+						).build();
+					}
+				});
+
+		DataRecord dataRecord2 =
+			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
+				dataRecordCollectionId,
+				new DataRecord() {
+					{
+						dataRecordCollectionId = _dataRecordCollectionId;
+						dataRecordValues = HashMapBuilder.<String, Object>put(
+							"Numeric",
+							HashMapBuilder.put(
+								"en_US", new String[] {"20"}
+							).build()
+						).build();
+					}
+				});
+
+		// Sort by numeric
+
+		Page<DataRecord> sortByNumericAscPage =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, null, Pagination.of(1, 2),
+				"dataRecordValues/Numeric:asc");
+
+		assertEquals(
+			Arrays.asList(dataRecord1, dataRecord2),
+			(List<DataRecord>)sortByNumericAscPage.getItems());
+
+		Page<DataRecord> sortByNumericDescPage =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, null, Pagination.of(1, 2),
+				"dataRecordValues/Numeric:desc");
+
+		assertEquals(
+			Arrays.asList(dataRecord2, dataRecord1),
+			(List<DataRecord>)sortByNumericDescPage.getItems());
+	}
+
+	@Override
+	@Test
 	public void testGetDataRecordCollectionDataRecordExport() throws Exception {
 		DataRecord dataRecord = testGetDataRecord_addDataRecord();
 

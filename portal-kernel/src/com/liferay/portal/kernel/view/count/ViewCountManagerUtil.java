@@ -42,6 +42,14 @@ public class ViewCountManagerUtil {
 			companyId, classNameId, classPK, increment);
 	}
 
+	public static boolean isViewCountEnabled() {
+		return _viewCountManager.isViewCountEnabled();
+	}
+
+	public static boolean isViewCountEnabled(long classNameId) {
+		return _viewCountManager.isViewCountEnabled(classNameId);
+	}
+
 	private static volatile ViewCountManager _viewCountManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ViewCountManager.class, ViewCountManagerUtil.class,

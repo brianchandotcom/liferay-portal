@@ -19,15 +19,7 @@ import {MenuItem} from './MenuItem';
 
 export const Menu = ({items}) => (
 	<div className="container p-3">
-		{items.map((item) => (
-			<div key={item.siteNavigationMenuItemId}>
-				<MenuItem item={item} />
-
-				<div className="pl-3">
-					{!!item.children.length && <Menu items={item.children} />}
-				</div>
-			</div>
-		))}
+		<MenuContent items={items} />
 	</div>
 );
 
@@ -39,3 +31,16 @@ Menu.propTypes = {
 		})
 	),
 };
+
+const MenuContent = ({items}) =>
+	items.map((item) => (
+		<div key={item.siteNavigationMenuItemId}>
+			<MenuItem item={item} />
+
+			<div className="pl-4">
+				{!!item.children.length && (
+					<MenuContent items={item.children} />
+				)}
+			</div>
+		</div>
+	));

@@ -292,7 +292,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				ddmStructure.getStructureId(), resourceClassNameId,
 				jsonObject.getString("ddmTemplateKey"),
 				HashMapBuilder.put(
-					LocaleUtil.getDefault(), jsonObject.getString("name")
+					LocaleUtil.getSiteDefault(), jsonObject.getString("name")
 				).build(),
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 				TemplateConstants.LANG_TYPE_FTL,
@@ -400,7 +400,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				folderId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
 				jsonObject.getString("articleId"), false, 1,
 				Collections.singletonMap(
-					LocaleUtil.getDefault(), jsonObject.getString("name")),
+					LocaleUtil.getSiteDefault(), jsonObject.getString("name")),
 				null, content, jsonObject.getString("ddmStructureKey"),
 				jsonObject.getString("ddmTemplateKey"), null, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,

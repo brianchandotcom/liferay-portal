@@ -79,8 +79,7 @@ page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.LinkedHashMap" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Map" %>
+page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>

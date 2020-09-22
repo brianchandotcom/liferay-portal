@@ -423,6 +423,11 @@
 	<td>//div[contains(.,'${key_table}')]//div[@class='data-set-display-wrapper' or @class='searchcontainer-content']//a[contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TABLE_ENTRY_EDIT_BUTTON</td>
+	<td>//div[contains(.,'${key_table}')]//div[@class='data-set-display-wrapper']//*[contains(.,'${key_entryName}')]/../../td/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
 <!--CATALOGS-->
 <tr>
 	<td>CATALOGS_FORM</td>

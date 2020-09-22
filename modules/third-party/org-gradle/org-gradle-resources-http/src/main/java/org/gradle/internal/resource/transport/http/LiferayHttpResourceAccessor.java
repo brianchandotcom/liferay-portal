@@ -46,6 +46,7 @@ import org.apache.maven.artifact.repository.metadata.Versioning;
 import org.apache.maven.artifact.repository.metadata.io.xpp3.MetadataXpp3Writer;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
+import org.gradle.internal.hash.HashCode;
 import org.gradle.internal.hash.HashUtil;
 import org.gradle.internal.hash.HashValue;
 import org.gradle.internal.resource.metadata.DefaultExternalResourceMetaData;
@@ -85,7 +86,8 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 
 		return new DefaultExternalResourceMetaData(
 			uri, cachedArtifactFile.lastModified(), cachedArtifactFile.length(),
-			null, hashValue.asHexString(), hashValue);
+			null, hashValue.asHexString(),
+			HashCode.fromBytes(hashValue.asByteArray()));
 	}
 
 	@Override

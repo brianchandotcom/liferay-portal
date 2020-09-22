@@ -1710,6 +1710,58 @@ private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFile
 		}
 	}
 
+	File sourceFormatterPropertiesFile = new File(projectDir, "source-formatter.properties")
+
+	if (sourceFormatterPropertiesFile.exists()) {
+		Properties sourceFormatterProperties = GUtil.loadProperties(sourceFormatterPropertiesFile)
+
+		String enforceVersionArtifacts = sourceFormatterProperties.getProperty("source.check.GradleDependencyArtifactsCheck.enforceVersionArtifacts");
+
+		if (enforceVersionArtifacts != null) {
+			for (String artifact : enforceVersionArtifacts.split(",")) {
+				if (!artifact.startsWith("com.fasterxml") &&
+					!artifact.startsWith("com.liferay:biz.aQute.bnd.annotation:") &&
+					!artifact.startsWith("io.swagger") &&
+					!artifact.startsWith("javax") &&
+					!artifact.startsWith("org.jsoup") &&
+					!artifact.startsWith("org.osgi")) {
+
+					continue
+				}
+
+				String[] array = artifact.split(":")
+
+				if (array.length != 3) {
+					continue;
+				}
+
+				String group = array[0]
+
+				String groupPath = group.replace('.' as char, '/' as char)
+
+				String name = array[1]
+				String version = array[2]
+
+				_downloadFile(cacheDir, "https://repository-cdn.liferay.com/nexus/content/groups/public/${groupPath}/${name}/${version}/${name}-${version}-sources.jar")
+
+				File jarFile = new File(cacheDir, "${name}-${version}-sources.jar")
+
+				File dir = new File(portalSourcesDir, jarFile.name[0 .. -5])
+
+				copy {
+					from zipTree(jarFile)
+					into dir
+				}
+
+				DependencyHandler dependencyHandler = project.getDependencies()
+
+				dependencies.add(dependencyHandler.create(files(dir)))
+
+				logger.lifecycle "Added {}", jarFile.name
+			}
+		}
+	}
+
 	return dependencies
 }
 

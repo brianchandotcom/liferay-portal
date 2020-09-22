@@ -15,12 +15,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_HEADING</td>
-	<td>//h1[@class='component-heading text-break page-editor__editable']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISHED_HEADING</td>
-	<td>//h1[@class='component-heading text-break']</td>
+	<td>//*[contains(@class, 'component-heading') and contains(@class, 'text-break')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -119,7 +119,7 @@ definition {
 			siteName = "Test Site Name");
 
 		AssertTextEquals(
-			locator1 = "Experience#PUBLISHED_HEADING",
+			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Edited Inline Text");
 
 		User.logoutPG();
@@ -129,7 +129,7 @@ definition {
 			siteName = "Test Site Name");
 
 		AssertTextEquals(
-			locator1 = "Experience#PUBLISHED_HEADING",
+			locator1 = "Experience#FRAGMENT_HEADING",
 			value1 = "Heading Example");
 
 		User.firstLoginPG();

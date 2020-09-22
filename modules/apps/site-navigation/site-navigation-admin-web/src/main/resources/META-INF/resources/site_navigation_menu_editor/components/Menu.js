@@ -15,26 +15,27 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {AppLayout} from './AppLayout';
-import {EmptyState} from './EmptyState';
-import {Menu} from './Menu';
-import {Toolbar} from './Toolbar';
+import {MenuItem} from './MenuItem';
 
-export function App({siteNavigationMenuItems}) {
-	return (
-		<AppLayout
-			contentChildren={
-				!siteNavigationMenuItems.length ? (
-					<EmptyState />
-				) : (
-					<Menu items={siteNavigationMenuItems} />
-				)
-			}
-			toolbarChildren={<Toolbar />}
-		/>
-	);
-}
+export const Menu = ({items}) => (
+	<div className="container p-3">
+		{items.map((item) => (
+			<div key={item.siteNavigationMenuItemId}>
+				<MenuItem item={item} />
 
-App.propTypes = {
-	siteNavigationMenuItems: PropTypes.array.isRequired,
+				<div className="pl-3">
+					{!!item.children.length && <Menu items={item.children} />}
+				</div>
+			</div>
+		))}
+	</div>
+);
+
+Menu.propTypes = {
+	items: PropTypes.arrayOf(
+		PropTypes.shape({
+			children: PropTypes.array.isRequired,
+			siteNavigationMenuItemId: PropTypes.string.isRequired,
+		})
+	),
 };

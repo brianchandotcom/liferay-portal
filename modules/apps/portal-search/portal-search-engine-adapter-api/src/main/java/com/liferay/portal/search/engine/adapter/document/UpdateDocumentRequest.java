@@ -107,6 +107,10 @@ public class UpdateDocumentRequest
 		return _refresh;
 	}
 
+	public boolean isScriptedUpsert() {
+		return _scriptedUpsert;
+	}
+
 	public boolean isUpsert() {
 		return _upsert;
 	}
@@ -117,6 +121,10 @@ public class UpdateDocumentRequest
 
 	public void setScript(Script script) {
 		_script = script;
+	}
+
+	public void setScriptedUpsert(boolean scriptedUpsert) {
+		_scriptedUpsert = scriptedUpsert;
 	}
 
 	public void setType(String type) {
@@ -132,6 +140,7 @@ public class UpdateDocumentRequest
 	private final com.liferay.portal.kernel.search.Document _legacyDocument;
 	private boolean _refresh;
 	private Script _script;
+	private boolean _scriptedUpsert;
 	private String _type;
 	private final String _uid;
 	private boolean _upsert;

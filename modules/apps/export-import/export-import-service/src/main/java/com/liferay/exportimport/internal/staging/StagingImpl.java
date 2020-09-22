@@ -1824,6 +1824,25 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
+	public Layout getRemoteLayout(long userId, long stagingGroupId, long plid)
+		throws PortalException {
+
+		Group stagingGroup = _groupLocalService.fetchGroup(stagingGroupId);
+		User user = _userLocalService.fetchUser(userId);
+
+		HttpPrincipal httpPrincipal = new HttpPrincipal(
+			_stagingURLHelper.buildRemoteURL(
+				stagingGroup.getTypeSettingsProperties()),
+			user.getLogin(), user.getPassword(), user.isPasswordEncrypted());
+
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		return LayoutServiceHttp.getLayoutByUuidAndGroupId(
+			httpPrincipal, layout.getUuid(),
+			stagingGroup.getRemoteLiveGroupId(), layout.isPrivateLayout());
+	}
+
+	@Override
 	public long getRemoteLayoutPlid(long userId, long stagingGroupId, long plid)
 		throws PortalException {
 

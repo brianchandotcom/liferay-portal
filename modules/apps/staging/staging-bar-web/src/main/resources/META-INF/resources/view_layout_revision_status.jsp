@@ -35,7 +35,7 @@ if ((layoutRevision == null) && (layout != null)) {
 
 			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-			<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage="<%= _getStatusMessage(layoutRevision, group, layout) %>" />
+			<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage="<%= _getStatusMessage(layoutRevision, group, layout, themeDisplay.getUser()) %>" />
 		</div>
 	</div>
 </span>

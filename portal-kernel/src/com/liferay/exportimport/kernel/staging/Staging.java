@@ -119,6 +119,9 @@ public interface Staging {
 
 	public long getRecentLayoutSetBranchId(User user, long layoutSetId);
 
+	public Layout getRemoteLayout(long userId, long stagingGroupId, long plid)
+		throws PortalException;
+
 	public long getRemoteLayoutPlid(long userId, long stagingGroupId, long plid)
 		throws PortalException;
 

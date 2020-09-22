@@ -603,49 +603,6 @@ public class CommerceShipmentTest {
 	}
 
 	@Test
-	public void testCreateShippingForCancelledOrder() throws Exception {
-		frutillaRule.scenario(
-			"Attach a shipment to an order with order status CANCELLED "
-		).given(
-			"An order is created"
-		).and(
-			"The order status is updated to CANCELLED"
-		).when(
-			"I attach the shipment to the order"
-		).then(
-			"An exception shall be raised"
-		);
-
-		try {
-			BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
-
-			CommerceOrder commerceOrder =
-				CommerceTestUtil.createCommerceOrderForShipping(
-					_user.getUserId(), _commerceChannel.getGroupId(),
-					_commerceCurrency.getCommerceCurrencyId(), value);
-
-			_commerceOrders.add(commerceOrder);
-
-			commerceOrder.setOrderStatus(
-				CommerceOrderConstants.ORDER_STATUS_CANCELLED);
-
-			_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
-
-			CommerceShipmentTestUtil.createEmptyOrderShipment(
-				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
-
-			_commerceOrderEngine.checkoutCommerceOrder(
-				commerceOrder, _user.getUserId());
-		}
-		catch (PortalException portalException) {
-			Throwable throwable = portalException.getCause();
-
-			Assert.assertSame(
-				CommerceOrderStatusException.class, throwable.getClass());
-		}
-	}
-
-	@Test
 	public void testCreateShippingForItemsOnly() throws Exception {
 		frutillaRule.scenario(
 			"Attach a shipment on the order items without a shipment to the " +

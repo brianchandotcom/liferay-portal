@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {AppLayout} from './AppLayout';
 import {EmptyState} from './EmptyState';
@@ -21,13 +21,24 @@ import {Menu} from './Menu';
 import {Toolbar} from './Toolbar';
 
 export function App({siteNavigationMenuItems}) {
+	const [selectedMenuItemId, setSelectedMenuItemId] = useState(null);
+
+	const handleSelectMenuItem = useCallback(
+		(menuItem) => setSelectedMenuItemId(menuItem.siteNavigationMenuItemId),
+		[]
+	);
+
 	return (
 		<AppLayout
 			contentChildren={
 				!siteNavigationMenuItems.length ? (
 					<EmptyState />
 				) : (
-					<Menu items={siteNavigationMenuItems} />
+					<Menu
+						items={siteNavigationMenuItems}
+						onSelectMenuItem={handleSelectMenuItem}
+						selectedMenuItemId={selectedMenuItemId}
+					/>
 				)
 			}
 			toolbarChildren={<Toolbar />}

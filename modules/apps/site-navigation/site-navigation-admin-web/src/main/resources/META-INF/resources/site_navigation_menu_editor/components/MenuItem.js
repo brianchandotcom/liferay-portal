@@ -20,54 +20,47 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export const MenuItem = ({item}) => {
-	const [selected, setSelected] = React.useState(false);
+export const MenuItem = ({item, onSelect, selected}) => (
+	<ClayCard
+		className={classNames('site_navigation_menu_editor_MenuItem', {
+			'site_navigation_menu_editor_MenuItem--selected': selected,
+		})}
+		horizontal
+		selectable
+	>
+		<ClayCheckbox checked={selected} onChange={onSelect}>
+			<ClayCard.Body className="px-0">
+				<ClayCard.Row>
+					<ClayLayout.ContentCol gutters>
+						<ClayButtonWithIcon
+							displayType="unstyled"
+							small
+							symbol="drag"
+						/>
+					</ClayLayout.ContentCol>
 
-	return (
-		<ClayCard
-			className={classNames('site_navigation_menu_editor_MenuItem', {
-				'site_navigation_menu_editor_MenuItem--selected': selected,
-			})}
-			horizontal
-			selectable
-		>
-			<ClayCheckbox
-				checked={selected}
-				onChange={(event) => setSelected(event.target.checked)}
-			>
-				<ClayCard.Body className="px-0">
-					<ClayCard.Row>
-						<ClayLayout.ContentCol gutters>
-							<ClayButtonWithIcon
-								displayType="unstyled"
-								small
-								symbol="drag"
-							/>
-						</ClayLayout.ContentCol>
+					<ClayLayout.ContentCol expand>
+						<ClayCard.Description displayType="title">
+							{item.title}
+						</ClayCard.Description>
 
-						<ClayLayout.ContentCol expand>
-							<ClayCard.Description displayType="title">
-								{item.title}
-							</ClayCard.Description>
+						<ClayCard.Description displayType="subtitle">
+							{item.type}
+						</ClayCard.Description>
+					</ClayLayout.ContentCol>
 
-							<ClayCard.Description displayType="subtitle">
-								{item.type}
-							</ClayCard.Description>
-						</ClayLayout.ContentCol>
-
-						<ClayLayout.ContentCol gutters>
-							<ClayButtonWithIcon
-								displayType="unstyled"
-								small
-								symbol="times-circle"
-							/>
-						</ClayLayout.ContentCol>
-					</ClayCard.Row>
-				</ClayCard.Body>
-			</ClayCheckbox>
-		</ClayCard>
-	);
-};
+					<ClayLayout.ContentCol gutters>
+						<ClayButtonWithIcon
+							displayType="unstyled"
+							small
+							symbol="times-circle"
+						/>
+					</ClayLayout.ContentCol>
+				</ClayCard.Row>
+			</ClayCard.Body>
+		</ClayCheckbox>
+	</ClayCard>
+);
 
 MenuItem.propTypes = {
 	item: PropTypes.shape({
@@ -76,4 +69,6 @@ MenuItem.propTypes = {
 		title: PropTypes.string.isRequired,
 		type: PropTypes.string.isRequired,
 	}),
+	onSelect: PropTypes.func.isRequired,
+	selected: PropTypes.bool,
 };

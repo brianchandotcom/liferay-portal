@@ -17,9 +17,13 @@ import React from 'react';
 
 import {MenuItem} from './MenuItem';
 
-export const Menu = ({items}) => (
+export const Menu = ({items, onSelectMenuItem, selectedMenuItemId}) => (
 	<div className="container p-3">
-		<MenuContent items={items} />
+		<MenuContent
+			items={items}
+			onSelectMenuItem={onSelectMenuItem}
+			selectedMenuItemId={selectedMenuItemId}
+		/>
 	</div>
 );
 
@@ -30,16 +34,26 @@ Menu.propTypes = {
 			siteNavigationMenuItemId: PropTypes.string.isRequired,
 		})
 	),
+	onSelectMenuItem: PropTypes.func.isRequired,
+	selectedMenuItemId: PropTypes.string,
 };
 
-const MenuContent = ({items}) =>
+const MenuContent = ({items, onSelectMenuItem, selectedMenuItemId}) =>
 	items.map((item) => (
 		<div key={item.siteNavigationMenuItemId}>
-			<MenuItem item={item} />
+			<MenuItem
+				item={item}
+				onSelect={() => onSelectMenuItem(item)}
+				selected={selectedMenuItemId === item.siteNavigationMenuItemId}
+			/>
 
 			<div className="pl-4">
 				{!!item.children.length && (
-					<MenuContent items={item.children} />
+					<MenuContent
+						items={item.children}
+						onSelectMenuItem={onSelectMenuItem}
+						selectedMenuItemId={selectedMenuItemId}
+					/>
 				)}
 			</div>
 		</div>

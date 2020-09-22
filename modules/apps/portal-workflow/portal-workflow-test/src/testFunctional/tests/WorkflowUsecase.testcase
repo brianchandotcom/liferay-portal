@@ -933,16 +933,9 @@ definition {
 
 		Button.clickPublish();
 
-		if (IsElementPresent(locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB")) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_1",
-				value1 = "Please enter valid content.");
-		}
-		else {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_1",
-				value1 = "Please enter a valid definition before publishing.");
-		}
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_1",
+			value1 = "Please enter valid content.");
 	}
 
 	@priority = "3"

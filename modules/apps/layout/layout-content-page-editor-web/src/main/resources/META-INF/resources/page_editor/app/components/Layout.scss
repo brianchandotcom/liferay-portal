@@ -129,10 +129,21 @@ $emptyItemMinHeight: 180px;
 	}
 
 	&__container.empty,
-	&__row.empty {
-		min-height: $emptyItemMinHeight;
-	}
+	&__row {
+		&.empty {
+			min-height: $emptyItemMinHeight;
+		}
 
+		&.flex-column-reverse {
+			.page-editor__col {
+				flex: 1;
+
+				&__border {
+					min-height: $emptyItemMinHeight / 2;
+				}
+			}
+		}
+	}
 	&__editable {
 		min-height: 1rem;
 		min-width: 3ch;

@@ -101,6 +101,12 @@ definition {
 			locator1 = "FormViewBuilder#SWITCHER_OPTION");
 	}
 
+	macro clickFieldLabel {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+	}
+
 	macro closeSidebar() {
 		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
 	}
@@ -206,6 +212,12 @@ definition {
 		Click(locator1 = "FormViewBuilder#RULE_BUILDER_EDIT");
 	}
 
+	macro editRuleName {
+		Type(
+			locator1 = "FormViewBuilder#RULE_BUILDER_NAME",
+			value1 = "${ruleName}");
+	}
+
 	macro editText {
 		Type(
 			key_fieldName = "${fieldName}",
@@ -264,6 +276,14 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
+	macro gotoFields {
+		Click(locator1 = "FormViewBuilder#FIELDS_TAB");
+	}
+
+	macro gotoRules {
+		Click(locator1 = "FormViewBuilder#RULES_TAB");
+	}
+
 	macro openFormView {
 		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 	}
@@ -278,6 +298,12 @@ definition {
 
 	macro save {
 		AppBuilderAdmin.save();
+	}
+
+	macro saveFormView {
+		AssertClick(
+			locator1 = "FormViewBuilder#SAVE_FORM_BUTTON",
+			value1 = "Save");
 	}
 
 	macro searchObjectField {

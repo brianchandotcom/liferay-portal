@@ -708,19 +708,24 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Nested Applications");
+		for (var portletName : list "Profile,Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		for (var portletName : list "Asset Publisher,Profile") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = "2",
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "${portletName}");
+			Portlet.addPG(portletName = "${portletName}");
+
+			Portlet.dragAndDropPortletToColumnPG(
+				columnNumberFrom = "1",
+				columnNumberTo = "2",
+				portletName = "${portletName}");
 		}
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Nested Applications");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",

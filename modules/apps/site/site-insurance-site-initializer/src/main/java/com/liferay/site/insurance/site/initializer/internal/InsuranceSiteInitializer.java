@@ -16,6 +16,8 @@ package com.liferay.site.insurance.site.initializer.internal;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -33,7 +35,11 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -42,28 +48,39 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.insurance.site.initializer.internal.util.ImagesImporterUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,6 +95,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -134,10 +153,13 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			_addFragments();
 
+			_addCollections();
+
 			_addSiteNavigationMenus();
 
 			_addMasterPages();
 			_addDisplayPageTemplates();
+			_addLayouts();
 
 			_updateLookAndFeel();
 		}
@@ -156,6 +178,76 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = bundleContext.getBundle();
+	}
+
+	private void _addCollections() throws Exception {
+		_assetListEntryLocalService.addDynamicAssetListEntry(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			"Policies", _getDynamicCollectionTypeSettings("POLICY"),
+			_serviceContext);
+
+		_assetListEntryLocalService.addDynamicAssetListEntry(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			"Closed Claims", _getDynamicCollectionTypeSettings("CLAIM"),
+			_serviceContext);
+
+		_assetListEntryLocalService.addDynamicAssetListEntry(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			"Open Claims", _getDynamicCollectionTypeSettings("CLAIM"),
+			_serviceContext);
+	}
+
+	private void _addContentLayout(
+			JSONObject pageJSONObject, JSONObject pageDefinitionJSONObject,
+			String type, Map<String, String> resourcesMap)
+		throws Exception {
+
+		String name = pageJSONObject.getString("name");
+
+		Layout layout = _layoutLocalService.addLayout(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			pageJSONObject.getBoolean("private"),
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), name
+			).build(),
+			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
+			type, null, false, false, new HashMap<>(), _serviceContext);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_importPageDefinition(draftLayout, pageDefinitionJSONObject);
+
+		if (Objects.equals(LayoutConstants.TYPE_COLLECTION, type)) {
+			UnicodeProperties typeSettingsUnicodeProperties =
+				draftLayout.getTypeSettingsProperties();
+
+			typeSettingsUnicodeProperties.setProperty(
+				"collectionPK",
+				resourcesMap.get(pageJSONObject.getString("collectionKey")));
+			typeSettingsUnicodeProperties.setProperty(
+				"collectionType",
+				"com.liferay.item.selector.criteria." +
+					"InfoListItemSelectorReturnType");
+
+			draftLayout = _layoutLocalService.updateLayout(
+				_serviceContext.getScopeGroupId(),
+				draftLayout.isPrivateLayout(), draftLayout.getLayoutId(),
+				typeSettingsUnicodeProperties.toString());
+		}
+
+		draftLayout = _updateLayoutSettings(
+			draftLayout, pageDefinitionJSONObject.getJSONObject("settings"));
+
+		layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+
+		_layoutLocalService.updateStatus(
+			layout.getUserId(), layout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		_layoutLocalService.updateStatus(
+			layout.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
 	private void _addDDMStructures() throws Exception {
@@ -350,6 +442,60 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addLayouts() throws Exception {
+		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray(
+			_readFile("/layouts/layouts.json"));
+
+		Map<String, String> resourcesMap = new HashMap<>();
+
+		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
+			_serviceContext.getScopeGroupId());
+
+		for (JournalArticle article : articles) {
+			resourcesMap.put(
+				article.getArticleId(),
+				String.valueOf(article.getResourcePrimKey()));
+		}
+
+		List<AssetListEntry> assetListEntries =
+			_assetListEntryLocalService.getAssetListEntries(
+				_serviceContext.getScopeGroupId());
+
+		for (AssetListEntry assetListEntry : assetListEntries) {
+			resourcesMap.put(
+				StringUtil.toUpperCase(assetListEntry.getAssetListEntryKey()),
+				String.valueOf(assetListEntry.getAssetListEntryId()));
+		}
+
+		for (int i = 0; i < layoutsJSONArray.length(); i++) {
+			JSONObject jsonObject = layoutsJSONArray.getJSONObject(i);
+
+			String path = jsonObject.getString("contentPath");
+
+			JSONObject pageJSONObject = JSONFactoryUtil.createJSONObject(
+				_readFile(path + StringPool.SLASH + "page.json"));
+
+			String type = StringUtil.toLowerCase(
+				pageJSONObject.getString("type"));
+
+			if (Objects.equals(LayoutConstants.TYPE_CONTENT, type) ||
+				Objects.equals(LayoutConstants.TYPE_COLLECTION, type)) {
+
+				String pageDefinition = StringUtil.replace(
+					_readFile(path + StringPool.SLASH + "page-definition.json"),
+					StringPool.DOLLAR, StringPool.DOLLAR, resourcesMap);
+
+				_addContentLayout(
+					pageJSONObject,
+					JSONFactoryUtil.createJSONObject(pageDefinition), type,
+					resourcesMap);
+			}
+			else {
+				_addWidgetLayout(pageJSONObject);
+			}
+		}
+	}
+
 	private void _addMasterPages() throws Exception {
 		File file = _generateZipFile(
 			"master-pages",
@@ -382,6 +528,20 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 				_PUBLIC_SITE_NAVIGATION_NAME, _serviceContext);
+	}
+
+	private void _addWidgetLayout(JSONObject jsonObject) throws Exception {
+		String name = jsonObject.getString("name");
+
+		_layoutLocalService.addLayout(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), name
+			).build(),
+			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
+			LayoutConstants.TYPE_PORTLET, null, false, false, new HashMap<>(),
+			_serviceContext);
 	}
 
 	private void _addZipWriterEntry(
@@ -461,6 +621,36 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		return defaultAssetDisplayPage.getLayoutPageTemplateEntryId();
 	}
 
+	private String _getDynamicCollectionTypeSettings(String ddmStructureKey)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_serviceContext.getScopeGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			ddmStructureKey);
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		unicodeProperties.put(
+			"anyAssetType",
+			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
+		unicodeProperties.put(
+			"anyClassTypeJournalArticleAssetRendererFactory",
+			String.valueOf(ddmStructure.getStructureId()));
+		unicodeProperties.put(
+			"classTypeIdsJournalArticleAssetRendererFactory",
+			String.valueOf(ddmStructure.getStructureId()));
+		unicodeProperties.put("classNameIds", JournalArticle.class.getName());
+		unicodeProperties.put(
+			"groupIds", String.valueOf(_serviceContext.getScopeGroupId()));
+		unicodeProperties.put("orderByColumn1", "modifiedDate");
+		unicodeProperties.put("orderByColumn2", "title");
+		unicodeProperties.put("orderByType1", "ASC");
+		unicodeProperties.put("orderByType2", "ASC");
+
+		return unicodeProperties.toString();
+	}
+
 	private Map<String, String> _getFileEntriesMap() throws Exception {
 		Map<String, String> fileEntriesMap = new HashMap<>();
 
@@ -480,6 +670,56 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 
 		return fileEntriesMap;
+	}
+
+	private String _getThemeId(long companyId, String themeName) {
+		List<Theme> themes = ListUtil.filter(
+			_themeLocalService.getThemes(companyId),
+			theme -> Objects.equals(theme.getName(), themeName));
+
+		if (ListUtil.isNotEmpty(themes)) {
+			Theme theme = themes.get(0);
+
+			return theme.getThemeId();
+		}
+
+		return null;
+	}
+
+	private void _importPageDefinition(
+			Layout draftLayout, JSONObject pageDefinitionJSONObject)
+		throws Exception {
+
+		if (!pageDefinitionJSONObject.has("pageElement")) {
+			return;
+		}
+
+		JSONObject jsonObject = pageDefinitionJSONObject.getJSONObject(
+			"pageElement");
+
+		String type = jsonObject.getString("type");
+
+		if (Validator.isNull(type) || !Objects.equals(type, "Root")) {
+			return;
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					draftLayout.getGroupId(), draftLayout.getPlid(), true);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(
+				SegmentsExperienceConstants.ID_DEFAULT));
+
+		JSONArray pageElementsJSONArray = jsonObject.getJSONArray(
+			"pageElements");
+
+		for (int j = 0; j < pageElementsJSONArray.length(); j++) {
+			_layoutPageTemplatesImporter.importPageElement(
+				draftLayout, layoutStructure, layoutStructure.getMainItemId(),
+				pageElementsJSONArray.getString(j), j);
+		}
 	}
 
 	private void _populateZipWriter(
@@ -504,6 +744,73 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(clazz.getClassLoader(), _PATH + fileName);
+	}
+
+	private Layout _updateLayoutSettings(
+		Layout layout, JSONObject settingsJSONObject) {
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		JSONObject themeSettingsJSONObject = settingsJSONObject.getJSONObject(
+			"themeSettings");
+
+		Set<Map.Entry<String, String>> entrySet = unicodeProperties.entrySet();
+
+		entrySet.removeIf(
+			entry -> {
+				String key = entry.getKey();
+
+				return key.startsWith("lfr-theme:");
+			});
+
+		if (themeSettingsJSONObject != null) {
+			for (String key : themeSettingsJSONObject.keySet()) {
+				unicodeProperties.put(
+					key, themeSettingsJSONObject.getString(key));
+			}
+
+			layout.setTypeSettingsProperties(unicodeProperties);
+		}
+
+		String themeName = settingsJSONObject.getString("themeName");
+
+		if (Validator.isNotNull(themeName)) {
+			String themeId = _getThemeId(layout.getCompanyId(), themeName);
+
+			layout.setThemeId(themeId);
+		}
+
+		String colorSchemeName = settingsJSONObject.getString(
+			"colorSchemeName");
+
+		if (Validator.isNotNull(colorSchemeName)) {
+			layout.setColorSchemeId(colorSchemeName);
+		}
+
+		String css = settingsJSONObject.getString("css");
+
+		if (Validator.isNotNull(css)) {
+			layout.setCss(css);
+		}
+
+		JSONObject masterPageJSONObject = settingsJSONObject.getJSONObject(
+			"masterPage");
+
+		if (masterPageJSONObject != null) {
+			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						layout.getGroupId(),
+						masterPageJSONObject.getString("key"));
+
+			if (masterLayoutPageTemplateEntry != null) {
+				layout.setMasterLayoutPlid(
+					masterLayoutPageTemplateEntry.getPlid());
+			}
+		}
+
+		return _layoutLocalService.updateLayout(layout);
 	}
 
 	private void _updateLookAndFeel() throws Exception {
@@ -552,6 +859,9 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
 
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
 	private Bundle _bundle;
 	private SiteNavigationMenu _customerPortalSiteNavigationMenu;
 
@@ -581,6 +891,12 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private List<JournalFolder> _journalFolders;
 
 	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
@@ -589,6 +905,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
@@ -605,7 +925,18 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private ServletContext _servletContext;
 
 	@Reference
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
+
+	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Reference
+	private ThemeLocalService _themeLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

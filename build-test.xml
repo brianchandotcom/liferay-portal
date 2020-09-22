@@ -5010,7 +5010,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						docker rm -f ${docker_rm_list}
 					fi
 
-					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${database.host}
+					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${database.host} 2>/dev/null
 				]]>
 			</echo>
 
@@ -5049,7 +5049,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 					docker rm -f ${operating.system.host}
 
-					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${operating.system.host}
+					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${operating.system.host} 2>/dev/null
 				]]>
 			</echo>
 

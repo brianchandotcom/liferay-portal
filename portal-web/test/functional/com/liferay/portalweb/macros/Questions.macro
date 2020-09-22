@@ -80,6 +80,10 @@ definition {
 
 		Button.click(button = "Create");
 
+		Pause(locator1 = "2000");
+
+		Refresh();
+
 		AssertTextEquals(
 			key_card = "${rootTopicName}",
 			locator1 = "Card#CARD_TITLE",

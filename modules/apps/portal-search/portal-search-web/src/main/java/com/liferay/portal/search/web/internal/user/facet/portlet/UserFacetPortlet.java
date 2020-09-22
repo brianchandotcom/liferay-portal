@@ -155,9 +155,9 @@ public class UserFacetPortlet extends MVCPortlet {
 		SearchResponse searchResponse =
 			portletSharedSearchResponse.getSearchResponse();
 
-		SearchRequest request = searchResponse.getRequest();
+		SearchRequest searchRequest = searchResponse.getRequest();
 
-		return request.getPaginationStartParameterName();
+		return searchRequest.getPaginationStartParameterName();
 	}
 
 	protected Optional<List<String>> getParameterValuesOptional(

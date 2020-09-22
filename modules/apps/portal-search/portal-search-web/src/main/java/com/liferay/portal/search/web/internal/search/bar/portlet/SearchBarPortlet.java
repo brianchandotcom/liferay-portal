@@ -195,9 +195,9 @@ public class SearchBarPortlet extends MVCPortlet {
 		SearchResponse searchResponse =
 			portletSharedSearchResponse.getSearchResponse();
 
-		SearchRequest request = searchResponse.getRequest();
+		SearchRequest searchRequest = searchResponse.getRequest();
 
-		return request.isEmptySearchEnabled();
+		return searchRequest.isEmptySearchEnabled();
 	}
 
 	@Reference

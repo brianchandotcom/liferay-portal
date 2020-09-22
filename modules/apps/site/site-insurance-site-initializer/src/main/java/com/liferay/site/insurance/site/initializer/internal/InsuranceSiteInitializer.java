@@ -42,9 +42,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -54,6 +56,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.site.exception.InitializationException;
@@ -135,6 +138,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			_addMasterPages();
 			_addDisplayPageTemplates();
+
+			_updateLookAndFeel();
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -501,6 +506,35 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		return StringUtil.read(clazz.getClassLoader(), _PATH + fileName);
 	}
 
+	private void _updateLookAndFeel() throws Exception {
+		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			_serviceContext.getScopeGroupId(), false);
+
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsUnicodeProperties.setProperty(
+			"lfr-theme:regular:show-footer", Boolean.FALSE.toString());
+		settingsUnicodeProperties.setProperty(
+			"lfr-theme:regular:show-header", Boolean.FALSE.toString());
+		settingsUnicodeProperties.setProperty(
+			"lfr-theme:regular:show-header-search", Boolean.FALSE.toString());
+		settingsUnicodeProperties.setProperty(
+			"lfr-theme:regular:show-maximize-minimize-application-links",
+			Boolean.FALSE.toString());
+		settingsUnicodeProperties.setProperty(
+			"lfr-theme:regular:wrap-widget-page-content",
+			Boolean.FALSE.toString());
+
+		_layoutSetLocalService.updateSettings(
+			_serviceContext.getScopeGroupId(), false,
+			settingsUnicodeProperties.toString());
+
+		_layoutSetLocalService.updateLookAndFeel(
+			_serviceContext.getScopeGroupId(), false, layoutSet.getThemeId(),
+			layoutSet.getColorSchemeId(), _readFile("/layout-set/custom.css"));
+	}
+
 	private static final String _CUSTOMER_PORTAL_SITE_NAVIGATION_NAME =
 		"Customer Portal Menu";
 
@@ -555,6 +589,9 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private Portal _portal;

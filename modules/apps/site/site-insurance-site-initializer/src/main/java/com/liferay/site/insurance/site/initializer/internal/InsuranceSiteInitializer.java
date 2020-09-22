@@ -41,7 +41,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -77,9 +76,11 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.insurance.site.initializer.internal.util.ImagesImporterUtil;
+import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.File;
@@ -197,7 +198,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			_serviceContext);
 	}
 
-	private void _addContentLayout(
+	private Layout _addContentLayout(
 			JSONObject pageJSONObject, JSONObject pageDefinitionJSONObject,
 			String type, Map<String, String> resourcesMap)
 		throws Exception {
@@ -248,6 +249,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		_layoutLocalService.updateStatus(
 			layout.getUserId(), draftLayout.getPlid(),
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		return layout;
 	}
 
 	private void _addDDMStructures() throws Exception {
@@ -397,7 +400,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				folderId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
 				jsonObject.getString("articleId"), false, 1,
 				Collections.singletonMap(
-					LocaleUtil.US, jsonObject.getString("name")),
+					LocaleUtil.getDefault(), jsonObject.getString("name")),
 				null, content, jsonObject.getString("ddmStructureKey"),
 				jsonObject.getString("ddmTemplateKey"), null, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
@@ -478,6 +481,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			String type = StringUtil.toLowerCase(
 				pageJSONObject.getString("type"));
 
+			Layout layout = null;
+
 			if (Objects.equals(LayoutConstants.TYPE_CONTENT, type) ||
 				Objects.equals(LayoutConstants.TYPE_COLLECTION, type)) {
 
@@ -485,14 +490,16 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 					_readFile(path + StringPool.SLASH + "page-definition.json"),
 					StringPool.DOLLAR, StringPool.DOLLAR, resourcesMap);
 
-				_addContentLayout(
+				layout = _addContentLayout(
 					pageJSONObject,
 					JSONFactoryUtil.createJSONObject(pageDefinition), type,
 					resourcesMap);
 			}
 			else {
-				_addWidgetLayout(pageJSONObject);
+				layout = _addWidgetLayout(pageJSONObject);
 			}
+
+			_addNavigationMenuItems(layout);
 		}
 	}
 
@@ -503,14 +510,13 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			HashMapBuilder.put(
 				"CUSTOMER_PORTAL_SITE_NAVIGATION_MENU_ID",
 				String.valueOf(
-					_customerPortalSiteNavigationMenu.getSiteNavigationMenuId())
+					_siteNavigationMenuMap.get("Customer Portal Menu"))
 			).put(
 				"PUBLIC_SITE_NAVIGATION_MENU_ID",
-				String.valueOf(
-					_publicSiteNavigationMenu.getSiteNavigationMenuId())
+				String.valueOf(_siteNavigationMenuMap.get("Public Menu"))
 			).put(
 				"SCOPE_GROUP_ID",
-				String.valueOf(_customerPortalSiteNavigationMenu.getGroupId())
+				String.valueOf(_serviceContext.getScopeGroupId())
 			).build());
 
 		_layoutPageTemplatesImporter.importFile(
@@ -518,22 +524,71 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			file, false);
 	}
 
-	private void _addSiteNavigationMenus() throws PortalException {
-		_customerPortalSiteNavigationMenu =
-			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				_CUSTOMER_PORTAL_SITE_NAVIGATION_NAME, _serviceContext);
+	private void _addNavigationMenuItems(Layout layout) throws Exception {
+		if (layout == null) {
+			return;
+		}
 
-		_publicSiteNavigationMenu =
-			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+		List<SiteNavigationMenu> siteNavigationMenus =
+			_layoutsSiteNavigationMenuMap.get(
+				StringUtil.toLowerCase(
+					layout.getName(LocaleUtil.getSiteDefault())));
+
+		if (ListUtil.isEmpty(siteNavigationMenus)) {
+			return;
+		}
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.LAYOUT);
+
+		for (SiteNavigationMenu siteNavigationMenu : siteNavigationMenus) {
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				_PUBLIC_SITE_NAVIGATION_NAME, _serviceContext);
+				siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT,
+				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
+				_serviceContext);
+		}
 	}
 
-	private void _addWidgetLayout(JSONObject jsonObject) throws Exception {
+	private void _addSiteNavigationMenus() throws Exception {
+		_layoutsSiteNavigationMenuMap = new HashMap<>();
+		_siteNavigationMenuMap = new HashMap<>();
+
+		JSONArray siteNavigationMenuJSONArray = JSONFactoryUtil.createJSONArray(
+			_readFile("/site-navigation-menus/site-navigation-menus.json"));
+
+		for (int i = 0; i < siteNavigationMenuJSONArray.length(); i++) {
+			JSONObject jsonObject = siteNavigationMenuJSONArray.getJSONObject(
+				i);
+
+			String name = jsonObject.getString("name");
+
+			SiteNavigationMenu siteNavigationMenu =
+				_siteNavigationMenuLocalService.addSiteNavigationMenu(
+					_serviceContext.getUserId(),
+					_serviceContext.getScopeGroupId(), name, _serviceContext);
+
+			_siteNavigationMenuMap.put(
+				name, siteNavigationMenu.getSiteNavigationMenuId());
+
+			JSONArray pagesJSONArray = jsonObject.getJSONArray("pages");
+
+			for (int j = 0; j < pagesJSONArray.length(); j++) {
+				List<SiteNavigationMenu> siteNavigationMenus =
+					_layoutsSiteNavigationMenuMap.computeIfAbsent(
+						pagesJSONArray.getString(j), key -> new ArrayList<>());
+
+				siteNavigationMenus.add(siteNavigationMenu);
+			}
+		}
+	}
+
+	private Layout _addWidgetLayout(JSONObject jsonObject) throws Exception {
 		String name = jsonObject.getString("name");
 
-		_layoutLocalService.addLayout(
+		return _layoutLocalService.addLayout(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			HashMapBuilder.put(
@@ -842,15 +897,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			layoutSet.getColorSchemeId(), _readFile("/layout-set/custom.css"));
 	}
 
-	private static final String _CUSTOMER_PORTAL_SITE_NAVIGATION_NAME =
-		"Customer Portal Menu";
-
 	private static final String _NAME = "Insurance Demo Site";
 
 	private static final String _PATH =
 		"com/liferay/site/insurance/site/initializer/internal/dependencies";
-
-	private static final String _PUBLIC_SITE_NAVIGATION_NAME = "Public Menu";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InsuranceSiteInitializer.class);
@@ -863,7 +913,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	private Bundle _bundle;
-	private SiteNavigationMenu _customerPortalSiteNavigationMenu;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
@@ -913,10 +962,11 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
 
+	private Map<String, List<SiteNavigationMenu>> _layoutsSiteNavigationMenuMap;
+
 	@Reference
 	private Portal _portal;
 
-	private SiteNavigationMenu _publicSiteNavigationMenu;
 	private ServiceContext _serviceContext;
 
 	@Reference(
@@ -934,6 +984,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	private Map<String, Long> _siteNavigationMenuMap;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

@@ -32,6 +32,8 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
@@ -56,6 +58,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
@@ -201,7 +204,7 @@ public class DataRecordResourceImpl
 					_searchRequestBuilderFactory.builder(
 						searchContext
 					).sorts(
-						_getFieldSorts(sorts)
+						_getFieldSorts(ddlRecordSet.getDDMStructure(), sorts)
 					);
 				}
 
@@ -250,10 +253,7 @@ public class DataRecordResourceImpl
 
 			for (String fieldName : ddmStructure.getFieldNames()) {
 				entityFields.add(
-					new StringEntityField(
-						fieldName,
-						locale -> _getIndexFieldName(
-							ddmStructure.getStructureId(), fieldName, locale)));
+					new StringEntityField(fieldName, locale -> fieldName));
 			}
 		}
 
@@ -453,12 +453,16 @@ public class DataRecordResourceImpl
 		return ddlRecordSet.getRecordSetId();
 	}
 
-	private FieldSort[] _getFieldSorts(Sort[] sorts) {
+	private FieldSort[] _getFieldSorts(DDMStructure ddmStructure, Sort[] sorts)
+		throws PortalException {
+
 		List<FieldSort> fieldSorts = new ArrayList<>();
 
 		for (Sort sort : sorts) {
+			String fieldName = sort.getFieldName();
+
 			FieldSort fieldSort = _sorts.field(
-				_getSortableFieldName(sort.getFieldName()));
+				_getSortableFieldName(ddmStructure, fieldName));
 
 			if (sort.isReverse()) {
 				fieldSort.setSortOrder(SortOrder.DESC);
@@ -471,7 +475,9 @@ public class DataRecordResourceImpl
 					StringBundler.concat(
 						DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
 						DDMIndexer.DDM_FIELD_NAME),
-					sort.getFieldName()));
+					_getIndexFieldName(
+						ddmStructure.getStructureId(), fieldName,
+						contextAcceptLanguage.getPreferredLocale())));
 
 			fieldSort.setNestedSort(nestedSort);
 
@@ -487,17 +493,35 @@ public class DataRecordResourceImpl
 		return _ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
 	}
 
-	private String _getSortableFieldName(String fieldName) {
+	private String _getSortableFieldName(
+			DDMStructure ddmStructure, String fieldName)
+		throws PortalException {
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(DDMIndexer.DDM_FIELD_ARRAY);
 		sb.append(StringPool.PERIOD);
 		sb.append(
 			_ddmIndexer.getValueFieldName(
-				fieldName.split(DDMIndexer.DDM_FIELD_SEPARATOR)[1],
+				ddmStructure.getFieldProperty(fieldName, "indexType"),
 				contextAcceptLanguage.getPreferredLocale()));
 		sb.append(StringPool.UNDERLINE);
-		sb.append("String");
+
+		DDMFormField ddmFormField = ddmStructure.getDDMFormField(fieldName);
+
+		String ddmFormFieldType = ddmFormField.getType();
+
+		String suffix = "String";
+
+		if (StringUtil.equals(ddmFormFieldType, DDMFormFieldType.DECIMAL) ||
+			StringUtil.equals(ddmFormFieldType, DDMFormFieldType.INTEGER) ||
+			StringUtil.equals(ddmFormFieldType, DDMFormFieldType.NUMBER) ||
+			StringUtil.equals(ddmFormFieldType, DDMFormFieldType.NUMERIC)) {
+
+			suffix = "Number";
+		}
+
+		sb.append(suffix);
 
 		return Field.getSortableFieldName(sb.toString());
 	}

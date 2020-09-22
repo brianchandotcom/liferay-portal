@@ -138,6 +138,7 @@ definition {
 			key_untracked = "0");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CleanAndReindexWorkflowMetricsInstances {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsInstances";
@@ -163,6 +164,7 @@ definition {
 			value1 = "1");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CleanAndReindexWorkflowMetricsNodes {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsNodes";
@@ -197,6 +199,7 @@ definition {
 			slaDefinitionStart = "Enters Task: Review");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CleanAndReindexWorkflowMetricsProcesses {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsProcesses";
@@ -219,6 +222,7 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CleanAndReindexWorkflowMetricsSLAInstanceResults {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsSLAInstanceResults";
@@ -241,6 +245,7 @@ definition {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CleanAndReindexWorkflowMetricsSLATaskResults {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsSLATaskResults";
@@ -266,6 +271,7 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CleanAndReindexWorkflowMetricsTasks {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsTasks";
@@ -308,6 +314,7 @@ definition {
 			taskCount = "1");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CleanAndReindexWorkflowMetricsTransitions {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsTransitions";

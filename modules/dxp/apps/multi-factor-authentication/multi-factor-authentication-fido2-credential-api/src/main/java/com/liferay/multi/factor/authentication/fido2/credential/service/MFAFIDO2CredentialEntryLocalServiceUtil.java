@@ -41,11 +41,11 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 		com.liferay.multi.factor.authentication.fido2.credential.model.
 			MFAFIDO2CredentialEntry addMFAFIDO2CredentialEntry(
 					long userId, String credentialKey, int credentialType,
-					String publicKeyCode)
+					String publicKeyCOSE)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addMFAFIDO2CredentialEntry(
-			userId, credentialKey, credentialType, publicKeyCode);
+			userId, credentialKey, credentialType, publicKeyCOSE);
 	}
 
 	/**

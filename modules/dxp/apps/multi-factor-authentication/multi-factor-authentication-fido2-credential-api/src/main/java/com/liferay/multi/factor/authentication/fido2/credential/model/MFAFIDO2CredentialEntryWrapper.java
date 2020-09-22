@@ -55,7 +55,7 @@ public class MFAFIDO2CredentialEntryWrapper
 		attributes.put("credentialKey", getCredentialKey());
 		attributes.put("credentialType", getCredentialType());
 		attributes.put("failedAttempts", getFailedAttempts());
-		attributes.put("publicKeyCode", getPublicKeyCode());
+		attributes.put("publicKeyCOSE", getPublicKeyCOSE());
 		attributes.put("signatureCount", getSignatureCount());
 
 		return attributes;
@@ -124,10 +124,10 @@ public class MFAFIDO2CredentialEntryWrapper
 			setFailedAttempts(failedAttempts);
 		}
 
-		String publicKeyCode = (String)attributes.get("publicKeyCode");
+		String publicKeyCOSE = (String)attributes.get("publicKeyCOSE");
 
-		if (publicKeyCode != null) {
-			setPublicKeyCode(publicKeyCode);
+		if (publicKeyCOSE != null) {
+			setPublicKeyCOSE(publicKeyCOSE);
 		}
 
 		Long signatureCount = (Long)attributes.get("signatureCount");
@@ -228,13 +228,13 @@ public class MFAFIDO2CredentialEntryWrapper
 	}
 
 	/**
-	 * Returns the public key code of this mfafido2 credential entry.
+	 * Returns the public key cose of this mfafido2 credential entry.
 	 *
-	 * @return the public key code of this mfafido2 credential entry
+	 * @return the public key cose of this mfafido2 credential entry
 	 */
 	@Override
-	public String getPublicKeyCode() {
-		return model.getPublicKeyCode();
+	public String getPublicKeyCOSE() {
+		return model.getPublicKeyCOSE();
 	}
 
 	/**
@@ -373,13 +373,13 @@ public class MFAFIDO2CredentialEntryWrapper
 	}
 
 	/**
-	 * Sets the public key code of this mfafido2 credential entry.
+	 * Sets the public key cose of this mfafido2 credential entry.
 	 *
-	 * @param publicKeyCode the public key code of this mfafido2 credential entry
+	 * @param publicKeyCOSE the public key cose of this mfafido2 credential entry
 	 */
 	@Override
-	public void setPublicKeyCode(String publicKeyCode) {
-		model.setPublicKeyCode(publicKeyCode);
+	public void setPublicKeyCOSE(String publicKeyCOSE) {
+		model.setPublicKeyCOSE(publicKeyCOSE);
 	}
 
 	/**

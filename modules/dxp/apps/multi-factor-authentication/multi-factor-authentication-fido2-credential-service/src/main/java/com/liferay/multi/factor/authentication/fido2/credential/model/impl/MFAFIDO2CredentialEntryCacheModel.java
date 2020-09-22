@@ -100,8 +100,8 @@ public class MFAFIDO2CredentialEntryCacheModel
 		sb.append(credentialType);
 		sb.append(", failedAttempts=");
 		sb.append(failedAttempts);
-		sb.append(", publicKeyCode=");
-		sb.append(publicKeyCode);
+		sb.append(", publicKeyCOSE=");
+		sb.append(publicKeyCOSE);
 		sb.append(", signatureCount=");
 		sb.append(signatureCount);
 		sb.append("}");
@@ -151,11 +151,11 @@ public class MFAFIDO2CredentialEntryCacheModel
 		mfaFIDO2CredentialEntryImpl.setCredentialType(credentialType);
 		mfaFIDO2CredentialEntryImpl.setFailedAttempts(failedAttempts);
 
-		if (publicKeyCode == null) {
-			mfaFIDO2CredentialEntryImpl.setPublicKeyCode("");
+		if (publicKeyCOSE == null) {
+			mfaFIDO2CredentialEntryImpl.setPublicKeyCOSE("");
 		}
 		else {
-			mfaFIDO2CredentialEntryImpl.setPublicKeyCode(publicKeyCode);
+			mfaFIDO2CredentialEntryImpl.setPublicKeyCOSE(publicKeyCOSE);
 		}
 
 		mfaFIDO2CredentialEntryImpl.setSignatureCount(signatureCount);
@@ -182,7 +182,7 @@ public class MFAFIDO2CredentialEntryCacheModel
 		credentialType = objectInput.readInt();
 
 		failedAttempts = objectInput.readInt();
-		publicKeyCode = objectInput.readUTF();
+		publicKeyCOSE = objectInput.readUTF();
 
 		signatureCount = objectInput.readLong();
 	}
@@ -218,11 +218,11 @@ public class MFAFIDO2CredentialEntryCacheModel
 
 		objectOutput.writeInt(failedAttempts);
 
-		if (publicKeyCode == null) {
+		if (publicKeyCOSE == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(publicKeyCode);
+			objectOutput.writeUTF(publicKeyCOSE);
 		}
 
 		objectOutput.writeLong(signatureCount);
@@ -238,7 +238,7 @@ public class MFAFIDO2CredentialEntryCacheModel
 	public String credentialKey;
 	public int credentialType;
 	public int failedAttempts;
-	public String publicKeyCode;
+	public String publicKeyCOSE;
 	public long signatureCount;
 
 }

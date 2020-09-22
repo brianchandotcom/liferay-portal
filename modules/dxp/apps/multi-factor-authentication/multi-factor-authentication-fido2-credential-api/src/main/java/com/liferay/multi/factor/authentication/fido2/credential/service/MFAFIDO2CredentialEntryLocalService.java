@@ -63,7 +63,7 @@ public interface MFAFIDO2CredentialEntryLocalService
 	 */
 	public MFAFIDO2CredentialEntry addMFAFIDO2CredentialEntry(
 			long userId, String credentialKey, int credentialType,
-			String publicKeyCode)
+			String publicKeyCOSE)
 		throws PortalException;
 
 	/**

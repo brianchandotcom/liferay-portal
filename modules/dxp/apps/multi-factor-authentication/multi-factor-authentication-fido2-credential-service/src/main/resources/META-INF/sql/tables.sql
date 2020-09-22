@@ -9,6 +9,6 @@ create table MFAFIDO2CredentialEntry (
 	credentialKey VARCHAR(128) null,
 	credentialType INTEGER,
 	failedAttempts INTEGER,
-	publicKeyCode VARCHAR(128) null,
+	publicKeyCOSE VARCHAR(128) null,
 	signatureCount LONG
 );

@@ -231,19 +231,19 @@ public interface MFAFIDO2CredentialEntryModel
 	public void setFailedAttempts(int failedAttempts);
 
 	/**
-	 * Returns the public key code of this mfafido2 credential entry.
+	 * Returns the public key cose of this mfafido2 credential entry.
 	 *
-	 * @return the public key code of this mfafido2 credential entry
+	 * @return the public key cose of this mfafido2 credential entry
 	 */
 	@AutoEscape
-	public String getPublicKeyCode();
+	public String getPublicKeyCOSE();
 
 	/**
-	 * Sets the public key code of this mfafido2 credential entry.
+	 * Sets the public key cose of this mfafido2 credential entry.
 	 *
-	 * @param publicKeyCode the public key code of this mfafido2 credential entry
+	 * @param publicKeyCOSE the public key cose of this mfafido2 credential entry
 	 */
-	public void setPublicKeyCode(String publicKeyCode);
+	public void setPublicKeyCOSE(String publicKeyCOSE);
 
 	/**
 	 * Returns the signature count of this mfafido2 credential entry.

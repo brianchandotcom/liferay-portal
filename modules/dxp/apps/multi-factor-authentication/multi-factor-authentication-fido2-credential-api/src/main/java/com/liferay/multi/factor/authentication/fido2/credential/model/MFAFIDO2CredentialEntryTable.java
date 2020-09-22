@@ -66,9 +66,9 @@ public class MFAFIDO2CredentialEntryTable
 		createColumn(
 			"failedAttempts", Integer.class, Types.INTEGER,
 			Column.FLAG_DEFAULT);
-	public final Column<MFAFIDO2CredentialEntryTable, String> publicKeyCode =
+	public final Column<MFAFIDO2CredentialEntryTable, String> publicKeyCOSE =
 		createColumn(
-			"publicKeyCode", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"publicKeyCOSE", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MFAFIDO2CredentialEntryTable, Long> signatureCount =
 		createColumn(
 			"signatureCount", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

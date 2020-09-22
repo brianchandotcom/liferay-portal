@@ -74,7 +74,7 @@ public class MFAFIDO2CredentialEntryModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"credentialKey", Types.VARCHAR},
 		{"credentialType", Types.INTEGER}, {"failedAttempts", Types.INTEGER},
-		{"publicKeyCode", Types.VARCHAR}, {"signatureCount", Types.BIGINT}
+		{"publicKeyCOSE", Types.VARCHAR}, {"signatureCount", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -91,12 +91,12 @@ public class MFAFIDO2CredentialEntryModelImpl
 		TABLE_COLUMNS_MAP.put("credentialKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("credentialType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("failedAttempts", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("publicKeyCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("publicKeyCOSE", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("signatureCount", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MFAFIDO2CredentialEntry (mvccVersion LONG default 0 not null,mfaFIDO2CredentialEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,credentialKey VARCHAR(128) null,credentialType INTEGER,failedAttempts INTEGER,publicKeyCode VARCHAR(128) null,signatureCount LONG)";
+		"create table MFAFIDO2CredentialEntry (mvccVersion LONG default 0 not null,mfaFIDO2CredentialEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,credentialKey VARCHAR(128) null,credentialType INTEGER,failedAttempts INTEGER,publicKeyCOSE VARCHAR(128) null,signatureCount LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table MFAFIDO2CredentialEntry";
@@ -338,11 +338,11 @@ public class MFAFIDO2CredentialEntryModelImpl
 			(BiConsumer<MFAFIDO2CredentialEntry, Integer>)
 				MFAFIDO2CredentialEntry::setFailedAttempts);
 		attributeGetterFunctions.put(
-			"publicKeyCode", MFAFIDO2CredentialEntry::getPublicKeyCode);
+			"publicKeyCOSE", MFAFIDO2CredentialEntry::getPublicKeyCOSE);
 		attributeSetterBiConsumers.put(
-			"publicKeyCode",
+			"publicKeyCOSE",
 			(BiConsumer<MFAFIDO2CredentialEntry, String>)
-				MFAFIDO2CredentialEntry::setPublicKeyCode);
+				MFAFIDO2CredentialEntry::setPublicKeyCOSE);
 		attributeGetterFunctions.put(
 			"signatureCount", MFAFIDO2CredentialEntry::getSignatureCount);
 		attributeSetterBiConsumers.put(
@@ -547,22 +547,22 @@ public class MFAFIDO2CredentialEntryModelImpl
 	}
 
 	@Override
-	public String getPublicKeyCode() {
-		if (_publicKeyCode == null) {
+	public String getPublicKeyCOSE() {
+		if (_publicKeyCOSE == null) {
 			return "";
 		}
 		else {
-			return _publicKeyCode;
+			return _publicKeyCOSE;
 		}
 	}
 
 	@Override
-	public void setPublicKeyCode(String publicKeyCode) {
+	public void setPublicKeyCOSE(String publicKeyCOSE) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_publicKeyCode = publicKeyCode;
+		_publicKeyCOSE = publicKeyCOSE;
 	}
 
 	@Override
@@ -646,7 +646,7 @@ public class MFAFIDO2CredentialEntryModelImpl
 		mfaFIDO2CredentialEntryImpl.setCredentialKey(getCredentialKey());
 		mfaFIDO2CredentialEntryImpl.setCredentialType(getCredentialType());
 		mfaFIDO2CredentialEntryImpl.setFailedAttempts(getFailedAttempts());
-		mfaFIDO2CredentialEntryImpl.setPublicKeyCode(getPublicKeyCode());
+		mfaFIDO2CredentialEntryImpl.setPublicKeyCOSE(getPublicKeyCOSE());
 		mfaFIDO2CredentialEntryImpl.setSignatureCount(getSignatureCount());
 
 		mfaFIDO2CredentialEntryImpl.resetOriginalValues();
@@ -777,12 +777,12 @@ public class MFAFIDO2CredentialEntryModelImpl
 
 		mfaFIDO2CredentialEntryCacheModel.failedAttempts = getFailedAttempts();
 
-		mfaFIDO2CredentialEntryCacheModel.publicKeyCode = getPublicKeyCode();
+		mfaFIDO2CredentialEntryCacheModel.publicKeyCOSE = getPublicKeyCOSE();
 
-		String publicKeyCode = mfaFIDO2CredentialEntryCacheModel.publicKeyCode;
+		String publicKeyCOSE = mfaFIDO2CredentialEntryCacheModel.publicKeyCOSE;
 
-		if ((publicKeyCode != null) && (publicKeyCode.length() == 0)) {
-			mfaFIDO2CredentialEntryCacheModel.publicKeyCode = null;
+		if ((publicKeyCOSE != null) && (publicKeyCOSE.length() == 0)) {
+			mfaFIDO2CredentialEntryCacheModel.publicKeyCOSE = null;
 		}
 
 		mfaFIDO2CredentialEntryCacheModel.signatureCount = getSignatureCount();
@@ -875,7 +875,7 @@ public class MFAFIDO2CredentialEntryModelImpl
 	private String _credentialKey;
 	private int _credentialType;
 	private int _failedAttempts;
-	private String _publicKeyCode;
+	private String _publicKeyCOSE;
 	private long _signatureCount;
 
 	public <T> T getColumnValue(String columnName) {
@@ -916,7 +916,7 @@ public class MFAFIDO2CredentialEntryModelImpl
 		_columnOriginalValues.put("credentialKey", _credentialKey);
 		_columnOriginalValues.put("credentialType", _credentialType);
 		_columnOriginalValues.put("failedAttempts", _failedAttempts);
-		_columnOriginalValues.put("publicKeyCode", _publicKeyCode);
+		_columnOriginalValues.put("publicKeyCOSE", _publicKeyCOSE);
 		_columnOriginalValues.put("signatureCount", _signatureCount);
 	}
 
@@ -951,7 +951,7 @@ public class MFAFIDO2CredentialEntryModelImpl
 
 		columnBitmasks.put("failedAttempts", 512L);
 
-		columnBitmasks.put("publicKeyCode", 1024L);
+		columnBitmasks.put("publicKeyCOSE", 1024L);
 
 		columnBitmasks.put("signatureCount", 2048L);
 

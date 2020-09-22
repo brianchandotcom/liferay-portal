@@ -1,4 +1,16 @@
-.data-engine-form-builder > .sheet {
-    margin: 24px auto 0;
-    max-width: $containerMaxWidth;
+.data-engine-form-builder {
+	padding-right: 300px;
+
+	> .sheet {
+		margin: 24px auto 0;
+		max-width: $containerMaxWidth;
+	}
+
+	@media (max-width: 1400px) {
+		padding-right: 60px;
+
+		> .sheet {
+			margin-left: 0;
+		}
+	}
 }

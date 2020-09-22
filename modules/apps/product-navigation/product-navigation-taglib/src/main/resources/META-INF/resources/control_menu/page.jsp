@@ -73,6 +73,7 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 											linkCssClass='<%= "control-menu-icon " + productNavigationControlMenuEntry.getLinkCssClass(request) %>'
 											markupView="<%= productNavigationControlMenuEntry.getMarkupView(request) %>"
 											message="<%= productNavigationControlMenuEntry.getLabel(locale) %>"
+											method="get"
 											url="<%= productNavigationControlMenuEntry.getURL(request) %>"
 										/>
 									</li>

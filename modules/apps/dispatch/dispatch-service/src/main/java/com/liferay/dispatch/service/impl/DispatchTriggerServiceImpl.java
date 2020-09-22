@@ -20,10 +20,13 @@ import com.liferay.dispatch.service.base.DispatchTriggerServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -60,6 +63,35 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 			getPermissionChecker(), dispatchTriggerId, ActionKeys.DELETE);
 
 		dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTriggerId);
+	}
+
+	@Override
+	public List<DispatchTrigger> getDispatchTriggers(int start, int end)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin()) {
+			return dispatchTriggerLocalService.getDispatchTriggers(
+				permissionChecker.getCompanyId(), start, end);
+		}
+
+		return dispatchTriggerLocalService.getUserDispatchTriggers(
+			permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+			start, end);
+	}
+
+	@Override
+	public int getDispatchTriggersCount() throws PortalException {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin()) {
+			return dispatchTriggerLocalService.getDispatchTriggersCount(
+				permissionChecker.getCompanyId());
+		}
+
+		return dispatchTriggerLocalService.getUserDispatchTriggersCount(
+			permissionChecker.getCompanyId(), permissionChecker.getUserId());
 	}
 
 	@Override

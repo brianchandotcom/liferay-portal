@@ -172,6 +172,19 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Override
+	public List<DispatchTrigger> getUserDispatchTriggers(
+		long companyId, long userId, int start, int end) {
+
+		return dispatchTriggerPersistence.findByC_U(
+			companyId, userId, start, end);
+	}
+
+	@Override
+	public int getUserDispatchTriggersCount(long companyId, long userId) {
+		return dispatchTriggerPersistence.countByC_U(companyId, userId);
+	}
+
+	@Override
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, boolean active, String cronExpression,
 			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,

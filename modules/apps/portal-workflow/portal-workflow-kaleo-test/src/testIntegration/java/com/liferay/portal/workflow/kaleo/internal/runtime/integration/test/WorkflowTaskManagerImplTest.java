@@ -111,6 +111,8 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -120,6 +122,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -1058,6 +1061,71 @@ public class WorkflowTaskManagerImplTest {
 	}
 
 	@Test
+	public void testSearchWorkflowTasksOrderByModifiedDate() throws Exception {
+		_activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
+
+		BlogsEntry blogsEntry1 = _addBlogsEntry();
+
+		_assignWorkflowTaskToUser(
+			_adminUser, _adminUser, _REVIEW, BlogsEntry.class.getName(),
+			blogsEntry1.getEntryId());
+
+		BlogsEntry blogsEntry2 = _addBlogsEntry();
+
+		_assignWorkflowTaskToUser(
+			_adminUser, _adminUser, _REVIEW, BlogsEntry.class.getName(),
+			blogsEntry2.getEntryId());
+
+		List<WorkflowTask> workflowTasks = new ArrayList<>();
+
+		workflowTasks.add(
+			_completeWorkflowTask(
+				_adminUser, Constants.REJECT, _REVIEW,
+				BlogsEntry.class.getName(), blogsEntry1.getEntryId()));
+
+		workflowTasks.add(
+			_completeWorkflowTask(
+				_adminUser, Constants.REJECT, _REVIEW,
+				BlogsEntry.class.getName(), blogsEntry2.getEntryId()));
+
+		workflowTasks.add(
+			_completeWorkflowTask(
+				_adminUser, "resubmit", "update", BlogsEntry.class.getName(),
+				blogsEntry2.getEntryId()));
+
+		workflowTasks.add(
+			_completeWorkflowTask(
+				_adminUser, "resubmit", "update", BlogsEntry.class.getName(),
+				blogsEntry1.getEntryId()));
+
+		WorkflowModelSearchResult<WorkflowTask> workflowModelSearchResult =
+			_workflowTaskManager.searchWorkflowTasks(
+				_adminUser.getCompanyId(), _adminUser.getUserId(), null, null,
+				null, null, User.class.getName(),
+				new Long[] {_adminUser.getUserId()}, null, null, true, false,
+				null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
+					true));
+
+		_assertEquals(
+			workflowTasks, workflowModelSearchResult.getWorkflowModels());
+
+		workflowModelSearchResult = _workflowTaskManager.searchWorkflowTasks(
+			_adminUser.getCompanyId(), _adminUser.getUserId(), null, null, null,
+			null, User.class.getName(), new Long[] {_adminUser.getUserId()},
+			null, null, true, false, null, null, false, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS,
+			WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(false));
+
+		Collections.reverse(workflowTasks);
+
+		_assertEquals(
+			workflowTasks, workflowModelSearchResult.getWorkflowModels());
+
+		_deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
+	}
+
+	@Test
 	public void testUpdateDueDate() throws Exception {
 		_activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
 
@@ -1264,6 +1332,26 @@ public class WorkflowTaskManagerImplTest {
 			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, _serviceContext);
 	}
 
+	private void _assertEquals(
+		List<WorkflowTask> workflowTasks1, List<WorkflowTask> workflowTasks2) {
+
+		Assert.assertEquals(
+			workflowTasks1.toString() + " does not equal " +
+				workflowTasks2.toString(),
+			workflowTasks1.size(), workflowTasks2.size());
+
+		for (int i = 0; i < workflowTasks1.size(); i++) {
+			WorkflowTask workflowTask1 = workflowTasks1.get(i);
+			WorkflowTask workflowTask2 = workflowTasks2.get(i);
+
+			Assert.assertEquals(
+				workflowTask1.getWorkflowTaskId() + " does not equal " +
+					workflowTask2.getWorkflowTaskId(),
+				workflowTask1.getWorkflowTaskId(),
+				workflowTask2.getWorkflowTaskId());
+		}
+	}
+
 	private void _assignWorkflowTaskToUser(User user, User assigneeUser)
 		throws Exception {
 
@@ -1331,7 +1419,7 @@ public class WorkflowTaskManagerImplTest {
 		_completeWorkflowTask(user, transition, taskName, null, 0);
 	}
 
-	private void _completeWorkflowTask(
+	private WorkflowTask _completeWorkflowTask(
 			User user, String transition, String taskName, String className,
 			long classPK)
 		throws Exception {
@@ -1344,7 +1432,7 @@ public class WorkflowTaskManagerImplTest {
 
 		PermissionThreadLocal.setPermissionChecker(userPermissionChecker);
 
-		_workflowTaskManager.completeWorkflowTask(
+		return _workflowTaskManager.completeWorkflowTask(
 			_group.getCompanyId(), user.getUserId(),
 			workflowTask.getWorkflowTaskId(), transition, StringPool.BLANK,
 			null);

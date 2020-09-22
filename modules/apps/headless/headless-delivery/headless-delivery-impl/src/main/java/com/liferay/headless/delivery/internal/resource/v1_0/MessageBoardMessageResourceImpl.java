@@ -468,12 +468,12 @@ public class MessageBoardMessageResourceImpl
 					HashMapBuilder.put(
 						"create",
 						addAction(
-							"UPDATE", mbMessage,
+							"VIEW", mbMessage,
 							"postMessageBoardMessageMyRating")
 					).put(
 						"delete",
 						addAction(
-							"UPDATE", mbMessage,
+							"VIEW", mbMessage,
 							"deleteMessageBoardMessageMyRating")
 					).put(
 						"get",
@@ -482,8 +482,7 @@ public class MessageBoardMessageResourceImpl
 					).put(
 						"replace",
 						addAction(
-							"UPDATE", mbMessage,
-							"putMessageBoardMessageMyRating")
+							"VIEW", mbMessage, "putMessageBoardMessageMyRating")
 					).build(),
 					_portal, ratingsEntry, _userLocalService);
 			},

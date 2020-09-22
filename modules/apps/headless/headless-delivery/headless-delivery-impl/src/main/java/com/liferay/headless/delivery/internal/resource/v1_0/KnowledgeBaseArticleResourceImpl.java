@@ -442,7 +442,7 @@ public class KnowledgeBaseArticleResourceImpl
 					HashMapBuilder.put(
 						"create",
 						addAction(
-							"UPDATE", kbArticle.getResourcePrimKey(),
+							"VIEW", kbArticle.getResourcePrimKey(),
 							"postKnowledgeBaseArticleMyRating",
 							kbArticle.getUserId(),
 							"com.liferay.knowledge.base.model.KBArticle",
@@ -450,7 +450,7 @@ public class KnowledgeBaseArticleResourceImpl
 					).put(
 						"delete",
 						addAction(
-							"UPDATE", kbArticle.getResourcePrimKey(),
+							"VIEW", kbArticle.getResourcePrimKey(),
 							"deleteKnowledgeBaseArticleMyRating",
 							kbArticle.getUserId(),
 							"com.liferay.knowledge.base.model.KBArticle",
@@ -466,7 +466,7 @@ public class KnowledgeBaseArticleResourceImpl
 					).put(
 						"replace",
 						addAction(
-							"UPDATE", kbArticle.getResourcePrimKey(),
+							"VIEW", kbArticle.getResourcePrimKey(),
 							"putKnowledgeBaseArticleMyRating",
 							kbArticle.getUserId(),
 							"com.liferay.knowledge.base.model.KBArticle",

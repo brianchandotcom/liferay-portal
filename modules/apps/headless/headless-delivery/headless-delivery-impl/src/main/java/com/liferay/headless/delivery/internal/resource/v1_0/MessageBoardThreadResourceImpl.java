@@ -578,12 +578,11 @@ public class MessageBoardThreadResourceImpl
 					HashMapBuilder.put(
 						"create",
 						addAction(
-							"UPDATE", mbMessage,
-							"postMessageBoardThreadMyRating")
+							"VIEW", mbMessage, "postMessageBoardThreadMyRating")
 					).put(
 						"delete",
 						addAction(
-							"UPDATE", mbMessage,
+							"VIEW", mbMessage,
 							"deleteMessageBoardThreadMyRating")
 					).put(
 						"get",
@@ -592,8 +591,7 @@ public class MessageBoardThreadResourceImpl
 					).put(
 						"replace",
 						addAction(
-							"UPDATE", mbMessage,
-							"putMessageBoardThreadMyRating")
+							"VIEW", mbMessage, "putMessageBoardThreadMyRating")
 					).build(),
 					_portal, ratingsEntry, _userLocalService);
 			},

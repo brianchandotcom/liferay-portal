@@ -309,19 +309,17 @@ public class BlogPostingResourceImpl
 				return RatingUtil.toRating(
 					HashMapBuilder.put(
 						"create",
-						addAction(
-							"UPDATE", blogsEntry, "postBlogPostingMyRating")
+						addAction("VIEW", blogsEntry, "postBlogPostingMyRating")
 					).put(
 						"delete",
 						addAction(
-							"UPDATE", blogsEntry, "deleteBlogPostingMyRating")
+							"VIEW", blogsEntry, "deleteBlogPostingMyRating")
 					).put(
 						"get",
 						addAction("VIEW", blogsEntry, "getBlogPostingMyRating")
 					).put(
 						"replace",
-						addAction(
-							"UPDATE", blogsEntry, "putBlogPostingMyRating")
+						addAction("VIEW", blogsEntry, "putBlogPostingMyRating")
 					).build(),
 					_portal, ratingsEntry, _userLocalService);
 			},

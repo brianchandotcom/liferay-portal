@@ -586,13 +586,13 @@ public class DocumentResourceImpl
 					HashMapBuilder.put(
 						"create",
 						addAction(
-							"UPDATE", fileEntry.getPrimaryKey(),
+							"VIEW", fileEntry.getPrimaryKey(),
 							"postDocumentMyRating", fileEntry.getUserId(),
 							DLFileEntry.class.getName(), fileEntry.getGroupId())
 					).put(
 						"delete",
 						addAction(
-							"UPDATE", fileEntry.getPrimaryKey(),
+							"VIEW", fileEntry.getPrimaryKey(),
 							"deleteDocumentMyRating", fileEntry.getUserId(),
 							DLFileEntry.class.getName(), fileEntry.getGroupId())
 					).put(
@@ -604,7 +604,7 @@ public class DocumentResourceImpl
 					).put(
 						"replace",
 						addAction(
-							"UPDATE", fileEntry.getPrimaryKey(),
+							"VIEW", fileEntry.getPrimaryKey(),
 							"putDocumentMyRating", fileEntry.getUserId(),
 							DLFileEntry.class.getName(), fileEntry.getGroupId())
 					).build(),

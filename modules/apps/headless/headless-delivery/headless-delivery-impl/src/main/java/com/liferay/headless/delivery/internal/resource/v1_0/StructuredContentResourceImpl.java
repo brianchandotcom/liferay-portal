@@ -773,7 +773,7 @@ public class StructuredContentResourceImpl
 					HashMapBuilder.put(
 						"create",
 						addAction(
-							"UPDATE", journalArticle.getResourcePrimKey(),
+							"VIEW", journalArticle.getResourcePrimKey(),
 							"postStructuredContentMyRating",
 							journalArticle.getUserId(),
 							JournalArticle.class.getName(),
@@ -781,7 +781,7 @@ public class StructuredContentResourceImpl
 					).put(
 						"delete",
 						addAction(
-							"UPDATE", journalArticle.getResourcePrimKey(),
+							"VIEW", journalArticle.getResourcePrimKey(),
 							"deleteStructuredContentMyRating",
 							journalArticle.getUserId(),
 							JournalArticle.class.getName(),
@@ -797,7 +797,7 @@ public class StructuredContentResourceImpl
 					).put(
 						"replace",
 						addAction(
-							"UPDATE", journalArticle.getResourcePrimKey(),
+							"VIEW", journalArticle.getResourcePrimKey(),
 							"putStructuredContentMyRating",
 							journalArticle.getUserId(),
 							JournalArticle.class.getName(),

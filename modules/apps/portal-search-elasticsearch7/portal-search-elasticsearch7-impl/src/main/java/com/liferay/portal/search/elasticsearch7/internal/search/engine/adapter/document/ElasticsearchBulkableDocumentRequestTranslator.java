@@ -25,6 +25,8 @@ import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
+import java.util.Collections;
+
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.index.IndexRequest;
@@ -112,6 +114,8 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 
 		_setDocAsUpsert(updateRequest, updateDocumentRequest.isUpsert());
 		_setRefreshPolicy(updateRequest, updateDocumentRequest.isRefresh());
+		_setScriptedUpsert(
+			updateRequest, updateDocumentRequest.isScriptedUpsert());
 
 		updateRequest.id(_getUid(updateDocumentRequest));
 		updateRequest.index(updateDocumentRequest.getIndexName());
@@ -210,13 +214,22 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 
 	private void _setDocAsUpsert(UpdateRequest updateRequest, boolean upsert) {
 		if (upsert) {
-			updateRequest.docAsUpsert(upsert);
+			updateRequest.docAsUpsert(true);
 		}
 	}
 
 	private void _setRefreshPolicy(WriteRequest writeRequest, boolean refresh) {
 		if (refresh) {
 			writeRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
+		}
+	}
+
+	private void _setScriptedUpsert(
+		UpdateRequest updateRequest, boolean scriptedUpsert) {
+
+		if (scriptedUpsert) {
+			updateRequest.scriptedUpsert(true);
+			updateRequest.upsert(Collections.emptyMap());
 		}
 	}
 

@@ -80,6 +80,44 @@ definition {
 			siteList = "Site Name,Private Site Name,Restricted Site Name");
 	}
 
+	@description = "This ensures that an asset library can not be connected to a staged site."
+	@priority = "4"
+	test ConnectStagedSite {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Button.clickAdd();
+
+		SelectFrame(locator1 = "IFrame#SELECT_SITES");
+
+		Pause(locator1 = "3000");
+
+		Navigator.gotoNavItem(navItem = "My Sites");
+
+		SiteSelector.selectSite(site = "Site Name");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "An asset library cannot be connected to a staged site.");
+	}
+
 	@description = "This asserts that a deactivated site is still shown in connected sites and a deleted site is removed from connected sites."
 	@priority = "4"
 	test DeactivateAndDeleteSite {

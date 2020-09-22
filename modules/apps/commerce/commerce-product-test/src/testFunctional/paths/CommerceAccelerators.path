@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKOUT_SUCCESS_MESSAGE</td>
+	<td>//div[@class='success-message']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUMMARY_DELIVERY</td>
 	<td>//li[contains(@class,'commerce-delivery')]//div[contains(@class,'commerce-value') and contains (.,'${key_deliveryValue}')]</td>
 	<td></td>

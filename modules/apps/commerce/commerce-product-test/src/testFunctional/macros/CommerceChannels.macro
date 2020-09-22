@@ -3,7 +3,8 @@ definition {
 	macro activatePaymentMethod {
 		Click(
 			key_entryName = "${paymentMethod}",
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+			key_table = "Payment Methods",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

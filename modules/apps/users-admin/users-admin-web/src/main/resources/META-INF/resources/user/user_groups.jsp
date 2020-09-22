@@ -157,41 +157,15 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		);
 
 		A.one('#<portlet:namespace />openUserGroupsLink').on('click', function (event) {
-			Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true,
-					},
-
-					<%
-					String eventName = liferayPortletResponse.getNamespace() + "selectUserGroup";
-					%>
-
-					id: '<%= eventName %>',
-
-					selectedData: searchContainer.getData(true),
-					title:
-						'<liferay-ui:message arguments="user-group" key="select-x" />',
-
-					<%
-					PortletURL selectUserGroupURL = PortletProviderUtil.getPortletURL(request, UserGroup.class.getName(), PortletProvider.Action.BROWSE);
-
-					selectUserGroupURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
-					selectUserGroupURL.setParameter("eventName", eventName);
-					selectUserGroupURL.setWindowState(LiferayWindowState.POP_UP);
-					%>
-
-					uri: '<%= selectUserGroupURL.toString() %>',
-				},
-				function (event) {
+			Liferay.Util.openSelectionModal({
+				onSelect: function (selectedItem) {
 					var A = AUI();
 
-					var entityId = event.entityid;
+					var entityId = selectedItem.entityid;
 
 					var rowColumns = [];
 
-					rowColumns.push(A.Escape.html(event.entityname));
+					rowColumns.push(A.Escape.html(selectedItem.entityname));
 					rowColumns.push(
 						'<a class="modify-link" data-rowId="' +
 							entityId +
@@ -212,8 +186,20 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = deleteUserGroupIds.join(
 						','
 					);
-				}
-			);
+				},
+				selectedData: searchContainer.getData(true),
+				selectEventName: '<portlet:namespace />selectUserGroup',
+				title: '<liferay-ui:message arguments="user-group" key="select-x" />',
+
+				<%
+				PortletURL selectUserGroupURL = PortletProviderUtil.getPortletURL(request, UserGroup.class.getName(), PortletProvider.Action.BROWSE);
+
+				selectUserGroupURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+				selectUserGroupURL.setWindowState(LiferayWindowState.POP_UP);
+				%>
+
+				url: '<%= selectUserGroupURL.toString() %>',
+			});
 		});
 	</aui:script>
 </c:if>

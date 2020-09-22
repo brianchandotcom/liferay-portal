@@ -69,7 +69,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 						"name = ?")) {
 
 				while (rs1.next()) {
-					List<String> stringPrimKeys = new ArrayList<>();
+					List<String> primKeys = new ArrayList<>();
 
 					String name = rs1.getString("name");
 
@@ -83,27 +83,20 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 								!primKey.contains(
 									PortletConstants.LAYOUT_SEPARATOR)) {
 
-								stringPrimKeys.add(primKey);
+								primKeys.add(primKey);
 							}
 						}
 					}
 
-					String[][] stringPrimKeysArray;
+					String[][] primKeysArray = null;
 
-					DB db = DBManagerUtil.getDB();
-
-					if ((db.getDBType() == DBType.ORACLE) &&
-						(stringPrimKeys.size() > 1000)) {
-
-						stringPrimKeysArray = (String[][])ArrayUtil.split(
-							stringPrimKeys.toArray(), 1000);
-					}
-					else {
-						stringPrimKeysArray = (String[][])ArrayUtil.split(
-							stringPrimKeys.toArray(), stringPrimKeys.size());
+					if (!primKeys.isEmpty()) {
+						primKeysArray = (String[][])ArrayUtil.split(
+							primKeys.toArray(new String[0]),
+							_getPrimKeysSplitSize(primKeys.size()));
 					}
 
-					_updatePrimKeyIdsByName(name, stringPrimKeysArray);
+					_updatePrimKeyIdsByName(name, primKeysArray);
 				}
 			}
 		}
@@ -121,6 +114,16 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		sb.append(")");
 
 		return sb.toString();
+	}
+
+	private int _getPrimKeysSplitSize(int primKeysCount) {
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.ORACLE) {
+			return 1000;
+		}
+
+		return primKeysCount;
 	}
 
 	private void _updatePrimKeyIds(String sql, String name, String[] primKeys)
@@ -141,10 +144,10 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		}
 	}
 
-	private void _updatePrimKeyIdsByName(String name, String[][] primKeyBatches)
+	private void _updatePrimKeyIdsByName(String name, String[][] primKeysArray)
 		throws Exception {
 
-		if (ArrayUtil.isEmpty(primKeyBatches)) {
+		if (ArrayUtil.isEmpty(primKeysArray)) {
 			_updatePrimKeyIds(
 				"update ResourcePermission set primKeyId = CAST_LONG(" +
 					"primKey) where name = ? and primKey not like '%_LAYOUT_%'",
@@ -158,15 +161,15 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			return;
 		}
 
-		for (String[] primKeyBatch : primKeyBatches) {
-			String inClause = _createInClause(primKeyBatch);
+		for (String[] primKeys : primKeysArray) {
+			String inClause = _createInClause(primKeys);
 
 			_updatePrimKeyIds(
 				StringBundler.concat(
 					"update ResourcePermission set primKeyId = 0 where name = ",
 					"? and (primKey like '%_LAYOUT_%' or primKey ", inClause,
 					")"),
-				name, primKeyBatch);
+				name, primKeys);
 		}
 
 		runSQL(

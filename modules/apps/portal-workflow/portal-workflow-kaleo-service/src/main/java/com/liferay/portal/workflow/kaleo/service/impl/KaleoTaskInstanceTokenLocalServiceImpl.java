@@ -1052,9 +1052,6 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 			Field.CREATE_DATE,
 			_getSortableFieldName(Field.CREATE_DATE, "Number")
 		).put(
-			Field.MODIFIED_DATE,
-			_getSortableFieldName(Field.MODIFIED_DATE, "Number")
-		).put(
 			Field.USER_ID, _getSortableFieldName(Field.USER_ID, "Number")
 		).put(
 			KaleoTaskInstanceTokenField.COMPLETED,
@@ -1081,6 +1078,8 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 			_getSortableFieldName(
 				KaleoTaskInstanceTokenField.KALEO_TASK_INSTANCE_TOKEN_ID,
 				"Number")
+		).put(
+			"modifiedDate", _getSortableFieldName(Field.MODIFIED_DATE, "Number")
 		).put(
 			"name",
 			_getSortableFieldName(

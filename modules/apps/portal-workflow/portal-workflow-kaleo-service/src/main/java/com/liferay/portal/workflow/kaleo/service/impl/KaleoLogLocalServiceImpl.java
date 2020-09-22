@@ -756,6 +756,8 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		).put(
 			"kaleoLogId", _getSortableFieldName("kaleoLogId", "Number")
 		).put(
+			"modifiedDate", _getSortableFieldName(Field.MODIFIED_DATE, "Number")
+		).put(
 			"userId", _getSortableFieldName(Field.USER_ID, "Number")
 		).build();
 	private static final Map<String, Integer> _fieldNameSortTypes =

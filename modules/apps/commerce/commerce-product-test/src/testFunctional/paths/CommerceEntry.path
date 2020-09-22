@@ -414,11 +414,6 @@
     <td></td>
 </tr>
 <tr>
-	<td>CHANNEL_PAYMENT_METHOD_NAME</td>
-	<td>//div/h4[contains(.,'Payment Methods')]/..//button[contains(.,'${key_paymentMethod}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TABLE_ENTRY_NAME</td>
 	<td>//div[contains(.,'${key_table}')]//div[@class='data-set-display-wrapper' or @class='searchcontainer-content']//a[contains(.,'${key_entryName}')]</td>
 	<td></td>

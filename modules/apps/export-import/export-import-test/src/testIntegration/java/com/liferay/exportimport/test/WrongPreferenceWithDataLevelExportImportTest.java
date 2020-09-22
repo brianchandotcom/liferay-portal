@@ -21,9 +21,11 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Dictionary;
 
 import javax.portlet.Portlet;
 
@@ -59,10 +61,8 @@ public class WrongPreferenceWithDataLevelExportImportTest
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		HashMapDictionary<String, String> portletProperties =
-			new HashMapDictionary<>();
-
-		portletProperties.put("javax.portlet.name", _PORTLET_NAME);
+		Dictionary<String, String> portletProperties =
+			MapUtil.singletonDictionary("javax.portlet.name", _PORTLET_NAME);
 
 		ServiceRegistration<Portlet> portletServiceRegistration =
 			bundleContext.registerService(

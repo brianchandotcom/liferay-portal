@@ -12,27 +12,23 @@
  * details.
  */
 
-package com.liferay.dispatch.web.internal.servlet.taglib.ui;
+package com.liferay.dispatch.web.internal.frontend.taglib.servlet.taglib.ui;
 
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.dispatch.service.DispatchLogService;
-import com.liferay.dispatch.web.internal.display.context.DispatchLogDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,18 +41,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"screen.navigation.category.order:Integer=20",
+		"screen.navigation.category.order:Integer=30",
 		"screen.navigation.entry.order:Integer=10"
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class DispatchLogScreenNavigationCategory
+public class DispatchTriggerScreenNavigationCategory
 	implements ScreenNavigationCategory,
 			   ScreenNavigationEntry<DispatchTrigger> {
 
 	@Override
 	public String getCategoryKey() {
-		return DispatchConstants.CATEGORY_KEY_DISPATCH_LOGS;
+		return DispatchConstants.CATEGORY_KEY_DISPATCH_TRIGGER;
 	}
 
 	@Override
@@ -92,25 +88,21 @@ public class DispatchLogScreenNavigationCategory
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		RenderRequest renderRequest =
-			(RenderRequest)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		DispatchLogDisplayContext dispatchLogDisplayContext =
-			new DispatchLogDisplayContext(_dispatchLogService, renderRequest);
-
-		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, dispatchLogDisplayContext);
-
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/trigger/dispatch_trigger_logs.jsp");
+			"/trigger/dispatch_trigger.jsp");
 	}
 
-	@Reference
-	private DispatchLogService _dispatchLogService;
+	@Reference(
+		target = "(model.class.name=com.liferay.dispatch.model.DispatchTrigger)"
+	)
+	private ModelResourcePermission<DispatchTrigger>
+		_dispatchTriggerModelResourcePermission;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

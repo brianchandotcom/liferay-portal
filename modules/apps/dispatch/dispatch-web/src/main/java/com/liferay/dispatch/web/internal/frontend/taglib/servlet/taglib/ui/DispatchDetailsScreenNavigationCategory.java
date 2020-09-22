@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dispatch.web.internal.servlet.taglib.ui;
+package com.liferay.dispatch.web.internal.frontend.taglib.servlet.taglib.ui;
 
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -20,9 +20,6 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
@@ -41,18 +38,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"screen.navigation.category.order:Integer=30",
+		"screen.navigation.category.order:Integer=10",
 		"screen.navigation.entry.order:Integer=10"
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class DispatchTriggerScreenNavigationCategory
+public class DispatchDetailsScreenNavigationCategory
 	implements ScreenNavigationCategory,
 			   ScreenNavigationEntry<DispatchTrigger> {
 
 	@Override
 	public String getCategoryKey() {
-		return DispatchConstants.CATEGORY_KEY_DISPATCH_TRIGGER;
+		return DispatchConstants.CATEGORY_KEY_DISPATCH_DETAILS;
 	}
 
 	@Override
@@ -74,35 +71,16 @@ public class DispatchTriggerScreenNavigationCategory
 	}
 
 	@Override
-	public boolean isVisible(User user, DispatchTrigger dispatchTrigger) {
-		if (dispatchTrigger == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse,
-			"/trigger/dispatch_trigger.jsp");
+			httpServletRequest, httpServletResponse, "/trigger/details.jsp");
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dispatch.model.DispatchTrigger)"
-	)
-	private ModelResourcePermission<DispatchTrigger>
-		_dispatchTriggerModelResourcePermission;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

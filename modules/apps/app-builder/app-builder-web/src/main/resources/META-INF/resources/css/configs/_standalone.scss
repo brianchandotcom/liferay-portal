@@ -1,7 +1,5 @@
-$background-header-color: #393a4a;
-
 .app-builder-standalone {
-	background-color: #f1f2f5;
+	background-color: $whiteColor200;
 	min-height: 100vh;
 	padding-bottom: 9.5rem;
 
@@ -10,14 +8,12 @@ $background-header-color: #393a4a;
 		padding-bottom: 2rem;
 
 		&.edit-entry {
-			max-width: 808px;
+			max-width: $containerMaxWidth;
 		}
 
 		.app-builder-root {
-			.control-menu-back-button {
-				.icon-monospaced {
-					padding-left: 4px;
-				}
+			.control-menu-back-button .icon-monospaced {
+				padding-left: 4px;
 			}
 
 			.edit-entry {
@@ -30,7 +26,7 @@ $background-header-color: #393a4a;
 			}
 
 			.view-entry {
-				background-color: #f7f8f9;
+				background-color: $whiteColor200;
 				border-radius: 4px;
 				margin-bottom: -2rem;
 				margin-left: calc(-1.5rem - 1px);
@@ -46,13 +42,13 @@ $background-header-color: #393a4a;
 	}
 
 	.app-builder-standalone-header {
-		background-color: $background-header-color;
+		background-color: $grayColor800;
 		min-height: 320px;
 		padding-top: 1rem;
 		width: 100%;
 
 		.app-builder-standalone-name {
-			color: #fff;
+			color: $whiteColor;
 			font-size: 2.5rem;
 			font-weight: bold;
 			margin-top: 4.5rem;
@@ -64,7 +60,7 @@ $background-header-color: #393a4a;
 		}
 
 		.company-link {
-			color: #fff;
+			color: $whiteColor;
 			display: inline-block;
 
 			.company-details {
@@ -90,17 +86,17 @@ $background-header-color: #393a4a;
 		flex-direction: row;
 
 		.btn.btn-secondary.dropdown-toggle {
-			background-color: $background-header-color;
-			border-color: #6b6c7e;
-			color: #a7a9bc;
+			background-color: $grayColor800;
+			border-color: $grayColor700;
+			color: $grayColor600;
 
 			&:hover {
-				background-color: rgba(107, 108, 126, 0.2);
-				border-color: #6b6c7e;
-				color: #fff;
+				background-color: rgba($grayColor700, 0.2);
+				border-color: $grayColor700;
+				color: $whiteColor;
 
 				.localizable-dropdown-label {
-					color: #fff;
+					color: $whiteColor;
 				}
 			}
 		}

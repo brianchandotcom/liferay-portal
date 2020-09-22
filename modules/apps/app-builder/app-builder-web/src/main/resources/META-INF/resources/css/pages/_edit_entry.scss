@@ -1,6 +1,6 @@
 .edit-entry {
 	&.container-fluid {
-		max-width: 808px;
+		max-width: $containerMaxWidth;
 		padding: 0;
 	}
 

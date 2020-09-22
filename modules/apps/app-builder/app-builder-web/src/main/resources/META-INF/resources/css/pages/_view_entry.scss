@@ -8,16 +8,16 @@
 			display: block;
 
 			.lexicon-icon-document-pdf {
-				color: red;
+				color: $redColor;
 			}
 
 			.lexicon-icon-document-text {
-				color: blue;
+				color: $blueColor;
 			}
 		}
 
 		label {
-			color: #6b6c7e;
+			color: $grayColor700;
 		}
 	}
 

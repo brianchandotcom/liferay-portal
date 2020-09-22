@@ -1,3 +1,7 @@
+.select-site {
+	text-align: left;
+}
+
 .card-footer {
 	padding: 10px 12px 20px;
 }
@@ -12,6 +16,15 @@
 
 .selectable-row:hover {
 	cursor: pointer;
+}
+
+.shadowless-card {
+	border: 1px solid $grayColor400;
+	box-shadow: none;
+
+	&-body {
+		height: 38em;
+	}
 }
 
 .scrollable-container {

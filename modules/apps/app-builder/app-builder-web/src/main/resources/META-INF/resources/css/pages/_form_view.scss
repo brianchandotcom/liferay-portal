@@ -44,11 +44,8 @@
 		}
 	}
 
+	&:hover .field-type-remove-icon,
 	&.loading .field-type-remove-icon {
-		opacity: 1;
-	}
-
-	&:hover .field-type-remove-icon {
 		opacity: 1;
 	}
 }
@@ -80,15 +77,15 @@
 			}
 
 			.btn {
-				color: #6b6c7e;
+				color: $grayColor700;
 			}
 
 			.btn:hover {
-				background-color: #e7e7ed;
+				background-color: $grayColor400;
 			}
 
 			h3.category-text {
-				color: #6b6c7e;
+				color: $grayColor700;
 				font-weight: 600;
 			}
 		}
@@ -112,7 +109,7 @@
 					text-align: center;
 
 					.lexicon-icon-custom-field {
-						color: #a7a9bc;
+						color: $grayColor600;
 						height: 40px;
 						width: 40px;
 					}
@@ -124,7 +121,7 @@
 					}
 
 					p {
-						color: #6b6c7e;
+						color: $grayColor700;
 						font-size: 1rem;
 						margin-bottom: 0;
 						margin-top: 0.5rem;
@@ -136,29 +133,29 @@
 				@extend .base-custom-object-field-type;
 
 				&.dragging {
-					background-color: rgba(39, 40, 51, 0.04);
+					background-color: rgba($grayColor900, 0.04);
 					border-color: transparent;
 					box-shadow: none;
 				}
 
 				&:hover:not(.disabled) {
-					background-color: rgba(39, 40, 51, 0.04);
+					background-color: rgba($grayColor900, 0.04);
 					border-color: transparent;
 					box-shadow: none;
 					transform: translateX(2px);
 
 					.sticker {
-						background-color: rgb(210, 212, 219);
+						background-color: $grayColor500;
 					}
 				}
 
 				&.active,
 				&.active:hover {
-					border-color: #0b5fff;
+					border-color: $primaryColor;
 				}
 
 				.sticker {
-					background-color: rgb(234, 235, 239);
+					background-color: $grayColor400;
 				}
 			}
 		}

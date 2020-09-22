@@ -16,7 +16,7 @@ $appBuilderTableViewTransitionTime: 0.5s;
 	&__sidebar {
 		.default,
 		.secondary {
-			border-left: 1px solid #e7e7ed;
+			border-left: 1px solid $grayColor400;
 			flex-flow: column;
 			height: 100%;
 			position: fixed;
@@ -55,7 +55,7 @@ $appBuilderTableViewTransitionTime: 0.5s;
 			padding-bottom: 1rem;
 
 			&.table-view-filters-sidebar-header {
-				border-bottom: 1px solid #e7e7ed;
+				border-bottom: 1px solid $grayColor400;
 			}
 
 			.btn-monospaced {
@@ -97,7 +97,7 @@ $appBuilderTableViewTransitionTime: 0.5s;
 			}
 
 			.table-view-filters-list:not(.single-field) .table-view-filter {
-				border-bottom: 1px solid #e7e7ed;
+				border-bottom: 1px solid $grayColor400;
 				padding: 1.5rem 0;
 			}
 
@@ -110,9 +110,9 @@ $appBuilderTableViewTransitionTime: 0.5s;
 
 		.multiple-select-filter-trigger {
 			align-items: center;
-			background-color: #f1f2f5;
-			border-color: #e7e7ed;
-			color: #272833;
+			background-color: $whiteColor200;
+			border-color: $grayColor400;
+			color: $grayColor900;
 			display: flex;
 			font-weight: normal;
 			text-align: left;
@@ -123,7 +123,7 @@ $appBuilderTableViewTransitionTime: 0.5s;
 			}
 
 			&.empty {
-				color: #6b6c7e;
+				color: $grayColor700;
 			}
 		}
 	}
@@ -133,7 +133,7 @@ $appBuilderTableViewTransitionTime: 0.5s;
 		position: absolute;
 
 		&.target-over {
-			border-right-color: #0b5fff;
+			border-right-color: $primaryColor;
 			border-right-style: solid;
 		}
 	}
@@ -143,13 +143,13 @@ $appBuilderTableViewTransitionTime: 0.5s;
 		position: absolute;
 
 		&.target-over {
-			border-left-color: #0b5fff;
+			border-left-color: $primaryColor;
 			border-left-style: solid;
 		}
 	}
 
 	.column-overlay {
-		border: 1px solid #0b5fff;
+		border: 1px solid $primaryColor;
 		pointer-events: none;
 		position: absolute;
 
@@ -163,10 +163,10 @@ $appBuilderTableViewTransitionTime: 0.5s;
 		}
 
 		header {
-			background-color: #0b5fff;
-			border: 2px solid #0b5fff;
+			background-color: $primaryColor;
+			border: 2px solid $primaryColor;
 			border-radius: 4px 4px 0 0;
-			color: white;
+			color: $whiteColor;
 			left: -1px;
 			line-height: 20px;
 			padding: 0 8px;
@@ -176,7 +176,7 @@ $appBuilderTableViewTransitionTime: 0.5s;
 			z-index: 50;
 
 			.btn {
-				color: white;
+				color: $whiteColor;
 				height: 20px;
 				line-height: 12px;
 				padding: 0;
@@ -184,7 +184,7 @@ $appBuilderTableViewTransitionTime: 0.5s;
 			}
 
 			label {
-				color: white;
+				color: $whiteColor;
 				margin-bottom: 0;
 				margin-right: 5px;
 			}
@@ -197,11 +197,11 @@ $appBuilderTableViewTransitionTime: 0.5s;
 	}
 
 	.empty-drop-zone {
-		background: #f7f8f9;
-		border: 2px dashed #a7a9bc;
+		background: $whiteColor200;
+		border: 2px dashed $grayColor600;
 		border-radius: 4px;
 		box-sizing: border-box;
-		color: #a7a9bc;
+		color: $grayColor600;
 		line-height: 1rem;
 		padding: 2rem 1rem;
 		text-align: center;
@@ -212,13 +212,13 @@ $appBuilderTableViewTransitionTime: 0.5s;
 			animation-iteration-count: infinite;
 			animation-name: drop-color;
 			animation-timing-function: $animation;
-			background-color: #2e5aac;
-			border-color: #0b5fff;
-			color: #0b5fff;
+			background-color: $blueColor300;
+			border-color: $primaryColor;
+			color: $primaryColor;
 		}
 
 		&.target-over {
-			border-color: #0b5fff;
+			border-color: $primaryColor;
 			border-style: solid;
 
 			p {
@@ -228,17 +228,17 @@ $appBuilderTableViewTransitionTime: 0.5s;
 
 		@keyframes drop-color {
 			0% {
-				background-color: #f0f5ff;
+				background-color: $whiteColor200;
 			}
 
 			100% {
-				background-color: rgba(179, 205, 255, 0.3);
+				background-color: rgba($blueColor200, 0.3);
 			}
 		}
 	}
 
 	.empty-drop-zone-header {
-		border-bottom: 1px solid #e7e7ed;
+		border-bottom: 1px solid $grayColor400;
 		margin: 1.5rem -1.5rem;
 	}
 }

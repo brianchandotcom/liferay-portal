@@ -180,7 +180,7 @@ public class DropZoneContentPageEditorListener
 		else {
 			for (int i = childrenItemIds.size(); i < elements.size(); i++) {
 				layoutStructure.addFragmentDropZoneLayoutStructureItem(
-					parentLayoutStructureItem.getItemId(), 0);
+					parentLayoutStructureItem.getItemId(), -1);
 			}
 		}
 

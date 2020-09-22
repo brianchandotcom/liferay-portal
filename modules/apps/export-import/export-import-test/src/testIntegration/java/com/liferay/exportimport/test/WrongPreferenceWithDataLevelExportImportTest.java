@@ -27,6 +27,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import javax.portlet.Portlet;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,7 +52,7 @@ public class WrongPreferenceWithDataLevelExportImportTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Test(expected = PortletDataException.class)
+	@Test
 	public void testExportLayoutPortlets() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			WrongPreferenceWithDataLevelExportImportTest.class);
@@ -78,9 +79,10 @@ public class WrongPreferenceWithDataLevelExportImportTest
 		try {
 			exportLayouts(
 				new long[] {layout.getLayoutId()}, getExportParameterMap());
+
+			Assert.fail();
 		}
 		catch (PortletDataException portletDataException) {
-			throw portletDataException;
 		}
 		finally {
 			portletServiceRegistration.unregister();

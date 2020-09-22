@@ -215,6 +215,12 @@ definition {
 	}
 
 	macro addPublicChildPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
 		SitePages.togglePrivacy(privacy = "Public Pages");
 
 		SitePages.addChildPage(

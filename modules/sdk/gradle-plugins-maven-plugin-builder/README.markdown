@@ -5,7 +5,7 @@ The Maven Plugin Builder Gradle Plugin lets you generate the
 for any [Mojos](https://maven.apache.org/general.html#What_is_a_Mojo) found in
 your project.
 
-The plugin has been successfully tested with Gradle 5.6.4.
+The plugin has been successfully tested with Gradle 6.6.1.
 
 ## Usage
 

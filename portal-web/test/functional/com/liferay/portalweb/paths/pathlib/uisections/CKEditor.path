@@ -166,7 +166,7 @@
 </tr>
 <tr>
 	<td>SOURCE_CODE_DIALOG</td>
-	<td>//*[contains(@class,'cke_dialog_contents')]//*[contains(@class,'CodeMirror cm-s-default')]</td>
+	<td>//*[contains(@class,'cke_dialog_contents')]//*[contains(@class,'CodeMirror-wrap')]</td>
 	<td></td>
 </tr>
 </tbody>

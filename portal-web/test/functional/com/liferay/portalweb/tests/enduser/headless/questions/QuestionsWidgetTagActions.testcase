@@ -244,6 +244,8 @@ definition {
 
 			Questions.gotoTab(questionTabField = "Questions");
 
+			Pause(locator1 = "2000");
+
 			Questions.addRootTopic(
 				rootTopicDescription = "Description",
 				rootTopicName = "Question ValidateTagsOccurrences${num}");

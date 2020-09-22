@@ -160,7 +160,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.model.AccountModel;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -258,6 +257,8 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.impl.SegmentsEntryImpl;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -3814,25 +3815,38 @@ public class DataFactory {
 		SegmentsEntry segmentsEntry = new SegmentsEntryImpl();
 
 		segmentsEntry.setActive(true);
-		segmentsEntry.setCriteria(
-			JSONUtil.put(
-				"criteria",
-				JSONUtil.put(
-					"user",
-					JSONUtil.put(
-						"conjunction", "and"
-					).put(
-						"filterString",
-						"(firstName eq ''" + "Another User" + "'')"
-					))
-			).toString());
+
+		Criteria criteria = new Criteria();
+
+		String filterString = StringBundler.concat(
+			"(firstName eq ''", _SAMPLE_USER_NAME, index, "'')");
+
+		criteria.addCriterion(
+			"user", Criteria.Type.MODEL, filterString,
+			Criteria.Conjunction.AND);
+
+		criteria.addFilter(
+			Criteria.Type.MODEL, filterString, Criteria.Conjunction.AND);
+
+		segmentsEntry.setCriteria(CriteriaSerializer.serialize(criteria));
+
 		segmentsEntry.setSegmentsEntryId(_counter.get());
 		segmentsEntry.setGroupId(groupId);
 		segmentsEntry.setCompanyId(_companyId);
 		segmentsEntry.setCreateDate(new Date());
 		segmentsEntry.setModifiedDate(new Date());
 		segmentsEntry.setSegmentsEntryKey(_counter.getString());
-		segmentsEntry.setName("SegmentName-" + index);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><Name language-id=\"en_US\">");
+		sb.append("SampleSegment");
+		sb.append(index);
+		sb.append("</Name></root>");
+
+		segmentsEntry.setName(sb.toString());
+
 		segmentsEntry.setSource(SegmentsEntryConstants.SOURCE_DEFAULT);
 		segmentsEntry.setType(User.class.getName());
 		segmentsEntry.setUuid(SequentialUUID.generate());
@@ -3840,6 +3854,15 @@ public class DataFactory {
 		segmentsEntry.setUserName(_SAMPLE_USER_NAME);
 
 		return segmentsEntry;
+	}
+
+	public ResourcePermissionModel newSegmentsEntryResourcePermissionModel(
+		SegmentsEntry segmentsEntry) {
+
+		return newResourcePermissionModel(
+			SegmentsEntry.class.getName(),
+			String.valueOf(segmentsEntry.getSegmentsEntryId()),
+			_guestRoleModel.getRoleId(), _sampleUserId);
 	}
 
 	public SocialActivityModel newSocialActivityModel(

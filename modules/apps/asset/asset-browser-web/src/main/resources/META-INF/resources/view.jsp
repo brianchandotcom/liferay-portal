@@ -142,6 +142,7 @@
 				</c:when>
 				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-cell-minw-200 table-title"
 						name="title"
 					>
 						<c:choose>
@@ -164,6 +165,7 @@
 					</c:if>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-cell-minw-200 text-truncate"
 						name="description"
 						value="<%= HtmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse)) %>"
 					/>
@@ -183,17 +185,20 @@
 					</c:if>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest table-cell-minw-100"
 						name="author"
 						value="<%= PortalUtil.getUserName(assetEntry) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 						name="modified-date"
 						value="<%= assetEntry.getModifiedDate() %>"
 					/>
 
 					<c:if test="<%= assetBrowserDisplayContext.isShowAssetEntryStatus() %>">
 						<liferay-ui:search-container-column-status
+							cssClass="text-nowrap"
 							name="status"
 							status="<%= assetRenderer.getStatus() %>"
 						/>

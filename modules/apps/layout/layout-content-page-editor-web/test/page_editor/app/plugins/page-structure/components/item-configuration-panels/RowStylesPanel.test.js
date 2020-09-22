@@ -193,6 +193,22 @@ describe('RowStylesPanel', () => {
 			config: {
 				modulesPerRow: 1,
 			},
+			state: {
+				layoutData: {
+					items: {
+						'item-1': {
+							config: {
+								size: 12,
+							},
+						},
+						'item-2': {
+							config: {
+								size: 12,
+							},
+						},
+					},
+				},
+			},
 		});
 		const input = getByLabelText('inverse-order');
 

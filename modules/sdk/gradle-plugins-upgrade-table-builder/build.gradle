@@ -2,7 +2,7 @@ apply plugin: "org.ysb33r.gradletest"
 
 task copyGradleTestDependencies(type: Copy)
 
-String gradleVersion = "5.6.4"
+String gradleVersion = "6.6.1"
 
 tasks.eclipse {
 	ext.gradleVersion = gradleVersion

@@ -118,8 +118,8 @@ public class CommerceDiscountDisplayContext {
 		List<CommerceChannelRel> commerceChannelRels =
 			_commerceChannelRelService.getCommerceChannelRels(
 				commerceDiscount.getModelClassName(),
-				commerceDiscount.getCommerceDiscountId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				commerceDiscount.getCommerceDiscountId(), null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Stream<CommerceChannelRel> stream = commerceChannelRels.stream();
 

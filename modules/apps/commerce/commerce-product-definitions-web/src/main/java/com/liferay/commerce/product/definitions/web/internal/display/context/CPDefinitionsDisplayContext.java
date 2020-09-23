@@ -252,8 +252,8 @@ public class CPDefinitionsDisplayContext
 
 		List<CommerceChannelRel> commerceChannelRels =
 			_commerceChannelRelService.getCommerceChannelRels(
-				CPDefinition.class.getName(), getCPDefinitionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				CPDefinition.class.getName(), getCPDefinitionId(), null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Stream<CommerceChannelRel> stream = commerceChannelRels.stream();
 

@@ -81,7 +81,7 @@ public class CommerceInventoryWarehousesDisplayContext {
 			_commerceChannelRelService.getCommerceChannelRels(
 				CommerceInventoryWarehouse.class.getName(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Stream<CommerceChannelRel> stream = commerceChannelRels.stream();
 

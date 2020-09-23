@@ -71,8 +71,8 @@ public class CommerceCountriesDisplayContext
 
 		List<CommerceChannelRel> commerceChannelRels =
 			_commerceChannelRelService.getCommerceChannelRels(
-				CommerceCountry.class.getName(), getCommerceCountryId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				CommerceCountry.class.getName(), getCommerceCountryId(), null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Stream<CommerceChannelRel> stream = commerceChannelRels.stream();
 

@@ -35,6 +35,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -77,9 +78,8 @@ public class DiscountChannelResourceImpl
 		List<CommerceChannelRel> commerceChannelRels =
 			_commerceChannelRelService.getCommerceChannelRels(
 				CommerceDiscount.class.getName(),
-				commerceDiscount.getCommerceDiscountId(),
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
+				commerceDiscount.getCommerceDiscountId(), null,
+				pagination.getStartPosition(), pagination.getEndPosition());
 
 		int totalItems = _commerceChannelRelService.getCommerceChannelRelsCount(
 			CommerceDiscount.class.getName(),
@@ -95,15 +95,20 @@ public class DiscountChannelResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
+		CommerceDiscount commerceDiscount =
+			_commerceDiscountService.fetchCommerceDiscount(id);
+
+		if (commerceDiscount == null) {
+			return Page.of(Collections.emptyList());
+		}
+
 		List<CommerceChannelRel> commerceChannelRel =
 			_commerceChannelRelService.getCommerceChannelRels(
-				CommerceDiscount.class.getName(), id,
-				"CommerceDiscount.commerceDiscountId", search,
+				CommerceDiscount.class.getName(), id, search,
 				pagination.getStartPosition(), pagination.getEndPosition());
 
 		int totalItems = _commerceChannelRelService.getCommerceChannelRelsCount(
-			CommerceDiscount.class.getName(), id,
-			"CommerceDiscount.commerceDiscountId", search);
+			CommerceDiscount.class.getName(), id, search);
 
 		return Page.of(
 			_toDiscountChannels(commerceChannelRel), pagination, totalItems);

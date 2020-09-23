@@ -40,7 +40,7 @@ public class CommerceChannelItemSelectorChecker extends EmptyOnClickRowChecker {
 
 		List<CommerceChannelRel> commerceChannelRels =
 			commerceChannelRelService.getCommerceChannelRels(
-				className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				className, classPK, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Stream<CommerceChannelRel> stream = commerceChannelRels.stream();
 

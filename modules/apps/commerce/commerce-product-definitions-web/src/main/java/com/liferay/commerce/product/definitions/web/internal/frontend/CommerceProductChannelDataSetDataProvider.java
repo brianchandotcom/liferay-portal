@@ -58,9 +58,8 @@ public class CommerceProductChannelDataSetDataProvider
 
 		List<CommerceChannelRel> commerceChannelRels =
 			_commerceChannelRelService.getCommerceChannelRels(
-				CPDefinition.class.getName(), cpDefinitionId,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
+				CPDefinition.class.getName(), cpDefinitionId, null,
+				pagination.getStartPosition(), pagination.getEndPosition());
 
 		for (CommerceChannelRel commerceChannelRel : commerceChannelRels) {
 			CommerceChannel commerceChannel =

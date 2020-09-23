@@ -16,6 +16,8 @@ package com.liferay.portal.remote.cors.internal.servlet.filter;
 
 import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAccessControlContext;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
+import com.liferay.petra.url.pattern.mapper.URLPatternMapperFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.log.Log;
@@ -36,8 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration;
 import com.liferay.portal.remote.cors.internal.CORSSupport;
 import com.liferay.portal.remote.cors.internal.configuration.persistence.listener.PortalCORSConfigurationModelListener;
-import com.liferay.portal.remote.cors.internal.url.pattern.mapper.URLPatternMapper;
-import com.liferay.portal.remote.cors.internal.url.pattern.mapper.URLPatternMapperFactory;
 
 import java.util.Collections;
 import java.util.Dictionary;

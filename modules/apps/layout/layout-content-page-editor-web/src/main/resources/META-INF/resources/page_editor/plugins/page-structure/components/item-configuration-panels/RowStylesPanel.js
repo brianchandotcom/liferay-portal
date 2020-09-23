@@ -121,7 +121,12 @@ export const RowStylesPanel = ({item}) => {
 	};
 
 	const isCustomRow = useMemo(() => {
-		const {modulesPerRow, numberOfColumns} = rowConfig;
+		const {numberOfColumns} = rowConfig;
+
+		const {modulesPerRow} = getResponsiveConfig(
+			rowConfig,
+			selectedViewportSize
+		);
 
 		const columnSizes = item.children.map((columnId) => {
 			const columnSizeConfig = getResponsiveColumnSize(

@@ -10,6 +10,8 @@ definition {
 
 		User.firstLoginPG();
 
+		CommerceConfiguration.commerceStoreFrontSetUp();
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

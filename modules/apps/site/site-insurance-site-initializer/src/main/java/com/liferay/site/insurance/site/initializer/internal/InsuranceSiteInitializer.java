@@ -313,7 +313,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addDisplayPageTemplates() throws Exception {
-		Map<String, String> valuesMap = new HashMap<>();
+		Map<String, String> numberValuesMap = new HashMap<>();
 
 		List<DDMStructure> ddmStructures =
 			_ddmStructureLocalService.getStructures(
@@ -321,7 +321,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				_portal.getClassNameId(JournalArticle.class.getName()));
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			valuesMap.put(
+			numberValuesMap.put(
 				StringUtil.toUpperCase(ddmStructure.getStructureKey()),
 				String.valueOf(ddmStructure.getStructureId()));
 		}
@@ -330,7 +330,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			"display-page-templates",
 			LayoutPageTemplateExportImportConstants.
 				FILE_NAME_DISPLAY_PAGE_TEMPLATE,
-			valuesMap);
+			numberValuesMap, new HashMap<>());
 
 		_layoutPageTemplatesImporter.importFile(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
@@ -476,7 +476,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 						StringBundler.concat(
 							"/layouts/", path, StringPool.SLASH,
 							"page-definition.json")),
-					StringPool.DOLLAR, StringPool.DOLLAR, resourcesMap);
+					"\"$", "$\"", resourcesMap);
 
 				layout = _addContentLayout(
 					pageJSONObject,
@@ -495,6 +495,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		File file = _generateZipFile(
 			"master-pages",
 			LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE,
+			new HashMap<>(),
 			HashMapBuilder.put(
 				"CUSTOMER_PORTAL_SITE_NAVIGATION_MENU_ID",
 				String.valueOf(
@@ -588,7 +589,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addZipWriterEntry(
-			ZipWriter zipWriter, URL url, Map<String, String> valuesMap)
+			ZipWriter zipWriter, URL url, Map<String, String> numberValuesMap,
+			Map<String, String> stringValuesMap)
 		throws IOException {
 
 		String entryPath = url.getPath();
@@ -597,10 +599,12 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 		String content = StringUtil.read(url.openStream());
 
-		zipWriter.addEntry(
-			zipPath,
-			StringUtil.replace(
-				content, StringPool.DOLLAR, StringPool.DOLLAR, valuesMap));
+		content = StringUtil.replace(content, "\"$", "$\"", numberValuesMap);
+
+		content = StringUtil.replace(
+			content, StringPool.DOLLAR, StringPool.DOLLAR, stringValuesMap);
+
+		zipWriter.addEntry(zipPath, content);
 	}
 
 	private void _createServiceContext(long groupId) throws Exception {
@@ -623,7 +627,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private File _generateZipFile(
-			String path, String type, Map<String, String> valuesMap)
+			String path, String type, Map<String, String> numberValuesMap,
+			Map<String, String> stringValuesMap)
 		throws Exception {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
@@ -640,7 +645,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				_populateZipWriter(zipWriter, url, valuesMap);
+				_populateZipWriter(zipWriter, url, numberValuesMap, stringValuesMap);
 			}
 
 			return zipWriter.getFile();
@@ -803,7 +808,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private void _populateZipWriter(
-			ZipWriter zipWriter, URL url, Map<String, String> valuesMap)
+			ZipWriter zipWriter, URL url, Map<String, String> numberValuesMap,
+			Map<String, String> stringValuesMap)
 		throws IOException {
 
 		String zipPath = StringUtil.removeSubstring(url.getFile(), _PATH);
@@ -816,7 +822,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		while (enumeration.hasMoreElements()) {
 			URL elementUrl = enumeration.nextElement();
 
-			_addZipWriterEntry(zipWriter, elementUrl, valuesMap);
+			_addZipWriterEntry(
+				zipWriter, elementUrl, numberValuesMap, stringValuesMap);
 		}
 	}
 

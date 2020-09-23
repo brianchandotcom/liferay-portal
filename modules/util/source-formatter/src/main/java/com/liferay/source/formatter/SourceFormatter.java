@@ -309,6 +309,10 @@ public class SourceFormatter {
 	public void format() throws Exception {
 		_printProgressStatusMessage("Scanning for files...");
 
+		System.setProperty(
+			"javax.xml.parsers.SAXParserFactory",
+			"org.apache.xerces.jaxp.SAXParserFactoryImpl");
+
 		_init();
 
 		if (_sourceFormatterArgs.isValidateCommitMessages()) {

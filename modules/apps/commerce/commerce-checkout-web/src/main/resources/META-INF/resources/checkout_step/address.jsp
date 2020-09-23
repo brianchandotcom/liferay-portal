@@ -69,7 +69,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 			%>
 
 			<c:if test="<%= (currentCommerceAddress != null) && !addressWasFound %>">
-				<aui:option label="<%= currentCommerceAddress.getName() %>" selected="<%= true %>" value="<%= currentCommerceAddress.getCommerceAddressId() %>" />
+				<aui:option label="<%= HtmlUtil.escapeAttribute(currentCommerceAddress.getName()) %>" selected="<%= true %>" value="<%= currentCommerceAddress.getCommerceAddressId() %>" />
 			</c:if>
 		</aui:select>
 	</c:if>

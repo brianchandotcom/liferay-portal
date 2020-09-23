@@ -42,6 +42,12 @@
 		<finder name="DDMStructureId" return-type="Collection">
 			<finder-column name="ddmStructureId" />
 		</finder>
+		<finder name="DDMStructureLayoutId" return-type="Collection">
+			<finder-column name="ddmStructureLayoutId" />
+		</finder>
+		<finder name="DEDataListViewId" return-type="Collection">
+			<finder-column name="deDataListViewId" />
+		</finder>
 		<finder name="G_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="scope" />

@@ -220,6 +220,22 @@ public class AppBuilderAppLocalServiceImpl
 	}
 
 	@Override
+	public List<AppBuilderApp> getAppBuilderAppsByDDMStructureLayoutId(
+		long ddmStructureLayoutId) {
+
+		return appBuilderAppPersistence.findByDDMStructureLayoutId(
+			ddmStructureLayoutId);
+	}
+
+	@Override
+	public List<AppBuilderApp> getAppBuilderAppsByDEDataListViewId(
+		long deDataListViewId) {
+
+		return appBuilderAppPersistence.findByDEDataListViewId(
+			deDataListViewId);
+	}
+
+	@Override
 	public int getAppBuilderAppsCount(long groupId) {
 		return appBuilderAppPersistence.countByGroupId(groupId);
 	}

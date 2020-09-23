@@ -29,9 +29,48 @@ definition {
 		else {
 			Navigator.openURL();
 
-			CommerceConfiguration.commerceAdminTearDown(userScreenName = "buyer");
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				panel = "Commerce",
+				portlet = "Options");
 
-			CommerceConfiguration.commerceInitializersTearDown();
+			if(IsElementPresent(locator1 = "CommerceEntry#DELETE_OPTION_BUTTON")){
+
+				CommerceOptions.deleteOptionsEntries();
+			}
+
+			CommerceNavigator.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				CommerceEntry.deleteCommerceEntry();
+			}
+			
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				panel = "Commerce",
+				portlet = "Specifications");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected specification labels?");
+			}
+
+			CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected specification groups?");
+			}
+
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				panel = "Commerce",
+				portlet = "Products");
+
+			while (IsElementPresent(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS") && (maxIterations = "50")) {
+				CommerceEntry.deleteCommerceEntry();
+			}
 
 			User.logoutPG();
 		}

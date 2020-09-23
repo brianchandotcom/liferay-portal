@@ -1,4 +1,4 @@
-<#assign segmentEntries = dataFactory.newSegmentsEntries(groupId) />
+<#assign segmentEntries = dataFactory.newSegmentsEntries(guestGroupModel.groupId) />
 
 <#list segmentEntries as segmentEntry>
 	${dataFactory.toInsertSQL(segmentEntry)}

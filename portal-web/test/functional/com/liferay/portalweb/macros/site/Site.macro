@@ -46,16 +46,6 @@ definition {
 			uncheckPropagation = "${uncheckPropagation}");
 	}
 
-	macro addCommunityCP {
-		Site.addCP(
-			membershipType = "${membershipType}",
-			parentSiteName = "${parentSiteName}",
-			siteName = "${siteName}",
-			siteTemplateName = "${siteTemplateName}",
-			siteType = "Community",
-			uncheckPropagation = "${uncheckPropagation}");
-	}
-
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
@@ -128,16 +118,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "SitesEditSite#DETAILS_NAME",
 			value1 = "${siteName}");
-	}
-
-	macro addIntranetCP {
-		Site.addCP(
-			membershipType = "${membershipType}",
-			parentSiteName = "${parentSiteName}",
-			siteName = "${siteName}",
-			siteTemplateName = "${siteTemplateName}",
-			siteType = "Intranet",
-			uncheckPropagation = "${uncheckPropagation}");
 	}
 
 	macro addSiteTemplateCP {

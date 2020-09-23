@@ -20,47 +20,60 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export const MenuItem = ({item, onSelect, selected}) => (
-	<ClayCard
-		className={classNames('site_navigation_menu_editor_MenuItem', {
-			'site_navigation_menu_editor_MenuItem--selected': selected,
-		})}
-		horizontal
-		selectable
-	>
-		<ClayCheckbox checked={selected} onChange={onSelect}>
-			<ClayCard.Body className="px-0">
-				<ClayCard.Row>
-					<ClayLayout.ContentCol gutters>
-						<ClayButtonWithIcon
-							displayType="unstyled"
-							small
-							symbol="drag"
-						/>
-					</ClayLayout.ContentCol>
+import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
+import {useSetSidebarPanelId} from './AppLayout';
 
-					<ClayLayout.ContentCol expand>
-						<ClayCard.Description displayType="title">
-							{item.title}
-						</ClayCard.Description>
+export const MenuItem = ({item, onSelect, selected}) => {
+	const setSidebarPanelId = useSetSidebarPanelId();
 
-						<ClayCard.Description displayType="subtitle">
-							{item.type}
-						</ClayCard.Description>
-					</ClayLayout.ContentCol>
+	return (
+		<ClayCard
+			className={classNames('site_navigation_menu_editor_MenuItem', {
+				'site_navigation_menu_editor_MenuItem--selected': selected,
+			})}
+			horizontal
+			selectable
+		>
+			<ClayCheckbox
+				checked={selected}
+				onChange={(menuItem) => {
+					onSelect(menuItem);
+					setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
+				}}
+			>
+				<ClayCard.Body className="px-0">
+					<ClayCard.Row>
+						<ClayLayout.ContentCol gutters>
+							<ClayButtonWithIcon
+								displayType="unstyled"
+								small
+								symbol="drag"
+							/>
+						</ClayLayout.ContentCol>
 
-					<ClayLayout.ContentCol gutters>
-						<ClayButtonWithIcon
-							displayType="unstyled"
-							small
-							symbol="times-circle"
-						/>
-					</ClayLayout.ContentCol>
-				</ClayCard.Row>
-			</ClayCard.Body>
-		</ClayCheckbox>
-	</ClayCard>
-);
+						<ClayLayout.ContentCol expand>
+							<ClayCard.Description displayType="title">
+								{item.title}
+							</ClayCard.Description>
+
+							<ClayCard.Description displayType="subtitle">
+								{item.type}
+							</ClayCard.Description>
+						</ClayLayout.ContentCol>
+
+						<ClayLayout.ContentCol gutters>
+							<ClayButtonWithIcon
+								displayType="unstyled"
+								small
+								symbol="times-circle"
+							/>
+						</ClayLayout.ContentCol>
+					</ClayCard.Row>
+				</ClayCard.Body>
+			</ClayCheckbox>
+		</ClayCard>
+	);
+};
 
 MenuItem.propTypes = {
 	item: PropTypes.shape({

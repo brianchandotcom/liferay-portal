@@ -15,9 +15,16 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
-import {AppLayout} from './AppLayout';
+import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
+import {AppLayout, useSetSidebarPanelId} from './AppLayout';
 
 export const Toolbar = () => {
+	const setSidebarPanelId = useSetSidebarPanelId();
+
+	const onSettingsButtonClick = () => {
+		setSidebarPanelId(SIDEBAR_PANEL_IDS.menuSettings);
+	};
+
 	return (
 		<>
 			<AppLayout.ToolbarItem expand />
@@ -26,6 +33,7 @@ export const Toolbar = () => {
 				<ClayButtonWithIcon
 					displayType="unstyled"
 					monospaced
+					onClick={onSettingsButtonClick}
 					small
 					symbol="cog"
 				/>

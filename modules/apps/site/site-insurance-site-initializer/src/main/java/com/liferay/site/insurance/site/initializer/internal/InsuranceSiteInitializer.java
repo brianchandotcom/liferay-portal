@@ -305,8 +305,9 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 					ddmTemplateJSONObject.getString("name")
 				).build(),
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-				TemplateConstants.LANG_TYPE_FTL, _getDDMTemplateContent(url),
-				false, false, null, null, _serviceContext);
+				TemplateConstants.LANG_TYPE_FTL,
+				_getContent("ddm_template.ftl", url), false, false, null, null,
+				_serviceContext);
 		}
 	}
 
@@ -356,9 +357,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addJournalArticles() throws Exception {
-		JSONArray journalArticlesJSONArray = JSONFactoryUtil.createJSONArray(
-			_readFile("/journal-articles/journal_articles.json"));
-
 		Map<String, Long> journalFolderMap = new HashMap<>();
 
 		for (JournalFolder journalFolder : _journalFolders) {
@@ -368,12 +366,16 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 		Map<String, String> fileEntriesMap = _getFileEntriesMap();
 
-		for (int i = 0; i < journalArticlesJSONArray.length(); i++) {
-			JSONObject jsonObject = journalArticlesJSONArray.getJSONObject(i);
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			_PATH + "/journal-articles", "journal_article.json", true);
 
-			String content = StringUtil.replace(
-				_readFile(jsonObject.getString("contentPath")),
-				StringPool.DOLLAR, StringPool.DOLLAR, fileEntriesMap);
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			String content = StringUtil.read(url.openStream());
+
+			JSONObject journalArticleJSONObject =
+				JSONFactoryUtil.createJSONObject(content);
 
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				_serviceContext.getTimeZone());
@@ -385,20 +387,26 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			int displayDateMinute = calendar.get(Calendar.MINUTE);
 
 			long folderId = journalFolderMap.getOrDefault(
-				jsonObject.getString("folder"),
+				journalArticleJSONObject.getString("folder"),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 			JournalArticle article = _journalArticleLocalService.addArticle(
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 				folderId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
-				jsonObject.getString("articleId"), false, 1,
+				journalArticleJSONObject.getString("articleId"), false, 1,
 				Collections.singletonMap(
-					LocaleUtil.getSiteDefault(), jsonObject.getString("name")),
-				null, content, jsonObject.getString("ddmStructureKey"),
-				jsonObject.getString("ddmTemplateKey"), null, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
-				true, false, null, null, null, null, _serviceContext);
+					LocaleUtil.getSiteDefault(),
+					journalArticleJSONObject.getString("name")),
+				null,
+				StringUtil.replace(
+					_getContent("journal_article.xml", url), StringPool.DOLLAR,
+					StringPool.DOLLAR, fileEntriesMap),
+				journalArticleJSONObject.getString("ddmStructureKey"),
+				journalArticleJSONObject.getString("ddmTemplateKey"), null,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0,
+				0, 0, 0, true, true, false, null, null, null, null,
+				_serviceContext);
 
 			long resourceClassNameId = _portal.getClassNameId(
 				JournalArticle.class);
@@ -406,7 +414,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
 					_serviceContext.getScopeGroupId(), resourceClassNameId,
-					jsonObject.getString("ddmStructureKey"));
+					journalArticleJSONObject.getString("ddmStructureKey"));
 
 			long defaultLayoutPageTemplateEntryId =
 				_getDefaultLayoutPageTemplateEntryId(
@@ -655,16 +663,15 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private String _getDDMTemplateContent(URL url) throws Exception {
+	private String _getContent(String fileName, URL url) throws Exception {
 		String entryPath = url.getPath();
 
-		String ddmTemplateContentPath =
-			entryPath.substring(0, entryPath.lastIndexOf("/") + 1) +
-				"ddm_template.ftl";
+		String contentPath =
+			entryPath.substring(0, entryPath.lastIndexOf("/") + 1) + fileName;
 
-		URL ddmTemplateContentURL = _bundle.getEntry(ddmTemplateContentPath);
+		URL contentURL = _bundle.getEntry(contentPath);
 
-		return StringUtil.read(ddmTemplateContentURL.openStream());
+		return StringUtil.read(contentURL.openStream());
 	}
 
 	private long _getDefaultLayoutPageTemplateEntryId(

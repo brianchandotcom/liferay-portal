@@ -705,19 +705,9 @@ public class CTClosureFactoryImplTest {
 			ParentTableReferenceInfoBuilder<GrandParentTable>
 				parentTableReferenceInfoBuilder) {
 
-			parentTableReferenceInfoBuilder.referenceInnerJoin(
-				fromStep -> {
-					GrandParentTable aliasGrandParentTable =
-						GrandParentTable.INSTANCE.as("aliasGrandParentTable");
-
-					return fromStep.from(
-						GrandParentTable.INSTANCE
-					).innerJoinON(
-						aliasGrandParentTable,
-						aliasGrandParentTable.parentGrandParentId.eq(
-							GrandParentTable.INSTANCE.grandParentId)
-					);
-				});
+			parentTableReferenceInfoBuilder.parentColumnReference(
+				GrandParentTable.INSTANCE.grandParentId,
+				GrandParentTable.INSTANCE.parentGrandParentId);
 		}
 
 		@Override

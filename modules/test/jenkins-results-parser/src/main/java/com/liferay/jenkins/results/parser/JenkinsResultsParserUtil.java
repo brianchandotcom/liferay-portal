@@ -1571,7 +1571,7 @@ public class JenkinsResultsParserUtil {
 		}
 
 		try {
-			JSONObject jsonObject = toJSONObject(sb.toString());
+			JSONObject jsonObject = toJSONObject(sb.toString(), false);
 
 			return jsonObject.getString("mostAvailableMasterURL");
 		}

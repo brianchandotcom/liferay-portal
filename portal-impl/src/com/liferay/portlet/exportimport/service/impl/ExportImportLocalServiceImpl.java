@@ -287,6 +287,29 @@ public class ExportImportLocalServiceImpl
 	}
 
 	@Override
+	public long importLayoutSetPrototypeInBackground(
+			long userId, ExportImportConfiguration exportImportConfiguration,
+			File file)
+		throws PortalException {
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskManagerUtil.addBackgroundTask(
+				userId, exportImportConfiguration.getGroupId(),
+				exportImportConfiguration.getName(),
+				BackgroundTaskExecutorNames.
+					LAYOUT_SET_PROTOTYPE_IMPORT_BACKGROUND_TASK_EXECUTOR,
+				HashMapBuilder.<String, Serializable>put(
+					"exportImportConfigurationId",
+					exportImportConfiguration.getExportImportConfigurationId()
+				).build(),
+				new ServiceContext());
+
+		backgroundTask.addAttachment(userId, file.getName(), file);
+
+		return backgroundTask.getBackgroundTaskId();
+	}
+
+	@Override
 	public long importLayoutsInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration,
 			File file)

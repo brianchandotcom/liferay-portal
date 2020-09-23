@@ -244,6 +244,11 @@ public class DDMStorageLinkLocalServiceWrapper
 	}
 
 	@Override
+	public DDMStorageLink fetchClassStorageLink(long classPK) {
+		return _ddmStorageLinkLocalService.fetchClassStorageLink(classPK);
+	}
+
+	@Override
 	public DDMStorageLink fetchDDMStorageLink(long storageLinkId) {
 		return _ddmStorageLinkLocalService.fetchDDMStorageLink(storageLinkId);
 	}

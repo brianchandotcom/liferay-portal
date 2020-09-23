@@ -274,43 +274,58 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110708. Can add Grid element into a custom module of anthor one."
+	@description = "This is a test for LPS-110708 and LPS-121112. Can add Grid element into a custom module of anthor one. Assert the height of empty row is greater than 20px after adding element to the resized module of another row."
 	@priority = "3"
 	test AddGridToCustomModuleOfAnotherGrid {
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Layout Elements",
-			fragmentName = "Grid");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
 
-		Click.clickNoWaitForVisible(
-			key_fragmentName = "Grid",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+		task ("Move the third module to the second row") {
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Grid",
+				locator1 = "Fragment#FRAGMENT_HEADER");
 
-		DragAndDrop.dragAndDrop(
-			key_position = "3",
-			locator1 = "PageEditor#GRID_COLUMN_RESIZER",
-			value1 = "530,0");
+			DragAndDrop.dragAndDrop(
+				key_position = "3",
+				locator1 = "PageEditor#GRID_COLUMN_RESIZER",
+				value1 = "530,0");
 
-		PageEditor.waitForAutoSave();
+			PageEditor.waitForAutoSave();
 
-		AssertVisible(locator1 = "PageEditor#GRID_COLUMN_FIRST_RESIZER");
+			AssertVisible(locator1 = "PageEditor#GRID_COLUMN_FIRST_RESIZER");
+		}
 
-		PageEditor.addElementToColumn(
-			collectionName = "Layout Elements",
-			columnNumber = "3",
-			fragmentName = "Grid",
-			navTab = "Fragments");
+		task ("Add a Grid to the third module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Layout Elements",
+				columnNumber = "3",
+				fragmentName = "Grid",
+				navTab = "Fragments");
 
-		PageEditor.waitForAutoSave();
+			PageEditor.waitForAutoSave();
 
-		AssertElementPresent(
-			key_columnNumber = "3",
-			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
-			key_position = "1",
-			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+			AssertElementPresent(
+				key_columnNumber = "3",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+
+		task ("Assert the height of the first module is greater than 20px") {
+			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')]");
+			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
+
+			TestUtils.isGreaterThan(
+				actual = "${moduleHeight}",
+				expected = "20");
+		}
 	}
 
 	@description = "This is a test for LPS-102887. A user can access content in a web content display widget through content panel"

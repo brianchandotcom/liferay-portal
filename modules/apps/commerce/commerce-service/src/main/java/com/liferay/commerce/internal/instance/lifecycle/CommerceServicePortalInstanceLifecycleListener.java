@@ -124,21 +124,21 @@ public class CommerceServicePortalInstanceLifecycleListener
 		}
 	}
 
-	private static final String _COMMERCE_CART_RESOURCE_CLASS_NAME =
+	private static final String _CLASS_NAME_COMMERCE_CART_RESOURCE =
 		"com.liferay.commerce.frontend.internal.cart.CommerceCartResource";
 
-	private static final String _COMMERCE_HEADLESS_CART_RESOURCE_CLASS_NAME =
+	private static final String _CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE =
 		"com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0." +
 			"CartResourceImpl";
 
-	private static final String _COMMERCE_SAP_ENTRY_NAME = "COMMERCE_DEFAULT";
-
-	private static final String _COMMERCE_SEARCH_RESOURCE_CLASS_NAME =
+	private static final String _CLASS_NAME_COMMERCE_SEARCH_RESOURCE =
 		"com.liferay.commerce.frontend.internal.search.CommerceSearchResource";
+
+	private static final String _SAP_ENTRY_NAME = "COMMERCE_DEFAULT";
 
 	private static final String[][] _SAP_ENTRY_OBJECT_ARRAYS = {
 		{
-			_COMMERCE_SAP_ENTRY_NAME,
+			_SAP_ENTRY_NAME,
 			StringBundler.concat(
 				CommerceAccountService.class.getName(), "#getCommerceAccount\n",
 				CommerceCountryService.class.getName(),
@@ -159,9 +159,9 @@ public class CommerceServicePortalInstanceLifecycleListener
 				CommerceOrderService.class.getName(), "#fetchCommerceOrder\n",
 				CommerceOrderService.class.getName(), "#getCommerceOrder\n",
 				CommerceRegionService.class.getName(), "#getCommerceRegions\n",
-				_COMMERCE_CART_RESOURCE_CLASS_NAME, "*\n",
-				_COMMERCE_HEADLESS_CART_RESOURCE_CLASS_NAME, "#getCart\n",
-				_COMMERCE_SEARCH_RESOURCE_CLASS_NAME)
+				_CLASS_NAME_COMMERCE_CART_RESOURCE, "*\n",
+				_CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE, "#getCart\n",
+				_CLASS_NAME_COMMERCE_SEARCH_RESOURCE)
 		}
 	};
 

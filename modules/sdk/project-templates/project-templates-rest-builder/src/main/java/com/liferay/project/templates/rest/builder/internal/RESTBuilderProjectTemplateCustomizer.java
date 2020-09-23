@@ -72,8 +72,14 @@ public class RESTBuilderProjectTemplateCustomizer
 
 			relativePath = relativePath.replace(File.separatorChar, ':');
 
-			apiPath = ":" + relativePath + ":" + artifactId + apiPath;
-			clientPath = ":" + relativePath + ":" + artifactId + clientPath;
+			if (relativePath.isEmpty()) {
+				apiPath = ":" + artifactId + apiPath;
+				clientPath = ":" + artifactId + clientPath;
+			}
+			else {
+				apiPath = ":" + relativePath + ":" + artifactId + apiPath;
+				clientPath = ":" + relativePath + ":" + artifactId + clientPath;
+			}
 		}
 
 		Properties properties = archetypeGenerationRequest.getProperties();

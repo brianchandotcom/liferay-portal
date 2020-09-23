@@ -72,7 +72,12 @@ public class ServiceBuilderProjectTemplateCustomizer
 
 			relativePath = relativePath.replace(File.separatorChar, ':');
 
-			apiPath = ":" + relativePath + ":" + artifactId + apiPath;
+			if (relativePath.isEmpty()) {
+				apiPath = ":" + artifactId + apiPath;
+			}
+			else {
+				apiPath = ":" + relativePath + ":" + artifactId + apiPath;
+			}
 		}
 
 		Properties properties = archetypeGenerationRequest.getProperties();

@@ -23,6 +23,8 @@ import java.io.File;
 
 import java.net.URI;
 
+import java.nio.file.Files;
+
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Consumer;
@@ -171,6 +173,39 @@ public class ProjectTemplatesServiceBuilderTest
 				"Expected maven output to include build error. " + mavenOutput,
 				mavenOutput.contains("Exporting an empty package"));
 		}
+	}
+
+	@Test
+	public void testBuildTemplateServiceBuilderWorkspaceRelativePath()
+		throws Exception {
+
+		String liferayVersion = getDefaultLiferayVersion();
+
+		String name = "sample";
+
+		String serviceProjectName = name + "-service";
+
+		String template = "service-builder";
+
+		File gradleWorkspaceDir = buildWorkspace(
+			temporaryFolder, "gradle", "gradleWS", liferayVersion,
+			mavenExecutor);
+
+		File gradlePropertiesFile = new File(
+			gradleWorkspaceDir + "gradle.properties");
+
+		Files.deleteIfExists(gradlePropertiesFile.toPath());
+
+		buildTemplateWithGradle(
+			gradleWorkspaceDir, template, name, "--liferay-version",
+			liferayVersion);
+
+		File serviceBuildFile = new File(
+			gradleWorkspaceDir,
+			name + "/" + serviceProjectName + "/build.gradle");
+
+		testContains(
+			serviceBuildFile, "project(\":" + name + ":" + name + "-api");
 	}
 
 	@Test

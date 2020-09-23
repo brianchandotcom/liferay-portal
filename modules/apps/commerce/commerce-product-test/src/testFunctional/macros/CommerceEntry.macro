@@ -861,7 +861,7 @@ definition {
 	macro viewProductOptions {
 		Click(locator1 = "CommerceEntry#PRODUCT_DETAIL_VIEW_OPTION");
 
-		SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",

@@ -92,7 +92,7 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 	public String getSearchActionURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter("navigation", "file_entry_metadata_sets");
 		portletURL.setParameter(
 			"tabs1",
 			ParamUtil.getString(liferayPortletRequest, "tabs1", "structures"));

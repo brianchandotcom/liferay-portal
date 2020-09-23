@@ -159,8 +159,8 @@ if (commerceOrder != null) {
 				<div class="row">
 					<div class="col-md-12">
 						<c:if test="<%= billingCommerceAddress != null %>">
-							<%= billingCommerceAddress.getStreet1() %><br />
-							<%= billingCommerceAddress.getCity() + StringPool.SPACE + billingCommerceAddress.getZip() %>
+							<%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %><br />
+							<%= HtmlUtil.escape(billingCommerceAddress.getCity() + StringPool.SPACE + billingCommerceAddress.getZip()) %>
 						</c:if>
 					</div>
 				</div>
@@ -175,8 +175,8 @@ if (commerceOrder != null) {
 				<div class="row">
 					<div class="col-md-12">
 						<c:if test="<%= shippingCommerceAddress != null %>">
-							<%= shippingCommerceAddress.getStreet1() %><br />
-							<%= shippingCommerceAddress.getCity() + StringPool.SPACE + shippingCommerceAddress.getZip() %>
+							<%= HtmlUtil.escape(shippingCommerceAddress.getStreet1()) %><br />
+							<%= HtmlUtil.escape(shippingCommerceAddress.getCity() + StringPool.SPACE + shippingCommerceAddress.getZip()) %>
 						</c:if>
 					</div>
 				</div>

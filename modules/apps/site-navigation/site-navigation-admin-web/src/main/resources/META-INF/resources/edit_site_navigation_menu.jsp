@@ -25,9 +25,18 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuName());
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/site-navigation-admin-web/site_navigation_menu_editor/components/App.css") %>" rel="stylesheet" />
-</liferay-util:html-top>
+<c:choose>
+	<c:when test="<%= FFSiteNavigationMenuConfigurationUtil.reactEnabled() %>">
+		<liferay-util:html-top>
+			<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/site-navigation-admin-web/site_navigation_menu_editor/components/App.css") %>" rel="stylesheet" />
+		</liferay-util:html-top>
 
-<react:component componentId="siteNavigationMenuEditor" module="site_navigation_menu_editor/index"
-props="<%= siteNavigationAdminDisplayContext.getSiteNavigationContext() %>" />
+		<react:component
+			componentId="siteNavigationMenuEditor"
+			module="site_navigation_menu_editor/index"
+			props="<%= siteNavigationAdminDisplayContext.getSiteNavigationContext() %>"
+		/>
+	</c:when>
+	<c:otherwise>
+	</c:otherwise>
+</c:choose>

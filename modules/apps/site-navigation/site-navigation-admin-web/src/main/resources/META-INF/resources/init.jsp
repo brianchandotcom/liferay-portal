@@ -46,6 +46,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.site.navigation.admin.web.internal.configuration.FFSiteNavigationMenuConfigurationUtil" %><%@
 page import="com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminWebKeys" %><%@
 page import="com.liferay.site.navigation.admin.web.internal.display.context.SiteNavigationAdminDisplayContext" %><%@
 page import="com.liferay.site.navigation.admin.web.internal.display.context.SiteNavigationAdminManagementToolbarDisplayContext" %><%@

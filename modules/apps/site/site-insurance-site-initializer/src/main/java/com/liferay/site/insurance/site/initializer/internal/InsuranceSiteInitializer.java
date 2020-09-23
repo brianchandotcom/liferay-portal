@@ -274,16 +274,21 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addDDMTemplates() throws Exception {
-		JSONArray ddmTemplatesJSONArray = JSONFactoryUtil.createJSONArray(
-			_readFile("/ddm-templates/ddm_templates.json"));
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			_PATH + "/ddm-templates", "ddm_template.json", true);
 
-		for (int i = 0; i < ddmTemplatesJSONArray.length(); i++) {
-			JSONObject jsonObject = ddmTemplatesJSONArray.getJSONObject(i);
+		long resourceClassNameId = _portal.getClassNameId(JournalArticle.class);
 
-			String ddmStructureKey = jsonObject.getString("ddmStructureKey");
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
 
-			long resourceClassNameId = _portal.getClassNameId(
-				JournalArticle.class);
+			String content = StringUtil.read(url.openStream());
+
+			JSONObject ddmTemplateJSONObject = JSONFactoryUtil.createJSONObject(
+				content);
+
+			String ddmStructureKey = ddmTemplateJSONObject.getString(
+				"ddmStructureKey");
 
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
@@ -294,14 +299,14 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(DDMStructure.class),
 				ddmStructure.getStructureId(), resourceClassNameId,
-				jsonObject.getString("ddmTemplateKey"),
+				ddmTemplateJSONObject.getString("ddmTemplateKey"),
 				HashMapBuilder.put(
-					LocaleUtil.getSiteDefault(), jsonObject.getString("name")
+					LocaleUtil.getSiteDefault(),
+					ddmTemplateJSONObject.getString("name")
 				).build(),
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-				TemplateConstants.LANG_TYPE_FTL,
-				_readFile(jsonObject.getString("contentPath")), false, false,
-				null, null, _serviceContext);
+				TemplateConstants.LANG_TYPE_FTL, _getDDMTemplateContent(url),
+				false, false, null, null, _serviceContext);
 		}
 	}
 
@@ -648,6 +653,18 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		catch (Exception exception) {
 			throw new Exception(exception);
 		}
+	}
+
+	private String _getDDMTemplateContent(URL url) throws Exception {
+		String entryPath = url.getPath();
+
+		String ddmTemplateContentPath =
+			entryPath.substring(0, entryPath.lastIndexOf("/") + 1) +
+				"ddm_template.ftl";
+
+		URL ddmTemplateContentURL = _bundle.getEntry(ddmTemplateContentPath);
+
+		return StringUtil.read(ddmTemplateContentURL.openStream());
 	}
 
 	private long _getDefaultLayoutPageTemplateEntryId(

@@ -14,13 +14,15 @@
 
 package com.liferay.commerce.application.list.constants;
 
+import com.liferay.application.list.constants.PanelCategoryKeys;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommercePanelCategoryKeys {
 
-	public static final String COMMERCE = "commerce";
+	public static final String COMMERCE = PanelCategoryKeys.COMMERCE;
 
 	public static final String COMMERCE_INVENTORY_MANAGEMENT =
 		"commerce.inventory_management";

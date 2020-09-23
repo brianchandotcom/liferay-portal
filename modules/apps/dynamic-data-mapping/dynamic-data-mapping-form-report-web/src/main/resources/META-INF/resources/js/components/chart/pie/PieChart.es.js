@@ -109,7 +109,16 @@ export default ({data, height, totalEntries, width}) => {
 						paddingAngle={0}
 					>
 						{data.map((_, index) => (
-							<Cell fill={colors(index)} key={index} />
+							<Cell
+								fill={colors(index)}
+								fillOpacity={
+									activeIndex !== null &&
+									activeIndex !== index
+										? 0.5
+										: 1
+								}
+								key={index}
+							/>
 						))}
 					</Pie>
 

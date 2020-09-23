@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
+import com.liferay.saml.runtime.exception.AuthnAgeException;
 import com.liferay.saml.runtime.exception.SubjectException;
 
 import java.io.IOException;
@@ -67,8 +68,21 @@ public class SamlBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 		HttpSession session = originalHttpServletRequest.getSession();
 
 		String error = (String)session.getAttribute(SamlWebKeys.SAML_SSO_ERROR);
+		String samlSsoErrorEntityId = (String)session.getAttribute(
+			com.liferay.saml.web.internal.constants.SamlWebKeys.
+				SAML_SSO_ERROR_ENTITY_ID);
+		String samlSubjectNameId = (String)session.getAttribute(
+			SamlWebKeys.SAML_SUBJECT_NAME_ID);
 
-		if (Validator.isBlank(error)) {
+		session.removeAttribute(SamlWebKeys.SAML_SSO_ERROR);
+		session.removeAttribute(
+			com.liferay.saml.web.internal.constants.SamlWebKeys.
+				SAML_SSO_ERROR_ENTITY_ID);
+		session.removeAttribute(SamlWebKeys.SAML_SUBJECT_NAME_ID);
+
+		if (Validator.isBlank(error) || Validator.isBlank(samlSubjectNameId) ||
+			Validator.isBlank(samlSsoErrorEntityId)) {
+
 			return;
 		}
 
@@ -76,17 +90,12 @@ public class SamlBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 			SessionMessages.add(httpServletRequest, error);
 		}
 
-		String samlSubjectNameId = (String)session.getAttribute(
-			SamlWebKeys.SAML_SUBJECT_NAME_ID);
-
-		if (Validator.isBlank(samlSubjectNameId)) {
-			return;
-		}
-
+		httpServletRequest.setAttribute(
+			com.liferay.saml.web.internal.constants.SamlWebKeys.
+				SAML_SSO_ERROR_ENTITY_ID,
+			samlSsoErrorEntityId);
 		httpServletRequest.setAttribute(
 			SamlWebKeys.SAML_SUBJECT_NAME_ID, samlSubjectNameId);
-
-		session.removeAttribute(SamlWebKeys.SAML_SUBJECT_NAME_ID);
 
 		super.include(httpServletRequest, httpServletResponse, key);
 	}
@@ -117,6 +126,7 @@ public class SamlBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final String[] _ERRORS = {
+		AuthnAgeException.class.getSimpleName(),
 		ContactNameException.class.getSimpleName(),
 		MustNotUseCompanyMx.class.getSimpleName(),
 		PrincipalException.MustBeAuthenticated.class.getSimpleName(),

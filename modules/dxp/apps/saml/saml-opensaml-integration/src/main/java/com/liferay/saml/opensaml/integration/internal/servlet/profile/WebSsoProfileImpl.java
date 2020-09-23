@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -930,16 +931,16 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSelfEntityContext.getEntityId(), assertionConsumerService,
 			singleSignOnService, nameIDPolicy);
 
-		HttpSession httpSession = httpServletRequest.getSession();
+		if (samlSpIdpConnection.isForceAuthn() ||
+			GetterUtil.getBoolean(
+				httpServletRequest.getAttribute(
+					SamlWebKeys.FORCE_REAUTHENTICATION),
+				Boolean.FALSE)) {
 
-		String error = (String)httpSession.getAttribute(
-			SamlWebKeys.SAML_SSO_ERROR);
-
-		if (Validator.isBlank(error)) {
-			authnRequest.setForceAuthn(samlSpIdpConnection.isForceAuthn());
+			authnRequest.setForceAuthn(true);
 		}
 		else {
-			authnRequest.setForceAuthn(true);
+			authnRequest.setForceAuthn(false);
 		}
 
 		authnRequest.setID(generateIdentifier(20));

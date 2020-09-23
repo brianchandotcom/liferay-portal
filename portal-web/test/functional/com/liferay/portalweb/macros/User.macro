@@ -895,6 +895,41 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro assignUserGroupCP {
+		UserNavigator.gotoMemberships();
+
+		AssertClick(
+			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_SELECT_LINK",
+			value1 = "Select");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#SELECT_USER_GROUP");
+
+		AssertTextEquals(
+			key_userGroupName = "${userGroupName}",
+			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_TABLE_NAME",
+			value1 = "${userGroupName}");
+
+		AssertClick(
+			key_userGroupName = "${userGroupName}",
+			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_CHOOSE_BUTTON",
+			value1 = "Choose");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			key_userGroupName = "${userGroupName}",
+			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_TABLE_NAME",
+			value1 = "${userGroupName}");
+
+		AssertElementPresent(
+			key_userGroupName = "${userGroupName}",
+			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_TABLE_REMOVE");
+
+		PortletEntry.save();
+	}
+
 	macro attemptImpersonateCP {
 		Search.searchCP(searchTerm = "${userScreenName}");
 

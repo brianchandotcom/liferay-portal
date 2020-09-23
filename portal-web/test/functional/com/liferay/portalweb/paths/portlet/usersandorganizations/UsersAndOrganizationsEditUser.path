@@ -185,6 +185,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_GROUPS_TABLE_REMOVE</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUPS_CHOOSE_BUTTON</td>
+	<td>//*[*[normalize-space(text())='${key_userGroupName}']]/..//following-sibling::td/*[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUPS_SELECT_LINK</td>
+	<td>//a[contains(@id,'openUserGroupsLink')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

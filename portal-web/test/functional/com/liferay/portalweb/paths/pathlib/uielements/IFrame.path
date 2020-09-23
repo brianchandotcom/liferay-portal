@@ -229,6 +229,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_USER_GROUP</td>
+	<td>//iframe[@title='Select User Group']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_USER_SITES</td>
 	<td>//iframe[contains(@id,'selectSite_iframe_')]</td>
 	<td></td>

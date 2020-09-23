@@ -74,6 +74,7 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.AssertionException;
 import com.liferay.saml.runtime.exception.AudienceException;
+import com.liferay.saml.runtime.exception.AuthnAgeException;
 import com.liferay.saml.runtime.exception.DestinationException;
 import com.liferay.saml.runtime.exception.ExpiredException;
 import com.liferay.saml.runtime.exception.InResponseToException;
@@ -235,7 +236,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			String error = StringPool.BLANK;
 
-			if (exception1 instanceof ContactNameException) {
+			if (exception1 instanceof AuthnAgeException) {
+				error = AuthnAgeException.class.getSimpleName();
+			}
+			else if (exception1 instanceof ContactNameException) {
 				error = ContactNameException.class.getSimpleName();
 			}
 			else if (exception1 instanceof SubjectException) {
@@ -837,9 +841,23 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SamlSpSession samlSpSession = getSamlSpSession(httpServletRequest);
 		HttpSession httpSession = httpServletRequest.getSession();
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
 		List<AuthnStatement> authnStatements = assertion.getAuthnStatements();
 
 		AuthnStatement authnStatement = authnStatements.get(0);
+
+		SamlSpIdpConnection samlSpIdpConnection =
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+				CompanyThreadLocal.getCompanyId(),
+				samlPeerEntityContext.getEntityId());
+
+		if (Validator.isNull(samlResponse.getInResponseTo()) &&
+			samlSpIdpConnection.isForceAuthn()) {
+
+			throw new AuthnAgeException();
+		}
 
 		String sessionIndex = authnStatement.getSessionIndex();
 

@@ -36,6 +36,21 @@ definition {
 		fail("${message}");
 	}
 
+	macro isGreaterThan {
+		echo("${expected}");
+
+		echo("${actual}");
+
+		var result = MathUtil.isGreaterThan("${actual}", "${expected}");
+
+		if ("${result}" == "true") {
+			echo("PASSED");
+		}
+		else {
+			TestUtils.fail(message = "FAILED: actual &apos;${actual}&apos; is less than or equals to expected &apos;${expected}&apos;");
+		}
+	}
+
 	macro pass {
 		if (!(isSet(message))) {
 			var message = "PASS";

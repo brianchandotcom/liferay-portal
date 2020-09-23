@@ -1163,7 +1163,7 @@ definition {
 
 	@description = "This is a test for LPS-101258. Can save a composition containing a fragment that has a Drop Zone area as fragment."
 	@priority = "4"
-	test SaveFragmentCompositionWithDropZoneInFrgament {
+	test SaveFragmentCompositionWithDropZoneInFragment {
 		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");

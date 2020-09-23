@@ -217,10 +217,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-109590. Assert no Section fragment is outside when add a Row fragment to content page. Can nest a Row fragment or multiple Row inside one column of another one."
+	@description = "This is a test for LPS-109590. Assert no Container element is outside when add a Grid element to content page. Can nest a Grid fragment or multiple Grid inside one module of another one."
 	@priority = "5"
-	test AddRowToColumnOfAnotherRow {
-		task ("Assert add Row without Section") {
+	test AddGridToColumnOfAnotherGrid {
+		task ("Assert add Grid without Container") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -235,7 +235,7 @@ definition {
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 		}
 
-		task ("Assert add the second Row in column 1 of the first Row") {
+		task ("Assert add the second Grid in module 1 of the first Grid") {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Layout Elements",
 				key_columnNumber = "1",
@@ -254,7 +254,7 @@ definition {
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 
-		task ("Assert add the third Row in column 1 of the first Row") {
+		task ("Assert add the third Grid in module 1 of the first Grid") {
 			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
 				key_collectionName = "Layout Elements",
 				key_columnNumber = "1",
@@ -274,9 +274,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110708. Can add Row element into a custom module of anthor one."
+	@description = "This is a test for LPS-110708. Can add Grid element into a custom module of anthor one."
 	@priority = "3"
-	test AddRowToCustomModuleOfAnotherRow {
+	test AddGridToCustomModuleOfAnotherGrid {
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");

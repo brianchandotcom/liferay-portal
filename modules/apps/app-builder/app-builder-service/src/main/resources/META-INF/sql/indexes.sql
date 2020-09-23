@@ -1,6 +1,8 @@
 create index IX_F1A2CD76 on AppBuilderApp (companyId, active_, scope[$COLUMN_LENGTH:75$]);
 create index IX_EE2A6D09 on AppBuilderApp (companyId, scope[$COLUMN_LENGTH:75$]);
 create index IX_4F325E62 on AppBuilderApp (ddmStructureId);
+create index IX_8EF3F4EC on AppBuilderApp (ddmStructureLayoutId);
+create index IX_F0E377EA on AppBuilderApp (deDataListViewId);
 create index IX_EAB1C0E4 on AppBuilderApp (groupId, companyId, ddmStructureId, scope[$COLUMN_LENGTH:75$]);
 create index IX_AB656D87 on AppBuilderApp (groupId, scope[$COLUMN_LENGTH:75$]);
 create index IX_EC1E021 on AppBuilderApp (uuid_[$COLUMN_LENGTH:75$], companyId);

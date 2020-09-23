@@ -315,6 +315,14 @@ public interface AppBuilderAppLocalService
 		long groupId, String scope, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AppBuilderApp> getAppBuilderAppsByDDMStructureLayoutId(
+		long ddmStructureLayoutId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AppBuilderApp> getAppBuilderAppsByDEDataListViewId(
+		long deDataListViewId);
+
 	/**
 	 * Returns all the app builder apps matching the UUID and company.
 	 *

@@ -247,6 +247,20 @@ public class AppBuilderAppPersistenceTest {
 	}
 
 	@Test
+	public void testCountByDDMStructureLayoutId() throws Exception {
+		_persistence.countByDDMStructureLayoutId(RandomTestUtil.nextLong());
+
+		_persistence.countByDDMStructureLayoutId(0L);
+	}
+
+	@Test
+	public void testCountByDEDataListViewId() throws Exception {
+		_persistence.countByDEDataListViewId(RandomTestUtil.nextLong());
+
+		_persistence.countByDEDataListViewId(0L);
+	}
+
+	@Test
 	public void testCountByG_S() throws Exception {
 		_persistence.countByG_S(RandomTestUtil.nextLong(), "");
 

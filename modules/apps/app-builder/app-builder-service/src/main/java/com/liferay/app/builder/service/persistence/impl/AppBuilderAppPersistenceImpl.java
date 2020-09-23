@@ -3337,6 +3337,1028 @@ public class AppBuilderAppPersistenceImpl
 	private static final String _FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2 =
 		"appBuilderApp.ddmStructureId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByDDMStructureLayoutId;
+	private FinderPath _finderPathWithoutPaginationFindByDDMStructureLayoutId;
+	private FinderPath _finderPathCountByDDMStructureLayoutId;
+
+	/**
+	 * Returns all the app builder apps where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @return the matching app builder apps
+	 */
+	@Override
+	public List<AppBuilderApp> findByDDMStructureLayoutId(
+		long ddmStructureLayoutId) {
+
+		return findByDDMStructureLayoutId(
+			ddmStructureLayoutId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the app builder apps where ddmStructureLayoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps
+	 */
+	@Override
+	public List<AppBuilderApp> findByDDMStructureLayoutId(
+		long ddmStructureLayoutId, int start, int end) {
+
+		return findByDDMStructureLayoutId(
+			ddmStructureLayoutId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where ddmStructureLayoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps
+	 */
+	@Override
+	public List<AppBuilderApp> findByDDMStructureLayoutId(
+		long ddmStructureLayoutId, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return findByDDMStructureLayoutId(
+			ddmStructureLayoutId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where ddmStructureLayoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching app builder apps
+	 */
+	@Override
+	public List<AppBuilderApp> findByDDMStructureLayoutId(
+		long ddmStructureLayoutId, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByDDMStructureLayoutId;
+				finderArgs = new Object[] {ddmStructureLayoutId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByDDMStructureLayoutId;
+			finderArgs = new Object[] {
+				ddmStructureLayoutId, start, end, orderByComparator
+			};
+		}
+
+		List<AppBuilderApp> list = null;
+
+		if (useFinderCache) {
+			list = (List<AppBuilderApp>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AppBuilderApp appBuilderApp : list) {
+					if (ddmStructureLayoutId !=
+							appBuilderApp.getDdmStructureLayoutId()) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_APPBUILDERAPP_WHERE);
+
+			sb.append(
+				_FINDER_COLUMN_DDMSTRUCTURELAYOUTID_DDMSTRUCTURELAYOUTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(AppBuilderAppModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(ddmStructureLayoutId);
+
+				list = (List<AppBuilderApp>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	@Override
+	public AppBuilderApp findByDDMStructureLayoutId_First(
+			long ddmStructureLayoutId,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws NoSuchAppException {
+
+		AppBuilderApp appBuilderApp = fetchByDDMStructureLayoutId_First(
+			ddmStructureLayoutId, orderByComparator);
+
+		if (appBuilderApp != null) {
+			return appBuilderApp;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("ddmStructureLayoutId=");
+		sb.append(ddmStructureLayoutId);
+
+		sb.append("}");
+
+		throw new NoSuchAppException(sb.toString());
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	@Override
+	public AppBuilderApp fetchByDDMStructureLayoutId_First(
+		long ddmStructureLayoutId,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		List<AppBuilderApp> list = findByDDMStructureLayoutId(
+			ddmStructureLayoutId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	@Override
+	public AppBuilderApp findByDDMStructureLayoutId_Last(
+			long ddmStructureLayoutId,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws NoSuchAppException {
+
+		AppBuilderApp appBuilderApp = fetchByDDMStructureLayoutId_Last(
+			ddmStructureLayoutId, orderByComparator);
+
+		if (appBuilderApp != null) {
+			return appBuilderApp;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("ddmStructureLayoutId=");
+		sb.append(ddmStructureLayoutId);
+
+		sb.append("}");
+
+		throw new NoSuchAppException(sb.toString());
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	@Override
+	public AppBuilderApp fetchByDDMStructureLayoutId_Last(
+		long ddmStructureLayoutId,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		int count = countByDDMStructureLayoutId(ddmStructureLayoutId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AppBuilderApp> list = findByDDMStructureLayoutId(
+			ddmStructureLayoutId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	@Override
+	public AppBuilderApp[] findByDDMStructureLayoutId_PrevAndNext(
+			long appBuilderAppId, long ddmStructureLayoutId,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws NoSuchAppException {
+
+		AppBuilderApp appBuilderApp = findByPrimaryKey(appBuilderAppId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AppBuilderApp[] array = new AppBuilderAppImpl[3];
+
+			array[0] = getByDDMStructureLayoutId_PrevAndNext(
+				session, appBuilderApp, ddmStructureLayoutId, orderByComparator,
+				true);
+
+			array[1] = appBuilderApp;
+
+			array[2] = getByDDMStructureLayoutId_PrevAndNext(
+				session, appBuilderApp, ddmStructureLayoutId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AppBuilderApp getByDDMStructureLayoutId_PrevAndNext(
+		Session session, AppBuilderApp appBuilderApp, long ddmStructureLayoutId,
+		OrderByComparator<AppBuilderApp> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_APPBUILDERAPP_WHERE);
+
+		sb.append(_FINDER_COLUMN_DDMSTRUCTURELAYOUTID_DDMSTRUCTURELAYOUTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(AppBuilderAppModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(ddmStructureLayoutId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						appBuilderApp)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<AppBuilderApp> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the app builder apps where ddmStructureLayoutId = &#63; from the database.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 */
+	@Override
+	public void removeByDDMStructureLayoutId(long ddmStructureLayoutId) {
+		for (AppBuilderApp appBuilderApp :
+				findByDDMStructureLayoutId(
+					ddmStructureLayoutId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(appBuilderApp);
+		}
+	}
+
+	/**
+	 * Returns the number of app builder apps where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @return the number of matching app builder apps
+	 */
+	@Override
+	public int countByDDMStructureLayoutId(long ddmStructureLayoutId) {
+		FinderPath finderPath = _finderPathCountByDDMStructureLayoutId;
+
+		Object[] finderArgs = new Object[] {ddmStructureLayoutId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_APPBUILDERAPP_WHERE);
+
+			sb.append(
+				_FINDER_COLUMN_DDMSTRUCTURELAYOUTID_DDMSTRUCTURELAYOUTID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(ddmStructureLayoutId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_DDMSTRUCTURELAYOUTID_DDMSTRUCTURELAYOUTID_2 =
+			"appBuilderApp.ddmStructureLayoutId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByDEDataListViewId;
+	private FinderPath _finderPathWithoutPaginationFindByDEDataListViewId;
+	private FinderPath _finderPathCountByDEDataListViewId;
+
+	/**
+	 * Returns all the app builder apps where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @return the matching app builder apps
+	 */
+	@Override
+	public List<AppBuilderApp> findByDEDataListViewId(long deDataListViewId) {
+		return findByDEDataListViewId(
+			deDataListViewId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the app builder apps where deDataListViewId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps
+	 */
+	@Override
+	public List<AppBuilderApp> findByDEDataListViewId(
+		long deDataListViewId, int start, int end) {
+
+		return findByDEDataListViewId(deDataListViewId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where deDataListViewId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps
+	 */
+	@Override
+	public List<AppBuilderApp> findByDEDataListViewId(
+		long deDataListViewId, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return findByDEDataListViewId(
+			deDataListViewId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where deDataListViewId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching app builder apps
+	 */
+	@Override
+	public List<AppBuilderApp> findByDEDataListViewId(
+		long deDataListViewId, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByDEDataListViewId;
+				finderArgs = new Object[] {deDataListViewId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByDEDataListViewId;
+			finderArgs = new Object[] {
+				deDataListViewId, start, end, orderByComparator
+			};
+		}
+
+		List<AppBuilderApp> list = null;
+
+		if (useFinderCache) {
+			list = (List<AppBuilderApp>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AppBuilderApp appBuilderApp : list) {
+					if (deDataListViewId !=
+							appBuilderApp.getDeDataListViewId()) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_APPBUILDERAPP_WHERE);
+
+			sb.append(_FINDER_COLUMN_DEDATALISTVIEWID_DEDATALISTVIEWID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(AppBuilderAppModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(deDataListViewId);
+
+				list = (List<AppBuilderApp>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	@Override
+	public AppBuilderApp findByDEDataListViewId_First(
+			long deDataListViewId,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws NoSuchAppException {
+
+		AppBuilderApp appBuilderApp = fetchByDEDataListViewId_First(
+			deDataListViewId, orderByComparator);
+
+		if (appBuilderApp != null) {
+			return appBuilderApp;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("deDataListViewId=");
+		sb.append(deDataListViewId);
+
+		sb.append("}");
+
+		throw new NoSuchAppException(sb.toString());
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	@Override
+	public AppBuilderApp fetchByDEDataListViewId_First(
+		long deDataListViewId,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		List<AppBuilderApp> list = findByDEDataListViewId(
+			deDataListViewId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	@Override
+	public AppBuilderApp findByDEDataListViewId_Last(
+			long deDataListViewId,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws NoSuchAppException {
+
+		AppBuilderApp appBuilderApp = fetchByDEDataListViewId_Last(
+			deDataListViewId, orderByComparator);
+
+		if (appBuilderApp != null) {
+			return appBuilderApp;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("deDataListViewId=");
+		sb.append(deDataListViewId);
+
+		sb.append("}");
+
+		throw new NoSuchAppException(sb.toString());
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	@Override
+	public AppBuilderApp fetchByDEDataListViewId_Last(
+		long deDataListViewId,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		int count = countByDEDataListViewId(deDataListViewId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AppBuilderApp> list = findByDEDataListViewId(
+			deDataListViewId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set where deDataListViewId = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param deDataListViewId the de data list view ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	@Override
+	public AppBuilderApp[] findByDEDataListViewId_PrevAndNext(
+			long appBuilderAppId, long deDataListViewId,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws NoSuchAppException {
+
+		AppBuilderApp appBuilderApp = findByPrimaryKey(appBuilderAppId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AppBuilderApp[] array = new AppBuilderAppImpl[3];
+
+			array[0] = getByDEDataListViewId_PrevAndNext(
+				session, appBuilderApp, deDataListViewId, orderByComparator,
+				true);
+
+			array[1] = appBuilderApp;
+
+			array[2] = getByDEDataListViewId_PrevAndNext(
+				session, appBuilderApp, deDataListViewId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AppBuilderApp getByDEDataListViewId_PrevAndNext(
+		Session session, AppBuilderApp appBuilderApp, long deDataListViewId,
+		OrderByComparator<AppBuilderApp> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_APPBUILDERAPP_WHERE);
+
+		sb.append(_FINDER_COLUMN_DEDATALISTVIEWID_DEDATALISTVIEWID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(AppBuilderAppModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(deDataListViewId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						appBuilderApp)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<AppBuilderApp> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the app builder apps where deDataListViewId = &#63; from the database.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 */
+	@Override
+	public void removeByDEDataListViewId(long deDataListViewId) {
+		for (AppBuilderApp appBuilderApp :
+				findByDEDataListViewId(
+					deDataListViewId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(appBuilderApp);
+		}
+	}
+
+	/**
+	 * Returns the number of app builder apps where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @return the number of matching app builder apps
+	 */
+	@Override
+	public int countByDEDataListViewId(long deDataListViewId) {
+		FinderPath finderPath = _finderPathCountByDEDataListViewId;
+
+		Object[] finderArgs = new Object[] {deDataListViewId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_APPBUILDERAPP_WHERE);
+
+			sb.append(_FINDER_COLUMN_DEDATALISTVIEWID_DEDATALISTVIEWID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(deDataListViewId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_DEDATALISTVIEWID_DEDATALISTVIEWID_2 =
+			"appBuilderApp.deDataListViewId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
 	private FinderPath _finderPathCountByG_S;
@@ -8939,6 +9961,45 @@ public class AppBuilderAppPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDMStructureId",
 			new String[] {Long.class.getName()},
 			new String[] {"ddmStructureId"}, false);
+
+		_finderPathWithPaginationFindByDDMStructureLayoutId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByDDMStructureLayoutId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"ddmStructureLayoutId"}, true);
+
+		_finderPathWithoutPaginationFindByDDMStructureLayoutId =
+			_createFinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByDDMStructureLayoutId",
+				new String[] {Long.class.getName()},
+				new String[] {"ddmStructureLayoutId"}, true);
+
+		_finderPathCountByDDMStructureLayoutId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByDDMStructureLayoutId", new String[] {Long.class.getName()},
+			new String[] {"ddmStructureLayoutId"}, false);
+
+		_finderPathWithPaginationFindByDEDataListViewId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDEDataListViewId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"deDataListViewId"}, true);
+
+		_finderPathWithoutPaginationFindByDEDataListViewId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDEDataListViewId",
+			new String[] {Long.class.getName()},
+			new String[] {"deDataListViewId"}, true);
+
+		_finderPathCountByDEDataListViewId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByDEDataListViewId", new String[] {Long.class.getName()},
+			new String[] {"deDataListViewId"}, false);
 
 		_finderPathWithPaginationFindByG_S = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",

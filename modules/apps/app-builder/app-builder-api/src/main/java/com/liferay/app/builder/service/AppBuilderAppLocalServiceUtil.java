@@ -403,6 +403,20 @@ public class AppBuilderAppLocalServiceUtil {
 			groupId, scope, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getAppBuilderAppsByDDMStructureLayoutId(long ddmStructureLayoutId) {
+
+		return getService().getAppBuilderAppsByDDMStructureLayoutId(
+			ddmStructureLayoutId);
+	}
+
+	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getAppBuilderAppsByDEDataListViewId(long deDataListViewId) {
+
+		return getService().getAppBuilderAppsByDEDataListViewId(
+			deDataListViewId);
+	}
+
 	/**
 	 * Returns all the app builder apps matching the UUID and company.
 	 *

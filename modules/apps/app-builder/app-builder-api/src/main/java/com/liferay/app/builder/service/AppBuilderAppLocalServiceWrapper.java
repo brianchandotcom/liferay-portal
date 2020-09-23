@@ -428,6 +428,22 @@ public class AppBuilderAppLocalServiceWrapper
 			groupId, scope, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getAppBuilderAppsByDDMStructureLayoutId(long ddmStructureLayoutId) {
+
+		return _appBuilderAppLocalService.
+			getAppBuilderAppsByDDMStructureLayoutId(ddmStructureLayoutId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getAppBuilderAppsByDEDataListViewId(long deDataListViewId) {
+
+		return _appBuilderAppLocalService.getAppBuilderAppsByDEDataListViewId(
+			deDataListViewId);
+	}
+
 	/**
 	 * Returns all the app builder apps matching the UUID and company.
 	 *

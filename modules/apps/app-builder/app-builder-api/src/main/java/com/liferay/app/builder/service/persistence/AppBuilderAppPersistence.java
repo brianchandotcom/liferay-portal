@@ -884,6 +884,294 @@ public interface AppBuilderAppPersistence
 	public int countByDDMStructureId(long ddmStructureId);
 
 	/**
+	 * Returns all the app builder apps where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @return the matching app builder apps
+	 */
+	public java.util.List<AppBuilderApp> findByDDMStructureLayoutId(
+		long ddmStructureLayoutId);
+
+	/**
+	 * Returns a range of all the app builder apps where ddmStructureLayoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps
+	 */
+	public java.util.List<AppBuilderApp> findByDDMStructureLayoutId(
+		long ddmStructureLayoutId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the app builder apps where ddmStructureLayoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps
+	 */
+	public java.util.List<AppBuilderApp> findByDDMStructureLayoutId(
+		long ddmStructureLayoutId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the app builder apps where ddmStructureLayoutId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching app builder apps
+	 */
+	public java.util.List<AppBuilderApp> findByDDMStructureLayoutId(
+		long ddmStructureLayoutId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first app builder app in the ordered set where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public AppBuilderApp findByDDMStructureLayoutId_First(
+			long ddmStructureLayoutId,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
+		throws NoSuchAppException;
+
+	/**
+	 * Returns the first app builder app in the ordered set where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public AppBuilderApp fetchByDDMStructureLayoutId_First(
+		long ddmStructureLayoutId,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
+
+	/**
+	 * Returns the last app builder app in the ordered set where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public AppBuilderApp findByDDMStructureLayoutId_Last(
+			long ddmStructureLayoutId,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
+		throws NoSuchAppException;
+
+	/**
+	 * Returns the last app builder app in the ordered set where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public AppBuilderApp fetchByDDMStructureLayoutId_Last(
+		long ddmStructureLayoutId,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	public AppBuilderApp[] findByDDMStructureLayoutId_PrevAndNext(
+			long appBuilderAppId, long ddmStructureLayoutId,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
+		throws NoSuchAppException;
+
+	/**
+	 * Removes all the app builder apps where ddmStructureLayoutId = &#63; from the database.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 */
+	public void removeByDDMStructureLayoutId(long ddmStructureLayoutId);
+
+	/**
+	 * Returns the number of app builder apps where ddmStructureLayoutId = &#63;.
+	 *
+	 * @param ddmStructureLayoutId the ddm structure layout ID
+	 * @return the number of matching app builder apps
+	 */
+	public int countByDDMStructureLayoutId(long ddmStructureLayoutId);
+
+	/**
+	 * Returns all the app builder apps where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @return the matching app builder apps
+	 */
+	public java.util.List<AppBuilderApp> findByDEDataListViewId(
+		long deDataListViewId);
+
+	/**
+	 * Returns a range of all the app builder apps where deDataListViewId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps
+	 */
+	public java.util.List<AppBuilderApp> findByDEDataListViewId(
+		long deDataListViewId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the app builder apps where deDataListViewId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps
+	 */
+	public java.util.List<AppBuilderApp> findByDEDataListViewId(
+		long deDataListViewId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the app builder apps where deDataListViewId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching app builder apps
+	 */
+	public java.util.List<AppBuilderApp> findByDEDataListViewId(
+		long deDataListViewId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first app builder app in the ordered set where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public AppBuilderApp findByDEDataListViewId_First(
+			long deDataListViewId,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
+		throws NoSuchAppException;
+
+	/**
+	 * Returns the first app builder app in the ordered set where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public AppBuilderApp fetchByDEDataListViewId_First(
+		long deDataListViewId,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
+
+	/**
+	 * Returns the last app builder app in the ordered set where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public AppBuilderApp findByDEDataListViewId_Last(
+			long deDataListViewId,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
+		throws NoSuchAppException;
+
+	/**
+	 * Returns the last app builder app in the ordered set where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public AppBuilderApp fetchByDEDataListViewId_Last(
+		long deDataListViewId,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set where deDataListViewId = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param deDataListViewId the de data list view ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	public AppBuilderApp[] findByDEDataListViewId_PrevAndNext(
+			long appBuilderAppId, long deDataListViewId,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
+		throws NoSuchAppException;
+
+	/**
+	 * Removes all the app builder apps where deDataListViewId = &#63; from the database.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 */
+	public void removeByDEDataListViewId(long deDataListViewId);
+
+	/**
+	 * Returns the number of app builder apps where deDataListViewId = &#63;.
+	 *
+	 * @param deDataListViewId the de data list view ID
+	 * @return the number of matching app builder apps
+	 */
+	public int countByDEDataListViewId(long deDataListViewId);
+
+	/**
 	 * Returns all the app builder apps where groupId = &#63; and scope = &#63;.
 	 *
 	 * @param groupId the group ID

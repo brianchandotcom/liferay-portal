@@ -173,24 +173,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _updateDefaultDisplayPageTemplates() {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), "policy",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
-
-		layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), "claim",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
-	}
-
 	@Override
 	public boolean isActive(long companyId) {
 		return true;
@@ -220,10 +202,12 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	private Layout _addContentLayout(
 			JSONObject pageJSONObject, JSONObject pageDefinitionJSONObject,
-			String type, Map<String, String> resourcesMap)
+			Map<String, String> resourcesMap)
 		throws Exception {
 
 		String name = pageJSONObject.getString("name");
+
+		String type = StringUtil.toLowerCase(pageJSONObject.getString("type"));
 
 		Layout layout = _layoutLocalService.addLayout(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
@@ -496,7 +480,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 				layout = _addContentLayout(
 					pageJSONObject,
-					JSONFactoryUtil.createJSONObject(pageDefinition), type,
+					JSONFactoryUtil.createJSONObject(pageDefinition),
 					resourcesMap);
 			}
 			else {
@@ -803,6 +787,24 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(clazz.getClassLoader(), _PATH + fileName);
+	}
+
+	private void _updateDefaultDisplayPageTemplates() {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_serviceContext.getScopeGroupId(), "policy",
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_serviceContext.getScopeGroupId(), "claim",
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
 	}
 
 	private Layout _updateLayoutSettings(

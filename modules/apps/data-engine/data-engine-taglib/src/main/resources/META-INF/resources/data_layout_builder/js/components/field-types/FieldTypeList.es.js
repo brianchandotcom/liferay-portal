@@ -38,10 +38,7 @@ export default ({
 	onDelete,
 	onDoubleClick,
 }) => {
-	const regex = new RegExp(
-		keywords.replace(new RegExp(/[^\w+ ]/g), ''),
-		'ig'
-	);
+	const regex = new RegExp(keywords, 'ig');
 	const fieldTypeList = fieldTypes
 		.filter(({system}) => !system)
 		.filter(({description, label}) => {

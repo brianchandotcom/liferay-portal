@@ -1,6 +1,20 @@
 @import 'atlas-variables';
 
-.page-editor__sidebar__fragments-widgets-panel .form-control-sm {
-	padding-left: 12px;
-	padding-right: 12px;
+.page-editor__sidebar__fragments-widgets-panel {
+	.form-control-sm {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+	.sheet-subtitle {
+		color: $secondary;
+		line-height: unset;
+	}
+
+	.collapse-icon {
+		border: 0;
+		font-size: 0.7rem;
+		height: 2rem;
+		margin-bottom: 4px;
+	}
 }

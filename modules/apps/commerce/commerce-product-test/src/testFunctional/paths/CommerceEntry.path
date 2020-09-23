@@ -494,6 +494,12 @@
 	<td>//div/label[@class='control-label' and contains(.,'${key_customFieldName}')]/..//p</td>
 	<td></td>
 </tr>
+<!--OPTION-->
+<tr>
+	<td>DELETE_OPTION_BUTTON</td>
+	<td>//h4[contains(.,'Option')]//..//button[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

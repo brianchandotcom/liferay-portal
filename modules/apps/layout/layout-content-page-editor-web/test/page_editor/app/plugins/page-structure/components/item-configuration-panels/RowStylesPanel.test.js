@@ -147,7 +147,7 @@ describe('RowStylesPanel', () => {
 		expect(input).toHaveValue('2');
 	});
 
-	it('allows custom value in modules per row when row is customized', async () => {
+	it('change label to custom when the column configuration is customized', async () => {
 		const {getByLabelText} = renderComponent({
 			state: {
 				layoutData: {

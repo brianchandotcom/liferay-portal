@@ -69,8 +69,9 @@ public class DepotEntryGroupRelModelImpl
 	public static final String TABLE_NAME = "DepotEntryGroupRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"depotEntryGroupRelId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"ddmStructuresAvailable", Types.BOOLEAN},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"depotEntryGroupRelId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"ddmStructuresAvailable", Types.BOOLEAN},
 		{"depotEntryId", Types.BIGINT}, {"searchable", Types.BOOLEAN},
 		{"toGroupId", Types.BIGINT}
 	};
@@ -80,6 +81,7 @@ public class DepotEntryGroupRelModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("depotEntryGroupRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ddmStructuresAvailable", Types.BOOLEAN);
@@ -89,7 +91,7 @@ public class DepotEntryGroupRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,depotEntryGroupRelId LONG not null primary key,companyId LONG,ddmStructuresAvailable BOOLEAN,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG)";
+		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryGroupRelId LONG not null primary key,companyId LONG,ddmStructuresAvailable BOOLEAN,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntryGroupRel";
 
@@ -109,32 +111,44 @@ public class DepotEntryGroupRelModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long DDMSTRUCTURESAVAILABLE_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long DEPOTENTRYID_COLUMN_BITMASK = 2L;
+	public static final long DDMSTRUCTURESAVAILABLE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long SEARCHABLE_COLUMN_BITMASK = 4L;
+	public static final long DEPOTENTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long TOGROUPID_COLUMN_BITMASK = 8L;
+	public static final long SEARCHABLE_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long TOGROUPID_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long DEPOTENTRYGROUPRELID_COLUMN_BITMASK = 16L;
+	public static final long DEPOTENTRYGROUPRELID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -166,6 +180,7 @@ public class DepotEntryGroupRelModelImpl
 		DepotEntryGroupRel model = new DepotEntryGroupRelImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setUuid(soapModel.getUuid());
 		model.setDepotEntryGroupRelId(soapModel.getDepotEntryGroupRelId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setDdmStructuresAvailable(soapModel.isDdmStructuresAvailable());
@@ -334,6 +349,11 @@ public class DepotEntryGroupRelModelImpl
 			"mvccVersion",
 			(BiConsumer<DepotEntryGroupRel, Long>)
 				DepotEntryGroupRel::setMvccVersion);
+		attributeGetterFunctions.put("uuid", DepotEntryGroupRel::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<DepotEntryGroupRel, String>)
+				DepotEntryGroupRel::setUuid);
 		attributeGetterFunctions.put(
 			"depotEntryGroupRelId",
 			DepotEntryGroupRel::getDepotEntryGroupRelId);
@@ -396,6 +416,35 @@ public class DepotEntryGroupRelModelImpl
 
 	@JSON
 	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
 	public long getDepotEntryGroupRelId() {
 		return _depotEntryGroupRelId;
 	}
@@ -422,6 +471,16 @@ public class DepotEntryGroupRelModelImpl
 		}
 
 		_companyId = companyId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCompanyId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -593,6 +652,7 @@ public class DepotEntryGroupRelModelImpl
 			new DepotEntryGroupRelImpl();
 
 		depotEntryGroupRelImpl.setMvccVersion(getMvccVersion());
+		depotEntryGroupRelImpl.setUuid(getUuid());
 		depotEntryGroupRelImpl.setDepotEntryGroupRelId(
 			getDepotEntryGroupRelId());
 		depotEntryGroupRelImpl.setCompanyId(getCompanyId());
@@ -680,6 +740,14 @@ public class DepotEntryGroupRelModelImpl
 			new DepotEntryGroupRelCacheModel();
 
 		depotEntryGroupRelCacheModel.mvccVersion = getMvccVersion();
+
+		depotEntryGroupRelCacheModel.uuid = getUuid();
+
+		String uuid = depotEntryGroupRelCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			depotEntryGroupRelCacheModel.uuid = null;
+		}
 
 		depotEntryGroupRelCacheModel.depotEntryGroupRelId =
 			getDepotEntryGroupRelId();
@@ -769,6 +837,7 @@ public class DepotEntryGroupRelModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _uuid;
 	private long _depotEntryGroupRelId;
 	private long _companyId;
 	private boolean _ddmStructuresAvailable;
@@ -777,6 +846,8 @@ public class DepotEntryGroupRelModelImpl
 	private long _toGroupId;
 
 	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
 		Function<DepotEntryGroupRel, Object> function =
 			_attributeGetterFunctions.get(columnName);
 
@@ -804,6 +875,7 @@ public class DepotEntryGroupRelModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"depotEntryGroupRelId", _depotEntryGroupRelId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -812,6 +884,16 @@ public class DepotEntryGroupRelModelImpl
 		_columnOriginalValues.put("depotEntryId", _depotEntryId);
 		_columnOriginalValues.put("searchable", _searchable);
 		_columnOriginalValues.put("toGroupId", _toGroupId);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -827,17 +909,19 @@ public class DepotEntryGroupRelModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("depotEntryGroupRelId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("depotEntryGroupRelId", 4L);
 
-		columnBitmasks.put("ddmStructuresAvailable", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("depotEntryId", 16L);
+		columnBitmasks.put("ddmStructuresAvailable", 16L);
 
-		columnBitmasks.put("searchable", 32L);
+		columnBitmasks.put("depotEntryId", 32L);
 
-		columnBitmasks.put("toGroupId", 64L);
+		columnBitmasks.put("searchable", 64L);
+
+		columnBitmasks.put("toGroupId", 128L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

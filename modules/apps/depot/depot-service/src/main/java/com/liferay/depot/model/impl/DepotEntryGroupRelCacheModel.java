@@ -76,10 +76,12 @@ public class DepotEntryGroupRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
 		sb.append(", depotEntryGroupRelId=");
 		sb.append(depotEntryGroupRelId);
 		sb.append(", companyId=");
@@ -103,6 +105,14 @@ public class DepotEntryGroupRelCacheModel
 			new DepotEntryGroupRelImpl();
 
 		depotEntryGroupRelImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			depotEntryGroupRelImpl.setUuid("");
+		}
+		else {
+			depotEntryGroupRelImpl.setUuid(uuid);
+		}
+
 		depotEntryGroupRelImpl.setDepotEntryGroupRelId(depotEntryGroupRelId);
 		depotEntryGroupRelImpl.setCompanyId(companyId);
 		depotEntryGroupRelImpl.setDdmStructuresAvailable(
@@ -119,6 +129,7 @@ public class DepotEntryGroupRelCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
 
 		depotEntryGroupRelId = objectInput.readLong();
 
@@ -137,6 +148,13 @@ public class DepotEntryGroupRelCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(depotEntryGroupRelId);
 
 		objectOutput.writeLong(companyId);
@@ -151,6 +169,7 @@ public class DepotEntryGroupRelCacheModel
 	}
 
 	public long mvccVersion;
+	public String uuid;
 	public long depotEntryGroupRelId;
 	public long companyId;
 	public boolean ddmStructuresAvailable;

@@ -246,6 +246,21 @@ public abstract class DepotEntryGroupRelLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the depot entry group rel with the matching UUID and company.
+	 *
+	 * @param uuid the depot entry group rel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
+	 */
+	@Override
+	public DepotEntryGroupRel fetchDepotEntryGroupRelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return depotEntryGroupRelPersistence.fetchByUuid_C_First(
+			uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the depot entry group rel with the primary key.
 	 *
 	 * @param depotEntryGroupRelId the primary key of the depot entry group rel
@@ -339,6 +354,23 @@ public abstract class DepotEntryGroupRelLocalServiceBaseImpl
 		throws PortalException {
 
 		return depotEntryGroupRelPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the depot entry group rel with the matching UUID and company.
+	 *
+	 * @param uuid the depot entry group rel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching depot entry group rel
+	 * @throws PortalException if a matching depot entry group rel could not be found
+	 */
+	@Override
+	public DepotEntryGroupRel getDepotEntryGroupRelByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return depotEntryGroupRelPersistence.findByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**

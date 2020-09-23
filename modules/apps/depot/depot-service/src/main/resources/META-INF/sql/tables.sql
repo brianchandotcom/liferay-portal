@@ -21,6 +21,7 @@ create table DepotEntry (
 
 create table DepotEntryGroupRel (
 	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
 	depotEntryGroupRelId LONG not null primary key,
 	companyId LONG,
 	ddmStructuresAvailable BOOLEAN,

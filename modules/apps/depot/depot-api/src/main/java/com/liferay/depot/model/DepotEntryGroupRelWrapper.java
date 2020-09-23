@@ -42,6 +42,7 @@ public class DepotEntryGroupRelWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("uuid", getUuid());
 		attributes.put("depotEntryGroupRelId", getDepotEntryGroupRelId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("ddmStructuresAvailable", isDdmStructuresAvailable());
@@ -58,6 +59,12 @@ public class DepotEntryGroupRelWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
 		}
 
 		Long depotEntryGroupRelId = (Long)attributes.get(
@@ -180,6 +187,16 @@ public class DepotEntryGroupRelWrapper
 	}
 
 	/**
+	 * Returns the uuid of this depot entry group rel.
+	 *
+	 * @return the uuid of this depot entry group rel
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
+	/**
 	 * Returns <code>true</code> if this depot entry group rel is ddm structures available.
 	 *
 	 * @return <code>true</code> if this depot entry group rel is ddm structures available; <code>false</code> otherwise
@@ -282,6 +299,16 @@ public class DepotEntryGroupRelWrapper
 	@Override
 	public void setToGroupId(long toGroupId) {
 		model.setToGroupId(toGroupId);
+	}
+
+	/**
+	 * Sets the uuid of this depot entry group rel.
+	 *
+	 * @param uuid the uuid of this depot entry group rel
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
 	}
 
 	@Override

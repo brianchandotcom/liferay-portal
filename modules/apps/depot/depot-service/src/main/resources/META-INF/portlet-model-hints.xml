@@ -22,6 +22,7 @@
 	</model>
 	<model name="com.liferay.depot.model.DepotEntryGroupRel">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="depotEntryGroupRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="ddmStructuresAvailable" type="boolean" />

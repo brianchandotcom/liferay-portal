@@ -126,6 +126,8 @@ public class DepotEntryGroupRelPersistenceTest {
 
 		newDepotEntryGroupRel.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDepotEntryGroupRel.setUuid(RandomTestUtil.randomString());
+
 		newDepotEntryGroupRel.setCompanyId(RandomTestUtil.nextLong());
 
 		newDepotEntryGroupRel.setDdmStructuresAvailable(
@@ -147,6 +149,9 @@ public class DepotEntryGroupRelPersistenceTest {
 			existingDepotEntryGroupRel.getMvccVersion(),
 			newDepotEntryGroupRel.getMvccVersion());
 		Assert.assertEquals(
+			existingDepotEntryGroupRel.getUuid(),
+			newDepotEntryGroupRel.getUuid());
+		Assert.assertEquals(
 			existingDepotEntryGroupRel.getDepotEntryGroupRelId(),
 			newDepotEntryGroupRel.getDepotEntryGroupRelId());
 		Assert.assertEquals(
@@ -164,6 +169,24 @@ public class DepotEntryGroupRelPersistenceTest {
 		Assert.assertEquals(
 			existingDepotEntryGroupRel.getToGroupId(),
 			newDepotEntryGroupRel.getToGroupId());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -230,9 +253,10 @@ public class DepotEntryGroupRelPersistenceTest {
 
 	protected OrderByComparator<DepotEntryGroupRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DepotEntryGroupRel", "mvccVersion", true, "depotEntryGroupRelId",
-			true, "companyId", true, "ddmStructuresAvailable", true,
-			"depotEntryId", true, "searchable", true, "toGroupId", true);
+			"DepotEntryGroupRel", "mvccVersion", true, "uuid", true,
+			"depotEntryGroupRelId", true, "companyId", true,
+			"ddmStructuresAvailable", true, "depotEntryId", true, "searchable",
+			true, "toGroupId", true);
 	}
 
 	@Test
@@ -529,6 +553,8 @@ public class DepotEntryGroupRelPersistenceTest {
 		DepotEntryGroupRel depotEntryGroupRel = _persistence.create(pk);
 
 		depotEntryGroupRel.setMvccVersion(RandomTestUtil.nextLong());
+
+		depotEntryGroupRel.setUuid(RandomTestUtil.randomString());
 
 		depotEntryGroupRel.setCompanyId(RandomTestUtil.nextLong());
 

@@ -14,6 +14,7 @@
 
 package com.liferay.depot.model;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -70,6 +71,21 @@ public interface DepotEntryGroupRelModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the uuid of this depot entry group rel.
+	 *
+	 * @return the uuid of this depot entry group rel
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this depot entry group rel.
+	 *
+	 * @param uuid the uuid of this depot entry group rel
+	 */
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the depot entry group rel ID of this depot entry group rel.

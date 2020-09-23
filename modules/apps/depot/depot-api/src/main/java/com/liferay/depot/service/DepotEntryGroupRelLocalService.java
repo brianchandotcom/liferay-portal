@@ -211,6 +211,17 @@ public interface DepotEntryGroupRelLocalService
 	public DepotEntryGroupRel fetchDepotEntryGroupRel(
 		long depotEntryGroupRelId);
 
+	/**
+	 * Returns the depot entry group rel with the matching UUID and company.
+	 *
+	 * @param uuid the depot entry group rel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DepotEntryGroupRel fetchDepotEntryGroupRelByUuidAndCompanyId(
+		String uuid, long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -223,6 +234,19 @@ public interface DepotEntryGroupRelLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DepotEntryGroupRel getDepotEntryGroupRel(long depotEntryGroupRelId)
+		throws PortalException;
+
+	/**
+	 * Returns the depot entry group rel with the matching UUID and company.
+	 *
+	 * @param uuid the depot entry group rel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching depot entry group rel
+	 * @throws PortalException if a matching depot entry group rel could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DepotEntryGroupRel getDepotEntryGroupRelByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

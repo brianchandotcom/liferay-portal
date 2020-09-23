@@ -238,6 +238,20 @@ public class DepotEntryGroupRelLocalServiceUtil {
 		return getService().fetchDepotEntryGroupRel(depotEntryGroupRelId);
 	}
 
+	/**
+	 * Returns the depot entry group rel with the matching UUID and company.
+	 *
+	 * @param uuid the depot entry group rel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
+	 */
+	public static com.liferay.depot.model.DepotEntryGroupRel
+		fetchDepotEntryGroupRelByUuidAndCompanyId(String uuid, long companyId) {
+
+		return getService().fetchDepotEntryGroupRelByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -256,6 +270,22 @@ public class DepotEntryGroupRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getDepotEntryGroupRel(depotEntryGroupRelId);
+	}
+
+	/**
+	 * Returns the depot entry group rel with the matching UUID and company.
+	 *
+	 * @param uuid the depot entry group rel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching depot entry group rel
+	 * @throws PortalException if a matching depot entry group rel could not be found
+	 */
+	public static com.liferay.depot.model.DepotEntryGroupRel
+			getDepotEntryGroupRelByUuidAndCompanyId(String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getDepotEntryGroupRelByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>

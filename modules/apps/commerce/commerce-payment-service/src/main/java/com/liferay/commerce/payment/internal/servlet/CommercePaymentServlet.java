@@ -80,7 +80,15 @@ public class CommercePaymentServlet extends HttpServlet {
 			CommerceOrder commerceOrder =
 				_commercePaymentHttpHelper.getCommerceOrder(httpServletRequest);
 
+			URL portalURL = new URL(_portal.getPortalURL(httpServletRequest));
+
 			_nextUrl = ParamUtil.getString(httpServletRequest, "nextStep");
+
+			URL nextURL = new URL(_nextUrl);
+
+			if (!Objects.equals(portalURL.getHost(), nextURL.getHost())) {
+				throw new ServletException();
+			}
 
 			_commerceOrderId = commerceOrder.getCommerceOrderId();
 
@@ -103,9 +111,6 @@ public class CommercePaymentServlet extends HttpServlet {
 			}
 
 			if (commercePaymentResult.isOnlineRedirect()) {
-				URL portalURL = new URL(
-					_portal.getPortalURL(httpServletRequest));
-
 				URL redirectURL = new URL(
 					commercePaymentResult.getRedirectUrl());
 

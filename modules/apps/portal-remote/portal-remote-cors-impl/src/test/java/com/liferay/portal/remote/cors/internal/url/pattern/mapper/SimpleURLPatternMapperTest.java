@@ -15,9 +15,6 @@
 package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,9 +38,11 @@ public class SimpleURLPatternMapperTest {
 	public void testConstructor() {
 		try {
 			createURLPatternMapper(
-				HashMapBuilder.put(
-					"", ""
-				).build());
+				new HashMap() {
+					{
+						put("", "");
+					}
+				});
 
 			Assert.fail();
 		}
@@ -51,11 +50,12 @@ public class SimpleURLPatternMapperTest {
 		}
 
 		try {
-			Map<String, String> map = new HashMap<>();
-
-			map.put(null, "null");
-
-			createURLPatternMapper(map);
+			createURLPatternMapper(
+				new HashMap() {
+					{
+						put(null, "null");
+					}
+				});
 
 			Assert.fail();
 		}
@@ -65,35 +65,37 @@ public class SimpleURLPatternMapperTest {
 
 	@Test
 	public void testGetValue() {
-		KeyValuePair[] keyValuePairs = _createKeyValuePairs();
+		Map<String, String> urlPaths = _createUrlPaths();
 
 		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(
-			_createValues(keyValuePairs));
+			_createValues(urlPaths));
 
-		for (KeyValuePair keyValuePair : keyValuePairs) {
-			String value = urlPatternMapper.getValue(keyValuePair.getKey());
+		for (Map.Entry<String, String> entry : urlPaths.entrySet()) {
+			String value = urlPatternMapper.getValue(entry.getKey());
 
 			try {
 				if (Objects.isNull(value)) {
-					Assert.assertEquals("", keyValuePair.getValue());
+					Assert.assertEquals("", entry.getValue());
 
 					continue;
 				}
 
-				Assert.assertEquals(keyValuePair.getValue(), value);
+				Assert.assertEquals(entry.getValue(), value);
 			}
 			catch (ComparisonFailure comparisonFailure) {
 				throw new ComparisonFailure(
-					"When testing " + keyValuePair.getKey() + ":",
+					"When testing " + entry.getKey() + ":",
 					comparisonFailure.getExpected(),
 					comparisonFailure.getActual());
 			}
 		}
 
 		urlPatternMapper = createURLPatternMapper(
-			HashMapBuilder.put(
-				"*.jsp", "*.jsp"
-			).build());
+			new HashMap() {
+				{
+					put("*.jsp", "*.jsp");
+				}
+			});
 
 		Assert.assertEquals("*.jsp", urlPatternMapper.getValue(".jsp"));
 		Assert.assertNull(urlPatternMapper.getValue("jsp"));
@@ -106,69 +108,71 @@ public class SimpleURLPatternMapperTest {
 		return new SimpleURLPatternMapper<>(values);
 	}
 
-	private KeyValuePair[] _createKeyValuePairs() {
-		return new KeyValuePair[] {
-			new KeyValuePair("/", "//*"), new KeyValuePair("/*", "/*/*"),
-			new KeyValuePair("/*/", "/*//*"), new KeyValuePair("/a", "/*"),
-			new KeyValuePair("/a/*/c/d", "/a/*/c/*"),
-			new KeyValuePair("/a/b", "/*"), new KeyValuePair("/b", "/*"),
-			new KeyValuePair("/b/c", "/b/c"),
-			new KeyValuePair("/c/portal/j_login", "/c/portal/j_login"),
-			new KeyValuePair("/documents", "/documents/*"),
-			new KeyValuePair("/documents/", "/documents/*"),
-			new KeyValuePair("/documents/main.jsp", "/documents/main.jsp/*"),
-			new KeyValuePair("/documents/main.jsp/*", "/documents/main.jsp/*"),
-			new KeyValuePair("/documents/main.jspf", "/documents/main.jspf/*"),
-			new KeyValuePair("/documents/main.jspf/", "/documents/main.jspf/*"),
-			new KeyValuePair("/documents/user1", "/documents/user1/*"),
-			new KeyValuePair("/documents/user1/", "/documents/user1/*"),
-			new KeyValuePair(
-				"/documents/user1/folder1", "/documents/user1/folder1/*"),
-			new KeyValuePair(
-				"/documents/user1/folder1/", "/documents/user1/folder1/*"),
-			new KeyValuePair(
-				"/documents/user1/folder2", "/documents/user1/folder2/*"),
-			new KeyValuePair(
-				"/documents/user1/folder2/", "/documents/user1/folder2/*"),
-			new KeyValuePair("/documents/user2", "/documents/user2/*"),
-			new KeyValuePair("/documents/user2/", "/documents/user2/*"),
-			new KeyValuePair(
-				"/documents/user2/folder1", "/documents/user2/folder1/*"),
-			new KeyValuePair(
-				"/documents/user2/folder1/", "/documents/user2/folder1/*"),
-			new KeyValuePair(
-				"/documents/user2/folder2", "/documents/user2/folder2/*"),
-			new KeyValuePair(
-				"/documents/user2/folder2/", "/documents/user2/folder2/*"),
-			new KeyValuePair("/documents/user3", "/documents/*"),
-			new KeyValuePair("/documents/user3/", "/documents/*"),
-			new KeyValuePair("/documents/user3/folder1", "/documents/*"),
-			new KeyValuePair("/documents/user3/folder1/", "/documents/*"),
-			new KeyValuePair("/documents/user3/folder2", "/documents/*"),
-			new KeyValuePair("/documents/user3/folder2/", "/documents/*"),
-			new KeyValuePair("/documents2/a", "/documents2/*"),
-			new KeyValuePair("/test", "/*"), new KeyValuePair("/test/", "/*"),
-			new KeyValuePair("no/leading/slash", ""),
-			new KeyValuePair("no/leading/slash/", ""),
-			new KeyValuePair("no/leading/slash/*", "no/leading/slash/*"),
-			new KeyValuePair("no/leading/slash/test", ""),
-			new KeyValuePair("nonexisting.extension", ""),
-			new KeyValuePair("test", ""), new KeyValuePair("test.jsp", "*.jsp"),
-			new KeyValuePair("test.jspf/", ""), new KeyValuePair("test/", ""),
-			new KeyValuePair("test/main.jsp/*", ""),
-			new KeyValuePair("test/main.jspf", "*.jspf")
+	private Map<String, String> _createUrlPaths() {
+		return new HashMap<String, String>() {
+			{
+				put("/", "//*");
+				put("/*", "/*/*");
+				put("/*/", "/*//*");
+				put("/a", "/*");
+				put("/a/*/c/d", "/a/*/c/*");
+				put("/a/b", "/*");
+				put("/b", "/*");
+				put("/b/c", "/b/c");
+				put("/c/portal/j_login", "/c/portal/j_login");
+				put("/documents", "/documents/*");
+				put("/documents/", "/documents/*");
+				put("/documents/main.jsp", "/documents/main.jsp/*");
+				put("/documents/main.jsp/*", "/documents/main.jsp/*");
+				put("/documents/main.jspf", "/documents/main.jspf/*");
+				put("/documents/main.jspf/", "/documents/main.jspf/*");
+				put("/documents/user1", "/documents/user1/*");
+				put("/documents/user1/", "/documents/user1/*");
+				put("/documents/user1/folder1", "/documents/user1/folder1/*");
+				put("/documents/user1/folder1/", "/documents/user1/folder1/*");
+				put("/documents/user1/folder2", "/documents/user1/folder2/*");
+				put("/documents/user1/folder2/", "/documents/user1/folder2/*");
+				put("/documents/user2", "/documents/user2/*");
+				put("/documents/user2/", "/documents/user2/*");
+				put("/documents/user2/folder1", "/documents/user2/folder1/*");
+				put("/documents/user2/folder1/", "/documents/user2/folder1/*");
+				put("/documents/user2/folder2", "/documents/user2/folder2/*");
+				put("/documents/user2/folder2/", "/documents/user2/folder2/*");
+				put("/documents/user3", "/documents/*");
+				put("/documents/user3/", "/documents/*");
+				put("/documents/user3/folder1", "/documents/*");
+				put("/documents/user3/folder1/", "/documents/*");
+				put("/documents/user3/folder2", "/documents/*");
+				put("/documents/user3/folder2/", "/documents/*");
+				put("/documents2/a", "/documents2/*");
+				put("/test", "/*");
+				put("/test/", "/*");
+				put("no/leading/slash", "");
+				put("no/leading/slash/", "");
+				put("no/leading/slash/*", "no/leading/slash/*");
+				put("no/leading/slash/test", "");
+				put("nonexisting.extension", "");
+				put("test", "");
+				put("test.jsp", "*.jsp");
+				put("test.jspf/", "");
+				put("test/", "");
+				put("test/main.jsp/*", "");
+				put("test/main.jspf", "*.jspf");
+			}
 		};
 	}
 
-	private Map<String, String> _createValues(KeyValuePair[] keyValuePairs) {
+	private Map<String, String> _createValues(
+		Map<String, String> pathToPatternMap) {
+
 		Map<String, String> values = new HashMap<>();
 
-		for (KeyValuePair keyValuePair : keyValuePairs) {
-			if (Validator.isBlank(keyValuePair.getValue())) {
+		for (String pattern : pathToPatternMap.values()) {
+			if ((pattern == null) || pattern.isEmpty()) {
 				continue;
 			}
 
-			values.put(keyValuePair.getValue(), keyValuePair.getValue());
+			values.put(pattern, pattern);
 		}
 
 		return values;

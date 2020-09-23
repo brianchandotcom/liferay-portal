@@ -341,6 +341,13 @@ public class DepotEntryLocalServiceUtil {
 		return getService().getDepotEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static java.util.List<com.liferay.depot.model.DepotEntry>
+		getDepotEntryGroupRelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		return getService().getDepotEntryGroupRelsByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

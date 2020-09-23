@@ -358,6 +358,14 @@ public class DepotEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.depot.model.DepotEntry>
+		getDepotEntryGroupRelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _depotEntryLocalService.getDepotEntryGroupRelsByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

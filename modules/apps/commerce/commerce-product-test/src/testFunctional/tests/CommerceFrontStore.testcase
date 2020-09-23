@@ -33,11 +33,10 @@ definition {
 				panel = "Commerce",
 				portlet = "Options");
 
-			ClickNoError.clickNoMouseOver(
-				key_text = "Delete",
-				locator1 = "Button#ANY");
+			if(IsElementPresent(locator1 = "CommerceEntry#DELETE_OPTION_BUTTON")){
 
-			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete the selected option?");
+				CommerceOptions.deleteOptionsEntries();
+			}
 
 			CommerceNavigator.gotoPortlet(
 				category = "Store Management",
@@ -56,6 +55,8 @@ definition {
 			while (IsElementPresent(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS") && (maxIterations = "50")) {
 				CommerceEntry.deleteCommerceEntry();
 			}
+
+			User.logoutPG();
 		}
 	}
 

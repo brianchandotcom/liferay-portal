@@ -1,32 +1,32 @@
 [
 	{
-		"contentPath": "/layouts/home"
+		"path": "home"
 	},
 	{
-		"contentPath": "/layouts/product"
+		"path": "product"
 	},
 	{
-		"contentPath": "/layouts/news"
+		"path": "news"
 	},
 	{
-		"contentPath": "/layouts/contact"
+		"path": "contact"
 	},
 	{
-		"contentPath": "/layouts/dashboard"
+		"path": "dashboard"
 	},
 	{
-		"contentPath": "/layouts/documents"
+		"path": "documents"
 	},
 	{
-		"contentPath": "/layouts/sign-in"
+		"path": "sign-in"
 	},
 	{
-		"contentPath": "/layouts/policies"
+		"path": "policies"
 	},
 	{
-		"contentPath": "/layouts/claims"
+		"path": "claims"
 	},
 	{
-		"contentPath": "/layouts/search"
+		"path": "search"
 	}
 ]

@@ -40,6 +40,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -447,37 +448,20 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayouts() throws Exception {
+		Map<String, String> resourcesMap = _getResourcesMap();
+
 		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray(
 			_readFile("/layouts/layouts.json"));
-
-		Map<String, String> resourcesMap = new HashMap<>();
-
-		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
-			_serviceContext.getScopeGroupId());
-
-		for (JournalArticle article : articles) {
-			resourcesMap.put(
-				article.getArticleId(),
-				String.valueOf(article.getResourcePrimKey()));
-		}
-
-		List<AssetListEntry> assetListEntries =
-			_assetListEntryLocalService.getAssetListEntries(
-				_serviceContext.getScopeGroupId());
-
-		for (AssetListEntry assetListEntry : assetListEntries) {
-			resourcesMap.put(
-				StringUtil.toUpperCase(assetListEntry.getAssetListEntryKey()),
-				String.valueOf(assetListEntry.getAssetListEntryId()));
-		}
 
 		for (int i = 0; i < layoutsJSONArray.length(); i++) {
 			JSONObject jsonObject = layoutsJSONArray.getJSONObject(i);
 
-			String path = jsonObject.getString("contentPath");
+			String path = jsonObject.getString("path");
 
 			JSONObject pageJSONObject = JSONFactoryUtil.createJSONObject(
-				_readFile(path + StringPool.SLASH + "page.json"));
+				_readFile(
+					StringBundler.concat(
+						"/layouts/", path, StringPool.SLASH, "page.json")));
 
 			String type = StringUtil.toLowerCase(
 				pageJSONObject.getString("type"));
@@ -488,7 +472,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				Objects.equals(LayoutConstants.TYPE_COLLECTION, type)) {
 
 				String pageDefinition = StringUtil.replace(
-					_readFile(path + StringPool.SLASH + "page-definition.json"),
+					_readFile(
+						StringBundler.concat(
+							"/layouts/", path, StringPool.SLASH,
+							"page-definition.json")),
 					StringPool.DOLLAR, StringPool.DOLLAR, resourcesMap);
 
 				layout = _addContentLayout(
@@ -737,6 +724,31 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 
 		return fileEntriesMap;
+	}
+
+	private Map<String, String> _getResourcesMap() {
+		Map<String, String> resourcesMap = new HashMap<>();
+
+		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
+			_serviceContext.getScopeGroupId());
+
+		for (JournalArticle article : articles) {
+			resourcesMap.put(
+				article.getArticleId(),
+				String.valueOf(article.getResourcePrimKey()));
+		}
+
+		List<AssetListEntry> assetListEntries =
+			_assetListEntryLocalService.getAssetListEntries(
+				_serviceContext.getScopeGroupId());
+
+		for (AssetListEntry assetListEntry : assetListEntries) {
+			resourcesMap.put(
+				StringUtil.toUpperCase(assetListEntry.getAssetListEntryKey()),
+				String.valueOf(assetListEntry.getAssetListEntryId()));
+		}
+
+		return resourcesMap;
 	}
 
 	private String _getThemeId(long companyId, String themeName) {

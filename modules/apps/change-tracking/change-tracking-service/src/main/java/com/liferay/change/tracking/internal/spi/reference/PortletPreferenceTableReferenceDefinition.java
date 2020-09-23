@@ -20,7 +20,6 @@ import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInf
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.PortletPreferencesTable;
-import com.liferay.portal.kernel.model.PortletTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 
@@ -50,18 +49,6 @@ public class PortletPreferenceTableReferenceDefinition
 			CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
 			PortletPreferencesTable.INSTANCE.plid, LayoutTable.INSTANCE.plid
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				PortletTable.INSTANCE
-			).innerJoinON(
-				PortletPreferencesTable.INSTANCE,
-				PortletPreferencesTable.INSTANCE.companyId.eq(
-					PortletTable.INSTANCE.companyId
-				).and(
-					PortletPreferencesTable.INSTANCE.portletId.eq(
-						PortletTable.INSTANCE.portletId)
-				)
-			)
 		);
 	}
 

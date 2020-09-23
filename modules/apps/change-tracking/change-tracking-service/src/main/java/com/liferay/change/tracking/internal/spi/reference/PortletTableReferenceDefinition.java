@@ -18,6 +18,7 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.model.PortletTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPersistence;
@@ -36,6 +37,19 @@ public class PortletTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<PortletTable>
 			childTableReferenceInfoBuilder) {
+
+		childTableReferenceInfoBuilder.referenceInnerJoin(
+			fromStep -> fromStep.from(
+				PortletPreferencesTable.INSTANCE
+			).innerJoinON(
+				PortletTable.INSTANCE,
+				PortletTable.INSTANCE.companyId.eq(
+					PortletPreferencesTable.INSTANCE.companyId
+				).and(
+					PortletTable.INSTANCE.portletId.eq(
+						PortletPreferencesTable.INSTANCE.portletId)
+				)
+			));
 	}
 
 	@Override

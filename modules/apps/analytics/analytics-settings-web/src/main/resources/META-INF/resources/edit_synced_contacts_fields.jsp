@@ -32,13 +32,8 @@ String[] syncedUserGroupIds = ParamUtil.getStringValues(request, "syncedUserGrou
 
 AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
 
-String[] syncedContactFieldNames = new String[0];
-String[] syncedUserFieldNames = new String[0];
-
-if (analyticsConfiguration != null) {
-	syncedContactFieldNames = analyticsConfiguration.syncedContactFieldNames();
-	syncedUserFieldNames = analyticsConfiguration.syncedUserFieldNames();
-}
+String[] syncedContactFieldNames = GetterUtil.getStringValues(analyticsConfiguration.syncedContactFieldNames());
+String[] syncedUserFieldNames = GetterUtil.getStringValues(analyticsConfiguration.syncedUserFieldNames());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", redirect));

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -383,7 +384,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 						"expando",
 						AnalyticsExpandoBridgeUtil.getAttributes(
 							baseModel.getExpandoBridge(),
-							Arrays.asList(
+							ListUtil.fromArray(
 								analyticsConfiguration.
 									syncedUserFieldNames())));
 				}

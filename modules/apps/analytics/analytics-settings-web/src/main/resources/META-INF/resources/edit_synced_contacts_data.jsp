@@ -36,7 +36,7 @@ if (analyticsConfiguration.syncAllContacts()) {
 	totalContactsSelected = analyticsUsersManager.getCompanyUsersCount(themeDisplay.getCompanyId());
 }
 else {
-	String[] syncedOrganizationIds = analyticsConfiguration.syncedOrganizationIds();
+	String[] syncedOrganizationIds = GetterUtil.getStringValues(analyticsConfiguration.syncedOrganizationIds());
 
 	long[] syncedOrganizationIdsLong = new long[syncedOrganizationIds.length];
 
@@ -44,7 +44,7 @@ else {
 		syncedOrganizationIdsLong[i] = GetterUtil.getLong(syncedOrganizationIds[i]);
 	}
 
-	String[] syncedUserGroupIds = analyticsConfiguration.syncedUserGroupIds();
+	String[] syncedUserGroupIds = GetterUtil.getStringValues(analyticsConfiguration.syncedUserGroupIds());
 
 	long[] syncedUserGroupIdsLong = new long[syncedUserGroupIds.length];
 

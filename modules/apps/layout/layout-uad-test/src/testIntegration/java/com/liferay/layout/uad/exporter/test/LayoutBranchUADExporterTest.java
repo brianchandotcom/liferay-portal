@@ -31,12 +31,14 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class LayoutBranchUADExporterTest
 	extends BaseUADExporterTestCase<LayoutBranch> {

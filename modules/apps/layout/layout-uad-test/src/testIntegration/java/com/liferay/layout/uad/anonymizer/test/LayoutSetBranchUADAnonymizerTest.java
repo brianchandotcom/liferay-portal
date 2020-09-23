@@ -33,12 +33,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class LayoutSetBranchUADAnonymizerTest
 	extends BaseUADAnonymizerTestCase<LayoutSetBranch> {

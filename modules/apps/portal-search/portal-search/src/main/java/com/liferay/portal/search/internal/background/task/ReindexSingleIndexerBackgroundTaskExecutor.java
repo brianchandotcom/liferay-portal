@@ -84,6 +84,21 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		_bundleContext = bundleContext;
 	}
 
+	protected boolean isSystemIndexer(Indexer<?> indexer) {
+		ServiceTrackerList<Indexer<?>, Indexer<?>> systemIndexers =
+			ServiceTrackerListFactory.open(
+				_bundleContext, (Class<Indexer<?>>)(Class<?>)Indexer.class,
+				"(system.index=true)");
+
+		for (Indexer<?> systemIndexer : systemIndexers) {
+			if (indexer.equals(systemIndexer)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	@Override
 	protected void reindex(String className, long[] companyIds)
 		throws Exception {
@@ -98,26 +113,10 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 			searchEngineHelper.getSearchEngines();
 
 		for (long companyId : companyIds) {
-			if (companyId == CompanyConstants.SYSTEM) {
-				ServiceTrackerList<Indexer<?>, Indexer<?>> systemIndexers =
-					ServiceTrackerListFactory.open(
-						_bundleContext,
-						(Class<Indexer<?>>)(Class<?>)Indexer.class,
-						"(system.index=true)");
+			if ((companyId == CompanyConstants.SYSTEM) &&
+				!isSystemIndexer(indexer)) {
 
-				boolean isSystemIndexer = false;
-
-				for (Indexer<?> systemIndexer : systemIndexers) {
-					if (indexer.equals(systemIndexer)) {
-						isSystemIndexer = true;
-
-						break;
-					}
-				}
-
-				if (!isSystemIndexer) {
-					continue;
-				}
+				continue;
 			}
 
 			reindexStatusMessageSender.sendStatusMessage(

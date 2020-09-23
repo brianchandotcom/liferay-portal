@@ -162,6 +162,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			_addDisplayPageTemplates();
 			_addLayouts();
 
+			_updateDefaultDisplayPageTemplates();
+
 			_updateLookAndFeel();
 		}
 		catch (Exception exception) {
@@ -169,6 +171,24 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			throw new InitializationException(exception);
 		}
+	}
+
+	private void _updateDefaultDisplayPageTemplates() {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_serviceContext.getScopeGroupId(), "policy",
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_serviceContext.getScopeGroupId(), "claim",
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
 	}
 
 	@Override
@@ -324,22 +344,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		_layoutPageTemplatesImporter.importFile(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			file, false);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), "policy",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
-
-		layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), "claim",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
 	}
 
 	private void _addFragments() throws Exception {

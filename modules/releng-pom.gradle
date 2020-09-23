@@ -173,7 +173,7 @@ generatePomRelease {
 				String[] artifactURLSplit = artifactProperties["artifact.url"].split("/")
 
 				dependency.setArtifactId(artifactURLSplit[artifactURLSplit.length - 3])
-				dependency.setGroupId(artifactURLSplit.last().endsWith(".war") ? "com.liferay.plugins" : "com.liferay")
+				dependency.setGroupId((artifactProperties["artifact.url"] =~ /(com\/liferay(?:\/[a-z]+)*)\//).findAll()[0][1].replaceAll("/", "."))
 				dependency.setVersion(artifactURLSplit[artifactURLSplit.length - 2])
 
 				dependencyManagement.addDependency(dependency)

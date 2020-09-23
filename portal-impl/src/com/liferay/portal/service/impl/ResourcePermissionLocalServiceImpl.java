@@ -382,7 +382,7 @@ public class ResourcePermissionLocalServiceImpl
 
 			if (_updateResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-					primKey, userId, role.getRoleId(),
+					primKey, userId, role.getRoleId(), Boolean.FALSE,
 					actionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
 					resourcePermissionsMap)) {
@@ -410,7 +410,7 @@ public class ResourcePermissionLocalServiceImpl
 
 				if (_updateResourcePermission(
 						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-						primKey, 0, groupRole.getRoleId(),
+						primKey, 0, groupRole.getRoleId(), Boolean.FALSE,
 						actions.toArray(new String[0]),
 						ResourcePermissionConstants.OPERATOR_SET, true,
 						resourcePermissionsMap)) {
@@ -444,7 +444,7 @@ public class ResourcePermissionLocalServiceImpl
 
 				if (_updateResourcePermission(
 						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-						primKey, 0, guestRole.getRoleId(),
+						primKey, 0, guestRole.getRoleId(), Boolean.TRUE,
 						actions.toArray(new String[0]),
 						ResourcePermissionConstants.OPERATOR_SET, true,
 						resourcePermissionsMap)) {
@@ -1452,8 +1452,9 @@ public class ResourcePermissionLocalServiceImpl
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			_updateResourcePermission(
 				companyId, name, scope, resourcePermission.getPrimKey(), 0,
-				roleId, actionIds, ResourcePermissionConstants.OPERATOR_REMOVE,
-				true, Collections.singletonMap(roleId, resourcePermission));
+				roleId, null, actionIds,
+				ResourcePermissionConstants.OPERATOR_REMOVE, true,
+				Collections.singletonMap(roleId, resourcePermission));
 		}
 	}
 
@@ -1767,11 +1768,16 @@ public class ResourcePermissionLocalServiceImpl
 		return roleLocalService.getRole(companyId, roleName);
 	}
 
-	protected boolean isGuestRoleId(long companyId, long roleId) {
-		Role guestRole = roleLocalService.fetchRole(
-			companyId, RoleConstants.GUEST);
+	protected boolean isGuestRoleId(
+		Boolean guestRole, long companyId, long roleId) {
 
-		if ((guestRole != null) && (roleId == guestRole.getRoleId())) {
+		if (guestRole != null) {
+			return guestRole;
+		}
+
+		Role role = roleLocalService.fetchRole(companyId, RoleConstants.GUEST);
+
+		if ((role != null) && (roleId == role.getRoleId())) {
 			return true;
 		}
 
@@ -1809,7 +1815,7 @@ public class ResourcePermissionLocalServiceImpl
 		throws PortalException {
 
 		_updateResourcePermission(
-			companyId, name, scope, primKey, ownerId, roleId, actionIds,
+			companyId, name, scope, primKey, ownerId, roleId, null, actionIds,
 			operator, true, null);
 	}
 
@@ -1876,8 +1882,9 @@ public class ResourcePermissionLocalServiceImpl
 				String[] actionIds = roleIdsToActionIds.remove(roleId);
 
 				_updateResourcePermission(
-					companyId, name, scope, primKey, ownerId, roleId, actionIds,
-					ResourcePermissionConstants.OPERATOR_SET, true, null);
+					companyId, name, scope, primKey, ownerId, roleId, null,
+					actionIds, ResourcePermissionConstants.OPERATOR_SET, true,
+					null);
 			}
 
 			if (roleIdsToActionIds.isEmpty()) {
@@ -1891,8 +1898,9 @@ public class ResourcePermissionLocalServiceImpl
 				String[] actionIds = entry.getValue();
 
 				_updateResourcePermission(
-					companyId, name, scope, primKey, ownerId, roleId, actionIds,
-					ResourcePermissionConstants.OPERATOR_SET, false, null);
+					companyId, name, scope, primKey, ownerId, roleId, null,
+					actionIds, ResourcePermissionConstants.OPERATOR_SET, false,
+					null);
 			}
 
 			if (!MergeLayoutPrototypesThreadLocal.isInProgress() &&
@@ -1997,7 +2005,7 @@ public class ResourcePermissionLocalServiceImpl
 		try {
 			if (_updateResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
-					0, guestRole.getRoleId(),
+					0, guestRole.getRoleId(), Boolean.TRUE,
 					guestActionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
 					resourcePermissionsMap)) {
@@ -2007,7 +2015,7 @@ public class ResourcePermissionLocalServiceImpl
 
 			if (_updateResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
-					0, ownerRole.getRoleId(),
+					0, ownerRole.getRoleId(), Boolean.FALSE,
 					ownerActionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
 					resourcePermissionsMap)) {
@@ -2018,7 +2026,7 @@ public class ResourcePermissionLocalServiceImpl
 			if ((groupActionIds != null) &&
 				_updateResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
-					0, siteMemberRole.getRoleId(),
+					0, siteMemberRole.getRoleId(), Boolean.FALSE,
 					groupActionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
 					resourcePermissionsMap)) {
@@ -2123,8 +2131,9 @@ public class ResourcePermissionLocalServiceImpl
 
 	private boolean _updateResourcePermission(
 			long companyId, String name, int scope, String primKey,
-			long ownerId, long roleId, String[] actionIds, int operator,
-			boolean fetch, Map<Long, ResourcePermission> resourcePermissionsMap)
+			long ownerId, long roleId, Boolean guestRole, String[] actionIds,
+			int operator, boolean fetch,
+			Map<Long, ResourcePermission> resourcePermissionsMap)
 		throws PortalException {
 
 		ResourcePermission resourcePermission = null;
@@ -2172,7 +2181,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		if (((operator == ResourcePermissionConstants.OPERATOR_ADD) ||
 			 (operator == ResourcePermissionConstants.OPERATOR_SET)) &&
-			isGuestRoleId(companyId, roleId)) {
+			isGuestRoleId(guestRole, companyId, roleId)) {
 
 			unsupportedActionIds =
 				ResourceActionsUtil.getResourceGuestUnsupportedActions(

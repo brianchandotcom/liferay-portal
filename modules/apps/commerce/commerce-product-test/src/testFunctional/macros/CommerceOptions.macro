@@ -28,7 +28,7 @@ definition {
 	}
 
 	macro deleteOptionsEntries {
-		while (IsElementPresent(locator1 = "Button#DELETE")) {
+		while (IsElementPresent(locator1 = "CommerceEntry#DELETE_OPTION_BUTTON")) {
 			CommerceOptions.deleteOptionsEntry();
 		}
 	}

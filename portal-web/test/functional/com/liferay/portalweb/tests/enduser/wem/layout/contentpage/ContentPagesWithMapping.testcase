@@ -488,6 +488,97 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121330. Can add an internal link to the Container element."
+	@priority = "5"
+	test MapDisplayPageURLToContainerElement {
+		property portal.acceptance = "true";
+
+		task ("Add a display page template with Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Display Page Content to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content article and select the display page template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Container element to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Card fragment into the Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Card",
+				navTab = "Fragments");
+		}
+
+		task ("Map Manual URL to Container") {
+			PageEditor.editLayoutContainer(
+				entryTitle = "Web Content Title",
+				field = "Display Page URL",
+				link = "From Content Field",
+				navItem = "Web Content",
+				panel = "Link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert mapped URL work in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var baseURL = PropsUtil.get("portal.url");
+
+			AssertVisible(locator1 = "//div[contains(@class,'layout-content')]/a[contains(@href,'${baseURL}/en/web/test-site-name/-/web-content-title')]");
+
+			Click(locator1 = "//div[contains(@class,'layout-content')]/a[contains(@href,'${baseURL}/en/web/test-site-name/-/web-content-title')]");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Display Page Name");
+
+			AssertVisible(
+				key_assetContent = "Web Content Content",
+				key_assetTitle = "Web Content Title",
+				locator1 = "PageEditor#ASSET_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-119817. Map manual URL to Container element."
 	@priority = "5"
 	test MapManualURLToContainerElement {

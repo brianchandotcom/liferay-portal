@@ -138,7 +138,10 @@ private String _getStatusMessage(LayoutRevision layoutRevision, Group group, Lay
 		statusMessage = "ready-for-publication";
 	}
 
-	if (layoutRevision.getLayoutRevisionId() == _getLastImportLayoutRevisionId(group, layout, user)) {
+	if (layoutRevision.isApproved() &&
+		(layoutRevision.getLayoutRevisionId() ==
+			_getLastImportLayoutRevisionId(group, layout, user))) {
+
 		statusMessage = "in-live";
 	}
 

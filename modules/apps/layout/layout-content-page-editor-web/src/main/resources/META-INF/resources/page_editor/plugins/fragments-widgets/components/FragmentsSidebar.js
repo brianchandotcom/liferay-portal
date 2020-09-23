@@ -30,10 +30,6 @@ export default function FragmentsSidebar() {
 
 	const [searchValue, setSearchValue] = useState('');
 
-	const searchValueLowerCase = useMemo(() => searchValue.toLowerCase(), [
-		searchValue,
-	]);
-
 	const tabs = useMemo(
 		() => [
 			{
@@ -61,44 +57,18 @@ export default function FragmentsSidebar() {
 
 	const filteredTabs = useMemo(
 		() =>
-			searchValueLowerCase
+			searchValue
 				? tabs
 						.map((tab) => ({
 							...tab,
-
-							collections: tab.collections
-								.map((collection) => {
-									let filteredChildren = collection.children;
-
-									if (collection.collections) {
-										filteredChildren = filteredChildren
-											.concat(
-												collection.collections.map(
-													collectionFilter
-												)
-											)
-											.flat();
-									}
-
-									return {
-										...collection,
-										children: filteredChildren.filter(
-											(item) =>
-												item.label
-													.toLowerCase()
-													.indexOf(
-														searchValueLowerCase
-													) !== -1
-										),
-									};
-								})
-								.filter(
-									(collection) => collection.children.length
-								),
+							collections: collectionFilter(
+								tab.collections,
+								searchValue
+							),
 						}))
-						.filter((tab) => tab.collections.length)
+						.filter((item) => item.collections.length)
 				: tabs,
-		[tabs, searchValueLowerCase]
+		[tabs, searchValue]
 	);
 
 	return (
@@ -177,10 +147,39 @@ const normalizeWidget = (widget) => {
 	};
 };
 
-const collectionFilter = (collection) => {
-	return collection.collections.reduce((acc, item) => {
-		return item.collections?.length > 0
-			? acc.concat(item.children, collectionFilter(item))
-			: acc.concat(item.children);
-	}, []);
+const collectionFilter = (collections, searchValue) => {
+	const searchValueLowerCase = searchValue.toLowerCase();
+
+	const itemFilter = (item) =>
+		item.label.toLowerCase().indexOf(searchValueLowerCase) !== -1;
+
+	const hasChildren = (collection) => {
+		if (collection.children?.length) {
+			return true;
+		}
+
+		return collection.collections?.some(hasChildren) ?? false;
+	};
+
+	return collections
+		.reduce((acc, collection) => {
+			if (itemFilter(collection)) {
+				return [...acc, collection];
+			}
+			else {
+				const updateCollection = {
+					...collection,
+					children: collection.children.filter(itemFilter),
+					...(collection.collections?.length && {
+						collections: collectionFilter(
+							collection.collections,
+							searchValueLowerCase
+						),
+					}),
+				};
+
+				return [...acc, updateCollection];
+			}
+		}, [])
+		.filter(hasChildren);
 };

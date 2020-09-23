@@ -53,15 +53,16 @@ public class CommerceChannelRelServiceUtil {
 		getService().deleteCommerceChannelRel(commerceChannelRelId);
 	}
 
-	public static void deleteCommerceChannelRels(
-		String className, long classPK) {
+	public static void deleteCommerceChannelRels(String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().deleteCommerceChannelRels(className, classPK);
 	}
 
 	public static com.liferay.commerce.product.model.CommerceChannelRel
-		fetchCommerceChannelRel(
-			String className, long classPK, long commerceChannelId) {
+			fetchCommerceChannelRel(
+				String className, long classPK, long commerceChannelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().fetchCommerceChannelRel(
 			className, classPK, commerceChannelId);
@@ -76,16 +77,21 @@ public class CommerceChannelRelServiceUtil {
 
 	public static java.util.List
 		<com.liferay.commerce.product.model.CommerceChannelRel>
-			getCommerceChannelRels(
-				long commerceChannelId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.product.model.CommerceChannelRel>
-						orderByComparator) {
+				getCommerceChannelRels(
+					long commerceChannelId, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.product.model.CommerceChannelRel>
+							orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCommerceChannelRels(
 			commerceChannelId, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.commerce.product.model.CommerceChannelRel>
 			getCommerceChannelRels(
@@ -101,6 +107,20 @@ public class CommerceChannelRelServiceUtil {
 	public static java.util.List
 		<com.liferay.commerce.product.model.CommerceChannelRel>
 			getCommerceChannelRels(
+				String className, long classPK, String name, int start,
+				int end) {
+
+		return getService().getCommerceChannelRels(
+			className, classPK, name, start, end);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static java.util.List
+		<com.liferay.commerce.product.model.CommerceChannelRel>
+			getCommerceChannelRels(
 				String className, long classPK, String classPKField,
 				String name, int start, int end) {
 
@@ -108,7 +128,9 @@ public class CommerceChannelRelServiceUtil {
 			className, classPK, classPKField, name, start, end);
 	}
 
-	public static int getCommerceChannelRelsCount(long commerceChannelId) {
+	public static int getCommerceChannelRelsCount(long commerceChannelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getCommerceChannelRelsCount(commerceChannelId);
 	}
 
@@ -118,6 +140,17 @@ public class CommerceChannelRelServiceUtil {
 		return getService().getCommerceChannelRelsCount(className, classPK);
 	}
 
+	public static int getCommerceChannelRelsCount(
+		String className, long classPK, String name) {
+
+		return getService().getCommerceChannelRelsCount(
+			className, classPK, name);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static int getCommerceChannelRelsCount(
 		String className, long classPK, String classPKField, String name) {
 

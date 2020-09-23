@@ -53,15 +53,18 @@ public class CommerceChannelRelServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceChannelRels(String className, long classPK) {
+	public void deleteCommerceChannelRels(String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_commerceChannelRelService.deleteCommerceChannelRels(
 			className, classPK);
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannelRel
-		fetchCommerceChannelRel(
-			String className, long classPK, long commerceChannelId) {
+			fetchCommerceChannelRel(
+				String className, long classPK, long commerceChannelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelRelService.fetchCommerceChannelRel(
 			className, classPK, commerceChannelId);
@@ -78,16 +81,21 @@ public class CommerceChannelRelServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CommerceChannelRel>
-		getCommerceChannelRels(
-			long commerceChannelId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.commerce.product.model.CommerceChannelRel>
-					orderByComparator) {
+			getCommerceChannelRels(
+				long commerceChannelId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.product.model.CommerceChannelRel>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelRelService.getCommerceChannelRels(
 			commerceChannelId, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CommerceChannelRel>
 		getCommerceChannelRels(
@@ -103,6 +111,19 @@ public class CommerceChannelRelServiceWrapper
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CommerceChannelRel>
 		getCommerceChannelRels(
+			String className, long classPK, String name, int start, int end) {
+
+		return _commerceChannelRelService.getCommerceChannelRels(
+			className, classPK, name, start, end);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CommerceChannelRel>
+		getCommerceChannelRels(
 			String className, long classPK, String classPKField, String name,
 			int start, int end) {
 
@@ -111,7 +132,9 @@ public class CommerceChannelRelServiceWrapper
 	}
 
 	@Override
-	public int getCommerceChannelRelsCount(long commerceChannelId) {
+	public int getCommerceChannelRelsCount(long commerceChannelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _commerceChannelRelService.getCommerceChannelRelsCount(
 			commerceChannelId);
 	}
@@ -122,6 +145,18 @@ public class CommerceChannelRelServiceWrapper
 			className, classPK);
 	}
 
+	@Override
+	public int getCommerceChannelRelsCount(
+		String className, long classPK, String name) {
+
+		return _commerceChannelRelService.getCommerceChannelRelsCount(
+			className, classPK, name);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public int getCommerceChannelRelsCount(
 		String className, long classPK, String classPKField, String name) {

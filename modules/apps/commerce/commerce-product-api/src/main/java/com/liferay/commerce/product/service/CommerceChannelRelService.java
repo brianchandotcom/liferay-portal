@@ -69,11 +69,13 @@ public interface CommerceChannelRelService extends BaseService {
 	public void deleteCommerceChannelRel(long commerceChannelRelId)
 		throws PortalException;
 
-	public void deleteCommerceChannelRels(String className, long classPK);
+	public void deleteCommerceChannelRels(String className, long classPK)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceChannelRel fetchCommerceChannelRel(
-		String className, long classPK, long commerceChannelId);
+			String className, long classPK, long commerceChannelId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceChannelRel getCommerceChannelRel(long commerceChannelRelId)
@@ -81,9 +83,14 @@ public interface CommerceChannelRelService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceChannelRel> getCommerceChannelRels(
-		long commerceChannelId, int start, int end,
-		OrderByComparator<CommerceChannelRel> orderByComparator);
+			long commerceChannelId, int start, int end,
+			OrderByComparator<CommerceChannelRel> orderByComparator)
+		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceChannelRel> getCommerceChannelRels(
 		String className, long classPK, int start, int end,
@@ -91,15 +98,32 @@ public interface CommerceChannelRelService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceChannelRel> getCommerceChannelRels(
+		String className, long classPK, String name, int start, int end);
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceChannelRel> getCommerceChannelRels(
 		String className, long classPK, String classPKField, String name,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceChannelRelsCount(long commerceChannelId);
+	public int getCommerceChannelRelsCount(long commerceChannelId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceChannelRelsCount(String className, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceChannelRelsCount(
+		String className, long classPK, String name);
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceChannelRelsCount(
 		String className, long classPK, String classPKField, String name);

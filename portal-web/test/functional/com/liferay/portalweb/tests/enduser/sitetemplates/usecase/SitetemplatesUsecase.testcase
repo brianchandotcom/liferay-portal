@@ -145,6 +145,7 @@ definition {
 			portlet = "Site Templates");
 
 		SiteTemplates.deletePage(
+			hasChildren = "true",
 			pageName = "Site Page Name",
 			siteTemplateName = "Site Template Name");
 

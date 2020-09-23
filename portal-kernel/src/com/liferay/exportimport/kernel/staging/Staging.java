@@ -144,6 +144,9 @@ public interface Staging {
 			long userId, LayoutRevision layoutRevision)
 		throws PortalException;
 
+	public boolean hasRemoteLayout(long userId, long stagingGroupId, long plid)
+		throws PortalException;
+
 	public boolean hasWorkflowTask(long userId, LayoutRevision layoutRevision)
 		throws PortalException;
 

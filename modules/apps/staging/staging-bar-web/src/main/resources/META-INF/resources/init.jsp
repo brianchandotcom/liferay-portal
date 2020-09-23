@@ -112,7 +112,9 @@ private long _getLastImportLayoutRevisionId(Group group, Layout layout, User use
 	try {
 		Layout liveLayout = null;
 
-		if (group.isStagedRemotely()) {
+		if (group.isStagedRemotely() &&
+			StagingUtil.hasRemoteLayout(user.getUserId(), group.getGroupId(), layout.getPlid())) {
+
 			liveLayout = StagingUtil.getRemoteLayout(user.getUserId(), group.getGroupId(), layout.getPlid());
 		}
 		else if (group.isStagingGroup()) {

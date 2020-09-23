@@ -240,6 +240,13 @@ public class StagingUtil {
 		return _staging.getWorkflowTask(userId, layoutRevision);
 	}
 
+	public static boolean hasRemoteLayout(
+			long userId, long stagingGroupId, long plid)
+		throws PortalException {
+
+		return _staging.hasRemoteLayout(userId, stagingGroupId, plid);
+	}
+
 	public static boolean hasWorkflowTask(
 			long userId, LayoutRevision layoutRevision)
 		throws PortalException {

@@ -761,6 +761,10 @@ definition {
 			pageName = "Test Page Name",
 			pageTemplateName = "Page Template Name");
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
 		SitePages.togglePrivacy(privacy = "Public Pages");
 
 		SitePages.gotoPageMenuItem(
@@ -844,6 +848,10 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Page1");
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
 			pageName = "Page1");
@@ -858,6 +866,10 @@ definition {
 		SitePages.addPublicChildPage(
 			childPageName = "Page2",
 			parentPageName = "Page1");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",

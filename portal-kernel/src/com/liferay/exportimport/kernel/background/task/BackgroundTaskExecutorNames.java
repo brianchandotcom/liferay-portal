@@ -39,6 +39,11 @@ public class BackgroundTaskExecutorNames {
 		"com.liferay.exportimport.internal.background.task." +
 			"LayoutRemoteStagingBackgroundTaskExecutor";
 
+	public static final String
+		LAYOUT_SET_PROTOTYPE_IMPORT_BACKGROUND_TASK_EXECUTOR =
+			"com.liferay.exportimport.internal.background.task." +
+				"LayoutSetPrototypeImportBackgroundTaskExcecutor";
+
 	public static final String LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR =
 		"com.liferay.exportimport.internal.background.task." +
 			"LayoutStagingBackgroundTaskExecutor";

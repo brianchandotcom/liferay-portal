@@ -20,7 +20,7 @@ import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInf
 import com.liferay.journal.model.JournalContentSearchTable;
 import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
 import com.liferay.portal.kernel.model.LayoutTable;
-import com.liferay.portal.kernel.model.PortletTable;
+import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,7 +63,7 @@ public class JournalContentSearchTableReferenceDefinition
 			)
 		).singleColumnReference(
 			JournalContentSearchTable.INSTANCE.portletId,
-			PortletTable.INSTANCE.portletId
+			PortletPreferencesTable.INSTANCE.portletId
 		);
 	}
 

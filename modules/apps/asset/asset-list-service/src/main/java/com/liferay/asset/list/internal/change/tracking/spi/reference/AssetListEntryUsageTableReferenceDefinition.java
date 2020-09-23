@@ -22,7 +22,7 @@ import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfo
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTable;
-import com.liferay.portal.kernel.model.PortletTable;
+import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,7 +56,7 @@ public class AssetListEntryUsageTableReferenceDefinition
 			LayoutTable.INSTANCE.plid, Layout.class
 		).singleColumnReference(
 			AssetListEntryUsageTable.INSTANCE.portletId,
-			PortletTable.INSTANCE.portletId
+			PortletPreferencesTable.INSTANCE.portletId
 		);
 	}
 

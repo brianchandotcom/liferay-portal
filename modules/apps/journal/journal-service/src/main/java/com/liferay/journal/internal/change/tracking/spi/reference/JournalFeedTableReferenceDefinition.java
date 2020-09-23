@@ -26,7 +26,7 @@ import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.JournalFeedTable;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
 import com.liferay.portal.kernel.model.ClassNameTable;
-import com.liferay.portal.kernel.model.PortletTable;
+import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -134,7 +134,7 @@ public class JournalFeedTableReferenceDefinition
 			)
 		).singleColumnReference(
 			JournalFeedTable.INSTANCE.targetPortletId,
-			PortletTable.INSTANCE.portletId
+			PortletPreferencesTable.INSTANCE.portletId
 		);
 	}
 

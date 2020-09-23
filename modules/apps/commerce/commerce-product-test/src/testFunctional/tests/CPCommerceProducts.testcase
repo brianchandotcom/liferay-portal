@@ -34,7 +34,7 @@ definition {
 				panel = "Commerce",
 				portlet = "Options");
 
-			if(IsElementPresent(locator1 = "CommerceEntry#DELETE_OPTION_BUTTON")){
+			if (IsElementPresent(locator1 = "CommerceEntry#DELETE_OPTION_BUTTON")) {
 
 				CommerceOptions.deleteOptionsEntries();
 			}
@@ -47,7 +47,7 @@ definition {
 			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 				CommerceEntry.deleteCommerceEntry();
 			}
-			
+
 			CommerceNavigator.gotoPortlet(
 				category = "Product Management",
 				panel = "Commerce",

@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
+package com.liferay.petra.url.pattern.mapper.factory;
+
+import com.liferay.petra.url.pattern.mapper.trie.DynamicSizeTrieURLPatternMapper;
+import com.liferay.petra.url.pattern.mapper.trie.StaticSizeTrieURLPatternMapper;
 
 import java.util.HashMap;
 import java.util.Map;

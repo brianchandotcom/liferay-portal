@@ -12,15 +12,38 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
+package com.liferay.petra.url.pattern.mapper.trie;
 
+import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
+import com.liferay.petra.url.pattern.mapper.simple.SimpleURLPatternMapperTest;
+
+import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Arthur Chan
  */
-public class DynamicSizeTrieURLPatternMapperPerformanceTest
-	extends SimpleURLPatternMapperPerformanceTest {
+public class DynamicSizeTrieURLPatternMapperTest
+	extends SimpleURLPatternMapperTest {
+
+	@Test
+	public void testConstructor() {
+		Map<String, String> map = new HashMap<>();
+
+		for (int i = 0; i < 1024; i++) {
+			map.put("*.key" + i, "value" + i);
+		}
+
+		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(map);
+
+		for (int i = 0; i < 1024; i++) {
+			Assert.assertEquals(
+				"value" + i, urlPatternMapper.getValue("*.key" + i));
+		}
+	}
 
 	@Override
 	protected URLPatternMapper<String> createURLPatternMapper(

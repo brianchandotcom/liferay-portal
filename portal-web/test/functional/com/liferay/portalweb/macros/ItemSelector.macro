@@ -572,21 +572,6 @@ definition {
 				value1 = "No web content was found.");
 		}
 		else {
-			AssertVisible(
-				key_rowEntry = "${webContentTitle}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-		}
-
-		if (isSet(draft)) {
-			AssertElementNotPresent(
-				key_rowEntry = "${webContentTitle}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "No web content was found.");
-		}
-		else {
 			for (var webContentTitle : list "${webContentTitle}") {
 				AssertVisible(
 					key_rowEntry = "${webContentTitle}",

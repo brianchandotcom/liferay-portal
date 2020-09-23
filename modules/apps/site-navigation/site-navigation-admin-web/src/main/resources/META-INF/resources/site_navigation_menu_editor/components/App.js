@@ -15,18 +15,34 @@
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
+import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
 import {AppLayout} from './AppLayout';
 import {EmptyState} from './EmptyState';
 import {Menu} from './Menu';
+import {MenuItemSettingsPanel} from './MenuItemSettingsPanel';
+import {MenuSettingsPanel} from './MenuSettingsPanel';
 import {Toolbar} from './Toolbar';
 
-export function App({siteNavigationMenuItems}) {
+const SIDEBAR_PANELS = [
+	{
+		component: MenuItemSettingsPanel,
+		sidebarPanelId: SIDEBAR_PANEL_IDS.menuItemSettings,
+	},
+	{
+		component: MenuSettingsPanel,
+		sidebarPanelId: SIDEBAR_PANEL_IDS.menuSettings,
+	},
+];
+
+export function App(props) {
 	const [selectedMenuItemId, setSelectedMenuItemId] = useState(null);
 
 	const handleSelectMenuItem = useCallback(
 		(menuItem) => setSelectedMenuItemId(menuItem.siteNavigationMenuItemId),
 		[]
 	);
+
+	const {siteNavigationMenuItems} = props;
 
 	return (
 		<AppLayout
@@ -41,7 +57,10 @@ export function App({siteNavigationMenuItems}) {
 					/>
 				)
 			}
+			selectedMenuItemId={selectedMenuItemId}
+			sidebarPanels={SIDEBAR_PANELS}
 			toolbarChildren={<Toolbar />}
+			{...props}
 		/>
 	);
 }

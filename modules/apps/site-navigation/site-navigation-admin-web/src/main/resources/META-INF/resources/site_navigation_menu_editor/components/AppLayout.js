@@ -29,6 +29,7 @@ export const AppLayout = ({
 	initialSidebarPanelId = null,
 	sidebarPanels = DEFAULT_SIDEBAR_PANELS,
 	toolbarChildren,
+	...props
 }) => {
 	const [sidebarPanelId, setSidebarPanelId] = useState(initialSidebarPanelId);
 
@@ -86,7 +87,7 @@ export const AppLayout = ({
 						}
 					)}
 				>
-					{SidebarPanel && <SidebarPanel />}
+					{SidebarPanel && <SidebarPanel {...props} />}
 				</div>
 			</div>
 		</SetSidebarPanelIdContext.Provider>

@@ -17,12 +17,8 @@ package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.exception.UserEmailAddressException;
-import com.liferay.portal.kernel.exception.UserEmailAddressException.MustNotUseCompanyMx;
-import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -76,6 +72,7 @@ import com.liferay.saml.runtime.exception.AssertionException;
 import com.liferay.saml.runtime.exception.AudienceException;
 import com.liferay.saml.runtime.exception.AuthnAgeException;
 import com.liferay.saml.runtime.exception.DestinationException;
+import com.liferay.saml.runtime.exception.EntityInteractionException;
 import com.liferay.saml.runtime.exception.ExpiredException;
 import com.liferay.saml.runtime.exception.InResponseToException;
 import com.liferay.saml.runtime.exception.IssuerException;
@@ -209,17 +206,28 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			doProcessResponse(
 				messageContext, httpServletRequest, httpServletResponse);
 		}
-		catch (Exception exception1) {
-			HttpServletRequest originalHttpServletRequest =
-				_portal.getOriginalServletRequest(httpServletRequest);
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+			else {
+				if (!(exception instanceof AuthnAgeException ||
+					  exception instanceof SubjectException)) {
 
-			HttpSession httpSession = originalHttpServletRequest.getSession();
+					_log.error(exception.getMessage());
+				}
+			}
 
 			if (messageContext != null) {
+				SAMLPeerEntityContext samlPeerEntityContext =
+					messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
 				SAMLSubjectNameIdentifierContext
 					samlSubjectNameIdentifierContext =
 						messageContext.getSubcontext(
 							SAMLSubjectNameIdentifierContext.class);
+
+				String nameIdValue = null;
 
 				if (samlSubjectNameIdentifierContext != null) {
 					NameID nameID =
@@ -227,60 +235,18 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 							getSAML2SubjectNameID();
 
 					if (nameID != null) {
-						httpSession.setAttribute(
-							SamlWebKeys.SAML_SUBJECT_NAME_ID,
-							nameID.getValue());
+						nameIdValue = nameID.getValue();
 					}
 				}
-			}
 
-			String error = StringPool.BLANK;
-
-			if (exception1 instanceof AuthnAgeException) {
-				error = AuthnAgeException.class.getSimpleName();
-			}
-			else if (exception1 instanceof ContactNameException) {
-				error = ContactNameException.class.getSimpleName();
-			}
-			else if (exception1 instanceof SubjectException) {
-				error = SubjectException.class.getSimpleName();
-			}
-			else if (exception1 instanceof MustNotUseCompanyMx) {
-				error = MustNotUseCompanyMx.class.getSimpleName();
-			}
-			else if (exception1 instanceof UserEmailAddressException) {
-				error = UserEmailAddressException.class.getSimpleName();
-			}
-			else if (exception1 instanceof UserScreenNameException) {
-				error = UserScreenNameException.class.getSimpleName();
-			}
-			else {
-				Class<?> clazz = exception1.getClass();
-
-				httpSession.setAttribute(
-					SamlWebKeys.SAML_SSO_ERROR, clazz.getSimpleName());
-
-				ExceptionHandlerUtil.handleException(exception1);
-			}
-
-			httpSession.setAttribute(SamlWebKeys.SAML_SSO_ERROR, error);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception1, exception1);
-			}
-			else {
-				if (!(exception1 instanceof SubjectException)) {
-					_log.error(exception1.getMessage());
+				if (samlPeerEntityContext != null) {
+					throw new EntityInteractionException(
+						samlPeerEntityContext.getEntityId(), nameIdValue,
+						exception);
 				}
 			}
 
-			try {
-				httpServletResponse.sendRedirect(
-					getAuthRedirectURL(messageContext, httpServletRequest));
-			}
-			catch (Exception exception2) {
-				ExceptionHandlerUtil.handleException(exception2);
-			}
+			ExceptionHandlerUtil.handleException(exception);
 		}
 	}
 

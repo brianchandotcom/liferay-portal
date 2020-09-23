@@ -111,7 +111,7 @@ definition {
 			Pause(locator1 = "3000");
 		}
 
-		task ("Assert the Layout of Grid is 2 Modules per Row and the height of module doesn't equal 0 in Desktop viewport") {
+		task ("Assert the Layout of Grid is 2 Modules per Row and the height of module is greater than 20px in Desktop viewport") {
 			Click(
 				key_deviceType = "Desktop",
 				locator1 = "PageEditor#DEVICE_TYPE");
@@ -124,13 +124,14 @@ definition {
 				position = "1");
 
 			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-6')]");
+			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
 
-			TestUtils.assertNotEquals(
+			TestUtils.isGreaterThan(
 				actual = "${moduleHeight}",
-				expected = "0px");
+				expected = "20");
 		}
 
-		task ("Assert the Layout of Grid is 3 Modules per Row and the height of module doesn't equal 0 in Tablet viewport") {
+		task ("Assert the Layout of Grid is 3 Modules per Row and the height of module is greater than 20px in Tablet viewport") {
 			Click(
 				key_deviceType = "Tablet",
 				locator1 = "PageEditor#DEVICE_TYPE");
@@ -145,15 +146,16 @@ definition {
 				position = "1");
 
 			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')]");
+			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
 
-			TestUtils.assertNotEquals(
+			TestUtils.isGreaterThan(
 				actual = "${moduleHeight}",
-				expected = "0px");
+				expected = "20");
 
 			SelectFrame(value1 = "relative=top");
 		}
 
-		task ("Assert the Layout of Grid is 6 Modules per Row and the height of module doesn't equal 0 in Landscape Phone viewport") {
+		task ("Assert the Layout of Grid is 6 Modules per Row and the height of module is greater than 20px in Landscape Phone viewport") {
 			Click(
 				key_deviceType = "Landscape Phone",
 				locator1 = "PageEditor#DEVICE_TYPE");
@@ -168,15 +170,16 @@ definition {
 				position = "1");
 
 			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-2')]");
+			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
 
-			TestUtils.assertNotEquals(
+			TestUtils.isGreaterThan(
 				actual = "${moduleHeight}",
-				expected = "0px");
+				expected = "20");
 
 			SelectFrame(value1 = "relative=top");
 		}
 
-		task ("Assert the Layout of Grid is 1 Module per Row and the height of module doesn't equal 0 in Portrait Phone viewport") {
+		task ("Assert the Layout of Grid is 1 Module per Row and the height of module is greater than 20px in Portrait Phone viewport") {
 			Click(
 				key_deviceType = "Portrait Phone",
 				locator1 = "PageEditor#DEVICE_TYPE");
@@ -191,10 +194,11 @@ definition {
 				position = "1");
 
 			var moduleHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-12')]");
+			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
 
-			TestUtils.assertNotEquals(
+			TestUtils.isGreaterThan(
 				actual = "${moduleHeight}",
-				expected = "0px");
+				expected = "20");
 
 			SelectFrame(value1 = "relative=top");
 		}

@@ -18,7 +18,6 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFolderTable;
-import com.liferay.portal.kernel.model.PortletTable;
 import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
@@ -46,8 +45,6 @@ public class RepositoryTableReferenceDefinition
 
 		parentTableReferenceInfoBuilder.groupedModel(
 			RepositoryTable.INSTANCE
-		).singleColumnReference(
-			RepositoryTable.INSTANCE.portletId, PortletTable.INSTANCE.portletId
 		).singleColumnReference(
 			RepositoryTable.INSTANCE.dlFolderId, DLFolderTable.INSTANCE.folderId
 		);

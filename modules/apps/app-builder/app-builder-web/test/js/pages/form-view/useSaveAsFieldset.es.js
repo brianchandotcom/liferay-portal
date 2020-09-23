@@ -19,92 +19,83 @@ import React from 'react';
 import FormViewContext from '../../../../src/main/resources/META-INF/resources/js/pages/form-view/FormViewContext.es';
 import useSaveAsFieldset from '../../../../src/main/resources/META-INF/resources/js/pages/form-view/useSaveAsFieldset.es';
 import * as toast from '../../../../src/main/resources/META-INF/resources/js/utils/toast.es';
-import {dataLayoutBuilderConfig, formViewContext} from '../../constants.es';
+import {FORM_VIEW_CONTEXT, dataLayoutBuilderConfig} from '../../constants.es';
 
-const dataLayoutBuilder = new DataLayoutBuilder.default(
-	dataLayoutBuilderConfig
-);
-
-const FormViewContextWrapper = ({children, defaultQuery = {}, dispatch}) => {
+const FormViewContextWrapper = ({children, dispatch}) => {
 	return (
-		<FormViewContext.Provider value={[defaultQuery, dispatch]}>
+		<FormViewContext.Provider value={[FORM_VIEW_CONTEXT, dispatch]}>
 			{children}
 		</FormViewContext.Provider>
 	);
 };
 
+const SaveAsFieldSetWrapper = ({dispatch, fieldName, onClick}) => {
+	const dataLayoutBuilder = new DataLayoutBuilder.default(
+		dataLayoutBuilderConfig
+	);
+
+	const saveAsFieldSet = useSaveAsFieldset({
+		dataLayoutBuilder: {
+			...dataLayoutBuilder,
+			dispatch,
+		},
+	});
+
+	return (
+		<button
+			onClick={() => {
+				onClick();
+
+				saveAsFieldSet(fieldName);
+			}}
+		>
+			Save
+		</button>
+	);
+};
+
 describe('useSaveAsFieldSet', () => {
-	let successToastSpy;
-	let errorToastSpy;
-	let SaveAsFieldSetWrapper;
 	let contextDispatch;
 	let dispatchFn;
-	let fieldName;
+	let errorToastSpy;
 	let onClick;
+	let successToastSpy;
 
 	beforeEach(() => {
 		cleanup();
 
 		contextDispatch = jest.fn();
 		dispatchFn = jest.fn();
-		onClick = jest.fn();
-		fieldName = 'Text';
-
-		successToastSpy = jest
-			.spyOn(toast, 'successToast')
-			.mockImplementation(() => {});
-
 		errorToastSpy = jest
 			.spyOn(toast, 'errorToast')
 			.mockImplementation(() => {});
+		onClick = jest.fn();
+		successToastSpy = jest
+			.spyOn(toast, 'successToast')
+			.mockImplementation(() => {});
+	});
 
-		SaveAsFieldSetWrapper = () => (
-			<FormViewContextWrapper
-				defaultQuery={formViewContext}
-				dispatch={contextDispatch}
-			>
-				<RenderSaveAsFieldSet
+	it('call saveAsFieldSet successfully', async () => {
+		fetch.mockResponseOnce(
+			JSON.stringify({
+				defaultDataLayout: {
+					defaultDataLayout: {
+						id: 1,
+					},
+				},
+				id: 1,
+			})
+		);
+
+		const {queryByText} = render(
+			<FormViewContextWrapper dispatch={contextDispatch}>
+				<SaveAsFieldSetWrapper
 					dispatch={dispatchFn}
-					fieldName={fieldName}
+					fieldName="SelectFromList"
 					onClick={onClick}
 				/>
 			</FormViewContextWrapper>
 		);
-	});
-
-	const RenderSaveAsFieldSet = ({dispatch, fieldName, onClick}) => {
-		const saveAsFieldSet = useSaveAsFieldset({
-			dataLayoutBuilder: {
-				...dataLayoutBuilder,
-				dispatch,
-			},
-		});
-
-		return (
-			<button
-				onClick={() => {
-					onClick();
-					saveAsFieldSet(fieldName);
-				}}
-			>
-				Save
-			</button>
-		);
-	};
-
-	it('call saveAsFieldSet with success', async () => {
-		const fieldSetResponse = {
-			defaultDataLayout: {
-				defaultDataLayout: {
-					id: 1,
-				},
-			},
-			id: 1,
-		};
-
-		fetch.mockResponseOnce(JSON.stringify(fieldSetResponse));
-
-		const {queryByText} = render(<SaveAsFieldSetWrapper />);
 
 		const button = queryByText('Save');
 
@@ -120,12 +111,12 @@ describe('useSaveAsFieldSet', () => {
 		expect(contextDispatchCalls.length).toBe(2);
 		expect(successToastSpy.mock.calls.length).toBe(1);
 		expect(dispatchFn.mock.calls[0][1]).toStrictEqual({
-			fieldName,
+			fieldName: 'SelectFromList',
 			propertyName: 'ddmStructureId',
-			propertyValue: fieldSetResponse.id,
+			propertyValue: 1,
 		});
 		expect(contextDispatchCalls[0][0].payload.fieldSets.length).toBe(
-			formViewContext.fieldSets.length + 1
+			FORM_VIEW_CONTEXT.fieldSets.length + 1
 		);
 		expect(
 			contextDispatchCalls[0][0].type ===
@@ -141,12 +132,18 @@ describe('useSaveAsFieldSet', () => {
 	it('call saveAsFieldSet with error', async () => {
 		fetch.mockReject(new Error('fetch-error'));
 
-		const {queryByText} = render(<SaveAsFieldSetWrapper />);
-
-		const button = queryByText('Save');
+		const {queryByText} = render(
+			<FormViewContextWrapper dispatch={contextDispatch}>
+				<SaveAsFieldSetWrapper
+					dispatch={dispatchFn}
+					fieldName="Text"
+					onClick={onClick}
+				/>
+			</FormViewContextWrapper>
+		);
 
 		await act(async () => {
-			fireEvent.click(button);
+			fireEvent.click(queryByText('Save'));
 		});
 
 		expect(errorToastSpy.mock.calls.length).toBe(1);

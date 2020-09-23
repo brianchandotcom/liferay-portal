@@ -70,6 +70,7 @@ export default ({dataLayoutBuilder}) => {
 		)
 			.then((dataDefinitionFieldSet) => {
 				const ddmStructureId = dataDefinitionFieldSet.id;
+
 				dispatch({
 					payload: {
 						fieldSets: [...fieldSets, dataDefinitionFieldSet],

@@ -280,7 +280,7 @@ export const dataLayoutBuilderConfig = {
 	portletNamespace: 'com_liferay_journal_web_portlet_JournalPortlet',
 };
 
-export const formViewContext = {
+export const FORM_VIEW_CONTEXT = {
 	appProps: {},
 	config: {
 		allowFieldSets: false,
@@ -292,7 +292,7 @@ export const formViewContext = {
 		ruleSettings: {},
 		unimplementedProperties: [],
 	},
-	dataDefinition: DATA_DEFINITION_RESPONSES.ONE_ITEM,
+	dataDefinition: DATA_DEFINITION_RESPONSES.TWO_ITEMS,
 	dataDefinitionId: 0,
 	dataLayout: {
 		dataLayoutPages: [],

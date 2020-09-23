@@ -50,7 +50,7 @@ public class UpstreamFailureUtil {
 
 			String jobVariant = failedBatchJSONObject.getString("jobVariant");
 
-			jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
+			jobVariant = _formatJobVariant(jobVariant);
 
 			if (type.equals("build")) {
 				upstreamFailures.add(
@@ -148,7 +148,7 @@ public class UpstreamFailureUtil {
 		try {
 			String jobVariant = build.getJobVariant();
 
-			jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
+			jobVariant = _formatJobVariant(jobVariant);
 
 			for (String failure :
 					getUpstreamJobFailures("test", topLevelBuild)) {
@@ -236,6 +236,12 @@ public class UpstreamFailureUtil {
 		}
 	}
 
+	private static String _formatJobVariant(String jobVariant) {
+		jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
+
+		return jobVariant.replaceAll("_stable$", "");
+	}
+
 	private static String _formatUpstreamBuildFailure(
 		String jobVariant, String testResult) {
 
@@ -261,7 +267,7 @@ public class UpstreamFailureUtil {
 			return false;
 		}
 
-		jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
+		jobVariant = _formatJobVariant(jobVariant);
 
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 

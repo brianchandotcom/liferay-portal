@@ -911,7 +911,7 @@ definition {
 				key_entryName = "${sku}",
 				locator1 = "CommerceNavigation#ENTRY_NAME");
 
-			SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#SKU_FIELD",

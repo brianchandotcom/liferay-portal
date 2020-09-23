@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -128,7 +129,13 @@ public class DepotEntryGroupRelPersistenceTest {
 
 		newDepotEntryGroupRel.setUuid(RandomTestUtil.randomString());
 
+		newDepotEntryGroupRel.setGroupId(RandomTestUtil.nextLong());
+
 		newDepotEntryGroupRel.setCompanyId(RandomTestUtil.nextLong());
+
+		newDepotEntryGroupRel.setCreateDate(RandomTestUtil.nextDate());
+
+		newDepotEntryGroupRel.setModifiedDate(RandomTestUtil.nextDate());
 
 		newDepotEntryGroupRel.setDdmStructuresAvailable(
 			RandomTestUtil.randomBoolean());
@@ -155,8 +162,18 @@ public class DepotEntryGroupRelPersistenceTest {
 			existingDepotEntryGroupRel.getDepotEntryGroupRelId(),
 			newDepotEntryGroupRel.getDepotEntryGroupRelId());
 		Assert.assertEquals(
+			existingDepotEntryGroupRel.getGroupId(),
+			newDepotEntryGroupRel.getGroupId());
+		Assert.assertEquals(
 			existingDepotEntryGroupRel.getCompanyId(),
 			newDepotEntryGroupRel.getCompanyId());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDepotEntryGroupRel.getCreateDate()),
+			Time.getShortTimestamp(newDepotEntryGroupRel.getCreateDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingDepotEntryGroupRel.getModifiedDate()),
+			Time.getShortTimestamp(newDepotEntryGroupRel.getModifiedDate()));
 		Assert.assertEquals(
 			existingDepotEntryGroupRel.isDdmStructuresAvailable(),
 			newDepotEntryGroupRel.isDdmStructuresAvailable());
@@ -178,6 +195,15 @@ public class DepotEntryGroupRelPersistenceTest {
 		_persistence.countByUuid("null");
 
 		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
 	}
 
 	@Test
@@ -254,9 +280,9 @@ public class DepotEntryGroupRelPersistenceTest {
 	protected OrderByComparator<DepotEntryGroupRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"DepotEntryGroupRel", "mvccVersion", true, "uuid", true,
-			"depotEntryGroupRelId", true, "companyId", true,
-			"ddmStructuresAvailable", true, "depotEntryId", true, "searchable",
-			true, "toGroupId", true);
+			"depotEntryGroupRelId", true, "groupId", true, "companyId", true,
+			"createDate", true, "modifiedDate", true, "ddmStructuresAvailable",
+			true, "depotEntryId", true, "searchable", true, "toGroupId", true);
 	}
 
 	@Test
@@ -536,6 +562,17 @@ public class DepotEntryGroupRelPersistenceTest {
 
 	private void _assertOriginalValues(DepotEntryGroupRel depotEntryGroupRel) {
 		Assert.assertEquals(
+			depotEntryGroupRel.getUuid(),
+			ReflectionTestUtil.invoke(
+				depotEntryGroupRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(depotEntryGroupRel.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				depotEntryGroupRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
 			Long.valueOf(depotEntryGroupRel.getDepotEntryId()),
 			ReflectionTestUtil.<Long>invoke(
 				depotEntryGroupRel, "getColumnOriginalValue",
@@ -556,7 +593,13 @@ public class DepotEntryGroupRelPersistenceTest {
 
 		depotEntryGroupRel.setUuid(RandomTestUtil.randomString());
 
+		depotEntryGroupRel.setGroupId(RandomTestUtil.nextLong());
+
 		depotEntryGroupRel.setCompanyId(RandomTestUtil.nextLong());
+
+		depotEntryGroupRel.setCreateDate(RandomTestUtil.nextDate());
+
+		depotEntryGroupRel.setModifiedDate(RandomTestUtil.nextDate());
 
 		depotEntryGroupRel.setDdmStructuresAvailable(
 			RandomTestUtil.randomBoolean());

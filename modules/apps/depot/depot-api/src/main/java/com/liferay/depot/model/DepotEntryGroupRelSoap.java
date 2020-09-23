@@ -17,6 +17,7 @@ package com.liferay.depot.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +36,10 @@ public class DepotEntryGroupRelSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setDepotEntryGroupRelId(model.getDepotEntryGroupRelId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setDdmStructuresAvailable(model.isDdmStructuresAvailable());
 		soapModel.setDepotEntryId(model.getDepotEntryId());
 		soapModel.setSearchable(model.isSearchable());
@@ -126,12 +130,36 @@ public class DepotEntryGroupRelSoap implements Serializable {
 		_depotEntryGroupRelId = depotEntryGroupRelId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public boolean getDdmStructuresAvailable() {
@@ -177,7 +205,10 @@ public class DepotEntryGroupRelSoap implements Serializable {
 	private long _mvccVersion;
 	private String _uuid;
 	private long _depotEntryGroupRelId;
+	private long _groupId;
 	private long _companyId;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private boolean _ddmStructuresAvailable;
 	private long _depotEntryId;
 	private boolean _searchable;

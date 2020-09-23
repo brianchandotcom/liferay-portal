@@ -24,7 +24,10 @@
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="depotEntryGroupRelId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 		<field name="ddmStructuresAvailable" type="boolean" />
 		<field name="depotEntryId" type="long" />
 		<field name="searchable" type="boolean" />

@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedModel;
+
+import java.util.Date;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -34,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DepotEntryGroupRelModel
-	extends BaseModel<DepotEntryGroupRel>, MVCCModel, ShardedModel {
+	extends BaseModel<DepotEntryGroupRel>, MVCCModel, ShardedModel,
+			StagedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -78,6 +82,7 @@ public interface DepotEntryGroupRelModel
 	 * @return the uuid of this depot entry group rel
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -85,6 +90,7 @@ public interface DepotEntryGroupRelModel
 	 *
 	 * @param uuid the uuid of this depot entry group rel
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -102,6 +108,20 @@ public interface DepotEntryGroupRelModel
 	public void setDepotEntryGroupRelId(long depotEntryGroupRelId);
 
 	/**
+	 * Returns the group ID of this depot entry group rel.
+	 *
+	 * @return the group ID of this depot entry group rel
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this depot entry group rel.
+	 *
+	 * @param groupId the group ID of this depot entry group rel
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this depot entry group rel.
 	 *
 	 * @return the company ID of this depot entry group rel
@@ -116,6 +136,38 @@ public interface DepotEntryGroupRelModel
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create date of this depot entry group rel.
+	 *
+	 * @return the create date of this depot entry group rel
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this depot entry group rel.
+	 *
+	 * @param createDate the create date of this depot entry group rel
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this depot entry group rel.
+	 *
+	 * @return the modified date of this depot entry group rel
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this depot entry group rel.
+	 *
+	 * @param modifiedDate the modified date of this depot entry group rel
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the ddm structures available of this depot entry group rel.

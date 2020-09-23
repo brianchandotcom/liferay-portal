@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing DepotEntryGroupRel in entity cache.
  *
@@ -76,7 +78,7 @@ public class DepotEntryGroupRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -84,8 +86,14 @@ public class DepotEntryGroupRelCacheModel
 		sb.append(uuid);
 		sb.append(", depotEntryGroupRelId=");
 		sb.append(depotEntryGroupRelId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", ddmStructuresAvailable=");
 		sb.append(ddmStructuresAvailable);
 		sb.append(", depotEntryId=");
@@ -114,7 +122,23 @@ public class DepotEntryGroupRelCacheModel
 		}
 
 		depotEntryGroupRelImpl.setDepotEntryGroupRelId(depotEntryGroupRelId);
+		depotEntryGroupRelImpl.setGroupId(groupId);
 		depotEntryGroupRelImpl.setCompanyId(companyId);
+
+		if (createDate == Long.MIN_VALUE) {
+			depotEntryGroupRelImpl.setCreateDate(null);
+		}
+		else {
+			depotEntryGroupRelImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			depotEntryGroupRelImpl.setModifiedDate(null);
+		}
+		else {
+			depotEntryGroupRelImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		depotEntryGroupRelImpl.setDdmStructuresAvailable(
 			ddmStructuresAvailable);
 		depotEntryGroupRelImpl.setDepotEntryId(depotEntryId);
@@ -133,7 +157,11 @@ public class DepotEntryGroupRelCacheModel
 
 		depotEntryGroupRelId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 
 		ddmStructuresAvailable = objectInput.readBoolean();
 
@@ -157,7 +185,11 @@ public class DepotEntryGroupRelCacheModel
 
 		objectOutput.writeLong(depotEntryGroupRelId);
 
+		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeBoolean(ddmStructuresAvailable);
 
@@ -171,7 +203,10 @@ public class DepotEntryGroupRelCacheModel
 	public long mvccVersion;
 	public String uuid;
 	public long depotEntryGroupRelId;
+	public long groupId;
 	public long companyId;
+	public long createDate;
+	public long modifiedDate;
 	public boolean ddmStructuresAvailable;
 	public long depotEntryId;
 	public boolean searchable;

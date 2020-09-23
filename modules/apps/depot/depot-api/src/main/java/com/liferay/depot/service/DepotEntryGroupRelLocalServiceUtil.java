@@ -239,17 +239,17 @@ public class DepotEntryGroupRelLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the depot entry group rel with the matching UUID and company.
+	 * Returns the depot entry group rel matching the UUID and group.
 	 *
 	 * @param uuid the depot entry group rel's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
 	 */
 	public static com.liferay.depot.model.DepotEntryGroupRel
-		fetchDepotEntryGroupRelByUuidAndCompanyId(String uuid, long companyId) {
+		fetchDepotEntryGroupRelByUuidAndGroupId(String uuid, long groupId) {
 
-		return getService().fetchDepotEntryGroupRelByUuidAndCompanyId(
-			uuid, companyId);
+		return getService().fetchDepotEntryGroupRelByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -273,19 +273,19 @@ public class DepotEntryGroupRelLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the depot entry group rel with the matching UUID and company.
+	 * Returns the depot entry group rel matching the UUID and group.
 	 *
 	 * @param uuid the depot entry group rel's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching depot entry group rel
 	 * @throws PortalException if a matching depot entry group rel could not be found
 	 */
 	public static com.liferay.depot.model.DepotEntryGroupRel
-			getDepotEntryGroupRelByUuidAndCompanyId(String uuid, long companyId)
+			getDepotEntryGroupRelByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getDepotEntryGroupRelByUuidAndCompanyId(
-			uuid, companyId);
+		return getService().getDepotEntryGroupRelByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
@@ -318,6 +318,41 @@ public class DepotEntryGroupRelLocalServiceUtil {
 	}
 
 	/**
+	 * Returns all the depot entry group rels matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the depot entry group rels
+	 * @param companyId the primary key of the company
+	 * @return the matching depot entry group rels, or an empty list if no matches were found
+	 */
+	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
+		getDepotEntryGroupRelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		return getService().getDepotEntryGroupRelsByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of depot entry group rels matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the depot entry group rels
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of depot entry group rels
+	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching depot entry group rels, or an empty list if no matches were found
+	 */
+	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
+		getDepotEntryGroupRelsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.depot.model.DepotEntryGroupRel>
+					orderByComparator) {
+
+		return getService().getDepotEntryGroupRelsByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the number of depot entry group rels.
 	 *
 	 * @return the number of depot entry group rels
@@ -334,6 +369,14 @@ public class DepotEntryGroupRelLocalServiceUtil {
 
 	public static int getDepotEntryGroupRelsCount(long groupId) {
 		return getService().getDepotEntryGroupRelsCount(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

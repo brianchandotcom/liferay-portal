@@ -19,6 +19,7 @@ import com.liferay.depot.model.DepotEntryGroupRelModel;
 import com.liferay.depot.model.DepotEntryGroupRelSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -38,6 +40,7 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -70,7 +73,9 @@ public class DepotEntryGroupRelModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"depotEntryGroupRelId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"depotEntryGroupRelId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"ddmStructuresAvailable", Types.BOOLEAN},
 		{"depotEntryId", Types.BIGINT}, {"searchable", Types.BOOLEAN},
 		{"toGroupId", Types.BIGINT}
@@ -83,7 +88,10 @@ public class DepotEntryGroupRelModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("depotEntryGroupRelId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("ddmStructuresAvailable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("depotEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("searchable", Types.BOOLEAN);
@@ -91,7 +99,7 @@ public class DepotEntryGroupRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryGroupRelId LONG not null primary key,companyId LONG,ddmStructuresAvailable BOOLEAN,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG)";
+		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryGroupRelId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,ddmStructuresAvailable BOOLEAN,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntryGroupRel";
 
@@ -129,26 +137,32 @@ public class DepotEntryGroupRelModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long SEARCHABLE_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long TOGROUPID_COLUMN_BITMASK = 16L;
+	public static final long SEARCHABLE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long TOGROUPID_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long DEPOTENTRYGROUPRELID_COLUMN_BITMASK = 64L;
+	public static final long DEPOTENTRYGROUPRELID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -182,7 +196,10 @@ public class DepotEntryGroupRelModelImpl
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setDepotEntryGroupRelId(soapModel.getDepotEntryGroupRelId());
+		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setDdmStructuresAvailable(soapModel.isDdmStructuresAvailable());
 		model.setDepotEntryId(soapModel.getDepotEntryId());
 		model.setSearchable(soapModel.isSearchable());
@@ -361,12 +378,29 @@ public class DepotEntryGroupRelModelImpl
 			"depotEntryGroupRelId",
 			(BiConsumer<DepotEntryGroupRel, Long>)
 				DepotEntryGroupRel::setDepotEntryGroupRelId);
+		attributeGetterFunctions.put("groupId", DepotEntryGroupRel::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<DepotEntryGroupRel, Long>)
+				DepotEntryGroupRel::setGroupId);
 		attributeGetterFunctions.put(
 			"companyId", DepotEntryGroupRel::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
 			(BiConsumer<DepotEntryGroupRel, Long>)
 				DepotEntryGroupRel::setCompanyId);
+		attributeGetterFunctions.put(
+			"createDate", DepotEntryGroupRel::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<DepotEntryGroupRel, Date>)
+				DepotEntryGroupRel::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", DepotEntryGroupRel::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<DepotEntryGroupRel, Date>)
+				DepotEntryGroupRel::setModifiedDate);
 		attributeGetterFunctions.put(
 			"ddmStructuresAvailable",
 			DepotEntryGroupRel::getDdmStructuresAvailable);
@@ -460,6 +494,30 @@ public class DepotEntryGroupRelModelImpl
 
 	@JSON
 	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_groupId = groupId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalGroupId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
+	}
+
+	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -481,6 +539,42 @@ public class DepotEntryGroupRelModelImpl
 	public long getOriginalCompanyId() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("companyId"));
+	}
+
+	@JSON
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createDate = createDate;
+	}
+
+	@JSON
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_modifiedDate = modifiedDate;
 	}
 
 	@JSON
@@ -595,6 +689,12 @@ public class DepotEntryGroupRelModelImpl
 			this.<Long>getColumnOriginalValue("toGroupId"));
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(DepotEntryGroupRel.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -655,7 +755,10 @@ public class DepotEntryGroupRelModelImpl
 		depotEntryGroupRelImpl.setUuid(getUuid());
 		depotEntryGroupRelImpl.setDepotEntryGroupRelId(
 			getDepotEntryGroupRelId());
+		depotEntryGroupRelImpl.setGroupId(getGroupId());
 		depotEntryGroupRelImpl.setCompanyId(getCompanyId());
+		depotEntryGroupRelImpl.setCreateDate(getCreateDate());
+		depotEntryGroupRelImpl.setModifiedDate(getModifiedDate());
 		depotEntryGroupRelImpl.setDdmStructuresAvailable(
 			isDdmStructuresAvailable());
 		depotEntryGroupRelImpl.setDepotEntryId(getDepotEntryId());
@@ -731,6 +834,8 @@ public class DepotEntryGroupRelModelImpl
 	public void resetOriginalValues() {
 		_columnOriginalValues = Collections.emptyMap();
 
+		_setModifiedDate = false;
+
 		_columnBitmask = 0;
 	}
 
@@ -752,7 +857,27 @@ public class DepotEntryGroupRelModelImpl
 		depotEntryGroupRelCacheModel.depotEntryGroupRelId =
 			getDepotEntryGroupRelId();
 
+		depotEntryGroupRelCacheModel.groupId = getGroupId();
+
 		depotEntryGroupRelCacheModel.companyId = getCompanyId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			depotEntryGroupRelCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			depotEntryGroupRelCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			depotEntryGroupRelCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			depotEntryGroupRelCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		depotEntryGroupRelCacheModel.ddmStructuresAvailable =
 			isDdmStructuresAvailable();
@@ -839,7 +964,11 @@ public class DepotEntryGroupRelModelImpl
 	private long _mvccVersion;
 	private String _uuid;
 	private long _depotEntryGroupRelId;
+	private long _groupId;
 	private long _companyId;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private boolean _ddmStructuresAvailable;
 	private long _depotEntryId;
 	private boolean _searchable;
@@ -878,7 +1007,10 @@ public class DepotEntryGroupRelModelImpl
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"depotEntryGroupRelId", _depotEntryGroupRelId);
+		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put(
 			"ddmStructuresAvailable", _ddmStructuresAvailable);
 		_columnOriginalValues.put("depotEntryId", _depotEntryId);
@@ -913,15 +1045,21 @@ public class DepotEntryGroupRelModelImpl
 
 		columnBitmasks.put("depotEntryGroupRelId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("ddmStructuresAvailable", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("depotEntryId", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("searchable", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("toGroupId", 128L);
+		columnBitmasks.put("ddmStructuresAvailable", 128L);
+
+		columnBitmasks.put("depotEntryId", 256L);
+
+		columnBitmasks.put("searchable", 512L);
+
+		columnBitmasks.put("toGroupId", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

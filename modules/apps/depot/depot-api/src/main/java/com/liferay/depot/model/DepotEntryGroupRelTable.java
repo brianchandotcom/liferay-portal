@@ -19,6 +19,8 @@ import com.liferay.petra.sql.dsl.base.BaseTable;
 
 import java.sql.Types;
 
+import java.util.Date;
+
 /**
  * The table class for the &quot;DepotEntryGroupRel&quot; database table.
  *
@@ -41,8 +43,16 @@ public class DepotEntryGroupRelTable
 		createColumn(
 			"depotEntryGroupRelId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
+	public final Column<DepotEntryGroupRelTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<DepotEntryGroupRelTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<DepotEntryGroupRelTable, Date> createDate =
+		createColumn(
+			"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<DepotEntryGroupRelTable, Date> modifiedDate =
+		createColumn(
+			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<DepotEntryGroupRelTable, Boolean>
 		ddmStructuresAvailable = createColumn(
 			"ddmStructuresAvailable", Boolean.class, Types.BOOLEAN,

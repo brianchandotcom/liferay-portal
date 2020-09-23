@@ -275,7 +275,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110708 and LPS-121112. Can add Grid element into a custom module of anthor one. Assert the height of empty row is greater than 20px after adding element to the resized module of another row."
-	@priority = "3"
+	@priority = "4"
 	test AddGridToCustomModuleOfAnotherGrid {
 		task ("Add a Grid to page") {
 			ContentPagesNavigator.openEditContentPage(

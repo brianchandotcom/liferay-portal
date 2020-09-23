@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
@@ -93,9 +92,6 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("navigation", "file_entry_metadata_sets");
-		portletURL.setParameter(
-			"tabs1",
-			ParamUtil.getString(liferayPortletRequest, "tabs1", "structures"));
 		portletURL.setParameter(
 			"groupId", String.valueOf(_dlRequestHelper.getScopeGroupId()));
 

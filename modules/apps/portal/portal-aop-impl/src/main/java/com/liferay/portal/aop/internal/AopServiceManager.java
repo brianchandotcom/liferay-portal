@@ -86,7 +86,7 @@ public class AopServiceManager {
 		_aopServiceServiceTracker;
 	private BundleContext _bundleContext;
 
-	@Reference(target = "(original.bean=true)")
+	@Reference(target = "(&(original.bean=true)(bean.id=transactionExecutor))")
 	private TransactionHandler _portalTransactionHandler;
 
 	private SynchronousBundleListener _synchronousBundleListener;

@@ -1505,8 +1505,19 @@ information.
 								<arg value="." />
 							</exec>
 
+							<loadresource property="remote.repository.cdn.url">
+								<filterchain>
+									<tokenfilter>
+										<filetokenizer />
+
+										<replacestring from="repository.liferay.com" to="repository-cdn.liferay.com" />
+									</tokenfilter>
+								</filterchain>
+								<propertyresource name="remote.repository.url" />
+							</loadresource>
+
 							<echo file="${project.dir}/modules/.releng/${artifact.name}.properties">artifact.git.id=${artifact.git.id}
-artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed.artifact.name}/${artifact.version}/com.liferay.${processed.artifact.name}-${artifact.version}.@{packaging}</echo>
+artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${processed.artifact.name}/${artifact.version}/com.liferay.${processed.artifact.name}-${artifact.version}.@{packaging}</echo>
 
 							<exec dir="${project.dir}/modules/.releng" executable="git" failonerror="true">
 								<arg value="add" />

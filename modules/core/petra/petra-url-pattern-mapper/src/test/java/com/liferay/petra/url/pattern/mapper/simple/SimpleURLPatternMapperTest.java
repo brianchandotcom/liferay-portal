@@ -16,9 +16,6 @@ package com.liferay.petra.url.pattern.mapper.simple;
 
 import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,11 +37,12 @@ public class SimpleURLPatternMapperTest {
 
 	@Test
 	public void testConstructor() {
+		Map<String, String> values = new HashMap<>();
+
+		values.put("", "");
+
 		try {
-			createURLPatternMapper(
-				HashMapBuilder.put(
-					"", ""
-				).build());
+			createURLPatternMapper(values);
 
 			Assert.fail();
 		}
@@ -66,35 +64,38 @@ public class SimpleURLPatternMapperTest {
 
 	@Test
 	public void testGetValue() {
-		KeyValuePair[] keyValuePairs = _createKeyValuePairs();
+		Map<String, String> pathToPatternMap = _createpathToPatternMap();
 
 		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(
-			_createValues(keyValuePairs));
+			_createValues(pathToPatternMap));
 
-		for (KeyValuePair keyValuePair : keyValuePairs) {
-			String value = urlPatternMapper.getValue(keyValuePair.getKey());
+		for (Map.Entry<String, String> pathToPattern :
+				pathToPatternMap.entrySet()) {
+
+			String value = urlPatternMapper.getValue(pathToPattern.getKey());
 
 			try {
 				if (Objects.isNull(value)) {
-					Assert.assertEquals("", keyValuePair.getValue());
+					Assert.assertEquals("", pathToPattern.getValue());
 
 					continue;
 				}
 
-				Assert.assertEquals(keyValuePair.getValue(), value);
+				Assert.assertEquals(pathToPattern.getValue(), value);
 			}
 			catch (ComparisonFailure comparisonFailure) {
 				throw new ComparisonFailure(
-					"When testing " + keyValuePair.getKey() + ":",
+					"When testing " + pathToPattern.getKey() + ":",
 					comparisonFailure.getExpected(),
 					comparisonFailure.getActual());
 			}
 		}
 
-		urlPatternMapper = createURLPatternMapper(
-			HashMapBuilder.put(
-				"*.jsp", "*.jsp"
-			).build());
+		Map<String, String> values = new HashMap<>();
+
+		values.put("*.jsp", "*.jsp");
+
+		urlPatternMapper = createURLPatternMapper(values);
 
 		Assert.assertEquals("*.jsp", urlPatternMapper.getValue(".jsp"));
 		Assert.assertNull(urlPatternMapper.getValue("jsp"));
@@ -107,69 +108,79 @@ public class SimpleURLPatternMapperTest {
 		return new SimpleURLPatternMapper<>(values);
 	}
 
-	private KeyValuePair[] _createKeyValuePairs() {
-		return new KeyValuePair[] {
-			new KeyValuePair("/", "//*"), new KeyValuePair("/*", "/*/*"),
-			new KeyValuePair("/*/", "/*//*"), new KeyValuePair("/a", "/*"),
-			new KeyValuePair("/a/*/c/d", "/a/*/c/*"),
-			new KeyValuePair("/a/b", "/*"), new KeyValuePair("/b", "/*"),
-			new KeyValuePair("/b/c", "/b/c"),
-			new KeyValuePair("/c/portal/j_login", "/c/portal/j_login"),
-			new KeyValuePair("/documents", "/documents/*"),
-			new KeyValuePair("/documents/", "/documents/*"),
-			new KeyValuePair("/documents/main.jsp", "/documents/main.jsp/*"),
-			new KeyValuePair("/documents/main.jsp/*", "/documents/main.jsp/*"),
-			new KeyValuePair("/documents/main.jspf", "/documents/main.jspf/*"),
-			new KeyValuePair("/documents/main.jspf/", "/documents/main.jspf/*"),
-			new KeyValuePair("/documents/user1", "/documents/user1/*"),
-			new KeyValuePair("/documents/user1/", "/documents/user1/*"),
-			new KeyValuePair(
-				"/documents/user1/folder1", "/documents/user1/folder1/*"),
-			new KeyValuePair(
-				"/documents/user1/folder1/", "/documents/user1/folder1/*"),
-			new KeyValuePair(
-				"/documents/user1/folder2", "/documents/user1/folder2/*"),
-			new KeyValuePair(
-				"/documents/user1/folder2/", "/documents/user1/folder2/*"),
-			new KeyValuePair("/documents/user2", "/documents/user2/*"),
-			new KeyValuePair("/documents/user2/", "/documents/user2/*"),
-			new KeyValuePair(
-				"/documents/user2/folder1", "/documents/user2/folder1/*"),
-			new KeyValuePair(
-				"/documents/user2/folder1/", "/documents/user2/folder1/*"),
-			new KeyValuePair(
-				"/documents/user2/folder2", "/documents/user2/folder2/*"),
-			new KeyValuePair(
-				"/documents/user2/folder2/", "/documents/user2/folder2/*"),
-			new KeyValuePair("/documents/user3", "/documents/*"),
-			new KeyValuePair("/documents/user3/", "/documents/*"),
-			new KeyValuePair("/documents/user3/folder1", "/documents/*"),
-			new KeyValuePair("/documents/user3/folder1/", "/documents/*"),
-			new KeyValuePair("/documents/user3/folder2", "/documents/*"),
-			new KeyValuePair("/documents/user3/folder2/", "/documents/*"),
-			new KeyValuePair("/documents2/a", "/documents2/*"),
-			new KeyValuePair("/test", "/*"), new KeyValuePair("/test/", "/*"),
-			new KeyValuePair("no/leading/slash", ""),
-			new KeyValuePair("no/leading/slash/", ""),
-			new KeyValuePair("no/leading/slash/*", "no/leading/slash/*"),
-			new KeyValuePair("no/leading/slash/test", ""),
-			new KeyValuePair("nonexisting.extension", ""),
-			new KeyValuePair("test", ""), new KeyValuePair("test.jsp", "*.jsp"),
-			new KeyValuePair("test.jspf/", ""), new KeyValuePair("test/", ""),
-			new KeyValuePair("test/main.jsp/*", ""),
-			new KeyValuePair("test/main.jspf", "*.jspf")
-		};
+	private Map<String, String> _createpathToPatternMap() {
+		Map<String, String> pathToPatternMap = new HashMap<>();
+
+		pathToPatternMap.put("/", "//*");
+		pathToPatternMap.put("/*", "/*/*");
+		pathToPatternMap.put("/*/", "/*//*");
+		pathToPatternMap.put("/a", "/*");
+		pathToPatternMap.put("/a/*/c/d", "/a/*/c/*");
+		pathToPatternMap.put("/a/b", "/*");
+		pathToPatternMap.put("/b", "/*");
+		pathToPatternMap.put("/b/c", "/b/c");
+		pathToPatternMap.put("/c/portal/j_login", "/c/portal/j_login");
+		pathToPatternMap.put("/documents", "/documents/*");
+		pathToPatternMap.put("/documents/", "/documents/*");
+		pathToPatternMap.put("/documents/main.jsp", "/documents/main.jsp/*");
+		pathToPatternMap.put("/documents/main.jsp/*", "/documents/main.jsp/*");
+		pathToPatternMap.put("/documents/main.jspf", "/documents/main.jspf/*");
+		pathToPatternMap.put("/documents/main.jspf/", "/documents/main.jspf/*");
+		pathToPatternMap.put("/documents/user1", "/documents/user1/*");
+		pathToPatternMap.put("/documents/user1/", "/documents/user1/*");
+		pathToPatternMap.put(
+			"/documents/user1/folder1", "/documents/user1/folder1/*");
+		pathToPatternMap.put(
+			"/documents/user1/folder1/", "/documents/user1/folder1/*");
+		pathToPatternMap.put(
+			"/documents/user1/folder2", "/documents/user1/folder2/*");
+		pathToPatternMap.put(
+			"/documents/user1/folder2/", "/documents/user1/folder2/*");
+		pathToPatternMap.put("/documents/user2", "/documents/user2/*");
+		pathToPatternMap.put("/documents/user2/", "/documents/user2/*");
+		pathToPatternMap.put(
+			"/documents/user2/folder1", "/documents/user2/folder1/*");
+		pathToPatternMap.put(
+			"/documents/user2/folder1/", "/documents/user2/folder1/*");
+		pathToPatternMap.put(
+			"/documents/user2/folder2", "/documents/user2/folder2/*");
+		pathToPatternMap.put(
+			"/documents/user2/folder2/", "/documents/user2/folder2/*");
+		pathToPatternMap.put("/documents/user3", "/documents/*");
+		pathToPatternMap.put("/documents/user3/", "/documents/*");
+		pathToPatternMap.put("/documents/user3/folder1", "/documents/*");
+		pathToPatternMap.put("/documents/user3/folder1/", "/documents/*");
+		pathToPatternMap.put("/documents/user3/folder2", "/documents/*");
+		pathToPatternMap.put("/documents/user3/folder2/", "/documents/*");
+		pathToPatternMap.put("/documents2/a", "/documents2/*");
+		pathToPatternMap.put("/test", "/*");
+		pathToPatternMap.put("/test/", "/*");
+		pathToPatternMap.put("no/leading/slash", "");
+		pathToPatternMap.put("no/leading/slash/", "");
+		pathToPatternMap.put("no/leading/slash/*", "no/leading/slash/*");
+		pathToPatternMap.put("no/leading/slash/test", "");
+		pathToPatternMap.put("nonexisting.extension", "");
+		pathToPatternMap.put("test", "");
+		pathToPatternMap.put("test.jsp", "*.jsp");
+		pathToPatternMap.put("test.jspf/", "");
+		pathToPatternMap.put("test/", "");
+		pathToPatternMap.put("test/main.jsp/*", "");
+		pathToPatternMap.put("test/main.jspf", "*.jspf");
+
+		return pathToPatternMap;
 	}
 
-	private Map<String, String> _createValues(KeyValuePair[] keyValuePairs) {
+	private Map<String, String> _createValues(
+		Map<String, String> pathToPatternMap) {
+
 		Map<String, String> values = new HashMap<>();
 
-		for (KeyValuePair keyValuePair : keyValuePairs) {
-			if (Validator.isBlank(keyValuePair.getValue())) {
+		for (String pattern : pathToPatternMap.values()) {
+			if ((pattern == null) || pattern.isEmpty()) {
 				continue;
 			}
 
-			values.put(keyValuePair.getValue(), keyValuePair.getValue());
+			values.put(pattern, pattern);
 		}
 
 		return values;

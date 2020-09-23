@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
+package com.liferay.petra.url.pattern.mapper.internal;
+
+import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,59 +23,22 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Arthur Chan
  */
-public class StaticSizeTrieURLPatternMapperTest
+public class DynamicSizeTrieURLPatternMapperTest
 	extends SimpleURLPatternMapperTest {
 
-	@Override
 	@Test
 	public void testConstructor() {
-		super.testConstructor();
-
-		try {
-			Map<String, String> map = new HashMap<>();
-
-			for (int i = 0; i < 65; i++) {
-				map.put("*.key" + i, "value" + i);
-			}
-
-			createURLPatternMapper(map);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-		}
-
-		try {
-			Map<String, String> map = new HashMap<>();
-
-			for (int i = 0; i < (Long.SIZE + 1); i++) {
-				map.put("key" + i, "value" + i);
-			}
-
-			createURLPatternMapper(map);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-		}
-	}
-
-	@Override
-	@Test
-	public void testGetValue() {
-		super.testGetValue();
-
 		Map<String, String> map = new HashMap<>();
 
-		for (int i = 0; i < Long.SIZE; i++) {
+		for (int i = 0; i < 1024; i++) {
 			map.put("*.key" + i, "value" + i);
 		}
 
 		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(map);
 
-		for (int i = 0; i < Long.SIZE; i++) {
+		for (int i = 0; i < 1024; i++) {
 			Assert.assertEquals(
 				"value" + i, urlPatternMapper.getValue("*.key" + i));
 		}
@@ -83,7 +48,7 @@ public class StaticSizeTrieURLPatternMapperTest
 	protected URLPatternMapper<String> createURLPatternMapper(
 		Map<String, String> values) {
 
-		return new StaticSizeTrieURLPatternMapper<>(values);
+		return new DynamicSizeTrieURLPatternMapper<>(values);
 	}
 
 }

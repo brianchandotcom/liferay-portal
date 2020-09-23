@@ -191,6 +191,12 @@
 	<td>//div[contains(@class,'page-editor__layout-viewport__resizer')][contains(@style,'${key_style}')]</td>
 	<td></td>
 </tr>
+<!--DISPLAY_PAGE_TEMPLATE-->
+<tr>
+	<td>ASSET_CONTENT</td>
+	<td>//div[contains(@data-analytics-asset-title,'${key_assetTitle}')]//*[contains(.,'${key_assetContent}')]</td>
+	<td></td>
+</tr>
 <!--DROP_TARGET-->
 <tr>
 	<td>ANY_FRAGMENT_DROP_TARGET</td>

@@ -1442,13 +1442,39 @@ definition {
 				locator1 = "PageEditor#NAV_ITEM_BUTTON",
 				value1 = "Link");
 
-			Type(
-				locator1 = "PageEditorEditableLink#URL",
-				value1 = "${url}");
+			if ("${link}" == "From Content Field") {
+				Select(
+					key_fieldLabel = "Link",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${link}");
 
-			Click(
-				key_sidebarButton = "Selection",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+				Pause(locator1 = "3000");
+
+				PageEditorMapping.mapEditableFieldToAsset(
+					entryTitle = "${entryTitle}",
+					navItem = "${navItem}");
+
+				Select(
+					key_fieldLabel = "Field",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${field}");
+
+				PageEditor.waitForAutoSave();
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Field",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${field}");
+			}
+			else {
+				Type(
+					locator1 = "PageEditorEditableLink#URL",
+					value1 = "${url}");
+
+				Click(
+					key_sidebarButton = "Selection",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+			}
 
 			if (isSet(target)) {
 				Select(
@@ -1458,8 +1484,6 @@ definition {
 
 				Pause(locator1 = "3000");
 			}
-
-			PageEditor.waitForAutoSave();
 		}
 
 		PageEditor.waitForAutoSave();

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.sites.util;
 
+import com.liferay.background.task.kernel.util.comparator.BackgroundTaskCreateDateComparator;
+import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -96,6 +98,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -2067,6 +2070,12 @@ public class SitesImpl implements Sites {
 			"lastMergeVersion",
 			new String[] {String.valueOf(lastMergeVersion)});
 
+		parameterMap.put(
+			"layoutSetPrototypeId",
+			new String[] {
+				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
+			});
+
 		if (importData) {
 			file = exportLayoutSetPrototype(
 				user, layoutSetPrototype, parameterMap, null);
@@ -2084,7 +2093,13 @@ public class SitesImpl implements Sites {
 			_exportInProgressMap.remove(cacheFileName);
 		}
 
-		if (file == null) {
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		if ((file == null) ||
+			isSkipImport(groupId, layoutSet, false, lastMergeVersion) ||
+			isSkipImport(groupId, layoutSet, true, lastMergeVersion)) {
+
 			return;
 		}
 
@@ -2103,11 +2118,62 @@ public class SitesImpl implements Sites {
 					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		ExportImportLocalServiceUtil.importLayoutsDataDeletions(
-			exportImportConfiguration, file);
+		ExportImportLocalServiceUtil.importLayoutSetPrototypeInBackground(
+			user.getUserId(), exportImportConfiguration, file);
+	}
 
-		ExportImportLocalServiceUtil.importLayouts(
-			exportImportConfiguration, file);
+	protected boolean isSkipImport(
+		long groupId, LayoutSet layoutSet, boolean completed,
+		long lastMergeVersion) {
+
+		BackgroundTask previousBackgroundTask =
+			BackgroundTaskManagerUtil.fetchFirstBackgroundTask(
+				groupId,
+				BackgroundTaskExecutorNames.
+					LAYOUT_SET_PROTOTYPE_IMPORT_BACKGROUND_TASK_EXECUTOR,
+				completed, new BackgroundTaskCreateDateComparator(false));
+
+		if (previousBackgroundTask == null) {
+			return false;
+		}
+
+		Map<String, Serializable> contextMap =
+			previousBackgroundTask.getTaskContextMap();
+
+		ExportImportConfiguration previousExportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				fetchExportImportConfiguration(
+					MapUtil.getLong(contextMap, "exportImportConfigurationId"));
+
+		if (previousExportImportConfiguration == null) {
+			return false;
+		}
+
+		Map<String, Serializable> settingsMap =
+			previousExportImportConfiguration.getSettingsMap();
+
+		Map<String, String[]> parameterMap =
+			(Map<String, String[]>)settingsMap.get("parameterMap");
+
+		long previousLastMergeVersion = MapUtil.getLong(
+			parameterMap, "lastMergeVersion");
+
+		if (previousLastMergeVersion == lastMergeVersion) {
+			UnicodeProperties settingsUnicodeProperties =
+				layoutSet.getSettingsProperties();
+
+			long lastResetTime = GetterUtil.getLong(
+				settingsUnicodeProperties.getProperty(LAST_RESET_TIME));
+
+			Date previousBackgroundTaskCreateDate =
+				previousBackgroundTask.getCreateDate();
+
+			if (previousBackgroundTaskCreateDate.getTime() > lastResetTime) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected void setLayoutSetPrototypeLinkEnabledParameter(

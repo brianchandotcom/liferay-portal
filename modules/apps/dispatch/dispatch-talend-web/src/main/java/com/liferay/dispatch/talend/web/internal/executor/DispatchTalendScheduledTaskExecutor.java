@@ -19,6 +19,9 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.talend.internal.helper.DispatchTalendScheduledJobHelper;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.process.CollectorOutputProcessor;
 import com.liferay.petra.process.ConsumerOutputProcessor;
 import com.liferay.petra.process.ProcessException;
@@ -34,6 +37,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.charset.StandardCharsets;
@@ -65,6 +69,8 @@ public class DispatchTalendScheduledTaskExecutor
 	@Override
 	public void execute(long dispatchTriggerId) throws PortalException {
 		DispatchLog dispatchLog = null;
+		DispatchTalendCollectorOutputProcessor
+			dispatchTalendCollectorOutputProcessor = null;
 		DispatchTrigger dispatchTrigger = null;
 
 		String rootDirectoryName = null;
@@ -100,8 +106,11 @@ public class DispatchTalendScheduledTaskExecutor
 				dispatchTrigger.getDispatchTriggerId(), null, null, null,
 				startDate, BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
+			dispatchTalendCollectorOutputProcessor =
+				new DispatchTalendCollectorOutputProcessor();
+
 			Future<Map.Entry<byte[], byte[]>> future = ProcessUtil.execute(
-				CollectorOutputProcessor.INSTANCE,
+				dispatchTalendCollectorOutputProcessor,
 				_getArguments(dispatchTrigger, rootDirectoryName, shFileName));
 
 			Map.Entry<byte[], byte[]> entry = future.get();
@@ -117,8 +126,10 @@ public class DispatchTalendScheduledTaskExecutor
 
 			_dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
-				exception.getMessage(), null,
-				BackgroundTaskConstants.STATUS_FAILED);
+				new String(
+					dispatchTalendCollectorOutputProcessor._stdErrByteArray,
+					StandardCharsets.UTF_8),
+				null, BackgroundTaskConstants.STATUS_FAILED);
 		}
 		finally {
 			FileUtil.deltree(rootDirectoryName);
@@ -206,5 +217,32 @@ public class DispatchTalendScheduledTaskExecutor
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+
+	private class DispatchTalendCollectorOutputProcessor
+		extends CollectorOutputProcessor {
+
+		@Override
+		public byte[] processStdErr(InputStream stdErrInputStream)
+			throws ProcessException {
+
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
+
+			try {
+				StreamUtil.transfer(
+					stdErrInputStream, unsyncByteArrayOutputStream, false);
+			}
+			catch (IOException ioException) {
+				throw new ProcessException(ioException);
+			}
+
+			_stdErrByteArray = unsyncByteArrayOutputStream.toByteArray();
+
+			return _stdErrByteArray;
+		}
+
+		private byte[] _stdErrByteArray;
+
+	}
 
 }

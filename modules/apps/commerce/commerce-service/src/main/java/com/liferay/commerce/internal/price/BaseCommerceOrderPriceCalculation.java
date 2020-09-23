@@ -544,7 +544,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 
 		CommerceMoney promoPrice = commerceOrderItemPrice.getPromoPrice();
 
-		if (!promoPrice.isEmpty() &&
+		if ((promoPrice != null) && !promoPrice.isEmpty() &&
 			CommerceBigDecimalUtil.gt(promoPrice.getPrice(), BigDecimal.ZERO) &&
 			CommerceBigDecimalUtil.gt(unitPrice, promoPrice.getPrice())) {
 

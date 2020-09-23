@@ -30,6 +30,10 @@ public class CommerceBigDecimalUtil {
 	}
 
 	public static boolean gt(BigDecimal value1, BigDecimal value2) {
+		if (value1 == null) {
+			return false;
+		}
+
 		if (value1.compareTo(value2) > 0) {
 			return true;
 		}
@@ -38,6 +42,10 @@ public class CommerceBigDecimalUtil {
 	}
 
 	public static boolean gte(BigDecimal value1, BigDecimal value2) {
+		if (value1 == null) {
+			return false;
+		}
+
 		if (value1.compareTo(value2) >= 0) {
 			return true;
 		}

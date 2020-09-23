@@ -16,7 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.frontend;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.model.ShippingFixedOption;
@@ -133,16 +133,17 @@ public class CommerceShippingFixedOptionClayTable
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long groupId =
-			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
-				themeDisplay.getScopeGroupId());
-
 		long commerceShippingMethodId = ParamUtil.getLong(
 			httpServletRequest, "commerceShippingMethodId");
 
+		CommerceShippingMethod commerceShippingMethod =
+			_commerceShippingMethodLocalService.getCommerceShippingMethod(
+				commerceShippingMethodId);
+
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
 			_commerceShippingFixedOptionService.getCommerceShippingFixedOptions(
-				themeDisplay.getCompanyId(), groupId, commerceShippingMethodId,
+				themeDisplay.getCompanyId(),
+				commerceShippingMethod.getGroupId(), commerceShippingMethodId,
 				filter.getKeywords(), pagination.getStartPosition(),
 				pagination.getEndPosition());
 
@@ -223,11 +224,12 @@ public class CommerceShippingFixedOptionClayTable
 	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
 
 	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference
 	private CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
+
+	@Reference
+	private CommerceShippingMethodLocalService
+		_commerceShippingMethodLocalService;
 
 	@Reference
 	private Portal _portal;

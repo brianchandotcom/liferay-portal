@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.internal.url.pattern.mapper;
+package com.liferay.petra.url.pattern.mapper.trie;
+
+import com.liferay.petra.url.pattern.mapper.trie.base.BaseTrieURLPatternMapper;
 
 import java.util.ArrayList;
 import java.util.List;

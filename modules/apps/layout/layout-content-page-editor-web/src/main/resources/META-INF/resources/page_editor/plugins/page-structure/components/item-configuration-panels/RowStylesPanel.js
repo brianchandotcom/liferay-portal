@@ -17,12 +17,14 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 
+import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../../../app/config/constants/columnSizes';
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../app/config/index';
 import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateItemConfig from '../../../../app/thunks/updateItemConfig';
 import updateRowColumns from '../../../../app/thunks/updateRowColumns';
+import {deepEqual} from '../../../../app/utils/checkDeepEqual';
 import {getResponsiveColumnSize} from '../../../../app/utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../../../app/utils/getResponsiveConfig';
 import {useId} from '../../../../app/utils/useId';
@@ -48,8 +50,6 @@ const VERTICAL_ALIGNMENT_OPTIONS = [
 	{label: Liferay.Language.get('middle'), value: 'middle'},
 	{label: Liferay.Language.get('bottom'), value: 'bottom'},
 ];
-
-const ROW_SIZE = 12;
 
 const ROW_STYLE_IDENTIFIERS = {
 	modulesPerRow: 'modulesPerRow',
@@ -122,24 +122,22 @@ export const RowStylesPanel = ({item}) => {
 
 	const isCustomRow = useMemo(() => {
 		const {modulesPerRow, numberOfColumns} = rowConfig;
-		const columnSize = Math.floor(ROW_SIZE / modulesPerRow);
 
-		return item.children.some((columnId, index) => {
+		const columnSizes = item.children.map((columnId) => {
 			const columnSizeConfig = getResponsiveColumnSize(
 				layoutData.items[columnId].config,
 				selectedViewportSize
 			);
 
-			if (
-				numberOfColumns === 5 &&
-				((modulesPerRow === 5 && index === 2) ||
-					(modulesPerRow === 2 && index !== 0 && index !== 1))
-			) {
-				return columnSizeConfig !== 4;
-			}
-
-			return columnSizeConfig !== columnSize;
+			return columnSizeConfig;
 		});
+
+		const columnConfiguration =
+			COLUMN_SIZE_MODULE_PER_ROW_SIZES[numberOfColumns]?.[
+				modulesPerRow
+			] ?? [];
+
+		return !deepEqual(columnConfiguration, columnSizes);
 	}, [item.children, layoutData.items, rowConfig, selectedViewportSize]);
 
 	const modulesPerRowOptions = isCustomRow

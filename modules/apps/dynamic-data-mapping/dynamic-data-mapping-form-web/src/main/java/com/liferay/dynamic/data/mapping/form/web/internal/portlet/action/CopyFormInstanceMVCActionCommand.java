@@ -94,11 +94,9 @@ public class CopyFormInstanceMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstance.class.getName(), actionRequest);
 
-		ddmFormInstanceService.addFormInstance(
-			groupId, getNameMap(formInstance, defaultLocale),
-			formInstance.getDescriptionMap(), ddmStructure.getDDMForm(),
-			ddmStructure.getDDMFormLayout(), settingsDDMFormValues,
-			serviceContext);
+		ddmFormInstanceService.copyFormInstance(
+			groupId, getNameMap(formInstance, defaultLocale), formInstance,
+			settingsDDMFormValues, serviceContext);
 	}
 
 	protected Map<Locale, String> getNameMap(

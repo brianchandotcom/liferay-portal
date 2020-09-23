@@ -404,6 +404,11 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 		selectedViewportSize
 	);
 
+	const isReverseOrder =
+		responsiveRowConfig.reverseOrder &&
+		parentItem.config.numberOfColumns === 2 &&
+		responsiveRowConfig.modulesPerRow === 1;
+
 	return (
 		<TopperEmpty item={item}>
 			<Column
@@ -420,7 +425,7 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 				{(canUpdatePageStructure || canUpdateItemConfiguration) &&
 					parentItemIsActive &&
 					columnIndex !== 0 &&
-					!responsiveRowConfig.reverseOrder && (
+					!isReverseOrder && (
 						<button
 							className={classNames(
 								'btn-primary page-editor__col__resizer',

@@ -151,10 +151,6 @@ public class ProjectTemplatesRESTBuilderTest
 
 		String name = "sample";
 
-		String implProjectName = name + "-impl";
-
-		String template = "rest-builder";
-
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
@@ -165,11 +161,11 @@ public class ProjectTemplatesRESTBuilderTest
 		Files.deleteIfExists(gradlePropertiesFile.toPath());
 
 		buildTemplateWithGradle(
-			gradleWorkspaceDir, template, name, "--liferay-version",
+			gradleWorkspaceDir, "rest-builder", name, "--liferay-version",
 			liferayVersion);
 
 		testContains(
-			gradleWorkspaceDir, name + "/" + implProjectName + "/build.gradle",
+			gradleWorkspaceDir, name + "/" + name + "-impl/build.gradle",
 			"project(\":" + name + ":" + name + "-api");
 	}
 

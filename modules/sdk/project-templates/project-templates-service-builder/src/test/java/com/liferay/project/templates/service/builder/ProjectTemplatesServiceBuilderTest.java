@@ -183,10 +183,6 @@ public class ProjectTemplatesServiceBuilderTest
 
 		String name = "sample";
 
-		String serviceProjectName = name + "-service";
-
-		String template = "service-builder";
-
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
@@ -197,12 +193,11 @@ public class ProjectTemplatesServiceBuilderTest
 		Files.deleteIfExists(gradlePropertiesFile.toPath());
 
 		buildTemplateWithGradle(
-			gradleWorkspaceDir, template, name, "--liferay-version",
+			gradleWorkspaceDir, "service-builder", name, "--liferay-version",
 			liferayVersion);
 
 		testContains(
-			gradleWorkspaceDir,
-			name + "/" + serviceProjectName + "/build.gradle",
+			gradleWorkspaceDir, name + "/" + name + "-service/build.gradle",
 			"project(\":" + name + ":" + name + "-api");
 	}
 

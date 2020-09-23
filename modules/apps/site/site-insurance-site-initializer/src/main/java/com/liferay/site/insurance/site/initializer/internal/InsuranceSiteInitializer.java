@@ -714,10 +714,11 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			jsonObject.put("alt", StringPool.BLANK);
 
-			fileEntriesMap.put(fileEntry.getFileName(), jsonObject.toString());
+			fileEntriesMap.put(
+				"JSON_" + fileEntry.getFileName(), jsonObject.toString());
 
 			fileEntriesMap.put(
-				"IMG_" + fileEntry.getFileName(),
+				"URL_" + fileEntry.getFileName(),
 				_dlURLHelper.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, false));

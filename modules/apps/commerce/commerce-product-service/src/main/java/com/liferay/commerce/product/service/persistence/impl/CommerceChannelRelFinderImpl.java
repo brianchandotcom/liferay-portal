@@ -49,13 +49,12 @@ public class CommerceChannelRelFinderImpl
 
 	@Override
 	public int countByC_C(String className, long classPK, String name) {
-		return countByC_C(className, classPK, StringPool.BLANK, name, false);
+		return countByC_C(className, classPK, name, false);
 	}
 
 	@Override
 	public int countByC_C(
-		String className, long classPK, String classPKField, String name,
-		boolean inlineSQLHelper) {
+		String className, long classPK, String name, boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -66,8 +65,8 @@ public class CommerceChannelRelFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, className, classPKField, null, null, new long[] {0},
-					null);
+					sql, className, "CommerceChannel.commerceChannelId", null,
+					null, new long[] {0}, null);
 			}
 
 			String[] keywords = _customSQL.keywords(name, true);
@@ -118,18 +117,29 @@ public class CommerceChannelRelFinderImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
-	public List<CommerceChannelRel> findByC_C(
-		String className, long classPK, String name, int start, int end) {
+	public int countByC_C(
+		String className, long classPK, String classPKField, String name,
+		boolean inlineSQLHelper) {
 
-		return findByC_C(
-			className, classPK, StringPool.BLANK, name, start, end, false);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public List<CommerceChannelRel> findByC_C(
-		String className, long classPK, String classPKField, String name,
-		int start, int end, boolean inlineSQLHelper) {
+		String className, long classPK, String name, int start, int end) {
+
+		return findByC_C(className, classPK, name, start, end, false);
+	}
+
+	@Override
+	public List<CommerceChannelRel> findByC_C(
+		String className, long classPK, String name, int start, int end,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -142,8 +152,8 @@ public class CommerceChannelRelFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, className, classPKField, null, null, new long[] {0},
-					null);
+					sql, className, "CommerceChannel.commerceChannelId", null,
+					null, new long[] {0}, null);
 			}
 
 			if (Validator.isNotNull(name)) {
@@ -183,6 +193,18 @@ public class CommerceChannelRelFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public List<CommerceChannelRel> findByC_C(
+		String className, long classPK, String classPKField, String name,
+		int start, int end, boolean inlineSQLHelper) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	private static final String _COUNT_VALUE = "COUNT_VALUE";

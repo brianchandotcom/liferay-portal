@@ -131,17 +131,14 @@ private long _getLastImportLayoutRevisionId(Group group, Layout layout, User use
 	return lastImportLayoutRevisionId;
 }
 
-private String _getStatusMessage(LayoutRevision layoutRevision, Group group, Layout layout, User user) {
+private String _getStatusMessage(LayoutRevision layoutRevision, long liveLayoutRevisionId) {
 	String statusMessage = null;
 
 	if (layoutRevision.isHead()) {
 		statusMessage = "ready-for-publication";
 	}
 
-	if (layoutRevision.isApproved() &&
-		(layoutRevision.getLayoutRevisionId() ==
-			_getLastImportLayoutRevisionId(group, layout, user))) {
-
+	if (layoutRevision.getLayoutRevisionId() == liveLayoutRevisionId) {
 		statusMessage = "in-live";
 	}
 

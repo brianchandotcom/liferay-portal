@@ -22,6 +22,12 @@ LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute(WebKeys.LAY
 if ((layoutRevision == null) && (layout != null)) {
 	layoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
 }
+
+Long liveLayoutRevisionId = null;
+
+if (layoutRevision.isApproved()) {
+	liveLayoutRevisionId = _getLastImportLayoutRevisionId(group, layout, themeDisplay.getUser());
+}
 %>
 
 <span class="staging-bar-workflow-text text-center">
@@ -35,7 +41,7 @@ if ((layoutRevision == null) && (layout != null)) {
 
 			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-			<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage="<%= _getStatusMessage(layoutRevision, group, layout, themeDisplay.getUser()) %>" />
+			<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage="<%= _getStatusMessage(layoutRevision, GetterUtil.getLong(liveLayoutRevisionId)) %>" />
 		</div>
 	</div>
 </span>

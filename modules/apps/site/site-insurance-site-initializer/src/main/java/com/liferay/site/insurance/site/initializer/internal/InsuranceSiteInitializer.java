@@ -165,7 +165,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			_updateDefaultDisplayPageTemplates();
 
-			_updateLookAndFeel();
+			_updateLookAndFeel("public");
+			_updateLookAndFeel("private");
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -645,7 +646,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				_populateZipWriter(zipWriter, url, numberValuesMap, stringValuesMap);
+				_populateZipWriter(
+					zipWriter, url, numberValuesMap, stringValuesMap);
 			}
 
 			return zipWriter.getFile();
@@ -918,33 +920,35 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		return _layoutLocalService.updateLayout(layout);
 	}
 
-	private void _updateLookAndFeel() throws Exception {
+	private void _updateLookAndFeel(String type) throws Exception {
+		boolean privateLayoutSet = false;
+
+		if (Objects.equals(type, "private")) {
+			privateLayoutSet = true;
+		}
+
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-			_serviceContext.getScopeGroupId(), false);
+			_serviceContext.getScopeGroupId(), privateLayoutSet);
 
 		UnicodeProperties settingsUnicodeProperties =
 			layoutSet.getSettingsProperties();
 
-		settingsUnicodeProperties.setProperty(
-			"lfr-theme:regular:show-footer", Boolean.FALSE.toString());
-		settingsUnicodeProperties.setProperty(
-			"lfr-theme:regular:show-header", Boolean.FALSE.toString());
-		settingsUnicodeProperties.setProperty(
-			"lfr-theme:regular:show-header-search", Boolean.FALSE.toString());
-		settingsUnicodeProperties.setProperty(
-			"lfr-theme:regular:show-maximize-minimize-application-links",
-			Boolean.FALSE.toString());
-		settingsUnicodeProperties.setProperty(
-			"lfr-theme:regular:wrap-widget-page-content",
-			Boolean.FALSE.toString());
+		UnicodeProperties themeSettingsUnicodeProperties =
+			new UnicodeProperties(true);
+
+		themeSettingsUnicodeProperties.fastLoad(
+			_readFile("/layout-set/" + type + "/theme.properties"));
+
+		settingsUnicodeProperties.putAll(themeSettingsUnicodeProperties);
 
 		_layoutSetLocalService.updateSettings(
-			_serviceContext.getScopeGroupId(), false,
+			_serviceContext.getScopeGroupId(), privateLayoutSet,
 			settingsUnicodeProperties.toString());
 
 		_layoutSetLocalService.updateLookAndFeel(
-			_serviceContext.getScopeGroupId(), false, layoutSet.getThemeId(),
-			layoutSet.getColorSchemeId(), _readFile("/layout-set/custom.css"));
+			_serviceContext.getScopeGroupId(), privateLayoutSet,
+			layoutSet.getThemeId(), layoutSet.getColorSchemeId(),
+			_readFile("/layout-set/" + type + "/css.css"));
 	}
 
 	private static final String _NAME = "Insurance Demo Site";

@@ -1511,6 +1511,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 			for (String artifact : enforceVersionArtifacts.split(",")) {
 				if (!artifact.startsWith("com.fasterxml") &&
 					!artifact.startsWith("com.liferay:biz.aQute.bnd.annotation:") &&
+					!artifact.startsWith("com.liferay.portletmvc4spring:com.liferay.portletmvc4spring.test:") &&
 					!artifact.startsWith("io.swagger") &&
 					!artifact.startsWith("javax") &&
 					!artifact.startsWith("org.jsoup") &&
@@ -1721,6 +1722,7 @@ private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFile
 			for (String artifact : enforceVersionArtifacts.split(",")) {
 				if (!artifact.startsWith("com.fasterxml") &&
 					!artifact.startsWith("com.liferay:biz.aQute.bnd.annotation:") &&
+					!artifact.startsWith("com.liferay.portletmvc4spring:com.liferay.portletmvc4spring.test:") &&
 					!artifact.startsWith("io.swagger") &&
 					!artifact.startsWith("javax") &&
 					!artifact.startsWith("org.jsoup") &&

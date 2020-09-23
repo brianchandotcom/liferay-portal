@@ -38,20 +38,46 @@ jest.mock(
 
 const renderRow = ({
 	activeItemId = 'row',
+	columnConfiguration = [],
 	hasUpdatePermissions = true,
 	lockedExperience = false,
 	viewportSize = VIEWPORT_SIZES.desktop,
 } = {}) => {
+	const childrenItems = {};
+
+	columnConfiguration.forEach(({size, children = []}, index) => {
+		const itemId = `column${index}`;
+
+		childrenItems[itemId] = {
+			children,
+			config: {
+				size,
+				styles: {},
+			},
+			itemId,
+			parentId: 'row',
+			type: LAYOUT_DATA_ITEM_TYPES.col,
+		};
+	});
+
 	const row = {
-		children: [],
+		children: Object.keys(childrenItems),
 		config: {styles: {}},
 		itemId: 'row',
 		parentId: null,
 		type: LAYOUT_DATA_ITEM_TYPES.row,
 	};
 
+	const child = {
+		children: [],
+		config: {styles: {}},
+		itemId: 'child',
+		parentId: null,
+		type: LAYOUT_DATA_ITEM_TYPES.container,
+	};
+
 	const layoutData = {
-		items: {row},
+		items: {child, row, ...childrenItems},
 	};
 
 	const AutoSelect = () => {
@@ -95,5 +121,43 @@ describe('RowWithControls', () => {
 
 		expect(queryByText(baseElement, 'delete')).not.toBeInTheDocument();
 		expect(queryByText(baseElement, 'duplicate')).not.toBeInTheDocument();
+	});
+
+	it('does include the empty class when having one row and columns are empty', () => {
+		const {baseElement} = renderRow({
+			columnConfiguration: [{size: 4}, {size: 4}, {size: 4}],
+		});
+
+		expect(
+			baseElement.querySelector('.page-editor__row.empty')
+		).toBeInTheDocument();
+	});
+
+	it('does not include the empty class when having one row and one column is not empty', () => {
+		const {baseElement} = renderRow({
+			columnConfiguration: [
+				{children: ['child'], size: 4},
+				{size: 4},
+				{size: 4},
+			],
+		});
+
+		expect(baseElement.querySelector('.page-editor__row.empty')).toBe(null);
+	});
+
+	it('does not include the empty class when having several rows and some columns from one row are empty', () => {
+		const {baseElement} = renderRow({
+			columnConfiguration: [
+				{children: ['child'], size: 6},
+				{size: 6},
+				{size: 4},
+				{size: 4},
+				{size: 4},
+			],
+		});
+
+		expect(
+			baseElement.querySelector('.page-editor__row.empty')
+		).toBeInTheDocument();
 	});
 });

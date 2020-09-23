@@ -34,7 +34,7 @@ definition {
 	}
 
 	macro deleteOptionsEntry {
-		ClickNoError.clickNoMouseOver(locator1 = "Button#DELETE");
+		ClickNoError.clickNoMouseOver(locator1 = "CommerceEntry#DELETE_OPTION_BUTTON");
 
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete the selected option?");
 	}

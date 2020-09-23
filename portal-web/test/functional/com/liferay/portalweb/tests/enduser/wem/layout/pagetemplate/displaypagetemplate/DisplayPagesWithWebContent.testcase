@@ -835,7 +835,7 @@ definition {
 		}
 	}
 
-	@description = "Display pages can be viewed through friendly URL."
+	@description = "This is a test for LPS-121195. Display pages can be viewed through friendly URL."
 	@priority = "5"
 	test ViewDisplayPageViaFriendlyURL {
 		property portal.acceptance = "true";
@@ -858,19 +858,19 @@ definition {
 		}
 
 		task ("Navigate to the web content article's friendly URL") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
-		}
+			for (var type : list "w,-") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/${type}/webcontent-title");
 
-		task ("Assert the web content article displays through the display page") {
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+				AssertVisible(
+					key_content = "Webcontent Title",
+					key_fragmentClass = "header",
+					locator1 = "Fragment#FRAGMENT");
 
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+				AssertVisible(
+					key_content = "Webcontent Content",
+					key_fragmentClass = "rich-text",
+					locator1 = "Fragment#FRAGMENT");
+			}
 		}
 	}
 

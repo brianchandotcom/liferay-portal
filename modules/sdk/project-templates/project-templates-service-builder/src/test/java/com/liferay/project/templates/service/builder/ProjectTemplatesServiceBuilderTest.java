@@ -200,12 +200,10 @@ public class ProjectTemplatesServiceBuilderTest
 			gradleWorkspaceDir, template, name, "--liferay-version",
 			liferayVersion);
 
-		File serviceBuildFile = new File(
-			gradleWorkspaceDir,
-			name + "/" + serviceProjectName + "/build.gradle");
-
 		testContains(
-			serviceBuildFile, "project(\":" + name + ":" + name + "-api");
+			gradleWorkspaceDir,
+			name + "/" + serviceProjectName + "/build.gradle",
+			"project(\":" + name + ":" + name + "-api");
 	}
 
 	@Test

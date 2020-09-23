@@ -168,10 +168,9 @@ public class ProjectTemplatesRESTBuilderTest
 			gradleWorkspaceDir, template, name, "--liferay-version",
 			liferayVersion);
 
-		File implBuildFile = new File(
-			gradleWorkspaceDir, name + "/" + implProjectName + "/build.gradle");
-
-		testContains(implBuildFile, "project(\":" + name + ":" + name + "-api");
+		testContains(
+			gradleWorkspaceDir, name + "/" + implProjectName + "/build.gradle",
+			"project(\":" + name + ":" + name + "-api");
 	}
 
 	@Test

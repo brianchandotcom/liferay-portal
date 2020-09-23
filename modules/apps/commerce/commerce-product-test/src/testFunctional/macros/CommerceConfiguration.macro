@@ -234,6 +234,8 @@ definition {
 					key_buttonRowNumber = "${buttonRowNumber}",
 					key_buttonStatus = "",
 					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_N");
+
+				Pause(locator1 = "3000");
 			}
 		}
 

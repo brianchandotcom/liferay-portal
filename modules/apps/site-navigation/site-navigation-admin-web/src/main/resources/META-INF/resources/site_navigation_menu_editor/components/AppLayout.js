@@ -42,12 +42,10 @@ export const AppLayout = ({
 	);
 
 	useEffect(() => {
-		const {removeListener} = onProductMenuOpen(() => {
-			setSidebarPanelId(null);
-		});
+		const handler = onProductMenuOpen(() => setSidebarPanelId(null));
 
 		return () => {
-			removeListener();
+			handler.removeListener();
 		};
 	}, []);
 

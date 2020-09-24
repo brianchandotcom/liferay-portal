@@ -21,10 +21,12 @@ patch {
 	}
 
 	fileNames "org/eclipse/equinox/metatype/impl/Activator.java"
+	fileNames "org/eclipse/equinox/metatype/impl/AttributeDefinitionImpl.java"
 	fileNames "org/eclipse/equinox/metatype/impl/MetaTypeInformationImpl.java"
 	fileNames "org/eclipse/equinox/metatype/impl/MetaTypeProviderImpl.java"
 	fileNames "org/eclipse/equinox/metatype/impl/MetaTypeProviderTracker.java"
 	fileNames "org/eclipse/equinox/metatype/impl/MetaTypeServiceImpl.java"
+	fileNames "org/eclipse/equinox/metatype/impl/ValueTokenizer.java"
 
 	originalLibModuleName = "org.eclipse.equinox.metatype"
 }

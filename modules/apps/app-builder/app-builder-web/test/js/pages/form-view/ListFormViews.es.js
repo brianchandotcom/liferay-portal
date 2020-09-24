@@ -22,8 +22,8 @@ import * as time from '../../../../src/main/resources/META-INF/resources/js/util
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 import {DATA_DEFINITION_RESPONSES, RESPONSES} from '../../constants.es';
 
+const basePortletURL = 'localhost';
 const portletURL = '/edit_form_view';
-const basePortletURL = 'localhost:8080';
 
 describe('ListFormViews', () => {
 	let spyFromNow;
@@ -44,6 +44,7 @@ describe('ListFormViews', () => {
 				navigate,
 			},
 		};
+
 		spyFromNow = jest
 			.spyOn(time, 'fromNow')
 			.mockImplementation(() => 'months ago');
@@ -51,6 +52,7 @@ describe('ListFormViews', () => {
 
 	afterEach(() => {
 		cleanup();
+
 		jest.restoreAllMocks();
 	});
 

@@ -151,7 +151,6 @@ definition {
 		}
 	}
 
-	@ignore
 	@priority = "5"
 	test AddOrganizationSitesAndDeactivate {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -170,6 +169,10 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name 1");
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name 2");
+
 		JSONOrganization.addOrganization(organizationName = "Organization Name 1");
 
 		User.openUsersAdmin();
@@ -177,7 +180,7 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
-			organizationSite = "Community Site",
+			organizationSite = "Site Template Name 1",
 			orgName = "Organization Name 1");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
@@ -200,7 +203,7 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
-			organizationSite = "Intranet Site",
+			organizationSite = "Site Template Name 2",
 			orgName = "Organization Name 2");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-2");
@@ -249,15 +252,13 @@ definition {
 
 		Page.viewDefaultSiteTemplatePagesPG(
 			pageName = "Home",
-			siteName = "Organization Name 1",
-			siteTemplate = "Community");
+			siteName = "Organization Name 1");
 
 		Navigator.openSiteURL(siteName = "Organization Name 2");
 
 		Page.viewDefaultSiteTemplatePagesPG(
 			pageName = "Home",
-			siteName = "Organization Name 2",
-			siteTemplate = "Intranet");
+			siteName = "Organization Name 2");
 
 		Navigator.openSiteURL(siteName = "Organization Name 2");
 
@@ -282,11 +283,15 @@ definition {
 	test MySitesDropDownDoesNotShowUserOrganizationOnTop {
 		property testray.component.names = "Site Administration,Users and Organization";
 
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
 		for (var siteNameListsCount : list "Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name") {
 			Site.openSitesAdmin();
 
-			// Site.addCommunityCP(siteName = "${siteNameListsCount}"); Deprecated
-
+			Site.addCP(
+				siteName = "${siteNameListsCount}",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template");
 		}
 
 		JSONOrganization.addOrganization(organizationName = "Site Organization Name");
@@ -296,7 +301,7 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
-			organizationSite = "Community Site",
+			organizationSite = "Site Template Name",
 			orgName = "Site Organization Name");
 
 		User.openUsersAdmin();
@@ -658,7 +663,6 @@ definition {
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/guest");
 	}
 
-	@ignore
 	@priority = "3"
 	test SitesDeactivated {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -676,13 +680,15 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
 		JSONGroup.addGroup(groupName = "Site1 Name");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
 
 		Site.selectPageType(
 			selectPublicPages = "true",
-			siteTemplate = "Community Site");
+			siteTemplate = "Site Template Name");
 
 		JSONGroup.addGroup(groupName = "Site2 Name");
 

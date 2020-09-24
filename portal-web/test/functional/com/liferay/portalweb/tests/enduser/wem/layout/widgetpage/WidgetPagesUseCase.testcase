@@ -265,7 +265,6 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@ignore
 	@priority = "5"
 	test SitesPrivatePagesPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -273,18 +272,18 @@ definition {
 		property test.name.skip.portal.instance = "WidgetPagesUseCase#SitesPrivatePagesPermissions";
 		property testray.component.names = "Permissions,Roles,Site Pages Administration,Training";
 
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		/*
-			Deprecated
-
-			Site.addCommunityCP(
-				membershipType = "Private",
-				siteName = "Site Name");
-		*/
+		Site.addCP(
+			membershipType = "Private",
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name",
+			siteType = "Site Template");
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Site Name",

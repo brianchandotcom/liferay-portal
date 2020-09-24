@@ -372,7 +372,6 @@ definition {
 		Blogs.viewControlsPG();
 	}
 
-	@ignore
 	@priority = "3"
 	test ViewNoInfoMessageWhenChangingSiteTemplateAsUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -389,12 +388,17 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		// Site.addCommunityCP(siteName = "Site Name"); Deprecated
+		Site.addCP(
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name",
+			siteType = "Site Template");
 
 		JSONUser.addUserToSite(
 			groupName = "Site Name",
@@ -408,18 +412,21 @@ definition {
 
 		Page.viewDefaultSiteTemplatePagesPG(
 			pageName = "Home",
-			siteName = "Site Name",
-			siteTemplate = "Community",
-			siteURL = "true");
+			siteName = "Site Name");
 
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Home",
-			widgetName = "Blogs");
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Site Name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addWidget(portletName = "Blogs");
+
+		PageEditor.clickPublish();
 
 		User.firstLoginPG(
 			password = "test",

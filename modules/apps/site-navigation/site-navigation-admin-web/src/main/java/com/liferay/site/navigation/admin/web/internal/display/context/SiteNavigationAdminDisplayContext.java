@@ -458,8 +458,8 @@ public class SiteNavigationAdminDisplayContext {
 						siteNavigationMenuItem, themeDisplay.getLocale())
 				).put(
 					"type",
-					siteNavigationMenuItemType.getLabel(
-						themeDisplay.getLocale())
+					siteNavigationMenuItemType.getSubtitle(
+						siteNavigationMenuItem, themeDisplay.getLocale())
 				));
 		}
 

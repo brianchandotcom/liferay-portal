@@ -73,11 +73,10 @@ public class DLSelectDDMStructureDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		SearchContainer<DDMStructure> ddmStructureSearch = new SearchContainer(
-			_renderRequest, _getPortletURL(), null, "there-are-no-structures");
+			_renderRequest, _getPortletURL(), null, "there-are-no-results");
 
 		if (Validator.isNotNull(_getKeywords())) {
-			ddmStructureSearch.setEmptyResultsMessage(
-				"no-structures-were-found");
+			ddmStructureSearch.setEmptyResultsMessage("no-results-were-found");
 		}
 
 		String orderByCol = getOrderByCol();

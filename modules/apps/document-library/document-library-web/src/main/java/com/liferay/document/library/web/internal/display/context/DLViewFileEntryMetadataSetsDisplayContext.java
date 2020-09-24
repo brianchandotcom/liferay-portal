@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -179,16 +177,10 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		structureSearch.setOrderByType(orderByType);
 
 		if (structureSearch.isSearch()) {
-			structureSearch.setEmptyResultsMessage(
-				LanguageUtil.format(
-					_dlRequestHelper.getRequest(), "no-x-were-found",
-					getScopedStructureLabel(), false));
+			structureSearch.setEmptyResultsMessage("no-results-were-found");
 		}
 		else {
-			structureSearch.setEmptyResultsMessage(
-				LanguageUtil.format(
-					_dlRequestHelper.getRequest(), "there-are-no-x",
-					getScopedStructureLabel(), false));
+			structureSearch.setEmptyResultsMessage("there-are-no-results");
 		}
 
 		setDDMStructureSearchResults(structureSearch);
@@ -319,13 +311,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		}
 
 		return resourceClassNameId;
-	}
-
-	protected String getScopedStructureLabel() {
-		return LanguageUtil.get(
-			ResourceBundleUtil.getBundle(
-				_dlRequestHelper.getLocale(), getClass()),
-			"documents-and-media");
 	}
 
 	protected long getSearchRestrictionClassNameId() {

@@ -21,10 +21,17 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
+import {
+	useSelectedMenuItemId,
+	useSetSelectedMenuItemId,
+} from '../contexts/SelectedMenuItemIdContext';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 
-export const MenuItem = ({item, onSelect, selected}) => {
+export const MenuItem = ({item}) => {
+	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
+
+	const selected = useSelectedMenuItemId() === item.siteNavigationMenuItemId;
 
 	return (
 		<ClayCard
@@ -36,8 +43,8 @@ export const MenuItem = ({item, onSelect, selected}) => {
 		>
 			<ClayCheckbox
 				checked={selected}
-				onChange={(menuItem) => {
-					onSelect(menuItem);
+				onChange={() => {
+					setSelectedMenuItemId(item.siteNavigationMenuItemId);
 					setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
 				}}
 			>
@@ -82,6 +89,4 @@ MenuItem.propTypes = {
 		title: PropTypes.string.isRequired,
 		type: PropTypes.string.isRequired,
 	}),
-	onSelect: PropTypes.func.isRequired,
-	selected: PropTypes.bool,
 };

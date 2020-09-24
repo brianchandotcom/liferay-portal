@@ -12,10 +12,11 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
+import {ConstantsProvider} from '../contexts/ConstantsContext';
+import {SelectedMenuItemIdProvider} from '../contexts/SelectedMenuItemIdContext';
 import {SidebarPanelIdProvider} from '../contexts/SidebarPanelIdContext';
 import {AppLayout} from './AppLayout';
 import {EmptyState} from './EmptyState';
@@ -36,38 +37,25 @@ const SIDEBAR_PANELS = [
 ];
 
 export function App(props) {
-	const [selectedMenuItemId, setSelectedMenuItemId] = useState(null);
-
-	const handleSelectMenuItem = useCallback(
-		(menuItem) => setSelectedMenuItemId(menuItem.siteNavigationMenuItemId),
-		[]
-	);
-
 	const {siteNavigationMenuItems} = props;
 
 	return (
-		<SidebarPanelIdProvider>
-			<AppLayout
-				contentChildren={
-					!siteNavigationMenuItems.length ? (
-						<EmptyState />
-					) : (
-						<Menu
-							items={siteNavigationMenuItems}
-							onSelectMenuItem={handleSelectMenuItem}
-							selectedMenuItemId={selectedMenuItemId}
-						/>
-					)
-				}
-				selectedMenuItemId={selectedMenuItemId}
-				sidebarPanels={SIDEBAR_PANELS}
-				toolbarChildren={<Toolbar />}
-				{...props}
-			/>
-		</SidebarPanelIdProvider>
+		<ConstantsProvider constants={props}>
+			<SelectedMenuItemIdProvider>
+				<SidebarPanelIdProvider>
+					<AppLayout
+						contentChildren={
+							!siteNavigationMenuItems.length ? (
+								<EmptyState />
+							) : (
+								<Menu />
+							)
+						}
+						sidebarPanels={SIDEBAR_PANELS}
+						toolbarChildren={<Toolbar />}
+					/>
+				</SidebarPanelIdProvider>
+			</SelectedMenuItemIdProvider>
+		</ConstantsProvider>
 	);
 }
-
-App.propTypes = {
-	siteNavigationMenuItems: PropTypes.array.isRequired,
-};

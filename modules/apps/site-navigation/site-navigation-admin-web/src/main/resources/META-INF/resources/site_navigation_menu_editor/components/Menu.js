@@ -15,46 +15,38 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {useConstants} from '../contexts/ConstantsContext';
 import {MenuItem} from './MenuItem';
 
-export const Menu = ({items, onSelectMenuItem, selectedMenuItemId}) => (
-	<div className="container p-3">
-		<MenuContent
-			items={items}
-			onSelectMenuItem={onSelectMenuItem}
-			selectedMenuItemId={selectedMenuItemId}
-		/>
-	</div>
-);
+export const Menu = () => {
+	const {siteNavigationMenuItems} = useConstants();
 
-Menu.propTypes = {
+	return (
+		<div className="container p-3">
+			<MenuContent items={siteNavigationMenuItems} />
+		</div>
+	);
+};
+
+const MenuContent = ({items}) => {
+	return items.map((item) => (
+		<div key={item.siteNavigationMenuItemId}>
+			<MenuItem item={item} />
+
+			<div className="pl-4">
+				{!!item.children.length && (
+					<MenuContent items={item.children} />
+				)}
+			</div>
+		</div>
+	));
+};
+
+MenuContent.propTypes = {
 	items: PropTypes.arrayOf(
 		PropTypes.shape({
 			children: PropTypes.array.isRequired,
 			siteNavigationMenuItemId: PropTypes.string.isRequired,
 		})
 	),
-	onSelectMenuItem: PropTypes.func.isRequired,
-	selectedMenuItemId: PropTypes.string,
 };
-
-const MenuContent = ({items, onSelectMenuItem, selectedMenuItemId}) =>
-	items.map((item) => (
-		<div key={item.siteNavigationMenuItemId}>
-			<MenuItem
-				item={item}
-				onSelect={() => onSelectMenuItem(item)}
-				selected={selectedMenuItemId === item.siteNavigationMenuItemId}
-			/>
-
-			<div className="pl-4">
-				{!!item.children.length && (
-					<MenuContent
-						items={item.children}
-						onSelectMenuItem={onSelectMenuItem}
-						selectedMenuItemId={selectedMenuItemId}
-					/>
-				)}
-			</div>
-		</div>
-	));

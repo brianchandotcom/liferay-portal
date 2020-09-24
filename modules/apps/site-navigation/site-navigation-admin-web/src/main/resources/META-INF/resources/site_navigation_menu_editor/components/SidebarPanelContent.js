@@ -22,22 +22,24 @@ import {globalEval} from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {useConstants} from '../contexts/ConstantsContext';
+import {useSelectedMenuItemId} from '../contexts/SelectedMenuItemIdContext';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 
 export const SidebarPanelContent = ({
 	contentRequestBody,
 	contentUrl,
 	title,
-	...props
 }) => {
 	const [body, setBody] = useState(null);
 
 	const changedRef = useRef(false);
 
 	const isMounted = useIsMounted();
+	const selectedMenuItemId = useSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
 
-	const {portletId, redirect} = props;
+	const {portletId, redirect} = useConstants();
 
 	const namespace = Liferay.Util.getPortletNamespace(portletId);
 
@@ -71,6 +73,7 @@ export const SidebarPanelContent = ({
 		isMounted,
 		namespace,
 		redirect,
+		selectedMenuItemId,
 		title,
 	]);
 
@@ -123,8 +126,6 @@ export const SidebarPanelContent = ({
 SidebarPanelContent.propTypes = {
 	contentRequestBody: PropTypes.object,
 	contentUrl: PropTypes.string,
-	portletId: PropTypes.string,
-	redirect: PropTypes.string,
 	title: PropTypes.string,
 };
 

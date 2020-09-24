@@ -12,17 +12,19 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React from 'react';
 
+import {useConstants} from '../contexts/ConstantsContext';
+import {useSelectedMenuItemId} from '../contexts/SelectedMenuItemIdContext';
 import {SidebarPanelContent} from './SidebarPanelContent';
 
-export function MenuItemSettingsPanel(props) {
+export function MenuItemSettingsPanel() {
 	const {
 		editSiteNavigationMenuItemURL,
-		selectedMenuItemId,
 		siteNavigationMenuItems,
-	} = props;
+	} = useConstants();
+
+	const selectedMenuItemId = useSelectedMenuItemId();
 
 	const title = siteNavigationMenuItems.find(
 		(item) => item.siteNavigationMenuItemId === selectedMenuItemId
@@ -35,20 +37,6 @@ export function MenuItemSettingsPanel(props) {
 			}}
 			contentUrl={editSiteNavigationMenuItemURL}
 			title={title}
-			{...props}
 		/>
 	);
 }
-
-MenuItemSettingsPanel.propTypes = {
-	editSiteNavigationMenuItemURL: PropTypes.string,
-	selectedMenuItemId: PropTypes.string,
-	siteNavigationMenuItems: PropTypes.arrayOf(
-		PropTypes.shape({
-			children: PropTypes.array,
-			siteNavigationMenuId: PropTypes.string,
-			title: PropTypes.string,
-			type: PropTypes.string,
-		})
-	),
-};

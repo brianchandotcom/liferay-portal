@@ -12,17 +12,17 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React from 'react';
 
+import {useConstants} from '../contexts/ConstantsContext';
 import {SidebarPanelContent} from './SidebarPanelContent';
 
-export function MenuSettingsPanel(props) {
+export function MenuSettingsPanel() {
 	const {
 		editSiteNavigationMenuSettingsURL,
 		siteNavigationMenuId,
 		siteNavigationMenuName,
-	} = props;
+	} = useConstants();
 
 	return (
 		<SidebarPanelContent
@@ -31,13 +31,6 @@ export function MenuSettingsPanel(props) {
 			}}
 			contentUrl={editSiteNavigationMenuSettingsURL}
 			title={siteNavigationMenuName}
-			{...props}
 		/>
 	);
 }
-
-MenuSettingsPanel.propTypes = {
-	editSiteNavigationMenuSettingsURL: PropTypes.string,
-	siteNavigationMenuId: PropTypes.string,
-	siteNavigationMenuName: PropTypes.string,
-};

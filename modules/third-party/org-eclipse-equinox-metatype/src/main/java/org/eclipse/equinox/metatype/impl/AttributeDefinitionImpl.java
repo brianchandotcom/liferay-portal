@@ -224,7 +224,7 @@ public class AttributeDefinitionImpl extends LocalizationElement implements Equi
 		_values = values;
 		if (needValidation) {
 			for (int index = 0; index < _values.size(); index++) {
-				ValueTokenizer vt = new ValueTokenizer(_values.get(index), logger);
+				ValueTokenizer vt = new ValueTokenizer(_cardinality, _values.get(index), logger);
 				_values.set(index, vt.getValuesAsString());
 				String reason = vt.validate(this);
 				if ((reason != null) && reason.length() > 0) {
@@ -251,7 +251,7 @@ public class AttributeDefinitionImpl extends LocalizationElement implements Equi
 	 * The given parameter is a comma delimited list needed to be parsed.
 	 */
 	void setDefaultValue(String defaults_str, boolean needValidation) {
-		ValueTokenizer vt = new ValueTokenizer(defaults_str, logger);
+		ValueTokenizer vt = new ValueTokenizer(_cardinality, defaults_str, logger);
 		String reason = vt.validate(this);
 		if ((reason != null) && reason.length() > 0) {
 			logger.log(LogService.LOG_WARNING, NLS.bind(MetaTypeMsg.INVALID_DEFAULTS, new Object[] {vt.getValuesAsString(), getID(), reason}));
@@ -302,7 +302,7 @@ public class AttributeDefinitionImpl extends LocalizationElement implements Equi
 	 * @see org.osgi.service.metatype.AttributeDefinition#validate(java.lang.String)
 	 */
 	public String validate(String value) {
-		ValueTokenizer vt = new ValueTokenizer(value, logger);
+		ValueTokenizer vt = new ValueTokenizer(_cardinality, value, logger);
 		return vt.validate(this);
 	}
 
@@ -322,3 +322,4 @@ public class AttributeDefinitionImpl extends LocalizationElement implements Equi
 		return _minValue == null ? null : String.valueOf(_minValue);
 	}
 }
+/* @generated */

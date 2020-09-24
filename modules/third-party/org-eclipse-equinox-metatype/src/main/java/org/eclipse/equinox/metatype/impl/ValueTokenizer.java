@@ -27,10 +27,17 @@ public class ValueTokenizer {
 	/*
 	 * Constructor of class ValueTokenizer
 	 */
-	public ValueTokenizer(String values_str, LogService logger) {
+	public ValueTokenizer(int cardinality, String values_str, LogService logger) {
 		this.logger = logger;
 		if (values_str == null)
 			return;
+
+		if (cardinality == 0) {
+			values.add(values_str);
+
+			return;
+		}
+
 		// The trick is to strip out unescaped whitespace characters before and
 		// after the input string as well as before and after each 
 		// individual token within the input string without losing any escaped 
@@ -288,3 +295,4 @@ public class ValueTokenizer {
 		}
 	}
 }
+/* @generated */

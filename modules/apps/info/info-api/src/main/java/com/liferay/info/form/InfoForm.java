@@ -136,6 +136,10 @@ public class InfoForm {
 	}
 
 	public String getLabel(Locale locale) {
+		if (_builder._labelInfoLocalizedValue == null) {
+			return _builder._name;
+		}
+
 		return _builder._labelInfoLocalizedValue.getValue(locale);
 	}
 

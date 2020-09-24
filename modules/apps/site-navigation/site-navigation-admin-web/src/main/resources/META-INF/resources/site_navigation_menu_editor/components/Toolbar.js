@@ -16,7 +16,8 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
-import {AppLayout, useSetSidebarPanelId} from './AppLayout';
+import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
+import {AppLayout} from './AppLayout';
 
 export const Toolbar = () => {
 	const setSidebarPanelId = useSetSidebarPanelId();

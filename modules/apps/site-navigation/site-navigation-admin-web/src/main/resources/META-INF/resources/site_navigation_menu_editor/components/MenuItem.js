@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
-import {useSetSidebarPanelId} from './AppLayout';
+import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 
 export const MenuItem = ({item, onSelect, selected}) => {
 	const setSidebarPanelId = useSetSidebarPanelId();

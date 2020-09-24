@@ -22,7 +22,7 @@ import {globalEval} from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-import {useSetSidebarPanelId} from './AppLayout';
+import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 
 export const SidebarPanelContent = ({
 	contentRequestBody,

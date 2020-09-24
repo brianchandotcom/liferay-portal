@@ -159,7 +159,7 @@ class ItemConfigurationComponent extends React.Component {
 				)}
 			</ClayAlert>
 		) : (
-			<Component item={item} />
+			<Component item={item} key={item.itemId} />
 		);
 	}
 }

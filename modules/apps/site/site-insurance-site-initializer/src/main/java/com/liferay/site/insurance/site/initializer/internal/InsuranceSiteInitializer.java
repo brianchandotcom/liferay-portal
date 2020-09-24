@@ -150,8 +150,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			_addImages();
 
-			_addJournalFolders();
-			_addJournalArticles();
+			_addJournalArticles(_addJournalFolders());
 
 			_addFragments();
 
@@ -353,10 +352,12 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			file);
 	}
 
-	private void _addJournalArticles() throws Exception {
+	private void _addJournalArticles(List<JournalFolder> journalFolders)
+		throws Exception {
+
 		Map<String, Long> journalFolderMap = new HashMap<>();
 
-		for (JournalFolder journalFolder : _journalFolders) {
+		for (JournalFolder journalFolder : journalFolders) {
 			journalFolderMap.put(
 				journalFolder.getName(), journalFolder.getFolderId());
 		}
@@ -425,8 +426,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addJournalFolders() throws Exception {
-		_journalFolders = new ArrayList<>();
+	private List<JournalFolder> _addJournalFolders() throws Exception {
+		List<JournalFolder> journalFolders = new ArrayList<>();
 
 		JSONArray journalFoldersJSONArray = JSONFactoryUtil.createJSONArray(
 			_readFile("/journal-folders/journal_folders.json"));
@@ -439,8 +440,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				jsonObject.getString("name"), null, _serviceContext);
 
-			_journalFolders.add(journalFolder);
+			journalFolders.add(journalFolder);
 		}
+
+		return journalFolders;
 	}
 
 	private void _addLayouts() throws Exception {
@@ -986,8 +989,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;
-
-	private List<JournalFolder> _journalFolders;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

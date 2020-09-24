@@ -1654,6 +1654,10 @@ public class CommercePriceListLocalServiceImpl
 		}
 
 		if (parentCommercePriceListId > 0) {
+			if (parentCommercePriceListId == commercePriceListId) {
+				throw new CommercePriceListParentPriceListGroupIdException();
+			}
+
 			CommercePriceList commercePriceList =
 				commercePriceListLocalService.fetchCommercePriceList(
 					parentCommercePriceListId);

@@ -266,7 +266,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "2");
 
-		Refresh();
+		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -424,7 +424,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "2");
 
-		Pause(locator1 = "2000");
+		Pause(locator1 = "5000");
 
 		Refresh();
 

@@ -65,7 +65,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "2");
 
-		Refresh();
+		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoMiniCart();
 

@@ -148,15 +148,13 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Tabs");
 
-		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "Basic Components",
-			key_fragmentName = "Heading",
-			key_index = "2",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
-			value1 = "");
+		PageEditor.addElementToTab(
+			collectionName = "Basic Components",
+			fragmentName = "Heading",
+			index = "2",
+			navItem = "Tab 1",
+			navTab = "Fragments",
+			position = "1");
 
 		PageEditor.editFragmentText(
 			fragmentName = "Heading",

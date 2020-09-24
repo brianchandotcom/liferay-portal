@@ -50,96 +50,36 @@ definition {
 			fragmentName = "Tabs",
 			scope = "Master");
 
-		AssertVisible(
-			key_content = "Place fragments here.",
-			key_fragmentClass = "content",
-			key_position = "1",
-			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+		PageEditor.addElementToTab(
+			collectionName = "Layout Elements",
+			fragmentName = "Container",
+			index = "2",
+			navItem = "Tab 1",
+			navTab = "Fragments",
+			position = "1");
 
-		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
+		var n = "2";
 
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "Layout Elements",
-			key_fragmentName = "Container",
-			key_index = "2",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
-			value1 = "");
+		for (var fragmentName : list "Heading,Tabs") {
+			var index = ${n} + 1;
 
-		AssertElementPresent(
-			key_fragmentName = "Container",
-			key_inFragmentName = "Tabs",
-			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+			PageEditor.addElementToTab(
+				collectionName = "Basic Components",
+				fragmentName = "${fragmentName}",
+				index = "${index}",
+				navItem = "Tab ${n}",
+				navTab = "Fragments",
+				position = "1");
 
-		PageEditor.gotoTabsFragmentNavItem(navItem = "Tab 2");
+			var n = ${n} + 1;
+		}
 
-		AssertVisible(
-			key_content = "Place fragments here.",
-			key_fragmentClass = "content",
-			key_position = "1",
-			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
-
-		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "Basic Components",
-			key_fragmentName = "Heading",
-			key_index = "3",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
-			value1 = "");
-
-		AssertElementPresent(
-			key_fragmentName = "Heading",
-			key_inFragmentName = "Tabs",
-			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
-
-		PageEditor.gotoTabsFragmentNavItem(navItem = "Tab 3");
-
-		AssertVisible(
-			key_content = "Place fragments here.",
-			key_fragmentClass = "content",
-			key_position = "1",
-			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
-
-		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "Basic Components",
-			key_fragmentName = "Tabs",
-			key_index = "4",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
-			value1 = "");
-
-		AssertElementPresent(
-			key_fragmentName = "Tabs",
-			key_inFragmentName = "Tabs",
-			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
-
-		PageEditor.gotoTabsFragmentNavItem(navItem = "Tab 4");
-
-		AssertVisible(
-			key_content = "Place fragments here.",
-			key_fragmentClass = "content",
-			key_position = "5",
-			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
-
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-		Navigator.gotoNavTab(navTab = "Widgets");
-
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_index = "9",
-			key_portletName = "Asset Publisher",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
-			value1 = "Asset Publisher");
-
-		AssertElementPresent(
-			key_fragmentName = "Asset Publisher",
-			key_inFragmentName = "Tabs",
-			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+		PageEditor.addElementToTab(
+			index = "9",
+			navItem = "Tab 4",
+			navTab = "Widgets",
+			portletName = "Asset Publisher",
+			position = "5");
 
 		Button.click(button = "Publish Master");
 

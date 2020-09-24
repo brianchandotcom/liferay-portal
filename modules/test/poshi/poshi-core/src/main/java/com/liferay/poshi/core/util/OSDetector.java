@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner.util;
-
-import com.liferay.poshi.core.util.StringUtil;
+package com.liferay.poshi.core.util;
 
 import java.io.File;
 

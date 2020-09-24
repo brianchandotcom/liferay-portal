@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.StringUtil;
 
 import java.io.IOException;

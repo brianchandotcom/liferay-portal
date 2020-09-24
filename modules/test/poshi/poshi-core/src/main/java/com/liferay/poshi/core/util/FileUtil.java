@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner.util;
-
-import com.liferay.poshi.core.util.StringUtil;
-import com.liferay.poshi.core.util.Validator;
+package com.liferay.poshi.core.util;
 
 import java.io.BufferedReader;
 import java.io.File;

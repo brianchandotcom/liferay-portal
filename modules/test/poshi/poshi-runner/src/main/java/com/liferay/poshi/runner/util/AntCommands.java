@@ -14,9 +14,10 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
-import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,7 +42,7 @@ public class AntCommands implements Callable<Void> {
 
 		StringBuilder sb = new StringBuilder();
 
-		String projectDirName = PoshiRunnerGetterUtil.getProjectDirName();
+		String projectDirName = PoshiGetterUtil.getProjectDirName();
 
 		if (!OSDetector.isWindows()) {
 			projectDirName = StringUtil.replace(projectDirName, "\\", "//");

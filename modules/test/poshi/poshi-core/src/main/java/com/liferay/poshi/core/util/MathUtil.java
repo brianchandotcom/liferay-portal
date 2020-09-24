@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner.util;
+package com.liferay.poshi.core.util;
 
 import java.util.Random;
 

@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner.util;
-
-import com.liferay.poshi.core.util.GetterUtil;
+package com.liferay.poshi.core.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -21,4 +21,6 @@ public class DepotConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.depot";
 
+	public static final String SERVICE_NAME = "com.liferay.depot";
+
 }

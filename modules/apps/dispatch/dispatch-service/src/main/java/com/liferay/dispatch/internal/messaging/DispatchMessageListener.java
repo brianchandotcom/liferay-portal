@@ -20,14 +20,11 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.MessageListenerException;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -42,37 +39,24 @@ import org.osgi.service.component.annotations.Reference;
 	property = "destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME,
 	service = MessageListener.class
 )
-public class DispatchMessageListener implements MessageListener {
+public class DispatchMessageListener extends BaseMessageListener {
 
 	@Override
-	public void receive(Message message) throws MessageListenerException {
+	public void doReceive(Message message) throws Exception {
 		String payload = (String)message.getPayload();
 
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = JSONFactoryUtil.createJSONObject(payload);
-		}
-		catch (JSONException jsonException) {
-			throw new MessageListenerException(jsonException);
-		}
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(payload);
 
 		long dispatchTriggerId = jsonObject.getLong("dispatchTriggerId");
 
-		try {
-			DispatchTrigger dispatchTrigger =
-				_dispatchTriggerLocalService.getDispatchTrigger(
-					dispatchTriggerId);
+		DispatchTrigger dispatchTrigger =
+			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
 
-			ScheduledTaskExecutor scheduledTaskExecutor =
-				_scheduledTaskExecutorServiceTrackerMap.getService(
-					dispatchTrigger.getTaskType());
+		ScheduledTaskExecutor scheduledTaskExecutor =
+			_scheduledTaskExecutorServiceTrackerMap.getService(
+				dispatchTrigger.getTaskType());
 
-			scheduledTaskExecutor.execute(dispatchTriggerId);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
+		scheduledTaskExecutor.execute(dispatchTriggerId);
 	}
 
 	@Activate
@@ -87,9 +71,6 @@ public class DispatchMessageListener implements MessageListener {
 	protected void deactivate() {
 		_scheduledTaskExecutorServiceTrackerMap.close();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DispatchMessageListener.class);
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

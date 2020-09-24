@@ -19,7 +19,6 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.talend.internal.helper.DispatchTalendScheduledJobHelper;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.process.CollectorOutputProcessor;
@@ -30,8 +29,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -67,48 +64,40 @@ public class DispatchTalendScheduledTaskExecutor
 	public static final String SCHEDULED_TASK_EXECUTOR_TYPE_TALEND = "talend";
 
 	@Override
-	public void execute(long dispatchTriggerId) throws PortalException {
-		DispatchLog dispatchLog = null;
-		DispatchTalendCollectorOutputProcessor
-			dispatchTalendCollectorOutputProcessor = null;
-		DispatchTrigger dispatchTrigger = null;
+	public void execute(long dispatchTriggerId)
+		throws IOException, PortalException {
 
-		String rootDirectoryName = null;
-
-		Date startDate = new Date();
-
-		File tempFile = null;
-
-		try {
-			FileEntry fileEntry =
-				_dispatchTalendScheduledTaskExecutorHelper.getFileEntry(
-					dispatchTriggerId);
-
-			InputStream inputStream = fileEntry.getContentStream();
-
-			tempFile = FileUtil.createTempFile(inputStream);
-
-			File tempFolder = FileUtil.createTempFolder();
-
-			FileUtil.unzip(tempFile, tempFolder);
-
-			rootDirectoryName = tempFolder.getAbsolutePath();
-
-			String shFileName = _getSHFileName(rootDirectoryName);
-
-			_addExecutePermission(shFileName);
-
-			dispatchTrigger = _dispatchTriggerLocalService.getDispatchTrigger(
+		FileEntry fileEntry =
+			_dispatchTalendScheduledTaskExecutorHelper.getFileEntry(
 				dispatchTriggerId);
 
-			dispatchLog = _dispatchLogLocalService.addDispatchLog(
-				dispatchTrigger.getUserId(),
-				dispatchTrigger.getDispatchTriggerId(), null, null, null,
-				startDate, BackgroundTaskConstants.STATUS_IN_PROGRESS);
+		InputStream inputStream = fileEntry.getContentStream();
 
+		File tempFile = FileUtil.createTempFile(inputStream);
+
+		File tempFolder = FileUtil.createTempFolder();
+
+		FileUtil.unzip(tempFile, tempFolder);
+
+		String rootDirectoryName = tempFolder.getAbsolutePath();
+
+		String shFileName = _getSHFileName(rootDirectoryName);
+
+		_addExecutePermission(shFileName);
+
+		DispatchTrigger dispatchTrigger =
+			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
+
+		DispatchLog dispatchLog = _dispatchLogLocalService.addDispatchLog(
+			dispatchTrigger.getUserId(), dispatchTrigger.getDispatchTriggerId(),
+			null, null, null, new Date(),
+			BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+		DispatchTalendCollectorOutputProcessor
 			dispatchTalendCollectorOutputProcessor =
 				new DispatchTalendCollectorOutputProcessor();
 
+		try {
 			Future<Map.Entry<byte[], byte[]>> future = ProcessUtil.execute(
 				dispatchTalendCollectorOutputProcessor,
 				_getArguments(dispatchTrigger, rootDirectoryName, shFileName));
@@ -122,14 +111,14 @@ public class DispatchTalendScheduledTaskExecutor
 				BackgroundTaskConstants.STATUS_SUCCESSFUL);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
-
 			_dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
 				new String(
 					dispatchTalendCollectorOutputProcessor._stdErrByteArray,
 					StandardCharsets.UTF_8),
 				null, BackgroundTaskConstants.STATUS_FAILED);
+
+			throw new PortalException(exception);
 		}
 		finally {
 			FileUtil.deltree(rootDirectoryName);
@@ -146,10 +135,15 @@ public class DispatchTalendScheduledTaskExecutor
 	}
 
 	private void _addExecutePermission(String shFileName)
-		throws ProcessException {
+		throws PortalException {
 
-		ProcessUtil.execute(
-			ConsumerOutputProcessor.INSTANCE, "chmod", "+x", shFileName);
+		try {
+			ProcessUtil.execute(
+				ConsumerOutputProcessor.INSTANCE, "chmod", "+x", shFileName);
+		}
+		catch (ProcessException processException) {
+			throw new PortalException(processException);
+		}
 	}
 
 	private List<String> _getArguments(
@@ -179,7 +173,7 @@ public class DispatchTalendScheduledTaskExecutor
 		arguments.add("--context_param jobWorkDirectory=" + rootDirectoryName);
 
 		UnicodeProperties taskUnicodeProperties =
-			dispatchTrigger.getTaskProperties();
+			dispatchTrigger.getTaskUnicodeProperties();
 
 		if (taskUnicodeProperties != null) {
 			for (Map.Entry<String, String> propEntry :
@@ -204,9 +198,6 @@ public class DispatchTalendScheduledTaskExecutor
 
 		return strings[0];
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DispatchTalendScheduledTaskExecutor.class);
 
 	@Reference
 	private DispatchLogLocalService _dispatchLogLocalService;

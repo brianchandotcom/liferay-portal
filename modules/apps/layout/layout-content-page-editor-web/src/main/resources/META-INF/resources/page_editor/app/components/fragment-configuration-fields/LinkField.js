@@ -17,7 +17,6 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import MappingSelector from '../../../common/components/MappingSelector';
-import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import InfoItemService from '../../services/InfoItemService';
@@ -57,8 +56,8 @@ export const TARGET_OPTIONS = [
 ];
 
 export default function LinkField({field, onValueSelect, value}) {
-	const [nextValue, setNextValue] = useControlledState(value || {});
-	const [nextHref, setNextHref] = useControlledState(nextValue.href);
+	const [nextValue, setNextValue] = useState(value || {});
+	const [nextHref, setNextHref] = useState(nextValue.href);
 
 	const [mappedHrefPreview, setMappedHrefPreview] = useState(null);
 	const languageId = useSelector((state) => state.languageId);

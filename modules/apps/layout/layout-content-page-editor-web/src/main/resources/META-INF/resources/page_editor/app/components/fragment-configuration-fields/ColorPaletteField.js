@@ -14,16 +14,13 @@
 
 import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import ColorPalette from '../../../common/components/ColorPalette';
-import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export const ColorPaletteField = ({field, onValueSelect, value}) => {
-	const [nextValue, setNextValue] = useControlledState(
-		value && value.cssClass
-	);
+	const [nextValue, setNextValue] = useState(value && value.cssClass);
 
 	return (
 		<ClayForm.Group>

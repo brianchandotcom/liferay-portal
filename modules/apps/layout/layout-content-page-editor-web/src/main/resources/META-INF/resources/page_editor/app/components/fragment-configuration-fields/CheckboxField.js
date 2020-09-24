@@ -14,13 +14,12 @@
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
-import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export const CheckboxField = ({field, onValueSelect, value}) => {
-	const [nextValue, setNextValue] = useControlledState(!!value);
+	const [nextValue, setNextValue] = useState(!!value);
 
 	return (
 		<ClayForm.Group>

@@ -16,7 +16,6 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export const TextField = ({field, onValueSelect, value}) => {
@@ -29,7 +28,7 @@ export const TextField = ({field, onValueSelect, value}) => {
 				: field.defaultValue
 			: value;
 
-	const [nextValue, setNextValue] = useControlledState(initialValue);
+	const [nextValue, setNextValue] = useState(initialValue);
 
 	const {additionalProps = {}, type = 'text'} = parseTypeOptions(
 		field.typeOptions

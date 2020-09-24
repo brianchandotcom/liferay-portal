@@ -14,9 +14,8 @@
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
-import useControlledState from '../../../core/hooks/useControlledState';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useId} from '../../utils/useId';
@@ -31,7 +30,7 @@ export const SelectField = ({disabled, field, onValueSelect, value}) => {
 
 	const [firstOption = {}] = validValues;
 
-	const [nextValue, setNextValue] = useControlledState(
+	const [nextValue, setNextValue] = useState(
 		value || field.defaultValue || firstOption.value
 	);
 

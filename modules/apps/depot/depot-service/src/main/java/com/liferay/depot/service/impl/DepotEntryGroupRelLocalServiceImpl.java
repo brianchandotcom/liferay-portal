@@ -49,6 +49,7 @@ public class DepotEntryGroupRelLocalServiceImpl
 		depotEntryGroupRel = depotEntryGroupRelPersistence.create(
 			counterLocalService.increment());
 
+		depotEntryGroupRel.setGroupId(toGroupId);
 		depotEntryGroupRel.setDdmStructuresAvailable(ddmStructuresAvailable);
 		depotEntryGroupRel.setDepotEntryId(depotEntryId);
 		depotEntryGroupRel.setSearchable(searchable);

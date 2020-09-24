@@ -247,6 +247,17 @@ public class KaleoDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_S_A() throws Exception {
+		_persistence.countByC_S_A(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_S_A(0L, "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_S_A(
+			0L, (String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KaleoDefinition newKaleoDefinition = addKaleoDefinition();
 

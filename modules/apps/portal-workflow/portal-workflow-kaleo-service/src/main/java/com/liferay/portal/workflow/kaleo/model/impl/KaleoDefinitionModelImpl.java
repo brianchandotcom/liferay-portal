@@ -145,7 +145,13 @@ public class KaleoDefinitionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 8L;
+	public static final long SCOPE_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long VERSION_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -702,6 +708,15 @@ public class KaleoDefinitionModelImpl
 		}
 
 		_scope = scope;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalScope() {
+		return getColumnOriginalValue("scope");
 	}
 
 	@Override

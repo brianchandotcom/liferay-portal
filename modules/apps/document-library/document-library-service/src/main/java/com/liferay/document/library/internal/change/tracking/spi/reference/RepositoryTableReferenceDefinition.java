@@ -17,6 +17,10 @@ package com.liferay.document.library.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.change.tracking.store.model.CTSContentTable;
+import com.liferay.document.library.kernel.model.DLFileEntryTable;
+import com.liferay.document.library.kernel.model.DLFileShortcutTable;
+import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -36,6 +40,23 @@ public class RepositoryTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<RepositoryTable>
 			childTableReferenceInfoBuilder) {
+
+		childTableReferenceInfoBuilder.singleColumnReference(
+			RepositoryTable.INSTANCE.repositoryId,
+			CTSContentTable.INSTANCE.repositoryId
+		).singleColumnReference(
+			RepositoryTable.INSTANCE.repositoryId,
+			DLFileEntryTable.INSTANCE.repositoryId
+		).singleColumnReference(
+			RepositoryTable.INSTANCE.repositoryId,
+			DLFileShortcutTable.INSTANCE.repositoryId
+		).singleColumnReference(
+			RepositoryTable.INSTANCE.repositoryId,
+			DLFileVersionTable.INSTANCE.repositoryId
+		).singleColumnReference(
+			RepositoryTable.INSTANCE.repositoryId,
+			DLFolderTable.INSTANCE.repositoryId
+		);
 	}
 
 	@Override

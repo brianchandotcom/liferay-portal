@@ -22,7 +22,6 @@ import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutTable;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileShortcutPersistence;
-import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,9 +53,6 @@ public class DLFileShortcutTableReferenceDefinition
 
 		parentTableReferenceInfoBuilder.groupedModel(
 			DLFileShortcutTable.INSTANCE
-		).singleColumnReference(
-			DLFileShortcutTable.INSTANCE.repositoryId,
-			RepositoryTable.INSTANCE.repositoryId
 		).singleColumnReference(
 			DLFileShortcutTable.INSTANCE.folderId,
 			DLFolderTable.INSTANCE.folderId

@@ -27,7 +27,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
 import com.liferay.portal.kernel.model.ClassNameTable;
-import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.trash.model.TrashVersionTable;
 
@@ -141,9 +140,6 @@ public class DLFileVersionTableReferenceDefinition
 
 		parentTableReferenceInfoBuilder.groupedModel(
 			DLFileVersionTable.INSTANCE
-		).singleColumnReference(
-			DLFileVersionTable.INSTANCE.repositoryId,
-			RepositoryTable.INSTANCE.repositoryId
 		).singleColumnReference(
 			DLFileVersionTable.INSTANCE.folderId,
 			DLFolderTable.INSTANCE.folderId

@@ -26,7 +26,6 @@ import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.ImageTable;
-import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -91,9 +90,6 @@ public class DLFileEntryTableReferenceDefinition
 
 		parentTableReferenceInfoBuilder.groupedModel(
 			DLFileEntryTable.INSTANCE
-		).singleColumnReference(
-			DLFileEntryTable.INSTANCE.repositoryId,
-			RepositoryTable.INSTANCE.repositoryId
 		).singleColumnReference(
 			DLFileEntryTable.INSTANCE.folderId, DLFolderTable.INSTANCE.folderId
 		).singleColumnReference(

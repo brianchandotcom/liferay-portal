@@ -20,7 +20,6 @@ import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInf
 import com.liferay.change.tracking.store.model.CTSContentTable;
 import com.liferay.change.tracking.store.service.persistence.CTSContentPersistence;
 import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,11 +44,8 @@ public class CTSContentTableReferenceDefinition
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			CTSContentTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			CTSContentTable.INSTANCE.repositoryId,
-			RepositoryTable.INSTANCE.repositoryId
-		);
+			CTSContentTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override

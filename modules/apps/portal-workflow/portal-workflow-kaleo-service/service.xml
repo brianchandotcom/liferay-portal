@@ -173,6 +173,11 @@
 			<finder-column name="name" />
 			<finder-column name="active" />
 		</finder>
+		<finder name="C_S_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="scope" />
+			<finder-column name="active" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="KaleoDefinitionVersion" remote-service="false">
 

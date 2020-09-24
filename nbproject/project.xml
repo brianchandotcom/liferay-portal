@@ -45,12 +45,6 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>modules\apps\petra\petra-url-pattern-mapper\src\main\java</label>
-					<type>java</type>
-					<location>modules/apps/petra/petra-url-pattern-mapper/src/main/java</location>
-					<encoding>UTF-8</encoding>
-				</source-folder>
-				<source-folder>
 					<label>modules\apps\petra\petra-xml\src\main\java</label>
 					<type>java</type>
 					<location>modules/apps/petra/petra-xml/src/main/java</location>
@@ -126,6 +120,12 @@
 					<label>modules\core\petra\petra-string\src\main\java</label>
 					<type>java</type>
 					<location>modules/core/petra/petra-string/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
+					<label>modules\core\petra\petra-url-pattern-mapper\src\main\java</label>
+					<type>java</type>
+					<location>modules/core/petra/petra-url-pattern-mapper/src/main/java</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>

@@ -120,6 +120,22 @@ definition {
 			value1 = "${siteName}");
 	}
 
+	macro addCustomCP {
+		LexiconEntry.gotoAdd();
+
+		MetalComponent.waitForCard(card = "${siteTemplateName}");
+
+		LexiconCard.clickCard(card = "${siteTemplateName}");
+
+		PortletEntry.inputName(name = "${siteName}");
+
+		Modal.save();
+
+		AssertTextEquals(
+			locator1 = "SitesEditSite#DETAILS_NAME",
+			value1 = "${siteName}");
+	}
+
 	macro addSiteTemplateCP {
 		Site.addCP(
 			membershipType = "${membershipType}",

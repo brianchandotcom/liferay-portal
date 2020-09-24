@@ -36,14 +36,8 @@ public class DepotEntryGroupRelLocalServiceImpl
 
 	@Override
 	public DepotEntryGroupRel addDepotEntryGroupRel(
-		long depotEntryId, long toGroupId) {
-
-		return addDepotEntryGroupRel(depotEntryId, toGroupId, true);
-	}
-
-	@Override
-	public DepotEntryGroupRel addDepotEntryGroupRel(
-		long depotEntryId, long toGroupId, boolean searchable) {
+		boolean ddmStructuresAvailable, long depotEntryId, long toGroupId,
+		boolean searchable) {
 
 		DepotEntryGroupRel depotEntryGroupRel =
 			depotEntryGroupRelPersistence.fetchByD_TGI(depotEntryId, toGroupId);
@@ -55,11 +49,27 @@ public class DepotEntryGroupRelLocalServiceImpl
 		depotEntryGroupRel = depotEntryGroupRelPersistence.create(
 			counterLocalService.increment());
 
+		depotEntryGroupRel.setDdmStructuresAvailable(ddmStructuresAvailable);
 		depotEntryGroupRel.setDepotEntryId(depotEntryId);
 		depotEntryGroupRel.setSearchable(searchable);
 		depotEntryGroupRel.setToGroupId(toGroupId);
 
 		return depotEntryGroupRelPersistence.update(depotEntryGroupRel);
+	}
+
+	@Override
+	public DepotEntryGroupRel addDepotEntryGroupRel(
+		long depotEntryId, long toGroupId) {
+
+		return addDepotEntryGroupRel(depotEntryId, toGroupId, true);
+	}
+
+	@Override
+	public DepotEntryGroupRel addDepotEntryGroupRel(
+		long depotEntryId, long toGroupId, boolean searchable) {
+
+		return addDepotEntryGroupRel(
+			false, depotEntryId, toGroupId, searchable);
 	}
 
 	@Override

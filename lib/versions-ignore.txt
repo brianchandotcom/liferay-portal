@@ -22,5 +22,6 @@ tmp/lib-pre/com.liferay.petra.sql.dsl.api.jar
 tmp/lib-pre/com.liferay.petra.sql.dsl.spi.jar
 tmp/lib-pre/com.liferay.petra.string.jar
 tmp/lib-pre/com.liferay.petra.test.util.jar
+tmp/lib-pre/com.liferay.petra.url.pattern.mapper.jar
 tmp/lib-pre/com.liferay.petra.xml.jar
 tmp/lib-pre/com.liferay.registry.api.jar

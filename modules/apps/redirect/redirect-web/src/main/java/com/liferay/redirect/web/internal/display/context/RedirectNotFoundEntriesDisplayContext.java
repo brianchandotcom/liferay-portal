@@ -216,7 +216,9 @@ public class RedirectNotFoundEntriesDisplayContext {
 				orderByAsc);
 		}
 
-		return new Sort("requestCount", Sort.LONG_TYPE, orderByAsc);
+		return new Sort(
+			Field.getSortableFieldName("requestCount"), Sort.LONG_TYPE,
+			orderByAsc);
 	}
 
 	private void _populateWithSearchIndex(

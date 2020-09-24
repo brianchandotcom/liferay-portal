@@ -3479,10 +3479,10 @@ alloy-ui@^3.1.0-deprecated.40:
   resolved "https://registry.yarnpkg.com/alloy-ui/-/alloy-ui-3.1.0.tgz#95842e4c793abbfe84aa8abfc5a637cd36dda823"
   integrity sha1-lYQuTHk6u/6Eqoq/xaY3zTbdqCM=
 
-alloyeditor@2.11.14:
-  version "2.11.14"
-  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.11.14.tgz#8c5fd73a4b3420041c94229ffdacb090d910caa7"
-  integrity sha512-5zgdfVRub2Ynsmm9hYgMTGEiGMbf8Gz1L2h5B0yoI6cJZTunja4DHzgJ1Rhp1HEYKVIbpLEUvstYm0hOIgIPPA==
+alloyeditor@2.11.15:
+  version "2.11.15"
+  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.11.15.tgz#c35051aabbfda7e4ade9f5c874bd95e545d21ca6"
+  integrity sha512-yE1idU84xhNV2gBRij98FK6G+Vw1unEw8nhEVAtUQzOObgbVDJw/K1fRMw3DIZi0tKp1O1qqopYL4HFqGO/GJg==
   dependencies:
     clay-css "^2.11.1"
     prop-types "^15.6.2"

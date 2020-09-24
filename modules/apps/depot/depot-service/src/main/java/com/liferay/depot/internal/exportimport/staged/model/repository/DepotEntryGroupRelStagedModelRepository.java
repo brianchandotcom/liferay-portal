@@ -52,6 +52,7 @@ public class DepotEntryGroupRelStagedModelRepository
 		}
 
 		return _depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntryGroupRel.isDdmStructuresAvailable(),
 			depotEntryGroupRel.getDepotEntryId(),
 			depotEntryGroupRel.getToGroupId(),
 			depotEntryGroupRel.isSearchable());

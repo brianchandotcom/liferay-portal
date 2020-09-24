@@ -19,14 +19,17 @@ import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfo
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.change.tracking.store.model.CTSContentTable;
 import com.liferay.document.library.content.model.DLContentTable;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
+import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.trash.model.TrashVersionTable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -110,6 +113,22 @@ public class DLFileVersionTableReferenceDefinition
 				).and(
 					DLFileEntryTable.INSTANCE.fileEntryId.eq(
 						DLFileVersionTable.INSTANCE.fileEntryId)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				TrashVersionTable.INSTANCE
+			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DLFileVersionTable.INSTANCE.fileVersionId.eq(
+					TrashVersionTable.INSTANCE.classPK)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					TrashVersionTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(
+						DLFileEntry.class.getName())
 				)
 			)
 		);

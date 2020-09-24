@@ -14,7 +14,6 @@
 
 package com.liferay.trash.internal.change.tracking.spi.reference;
 
-import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
@@ -46,20 +45,7 @@ public class TrashVersionTableReferenceDefinition
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
 			TrashVersionTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				AssetEntryTable.INSTANCE
-			).innerJoinON(
-				TrashVersionTable.INSTANCE,
-				TrashVersionTable.INSTANCE.classNameId.eq(
-					AssetEntryTable.INSTANCE.classNameId
-				).and(
-					TrashVersionTable.INSTANCE.classPK.eq(
-						AssetEntryTable.INSTANCE.classPK)
-				)
-			)
-		);
+			CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override

@@ -79,6 +79,7 @@ definition {
 	test ProductPublishing {
 		property environment.acceptance = "quarantine";
 		property portal.acceptance = "quarantine";
+		property test.name.skip.portal.instance = "CPCommerceProducts#ProductPublishing";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

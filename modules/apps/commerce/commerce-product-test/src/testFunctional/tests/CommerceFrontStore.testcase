@@ -62,6 +62,7 @@ definition {
 
 	test ViewStoreFrontSimpleProduct {
 		property portal.acceptance = "quarantine";
+		property test.name.skip.portal.instance = "CommerceFrontStore#ViewStoreFrontSimpleProduct";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

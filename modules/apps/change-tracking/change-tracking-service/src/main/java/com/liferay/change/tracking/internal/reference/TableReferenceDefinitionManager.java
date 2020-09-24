@@ -46,6 +46,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class TableReferenceDefinitionManager {
 
 	public long getClassNameId(Table<?> table) {
+		_ensureOpened();
+
 		TableReferenceInfo<?> tableReferenceInfo = _tableReferenceInfos.get(
 			table);
 
@@ -58,6 +60,8 @@ public class TableReferenceDefinitionManager {
 	}
 
 	public Map<Long, TableReferenceInfo<?>> getCombinedTableReferenceInfos() {
+		_ensureOpened();
+
 		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos =
 			_combinedTableReferenceInfos;
 
@@ -140,8 +144,6 @@ public class TableReferenceDefinitionManager {
 				(Class<?>)TableReferenceDefinition.class,
 			new TableReferenceDefinitionServiceTrackerCustomizer(
 				bundleContext));
-
-		_serviceTracker.open();
 	}
 
 	@Deactivate
@@ -161,6 +163,22 @@ public class TableReferenceDefinitionManager {
 		}
 
 		return copy;
+	}
+
+	private void _ensureOpened() {
+		if (_opened) {
+			return;
+		}
+
+		synchronized (this) {
+			if (_opened) {
+				return;
+			}
+
+			_serviceTracker.open();
+
+			_opened = true;
+		}
 	}
 
 	private <T extends Table<T>> TableReferenceInfo<T>
@@ -247,6 +265,7 @@ public class TableReferenceDefinitionManager {
 
 	private volatile Map<Long, TableReferenceInfo<?>>
 		_combinedTableReferenceInfos;
+	private volatile boolean _opened;
 	private ServiceTracker<?, ?> _serviceTracker;
 	private final Map<Table<?>, TableReferenceInfo<?>> _tableReferenceInfos =
 		new ConcurrentHashMap<>();

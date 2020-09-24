@@ -292,6 +292,7 @@ definition {
 			roleTitle = "Guest");
 	}
 
+	@ignore
 	@priority = "3"
 	test SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates {
 		ApplicationsMenu.gotoPortlet(
@@ -324,6 +325,7 @@ definition {
 		}
 	}
 
+	@ignore
 	@priority = "4"
 	test SitesDynamicTemplateInheritance {
 		property portal.acceptance = "true";

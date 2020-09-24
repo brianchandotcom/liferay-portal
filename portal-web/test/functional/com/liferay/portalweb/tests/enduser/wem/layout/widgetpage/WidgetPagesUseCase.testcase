@@ -265,6 +265,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	@ignore
 	@priority = "5"
 	test SitesPrivatePagesPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -277,9 +278,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(
-			membershipType = "Private",
-			siteName = "Site Name");
+		/*
+			Deprecated
+
+			Site.addCommunityCP(
+				membershipType = "Private",
+				siteName = "Site Name");
+		*/
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Site Name",

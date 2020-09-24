@@ -372,6 +372,7 @@ definition {
 		Blogs.viewControlsPG();
 	}
 
+	@ignore
 	@priority = "3"
 	test ViewNoInfoMessageWhenChangingSiteTemplateAsUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -393,7 +394,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(siteName = "Site Name");
+		// Site.addCommunityCP(siteName = "Site Name"); Deprecated
 
 		JSONUser.addUserToSite(
 			groupName = "Site Name",

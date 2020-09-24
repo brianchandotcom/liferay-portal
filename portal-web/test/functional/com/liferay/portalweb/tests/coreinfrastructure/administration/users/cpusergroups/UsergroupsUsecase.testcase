@@ -265,6 +265,7 @@ definition {
 			userScreenName = "test");
 	}
 
+	@ignore
 	@priority = "4"
 	test UserGroupSiteTemplates {
 		property test.name.skip.portal.instance = "UsergroupsUsecase#UserGroupSiteTemplates";

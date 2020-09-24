@@ -144,6 +144,7 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
+	@ignore
 	@priority = "4"
 	test StagingDemoLocalLive2 {
 		ApplicationsMenu.gotoPortlet(
@@ -151,9 +152,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(
-			siteName = "Community Site Name",
-			uncheckPropagation = "true");
+		/*
+			Deprecated
+
+			Site.addCommunityCP(
+				siteName = "Community Site Name",
+				uncheckPropagation = "true");
+		*/
 
 		Staging.openStagingAdmin(siteURLKey = "community-site-name");
 
@@ -220,6 +225,7 @@ definition {
 		Page.viewPageLayoutColumn(columnName = "1 Column");
 	}
 
+	@ignore
 	@priority = "4"
 	test StagingDemoLocalLive3 {
 		ApplicationsMenu.gotoPortlet(
@@ -227,9 +233,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(
-			siteName = "Community Site Name",
-			uncheckPropagation = "true");
+		/*
+			Deprecated
+
+			Site.addCommunityCP(
+				siteName = "Community Site Name",
+				uncheckPropagation = "true");
+		*/
 
 		Staging.openStagingAdmin(siteURLKey = "community-site-name");
 
@@ -411,6 +421,7 @@ definition {
 			privacy = "Public Pages");
 	}
 
+	@ignore
 	@priority = "5"
 	test StagingDemoLocalLive4 {
 		property testray.component.names = "Training";
@@ -420,9 +431,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(
-			siteName = "Community Site Name",
-			uncheckPropagation = "true");
+		/*
+			Deprecated
+
+			Site.addCommunityCP(
+				siteName = "Community Site Name",
+				uncheckPropagation = "true");
+		*/
 
 		Staging.openStagingAdmin(siteURLKey = "community-site-name");
 
@@ -618,6 +633,7 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
+	@ignore
 	@priority = "4"
 	test StagingLocalLiveWorkflow {
 		ApplicationsMenu.gotoPortlet(
@@ -625,9 +641,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(
-			siteName = "Community Site Name",
-			uncheckPropagation = "true");
+		/*
+			Deprecated
+
+			Site.addCommunityCP(
+				siteName = "Community Site Name",
+				uncheckPropagation = "true");
+		*/
 
 		Staging.openStagingAdmin(siteURLKey = "community-site-name");
 
@@ -881,6 +901,7 @@ definition {
 			workflowTask = "Review");
 	}
 
+	@ignore
 	@priority = "5"
 	test StagingPublishPage {
 		property testray.component.names = "Training";
@@ -890,9 +911,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(
-			siteName = "Community Site Name",
-			uncheckPropagation = "true");
+		/*
+			Deprecated
+
+			Site.addCommunityCP(
+				siteName = "Community Site Name",
+				uncheckPropagation = "true");
+		*/
 
 		Staging.openStagingAdmin(siteURLKey = "community-site-name");
 

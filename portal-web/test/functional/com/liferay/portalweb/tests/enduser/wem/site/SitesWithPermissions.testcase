@@ -26,6 +26,7 @@ definition {
 		}
 	}
 
+	@ignore
 	@priority = "3"
 	test SitesTemplatePermissionPersistence {
 		property testray.component.names = "Permissions,Site Administration";
@@ -40,7 +41,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(siteName = "Site Name");
+		// Site.addCommunityCP(siteName = "Site Name"); Deprecated
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

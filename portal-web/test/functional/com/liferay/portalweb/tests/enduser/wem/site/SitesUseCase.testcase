@@ -151,6 +151,7 @@ definition {
 		}
 	}
 
+	@ignore
 	@priority = "5"
 	test AddOrganizationSitesAndDeactivate {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -284,7 +285,8 @@ definition {
 		for (var siteNameListsCount : list "Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name") {
 			Site.openSitesAdmin();
 
-			Site.addCommunityCP(siteName = "${siteNameListsCount}");
+			// Site.addCommunityCP(siteName = "${siteNameListsCount}"); Deprecated
+
 		}
 
 		JSONOrganization.addOrganization(organizationName = "Site Organization Name");
@@ -656,6 +658,7 @@ definition {
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/guest");
 	}
 
+	@ignore
 	@priority = "3"
 	test SitesDeactivated {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

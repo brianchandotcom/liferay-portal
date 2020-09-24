@@ -1758,6 +1758,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
+	@ignore
 	@priority = "3"
 	test StagingAssetPublisher {
 		ApplicationsMenu.gotoPortlet(
@@ -1765,9 +1766,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(
-			siteName = "Community Site Name",
-			uncheckPropagation = "true");
+		/*
+			Deprecated
+
+			Site.addCommunityCP(
+				siteName = "Community Site Name",
+				uncheckPropagation = "true");
+		*/
 
 		Navigator.gotoSitePage(
 			pageName = "Home",
@@ -1941,6 +1946,7 @@ definition {
 		}
 	}
 
+	@ignore
 	@priority = "3"
 	test StagingKaleoPageRevision {
 		ApplicationsMenu.gotoPortlet(
@@ -1948,9 +1954,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(
-			siteName = "Community Site Name",
-			uncheckPropagation = "true");
+		/*
+			Deprecated
+
+			Site.addCommunityCP(
+				siteName = "Community Site Name",
+				uncheckPropagation = "true");
+		*/
 
 		JSONLayout.addPublicLayout(
 			groupName = "Community Site Name",

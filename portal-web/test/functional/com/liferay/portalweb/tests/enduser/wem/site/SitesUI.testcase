@@ -49,6 +49,7 @@ definition {
 			siteName = "Site Name");
 	}
 
+	@ignore
 	@priority = "4"
 	test AddSitesMultiple {
 		ApplicationsMenu.gotoPortlet(
@@ -70,7 +71,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(siteName = "Site2 Name");
+		// Site.addCommunityCP(siteName = "Site2 Name"); Deprecated
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -84,7 +85,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addIntranetCP(siteName = "Site3 Name");
+		// Site.addIntranetCP(siteName = "Site3 Name"); Deprecated
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",

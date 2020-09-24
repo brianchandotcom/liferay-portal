@@ -199,6 +199,7 @@ definition {
 			siteTemplateName = "Site Template Name");
 	}
 
+	@ignore
 	@priority = "4"
 	test DeactivateDefaultSiteTemplate {
 		property portal.acceptance = "true";
@@ -236,6 +237,7 @@ definition {
 		SiteTemplates.viewNoTemplatesDisplay(siteTemplateName = "Community Site");
 	}
 
+	@ignore
 	@description = "This is a use case for LPS-87081."
 	@priority = "5"
 	test DeleteSiteTemplate {
@@ -415,6 +417,7 @@ definition {
 			siteTemplateName = "Site Template Name");
 	}
 
+	@ignore
 	@priority = "4"
 	test LocalizeDefaultSiteTemplates {
 		property test.name.skip.portal.instance = "CPSitetemplates#LocalizeDefaultSiteTemplates";
@@ -521,6 +524,7 @@ definition {
 		User.loginUserPG();
 	}
 
+	@ignore
 	@priority = "5"
 	test ResetPageChanges {
 		property portal.acceptance = "true";
@@ -580,7 +584,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(siteName = "Site Name");
+		// Site.addCommunityCP(siteName = "Site Name"); Deprecated
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

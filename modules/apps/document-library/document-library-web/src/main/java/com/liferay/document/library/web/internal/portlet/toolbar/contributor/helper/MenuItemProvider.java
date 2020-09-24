@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.petra.string.StringBundler;
@@ -122,9 +123,24 @@ public class MenuItemProvider {
 			"repositoryId",
 			String.valueOf(_getRepositoryId(folder, themeDisplay)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
-		portletURL.setParameter(
-			"fileEntryTypeId",
-			String.valueOf(DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT));
+
+		try {
+			portletURL.setParameter(
+				"fileEntryTypeId",
+				String.valueOf(
+					DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
+						folderId)));
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get default file entry type ID for folder " + folder,
+				portalException);
+
+			portletURL.setParameter(
+				"fileEntryTypeId",
+				String.valueOf(
+					DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT));
+		}
 
 		urlMenuItem.setURL(portletURL.toString());
 

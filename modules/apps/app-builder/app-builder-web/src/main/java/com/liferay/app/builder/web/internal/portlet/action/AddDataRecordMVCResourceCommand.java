@@ -23,23 +23,21 @@ import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.io.Serializable;
 
 import java.util.Optional;
 
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -88,15 +86,7 @@ public class AddDataRecordMVCResourceCommand
 			appBuilderAppVersion.getAppBuilderAppVersionId(),
 			dataRecord.getId());
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(resourceResponse);
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			_portal.getPortletId(resourceRequest));
-
-		portletURL.setParameter("mvcPath", "/edit_entry.jsp");
-		portletURL.setParameter(
-			"dataRecordId", String.valueOf(dataRecord.getId()));
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
@@ -107,7 +97,9 @@ public class AddDataRecordMVCResourceCommand
 			_ddlRecordLocalService.getDDLRecord(dataRecord.getId()),
 			new ServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
-				WorkflowConstants.CONTEXT_URL, portletURL.toString()
+				"plid", themeDisplay.getPlid()
+			).put(
+				"portletId", portletDisplay.getId()
 			).build());
 
 		return Optional.of(dataRecord);

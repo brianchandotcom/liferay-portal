@@ -105,8 +105,8 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			List<KaleoDefinition> kaleoDefinitions =
-				_kaleoDefinitionLocalService.getKaleoDefinitions(
-					true, start, end,
+				_kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+					WorkflowDefinitionConstants.SCOPE_ALL, true, start, end,
 					KaleoDefinitionOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter),
 					serviceContext);
@@ -166,8 +166,8 @@ public class WorkflowDefinitionManagerImpl
 
 			serviceContext.setCompanyId(companyId);
 
-			return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
-				true, serviceContext);
+			return _kaleoDefinitionLocalService.getScopeKaleoDefinitionsCount(
+				WorkflowDefinitionConstants.SCOPE_ALL, true, serviceContext);
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

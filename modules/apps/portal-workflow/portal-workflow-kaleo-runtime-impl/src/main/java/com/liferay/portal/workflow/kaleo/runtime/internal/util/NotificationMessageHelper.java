@@ -79,6 +79,10 @@ public class NotificationMessageHelper {
 		).put(
 			"notificationMessage", notificationMessage
 		).put(
+			"plid", workflowContext.get("plid")
+		).put(
+			"portletId", workflowContext.get("portletId")
+		).put(
 			"workflowInstanceId", kaleoInstanceToken.getKaleoInstanceId()
 		);
 

@@ -1468,7 +1468,7 @@ public class LayoutStagedModelDataHandler
 		Map<Long, Long> layoutNewPrimaryKeys =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				_layoutFriendlyURLEntryHelper.getClassName(
-					layout.isPrivateLayout()));
+					portletDataContext.isPrivateLayout()));
 
 		layoutNewPrimaryKeys.put(
 			layout.getPrimaryKey(), importedLayout.getPrimaryKey());

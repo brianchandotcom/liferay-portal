@@ -61,9 +61,22 @@ public class FragmentEntryTableReferenceDefinition
 		).singleColumnReference(
 			FragmentEntryTable.INSTANCE.fragmentCollectionId,
 			FragmentCollectionTable.INSTANCE.fragmentCollectionId
-		).parentColumnReference(
-			FragmentEntryTable.INSTANCE.fragmentEntryId,
-			FragmentEntryTable.INSTANCE.headId
+		).referenceInnerJoin(
+			fromStep -> {
+				FragmentEntryTable parentFragmentEntryTable =
+					FragmentEntryTable.INSTANCE.as("parentFragmentEntryTable");
+
+				return fromStep.from(
+					parentFragmentEntryTable
+				).innerJoinON(
+					FragmentEntryTable.INSTANCE,
+					FragmentEntryTable.INSTANCE.headId.eq(
+						parentFragmentEntryTable.fragmentEntryId
+					).and(
+						FragmentEntryTable.INSTANCE.head.eq(false)
+					)
+				);
+			}
 		);
 	}
 

@@ -37,6 +37,20 @@ type ClientOptions = {
 };
 
 /**
+ * Properties accessible via the `get()` method. The remote-app-support-web
+ * module will reject requests for properties outside of this list.
+ */
+type GettableProperties =
+	| 'companyId'
+	| 'css'
+	| 'defaultLanguageId'
+	| 'isControlPanel'
+	| 'languageId'
+	| 'isSignedIn'
+	| 'userId'
+	| 'userName';
+
+/**
  * Payloads may only contain properties which we can send across iframes
  * using the `postMessage` API. Complex properties like functions cannot
  * be sent because the "Structured clone algorithm" does not support
@@ -807,7 +821,7 @@ const SDK = Object.freeze({
 				});
 			},
 
-			get(property: 'css'): Promise<string> {
+			get(property: GettableProperties): Promise<string> {
 				const requestID = getUUID();
 
 				postMessage({

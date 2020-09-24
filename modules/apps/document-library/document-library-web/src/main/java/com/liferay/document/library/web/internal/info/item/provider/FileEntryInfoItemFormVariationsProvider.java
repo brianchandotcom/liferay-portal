@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.internal.info.item.provider;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -21,8 +23,11 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
@@ -31,6 +36,8 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adolfo Pérez
@@ -49,8 +56,7 @@ public class FileEntryInfoItemFormVariationsProvider
 		infoItemFormVariations.add(getBasicDocumentInfoItemFormVariation());
 
 		try {
-			long[] groupIds = _portal.getCurrentAndAncestorSiteGroupIds(
-				groupId);
+			long[] groupIds = _getCurrentAndAncestorSiteGroupIds(groupId);
 
 			List<DLFileEntryType> dlFileEntryTypes =
 				_dlFileEntryTypeLocalService.getFileEntryTypes(groupIds);
@@ -84,6 +90,27 @@ public class FileEntryInfoItemFormVariationsProvider
 				FileEntryInfoItemFormVariationsProvider.class,
 				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
 	}
+
+	private long[] _getCurrentAndAncestorSiteGroupIds(long groupId)
+		throws PortalException {
+
+		if (_depotEntryLocalService == null) {
+			return _portal.getCurrentAndAncestorSiteGroupIds(groupId);
+		}
+
+		return ArrayUtil.append(
+			_portal.getCurrentAndAncestorSiteGroupIds(groupId),
+			ListUtil.toLongArray(
+				_depotEntryLocalService.getGroupConnectedDepotEntries(
+					groupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				DepotEntry::getGroupId));
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

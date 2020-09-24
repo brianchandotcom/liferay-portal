@@ -44,6 +44,28 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commercePriceEntry, request
 		</div>
 
 		<div class="col-4">
+			<div class="row">
+				<div class="col-12">
+					<aui:input helpMessage="override-discount-help" ignoreRequestValue="<%= true %>" label='<%= LanguageUtil.get(request, "override-discount") %>' name="overrideDiscount" type="toggle-switch" value="<%= !discountDiscovery %>" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-4">
+			<aui:input cssClass="mb-2" formName="fm" label="publish-date" name="displayDate" />
+		</div>
+
+		<div class="col-4">
+			<liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
+
+			<aui:fieldset>
+				<aui:input cssClass="mb-2" dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
+			</aui:fieldset>
+		</div>
+
+		<div class="col-4">
 			<div class="<%= discountDiscovery ? "hide" : StringPool.BLANK %>" id="<%= liferayPortletResponse.getNamespace() %>discountLevels">
 				<label class="control-label" for="<%= liferayPortletResponse.getNamespace() %>discountLevel1"><%= LanguageUtil.get(request, "discount-levels") %></label>
 
@@ -67,28 +89,6 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commercePriceEntry, request
 						<aui:validator name="min">0</aui:validator>
 						<aui:validator name="number" />
 					</aui:input>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-4">
-			<aui:input cssClass="mb-2" formName="fm" label="publish-date" name="displayDate" />
-		</div>
-
-		<div class="col-4">
-			<liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
-
-			<aui:fieldset>
-				<aui:input cssClass="mb-2" dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
-			</aui:fieldset>
-		</div>
-
-		<div class="col-4">
-			<div class="row">
-				<div class="col-12">
-					<aui:input helpMessage="override-discount-help" ignoreRequestValue="<%= true %>" label='<%= LanguageUtil.get(request, "override-discount") %>' name="overrideDiscount" type="toggle-switch" value="<%= !discountDiscovery %>" />
 				</div>
 			</div>
 		</div>

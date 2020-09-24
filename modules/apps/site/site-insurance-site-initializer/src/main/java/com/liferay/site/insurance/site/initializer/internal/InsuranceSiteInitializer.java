@@ -614,13 +614,14 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
-
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
 
 		serviceContext.setScopeGroupId(groupId);
+
+		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
+
 		serviceContext.setTimeZone(user.getTimeZone());
 		serviceContext.setUserId(user.getUserId());
 

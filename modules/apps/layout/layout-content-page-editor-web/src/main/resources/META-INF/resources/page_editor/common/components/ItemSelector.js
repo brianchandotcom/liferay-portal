@@ -104,14 +104,16 @@ export default function ItemSelector({
 								))}
 								<ClayDropDown.Divider />
 								<ClayDropDown.Item
-									onClick={() =>
+									onClick={() => {
 										openInfoItemSelector(
 											onItemSelect,
 											eventName || defaultEventName,
 											itemSelectorURL ||
 												config.infoItemSelectorURL
-										)
-									}
+										);
+
+										setActive(false);
+									}}
 								>
 									{Liferay.Language.get('select-content')}...
 								</ClayDropDown.Item>

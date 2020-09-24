@@ -119,9 +119,11 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		Collection<SearchEngine> searchEngines =
 			searchEngineHelper.getSearchEngines();
 
+		boolean systemIndexer = isSystemIndexer(indexer);
+
 		for (long companyId : companyIds) {
-			if ((companyId == CompanyConstants.SYSTEM) &&
-				!isSystemIndexer(indexer)) {
+			if (((companyId == CompanyConstants.SYSTEM) && !systemIndexer) ||
+				((companyId != CompanyConstants.SYSTEM) && systemIndexer)) {
 
 				continue;
 			}

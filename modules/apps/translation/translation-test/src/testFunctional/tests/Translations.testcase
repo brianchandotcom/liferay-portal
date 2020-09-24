@@ -581,6 +581,61 @@ definition {
 			webContentTitle = "WC WebContent Título");
 	}
 
+	@description = "This ensures that the user can not translate a web content without any languages permissions."
+	@priority = "4"
+	test TranslateWCWithoutLanguagesPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(roleTitle = "Regrole Name");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Regrole Name");
+
+		for (var resourceNameIndex : list "com_liferay_journal_web_portlet_JournalPortlet,com.liferay.journal,com.liferay.journal.model.JournalArticle") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "${resourceNameIndex}",
+				roleTitle = "Regrole Name");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Alert.viewInfoMessageSpecific(infoMessage = "Info:You do not have permissions to translate to any of the available languages.");
+	}
+
 	@description = "This ensures that the user can translate a Web content to the language she has permissions."
 	@priority = "5"
 	test TranslateWCWithSpecificLanguagesPermissions {

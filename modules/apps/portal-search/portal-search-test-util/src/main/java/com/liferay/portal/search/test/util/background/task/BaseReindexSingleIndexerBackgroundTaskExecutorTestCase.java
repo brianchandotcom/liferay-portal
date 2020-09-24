@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test.util.background.task;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -110,6 +111,7 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 				indexWriterHelper = _indexWriterHelper;
 				reindexStatusMessageSender = _reindexStatusMessageSender;
 				searchEngineHelper = _searchEngineHelper;
+				systemIndexers = _systemIndexers;
 			}
 		};
 	}
@@ -157,5 +159,8 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 
 	private SearchEngineFixture _searchEngineFixture;
 	private SearchEngineHelper _searchEngineHelper;
+
+	@Mock
+	private ServiceTrackerList<Indexer<?>, Indexer<?>> _systemIndexers;
 
 }

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -37,6 +38,11 @@ import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,8 +87,26 @@ public class AppBuilderAppWorkflowHandler
 			long workflowTaskId, ServiceContext serviceContext)
 		throws PortalException {
 
-		return String.valueOf(
-			serviceContext.getAttribute(WorkflowConstants.CONTEXT_URL));
+		try {
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				serviceContext.getRequest(),
+				GetterUtil.getString(serviceContext.getAttribute("portletId")),
+				GetterUtil.getLong(serviceContext.getAttribute("plid")),
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter("mvcPath", "/edit_entry.jsp");
+			portletURL.setParameter(
+				"dataRecordId",
+				String.valueOf(
+					serviceContext.getAttribute(
+						WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)));
+			portletURL.setWindowState(WindowState.MAXIMIZED);
+
+			return portletURL.toString();
+		}
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
+		}
 	}
 
 	@Override

@@ -3358,6 +3358,82 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121223. View nested content when increase number of tabs."
+	@priority = "4"
+	test ViewNestedContentWhenIncreaseNumberOfTabs {
+		task ("Add a Tabs fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
+		}
+
+		task ("Edit text in editable field of nav buttons") {
+			for (var n : list "1,2,3,4") {
+				PageEditor.editFragmentText(
+					fragmentName = "Tabs",
+					id = "title${n}",
+					text = "My Tab ${n}");
+			}
+		}
+
+		task ("Add fragments to drop zone of each tab") {
+			var n = "1";
+
+			for (var fragmentName : list "Button,Card,Heading,HTML") {
+				var index = ${n} + 1;
+
+				PageEditor.addElementToTab(
+					collectionName = "Basic Components",
+					fragmentName = "${fragmentName}",
+					index = "${index}",
+					navItem = "My Tab ${n}",
+					navTab = "Fragments",
+					position = "1");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Increase number of tabs") {
+			PageEditor.gotoStyle(fragmentName = "Tabs");
+
+			PageEditor.configureFragment(numberOfTabs = "6");
+		}
+
+		task ("View nested content in drop zone of each tab") {
+			var n = "1";
+
+			for (var fragmentName : list "Button,Card,Heading,HTML") {
+				PageEditor.gotoTabsFragmentNavItem(navItem = "My Tab ${n}");
+
+				AssertElementPresent(
+					key_fragmentName = "${fragmentName}",
+					key_inFragmentName = "Tabs",
+					locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+
+				var n = ${n} + 1;
+			}
+
+			var position = "1";
+
+			for (var n : list "5,6") {
+				PageEditor.gotoTabsFragmentNavItem(navItem = "Tab ${n}");
+
+				AssertVisible(
+					key_content = "Place fragments here.",
+					key_fragmentClass = "content",
+					key_position = "${position}",
+					locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
+				var position = ${position} + 1;
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-112249. The ratings of each collection item are shown when add a Content Ratings fragment to Collection Display."
 	@priority = "5"
 	test ViewRatingsViaContentRatingsInCollectionDisplay {

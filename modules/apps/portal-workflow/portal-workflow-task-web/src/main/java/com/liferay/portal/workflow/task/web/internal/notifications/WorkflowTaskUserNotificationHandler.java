@@ -101,8 +101,14 @@ public class WorkflowTaskUserNotificationHandler
 		}
 
 		serviceContext.setAttribute(
+			WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
+			jsonObject.getString(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+		serviceContext.setAttribute(
 			WorkflowConstants.CONTEXT_URL,
 			jsonObject.getString(WorkflowConstants.CONTEXT_URL));
+		serviceContext.setAttribute("plid", jsonObject.getLong("plid"));
+		serviceContext.setAttribute(
+			"portletId", jsonObject.getString("portletId"));
 
 		return workflowHandler.getURLEditWorkflowTask(
 			workflowTaskId, serviceContext);

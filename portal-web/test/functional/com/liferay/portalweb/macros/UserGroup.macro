@@ -52,7 +52,7 @@ definition {
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
-		if (("${userGroupSite}" == "Community Site") || ("${userGroupSite}" == "Intranet Site")) {
+		if (isSet(userGroupSite)) {
 			Select(
 				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
 				value1 = "${userGroupSite}");

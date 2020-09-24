@@ -63,7 +63,7 @@ definition {
 			Modal.save();
 		}
 
-		if (("${siteType}" == "Community") || ("${siteType}" == "Site Template")) {
+		if ("${siteType}" == "Site Template") {
 			if ("${uncheckPropagation}" == "true") {
 				Panel.expandPanel(panel = "Pages");
 

@@ -717,41 +717,13 @@ definition {
 
 		var key_pageName = "${pageName}";
 
-		if ("${siteTemplate}" == "Community") {
-			AssertTextEquals(
-				locator1 = "Home#PAGE_TEMPLATE_1",
-				value1 = "${pageName}");
+		AssertTextEquals(
+			locator1 = "Home#PAGE_TEMPLATE_1",
+			value1 = "${pageName}");
 
-			AssertTextEquals(
-				locator1 = "Home#PAGE_TEMPLATE_2",
-				value1 = "Wiki");
-		}
-		else if ("${siteTemplate}" == "Intranet") {
-			AssertTextEquals(
-				locator1 = "Home#PAGE_TEMPLATE_1",
-				value1 = "${pageName}");
-
-			AssertTextEquals(
-				locator1 = "Home#PAGE_TEMPLATE_2",
-				value1 = "Documents and Media");
-		}
-		else if ("${siteTemplate}" == "Zoe Healthcare Theme") {
-			AssertElementPresent(locator1 = "Home#SITE_NAME_LOGO");
-
-			AssertElementPresent(locator1 = "Home#PAGE_TEMPLATE_1");
-
-			AssertElementPresent(locator1 = "Home#PAGE_TEMPLATE_2");
-
-			AssertElementPresent(locator1 = "Home#PAGE_TEMPLATE_3");
-
-			AssertElementPresent(locator1 = "Home#PAGE_TEMPLATE_4");
-
-			AssertElementPresent(locator1 = "Home#PAGE_TEMPLATE_5");
-
-			AssertElementPresent(locator1 = "Home#PAGE_TEMPLATE_6");
-
-			AssertElementPresent(locator1 = "Home#PAGE_TEMPLATE_7");
-		}
+		AssertVisible(
+			key_siteName = "${siteName}",
+			locator1 = "NavBar#GO_TO_HOME_PAGE_LINK");
 	}
 
 	macro viewEmbeddedPagePG {

@@ -271,7 +271,7 @@ definition {
 			key_toggleSwitchLabel = "Create Site",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if (("${organizationSite}" == "Community Site") || ("${organizationSite}" == "Intranet Site")) {
+		if (isSet(organizationSite)) {
 			Select(
 				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
 				value1 = "${organizationSite}");

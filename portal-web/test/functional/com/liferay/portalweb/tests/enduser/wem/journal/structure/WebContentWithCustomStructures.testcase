@@ -300,7 +300,7 @@ definition {
 			fieldName = "TextBox",
 			fieldValue = "Text Box");
 
-		AssertEditable(
+		AssertNotEditable(
 			key_fieldName = "TextBox",
 			locator1 = "DDMField#TEXT_BOX");
 	}

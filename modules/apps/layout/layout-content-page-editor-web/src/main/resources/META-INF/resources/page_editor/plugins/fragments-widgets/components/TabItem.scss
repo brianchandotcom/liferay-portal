@@ -2,88 +2,94 @@
 
 @import '../../../app/components/variables';
 
-.page-editor__fragments-widgets__tab-item {
-	align-items: center;
-	border-radius: 4px;
-	color: $secondary-d2;
-	cursor: grab;
-	display: flex;
-	height: 32px;
-	margin-bottom: 4px;
-	padding: 0 4px 0 12px;
-
-	&:hover {
-		background-color: $gray-100;
-
-		.preview-icon {
-			opacity: 1;
-		}
-	}
-
-	&.disabled {
-		color: $secondary-l1;
-		cursor: default;
+.page-editor__fragments-widgets__tab {
+	&-item {
+		align-items: center;
+		border-radius: 4px;
+		color: $secondary-d2;
+		cursor: grab;
+		display: flex;
+		height: 32px;
+		margin-bottom: 4px;
+		padding: 0 4px 0 12px;
 
 		&:hover {
-			background-color: transparent;
-		}
-	}
+			background-color: $gray-100;
 
-	.preview-icon {
-		font-size: 14px;
-		opacity: 0;
-
-		.lexicon-icon {
-			fill: $secondary-l1;
+			.preview-icon {
+				opacity: 1;
+			}
 		}
 
-		&:focus {
-			opacity: 1;
-		}
-	}
+		&.disabled {
+			color: $secondary-l1;
+			cursor: default;
 
-	&-body {
-		align-items: center;
-		display: flex;
-		font-size: 14px;
-		text-align: center;
-		width: calc(100% - 24px);
-
-		.lexicon-icon {
-			transform: translateY(1px);
+			&:hover {
+				background-color: transparent;
+			}
 		}
 
-		.title {
-			font-size: 12px;
-			font-weight: 600;
-		}
-	}
+		.preview-icon {
+			font-size: 14px;
+			opacity: 0;
 
-	&-preview {
-		position: relative;
-
-		.popover {
-			border-radius: 4px;
-			bottom: 40px;
-			display: block;
-			left: auto;
-			right: -4px;
-			top: auto;
-			width: 208px;
-
-			.arrow {
-				display: none;
+			.lexicon-icon {
+				fill: $secondary-l1;
 			}
 
-			img {
-				border: 1px solid $gray-300;
+			&:focus {
+				opacity: 1;
+			}
+		}
+
+		&-body {
+			align-items: center;
+			display: flex;
+			font-size: 14px;
+			text-align: center;
+			width: calc(100% - 24px);
+
+			.lexicon-icon {
+				transform: translateY(1px);
+			}
+
+			.title {
+				font-size: 12px;
+				font-weight: 600;
+			}
+		}
+
+		&-preview {
+			position: relative;
+
+			.popover {
 				border-radius: 4px;
-				width: 100%;
-			}
+				bottom: 40px;
+				display: block;
+				left: auto;
+				right: -4px;
+				top: auto;
+				width: 208px;
 
-			.popover-body {
-				padding: 8px;
+				.arrow {
+					display: none;
+				}
+
+				img {
+					border: 1px solid $gray-300;
+					border-radius: 4px;
+					width: 100%;
+				}
+
+				.popover-body {
+					padding: 8px;
+				}
 			}
 		}
+	}
+
+	&-portlet-item {
+		margin-left: 16px;
 	}
 }

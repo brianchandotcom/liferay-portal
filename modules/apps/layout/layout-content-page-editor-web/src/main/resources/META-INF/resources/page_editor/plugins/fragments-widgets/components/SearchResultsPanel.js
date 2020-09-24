@@ -16,8 +16,7 @@ import ClayAlert from '@clayui/alert';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Collapse from '../../../common/components/Collapse';
-import TabItem from './TabItem';
+import Collection from './Collection';
 
 export default function SearchResultsPanel({filteredTabs}) {
 	return filteredTabs.length ? (
@@ -26,29 +25,14 @@ export default function SearchResultsPanel({filteredTabs}) {
 				<div className="page-editor__fragments-widgets__search-results-panel__filter-subtitle">
 					{tab.label}
 				</div>
-				{tab.collections.map((collection) => {
-					return (
-						<Collapse
-							key={collection.collectionId}
-							label={collection.label}
-							open
-						>
-							<ul className="list-unstyled">
-								{collection.children.map((item) => (
-									<React.Fragment key={item.itemId}>
-										<TabItem
-											item={item}
-											key={item.itemId}
-										/>
-										{item.portletItems?.length && (
-											<TabPortletItem item={item} />
-										)}
-									</React.Fragment>
-								))}
-							</ul>
-						</Collapse>
-					);
-				})}
+				{tab.collections.map((collection, index) => (
+					<Collection
+						collection={collection}
+						isSearchResult
+						key={index}
+						open
+					/>
+				))}
 			</div>
 		))
 	) : (
@@ -59,11 +43,6 @@ export default function SearchResultsPanel({filteredTabs}) {
 		</ClayAlert>
 	);
 }
-
-const TabPortletItem = ({item}) =>
-	item.portletItems.map((portlet, index) => (
-		<TabItem item={portlet} key={index} />
-	));
 
 SearchResultsPanel.proptypes = {
 	filteredTabs: PropTypes.object.isRequired,

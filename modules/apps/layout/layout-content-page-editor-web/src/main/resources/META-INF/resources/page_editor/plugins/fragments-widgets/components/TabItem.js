@@ -68,6 +68,8 @@ export default function TabItem({item}) {
 		<li
 			className={classNames('page-editor__fragments-widgets__tab-item', {
 				disabled: item.disabled,
+				'page-editor__fragments-widgets__tab-portlet-item':
+					item.data.portletItemId,
 			})}
 			ref={item.disabled ? null : sourceRef}
 		>

@@ -1,13 +1,13 @@
 @import 'atlas-variables';
 
 .page-editor__fragments-widgets__search-results-panel__filter-subtitle {
+	border-bottom: 1px solid $secondary-l3;
 	color: $dark;
 	font-size: 0.75rem;
 	font-weight: 600;
 	margin-bottom: 12px;
 	padding-top: 8px;
 	text-transform: uppercase;
-	border-bottom: 1px solid $secondary-l3;
 
 	& ~ .page-editor__collapse {
 		margin-left: 12px;

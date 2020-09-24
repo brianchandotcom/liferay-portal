@@ -13,11 +13,11 @@
  */
 
 import ClayTabs from '@clayui/tabs';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {useId} from '../../../app/utils/useId';
-import Collapse from '../../../common/components/Collapse';
-import TabItem from './TabItem';
+import Collection from './Collection';
 
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 
@@ -61,7 +61,16 @@ export default function TabsPanel({tabs}) {
 						key={index}
 					>
 						<ul className="list-unstyled">
-							<Collections collections={tab.collections} open />
+							{tab.collections.map((collection, index) => (
+								<Collection
+									collection={collection}
+									key={index}
+									open={
+										index <
+										INITIAL_EXPANDED_ITEM_COLLECTIONS
+									}
+								/>
+							))}
 						</ul>
 					</ClayTabs.TabPane>
 				))}
@@ -70,32 +79,12 @@ export default function TabsPanel({tabs}) {
 	);
 }
 
-const Collections = ({collections, open}) =>
-	collections.map((collection, index) => (
-		<Collapse
-			key={collection.collectionId}
-			label={collection.label}
-			open={open && index < INITIAL_EXPANDED_ITEM_COLLECTIONS}
-		>
-			{collection.collections && (
-				<Collections collections={collection.collections} />
-			)}
-
-			<ul className="list-unstyled">
-				{collection.children.map((item, index) => (
-					<React.Fragment key={index}>
-						<TabItem item={item} />
-
-						{item.portletItems?.length && (
-							<TabPortletItem item={item} />
-						)}
-					</React.Fragment>
-				))}
-			</ul>
-		</Collapse>
-	));
-
-const TabPortletItem = ({item}) =>
-	item.portletItems.map((portlet, index) => (
-		<TabItem item={portlet} key={index} />
-	));
+TabsPanel.propTypes = {
+	tabs: PropTypes.arrayOf(
+		PropTypes.shape({
+			collections: PropTypes.arrayOf(PropTypes.shape({})),
+			id: PropTypes.string,
+			label: PropTypes.string,
+		})
+	),
+};

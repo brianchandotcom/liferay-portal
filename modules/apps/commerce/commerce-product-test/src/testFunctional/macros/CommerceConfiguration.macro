@@ -216,16 +216,18 @@ definition {
 			var count = ${count} + 1;
 		}
 
-		for (var catalogName : list "${catalogsList}") {
-			ClickNoError(
-				key_entryName = "${catalogName}",
-				locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
+		if("${catalogsList}" != ""){
+			for (var catalogName : list "${catalogsList}") {
+				ClickNoError(
+					key_entryName = "${catalogName}",
+					locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 
-			CommerceEntry.clickNoError(menuItem = "Delete");
+				CommerceEntry.clickNoError(menuItem = "Delete");
 
-			AssertElementPresent(locator1 = "Message#SUCCESS");
+				AssertElementPresent(locator1 = "Message#SUCCESS");
 
-			AssertElementNotPresent(locator1 = "Message#ERROR");
+				AssertElementNotPresent(locator1 = "Message#ERROR");
+			}
 		}
 	}
 

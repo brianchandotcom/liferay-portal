@@ -184,15 +184,16 @@
 
 	<target name="build-app-lpkg-all">
 		<pathconvert pathsep="," property="app.names">
-			<globmapper
-				from="${modules.dir}${file.separator}apps${file.separator}*"
-				to="*"
+			<regexpmapper
+				from=".*${file.separator}apps${file.separator}(.*)"
+				to="\1"
 			/>
 			<path>
 				<dirset
 					dir="${modules.dir}"
-					includes="apps/*"
 				>
+					<include name="apps/*" />
+					<include name="dxp/apps/*" />
 					<present targetdir="${modules.dir}">
 						<mapper
 							from="*"

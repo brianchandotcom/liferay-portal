@@ -33,6 +33,15 @@ public class DepotEntryGroupRelLocalServiceWrapper
 		_depotEntryGroupRelLocalService = depotEntryGroupRelLocalService;
 	}
 
+	@Override
+	public com.liferay.depot.model.DepotEntryGroupRel addDepotEntryGroupRel(
+		boolean ddmStructuresAvailable, long depotEntryId, long toGroupId,
+		boolean searchable) {
+
+		return _depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			ddmStructuresAvailable, depotEntryId, toGroupId, searchable);
+	}
+
 	/**
 	 * Adds the depot entry group rel to the database. Also notifies the appropriate model listeners.
 	 *

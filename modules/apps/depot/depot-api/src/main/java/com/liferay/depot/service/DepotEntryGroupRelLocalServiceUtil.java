@@ -37,6 +37,14 @@ public class DepotEntryGroupRelLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.depot.service.impl.DepotEntryGroupRelLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.depot.model.DepotEntryGroupRel
+		addDepotEntryGroupRel(
+			boolean ddmStructuresAvailable, long depotEntryId, long toGroupId,
+			boolean searchable) {
+
+		return getService().addDepotEntryGroupRel(
+			ddmStructuresAvailable, depotEntryId, toGroupId, searchable);
+	}
 
 	/**
 	 * Adds the depot entry group rel to the database. Also notifies the appropriate model listeners.

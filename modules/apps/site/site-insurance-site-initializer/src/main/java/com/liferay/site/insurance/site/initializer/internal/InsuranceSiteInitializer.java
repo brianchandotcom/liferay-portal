@@ -284,18 +284,13 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
-			String content = StringUtil.read(url.openStream());
-
 			JSONObject ddmTemplateJSONObject = JSONFactoryUtil.createJSONObject(
-				content);
-
-			String ddmStructureKey = ddmTemplateJSONObject.getString(
-				"ddmStructureKey");
+				StringUtil.read(url.openStream()));
 
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
 					_serviceContext.getScopeGroupId(), resourceClassNameId,
-					ddmStructureKey);
+					ddmTemplateJSONObject.getString("ddmStructureKey"));
 
 			_ddmTemplateLocalService.addTemplate(
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),

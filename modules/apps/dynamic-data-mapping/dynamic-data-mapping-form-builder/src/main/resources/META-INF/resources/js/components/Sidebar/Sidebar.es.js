@@ -534,9 +534,14 @@ class Sidebar extends Component {
 		const {transitionEnd} = this;
 		const {open} = this.state;
 
+		const ckeContext = target
+			? target.closest('.cke_dialog_container')
+			: undefined;
+
 		if (
 			this._isCloseButton(target) ||
 			(open &&
+				!ckeContext &&
 				!this._isControlProductMenuItem(target) &&
 				!this._isProductMenuSidebarItem(target) &&
 				!this._isSidebarElement(target) &&

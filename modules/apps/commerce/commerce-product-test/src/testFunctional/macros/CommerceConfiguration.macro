@@ -76,11 +76,17 @@ definition {
 			CommerceEntry.deleteCommerceEntry();
 		}
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Options");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
 
-		CommerceOptions.deleteOptionsEntries();
+		while (IsElementPresent(locator1 = "CommerceEntry#DELETE_OPTION_BUTTON")) {
+			CommerceOptions.deleteOptionsEntries();
+		}
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Specifications");
 
 		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected specification labels?");
@@ -113,13 +119,23 @@ definition {
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Price Lists");
 
 		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected price lists?");
+			CommerceEntry.deleteCommerceEntry();
 		}
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Discounts");
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Promotions");
 
 		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected discounts?");
+			CommerceEntry.deleteCommerceEntry();
+		}
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Discounts");
+
+		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+			CommerceEntry.deleteCommerceEntry();
 		}
 
 		CommerceNavigator.gotoPortlet(
@@ -141,7 +157,7 @@ definition {
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Countries");
 
 		if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-			Pagination.changePagination(itemsPerPage = "75");
+			Pagination.changePagination(itemsPerPage = "60");
 
 			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 				CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected countries?");

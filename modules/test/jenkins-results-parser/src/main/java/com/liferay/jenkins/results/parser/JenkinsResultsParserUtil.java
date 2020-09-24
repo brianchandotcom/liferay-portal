@@ -396,6 +396,12 @@ public class JenkinsResultsParserUtil {
 
 		StringBuffer sb = new StringBuffer();
 
+		if (isWindows()) {
+			sb.append("export GIT_ASK_YESNO=false");
+			sb.append(commandTerminator);
+			sb.append(" ");
+		}
+
 		for (String command : commands) {
 			if (isWindows()) {
 				command = command.replaceAll("\\(", "\\\\\\\\(");

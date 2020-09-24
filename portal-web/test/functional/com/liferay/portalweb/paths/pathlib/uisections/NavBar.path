@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GO_TO_HOME_PAGE_LINK</td>
+	<td>//div[contains(@class,'navbar')]//a[contains(@class,'logo')]//*[contains(@role,'heading')][normalize-space(text())='${key_siteName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HOME</td>
 	<td>//ol[contains(@class,'breadcrumb')]/li//a[contains(.,'Home')]</td>
 	<td></td>

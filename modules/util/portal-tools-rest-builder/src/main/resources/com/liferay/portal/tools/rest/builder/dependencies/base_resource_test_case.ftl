@@ -1972,9 +1972,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 					return false;
 				}
 			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	<#list relatedSchemaNames as relatedSchemaName>

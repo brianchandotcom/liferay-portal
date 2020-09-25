@@ -66,32 +66,25 @@ definition {
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addCP(
-			siteName = "Community Site Name",
-			siteType = "Community");
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Community Site Name",
+			groupName = "Test Site Name",
 			layoutName = "Site Page Name");
 
 		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Community Site Name",
+			groupName = "Test Site Name",
 			layoutName = "Site Page Name",
 			layoutTemplate = "1 Column");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Community Site Name",
+			groupName = "Test Site Name",
 			layoutName = "Site Page Name",
 			widgetName = "Announcements");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
-			siteName = "Community Site Name");
+			siteName = "Test Site Name");
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
@@ -99,13 +92,13 @@ definition {
 			entryTitle = "Announcements Entry Title");
 
 		AnnouncementsEntry.addPG(
-			distributionScope = "Community Site Name",
+			distributionScope = "Test Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
 			entryTitle = "Announcements Entry2 Scoped Title",
 			entryURL = "http://www.yahoo.com");
 
 		AnnouncementsEntry.viewPG(
-			distributionScope = "Community Site Name",
+			distributionScope = "Test Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
 			entryTitle = "Announcements Entry2 Scoped Title");
 
@@ -141,7 +134,7 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
-			siteName = "Community Site Name");
+			siteName = "Test Site Name");
 
 		AnnouncementsEntry.viewViaEntriesPG(
 			distributionScope = "General",
@@ -149,7 +142,7 @@ definition {
 			entryTitle = "Announcements Entry Title");
 
 		AnnouncementsEntry.viewViaEntriesPG(
-			distributionScope = "Community Site Name",
+			distributionScope = "Test Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
 			entryTitle = "Announcements Entry2 Scoped Title");
 	}

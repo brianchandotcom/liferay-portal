@@ -47,64 +47,35 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages",
-			site = "${siteName}");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		SitePages.addPublicPage(
-			pageName = "Blogs Page",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		Portlet.addPG(portletName = "Blogs");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addCP(
-			siteName = "Community Site Name",
-			siteType = "Community");
-
-		Navigator.gotoSitePage(
-			pageName = "Home",
-			siteName = "Community Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(
-			pageName = "Blank Page",
-			sitePageType = "Widget Page");
-
-		SitePages.addPublicPage(
-			pageName = "Invite Members Page",
-			sitePageType = "Widget Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Invite Members Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Invite Members Page",
-			siteName = "Community Site Name");
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Invite Members");
 
 		Navigator.gotoSitePage(
 			pageName = "Invite Members Page",
-			siteName = "Community Site Name");
+			siteName = "Test Site Name");
 
 		InviteMembers.inviteMembers(inviteUserFullName = "userfn userln");
 
@@ -145,9 +116,9 @@ definition {
 			contentBody = "Blogs Entry Title",
 			user = "Test Test");
 
-		Notifications.viewRequest(requestsTitle = "Test Test invited you to join Community Site Name.");
+		Notifications.viewRequest(requestsTitle = "Test Test invited you to join Test Site Name.");
 
-		Notifications.acceptRequest(requestsTitle = "Test Test invited you to join Community Site Name.");
+		Notifications.acceptRequest(requestsTitle = "Test Test invited you to join Test Site Name.");
 
 		Refresh();
 

@@ -1707,21 +1707,26 @@ public class GitWorkingDirectory {
 		RemoteGitBranch upstreamRemoteGitBranch = getRemoteGitBranch(
 			upstreamBranchName, getGitRemote("upstream"));
 
+		if (upstreamRemoteGitBranch == null) {
+			upstreamRemoteGitBranch = getRemoteGitBranch(
+				upstreamBranchName, getGitRemote("origin"));
+		}
+
+		String upstreamBranchSHA = upstreamRemoteGitBranch.getSHA();
+
 		fetch(upstreamRemoteGitBranch);
 
 		String currentBranchName = getCurrentBranchName();
 
 		if (currentBranchName == null) {
-			List<String> localGitBranchNames = getLocalGitBranchNames();
-
-			List<LocalGitBranch> localGitBranches = getLocalGitBranches(
-				localGitBranchNames.get(0));
-
-			checkoutLocalGitBranch(localGitBranches.get(0));
+			checkoutLocalGitBranch(
+				createLocalGitBranch(
+					upstreamBranchName + "-temp-" + System.currentTimeMillis(),
+					true, upstreamBranchSHA));
 		}
 
 		return createLocalGitBranch(
-			upstreamBranchName, true, upstreamRemoteGitBranch.getSHA());
+			upstreamBranchName, true, upstreamBranchSHA);
 	}
 
 	public RemoteGitBranch getUpstreamRemoteGitBranch() {

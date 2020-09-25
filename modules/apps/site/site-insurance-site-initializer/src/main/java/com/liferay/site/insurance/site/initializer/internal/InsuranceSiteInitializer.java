@@ -144,27 +144,26 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		try {
 			_createServiceContext(groupId);
 
-			_addDDMStructures();
-			_addDDMTemplates();
-
 			_addImages();
+
+			_addDDMStructures();
+
+			_addDDMTemplates();
 
 			_addJournalArticles(_addJournalFolders());
 
-			_addFragments();
-
 			_addCollections();
-
+			_addFragments();
 			_addSiteNavigationMenus();
 
 			_addMasterPages();
+
 			_addDisplayPageTemplates();
 			_addLayouts();
 
 			_updateDefaultDisplayPageTemplates();
-
-			_updateLookAndFeel("public");
 			_updateLookAndFeel("private");
+			_updateLookAndFeel("public");
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

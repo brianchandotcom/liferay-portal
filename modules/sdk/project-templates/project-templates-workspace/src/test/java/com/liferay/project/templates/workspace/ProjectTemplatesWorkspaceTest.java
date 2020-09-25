@@ -428,6 +428,9 @@ public class ProjectTemplatesWorkspaceTest
 			temporaryFolder, "gradle", "nativeSassWorkspace", liferayVersion,
 			mavenExecutor);
 
+		writeGradlePropertiesInWorkspace(
+			nativeSassWorkspaceDir, "liferay.workspace.product=portal-7.3-ga5");
+
 		File nativeSassModulesDir = new File(nativeSassWorkspaceDir, "modules");
 
 		File nativeSassProjectDir = buildTemplateWithGradle(
@@ -444,6 +447,9 @@ public class ProjectTemplatesWorkspaceTest
 
 		File rubySassWorkspaceDir = buildTemplateWithGradle(
 			temporaryFolder, WorkspaceUtil.WORKSPACE, "rubySassWorkspace");
+
+		writeGradlePropertiesInWorkspace(
+			rubySassWorkspaceDir, "liferay.workspace.product=portal-7.3-ga5");
 
 		writeGradlePropertiesInWorkspace(
 			rubySassWorkspaceDir, "sass.compiler.class.name=ruby");

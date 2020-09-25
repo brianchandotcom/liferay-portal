@@ -75,6 +75,9 @@ public class ProjectTemplatesModulesExtTest
 			"--original-module-version", "1.0.0",
 			"--dependency-management-enabled");
 
+		writeGradlePropertiesInWorkspace(
+			workspaceDir, "liferay.workspace.product=portal-7.3-ga5");
+
 		testContains(
 			workspaceProjectDir, "build.gradle",
 			"originalModule group: \"com.liferay\", name: " +

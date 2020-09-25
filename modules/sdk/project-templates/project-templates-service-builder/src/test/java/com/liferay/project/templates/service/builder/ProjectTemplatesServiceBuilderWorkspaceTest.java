@@ -128,6 +128,23 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
+		if (_liferayVersion.startsWith("7.0")) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir, "liferay.workspace.product=portal-7.0-ga7");
+		}
+		else if (_liferayVersion.startsWith("7.1")) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir, "liferay.workspace.product=portal-7.1-ga4");
+		}
+		else if (_liferayVersion.startsWith("7.2")) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir, "liferay.workspace.product=portal-7.2-ga2");
+		}
+		else if (_liferayVersion.startsWith("7.3")) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga5");
+		}
+
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");
 

@@ -454,7 +454,7 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField73() throws Exception {
-		String liferayVersion = "7.3.3";
+		String liferayVersion = "7.3.4";
 		String name = "foobar";
 
 		File workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
@@ -462,6 +462,9 @@ public class ProjectTemplatesFormFieldTest
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(workspaceDir, "modules"), "form-field", name,
 			"--liferay-version", liferayVersion);
+
+		writeGradlePropertiesInWorkspace(
+			workspaceDir, "liferay.workspace.product=portal-7.3-ga5");
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Provide-Capability:", "soy;",

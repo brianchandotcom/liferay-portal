@@ -59,6 +59,12 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "DM Metadata Set Name");
 
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.delete(
+			metadataSetHasReference = "true",
+			metadataSetName = "DM Metadata Set Name");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentType();
@@ -67,6 +73,10 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "DM Metadata Set Name",
 			removeMetadataSet = "true");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.delete(metadataSetName = "DM Metadata Set Name");
 	}
 
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."

@@ -102,6 +102,8 @@ public class DDMFormTemplateContextProcessor {
 
 		DDMFormField ddmFormField = new DDMFormField(name, type);
 
+		setDDMFormFieldAlphabeticalOrder(
+			jsonObject.getBoolean("alphabeticalOrder"), ddmFormField);
 		setDDMFormFieldCollapsible(
 			jsonObject.getBoolean("collapsible"), ddmFormField);
 		setDDMFormFieldDataProviderSettings(
@@ -240,6 +242,12 @@ public class DDMFormTemplateContextProcessor {
 
 	protected void setDDMFormDefaultLocale() {
 		_ddmForm.setDefaultLocale(_locale);
+	}
+
+	protected void setDDMFormFieldAlphabeticalOrder(
+		boolean alphabeticalOrder, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty("alphabeticalOrder", alphabeticalOrder);
 	}
 
 	protected void setDDMFormFieldCollapsible(

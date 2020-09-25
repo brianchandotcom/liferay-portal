@@ -76,6 +76,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.validation.ValidationException;
 
@@ -257,6 +258,22 @@ public class DataRecordResourceImpl
 		}
 
 		return new DataRecordEntityModel(entityFields);
+	}
+
+	@Override
+	public DataRecord patchDataRecord(Long dataRecordId, DataRecord dataRecord)
+		throws Exception {
+
+		DataRecord existingDataRecord = getDataRecord(dataRecordId);
+
+		Map<String, Object> dataRecordValues =
+			existingDataRecord.getDataRecordValues();
+
+		dataRecordValues.putAll(dataRecord.getDataRecordValues());
+
+		dataRecord.setDataRecordValues(dataRecordValues);
+
+		return putDataRecord(dataRecordId, dataRecord);
 	}
 
 	@Override

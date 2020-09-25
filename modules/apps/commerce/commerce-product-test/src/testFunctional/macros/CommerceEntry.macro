@@ -114,15 +114,15 @@ definition {
 
 		Type(
 			locator1 = "CommerceEntry#TWO_LETTERS_ISO_CODE_FIELD",
-			value1 = "NC");
+			value1 = "${entryIsoTwoLetters}");
 
 		Type(
 			locator1 = "CommerceEntry#THREE_LETTERS_ISO_CODE_FIELD",
-			value1 = "NCO");
+			value1 = "${entryIsoThreeLetters}");
 
 		Type(
 			locator1 = "CommerceEntry#NUMERIC_ISO_CODE_FIELD",
-			value1 = "001");
+			value1 = "${entryIsoNumber}");
 
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#SUBJECT_TO_VAT_CHECKBOX");
 

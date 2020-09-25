@@ -1,0 +1,38 @@
+.products-list .products-list-claim-heading {
+	 text-align: center;
+	 font-size: var(--display4-size);
+	 font-weight: var(--display4-weight);
+	 margin-bottom: var(--spacer-3);
+}
+.products-list .products-list-claim-text {
+	 text-align: center;
+	 font-size: var(--font-size-lg);
+	 color: var(--secondary);
+	 margin-left: auto;
+	 margin-right: auto;
+	 margin-bottom: var(--spacer-6);
+	 width: 75%;
+}
+.products-list .products-list-title {
+	 text-align: center;
+	 font-weight: var(--font-weight-bolder);
+	 margin-bottom: var(--spacer-7);
+	 color: var(--secondary);
+}
+.products-list .product-group {
+	 margin-bottom: var(--spacer-5);
+}
+.products-list .product-group .product-name {
+	 display: flex;
+	 align-items: center;
+	 font-size: var(--font-size-lg);
+	 font-weight: var(--font-weight-bolder);
+	 margin-bottom: var(--spacer-3);
+}
+.products-list .product-group .product-name img {
+	 margin-right: var(--spacer-3);
+	width: 40px;
+}
+.products-list .product-group .product-summary {
+	 color: var(--secondary);
+}

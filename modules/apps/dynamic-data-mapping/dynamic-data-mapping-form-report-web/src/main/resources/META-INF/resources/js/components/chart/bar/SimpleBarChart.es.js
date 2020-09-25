@@ -58,73 +58,78 @@ export default ({data, height, totalEntries, width}) => {
 	};
 
 	return (
-		<ResponsiveContainer height={height || '99%'} width={width || '99%'}>
-			<BarChart
-				data={data}
-				layout="vertical"
-				margin={{
-					bottom: 20,
-					left: 20,
-					right: 20,
-					top: 20,
-				}}
+		<div className="custom-chart-size simple-bar-chart">
+			<ResponsiveContainer
+				height={height || '99%'}
+				width={width || '99%'}
 			>
-				<XAxis
-					axisLine={{stroke: gray}}
-					tick={{fontSize: 14}}
-					tickLine={false}
-					type="number"
-				/>
-
-				<YAxis
-					dataKey="label"
-					stroke={blueDark}
-					tick={CustomizedYAxisTick}
-					tickLine={false}
-					tickMargin={16}
-					type="category"
-					width={214}
-				/>
-
-				<Tooltip
-					content={
-						<TooltipContent
-							showBullet={false}
-							showHeader={false}
-							totalEntries={totalEntries}
-						/>
-					}
-					cursor={{fill: 'transparent'}}
-				/>
-
-				<Bar
-					barCategoryGap={30}
-					barGap={5}
-					dataKey="count"
-					fill={lightBlue}
-					onMouseOut={handleOnMouseOut}
-					onMouseOver={(_, index) => handleOnMouseOver(index)}
+				<BarChart
+					data={data}
+					layout="vertical"
+					margin={{
+						bottom: 20,
+						left: 20,
+						right: 20,
+						top: 20,
+					}}
 				>
-					{data.map((_, index) => (
-						<Cell
-							fillOpacity={
-								activeIndex != null && activeIndex != index
-									? '.5'
-									: 1
-							}
-							key={`cell-${index}`}
-						/>
-					))}
-
-					<LabelList
-						dataKey="count"
-						fill={white}
-						fontSize={14}
-						offset={16}
-						position="insideRight"
+					<XAxis
+						axisLine={{stroke: gray}}
+						tick={{fontSize: 14}}
+						tickLine={false}
+						type="number"
 					/>
-				</Bar>
-			</BarChart>
-		</ResponsiveContainer>
+
+					<YAxis
+						dataKey="label"
+						stroke={blueDark}
+						tick={{fontSize: 14}}
+						tickLine={false}
+						tickMargin={16}
+						type="category"
+						width={214}
+					/>
+
+					<Tooltip
+						content={
+							<TooltipContent
+								showBullet={false}
+								showHeader={false}
+								totalEntries={totalEntries}
+							/>
+						}
+						cursor={{fill: 'transparent'}}
+					/>
+
+					<Bar
+						barCategoryGap={30}
+						barGap={5}
+						dataKey="count"
+						fill={lightBlue}
+						onMouseOut={handleOnMouseOut}
+						onMouseOver={(_, index) => handleOnMouseOver(index)}
+					>
+						{data.map((_, index) => (
+							<Cell
+								fillOpacity={
+									activeIndex != null && activeIndex != index
+										? '.5'
+										: 1
+								}
+								key={`cell-${index}`}
+							/>
+						))}
+
+						<LabelList
+							dataKey="count"
+							fill={white}
+							fontSize={14}
+							offset={16}
+							position="insideRight"
+						/>
+					</Bar>
+				</BarChart>
+			</ResponsiveContainer>
+		</div>
 	);
 };

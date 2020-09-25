@@ -86,7 +86,7 @@ export default ({data, height, totalEntries, width}) => {
 	};
 
 	return (
-		<>
+		<div className="custom-chart-size pie-chart">
 			<ResponsiveContainer
 				height={height || '99%'}
 				width={width || '50%'}
@@ -140,6 +140,6 @@ export default ({data, height, totalEntries, width}) => {
 				onMouseOut={handleOnMouseOut}
 				onMouseOver={handleOnMouseOver}
 			/>
-		</>
+		</div>
 	);
 };

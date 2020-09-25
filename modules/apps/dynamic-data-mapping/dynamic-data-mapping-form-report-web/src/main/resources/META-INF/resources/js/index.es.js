@@ -23,7 +23,7 @@ export default ({data, ...restProps}) => {
 	}
 
 	return (
-		<div className="form-report">
+		<div className="container-fluid form-report">
 			<App {...restProps} data={JSON.parse(data)} />
 		</div>
 	);

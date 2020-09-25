@@ -121,72 +121,79 @@ export default ({data, field, height, structure, width}) => {
 	};
 
 	return (
-		<ResponsiveContainer height={height || '99%'} width={width || '99%'}>
-			<BarChart
-				data={data}
-				layout={'horizontal'}
-				margin={{
-					bottom: 20,
-					left: 20,
-					right: 20,
-					top: 20,
-				}}
+		<div className="custom-chart-size multi-bar-chart">
+			<ResponsiveContainer
+				height={height || '99%'}
+				width={width || '99%'}
 			>
-				<XAxis
-					axisLine={{stroke: blueDark}}
-					dataKey="label"
-					interval={0}
-					tick={
-						<CustomizedAxisTick
-							ticksNumber={structure.rows.length}
-						/>
-					}
-					tickLine={false}
-				/>
+				<BarChart
+					data={data}
+					layout={'horizontal'}
+					margin={{
+						bottom: 20,
+						left: 20,
+						right: 20,
+						top: 20,
+					}}
+				>
+					<XAxis
+						axisLine={{stroke: blueDark}}
+						dataKey="label"
+						interval={0}
+						tick={
+							<CustomizedAxisTick
+								ticksNumber={structure.rows.length}
+							/>
+						}
+						tickLine={false}
+					/>
 
-				<YAxis
-					axisLine={{stroke: gray}}
-					tickLine={false}
-					type="number"
-				/>
+					<YAxis
+						axisLine={{stroke: gray}}
+						tickLine={false}
+						type="number"
+					/>
 
-				<Tooltip
-					content={
-						<TooltipContent field={field} roundBullet={false} />
-					}
-					cursor={{fill: 'transparent'}}
-				/>
+					<Tooltip
+						content={
+							<TooltipContent field={field} roundBullet={false} />
+						}
+						cursor={{fill: 'transparent'}}
+					/>
 
-				{columns.map((row, index) => {
-					return (
-						<Bar
-							dataKey={row}
-							fill={colors(index)}
-							key={`bar-${index}`}
-							onMouseOut={handleOnMouseOut}
-							onMouseOver={(_, index) => handleOnMouseOver(index)}
-						>
-							{data.map((_, index) => (
-								<Cell
-									fillOpacity={
-										activeIndex != null &&
-										activeIndex != index
-											? '.5'
-											: 1
-									}
-									key={`cell-${index}`}
-								/>
-							))}
-						</Bar>
-					);
-				})}
+					{columns.map((row, index) => {
+						return (
+							<Bar
+								dataKey={row}
+								fill={colors(index)}
+								key={`bar-${index}`}
+								onMouseOut={handleOnMouseOut}
+								onMouseOver={(_, index) =>
+									handleOnMouseOver(index)
+								}
+							>
+								{data.map((_, index) => (
+									<Cell
+										fillOpacity={
+											activeIndex != null &&
+											activeIndex != index
+												? '.5'
+												: 1
+										}
+										key={`cell-${index}`}
+									/>
+								))}
+							</Bar>
+						);
+					})}
 
-				<Legend
-					content={renderLegend}
-					iconType="square"
-					verticalAlign="top"
-				/>
-			</BarChart>
-		</ResponsiveContainer>
+					<Legend
+						content={renderLegend}
+						iconType="square"
+						verticalAlign="top"
+					/>
+				</BarChart>
+			</ResponsiveContainer>
+		</div>
 	);
 };

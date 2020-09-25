@@ -244,6 +244,65 @@ definition {
 			value1 = "Revert &quot;${publicationName}&quot;");
 	}
 
+	macro schedulePublication {
+		if ("${gotoManagePublications}" == "true") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Publications",
+				panel = "Applications",
+				portlet = "Publications");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			Click(
+				key_publicationName = "${publicationName}",
+				locator1 = "ChangeList#LIST_PUBLICATION_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Schedule");
+		}
+		else if ("${gotoReviewChanges}" == "true") {
+			ChangeList.gotoReviewChanges();
+
+			Click(locator1 = "ChangeList#SCHEDULE_BUTTON");
+		}
+		else {
+			Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
+
+			MenuItem.click(menuItem = "Schedule");
+		}
+
+		Click(locator1 = "ChangeList#NEXT_BUTTON");
+
+		var utcHours = Time.getUTCHours();
+		var utcMinutes = Time.getUTCMinutes();
+
+		if ("${utcMinutes}" == "59") {
+			utcHours = MathUtil.sum("${utcHours}", "1");
+
+			utcMinutes = "00";
+		}
+		else {
+			utcMinutes = MathUtil.sum("${utcMinutes}", "1");
+		}
+
+		Type(
+			locator1 = "ChangeList#PUBLISH_TIME",
+			value1 = "${utcHours}:${utcMinutes}");
+
+		Click(locator1 = "ChangeList#SCHEDULE_BUTTON");
+
+		Pause(locator1 = "120000");
+
+		Click(
+			key_navBarTitle = "History",
+			locator1 = "ChangeList#MANGE_PUBLICATIONS_NAVBAR_TITLE");
+
+		var key_publicationName = "${publicationName}";
+
+		AssertTextEquals(
+			locator1 = "ChangeList#HISTORY_PUBLICATION_STATUS",
+			value1 = "Published");
+	}
+
 	macro search {
 		Search.searchCP(searchTerm = "${publicationName}");
 

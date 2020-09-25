@@ -66,10 +66,11 @@ export const EditEntry = ({
 			validateForm(event)
 				.then((dataRecord) => {
 					if (dataRecordId !== '0') {
-						updateItem(
-							`/o/data-engine/v2.0/data-records/${dataRecordId}`,
-							dataRecord
-						)
+						updateItem({
+							endpoint: `/o/data-engine/v2.0/data-records/${dataRecordId}`,
+							item: dataRecord,
+							method: 'PATCH',
+						})
 							.then(() => {
 								successToast(
 									Liferay.Language.get('an-entry-was-updated')

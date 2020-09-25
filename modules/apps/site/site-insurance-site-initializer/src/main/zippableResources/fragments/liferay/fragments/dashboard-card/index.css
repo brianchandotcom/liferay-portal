@@ -1,0 +1,21 @@
+.dashboard-card {
+	 background-color: var(--white);
+	 padding-right: var(--spacer-4);
+	 padding-bottom: calc(var(--spacer-1)*8);
+	 padding-left: var(--spacer-4);
+	 box-shadow: var(--box-shadow-sm);
+	 border-radius: var(--border-radius-lg);
+	 margin-bottom: var(--spacer-5);
+	 height: 100% !important;
+}
+ .dashboard-card .dashboard-class-title {
+	 margin-bottom: var(--spacer-5);
+}
+ .dashboard-card:before {
+	 background-color: var(--primary);
+	 margin-bottom: calc(var(--spacer-1)*5);
+	 content: '';
+	 display: block;
+	 height: 7px;
+	 width: 64px;
+}

@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -118,6 +119,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			_addJournalFolders();
 			_addJournalArticles();
+
+			_addFragments();
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -182,6 +185,16 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				_readFile(jsonObject.getString("contentPath")), false, false,
 				null, null, _serviceContext);
 		}
+	}
+
+	private void _addFragments() throws Exception {
+		URL url = _bundle.getEntry("/fragments.zip");
+
+		File file = FileUtil.createTempFile(url.openStream());
+
+		_fragmentsImporter.importFile(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(), 0,
+			file, false);
 	}
 
 	private void _addImages() throws Exception {
@@ -364,6 +377,9 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private DLURLHelper _dlURLHelper;
 
 	private List<FileEntry> _fileEntries;
+
+	@Reference
+	private FragmentsImporter _fragmentsImporter;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

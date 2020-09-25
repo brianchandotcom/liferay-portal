@@ -1,0 +1,26 @@
+.section-subscription {
+	 text-align: center;
+	 color: var(--white);
+	background-color: var(--gray-800);
+}
+.section-subscription .section-subscription-title {
+	 margin-bottom: var(--spacer-3);
+	 font-size: var(--display4-size);
+	 font-weight: var(--display4-weight);
+}
+.section-subscription .section-subscription-details {
+	 font-size: var(--font-size-lg);
+	 color: var(--gray-400);
+	 margin-bottom: var(--spacer-5);
+}
+.section-subscription .section-subscription-form {
+	 margin-bottom: var(--spacer-3);
+	 justify-content: center;
+}
+.section-subscription .section-subscription-form .form-control {
+	 width: 400px;
+}
+.section-subscription .input-info-text {
+	 color: var(--gray-500);
+	 margin-bottom: var(--spacer-4);
+}

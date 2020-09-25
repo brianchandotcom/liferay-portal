@@ -1,0 +1,60 @@
+.sign-in {
+    height: 100%;
+    background-color: var(--gray-900);
+}
+
+    .sign-in .form-column {
+        color: var(--white);
+        display: flex;
+        justify-content: flex-end;
+        padding-top: var(--spacer-9);
+        padding-bottom: var(--spacer-10);
+        padding-right: var(--spacer-6);
+    }
+
+    .sign-in .sign-in-image {
+        background-image: url([resources:login_portlet_splash.jpg]);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+
+
+
+.sign-in-form {
+	 display: flex;
+	 flex-direction: column;
+	 justify-content: space-between;
+	 align-items: flex-start;
+}
+ .sign-in-form .sign-in-logo {
+	 height: 32px;
+}
+ .sign-in-form .login-title {
+	 margin-bottom: var(--spacer-4);
+}
+ .sign-in-form .login-title.login-title:after {
+	 background-color: var(--primary);
+	 margin-top: var(--spacer-3);
+	 content: '';
+	 display: block;
+	 height: 3px;
+	 width: 24px;
+}
+ .sign-in-form .form-group {
+	 width: 320px;
+}
+ .sign-in-form .form-group label {
+	 font-weight: var(--font-weight-bold);
+	 color: var(--gray-500);
+}
+ .sign-in-form .form-group input {
+	 border-color: var(--white);
+}
+ .sign-in-form .form-check {
+	 margin-bottom: var(--spacer-4);
+}
+ .sign-in-form .form-check label {
+	 transform: translateY(-2px);
+   color: var(--gray-500);
+}

@@ -1,0 +1,27 @@
+definition {
+
+	macro getUTCHours {
+		var javaScript = '''
+		var utcHours = new Date().getUTCHours().toString();
+
+		return utcHours;
+		''';
+
+		var utcHours = selenium.getEval("${javaScript}");
+
+		return "${utcHours}";
+	}
+
+	macro getUTCMinutes {
+		var javaScript = '''
+		var utcMinutes = new Date().getUTCMinutes().toString();
+
+		return utcMinutes;
+		''';
+
+		var utcMinutes = selenium.getEval("${javaScript}");
+
+		return "${utcMinutes}";
+	}
+
+}

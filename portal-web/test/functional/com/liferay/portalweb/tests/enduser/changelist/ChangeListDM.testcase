@@ -36,6 +36,7 @@ definition {
 
 	@priority = "4"
 	test CheckoutAndCheckinDocumentInPublication {
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "ChangeListDM#CheckoutAndCheckinDocumentInPublication";
 
 		ChangeList.createNewPublication(publicationName = "Publication Name");

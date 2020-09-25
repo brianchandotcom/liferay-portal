@@ -227,6 +227,7 @@ definition {
 
 	@priority = "4"
 	test PublishWebContentWithNewStructure {
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "ChangeListWebContent#PublishWebContentWithNewStructure";
 
 		ChangeList.createNewPublication(publicationName = "Publication Name");

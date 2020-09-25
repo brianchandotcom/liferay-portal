@@ -93,6 +93,7 @@ definition {
 
 	@priority = "4"
 	test PublishPrivateContentPageWithFragment {
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "ChangeListPage#PublishPrivateContentPageWithFragment";
 
 		ChangeList.createNewPublication(publicationName = "Publication Name");

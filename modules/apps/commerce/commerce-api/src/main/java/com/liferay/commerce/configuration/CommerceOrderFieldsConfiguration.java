@@ -30,7 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CommerceOrderFieldsConfiguration {
 
-	@Meta.AD(deflt = "-1", name = "account-cart-max-allowed", required = false)
+	@Meta.AD(deflt = "0", name = "account-cart-max-allowed", required = false)
 	public int accountCartMaxAllowed();
 
 	@Meta.AD(

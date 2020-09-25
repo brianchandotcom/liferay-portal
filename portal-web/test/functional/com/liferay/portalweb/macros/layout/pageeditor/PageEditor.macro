@@ -80,13 +80,24 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 			if (isSet(targetFragmentName)) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					key_collectionName = "${collectionName}",
-					key_fragmentName = "${fragmentName}",
-					key_targetFragmentName = "${targetFragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
-					value1 = "");
+				if ("${height}" == "Short") {
+					DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
+						key_collectionName = "${collectionName}",
+						key_fragmentName = "${fragmentName}",
+						key_targetFragmentName = "${targetFragmentName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+						locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+						value1 = "");
+				}
+				else if ("${height}" == "Tall") {
+					DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
+						key_collectionName = "${collectionName}",
+						key_fragmentName = "${fragmentName}",
+						key_targetFragmentName = "${targetFragmentName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+						locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+						value1 = "");
+				}
 			}
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
@@ -115,12 +126,22 @@ definition {
 				value1 = "${portletName}");
 
 			if (isSet(targetFragmentName)) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					key_fragmentName = "${portletName}",
-					key_targetFragmentName = "${targetFragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
-					value1 = "");
+				if ("${height}" == "Short") {
+					DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
+						key_portletName = "${portletName}",
+						key_targetFragmentName = "${targetFragmentName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+						locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+						value1 = "${portletName}");
+				}
+				else if ("${height}" == "Tall") {
+					DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
+						key_portletName = "${portletName}",
+						key_targetFragmentName = "${targetFragmentName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+						locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+						value1 = "${portletName}");
+				}
 			}
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(

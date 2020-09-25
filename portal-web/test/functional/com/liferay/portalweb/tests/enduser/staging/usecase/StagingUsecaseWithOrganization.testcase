@@ -29,7 +29,6 @@ definition {
 		}
 	}
 
-	@ignore
 	@priority = "5"
 	test StagingOrganizations {
 		property portal.acceptance = "true";

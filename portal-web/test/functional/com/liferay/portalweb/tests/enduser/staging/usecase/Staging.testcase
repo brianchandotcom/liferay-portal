@@ -1758,7 +1758,6 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
-	@ignore
 	@priority = "3"
 	test StagingAssetPublisher {
 		Navigator.openSiteURL(siteName = "Site Name");

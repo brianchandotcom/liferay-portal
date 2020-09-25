@@ -199,7 +199,6 @@ definition {
 			siteTemplateName = "Site Template Name");
 	}
 
-	@ignore
 	@description = "This is a use case for LPS-87081."
 	@priority = "5"
 	test DeleteSiteTemplate {
@@ -379,7 +378,6 @@ definition {
 			siteTemplateName = "Site Template Name");
 	}
 
-	@ignore
 	@priority = "4"
 	test LocalizeSiteTemplatesAdmin {
 		property test.name.skip.portal.instance = "CPSitetemplates#LocalizeSiteTemplatesAdmin";
@@ -481,7 +479,6 @@ definition {
 		User.loginUserPG();
 	}
 
-	@ignore
 	@priority = "5"
 	test ResetPageChanges {
 		property portal.acceptance = "true";

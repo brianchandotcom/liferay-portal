@@ -144,7 +144,6 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@ignore
 	@priority = "4"
 	test StagingDemoLocalLive2 {
 		Staging.openStagingAdmin(siteURLKey = "site-name");
@@ -212,7 +211,6 @@ definition {
 		Page.viewPageLayoutColumn(columnName = "1 Column");
 	}
 
-	@ignore
 	@priority = "4"
 	test StagingDemoLocalLive3 {
 		JSONLayout.addPublicLayout(
@@ -399,7 +397,6 @@ definition {
 			privacy = "Public Pages");
 	}
 
-	@ignore
 	@priority = "5"
 	test StagingDemoLocalLive4 {
 		property testray.component.names = "Training";
@@ -602,7 +599,6 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@ignore
 	@priority = "4"
 	test StagingLocalLiveWorkflow {
 		Staging.openStagingAdmin(siteURLKey = "site-name");
@@ -857,7 +853,6 @@ definition {
 			workflowTask = "Review");
 	}
 
-	@ignore
 	@priority = "5"
 	test StagingPublishPage {
 		property testray.component.names = "Training";

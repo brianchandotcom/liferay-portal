@@ -292,7 +292,6 @@ definition {
 			roleTitle = "Guest");
 	}
 
-	@ignore
 	@priority = "3"
 	test SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates {
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -323,7 +322,6 @@ definition {
 			pageName = "Public Pages");
 	}
 
-	@ignore
 	@priority = "4"
 	test SitesDynamicTemplateInheritance {
 		property portal.acceptance = "true";

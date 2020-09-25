@@ -152,7 +152,7 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		DDMFormFieldOptions ddmFormFieldOptions =
 			DDMFormFieldOptionsTestUtil.createDDMFormFieldOptions();
 
-		List<Object> actualOptions = _getActualOptions(
+		List<Map<String, String>> actualOptions = _getActualOptions(
 			ddmFormFieldOptions, LocaleUtil.US);
 
 		Assert.assertEquals(expectedOptions, actualOptions);
@@ -314,14 +314,15 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		return spy;
 	}
 
-	private List<Object> _getActualOptions(
+	private List<Map<String, String>> _getActualOptions(
 		DDMFormFieldOptions ddmFormFieldOptions, Locale locale) {
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
 		return _selectDDMFormFieldTemplateContextContributor.getOptions(
-			ddmFormFieldOptions, locale, ddmFormFieldRenderingContext);
+			new DDMFormField("field", "select"), ddmFormFieldOptions, locale,
+			ddmFormFieldRenderingContext);
 	}
 
 	private void _setUpDDMFormFieldOptionsFactory(

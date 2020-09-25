@@ -85,7 +85,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.net.URL;
 
@@ -590,7 +589,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private void _addZipWriterEntry(
 			ZipWriter zipWriter, URL url, Map<String, String> numberValuesMap,
 			Map<String, String> stringValuesMap)
-		throws IOException {
+		throws Exception {
 
 		String entryPath = url.getPath();
 
@@ -806,7 +805,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private void _populateZipWriter(
 			ZipWriter zipWriter, URL url, Map<String, String> numberValuesMap,
 			Map<String, String> stringValuesMap)
-		throws IOException {
+		throws Exception {
 
 		String zipPath = StringUtil.removeSubstring(url.getFile(), _PATH);
 

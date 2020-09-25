@@ -36,6 +36,8 @@ definition {
 		property test.name.skip.portal.instance = "StagingUsecaseWithOrganizatiton#StagingOrganizations";
 		property testray.component.names = "Training";
 
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
 		User.openUsersAdmin();
 
 		Organization.addCP(
@@ -47,7 +49,7 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
-			organizationSite = "Community Site",
+			organizationSite = "Site Template Name",
 			orgName = "Staging Organization Name");
 
 		JSONUser.addUser(

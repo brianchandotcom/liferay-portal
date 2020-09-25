@@ -295,6 +295,8 @@ definition {
 	@ignore
 	@priority = "3"
 	test SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates {
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -302,7 +304,7 @@ definition {
 
 		UserGroup.addCP(
 			selectSiteTemplate = "true",
-			siteTemplateName = "Community Site",
+			siteTemplateName = "Site Template Name",
 			userGroupName = "UG UserGroup Name");
 
 		ApplicationsMenu.gotoPortlet(
@@ -312,17 +314,13 @@ definition {
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Manage Pages");
 
-		for (var page : list "Home,Wiki") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
 
-			Page.viewNoDeletePagesAssociatedWithSiteTemplate(
-				page = "${page}",
-				pageName = "Public Pages");
-
-			Refresh();
-		}
+		Page.viewNoDeletePagesAssociatedWithSiteTemplate(
+			page = "Home",
+			pageName = "Public Pages");
 	}
 
 	@ignore
@@ -331,15 +329,6 @@ definition {
 		property portal.acceptance = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Manage Sites Templates");
-
-		SiteTemplates.viewDefaultCP(siteTemplateNameList = "Intranet Site,Community Site");
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 

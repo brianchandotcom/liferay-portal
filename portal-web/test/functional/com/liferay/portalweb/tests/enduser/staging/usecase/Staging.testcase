@@ -1761,34 +1761,19 @@ definition {
 	@ignore
 	@priority = "3"
 	test StagingAssetPublisher {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		/*
-			Deprecated
-
-			Site.addCommunityCP(
-				siteName = "Community Site Name",
-				uncheckPropagation = "true");
-		*/
-
-		Navigator.gotoSitePage(
-			pageName = "Home",
-			siteName = "Community Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
-		Staging.openStagingAdmin(siteURLKey = "community-site-name");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(
 			pageVersioningEnabled = "true",
-			siteName = "Community Site Name");
+			siteName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Home",
-			siteName = "Community Site Name");
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Asset Publisher",
@@ -1796,13 +1781,13 @@ definition {
 
 		AssetPublisherPortlet.viewAssetTypeNotAvailable(assetType = "Page Revision");
 
-		Staging.openStagingAdmin(siteURLKey = "community-site-name-staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.deactivateStagingCP(siteName = "Community Site Name");
+		Staging.deactivateStagingCP(siteName = "Site Name");
 
 		Navigator.gotoSitePage(
-			pageName = "Home",
-			siteName = "Community Site Name");
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Asset Publisher",
@@ -1944,85 +1929,6 @@ definition {
 				webContentTitle = "${webContentTitle}",
 				webContentTitleEdit = "${webContentTitle} Edit");
 		}
-	}
-
-	@ignore
-	@priority = "3"
-	test StagingKaleoPageRevision {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		/*
-			Deprecated
-
-			Site.addCommunityCP(
-				siteName = "Community Site Name",
-				uncheckPropagation = "true");
-		*/
-
-		JSONLayout.addPublicLayout(
-			groupName = "Community Site Name",
-			layoutName = "Test Page Name 1");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name 1",
-			siteName = "Community Site Name");
-
-		Portlet.addPG(portletName = "Message Boards");
-
-		Navigator.openSiteURL(siteName = "Community Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Community Site Name",
-			layoutName = "Test Page Name 2");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name 2",
-			siteName = "Community Site Name");
-
-		Portlet.addPG(portletName = "Wiki");
-
-		Navigator.openSiteURL(siteName = "Community Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Community Site Name",
-			layoutName = "Test Page Name 3");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name 3",
-			siteName = "Community Site Name");
-
-		Portlet.addPG(portletName = "Language Selector");
-
-		Navigator.openSiteURL(siteName = "Community Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Workflow");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Page Revision");
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.viewDefaultMyWorkflowTasksCP();
-
-		Staging.openStagingAdmin(siteURLKey = "community-site-name");
-
-		Staging.activateStagingCP(siteName = "Community Site Name");
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.viewDefaultMyWorkflowTasksCP();
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name 1",
-			siteName = "Community Site Name");
-
-		Page.viewSpecificPG(pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 	}
 
 	@priority = "3"

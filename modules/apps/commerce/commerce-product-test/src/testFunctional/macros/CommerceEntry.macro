@@ -197,6 +197,9 @@ definition {
 	}
 
 	macro addNewNotificationTemplate {
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${entryName}");
@@ -205,13 +208,13 @@ definition {
 			locator1 = "TextArea#DESCRIPTION",
 			value1 = "${entryName} Description");
 
-		Click(locator1 = "Button#SELECT");
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "${notificationType}");
 
-		CommerceItemSelector.selectEntry(entryName = "${accountGroup}");
-
-		Click(
-			locator1 = "ItemSelector#ADD_BUTTON",
-			value1 = "Add");
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Enabled",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Type(
 			locator1 = "CommerceEntry#NOTIFICATION_TEMPLATE_FROM_ADDRESS_FIELD",
@@ -220,10 +223,6 @@ definition {
 		Type(
 			locator1 = "CommerceEntry#NOTIFICATION_TEMPLATE_FROM_NAME_FIELD",
 			value1 = "${fromName}");
-
-		Select(
-			locator1 = "Select#TYPE",
-			value1 = "${notificationType}");
 	}
 
 	macro addNewPriceListsEntry {

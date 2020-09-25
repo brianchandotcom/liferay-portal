@@ -581,6 +581,8 @@ public interface BaseProjectTemplatesTestCase {
 		}
 
 		completeArgs.add("-DarchetypeArtifactId=" + archetypeArtifactId);
+		completeArgs.add("-DarchetypeCatalog=internal");
+		completeArgs.add("-DarchetypeGroupId=com.liferay");
 
 		String projectTemplateVersion =
 			ProjectTemplatesUtil.getArchetypeVersion(archetypeArtifactId);
@@ -589,11 +591,10 @@ public interface BaseProjectTemplatesTestCase {
 			"Unable to get project template version",
 			Validator.isNotNull(projectTemplateVersion));
 
-		completeArgs.add("-DarchetypeGroupId=com.liferay");
 		completeArgs.add("-DarchetypeVersion=" + projectTemplateVersion);
+		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
 		completeArgs.add("-DgroupId=" + groupId);
-		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dversion=1.0.0");
 
 		boolean liferayVersionSet = false;

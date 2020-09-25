@@ -14,11 +14,12 @@
 
 package com.liferay.portal.configuration.metatype.definitions.test;
 
+import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
-import com.liferay.portal.configuration.test.util.metatype.MetatypeDefinitionsTestConfiguration;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -48,12 +49,13 @@ public class MetatypeAttributeDefinitionTest {
 	public void testDefaultValue() {
 		ExtendedMetaTypeInformation extendedMetaTypeInformation =
 			_extendedMetaTypeService.getMetaTypeInformation(
-				FrameworkUtil.getBundle(
-					MetatypeDefinitionsTestConfiguration.class));
+				FrameworkUtil.getBundle(MetatypeAttributeDefinitionTest.class));
 
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
 			extendedMetaTypeInformation.getObjectClassDefinition(
-				MetatypeDefinitionsTestConfiguration.class.getName(), null);
+				"com.liferay.portal.configuration.metatype.definitions.test." +
+					"TestConfiguration",
+				null);
 
 		AttributeDefinition singleValuedAttributeDefinition =
 			_getAttributeDefinition(
@@ -98,5 +100,18 @@ public class MetatypeAttributeDefinitionTest {
 
 	@Inject
 	private ExtendedMetaTypeService _extendedMetaTypeService;
+
+	@Meta.OCD(
+		id = "com.liferay.portal.configuration.metatype.definitions.test.TestConfiguration"
+	)
+	private interface TestConfiguration {
+
+		@Meta.AD(deflt = "a=b,c=d\\,e=f", required = false)
+		public String[] testStringEscapeMultiValuedAttribute();
+
+		@Meta.AD(deflt = "a=b,c=d\\,e=f", required = false)
+		public String testStringEscapeSingleValuedAttribute();
+
+	}
 
 }

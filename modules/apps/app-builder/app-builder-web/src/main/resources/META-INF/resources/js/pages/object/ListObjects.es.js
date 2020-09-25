@@ -194,10 +194,10 @@ export default ({history, listViewProps = {}, objectType}) => {
 						}
 					);
 
-					return updateItem(
-						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/permissions`,
-						dataDefinitionPermissions
-					);
+					return updateItem({
+						endpoint: `/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/permissions`,
+						item: dataDefinitionPermissions,
+					});
 				}}
 				rolesFilter={rolesFilter}
 				title={Liferay.Language.get('app-permissions')}

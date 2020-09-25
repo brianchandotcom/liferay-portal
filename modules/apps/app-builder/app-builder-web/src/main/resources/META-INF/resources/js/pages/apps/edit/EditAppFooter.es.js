@@ -111,7 +111,10 @@ export default withRouter(
 			};
 
 			if (appId) {
-				updateItem(`/o/app-builder/v1.0/apps/${appId}`, data)
+				updateItem({
+					endpoint: `/o/app-builder/v1.0/apps/${appId}`,
+					item: data,
+				})
 					.then(() => onSuccess(appId))
 					.then(onCancel)
 					.catch(onError);

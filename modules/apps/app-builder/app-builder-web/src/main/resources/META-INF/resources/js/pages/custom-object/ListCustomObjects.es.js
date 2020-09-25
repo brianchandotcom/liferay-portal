@@ -81,13 +81,16 @@ export default ({history}) => {
 	};
 
 	const onRenameAction = ({originalItem}, value, refetch) => {
-		updateItem(`/o/data-engine/v2.0/data-definitions/${originalItem.id}`, {
-			...originalItem,
-			name: {
-				[originalItem.defaultLanguageId]: getValidName(
-					Liferay.Language.get('untitled-custom-object'),
-					value
-				),
+		updateItem({
+			endpoint: `/o/data-engine/v2.0/data-definitions/${originalItem.id}`,
+			item: {
+				...originalItem,
+				name: {
+					[originalItem.defaultLanguageId]: getValidName(
+						Liferay.Language.get('untitled-custom-object'),
+						value
+					),
+				},
 			},
 		})
 			.then(refetch)

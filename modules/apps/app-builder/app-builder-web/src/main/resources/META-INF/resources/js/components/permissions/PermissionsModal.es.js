@@ -107,7 +107,10 @@ export default ({
 		);
 
 	const handleOnSave = () =>
-		Promise.all([updateItem(endpoint, permissions), onSave(permissions)])
+		Promise.all([
+			updateItem({endpoint, item: permissions}),
+			onSave(permissions),
+		])
 			.then(() => close())
 			.then(() => successToast())
 			.catch(() => errorToast());

@@ -31,17 +31,15 @@
 			}
 
 			.legend-container {
+				margin-left: 50px;
 				width: 50%;
+
 				ul {
 					font-size: 14px;
 
 					li {
 						display: flex;
 						padding-bottom: 10px;
-
-						svg {
-							width: 7%;
-						}
 
 						p {
 							margin-bottom: 0;
@@ -201,6 +199,26 @@
 		}
 	}
 
+	.custom-chart-size {
+		display: flex;
+		height: 400px !important;
+		min-height: 400px;
+		min-width: 400px;
+		width: 100%;
+
+		&.multi-bar-chart {
+			margin-left: -32px;
+		}
+
+		&.pie-chart {
+			margin-left: 63px;
+		}
+
+		&.simple-bar-chart {
+			margin-left: -43px;
+		}
+	}
+
 	.empty-message {
 		margin-top: 104px;
 
@@ -243,6 +261,10 @@
 	.form-report {
 		display: flex;
 
+		.card-item {
+			width: 808px;
+		}
+
 		.card-item::before {
 			content: ' ';
 			display: block;
@@ -262,6 +284,7 @@
 			ul {
 				list-style-type: none;
 				padding: 0;
+				width: 240px;
 
 				li {
 					padding-bottom: 16px;
@@ -486,9 +509,7 @@
 	}
 
 	.report-cards-area {
-		margin-left: 384px;
 		transition: all 0.3s cubic-bezier(0.25, 0.11, 0.25, 1);
-		width: 808px;
 
 		.sheet {
 			margin-top: 24px;

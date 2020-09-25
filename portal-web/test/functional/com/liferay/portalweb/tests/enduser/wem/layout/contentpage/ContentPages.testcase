@@ -236,35 +236,21 @@ definition {
 		}
 
 		task ("Assert add the second Grid in module 1 of the first Grid") {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "Layout Elements",
-				key_columnNumber = "1",
-				key_fragmentName = "Grid",
-				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#GRID_COLUMN",
-				value1 = "");
-
-			PageEditor.waitForAutoSave();
-
-			AssertElementPresent(
-				key_columnNumber = "1",
-				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Grid')]//li[contains(@class,'title')]",
-				key_position = "1",
-				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+			PageEditor.addElementToColumn(
+				collectionName = "Layout Elements",
+				columnNumber = "1",
+				fragmentName = "Grid",
+				navTab = "Fragments");
 		}
 
 		task ("Assert add the third Grid in module 1 of the first Grid") {
-			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
-				key_collectionName = "Layout Elements",
-				key_columnNumber = "1",
-				key_fragmentName = "Grid",
-				key_targetFragmentName = "Grid",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#EMPTY_NESTED_FRAGMENT_DROP_TARGET",
-				value1 = "");
-
-			PageEditor.waitForAutoSave();
+			PageEditor.addElementToColumn(
+				collectionName = "Layout Elements",
+				columnNumber = "1",
+				fragmentName = "Grid",
+				height = "Tall",
+				navTab = "Fragments",
+				targetFragmentName = "Grid");
 
 			AssertElementPresent(
 				key_columnNumber = "1",

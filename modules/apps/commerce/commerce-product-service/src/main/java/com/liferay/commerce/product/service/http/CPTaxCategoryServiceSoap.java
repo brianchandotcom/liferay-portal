@@ -67,6 +67,11 @@ import java.util.Map;
 @Deprecated
 public class CPTaxCategoryServiceSoap {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addCPTaxCategory(String, Map, Map, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.product.model.CPTaxCategorySoap
 			addCPTaxCategory(
 				String[] nameMapLanguageIds, String[] nameMapValues,
@@ -85,6 +90,36 @@ public class CPTaxCategoryServiceSoap {
 			com.liferay.commerce.product.model.CPTaxCategory returnValue =
 				CPTaxCategoryServiceUtil.addCPTaxCategory(
 					nameMap, descriptionMap, serviceContext);
+
+			return com.liferay.commerce.product.model.CPTaxCategorySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPTaxCategorySoap
+			addCPTaxCategory(
+				String externalReferenceCode, String[] nameMapLanguageIds,
+				String[] nameMapValues, String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+
+			com.liferay.commerce.product.model.CPTaxCategory returnValue =
+				CPTaxCategoryServiceUtil.addCPTaxCategory(
+					externalReferenceCode, nameMap, descriptionMap,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPTaxCategorySoap.
 				toSoapModel(returnValue);
@@ -224,6 +259,11 @@ public class CPTaxCategoryServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateCPTaxCategory(String, long, Map, Map)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.product.model.CPTaxCategorySoap
 			updateCPTaxCategory(
 				long cpTaxCategoryId, String[] nameMapLanguageIds,
@@ -241,6 +281,36 @@ public class CPTaxCategoryServiceSoap {
 			com.liferay.commerce.product.model.CPTaxCategory returnValue =
 				CPTaxCategoryServiceUtil.updateCPTaxCategory(
 					cpTaxCategoryId, nameMap, descriptionMap);
+
+			return com.liferay.commerce.product.model.CPTaxCategorySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPTaxCategorySoap
+			updateCPTaxCategory(
+				String externalReferenceCode, long cpTaxCategoryId,
+				String[] nameMapLanguageIds, String[] nameMapValues,
+				String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+
+			com.liferay.commerce.product.model.CPTaxCategory returnValue =
+				CPTaxCategoryServiceUtil.updateCPTaxCategory(
+					externalReferenceCode, cpTaxCategoryId, nameMap,
+					descriptionMap);
 
 			return com.liferay.commerce.product.model.CPTaxCategorySoap.
 				toSoapModel(returnValue);

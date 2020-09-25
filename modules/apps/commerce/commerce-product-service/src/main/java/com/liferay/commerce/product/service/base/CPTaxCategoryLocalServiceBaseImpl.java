@@ -263,6 +263,21 @@ public abstract class CPTaxCategoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the cp tax category with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the cp tax category's external reference code
+	 * @return the matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
+	 */
+	@Override
+	public CPTaxCategory fetchCPTaxCategoryByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return cpTaxCategoryPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the cp tax category with the primary key.
 	 *
 	 * @param CPTaxCategoryId the primary key of the cp tax category

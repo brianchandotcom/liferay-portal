@@ -64,6 +64,21 @@ public interface CPTaxCategoryModel
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the external reference code of this cp tax category.
+	 *
+	 * @return the external reference code of this cp tax category
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this cp tax category.
+	 *
+	 * @param externalReferenceCode the external reference code of this cp tax category
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the cp tax category ID of this cp tax category.
 	 *
 	 * @return the cp tax category ID of this cp tax category

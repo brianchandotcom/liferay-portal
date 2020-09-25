@@ -185,6 +185,59 @@ public interface CPTaxCategoryPersistence
 	public int countByCompanyId(long companyId);
 
 	/**
+	 * Returns the cp tax category where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchCPTaxCategoryException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching cp tax category
+	 * @throws NoSuchCPTaxCategoryException if a matching cp tax category could not be found
+	 */
+	public CPTaxCategory findByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws NoSuchCPTaxCategoryException;
+
+	/**
+	 * Returns the cp tax category where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
+	 */
+	public CPTaxCategory fetchByC_ERC(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * Returns the cp tax category where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
+	 */
+	public CPTaxCategory fetchByC_ERC(
+		long companyId, String externalReferenceCode, boolean useFinderCache);
+
+	/**
+	 * Removes the cp tax category where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the cp tax category that was removed
+	 */
+	public CPTaxCategory removeByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws NoSuchCPTaxCategoryException;
+
+	/**
+	 * Returns the number of cp tax categories where companyId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching cp tax categories
+	 */
+	public int countByC_ERC(long companyId, String externalReferenceCode);
+
+	/**
 	 * Caches the cp tax category in the entity cache if it is enabled.
 	 *
 	 * @param cpTaxCategory the cp tax category

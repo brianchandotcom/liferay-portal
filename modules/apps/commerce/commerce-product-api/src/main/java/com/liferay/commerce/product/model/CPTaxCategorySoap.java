@@ -33,6 +33,7 @@ public class CPTaxCategorySoap implements Serializable {
 	public static CPTaxCategorySoap toSoapModel(CPTaxCategory model) {
 		CPTaxCategorySoap soapModel = new CPTaxCategorySoap();
 
+		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCPTaxCategoryId(model.getCPTaxCategoryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -92,6 +93,14 @@ public class CPTaxCategorySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPTaxCategoryId(pk);
+	}
+
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
 	}
 
 	public long getCPTaxCategoryId() {
@@ -158,6 +167,7 @@ public class CPTaxCategorySoap implements Serializable {
 		_description = description;
 	}
 
+	private String _externalReferenceCode;
 	private long _CPTaxCategoryId;
 	private long _companyId;
 	private long _userId;

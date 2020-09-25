@@ -80,6 +80,7 @@ public class CPTaxCategoryModelImpl
 	public static final String TABLE_NAME = "CPTaxCategory";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"externalReferenceCode", Types.VARCHAR},
 		{"CPTaxCategoryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -90,6 +91,7 @@ public class CPTaxCategoryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPTaxCategoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -101,7 +103,7 @@ public class CPTaxCategoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPTaxCategory (CPTaxCategoryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
+		"create table CPTaxCategory (externalReferenceCode VARCHAR(75) null,CPTaxCategoryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPTaxCategory";
 
@@ -142,11 +144,17 @@ public class CPTaxCategoryModelImpl
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -163,6 +171,7 @@ public class CPTaxCategoryModelImpl
 
 		CPTaxCategory model = new CPTaxCategoryImpl();
 
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCPTaxCategoryId(soapModel.getCPTaxCategoryId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -327,6 +336,12 @@ public class CPTaxCategoryModelImpl
 			new LinkedHashMap<String, BiConsumer<CPTaxCategory, ?>>();
 
 		attributeGetterFunctions.put(
+			"externalReferenceCode", CPTaxCategory::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<CPTaxCategory, String>)
+				CPTaxCategory::setExternalReferenceCode);
+		attributeGetterFunctions.put(
 			"CPTaxCategoryId", CPTaxCategory::getCPTaxCategoryId);
 		attributeSetterBiConsumers.put(
 			"CPTaxCategoryId",
@@ -366,6 +381,35 @@ public class CPTaxCategoryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -856,6 +900,7 @@ public class CPTaxCategoryModelImpl
 	public Object clone() {
 		CPTaxCategoryImpl cpTaxCategoryImpl = new CPTaxCategoryImpl();
 
+		cpTaxCategoryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		cpTaxCategoryImpl.setCPTaxCategoryId(getCPTaxCategoryId());
 		cpTaxCategoryImpl.setCompanyId(getCompanyId());
 		cpTaxCategoryImpl.setUserId(getUserId());
@@ -944,6 +989,18 @@ public class CPTaxCategoryModelImpl
 	public CacheModel<CPTaxCategory> toCacheModel() {
 		CPTaxCategoryCacheModel cpTaxCategoryCacheModel =
 			new CPTaxCategoryCacheModel();
+
+		cpTaxCategoryCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			cpTaxCategoryCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			cpTaxCategoryCacheModel.externalReferenceCode = null;
+		}
 
 		cpTaxCategoryCacheModel.CPTaxCategoryId = getCPTaxCategoryId();
 
@@ -1066,6 +1123,7 @@ public class CPTaxCategoryModelImpl
 
 	}
 
+	private String _externalReferenceCode;
 	private long _CPTaxCategoryId;
 	private long _companyId;
 	private long _userId;
@@ -1105,6 +1163,8 @@ public class CPTaxCategoryModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("CPTaxCategoryId", _CPTaxCategoryId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1126,21 +1186,23 @@ public class CPTaxCategoryModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("CPTaxCategoryId", 1L);
+		columnBitmasks.put("externalReferenceCode", 1L);
 
-		columnBitmasks.put("companyId", 2L);
+		columnBitmasks.put("CPTaxCategoryId", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("userName", 8L);
+		columnBitmasks.put("userId", 8L);
 
-		columnBitmasks.put("createDate", 16L);
+		columnBitmasks.put("userName", 16L);
 
-		columnBitmasks.put("modifiedDate", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("name", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("description", 128L);
+		columnBitmasks.put("name", 128L);
+
+		columnBitmasks.put("description", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

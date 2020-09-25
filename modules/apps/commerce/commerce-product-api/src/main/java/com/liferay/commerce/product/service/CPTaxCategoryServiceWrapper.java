@@ -32,6 +32,11 @@ public class CPTaxCategoryServiceWrapper
 		_cpTaxCategoryService = cpTaxCategoryService;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addCPTaxCategory(String, Map, Map, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPTaxCategory addCPTaxCategory(
 			java.util.Map<java.util.Locale, String> nameMap,
@@ -41,6 +46,18 @@ public class CPTaxCategoryServiceWrapper
 
 		return _cpTaxCategoryService.addCPTaxCategory(
 			nameMap, descriptionMap, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPTaxCategory addCPTaxCategory(
+			String externalReferenceCode,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpTaxCategoryService.addCPTaxCategory(
+			externalReferenceCode, nameMap, descriptionMap, serviceContext);
 	}
 
 	@Override
@@ -114,6 +131,11 @@ public class CPTaxCategoryServiceWrapper
 		return _cpTaxCategoryService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateCPTaxCategory(String, long, Map, Map)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPTaxCategory updateCPTaxCategory(
 			long cpTaxCategoryId,
@@ -123,6 +145,17 @@ public class CPTaxCategoryServiceWrapper
 
 		return _cpTaxCategoryService.updateCPTaxCategory(
 			cpTaxCategoryId, nameMap, descriptionMap);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPTaxCategory updateCPTaxCategory(
+			String externalReferenceCode, long cpTaxCategoryId,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpTaxCategoryService.updateCPTaxCategory(
+			externalReferenceCode, cpTaxCategoryId, nameMap, descriptionMap);
 	}
 
 	@Override

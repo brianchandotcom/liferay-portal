@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -122,6 +124,9 @@ public class CPTaxCategoryPersistenceTest {
 
 		CPTaxCategory newCPTaxCategory = _persistence.create(pk);
 
+		newCPTaxCategory.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newCPTaxCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		newCPTaxCategory.setUserId(RandomTestUtil.nextLong());
@@ -141,6 +146,9 @@ public class CPTaxCategoryPersistenceTest {
 		CPTaxCategory existingCPTaxCategory = _persistence.findByPrimaryKey(
 			newCPTaxCategory.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCPTaxCategory.getExternalReferenceCode(),
+			newCPTaxCategory.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingCPTaxCategory.getCPTaxCategoryId(),
 			newCPTaxCategory.getCPTaxCategoryId());
@@ -173,6 +181,15 @@ public class CPTaxCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC() throws Exception {
+		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_ERC(0L, "null");
+
+		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPTaxCategory newCPTaxCategory = addCPTaxCategory();
 
@@ -197,9 +214,10 @@ public class CPTaxCategoryPersistenceTest {
 
 	protected OrderByComparator<CPTaxCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPTaxCategory", "CPTaxCategoryId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true);
+			"CPTaxCategory", "externalReferenceCode", true, "CPTaxCategoryId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "name", true,
+			"description", true);
 	}
 
 	@Test
@@ -415,10 +433,75 @@ public class CPTaxCategoryPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CPTaxCategory newCPTaxCategory = addCPTaxCategory();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCPTaxCategory.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CPTaxCategory newCPTaxCategory = addCPTaxCategory();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CPTaxCategory.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"CPTaxCategoryId", newCPTaxCategory.getCPTaxCategoryId()));
+
+		List<CPTaxCategory> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CPTaxCategory cpTaxCategory) {
+		Assert.assertEquals(
+			Long.valueOf(cpTaxCategory.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				cpTaxCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			cpTaxCategory.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				cpTaxCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+	}
+
 	protected CPTaxCategory addCPTaxCategory() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		CPTaxCategory cpTaxCategory = _persistence.create(pk);
+
+		cpTaxCategory.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		cpTaxCategory.setCompanyId(RandomTestUtil.nextLong());
 

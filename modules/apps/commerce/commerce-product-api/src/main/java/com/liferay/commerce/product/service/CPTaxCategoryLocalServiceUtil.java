@@ -55,6 +55,11 @@ public class CPTaxCategoryLocalServiceUtil {
 		return getService().addCPTaxCategory(cpTaxCategory);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addCPTaxCategory(String, Map, Map, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.product.model.CPTaxCategory
 			addCPTaxCategory(
 				java.util.Map<java.util.Locale, String> nameMap,
@@ -64,6 +69,18 @@ public class CPTaxCategoryLocalServiceUtil {
 
 		return getService().addCPTaxCategory(
 			nameMap, descriptionMap, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPTaxCategory
+			addCPTaxCategory(
+				String externalReferenceCode,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCPTaxCategory(
+			externalReferenceCode, nameMap, descriptionMap, serviceContext);
 	}
 
 	public static int countCPTaxCategoriesByCompanyId(
@@ -243,6 +260,21 @@ public class CPTaxCategoryLocalServiceUtil {
 		return getService().fetchCPTaxCategory(CPTaxCategoryId);
 	}
 
+	/**
+	 * Returns the cp tax category with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the cp tax category's external reference code
+	 * @return the matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
+	 */
+	public static com.liferay.commerce.product.model.CPTaxCategory
+		fetchCPTaxCategoryByReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return getService().fetchCPTaxCategoryByReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	public static java.util.List
 		<com.liferay.commerce.product.model.CPTaxCategory>
 			findCPTaxCategoriesByCompanyId(
@@ -364,6 +396,11 @@ public class CPTaxCategoryLocalServiceUtil {
 		return getService().updateCPTaxCategory(cpTaxCategory);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateCPTaxCategory(String, long, Map, Map)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.product.model.CPTaxCategory
 			updateCPTaxCategory(
 				long cpTaxCategoryId,
@@ -373,6 +410,17 @@ public class CPTaxCategoryLocalServiceUtil {
 
 		return getService().updateCPTaxCategory(
 			cpTaxCategoryId, nameMap, descriptionMap);
+	}
+
+	public static com.liferay.commerce.product.model.CPTaxCategory
+			updateCPTaxCategory(
+				String externalReferenceCode, long cpTaxCategoryId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCPTaxCategory(
+			externalReferenceCode, cpTaxCategoryId, nameMap, descriptionMap);
 	}
 
 	public static CPTaxCategoryLocalService getService() {

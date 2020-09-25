@@ -32,6 +32,10 @@ public class CPTaxCategoryTable extends BaseTable<CPTaxCategoryTable> {
 
 	public static final CPTaxCategoryTable INSTANCE = new CPTaxCategoryTable();
 
+	public final Column<CPTaxCategoryTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CPTaxCategoryTable, Long> CPTaxCategoryId =
 		createColumn(
 			"CPTaxCategoryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

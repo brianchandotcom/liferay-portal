@@ -37,6 +37,12 @@ public class CPTaxCategoryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPTaxCategoryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addCPTaxCategory(String, Map, Map, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.product.model.CPTaxCategory
 			addCPTaxCategory(
 				java.util.Map<java.util.Locale, String> nameMap,
@@ -46,6 +52,18 @@ public class CPTaxCategoryServiceUtil {
 
 		return getService().addCPTaxCategory(
 			nameMap, descriptionMap, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPTaxCategory
+			addCPTaxCategory(
+				String externalReferenceCode,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCPTaxCategory(
+			externalReferenceCode, nameMap, descriptionMap, serviceContext);
 	}
 
 	public static int countCPTaxCategoriesByCompanyId(
@@ -113,6 +131,11 @@ public class CPTaxCategoryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateCPTaxCategory(String, long, Map, Map)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.product.model.CPTaxCategory
 			updateCPTaxCategory(
 				long cpTaxCategoryId,
@@ -122,6 +145,17 @@ public class CPTaxCategoryServiceUtil {
 
 		return getService().updateCPTaxCategory(
 			cpTaxCategoryId, nameMap, descriptionMap);
+	}
+
+	public static com.liferay.commerce.product.model.CPTaxCategory
+			updateCPTaxCategory(
+				String externalReferenceCode, long cpTaxCategoryId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCPTaxCategory(
+			externalReferenceCode, cpTaxCategoryId, nameMap, descriptionMap);
 	}
 
 	public static CPTaxCategoryService getService() {

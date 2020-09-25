@@ -472,6 +472,7 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPTaxCategory">
+		<field name="externalReferenceCode" type="String" />
 		<field name="CPTaxCategoryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

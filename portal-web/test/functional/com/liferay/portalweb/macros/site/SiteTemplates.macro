@@ -317,33 +317,13 @@ definition {
 		}
 	}
 
-	macro viewDefaultCP {
-		for (var siteTemplateName : list "${siteTemplateNameList}") {
-			var key_siteTemplateName = "${siteTemplateName}";
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
-				value1 = "${siteTemplateName}");
-		}
-
-		AssertElementNotPresent(locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME_3");
-	}
-
-	macro viewDefaultDataLocalizedCP {
+	macro viewDataLocalizedCP {
 		for (var siteTemplateNameTranslation : list "${siteTemplateNameList}") {
 			var key_siteTemplateName = "${siteTemplateNameTranslation}";
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
 				value1 = "${siteTemplateNameTranslation}");
-		}
-
-		for (var DescriptionTranslation : list "${siteTemplateDescriptionList}") {
-			var key_siteTemplateDescription = "${DescriptionTranslation}";
-
-			AssertTextEquals(
-				locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION",
-				value1 = "${DescriptionTranslation}");
 		}
 	}
 

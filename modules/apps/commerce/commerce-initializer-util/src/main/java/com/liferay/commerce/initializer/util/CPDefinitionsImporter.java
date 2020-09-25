@@ -304,7 +304,7 @@ public class CPDefinitionsImporter {
 
 		CPTaxCategory cpTaxCategory =
 			_cpTaxCategoryLocalService.addCPTaxCategory(
-				nameMap, Collections.emptyMap(), StringPool.BLANK,
+				StringPool.BLANK, nameMap, Collections.emptyMap(),
 				serviceContext);
 
 		return cpTaxCategory.getCPTaxCategoryId();

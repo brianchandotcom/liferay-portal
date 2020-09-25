@@ -38,8 +38,8 @@ public class CPTaxCategoryLocalServiceImpl
 
 	@Override
 	public CPTaxCategory addCPTaxCategory(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String externalReferenceCode, ServiceContext serviceContext)
+			String externalReferenceCode, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -51,12 +51,12 @@ public class CPTaxCategoryLocalServiceImpl
 		CPTaxCategory cpTaxCategory = cpTaxCategoryPersistence.create(
 			cpTaxCategoryId);
 
+		cpTaxCategory.setExternalReferenceCode(externalReferenceCode);
 		cpTaxCategory.setCompanyId(user.getCompanyId());
 		cpTaxCategory.setUserId(user.getUserId());
 		cpTaxCategory.setUserName(user.getFullName());
 		cpTaxCategory.setNameMap(nameMap);
 		cpTaxCategory.setDescriptionMap(descriptionMap);
-		cpTaxCategory.setExternalReferenceCode(externalReferenceCode);
 
 		return cpTaxCategoryPersistence.update(cpTaxCategory);
 	}
@@ -128,8 +128,8 @@ public class CPTaxCategoryLocalServiceImpl
 
 	@Override
 	public CPTaxCategory updateCPTaxCategory(
-			long cpTaxCategoryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String externalReferenceCode)
+			String externalReferenceCode, long cpTaxCategoryId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap)
 		throws PortalException {
 
 		CPTaxCategory cpTaxCategory = cpTaxCategoryPersistence.findByPrimaryKey(
@@ -137,9 +137,9 @@ public class CPTaxCategoryLocalServiceImpl
 
 		validate(nameMap);
 
+		cpTaxCategory.setExternalReferenceCode(externalReferenceCode);
 		cpTaxCategory.setNameMap(nameMap);
 		cpTaxCategory.setDescriptionMap(descriptionMap);
-		cpTaxCategory.setExternalReferenceCode(externalReferenceCode);
 
 		return cpTaxCategoryPersistence.update(cpTaxCategory);
 	}

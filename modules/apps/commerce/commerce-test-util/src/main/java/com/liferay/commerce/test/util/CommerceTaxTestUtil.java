@@ -50,8 +50,8 @@ public class CommerceTaxTestUtil {
 	public static long addTaxCategoryId(long groupId) throws PortalException {
 		CPTaxCategory cpTaxCategory =
 			CPTaxCategoryLocalServiceUtil.addCPTaxCategory(
+				StringPool.BLANK, RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(), StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(groupId));
 
 		return cpTaxCategory.getCPTaxCategoryId();

@@ -121,24 +121,26 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 		long cpTaxCategoryId = ParamUtil.getLong(
 			actionRequest, "cpTaxCategoryId");
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		String externalReferenceCode = ParamUtil.getString(
 			actionRequest, "externalReferenceCode");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPTaxCategory.class.getName(), actionRequest);
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		if (cpTaxCategoryId <= 0) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CPTaxCategory.class.getName(), actionRequest);
+
 			_cpTaxCategoryService.addCPTaxCategory(
-				nameMap, descriptionMap, externalReferenceCode, serviceContext);
+				externalReferenceCode, nameMap, descriptionMap, serviceContext);
 		}
 		else {
 			_cpTaxCategoryService.updateCPTaxCategory(
-				cpTaxCategoryId, nameMap, descriptionMap,
-				externalReferenceCode);
+				externalReferenceCode, cpTaxCategoryId, nameMap,
+				descriptionMap);
 		}
 	}
 

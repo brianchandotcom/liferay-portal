@@ -79,10 +79,10 @@ public class TaxCategoryHelper {
 			id);
 
 		return _cpTaxCategoryService.updateCPTaxCategory(
+			cpTaxCategory.getExternalReferenceCode(),
 			cpTaxCategory.getCPTaxCategoryId(),
 			LanguageUtils.getLocalizedMap(taxCategory.getName()),
-			LanguageUtils.getLocalizedMap(taxCategory.getDescription()),
-			cpTaxCategory.getExternalReferenceCode());
+			LanguageUtils.getLocalizedMap(taxCategory.getDescription()));
 	}
 
 	public TaxCategory upsertTaxCategory(
@@ -107,9 +107,10 @@ public class TaxCategoryHelper {
 			groupId, new long[0], user, true);
 
 		CPTaxCategory cpTaxCategory = _cpTaxCategoryService.addCPTaxCategory(
+			StringPool.BLANK,
 			LanguageUtils.getLocalizedMap(taxCategory.getName()),
 			LanguageUtils.getLocalizedMap(taxCategory.getDescription()),
-			StringPool.BLANK, serviceContext);
+			serviceContext);
 
 		return _dtoMapper.modelToDTO(cpTaxCategory);
 	}

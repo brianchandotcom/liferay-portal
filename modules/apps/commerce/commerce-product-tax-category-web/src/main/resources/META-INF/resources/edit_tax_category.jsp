@@ -47,9 +47,9 @@ else {
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="name" />
-
 				<aui:input name="externalReferenceCode" />
+
+				<aui:input name="name" />
 
 				<aui:input name="description" />
 			</aui:fieldset>

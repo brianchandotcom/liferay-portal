@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEXT_BUTTON</td>
+	<td>//*[contains(@class,'btn')][normalize-space(text())='Next']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATION_NAME</td>
 	<td>//input[contains(@name,'name')]</td>
 	<td></td>
@@ -109,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_TIME</td>
+	<td>//span[@class='lfr-input-time']/input[contains(@name,'publishTime') and @type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISHED_PUBLICATIONS_NAME</td>
 	<td>//div[contains(@class,'change-list-name') and contains(.,'${key_publicationName}')]</td>
 	<td></td>
@@ -131,6 +141,11 @@
 <tr>
 	<td>REVERT_SCREEN_RADIO_OPTION</td>
 	<td>//div[contains(@class,'change-lists-radio-label') and contains(.,'${key_radioName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULE_BUTTON</td>
+	<td>//*[contains(@class,'btn')][normalize-space(text())='Schedule']</td>
 	<td></td>
 </tr>
 <tr>

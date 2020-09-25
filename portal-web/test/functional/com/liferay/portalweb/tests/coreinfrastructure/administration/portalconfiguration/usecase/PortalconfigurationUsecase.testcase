@@ -295,19 +295,24 @@ definition {
 	test ViewVirtualInstanceInheritsSystemSettings {
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#ViewVirtualInstanceInheritsSystemSettings";
 
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Personal Menu",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.viewToggleSwitchNotChecked(portalSetting = "Show in Control Menu");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
-			configurationCategory = "LDAP",
-			configurationName = "Authentication",
+			configurationCategory = "Users",
+			configurationName = "Personal Menu",
 			configurationScope = "Virtual Instance Scope");
 
-		FormFields.enableCheckbox(fieldName = "enabled");
-
-		SystemSettings.saveConfiguration();
+		PortalSettings.editConfigurationUsersPersonalMenuShowInControlMenu(toggleSwitchLabel = "Show in Control Menu");
 
 		Navigator.openURL();
 
@@ -327,11 +332,11 @@ definition {
 			virtualHostsURL = "http://www.able.com:8080");
 
 		PortalSettings.gotoConfiguration(
-			configurationCategory = "LDAP",
-			configurationName = "General",
+			configurationCategory = "Users",
+			configurationName = "Personal Menu",
 			configurationScope = "Virtual Instance Scope");
 
-		FormFields.viewCheckboxChecked(fieldName = "InstanceSettingsPortlet_enabled");
+		PortalSettings.viewToggleSwitchChecked(portalSetting = "Show in Control Menu");
 	}
 
 }

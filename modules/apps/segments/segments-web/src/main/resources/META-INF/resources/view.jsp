@@ -22,6 +22,8 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 String eventName = liferayPortletResponse.getNamespace() + "assignSiteRoles";
 
 request.setAttribute("view.jsp-eventName", eventName);
+
+String releaseInfo = ReleaseInfo.getReleaseInfo();
 %>
 
 <clay:management-toolbar
@@ -88,10 +90,20 @@ request.setAttribute("view.jsp-eventName", eventName);
 							/>
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:icon
-								message="source.dxp"
-								src='<%= PortalUtil.getPathContext(request) + "/assets/dxp-icon.svg" %>'
-							/>
+							<c:choose>
+								<c:when test='<%= releaseInfo.contains("CE") %>'>
+									<liferay-ui:icon
+										message="source.ce"
+										src='<%= PortalUtil.getPathContext(request) + "/assets/ce-icon.svg" %>'
+									/>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:icon
+										message="source.dxp"
+										src='<%= PortalUtil.getPathContext(request) + "/assets/dxp-icon.svg" %>'
+									/>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-column-text>

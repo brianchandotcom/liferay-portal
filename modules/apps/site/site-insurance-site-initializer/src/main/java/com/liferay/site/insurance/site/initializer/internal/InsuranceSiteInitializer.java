@@ -641,19 +641,14 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			sb.toString(), type, true);
 
-		try {
-			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
 
-				_populateZipWriter(
-					zipWriter, url, numberValuesMap, stringValuesMap);
-			}
+			_populateZipWriter(
+				zipWriter, url, numberValuesMap, stringValuesMap);
+		}
 
-			return zipWriter.getFile();
-		}
-		catch (Exception exception) {
-			throw new Exception(exception);
-		}
+		return zipWriter.getFile();
 	}
 
 	private String _getContent(String fileName, URL url) throws Exception {

@@ -29,7 +29,6 @@ definition {
 		}
 	}
 
-	@ignore
 	@priority = "4"
 	test MarkNotificationAsReadAndAcceptRequest {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

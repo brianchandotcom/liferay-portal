@@ -47,7 +47,6 @@ definition {
 		}
 	}
 
-	@ignore
 	@priority = "4"
 	test ViewAnnouncementsEntryWithDistributedScope {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

@@ -40,9 +40,14 @@ definition {
 			category = "Order Management",
 			portlet = "Orders");
 
+		Refresh();
+
 		while (IsElementPresent(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS")) {
 			CommerceEntry.deleteCommerceEntry();
+
 		}
+
+		Pause(locator1 = "3000");
 
 		if (isSet(userScreenName)) {
 			ApplicationsMenu.gotoPortlet(
@@ -157,7 +162,9 @@ definition {
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Countries");
 
 		if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-			Pagination.changePagination(itemsPerPage = "60");
+			if(IsElementPresent(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT")){
+				Pagination.changePagination(itemsPerPage = "60");
+			}
 
 			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 				CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected countries?");

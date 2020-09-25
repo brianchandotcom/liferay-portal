@@ -31,7 +31,26 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 				size="<%= StringPool.BLANK %>"
 			>
 				<h2 class="sheet-title">
-					<%= contentDashboardAdminDisplayContext.getAuditGraphTitle() %>
+					<clay:content-row>
+						<clay:content-col
+							expand="<%= true %>"
+						>
+							<%= contentDashboardAdminDisplayContext.getAuditGraphTitle() %>
+						</clay:content-col>
+
+						<clay:content-col>
+							<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "configure-chart") %>">
+								<clay:button
+									borderless="<%= true %>"
+									cssClass="component-action"
+									displayType="secondary"
+									icon="cog"
+									onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+									small="<%= true %>"
+								/>
+							</span>
+						</clay:content-col>
+					</clay:content-row>
 				</h2>
 
 				<div class="audit-graph">

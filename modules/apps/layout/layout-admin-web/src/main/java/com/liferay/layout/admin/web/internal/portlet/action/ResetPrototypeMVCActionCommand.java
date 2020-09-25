@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
@@ -50,7 +51,15 @@ public class ResetPrototypeMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SitesUtil.resetPrototype(themeDisplay.getLayout());
+		Layout layout = themeDisplay.getLayout();
+
+		SitesUtil.resetPrototype(layout);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout != null) {
+			SitesUtil.resetPrototype(draftLayout);
+		}
 
 		MultiSessionMessages.add(
 			actionRequest,

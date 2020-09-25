@@ -279,11 +279,9 @@ a.control-menu-icon,
 	> .control-menu-nav {
 		flex-wrap: nowrap;
 		justify-content: center;
-		overflow: hidden;
 
 		@include media-breakpoint-up(md) {
 			flex-wrap: wrap;
-			overflow: auto;
 		}
 
 		> li > .lfr-portal-tooltip > .control-menu-icon {

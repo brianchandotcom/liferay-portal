@@ -987,9 +987,11 @@ public abstract class BaseFormResourceTestCase {
 					return false;
 				}
 			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	protected boolean equals(

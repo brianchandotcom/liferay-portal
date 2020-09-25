@@ -862,6 +862,32 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
+	public void testPatchDataRecord() throws Exception {
+		DataRecord postDataRecord = testPatchDataRecord_addDataRecord();
+
+		DataRecord randomPatchDataRecord = randomPatchDataRecord();
+
+		DataRecord patchDataRecord = dataRecordResource.patchDataRecord(
+			postDataRecord.getId(), randomPatchDataRecord);
+
+		DataRecord expectedPatchDataRecord = postDataRecord.clone();
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchDataRecord, randomPatchDataRecord);
+
+		DataRecord getDataRecord = dataRecordResource.getDataRecord(
+			patchDataRecord.getId());
+
+		assertEquals(expectedPatchDataRecord, getDataRecord);
+		assertValid(getDataRecord);
+	}
+
+	protected DataRecord testPatchDataRecord_addDataRecord() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutDataRecord() throws Exception {
 		DataRecord postDataRecord = testPutDataRecord_addDataRecord();
 
@@ -1120,9 +1146,11 @@ public abstract class BaseDataRecordResourceTestCase {
 					return false;
 				}
 			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()

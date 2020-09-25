@@ -60,6 +60,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -385,6 +386,43 @@ public abstract class BaseDataRecordResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/data-engine/v2.0/data-records/{dataRecordId}' -d $'{"dataRecordCollectionId": ___, "dataRecordValues": ___, "id": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@PATCH
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataRecordId")}
+	)
+	@Path("/data-records/{dataRecordId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataRecord")})
+	public DataRecord patchDataRecord(
+			@NotNull @Parameter(hidden = true) @PathParam("dataRecordId") Long
+				dataRecordId,
+			DataRecord dataRecord)
+		throws Exception {
+
+		DataRecord existingDataRecord = getDataRecord(dataRecordId);
+
+		if (dataRecord.getDataRecordCollectionId() != null) {
+			existingDataRecord.setDataRecordCollectionId(
+				dataRecord.getDataRecordCollectionId());
+		}
+
+		if (dataRecord.getDataRecordValues() != null) {
+			existingDataRecord.setDataRecordValues(
+				dataRecord.getDataRecordValues());
+		}
+
+		preparePatch(dataRecord, existingDataRecord);
+
+		return putDataRecord(dataRecordId, existingDataRecord);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-records/{dataRecordId}' -d $'{"dataRecordCollectionId": ___, "dataRecordValues": ___, "id": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -601,6 +639,10 @@ public abstract class BaseDataRecordResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		DataRecord dataRecord, DataRecord existingDataRecord) {
 	}
 
 	protected <T, R> List<R> transform(

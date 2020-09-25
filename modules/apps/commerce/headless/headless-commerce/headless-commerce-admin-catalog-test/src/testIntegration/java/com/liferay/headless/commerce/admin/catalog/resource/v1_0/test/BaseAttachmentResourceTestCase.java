@@ -1279,9 +1279,11 @@ public abstract class BaseAttachmentResourceTestCase {
 					return false;
 				}
 			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()

@@ -87,6 +87,9 @@ public interface DataRecordResource {
 
 	public DataRecord getDataRecord(Long dataRecordId) throws Exception;
 
+	public DataRecord patchDataRecord(Long dataRecordId, DataRecord dataRecord)
+		throws Exception;
+
 	public DataRecord putDataRecord(Long dataRecordId, DataRecord dataRecord)
 		throws Exception;
 

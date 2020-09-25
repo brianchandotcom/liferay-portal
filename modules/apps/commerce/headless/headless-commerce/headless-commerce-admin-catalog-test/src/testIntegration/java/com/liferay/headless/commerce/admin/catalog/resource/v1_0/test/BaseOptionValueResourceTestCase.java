@@ -750,9 +750,11 @@ public abstract class BaseOptionValueResourceTestCase {
 					return false;
 				}
 			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()

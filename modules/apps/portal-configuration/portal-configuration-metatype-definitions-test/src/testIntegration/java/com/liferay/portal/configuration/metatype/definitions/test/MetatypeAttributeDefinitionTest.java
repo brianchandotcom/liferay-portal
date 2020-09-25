@@ -57,41 +57,32 @@ public class MetatypeAttributeDefinitionTest {
 					"TestConfiguration",
 				null);
 
-		AttributeDefinition singleValuedAttributeDefinition =
-			_getAttributeDefinition(
-				"testStringEscapeSingleValuedAttribute",
-				extendedObjectClassDefinition);
-
-		String[] singleValuedAttributeDefaultValue =
-			singleValuedAttributeDefinition.getDefaultValue();
-
-		Assert.assertNotNull(
+		Assert.assertArrayEquals(
 			"Default value of single valued string attribute containing " +
 				"non-escaped delimiter should be considered valid.",
-			singleValuedAttributeDefaultValue);
-		Assert.assertEquals(
-			"a=b,c=d\\,e=f", singleValuedAttributeDefaultValue[0]);
-
-		AttributeDefinition multiValuedAttributeDefinition =
-			_getAttributeDefinition(
-				"testStringEscapeMultiValuedAttribute",
-				extendedObjectClassDefinition);
+			new String[] {"a=b,c=d\\,e=f"},
+			_getDefaultValue(
+				extendedObjectClassDefinition,
+				"testStringEscapeSingleValuedAttribute"));
 
 		Assert.assertArrayEquals(
 			new String[] {"a=b", "c=d,e=f"},
-			multiValuedAttributeDefinition.getDefaultValue());
+			_getDefaultValue(
+				extendedObjectClassDefinition,
+				"testStringEscapeMultiValuedAttribute"));
 	}
 
-	private AttributeDefinition _getAttributeDefinition(
-		String id, ObjectClassDefinition objectClassDefinition) {
+	private String[] _getDefaultValue(
+		ExtendedObjectClassDefinition extendedObjectClassDefinition,
+		String id) {
 
 		AttributeDefinition[] attributeDefinitions =
-			objectClassDefinition.getAttributeDefinitions(
+			extendedObjectClassDefinition.getAttributeDefinitions(
 				ObjectClassDefinition.ALL);
 
 		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
 			if (id.equals(attributeDefinition.getID())) {
-				return attributeDefinition;
+				return attributeDefinition.getDefaultValue();
 			}
 		}
 

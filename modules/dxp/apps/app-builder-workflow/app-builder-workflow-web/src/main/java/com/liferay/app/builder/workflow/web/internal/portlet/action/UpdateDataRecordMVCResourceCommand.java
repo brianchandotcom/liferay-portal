@@ -109,21 +109,10 @@ public class UpdateDataRecordMVCResourceCommand
 			themeDisplay.getUser()
 		).build();
 
-		DataRecord newDataRecord = DataRecord.toDTO(
-			ParamUtil.getString(resourceRequest, "dataRecord"));
-
-		DataRecord existingDataRecord = dataRecordResource.getDataRecord(
-			ParamUtil.getLong(resourceRequest, "dataRecordId"));
-
-		Map<String, Object> existingDataRecordValues =
-			existingDataRecord.getDataRecordValues();
-
-		existingDataRecordValues.putAll(newDataRecord.getDataRecordValues());
-
-		newDataRecord.setDataRecordValues(existingDataRecordValues);
-
-		return dataRecordResource.putDataRecord(
-			ParamUtil.getLong(resourceRequest, "dataRecordId"), newDataRecord);
+		return dataRecordResource.patchDataRecord(
+			ParamUtil.getLong(resourceRequest, "dataRecordId"),
+			DataRecord.toDTO(
+				ParamUtil.getString(resourceRequest, "dataRecord")));
 	}
 
 	@Reference

@@ -76,6 +76,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.validation.ValidationException;
 
@@ -348,6 +349,26 @@ public class DataRecordResourceImpl
 			new ServiceContext());
 
 		return dataRecord;
+	}
+
+	@Override
+	protected void preparePatch(
+		DataRecord dataRecord, DataRecord existingDataRecord) {
+
+		if (dataRecord.getDataRecordValues() != null) {
+			existingDataRecord.setDataRecordValues(
+				() -> {
+					DataRecord getDataRecord = getDataRecord(
+						existingDataRecord.getId());
+
+					Map<String, Object> dataRecordValues =
+						getDataRecord.getDataRecordValues();
+
+					dataRecordValues.putAll(dataRecord.getDataRecordValues());
+
+					return dataRecordValues;
+				});
+		}
 	}
 
 	private BooleanFilter _getBooleanFilter(

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.poshi.runner;
+package com.liferay.poshi.core;
 
+import com.liferay.poshi.core.util.FileUtil;
+import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
-import com.liferay.poshi.runner.util.FileUtil;
-import com.liferay.poshi.runner.util.OSDetector;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -45,30 +45,29 @@ import org.junit.Test;
  * @author Karen Dang
  * @author Michael Hashimoto
  */
-public class PoshiRunnerValidationTest extends TestCase {
+public class PoshiValidationTest extends TestCase {
 
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		String[] poshiFileNames = ArrayUtils.addAll(
-			PoshiRunnerContext.POSHI_SUPPORT_FILE_INCLUDES,
-			PoshiRunnerContext.POSHI_TEST_FILE_INCLUDES);
+			PoshiContext.POSHI_SUPPORT_FILE_INCLUDES,
+			PoshiContext.POSHI_TEST_FILE_INCLUDES);
 
 		String poshiTestDirName =
-			"src/test/resources/com/liferay/poshi/runner/dependencies/test";
+			"src/test/resources/com/liferay/poshi/core/dependencies/test";
 
 		String poshiValidationDirName =
-			"src/test/resources/com/liferay/poshi/runner/dependencies" +
-				"/validation";
+			"src/test/resources/com/liferay/poshi/core/dependencies/validation";
 
-		PoshiRunnerContext.readFiles(
+		PoshiContext.readFiles(
 			poshiFileNames, poshiTestDirName, poshiValidationDirName);
 	}
 
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		PoshiRunnerContext.clear();
+		PoshiContext.clear();
 	}
 
 	@Test
@@ -80,10 +79,9 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("function", "AssertTextPresent");
 		element.addAttribute("value1", "hello world");
 
-		String primaryAttributeName =
-			PoshiRunnerValidation.getPrimaryAttributeName(
-				element, Arrays.asList("function", "selenium"),
-				"GetPrimaryAttributeName.macro");
+		String primaryAttributeName = PoshiValidation.getPrimaryAttributeName(
+			element, Arrays.asList("function", "selenium"),
+			"GetPrimaryAttributeName.macro");
 
 		Assert.assertEquals(
 			"getPrimaryAttributeName is failing", "function",
@@ -97,21 +95,21 @@ public class PoshiRunnerValidationTest extends TestCase {
 	public void testValidateClassCommandName() {
 		String classCommandName = "ValidateClassCommandName#classCommandName";
 
-		Element element = PoshiRunnerContext.getTestCaseCommandElement(
+		Element element = PoshiContext.getTestCaseCommandElement(
 			classCommandName,
-			PoshiRunnerGetterUtil.getNamespaceFromNamespacedClassCommandName(
+			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
 				classCommandName));
 
 		String filePath = getFilePath("ValidateClassCommandName.testcase");
 
-		PoshiRunnerValidation.validateNamespacedClassCommandName(
+		PoshiValidation.validateNamespacedClassCommandName(
 			element, classCommandName, "test-case", filePath);
 
 		Assert.assertEquals(
 			"validateNamespaceClassCommandName is failing", "",
 			getExceptionMessage());
 
-		PoshiRunnerValidation.validateNamespacedClassCommandName(
+		PoshiValidation.validateNamespacedClassCommandName(
 			element, "ValidateClassCommandName#fail", "test-case", filePath);
 
 		Assert.assertEquals(
@@ -129,7 +127,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("name", "validateCommandElement");
 		element.addAttribute("summary", "This is a test");
 
-		PoshiRunnerValidation.validateCommandElement(
+		PoshiValidation.validateCommandElement(
 			element, "ValidateCommandElement.macro");
 
 		Assert.assertEquals(
@@ -141,7 +139,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		element.addAttribute("summary", "This is a test");
 
-		PoshiRunnerValidation.validateCommandElement(
+		PoshiValidation.validateCommandElement(
 			element, "ValidateCommandElement.macro");
 
 		Assert.assertEquals(
@@ -167,7 +165,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement2.addAttribute("arg2", "true");
 		childElement2.addAttribute("line-number", "1");
 
-		PoshiRunnerValidation.validateConditionElement(
+		PoshiValidation.validateConditionElement(
 			element, "ValidateConditionElement.macro");
 
 		Assert.assertEquals(
@@ -183,7 +181,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement1.addAttribute("string", "hello world");
 		childElement1.addAttribute("substring", "hello");
 
-		PoshiRunnerValidation.validateConditionElement(
+		PoshiValidation.validateConditionElement(
 			element, "ValidateConditionElement.macro");
 
 		Assert.assertEquals(
@@ -195,20 +193,18 @@ public class PoshiRunnerValidationTest extends TestCase {
 	public void testValidateDefinitionElement() throws Exception {
 		URL url = getURL("ValidateDefinitionElement.macro");
 
-		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+		Element rootElement = PoshiGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validateDefinitionElement(
-			rootElement, url.getFile());
+		PoshiValidation.validateDefinitionElement(rootElement, url.getFile());
 
 		Assert.assertEquals(
 			"validateDefinitionElement is failing", "", getExceptionMessage());
 
 		url = getURL("ValidateDefinitionElement2.macro");
 
-		rootElement = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+		rootElement = PoshiGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validateDefinitionElement(
-			rootElement, url.getFile());
+		PoshiValidation.validateDefinitionElement(rootElement, url.getFile());
 
 		Assert.assertEquals(
 			"validateDefinitionElement is failing",
@@ -226,7 +222,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		List<String> possibleElementNames = Arrays.asList("command", "execute");
 
-		PoshiRunnerValidation.validateElementName(
+		PoshiValidation.validateElementName(
 			element, possibleElementNames, "ValidateElementName.macro");
 
 		Assert.assertEquals(
@@ -239,7 +235,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("function", "AssertTextPresent");
 		element.addAttribute("value1", "hello world");
 
-		PoshiRunnerValidation.validateElementName(
+		PoshiValidation.validateElementName(
 			element, possibleElementNames, "ValidateElementName.macro");
 
 		Assert.assertEquals(
@@ -261,7 +257,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		executeElement1.addAttribute("function", "Click");
 		executeElement1.addAttribute("locator1", "//else element");
 
-		PoshiRunnerValidation.validateElseElement(
+		PoshiValidation.validateElseElement(
 			element, "ValidateElseElement.macro");
 
 		Assert.assertEquals(
@@ -274,7 +270,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		executeElement2.addAttribute("function", "Click");
 		executeElement2.addAttribute("locator1", "//else element");
 
-		PoshiRunnerValidation.validateElseElement(
+		PoshiValidation.validateElseElement(
 			element, "ValidateElseElement.macro");
 
 		Assert.assertEquals(
@@ -302,7 +298,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		executeElement1.addAttribute("line-number", "15");
 		executeElement1.addAttribute("locator1", "//else if element");
 
-		PoshiRunnerValidation.validateElseIfElement(
+		PoshiValidation.validateElseIfElement(
 			element, "ValidateElseIfElement.macro");
 
 		Assert.assertEquals(
@@ -325,7 +321,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		executeElement1.addAttribute("line-number", "15");
 		executeElement1.addAttribute("locator1", "//else if element");
 
-		PoshiRunnerValidation.validateElseIfElement(
+		PoshiValidation.validateElseIfElement(
 			element, "ValidateElseIfElement.macro");
 
 		Assert.assertEquals(
@@ -348,7 +344,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement.addAttribute("name", "name");
 		childElement.addAttribute("value", "value");
 
-		PoshiRunnerValidation.validateExecuteElement(
+		PoshiValidation.validateExecuteElement(
 			element, "ValidateExecuteElement.macro");
 
 		Assert.assertEquals(
@@ -366,7 +362,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement.addAttribute("function", "Click");
 		childElement.addAttribute("locator1", "//here");
 
-		PoshiRunnerValidation.validateExecuteElement(
+		PoshiValidation.validateExecuteElement(
 			element, "ValidateExecuteElement.macro");
 
 		Assert.assertEquals(
@@ -390,8 +386,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement.addAttribute("locator1", "//here");
 		childElement.addAttribute("value1", "${i}");
 
-		PoshiRunnerValidation.validateForElement(
-			element, "ValidateForElement.macro");
+		PoshiValidation.validateForElement(element, "ValidateForElement.macro");
 
 		Assert.assertEquals(
 			"validateForElement is failing", "", getExceptionMessage());
@@ -409,8 +404,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement.addAttribute("locator1", "//here");
 		childElement.addAttribute("value1", "${i}");
 
-		PoshiRunnerValidation.validateForElement(
-			element, "ValidateForElement.macro");
+		PoshiValidation.validateForElement(element, "ValidateForElement.macro");
 
 		Assert.assertEquals(
 			"validateForElement is failing", "Missing param attribute",
@@ -424,8 +418,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("list", "1,2,3");
 		element.addAttribute("param", "i");
 
-		PoshiRunnerValidation.validateForElement(
-			element, "ValidateForElement.macro");
+		PoshiValidation.validateForElement(element, "ValidateForElement.macro");
 
 		Assert.assertEquals(
 			"validateForElement is failing", "Missing child elements",
@@ -436,44 +429,41 @@ public class PoshiRunnerValidationTest extends TestCase {
 	public void testValidateFunctionContext() {
 		String filePath = getFilePath("ValidateFunctionContext.macro");
 
-		Element element = PoshiRunnerContext.getMacroCommandElement(
+		Element element = PoshiContext.getMacroCommandElement(
 			"ValidateFunctionContext#validateFunctionContextPass",
-			PoshiRunnerContext.getDefaultNamespace());
+			PoshiContext.getDefaultNamespace());
 
 		List<Element> functionElements = element.elements("execute");
 
 		for (Element functionElement : functionElements) {
-			PoshiRunnerValidation.validateFunctionContext(
-				functionElement, filePath);
+			PoshiValidation.validateFunctionContext(functionElement, filePath);
 		}
 
 		Assert.assertEquals(
 			"ValidateFunctionContext is failing", "", getExceptionMessage());
 
-		element = PoshiRunnerContext.getMacroCommandElement(
+		element = PoshiContext.getMacroCommandElement(
 			"ValidateFunctionContext#validateFunctionContextFail1",
-			PoshiRunnerContext.getDefaultNamespace());
+			PoshiContext.getDefaultNamespace());
 
 		functionElements = element.elements("execute");
 
 		for (Element functionElement : functionElements) {
-			PoshiRunnerValidation.validateFunctionContext(
-				functionElement, filePath);
+			PoshiValidation.validateFunctionContext(functionElement, filePath);
 		}
 
 		Assert.assertEquals(
 			"validateFunctionContext is failing", "Invalid path name ClickAt",
 			getExceptionMessage());
 
-		element = PoshiRunnerContext.getMacroCommandElement(
+		element = PoshiContext.getMacroCommandElement(
 			"ValidateFunctionContext#validateFunctionContextFail2",
-			PoshiRunnerContext.getDefaultNamespace());
+			PoshiContext.getDefaultNamespace());
 
 		functionElements = element.elements("execute");
 
 		for (Element functionElement : functionElements) {
-			PoshiRunnerValidation.validateFunctionContext(
-				functionElement, filePath);
+			PoshiValidation.validateFunctionContext(functionElement, filePath);
 		}
 
 		Assert.assertEquals(
@@ -503,8 +493,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		executeElement2.addAttribute("argument1", "relative=top");
 		executeElement2.addAttribute("selenium", "selectFrame");
 
-		PoshiRunnerValidation.validateFunctionFile(
-			rootElement, "Close.function");
+		PoshiValidation.validateFunctionFile(rootElement, "Close.function");
 
 		Assert.assertEquals(
 			"validateFunctionFile is failing", "", getExceptionMessage());
@@ -528,8 +517,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		executeElement2.addAttribute("macro", "MacroFileName#macroCommandName");
 
-		PoshiRunnerValidation.validateFunctionFile(
-			rootElement, "Open.function");
+		PoshiValidation.validateFunctionFile(rootElement, "Open.function");
 
 		Assert.assertEquals(
 			"validateFunctionFile is failing", "Invalid or missing attribute",
@@ -551,7 +539,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement.addAttribute("name", "hello");
 		childElement.addAttribute("value", "world");
 
-		PoshiRunnerValidation.validateHasChildElements(
+		PoshiValidation.validateHasChildElements(
 			element, "ValidateHasChildElements.macro");
 
 		Assert.assertEquals(
@@ -565,7 +553,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("locator1", "//here");
 		element.addAttribute("value", "value");
 
-		PoshiRunnerValidation.validateHasChildElements(
+		PoshiValidation.validateHasChildElements(
 			element, "ValidateHasChildElements.macro");
 
 		Assert.assertEquals(
@@ -590,7 +578,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 			attributeNames.add(attribute.getName());
 		}
 
-		PoshiRunnerValidation.validateHasMultiplePrimaryAttributeNames(
+		PoshiValidation.validateHasMultiplePrimaryAttributeNames(
 			element, attributeNames, Arrays.asList("function", "selenium"),
 			"ValidateHasMultiplePrimaryAttributeNames.macro");
 
@@ -613,7 +601,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 			attributeNames.add(attribute.getName());
 		}
 
-		PoshiRunnerValidation.validateHasMultiplePrimaryAttributeNames(
+		PoshiValidation.validateHasMultiplePrimaryAttributeNames(
 			element, attributeNames, Arrays.asList("function", "selenium"),
 			"ValidateHasMultiplePrimaryAttributeNames.macro");
 
@@ -633,7 +621,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement.addAttribute("arg1", "hello");
 		childElement.addAttribute("arg2", "world");
 
-		PoshiRunnerValidation.validateHasNoAttributes(
+		PoshiValidation.validateHasNoAttributes(
 			element, "ValidateHasNoAttributes.macro");
 
 		Assert.assertEquals(
@@ -645,7 +633,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		element.addAttribute("then", "Click");
 
-		PoshiRunnerValidation.validateHasNoAttributes(
+		PoshiValidation.validateHasNoAttributes(
 			element, "ValidateHasNoAttributes.macro");
 
 		Assert.assertEquals(
@@ -662,7 +650,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("function", "Click");
 		element.addAttribute("locator1", "//here");
 
-		PoshiRunnerValidation.validateHasNoChildElements(
+		PoshiValidation.validateHasNoChildElements(
 			element, "ValidateHasNoChildElements.macro");
 
 		Assert.assertEquals(
@@ -673,7 +661,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement.addAttribute("name", "hello");
 		childElement.addAttribute("value", "world");
 
-		PoshiRunnerValidation.validateHasNoChildElements(
+		PoshiValidation.validateHasNoChildElements(
 			element, "ValidateHasNoChildElements.macro");
 
 		Assert.assertEquals(
@@ -690,7 +678,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("function", "Click");
 		element.addAttribute("locator1", "//here");
 
-		PoshiRunnerValidation.validateHasPrimaryAttributeName(
+		PoshiValidation.validateHasPrimaryAttributeName(
 			element, Arrays.asList("function", "macro"),
 			"ValidateHasPrimaryAttributeName.macro");
 
@@ -705,7 +693,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("function", "Click");
 		element.addAttribute("selenium", "click");
 
-		PoshiRunnerValidation.validateHasPrimaryAttributeName(
+		PoshiValidation.validateHasPrimaryAttributeName(
 			element, Arrays.asList("function", "selenium"),
 			"ValidateHasPrimaryAttributeName.macro");
 
@@ -717,7 +705,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		element = document.addElement("execute");
 
-		PoshiRunnerValidation.validateHasPrimaryAttributeName(
+		PoshiValidation.validateHasPrimaryAttributeName(
 			element, Arrays.asList("function", "selenium"),
 			"ValidateHasPrimaryAttributeName.macro");
 
@@ -732,7 +720,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("function", "Click");
 		element.addAttribute("selenium", "click");
 
-		PoshiRunnerValidation.validateHasPrimaryAttributeName(
+		PoshiValidation.validateHasPrimaryAttributeName(
 			element, Arrays.asList("function", "selenium"),
 			Arrays.asList("function", "selenium"),
 			"ValidateHasPrimaryAttributeName.macro");
@@ -761,8 +749,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		thenChildElement.addAttribute("function", "Click");
 		thenChildElement.addAttribute("locator1", "//here");
 
-		PoshiRunnerValidation.validateIfElement(
-			element, "ValidateIfElement.macro");
+		PoshiValidation.validateIfElement(element, "ValidateIfElement.macro");
 
 		Assert.assertEquals(
 			"validateIfElement is failing", "", getExceptionMessage());
@@ -783,8 +770,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		thenChildElement.addAttribute("function", "Click");
 		thenChildElement.addAttribute("locator1", "//here");
 
-		PoshiRunnerValidation.validateIfElement(
-			element, "ValidateIfElement.macro");
+		PoshiValidation.validateIfElement(element, "ValidateIfElement.macro");
 
 		Assert.assertEquals(
 			"validateIfElement is failing",
@@ -807,7 +793,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		thenChildElement.addAttribute("function", "Click");
 		thenChildElement.addAttribute("locator1", "//here");
 
-		PoshiRunnerValidation.validateIfElement(
+		PoshiValidation.validateIfElement(
 			element, "ValidateIfElement.function");
 
 		Assert.assertEquals(
@@ -829,7 +815,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement.addAttribute("name", "varName");
 		childElement.addAttribute("value", "varValue");
 
-		PoshiRunnerValidation.validateMacroContext(
+		PoshiValidation.validateMacroContext(
 			element, "macro", "ValidateMacroContext.macro");
 
 		Assert.assertEquals(
@@ -846,7 +832,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement.addAttribute("name", "varName");
 		childElement.addAttribute("value", "varValue");
 
-		PoshiRunnerValidation.validateMacroContext(
+		PoshiValidation.validateMacroContext(
 			element, "macro", "ValidateMacroContext.macro");
 
 		Assert.assertEquals(
@@ -869,7 +855,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		echoElement.addAttribute("message", "hello world");
 
-		PoshiRunnerValidation.validateMacroFile(
+		PoshiValidation.validateMacroFile(
 			rootElement, "ValidateMacroFile.macro");
 
 		Assert.assertEquals(
@@ -887,7 +873,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		containsElement.addAttribute("string", "string");
 
-		PoshiRunnerValidation.validateMacroFile(
+		PoshiValidation.validateMacroFile(
 			rootElement, "ValidateMacroFile.macro");
 
 		Assert.assertEquals(
@@ -903,7 +889,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		element.addAttribute("message", "This test passed");
 
-		PoshiRunnerValidation.validateMessageElement(
+		PoshiValidation.validateMessageElement(
 			element, "ValidateMessageElement.macro");
 
 		Assert.assertEquals(
@@ -913,7 +899,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		element = document.addElement("echo");
 
-		PoshiRunnerValidation.validateMessageElement(
+		PoshiValidation.validateMessageElement(
 			element, "ValidateMessageElement.macro");
 
 		Assert.assertEquals(
@@ -924,10 +910,10 @@ public class PoshiRunnerValidationTest extends TestCase {
 	@Test
 	public void testValidateMethodExecuteElement() {
 		String filePath = "validateMethodExecuteElement.macro";
-		String invalidClassName = "com.liferay.poshi.runner.util.FakeUtil";
+		String invalidClassName = "com.liferay.poshi.core.util.FakeUtil";
 		String invalidMethodName = "FakeMethod";
 		String invalidUtilityClassName =
-			"com.liferay.poshi.runner.PoshiRunnerGetterUtil";
+			"com.liferay.poshi.core.PoshiGetterUtil";
 		String invalidUtilityClassMethodName = "getCurrentNamespace";
 		String validClassName = "com.liferay.poshi.core.util.StringUtil";
 		String validMethodName = "add";
@@ -973,7 +959,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 				argElement.addAttribute("value", argument);
 			}
 
-			PoshiRunnerValidation.validateMethodExecuteElement(
+			PoshiValidation.validateMethodExecuteElement(
 				executeElement, filePath);
 
 			Assert.assertEquals(
@@ -993,7 +979,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement1.addAttribute("name", "varName");
 		childElement1.addAttribute("value", "varValue");
 
-		PoshiRunnerValidation.validateNumberOfChildElements(
+		PoshiValidation.validateNumberOfChildElements(
 			element, 1, "ValidateNumberOfChildElements.macro");
 
 		Assert.assertEquals(
@@ -1004,7 +990,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		element = document.addElement("execute");
 
-		PoshiRunnerValidation.validateNumberOfChildElements(
+		PoshiValidation.validateNumberOfChildElements(
 			element, 1, "ValidateNumberOfChildElements.macro");
 
 		Assert.assertEquals(
@@ -1025,7 +1011,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement2.addAttribute("name", "varName");
 		childElement2.addAttribute("value", "varValue");
 
-		PoshiRunnerValidation.validateNumberOfChildElements(
+		PoshiValidation.validateNumberOfChildElements(
 			element, 1, "ValidateNumberOfChildElements.macro");
 
 		Assert.assertEquals(
@@ -1041,7 +1027,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement1.addAttribute("name", "varName");
 		childElement1.addAttribute("value", "varValue");
 
-		PoshiRunnerValidation.validateNumberOfChildElements(
+		PoshiValidation.validateNumberOfChildElements(
 			element, 2, "ValidateNumberOfChildElements.macro");
 
 		Assert.assertEquals(
@@ -1053,18 +1039,18 @@ public class PoshiRunnerValidationTest extends TestCase {
 	public void testValidatePathFile() throws Exception {
 		URL url = getURL("Click.path");
 
-		Element element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+		Element element = PoshiGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, url.getFile());
+		PoshiValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing", "", getExceptionMessage());
 
 		url = getURL("ValidatePathFile1.path");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+		element = PoshiGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, url.getFile());
+		PoshiValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing", "Invalid definition element",
@@ -1072,9 +1058,9 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		url = getURL("ValidatePathFile2.path");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+		element = PoshiGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, url.getFile());
+		PoshiValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing", "Missing locator",
@@ -1082,9 +1068,9 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		url = getURL("ValidatePathFile3.path");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+		element = PoshiGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, url.getFile());
+		PoshiValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing", "Missing thead class name",
@@ -1092,9 +1078,9 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		url = getURL("ValidatePathFile4.path");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+		element = PoshiGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, url.getFile());
+		PoshiValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing",
@@ -1102,9 +1088,9 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		url = getURL("ValidatePathFile5.path");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+		element = PoshiGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, url.getFile());
+		PoshiValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing", "File name and title are different",
@@ -1121,7 +1107,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("locator1", "//here");
 		element.addAttribute("value1", "there");
 
-		PoshiRunnerValidation.validatePossibleAttributeNames(
+		PoshiValidation.validatePossibleAttributeNames(
 			element, Arrays.asList("function", "locator1", "value1"),
 			"ValidatePossibleAttributeNames.macro");
 
@@ -1137,7 +1123,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("locator1", "//here");
 		element.addAttribute("value", "there");
 
-		PoshiRunnerValidation.validatePossibleAttributeNames(
+		PoshiValidation.validatePossibleAttributeNames(
 			element, Arrays.asList("function", "locator1", "value1"),
 			"ValidatePossibleAttributeNames.macro");
 
@@ -1156,7 +1142,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("name", "testray.main.component.name");
 		element.addAttribute("value", "Tools");
 
-		PoshiRunnerValidation.validatePropertyElement(
+		PoshiValidation.validatePropertyElement(
 			element, "ValidatePossibleAttributeNames.macro");
 
 		Assert.assertEquals(
@@ -1173,7 +1159,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("name", "testray.main.component.name");
 		element.addAttribute("value", "Tools");
 
-		PoshiRunnerValidation.validateRequiredAttributeNames(
+		PoshiValidation.validateRequiredAttributeNames(
 			element, Arrays.asList("line-number", "name", "value"),
 			"ValidateRequiredAttributeNames.macro");
 
@@ -1188,7 +1174,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("name", "testray.main.component.name");
 		element.addAttribute("value", "Tools");
 
-		PoshiRunnerValidation.validateRequiredAttributeNames(
+		PoshiValidation.validateRequiredAttributeNames(
 			element, Arrays.asList("line-number", "name", "value"),
 			"ValidateRequiredAttributeNames.macro");
 
@@ -1213,7 +1199,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		String requiredChildElementName = "var";
 
-		PoshiRunnerValidation.validateRequiredChildElementName(
+		PoshiValidation.validateRequiredChildElementName(
 			element, requiredChildElementName,
 			"ValidateRequiredChildElementName,macro");
 
@@ -1228,7 +1214,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("function", "Click");
 		element.addAttribute("locator1", "//here");
 
-		PoshiRunnerValidation.validateRequiredChildElementName(
+		PoshiValidation.validateRequiredChildElementName(
 			element, requiredChildElementName,
 			"ValidateRequiredChildElementName,macro");
 
@@ -1253,7 +1239,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		childElement2.addAttribute("string", "name");
 		childElement2.addAttribute("substring", "value");
 
-		PoshiRunnerValidation.validateRequiredChildElementNames(
+		PoshiValidation.validateRequiredChildElementNames(
 			element, Arrays.asList("condition", "contains"),
 			"ValidateRequiredChildElementNames.macro");
 
@@ -1261,7 +1247,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validateRequiredChildElementNames is failing", "",
 			getExceptionMessage());
 
-		PoshiRunnerValidation.validateRequiredChildElementNames(
+		PoshiValidation.validateRequiredChildElementNames(
 			element, Arrays.asList("condition", "contains", "equals"),
 			"ValidateRequiredChildElementNames.macro");
 
@@ -1274,18 +1260,18 @@ public class PoshiRunnerValidationTest extends TestCase {
 	public void testValidateTestCaseFile() throws Exception {
 		URL url = getURL("ValidateTestCaseFile1.testcase");
 
-		Element element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+		Element element = PoshiGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validateTestCaseFile(element, url.getFile());
+		PoshiValidation.validateTestCaseFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validateTestCaseFile is failing", "", getExceptionMessage());
 
 		url = getURL("ValidateTestCaseFile2.testcase");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+		element = PoshiGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validateTestCaseFile(element, url.getFile());
+		PoshiValidation.validateTestCaseFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validateTestCaseFile is failing", "Invalid execute element",
@@ -1294,12 +1280,12 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 	@Test
 	public void testValidateTestName() {
-		PoshiRunnerValidation.validateTestName("ValidateTestName#testName");
+		PoshiValidation.validateTestName("ValidateTestName#testName");
 
 		Assert.assertEquals(
 			"validateTestName is failing", "", getExceptionMessage());
 
-		PoshiRunnerValidation.validateTestName("ValidateTestName#fail");
+		PoshiValidation.validateTestName("ValidateTestName#fail");
 
 		Assert.assertEquals(
 			"validateTestName is failing", "Invalid test case command fail",
@@ -1319,7 +1305,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		thenChildElement1.addAttribute("function", "Click");
 		thenChildElement1.addAttribute("locator1", "//here");
 
-		PoshiRunnerValidation.validateThenElement(
+		PoshiValidation.validateThenElement(
 			element, "ValidateThenElement.macro");
 
 		Assert.assertEquals(
@@ -1329,7 +1315,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		element = document.addElement("if");
 
-		PoshiRunnerValidation.validateThenElement(
+		PoshiValidation.validateThenElement(
 			element, "ValidateThenElement.macro");
 
 		Assert.assertEquals(
@@ -1354,7 +1340,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		thenChildElement3.addAttribute("function", "Click");
 		thenChildElement3.addAttribute("locator1", "//here");
 
-		PoshiRunnerValidation.validateThenElement(
+		PoshiValidation.validateThenElement(
 			element, "ValidateThenElement.macro");
 
 		Assert.assertEquals(
@@ -1372,8 +1358,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("name", "name");
 		element.addAttribute("value", "value");
 
-		PoshiRunnerValidation.validateVarElement(
-			element, "ValidateVarElement.macro");
+		PoshiValidation.validateVarElement(element, "ValidateVarElement.macro");
 
 		Assert.assertEquals(
 			"validateVarElement is failing", "", getExceptionMessage());
@@ -1386,8 +1371,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("name", "name");
 		element.addText("value");
 
-		PoshiRunnerValidation.validateVarElement(
-			element, "ValidateVarElement.macro");
+		PoshiValidation.validateVarElement(element, "ValidateVarElement.macro");
 
 		Assert.assertEquals(
 			"validateVarElement is failing", "", getExceptionMessage());
@@ -1399,8 +1383,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("line-number", "1");
 		element.addAttribute("name", "name");
 
-		PoshiRunnerValidation.validateVarElement(
-			element, "ValidateVarElement.macro");
+		PoshiValidation.validateVarElement(element, "ValidateVarElement.macro");
 
 		Assert.assertEquals(
 			"validateVarElement is failing", "Missing value attribute",
@@ -1414,8 +1397,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("method", "TestPropsUtil#get('test.name')");
 		element.addAttribute("name", "name");
 
-		PoshiRunnerValidation.validateVarElement(
-			element, "ValidateVarElement.macro");
+		PoshiValidation.validateVarElement(element, "ValidateVarElement.macro");
 
 		Assert.assertEquals(
 			"validateVarElement is failing",
@@ -1441,7 +1423,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		executeElement.addAttribute("function", "Click");
 		executeElement.addAttribute("locator1", "//else if element");
 
-		PoshiRunnerValidation.validateWhileElement(element, "While.macro");
+		PoshiValidation.validateWhileElement(element, "While.macro");
 
 		Assert.assertEquals(
 			"validateWhileElement is failing", "", getExceptionMessage());
@@ -1457,7 +1439,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 		executeElement.addAttribute("function", "Click");
 		executeElement.addAttribute("locator1", "//else if element");
 
-		PoshiRunnerValidation.validateWhileElement(element, "While.macro");
+		PoshiValidation.validateWhileElement(element, "While.macro");
 
 		Assert.assertEquals(
 			"validateWhileElement is failing",
@@ -1465,7 +1447,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 	}
 
 	protected String getExceptionMessage() {
-		Set<Exception> exceptions = PoshiRunnerValidation.getExceptions();
+		Set<Exception> exceptions = PoshiValidation.getExceptions();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -1482,7 +1464,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 			}
 		}
 
-		PoshiRunnerValidation.clearExceptions();
+		PoshiValidation.clearExceptions();
 
 		return sb.toString();
 	}
@@ -1490,7 +1472,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 	protected String getFilePath(String fileName) {
 		String filePath = FileUtil.getCanonicalPath(
 			PropsValues.TEST_BASE_DIR_NAME +
-				"resources/com/liferay/poshi/runner/dependencies/validation/" +
+				"resources/com/liferay/poshi/core/dependencies/validation/" +
 					fileName);
 
 		if (OSDetector.isWindows()) {

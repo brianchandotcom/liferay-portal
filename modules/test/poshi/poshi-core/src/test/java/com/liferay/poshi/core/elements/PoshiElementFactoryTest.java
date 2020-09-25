@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.poshi.runner.elements;
+package com.liferay.poshi.core.elements;
 
-import com.liferay.poshi.runner.PoshiRunnerContext;
-import com.liferay.poshi.runner.util.Dom4JUtil;
-import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.util.Dom4JUtil;
+import com.liferay.poshi.core.util.FileUtil;
 
 import java.io.File;
 
@@ -42,7 +42,7 @@ public class PoshiElementFactoryTest {
 			"../poshi-runner-resources/src/main/resources/default" +
 				"/testFunctional/functions";
 
-		PoshiRunnerContext.readFiles(poshiFileNames, poshiFileDir);
+		PoshiContext.readFiles(poshiFileNames, poshiFileDir);
 	}
 
 	@Test
@@ -298,6 +298,6 @@ public class PoshiElementFactoryTest {
 	}
 
 	private static final String _BASE_DIR =
-		"src/test/resources/com/liferay/poshi/runner/dependencies/elements/";
+		"src/test/resources/com/liferay/poshi/core/dependencies/elements/";
 
 }

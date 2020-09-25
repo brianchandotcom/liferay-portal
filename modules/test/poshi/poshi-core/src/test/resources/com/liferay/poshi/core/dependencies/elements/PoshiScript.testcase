@@ -244,7 +244,7 @@ definition {
 			value1 = "Welcome"
 		);
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.delete("${curl}");
+		com.liferay.poshi.core.util.StringUtil.count("one,two,three", ",");
 	}
 
 	@description = "Ensure that a user can add multiple Blogs Entries."

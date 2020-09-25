@@ -312,8 +312,9 @@
 
 		<execute function="AssertElementPresent#assertElementPresent" locator1="Home#PAGE" value1="Welcome" />
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="delete">
-			<arg value="${curl}" />
+		<execute class="com.liferay.poshi.core.util.StringUtil" method="count">
+			<arg value="one,two,three" />
+			<arg value="," />
 		</execute>
 	</command>
 

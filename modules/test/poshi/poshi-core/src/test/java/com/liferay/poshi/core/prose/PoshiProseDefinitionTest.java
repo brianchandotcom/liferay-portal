@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.poshi.runner.prose;
+package com.liferay.poshi.core.prose;
 
-import com.liferay.poshi.runner.PoshiRunnerContext;
-import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
-import com.liferay.poshi.runner.util.Dom4JUtil;
+import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.util.Dom4JUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,10 +53,10 @@ public class PoshiProseDefinitionTest extends TestCase {
 		}
 
 		String[] poshiFileNames = ArrayUtils.addAll(
-			PoshiRunnerContext.POSHI_SUPPORT_FILE_INCLUDES,
-			PoshiRunnerContext.POSHI_TEST_FILE_INCLUDES);
+			PoshiContext.POSHI_SUPPORT_FILE_INCLUDES,
+			PoshiContext.POSHI_TEST_FILE_INCLUDES);
 
-		PoshiRunnerContext.readFiles(poshiFileNames, _TEST_BASE_DIR_NAME);
+		PoshiContext.readFiles(poshiFileNames, _TEST_BASE_DIR_NAME);
 
 		_poshiProseDefinition = new PoshiProseDefinition(
 			_POSHI_PROSE_FILE_NAME, read(_testBaseDir, _POSHI_PROSE_FILE_NAME));
@@ -65,7 +65,7 @@ public class PoshiProseDefinitionTest extends TestCase {
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		PoshiRunnerContext.clear();
+		PoshiContext.clear();
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class PoshiProseDefinitionTest extends TestCase {
 
 		URI uri = file.toURI();
 
-		Element expected = PoshiRunnerGetterUtil.getRootElementFromURL(
+		Element expected = PoshiGetterUtil.getRootElementFromURL(
 			uri.toURL(), false);
 
 		Dom4JUtil.removeWhiteSpaceTextNodes(expected);
@@ -133,7 +133,7 @@ public class PoshiProseDefinitionTest extends TestCase {
 		"PoshiXMLSyntax.testcase";
 
 	private static final String _TEST_BASE_DIR_NAME =
-		"src/test/resources/com/liferay/poshi/runner/dependencies/prose/";
+		"src/test/resources/com/liferay/poshi/core/dependencies/prose/";
 
 	private PoshiProseDefinition _poshiProseDefinition;
 	private File _testBaseDir;

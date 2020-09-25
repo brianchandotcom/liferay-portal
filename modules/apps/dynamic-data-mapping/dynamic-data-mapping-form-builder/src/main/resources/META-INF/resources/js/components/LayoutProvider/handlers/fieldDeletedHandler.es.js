@@ -85,7 +85,7 @@ export const removeField = (
 export const handleFieldDeleted = (
 	props,
 	state,
-	{activePage, fieldName, removeEmptyRows = true}
+	{activePage, editRule = true, fieldName, removeEmptyRows = true}
 ) => {
 	const {pages} = state;
 
@@ -119,7 +119,9 @@ export const handleFieldDeleted = (
 	return {
 		focusedField: {},
 		pages: newPages,
-		rules: RulesSupport.formatRules(newPages, state.rules),
+		rules: editRule
+			? RulesSupport.formatRules(newPages, state.rules)
+			: state.rules,
 	};
 };
 

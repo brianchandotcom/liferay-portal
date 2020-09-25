@@ -38,6 +38,7 @@ export default (props, state, event) => {
 	let mergedState = {
 		...handleFieldDeleted(props, state, {
 			activePage: sourceFieldPage,
+			editRule: false,
 			fieldName: sourceFieldName,
 			removeEmptyRows: false,
 		}),
@@ -68,6 +69,7 @@ export default (props, state, event) => {
 			mergedState = {
 				...handleFieldDeleted(props, state, {
 					activePage: sourceFieldPage,
+					editRule: false,
 					fieldName: parentFieldName,
 					removeEmptyRows: false,
 				}),
@@ -78,6 +80,7 @@ export default (props, state, event) => {
 	if (targetFieldName) {
 		const deletedState = handleFieldDeleted(props, state, {
 			activePage: sourceFieldPage,
+			editRule: false,
 			fieldName: sourceFieldName,
 		});
 

@@ -271,11 +271,18 @@ definition {
 			locator1 = "Button#RESET_CHANGES",
 			value1 = "Reset Changes");
 
-		var key_portletTitleName = "${portletName}";
+		if (isSet(widgetName)) {
+			AssertElementNotPresent(
+				key_portletName = "${widgetName}",
+				locator1 = "Home#PORTLET_BORDERLESS");
+		}
+		else {
+			var key_portletTitleName = "${portletName}";
 
-		AssertTextEquals(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE",
-			value1 = "${portletName}");
+			AssertTextEquals(
+				locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE",
+				value1 = "${portletName}");
+		}
 
 		AssertClick(
 			locator1 = "Button#RESET_CHANGES",

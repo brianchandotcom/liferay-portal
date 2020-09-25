@@ -69,4 +69,36 @@ definition {
 			channelType = "Site");
 	}
 
+	test CreateNewNotificationTemplate {
+		property portal.acceptance = "quarantine";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewNotificationTemplate";
+
+		CommerceEntry.createNewAccountGroup(
+			criteriaType = "Users",
+			criterionEntryName = "Commerce User",
+			entryName = "Account groups");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Commerce",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Notificatios");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewNotificationTemplate(
+			accountGroup = "Account groups",
+			entryName = "New Notification Template",
+			fromAddress = "test@liferay.com",
+			fromName = "Test Test",
+			notificationType = "Order Placed");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
 }

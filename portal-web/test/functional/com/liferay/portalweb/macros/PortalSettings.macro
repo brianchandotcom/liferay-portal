@@ -1336,4 +1336,10 @@ definition {
 			value1 = "");
 	}
 
+	macro viewToggleSwitchChecked {
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "${portalSetting}",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+	}
+
 }

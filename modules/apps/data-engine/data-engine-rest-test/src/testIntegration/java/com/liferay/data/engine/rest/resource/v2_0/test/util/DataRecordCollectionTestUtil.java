@@ -44,12 +44,24 @@ public class DataRecordCollectionTestUtil {
 		throws Exception {
 
 		return addRecordSet(
-			dataDefinition, group, resourceLocalService,
+			dataDefinition.getId(), dataDefinition.getDataDefinitionKey(),
+			group, resourceLocalService,
 			DDLRecordSetConstants.SCOPE_DATA_ENGINE);
 	}
 
 	public static DDLRecordSet addRecordSet(
-			DataDefinition dataDefinition, Group group,
+			DDMStructure ddmStructure, Group group,
+			ResourceLocalService resourceLocalService)
+		throws Exception {
+
+		return addRecordSet(
+			ddmStructure.getStructureId(), ddmStructure.getStructureKey(),
+			group, resourceLocalService,
+			DDLRecordSetConstants.SCOPE_DATA_ENGINE);
+	}
+
+	public static DDLRecordSet addRecordSet(
+			long dataDefinitionId, String dataDefinitionKey, Group group,
 			ResourceLocalService resourceLocalService, int scope)
 		throws Exception {
 
@@ -61,13 +73,13 @@ public class DataRecordCollectionTestUtil {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		DDLRecordSet ddlRecordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			dataDefinition.getId(), dataDefinition.getDataDefinitionKey(),
-			nameMap, null, DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
-			scope, serviceContext);
+			TestPropsValues.getUserId(), group.getGroupId(), dataDefinitionId,
+			dataDefinitionKey, nameMap, null,
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, scope,
+			serviceContext);
 
 		resourceLocalService.addModelResources(
-			TestPropsValues.getCompanyId(), dataDefinition.getSiteId(),
+			TestPropsValues.getCompanyId(), group.getGroupId(),
 			TestPropsValues.getUserId(), _getResourceName(ddlRecordSet),
 			ddlRecordSet.getRecordSetId(),
 			serviceContext.getModelPermissions());

@@ -535,6 +535,69 @@ definition {
 	}
 
 	@priority = "5"
+	test SchedulePublication {
+		property test.name.skip.portal.instance = "ChangeList#schedulePublication";
+
+		ChangeList.createNewPublication(publicationName = "Publication Name 1");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent 1 Content",
+			webContentTitle = "WC WebContent 1 Title");
+
+		PortletEntry.publish();
+
+		ChangeList.schedulePublication(publicationName = "Publication Name 1");
+
+		ChangeList.createNewPublication(publicationName = "Publication Name 2");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent 2 Content",
+			webContentTitle = "WC WebContent 2 Title");
+
+		PortletEntry.publish();
+
+		ChangeList.schedulePublication(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name 2");
+
+		ChangeList.createNewPublication(publicationName = "Publication Name 3");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent 3 Content",
+			webContentTitle = "WC WebContent 3 Title");
+
+		PortletEntry.publish();
+
+		ChangeList.schedulePublication(
+			gotoReviewChanges = "true",
+			publicationName = "Publication Name 3");
+	}
+
+	@priority = "5"
 	test SearchPublishedPublications {
 		property test.name.skip.portal.instance = "ChangeList#SearchPublishedPublications";
 

@@ -25,11 +25,11 @@ export default () => {
 	const [{onClose}, dispatch] = useContext(Context);
 
 	const deployApp = (item, undeploy) => {
-		return updateItem(
-			`/o/app-builder/v1.0/apps/${item.id}/${
+		return updateItem({
+			endpoint: `/o/app-builder/v1.0/apps/${item.id}/${
 				undeploy ? 'undeploy' : 'deploy'
-			}`
-		)
+			}`,
+		})
 			.then(() => true)
 			.catch((error) => error);
 	};

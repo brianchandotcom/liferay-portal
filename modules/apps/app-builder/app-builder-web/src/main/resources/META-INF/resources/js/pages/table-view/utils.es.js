@@ -115,10 +115,10 @@ export const getTableViewTitle = ({id}) => {
 
 export const saveTableView = (dataDefinition, dataListView) => {
 	if (dataListView.id) {
-		return updateItem(
-			`/o/data-engine/v2.0/data-list-views/${dataListView.id}`,
-			dataListView
-		);
+		return updateItem({
+			endpoint: `/o/data-engine/v2.0/data-list-views/${dataListView.id}`,
+			item: dataListView,
+		});
 	}
 
 	return addItem(

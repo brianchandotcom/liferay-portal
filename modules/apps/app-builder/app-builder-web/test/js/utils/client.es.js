@@ -197,7 +197,7 @@ describe('client', () => {
 		const item = {data: 'hello'};
 		fetch.mockResponseOnce(JSON.stringify(item));
 
-		updateItem('/test', item).then((res) => {
+		updateItem({endpoint: '/test', item}).then((res) => {
 			expect(res.data).toEqual('hello');
 		});
 

@@ -551,7 +551,7 @@
 </tr>
 <tr>
 	<td>PORTLET_BORDERLESS</td>
-	<td>//div[contains(@class,'portlet-borderless')]/span[contains(.,'${key_portletName}')]</td>
+	<td>//div[contains(@class,'portlet-borderless')]/span[contains(@id,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -115,9 +115,9 @@ export const request = ({endpoint, method = 'GET', params = {}}) =>
 		method,
 	}).then((response) => parseResponse(response));
 
-export const updateItem = (endpoint, item, params) =>
+export const updateItem = ({endpoint, item, method = 'PUT', params = {}}) =>
 	fetch(getURL(endpoint, params), {
 		body: JSON.stringify(item),
 		headers: HEADERS,
-		method: 'PUT',
+		method,
 	}).then((response) => parseResponse(response));

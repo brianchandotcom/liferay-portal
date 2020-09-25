@@ -384,6 +384,10 @@ definition {
 
 		SitePages.addPrivatePage(pageName = "Private Blogs Page");
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
 		PermissionsInline.gotoSitepageCP(
 			pageName = "Private Blogs Page",
 			privacy = "Private Pages");

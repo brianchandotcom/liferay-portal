@@ -195,13 +195,10 @@ export default function ListEntries({history}) {
 				WORKFLOW_COLUMNS.forEach(({key}) => {
 					switch (key) {
 						case 'assignees': {
-							const {assignees = [{}], taskNames = []} = entry;
+							const {assignees = [], taskNames = []} = entry;
 
-							const {
-								id,
-								name = emptyValue,
-								reviewer,
-							} = assignees[0];
+							const {id, name = emptyValue, reviewer} =
+								assignees[0] || {};
 
 							if (id === -1) {
 								const {appWorkflowTasks = []} =

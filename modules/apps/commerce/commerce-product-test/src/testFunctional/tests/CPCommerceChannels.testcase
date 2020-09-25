@@ -71,26 +71,26 @@ definition {
 
 	test CreateNewNotificationTemplate {
 		property portal.acceptance = "quarantine";
-		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewNotificationTemplate";
+		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewNotificationTemplate";
 
-		CommerceEntry.createNewAccountGroup(
-			criteriaType = "Users",
-			criterionEntryName = "Commerce User",
-			entryName = "Account groups");
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			panel = "Commerce",
+			portlet = "Channels");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Site Administration",
-			portlet = "Settings");
+		Click(locator1 = "Button#PLUS");
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Notificatios");
+		CommerceEntry.addNewChannelsEntry(
+			channelCurrency = "US Dollar",
+			channelName = "Test Channel",
+			channelType = "Site",
+			siteName = "Guest");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
 
 		Click(locator1 = "Button#PLUS");
 
 		CommerceEntry.addNewNotificationTemplate(
-			accountGroup = "Account groups",
 			entryName = "New Notification Template",
 			fromAddress = "test@liferay.com",
 			fromName = "Test Test",

@@ -133,6 +133,8 @@ out.println(PortalUtil.escapeRedirect("/"));
 			locator1 = "Portlet#BODY");
 	}
 
+	@description = "This is a use case for LPS-80905."
+	@priority = "5"
 	test UserCanAccessPermissionsWindowWithPermissionFromAdmin {
 		property test.name.skip.portal.instance = "SecurityUsecase#UserCanAccessPermissionsWindowWithPermissionFromAdmin";
 		var portalURL = PropsUtil.get("portal.url");

@@ -193,6 +193,8 @@ definition {
 	macro gotoSitepageCP {
 		SitePages.togglePrivacy(privacy = "${privacy}");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		SitePages.gotoPageMenuItem(
 			menuItem = "Permissions",
 			pageName = "${pageName}");

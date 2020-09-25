@@ -14,11 +14,11 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
-import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.ProxyUtil;
 
 import java.io.File;

@@ -14,9 +14,9 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.PoshiStackTraceUtil;
 import com.liferay.poshi.core.util.Validator;
-import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
-import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public final class XMLSyntaxLogger extends SyntaxLogger {
 			updateElementStatus(ifElement, status);
 		}
 
-		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+		PoshiStackTraceUtil.setCurrentElement(element);
 	}
 
 	@Override
@@ -58,8 +58,7 @@ public final class XMLSyntaxLogger extends SyntaxLogger {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(
-			getLineNumberItemText(
-				PoshiRunnerGetterUtil.getLineNumber(element)));
+			getLineNumberItemText(PoshiGetterUtil.getLineNumber(element)));
 
 		if (isExecuteChildElementLogged(element)) {
 			sb.append(getBtnItemText("btn-collapse"));
@@ -285,8 +284,7 @@ public final class XMLSyntaxLogger extends SyntaxLogger {
 
 		for (Element childElement : childElements) {
 			loggerElement.addChildLoggerElement(
-				getLineNumberItem(
-					PoshiRunnerGetterUtil.getLineNumber(childElement)));
+				getLineNumberItem(PoshiGetterUtil.getLineNumber(childElement)));
 			loggerElement.addChildLoggerElement(
 				getLineContainerLoggerElement(childElement));
 		}

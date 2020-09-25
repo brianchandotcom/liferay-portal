@@ -14,7 +14,9 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.PoshiValidation;
+import com.liferay.poshi.core.util.FileUtil;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -101,7 +103,7 @@ public class PoshiRunnerCommandExecutor {
 	protected static void executePQLQuery() throws Exception {
 		System.out.println("Executing task: executePQLQuery");
 
-		PoshiRunnerContext.executePQLQuery();
+		PoshiContext.executePQLQuery();
 	}
 
 	protected static void populateSystemProperties() throws Exception {
@@ -142,13 +144,13 @@ public class PoshiRunnerCommandExecutor {
 	protected static void validatePoshi() throws Exception {
 		System.out.println("Executing task: validatePoshi");
 
-		PoshiRunnerValidation.main(null);
+		PoshiValidation.main(null);
 	}
 
 	protected static void writePoshiProperties() throws Exception {
 		System.out.println("Executing task: writePoshiProperties");
 
-		PoshiRunnerContext.main(null);
+		PoshiContext.main(null);
 	}
 
 }

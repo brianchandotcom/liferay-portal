@@ -15,13 +15,13 @@
 package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.core.selenium.LiferaySelenium;
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
+import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.EmailCommands;
-import com.liferay.poshi.runner.util.FileUtil;
-import com.liferay.poshi.runner.util.OSDetector;
 
 import java.awt.Rectangle;
 import java.awt.Robot;

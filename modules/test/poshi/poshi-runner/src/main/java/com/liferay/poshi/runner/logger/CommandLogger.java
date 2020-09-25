@@ -14,16 +14,16 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.PoshiStackTraceUtil;
+import com.liferay.poshi.core.PoshiVariablesUtil;
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
-import com.liferay.poshi.runner.PoshiRunnerContext;
-import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
-import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
-import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
-import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
 
 import java.util.List;
@@ -87,7 +87,7 @@ public final class CommandLogger {
 		_commandLogLoggerElement.addChildLoggerElement(lineGroupLoggerElement);
 
 		LoggerElement scriptLoggerElement = syntaxLogger.getSyntaxLoggerElement(
-			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+			PoshiStackTraceUtil.getSimpleStackTrace());
 
 		_linkLoggerElements(scriptLoggerElement);
 	}
@@ -374,30 +374,28 @@ public final class CommandLogger {
 		sb.append(_getLineItemText("command-name", namespacedClassCommandName));
 
 		String classCommandName =
-			PoshiRunnerGetterUtil.
-				getClassCommandNameFromNamespacedClassCommandName(
-					namespacedClassCommandName);
+			PoshiGetterUtil.getClassCommandNameFromNamespacedClassCommandName(
+				namespacedClassCommandName);
 
 		String className =
-			PoshiRunnerGetterUtil.getClassNameFromNamespacedClassCommandName(
+			PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
 				classCommandName);
 
-		String namespace = PoshiRunnerStackTraceUtil.getCurrentNamespace(
+		String namespace = PoshiStackTraceUtil.getCurrentNamespace(
 			namespacedClassCommandName);
 
-		int functionLocatorCount = PoshiRunnerContext.getFunctionLocatorCount(
+		int functionLocatorCount = PoshiContext.getFunctionLocatorCount(
 			className, namespace);
 
 		for (int i = 0; i < functionLocatorCount; i++) {
 			String locatorKey = "locator" + (i + 1);
 
-			if (PoshiRunnerVariablesUtil.containsKeyInExecuteMap(locatorKey)) {
+			if (PoshiVariablesUtil.containsKeyInExecuteMap(locatorKey)) {
 				sb.append(_getLineItemText("misc", " with "));
 				sb.append(_getLineItemText("param-type", locatorKey));
 
-				String paramValue =
-					PoshiRunnerVariablesUtil.getStringFromExecuteMap(
-						locatorKey);
+				String paramValue = PoshiVariablesUtil.getStringFromExecuteMap(
+					locatorKey);
 
 				sb.append(
 					_getLineItemText(
@@ -406,12 +404,12 @@ public final class CommandLogger {
 
 			String valueKey = "value" + (i + 1);
 
-			if (PoshiRunnerVariablesUtil.containsKeyInExecuteMap(valueKey)) {
+			if (PoshiVariablesUtil.containsKeyInExecuteMap(valueKey)) {
 				sb.append(_getLineItemText("misc", " with "));
 				sb.append(_getLineItemText("param-type", valueKey));
 
-				String paramValue =
-					PoshiRunnerVariablesUtil.getStringFromExecuteMap(valueKey);
+				String paramValue = PoshiVariablesUtil.getStringFromExecuteMap(
+					valueKey);
 
 				sb.append(
 					_getLineItemText(
@@ -481,7 +479,7 @@ public final class CommandLogger {
 			message = element.getText();
 		}
 
-		return PoshiRunnerVariablesUtil.getReplacedCommandVarsString(message);
+		return PoshiVariablesUtil.getReplacedCommandVarsString(message);
 	}
 
 	private LoggerElement _getMessageGroupLoggerElement(Element element)
@@ -673,7 +671,7 @@ public final class CommandLogger {
 		throws Exception {
 
 		String testClassCommandName =
-			PoshiRunnerContext.getTestCaseNamespacedClassCommandName();
+			PoshiContext.getTestCaseNamespacedClassCommandName();
 
 		testClassCommandName = StringUtil.replace(
 			testClassCommandName, "#", "_");

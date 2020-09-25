@@ -14,10 +14,10 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.PoshiStackTraceUtil;
 import com.liferay.poshi.core.util.Validator;
-import com.liferay.poshi.runner.PoshiRunnerContext;
-import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
-import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
 
 import java.util.HashMap;
@@ -77,56 +77,52 @@ public abstract class SyntaxLogger {
 			childContainerLoggerElement.setName("ul");
 
 			String className =
-				PoshiRunnerGetterUtil.
-					getClassNameFromNamespacedClassCommandName(
-						namespacedClassCommandName);
+				PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
+					namespacedClassCommandName);
 			String namespace =
-				PoshiRunnerGetterUtil.
-					getNamespaceFromNamespacedClassCommandName(
-						namespacedClassCommandName);
+				PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
+					namespacedClassCommandName);
 
-			Element setUpElement = PoshiRunnerContext.getTestCaseCommandElement(
+			Element setUpElement = PoshiContext.getTestCaseCommandElement(
 				className + "#set-up", namespace);
 
 			if (setUpElement != null) {
-				PoshiRunnerStackTraceUtil.startStackTrace(
+				PoshiStackTraceUtil.startStackTrace(
 					namespace + "." + className + "#set-up", "test-case");
 
 				childContainerLoggerElement.addChildLoggerElement(
 					getLoggerElementFromElement(setUpElement));
 
-				PoshiRunnerStackTraceUtil.emptyStackTrace();
+				PoshiStackTraceUtil.emptyStackTrace();
 			}
 
-			PoshiRunnerStackTraceUtil.startStackTrace(
+			PoshiStackTraceUtil.startStackTrace(
 				namespacedClassCommandName, "test-case");
 
 			String classCommandName =
-				PoshiRunnerGetterUtil.
+				PoshiGetterUtil.
 					getClassCommandNameFromNamespacedClassCommandName(
 						namespacedClassCommandName);
 
-			Element testCaseElement =
-				PoshiRunnerContext.getTestCaseCommandElement(
-					classCommandName, namespace);
+			Element testCaseElement = PoshiContext.getTestCaseCommandElement(
+				classCommandName, namespace);
 
 			childContainerLoggerElement.addChildLoggerElement(
 				getLoggerElementFromElement(testCaseElement));
 
-			PoshiRunnerStackTraceUtil.emptyStackTrace();
+			PoshiStackTraceUtil.emptyStackTrace();
 
-			Element tearDownElement =
-				PoshiRunnerContext.getTestCaseCommandElement(
-					className + "#tear-down", namespace);
+			Element tearDownElement = PoshiContext.getTestCaseCommandElement(
+				className + "#tear-down", namespace);
 
 			if (tearDownElement != null) {
-				PoshiRunnerStackTraceUtil.startStackTrace(
+				PoshiStackTraceUtil.startStackTrace(
 					namespace + "." + className + "#tear-down", "test-case");
 
 				childContainerLoggerElement.addChildLoggerElement(
 					getLoggerElementFromElement(tearDownElement));
 
-				PoshiRunnerStackTraceUtil.emptyStackTrace();
+				PoshiStackTraceUtil.emptyStackTrace();
 			}
 
 			headerLoggerElement.addChildLoggerElement(
@@ -159,8 +155,7 @@ public abstract class SyntaxLogger {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(
-			getLineNumberItemText(
-				PoshiRunnerGetterUtil.getLineNumber(element)));
+			getLineNumberItemText(PoshiGetterUtil.getLineNumber(element)));
 
 		if (isExecuteChildElementLogged(element)) {
 			sb.append(getBtnItemText("btn-collapse"));
@@ -326,7 +321,7 @@ public abstract class SyntaxLogger {
 		_btnLinkCollapseId++;
 		_btnLinkVarId++;
 
-		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+		PoshiStackTraceUtil.setCurrentElement(element);
 
 		LoggerElement loggerElement = new LoggerElement();
 
@@ -343,7 +338,7 @@ public abstract class SyntaxLogger {
 			getLineContainerLoggerElement(element));
 
 		_loggerElements.put(
-			PoshiRunnerStackTraceUtil.getSimpleStackTrace(), loggerElement);
+			PoshiStackTraceUtil.getSimpleStackTrace(), loggerElement);
 
 		return loggerElement;
 	}
@@ -389,12 +384,12 @@ public abstract class SyntaxLogger {
 
 		String classCommandName = executeElement.attributeValue(macroType);
 
-		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
+		PoshiStackTraceUtil.pushStackTrace(executeElement);
 
 		loggerElement.addChildLoggerElement(
 			_getMacroCommandLoggerElement(classCommandName));
 
-		PoshiRunnerStackTraceUtil.popStackTrace();
+		PoshiStackTraceUtil.popStackTrace();
 
 		return loggerElement;
 	}
@@ -418,18 +413,18 @@ public abstract class SyntaxLogger {
 			String namespacedClassCommandName)
 		throws Exception {
 
-		Element commandElement = PoshiRunnerContext.getTestCaseCommandElement(
+		Element commandElement = PoshiContext.getTestCaseCommandElement(
 			namespacedClassCommandName,
-			PoshiRunnerGetterUtil.getNamespaceFromNamespacedClassCommandName(
+			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
 				namespacedClassCommandName));
 
 		String className =
-			PoshiRunnerGetterUtil.getClassNameFromNamespacedClassCommandName(
+			PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
 				namespacedClassCommandName);
 
-		Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
+		Element rootElement = PoshiContext.getTestCaseRootElement(
 			className,
-			PoshiRunnerGetterUtil.getNamespaceFromNamespacedClassCommandName(
+			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
 				namespacedClassCommandName));
 
 		return getChildContainerLoggerElement(commandElement, rootElement);
@@ -445,12 +440,12 @@ public abstract class SyntaxLogger {
 		String namespacedClassCommandName = executeElement.attributeValue(
 			"test-case");
 
-		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
+		PoshiStackTraceUtil.pushStackTrace(executeElement);
 
 		loggerElement.addChildLoggerElement(
 			getTestCaseCommandLoggerElement(namespacedClassCommandName));
 
-		PoshiRunnerStackTraceUtil.popStackTrace();
+		PoshiStackTraceUtil.popStackTrace();
 
 		return loggerElement;
 	}
@@ -518,9 +513,9 @@ public abstract class SyntaxLogger {
 	}
 
 	protected void updateElementStatus(Element element, String status) {
-		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+		PoshiStackTraceUtil.setCurrentElement(element);
 
-		String stackTrace = PoshiRunnerStackTraceUtil.getSimpleStackTrace();
+		String stackTrace = PoshiStackTraceUtil.getSimpleStackTrace();
 
 		if (stackTrace.contains(".function")) {
 			return;
@@ -536,20 +531,19 @@ public abstract class SyntaxLogger {
 		throws Exception {
 
 		String classCommandName =
-			PoshiRunnerGetterUtil.
-				getClassCommandNameFromNamespacedClassCommandName(
-					namespacedClassCommandName);
-		String namespace = PoshiRunnerStackTraceUtil.getCurrentNamespace(
+			PoshiGetterUtil.getClassCommandNameFromNamespacedClassCommandName(
+				namespacedClassCommandName);
+		String namespace = PoshiStackTraceUtil.getCurrentNamespace(
 			namespacedClassCommandName);
 
-		Element commandElement = PoshiRunnerContext.getMacroCommandElement(
+		Element commandElement = PoshiContext.getMacroCommandElement(
 			classCommandName, namespace);
 
 		String className =
-			PoshiRunnerGetterUtil.getClassNameFromNamespacedClassCommandName(
+			PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
 				namespacedClassCommandName);
 
-		Element rootElement = PoshiRunnerContext.getMacroRootElement(
+		Element rootElement = PoshiContext.getMacroRootElement(
 			className, namespace);
 
 		return getChildContainerLoggerElement(commandElement, rootElement);

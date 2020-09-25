@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.PoshiValidation;
 import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
@@ -53,12 +55,12 @@ public abstract class PoshiRunnerTestCase extends TestCase {
 		}
 
 		String[] poshiFileNames = ArrayUtils.addAll(
-			PoshiRunnerContext.POSHI_SUPPORT_FILE_INCLUDES,
-			PoshiRunnerContext.POSHI_TEST_FILE_INCLUDES);
+			PoshiContext.POSHI_SUPPORT_FILE_INCLUDES,
+			PoshiContext.POSHI_TEST_FILE_INCLUDES);
 
-		PoshiRunnerContext.readFiles(poshiFileNames, testBaseDirName);
+		PoshiContext.readFiles(poshiFileNames, testBaseDirName);
 
-		PoshiRunnerValidation.validate();
+		PoshiValidation.validate();
 	}
 
 	@After

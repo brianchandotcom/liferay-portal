@@ -16,23 +16,23 @@ package com.liferay.poshi.runner.selenium;
 
 import com.deque.axe.AXE;
 
+import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.CharPool;
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
+import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
-import com.liferay.poshi.runner.PoshiRunnerContext;
-import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.exception.ElementNotFoundPoshiRunnerException;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.ArchiveUtil;
 import com.liferay.poshi.runner.util.EmailCommands;
-import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
-import com.liferay.poshi.runner.util.OSDetector;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
@@ -1426,7 +1426,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public String getTestName() {
-		return PoshiRunnerContext.getTestCaseNamespacedClassCommandName();
+		return PoshiContext.getTestCaseNamespacedClassCommandName();
 	}
 
 	@Override
@@ -1745,12 +1745,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public boolean isTestName(String testName) {
 		String classCommandName =
-			PoshiRunnerContext.getTestCaseNamespacedClassCommandName();
+			PoshiContext.getTestCaseNamespacedClassCommandName();
 
 		classCommandName =
-			PoshiRunnerGetterUtil.
-				getClassCommandNameFromNamespacedClassCommandName(
-					classCommandName);
+			PoshiGetterUtil.getClassCommandNameFromNamespacedClassCommandName(
+				classCommandName);
 
 		if (testName.equals(classCommandName)) {
 			return true;

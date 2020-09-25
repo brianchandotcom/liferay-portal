@@ -14,14 +14,14 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.PoshiStackTraceUtil;
+import com.liferay.poshi.core.PoshiVariablesUtil;
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
-import com.liferay.poshi.runner.PoshiRunnerContext;
-import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
-import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
-import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
-import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
 
 import java.io.BufferedReader;
@@ -76,7 +76,7 @@ public final class SummaryLogger {
 		sb.append("/test-results/");
 		sb.append(
 			StringUtil.replace(
-				PoshiRunnerContext.getTestCaseNamespacedClassCommandName(), "#",
+				PoshiContext.getTestCaseNamespacedClassCommandName(), "#",
 				"_"));
 		sb.append("/summary.html");
 
@@ -572,26 +572,26 @@ public final class SummaryLogger {
 			}
 
 			String classCommandName =
-				PoshiRunnerGetterUtil.
+				PoshiGetterUtil.
 					getClassCommandNameFromNamespacedClassCommandName(
 						namespacedClassCommandName);
 
-			String namespace = PoshiRunnerStackTraceUtil.getCurrentNamespace(
+			String namespace = PoshiStackTraceUtil.getCurrentNamespace(
 				namespacedClassCommandName);
 
 			if (classType.startsWith("function")) {
-				summary = PoshiRunnerContext.getFunctionCommandSummary(
+				summary = PoshiContext.getFunctionCommandSummary(
 					classCommandName, namespace);
 			}
 			else if (classType.startsWith("macro")) {
-				summary = PoshiRunnerContext.getMacroCommandSummary(
+				summary = PoshiContext.getMacroCommandSummary(
 					classCommandName, namespace);
 			}
 		}
 
 		if (summary != null) {
 			summary = HtmlUtil.escape(
-				PoshiRunnerVariablesUtil.getReplacedCommandVarsString(summary));
+				PoshiVariablesUtil.getReplacedCommandVarsString(summary));
 
 			return _replaceExecuteVars(summary, element);
 		}
@@ -667,8 +667,8 @@ public final class SummaryLogger {
 		LoggerElement loggerElement = new LoggerElement(
 			"summaryTestDescription");
 
-		String testCaseDescription = PoshiRunnerContext.getTestCaseDescription(
-			PoshiRunnerContext.getTestCaseNamespacedClassCommandName());
+		String testCaseDescription = PoshiContext.getTestCaseDescription(
+			PoshiContext.getTestCaseNamespacedClassCommandName());
 
 		if (Validator.isNull(testCaseDescription)) {
 			testCaseDescription = "";
@@ -685,7 +685,7 @@ public final class SummaryLogger {
 
 		loggerElement.setName("h3");
 		loggerElement.setText(
-			PoshiRunnerContext.getTestCaseNamespacedClassCommandName());
+			PoshiContext.getTestCaseNamespacedClassCommandName());
 
 		return loggerElement;
 	}
@@ -855,21 +855,20 @@ public final class SummaryLogger {
 		Matcher matcher = _pattern.matcher(token);
 
 		while (matcher.find() &&
-			   PoshiRunnerVariablesUtil.containsKeyInExecuteMap(
-				   matcher.group(1))) {
+			   PoshiVariablesUtil.containsKeyInExecuteMap(matcher.group(1))) {
 
 			String varName = matcher.group(1);
 
 			String varValue = HtmlUtil.escape(
-				PoshiRunnerVariablesUtil.getStringFromExecuteMap(varName));
+				PoshiVariablesUtil.getStringFromExecuteMap(varName));
 
 			if ((element.attributeValue("function") != null) &&
 				varName.startsWith("locator")) {
 
 				varName = StringUtil.replace(varName, "locator", "locator-key");
 
-				String locatorKey =
-					PoshiRunnerVariablesUtil.getStringFromExecuteMap(varName);
+				String locatorKey = PoshiVariablesUtil.getStringFromExecuteMap(
+					varName);
 
 				if (Validator.isNotNull(locatorKey)) {
 					StringBuilder sb = new StringBuilder();

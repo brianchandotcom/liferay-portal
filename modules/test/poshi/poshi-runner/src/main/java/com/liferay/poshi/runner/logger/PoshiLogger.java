@@ -14,15 +14,15 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.PoshiStackTraceUtil;
+import com.liferay.poshi.core.elements.PoshiElement;
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
-import com.liferay.poshi.runner.PoshiRunnerContext;
-import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
-import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
-import com.liferay.poshi.runner.elements.PoshiElement;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
-import com.liferay.poshi.runner.util.FileUtil;
 
 import java.io.IOException;
 
@@ -95,7 +95,7 @@ public class PoshiLogger {
 		sb.append("/test-results/");
 		sb.append(
 			StringUtil.replace(
-				PoshiRunnerContext.getTestCaseNamespacedClassCommandName(), "#",
+				PoshiContext.getTestCaseNamespacedClassCommandName(), "#",
 				"_"));
 		sb.append("/index.html");
 
@@ -196,15 +196,14 @@ public class PoshiLogger {
 		throws Exception {
 
 		String namespace =
-			PoshiRunnerGetterUtil.getNamespaceFromNamespacedClassCommandName(
+			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
 				namespacedClassCommandName);
 
 		String classCommandName =
-			PoshiRunnerGetterUtil.
-				getClassCommandNameFromNamespacedClassCommandName(
-					namespacedClassCommandName);
+			PoshiGetterUtil.getClassCommandNameFromNamespacedClassCommandName(
+				namespacedClassCommandName);
 
-		Element commandElement = PoshiRunnerContext.getTestCaseCommandElement(
+		Element commandElement = PoshiContext.getTestCaseCommandElement(
 			classCommandName, namespace);
 
 		if (commandElement instanceof PoshiElement) {
@@ -216,7 +215,7 @@ public class PoshiLogger {
 
 	private LoggerElement _getSyntaxLoggerElement() {
 		return _syntaxLogger.getSyntaxLoggerElement(
-			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+			PoshiStackTraceUtil.getSimpleStackTrace());
 	}
 
 	private void _linkLoggerElements(

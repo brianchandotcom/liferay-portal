@@ -14,9 +14,9 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
-import com.liferay.poshi.runner.util.FileUtil;
 
 import java.io.BufferedReader;
 import java.io.StringReader;

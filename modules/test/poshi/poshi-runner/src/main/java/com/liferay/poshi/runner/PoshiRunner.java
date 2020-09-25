@@ -14,12 +14,17 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.PoshiStackTraceUtil;
+import com.liferay.poshi.core.PoshiValidation;
+import com.liferay.poshi.core.PoshiVariablesUtil;
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
-import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.ProxyUtil;
 
 import java.io.File;
@@ -98,18 +103,18 @@ public class PoshiRunner {
 		List<String> testNames = Arrays.asList(
 			PropsValues.TEST_NAME.split("\\s*,\\s*"));
 
-		PoshiRunnerContext.readFiles(_getTestClassFileIncludes(testNames));
+		PoshiContext.readFiles(_getTestClassFileIncludes(testNames));
 
 		for (String testName : testNames) {
-			PoshiRunnerValidation.validate(testName);
+			PoshiValidation.validate(testName);
 
 			String namespace =
-				PoshiRunnerGetterUtil.
-					getNamespaceFromNamespacedClassCommandName(testName);
+				PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
+					testName);
 
 			if (testName.contains("#")) {
 				String classCommandName =
-					PoshiRunnerGetterUtil.
+					PoshiGetterUtil.
 						getClassCommandNameFromNamespacedClassCommandName(
 							testName);
 
@@ -118,10 +123,10 @@ public class PoshiRunner {
 			}
 			else {
 				String className =
-					PoshiRunnerGetterUtil.
-						getClassNameFromNamespacedClassCommandName(testName);
+					PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
+						testName);
 
-				Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
+				Element rootElement = PoshiContext.getTestCaseRootElement(
 					className, namespace);
 
 				List<Element> commandElements = rootElement.elements("command");
@@ -141,7 +146,7 @@ public class PoshiRunner {
 		_testNamespacedClassCommandName = namespacedClassCommandName;
 
 		_testNamespacedClassName =
-			PoshiRunnerGetterUtil.
+			PoshiGetterUtil.
 				getNamespacedClassNameFromNamespacedClassCommandName(
 					_testNamespacedClassCommandName);
 
@@ -158,10 +163,10 @@ public class PoshiRunner {
 		System.out.println("###");
 		System.out.println();
 
-		PoshiRunnerContext.setTestCaseNamespacedClassCommandName(
+		PoshiContext.setTestCaseNamespacedClassCommandName(
 			_testNamespacedClassCommandName);
 
-		PoshiRunnerVariablesUtil.clear();
+		PoshiVariablesUtil.clear();
 
 		FileUtil.delete(new File(PropsValues.OUTPUT_DIR_NAME));
 
@@ -180,9 +185,9 @@ public class PoshiRunner {
 		catch (Exception exception) {
 			LiferaySeleniumUtil.printJavaProcessStacktrace();
 
-			PoshiRunnerStackTraceUtil.printStackTrace(exception.getMessage());
+			PoshiStackTraceUtil.printStackTrace(exception.getMessage());
 
-			PoshiRunnerStackTraceUtil.emptyStackTrace();
+			PoshiStackTraceUtil.emptyStackTrace();
 
 			exception.printStackTrace();
 
@@ -202,9 +207,9 @@ public class PoshiRunner {
 			}
 		}
 		catch (Exception exception) {
-			PoshiRunnerStackTraceUtil.printStackTrace(exception.getMessage());
+			PoshiStackTraceUtil.printStackTrace(exception.getMessage());
 
-			PoshiRunnerStackTraceUtil.emptyStackTrace();
+			PoshiStackTraceUtil.emptyStackTrace();
 		}
 		finally {
 			if (PropsValues.PROXY_SERVER_ENABLED) {
@@ -229,9 +234,9 @@ public class PoshiRunner {
 		catch (Exception exception) {
 			LiferaySeleniumUtil.printJavaProcessStacktrace();
 
-			PoshiRunnerStackTraceUtil.printStackTrace(exception.getMessage());
+			PoshiStackTraceUtil.printStackTrace(exception.getMessage());
 
-			PoshiRunnerStackTraceUtil.emptyStackTrace();
+			PoshiStackTraceUtil.emptyStackTrace();
 
 			exception.printStackTrace();
 
@@ -247,8 +252,8 @@ public class PoshiRunner {
 
 		for (String testName : testNames) {
 			String testClassName =
-				PoshiRunnerGetterUtil.
-					getClassNameFromNamespacedClassCommandName(testName);
+				PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
+					testName);
 
 			testClassFileGlobsSet.add("**/" + testClassName + ".prose");
 			testClassFileGlobsSet.add("**/" + testClassName + ".testcase");
@@ -269,19 +274,18 @@ public class PoshiRunner {
 		throws Exception {
 
 		String namespace =
-			PoshiRunnerGetterUtil.getNamespaceFromNamespacedClassCommandName(
+			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
 				namespacedClassCommandName);
 
 		String classCommandName =
-			PoshiRunnerGetterUtil.
-				getClassCommandNameFromNamespacedClassCommandName(
-					namespacedClassCommandName);
+			PoshiGetterUtil.getClassCommandNameFromNamespacedClassCommandName(
+				namespacedClassCommandName);
 
-		Element commandElement = PoshiRunnerContext.getTestCaseCommandElement(
+		Element commandElement = PoshiContext.getTestCaseCommandElement(
 			classCommandName, namespace);
 
 		if (commandElement != null) {
-			PoshiRunnerStackTraceUtil.startStackTrace(
+			PoshiStackTraceUtil.startStackTrace(
 				namespacedClassCommandName, "test-case");
 
 			_poshiLogger.updateStatus(commandElement, "pending");
@@ -291,7 +295,7 @@ public class PoshiRunner {
 
 			_poshiLogger.updateStatus(commandElement, "pass");
 
-			PoshiRunnerStackTraceUtil.emptyStackTrace();
+			PoshiStackTraceUtil.emptyStackTrace();
 		}
 	}
 

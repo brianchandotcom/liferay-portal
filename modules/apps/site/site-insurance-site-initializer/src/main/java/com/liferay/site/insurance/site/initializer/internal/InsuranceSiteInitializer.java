@@ -337,7 +337,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 		File file = FileUtil.createTempFile(url.openStream());
 
-		_fragmentsImporter.importFile(
+		_fragmentsImporter.importFragmentEntries(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(), 0,
 			file, false);
 	}

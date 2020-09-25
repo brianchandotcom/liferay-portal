@@ -424,7 +424,7 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#HotDeployApp";
 
-		var appName = "Liferay Cross-Cluster Replication for Elasticsearch";
+		var appName = "Liferay Enterprise Search Cross-Cluster Replication";
 
 		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
 

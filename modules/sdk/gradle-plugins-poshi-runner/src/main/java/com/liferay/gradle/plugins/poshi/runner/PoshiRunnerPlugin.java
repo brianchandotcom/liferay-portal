@@ -368,7 +368,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		javaExec.setClasspath(_getPoshiRunnerClasspath(project));
 		javaExec.setDescription("Validates the Poshi files syntax.");
 		javaExec.setGroup("verification");
-		javaExec.setMain("com.liferay.poshi.runner.PoshiRunnerValidation");
+		javaExec.setMain("com.liferay.poshi.core.PoshiValidation");
 
 		return javaExec;
 	}
@@ -380,7 +380,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		javaExec.setClasspath(_getPoshiRunnerClasspath(project));
 		javaExec.setDescription("Write the Poshi properties files.");
 		javaExec.setGroup("verification");
-		javaExec.setMain("com.liferay.poshi.runner.PoshiRunnerContext");
+		javaExec.setMain("com.liferay.poshi.core.PoshiContext");
 
 		return javaExec;
 	}

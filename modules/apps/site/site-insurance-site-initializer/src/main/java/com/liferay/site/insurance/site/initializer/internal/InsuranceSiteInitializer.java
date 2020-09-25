@@ -697,10 +697,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		unicodeProperties.put(
 			"anyClassTypeJournalArticleAssetRendererFactory",
 			String.valueOf(ddmStructure.getStructureId()));
+		unicodeProperties.put("classNameIds", JournalArticle.class.getName());
 		unicodeProperties.put(
 			"classTypeIdsJournalArticleAssetRendererFactory",
 			String.valueOf(ddmStructure.getStructureId()));
-		unicodeProperties.put("classNameIds", JournalArticle.class.getName());
 		unicodeProperties.put(
 			"groupIds", String.valueOf(_serviceContext.getScopeGroupId()));
 		unicodeProperties.put("orderByColumn1", "modifiedDate");

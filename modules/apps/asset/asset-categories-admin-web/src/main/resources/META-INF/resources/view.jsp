@@ -137,7 +137,7 @@
 
 								<c:if test="<%= ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) %>">
 									<ul class="mb-2 nav nav-stacked">
-										<span class="text-truncate"><%= assetCategoriesDisplayContext.getGroupName() %></span>
+										<span class="text-truncate"><%= HtmlUtil.escape(assetCategoriesDisplayContext.getGroupName()) %></span>
 
 										<%
 										for (AssetVocabulary vocabulary : assetCategoriesDisplayContext.getVocabularies()) {

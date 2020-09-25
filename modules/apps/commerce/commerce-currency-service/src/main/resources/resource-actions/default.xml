@@ -2,17 +2,22 @@
 <!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
 
 <resource-action-mapping>
-	<portlet-resource>
-		<portlet-name>90</portlet-name>
+	<model-resource>
+		<model-name>com.liferay.commerce.currency</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_currency_web_internal_portlet_CommerceCurrencyPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>MANAGE_COMMERCE_CURRENCIES</action-key>
 			</supports>
-			<site-member-defaults />
-			<guest-defaults />
+			<site-member-defaults/>
+			<guest-defaults/>
 			<guest-unsupported>
 				<action-key>MANAGE_COMMERCE_CURRENCIES</action-key>
 			</guest-unsupported>
 		</permissions>
-	</portlet-resource>
+	</model-resource>
 </resource-action-mapping>

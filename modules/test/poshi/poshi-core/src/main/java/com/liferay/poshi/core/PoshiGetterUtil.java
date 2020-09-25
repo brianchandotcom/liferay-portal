@@ -12,24 +12,23 @@
  * details.
  */
 
-package com.liferay.poshi.runner;
+package com.liferay.poshi.core;
 
 import com.google.common.reflect.ClassPath;
 
+import com.liferay.poshi.core.elements.PoshiElement;
+import com.liferay.poshi.core.elements.PoshiNode;
+import com.liferay.poshi.core.elements.PoshiNodeFactory;
+import com.liferay.poshi.core.prose.PoshiProseDefinition;
+import com.liferay.poshi.core.util.Dom4JUtil;
+import com.liferay.poshi.core.util.ExternalMethod;
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
+import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
-import com.liferay.poshi.runner.elements.PoshiElement;
-import com.liferay.poshi.runner.elements.PoshiNode;
-import com.liferay.poshi.runner.elements.PoshiNodeFactory;
-import com.liferay.poshi.runner.prose.PoshiProseDefinition;
-import com.liferay.poshi.runner.selenium.SeleniumUtil;
-import com.liferay.poshi.runner.util.Dom4JUtil;
-import com.liferay.poshi.runner.util.ExternalMethod;
-import com.liferay.poshi.runner.util.FileUtil;
-import com.liferay.poshi.runner.util.OSDetector;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -56,7 +55,7 @@ import org.dom4j.io.SAXReader;
  * @author Karen Dang
  * @author Michael Hashimoto
  */
-public class PoshiRunnerGetterUtil {
+public class PoshiGetterUtil {
 
 	public static List<Element> getAllChildElements(
 		Element element, String elementName) {
@@ -184,7 +183,7 @@ public class PoshiRunnerGetterUtil {
 	public static String getExtendedTestCaseName() {
 		String testName = PropsValues.TEST_NAME;
 
-		Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
+		Element rootElement = PoshiContext.getTestCaseRootElement(
 			getClassNameFromNamespacedClassCommandName(testName),
 			getNamespaceFromNamespacedClassCommandName(testName));
 
@@ -196,9 +195,9 @@ public class PoshiRunnerGetterUtil {
 	}
 
 	public static String getExtendedTestCaseName(String filePath) {
-		Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
+		Element rootElement = PoshiContext.getTestCaseRootElement(
 			getClassNameFromFilePath(filePath),
-			PoshiRunnerContext.getNamespaceFromFilePath(filePath));
+			PoshiContext.getNamespaceFromFilePath(filePath));
 
 		return getExtendedTestCaseName(rootElement);
 	}
@@ -269,11 +268,11 @@ public class PoshiRunnerGetterUtil {
 			Object parameter = null;
 
 			if (matcher.matches()) {
-				parameter = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+				parameter = PoshiVariablesUtil.getValueFromCommandMap(
 					matcher.group(1));
 			}
 			else {
-				parameter = PoshiRunnerVariablesUtil.replaceCommandVars(arg);
+				parameter = PoshiVariablesUtil.replaceCommandVars(arg);
 			}
 
 			if (className.endsWith("MathUtil") &&
@@ -312,7 +311,7 @@ public class PoshiRunnerGetterUtil {
 			String namespace = matcher.group("namespace");
 
 			if (Validator.isNull(namespace)) {
-				namespace = PoshiRunnerStackTraceUtil.getCurrentNamespace();
+				namespace = PoshiStackTraceUtil.getCurrentNamespace();
 			}
 
 			String className = matcher.group("className");
@@ -334,7 +333,7 @@ public class PoshiRunnerGetterUtil {
 			String namespace = matcher.group("namespace");
 
 			if (Validator.isNull(namespace)) {
-				namespace = PoshiRunnerStackTraceUtil.getCurrentNamespace();
+				namespace = PoshiStackTraceUtil.getCurrentNamespace();
 			}
 
 			return namespace;
@@ -354,7 +353,7 @@ public class PoshiRunnerGetterUtil {
 			String namespace = matcher.group("namespace");
 
 			if (Validator.isNull(namespace)) {
-				namespace = PoshiRunnerStackTraceUtil.getCurrentNamespace();
+				namespace = PoshiStackTraceUtil.getCurrentNamespace();
 			}
 
 			return namespace;
@@ -511,68 +510,6 @@ public class PoshiRunnerGetterUtil {
 			simpleClassName + " is not a valid simple class name");
 	}
 
-	public static Object getVarMethodValue(
-			String expression, String defaultNamespace)
-		throws Exception {
-
-		List<String> args = new ArrayList<>();
-
-		int x = expression.indexOf("(");
-		int y = expression.lastIndexOf(")");
-
-		if ((x + 1) < y) {
-			String parameterString = expression.substring(x + 1, y);
-
-			Matcher parameterMatcher = _parameterPattern.matcher(
-				parameterString);
-
-			while (parameterMatcher.find()) {
-				String parameterValue = parameterMatcher.group();
-
-				if (parameterValue.startsWith("'") &&
-					parameterValue.endsWith("'")) {
-
-					parameterValue = parameterValue.substring(
-						1, parameterValue.length() - 1);
-				}
-
-				Matcher matcher = _locatorKeyPattern.matcher(parameterValue);
-
-				if (matcher.matches()) {
-					String namespace = matcher.group("namespace");
-
-					if (namespace == null) {
-						parameterValue = PoshiRunnerContext.getPathLocator(
-							parameterValue, defaultNamespace);
-					}
-					else {
-						parameterValue = PoshiRunnerContext.getPathLocator(
-							parameterValue, namespace);
-					}
-				}
-
-				if (parameterValue.contains("\'")) {
-					parameterValue = parameterValue.replaceAll("\\\\'", "'");
-				}
-
-				args.add(parameterValue);
-			}
-		}
-
-		y = expression.indexOf("#");
-
-		String className = expression.substring(0, y);
-		String methodName = expression.substring(y + 1, x);
-
-		Object object = null;
-
-		if (className.equals("selenium")) {
-			object = SeleniumUtil.getSelenium();
-		}
-
-		return getMethodReturnValue(args, className, methodName, object);
-	}
-
 	public static boolean isValidUtilityClass(String className) {
 		if (_utilityClassMap.containsValue(className)) {
 			return true;
@@ -581,14 +518,10 @@ public class PoshiRunnerGetterUtil {
 		return false;
 	}
 
-	private static final Pattern _locatorKeyPattern = Pattern.compile(
-		"(?<namespace>[\\w]+\\.)?[\\w]+#[A-Z0-9_]+");
 	private static final Pattern _namespacedClassCommandNamePattern =
 		Pattern.compile(
 			"((?<namespace>\\w+)\\.)?(?<className>\\w+)(\\#(?<commandName>" +
 				"(\\w+(\\-\\w+)*|\\$\\{\\w+\\}|\\w+|\\s*\\w+)*))?");
-	private static final Pattern _parameterPattern = Pattern.compile(
-		"('([^'\\\\]|\\\\.)*'|[^',\\s]+)");
 	private static final List<String> _reservedTags = Arrays.asList(
 		"and", "arg", "body", "case", "command", "condition", "contains",
 		"default", "definition", "description", "echo", "else", "elseif",
@@ -606,7 +539,7 @@ public class PoshiRunnerGetterUtil {
 						PropsUtil.class.getClassLoader());
 
 					for (String packageName :
-							PoshiRunnerValidation.UTIL_PACKAGE_NAMES) {
+							PoshiValidation.UTIL_PACKAGE_NAMES) {
 
 						for (ClassPath.ClassInfo classInfo :
 								classPath.getTopLevelClasses(packageName)) {

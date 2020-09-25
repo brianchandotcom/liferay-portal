@@ -12,24 +12,23 @@
  * details.
  */
 
-package com.liferay.poshi.runner;
+package com.liferay.poshi.core;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
-import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.pql.PQLEntity;
 import com.liferay.poshi.core.pql.PQLEntityFactory;
+import com.liferay.poshi.core.prose.PoshiProseMatcher;
+import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
+import com.liferay.poshi.core.util.FileUtil;
+import com.liferay.poshi.core.util.MathUtil;
+import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
-import com.liferay.poshi.runner.prose.PoshiProseMatcher;
-import com.liferay.poshi.runner.script.PoshiScriptParserException;
-import com.liferay.poshi.runner.util.FileUtil;
-import com.liferay.poshi.runner.util.MathUtil;
-import com.liferay.poshi.runner.util.OSDetector;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -75,7 +74,7 @@ import org.dom4j.Element;
  * @author Karen Dang
  * @author Michael Hashimoto
  */
-public class PoshiRunnerContext {
+public class PoshiContext {
 
 	public static final String[] POSHI_SUPPORT_FILE_INCLUDES = {
 		"**/*.action", "**/*.function", "**/*.macro", "**/*.path"
@@ -211,7 +210,7 @@ public class PoshiRunnerContext {
 
 			if (value.equals(filePath)) {
 				String key = entry.getKey();
-				String fileName = PoshiRunnerGetterUtil.getFileNameFromFilePath(
+				String fileName = PoshiGetterUtil.getFileNameFromFilePath(
 					filePath);
 
 				return key.substring(0, key.indexOf("." + fileName));
@@ -236,7 +235,7 @@ public class PoshiRunnerContext {
 			namespace + "." + pathLocatorKey);
 
 		String className =
-			PoshiRunnerGetterUtil.getClassNameFromNamespacedClassCommandName(
+			PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
 				pathLocatorKey);
 
 		if ((pathLocator == null) &&
@@ -245,9 +244,8 @@ public class PoshiRunnerContext {
 			String pathExtension = _pathExtensions.get(
 				namespace + "." + className);
 			String commandName =
-				PoshiRunnerGetterUtil.
-					getCommandNameFromNamespacedClassCommandName(
-						pathLocatorKey);
+				PoshiGetterUtil.getCommandNameFromNamespacedClassCommandName(
+					pathLocatorKey);
 
 			return getPathLocator(pathExtension + "#" + commandName, namespace);
 		}
@@ -322,7 +320,7 @@ public class PoshiRunnerContext {
 	public static void main(String[] args) throws Exception {
 		readFiles();
 
-		PoshiRunnerValidation.validate();
+		PoshiValidation.validate();
 
 		_writeTestCaseMethodNamesProperties();
 		_writeTestCSVReportFile();
@@ -334,7 +332,7 @@ public class PoshiRunnerContext {
 
 		long start = System.currentTimeMillis();
 
-		readFiles(PoshiRunnerContext.POSHI_TEST_FILE_INCLUDES);
+		readFiles(POSHI_TEST_FILE_INCLUDES);
 
 		System.out.println(
 			" Completed in " + (System.currentTimeMillis() - start) + "ms.");
@@ -740,10 +738,10 @@ public class PoshiRunnerContext {
 				_testCaseNamespacedClassNames) {
 
 			String className =
-				PoshiRunnerGetterUtil.getClassNameFromNamespacedClassName(
+				PoshiGetterUtil.getClassNameFromNamespacedClassName(
 					testCaseNamespacedClassName);
 			String namespace =
-				PoshiRunnerGetterUtil.getNamespaceFromNamespacedClassName(
+				PoshiGetterUtil.getNamespaceFromNamespacedClassName(
 					testCaseNamespacedClassName);
 
 			Element rootElement = getTestCaseRootElement(className, namespace);
@@ -860,13 +858,12 @@ public class PoshiRunnerContext {
 			Element rootElement, String filePath, String namespace)
 		throws Exception {
 
-		String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
-			filePath);
+		String className = PoshiGetterUtil.getClassNameFromFilePath(filePath);
 
 		String baseNamespacedClassName = rootElement.attributeValue("override");
 
 		String baseClassName =
-			PoshiRunnerGetterUtil.getClassNameFromNamespacedClassName(
+			PoshiGetterUtil.getClassNameFromNamespacedClassName(
 				baseNamespacedClassName);
 
 		if (!className.equals(baseClassName)) {
@@ -882,7 +879,7 @@ public class PoshiRunnerContext {
 		}
 
 		String baseNamespace =
-			PoshiRunnerGetterUtil.getNamespaceFromNamespacedClassName(
+			PoshiGetterUtil.getNamespaceFromNamespacedClassName(
 				baseNamespacedClassName);
 
 		if (_isClassOverridden(baseNamespace + "." + baseClassName)) {
@@ -903,8 +900,7 @@ public class PoshiRunnerContext {
 			throw new RuntimeException(sb.toString());
 		}
 
-		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
-			filePath);
+		String classType = PoshiGetterUtil.getClassTypeFromFilePath(filePath);
 
 		if (classType.equals("test-case")) {
 			Element setUpElement = rootElement.element("set-up");
@@ -1119,7 +1115,7 @@ public class PoshiRunnerContext {
 		throws Exception {
 
 		for (String resourceName : resourceNames) {
-			ClassLoader classLoader = PoshiRunnerContext.class.getClassLoader();
+			ClassLoader classLoader = PoshiContext.class.getClassLoader();
 
 			Enumeration<URL> enumeration = classLoader.getResources(
 				resourceName);
@@ -1225,8 +1221,7 @@ public class PoshiRunnerContext {
 				sb.append("' \n");
 				sb.append(filePath);
 				sb.append(": ");
-				sb.append(
-					PoshiRunnerGetterUtil.getLineNumber(locatorKeyElement));
+				sb.append(PoshiGetterUtil.getLineNumber(locatorKeyElement));
 
 				_duplicateLocatorMessages.add(sb.toString());
 			}
@@ -1253,10 +1248,8 @@ public class PoshiRunnerContext {
 			return;
 		}
 
-		String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
-			filePath);
-		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
-			filePath);
+		String className = PoshiGetterUtil.getClassNameFromFilePath(filePath);
+		String classType = PoshiGetterUtil.getClassTypeFromFilePath(filePath);
 
 		if (classType.equals("test-case")) {
 			_testCaseNamespacedClassNames.add(namespace + "." + className);
@@ -1309,12 +1302,11 @@ public class PoshiRunnerContext {
 					sb.append("'\n");
 					sb.append(filePath);
 					sb.append(": ");
-					sb.append(
-						PoshiRunnerGetterUtil.getLineNumber(commandElement));
+					sb.append(PoshiGetterUtil.getLineNumber(commandElement));
 					sb.append("\n");
 
 					String duplicateElementFilePath = getFilePathFromFileName(
-						PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
+						PoshiGetterUtil.getFileNameFromFilePath(filePath),
 						namespace);
 
 					if (Validator.isNull(duplicateElementFilePath)) {
@@ -1327,8 +1319,7 @@ public class PoshiRunnerContext {
 					Element duplicateElement = _commandElements.get(
 						classType + "#" + namespace + "." + classCommandName);
 
-					sb.append(
-						PoshiRunnerGetterUtil.getLineNumber(duplicateElement));
+					sb.append(PoshiGetterUtil.getLineNumber(duplicateElement));
 
 					_duplicateLocatorMessages.add(sb.toString());
 
@@ -1563,13 +1554,12 @@ public class PoshiRunnerContext {
 				_namespacedClassCommandNamePropertiesMap.get(
 					testCaseNamespacedClassCommandName);
 			String testNamespacedClassName =
-				PoshiRunnerGetterUtil.
+				PoshiGetterUtil.
 					getNamespacedClassNameFromNamespacedClassCommandName(
 						testCaseNamespacedClassCommandName);
 			String testCommandName =
-				PoshiRunnerGetterUtil.
-					getCommandNameFromNamespacedClassCommandName(
-						testCaseNamespacedClassCommandName);
+				PoshiGetterUtil.getCommandNameFromNamespacedClassCommandName(
+					testCaseNamespacedClassCommandName);
 
 			for (String propertyName : properties.stringPropertyNames()) {
 				sb.append(testNamespacedClassName);
@@ -1649,7 +1639,7 @@ public class PoshiRunnerContext {
 					filePath = StringUtil.replace(filePath, "/", "\\");
 				}
 
-				String fileName = PoshiRunnerGetterUtil.getFileNameFromFilePath(
+				String fileName = PoshiGetterUtil.getFileNameFromFilePath(
 					filePath);
 
 				String namespacedFileName = _namespace + "." + fileName;
@@ -1664,8 +1654,8 @@ public class PoshiRunnerContext {
 						filePath, "\n", duplicateFilePath, "\n");
 				}
 
-				Element rootElement =
-					PoshiRunnerGetterUtil.getRootElementFromURL(_url);
+				Element rootElement = PoshiGetterUtil.getRootElementFromURL(
+					_url);
 
 				_storeRootElement(rootElement, filePath, _namespace);
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner;
+package com.liferay.poshi.core;
 
 import com.liferay.poshi.core.util.StringUtil;
 
@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
  * @author Karen Dang
  * @author Michael Hashimoto
  */
-public class PoshiRunnerVariablesUtil {
+public class PoshiVariablesUtil {
 
 	public static void clear() {
 		_commandMap.clear();

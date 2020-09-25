@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.poshi.runner;
+package com.liferay.poshi.core;
 
 import com.liferay.poshi.core.util.Validator;
 
@@ -24,7 +24,7 @@ import org.dom4j.Element;
  * @author Karen Dang
  * @author Michael Hashimoto
  */
-public final class PoshiRunnerStackTraceUtil {
+public final class PoshiStackTraceUtil {
 
 	public static void emptyStackTrace() {
 		while (!_stackTrace.isEmpty()) {
@@ -38,24 +38,23 @@ public final class PoshiRunnerStackTraceUtil {
 
 	public static String getCurrentNamespace() {
 		if (_filePaths.isEmpty()) {
-			return PoshiRunnerContext.getDefaultNamespace();
+			return PoshiContext.getDefaultNamespace();
 		}
 
 		String filePath = getCurrentFilePath();
 
 		int x = filePath.indexOf("[");
 
-		return PoshiRunnerContext.getNamespaceFromFilePath(
-			filePath.substring(0, x));
+		return PoshiContext.getNamespaceFromFilePath(filePath.substring(0, x));
 	}
 
 	public static String getCurrentNamespace(
 		String namespacedClassCommandName) {
 
-		String defaultNamespace = PoshiRunnerContext.getDefaultNamespace();
+		String defaultNamespace = PoshiContext.getDefaultNamespace();
 
 		String namespace =
-			PoshiRunnerGetterUtil.getNamespaceFromNamespacedClassCommandName(
+			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
 				namespacedClassCommandName);
 
 		if (Validator.isNull(namespace) || namespace.equals(defaultNamespace)) {
@@ -73,17 +72,15 @@ public final class PoshiRunnerStackTraceUtil {
 				continue;
 			}
 
-			sb.append(PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath));
+			sb.append(PoshiGetterUtil.getFileNameFromFilePath(filePath));
 		}
 
 		String currentFilePath = _filePaths.peek();
 
 		if (!currentFilePath.contains(".function")) {
-			sb.append(
-				PoshiRunnerGetterUtil.getFileNameFromFilePath(currentFilePath));
-
+			sb.append(PoshiGetterUtil.getFileNameFromFilePath(currentFilePath));
 			sb.append(":");
-			sb.append(PoshiRunnerGetterUtil.getLineNumber(_currentElement));
+			sb.append(PoshiGetterUtil.getLineNumber(_currentElement));
 		}
 
 		return sb.toString();
@@ -104,7 +101,7 @@ public final class PoshiRunnerStackTraceUtil {
 		sb.append("\n");
 		sb.append(_filePaths.peek());
 		sb.append(":");
-		sb.append(PoshiRunnerGetterUtil.getLineNumber(_currentElement));
+		sb.append(PoshiGetterUtil.getLineNumber(_currentElement));
 
 		while (!stackTrace.isEmpty()) {
 			sb.append("\n");
@@ -131,8 +128,7 @@ public final class PoshiRunnerStackTraceUtil {
 
 	public static void pushStackTrace(Element element) throws Exception {
 		_stackTrace.push(
-			_filePaths.peek() + ":" +
-				PoshiRunnerGetterUtil.getLineNumber(element));
+			_filePaths.peek() + ":" + PoshiGetterUtil.getLineNumber(element));
 
 		String namespacedClassCommandName = null;
 		String classType = null;
@@ -149,12 +145,11 @@ public final class PoshiRunnerStackTraceUtil {
 			namespacedClassCommandName = element.attributeValue("test-case");
 
 			String className =
-				PoshiRunnerGetterUtil.
-					getClassNameFromNamespacedClassCommandName(
-						namespacedClassCommandName);
+				PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
+					namespacedClassCommandName);
 
 			if (className.equals("super")) {
-				className = PoshiRunnerGetterUtil.getExtendedTestCaseName();
+				className = PoshiGetterUtil.getExtendedTestCaseName();
 
 				namespacedClassCommandName =
 					namespacedClassCommandName.replaceFirst("super", className);
@@ -185,29 +180,28 @@ public final class PoshiRunnerStackTraceUtil {
 		String namespacedClassCommandName, String classType) {
 
 		String classCommandName =
-			PoshiRunnerGetterUtil.
-				getClassCommandNameFromNamespacedClassCommandName(
-					namespacedClassCommandName);
+			PoshiGetterUtil.getClassCommandNameFromNamespacedClassCommandName(
+				namespacedClassCommandName);
 
 		String className =
-			PoshiRunnerGetterUtil.getClassNameFromNamespacedClassCommandName(
+			PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
 				classCommandName);
 
-		String fileExtension =
-			PoshiRunnerGetterUtil.getFileExtensionFromClassType(classType);
+		String fileExtension = PoshiGetterUtil.getFileExtensionFromClassType(
+			classType);
 
-		String filePath = PoshiRunnerContext.getFilePathFromFileName(
+		String filePath = PoshiContext.getFilePathFromFileName(
 			className + "." + fileExtension,
 			getCurrentNamespace(namespacedClassCommandName));
 
 		if (classType.equals("test-case") && (filePath == null)) {
-			filePath = PoshiRunnerContext.getFilePathFromFileName(
+			filePath = PoshiContext.getFilePathFromFileName(
 				className + ".prose",
 				getCurrentNamespace(namespacedClassCommandName));
 		}
 
 		String commandName =
-			PoshiRunnerGetterUtil.getCommandNameFromNamespacedClassCommandName(
+			PoshiGetterUtil.getCommandNameFromNamespacedClassCommandName(
 				namespacedClassCommandName);
 
 		_filePaths.push(filePath + "[" + commandName + "]");

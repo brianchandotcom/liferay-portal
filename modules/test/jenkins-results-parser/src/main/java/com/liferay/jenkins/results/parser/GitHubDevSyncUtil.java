@@ -1234,34 +1234,13 @@ public class GitHubDevSyncUtil {
 				"branch is ", upstreamBranchName, "."));
 
 		try {
-			List<GitRemote> gitHubDevGitRemotes = null;
+			List<GitRemote> gitHubDevGitRemotes = getGitHubDevGitRemotes(
+				gitWorkingDirectory);
 
 			try {
-				gitHubDevGitRemotes = getGitHubDevGitRemotes(
-					gitWorkingDirectory);
-
-				for (GitRemote gitHubDevGitRemote : gitHubDevGitRemotes) {
-					gitWorkingDirectory.pushToRemoteGitRepository(
-						false, localGitBranch, upstreamBranchName,
-						gitHubDevGitRemote);
-				}
-			}
-			catch (Exception exception) {
-				if (retryCount == 1) {
-					throw exception;
-				}
-
-				gitHubDevGitRemotes = null;
-
-				System.out.println(
-					"Synchronization with local-git failed. Retrying.");
-
-				exception.printStackTrace();
-
-				gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch);
-
-				return synchronizeUpstreamBranchToGitHubDev(
-					gitWorkingDirectory, localGitBranch, retryCount + 1);
+				pushToAllRemotes(
+					true, localGitBranch, upstreamBranchName,
+					gitHubDevGitRemotes);
 			}
 			finally {
 				if (gitHubDevGitRemotes != null) {

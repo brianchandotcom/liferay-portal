@@ -169,6 +169,7 @@ public class GetPagePreviewMVCResourceCommandTest {
 		_themeDisplay.setLayoutSet(layout.getLayoutSet());
 		_themeDisplay.setLookAndFeel(
 			layout.getTheme(), layout.getColorScheme());
+		_themeDisplay.setPlid(layout.getPlid());
 	}
 
 	private void _assertContainsContent() throws Exception {

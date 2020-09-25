@@ -1339,6 +1339,35 @@ paths:
                     description:
                         ""
             tags: ["DataRecord"]
+        patch:
+            operationId: patchDataRecord
+            parameters:
+                - in: path
+                  name: dataRecordId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataRecord"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataRecord"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecord"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataRecord"
+                    description:
+                        ""
+            tags: ["DataRecord"]
         put:
             operationId: putDataRecord
             parameters:

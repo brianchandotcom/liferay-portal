@@ -1096,6 +1096,69 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
+	protected static Object getVarMethodValue(
+			String expression, String defaultNamespace)
+		throws Exception {
+
+		List<String> args = new ArrayList<>();
+
+		int x = expression.indexOf("(");
+		int y = expression.lastIndexOf(")");
+
+		if ((x + 1) < y) {
+			String parameterString = expression.substring(x + 1, y);
+
+			Matcher parameterMatcher = _parameterPattern.matcher(
+				parameterString);
+
+			while (parameterMatcher.find()) {
+				String parameterValue = parameterMatcher.group();
+
+				if (parameterValue.startsWith("'") &&
+					parameterValue.endsWith("'")) {
+
+					parameterValue = parameterValue.substring(
+						1, parameterValue.length() - 1);
+				}
+
+				Matcher matcher = _locatorKeyPattern.matcher(parameterValue);
+
+				if (matcher.matches()) {
+					String namespace = matcher.group("namespace");
+
+					if (namespace == null) {
+						parameterValue = PoshiContext.getPathLocator(
+							parameterValue, defaultNamespace);
+					}
+					else {
+						parameterValue = PoshiContext.getPathLocator(
+							parameterValue, namespace);
+					}
+				}
+
+				if (parameterValue.contains("\'")) {
+					parameterValue = parameterValue.replaceAll("\\\\'", "'");
+				}
+
+				args.add(parameterValue);
+			}
+		}
+
+		y = expression.indexOf("#");
+
+		String className = expression.substring(0, y);
+		String methodName = expression.substring(y + 1, x);
+
+		Object object = null;
+
+		if (className.equals("selenium")) {
+			object = SeleniumUtil.getSelenium();
+		}
+
+		return PoshiGetterUtil.getMethodReturnValue(
+			args, className, methodName, object);
+	}
+
 	protected Object callWithTimeout(
 			Callable<?> callable, String description, long timeoutSeconds)
 		throws Exception {
@@ -1216,7 +1279,7 @@ public class PoshiRunnerExecutor {
 				String methodName = element.attributeValue("method");
 
 				try {
-					varValue = PoshiRunnerGetterUtil.getVarMethodValue(
+					varValue = getVarMethodValue(
 						methodName,
 						PoshiRunnerStackTraceUtil.getCurrentNamespace());
 				}

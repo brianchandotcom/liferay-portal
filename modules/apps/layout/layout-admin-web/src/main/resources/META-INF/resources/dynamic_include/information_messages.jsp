@@ -40,12 +40,8 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 		<div id="<%= portletNamespace %>infoContainer">
 			<c:if test="<%= GetterUtil.getBoolean(request.getAttribute(InformationMessagesProductNavigationControlMenuEntry.INFORMATION_MESSAGES_MODIFIED_LAYOUT)) %>">
 				<div class="modified-layout">
-					<aui:icon image="information-live" markupView="lexicon" />
-
 					<span class="message-info">
-						<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template-excerpt" />
-
-						<liferay-ui:icon-help message="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
+						<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
 					</span>
 
 					<%
@@ -59,7 +55,7 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 					%>
 
 					<span class="button-info">
-						<aui:button name="submit" onClick="<%= taglibURL %>" type="submit" value='<%= LanguageUtil.get(resourceBundle, "reset-changes") %>' />
+						<aui:button cssClass="btn-sm mt-3" name="submit" onClick="<%= taglibURL %>" type="submit" value='<%= LanguageUtil.get(resourceBundle, "reset-changes") %>' />
 					</span>
 				</div>
 			</c:if>

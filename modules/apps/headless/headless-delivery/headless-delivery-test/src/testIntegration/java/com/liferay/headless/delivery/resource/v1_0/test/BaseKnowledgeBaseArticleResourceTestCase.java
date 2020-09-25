@@ -2641,9 +2641,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					return false;
 				}
 			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	protected boolean equals(Rating rating1, Rating rating2) {

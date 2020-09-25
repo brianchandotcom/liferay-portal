@@ -478,9 +478,11 @@ public abstract class BaseStatusResourceTestCase {
 					return false;
 				}
 			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	protected boolean equals(Experiment experiment1, Experiment experiment2) {

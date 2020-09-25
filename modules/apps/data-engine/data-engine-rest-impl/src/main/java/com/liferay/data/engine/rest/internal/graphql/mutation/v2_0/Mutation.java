@@ -491,6 +491,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public DataRecord patchDataRecord(
+			@GraphQLName("dataRecordId") Long dataRecordId,
+			@GraphQLName("dataRecord") DataRecord dataRecord)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordResource -> dataRecordResource.patchDataRecord(
+				dataRecordId, dataRecord));
+	}
+
+	@GraphQLField
 	public DataRecord updateDataRecord(
 			@GraphQLName("dataRecordId") Long dataRecordId,
 			@GraphQLName("dataRecord") DataRecord dataRecord)

@@ -52,10 +52,10 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		CommerceEntry.addNewCountriesEntry(
-			entryName = "Test Country",
-			entryIsoTwoLetters = "TC",
+			entryIsoNumber = "020",
 			entryIsoThreeLetters = "TCO",
-			entryIsoNumber = "020");
+			entryIsoTwoLetters = "TC",
+			entryName = "Test Country");
 
 		Button.clickSave();
 

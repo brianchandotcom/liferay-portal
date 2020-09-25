@@ -212,6 +212,15 @@ public class GitHubDevSyncUtil {
 			senderUsername, senderBranchSHA, upstreamBranchSHA);
 	}
 
+	public static boolean synchronizeUpstreamBranchToGitHubDev(
+			GitWorkingDirectory gitWorkingDirectory,
+			LocalGitBranch localGitBranch)
+		throws IOException {
+
+		return synchronizeUpstreamBranchToGitHubDev(
+			gitWorkingDirectory, localGitBranch, 0);
+	}
+
 	protected static void cacheBranch(
 		GitWorkingDirectory gitWorkingDirectory, LocalGitBranch localGitBranch,
 		GitRemote gitRemote, long timestamp) {
@@ -1202,6 +1211,80 @@ public class GitHubDevSyncUtil {
 				"Synchronization with local Git completed in " +
 					durationString);
 		}
+	}
+
+	protected static boolean synchronizeUpstreamBranchToGitHubDev(
+		GitWorkingDirectory gitWorkingDirectory, LocalGitBranch localGitBranch,
+		int retryCount) {
+
+		long start = System.currentTimeMillis();
+
+		File gitRepositoryDirectory = gitWorkingDirectory.getWorkingDirectory();
+
+		gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch);
+
+		String upstreamBranchName = gitWorkingDirectory.getUpstreamBranchName();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Starting synchronization with local-git. Current repository ",
+				"directory is ", gitRepositoryDirectory.getPath(), ". Current ",
+				"branch is ", localGitBranch.getName(), " at hash ",
+				localGitBranch.getSHA(), ". Synchronization target upstream ",
+				"branch is ", upstreamBranchName, "."));
+
+		try {
+			List<GitRemote> gitHubDevGitRemotes = null;
+
+			try {
+				gitHubDevGitRemotes = getGitHubDevGitRemotes(
+					gitWorkingDirectory);
+
+				for (GitRemote gitHubDevGitRemote : gitHubDevGitRemotes) {
+					gitWorkingDirectory.pushToRemoteGitRepository(
+						false, localGitBranch, upstreamBranchName,
+						gitHubDevGitRemote);
+				}
+			}
+			catch (Exception exception) {
+				if (retryCount == 1) {
+					throw exception;
+				}
+
+				gitHubDevGitRemotes = null;
+
+				System.out.println(
+					"Synchronization with local-git failed. Retrying.");
+
+				exception.printStackTrace();
+
+				gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch);
+
+				return synchronizeUpstreamBranchToGitHubDev(
+					gitWorkingDirectory, localGitBranch, retryCount + 1);
+			}
+			finally {
+				if (gitHubDevGitRemotes != null) {
+					try {
+						gitWorkingDirectory.removeGitRemotes(
+							gitHubDevGitRemotes);
+					}
+					catch (Exception exception) {
+						exception.printStackTrace();
+					}
+				}
+			}
+		}
+		finally {
+			String durationString = JenkinsResultsParserUtil.toDurationString(
+				System.currentTimeMillis() - start);
+
+			System.out.println(
+				"Synchronization with local Git completed in " +
+					durationString);
+		}
+
+		return true;
 	}
 
 	protected static void updateCacheRemoteGitBranchTimestamp(

@@ -3,120 +3,124 @@
 exports[`PieChart renders 1`] = `
 <DocumentFragment>
   <div
-    class="recharts-responsive-container"
-    style="width: 700px; height: 300px;"
+    class="custom-chart-size pie-chart"
   >
     <div
-      class="recharts-wrapper"
-      style="position: relative; cursor: default; width: 700px; height: 300px;"
+      class="recharts-responsive-container"
+      style="width: 700px; height: 300px;"
     >
-      <svg
-        class="recharts-surface"
-        height="300"
-        version="1.1"
-        viewBox="0 0 700 300"
-        width="700"
-      >
-        <defs>
-          <clippath
-            id="recharts1-clip"
-          >
-            <rect
-              height="290"
-              width="690"
-              x="5"
-              y="5"
-            />
-          </clippath>
-        </defs>
-        <g
-          class="recharts-layer recharts-pie"
-        >
-          <g
-            class="recharts-layer"
-          >
-            <g
-              class="recharts-layer recharts-pie-sector"
-            />
-            <g
-              class="recharts-layer recharts-pie-sector"
-            />
-          </g>
-        </g>
-      </svg>
       <div
-        class="recharts-tooltip-wrapper"
-        style="transform: translate(undefinedpx, undefinedpx); pointer-events: none; visibility: hidden; position: absolute; top: 0px;"
+        class="recharts-wrapper"
+        style="position: relative; cursor: default; width: 700px; height: 300px;"
+      >
+        <svg
+          class="recharts-surface"
+          height="300"
+          version="1.1"
+          viewBox="0 0 700 300"
+          width="700"
+        >
+          <defs>
+            <clippath
+              id="recharts1-clip"
+            >
+              <rect
+                height="290"
+                width="690"
+                x="5"
+                y="5"
+              />
+            </clippath>
+          </defs>
+          <g
+            class="recharts-layer recharts-pie"
+          >
+            <g
+              class="recharts-layer"
+            >
+              <g
+                class="recharts-layer recharts-pie-sector"
+              />
+              <g
+                class="recharts-layer recharts-pie-sector"
+              />
+            </g>
+          </g>
+        </svg>
+        <div
+          class="recharts-tooltip-wrapper"
+          style="transform: translate(undefinedpx, undefinedpx); pointer-events: none; visibility: hidden; position: absolute; top: 0px;"
+        />
+      </div>
+      <div
+        style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
       />
     </div>
     <div
-      style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
-    />
-  </div>
-  <div
-    class="legend-container well well-lg"
-  >
-    <div
-      class="legend-list"
+      class="legend-container well well-lg"
     >
-      <ul>
-        <li
-          class=""
-          data-item="0"
-        >
-          <svg
-            height="20"
-            width="20"
+      <div
+        class="legend-list"
+      >
+        <ul>
+          <li
+            class=""
+            data-item="0"
           >
-            <circle
-              cx="10"
-              cy="10"
-              fill="#4b9bff"
-              r="9"
-              stroke-width="3"
-            />
-          </svg>
-          <p
-            x="0em"
-            y="1em"
-          >
-            <span
-              dy="2em"
-              x="2.5em"
+            <svg
+              height="20"
+              width="20"
             >
-              label1
-            </span>
-          </p>
-        </li>
-        <li
-          class=""
-          data-item="1"
-        >
-          <svg
-            height="20"
-            width="20"
-          >
-            <circle
-              cx="10"
-              cy="10"
-              fill="#af78ff"
-              r="9"
-              stroke-width="3"
-            />
-          </svg>
-          <p
-            x="0em"
-            y="1em"
-          >
-            <span
-              dy="2em"
-              x="2.5em"
+              <circle
+                cx="10"
+                cy="10"
+                fill="#4b9bff"
+                r="9"
+                stroke-width="3"
+              />
+            </svg>
+            <p
+              x="0em"
+              y="1em"
             >
-              label2
-            </span>
-          </p>
-        </li>
-      </ul>
+              <span
+                dy="2em"
+                x="2.5em"
+              >
+                label1
+              </span>
+            </p>
+          </li>
+          <li
+            class=""
+            data-item="1"
+          >
+            <svg
+              height="20"
+              width="20"
+            >
+              <circle
+                cx="10"
+                cy="10"
+                fill="#af78ff"
+                r="9"
+                stroke-width="3"
+              />
+            </svg>
+            <p
+              x="0em"
+              y="1em"
+            >
+              <span
+                dy="2em"
+                x="2.5em"
+              >
+                label2
+              </span>
+            </p>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </DocumentFragment>

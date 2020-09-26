@@ -3,7 +3,7 @@
 exports[`index renders 1`] = `
 <DocumentFragment>
   <div
-    class="form-report"
+    class="container-fluid form-report"
   >
     <div
       class="report-cards-area"

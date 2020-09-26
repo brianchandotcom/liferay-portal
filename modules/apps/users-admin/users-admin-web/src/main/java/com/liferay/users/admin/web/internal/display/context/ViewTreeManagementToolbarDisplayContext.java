@@ -214,7 +214,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 
 				if (hasAddOrganizationPermission()) {
 					for (String organizationType :
-							OrganizationLocalServiceUtil.getTypes()) {
+							OrganizationLocalServiceUtil.getChildrenTypes(
+								_organization.getType())) {
 
 						PortletURL addOrganizationTypeURL =
 							_renderResponse.createRenderURL();

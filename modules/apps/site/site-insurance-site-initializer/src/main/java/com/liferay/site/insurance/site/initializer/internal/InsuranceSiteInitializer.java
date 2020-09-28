@@ -672,19 +672,21 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private String _getDynamicCollectionTypeSettings(String ddmStructureKey)
 		throws Exception {
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			_serviceContext.getScopeGroupId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			ddmStructureKey);
-
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 		unicodeProperties.put(
 			"anyAssetType",
 			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_serviceContext.getScopeGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			ddmStructureKey);
+
 		unicodeProperties.put(
 			"anyClassTypeJournalArticleAssetRendererFactory",
 			String.valueOf(ddmStructure.getStructureId()));
+
 		unicodeProperties.put("classNameIds", JournalArticle.class.getName());
 		unicodeProperties.put(
 			"classTypeIdsJournalArticleAssetRendererFactory",

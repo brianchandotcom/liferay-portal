@@ -102,9 +102,7 @@ definition {
 	}
 
 	macro cancelRule {
-		AssertClick(
-			locator1 = "FormViewBuilder#RULE_BUILDER_CANCEL_BUTTON",
-			value1 = "Cancel");
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_CANCEL_BUTTON");
 	}
 
 	macro checkSwitcher {
@@ -115,6 +113,10 @@ definition {
 
 	macro closeSidebar() {
 		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
+	}
+
+	macro createFirstRule {
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_RULE_BUTTON");
 	}
 
 	macro deleteButtonInDeleteFromObject {
@@ -285,20 +287,11 @@ definition {
 	}
 
 	macro ruleSave {
-		AssertClick(
-			locator1 = "FormViewBuilder#RULE_BUILDER_SAVE_BUTTON",
-			value1 = "Save");
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_SAVE_BUTTON");
 	}
 
 	macro save {
 		AppBuilderAdmin.save();
-	}
-
-	macro saveFormView {
-
-		AssertClick(
-			locator1 = "FormViewBuilder#SAVE_FORM_BUTTON",
-			value1 = "Save");
 	}
 
 	macro searchObjectField {
@@ -405,12 +398,22 @@ definition {
 		AppBuilderAdmin.setName(title = "${formViewName}");
 	}
 
+	macro setRuleName {
+		Type(
+			locator1 = "FormViewBuilder#RULE_NAME_TEXT_FIELD",
+			value1 = "${ruleName}");
+	}
+
 	macro switchToAdvancedTab {
 		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_TAB");
 	}
 
 	macro switchToFormViewTab {
 		AppBuilderAdmin.switchTab(tabName = "Form Views");
+	}
+
+	macro switchToRulesTab {
+		Click(locator1 = "FormViewBuilder#RULES_TAB");
 	}
 
 	macro validateDeleteObjectMessage {
@@ -510,6 +513,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM",
 			value1 = "${fieldValue}");
+	}
+
+	macro validateRuleName {
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#RULE_LABEL",
+			value1 = "${ruleLabel}");
 	}
 
 	macro validateRuleSummary {

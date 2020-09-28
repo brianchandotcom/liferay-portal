@@ -41,14 +41,20 @@
 </tr>
 
 <tr>
-	<td>RULE_BUILDER_FORM_VIEW_NAME</td>
-	<td>//input[contains(@placeholder,'Untitled Form View')]</td>
+	<td>FIELD_LABEL</td>
+	<td>//p[text()='${fieldLabel}']</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>FIELD_LABEL</td>
 	<td>//label[text()='${fieldLabel}'] | //legend[text()='${fieldLabel}']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_LABEL</td>
+	<td>//span[contains(@class,'panel-title') and contains(text(),'${ruleLabel}')]</td>
 	<td></td>
 </tr>
 
@@ -448,31 +454,19 @@
 
 <tr>
 	<td>RULE_BUILDER_SAVE_BUTTON</td>
-	<td>xpath=(//div[contains(@class, 'modal-item-last')]//button[contains(@class,'btn-primary')])[3]</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>SAVE_FORM_BUTTON</td>
-	<td>//div[contains(@class, 'input-group-item')]//button[contains(@class,'btn-primary')]</td>
+	<td>//div[contains(@class, 'modal-item-last')]//button[contains(@class,'btn-primary')][contains(text(),'Save')]</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>RULE_BUILDER_CANCEL_BUTTON</td>
-	<td>xpath=(//div[contains(@class, 'modal-item-last')]//button[contains(@class,'btn-secondary')])[3]</td>
+	<td>//div[contains(@class, 'modal-item-last')]//button[contains(@class,'btn-secondary')][contains(text(),'Cancel')]</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>RULE_BUILDER_DEFAULT_EDIT</td>
 	<td>//div[contains(@class, 'collapse-icon-options')]//button[contains(@class, 'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>ASSERT_FORM</td>
-	<td>//td[contains(@class,'table-cell-expand') and contains(.,'${key_formViewName}')]</td>
 	<td></td>
 </tr>
 

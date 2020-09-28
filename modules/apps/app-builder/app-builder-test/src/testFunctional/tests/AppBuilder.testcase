@@ -192,13 +192,11 @@ definition {
 
 		FormViewBuilder.setFieldLabel(fieldLabel = "Options");
 
-		Click(locator1 = "FormViewBuilder#RULES_TAB");
+		FormViewBuilder.switchToRulesTab();
 
-		Click(locator1 = "FormViewBuilder#CREATE_NEW_RULE_BUTTON");
+		FormViewBuilder.createFirstRule();
 
-		Type(
-			locator1 = "FormViewBuilder#RULE_NAME_TEXT_FIELD",
-			value1 = "Test Rule");
+		FormViewBuilder.setRuleName(ruleName = "My First Rule");
 
 		FormRules.viewInactiveSaveButton();
 
@@ -245,16 +243,18 @@ definition {
 		FormViewBuilder.validateRuleSummary(
 			action = "Show",
 			condition = "Is Empty",
-			firstField = "Text",
-			secondField = "Select from List");
+			firstField = "Text field",
+			secondField = "Options");
 
-		Type(
-			locator1 = "FormViewBuilder#RULE_BUILDER_FORM_VIEW_NAME",
-			value1 = "Text Field");
+		FormViewBuilder.setName("My Form View");
 
-		FormViewBuilder.saveFormView();
+		FormViewBuilder.save();
 
-		FormViewBuilder.assertFormView(formViewName = "Text Field");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "My Form View");
+
+		FormViewBuilder.switchToRulesTab();
+
+		FormViewBuilder.validateRuleName(ruleLabel = "My First Rule");
 	}
 
 	@description = "Add a Form View with a Date field"

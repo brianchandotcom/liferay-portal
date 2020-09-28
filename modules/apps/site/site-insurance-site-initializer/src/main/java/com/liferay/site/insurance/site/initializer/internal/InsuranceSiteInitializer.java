@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -152,13 +153,12 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			_addJournalArticles(_addJournalFolders());
 
-			_addCollections();
-			_addFragments();
+			_addAssetListEntries();
+			_addFragmentsEntries();
 			_addSiteNavigationMenus();
 
-			_addMasterPages();
+			_addLayoutPageTemplateEntries();
 
-			_addDisplayPageTemplates();
 			_addLayouts();
 
 			_updateDefaultDisplayPageTemplates();
@@ -182,7 +182,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		_bundle = bundleContext.getBundle();
 	}
 
-	private void _addCollections() throws Exception {
+	private void _addAssetListEntries() throws Exception {
 		_assetListEntryLocalService.addDynamicAssetListEntry(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			"Policies", _getDynamicCollectionTypeSettings("POLICY"),
@@ -305,32 +305,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addDisplayPageTemplates() throws Exception {
-		Map<String, String> numberValuesMap = new HashMap<>();
-
-		List<DDMStructure> ddmStructures =
-			_ddmStructureLocalService.getStructures(
-				_serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class.getName()));
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			numberValuesMap.put(
-				StringUtil.toUpperCase(ddmStructure.getStructureKey()),
-				String.valueOf(ddmStructure.getStructureId()));
-		}
-
-		File file = _generateZipFile(
-			"display-page-templates",
-			LayoutPageTemplateExportImportConstants.
-				FILE_NAME_DISPLAY_PAGE_TEMPLATE,
-			numberValuesMap, new HashMap<>());
-
-		_layoutPageTemplatesImporter.importFile(
-			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-			file, false);
-	}
-
-	private void _addFragments() throws Exception {
+	private void _addFragmentsEntries() throws Exception {
 		URL url = _bundle.getEntry("/fragments.zip");
 
 		File file = FileUtil.createTempFile(url.openStream());
@@ -444,6 +419,51 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		return journalFolders;
 	}
 
+	private void _addLayoutPageTemplateEntries() throws Exception {
+		Map<String, String> numberValuesMap = new HashMap<>();
+
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getStructures(
+				_serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(JournalArticle.class.getName()));
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			numberValuesMap.put(
+				StringUtil.toUpperCase(ddmStructure.getStructureKey()),
+				String.valueOf(ddmStructure.getStructureId()));
+		}
+
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
+		keyValuePairs.add(
+			new KeyValuePair(
+				"display-page-templates",
+				LayoutPageTemplateExportImportConstants.
+					FILE_NAME_DISPLAY_PAGE_TEMPLATE));
+		keyValuePairs.add(
+			new KeyValuePair(
+				"master-pages",
+				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE));
+
+		File file = _generateZipFile(
+			keyValuePairs, numberValuesMap,
+			HashMapBuilder.put(
+				"CUSTOMER_PORTAL_SITE_NAVIGATION_MENU_ID",
+				String.valueOf(
+					_siteNavigationMenuMap.get("Customer Portal Menu"))
+			).put(
+				"PUBLIC_SITE_NAVIGATION_MENU_ID",
+				String.valueOf(_siteNavigationMenuMap.get("Public Menu"))
+			).put(
+				"SCOPE_GROUP_ID",
+				String.valueOf(_serviceContext.getScopeGroupId())
+			).build());
+
+		_layoutPageTemplatesImporter.importFile(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			file, false);
+	}
+
 	private void _addLayouts() throws Exception {
 		Map<String, String> resourcesMap = _getResourcesMap();
 
@@ -486,28 +506,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			_addNavigationMenuItems(layout);
 		}
-	}
-
-	private void _addMasterPages() throws Exception {
-		File file = _generateZipFile(
-			"master-pages",
-			LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE,
-			new HashMap<>(),
-			HashMapBuilder.put(
-				"CUSTOMER_PORTAL_SITE_NAVIGATION_MENU_ID",
-				String.valueOf(
-					_siteNavigationMenuMap.get("Customer Portal Menu"))
-			).put(
-				"PUBLIC_SITE_NAVIGATION_MENU_ID",
-				String.valueOf(_siteNavigationMenuMap.get("Public Menu"))
-			).put(
-				"SCOPE_GROUP_ID",
-				String.valueOf(_serviceContext.getScopeGroupId())
-			).build());
-
-		_layoutPageTemplatesImporter.importFile(
-			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-			file, false);
 	}
 
 	private void _addNavigationMenuItems(Layout layout) throws Exception {
@@ -625,25 +623,29 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private File _generateZipFile(
-			String path, String type, Map<String, String> numberValuesMap,
+			List<KeyValuePair> pathKeyValuePairs,
+			Map<String, String> numberValuesMap,
 			Map<String, String> stringValuesMap)
 		throws Exception {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-		StringBuilder sb = new StringBuilder(3);
+		for (KeyValuePair pathKeyValuePair : pathKeyValuePairs) {
+			StringBuilder sb = new StringBuilder(3);
 
-		sb.append(_PATH + StringPool.FORWARD_SLASH + path);
-		sb.append(StringPool.FORWARD_SLASH);
+			sb.append(
+				_PATH + StringPool.FORWARD_SLASH + pathKeyValuePair.getKey());
+			sb.append(StringPool.FORWARD_SLASH);
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
-			sb.toString(), type, true);
+			Enumeration<URL> enumeration = _bundle.findEntries(
+				sb.toString(), pathKeyValuePair.getValue(), true);
 
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
 
-			_populateZipWriter(
-				zipWriter, url, numberValuesMap, stringValuesMap);
+				_populateZipWriter(
+					zipWriter, url, numberValuesMap, stringValuesMap);
+			}
 		}
 
 		return zipWriter.getFile();

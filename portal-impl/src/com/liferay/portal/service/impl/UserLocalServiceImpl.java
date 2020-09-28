@@ -3537,7 +3537,39 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public Map<Long, Integer> searchCounts(
 		long companyId, int status, long[] groupIds) {
 
-		return userFinder.countByGroups(companyId, status, groupIds);
+		Map<Long, Integer> counts = new HashMap<>();
+
+		int count = 0;
+
+		try {
+			for (long groupId : groupIds) {
+				Group group = groupLocalService.fetchGroup(groupId);
+
+				if (group == null) {
+					continue;
+				}
+
+				if (group.isOrganization()) {
+					count = getOrganizationUsersCount(
+						group.getOrganizationId(), status);
+				}
+				else if (group.isUserGroup()) {
+					count = getUserGroupUsersCount(group.getClassPK(), status);
+				}
+				else {
+					count = getGroupUsersCount(groupId, status);
+				}
+
+				if (count > 0) {
+					counts.put(groupId, count);
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return counts;
 	}
 
 	@Override

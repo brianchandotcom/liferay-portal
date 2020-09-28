@@ -91,7 +91,7 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addScalar(_COUNT_VALUE, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
@@ -133,7 +133,7 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addScalar(_SUM_VALUE, Type.INTEGER);
+			sqlQuery.addScalar("SUM_VALUE", Type.INTEGER);
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
@@ -174,7 +174,7 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addScalar(_SUM_VALUE, Type.INTEGER);
+			sqlQuery.addScalar("SUM_VALUE", Type.INTEGER);
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
@@ -277,10 +277,10 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addScalar(_SKU, Type.STRING);
-			sqlQuery.addScalar(_SUM_STOCK, Type.INTEGER);
-			sqlQuery.addScalar(_SUM_BOOKED, Type.INTEGER);
-			sqlQuery.addScalar(_SUM_AWAITING, Type.INTEGER);
+			sqlQuery.addScalar("SKU", Type.STRING);
+			sqlQuery.addScalar("SUM_STOCK", Type.INTEGER);
+			sqlQuery.addScalar("SUM_BOOKED", Type.INTEGER);
+			sqlQuery.addScalar("SUM_AWAITING", Type.INTEGER);
 
 			if (Validator.isNotNull(sku)) {
 				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
@@ -332,18 +332,6 @@ public class CommerceInventoryWarehouseItemFinderImpl
 			closeSession(session);
 		}
 	}
-
-	private static final String _COUNT_VALUE = "COUNT_VALUE";
-
-	private static final String _SKU = "SKU";
-
-	private static final String _SUM_AWAITING = "SUM_AWAITING";
-
-	private static final String _SUM_BOOKED = "SUM_BOOKED";
-
-	private static final String _SUM_STOCK = "SUM_STOCK";
-
-	private static final String _SUM_VALUE = "SUM_VALUE";
 
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;

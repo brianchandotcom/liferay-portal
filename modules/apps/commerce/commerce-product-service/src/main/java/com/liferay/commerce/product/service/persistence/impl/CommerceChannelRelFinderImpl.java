@@ -91,7 +91,7 @@ public class CommerceChannelRelFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addScalar(_COUNT_VALUE, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
@@ -246,8 +246,6 @@ public class CommerceChannelRelFinderImpl
 
 		return validClassNameIds.contains(classNameId);
 	}
-
-	private static final String _COUNT_VALUE = "COUNT_VALUE";
 
 	private static final String _FIND_CLASS_NAME_IDS =
 		CommerceChannelRelFinder.class.getName() + ".findClassNameIds";

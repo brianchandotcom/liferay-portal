@@ -117,7 +117,7 @@ public class CommercePriceModifierRelFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addScalar(_COUNT_VALUE, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
@@ -194,7 +194,7 @@ public class CommercePriceModifierRelFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addScalar(_COUNT_VALUE, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
@@ -272,7 +272,7 @@ public class CommercePriceModifierRelFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addScalar(_COUNT_VALUE, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
@@ -523,8 +523,6 @@ public class CommercePriceModifierRelFinderImpl
 			closeSession(session);
 		}
 	}
-
-	private static final String _COUNT_VALUE = "COUNT_VALUE";
 
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;

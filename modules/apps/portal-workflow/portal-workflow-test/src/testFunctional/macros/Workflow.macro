@@ -68,11 +68,15 @@ definition {
 	macro approveTaskByActions {
 		Workflow.viewTaskAssignedToMe(
 			ddlDataDefinitionName = "${ddlDataDefinitionName}",
+			multipleTasks = "${multipleTasks}",
+			taskPosition = "${taskPosition}",
 			workflowAssetTitle = "${workflowAssetTitle}",
 			workflowAssetType = "${workflowAssetType}",
 			workflowTask = "${workflowTask}");
 
 		Workflow.gotoTaskAssignedToMeActionsCmd(
+			multipleTasks = "${multipleTasks}",
+			taskPosition = "${taskPosition}",
 			workflowAssetTitle = "${workflowAssetTitle}",
 			workflowTask = "${workflowTask}");
 
@@ -103,6 +107,8 @@ definition {
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = "${ddlDataDefinitionName}",
+			multipleTasks = "${multipleTasks}",
+			taskPosition = "${taskPosition}",
 			workflowAssetTitle = "${workflowAssetTitle}",
 			workflowAssetType = "${workflowAssetType}",
 			workflowTask = "${workflowTask}");
@@ -244,6 +250,8 @@ definition {
 
 		Workflow.viewTaskAssignedToMe(
 			ddlDataDefinitionName = "${ddlDataDefinitionName}",
+			multipleTasks = "${multipleTasks}",
+			taskPosition = "${taskPosition}",
 			workflowAssetTitle = "${workflowAssetTitle}",
 			workflowAssetType = "${workflowAssetType}",
 			workflowTask = "${workflowTask}");
@@ -513,7 +521,14 @@ definition {
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
 		var key_workflowTask = "${workflowTask}";
 
-		Click(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ACTIONS");
+		if ("${multipleTasks}" == "true") {
+			var key_position = "${taskPosition}";
+
+			Click(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_SPECIFIC_ACTIONS");
+		}
+		else {
+			Click(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ACTIONS");
+		}
 	}
 
 	macro gotoTaskAssignedToMyRolesActionsCmd {
@@ -1037,9 +1052,17 @@ definition {
 				value1 = "${workflowAssetTitle}");
 		}
 
-		AssertTextEquals(
-			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
-			value1 = "${workflowAssetType}");
+		if ("${multipleTasks}" == "true") {
+			AssertTextEquals(
+				key_position = "${taskPosition}",
+				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_SPECIFIC_TYPE",
+				value1 = "${workflowAssetType}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
+				value1 = "${workflowAssetType}");
+		}
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE");
 
@@ -1270,17 +1293,30 @@ definition {
 			Pause(locator1 = "1000");
 		}
 
-		AssertTextEquals(
-			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK",
-			value1 = "${workflowTask}");
+		if ("${multipleTasks}" == "true") {
+			var key_position = "${taskPosition}";
+
+			AssertTextEquals(
+				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_SPECIFIC_TASK",
+				value1 = "${workflowTask}");
+
+			AssertTextEquals(
+				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_SPECIFIC_TYPE",
+				value1 = "${workflowAssetType}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK",
+				value1 = "${workflowTask}");
+
+			AssertTextEquals(
+				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
+				value1 = "${workflowAssetType}");
+		}
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
 			value1 = "${workflowAssetTitle}");
-
-		AssertTextEquals(
-			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
-			value1 = "${workflowAssetType}");
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE");
 

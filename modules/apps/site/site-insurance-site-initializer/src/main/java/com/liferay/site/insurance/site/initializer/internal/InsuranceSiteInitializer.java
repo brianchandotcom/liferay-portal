@@ -145,7 +145,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		try {
 			_createServiceContext(groupId);
 
-			_addImages();
+			_addDLFileEntries();
 
 			_addDDMStructures();
 
@@ -305,6 +305,16 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addDLFileEntries() throws Exception {
+		URL url = _bundle.getEntry("/images.zip");
+
+		File file = FileUtil.createTempFile(url.openStream());
+
+		_fileEntries = ImagesImporterUtil.importFile(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			file);
+	}
+
 	private void _addFragmentsEntries() throws Exception {
 		URL url = _bundle.getEntry("/fragments.zip");
 
@@ -313,16 +323,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		_fragmentsImporter.importFragmentEntries(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(), 0,
 			file, false);
-	}
-
-	private void _addImages() throws Exception {
-		URL url = _bundle.getEntry("/images.zip");
-
-		File file = FileUtil.createTempFile(url.openStream());
-
-		_fileEntries = ImagesImporterUtil.importFile(
-			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-			file);
 	}
 
 	private void _addJournalArticles(List<JournalFolder> journalFolders)
@@ -594,7 +594,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 		String content = StringUtil.read(url.openStream());
 
-		content = StringUtil.replace(content, "\"$", "$\"", numberValuesMap);
+		content = StringUtil.replace(content, "\"£", "£\"", numberValuesMap);
 
 		content = StringUtil.replace(
 			content, StringPool.DOLLAR, StringPool.DOLLAR, stringValuesMap);

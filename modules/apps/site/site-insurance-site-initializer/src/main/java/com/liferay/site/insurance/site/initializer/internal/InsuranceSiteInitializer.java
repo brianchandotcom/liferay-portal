@@ -154,7 +154,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			_addJournalArticles(_addJournalFolders());
 
 			_addAssetListEntries();
-			_addFragmentsEntries();
+			_addFragmentEntries();
 			_addSiteNavigationMenus();
 
 			_addLayoutPageTemplateEntries();
@@ -315,7 +315,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			file);
 	}
 
-	private void _addFragmentsEntries() throws Exception {
+	private void _addFragmentEntries() throws Exception {
 		URL url = _bundle.getEntry("/fragments.zip");
 
 		File file = FileUtil.createTempFile(url.openStream());

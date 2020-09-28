@@ -272,10 +272,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addDDMTemplates() throws Exception {
+		long resourceClassNameId = _portal.getClassNameId(JournalArticle.class);
+
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			_PATH + "/ddm-templates", "ddm_template.json", true);
-
-		long resourceClassNameId = _portal.getClassNameId(JournalArticle.class);
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();

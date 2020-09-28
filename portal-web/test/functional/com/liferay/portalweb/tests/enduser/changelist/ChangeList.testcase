@@ -536,7 +536,7 @@ definition {
 
 	@priority = "5"
 	test SchedulePublication {
-		property test.name.skip.portal.instance = "ChangeList#schedulePublication";
+		property test.name.skip.portal.instance = "ChangeList#SchedulePublication";
 
 		ChangeList.createNewPublication(publicationName = "Publication Name 1");
 

@@ -91,28 +91,38 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 					</aui:field-wrapper>
 
 					<aui:field-wrapper label="end-date">
-						<liferay-ui:input-date
-							dayParam="endDateDay"
-							dayValue="<%= endDateDay %>"
-							monthParam="endDateMonth"
-							monthValue="<%= endDateMonth %>"
-							yearParam="endDateYear"
-							yearValue="<%= endDateYear %>"
-						/>
+						</br>
+
+						<aui:input name="neverEnd" onClick='<%= liferayPortletResponse.getNamespace() + "updateEndDateTimeInputsDisabled(this.checked);" %>' type="checkbox" value="<%= neverEnd %>" />
+
+						<span class="end-date-input-selector">
+							<liferay-ui:input-date
+								dayParam="endDateDay"
+								dayValue="<%= endDateDay %>"
+								disabled="<%= neverEnd %>"
+								monthParam="endDateMonth"
+								monthValue="<%= endDateMonth %>"
+								yearParam="endDateYear"
+								yearValue="<%= endDateYear %>"
+							/>
+						</span>
 
 						<liferay-ui:icon
 							icon="calendar"
 							markupView="lexicon"
 						/>
 
-						<liferay-ui:input-time
-							amPmParam="endDateAmPm"
-							amPmValue="<%= endDateAmPm %>"
-							hourParam="endDateHour"
-							hourValue="<%= endDateHour %>"
-							minuteParam="endDateMinute"
-							minuteValue="<%= endDateMinute %>"
-						/>
+						<span class="end-time-input-selector">
+							<liferay-ui:input-time
+								amPmParam="endDateAmPm"
+								amPmValue="<%= endDateAmPm %>"
+								disabled="<%= neverEnd %>"
+								hourParam="endDateHour"
+								hourValue="<%= endDateHour %>"
+								minuteParam="endDateMinute"
+								minuteValue="<%= endDateMinute %>"
+							/>
+						</span>
 					</aui:field-wrapper>
 				</aui:fieldset>
 
@@ -125,3 +135,19 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 		</aui:fieldset>
 	</aui:fieldset-group>
 </aui:form>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />updateEndDateTimeInputsDisabled',
+		function (checked) {
+			document
+				.querySelectorAll(
+					'.end-date-input-selector input, .end-time-input-selector input'
+				)
+				.forEach(function (input) {
+					input.disabled = checked;
+				});
+		}
+	);
+</aui:script>

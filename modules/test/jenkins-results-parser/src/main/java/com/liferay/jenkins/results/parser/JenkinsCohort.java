@@ -16,8 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
-import java.text.DecimalFormat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -238,14 +236,6 @@ public class JenkinsCohort {
 		return jsonArray;
 	}
 
-	private static String _getPercentage(Integer dividend, Integer divisor) {
-		double quotient = (double)dividend / (double)divisor;
-
-		DecimalFormat decimalFormat = new DecimalFormat("###.##%");
-
-		return decimalFormat.format(quotient);
-	}
-
 	private String _formatBuildCountText(
 		int buildCount, String buildPercentage) {
 
@@ -316,7 +306,7 @@ public class JenkinsCohort {
 		}
 
 		public String getQueuedBuildPercentage() {
-			return _getPercentage(
+			return CISystemStatusReportUtil.getPercentage(
 				_queuedBuildCount, JenkinsCohort.this.getQueuedBuildCount());
 		}
 
@@ -325,7 +315,7 @@ public class JenkinsCohort {
 		}
 
 		public String getRunningBuildPercentage() {
-			return _getPercentage(
+			return CISystemStatusReportUtil.getPercentage(
 				_runningBuildCount, JenkinsCohort.this.getRunningBuildCount());
 		}
 
@@ -338,7 +328,7 @@ public class JenkinsCohort {
 		}
 
 		public String getTotalBuildPercentage() {
-			return _getPercentage(
+			return CISystemStatusReportUtil.getPercentage(
 				getTotalBuildCount(),
 				JenkinsCohort.this.getRunningBuildCount() +
 					JenkinsCohort.this.getQueuedBuildCount());

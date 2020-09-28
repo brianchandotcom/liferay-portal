@@ -103,8 +103,12 @@ public class CISystemStatusReportUtil {
 		JenkinsResultsParserUtil.write(filePath, sb.toString());
 	}
 
-	private static String _getPercentage(Integer dividend, Integer divisor) {
-		double quotient = (double)dividend / (double)divisor;
+	protected static String getPercentage(Integer dividend, Integer divisor) {
+		double quotient = 0;
+
+		if (divisor != 0) {
+			quotient = (double)dividend / (double)divisor;
+		}
 
 		DecimalFormat decimalFormat = new DecimalFormat("###.##%");
 
@@ -263,8 +267,8 @@ public class CISystemStatusReportUtil {
 
 		successRateJSONArray.put(title);
 		successRateJSONArray.put(
-			_getPercentage(passedBuilds + unstableBuilds, totalBuilds));
-		successRateJSONArray.put(_getPercentage(passedBuilds, totalBuilds));
+			getPercentage(passedBuilds + unstableBuilds, totalBuilds));
+		successRateJSONArray.put(getPercentage(passedBuilds, totalBuilds));
 		successRateJSONArray.put(totalBuilds);
 
 		return successRateJSONArray;

@@ -13,6 +13,18 @@ definition {
 		AssertElementNotPresent(locator1 = "ChangeListChanges#CHANGES_ELLIPSIS");
 	}
 
+	macro assertScheduledPublicationPublished {
+		Click(
+			key_navBarTitle = "History",
+			locator1 = "ChangeList#MANGE_PUBLICATIONS_NAVBAR_TITLE");
+
+		var key_publicationName = "${publicationName}";
+
+		AssertTextEquals(
+			locator1 = "ChangeList#HISTORY_PUBLICATION_STATUS",
+			value1 = "Published");
+	}
+
 	macro cancelPublicationCreation {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
@@ -289,18 +301,6 @@ definition {
 			value1 = "${utcHours}:${utcMinutes}");
 
 		Click(locator1 = "ChangeList#SCHEDULE_BUTTON");
-
-		Pause(locator1 = "120000");
-
-		Click(
-			key_navBarTitle = "History",
-			locator1 = "ChangeList#MANGE_PUBLICATIONS_NAVBAR_TITLE");
-
-		var key_publicationName = "${publicationName}";
-
-		AssertTextEquals(
-			locator1 = "ChangeList#HISTORY_PUBLICATION_STATUS",
-			value1 = "Published");
 	}
 
 	macro search {

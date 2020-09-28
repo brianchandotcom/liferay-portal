@@ -556,6 +556,10 @@ definition {
 
 		ChangeList.schedulePublication(publicationName = "Publication Name 1");
 
+		Pause(locator1 = "120000");
+
+		ChangeList.assertScheduledPublicationPublished(publicationName = "Publication Name 1");
+
 		ChangeList.createNewPublication(publicationName = "Publication Name 2");
 
 		Navigator.openURL();
@@ -576,6 +580,10 @@ definition {
 			gotoManagePublications = "true",
 			publicationName = "Publication Name 2");
 
+		Pause(locator1 = "120000");
+
+		ChangeList.assertScheduledPublicationPublished(publicationName = "Publication Name 2");
+
 		ChangeList.createNewPublication(publicationName = "Publication Name 3");
 
 		Navigator.openURL();
@@ -595,6 +603,10 @@ definition {
 		ChangeList.schedulePublication(
 			gotoReviewChanges = "true",
 			publicationName = "Publication Name 3");
+
+		Pause(locator1 = "120000");
+
+		ChangeList.assertScheduledPublicationPublished(publicationName = "Publication Name 3");
 	}
 
 	@priority = "5"

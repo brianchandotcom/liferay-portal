@@ -106,8 +106,8 @@ definition {
 
 		AssertElementPresent(locator1 = "ChangeList#DISCARDED_CHANGES_TITLE");
 
-		key_changeCategory = "${changeCategory}";
-		key_changeTitle = "${changeTitle}";
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ChangeListChanges#CONTEXT_CHANGE_TITLE",
@@ -306,7 +306,7 @@ definition {
 	macro search {
 		Search.searchCP(searchTerm = "${publicationName}");
 
-		key_publicationName = "${publicationName}";
+		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
 			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME",
@@ -352,9 +352,9 @@ definition {
 				locator1 = "ChangeList#PUBLICATION_NAME_IN_DIFF",
 				value1 = "${publicationName}");
 
-			key_columnName = "${columnName}";
-			key_columnValueInProduction = "${columnValueInProduction}";
-			key_columnValueInPublication = "${columnValueInPublication}";
+			var key_columnName = "${columnName}";
+			var key_columnValueInProduction = "${columnValueInProduction}";
+			var key_columnValueInPublication = "${columnValueInPublication}";
 
 			if (isSet(columnValueInProduction)) {
 				AssertTextEquals.assertPartialText(
@@ -380,7 +380,7 @@ definition {
 	}
 
 	macro viewPublishedPublicationDetails {
-		key_publicationName = "${publicationName}";
+		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
 			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME",

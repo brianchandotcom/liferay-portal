@@ -18,11 +18,11 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		key_changeCategory = "${changeCategory}";
-		key_changeUser = "${changeUser}";
-		key_changeSite = "${changeSite}";
-		key_changeTitle = "${changeTitle}";
-		key_changeType = "${changeType}";
+		var key_changeCategory = "${changeCategory}";
+		var key_changeUser = "${changeUser}";
+		var key_changeSite = "${changeSite}";
+		var key_changeTitle = "${changeTitle}";
+		var key_changeType = "${changeType}";
 
 		if (isSet(changeOrder)) {
 			var changeOrder = "${changesOrder}";
@@ -51,9 +51,9 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		key_changeCategory = "${changeCategory}";
-		key_changeDescription = "${changeDescription}";
-		key_changeTitle = "${changeTitle}";
+		var key_changeCategory = "${changeCategory}";
+		var key_changeDescription = "${changeDescription}";
+		var key_changeTitle = "${changeTitle}";
 
 		Click.javaScriptClick(locator1 = "ChangeListChanges#CONTEXT_CHANGE_CATEGORY_RADIO");
 

@@ -510,6 +510,11 @@ definition {
 			columnNumberTo = "2",
 			portletName = "Asset Publisher");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
 		Site.addSiteTemplateCP(
 			siteName = "Site Name",
 			siteTemplateName = "Site Template Name");

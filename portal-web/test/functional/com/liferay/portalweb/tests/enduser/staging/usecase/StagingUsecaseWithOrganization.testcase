@@ -35,7 +35,13 @@ definition {
 		property test.name.skip.portal.instance = "StagingUsecaseWithOrganizatiton#StagingOrganizations";
 		property testray.component.names = "Training";
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		SiteTemplates.addCP(
+			disableChanges = "true",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "Site Page Name",
+			siteTemplateName = "Site Template Name");
 
 		User.openUsersAdmin();
 
@@ -83,7 +89,7 @@ definition {
 			siteName = "Staging Organization Name");
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Home",
+			pageName = "Site Page Name",
 			siteName = "Staging Organization Name");
 
 		Staging.addSitePagesVariationPG(
@@ -91,7 +97,7 @@ definition {
 			sitePagesVariationName = "Site Pages Variation Name");
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Home",
+			pageName = "Site Page Name",
 			siteName = "Staging Organization Name");
 
 		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
@@ -99,7 +105,7 @@ definition {
 		Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Home",
+			pageName = "Site Page Name",
 			siteName = "Staging Organization Name");
 
 		Staging.viewPageVariationPG(pageVariationName = "Page Variation Name");

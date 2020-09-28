@@ -373,7 +373,7 @@ definition {
 		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Empty Variation");
 
 		Page.view(
-			pageName = "Home",
+			pageName = "Staging Test Page",
 			privacy = "Public Pages");
 
 		Navigator.gotoStagedSitePage(
@@ -458,7 +458,7 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Community Site Name");
+			siteName = "Site Name");
 
 		if (IsElementPresent(locator1 = "Home#PAGE_2_GUEST_VIEW")) {
 			AssertTextNotEquals(

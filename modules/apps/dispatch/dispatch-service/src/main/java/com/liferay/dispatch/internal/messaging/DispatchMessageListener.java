@@ -66,7 +66,7 @@ public class DispatchMessageListener implements MessageListener {
 
 			ScheduledTaskExecutor scheduledTaskExecutor =
 				_scheduledTaskExecutorServiceTrackerMap.getService(
-					dispatchTrigger.getType());
+					dispatchTrigger.getTaskType());
 
 			scheduledTaskExecutor.execute(dispatchTriggerId);
 		}

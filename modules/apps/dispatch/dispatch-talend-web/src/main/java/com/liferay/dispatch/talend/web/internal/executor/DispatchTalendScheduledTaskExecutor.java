@@ -167,12 +167,12 @@ public class DispatchTalendScheduledTaskExecutor
 
 		arguments.add("--context_param jobWorkDirectory=" + rootDirectoryName);
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			dispatchTrigger.getTypeSettingsProperties();
+		UnicodeProperties taskUnicodeProperties =
+			dispatchTrigger.getTaskProperties();
 
-		if (typeSettingsUnicodeProperties != null) {
+		if (taskUnicodeProperties != null) {
 			for (Map.Entry<String, String> propEntry :
-					typeSettingsUnicodeProperties.entrySet()) {
+					taskUnicodeProperties.entrySet()) {
 
 				StringBundler contextSB = new StringBundler(4);
 

@@ -650,14 +650,12 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private String _getContent(String fileName, URL url) throws Exception {
-		String entryPath = url.getPath();
+		String path = url.getPath();
 
-		String contentPath =
-			entryPath.substring(0, entryPath.lastIndexOf("/") + 1) + fileName;
+		URL entryURL = _bundle.getEntry(
+			path.substring(0, path.lastIndexOf("/") + 1) + fileName);
 
-		URL contentURL = _bundle.getEntry(contentPath);
-
-		return StringUtil.read(contentURL.openStream());
+		return StringUtil.read(entryURL.openStream());
 	}
 
 	private long _getDefaultLayoutPageTemplateEntryId(

@@ -220,14 +220,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 
 			if (messageContext != null) {
-				SAMLPeerEntityContext samlPeerEntityContext =
-					messageContext.getSubcontext(SAMLPeerEntityContext.class);
-
 				SAMLSubjectNameIdentifierContext
 					samlSubjectNameIdentifierContext =
-						messageContext.getSubcontext(
-							SAMLSubjectNameIdentifierContext.class);
-
+					messageContext.getSubcontext(
+						SAMLSubjectNameIdentifierContext.class);
 				String nameIdValue = null;
 
 				if (samlSubjectNameIdentifierContext != null) {
@@ -239,6 +235,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 						nameIdValue = nameID.getValue();
 					}
 				}
+
+				SAMLPeerEntityContext samlPeerEntityContext =
+					messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
 				if (samlPeerEntityContext != null) {
 					throw new EntityInteractionException(

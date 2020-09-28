@@ -185,7 +185,10 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger.setActive(active);
 		dispatchTrigger.setCronExpression(cronExpression);
 
-		if (!neverEnd) {
+		if (neverEnd) {
+			dispatchTrigger.setEndDate(null);
+		}
+		else {
 			dispatchTrigger.setEndDate(
 				_portal.getDate(
 					endDateMonth, endDateDay, endDateYear, endDateHour,

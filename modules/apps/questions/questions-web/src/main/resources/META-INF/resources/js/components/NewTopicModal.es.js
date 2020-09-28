@@ -45,8 +45,8 @@ export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
 		onCompleted(data) {
 			onCreateNavigateTo(
 				context.useTopicNamesInURL
-					? data.createMessageBoardSectionMessageBoardSection.title
-					: data.createMessageBoardSectionMessageBoardSection.id
+					? data.createSiteMessageBoardSection.title
+					: data.createSiteMessageBoardSection.id
 			);
 		},
 		update(proxy) {

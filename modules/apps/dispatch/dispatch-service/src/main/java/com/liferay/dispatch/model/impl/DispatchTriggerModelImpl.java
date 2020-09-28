@@ -79,7 +79,7 @@ public class DispatchTriggerModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
 		{"cronExpression", Types.VARCHAR}, {"endDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"startDate", Types.TIMESTAMP},
-		{"system_", Types.BOOLEAN}, {"taskProperties", Types.VARCHAR},
+		{"system_", Types.BOOLEAN}, {"taskProperties", Types.CLOB},
 		{"taskType", Types.VARCHAR}
 	};
 
@@ -100,12 +100,12 @@ public class DispatchTriggerModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("taskProperties", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("taskProperties", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("taskType", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,endDate DATE null,name VARCHAR(75) null,startDate DATE null,system_ BOOLEAN,taskProperties VARCHAR(75) null,taskType VARCHAR(75) null)";
+		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,endDate DATE null,name VARCHAR(75) null,startDate DATE null,system_ BOOLEAN,taskProperties TEXT null,taskType VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchTrigger";
 

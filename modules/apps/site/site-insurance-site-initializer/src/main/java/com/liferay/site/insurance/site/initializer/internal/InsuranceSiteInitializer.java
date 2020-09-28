@@ -205,7 +205,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		String name = pageJSONObject.getString("name");
-
 		String type = StringUtil.toLowerCase(pageJSONObject.getString("type"));
 
 		Layout layout = _layoutLocalService.addLayout(

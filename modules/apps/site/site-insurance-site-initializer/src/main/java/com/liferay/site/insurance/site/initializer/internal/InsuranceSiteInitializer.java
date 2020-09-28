@@ -401,7 +401,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		List<JournalFolder> journalFolders = new ArrayList<>();
 
 		JSONArray journalFoldersJSONArray = JSONFactoryUtil.createJSONArray(
-			_readFile("/journal-folders/journal_folders.json"));
+			_read("/journal-folders/journal_folders.json"));
 
 		for (int i = 0; i < journalFoldersJSONArray.length(); i++) {
 			JSONObject jsonObject = journalFoldersJSONArray.getJSONObject(i);
@@ -466,7 +466,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		Map<String, String> resourcesMap = _getResourcesMap();
 
 		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray(
-			_readFile("/layouts/layouts.json"));
+			_read("/layouts/layouts.json"));
 
 		for (int i = 0; i < layoutsJSONArray.length(); i++) {
 			JSONObject jsonObject = layoutsJSONArray.getJSONObject(i);
@@ -474,7 +474,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			String path = jsonObject.getString("path");
 
 			JSONObject pageJSONObject = JSONFactoryUtil.createJSONObject(
-				_readFile(
+				_read(
 					StringBundler.concat(
 						"/layouts/", path, StringPool.SLASH, "page.json")));
 
@@ -487,7 +487,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				Objects.equals(LayoutConstants.TYPE_COLLECTION, type)) {
 
 				String pageDefinitionJSON = StringUtil.replace(
-					_readFile(
+					_read(
 						StringBundler.concat(
 							"/layouts/", path, StringPool.SLASH,
 							"page-definition.json")),
@@ -539,7 +539,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		_siteNavigationMenuMap = new HashMap<>();
 
 		JSONArray siteNavigationMenuJSONArray = JSONFactoryUtil.createJSONArray(
-			_readFile("/site-navigation-menus/site-navigation-menus.json"));
+			_read("/site-navigation-menus/site-navigation-menus.json"));
 
 		for (int i = 0; i < siteNavigationMenuJSONArray.length(); i++) {
 			JSONObject jsonObject = siteNavigationMenuJSONArray.getJSONObject(
@@ -814,7 +814,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private String _readFile(String fileName) throws Exception {
+	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(clazz.getClassLoader(), _PATH + fileName);
@@ -922,7 +922,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			new UnicodeProperties(true);
 
 		themeSettingsUnicodeProperties.fastLoad(
-			_readFile("/layout-set/" + type + "/theme.properties"));
+			_read("/layout-set/" + type + "/theme.properties"));
 
 		settingsUnicodeProperties.putAll(themeSettingsUnicodeProperties);
 
@@ -933,7 +933,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		_layoutSetLocalService.updateLookAndFeel(
 			_serviceContext.getScopeGroupId(), privateLayoutSet,
 			layoutSet.getThemeId(), layoutSet.getColorSchemeId(),
-			_readFile("/layout-set/" + type + "/css.css"));
+			_read("/layout-set/" + type + "/css.css"));
 	}
 
 	private static final String _NAME = "Insurance Demo Site";

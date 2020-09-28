@@ -114,16 +114,13 @@ definition {
 				portlet = "${portlet}");
 		}
 
-		if ("${portlet}" == "Recycle Bin") {
-			AssertTextEquals(
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
-				value1 = "Recycle Bin");
+		if ("${portlet}" == "Export" || "${portlet}" == "Import" ) {
+			Pause(locator1 = "2000");
 		}
-		else {
-			AssertTextEquals(
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
-				value1 = "${portlet}");
-		}
+
+		AssertTextEquals(
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
+			value1 = "${portlet}");
 	}
 
 	macro gotoEdit {

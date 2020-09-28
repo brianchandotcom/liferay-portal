@@ -42,12 +42,6 @@
 
 <tr>
 	<td>FIELD_LABEL</td>
-	<td>//p[text()='${fieldLabel}']</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>FIELD_LABEL</td>
 	<td>//label[text()='${fieldLabel}'] | //legend[text()='${fieldLabel}']</td>
 	<td></td>
 </tr>

@@ -91,12 +91,6 @@ definition {
 		Click(locator1 = "FormViewBuilder#RULE_ADD_BUTTON");
 	}
 
-	macro assertFormView {
-		var key_formViewName = "${formViewName}";
-
-		AssertElementPresent(locator1 = "FormViewBuilder#ASSERT_FORM");
-	}
-
 	macro cancelButtonInDeleteFromObject {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_CANCEL_BUTTON");
 	}

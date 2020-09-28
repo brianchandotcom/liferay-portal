@@ -243,14 +243,16 @@ definition {
 		FormViewBuilder.validateRuleSummary(
 			action = "Show",
 			condition = "Is Empty",
-			firstField = "Text field",
+			firstField = "Text Field",
 			secondField = "Options");
 
-		FormViewBuilder.setName("My Form View");
+		FormViewBuilder.setName(formViewName = "My Form View");
 
 		FormViewBuilder.save();
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "My Form View");
+
+		AppBuilderAdmin.openItem(itemName = "My Form View");
 
 		FormViewBuilder.switchToRulesTab();
 

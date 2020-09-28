@@ -301,11 +301,15 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
+			multipleTasks = "true",
+			taskPosition = "3",
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
+			multipleTasks = "true",
+			taskPosition = "3",
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
 			workflowTask = "Review");
@@ -333,6 +337,8 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
+			multipleTasks = "true",
+			taskPosition = "3",
 			workflowAssetTitle = "Translation of WC WebContent Title to ja-JP",
 			workflowAssetType = "Translation",
 			workflowTask = "Review");

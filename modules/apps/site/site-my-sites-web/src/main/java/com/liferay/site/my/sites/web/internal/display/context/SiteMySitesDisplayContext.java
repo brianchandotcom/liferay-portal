@@ -145,20 +145,21 @@ public class SiteMySitesDisplayContext {
 	}
 
 	public int getGroupUsersCounts(long groupId) {
-		if (_groupUsersCounts == null) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_renderRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			GroupSearch groupSearch = getGroupSearchContainer();
-
-			long[] groupIds = ListUtil.toLongArray(
-				groupSearch.getResults(), Group.GROUP_ID_ACCESSOR);
-
-			_groupUsersCounts = UserLocalServiceUtil.searchCounts(
-				themeDisplay.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
-				groupIds);
+		if (_groupUsersCounts != null) {
+			return GetterUtil.getInteger(_groupUsersCounts.get(groupId));
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		GroupSearch groupSearch = getGroupSearchContainer();
+
+		long[] groupIds = ListUtil.toLongArray(
+			groupSearch.getResults(), Group.GROUP_ID_ACCESSOR);
+
+		_groupUsersCounts = UserLocalServiceUtil.searchCounts(
+			themeDisplay.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
+			groupIds);
 
 		return GetterUtil.getInteger(_groupUsersCounts.get(groupId));
 	}

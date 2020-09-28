@@ -14,11 +14,14 @@
 
 package com.liferay.change.tracking.web.internal.display;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -130,7 +133,10 @@ public class BasePersistenceRegistry {
 			}
 		}
 
-		try {
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
 			return transactionExecutor.execute(
 				_transactionAttributeAdapter,
 				() -> function.apply(basePersistence));

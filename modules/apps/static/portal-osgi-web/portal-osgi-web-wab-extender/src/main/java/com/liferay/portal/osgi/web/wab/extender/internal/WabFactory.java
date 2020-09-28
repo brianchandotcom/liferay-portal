@@ -147,12 +147,12 @@ public class WabFactory
 				return null;
 			});
 
-		Thread serviceTrackerOpenerThread = new Thread(
-			_futureTask, WabFactory.class.getName() + "-ServiceTrackerOpener");
+		Thread bundleTrackerOpenerThread = new Thread(
+			_futureTask, WabFactory.class.getName() + "-BundleTrackerOpener");
 
-		serviceTrackerOpenerThread.setDaemon(true);
+		bundleTrackerOpenerThread.setDaemon(true);
 
-		serviceTrackerOpenerThread.start();
+		bundleTrackerOpenerThread.start();
 	}
 
 	@Deactivate
@@ -163,7 +163,7 @@ public class WabFactory
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to stop service tracker opener thread", exception);
+				"Unable to stop bundle tracker opener thread", exception);
 		}
 
 		_bundleTracker.close();

@@ -327,14 +327,14 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private void _addJournalArticles(List<JournalFolder> journalFolders)
 		throws Exception {
 
+		Map<String, String> fileEntriesMap = _getFileEntriesMap();
+
 		Map<String, Long> journalFolderMap = new HashMap<>();
 
 		for (JournalFolder journalFolder : journalFolders) {
 			journalFolderMap.put(
 				journalFolder.getName(), journalFolder.getFolderId());
 		}
-
-		Map<String, String> fileEntriesMap = _getFileEntriesMap();
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			_PATH + "/journal-articles", "journal_article.json", true);

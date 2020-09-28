@@ -254,7 +254,7 @@ public class SiteNavigationAdminDisplayContext {
 
 	public Map<String, Object> getSiteNavigationContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"addFragmentEntryLinkCommentURL",
+			"editSiteNavigationMenuItemParentURL",
 			() -> {
 				PortletURL actionURL =
 					_liferayPortletResponse.createActionURL();

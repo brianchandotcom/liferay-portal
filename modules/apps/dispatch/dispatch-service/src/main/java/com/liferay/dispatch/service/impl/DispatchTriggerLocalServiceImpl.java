@@ -58,8 +58,8 @@ public class DispatchTriggerLocalServiceImpl
 
 	@Override
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, boolean system, String type,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			long userId, String name, boolean system,
+			UnicodeProperties taskUnicodeProperties, String taskType)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -74,9 +74,8 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger.setUserName(user.getFullName());
 		dispatchTrigger.setName(name);
 		dispatchTrigger.setSystem(system);
-		dispatchTrigger.setType(type);
-		dispatchTrigger.setTypeSettingsProperties(
-			typeSettingsUnicodeProperties);
+		dispatchTrigger.setTaskUnicodeProperties(taskUnicodeProperties);
+		dispatchTrigger.setTaskType(taskType);
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
@@ -214,7 +213,7 @@ public class DispatchTriggerLocalServiceImpl
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, String name,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			UnicodeProperties taskUnicodeProperties)
 		throws PortalException {
 
 		DispatchTrigger dispatchTrigger =
@@ -223,8 +222,7 @@ public class DispatchTriggerLocalServiceImpl
 		validate(dispatchTriggerId, dispatchTrigger.getCompanyId(), name);
 
 		dispatchTrigger.setName(name);
-		dispatchTrigger.setTypeSettingsProperties(
-			typeSettingsUnicodeProperties);
+		dispatchTrigger.setTaskUnicodeProperties(taskUnicodeProperties);
 
 		return dispatchTriggerPersistence.update(dispatchTrigger);
 	}

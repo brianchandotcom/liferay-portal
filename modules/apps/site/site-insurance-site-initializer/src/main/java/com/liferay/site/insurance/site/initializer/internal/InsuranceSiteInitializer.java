@@ -356,13 +356,12 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
 			int displayDateMinute = calendar.get(Calendar.MINUTE);
 
-			long folderId = journalFolderMap.getOrDefault(
-				journalArticleJSONObject.getString("folder"),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
 			JournalArticle article = _journalArticleLocalService.addArticle(
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				folderId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
+				journalFolderMap.getOrDefault(
+					journalArticleJSONObject.getString("folder"),
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
 				journalArticleJSONObject.getString("articleId"), false, 1,
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(),

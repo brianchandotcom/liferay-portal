@@ -126,20 +126,14 @@ public class CTRowUtil {
 	public static String getConstraintConflictsSQL(
 		String tableName, String primaryColumnName,
 		String[] uniqueIndexColumnNames, long sourceCTCollectionId,
-		long targetCTCollectionId, boolean includeSourceCTPrimaryKey) {
+		long targetCTCollectionId) {
 
 		StringBundler sb = new StringBundler(
 			(4 * uniqueIndexColumnNames.length) + 17);
 
-		sb.append("select ");
-
-		if (includeSourceCTPrimaryKey) {
-			sb.append("sourceTable.");
-			sb.append(primaryColumnName);
-			sb.append(" as sourcePK, ");
-		}
-
-		sb.append("targetTable.");
+		sb.append("select sourceTable.");
+		sb.append(primaryColumnName);
+		sb.append(" as sourcePK, targetTable.");
 		sb.append(primaryColumnName);
 		sb.append(" as targetPK from ");
 		sb.append(tableName);

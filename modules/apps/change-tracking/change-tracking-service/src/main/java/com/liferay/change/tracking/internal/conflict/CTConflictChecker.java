@@ -161,7 +161,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		String constraintConflictsSQL = CTRowUtil.getConstraintConflictsSQL(
 			ctPersistence.getTableName(), primaryKeyName, columnNames,
-			_sourceCTCollectionId, _targetCTCollectionId, true);
+			_sourceCTCollectionId, _targetCTCollectionId);
 
 		List<Map.Entry<Long, Long>> nextPrimaryKeys =
 			_getConflictingPrimaryKeys(connection, constraintConflictsSQL);

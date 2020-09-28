@@ -175,6 +175,17 @@ definition {
 		Pause(locator1 = "3000");
 	}
 
+	macro gotoScheduledChanges {
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Click(
+			key_navBarTitle = "Scheduled",
+			locator1 = "ChangeList#MANGE_PUBLICATIONS_NAVBAR_TITLE");
+	}
+
 	macro gotoViewDiffInConflictingChanges {
 		Click(
 			key_entryTitle = "${entryTitle}",
@@ -270,19 +281,34 @@ definition {
 				locator1 = "ChangeList#LIST_PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Schedule");
+
+			Click(locator1 = "ChangeList#NEXT_BUTTON");
 		}
 		else if ("${gotoReviewChanges}" == "true") {
 			ChangeList.gotoReviewChanges();
 
 			Click(locator1 = "ChangeList#SCHEDULE_BUTTON");
+
+			Click(locator1 = "ChangeList#NEXT_BUTTON");
+		}
+		else if ("${reschedule}" == "true") {
+			ChangeList.gotoScheduledChanges();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			Click(
+				key_publicationName = "${publicationName}",
+				locator1 = "ChangeList#LIST_PUBLICATION_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Reschedule");
 		}
 		else {
 			Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
 
 			MenuItem.click(menuItem = "Schedule");
-		}
 
-		Click(locator1 = "ChangeList#NEXT_BUTTON");
+			Click(locator1 = "ChangeList#NEXT_BUTTON");
+		}
 
 		var utcHours = Time.getUTCHours();
 		var utcMinutes = Time.getUTCMinutes();
@@ -329,6 +355,18 @@ definition {
 		AssertTextPresent(
 			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
 			value1 = "${publicationName}");
+	}
+
+	macro unschedulePublication {
+		ChangeList.gotoScheduledChanges();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(
+			key_publicationName = "${publicationName}",
+			locator1 = "ChangeList#LIST_PUBLICATION_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Unschedule");
 	}
 
 	macro viewAutomaticallyResolved {

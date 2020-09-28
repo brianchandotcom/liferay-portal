@@ -298,9 +298,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 					ddmTemplateJSONObject.getString("name")
 				).build(),
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-				TemplateConstants.LANG_TYPE_FTL,
-				_read("ddm_template.ftl", url), false, false, null, null,
-				_serviceContext);
+				TemplateConstants.LANG_TYPE_FTL, _read("ddm_template.ftl", url),
+				false, false, null, null, _serviceContext);
 		}
 	}
 
@@ -646,15 +645,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		return zipWriter.getFile();
 	}
 
-	private String _read(String fileName, URL url) throws Exception {
-		String path = url.getPath();
-
-		URL entryURL = _bundle.getEntry(
-			path.substring(0, path.lastIndexOf("/") + 1) + fileName);
-
-		return StringUtil.read(entryURL.openStream());
-	}
-
 	private long _getDefaultLayoutPageTemplateEntryId(
 		long classNameId, long classTypeId) {
 
@@ -820,6 +810,15 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(clazz.getClassLoader(), _PATH + fileName);
+	}
+
+	private String _read(String fileName, URL url) throws Exception {
+		String path = url.getPath();
+
+		URL entryURL = _bundle.getEntry(
+			path.substring(0, path.lastIndexOf("/") + 1) + fileName);
+
+		return StringUtil.read(entryURL.openStream());
 	}
 
 	private void _updateDefaultDisplayPageTemplates() {

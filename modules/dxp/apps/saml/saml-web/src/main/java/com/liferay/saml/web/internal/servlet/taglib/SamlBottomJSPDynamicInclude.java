@@ -80,8 +80,9 @@ public class SamlBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 				SAML_SSO_ERROR_ENTITY_ID);
 		session.removeAttribute(SamlWebKeys.SAML_SUBJECT_NAME_ID);
 
-		if (Validator.isBlank(error) || Validator.isBlank(samlSubjectNameId) ||
-			Validator.isBlank(samlSsoErrorEntityId)) {
+		if (Validator.isBlank(error) ||
+			Validator.isBlank(samlSsoErrorEntityId) ||
+			Validator.isBlank(samlSubjectNameId)) {
 
 			return;
 		}

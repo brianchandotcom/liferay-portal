@@ -54,8 +54,13 @@ public class JSONDDMStorageAdapter implements DDMStorageAdapter {
 		throws StorageException {
 
 		try {
-			ddmContentLocalService.deleteDDMContent(
+			DDMContent ddmContent = ddmContentLocalService.fetchDDMContent(
 				ddmStorageAdapterDeleteRequest.getPrimaryKey());
+
+			if (ddmContent != null) {
+				ddmContentLocalService.deleteDDMContent(
+					ddmContent.getPrimaryKey());
+			}
 
 			DDMStorageAdapterDeleteResponse.Builder builder =
 				DDMStorageAdapterDeleteResponse.Builder.newBuilder();

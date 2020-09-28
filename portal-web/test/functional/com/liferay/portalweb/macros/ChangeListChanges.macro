@@ -24,6 +24,13 @@ definition {
 		key_changeTitle = "${changeTitle}";
 		key_changeType = "${changeType}";
 
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changesOrder}";
+		}
+		else {
+			var changeOrder = "1";
+		}
+
 		AssertElementPresent(locator1 = "ChangeListChanges#CHANGES_CHANGE_USER");
 
 		AssertTextEquals.assertPartialText(

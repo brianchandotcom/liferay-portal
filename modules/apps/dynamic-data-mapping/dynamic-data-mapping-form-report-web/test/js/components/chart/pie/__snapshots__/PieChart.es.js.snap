@@ -38,6 +38,9 @@ exports[`PieChart renders 1`] = `
             <g
               class="recharts-layer recharts-pie-sector"
             />
+            <g
+              class="recharts-layer recharts-pie-sector"
+            />
           </g>
         </g>
       </svg>
@@ -82,6 +85,34 @@ exports[`PieChart renders 1`] = `
               x="2.5em"
             >
               label1
+            </span>
+          </p>
+        </li>
+        <li
+          class=""
+          data-item="1"
+        >
+          <svg
+            height="20"
+            width="20"
+          >
+            <circle
+              cx="10"
+              cy="10"
+              fill="#af78ff"
+              r="9"
+              stroke-width="3"
+            />
+          </svg>
+          <p
+            x="0em"
+            y="1em"
+          >
+            <span
+              dy="2em"
+              x="2.5em"
+            >
+              label2
             </span>
           </p>
         </li>

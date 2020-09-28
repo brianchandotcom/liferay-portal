@@ -18,9 +18,12 @@ import React from 'react';
 import PieChart from '../../../../../src/main/resources/META-INF/resources/js/components/chart/pie/PieChart.es';
 
 const props = {
-	data: [{count: 2, label: 'label1'}],
+	data: [
+		{count: 2, label: 'label1'},
+		{count: 2, label: 'label2'},
+	],
 	height: 300,
-	totalEntries: 2,
+	totalEntries: 4,
 	width: 700,
 };
 
@@ -45,7 +48,7 @@ describe('PieChart', () => {
 
 		expect(
 			container.querySelector('.recharts-layer > text').innerHTML
-		).toBe('100%');
+		).toBe('50%');
 	});
 
 	it('resets a sector when mouse is out', () => {
@@ -63,5 +66,17 @@ describe('PieChart', () => {
 		expect(
 			container.querySelector('.recharts-pie-sector > path')
 		).toBeTruthy();
+	});
+
+	it('highlight a sector when mouse is over it', () => {
+		const {container} = render(<PieChart {...props} />);
+
+		const sector = container.querySelector('.recharts-pie-sector');
+		fireEvent.mouseOver(sector);
+		expect(
+			container
+				.querySelector('.recharts-layer > path')
+				.getAttribute('fill-opacity')
+		).toBe('0.5');
 	});
 });

@@ -1,5 +1,11 @@
 # Poshi Runner Change Log
 
+## 1.0.282
+
+### Runner
+
+* [POSHI-107](https://issues.liferay.com/browse/POSHI-107) - Split Poshi Runner into 2 different modules
+
 ## 1.0.280
 
 ### Runner

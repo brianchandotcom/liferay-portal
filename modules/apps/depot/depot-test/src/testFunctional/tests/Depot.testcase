@@ -62,6 +62,36 @@ definition {
 		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
 	}
 
+	@description = "This ensures that a depot can be accessed when the Applications Menu is disabled at the system level."
+	@priority = "5"
+	test AccessWithDisabledAppsMenuAtSystemScope {
+		property test.name.skip.portal.instance = "Depot#AccessWithDisabledAppsMenuAtSystemScope";
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Navigation",
+			configurationName = "Applications Menu",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.disableCheckbox(fieldName = "Enable Applications Menu");
+
+		SystemSettings.saveConfiguration();
+
+		for (var application : list "Documents and Media,Web Content") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+			DepotNavigator.gotoPortlet(portlet = "${application}");
+
+		}
+	}
+
 	@description = "This ensures that a user can not create a repository with the same escape characters name as another repository."
 	@priority = "5"
 	test AddDuplicateWithEscapeCharacters {
@@ -252,6 +282,32 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		Depot.deleteCP(depotName = "Test Depot Name");
+
+		Depot.viewDefaultCP();
+	}
+
+	@description = "This ensures that a depot can be deleted when the Applications Menu is disabled at the instance level."
+	@priority = "5"
+	test DeleteWithDisabledAppsMenuAtInstanceScope {
+		PortalSettings.disableApplicationsMenu();
+
+		ProductMenuHelper.openProductMenu();
+
+		ProductMenu.gotoPortletWhenDisableApplicationsMenu(
+			category = "Content",
+			panel = "Applications Menu-Applications",
+			portlet = "Asset Libraries");
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		ProductMenu.gotoPortletWhenDisableApplicationsMenu(
+			category = "Content",
+			panel = "Applications Menu-Applications",
+			portlet = "Asset Libraries");
 
 		Depot.deleteCP(depotName = "Test Depot Name");
 

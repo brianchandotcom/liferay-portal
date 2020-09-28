@@ -125,21 +125,7 @@ public class BackgroundImageFragmentEntryProcessor
 				Map<String, Object> fieldValues = fieldValuesOptional.orElse(
 					new HashMap<>());
 
-				Object fieldValue = fieldValues.get(mappedField);
-
-				if (fieldValue instanceof JSONObject) {
-					JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
-
-					value = fieldValueJSONObject.getString("url");
-				}
-				else if (fieldValue instanceof WebImage) {
-					WebImage webImage = (WebImage)fieldValue;
-
-					value = String.valueOf(webImage.toJSONObject());
-				}
-				else {
-					value = String.valueOf(fieldValue);
-				}
+				value = _getImageURL(fieldValues.get(mappedField));
 			}
 
 			if (_fragmentEntryProcessorHelper.isMapped(
@@ -151,20 +137,7 @@ public class BackgroundImageFragmentEntryProcessor
 						fragmentEntryProcessorContext);
 
 				if (fieldValue != null) {
-					if (fieldValue instanceof JSONObject) {
-						JSONObject fieldValueJSONObject =
-							(JSONObject)fieldValue;
-
-						value = fieldValueJSONObject.getString("url");
-					}
-					else if (fieldValue instanceof WebImage) {
-						WebImage webImage = (WebImage)fieldValue;
-
-						value = String.valueOf(webImage.toJSONObject());
-					}
-					else {
-						value = String.valueOf(fieldValue);
-					}
+					value = _getImageURL(fieldValue);
 				}
 			}
 
@@ -251,6 +224,22 @@ public class BackgroundImageFragmentEntryProcessor
 		document.outputSettings(outputSettings);
 
 		return document;
+	}
+
+	private String _getImageURL(Object fieldValue) {
+		if (fieldValue instanceof JSONObject) {
+			JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
+
+			return fieldValueJSONObject.getString("url");
+		}
+
+		if (fieldValue instanceof WebImage) {
+			WebImage webImage = (WebImage)fieldValue;
+
+			return String.valueOf(webImage.toJSONObject());
+		}
+
+		return String.valueOf(fieldValue);
 	}
 
 	@Reference

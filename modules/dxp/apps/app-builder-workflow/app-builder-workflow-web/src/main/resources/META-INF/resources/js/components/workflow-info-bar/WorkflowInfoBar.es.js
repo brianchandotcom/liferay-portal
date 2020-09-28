@@ -17,7 +17,7 @@ import React from 'react';
 import '../../../css/WorkflowInfoBar.scss';
 
 export default function WorkflowInfo({
-	assignees = [{}],
+	assignees = [],
 	appVersion,
 	completed,
 	hideColumns = [],
@@ -26,7 +26,7 @@ export default function WorkflowInfo({
 }) {
 	const emptyValue = '--';
 
-	let assignee = assignees[0].name || emptyValue;
+	let assignee = assignees[0]?.name || emptyValue;
 
 	const status = completed ? (
 		<ClayLabel displayType="success">
@@ -40,7 +40,7 @@ export default function WorkflowInfo({
 
 	const stepName = taskNames[0] || emptyValue;
 
-	if (assignees[0].id === -1) {
+	if (assignees[0]?.id === -1) {
 		const {appWorkflowRoleAssignments: roles = []} =
 			tasks.find(({name}) => name === stepName) || {};
 

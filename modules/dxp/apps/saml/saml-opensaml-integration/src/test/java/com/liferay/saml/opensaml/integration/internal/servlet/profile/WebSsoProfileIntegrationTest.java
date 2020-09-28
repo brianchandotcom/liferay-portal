@@ -968,7 +968,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		response.setIssuer(OpenSamlUtil.buildIssuer(IDP_ENTITY_ID));
 
-		_webSsoProfileImpl.verifyInResponseTo(response);
+		_webSsoProfileImpl.verifyInResponseTo(new MessageContext<>(), response);
 	}
 
 	@Test(expected = InResponseToException.class)
@@ -978,7 +978,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		response.setInResponseTo("responseto");
 		response.setIssuer(OpenSamlUtil.buildIssuer(IDP_ENTITY_ID));
 
-		_webSsoProfileImpl.verifyInResponseTo(response);
+		_webSsoProfileImpl.verifyInResponseTo(null, response);
 	}
 
 	@Test
@@ -1007,7 +1007,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		response.setInResponseTo(samlSpAuthRequestKey);
 		response.setIssuer(OpenSamlUtil.buildIssuer(IDP_ENTITY_ID));
 
-		_webSsoProfileImpl.verifyInResponseTo(response);
+		_webSsoProfileImpl.verifyInResponseTo(null, response);
 	}
 
 	@Test(expected = IssuerException.class)

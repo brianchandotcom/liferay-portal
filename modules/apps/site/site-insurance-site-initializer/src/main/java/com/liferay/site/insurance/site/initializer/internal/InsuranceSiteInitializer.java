@@ -586,10 +586,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			Map<String, String> stringValuesMap)
 		throws Exception {
 
-		String entryPath = url.getPath();
-
-		String zipPath = StringUtil.removeSubstring(entryPath, _PATH);
-
 		String content = StringUtil.read(url.openStream());
 
 		content = StringUtil.replace(content, "\"£", "£\"", numberValuesMap);
@@ -597,7 +593,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		content = StringUtil.replace(
 			content, StringPool.DOLLAR, StringPool.DOLLAR, stringValuesMap);
 
-		zipWriter.addEntry(zipPath, content);
+		zipWriter.addEntry(
+			StringUtil.removeSubstring(url.getPath(), _PATH), content);
 	}
 
 	private void _createServiceContext(long groupId) throws Exception {
@@ -804,9 +801,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			Map<String, String> stringValuesMap)
 		throws Exception {
 
-		String zipPath = StringUtil.removeSubstring(url.getFile(), _PATH);
-
-		zipWriter.addEntry(zipPath, url.openStream());
+		zipWriter.addEntry(
+			StringUtil.removeSubstring(url.getFile(), _PATH), url.openStream());
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			FileUtil.getPath(url.getPath()), StringPool.STAR, true);

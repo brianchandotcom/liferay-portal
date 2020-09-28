@@ -236,18 +236,15 @@
 						callback(imageSrc, selectedItem);
 					}
 					else {
-						var elementOuterHtml = '<img src="' + imageSrc + '">';
+						var imageElement = new CKEDITOR.dom.element.createFromHtml(
+							'<img src="' + imageSrc + '">'
+						);
 
-						editor.insertHtml(elementOuterHtml);
+						editor.insertElement(imageElement);
 
 						if (IE9AndLater) {
 							if (!editor.window.$.AlloyEditor) {
-								var emptySelectionMarkup = '&nbsp;';
-
-								emptySelectionMarkup =
-									elementOuterHtml + emptySelectionMarkup;
-
-								editor.insertHtml(emptySelectionMarkup);
+								editor.insertHtml('&nbsp;');
 							}
 
 							var element = new CKEDITOR.dom.element('br');

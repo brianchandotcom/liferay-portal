@@ -14,10 +14,17 @@
 
 package com.liferay.portal.kernel.dependency.manager;
 
+import java.util.concurrent.Future;
+
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public interface DependencyManagerSync {
+
+	public void registerSyncFuture(Future<Void> syncFuture);
 
 	public void sync();
 

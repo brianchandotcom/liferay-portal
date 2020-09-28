@@ -41,8 +41,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGNED_TO_ME_TABLE_ASSET_SPECIFIC_TYPE</td>
+	<td>//tr[${key_position}][contains(.,'${key_workflowAssetTitle}')]/td[2]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGNED_TO_ME_TABLE_TASK</td>
 	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_SPECIFIC_TASK</td>
+	<td>//tr[${key_position}][contains(.,'${key_workflowAssetTitle}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,6 +73,11 @@
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[6]//div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_SPECIFIC_ACTIONS</td>
+	<td>//tr[${key_position}][contains(.,'${key_workflowAssetTitle}')]/td[6]//div/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -132,7 +132,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	@Override
 	public String getName(Locale locale) {
-		return _NAME;
+		return "Insurance Demo Site";
 	}
 
 	@Override
@@ -936,8 +936,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			layoutSet.getThemeId(), layoutSet.getColorSchemeId(),
 			_read("/layout-set/" + type + "/css.css"));
 	}
-
-	private static final String _NAME = "Insurance Demo Site";
 
 	private static final String _PATH =
 		"com/liferay/site/insurance/site/initializer/internal/dependencies";

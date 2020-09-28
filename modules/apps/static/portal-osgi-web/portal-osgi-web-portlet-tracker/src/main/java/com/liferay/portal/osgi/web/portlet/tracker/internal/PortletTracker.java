@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.web.portlet.tracker.internal;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -245,8 +244,10 @@ public class PortletTracker
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTracker = ServiceTrackerFactory.open(
+		_serviceTracker = new ServiceTracker<>(
 			_bundleContext, Portlet.class, this);
+
+		_serviceTracker.open();
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Activated");

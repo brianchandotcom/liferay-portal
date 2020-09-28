@@ -15,11 +15,14 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {useDrag} from 'react-dnd';
 
+import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
 import {
 	useSelectedMenuItemId,
@@ -32,6 +35,13 @@ export const MenuItem = ({item}) => {
 	const setSidebarPanelId = useSetSidebarPanelId();
 
 	const selected = useSelectedMenuItemId() === item.siteNavigationMenuItemId;
+
+	const [, handlerRef] = useDrag({
+		item: {
+			id: item.siteNavigationMenuItemId,
+			type: ACCEPTING_ITEM_TYPE,
+		},
+	});
 
 	return (
 		<ClayCard
@@ -50,12 +60,8 @@ export const MenuItem = ({item}) => {
 			>
 				<ClayCard.Body className="px-0">
 					<ClayCard.Row>
-						<ClayLayout.ContentCol gutters>
-							<ClayButtonWithIcon
-								displayType="unstyled"
-								small
-								symbol="drag"
-							/>
+						<ClayLayout.ContentCol gutters ref={handlerRef}>
+							<ClayIcon symbol="drag" />
 						</ClayLayout.ContentCol>
 
 						<ClayLayout.ContentCol expand>

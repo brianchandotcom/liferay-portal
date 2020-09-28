@@ -468,6 +468,41 @@ definition {
 	}
 
 	@priority = "5"
+	test RescheduleAndCancelScheduledPublication {
+		property test.name.skip.portal.instance = "ChangeList#RescheduleAndCancelScheduledPublication";
+
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		ChangeList.schedulePublication(publicationName = "Publication Name");
+
+		ChangeList.gotoScheduledChanges();
+
+		ChangeList.schedulePublication(
+			publicationName = "Publication Name",
+			reschedule = "true");
+
+		ChangeList.unschedulePublication(publicationName = "Publication Name");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No publication has been scheduled yet.");
+	}
+
+	@priority = "5"
 	test RevertPublicationAndPublishNow {
 		property test.name.skip.portal.instance = "ChangeList#RevertPublicationAndPublishNow";
 

@@ -42,10 +42,12 @@ public class DispatchTriggerSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setActive(model.isActive());
 		soapModel.setCronExpression(model.getCronExpression());
+		soapModel.setEndDate(model.getEndDate());
 		soapModel.setName(model.getName());
+		soapModel.setStartDate(model.getStartDate());
 		soapModel.setSystem(model.isSystem());
-		soapModel.setType(model.getType());
-		soapModel.setTypeSettings(model.getTypeSettings());
+		soapModel.setTaskProperties(model.getTaskProperties());
+		soapModel.setTaskType(model.getTaskType());
 
 		return soapModel;
 	}
@@ -181,12 +183,28 @@ public class DispatchTriggerSoap implements Serializable {
 		_cronExpression = cronExpression;
 	}
 
+	public Date getEndDate() {
+		return _endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		_endDate = endDate;
+	}
+
 	public String getName() {
 		return _name;
 	}
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public Date getStartDate() {
+		return _startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
 	}
 
 	public boolean getSystem() {
@@ -201,20 +219,20 @@ public class DispatchTriggerSoap implements Serializable {
 		_system = system;
 	}
 
-	public String getType() {
-		return _type;
+	public String getTaskProperties() {
+		return _taskProperties;
 	}
 
-	public void setType(String type) {
-		_type = type;
+	public void setTaskProperties(String taskProperties) {
+		_taskProperties = taskProperties;
 	}
 
-	public String getTypeSettings() {
-		return _typeSettings;
+	public String getTaskType() {
+		return _taskType;
 	}
 
-	public void setTypeSettings(String typeSettings) {
-		_typeSettings = typeSettings;
+	public void setTaskType(String taskType) {
+		_taskType = taskType;
 	}
 
 	private long _mvccVersion;
@@ -226,9 +244,11 @@ public class DispatchTriggerSoap implements Serializable {
 	private Date _modifiedDate;
 	private boolean _active;
 	private String _cronExpression;
+	private Date _endDate;
 	private String _name;
+	private Date _startDate;
 	private boolean _system;
-	private String _type;
-	private String _typeSettings;
+	private String _taskProperties;
+	private String _taskType;
 
 }

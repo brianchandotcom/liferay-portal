@@ -486,7 +486,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			if (Objects.equals(LayoutConstants.TYPE_CONTENT, type) ||
 				Objects.equals(LayoutConstants.TYPE_COLLECTION, type)) {
 
-				String pageDefinition = StringUtil.replace(
+				String pageDefinitionJSON = StringUtil.replace(
 					_readFile(
 						StringBundler.concat(
 							"/layouts/", path, StringPool.SLASH,
@@ -495,7 +495,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 				layout = _addContentLayout(
 					pageJSONObject,
-					JSONFactoryUtil.createJSONObject(pageDefinition),
+					JSONFactoryUtil.createJSONObject(pageDefinitionJSON),
 					resourcesMap);
 			}
 			else {

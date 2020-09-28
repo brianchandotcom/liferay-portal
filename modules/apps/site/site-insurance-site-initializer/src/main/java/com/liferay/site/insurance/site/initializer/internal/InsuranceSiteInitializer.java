@@ -418,6 +418,18 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayoutPageTemplateEntries() throws Exception {
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
+		keyValuePairs.add(
+			new KeyValuePair(
+				"display-page-templates",
+				LayoutPageTemplateExportImportConstants.
+					FILE_NAME_DISPLAY_PAGE_TEMPLATE));
+		keyValuePairs.add(
+			new KeyValuePair(
+				"master-pages",
+				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE));
+
 		Map<String, String> numberValuesMap = new HashMap<>();
 
 		List<DDMStructure> ddmStructures =
@@ -430,18 +442,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				StringUtil.toUpperCase(ddmStructure.getStructureKey()),
 				String.valueOf(ddmStructure.getStructureId()));
 		}
-
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
-
-		keyValuePairs.add(
-			new KeyValuePair(
-				"display-page-templates",
-				LayoutPageTemplateExportImportConstants.
-					FILE_NAME_DISPLAY_PAGE_TEMPLATE));
-		keyValuePairs.add(
-			new KeyValuePair(
-				"master-pages",
-				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE));
 
 		File file = _generateZipFile(
 			keyValuePairs, numberValuesMap,

@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess.AlterColumnType;
 import com.liferay.portal.upgrade.v7_3_x.util.LayoutTable;
 
 /**
@@ -69,7 +68,7 @@ public class UpgradeLayout extends UpgradeProcess {
 
 			alter(
 				LayoutTable.class,
-				new AlterColumnType("description", "TEXT null"));
+				new UpgradeProcess.AlterColumnType("description", "TEXT null"));
 		}
 
 		runSQL("DROP_TABLE_IF_EXISTS(LayoutVersion)");

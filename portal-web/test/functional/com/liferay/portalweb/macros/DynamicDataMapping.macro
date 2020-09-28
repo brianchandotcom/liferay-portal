@@ -637,6 +637,18 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro moveNestedField {
+		var key_nestedFieldLabel = "${nestedFieldLabel}";
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+		
+		DoubleClick(locator1 = "DDMEditStructure#FORM_FIELD_NESTED_ANY");
+
+		DragAndDrop.dragAndDropReorganizeObjects(
+			locator1 = "DDMEditStructure#FORM_FIELD_NESTED_ANY",
+			locator2 = "DDMEditStructure#FORM_FIELD",
+			position = "0,20");
+	}
+
 	macro selectDynamicDataMappingFrame {
 		if (IsElementPresent(locator1 = "DDMEditStructure#IFRAME")) {
 			SelectFrame(locator1 = "DDMEditStructure#IFRAME");

@@ -31,6 +31,14 @@
 				(LOWER(CommerceChannel.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder.findClassNameIds">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceChannelRel.classNameId
+			FROM
+				CommerceChannelRel
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder.findByExpirationDate">
 		<![CDATA[
 			SELECT

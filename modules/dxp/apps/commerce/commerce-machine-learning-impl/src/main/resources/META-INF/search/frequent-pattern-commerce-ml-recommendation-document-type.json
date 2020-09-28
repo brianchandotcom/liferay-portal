@@ -1,0 +1,41 @@
+{
+	"FrequentPatternCommerceMLRecommendationDocumentType": {
+		"properties": {
+			"antecedentIds": {
+				"index": true,
+				"store": true,
+				"type": "keyword"
+			},
+			"antecedentIdsLength": {
+				"index": true,
+				"store": true,
+				"type": "long"
+			},
+			"companyId": {
+				"index": true,
+				"store": true,
+				"type": "long"
+			},
+			"createDate": {
+				"index": false,
+				"store": true,
+				"type": "date"
+			},
+			"jobId": {
+				"index": false,
+				"store": true,
+				"type": "keyword"
+			},
+			"recommendedEntryClassPK": {
+				"index": true,
+				"store": true,
+				"type": "long"
+			},
+			"score": {
+				"index": false,
+				"store": true,
+				"type": "float"
+			}
+		}
+	}
+}

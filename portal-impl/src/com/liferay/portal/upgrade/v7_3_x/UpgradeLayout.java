@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess.AlterColumnType;
 import com.liferay.portal.upgrade.v7_3_x.util.LayoutTable;
 
 /**
@@ -40,6 +41,8 @@ public class UpgradeLayout extends UpgradeProcess {
 			alter(
 				LayoutTable.class,
 				new AlterTableAddColumn("status", "INTEGER"));
+
+			runSQL("update Layout set masterLayoutPlid = 0, status = 0");
 		}
 
 		if (!hasColumn("Layout", "statusByUserId")) {
@@ -61,7 +64,13 @@ public class UpgradeLayout extends UpgradeProcess {
 				new AlterTableAddColumn("statusDate", "DATE null"));
 		}
 
-		runSQL("update Layout set masterLayoutPlid = 0, status = 0");
+		if (!hasColumnType(
+				LayoutTable.TABLE_NAME, "description", "TEXT null")) {
+
+			alter(
+				LayoutTable.class,
+				new AlterColumnType("description", "TEXT null"));
+		}
 
 		runSQL("DROP_TABLE_IF_EXISTS(LayoutVersion)");
 	}

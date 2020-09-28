@@ -126,8 +126,10 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepotPortletViaBreadcrumb(
+			otherDepotName = "Test Depot Name",
 			portlet = "Export");
 
 		LAR.exportSiteCP(depotName = "Test Depot Name");
@@ -142,8 +144,10 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Import Depot Name",
+		DepotNavigator.gotoDepot(depotName = "Test Import Depot Name");
+
+		DepotNavigator.gotoDepotPortletViaBreadcrumb(
+			otherDepotName = "Test Import Depot Name",
 			portlet = "Import");
 
 		LAR.importSiteCP(

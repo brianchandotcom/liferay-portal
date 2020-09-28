@@ -49,7 +49,7 @@ DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDi
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 					<portlet:param name="mvcRenderCommandName" value="editDispatchTrigger" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="type" value="<%= scheduledTaskExecutorServiceType %>" />
+					<portlet:param name="taskType" value="<%= scheduledTaskExecutorServiceType %>" />
 				</liferay-portlet:renderURL>
 
 				<liferay-frontend:add-menu-item

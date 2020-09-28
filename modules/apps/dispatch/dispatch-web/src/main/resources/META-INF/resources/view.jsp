@@ -66,7 +66,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								property="type"
+								property="taskType"
 							/>
 
 							<liferay-ui:search-container-column-text

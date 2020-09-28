@@ -23,14 +23,14 @@ long dispatchTriggerId = 0;
 
 DispatchTrigger dispatchTrigger = dispatchTriggerDisplayContext.getDispatchTrigger();
 
-String type = ParamUtil.getString(request, "type");
+String taskProperties = StringPool.BLANK;
 
-String typeSettings = StringPool.BLANK;
+String taskType = ParamUtil.getString(request, "taskType");
 
 if (dispatchTrigger != null) {
 	dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
-	type = dispatchTrigger.getType();
-	typeSettings = dispatchTrigger.getTypeSettings();
+	taskProperties = dispatchTrigger.getTaskProperties();
+	taskType = dispatchTrigger.getTaskType();
 }
 %>
 
@@ -47,8 +47,8 @@ if (dispatchTrigger != null) {
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTriggerId) %>" />
-			<aui:input name="type" type="hidden" value="<%= type %>" />
-			<aui:input name="typeSettings" type="hidden" />
+			<aui:input name="taskType" type="hidden" value="<%= taskType %>" />
+			<aui:input name="taskProperties" type="hidden" />
 
 			<div class="lfr-form-content">
 				<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
@@ -57,7 +57,7 @@ if (dispatchTrigger != null) {
 					<aui:input disabled="<%= (dispatchTrigger != null) && dispatchTrigger.isSystem() %>" name="name" required="<%= true %>" />
 				</aui:fieldset>
 
-				<div id="<portlet:namespace />typeSettingsEditor"></div>
+				<div id="<portlet:namespace />taskPropertiesEditor"></div>
 
 				<aui:button-row>
 
@@ -99,7 +99,7 @@ if (dispatchTrigger != null) {
 	var STR_VALUE = 'value';
 
 	var contentEditor = new A.AceEditor({
-		boundingBox: '#<portlet:namespace />typeSettingsEditor',
+		boundingBox: '#<portlet:namespace />taskPropertiesEditor',
 		height: 600,
 		mode: 'xml',
 		tabSize: 4,
@@ -108,7 +108,7 @@ if (dispatchTrigger != null) {
 
 	var xmlFormatter = new Liferay.XMLFormatter();
 
-	var content = xmlFormatter.format('<%= HtmlUtil.escapeJS(typeSettings) %>');
+	var content = xmlFormatter.format('<%= HtmlUtil.escapeJS(taskProperties) %>');
 
 	if (content) {
 		content = content.trim();
@@ -119,7 +119,7 @@ if (dispatchTrigger != null) {
 	Liferay.on('<portlet:namespace />saveTrigger', function (event) {
 		var form = window.document['<portlet:namespace />fm'];
 
-		form['<portlet:namespace />typeSettings'].value = contentEditor.get(
+		form['<portlet:namespace />taskProperties'].value = contentEditor.get(
 			STR_VALUE
 		);
 

@@ -808,10 +808,9 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			FileUtil.getPath(url.getPath()), StringPool.STAR, true);
 
 		while (enumeration.hasMoreElements()) {
-			URL elementURL = enumeration.nextElement();
-
 			_addZipWriterEntry(
-				zipWriter, elementURL, numberValuesMap, stringValuesMap);
+				zipWriter, enumeration.nextElement(), numberValuesMap,
+				stringValuesMap);
 		}
 	}
 

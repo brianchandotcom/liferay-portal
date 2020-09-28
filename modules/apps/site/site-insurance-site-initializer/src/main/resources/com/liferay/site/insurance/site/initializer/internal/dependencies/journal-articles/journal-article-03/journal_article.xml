@@ -84,7 +84,7 @@
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="wbtvfajv" name="Reports" type="text_area">
-		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="$URL_policy-document.svg$" />Damages Statement</li><li><img alt="" src="$URL_policy-document.svg$" />Damages Images</li><li><img alt="" src="$URL_policy-document.svg$" />Final Report</li></ul>]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="$URL_policy_document.svg$" />Damages Statement</li><li><img alt="" src="$URL_policy_document.svg$" />Damages Images</li><li><img alt="" src="$URL_policy_document.svg$" />Final Report</li></ul>]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="vuyeppaj" name="Communications" type="text_area">
 		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="$URL_download.svg$" />26/02/2020 - Order Information</li><li><img alt="" src="$URL_download.svg$" />26/02/2019 - Order Registration</li><li><img alt="" src="$URL_download.svg$" />26/02/2018 - Company Information</li><li><img alt="" src="$URL_download.svg$" />26/02/2018 - Claim Registration</li></ul><p><a href="#">View all</a></p>]]></dynamic-content>

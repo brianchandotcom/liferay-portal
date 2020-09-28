@@ -132,6 +132,14 @@ public class BackgroundImageFragmentEntryProcessor
 
 					value = fieldValueJSONObject.getString("url");
 				}
+				else if (fieldValue instanceof WebImage) {
+					WebImage webImage = (WebImage)fieldValue;
+
+					value = String.valueOf(webImage.toJSONObject());
+				}
+				else {
+					value = String.valueOf(fieldValue);
+				}
 			}
 
 			if (_fragmentEntryProcessorHelper.isMapped(

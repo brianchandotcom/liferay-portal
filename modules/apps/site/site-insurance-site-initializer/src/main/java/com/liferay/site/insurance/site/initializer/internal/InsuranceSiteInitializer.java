@@ -299,7 +299,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				).build(),
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 				TemplateConstants.LANG_TYPE_FTL,
-				_getContent("ddm_template.ftl", url), false, false, null, null,
+				_read("ddm_template.ftl", url), false, false, null, null,
 				_serviceContext);
 		}
 	}
@@ -368,7 +368,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 					journalArticleJSONObject.getString("name")),
 				null,
 				StringUtil.replace(
-					_getContent("journal_article.xml", url), StringPool.DOLLAR,
+					_read("journal_article.xml", url), StringPool.DOLLAR,
 					StringPool.DOLLAR, fileEntriesMap),
 				journalArticleJSONObject.getString("ddmStructureKey"),
 				journalArticleJSONObject.getString("ddmTemplateKey"), null,
@@ -646,7 +646,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		return zipWriter.getFile();
 	}
 
-	private String _getContent(String fileName, URL url) throws Exception {
+	private String _read(String fileName, URL url) throws Exception {
 		String path = url.getPath();
 
 		URL entryURL = _bundle.getEntry(

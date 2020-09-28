@@ -6525,6 +6525,30 @@ go</echo>
 		<delete dir="/tmp/sprite" />
 	</target>
 
+	<target name="delete-portal-theme">
+		<if>
+			<and>
+				<isset property="theme-name" />
+				<available file="${liferay.home}/osgi/war/${theme-name}.war" />
+			</and>
+			<then>
+				<echo>Deleting ${liferay.home}/osgi/war/${theme-name}.war.</echo>
+
+				<delete file="${liferay.home}/osgi/war/${theme-name}.war" />
+			</then>
+			<else>
+				<echo>Deleting ${liferay.home}/osgi/marketplace/Theme.lpkg.</echo>
+
+				<delete>
+					<fileset
+						dir="${liferay.home}/osgi/marketplace"
+						includes="*Theme*.lpkg"
+					/>
+				</delete>
+			</else>
+		</if>
+	</target>
+
 	<target name="deploy-analytics-cloud-demo-data-creator">
 		<if>
 			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />

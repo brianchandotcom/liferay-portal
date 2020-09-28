@@ -140,7 +140,9 @@ definition {
 		property skip.start-app-server = "true";
 		property test.name.skip.portal.instance = "Theme#StartPortalWithoutClassicTheme";
 
-		FileInstall.deleteWarOffline(liferayDependencyWars = "classic-theme.war");
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "delete-portal-theme -Dtheme-name=classic-theme");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 

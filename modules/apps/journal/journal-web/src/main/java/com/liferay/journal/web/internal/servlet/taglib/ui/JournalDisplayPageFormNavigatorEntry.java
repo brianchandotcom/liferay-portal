@@ -60,7 +60,7 @@ public class JournalDisplayPageFormNavigatorEntry
 			group = themeDisplay.getScopeGroup();
 		}
 
-		if ((group != null) && group.isCompany()) {
+		if ((group != null) && (group.isCompany() || group.isDepot())) {
 			return false;
 		}
 

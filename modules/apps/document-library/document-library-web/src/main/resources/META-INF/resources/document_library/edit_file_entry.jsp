@@ -459,7 +459,7 @@ renderResponse.setTitle(headerTitle);
 				Group scopeGroup = themeDisplay.getScopeGroup();
 				%>
 
-				<c:if test="<%= !scopeGroup.isCompany() %>">
+				<c:if test="<%= !scopeGroup.isCompany() && !scopeGroup.isDepot() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-page-template">
 						<liferay-asset:select-asset-display-page
 							classNameId="<%= PortalUtil.getClassNameId(FileEntry.class) %>"

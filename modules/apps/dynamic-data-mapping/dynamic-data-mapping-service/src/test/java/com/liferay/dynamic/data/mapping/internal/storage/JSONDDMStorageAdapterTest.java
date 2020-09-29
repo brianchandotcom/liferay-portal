@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeReque
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.impl.DDMContentImpl;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterDeleteRequest;
@@ -66,6 +67,16 @@ public class JSONDDMStorageAdapterTest extends PowerMockito {
 
 	@Test
 	public void testDelete() throws Exception {
+		when(
+			_ddmContentLocalService.fetchDDMContent(1)
+		).thenReturn(
+			new DDMContentImpl() {
+				{
+					setPrimaryKey(1);
+				}
+			}
+		);
+
 		DDMStorageAdapterDeleteRequest.Builder builder =
 			DDMStorageAdapterDeleteRequest.Builder.newBuilder(1);
 
@@ -79,20 +90,6 @@ public class JSONDDMStorageAdapterTest extends PowerMockito {
 		).deleteDDMContent(
 			1
 		);
-	}
-
-	@Test(expected = StorageException.class)
-	public void testDeleteException() throws Exception {
-		when(
-			_ddmContentLocalService.deleteDDMContent(2)
-		).thenThrow(
-			Exception.class
-		);
-
-		DDMStorageAdapterDeleteRequest.Builder builder =
-			DDMStorageAdapterDeleteRequest.Builder.newBuilder(2);
-
-		_jsonDDMStorageAdapter.delete(builder.build());
 	}
 
 	@Test

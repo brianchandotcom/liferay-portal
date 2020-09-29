@@ -30,22 +30,22 @@ public class TableJoinHolder {
 
 	public static TableJoinHolder reverse(TableJoinHolder tableJoinHolder) {
 		return new TableJoinHolder(
-			tableJoinHolder.getChildPKColumn(),
 			tableJoinHolder.getParentPKColumn(),
-			tableJoinHolder.getMissingRequirementWhereStep(),
+			tableJoinHolder.getJoinFunction(),
 			tableJoinHolder.getMissingRequirementWherePredicate(),
-			tableJoinHolder.getJoinFunction(), !tableJoinHolder.isReversed());
+			tableJoinHolder.getMissingRequirementWhereStep(),
+			tableJoinHolder.getChildPKColumn(), !tableJoinHolder.isReversed());
 	}
 
 	public TableJoinHolder(
-		Column<?, Long> parentPKColumn, Column<?, Long> childPKColumn,
-		WhereStep missingRequirementWhereStep,
+		Column<?, Long> childPKColumn,
+		Function<FromStep, JoinStep> joinFunction,
 		Predicate missingRequirementWherePredicate,
-		Function<FromStep, JoinStep> joinFunction) {
+		WhereStep missingRequirementWhereStep, Column<?, Long> parentPKColumn) {
 
 		this(
-			parentPKColumn, childPKColumn, missingRequirementWhereStep,
-			missingRequirementWherePredicate, joinFunction, false);
+			childPKColumn, joinFunction, missingRequirementWherePredicate,
+			missingRequirementWhereStep, parentPKColumn, false);
 	}
 
 	public Column<?, Long> getChildPKColumn() {
@@ -83,16 +83,17 @@ public class TableJoinHolder {
 	}
 
 	private TableJoinHolder(
-		Column<?, Long> parentPKColumn, Column<?, Long> childPKColumn,
-		WhereStep missingRequirementWhereStep,
+		Column<?, Long> childPKColumn,
+		Function<FromStep, JoinStep> joinFunction,
 		Predicate missingRequirementWherePredicate,
-		Function<FromStep, JoinStep> joinFunction, boolean reversed) {
+		WhereStep missingRequirementWhereStep, Column<?, Long> parentPKColumn,
+		boolean reversed) {
 
-		_parentPKColumn = parentPKColumn;
 		_childPKColumn = childPKColumn;
-		_missingRequirementWhereStep = missingRequirementWhereStep;
-		_missingRequirementWherePredicate = missingRequirementWherePredicate;
 		_joinFunction = joinFunction;
+		_missingRequirementWherePredicate = missingRequirementWherePredicate;
+		_missingRequirementWhereStep = missingRequirementWhereStep;
+		_parentPKColumn = parentPKColumn;
 		_reversed = reversed;
 	}
 

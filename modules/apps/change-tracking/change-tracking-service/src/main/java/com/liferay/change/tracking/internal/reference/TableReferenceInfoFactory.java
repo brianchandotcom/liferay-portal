@@ -51,9 +51,10 @@ public class TableReferenceInfoFactory {
 			childTableReferenceInfoBuilderImpl);
 
 		return new TableReferenceInfo<>(
-			tableReferenceDefinition, classNameId,
+			childTableReferenceInfoBuilderImpl.getTableJoinHoldersMap(),
+			classNameId,
 			parentTableReferenceInfoBuilderImpl.getTableJoinHoldersMap(),
-			childTableReferenceInfoBuilderImpl.getTableJoinHoldersMap());
+			tableReferenceDefinition);
 	}
 
 }

@@ -235,8 +235,8 @@ public class TableJoinHolderFactory {
 		}
 
 		return new TableJoinHolder(
-			fromPKColumn, primaryKeyColumn, missingRequirementWhereStep,
-			missingRequirementWherePredicate, joinFunction);
+			primaryKeyColumn, joinFunction, missingRequirementWherePredicate,
+			missingRequirementWhereStep, fromPKColumn);
 	}
 
 	private static final Consumer<String> _emptyStringConsumer = string -> {

@@ -256,9 +256,9 @@ public class TableReferenceDefinitionManager {
 		}
 
 		return new TableReferenceInfo<>(
-			tableReferenceDefinition, tableReferenceInfo.getClassNameId(),
-			combinedParentTableJoinHoldersMap,
-			combinedChildTableJoinHoldersMap);
+			combinedChildTableJoinHoldersMap,
+			tableReferenceInfo.getClassNameId(),
+			combinedParentTableJoinHoldersMap, tableReferenceDefinition);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

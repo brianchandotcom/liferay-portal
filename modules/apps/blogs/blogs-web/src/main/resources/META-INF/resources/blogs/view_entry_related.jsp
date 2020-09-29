@@ -42,11 +42,11 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			}
 			%>
 
-				<div class="card-header">
-					<div class="aspect-ratio aspect-ratio-8-to-3">
-						<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= HtmlUtil.escape(imageURL) %>" />
-					</div>
+			<div class="card-header">
+				<div class="aspect-ratio aspect-ratio-8-to-3">
+					<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= HtmlUtil.escape(imageURL) %>" />
 				</div>
+			</div>
 
 			<div class="card-body widget-topbar">
 				<clay:content-row

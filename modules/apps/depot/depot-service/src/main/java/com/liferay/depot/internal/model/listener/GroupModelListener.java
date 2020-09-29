@@ -15,10 +15,15 @@
 package com.liferay.depot.internal.model.listener;
 
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,6 +33,23 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ModelListener.class)
 public class GroupModelListener extends BaseModelListener<Group> {
+
+	@Override
+	public void onBeforeCreate(Group group) throws ModelListenerException {
+		try {
+			super.onBeforeCreate(group);
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (group.isDepot() && _isStaging(serviceContext)) {
+				_depotEntryLocalService.addDepotEntry(group, serviceContext);
+			}
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+	}
 
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
@@ -41,7 +63,18 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			group.getGroupId());
 	}
 
+	private boolean _isStaging(ServiceContext serviceContext) {
+		if (serviceContext == null) {
+			return false;
+		}
+
+		return ParamUtil.getBoolean(serviceContext, "staging");
+	}
+
 	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 }

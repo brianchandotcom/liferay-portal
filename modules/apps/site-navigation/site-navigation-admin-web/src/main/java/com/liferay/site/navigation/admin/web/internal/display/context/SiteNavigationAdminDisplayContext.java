@@ -454,6 +454,9 @@ public class SiteNavigationAdminDisplayContext {
 					_getSiteNavigationMenuItemsJSONArray(
 						siteNavigationMenuItemId)
 				).put(
+					"parentSiteNavigationMenuItemId",
+					parentSiteNavigationMenuItemId
+				).put(
 					"siteNavigationMenuItemId", siteNavigationMenuItemId
 				).put(
 					"title",

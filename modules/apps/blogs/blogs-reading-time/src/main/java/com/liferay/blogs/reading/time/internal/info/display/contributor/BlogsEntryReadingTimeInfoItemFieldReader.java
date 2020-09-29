@@ -15,16 +15,13 @@
 package com.liferay.blogs.reading.time.internal.info.display.contributor;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
-import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.item.field.reader.InfoItemFieldReader;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.reading.time.message.ReadingTimeMessageProvider;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.service.ReadingTimeEntryLocalService;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,38 +29,33 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = InfoDisplayContributorField.class
-)
-public class BlogsEntryReadingTimeInfoDisplayContributorField
-	implements InfoDisplayContributorField<BlogsEntry> {
+@Component(service = InfoItemFieldReader.class)
+public class BlogsEntryReadingTimeInfoItemFieldReader
+	implements InfoItemFieldReader<BlogsEntry> {
 
 	@Override
-	public String getKey() {
-		return "readingTime";
+	public InfoField getField() {
+		return InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"readingTime"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "reading-time")
+		).build();
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
+	public Object getValue(BlogsEntry blogsEntry) {
+		return InfoLocalizedValue.function(
+			locale -> {
+				ReadingTimeEntry readingTimeEntry =
+					_readingTimeEntryLocalService.fetchOrAddReadingTimeEntry(
+						blogsEntry);
 
-		return LanguageUtil.get(resourceBundle, "reading-time");
-	}
-
-	@Override
-	public InfoDisplayContributorFieldType getType() {
-		return InfoDisplayContributorFieldType.TEXT;
-	}
-
-	@Override
-	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		ReadingTimeEntry readingTimeEntry =
-			_readingTimeEntryLocalService.fetchOrAddReadingTimeEntry(
-				blogsEntry);
-
-		return _readingTimeMessageProvider.provide(readingTimeEntry, locale);
+				return _readingTimeMessageProvider.provide(
+					readingTimeEntry, locale);
+			});
 	}
 
 	@Reference

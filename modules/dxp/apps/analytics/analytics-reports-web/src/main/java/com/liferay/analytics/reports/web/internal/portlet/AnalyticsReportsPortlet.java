@@ -49,6 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
+		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.instanceable=false",

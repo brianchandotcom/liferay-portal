@@ -1,14 +1,23 @@
 definition {
 
 	macro assertDiscardIsUnavailableForInactivePublication {
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changesOrder}";
+		}
+		else {
+			var changeOrder = "1";
+		}
+
 		Click(
 			key_publicationName = "${publicationName}",
 			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME");
 
-		Click(
-			key_changeCategory = "${changeCategory}",
-			key_changeTitle = "${changeTitle}",
-			locator1 = "ChangeListChanges#CHANGES_CHANGE_TITLE");
+		Pause(locator1 = "1000");
+
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
+
+		Click(locator1 = "ChangeListChanges#CHANGES_CHANGE_TITLE");
 
 		AssertElementNotPresent(locator1 = "ChangeListChanges#CHANGES_ELLIPSIS");
 	}

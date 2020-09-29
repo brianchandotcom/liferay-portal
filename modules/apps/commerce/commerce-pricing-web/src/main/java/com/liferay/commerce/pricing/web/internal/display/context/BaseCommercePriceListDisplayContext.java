@@ -25,7 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -122,9 +122,14 @@ public abstract class BaseCommercePriceListDisplayContext
 			commercePriceListId, actionId);
 	}
 
-	public boolean hasPermission(String actionId) {
-		return PortalPermissionUtil.contains(
-			commercePricingRequestHelper.getPermissionChecker(), actionId);
+	public boolean hasPermission(String actionId) throws PortalException {
+		PortletResourcePermission portletResourcePermission =
+			commercePriceListModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			commercePricingRequestHelper.getPermissionChecker(), null,
+			actionId);
 	}
 
 	protected List<ClayDataSetActionDropdownItem>

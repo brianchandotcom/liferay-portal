@@ -30,11 +30,13 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="active" type="boolean" />
 		<field name="cronExpression" type="String" />
+		<field name="endDate" type="Date" />
 		<field name="name" type="String" />
+		<field name="startDate" type="Date" />
 		<field name="system" type="boolean" />
-		<field name="type" type="String" />
-		<field name="typeSettings" type="String">
+		<field name="taskProperties" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="taskType" type="String" />
 	</model>
 </model-hints>

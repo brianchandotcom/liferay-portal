@@ -161,9 +161,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			_addLayouts();
 
-			_updateDefaultDisplayPageTemplates();
-			_updateLookAndFeel("private");
-			_updateLookAndFeel("public");
+			_setDefaultLayoutPageTemplateEntries();
+
+			_updateLayoutSetLookAndFeel("private");
+			_updateLayoutSetLookAndFeel("public");
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -239,7 +240,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				typeSettingsUnicodeProperties.toString());
 		}
 
-		draftLayout = _updateLayoutSettings(
+		draftLayout = _updateLayoutTypeSettings(
 			draftLayout, pageDefinitionJSONObject.getJSONObject("settings"));
 
 		layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
@@ -821,7 +822,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		return StringUtil.read(entryURL.openStream());
 	}
 
-	private void _updateDefaultDisplayPageTemplates() {
+	private void _setDefaultLayoutPageTemplateEntries() {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_serviceContext.getScopeGroupId(), "policy",
@@ -839,7 +840,38 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
 	}
 
-	private Layout _updateLayoutSettings(
+	private void _updateLayoutSetLookAndFeel(String type) throws Exception {
+		boolean privateLayoutSet = false;
+
+		if (Objects.equals(type, "private")) {
+			privateLayoutSet = true;
+		}
+
+		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			_serviceContext.getScopeGroupId(), privateLayoutSet);
+
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSet.getSettingsProperties();
+
+		UnicodeProperties themeSettingsUnicodeProperties =
+			new UnicodeProperties(true);
+
+		themeSettingsUnicodeProperties.fastLoad(
+			_read("/layout-set/" + type + "/theme.properties"));
+
+		settingsUnicodeProperties.putAll(themeSettingsUnicodeProperties);
+
+		_layoutSetLocalService.updateSettings(
+			_serviceContext.getScopeGroupId(), privateLayoutSet,
+			settingsUnicodeProperties.toString());
+
+		_layoutSetLocalService.updateLookAndFeel(
+			_serviceContext.getScopeGroupId(), privateLayoutSet,
+			layoutSet.getThemeId(), layoutSet.getColorSchemeId(),
+			_read("/layout-set/" + type + "/css.css"));
+	}
+
+	private Layout _updateLayoutTypeSettings(
 		Layout layout, JSONObject settingsJSONObject) {
 
 		UnicodeProperties unicodeProperties =
@@ -904,37 +936,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 
 		return _layoutLocalService.updateLayout(layout);
-	}
-
-	private void _updateLookAndFeel(String type) throws Exception {
-		boolean privateLayoutSet = false;
-
-		if (Objects.equals(type, "private")) {
-			privateLayoutSet = true;
-		}
-
-		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-			_serviceContext.getScopeGroupId(), privateLayoutSet);
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		UnicodeProperties themeSettingsUnicodeProperties =
-			new UnicodeProperties(true);
-
-		themeSettingsUnicodeProperties.fastLoad(
-			_read("/layout-set/" + type + "/theme.properties"));
-
-		settingsUnicodeProperties.putAll(themeSettingsUnicodeProperties);
-
-		_layoutSetLocalService.updateSettings(
-			_serviceContext.getScopeGroupId(), privateLayoutSet,
-			settingsUnicodeProperties.toString());
-
-		_layoutSetLocalService.updateLookAndFeel(
-			_serviceContext.getScopeGroupId(), privateLayoutSet,
-			layoutSet.getThemeId(), layoutSet.getColorSchemeId(),
-			_read("/layout-set/" + type + "/css.css"));
 	}
 
 	private static final String _PATH =

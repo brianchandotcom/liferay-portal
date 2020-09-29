@@ -155,6 +155,126 @@ definition {
 	}
 
 	@priority = "4"
+	test PublishWebContentWithDMAndImageFields {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "ChangeListWebContent#PublishWebContentWithDMAndImageFields";
+
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		for (var structureFieldName : list "Documents and Media,Image,Text") {
+			DynamicDataMapping.addField(
+				field = "${structureFieldName}",
+				fieldFieldLabel = "${structureFieldName}",
+				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
+		}
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Documents and Media,Image,Text",
+			templateName = "WC Template Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			fieldName = "DocumentsandMedia",
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentDocumentsAndMedia = "DM Document Title",
+			webContentImage = "Document_1.jpg",
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		AssertElementPresent(
+			key_webContentTitle = "WC WebContent Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		ChangeList.gotoReviewChanges();
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Guest",
+			changeTitle = "WC Structure Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Template",
+			changeSite = "Guest",
+			changeTitle = "WC Template Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeSite = "Guest",
+			changeTitle = "DM Document Title",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		ChangeListChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeOrder = "2",
+			changeSite = "Guest",
+			changeTitle = "Document_1.jpg",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		ChangeList.gotoPublish(publicationName = "Publication Name");
+
+		ChangeList.publishPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		AssertElementPresent(
+			key_webContentTitle = "WC WebContent Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+	}
+
+	@priority = "4"
 	test PublishWebContentWithFriendlyURL {
 		property test.name.skip.portal.instance = "ChangeListWebContent#PublishWebContentWithFriendlyURL";
 
@@ -223,97 +343,6 @@ definition {
 			key_assetTitle = "WC WebContent Title",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "WC WebContent Title");
-	}
-
-	@priority = "4"
-	test PublishWebContentWithNewStructure {
-		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "ChangeListWebContent#PublishWebContentWithNewStructure";
-
-		ChangeList.createNewPublication(publicationName = "Publication Name");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
-		DynamicDataMapping.addField(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		NavItem.gotoTemplates();
-
-		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateDescription = "WC Template Description",
-			templateFieldNames = "Text",
-			templateName = "WC Template Name");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-		WebContent.addWithStructureCP(
-			structureName = "WC Structure Name",
-			templateName = "WC Template Name",
-			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		AssertElementPresent(
-			key_webContentTitle = "WC WebContent Title",
-			locator1 = "WC#ENTRY_LIST_TITLE");
-
-		ChangeList.gotoReviewChanges();
-
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Dynamic Data Mapping Structure",
-			changeSite = "Guest",
-			changeTitle = "WC Structure Name",
-			changeType = "Added",
-			changeUser = "Test Test");
-
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Dynamic Data Mapping Template",
-			changeSite = "Guest",
-			changeTitle = "WC Template Name",
-			changeType = "Added",
-			changeUser = "Test Test");
-
-		ChangeList.gotoPublish(publicationName = "Publication Name");
-
-		ChangeList.publishPublication(publicationName = "Publication Name");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		AssertElementPresent(
-			key_webContentTitle = "WC WebContent Title",
-			locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
 }

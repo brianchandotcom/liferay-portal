@@ -17,7 +17,7 @@ module.exports = {
 		global: true,
 	},
 	rules: {
-		'liferay-portal/no-global-fetch': 'off',
-		'liferay-portal/no-react-dom-render': 'off',
+		'@liferay/portal/no-global-fetch': 'off',
+		'@liferay/portal/no-react-dom-render': 'off',
 	},
 };

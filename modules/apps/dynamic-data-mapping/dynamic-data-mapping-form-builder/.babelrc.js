@@ -15,7 +15,7 @@
 module.exports = {
 	liferay: {
 		excludes: {
-			// eslint-disable-next-line liferay-portal/no-explicit-extend
+			// eslint-disable-next-line @liferay/portal/no-explicit-extend
 			presets: ['@babel/preset-react'],
 		},
 	},

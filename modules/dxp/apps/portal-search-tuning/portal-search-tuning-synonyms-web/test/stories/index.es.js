@@ -14,7 +14,7 @@ import {
 	STORYBOOK_CONSTANTS,
 	StorybookAddonKnobs,
 	StorybookReact,
-} from 'liferay-npm-scripts/src/storybook';
+} from '@liferay/npm-scripts/src/storybook';
 import React from 'react';
 
 import SynonymSetsForm from '../../src/main/resources/META-INF/resources/js/components/SynonymSetsForm.es';

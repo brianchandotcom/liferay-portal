@@ -13,7 +13,7 @@
  */
 
 module.exports = {
-	extends: ['liferay/metal'],
+	extends: ['@liferay/eslint-config/metal'],
 	globals: {
 		Lagrange: true,
 		importScripts: true,

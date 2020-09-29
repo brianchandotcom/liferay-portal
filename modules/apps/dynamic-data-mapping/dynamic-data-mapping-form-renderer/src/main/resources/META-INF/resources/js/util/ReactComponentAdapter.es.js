@@ -162,7 +162,7 @@ function getConnectedReactComponentAdapter(ReactComponent) {
 			IncrementalDOM.elementClose('div');
 			/* eslint-enable no-undef */
 
-			// eslint-disable-next-line liferay-portal/no-react-dom-render
+			// eslint-disable-next-line @liferay/portal/no-react-dom-render
 			ReactDOM.render(
 				<ObserverSubscribe observer={this.observer}>
 					<ReactComponent

@@ -23,5 +23,5 @@ const CHECK_AND_FIX_GLOBS = [
 module.exports = {
 	check: CHECK_AND_FIX_GLOBS,
 	fix: CHECK_AND_FIX_GLOBS,
-	preset: 'liferay-npm-scripts/src/presets/standard',
+	preset: '@liferay/npm-scripts/src/presets/standard',
 };

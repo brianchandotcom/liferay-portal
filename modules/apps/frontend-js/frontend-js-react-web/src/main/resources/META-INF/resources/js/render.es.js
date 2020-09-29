@@ -68,7 +68,7 @@ export default function render(renderable, renderData, container) {
 				? renderable
 				: null;
 
-		// eslint-disable-next-line liferay-portal/no-react-dom-render
+		// eslint-disable-next-line @liferay/portal/no-react-dom-render
 		ReactDOM.render(
 			<ClayIconSpriteContext.Provider value={spritemap}>
 				{Component ? <Component {...renderData} /> : renderable}

@@ -483,6 +483,80 @@ definition {
 		AssertElementNotPresent(locator1 = "Questions#NEW_TOPIC");
 	}
 
+	@description = "Validate if the user can setup the landing page topic navigation for the widget."
+	@priority = "4"
+	test ConfigureLandingPageTopicNavigation {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Questions Page");
+
+		Navigator.gotoPage(pageName = "Test Questions Page");
+
+		Portlet.addPG(portletName = "Questions");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "Description",
+			rootTopicName = "Questions Test Category1");
+
+		Questions.configureLandingPageTopicNavigation(toggleValue = "disable");
+
+		Navigator.gotoPage(pageName = "Test Questions Page");
+
+		AssertElementNotPresent(
+			key_card = "Questions Test Category1",
+			locator1 = "Card#CARD_TITLE");
+
+		Questions.viewHomeTopicsList(topicsName = "Questions Test Category1");
+
+		Questions.addSubTopic(
+			subTopicDescription = "Description",
+			subTopicName = "Questions Test Category2");
+
+		Questions.viewHomeTopicsList(topicsName = "Questions Test Category1,Questions Test Category2");
+
+		Questions.addSubTopic(
+			subTopicDescription = "Description",
+			subTopicName = "Questions Test SubCategory2");
+
+		Navigator.gotoPage(pageName = "Test Questions Page");
+
+		Questions.changeTopic(
+			changeTopicFromHomeToggle = "true",
+			subTopicName = "Questions Test Category1");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Body AddQuestion",
+			titleField = "Title AddQuestion");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		Questions.configureLandingPageTopicNavigation(toggleValue = "enable");
+
+		Navigator.gotoPage(pageName = "Test Questions Page");
+
+		for (var topicName : list "Questions Test Category1,Questions Test Category2") {
+			AssertElementPresent(
+				key_card = "${topicName}",
+				locator1 = "Card#CARD_TITLE");
+		}
+
+		Questions.gotoCategory(categoryName = "Questions Test Category1");
+
+		AssertVisible(
+			key_questionTitle = "Title AddQuestion",
+			locator1 = "Questions#QUESTIONS_TITLE");
+
+		Navigator.gotoPage(pageName = "Test Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category2");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category2",
+			subTopicName = "Questions Test SubCategory2");
+	}
+
 	@description = "Validate if the user can setup the root topic for the widget."
 	@priority = "4"
 	test ConfigureRootTopic {

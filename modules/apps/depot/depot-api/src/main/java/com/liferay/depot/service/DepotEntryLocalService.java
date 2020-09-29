@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -80,6 +81,9 @@ public interface DepotEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DepotEntry addDepotEntry(DepotEntry depotEntry);
+
+	public DepotEntry addDepotEntry(Group group, ServiceContext serviceContext)
+		throws PortalException;
 
 	public DepotEntry addDepotEntry(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

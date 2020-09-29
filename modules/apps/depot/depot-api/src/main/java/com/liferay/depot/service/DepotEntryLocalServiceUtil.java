@@ -55,6 +55,14 @@ public class DepotEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.depot.model.DepotEntry addDepotEntry(
+			com.liferay.portal.kernel.model.Group group,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addDepotEntry(group, serviceContext);
+	}
+
+	public static com.liferay.depot.model.DepotEntry addDepotEntry(
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

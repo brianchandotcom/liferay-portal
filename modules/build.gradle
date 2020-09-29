@@ -273,8 +273,8 @@ gradle.beforeProject {
 			}
 
 			if (configurations.findByName("portalTestSnapshot") != null) {
-				configurations.portalTestSnapshot.exclude group: "com.liferay.portal", module: "com.liferay.portal.kernel"
 				configurations.portalTestSnapshot.exclude group: "com.liferay.portal", module: "com.liferay.portal.impl"
+				configurations.portalTestSnapshot.exclude group: "com.liferay.portal", module: "com.liferay.portal.kernel"
 			}
 		}
 

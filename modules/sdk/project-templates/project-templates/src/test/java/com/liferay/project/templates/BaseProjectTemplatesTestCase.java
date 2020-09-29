@@ -681,7 +681,7 @@ public interface BaseProjectTemplatesTestCase {
 			}
 			else if (liferayVersion.startsWith("7.3")) {
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.product=portal-7.3-ga5");
+					workspaceDir, "liferay.workspace.product=portal-7.3-ga6");
 			}
 		}
 		else {
@@ -1288,7 +1288,7 @@ public interface BaseProjectTemplatesTestCase {
 		}
 		else if (liferayVersion.startsWith("7.3")) {
 			writeGradlePropertiesInWorkspace(
-				gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga5");
+				gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga6");
 		}
 
 		File modulesDir = new File(gradleWorkspaceDir, "modules");
@@ -1372,7 +1372,7 @@ public interface BaseProjectTemplatesTestCase {
 				temporaryFolder, getDefaultLiferayVersion());
 
 			writeGradlePropertiesInWorkspace(
-				workspaceDir, "liferay.workspace.product=portal-7.3-ga5");
+				workspaceDir, "liferay.workspace.product=portal-7.3-ga6");
 		}
 
 		File modulesDir = new File(workspaceDir, "modules");

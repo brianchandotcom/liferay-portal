@@ -51,7 +51,7 @@ public class ProjectTemplatesServiceWrapperTest
 	@Parameterized.Parameters(name = "Testcase-{index}: testing {0}")
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
-			new Object[][] {{"7.0.6"}, {"7.1.3"}, {"7.2.1"}, {"7.3.4"}});
+			new Object[][] {{"7.0.6"}, {"7.1.3"}, {"7.2.1"}, {"7.3.5"}});
 	}
 
 	@BeforeClass
@@ -137,7 +137,7 @@ public class ProjectTemplatesServiceWrapperTest
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
 			File mavenOutputDir = new File(mavenProjectDir, "target");
 
-			if (_liferayVersion.equals("7.3.4")) {
+			if (_liferayVersion.equals("7.3.5")) {
 				File buildGradleFile = testExists(
 					gradleProjectDir, "build.gradle");
 				File pomXmlFile = testExists(mavenProjectDir, "pom.xml");

@@ -54,6 +54,8 @@ public class CommerceDiscountConstants {
 		LIMITATION_TYPE_LIMITED_FOR_ACCOUNTS_AND_TOTAL
 	};
 
+	public static final String RESOURCE_NAME = "com.liferay.commerce.discount";
+
 	public static final String TARGET_CATEGORIES = "categories";
 
 	/**

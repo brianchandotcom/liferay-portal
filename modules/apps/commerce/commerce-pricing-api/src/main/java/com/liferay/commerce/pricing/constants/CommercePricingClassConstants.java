@@ -12,20 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.price.list.constants;
+package com.liferay.commerce.pricing.constants;
 
 /**
  * @author Riccardo Alberti
  */
-public class CommercePriceListConstants {
+public class CommercePricingClassConstants {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.commerce.price.list";
-
-	public static final String TYPE_CONTRACT = "contract";
-
-	public static final String TYPE_PRICE_LIST = "price-list";
-
-	public static final String TYPE_PROMOTION = "promotion";
+	public static final String RESOURCE_NAME = "com.liferay.commerce.pricing";
 
 }

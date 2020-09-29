@@ -13,13 +13,16 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useRef, useState} from 'react';
 
 let nextInputId = 0;
 
-export default function SearchForm({onChange, value}) {
+export default function SearchForm({onChange}) {
 	const id = `pageEditorSearchFormInput${nextInputId++}`;
+	const onChangeDebounce = useRef(debounce((value) => onChange(value), 100));
+	const [searchValue, setSearchValue] = useState('');
 
 	return (
 		<ClayForm.Group className="mb-3" role="search">
@@ -29,12 +32,13 @@ export default function SearchForm({onChange, value}) {
 			<ClayInput
 				id={id}
 				onChange={(event) => {
-					onChange(event.target.value);
+					setSearchValue(event.target.value);
+					onChangeDebounce.current(event.target.value);
 				}}
 				placeholder={`${Liferay.Language.get('search')}...`}
 				sizing="sm"
 				type="search"
-				value={value}
+				value={searchValue}
 			/>
 		</ClayForm.Group>
 	);
@@ -42,5 +46,4 @@ export default function SearchForm({onChange, value}) {
 
 SearchForm.propTypes = {
 	onChange: PropTypes.func.isRequired,
-	value: PropTypes.string.isRequired,
 };

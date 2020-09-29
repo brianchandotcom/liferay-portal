@@ -215,6 +215,19 @@ public class WikiPageIndexer
 	}
 
 	@Override
+	public Hits search(SearchContext searchContext) throws SearchException {
+		Hits hits = super.search(searchContext);
+
+		String[] queryTerms = ArrayUtil.append(
+			GetterUtil.getStringValues(hits.getQueryTerms()),
+			StringUtil.split(searchContext.getKeywords(), StringPool.SPACE));
+
+		hits.setQueryTerms(queryTerms);
+
+		return hits;
+	}
+
+	@Override
 	public void updateFullQuery(SearchContext searchContext) {
 	}
 
@@ -456,19 +469,6 @@ public class WikiPageIndexer
 				_deleteDocument(wikiPage);
 			}
 		}
-	}
-
-	@Override
-	public Hits search(SearchContext searchContext) throws SearchException {
-		Hits hits = super.search(searchContext);
-
-		String[] queryTerms = ArrayUtil.append(
-			GetterUtil.getStringValues(hits.getQueryTerms()),
-			StringUtil.split(searchContext.getKeywords(), StringPool.SPACE));
-
-		hits.setQueryTerms(queryTerms);
-
-		return hits;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

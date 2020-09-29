@@ -251,6 +251,28 @@ definition {
 		Pause(locator1 = "1000");
 	}
 
+	macro configureLandingPageTopicNavigation {
+		Portlet.gotoPortletOptions(
+			portletName = "Questions",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		if ("${toggleValue}" == "enable") {
+			Check(
+				checkboxName = "Show Cards for Topic Navigation",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if ("${toggleValue}" == "disable") {
+			Uncheck(
+				checkboxName = "Show Cards for Topic Navigation",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro configureRootTopic {
 		Portlet.gotoPortletOptions(
 			portletName = "Questions",

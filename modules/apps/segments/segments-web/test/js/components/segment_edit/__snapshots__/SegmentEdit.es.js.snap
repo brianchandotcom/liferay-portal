@@ -84,16 +84,6 @@ exports[`SegmentEdit renders 1`] = `
               />
             </div>
           </div>
-          <div
-            class="align-self-center"
-          >
-            <img
-              class="lfr-portal-tooltip source-icon"
-              data-testid="source-icon"
-              src="/dxp-icon.svg"
-              title="source.dxp"
-            />
-          </div>
         </div>
       </div>
     </div>
@@ -187,16 +177,6 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
                 value="Segment title"
               />
             </div>
-          </div>
-          <div
-            class="align-self-center"
-          >
-            <img
-              class="lfr-portal-tooltip source-icon"
-              data-testid="source-icon"
-              src="/dxp-icon.svg"
-              title="source.dxp"
-            />
           </div>
         </div>
         <div
@@ -370,16 +350,6 @@ exports[`SegmentEdit renders with given values 1`] = `
                 value="Segment title"
               />
             </div>
-          </div>
-          <div
-            class="align-self-center"
-          >
-            <img
-              class="lfr-portal-tooltip source-icon"
-              data-testid="source-icon"
-              src="/dxp-icon.svg"
-              title="source.dxp"
-            />
           </div>
         </div>
         <div
@@ -862,16 +832,6 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
                 value="Segment title"
               />
             </div>
-          </div>
-          <div
-            class="align-self-center"
-          >
-            <img
-              class="lfr-portal-tooltip source-icon"
-              data-testid="source-icon"
-              src="/dxp-icon.svg"
-              title="source.dxp"
-            />
           </div>
         </div>
       </div>

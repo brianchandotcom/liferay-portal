@@ -67,6 +67,34 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 	@Override
+	public DepotEntry addDepotEntry(Group group, ServiceContext serviceContext)
+		throws PortalException {
+
+		_validateNameMap(group.getNameMap(), LocaleUtil.getDefault());
+
+		DepotEntry depotEntry = depotEntryPersistence.create(
+			counterLocalService.increment());
+
+		group.setClassPK(depotEntry.getDepotEntryId());
+
+		depotEntry.setUuid(serviceContext.getUuid());
+
+		depotEntry.setGroupId(group.getGroupId());
+
+		depotEntry.setCompanyId(serviceContext.getCompanyId());
+		depotEntry.setUserId(serviceContext.getUserId());
+
+		depotEntry = depotEntryPersistence.update(depotEntry);
+
+		resourceLocalService.addResources(
+			serviceContext.getCompanyId(), 0, serviceContext.getUserId(),
+			DepotEntry.class.getName(), depotEntry.getDepotEntryId(), false,
+			false, false);
+
+		return depotEntry;
+	}
+
+	@Override
 	public DepotEntry addDepotEntry(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			ServiceContext serviceContext)

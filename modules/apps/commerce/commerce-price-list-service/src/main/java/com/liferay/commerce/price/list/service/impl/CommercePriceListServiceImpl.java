@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -81,9 +81,8 @@ public class CommercePriceListServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST);
+		_checkPortletResourcePermission(
+			groupId, CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST);
 
 		return commercePriceListLocalService.addCommercePriceList(
 			groupId, userId, commerceCurrencyId, netPrice,
@@ -107,9 +106,8 @@ public class CommercePriceListServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST);
+		_checkPortletResourcePermission(
+			groupId, CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST);
 
 		return commercePriceListLocalService.addCommercePriceList(
 			groupId, userId, commerceCurrencyId, netPrice, type,
@@ -151,9 +149,8 @@ public class CommercePriceListServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST);
+		_checkPortletResourcePermission(
+			groupId, CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST);
 
 		return commercePriceListLocalService.addCommercePriceList(
 			groupId, userId, commerceCurrencyId, parentCommercePriceListId,
@@ -615,6 +612,17 @@ public class CommercePriceListServiceImpl
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, externalReferenceCode, neverExpire,
 			serviceContext);
+	}
+
+	private void _checkPortletResourcePermission(long groupId, String actionId)
+		throws PrincipalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commercePriceListModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), groupId, actionId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

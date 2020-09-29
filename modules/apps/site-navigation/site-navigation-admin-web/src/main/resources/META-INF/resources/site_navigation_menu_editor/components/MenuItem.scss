@@ -4,6 +4,10 @@
 	margin-bottom: 1.5rem;
 	width: 40ch;
 
+	&.dragging {
+		opacity: 0.4;
+	}
+
 	&--selected .card {
 		background: $primary-l3;
 	}

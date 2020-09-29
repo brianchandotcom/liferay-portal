@@ -43,7 +43,7 @@ export const MenuItem = ({item}) => {
 
 	const selected = useSelectedMenuItemId() === siteNavigationMenuItemId;
 
-	const {handlerRef} = useDragItem(item);
+	const {handlerRef, isDragging} = useDragItem(item);
 	const {targetRef} = useDropTarget(item);
 
 	const deleteMenuItem = () => {
@@ -72,6 +72,7 @@ export const MenuItem = ({item}) => {
 		<div ref={targetRef}>
 			<ClayCard
 				className={classNames('site_navigation_menu_editor_MenuItem', {
+					dragging: isDragging,
 					'site_navigation_menu_editor_MenuItem--selected': selected,
 				})}
 				horizontal

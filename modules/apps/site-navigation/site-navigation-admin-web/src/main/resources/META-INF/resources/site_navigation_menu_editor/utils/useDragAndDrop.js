@@ -15,11 +15,22 @@
 import {useDrag, useDrop} from 'react-dnd';
 
 import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
+import {useItemsMap} from '../contexts/ItemsContext';
+import getItemPath from './getItemPath';
 
 export function useDragItem(item) {
 	const {siteNavigationMenuItemId} = item;
 
-	const [, handlerRef] = useDrag({
+	const itemsMap = useItemsMap();
+	const itemPath = getItemPath(siteNavigationMenuItemId, itemsMap);
+
+	const [{isDragging}, handlerRef] = useDrag({
+		collect: (monitor) => ({
+			isDragging: !!monitor.isDragging(),
+		}),
+		isDragging(monitor) {
+			return itemPath.includes(monitor.getItem().id);
+		},
 		item: {
 			id: siteNavigationMenuItemId,
 			type: ACCEPTING_ITEM_TYPE,
@@ -28,6 +39,7 @@ export function useDragItem(item) {
 
 	return {
 		handlerRef,
+		isDragging,
 	};
 }
 

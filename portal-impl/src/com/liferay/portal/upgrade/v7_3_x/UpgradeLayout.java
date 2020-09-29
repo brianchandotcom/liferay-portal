@@ -24,16 +24,12 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("Layout", "headId") || hasColumn("Layout", "head")) {
+		if (hasColumn(LayoutTable.TABLE_NAME, "headId") ||
+			hasColumn(LayoutTable.TABLE_NAME, "head")) {
+
 			alter(
 				LayoutTable.class, new AlterTableDropColumn("headId"),
 				new AlterTableDropColumn("head"));
-		}
-
-		if (!hasColumn("Layout", "masterLayoutPlid")) {
-			alter(
-				LayoutTable.class,
-				new AlterTableAddColumn("masterLayoutPlid", "LONG"));
 		}
 
 		if (!hasColumnType(
@@ -44,7 +40,13 @@ public class UpgradeLayout extends UpgradeProcess {
 				new UpgradeProcess.AlterColumnType("description", "TEXT null"));
 		}
 
-		if (!hasColumn("Layout", "status")) {
+		if (!hasColumn(LayoutTable.TABLE_NAME, "masterLayoutPlid")) {
+			alter(
+				LayoutTable.class,
+				new AlterTableAddColumn("masterLayoutPlid", "LONG"));
+		}
+
+		if (!hasColumn(LayoutTable.TABLE_NAME, "status")) {
 			alter(
 				LayoutTable.class,
 				new AlterTableAddColumn("status", "INTEGER"));
@@ -52,20 +54,20 @@ public class UpgradeLayout extends UpgradeProcess {
 			runSQL("update Layout set masterLayoutPlid = 0, status = 0");
 		}
 
-		if (!hasColumn("Layout", "statusByUserId")) {
+		if (!hasColumn(LayoutTable.TABLE_NAME, "statusByUserId")) {
 			alter(
 				LayoutTable.class,
 				new AlterTableAddColumn("statusByUserId", "LONG"));
 		}
 
-		if (!hasColumn("Layout", "statusByUserName")) {
+		if (!hasColumn(LayoutTable.TABLE_NAME, "statusByUserName")) {
 			alter(
 				LayoutTable.class,
 				new AlterTableAddColumn(
 					"statusByUserName", "VARCHAR(75) null"));
 		}
 
-		if (!hasColumn("Layout", "statusDate")) {
+		if (!hasColumn(LayoutTable.TABLE_NAME, "statusDate")) {
 			alter(
 				LayoutTable.class,
 				new AlterTableAddColumn("statusDate", "DATE null"));

@@ -88,9 +88,8 @@ public class PoshiAxisBuild extends AxisBuild {
 	}
 
 	private List<String> _getPoshiTestNames() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		BuildDatabase buildDatabase = topLevelBuild.getBuildDatabase();
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(
+			getTopLevelBuild());
 
 		List<String> poshiTestNames = new ArrayList<>();
 

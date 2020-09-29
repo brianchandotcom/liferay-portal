@@ -36,15 +36,17 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			if (Validator.isNull(imageURL)) {
 				imageURL = blogsEntry.getSmallImageURL(themeDisplay);
 			}
+
+			if (Validator.isNull(imageURL)) {
+				imageURL = PortalUtil.getPathContext(request) + "/blogs/images/cover-image-placeholder.jpg";
+			}
 			%>
 
-			<c:if test="<%= Validator.isNotNull(imageURL) %>">
 				<div class="card-header">
 					<div class="aspect-ratio aspect-ratio-8-to-3">
 						<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= HtmlUtil.escape(imageURL) %>" />
 					</div>
 				</div>
-			</c:if>
 
 			<div class="card-body widget-topbar">
 				<clay:content-row

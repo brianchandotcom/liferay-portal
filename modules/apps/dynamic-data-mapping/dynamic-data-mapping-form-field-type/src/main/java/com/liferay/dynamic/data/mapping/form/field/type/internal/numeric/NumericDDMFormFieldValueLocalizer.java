@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueEditingAware;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -55,6 +56,16 @@ public class NumericDDMFormFieldValueLocalizer
 				number = defaultDecimalFormat.parse(value);
 
 				formattedNumber = decimalFormat.format(number);
+
+				String lastChar = String.valueOf(
+					value.charAt(value.length() - 1));
+
+				if (_editing &&
+					(lastChar.equals(StringPool.COMMA) ||
+					 lastChar.equals(StringPool.PERIOD))) {
+
+					formattedNumber = formattedNumber.concat(lastChar);
+				}
 			}
 
 			return formattedNumber;

@@ -12,7 +12,10 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import {usePrevious} from 'frontend-js-react-web';
+import React, {useEffect, useState} from 'react';
+
+import {usePage} from '../../hooks/usePage.es';
 
 export const PageHeader = ({
 	description: initialDescription,
@@ -21,6 +24,22 @@ export const PageHeader = ({
 }) => {
 	const [description, setDescription] = useState(initialDescription);
 	const [title, setTitle] = useState(initialTitle);
+
+	const {editingLanguageId} = usePage();
+
+	const prevEditingLanguageId = usePrevious(editingLanguageId);
+
+	useEffect(() => {
+		if (prevEditingLanguageId !== editingLanguageId) {
+			setDescription(initialDescription);
+			setTitle(initialTitle);
+		}
+	}, [
+		editingLanguageId,
+		initialDescription,
+		initialTitle,
+		prevEditingLanguageId,
+	]);
 
 	return (
 		<div>

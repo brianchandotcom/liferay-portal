@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.internal.expression.DDMFo
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.expression.DDMFormEvaluatorExpressionParameterAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueEditingAware;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -689,6 +690,18 @@ public class DDMFormEvaluatorHelper {
 								ddmFormFieldValue.getType());
 
 					if (ddmFormFieldValueLocalizer != null) {
+						if (ddmFormFieldValueLocalizer instanceof
+								DDMFormFieldValueEditingAware) {
+
+							DDMFormFieldValueEditingAware
+								ddmFormFieldValueEditingAware =
+									(DDMFormFieldValueEditingAware)
+										ddmFormFieldValueLocalizer;
+
+							ddmFormFieldValueEditingAware.setEditing(
+								_ddmFormEvaluatorEvaluateRequest.getEditing());
+						}
+
 						value.addString(
 							entry.getKey(),
 							ddmFormFieldValueLocalizer.localize(

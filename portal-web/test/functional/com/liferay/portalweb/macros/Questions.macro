@@ -449,6 +449,17 @@ definition {
 			value1 = "${lastQuestionTitle}");
 	}
 
+	macro viewHomeTopicsList {
+		Click(locator1 = "Questions#QUESTIONS_BREADCRUMB_HOME_DROPDOWN_TOGGLE");
+
+		for (var topicName : list "${topicsName}") {
+			AssertTextEquals(
+				key_topicName = "${topicName}",
+				locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_OPTION",
+				value1 = "${topicName}");
+		}
+	}
+
 	macro viewList {
 		if (isSet(unlistedQuestions)) {
 			for (var unlistedQuestion : list "${unlistedQuestions}") {

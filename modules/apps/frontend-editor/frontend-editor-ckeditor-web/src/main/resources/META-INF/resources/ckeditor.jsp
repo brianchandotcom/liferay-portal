@@ -645,10 +645,14 @@ name = HtmlUtil.escapeJS(name);
 			if (data) {
 				var fragment = CKEDITOR.htmlParser.fragment.fromHtml(data);
 
-				var name = fragment.children[0].name;
+				var element = fragment.children[0];
 
-				if (name) {
-					return this.pasteFilter.check(name);
+				if (element.hasClass('cke_widget_image')) {
+					element = element.children[0];
+				}
+
+				if (this.pasteFilter && element.name) {
+					return this.pasteFilter.check(element.name);
 				}
 			}
 		});

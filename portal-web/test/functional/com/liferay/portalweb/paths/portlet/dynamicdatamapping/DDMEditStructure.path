@@ -178,6 +178,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_NESTED_ANY</td>
+	<td>//div[contains(@class,'form-builder-drop-zone')]//div/label[.='${key_nestedFieldLabel}']/../../../div[contains(@class,'dd-draggable')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_FIELD</td>
 	<td>//input[@name='${key_fieldName}']</td>
 	<td></td>

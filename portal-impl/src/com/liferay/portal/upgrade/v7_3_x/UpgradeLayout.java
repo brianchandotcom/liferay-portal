@@ -36,6 +36,14 @@ public class UpgradeLayout extends UpgradeProcess {
 				new AlterTableAddColumn("masterLayoutPlid", "LONG"));
 		}
 
+		if (!hasColumnType(
+				LayoutTable.TABLE_NAME, "description", "TEXT null")) {
+
+			alter(
+				LayoutTable.class,
+				new UpgradeProcess.AlterColumnType("description", "TEXT null"));
+		}
+
 		if (!hasColumn("Layout", "status")) {
 			alter(
 				LayoutTable.class,
@@ -61,14 +69,6 @@ public class UpgradeLayout extends UpgradeProcess {
 			alter(
 				LayoutTable.class,
 				new AlterTableAddColumn("statusDate", "DATE null"));
-		}
-
-		if (!hasColumnType(
-				LayoutTable.TABLE_NAME, "description", "TEXT null")) {
-
-			alter(
-				LayoutTable.class,
-				new UpgradeProcess.AlterColumnType("description", "TEXT null"));
 		}
 
 		runSQL("DROP_TABLE_IF_EXISTS(LayoutVersion)");

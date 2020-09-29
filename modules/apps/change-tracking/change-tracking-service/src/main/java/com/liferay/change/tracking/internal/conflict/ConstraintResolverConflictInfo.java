@@ -27,13 +27,13 @@ import java.util.ResourceBundle;
 public class ConstraintResolverConflictInfo implements ConflictInfo {
 
 	public ConstraintResolverConflictInfo(
-		ConstraintResolver<?> constraintResolver, long sourcePrimaryKey,
-		long targetPrimaryKey, boolean resolved) {
+		ConstraintResolver<?> constraintResolver, boolean resolved,
+		long sourcePrimaryKey, long targetPrimaryKey) {
 
 		_constraintResolver = constraintResolver;
+		_resolved = resolved;
 		_sourcePrimaryKey = sourcePrimaryKey;
 		_targetPrimaryKey = targetPrimaryKey;
-		_resolved = resolved;
 	}
 
 	@Override

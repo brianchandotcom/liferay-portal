@@ -29,11 +29,11 @@ import java.util.ResourceBundle;
 public class MissingRequirementConflictInfo implements ConflictInfo {
 
 	public MissingRequirementConflictInfo(
-		long modelClassPK, String className,
+		String className, long modelClassPK,
 		CTDisplayRenderer<?> requirementCTDisplayRenderer) {
 
-		_modelClassPK = modelClassPK;
 		_className = className;
+		_modelClassPK = modelClassPK;
 		_requirementCTDisplayRenderer = requirementCTDisplayRenderer;
 	}
 

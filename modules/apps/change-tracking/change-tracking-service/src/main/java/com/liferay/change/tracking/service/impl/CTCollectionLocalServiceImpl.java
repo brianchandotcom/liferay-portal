@@ -286,10 +286,9 @@ public class CTCollectionLocalServiceImpl
 					ConstraintResolverConflictInfo
 						constraintResolverConflictInfo =
 							new ConstraintResolverConflictInfo(
-								constraintResolver,
+								constraintResolver, true,
 								ctAutoResolutionInfo.getSourceModelClassPK(),
-								ctAutoResolutionInfo.getTargetModelClassPK(),
-								true);
+								ctAutoResolutionInfo.getTargetModelClassPK());
 
 					constraintResolverConflictInfo.setCtAutoResolutionInfoId(
 						ctAutoResolutionInfo.getCtAutoResolutionInfoId());

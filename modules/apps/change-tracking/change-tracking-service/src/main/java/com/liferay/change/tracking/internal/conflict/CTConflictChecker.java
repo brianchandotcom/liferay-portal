@@ -238,8 +238,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		for (Map.Entry<Long, Long> currentPrimaryKeys : resolvedPrimaryKeys) {
 			conflictInfos.add(
 				new ConstraintResolverConflictInfo(
-					constraintResolver, currentPrimaryKeys.getKey(),
-					currentPrimaryKeys.getValue(), true));
+					constraintResolver, true, currentPrimaryKeys.getKey(),
+					currentPrimaryKeys.getValue()));
 		}
 
 		if (unresolvedPrimaryKeys.isEmpty()) {
@@ -249,8 +249,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		for (Map.Entry<Long, Long> currentPrimaryKeys : unresolvedPrimaryKeys) {
 			conflictInfos.add(
 				new ConstraintResolverConflictInfo(
-					constraintResolver, currentPrimaryKeys.getKey(),
-					currentPrimaryKeys.getValue(), false));
+					constraintResolver, false, currentPrimaryKeys.getKey(),
+					currentPrimaryKeys.getValue()));
 		}
 	}
 
@@ -377,7 +377,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 					conflictInfos.add(
 						new MissingRequirementConflictInfo(
-							modelClassPK, classNameValue,
+							classNameValue, modelClassPK,
 							_ctDisplayRendererServiceTrackerMap.getService(
 								classNameValue)));
 				}

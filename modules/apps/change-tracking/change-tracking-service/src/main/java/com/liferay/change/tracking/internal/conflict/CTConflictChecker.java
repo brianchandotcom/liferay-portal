@@ -383,7 +383,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				}
 			}
 			catch (SQLException sqlException) {
-				throw new ORMException(sqlException);
+				throw new ORMException(
+					"Unable to execute query: " + dslQuery, sqlException);
 			}
 		}
 	}

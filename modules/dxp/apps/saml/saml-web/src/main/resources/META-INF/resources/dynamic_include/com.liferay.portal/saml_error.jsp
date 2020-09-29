@@ -18,7 +18,6 @@
 
 <%
 String samlSubjectScreenName = (String)request.getAttribute(SamlWebKeys.SAML_SUBJECT_NAME_ID);
-String samlSsoErrorEntityId = (String)request.getAttribute(com.liferay.saml.web.internal.constants.SamlWebKeys.SAML_SSO_ERROR_ENTITY_ID);
 %>
 
 <liferay-util:buffer
@@ -28,7 +27,7 @@ String samlSsoErrorEntityId = (String)request.getAttribute(com.liferay.saml.web.
 		<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
 		<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 		<aui:input name="forceAuthn" type="hidden" value="true" />
-		<aui:input name="idpEntityId" type="hidden" value="<%= samlSsoErrorEntityId %>" />
+		<aui:input name="idpEntityId" type="hidden" value="<%= (String)request.getAttribute(com.liferay.saml.web.internal.constants.SamlWebKeys.SAML_SSO_ERROR_ENTITY_ID) %>" />
 
 		<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(samlSubjectScreenName) + "</strong>" %>' key="your-user-x-could-not-be-logged-in" />
 

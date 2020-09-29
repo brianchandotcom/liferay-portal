@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.pricing.internal.security.permission.resource;
 
+import com.liferay.commerce.pricing.constants.CommercePricingClassConstants;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.permission.CommercePricingClassPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -82,10 +83,15 @@ public class CommercePricingClassModelResourcePermission
 
 	@Override
 	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+		return _portletResourcePermission;
 	}
 
 	@Reference
 	protected CommercePricingClassPermission commercePricingClassPermission;
+
+	@Reference(
+		target = "(resource.name=" + CommercePricingClassConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

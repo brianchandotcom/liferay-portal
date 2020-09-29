@@ -182,6 +182,70 @@ definition {
 	}
 
 	@priority = "5"
+	test PublishThemeFromStagedToLive {
+		property test.name.skip.portal.instance = "Theme#PublishThemeFromStagedToLive";
+
+		Theme.deployThemeWar(themeName = "test-theme");
+
+		User.firstLoginPG();
+
+		Staging.openStagingAdmin(siteURLKey = "guest");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "${siteName}");
+
+		Navigator.openStagingSiteURL(defaultSite = "true");
+
+		Page.changeSinglePageTheme(themeName = "test-theme-7-3");
+
+		Navigator.gotoBack();
+
+		Button.clickPublish();
+
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+
+		// Workaround for LPS-110206
+
+		//AssertCssValue(
+		//	locator1 = "//body",
+		//	locator2 = "background-color",
+		//	value1 = "rgba(255, 165, 0, 1)");
+
+		takeScreenshot();
+
+		Navigator.openURL();
+
+		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+
+		AssertCssValue(
+			locator1 = "//body",
+			locator2 = "background-color",
+			value1 = "rgba(255, 255, 255, 1)");
+
+		takeScreenshot();
+
+		Navigator.openStagingSiteURL(defaultSite = "true");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openURL();
+
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+
+		AssertCssValue(
+			locator1 = "//body",
+			locator2 = "background-color",
+			value1 = "rgba(255, 165, 0, 1)");
+
+		takeScreenshot();
+	}
+
+	@priority = "5"
 	test StartPortalWithoutClassicTheme {
 		property liferay.dependency.jars = "test-theme.war";
 		property skip.start-app-server = "true";

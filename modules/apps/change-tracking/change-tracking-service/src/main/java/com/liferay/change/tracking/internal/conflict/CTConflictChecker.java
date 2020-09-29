@@ -72,25 +72,25 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 	public CTConflictChecker(
 		ClassNameLocalService classNameLocalService,
-		CTEntryLocalService ctEntryLocalService, CTService<T> ctService,
-		long modelClassNameId,
 		ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver<?>>
 			constraintResolverServiceTrackerMap,
 		ServiceTrackerMap<String, CTDisplayRenderer<?>>
 			ctDisplayRendererServiceTrackerMap,
+		CTEntryLocalService ctEntryLocalService, CTService<T> ctService,
+		long modelClassNameId, long sourceCTCollectionId,
 		TableReferenceDefinitionManager tableReferenceDefinitionManager,
-		long sourceCTCollectionId, long targetCTCollectionId) {
+		long targetCTCollectionId) {
 
 		_classNameLocalService = classNameLocalService;
-		_ctEntryLocalService = ctEntryLocalService;
-		_ctService = ctService;
-		_modelClassNameId = modelClassNameId;
 		_constraintResolverServiceTrackerMap =
 			constraintResolverServiceTrackerMap;
 		_ctDisplayRendererServiceTrackerMap =
 			ctDisplayRendererServiceTrackerMap;
-		_tableReferenceDefinitionManager = tableReferenceDefinitionManager;
+		_ctEntryLocalService = ctEntryLocalService;
+		_ctService = ctService;
+		_modelClassNameId = modelClassNameId;
 		_sourceCTCollectionId = sourceCTCollectionId;
+		_tableReferenceDefinitionManager = tableReferenceDefinitionManager;
 		_targetCTCollectionId = targetCTCollectionId;
 	}
 

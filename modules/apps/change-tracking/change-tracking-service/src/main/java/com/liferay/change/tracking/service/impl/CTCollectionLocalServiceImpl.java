@@ -159,12 +159,12 @@ public class CTCollectionLocalServiceImpl
 						}
 
 						return new CTConflictChecker<>(
-							_classNameLocalService, _ctEntryLocalService,
-							ctService, modelClassNameId,
+							_classNameLocalService,
 							_constraintResolverServiceTrackerMap,
 							_ctDisplayRendererServiceTrackerMap,
-							_tableReferenceDefinitionManager,
+							_ctEntryLocalService, ctService, modelClassNameId,
 							ctCollection.getCtCollectionId(),
+							_tableReferenceDefinitionManager,
 							CTConstants.CT_COLLECTION_ID_PRODUCTION);
 					});
 

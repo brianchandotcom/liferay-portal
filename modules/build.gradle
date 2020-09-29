@@ -267,6 +267,17 @@ gradle.beforeProject {
 			}
 		}
 
+		if (project.path.startsWith(":sdk:project-templates")) {
+			if (configurations.findByName("portalTest") != null) {
+				configurations.portalTest.exclude group: "com.liferay.portal", module: "com.liferay.portal.test"
+			}
+
+			if (configurations.findByName("portalTestSnapshot") != null) {
+				configurations.portalTestSnapshot.exclude group: "com.liferay.portal", module: "com.liferay.portal.kernel"
+				configurations.portalTestSnapshot.exclude group: "com.liferay.portal", module: "com.liferay.portal.impl"
+			}
+		}
+
 		if (project.path.startsWith(":sdk:project-templates:project-templates")) {
 			File mavenWrapperPropertiesFile = project.project(":sdk:project-templates:project-templates").file("src/main/resources/maven-wrapper/.mvn/wrapper/maven-wrapper.properties")
 

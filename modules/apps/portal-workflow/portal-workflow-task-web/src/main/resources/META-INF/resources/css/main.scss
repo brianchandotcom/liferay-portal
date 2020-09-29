@@ -309,6 +309,11 @@
 	.metadata-author {
 		font-weight: bold;
 		margin-right: 10px;
+
+		img,
+		svg {
+			vertical-align: baseline;
+		}
 	}
 
 	.metadata-entry {

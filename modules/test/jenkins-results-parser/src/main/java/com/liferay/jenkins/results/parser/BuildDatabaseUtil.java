@@ -26,11 +26,21 @@ import java.util.concurrent.TimeoutException;
 public class BuildDatabaseUtil {
 
 	public static BuildDatabase getBuildDatabase() {
-		return getBuildDatabase(null, true);
+		return getBuildDatabase(null, null, true);
+	}
+
+	public static BuildDatabase getBuildDatabase(Build build) {
+		return getBuildDatabase(null, build, true);
 	}
 
 	public static BuildDatabase getBuildDatabase(
 		String baseDirPath, boolean download) {
+
+		return getBuildDatabase(baseDirPath, null, download);
+	}
+
+	public static BuildDatabase getBuildDatabase(
+		String baseDirPath, Build build, boolean download) {
 
 		if (_buildDatabase != null) {
 			return _buildDatabase;
@@ -56,10 +66,46 @@ public class BuildDatabaseUtil {
 		if ((distNodes != null) && (distPath != null) && download) {
 			_downloadBuildDatabaseFile(baseDir, distNodes, distPath);
 		}
+		else if ((build instanceof TopLevelBuild) && download) {
+			_downloadBuildDatabaseFile(baseDir, build);
+		}
 
 		_buildDatabase = new DefaultBuildDatabase(baseDir);
 
 		return _buildDatabase;
+	}
+
+	private static void _downloadBuildDatabaseFile(File baseDir, Build build) {
+		JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
+
+		String masterName = jenkinsMaster.getName();
+
+		String jobName = build.getJobName();
+		int buildNumber = build.getBuildNumber();
+
+		if (JenkinsResultsParserUtil.isCINode()) {
+			String filePath =
+				"/opt/java/jenkins/userContent/jobs/" + jobName + "/builds/" +
+					buildNumber;
+
+			_downloadBuildDatabaseFile(baseDir, masterName, filePath);
+
+			return;
+		}
+
+		try {
+			String buildDatabaseURL =
+				"http://" + masterName + "/userContent/jobs/" + jobName +
+					"/builds/" + buildNumber + "/" +
+						BuildDatabase.FILE_NAME_BUILD_DATABASE;
+
+			JenkinsResultsParserUtil.write(
+				baseDir + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE,
+				JenkinsResultsParserUtil.toString(buildDatabaseURL));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private static void _downloadBuildDatabaseFile(

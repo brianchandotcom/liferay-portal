@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {useId} from '../../../app/utils/useId';
-import Collection from './Collection';
+import TabCollection from './TabCollection';
 
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 
@@ -62,7 +62,7 @@ export default function TabsPanel({tabs}) {
 					>
 						<ul className="list-unstyled">
 							{tab.collections.map((collection, index) => (
-								<Collection
+								<TabCollection
 									collection={collection}
 									key={index}
 									open={

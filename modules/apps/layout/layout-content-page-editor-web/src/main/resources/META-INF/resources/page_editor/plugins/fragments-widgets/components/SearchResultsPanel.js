@@ -16,7 +16,7 @@ import ClayAlert from '@clayui/alert';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Collection from './Collection';
+import TabCollection from './TabCollection';
 
 export default function SearchResultsPanel({filteredTabs}) {
 	return filteredTabs.length ? (
@@ -26,7 +26,7 @@ export default function SearchResultsPanel({filteredTabs}) {
 					{tab.label}
 				</div>
 				{tab.collections.map((collection, index) => (
-					<Collection
+					<TabCollection
 						collection={collection}
 						isSearchResult
 						key={index}

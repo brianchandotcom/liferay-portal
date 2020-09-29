@@ -18,7 +18,7 @@ import React from 'react';
 import Collapse from '../../../common/components/Collapse';
 import TabItem from './TabItem';
 
-export default function Collection({collection, isSearchResult, open}) {
+export default function TabCollection({collection, isSearchResult, open}) {
 	return (
 		<Collapse
 			key={collection.collectionId}
@@ -27,7 +27,7 @@ export default function Collection({collection, isSearchResult, open}) {
 		>
 			{collection.collections &&
 				collection.collections.map((collection, index) => (
-					<Collection
+					<TabCollection
 						collection={collection}
 						isSearchResult={isSearchResult}
 						key={index}
@@ -48,14 +48,14 @@ export default function Collection({collection, isSearchResult, open}) {
 	);
 }
 
-Collection.proptypes = {
+TabCollection.proptypes = {
 	collection: PropTypes.shape({
 		children: PropTypes.array,
 		collectionId: PropTypes.string,
 		label: PropTypes.string,
 	}).isRequired,
-	isSearchResult: PropTypes.object,
-	open: PropTypes.string,
+	isSearchResult: PropTypes.bool,
+	open: PropTypes.bool,
 };
 
 const TabPortletItems = ({item}) => (

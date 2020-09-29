@@ -26,8 +26,8 @@ import com.liferay.petra.sql.dsl.Table;
 public class TableReferenceInfoFactory {
 
 	public static <T extends Table<T>> TableReferenceInfo<T> create(
-		TableReferenceDefinition<T> tableReferenceDefinition, long classNameId,
-		Column<T, Long> primaryKeyColumn) {
+		long classNameId, Column<T, Long> primaryKeyColumn,
+		TableReferenceDefinition<T> tableReferenceDefinition) {
 
 		ParentTableReferenceInfoBuilderImpl<T>
 			parentTableReferenceInfoBuilderImpl =

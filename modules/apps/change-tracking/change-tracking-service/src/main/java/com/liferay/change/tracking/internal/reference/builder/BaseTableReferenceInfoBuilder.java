@@ -50,8 +50,8 @@ public abstract class BaseTableReferenceInfoBuilder<T extends Table<T>> {
 		Function<FromStep, JoinStep> joinFunction) {
 
 		TableJoinHolder tableJoinHolder = TableJoinHolderFactory.create(
-			_tableReferenceDefinition, _primaryKeyColumn, _parent,
-			joinFunction);
+			joinFunction, _parent, _primaryKeyColumn,
+			_tableReferenceDefinition);
 
 		Column<?, Long> parentPKColumn = tableJoinHolder.getParentPKColumn();
 

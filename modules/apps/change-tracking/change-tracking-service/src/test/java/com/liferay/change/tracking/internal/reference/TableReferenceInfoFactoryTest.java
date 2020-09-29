@@ -125,8 +125,9 @@ public class TableReferenceInfoFactoryTest {
 
 		TableReferenceInfo<MainExampleTable> tableReferenceInfo =
 			TableReferenceInfoFactory.create(
-				tableReferenceDefinition, MainExampleTable.CLASS_NAME_ID,
-				MainExampleTable.INSTANCE.mainExampleId);
+				MainExampleTable.CLASS_NAME_ID,
+				MainExampleTable.INSTANCE.mainExampleId,
+				tableReferenceDefinition);
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -174,9 +175,9 @@ public class TableReferenceInfoFactoryTest {
 	public void testMissingRequirements() {
 		TableReferenceInfo<ReferenceExampleTable> tableReferenceInfo =
 			TableReferenceInfoFactory.create(
-				new MissingRequirementsTableReferenceDefinition(),
 				ReferenceExampleTable.CLASS_NAME_ID,
-				ReferenceExampleTable.INSTANCE.mainExampleId);
+				ReferenceExampleTable.INSTANCE.mainExampleId,
+				new MissingRequirementsTableReferenceDefinition());
 
 		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
 			tableReferenceInfo.getParentTableJoinHoldersMap();
@@ -346,8 +347,9 @@ public class TableReferenceInfoFactoryTest {
 
 		TableReferenceInfo<ReferenceExampleTable> tableReferenceInfo =
 			TableReferenceInfoFactory.create(
-				tableReferenceDefinition, ReferenceExampleTable.CLASS_NAME_ID,
-				ReferenceExampleTable.INSTANCE.referenceExampleId);
+				ReferenceExampleTable.CLASS_NAME_ID,
+				ReferenceExampleTable.INSTANCE.referenceExampleId,
+				tableReferenceDefinition);
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -711,8 +713,9 @@ public class TableReferenceInfoFactoryTest {
 
 		TableReferenceInfo<MainExampleTable> tableReferenceInfo =
 			TableReferenceInfoFactory.create(
-				tableReferenceDefinition, MainExampleTable.CLASS_NAME_ID,
-				MainExampleTable.INSTANCE.mainExampleId);
+				MainExampleTable.CLASS_NAME_ID,
+				MainExampleTable.INSTANCE.mainExampleId,
+				tableReferenceDefinition);
 
 		Assert.assertNotNull(tableReferenceInfo);
 

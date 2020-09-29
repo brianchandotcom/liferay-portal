@@ -342,7 +342,7 @@ public class TableReferenceDefinitionManager {
 
 			TableReferenceInfo<T> tableReferenceInfo =
 				TableReferenceInfoFactory.create(
-					tableReferenceDefinition, classNameId, primaryKeyColumn);
+					classNameId, primaryKeyColumn, tableReferenceDefinition);
 
 			Table<?> table = tableReferenceDefinition.getTable();
 

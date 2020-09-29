@@ -56,9 +56,9 @@ import java.util.function.Function;
 public class TableJoinHolderFactory {
 
 	public static <T extends Table<T>> TableJoinHolder create(
-		TableReferenceDefinition<T> tableReferenceDefinition,
-		Column<T, Long> primaryKeyColumn, boolean parent,
-		Function<FromStep, JoinStep> joinFunction) {
+		Function<FromStep, JoinStep> joinFunction, boolean parent,
+		Column<T, Long> primaryKeyColumn,
+		TableReferenceDefinition<T> tableReferenceDefinition) {
 
 		JoinStep joinStep = joinFunction.apply(_validationFromStep);
 

@@ -17,6 +17,10 @@ package com.liferay.change.tracking.internal.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.change.tracking.store.model.CTSContentTable;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -36,6 +40,25 @@ public class ImageTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<ImageTable>
 			childTableReferenceInfoBuilder) {
+
+		childTableReferenceInfoBuilder.referenceInnerJoin(
+			fromStep -> fromStep.from(
+				CTSContentTable.INSTANCE
+			).innerJoinON(
+				ImageTable.INSTANCE,
+				CTSContentTable.INSTANCE.companyId.eq(
+					0L
+				).and(
+					CTSContentTable.INSTANCE.repositoryId.eq(0L)
+				).and(
+					CTSContentTable.INSTANCE.path.eq(
+						DSLFunctionFactoryUtil.concat(
+							DSLFunctionFactoryUtil.castText(
+								ImageTable.INSTANCE.imageId),
+							new Scalar<>(StringPool.PERIOD),
+							ImageTable.INSTANCE.type))
+				)
+			));
 	}
 
 	@Override

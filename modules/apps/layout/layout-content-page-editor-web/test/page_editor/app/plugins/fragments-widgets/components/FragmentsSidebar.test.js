@@ -185,6 +185,7 @@ describe('FragmentsSidebar', () => {
 	afterEach(() => {
 		cleanup();
 		TabsPanel.mockClear();
+		jest.useFakeTimers();
 	});
 
 	it('has a sidebar panel title', () => {
@@ -207,6 +208,8 @@ describe('FragmentsSidebar', () => {
 			target: {value: 't 1'},
 		});
 
+		jest.runAllTimers();
+
 		expect(queryByText('Portlet 1')).toBeInTheDocument();
 		expect(queryByText('Fragment 1')).toBeInTheDocument();
 		expect(queryByText('Fragment 2')).not.toBeInTheDocument();
@@ -220,6 +223,8 @@ describe('FragmentsSidebar', () => {
 		await fireEvent.change(input, {
 			target: {value: 'Widget Collection 1'},
 		});
+
+		jest.runAllTimers();
 
 		expect(queryByText('Portlet 1')).toBeInTheDocument();
 		expect(queryByText('Fragment 1')).not.toBeInTheDocument();

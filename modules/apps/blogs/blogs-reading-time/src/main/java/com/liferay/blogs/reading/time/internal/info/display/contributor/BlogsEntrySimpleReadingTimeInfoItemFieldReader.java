@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(service = InfoItemFieldReader.class)
-public class BlogsEntryReadingTimeInfoItemFieldReader
+public class BlogsEntrySimpleReadingTimeInfoItemFieldReader
 	implements InfoItemFieldReader<BlogsEntry> {
 
 	@Override
@@ -39,9 +39,9 @@ public class BlogsEntryReadingTimeInfoItemFieldReader
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
-			"readingTime"
+			"simpleReadingTime"
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "descriptive-reading-time")
+			InfoLocalizedValue.localize(getClass(), "simple-reading-time")
 		).build();
 	}
 
@@ -61,7 +61,7 @@ public class BlogsEntryReadingTimeInfoItemFieldReader
 	@Reference
 	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;
 
-	@Reference(target = "(display.style=descriptive)")
+	@Reference(target = "(display.style=simple)")
 	private ReadingTimeMessageProvider _readingTimeMessageProvider;
 
 }

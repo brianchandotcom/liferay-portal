@@ -11,3 +11,4 @@ Provide-Capability:\
 		type="commerce-product-content-web";\
 		version:Version="${Bundle-Version}"
 Web-ContextPath: /commerce-product-content-web
+-dsannotations-options: inherit

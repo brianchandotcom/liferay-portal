@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.commerce.product.content.web.internal.info.CProductInfoItemFields;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
@@ -24,7 +25,11 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -65,33 +70,70 @@ public class CProductInfoItemFieldValuesProvider
 		List<InfoFieldValue<Object>> cProductInfoFieldValues =
 			new ArrayList<>();
 
-		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
-				cProduct.getCProductId());
+		try {
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+					cProduct.getCProductId());
 
-		cProductInfoFieldValues.add(
-			new InfoFieldValue<>(
-				CProductInfoItemFields.titleInfoField,
-				InfoLocalizedValue.<String>builder(
-				).defaultLocale(
-					LocaleUtil.fromLanguageId(
-						cpDefinition.getDefaultLanguageId())
-				).values(
-					cpDefinition.getNameMap()
-				).build()));
-		cProductInfoFieldValues.add(
-			new InfoFieldValue<>(
-				CProductInfoItemFields.descriptionInfoField,
-				InfoLocalizedValue.<String>builder(
-				).defaultLocale(
-					LocaleUtil.fromLanguageId(
-						cpDefinition.getDefaultLanguageId())
-				).values(
-					cpDefinition.getDescriptionMap()
-				).build()));
+			cProductInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CProductInfoItemFields.titleInfoField,
+					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							cpDefinition.getDefaultLanguageId())
+					).values(
+						cpDefinition.getNameMap()
+					).build()));
+			cProductInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CProductInfoItemFields.descriptionInfoField,
+					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							cpDefinition.getDefaultLanguageId())
+					).values(
+						cpDefinition.getDescriptionMap()
+					).build()));
+
+			ThemeDisplay themeDisplay = _getThemeDisplay();
+
+			if (themeDisplay != null) {
+				cProductInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CProductInfoItemFields.displayPageUrlInfoField,
+						_getDisplayPageURL(cProduct, themeDisplay)));
+			}
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 
 		return cProductInfoFieldValues;
 	}
+
+	private String _getDisplayPageURL(
+			CProduct cProduct, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+			CProduct.class.getName(), cProduct.getCProductId(), themeDisplay);
+	}
+
+	private ThemeDisplay _getThemeDisplay() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getThemeDisplay();
+		}
+
+		return null;
+	}
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

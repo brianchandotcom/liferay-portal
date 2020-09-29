@@ -59,6 +59,8 @@ public class CProductInfoItemFormProvider
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			_getBasicInformationInfoFieldSet()
+		).infoFieldSetEntry(
+			_getDisplayPageInfoFieldSet()
 		).labelInfoLocalizedValue(
 			infoLocalizedValueBuilder.build()
 		).name(
@@ -77,6 +79,17 @@ public class CProductInfoItemFormProvider
 				"com.liferay.commerce.lang", "basic-information")
 		).name(
 			"basic-information"
+		).build();
+	}
+
+	private InfoFieldSet _getDisplayPageInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			CProductInfoItemFields.displayPageUrlInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "configuration")
+		).name(
+			"configuration"
 		).build();
 	}
 

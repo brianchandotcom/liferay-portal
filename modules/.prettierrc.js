@@ -33,7 +33,7 @@ function getConfig() {
 	let config;
 
 	try {
-		config = require('liferay-npm-scripts/src/config/prettier');
+		config = require('@liferay/npm-scripts/src/config/prettier');
 	}
 	catch (error) {
 		console.log(`info: using fallback config in ${__filename}`);
@@ -44,7 +44,7 @@ function getConfig() {
 	if (JSON.stringify(FALLBACK_CONFIG) !== JSON.stringify(config)) {
 		console.warn(
 			`warning: The fallback config in ${__filename} is out of sync ` +
-				'with the one in liferay-npm-scripts and should be updated'
+				'with the one in @liferay/npm-scripts and should be updated'
 		);
 	}
 

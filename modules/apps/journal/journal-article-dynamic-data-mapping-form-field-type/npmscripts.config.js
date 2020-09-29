@@ -12,7 +12,7 @@
  * details.
  */
 
-const preset = require('liferay-npm-scripts/src/presets/standard');
+const preset = require('@liferay/npm-scripts/src/presets/standard');
 
 module.exports = {
 	build: {
@@ -22,5 +22,5 @@ module.exports = {
 			'dynamic-data-mapping-form-renderer',
 		],
 	},
-	preset: 'liferay-npm-scripts/src/presets/standard',
+	preset: '@liferay/npm-scripts/src/presets/standard',
 };

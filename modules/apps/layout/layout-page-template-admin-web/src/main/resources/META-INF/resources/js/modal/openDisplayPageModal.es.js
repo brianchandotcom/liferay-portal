@@ -47,7 +47,7 @@ export default function openDisplayPageModal({
 
 	document.body.appendChild(container);
 
-	// eslint-disable-next-line liferay-portal/no-react-dom-render
+	// eslint-disable-next-line @liferay/portal/no-react-dom-render
 	ReactDOM.render(
 		<ClayIconSpriteContext.Provider value={spritemap}>
 			<DisplayPageModal

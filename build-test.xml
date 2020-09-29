@@ -11739,7 +11739,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<![CDATA[
 									#!/bin/bash
 
-									/opt/mssql-tools/bin/sqlcmd -S localhost -U ${database.sqlserver.username} -P ${database.sqlserver.password} -Q "RESTORE DATABASE ${database.sqlserver.schema} FROM  DISK='/tmp/${database.type}.bak'"
+									/opt/mssql-tools/bin/sqlcmd -P ${database.sqlserver.password} -Q "RESTORE DATABASE ${database.sqlserver.schema} FROM  DISK='/tmp/${database.type}.bak'" -S localhost -U ${database.sqlserver.username}
 								]]>
 							</echo>
 

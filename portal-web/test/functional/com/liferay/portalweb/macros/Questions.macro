@@ -211,9 +211,14 @@ definition {
 			}
 		}
 		else {
-			Click(
-				key_topicName = "${parentTopicName}",
-				locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_TOGGLE");
+			if (isSet(changeTopicFromHomeToggle)) {
+				Click(locator1 = "Questions#QUESTIONS_BREADCRUMB_HOME_DROPDOWN_TOGGLE");
+			}
+			else {
+				Click(
+					key_topicName = "${parentTopicName}",
+					locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_TOGGLE");
+			}
 
 			Click(
 				key_topicName = "${subTopicName}",

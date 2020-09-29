@@ -78,7 +78,7 @@ public class DispatchTriggerCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,14 +98,18 @@ public class DispatchTriggerCacheModel
 		sb.append(active);
 		sb.append(", cronExpression=");
 		sb.append(cronExpression);
+		sb.append(", endDate=");
+		sb.append(endDate);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", startDate=");
+		sb.append(startDate);
 		sb.append(", system=");
 		sb.append(system);
-		sb.append(", type=");
-		sb.append(type);
-		sb.append(", typeSettings=");
-		sb.append(typeSettings);
+		sb.append(", taskProperties=");
+		sb.append(taskProperties);
+		sb.append(", taskType=");
+		sb.append(taskType);
 		sb.append("}");
 
 		return sb.toString();
@@ -150,6 +154,13 @@ public class DispatchTriggerCacheModel
 			dispatchTriggerImpl.setCronExpression(cronExpression);
 		}
 
+		if (endDate == Long.MIN_VALUE) {
+			dispatchTriggerImpl.setEndDate(null);
+		}
+		else {
+			dispatchTriggerImpl.setEndDate(new Date(endDate));
+		}
+
 		if (name == null) {
 			dispatchTriggerImpl.setName("");
 		}
@@ -157,20 +168,27 @@ public class DispatchTriggerCacheModel
 			dispatchTriggerImpl.setName(name);
 		}
 
+		if (startDate == Long.MIN_VALUE) {
+			dispatchTriggerImpl.setStartDate(null);
+		}
+		else {
+			dispatchTriggerImpl.setStartDate(new Date(startDate));
+		}
+
 		dispatchTriggerImpl.setSystem(system);
 
-		if (type == null) {
-			dispatchTriggerImpl.setType("");
+		if (taskProperties == null) {
+			dispatchTriggerImpl.setTaskProperties("");
 		}
 		else {
-			dispatchTriggerImpl.setType(type);
+			dispatchTriggerImpl.setTaskProperties(taskProperties);
 		}
 
-		if (typeSettings == null) {
-			dispatchTriggerImpl.setTypeSettings("");
+		if (taskType == null) {
+			dispatchTriggerImpl.setTaskType("");
 		}
 		else {
-			dispatchTriggerImpl.setTypeSettings(typeSettings);
+			dispatchTriggerImpl.setTaskType(taskType);
 		}
 
 		dispatchTriggerImpl.resetOriginalValues();
@@ -195,11 +213,13 @@ public class DispatchTriggerCacheModel
 
 		active = objectInput.readBoolean();
 		cronExpression = objectInput.readUTF();
+		endDate = objectInput.readLong();
 		name = objectInput.readUTF();
+		startDate = objectInput.readLong();
 
 		system = objectInput.readBoolean();
-		type = objectInput.readUTF();
-		typeSettings = (String)objectInput.readObject();
+		taskProperties = (String)objectInput.readObject();
+		taskType = objectInput.readUTF();
 	}
 
 	@Override
@@ -231,6 +251,8 @@ public class DispatchTriggerCacheModel
 			objectOutput.writeUTF(cronExpression);
 		}
 
+		objectOutput.writeLong(endDate);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -238,20 +260,22 @@ public class DispatchTriggerCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		objectOutput.writeLong(startDate);
+
 		objectOutput.writeBoolean(system);
 
-		if (type == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(type);
-		}
-
-		if (typeSettings == null) {
+		if (taskProperties == null) {
 			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeObject(typeSettings);
+			objectOutput.writeObject(taskProperties);
+		}
+
+		if (taskType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(taskType);
 		}
 	}
 
@@ -264,9 +288,11 @@ public class DispatchTriggerCacheModel
 	public long modifiedDate;
 	public boolean active;
 	public String cronExpression;
+	public long endDate;
 	public String name;
+	public long startDate;
 	public boolean system;
-	public String type;
-	public String typeSettings;
+	public String taskProperties;
+	public String taskType;
 
 }

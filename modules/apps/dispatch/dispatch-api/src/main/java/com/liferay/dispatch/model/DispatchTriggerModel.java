@@ -223,6 +223,20 @@ public interface DispatchTriggerModel
 	public void setCronExpression(String cronExpression);
 
 	/**
+	 * Returns the end date of this dispatch trigger.
+	 *
+	 * @return the end date of this dispatch trigger
+	 */
+	public Date getEndDate();
+
+	/**
+	 * Sets the end date of this dispatch trigger.
+	 *
+	 * @param endDate the end date of this dispatch trigger
+	 */
+	public void setEndDate(Date endDate);
+
+	/**
 	 * Returns the name of this dispatch trigger.
 	 *
 	 * @return the name of this dispatch trigger
@@ -236,6 +250,20 @@ public interface DispatchTriggerModel
 	 * @param name the name of this dispatch trigger
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the start date of this dispatch trigger.
+	 *
+	 * @return the start date of this dispatch trigger
+	 */
+	public Date getStartDate();
+
+	/**
+	 * Sets the start date of this dispatch trigger.
+	 *
+	 * @param startDate the start date of this dispatch trigger
+	 */
+	public void setStartDate(Date startDate);
 
 	/**
 	 * Returns the system of this dispatch trigger.
@@ -259,33 +287,33 @@ public interface DispatchTriggerModel
 	public void setSystem(boolean system);
 
 	/**
-	 * Returns the type of this dispatch trigger.
+	 * Returns the task properties of this dispatch trigger.
 	 *
-	 * @return the type of this dispatch trigger
+	 * @return the task properties of this dispatch trigger
 	 */
 	@AutoEscape
-	public String getType();
+	public String getTaskProperties();
 
 	/**
-	 * Sets the type of this dispatch trigger.
+	 * Sets the task properties of this dispatch trigger.
 	 *
-	 * @param type the type of this dispatch trigger
+	 * @param taskProperties the task properties of this dispatch trigger
 	 */
-	public void setType(String type);
+	public void setTaskProperties(String taskProperties);
 
 	/**
-	 * Returns the type settings of this dispatch trigger.
+	 * Returns the task type of this dispatch trigger.
 	 *
-	 * @return the type settings of this dispatch trigger
+	 * @return the task type of this dispatch trigger
 	 */
 	@AutoEscape
-	public String getTypeSettings();
+	public String getTaskType();
 
 	/**
-	 * Sets the type settings of this dispatch trigger.
+	 * Sets the task type of this dispatch trigger.
 	 *
-	 * @param typeSettings the type settings of this dispatch trigger
+	 * @param taskType the task type of this dispatch trigger
 	 */
-	public void setTypeSettings(String typeSettings);
+	public void setTaskType(String taskType);
 
 }

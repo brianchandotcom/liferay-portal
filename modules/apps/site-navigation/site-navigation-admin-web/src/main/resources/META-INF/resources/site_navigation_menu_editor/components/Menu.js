@@ -17,15 +17,15 @@ import React from 'react';
 import {useDrop} from 'react-dnd';
 
 import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
-import {useConstants} from '../contexts/ConstantsContext';
+import {useItems} from '../contexts/ItemsContext';
 import {MenuItem} from './MenuItem';
 
 export const Menu = () => {
-	const {siteNavigationMenuItems} = useConstants();
+	const items = useItems();
 
 	return (
 		<div className="container p-3">
-			<MenuContent items={siteNavigationMenuItems} />
+			<MenuContent items={items} />
 		</div>
 	);
 };

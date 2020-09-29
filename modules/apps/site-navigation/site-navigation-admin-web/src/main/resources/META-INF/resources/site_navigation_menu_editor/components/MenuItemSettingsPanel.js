@@ -15,18 +15,17 @@
 import React from 'react';
 
 import {useConstants} from '../contexts/ConstantsContext';
+import {useItems} from '../contexts/ItemsContext';
 import {useSelectedMenuItemId} from '../contexts/SelectedMenuItemIdContext';
 import {SidebarPanelContent} from './SidebarPanelContent';
 
 export function MenuItemSettingsPanel() {
-	const {
-		editSiteNavigationMenuItemURL,
-		siteNavigationMenuItems,
-	} = useConstants();
+	const {editSiteNavigationMenuItemURL} = useConstants();
+	const items = useItems();
 
 	const selectedMenuItemId = useSelectedMenuItemId();
 
-	const title = siteNavigationMenuItems.find(
+	const title = items.find(
 		(item) => item.siteNavigationMenuItemId === selectedMenuItemId
 	)?.title;
 

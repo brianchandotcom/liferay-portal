@@ -132,9 +132,12 @@ public class MenuItemProvider {
 						folderId)));
 		}
 		catch (PortalException portalException) {
-			_log.error(
-				"Unable to get default file entry type ID for folder " + folder,
-				portalException);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get default file entry type ID for folder " +
+						folder,
+					portalException);
+			}
 
 			portletURL.setParameter(
 				"fileEntryTypeId",

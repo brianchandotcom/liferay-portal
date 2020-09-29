@@ -12,25 +12,40 @@
  * details.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 
-export const PageHeader = ({description, placeholder, title}) => (
-	<div>
-		<input
-			className="form-builder-page-header-title form-control p-0"
-			defaultValue={title}
-			maxLength="120"
-			placeholder={placeholder}
-			value={title}
-		/>
-		<input
-			className="form-builder-page-header-description form-control p-0"
-			defaultValue={description}
-			maxLength="120"
-			placeholder={Liferay.Language.get(
-				'add-a-short-description-for-this-page'
-			)}
-			value={description}
-		/>
-	</div>
-);
+export const PageHeader = ({
+	description: initialDescription,
+	placeholder,
+	title: initialTitle,
+}) => {
+	const [description, setDescription] = useState(initialDescription);
+	const [title, setTitle] = useState(initialTitle);
+
+	return (
+		<div>
+			<input
+				className="form-builder-page-header-title form-control p-0"
+				defaultValue={title}
+				maxLength="120"
+				onChange={(event) => {
+					setTitle(event.target.value);
+				}}
+				placeholder={placeholder}
+				value={title}
+			/>
+			<input
+				className="form-builder-page-header-description form-control p-0"
+				defaultValue={description}
+				maxLength="120"
+				onChange={(event) => {
+					setDescription(event.target.value);
+				}}
+				placeholder={Liferay.Language.get(
+					'add-a-short-description-for-this-page'
+				)}
+				value={description}
+			/>
+		</div>
+	);
+};

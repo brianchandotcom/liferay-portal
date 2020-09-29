@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.trash.TrashHelper;
@@ -453,6 +455,16 @@ public class WikiPageIndexer
 				_deleteDocument(wikiPage);
 			}
 		}
+	}
+
+	@Override
+	public Hits search(SearchContext searchContext) throws SearchException {
+		Hits hits = super.search(searchContext);
+
+		String[] queryTerms = StringUtil.split(searchContext.getKeywords(), " ");
+		hits.setQueryTerms(queryTerms);
+
+		return hits;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -71,31 +71,44 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 			workspaceDir,
 			"liferay.workspace.target.platform.version=" + _BOM_VERSION);
 
+		String product;
+
+		if (version.getMicro() >= 10) {
+			product = "dxp";
+		}
+		else {
+			product = "portal";
+		}
+
 		File modulesDir = new File(workspaceDir, "modules");
 
-		_buildTemplateTestOutput(modulesDir, "api", workspaceDir);
+		_buildTemplateTestOutput(modulesDir, "api", workspaceDir, product);
 
 		_buildTemplateTestOutput(
-			modulesDir, "control-menu-entry", workspaceDir);
-
-		_buildTemplateTestOutput(modulesDir, "mvc-portlet", workspaceDir);
-
-		_buildTemplateTestOutput(modulesDir, "npm-react-portlet", workspaceDir);
-
-		_buildTemplateTestOutput(modulesDir, "panel-app", workspaceDir);
+			modulesDir, "control-menu-entry", workspaceDir, product);
 
 		_buildTemplateTestOutput(
-			modulesDir, "portlet-configuration-icon", workspaceDir);
-
-		_buildTemplateTestOutput(modulesDir, "portlet-provider", workspaceDir);
+			modulesDir, "mvc-portlet", workspaceDir, product);
 
 		_buildTemplateTestOutput(
-			modulesDir, "portlet-toolbar-contributor", workspaceDir);
+			modulesDir, "npm-react-portlet", workspaceDir, product);
+
+		_buildTemplateTestOutput(
+			modulesDir, "panel-app", workspaceDir, product);
+
+		_buildTemplateTestOutput(
+			modulesDir, "portlet-configuration-icon", workspaceDir, product);
+
+		_buildTemplateTestOutput(
+			modulesDir, "portlet-provider", workspaceDir, product);
+
+		_buildTemplateTestOutput(
+			modulesDir, "portlet-toolbar-contributor", workspaceDir, product);
 
 		String template = "service-builder";
 
 		File serviceBuilderProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
+			modulesDir, template, template + "test", "--product", product);
 
 		String serviceProjectName = template + "test-service";
 
@@ -112,19 +125,21 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 
 		File serviceWrapperProjectDir = buildTemplateWithGradle(
 			modulesDir, template, template + "test", "--service",
-			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
+			"--product", product);
 
 		testOutput(serviceWrapperProjectDir, template, workspaceDir);
 
 		_buildTemplateTestOutput(
-			modulesDir, "simulation-panel-entry", workspaceDir);
+			modulesDir, "simulation-panel-entry", workspaceDir, product);
 
 		_buildTemplateTestOutput(
-			modulesDir, "template-context-contributor", workspaceDir);
+			modulesDir, "template-context-contributor", workspaceDir, product);
 
-		_buildTemplateTestOutput(modulesDir, "war-hook", workspaceDir);
+		_buildTemplateTestOutput(modulesDir, "war-hook", workspaceDir, product);
 
-		_buildTemplateTestOutput(modulesDir, "war-mvc-portlet", workspaceDir);
+		_buildTemplateTestOutput(
+			modulesDir, "war-mvc-portlet", workspaceDir, product);
 	}
 
 	public void testOutput(
@@ -162,11 +177,11 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private void _buildTemplateTestOutput(
-			File modulesDir, String template, File workspaceDir)
+			File modulesDir, String template, File workspaceDir, String product)
 		throws Exception {
 
 		File apiProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test");
+			modulesDir, template, template + "test", "--product", product);
 
 		testOutput(apiProjectDir, template, workspaceDir);
 

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {DataLayoutBuilder} from 'data-engine-taglib';
+
 const createItems = (size) => {
 	const items = [];
 
@@ -195,20 +197,105 @@ const dataDefinition = {
 	userId: 20127,
 };
 
+const dataDefinitionFieldSet = {
+	customProperties: {
+		collapsible: false,
+		ddmStructureId: 41628,
+		ddmStructureLayoutId: '',
+		rows: '[{"columns":[{"fields":["Campo95700329"],"size":12}]}]',
+		upgradedStructure: false,
+	},
+	fieldType: 'fieldset',
+	label: {
+		en_US: 'Address',
+		pt_BR: 'Address',
+	},
+	name: 'Field53354166',
+	nestedDataDefinitionFields: [
+		{
+			customProperties: {
+				autocomplete: false,
+				dataSourceType: 'manual',
+				dataType: 'string',
+				ddmDataProviderInstanceId: '[]',
+				ddmDataProviderInstanceOutput: '[]',
+				displayStyle: 'singleline',
+				fieldNamespace: '',
+				nativeField: false,
+				options: {
+					en_US: [
+						{
+							label: 'Option',
+							value: '',
+						},
+					],
+				},
+				placeholder: {
+					en_US: '',
+					pt_BR: '',
+				},
+				tooltip: {
+					en_US: '',
+					pt_BR: '',
+				},
+				validation: {
+					errorMessage: {},
+					expression: {},
+					parameter: {},
+				},
+				visibilityExpression: '',
+			},
+			defaultValue: {
+				en_US: '',
+				pt_BR: '',
+			},
+			fieldType: 'text',
+			indexType: 'keyword',
+			label: {
+				en_US: 'Text Field',
+				pt_BR: 'Text Field',
+			},
+			localizable: true,
+			name: 'Field95700329',
+			nestedDataDefinitionFields: [],
+			readOnly: false,
+			repeatable: false,
+			required: false,
+			showLabel: true,
+			tip: {
+				en_US: '',
+				pt_BR: '',
+			},
+		},
+	],
+	repeatable: false,
+	showLabel: true,
+};
+
+const dataDefinitionSelectField = {
+	...dataDefinitionField,
+	fieldType: 'select',
+	label: {
+		en_US: 'Options',
+	},
+	name: 'SelectFromList',
+} 
+
 export const DATA_DEFINITION_RESPONSES = {
 	ONE_ITEM: dataDefinition,
+	THREE_ITEMS: {
+		...dataDefinition,
+		dataDefinitionFields: [
+			dataDefinitionField,
+			dataDefinitionSelectField,
+			dataDefinitionFieldSet
+		],
+	},
 	TWO_ITEMS: {
 		...dataDefinition,
 		dataDefinitionFields: [
 			dataDefinitionField,
-			{
-				...dataDefinitionField,
-				fieldType: 'select',
-				label: {
-					en_US: 'Options',
-				},
-				name: 'SelectFromList',
-			},
+			dataDefinitionSelectField,
 		],
 	},
 };
@@ -280,7 +367,30 @@ export const dataLayoutBuilderConfig = {
 	portletNamespace: 'com_liferay_journal_web_portlet_JournalPortlet',
 };
 
-export const FORM_VIEW_CONTEXT = {
+const dataLayoutBuilder = new DataLayoutBuilder.default(
+	dataLayoutBuilderConfig
+);
+
+const pages = [
+	{
+		rows: [
+			{
+				columns: [
+					{
+						fields: [
+							{
+								fieldName: 'Text',
+							},
+						],
+						size: 12,
+					},
+				],
+			},
+		],
+	},
+];
+
+const FORM_VIEW_CONTEXT = {
 	appProps: {},
 	config: {
 		allowFieldSets: false,
@@ -292,7 +402,7 @@ export const FORM_VIEW_CONTEXT = {
 		ruleSettings: {},
 		unimplementedProperties: [],
 	},
-	dataDefinition: DATA_DEFINITION_RESPONSES.TWO_ITEMS,
+	dataDefinition: DATA_DEFINITION_RESPONSES.THREE_ITEMS,
 	dataDefinitionId: 0,
 	dataLayout: {
 		dataLayoutPages: [],
@@ -313,4 +423,50 @@ export const FORM_VIEW_CONTEXT = {
 	sidebarOpen: true,
 	sidebarPanelId: 'fields',
 	spritemap: 'icons.svg',
+};
+
+export const FORM_VIEW = {
+	EDIT_FORM_VIEW_PROPS: {
+		basePortletURL: 'localhost',
+		customObjectSidebarElementId: 'customObject',
+		dataDefinitionId: 1,
+		dataLayoutBuilderElementId: '',
+		dataLayoutBuilderId: 1,
+		dataLayoutId: 1,
+		newCustomObject: true,
+	},
+	FORM_VIEW_CONTEXT,
+	getDataLayoutBuilderProps() {
+		return {
+			...dataLayoutBuilder,
+			dispatch: jest.fn(),
+			dispatchAction: jest.fn(),
+			getDDMFormFieldSettingsContext: jest.fn(),
+			getFieldTypes: () => {
+				return [
+					{
+						name: 'Text',
+					},
+				];
+			},
+			getLayoutProvider: () => ({
+				getEvents: () => ({
+					fieldHovered: jest.fn(),
+				}),
+			}),
+			getState: () => {
+				return FORM_VIEW_CONTEXT;
+			},
+			getStore: () => {
+				return {
+					activePage: 0,
+					pages,
+				};
+			},
+			on: jest.fn(),
+			onEditingLanguageIdChange: jest.fn(),
+			removeEventListener: jest.fn(),
+		};
+	},
+	pages,
 };

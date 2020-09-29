@@ -19,7 +19,9 @@ import React from 'react';
 import FormViewContext from '../../../../src/main/resources/META-INF/resources/js/pages/form-view/FormViewContext.es';
 import useSaveAsFieldset from '../../../../src/main/resources/META-INF/resources/js/pages/form-view/useSaveAsFieldset.es';
 import * as toast from '../../../../src/main/resources/META-INF/resources/js/utils/toast.es';
-import {FORM_VIEW_CONTEXT, dataLayoutBuilderConfig} from '../../constants.es';
+import {FORM_VIEW, dataLayoutBuilderConfig} from '../../constants.es';
+
+const {FORM_VIEW_CONTEXT} = FORM_VIEW;
 
 const FormViewContextWrapper = ({children, dispatch}) => {
 	return (

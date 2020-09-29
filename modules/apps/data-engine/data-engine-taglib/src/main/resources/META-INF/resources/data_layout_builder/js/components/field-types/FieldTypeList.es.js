@@ -85,14 +85,13 @@ export default ({
 			);
 
 			return (
-				<div className="field-type-list">
+				<div className="field-type-list" key={index}>
 					<CollapsablePanel
 						className={classNames({
 							'field-type-fieldgroup': !isFieldSet,
 							'field-type-fieldset': isFieldSet,
 						})}
 						Header={Header}
-						key={index}
 					>
 						<div className="field-type-item position-relative">
 							{nestedDataDefinitionFields.map(

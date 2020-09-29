@@ -14,7 +14,7 @@
 
 import {ClayModalProvider} from '@clayui/modal';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
-import {DataLayoutBuilder, DataLayoutVisitor} from 'data-engine-taglib';
+import {DataLayoutVisitor} from 'data-engine-taglib';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -22,21 +22,13 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import {AppContextProvider} from '../../../../src/main/resources/META-INF/resources/js/AppContext.es';
 import EditFormView from '../../../../src/main/resources/META-INF/resources/js/pages/form-view/EditFormView.es';
 import * as toast from '../../../../src/main/resources/META-INF/resources/js/utils/toast.es';
-import {FORM_VIEW_CONTEXT, dataLayoutBuilderConfig} from '../../constants.es';
+import {FORM_VIEW} from '../../constants.es';
 
-const EDIT_FORM_VIEW_PROPS = {
-	basePortletURL: 'localhost',
-	customObjectSidebarElementId: 'customObject',
-	dataDefinitionId: 1,
-	dataLayoutBuilderElementId: '',
-	dataLayoutBuilderId: 1,
-	dataLayoutId: 1,
-	newCustomObject: true,
-};
-
-const dataLayoutBuilder = new DataLayoutBuilder.default(
-	dataLayoutBuilderConfig
-);
+const {
+	EDIT_FORM_VIEW_PROPS,
+	FORM_VIEW_CONTEXT,
+	getDataLayoutBuilderProps,
+} = FORM_VIEW;
 
 describe('EditFormView', () => {
 	let dataLayoutBuilderProps;
@@ -44,40 +36,9 @@ describe('EditFormView', () => {
 	let successToastSpy;
 
 	beforeEach(() => {
-		dataLayoutBuilderProps = {
-			...dataLayoutBuilder,
-			dispatch: jest.fn(),
-			dispatchAction: jest.fn(),
-			getDDMFormFieldSettingsContext: jest.fn(),
-			getFieldTypes: () => {
-				return [
-					{
-						name: 'Text',
-					},
-				];
-			},
-			getLayoutProvider: () => ({
-				getEvents: () => ({
-					fieldHovered: jest.fn(),
-				}),
-			}),
-			getState: () => {
-				return FORM_VIEW_CONTEXT;
-			},
-			getStore: () => {
-				return {
-					activePage: 0,
-					pages: [
-						{
-							rows: [],
-						},
-					],
-				};
-			},
-			on: jest.fn(),
-			onEditingLanguageIdChange: jest.fn(),
-			removeEventListener: jest.fn(),
-		};
+		jest.useFakeTimers();
+
+		dataLayoutBuilderProps = getDataLayoutBuilderProps();
 
 		dataLayoutVisitorSpy = jest
 			.spyOn(DataLayoutVisitor, 'isDataLayoutEmpty')
@@ -95,15 +56,12 @@ describe('EditFormView', () => {
 				});
 			},
 		};
-
-		jest.useFakeTimers();
 	});
 
 	afterEach(() => {
-		cleanup();
-
 		jest.clearAllTimers();
 		jest.restoreAllMocks();
+		cleanup();
 	});
 
 	afterAll(() => {
@@ -317,5 +275,176 @@ describe('EditFormView', () => {
 		expect(search.value).toBe('Number');
 
 		expect(queryAllByText('Name').length).toBe(0);
+	});
+
+	it('renders as new-form-view and delete field', async () => {
+		fetch.mockResponse(
+			JSON.stringify({
+				items: [
+					{
+						dataDefinition: {},
+						dataLayouts: [],
+						dataListViews: [],
+					},
+				],
+			})
+		);
+		const {container, queryByText} = render(
+			<AppContextProvider>
+				<ClayModalProvider>
+					<div className="tools-control-group">
+						<div className="control-menu-level-1-heading" />
+					</div>
+
+					<DndProvider backend={HTML5Backend}>
+						<div
+							id={
+								EDIT_FORM_VIEW_PROPS.customObjectSidebarElementId
+							}
+						/>
+
+						<EditFormView {...EDIT_FORM_VIEW_PROPS} />
+					</DndProvider>
+				</ClayModalProvider>
+			</AppContextProvider>
+		);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
+		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(1);
+		expect(dataLayoutVisitorSpy.mock.calls.length).toBe(1);
+
+		const [, deleteButton] = container.querySelectorAll(
+			'.field-type-remove-icon button'
+		);
+
+		await act(async () => {
+			fireEvent.click(deleteButton);
+		});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		let modal = document.querySelector('.remove-object-field-panel');
+
+		expect(modal).toBeTruthy();
+
+		const deleteField = queryByText('delete');
+
+		await act(async () => {
+			fireEvent.click(deleteField);
+		});
+
+		expect(
+			dataLayoutBuilderProps.dispatchAction.mock.calls[1][0]
+		).toStrictEqual({
+			payload: {
+				fieldName: 'SelectFromList',
+			},
+			type: 'DELETE_DATA_DEFINITION_FIELD',
+		});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		modal = document.querySelector('.remove-object-field-panel');
+
+		expect(modal).toBeFalsy();
+	});
+
+	it('delete field from Layout', async () => {
+		fetch.mockResponse(
+			JSON.stringify({
+				items: [
+					{
+						dataDefinition: {
+							defaultLanguageId: 'en_US',
+						},
+						dataLayouts: [
+							{
+								name: {
+									en_US: 'Test FormView',
+								},
+							},
+						],
+						dataListViews: [
+							{
+								name: {
+									en_US: 'Test TableView',
+								},
+							},
+						],
+					},
+				],
+			})
+		);
+		const {container, queryByText} = render(
+			<AppContextProvider>
+				<ClayModalProvider>
+					<div className="tools-control-group">
+						<div className="control-menu-level-1-heading" />
+					</div>
+
+					<DndProvider backend={HTML5Backend}>
+						<div
+							id={
+								EDIT_FORM_VIEW_PROPS.customObjectSidebarElementId
+							}
+						/>
+
+						<EditFormView {...EDIT_FORM_VIEW_PROPS} />
+					</DndProvider>
+				</ClayModalProvider>
+			</AppContextProvider>
+		);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
+		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(1);
+		expect(dataLayoutVisitorSpy.mock.calls.length).toBe(1);
+
+		const deleteButton = container.querySelector(
+			'.field-type-remove-icon button'
+		);
+
+		await act(async () => {
+			fireEvent.click(deleteButton);
+		});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		let modal = document.querySelector('.remove-object-field-panel');
+
+		expect(modal).toBeTruthy();
+
+		const deleteField = queryByText('delete');
+
+		expect(queryByText('1. Test FormView')).toBeTruthy();
+		expect(queryByText('1. Test TableView')).toBeTruthy();
+
+		await act(async () => {
+			fireEvent.click(deleteField);
+		});
+
+		const [action, payload] = dataLayoutBuilderProps.dispatch.mock.calls[0];
+
+		expect(action).toEqual('fieldDeleted');
+		expect(payload).toStrictEqual({activePage: 0, fieldName: 'Text'});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		modal = document.querySelector('.remove-object-field-panel');
+
+		expect(modal).toBeFalsy();
 	});
 });

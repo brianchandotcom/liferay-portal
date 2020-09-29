@@ -236,6 +236,154 @@ exports[`EditFormView renders 1`] = `
               </button>
             </div>
           </div>
+          <div
+            class="field-type-list"
+          >
+            <div
+              class="collapsable-panel panel panel-unstyled field-type-fieldset"
+              role="tablist"
+            >
+              <div
+                class="custom-object-field field-type-header field-type autofit-row autofit-row-center"
+                data-field-type-name="Field53354166"
+                draggable="true"
+              >
+                <div
+                  class="pr-2 pl-2 autofit-col"
+                >
+                  <span
+                    class="sticker data-layout-builder-field-sticker sticker-light sticker-md"
+                  >
+                    <span
+                      class="sticker-overlay"
+                    >
+                      <svg
+                        class="lexicon-icon lexicon-icon-angle-right"
+                        role="presentation"
+                      >
+                        <use
+                          xlink:href="#angle-right"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+                <div
+                  class="pr-2 autofit-col autofit-col-expand"
+                >
+                  <h4
+                    class="list-group-title text-truncate"
+                  >
+                    <span>
+                      Address
+                    </span>
+                  </h4>
+                  <p
+                    class="list-group-subtitle text-truncate"
+                  >
+                    <small>
+                      fieldset - 1 fields
+                    </small>
+                  </p>
+                </div>
+                <div
+                  class="autofit-col pr-2"
+                />
+                <div
+                  class="pr-2 autofit-col"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-drag"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#drag"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="field-type-remove-icon"
+                >
+                  <button
+                    class="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+                    data-tooltip-align="right"
+                    data-tooltip-delay="200"
+                    title="delete-from-object"
+                    type="button"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-times-circle"
+                      role="presentation"
+                    >
+                      <use
+                        xlink:href="#times-circle"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="panel-collapse collapse"
+                role="tabpanel"
+              >
+                <div
+                  class="panel-body"
+                >
+                  <div
+                    class="field-type-item position-relative"
+                  >
+                    <div
+                      class="custom-object-field-children field-type autofit-row autofit-row-center"
+                      data-field-type-name="Field95700329"
+                      draggable="true"
+                    >
+                      <div
+                        class="pr-2 pl-2 autofit-col"
+                      >
+                        <span
+                          class="sticker data-layout-builder-field-sticker sticker-light sticker-md"
+                        >
+                          <span
+                            class="sticker-overlay"
+                          >
+                            <svg
+                              class="lexicon-icon lexicon-icon-undefined"
+                              role="presentation"
+                            >
+                              <use
+                                xlink:href="#undefined"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </div>
+                      <div
+                        class="pr-2 autofit-col autofit-col-expand"
+                      >
+                        <h4
+                          class="list-group-title text-truncate"
+                        >
+                          <span>
+                            Text Field
+                          </span>
+                        </h4>
+                        <p
+                          class="list-group-subtitle text-truncate"
+                        >
+                          <small>
+                            Text 
+                          </small>
+                        </p>
+                      </div>
+                      <div
+                        class="autofit-col pr-2"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

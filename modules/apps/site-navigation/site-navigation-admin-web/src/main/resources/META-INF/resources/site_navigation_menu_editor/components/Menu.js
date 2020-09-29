@@ -33,7 +33,7 @@ const MenuContent = ({items}) => {
 		<div key={item.siteNavigationMenuItemId}>
 			<MenuItem item={item} />
 
-			<div className="pl-4">
+			<div className="pl-5">
 				{!!item.children.length && (
 					<MenuContent items={item.children} />
 				)}

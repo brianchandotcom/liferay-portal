@@ -53,9 +53,23 @@ body,
 
 @each $key, $map in $custom-properties-button-maps {
 	.btn-#{$key} {
-		&:not(.btn-outline-borderless) {
+		&:not(.dropdown-item) {
 			@include clay-button-variant($map);
 		}
+	}
+}
+
+.btn-outline-borderless:not(.dropdown-item) {
+	border-color: transparent;
+
+	&:hover,
+	&:focus {
+		border-color: transparent;
+	}
+
+	&:disabled,
+	&.disabled {
+		border-color: transparent;
 	}
 }
 

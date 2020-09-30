@@ -30,8 +30,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,6 +59,8 @@ public class CommerceInventoryDisplayContext {
 		CommerceInventoryWarehouseService commerceInventoryWarehouseService,
 		CommerceInventoryWarehouseItemService
 			commerceInventoryWarehouseItemService,
+		ModelResourcePermission<CommerceInventoryWarehouse>
+			commerceInventoryWarehouseModelResourcePermission,
 		HttpServletRequest httpServletRequest) {
 
 		_commerceInventoryReplenishmentItemService =
@@ -65,6 +68,8 @@ public class CommerceInventoryDisplayContext {
 		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
 		_commerceInventoryWarehouseItemService =
 			commerceInventoryWarehouseItemService;
+		_commerceInventoryWarehouseModelResourcePermission =
+			commerceInventoryWarehouseModelResourcePermission;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
@@ -185,17 +190,16 @@ public class CommerceInventoryDisplayContext {
 		return portletURL.toString();
 	}
 
-	public List<HeaderActionModel> getHeaderActionModels() {
+	public List<HeaderActionModel> getHeaderActionModels()
+		throws PrincipalException {
+
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
 		if (_sku == null) {
 			return headerActionModels;
 		}
 
-		if (PortalPermissionUtil.contains(
-				PermissionThreadLocal.getPermissionChecker(),
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
-
+		if (_hasPermission()) {
 			RenderResponse renderResponse =
 				_cpRequestHelper.getRenderResponse();
 
@@ -212,10 +216,7 @@ public class CommerceInventoryDisplayContext {
 	public CreationMenu getInventoryItemCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (PortalPermissionUtil.contains(
-				PermissionThreadLocal.getPermissionChecker(),
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
-
+		if (_hasPermission()) {
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref(getCreateInventoryItemActionURL());
@@ -253,10 +254,7 @@ public class CommerceInventoryDisplayContext {
 	public CreationMenu getReplenishmentCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (PortalPermissionUtil.contains(
-				PermissionThreadLocal.getPermissionChecker(),
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
-
+		if (_hasPermission()) {
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref(getCreateReplenishmentActionURL());
@@ -308,10 +306,7 @@ public class CommerceInventoryDisplayContext {
 	public CreationMenu getWarehousesCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (PortalPermissionUtil.contains(
-				PermissionThreadLocal.getPermissionChecker(),
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
-
+		if (_hasPermission()) {
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref(getAddQuantityActionURL());
@@ -335,10 +330,22 @@ public class CommerceInventoryDisplayContext {
 		return creationMenu;
 	}
 
+	private boolean _hasPermission() throws PrincipalException {
+		PortletResourcePermission portletResourcePermission =
+			_commerceInventoryWarehouseModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			PermissionThreadLocal.getPermissionChecker(), null,
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+	}
+
 	private final CommerceInventoryReplenishmentItemService
 		_commerceInventoryReplenishmentItemService;
 	private final CommerceInventoryWarehouseItemService
 		_commerceInventoryWarehouseItemService;
+	private final ModelResourcePermission<CommerceInventoryWarehouse>
+		_commerceInventoryWarehouseModelResourcePermission;
 	private final CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
 	private final CPRequestHelper _cpRequestHelper;

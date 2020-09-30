@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_LOCKED_ICON</td>
+	<td>//h1[contains(.,'${key_questionTitle}')]//*[name()='svg'][contains(@class,'lexicon-icon-lock')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_SUBSCRIBED_BUTTON</td>
 	<td>//button[@type='button' and @title='Subscribed']</td>
 	<td></td>
@@ -226,6 +231,11 @@
 <tr>
 	<td>VOTE_BUTTON</td>
 	<td>//button[contains(@class,'text-reset')]//*[name()='svg'][contains(@class,'${key_caretName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTE_BUTTON_DISABLED</td>
+	<td>//button[contains(@class,'text-reset') and @disabled]//*[name()='svg'][contains(@class,'${key_caretName}')]</td>
 	<td></td>
 </tr>
 <tr>

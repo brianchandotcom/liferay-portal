@@ -430,11 +430,10 @@ public class CTCollectionLocalServiceTest {
 		Assert.assertEquals(
 			layout, _layoutLocalService.getLayout(layout.getPlid()));
 
-		_ctProcessLocalService.addCTProcess(
-			_ctCollection4.getUserId(), _ctCollection4.getCtCollectionId());
+		Map<Long, List<ConflictInfo>> conflictInfosMap =
+			_ctCollectionLocalService.checkConflicts(_ctCollection4);
 
-		Assert.assertEquals(
-			layout, _layoutLocalService.getLayout(layout.getPlid()));
+		Assert.assertFalse(conflictInfosMap.isEmpty());
 	}
 
 	@Test

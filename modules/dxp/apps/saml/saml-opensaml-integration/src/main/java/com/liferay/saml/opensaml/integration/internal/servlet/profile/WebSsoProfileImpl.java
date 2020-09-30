@@ -201,9 +201,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		MessageContext<?> messageContext = null;
 
 		try {
-			messageContext = decodeSamlMessage(
+			messageContext = decodeAuthnResponse(
 				httpServletRequest, httpServletResponse,
-				getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI), true);
+				getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI));
 
 			doProcessResponse(
 				messageContext, httpServletRequest, httpServletResponse);
@@ -562,6 +562,107 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		return samlSsoRequestContext;
 	}
 
+	protected MessageContext<?> decodeAuthnResponse(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, SamlBinding samlBinding)
+		throws Exception {
+
+		MessageContext<?> messageContext = decodeSamlMessage(
+			httpServletRequest, httpServletResponse, samlBinding, true);
+
+		InOutOperationContext<Response, ?> inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext<Response> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		Response samlResponse = inboundMessageContext.getMessage();
+
+		List<EncryptedAssertion> encryptedAssertions =
+			samlResponse.getEncryptedAssertions();
+
+		List<Assertion> assertions = new ArrayList<>(
+			samlResponse.getAssertions());
+
+		if (_decrypter != null) {
+			for (EncryptedAssertion encryptedAssertion : encryptedAssertions) {
+				try {
+					assertions.add(_decrypter.decrypt(encryptedAssertion));
+				}
+				catch (DecryptionException decryptionException) {
+					_log.error(
+						"Unable to assertion decryption", decryptionException);
+				}
+			}
+
+			inboundMessageContext.addSubcontext(
+				new DecrypterContext(_decrypter));
+		}
+		else {
+			if (!encryptedAssertions.isEmpty()) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Message returned encrypted assertions but there is " +
+							"no decrypter available");
+				}
+			}
+		}
+
+		SignatureTrustEngine signatureTrustEngine =
+			metadataManager.getSignatureTrustEngine();
+
+		Assertion assertion = null;
+
+		for (Assertion curAssertion : assertions) {
+			try {
+				verifyAssertion(
+					curAssertion, messageContext, signatureTrustEngine);
+			}
+			catch (SamlException samlException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Rejecting assertion " + curAssertion.getID(),
+						samlException);
+				}
+
+				continue;
+			}
+
+			List<AuthnStatement> authnStatements =
+				curAssertion.getAuthnStatements();
+
+			if (!authnStatements.isEmpty()) {
+				Subject subject = curAssertion.getSubject();
+
+				if ((subject != null) &&
+					(subject.getSubjectConfirmations() != null)) {
+
+					for (SubjectConfirmation subjectConfirmation :
+							subject.getSubjectConfirmations()) {
+
+						if (SubjectConfirmation.METHOD_BEARER.equals(
+								subjectConfirmation.getMethod())) {
+
+							assertion = curAssertion;
+
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		if (assertion == null) {
+			throw new AssertionException(
+				"Response does not contain any acceptable assertions");
+		}
+
+		inboundMessageContext.addSubcontext(
+			new SubjectAssertionContext(assertion));
+
+		return messageContext;
+	}
+
 	protected void doProcessAuthnRequest(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -693,88 +794,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		verifyIssuer(messageContext, issuer);
 
-		Assertion assertion = null;
-
-		SignatureTrustEngine signatureTrustEngine =
-			metadataManager.getSignatureTrustEngine();
-
-		List<EncryptedAssertion> encryptedAssertions =
-			samlResponse.getEncryptedAssertions();
-
-		List<Assertion> assertions = new ArrayList<>(
-			samlResponse.getAssertions());
-
-		if (_decrypter != null) {
-			for (EncryptedAssertion encryptedAssertion : encryptedAssertions) {
-				try {
-					assertions.add(_decrypter.decrypt(encryptedAssertion));
-				}
-				catch (DecryptionException decryptionException) {
-					_log.error(
-						"Unable to assertion decryption", decryptionException);
-				}
-			}
-
-			inboundMessageContext.addSubcontext(
-				new DecrypterContext(_decrypter));
-		}
-		else {
-			if (!encryptedAssertions.isEmpty()) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Message returned encrypted assertions but there is " +
-							"no decrypter available");
-				}
-			}
-		}
-
-		for (Assertion curAssertion : assertions) {
-			try {
-				verifyAssertion(
-					curAssertion, messageContext, signatureTrustEngine);
-			}
-			catch (SamlException samlException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Rejecting assertion " + curAssertion.getID(),
-						samlException);
-				}
-
-				continue;
-			}
-
-			List<AuthnStatement> authnStatements =
-				curAssertion.getAuthnStatements();
-
-			if (!authnStatements.isEmpty()) {
-				Subject subject = curAssertion.getSubject();
-
-				if ((subject != null) &&
-					(subject.getSubjectConfirmations() != null)) {
-
-					for (SubjectConfirmation subjectConfirmation :
-							subject.getSubjectConfirmations()) {
-
-						if (SubjectConfirmation.METHOD_BEARER.equals(
-								subjectConfirmation.getMethod())) {
-
-							assertion = curAssertion;
-
-							break;
-						}
-					}
-				}
-			}
-		}
-
-		if (assertion == null) {
-			throw new AssertionException(
-				"Response does not contain any acceptable assertions");
-		}
-
-		inboundMessageContext.addSubcontext(
-			new SubjectAssertionContext(assertion));
-
 		SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
 			messageContext.getSubcontext(
 				SAMLSubjectNameIdentifierContext.class);
@@ -805,6 +824,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SubjectAssertionContext subjectAssertionContext =
+			inboundMessageContext.getSubcontext(SubjectAssertionContext.class);
+
+		Assertion assertion = subjectAssertionContext.getAssertion();
 
 		List<AuthnStatement> authnStatements = assertion.getAuthnStatements();
 

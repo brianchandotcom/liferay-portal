@@ -49,6 +49,9 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	public String getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
 		return JSONUtil.put(
 			"fieldSets",
 			JSONUtil.putAll(
@@ -71,12 +74,16 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 								"validValues",
 								JSONUtil.putAll(
 									JSONUtil.put(
-										"label", "horizontal"
+										"label",
+										LanguageUtil.get(
+											resourceBundle, "horizontal")
 									).put(
 										"value", "horizontal"
 									),
 									JSONUtil.put(
-										"label", "stacked"
+										"label",
+										LanguageUtil.get(
+											resourceBundle, "stacked")
 									).put(
 										"value", "stacked"
 									)))

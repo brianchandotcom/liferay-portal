@@ -132,6 +132,36 @@ describe('Field Text', () => {
 		expect(container).toMatchSnapshot();
 	});
 
+	it('hides autocomplete dropdown menu when container layout is hidden', () => {
+		const props = {
+			autocomplete: true,
+			options: [
+				{label: 'Option 1', value: 'Option1'},
+				{label: 'Option 2', value: 'Option2'},
+			],
+			value: 'Option',
+			...defaultTextConfig,
+		};
+
+		render(
+			<div className="ddm-page-container-layout hide">
+				<TextWithProvider {...props} />
+			</div>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const autocompleteDropdownMenu = document.body.querySelector(
+			'.autocomplete-dropdown-menu'
+		);
+
+		const classList = autocompleteDropdownMenu.classList;
+
+		expect(classList.contains('show')).toBeFalsy();
+	});
+
 	it('is not required', () => {
 		const {container} = render(
 			<TextWithProvider {...defaultTextConfig} required={false} />
@@ -142,6 +172,36 @@ describe('Field Text', () => {
 		});
 
 		expect(container).toMatchSnapshot();
+	});
+
+	it('renders autocomplete dropdown menu', () => {
+		const props = {
+			autocomplete: true,
+			options: [
+				{label: 'Option 1', value: 'Option1'},
+				{label: 'Option 2', value: 'Option2'},
+			],
+			value: 'Option',
+			...defaultTextConfig,
+		};
+
+		render(
+			<div className="ddm-page-container-layout">
+				<TextWithProvider {...props} />
+			</div>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const autocompleteDropdownMenu = document.body.querySelector(
+			'.autocomplete-dropdown-menu'
+		);
+
+		const classList = autocompleteDropdownMenu.classList;
+
+		expect(classList.contains('show')).toBeTruthy();
 	});
 
 	it('renders Label if showLabel is true', () => {

@@ -13,11 +13,12 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {useConstants} from '../contexts/ConstantsContext';
 
-export const DropDown = ({trigger}) => {
+export const AddItemDropDown = ({trigger}) => {
 	const [active, setActive] = useState(false);
 	const {addSiteNavigationMenuItemOptions, portletNamespace} = useConstants();
 
@@ -51,4 +52,8 @@ export const DropDown = ({trigger}) => {
 			</ClayDropDown>
 		</>
 	);
+};
+
+AddItemDropDown.propTypes = {
+	trigger: PropTypes.element,
 };

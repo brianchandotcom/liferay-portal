@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
-import {DropDown} from './DropDown';
+import {AddItemDropDown} from './AddItemDropdown';
 
 export const EmptyState = () => (
 	<div className="p-3 taglib-empty-result-message text-center">
@@ -32,7 +32,7 @@ export const EmptyState = () => (
 		</p>
 
 		<div className="taglib-empty-result-message-actionDropdownItems">
-			<DropDown
+			<AddItemDropDown
 				trigger={
 					<ClayButton small>{Liferay.Language.get('new')}</ClayButton>
 				}

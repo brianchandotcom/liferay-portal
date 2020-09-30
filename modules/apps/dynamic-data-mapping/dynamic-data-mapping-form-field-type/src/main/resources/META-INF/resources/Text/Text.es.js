@@ -138,7 +138,19 @@ const Autocomplete = ({
 			setVisible(false);
 		}
 		else {
-			setVisible(!!value);
+			const ddmPageContainerLayout = inputRef.current.closest(
+				'.ddm-page-container-layout'
+			);
+
+			if (
+				ddmPageContainerLayout &&
+				ddmPageContainerLayout.classList.contains('hide')
+			) {
+				setVisible(false);
+			}
+			else {
+				setVisible(!!value);
+			}
 		}
 	}, [filteredItems, value]);
 

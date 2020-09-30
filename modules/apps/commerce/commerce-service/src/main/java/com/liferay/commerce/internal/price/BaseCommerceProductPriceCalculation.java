@@ -355,6 +355,10 @@ public abstract class BaseCommerceProductPriceCalculation
 
 		int quantity = commerceProductPriceImpl.getQuantity();
 
+		if (activePrice == null) {
+			activePrice = BigDecimal.ZERO;
+		}
+
 		activePrice = activePrice.multiply(BigDecimal.valueOf(quantity));
 
 		if (discountsTargetNetPrice) {

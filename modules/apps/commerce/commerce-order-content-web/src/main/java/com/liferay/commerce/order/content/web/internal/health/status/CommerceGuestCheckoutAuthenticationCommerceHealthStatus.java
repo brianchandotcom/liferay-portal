@@ -144,7 +144,7 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 
 			List<JournalArticle> journalArticles =
 				_journalArticleLocalService.getArticlesByStructureId(
-					commerceChannel.getSiteGroupId(),
+					serviceContext.getScopeGroupId(),
 					"guest-checkout-authentication-structure", 0, 1, null);
 
 			JournalArticle journalArticle = journalArticles.get(0);

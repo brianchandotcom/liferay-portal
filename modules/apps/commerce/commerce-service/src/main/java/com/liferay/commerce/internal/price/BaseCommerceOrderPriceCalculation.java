@@ -542,13 +542,17 @@ public abstract class BaseCommerceOrderPriceCalculation
 
 		BigDecimal activePrice = unitPrice;
 
-		CommerceMoney promoPrice = commerceOrderItemPrice.getPromoPrice();
+		CommerceMoney promoPriceCommerceMoney =
+			commerceOrderItemPrice.getPromoPrice();
 
-		if ((promoPrice != null) && !promoPrice.isEmpty() &&
-			CommerceBigDecimalUtil.gt(promoPrice.getPrice(), BigDecimal.ZERO) &&
-			CommerceBigDecimalUtil.gt(unitPrice, promoPrice.getPrice())) {
+		if ((promoPriceCommerceMoney != null) &&
+			!promoPriceCommerceMoney.isEmpty() &&
+			CommerceBigDecimalUtil.gt(
+				promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
+			CommerceBigDecimalUtil.gt(
+				unitPrice, promoPriceCommerceMoney.getPrice())) {
 
-			activePrice = promoPrice.getPrice();
+			activePrice = promoPriceCommerceMoney.getPrice();
 		}
 
 		commerceOrderItemPrice.setDiscountAmount(

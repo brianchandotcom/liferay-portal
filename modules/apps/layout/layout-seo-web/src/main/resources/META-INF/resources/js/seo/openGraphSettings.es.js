@@ -51,12 +51,11 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 					openGraphImageFileEntryId.value = itemValue.fileEntryId;
 					openGraphImageTitle.value = itemValue.title;
 					openGraphPreviewImage.src = itemValue.url;
+					openGraphPreviewImage.classList.remove('hide');
 
 					toggleDisabled(openGraphImageAltField, false);
 					toggleDisabled(openGraphImageAltFieldDefaultLocale, false);
 					toggleDisabled(openGraphImageAltLabel, false);
-
-					openGraphPreviewImage.classList.remove('hide');
 				}
 			},
 			selectEventName: `${namespace}openGraphImageSelectedItem`,

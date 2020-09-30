@@ -48,14 +48,14 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 					openGraphImageFileEntryId.value = itemValue.fileEntryId;
 					openGraphImageTitle.value = itemValue.title;
 
-					toggleDisabled(openGraphImageAltField, false);
-					toggleDisabled(openGraphImageAltFieldDefaultLocale, false);
-					toggleDisabled(openGraphImageAltLabel, false);
-
 					previewSeoFireChange(namespace, {
 						type: 'imgUrl',
 						value: itemValue.url,
 					});
+
+					toggleDisabled(openGraphImageAltField, false);
+					toggleDisabled(openGraphImageAltFieldDefaultLocale, false);
+					toggleDisabled(openGraphImageAltLabel, false);
 				}
 			},
 			selectEventName: `${namespace}openGraphImageSelectedItem`,

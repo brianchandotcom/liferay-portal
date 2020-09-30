@@ -809,6 +809,20 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			_log.debug("SAML authenticated user " + nameID.getValue());
 		}
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SamlSpIdpConnection samlSpIdpConnection =
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+				CompanyThreadLocal.getCompanyId(),
+				samlPeerEntityContext.getEntityId());
+
+		if (Validator.isNull(samlResponse.getInResponseTo()) &&
+			samlSpIdpConnection.isForceAuthn()) {
+
+			throw new AuthnAgeException();
+		}
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
@@ -822,9 +836,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SamlSpSession samlSpSession = getSamlSpSession(httpServletRequest);
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		SAMLPeerEntityContext samlPeerEntityContext =
-			messageContext.getSubcontext(SAMLPeerEntityContext.class);
-
 		SubjectAssertionContext subjectAssertionContext =
 			inboundMessageContext.getSubcontext(SubjectAssertionContext.class);
 
@@ -833,17 +844,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		List<AuthnStatement> authnStatements = assertion.getAuthnStatements();
 
 		AuthnStatement authnStatement = authnStatements.get(0);
-
-		SamlSpIdpConnection samlSpIdpConnection =
-			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-				CompanyThreadLocal.getCompanyId(),
-				samlPeerEntityContext.getEntityId());
-
-		if (Validator.isNull(samlResponse.getInResponseTo()) &&
-			samlSpIdpConnection.isForceAuthn()) {
-
-			throw new AuthnAgeException();
-		}
 
 		String sessionIndex = authnStatement.getSessionIndex();
 

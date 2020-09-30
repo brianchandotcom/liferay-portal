@@ -71,13 +71,10 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 			workspaceDir,
 			"liferay.workspace.target.platform.version=" + _BOM_VERSION);
 
-		String product;
+		String product = "portal";
 
 		if (version.getMicro() >= 10) {
 			product = "dxp";
-		}
-		else {
-			product = "portal";
 		}
 
 		File modulesDir = new File(workspaceDir, "modules");

@@ -44,6 +44,8 @@ public class UpgradeLayout extends UpgradeProcess {
 			alter(
 				LayoutTable.class,
 				new AlterTableAddColumn("masterLayoutPlid", "LONG"));
+
+			runSQL("update Layout set masterLayoutPlid = 0");
 		}
 
 		if (!hasColumn(LayoutTable.TABLE_NAME, "status")) {
@@ -51,7 +53,7 @@ public class UpgradeLayout extends UpgradeProcess {
 				LayoutTable.class,
 				new AlterTableAddColumn("status", "INTEGER"));
 
-			runSQL("update Layout set masterLayoutPlid = 0, status = 0");
+			runSQL("update Layout set status = 0");
 		}
 
 		if (!hasColumn(LayoutTable.TABLE_NAME, "statusByUserId")) {

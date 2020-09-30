@@ -23,6 +23,38 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-121201. It ensures that a site can be exported after a user sets a custom canonical URL at the page level."
+	@priority = "4"
+	test ExportSiteWithCustomURL {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Canonical URL Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Canonical URL Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Click(
+			checkboxName = "Use Custom Canonical URL",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Type(
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
+			value1 = "http://mycustomizedurl.com/mydesiredurl");
+
+		PortletEntry.save();
+
+		LAR.exportSiteCP(siteScopeName = "Site Name");
+
+		AssertConsoleTextNotPresent(value1 = "NoSuchStorageLinkException");
+	}
+
 	@description = "This test ensures that when a user sets a custom canonical URL at the page level, it will overwrite system level settings."
 	@priority = "5"
 	test SetCustomURLAtPageLevel {

@@ -58,16 +58,16 @@ public abstract class BaseMaxExpansionsTestCase
 	public void testPrefixWithNumberSpaceNumberSuffix() throws Exception {
 		addDocuments("Prefix# #");
 
-		assertSearch("Prefi", _MAX_EXPANSIONS);
-		assertSearchCount("Prefi", _MAX_EXPANSIONS);
+		assertSearch("Prefi", MAX_EXPANSIONS);
+		assertSearchCount("Prefi", MAX_EXPANSIONS);
 	}
 
 	@Test
 	public void testPrefixWithNumberSuffix() throws Exception {
 		addDocuments("Prefix#");
 
-		assertSearch("Prefi", _MAX_EXPANSIONS);
-		assertSearchCount("Prefi", _MAX_EXPANSIONS);
+		assertSearch("Prefi", MAX_EXPANSIONS);
+		assertSearchCount("Prefi", MAX_EXPANSIONS);
 	}
 
 	@Test
@@ -82,8 +82,8 @@ public abstract class BaseMaxExpansionsTestCase
 	public void testPrefixWithUnderscoreNumberSuffix() throws Exception {
 		addDocuments("Prefix_#");
 
-		assertSearch("Prefi", _MAX_EXPANSIONS);
-		assertSearchCount("Prefi", _MAX_EXPANSIONS);
+		assertSearch("Prefi", MAX_EXPANSIONS);
+		assertSearchCount("Prefi", MAX_EXPANSIONS);
 	}
 
 	protected void addDocuments(String pattern) throws Exception {
@@ -101,7 +101,7 @@ public abstract class BaseMaxExpansionsTestCase
 
 				activate(
 					HashMapBuilder.<String, Object>put(
-						"maxExpansions", _MAX_EXPANSIONS
+						"maxExpansions", MAX_EXPANSIONS
 					).build());
 			}
 		};
@@ -112,7 +112,7 @@ public abstract class BaseMaxExpansionsTestCase
 		return Field.TITLE;
 	}
 
-	private static final int _MAX_EXPANSIONS = 60;
+	protected static final int MAX_EXPANSIONS = 60;
 
 	private static final int _TOTAL_DOCUMENTS = 65;
 

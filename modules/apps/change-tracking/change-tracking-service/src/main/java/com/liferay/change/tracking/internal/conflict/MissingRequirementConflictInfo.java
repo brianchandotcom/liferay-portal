@@ -14,11 +14,9 @@
 
 package com.liferay.change.tracking.internal.conflict;
 
-import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -26,7 +24,7 @@ import java.util.ResourceBundle;
 /**
  * @author Preston Crary
  */
-public class MissingRequirementConflictInfo implements ConflictInfo {
+public class MissingRequirementConflictInfo extends BaseConflictInfo {
 
 	public MissingRequirementConflictInfo(
 		String className, long modelClassPK,
@@ -43,22 +41,11 @@ public class MissingRequirementConflictInfo implements ConflictInfo {
 	}
 
 	@Override
-	public long getCTAutoResolutionInfoId() {
-		return 0;
-	}
-
-	@Override
 	public String getResolutionDescription(ResourceBundle resourceBundle) {
 		return LanguageUtil.format(
 			resourceBundle,
 			"cannot-be-added-because-a-required-x-has-been-deleted",
 			_getRequirementTypeName(resourceBundle.getLocale()), false);
-	}
-
-	@Override
-	public ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(
-			locale, MissingRequirementConflictInfo.class);
 	}
 
 	@Override
@@ -69,11 +56,6 @@ public class MissingRequirementConflictInfo implements ConflictInfo {
 	@Override
 	public long getTargetPrimaryKey() {
 		return 0;
-	}
-
-	@Override
-	public boolean isResolved() {
-		return false;
 	}
 
 	private String _getRequirementTypeName(Locale locale) {

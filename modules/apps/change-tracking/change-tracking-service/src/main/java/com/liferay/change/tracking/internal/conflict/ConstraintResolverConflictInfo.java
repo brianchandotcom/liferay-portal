@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.internal.conflict;
 
-import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -24,7 +23,7 @@ import java.util.ResourceBundle;
 /**
  * @author Preston Crary
  */
-public class ConstraintResolverConflictInfo implements ConflictInfo {
+public class ConstraintResolverConflictInfo extends BaseConflictInfo {
 
 	public ConstraintResolverConflictInfo(
 		ConstraintResolver<?> constraintResolver, boolean resolved,

@@ -14,17 +14,14 @@
 
 package com.liferay.change.tracking.internal.conflict;
 
-import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
  * @author Preston Crary
  */
-public class AdditionConflictInfo implements ConflictInfo {
+public class AdditionConflictInfo extends BaseConflictInfo {
 
 	public AdditionConflictInfo(long modelClassPK) {
 		_modelClassPK = modelClassPK;
@@ -36,18 +33,8 @@ public class AdditionConflictInfo implements ConflictInfo {
 	}
 
 	@Override
-	public long getCTAutoResolutionInfoId() {
-		return 0;
-	}
-
-	@Override
 	public String getResolutionDescription(ResourceBundle resourceBundle) {
 		return LanguageUtil.get(resourceBundle, "new-item-already-exists");
-	}
-
-	@Override
-	public ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(locale, AdditionConflictInfo.class);
 	}
 
 	@Override
@@ -58,11 +45,6 @@ public class AdditionConflictInfo implements ConflictInfo {
 	@Override
 	public long getTargetPrimaryKey() {
 		return _modelClassPK;
-	}
-
-	@Override
-	public boolean isResolved() {
-		return false;
 	}
 
 	private final long _modelClassPK;

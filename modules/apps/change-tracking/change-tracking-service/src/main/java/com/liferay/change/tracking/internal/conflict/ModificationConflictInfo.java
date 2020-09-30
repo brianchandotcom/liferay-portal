@@ -14,17 +14,14 @@
 
 package com.liferay.change.tracking.internal.conflict;
 
-import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
  * @author Samuel Trong Tran
  */
-public class ModificationConflictInfo implements ConflictInfo {
+public class ModificationConflictInfo extends BaseConflictInfo {
 
 	public ModificationConflictInfo(long modelClassPK, boolean resolved) {
 		_modelClassPK = modelClassPK;
@@ -50,12 +47,6 @@ public class ModificationConflictInfo implements ConflictInfo {
 		}
 
 		return LanguageUtil.get(resourceBundle, message);
-	}
-
-	@Override
-	public ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(
-			locale, ModificationConflictInfo.class);
 	}
 
 	@Override

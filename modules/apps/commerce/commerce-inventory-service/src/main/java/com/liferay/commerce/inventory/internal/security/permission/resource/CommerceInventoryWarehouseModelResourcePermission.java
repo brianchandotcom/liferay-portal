@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.inventory.internal.security.permission.resource;
 
+import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.permission.CommerceInventoryWarehousePermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -84,11 +85,16 @@ public class CommerceInventoryWarehouseModelResourcePermission
 
 	@Override
 	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+		return _portletResourcePermission;
 	}
 
 	@Reference
 	protected CommerceInventoryWarehousePermission
 		commerceInventoryWarehousePermission;
+
+	@Reference(
+		target = "(resource.name=" + CommerceInventoryConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

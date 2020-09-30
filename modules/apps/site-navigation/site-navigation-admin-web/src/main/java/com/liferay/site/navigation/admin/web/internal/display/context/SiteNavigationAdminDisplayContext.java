@@ -270,6 +270,9 @@ public class SiteNavigationAdminDisplayContext {
 				return actionURL.toString();
 			}
 		).put(
+			"addSiteNavigationMenuItemOptions",
+			getAddSiteNavigationMenuItemDropdownItems()
+		).put(
 			"editSiteNavigationMenuItemURL",
 			() -> {
 				PortletURL renderURL =

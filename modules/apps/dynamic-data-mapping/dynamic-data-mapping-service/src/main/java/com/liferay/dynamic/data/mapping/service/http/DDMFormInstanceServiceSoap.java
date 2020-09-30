@@ -134,6 +134,38 @@ public class DDMFormInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap
+			copyFormInstance(
+				long groupId, String[] nameMapLanguageIds,
+				String[] nameMapValues,
+				com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap
+					ddmFormInstance,
+				com.liferay.dynamic.data.mapping.storage.DDMFormValues
+					settingsDDMFormValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+
+			com.liferay.dynamic.data.mapping.model.DDMFormInstance returnValue =
+				DDMFormInstanceServiceUtil.copyFormInstance(
+					groupId, nameMap,
+					com.liferay.dynamic.data.mapping.model.impl.
+						DDMFormInstanceModelImpl.toModel(ddmFormInstance),
+					settingsDDMFormValues, serviceContext);
+
+			return com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteFormInstance(long ddmFormInstanceId)
 		throws RemoteException {
 

@@ -150,6 +150,55 @@ public class DDMFormInstanceServiceHttp {
 		}
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstance
+			copyFormInstance(
+				HttpPrincipal httpPrincipal, long groupId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				com.liferay.dynamic.data.mapping.model.DDMFormInstance
+					ddmFormInstance,
+				com.liferay.dynamic.data.mapping.storage.DDMFormValues
+					settingsDDMFormValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DDMFormInstanceServiceUtil.class, "copyFormInstance",
+				_copyFormInstanceParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, nameMap, ddmFormInstance,
+				settingsDDMFormValues, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.dynamic.data.mapping.model.DDMFormInstance)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void deleteFormInstance(
 			HttpPrincipal httpPrincipal, long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -157,7 +206,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "deleteFormInstance",
-				_deleteFormInstanceParameterTypes2);
+				_deleteFormInstanceParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, ddmFormInstanceId);
@@ -194,7 +243,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "fetchFormInstance",
-				_fetchFormInstanceParameterTypes3);
+				_fetchFormInstanceParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, ddmFormInstanceId);
@@ -235,7 +284,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "getFormInstance",
-				_getFormInstanceParameterTypes4);
+				_getFormInstanceParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, ddmFormInstanceId);
@@ -278,7 +327,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "getFormInstances",
-				_getFormInstancesParameterTypes5);
+				_getFormInstancesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, start, end);
@@ -312,7 +361,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "getFormInstancesCount",
-				_getFormInstancesCountParameterTypes6);
+				_getFormInstancesCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId);
@@ -345,7 +394,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "getFormInstancesCount",
-				_getFormInstancesCountParameterTypes7);
+				_getFormInstancesCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, uuid);
 
@@ -388,7 +437,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "search",
-				_searchParameterTypes8);
+				_searchParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, keywords, status, start, end,
@@ -428,7 +477,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "search",
-				_searchParameterTypes9);
+				_searchParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, keywords, start, end,
@@ -469,7 +518,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "search",
-				_searchParameterTypes10);
+				_searchParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, names, descriptions, andOperator,
@@ -505,7 +554,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "searchCount",
-				_searchCountParameterTypes11);
+				_searchCountParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, keywords);
@@ -538,7 +587,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "searchCount",
-				_searchCountParameterTypes12);
+				_searchCountParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, keywords, status);
@@ -571,7 +620,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "searchCount",
-				_searchCountParameterTypes13);
+				_searchCountParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, names, descriptions,
@@ -606,7 +655,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "sendEmail",
-				_sendEmailParameterTypes14);
+				_sendEmailParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, formInstanceId, message, subject, toEmailAddresses);
@@ -642,7 +691,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "updateFormInstance",
-				_updateFormInstanceParameterTypes15);
+				_updateFormInstanceParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, formInstanceId, settingsDDMFormValues);
@@ -692,7 +741,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "updateFormInstance",
-				_updateFormInstanceParameterTypes16);
+				_updateFormInstanceParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, ddmFormInstanceId, nameMap, descriptionMap, ddmForm,
@@ -744,49 +793,56 @@ public class DDMFormInstanceServiceHttp {
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteFormInstanceParameterTypes2 =
+	private static final Class<?>[] _copyFormInstanceParameterTypes2 =
+		new Class[] {
+			long.class, java.util.Map.class,
+			com.liferay.dynamic.data.mapping.model.DDMFormInstance.class,
+			com.liferay.dynamic.data.mapping.storage.DDMFormValues.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteFormInstanceParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _fetchFormInstanceParameterTypes3 =
+	private static final Class<?>[] _fetchFormInstanceParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getFormInstanceParameterTypes4 =
+	private static final Class<?>[] _getFormInstanceParameterTypes5 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getFormInstancesParameterTypes5 =
+	private static final Class<?>[] _getFormInstancesParameterTypes6 =
 		new Class[] {long.class, long.class, int.class, int.class};
-	private static final Class<?>[] _getFormInstancesCountParameterTypes6 =
-		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getFormInstancesCountParameterTypes7 =
+		new Class[] {long.class, long.class};
+	private static final Class<?>[] _getFormInstancesCountParameterTypes8 =
 		new Class[] {String.class};
-	private static final Class<?>[] _searchParameterTypes8 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes9 = new Class[] {
 		long.class, long.class, String.class, int.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _searchParameterTypes9 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes10 = new Class[] {
 		long.class, long.class, String.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _searchParameterTypes10 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes11 = new Class[] {
 		long.class, long.class, String[].class, String[].class, boolean.class,
 		int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _searchCountParameterTypes11 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes12 = new Class[] {
 		long.class, long.class, String.class
 	};
-	private static final Class<?>[] _searchCountParameterTypes12 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes13 = new Class[] {
 		long.class, long.class, String.class, int.class
 	};
-	private static final Class<?>[] _searchCountParameterTypes13 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes14 = new Class[] {
 		long.class, long.class, String[].class, String[].class, boolean.class
 	};
-	private static final Class<?>[] _sendEmailParameterTypes14 = new Class[] {
+	private static final Class<?>[] _sendEmailParameterTypes15 = new Class[] {
 		long.class, String.class, String.class, String[].class
 	};
-	private static final Class<?>[] _updateFormInstanceParameterTypes15 =
+	private static final Class<?>[] _updateFormInstanceParameterTypes16 =
 		new Class[] {
 			long.class,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues.class
 		};
-	private static final Class<?>[] _updateFormInstanceParameterTypes16 =
+	private static final Class<?>[] _updateFormInstanceParameterTypes17 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			com.liferay.dynamic.data.mapping.model.DDMForm.class,

@@ -69,3 +69,7 @@
 <c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_SHORT %>">
 	<liferay-ui:message key="please-enter-a-friendly-url-that-is-at-least-two-characters-long" />
 </c:if>
+
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_LONG %>">
+	<liferay-ui:message key="the-friendly-url-is-too-long" />
+</c:if>

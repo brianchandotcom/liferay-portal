@@ -13,3 +13,19 @@
  * details.
  */
 --%>
+
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+
+<%@ page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
+page import="com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil" %><%@
+page import="com.liferay.portal.kernel.model.Group" %><%@
+page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.theme.NavItem" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %>
+
+<liferay-theme:defineObjects />
+
+<portlet:defineObjects />

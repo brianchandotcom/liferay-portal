@@ -16,7 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(themeDisplay.getCompanyId());
+
+DDMTemplate ddmTemplate = DDMTemplateServiceUtil.fetchTemplate(companyGroup.getGroupId(), PortalUtil.getClassNameId(NavItem.class), "LIST-MENU-FTL");
+%>
+
 <liferay-site-navigation:navigation-menu
+	ddmTemplateGroupId="<%= ddmTemplate.getGroupId() %>"
+	ddmTemplateKey="<%= ddmTemplate.getTemplateKey() %>"
 	rootItemLevel="<%= 0 %>"
 	siteNavigationMenuId="<%= 0 %>"
 />

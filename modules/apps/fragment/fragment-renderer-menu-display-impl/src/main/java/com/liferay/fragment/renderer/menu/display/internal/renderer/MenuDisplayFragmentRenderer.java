@@ -14,13 +14,16 @@
 
 package com.liferay.fragment.renderer.menu.display.internal.renderer;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.petra.string.StringPool;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;
@@ -46,7 +49,39 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	public String getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
-		return StringPool.BLANK;
+		return JSONUtil.put(
+			"fieldSets",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"defaultValue", "horizontal"
+						).put(
+							"label", "display-style"
+						).put(
+							"name", "displayStyle"
+						).put(
+							"type", "select"
+						).put(
+							"type", "select"
+						).put(
+							"typeOptions",
+							JSONUtil.put(
+								"validValues",
+								JSONUtil.putAll(
+									JSONUtil.put(
+										"label", "horizontal"
+									).put(
+										"value", "horizontal"
+									),
+									JSONUtil.put(
+										"label", "stacked"
+									).put(
+										"value", "stacked"
+									)))
+						))))
+		).toString();
 	}
 
 	@Override
@@ -68,10 +103,19 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		String displayStyle = _getDisplayStyle(fragmentRendererContext);
+
 		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
+			RequestDispatcher requestDispatcher = null;
+
+			if (Objects.equals(displayStyle, "stacked")) {
+				requestDispatcher = _servletContext.getRequestDispatcher(
+					"/stacked_menu/stacked_menu.jsp");
+			}
+			else {
+				requestDispatcher = _servletContext.getRequestDispatcher(
 					"/horizontal_menu/horizontal_menu.jsp");
+			}
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -87,6 +131,20 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
+
+	private String _getDisplayStyle(
+		FragmentRendererContext fragmentRendererContext) {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
+		return (String)_fragmentEntryConfigurationParser.getFieldValue(
+			getConfiguration(fragmentRendererContext),
+			fragmentEntryLink.getEditableValues(), "displayStyle");
+	}
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	private ServletContext _servletContext;
 

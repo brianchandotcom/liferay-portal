@@ -18,6 +18,7 @@ import React from 'react';
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 import {AppLayout} from './AppLayout';
+import {DropDown} from './DropDown';
 
 export const Toolbar = () => {
 	const setSidebarPanelId = useSetSidebarPanelId();
@@ -41,7 +42,11 @@ export const Toolbar = () => {
 			</AppLayout.ToolbarItem>
 
 			<AppLayout.ToolbarItem>
-				<ClayButtonWithIcon monospaced small symbol="plus" />
+				<DropDown
+					trigger={
+						<ClayButtonWithIcon monospaced small symbol="plus" />
+					}
+				/>
 			</AppLayout.ToolbarItem>
 		</>
 	);

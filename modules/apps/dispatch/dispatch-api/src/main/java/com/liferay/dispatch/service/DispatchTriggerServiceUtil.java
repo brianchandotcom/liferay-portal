@@ -26,7 +26,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchTriggerService
  * @generated
  */
@@ -38,13 +38,14 @@ public class DispatchTriggerServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dispatch.service.impl.DispatchTriggerServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
-			long userId, String name, String type,
+			long userId, String name,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsUnicodeProperties)
+				taskSettingsUnicodeProperties,
+			String taskType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addDispatchTrigger(
-			userId, name, type, typeSettingsUnicodeProperties);
+			userId, name, taskSettingsUnicodeProperties, taskType);
 	}
 
 	public static void deleteDispatchTrigger(long dispatchTriggerId)
@@ -81,11 +82,11 @@ public class DispatchTriggerServiceUtil {
 			updateDispatchTrigger(
 				long dispatchTriggerId, String name,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsUnicodeProperties)
+					taskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateDispatchTrigger(
-			dispatchTriggerId, name, typeSettingsUnicodeProperties);
+			dispatchTriggerId, name, taskSettingsUnicodeProperties);
 	}
 
 	public static DispatchTriggerService getService() {

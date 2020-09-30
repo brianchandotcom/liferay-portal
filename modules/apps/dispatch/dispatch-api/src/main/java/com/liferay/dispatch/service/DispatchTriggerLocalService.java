@@ -48,7 +48,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchTriggerLocalServiceUtil
  * @generated
  */
@@ -80,8 +80,8 @@ public interface DispatchTriggerLocalService
 	public DispatchTrigger addDispatchTrigger(DispatchTrigger dispatchTrigger);
 
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, boolean system, String type,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			long userId, String name, boolean system,
+			UnicodeProperties taskSettingsUnicodeProperties, String taskType)
 		throws PortalException;
 
 	/**
@@ -304,7 +304,7 @@ public interface DispatchTriggerLocalService
 
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, String name,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			UnicodeProperties taskSettingsUnicodeProperties)
 		throws PortalException;
 
 }

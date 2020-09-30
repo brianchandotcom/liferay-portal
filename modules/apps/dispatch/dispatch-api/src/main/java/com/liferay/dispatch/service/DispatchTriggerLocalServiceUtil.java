@@ -26,7 +26,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * based on the propagated JAAS credentials because this service can only be
  * accessed from within the same VM.
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchTriggerLocalService
  * @generated
  */
@@ -55,13 +55,14 @@ public class DispatchTriggerLocalServiceUtil {
 	}
 
 	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
-			long userId, String name, boolean system, String type,
+			long userId, String name, boolean system,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsUnicodeProperties)
+				taskSettingsUnicodeProperties,
+			String taskType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addDispatchTrigger(
-			userId, name, system, type, typeSettingsUnicodeProperties);
+			userId, name, system, taskSettingsUnicodeProperties, taskType);
 	}
 
 	/**
@@ -363,11 +364,11 @@ public class DispatchTriggerLocalServiceUtil {
 			updateDispatchTrigger(
 				long dispatchTriggerId, String name,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					typeSettingsUnicodeProperties)
+					taskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateDispatchTrigger(
-			dispatchTriggerId, name, typeSettingsUnicodeProperties);
+			dispatchTriggerId, name, taskSettingsUnicodeProperties);
 	}
 
 	public static DispatchTriggerLocalService getService() {

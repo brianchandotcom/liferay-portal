@@ -36,7 +36,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchTriggerPersistence
  * @generated
  */
@@ -435,66 +435,68 @@ public class DispatchTriggerUtil {
 	}
 
 	/**
-	 * Returns all the dispatch triggers where companyId = &#63; and type = &#63;.
+	 * Returns all the dispatch triggers where companyId = &#63; and taskType = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @return the matching dispatch triggers
 	 */
-	public static List<DispatchTrigger> findByC_T(long companyId, String type) {
-		return getPersistence().findByC_T(companyId, type);
+	public static List<DispatchTrigger> findByC_T(
+		long companyId, String taskType) {
+
+		return getPersistence().findByC_T(companyId, taskType);
 	}
 
 	/**
-	 * Returns a range of all the dispatch triggers where companyId = &#63; and type = &#63;.
+	 * Returns a range of all the dispatch triggers where companyId = &#63; and taskType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @return the range of matching dispatch triggers
 	 */
 	public static List<DispatchTrigger> findByC_T(
-		long companyId, String type, int start, int end) {
+		long companyId, String taskType, int start, int end) {
 
-		return getPersistence().findByC_T(companyId, type, start, end);
+		return getPersistence().findByC_T(companyId, taskType, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the dispatch triggers where companyId = &#63; and type = &#63;.
+	 * Returns an ordered range of all the dispatch triggers where companyId = &#63; and taskType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching dispatch triggers
 	 */
 	public static List<DispatchTrigger> findByC_T(
-		long companyId, String type, int start, int end,
+		long companyId, String taskType, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
 		return getPersistence().findByC_T(
-			companyId, type, start, end, orderByComparator);
+			companyId, taskType, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the dispatch triggers where companyId = &#63; and type = &#63;.
+	 * Returns an ordered range of all the dispatch triggers where companyId = &#63; and taskType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -502,204 +504,205 @@ public class DispatchTriggerUtil {
 	 * @return the ordered range of matching dispatch triggers
 	 */
 	public static List<DispatchTrigger> findByC_T(
-		long companyId, String type, int start, int end,
+		long companyId, String taskType, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator,
 		boolean useFinderCache) {
 
 		return getPersistence().findByC_T(
-			companyId, type, start, end, orderByComparator, useFinderCache);
+			companyId, taskType, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Returns the first dispatch trigger in the ordered set where companyId = &#63; and type = &#63;.
+	 * Returns the first dispatch trigger in the ordered set where companyId = &#63; and taskType = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching dispatch trigger
 	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
 	 */
 	public static DispatchTrigger findByC_T_First(
-			long companyId, String type,
+			long companyId, String taskType,
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws com.liferay.dispatch.exception.NoSuchTriggerException {
 
 		return getPersistence().findByC_T_First(
-			companyId, type, orderByComparator);
+			companyId, taskType, orderByComparator);
 	}
 
 	/**
-	 * Returns the first dispatch trigger in the ordered set where companyId = &#63; and type = &#63;.
+	 * Returns the first dispatch trigger in the ordered set where companyId = &#63; and taskType = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	public static DispatchTrigger fetchByC_T_First(
-		long companyId, String type,
+		long companyId, String taskType,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
 		return getPersistence().fetchByC_T_First(
-			companyId, type, orderByComparator);
+			companyId, taskType, orderByComparator);
 	}
 
 	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and type = &#63;.
+	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and taskType = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching dispatch trigger
 	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
 	 */
 	public static DispatchTrigger findByC_T_Last(
-			long companyId, String type,
+			long companyId, String taskType,
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws com.liferay.dispatch.exception.NoSuchTriggerException {
 
 		return getPersistence().findByC_T_Last(
-			companyId, type, orderByComparator);
+			companyId, taskType, orderByComparator);
 	}
 
 	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and type = &#63;.
+	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and taskType = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	public static DispatchTrigger fetchByC_T_Last(
-		long companyId, String type,
+		long companyId, String taskType,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
 		return getPersistence().fetchByC_T_Last(
-			companyId, type, orderByComparator);
+			companyId, taskType, orderByComparator);
 	}
 
 	/**
-	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set where companyId = &#63; and type = &#63;.
+	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set where companyId = &#63; and taskType = &#63;.
 	 *
 	 * @param dispatchTriggerId the primary key of the current dispatch trigger
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next dispatch trigger
 	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
 	 */
 	public static DispatchTrigger[] findByC_T_PrevAndNext(
-			long dispatchTriggerId, long companyId, String type,
+			long dispatchTriggerId, long companyId, String taskType,
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws com.liferay.dispatch.exception.NoSuchTriggerException {
 
 		return getPersistence().findByC_T_PrevAndNext(
-			dispatchTriggerId, companyId, type, orderByComparator);
+			dispatchTriggerId, companyId, taskType, orderByComparator);
 	}
 
 	/**
-	 * Returns all the dispatch triggers that the user has permission to view where companyId = &#63; and type = &#63;.
+	 * Returns all the dispatch triggers that the user has permission to view where companyId = &#63; and taskType = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @return the matching dispatch triggers that the user has permission to view
 	 */
 	public static List<DispatchTrigger> filterFindByC_T(
-		long companyId, String type) {
+		long companyId, String taskType) {
 
-		return getPersistence().filterFindByC_T(companyId, type);
+		return getPersistence().filterFindByC_T(companyId, taskType);
 	}
 
 	/**
-	 * Returns a range of all the dispatch triggers that the user has permission to view where companyId = &#63; and type = &#63;.
+	 * Returns a range of all the dispatch triggers that the user has permission to view where companyId = &#63; and taskType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @return the range of matching dispatch triggers that the user has permission to view
 	 */
 	public static List<DispatchTrigger> filterFindByC_T(
-		long companyId, String type, int start, int end) {
+		long companyId, String taskType, int start, int end) {
 
-		return getPersistence().filterFindByC_T(companyId, type, start, end);
+		return getPersistence().filterFindByC_T(
+			companyId, taskType, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the dispatch triggers that the user has permissions to view where companyId = &#63; and type = &#63;.
+	 * Returns an ordered range of all the dispatch triggers that the user has permissions to view where companyId = &#63; and taskType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching dispatch triggers that the user has permission to view
 	 */
 	public static List<DispatchTrigger> filterFindByC_T(
-		long companyId, String type, int start, int end,
+		long companyId, String taskType, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
 		return getPersistence().filterFindByC_T(
-			companyId, type, start, end, orderByComparator);
+			companyId, taskType, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set of dispatch triggers that the user has permission to view where companyId = &#63; and type = &#63;.
+	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set of dispatch triggers that the user has permission to view where companyId = &#63; and taskType = &#63;.
 	 *
 	 * @param dispatchTriggerId the primary key of the current dispatch trigger
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next dispatch trigger
 	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
 	 */
 	public static DispatchTrigger[] filterFindByC_T_PrevAndNext(
-			long dispatchTriggerId, long companyId, String type,
+			long dispatchTriggerId, long companyId, String taskType,
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws com.liferay.dispatch.exception.NoSuchTriggerException {
 
 		return getPersistence().filterFindByC_T_PrevAndNext(
-			dispatchTriggerId, companyId, type, orderByComparator);
+			dispatchTriggerId, companyId, taskType, orderByComparator);
 	}
 
 	/**
-	 * Removes all the dispatch triggers where companyId = &#63; and type = &#63; from the database.
+	 * Removes all the dispatch triggers where companyId = &#63; and taskType = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 */
-	public static void removeByC_T(long companyId, String type) {
-		getPersistence().removeByC_T(companyId, type);
+	public static void removeByC_T(long companyId, String taskType) {
+		getPersistence().removeByC_T(companyId, taskType);
 	}
 
 	/**
-	 * Returns the number of dispatch triggers where companyId = &#63; and type = &#63;.
+	 * Returns the number of dispatch triggers where companyId = &#63; and taskType = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @return the number of matching dispatch triggers
 	 */
-	public static int countByC_T(long companyId, String type) {
-		return getPersistence().countByC_T(companyId, type);
+	public static int countByC_T(long companyId, String taskType) {
+		return getPersistence().countByC_T(companyId, taskType);
 	}
 
 	/**
-	 * Returns the number of dispatch triggers that the user has permission to view where companyId = &#63; and type = &#63;.
+	 * Returns the number of dispatch triggers that the user has permission to view where companyId = &#63; and taskType = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param type the type
+	 * @param taskType the task type
 	 * @return the number of matching dispatch triggers that the user has permission to view
 	 */
-	public static int filterCountByC_T(long companyId, String type) {
-		return getPersistence().filterCountByC_T(companyId, type);
+	public static int filterCountByC_T(long companyId, String taskType) {
+		return getPersistence().filterCountByC_T(companyId, taskType);
 	}
 
 	/**

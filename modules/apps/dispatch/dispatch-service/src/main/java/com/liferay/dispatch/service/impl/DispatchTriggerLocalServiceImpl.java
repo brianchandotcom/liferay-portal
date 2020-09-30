@@ -58,8 +58,8 @@ public class DispatchTriggerLocalServiceImpl
 
 	@Override
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, boolean system, String type,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			long userId, String name, boolean system,
+			UnicodeProperties taskSettingsUnicodeProperties, String taskType)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -74,9 +74,9 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger.setUserName(user.getFullName());
 		dispatchTrigger.setName(name);
 		dispatchTrigger.setSystem(system);
-		dispatchTrigger.setType(type);
-		dispatchTrigger.setTypeSettingsProperties(
-			typeSettingsUnicodeProperties);
+		dispatchTrigger.setTaskSettingsUnicodeProperties(
+			taskSettingsUnicodeProperties);
+		dispatchTrigger.setTaskType(taskType);
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
@@ -186,7 +186,10 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger.setActive(active);
 		dispatchTrigger.setCronExpression(cronExpression);
 
-		if (!neverEnd) {
+		if (neverEnd) {
+			dispatchTrigger.setEndDate(null);
+		}
+		else {
 			dispatchTrigger.setEndDate(
 				_portal.getDate(
 					endDateMonth, endDateDay, endDateYear, endDateHour,
@@ -214,7 +217,7 @@ public class DispatchTriggerLocalServiceImpl
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, String name,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			UnicodeProperties taskSettingsUnicodeProperties)
 		throws PortalException {
 
 		DispatchTrigger dispatchTrigger =
@@ -223,8 +226,8 @@ public class DispatchTriggerLocalServiceImpl
 		validate(dispatchTriggerId, dispatchTrigger.getCompanyId(), name);
 
 		dispatchTrigger.setName(name);
-		dispatchTrigger.setTypeSettingsProperties(
-			typeSettingsUnicodeProperties);
+		dispatchTrigger.setTaskSettingsUnicodeProperties(
+			taskSettingsUnicodeProperties);
 
 		return dispatchTriggerPersistence.update(dispatchTrigger);
 	}

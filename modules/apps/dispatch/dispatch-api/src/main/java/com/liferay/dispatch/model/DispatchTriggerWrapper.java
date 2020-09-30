@@ -26,7 +26,7 @@ import java.util.Map;
  * This class is a wrapper for {@link DispatchTrigger}.
  * </p>
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchTrigger
  * @generated
  */
@@ -51,10 +51,12 @@ public class DispatchTriggerWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("active", isActive());
 		attributes.put("cronExpression", getCronExpression());
+		attributes.put("endDate", getEndDate());
 		attributes.put("name", getName());
+		attributes.put("startDate", getStartDate());
 		attributes.put("system", isSystem());
-		attributes.put("type", getType());
-		attributes.put("typeSettings", getTypeSettings());
+		attributes.put("taskSettings", getTaskSettings());
+		attributes.put("taskType", getTaskType());
 
 		return attributes;
 	}
@@ -115,10 +117,22 @@ public class DispatchTriggerWrapper
 			setCronExpression(cronExpression);
 		}
 
+		Date endDate = (Date)attributes.get("endDate");
+
+		if (endDate != null) {
+			setEndDate(endDate);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Date startDate = (Date)attributes.get("startDate");
+
+		if (startDate != null) {
+			setStartDate(startDate);
 		}
 
 		Boolean system = (Boolean)attributes.get("system");
@@ -127,16 +141,16 @@ public class DispatchTriggerWrapper
 			setSystem(system);
 		}
 
-		String type = (String)attributes.get("type");
+		String taskSettings = (String)attributes.get("taskSettings");
 
-		if (type != null) {
-			setType(type);
+		if (taskSettings != null) {
+			setTaskSettings(taskSettings);
 		}
 
-		String typeSettings = (String)attributes.get("typeSettings");
+		String taskType = (String)attributes.get("taskType");
 
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
+		if (taskType != null) {
+			setTaskType(taskType);
 		}
 	}
 
@@ -190,10 +204,13 @@ public class DispatchTriggerWrapper
 		return model.getDispatchTriggerId();
 	}
 
+	/**
+	 * Returns the end date of this dispatch trigger.
+	 *
+	 * @return the end date of this dispatch trigger
+	 */
 	@Override
-	public Date getEndDate()
-		throws com.liferay.portal.kernel.scheduler.SchedulerException {
-
+	public Date getEndDate() {
 		return model.getEndDate();
 	}
 
@@ -237,10 +254,13 @@ public class DispatchTriggerWrapper
 		return model.getPrimaryKey();
 	}
 
+	/**
+	 * Returns the start date of this dispatch trigger.
+	 *
+	 * @return the start date of this dispatch trigger
+	 */
 	@Override
-	public Date getStartDate()
-		throws com.liferay.portal.kernel.scheduler.SchedulerException {
-
+	public Date getStartDate() {
 		return model.getStartDate();
 	}
 
@@ -255,30 +275,30 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
-	 * Returns the type of this dispatch trigger.
+	 * Returns the task settings of this dispatch trigger.
 	 *
-	 * @return the type of this dispatch trigger
+	 * @return the task settings of this dispatch trigger
 	 */
 	@Override
-	public String getType() {
-		return model.getType();
-	}
-
-	/**
-	 * Returns the type settings of this dispatch trigger.
-	 *
-	 * @return the type settings of this dispatch trigger
-	 */
-	@Override
-	public String getTypeSettings() {
-		return model.getTypeSettings();
+	public String getTaskSettings() {
+		return model.getTaskSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTypeSettingsProperties() {
+		getTaskSettingsUnicodeProperties() {
 
-		return model.getTypeSettingsProperties();
+		return model.getTaskSettingsUnicodeProperties();
+	}
+
+	/**
+	 * Returns the task type of this dispatch trigger.
+	 *
+	 * @return the task type of this dispatch trigger
+	 */
+	@Override
+	public String getTaskType() {
+		return model.getTaskType();
 	}
 
 	/**
@@ -386,6 +406,11 @@ public class DispatchTriggerWrapper
 		model.setDispatchTriggerId(dispatchTriggerId);
 	}
 
+	/**
+	 * Sets the end date of this dispatch trigger.
+	 *
+	 * @param endDate the end date of this dispatch trigger
+	 */
 	@Override
 	public void setEndDate(Date endDate) {
 		model.setEndDate(endDate);
@@ -431,6 +456,11 @@ public class DispatchTriggerWrapper
 		model.setPrimaryKey(primaryKey);
 	}
 
+	/**
+	 * Sets the start date of this dispatch trigger.
+	 *
+	 * @param startDate the start date of this dispatch trigger
+	 */
 	@Override
 	public void setStartDate(Date startDate) {
 		model.setStartDate(startDate);
@@ -447,31 +477,31 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
-	 * Sets the type of this dispatch trigger.
+	 * Sets the task settings of this dispatch trigger.
 	 *
-	 * @param type the type of this dispatch trigger
+	 * @param taskSettings the task settings of this dispatch trigger
 	 */
 	@Override
-	public void setType(String type) {
-		model.setType(type);
+	public void setTaskSettings(String taskSettings) {
+		model.setTaskSettings(taskSettings);
+	}
+
+	@Override
+	public void setTaskSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			taskSettingsUnicodeProperties) {
+
+		model.setTaskSettingsUnicodeProperties(taskSettingsUnicodeProperties);
 	}
 
 	/**
-	 * Sets the type settings of this dispatch trigger.
+	 * Sets the task type of this dispatch trigger.
 	 *
-	 * @param typeSettings the type settings of this dispatch trigger
+	 * @param taskType the task type of this dispatch trigger
 	 */
 	@Override
-	public void setTypeSettings(String typeSettings) {
-		model.setTypeSettings(typeSettings);
-	}
-
-	@Override
-	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsUnicodeProperties) {
-
-		model.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+	public void setTaskType(String taskType) {
+		model.setTaskType(taskType);
 	}
 
 	/**

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DispatchTriggerService}.
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchTriggerService
  * @generated
  */
@@ -34,13 +34,14 @@ public class DispatchTriggerServiceWrapper
 
 	@Override
 	public com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
-			long userId, String name, String type,
+			long userId, String name,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsUnicodeProperties)
+				taskSettingsUnicodeProperties,
+			String taskType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchTriggerService.addDispatchTrigger(
-			userId, name, type, typeSettingsUnicodeProperties);
+			userId, name, taskSettingsUnicodeProperties, taskType);
 	}
 
 	@Override
@@ -79,11 +80,11 @@ public class DispatchTriggerServiceWrapper
 	public com.liferay.dispatch.model.DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, String name,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				typeSettingsUnicodeProperties)
+				taskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchTriggerService.updateDispatchTrigger(
-			dispatchTriggerId, name, typeSettingsUnicodeProperties);
+			dispatchTriggerId, name, taskSettingsUnicodeProperties);
 	}
 
 	@Override

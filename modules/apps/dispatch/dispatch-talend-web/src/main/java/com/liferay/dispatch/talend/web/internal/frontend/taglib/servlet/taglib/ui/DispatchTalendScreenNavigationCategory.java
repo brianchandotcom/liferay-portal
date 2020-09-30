@@ -81,9 +81,9 @@ public class DispatchTalendScreenNavigationCategory
 			return false;
 		}
 
-		String scheduledTaskExecutorType = dispatchTrigger.getType();
+		String taskType = dispatchTrigger.getTaskType();
 
-		if (scheduledTaskExecutorType.equals(
+		if (taskType.equals(
 				DispatchTalendScheduledTaskExecutor.
 					SCHEDULED_TASK_EXECUTOR_TYPE_TALEND) &&
 			!dispatchTrigger.isSystem()) {

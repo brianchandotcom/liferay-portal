@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * The extended model interface for the DispatchTrigger service. Represents a row in the &quot;DispatchTrigger&quot; database table, with each column mapped to a property of this class.
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchTriggerModel
  * @generated
  */
@@ -56,21 +56,11 @@ public interface DispatchTrigger extends DispatchTriggerModel, PersistedModel {
 
 		};
 
-	public java.util.Date getEndDate()
-		throws com.liferay.portal.kernel.scheduler.SchedulerException;
-
-	public java.util.Date getStartDate()
-		throws com.liferay.portal.kernel.scheduler.SchedulerException;
-
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTypeSettingsProperties();
+		getTaskSettingsUnicodeProperties();
 
-	public void setEndDate(java.util.Date endDate);
-
-	public void setStartDate(java.util.Date startDate);
-
-	public void setTypeSettingsProperties(
+	public void setTaskSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
-			typeSettingsUnicodeProperties);
+			taskSettingsUnicodeProperties);
 
 }

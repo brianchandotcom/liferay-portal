@@ -756,7 +756,7 @@ definition {
 	@priority = "5"
 	test CreateTableViewsWithFixedEntriesFilter {
 		property test.name.skip.portal.instance = "AppBuilder#CreateTableViewsWithFixedEntriesFilter";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

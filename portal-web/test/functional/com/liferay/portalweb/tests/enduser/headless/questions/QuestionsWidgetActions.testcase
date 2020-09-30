@@ -627,6 +627,73 @@ definition {
 			subTopicName = "New Questions Test SubCategory");
 	}
 
+	@description = "Validate if the user can lock and unlock a question through the MB."
+	@priority = "4"
+	test LockAndUnlockThroughMB {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Content1",
+			categoryName = "Questions Test Category",
+			tagField = "new",
+			titleField = "Question1");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question1");
+
+		Questions.answerQuestion(contentField = "This is my answer");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Question1");
+
+		MenuItem.click(menuItem = "Lock");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question1");
+
+		AssertVisible(
+			key_answerBodyContent = "This is my answer",
+			locator1 = "Questions#ANSWER_BODY");
+
+		Questions.viewLockedQuestion(questionTitle = "Question1");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Question1");
+
+		MenuItem.click(menuItem = "Unlock");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question1");
+
+		Questions.viewUnlockedQuestion(questionTitle = "Question1");
+
+		Questions.answerQuestion(contentField = "This is my answer2");
+	}
+
 	@description = "Validate if the user can search for the questions."
 	@priority = "4"
 	test SearchForQuestions {

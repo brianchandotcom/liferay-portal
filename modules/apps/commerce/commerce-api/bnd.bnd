@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce API
 Bundle-SymbolicName: com.liferay.commerce.api
-Bundle-Version: 22.3.4
+Bundle-Version: 22.4.0
 Export-Package:\
 	com.liferay.commerce.address,\
 	com.liferay.commerce.configuration,\

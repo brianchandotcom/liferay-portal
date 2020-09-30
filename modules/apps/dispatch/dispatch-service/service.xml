@@ -2,7 +2,7 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
 
 <service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.dispatch">
-	<author>Alessio Antonio Rendina</author>
+	<author>Matija Petanjek</author>
 	<namespace>Dispatch</namespace>
 	<entity local-service="true" name="DispatchLog" remote-service="true">
 

@@ -91,8 +91,6 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 					</aui:field-wrapper>
 
 					<aui:field-wrapper label="end-date">
-						</br>
-
 						<aui:input name="neverEnd" onClick='<%= liferayPortletResponse.getNamespace() + "updateEndDateTimeInputsDisabled(this.checked);" %>' type="checkbox" value="<%= neverEnd %>" />
 
 						<span class="end-date-input-selector">

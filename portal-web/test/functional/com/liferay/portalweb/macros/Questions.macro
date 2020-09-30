@@ -497,6 +497,36 @@ definition {
 		}
 	}
 
+	macro viewLockedQuestion {
+		AssertElementPresent(
+			key_questionTitle = "${questionTitle}",
+			locator1 = "Questions#QUESTIONS_LOCKED_ICON");
+
+		for (var caretName : list "caret-top,caret-bottom") {
+			AssertElementPresent(
+				key_caretName = "${caretName}",
+				locator1 = "Questions#VOTE_BUTTON_DISABLED");
+		}
+
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
+
+		AssertElementNotPresent(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+
+		AssertElementNotPresent(locator1 = "Button#EDIT");
+
+		AssertElementNotPresent(locator1 = "Button#REPLY");
+
+		AssertElementNotPresent(
+			key_text = "Delete",
+			locator1 = "Button#ANY");
+
+		AssertElementNotPresent(
+			key_text = "Mark as answer",
+			locator1 = "Button#ANY");
+
+		AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+	}
+
 	macro viewNoSearchResults {
 		for (var questionTitle : list "${questionsList}") {
 			AssertElementNotPresent(
@@ -594,6 +624,34 @@ definition {
 				locator1 = "Questions#TAGS_POSITION",
 				value1 = "Created");
 		}
+	}
+
+	macro viewUnlockedQuestion {
+		AssertElementNotPresent(
+			key_questionTitle = "${questionTitle}",
+			locator1 = "Questions#QUESTIONS_LOCKED_ICON");
+
+		for (var caretName : list "caret-top,caret-bottom") {
+			AssertVisible(
+				key_caretName = "${caretName}",
+				locator1 = "Questions#VOTE_BUTTON");
+		}
+
+		AssertVisible(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
+
+		AssertVisible(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+
+		AssertVisible(locator1 = "Button#EDIT");
+
+		AssertVisible(locator1 = "Button#REPLY");
+
+		AssertVisible(
+			key_text = "Delete",
+			locator1 = "Button#ANY");
+
+		AssertVisible(
+			key_text = "Mark as answer",
+			locator1 = "Button#ANY");
 	}
 
 	macro voteQuestion {

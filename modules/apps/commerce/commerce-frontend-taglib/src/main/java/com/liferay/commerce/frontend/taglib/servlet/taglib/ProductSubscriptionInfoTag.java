@@ -15,6 +15,7 @@
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
@@ -57,6 +58,13 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 			if (cpSubscriptionInfo == null) {
 				return SKIP_BODY;
 			}
+
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			_subscriptionEnabled = cpDefinition.isSubscriptionEnabled();
+
+			_deliverySubscriptionEnabled =
+				cpDefinition.isDeliverySubscriptionEnabled();
 
 			_length = cpSubscriptionInfo.getSubscriptionLength();
 
@@ -113,25 +121,29 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 			return SKIP_BODY;
 		}
 
-		if (_showDuration && (_duration > 0)) {
+		if (_subscriptionEnabled && _showDuration && (_duration > 0)) {
 			_durationPeriod = LanguageUtil.format(
 				request, "duration-x-x",
 				new Object[] {_duration, _durationPeriodKey});
 		}
 
-		if (_deliveryShowDuration && (_deliveryDuration > 0)) {
+		if (_deliverySubscriptionEnabled && _deliveryShowDuration &&
+			(_deliveryDuration > 0)) {
+
 			_deliveryDurationPeriod = LanguageUtil.format(
 				request, "duration-x-x",
 				new Object[] {_deliveryDuration, _deliveryDurationPeriodKey});
 		}
 
-		if ((_length > 0) && Validator.isNotNull(_subscriptionPeriodKey)) {
+		if (_subscriptionEnabled && (_length > 0) &&
+			Validator.isNotNull(_subscriptionPeriodKey)) {
+
 			_subscriptionPeriod = LanguageUtil.format(
 				request, "every-x-x",
 				new Object[] {_length, _subscriptionPeriodKey});
 		}
 
-		if ((_deliveryLength > 0) &&
+		if (_deliverySubscriptionEnabled && (_deliveryLength > 0) &&
 			Validator.isNotNull(_deliverySubscriptionPeriodKey)) {
 
 			_deliverySubscriptionPeriod = LanguageUtil.format(
@@ -177,6 +189,7 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 		_deliveryDurationPeriodKey = null;
 		_deliveryLength = 0;
 		_deliveryShowDuration = true;
+		_deliverySubscriptionEnabled = false;
 		_deliverySubscriptionPeriod = null;
 		_deliverySubscriptionPeriodKey = null;
 		_duration = 0;
@@ -184,6 +197,7 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 		_durationPeriodKey = null;
 		_length = 0;
 		_showDuration = true;
+		_subscriptionEnabled = false;
 		_subscriptionPeriod = null;
 		_subscriptionPeriodKey = null;
 	}
@@ -232,6 +246,7 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 	private String _deliveryDurationPeriodKey;
 	private int _deliveryLength;
 	private boolean _deliveryShowDuration = true;
+	private boolean _deliverySubscriptionEnabled;
 	private String _deliverySubscriptionPeriod;
 	private String _deliverySubscriptionPeriodKey;
 	private long _duration;
@@ -239,6 +254,7 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 	private String _durationPeriodKey;
 	private long _length;
 	private boolean _showDuration = true;
+	private boolean _subscriptionEnabled;
 	private String _subscriptionPeriod;
 	private String _subscriptionPeriodKey;
 

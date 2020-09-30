@@ -183,6 +183,17 @@ public class FileEntryInfoItemFormProvider
 		).build();
 	}
 
+	private InfoFieldSet _getDisplayPageInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			FileEntryInfoItemFields.displayPageUrlInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "display-page")
+		).name(
+			"display-page"
+		).build();
+	}
+
 	private InfoFieldSet _getFileInformationFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
@@ -239,6 +250,8 @@ public class FileEntryInfoItemFormProvider
 								getInfoItemFieldSet(ddmStructureId));
 					}
 				}
+			).infoFieldSetEntry(
+				_getDisplayPageInfoFieldSet()
 			).infoFieldSetEntry(
 				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
 					FileEntry.class.getName())

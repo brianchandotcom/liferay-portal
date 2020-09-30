@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.info.item.provider;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -114,6 +115,15 @@ public class FileEntryInfoItemFieldValuesProvider
 		}
 
 		return Collections.emptyList();
+	}
+
+	private String _getDisplayPageURL(
+			FileEntry fileEntry, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+			FileEntry.class.getName(), fileEntry.getFileEntryId(),
+			themeDisplay);
 	}
 
 	private List<InfoFieldValue<Object>> _getExpandoInfoFieldValues(
@@ -226,6 +236,13 @@ public class FileEntryInfoItemFieldValuesProvider
 					FileEntryInfoItemFields.previewImage,
 					imagePreviewURLWebImage));
 
+			if (themeDisplay != null) {
+				fileEntryFieldValues.add(
+					new InfoFieldValue<>(
+						FileEntryInfoItemFields.displayPageUrlInfoField,
+						_getDisplayPageURL(fileEntry, themeDisplay)));
+			}
+
 			return fileEntryFieldValues;
 		}
 		catch (Exception exception) {
@@ -243,6 +260,10 @@ public class FileEntryInfoItemFieldValuesProvider
 
 		return null;
 	}
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider

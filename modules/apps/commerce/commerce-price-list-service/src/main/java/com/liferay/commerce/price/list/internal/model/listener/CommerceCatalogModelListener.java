@@ -14,26 +14,13 @@
 
 package com.liferay.commerce.price.list.internal.model.listener;
 
-import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
-import com.liferay.commerce.price.list.model.CommercePriceList;
-import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
-import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
-import com.liferay.commerce.pricing.constants.CommercePricingConstants;
+import com.liferay.commerce.price.list.internal.helper.CommerceBasePriceListHelper;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.settings.SystemSettingsLocator;
-import com.liferay.portal.kernel.util.LocaleUtil;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,38 +35,8 @@ public class CommerceCatalogModelListener
 	@Override
 	public void onAfterCreate(CommerceCatalog commerceCatalog) {
 		try {
-			CommercePricingConfiguration commercePricingConfiguration =
-				_configurationProvider.getConfiguration(
-					CommercePricingConfiguration.class,
-					new SystemSettingsLocator(
-						CommercePricingConstants.SERVICE_NAME));
-
-			if (Objects.equals(
-					commercePricingConfiguration.
-						commercePricingCalculationKey(),
-					CommercePricingConstants.VERSION_2_0)) {
-
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setScopeGroupId(commerceCatalog.getGroupId());
-				serviceContext.setUserId(commerceCatalog.getUserId());
-				serviceContext.setCompanyId(commerceCatalog.getCompanyId());
-
-				_addCatalogBaseCommercePriceList(
-					commerceCatalog, CommercePriceListConstants.TYPE_PRICE_LIST,
-					LanguageUtil.format(
-						LocaleUtil.fromLanguageId(
-							commerceCatalog.getCatalogDefaultLanguageId()),
-						"x-base-price-list", commerceCatalog.getName(), false),
-					serviceContext);
-				_addCatalogBaseCommercePriceList(
-					commerceCatalog, CommercePriceListConstants.TYPE_PROMOTION,
-					LanguageUtil.format(
-						LocaleUtil.fromLanguageId(
-							commerceCatalog.getCatalogDefaultLanguageId()),
-						"x-base-promotion", commerceCatalog.getName(), false),
-					serviceContext);
-			}
+			_commerceBasePriceListHelper.addCatalogBaseCommercePriceList(
+				commerceCatalog);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -91,11 +48,8 @@ public class CommerceCatalogModelListener
 	@Override
 	public void onBeforeRemove(CommerceCatalog commerceCatalog) {
 		try {
-			_deleteCatalogBaseCommercePriceList(
-				commerceCatalog, CommercePriceListConstants.TYPE_PRICE_LIST);
-
-			_deleteCatalogBaseCommercePriceList(
-				commerceCatalog, CommercePriceListConstants.TYPE_PROMOTION);
+			_commerceBasePriceListHelper.deleteCatalogBaseCommercePriceList(
+				commerceCatalog);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -104,54 +58,10 @@ public class CommerceCatalogModelListener
 		}
 	}
 
-	private void _addCatalogBaseCommercePriceList(
-			CommerceCatalog commerceCatalog, String type, String name,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CommercePriceList catalogBaseCommercePriceList =
-			_commercePriceListLocalService.
-				fetchCatalogBaseCommercePriceListByType(
-					commerceCatalog.getGroupId(), type);
-
-		if (catalogBaseCommercePriceList == null) {
-			CommerceCurrency commerceCurrency =
-				_commerceCurrencyLocalService.getCommerceCurrency(
-					serviceContext.getCompanyId(),
-					commerceCatalog.getCommerceCurrencyCode());
-
-			_commercePriceListLocalService.addCatalogBaseCommercePriceList(
-				commerceCatalog.getGroupId(), serviceContext.getUserId(),
-				commerceCurrency.getCommerceCurrencyId(), type, name,
-				serviceContext);
-		}
-	}
-
-	private void _deleteCatalogBaseCommercePriceList(
-			CommerceCatalog commerceCatalog, String type)
-		throws PortalException {
-
-		CommercePriceList catalogBaseCommercePriceList =
-			_commercePriceListLocalService.
-				fetchCatalogBaseCommercePriceListByType(
-					commerceCatalog.getGroupId(), type);
-
-		if (catalogBaseCommercePriceList != null) {
-			_commercePriceListLocalService.deleteCommercePriceList(
-				catalogBaseCommercePriceList);
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceCatalogModelListener.class);
 
 	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
-	private CommercePriceListLocalService _commercePriceListLocalService;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private CommerceBasePriceListHelper _commerceBasePriceListHelper;
 
 }

@@ -4,22 +4,31 @@ import com.liferay.gradle.plugins.util.PortalTools
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.StringUtil
 
+import com.pswidersk.gradle.python.VenvTask
+
 import java.util.regex.Matcher
 
 import org.gradle.util.GUtil
 
 buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
+
+	dependencies {
+		classpath group: "com.pswidersk", name: "python-gradle-plugin", version: "1.2.1"
+	}
 }
 
 apply plugin: "com.liferay.source.formatter"
 apply plugin: "com.liferay.source.formatter.defaults"
+apply plugin: "com.pswidersk.python-plugin"
 
 task appendHotfixQualifier
 task formatSourceCurrentBranch(type: FormatSourceTask)
 task formatSourceLatestAuthor(type: FormatSourceTask)
 task formatSourceLocalChanges(type: FormatSourceTask)
 task printDependencyPath
+task pythonBlack(type: VenvTask)
+task pythonBlackInstall(type: VenvTask)
 task removeHotfixQualifier
 task setUpLibs
 task setUpPortalTools
@@ -92,6 +101,18 @@ printDependencyPath {
 
 		logger.quiet configuration.singleFile.absolutePath
 	}
+}
+
+pythonBlack {
+	dependsOn pythonBlackInstall
+
+	args = ["--fast", projectDir.parentFile]
+	venvExec = "black"
+}
+
+pythonBlackInstall {
+	args = ["install", "black"]
+	venvExec = "pip"
 }
 
 removeHotfixQualifier {

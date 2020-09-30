@@ -563,6 +563,12 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</if>
 	</target>
 
+	<target name="format-python">
+		<gradle-execute outputproperty="jar.file" setupbinariescache="false" task="pythonBlack">
+			<arg value="--build-file=${project.dir}/modules/util.gradle" />
+		</gradle-execute>
+	</target>
+
 	<target name="format-source">
 		<antcall target="format-source-files">
 			<param name="format.source.default.task" value="true" />

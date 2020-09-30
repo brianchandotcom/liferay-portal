@@ -40,6 +40,7 @@ describe('PieChart', () => {
 		const {container} = render(<PieChart {...props} />);
 
 		const sector = container.querySelector('.recharts-pie-sector');
+
 		fireEvent.mouseOver(sector);
 
 		expect(
@@ -55,6 +56,7 @@ describe('PieChart', () => {
 		const {container} = render(<PieChart {...props} />);
 
 		const sector = container.querySelector('.recharts-pie-sector');
+
 		fireEvent.mouseOver(sector);
 
 		const expandedSector = container.querySelector(
@@ -72,7 +74,9 @@ describe('PieChart', () => {
 		const {container} = render(<PieChart {...props} />);
 
 		const sector = container.querySelector('.recharts-pie-sector');
+
 		fireEvent.mouseOver(sector);
+
 		expect(
 			container
 				.querySelector('.recharts-layer > path')

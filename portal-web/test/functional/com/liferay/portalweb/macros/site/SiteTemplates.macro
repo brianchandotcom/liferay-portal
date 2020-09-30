@@ -164,7 +164,14 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.deletePage(pageName = "${pageName}");
+		if (isSet(hasChildren)) {
+			SitePages.deletePage(
+				hasChildren = "true",
+				pageName = "${pageName}");
+		}
+		else {
+			SitePages.deletePage(pageName = "${pageName}");
+		}
 	}
 
 	macro deleteViaDeleteIconCP {

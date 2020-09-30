@@ -686,7 +686,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			throw new StatusException(statusCodeURI);
 		}
 
-		verifyInResponseTo(messageContext, samlResponse);
+		verifyInResponseTo(samlResponse);
 		verifyDestination(messageContext, samlResponse.getDestination());
 
 		Issuer issuer = samlResponse.getIssuer();
@@ -803,9 +803,23 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SamlSpSession samlSpSession = getSamlSpSession(httpServletRequest);
 		HttpSession httpSession = httpServletRequest.getSession();
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
 		List<AuthnStatement> authnStatements = assertion.getAuthnStatements();
 
 		AuthnStatement authnStatement = authnStatements.get(0);
+
+		SamlSpIdpConnection samlSpIdpConnection =
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+				CompanyThreadLocal.getCompanyId(),
+				samlPeerEntityContext.getEntityId());
+
+		if (Validator.isNull(samlResponse.getInResponseTo()) &&
+			samlSpIdpConnection.isForceAuthn()) {
+
+			throw new AuthnAgeException();
+		}
 
 		String sessionIndex = authnStatement.getSessionIndex();
 
@@ -1861,25 +1875,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				samlBindingContext.getBindingUri()));
 	}
 
-	protected void verifyInResponseTo(
-			MessageContext<?> messageContext, Response samlResponse)
+	protected void verifyInResponseTo(Response samlResponse)
 		throws PortalException {
 
 		if (Validator.isNull(samlResponse.getInResponseTo())) {
-			SAMLPeerEntityContext samlPeerEntityContext =
-				messageContext.getSubcontext(SAMLPeerEntityContext.class);
-
-			if (samlPeerEntityContext != null) {
-				SamlSpIdpConnection samlSpIdpConnection =
-					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-						CompanyThreadLocal.getCompanyId(),
-						samlPeerEntityContext.getEntityId());
-
-				if (samlSpIdpConnection.isForceAuthn()) {
-					throw new AuthnAgeException();
-				}
-			}
-
 			return;
 		}
 

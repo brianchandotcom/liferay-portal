@@ -123,6 +123,20 @@ function receiveMessage(event) {
 					const resource = data.resource;
 					const init = data.init;
 
+					const {body} = init;
+
+					if (body.__FORM_DATA__) {
+						const formData = new FormData();
+
+						Object.entries(body.__FORM_DATA__).forEach(
+							([key, value]) => {
+								formData.append(key, value);
+							}
+						);
+
+						init.body = formData;
+					}
+
 					fetch(resource, init)
 						.then((response) => {
 							RESPONSES[requestID] = response;

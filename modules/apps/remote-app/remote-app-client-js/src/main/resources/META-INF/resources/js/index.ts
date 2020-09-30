@@ -321,8 +321,20 @@ function serializeBody(body: BodyInit | null): StructuredClonable {
 		isArrayBufferView(body)
 	) {
 		return body;
-	} else {
-		// warn about unserializable body type (eg. FormData, search params,
+	}
+	else if (body instanceof FormData) {
+		const serializedFormData: {[key: string]: File | string} = {};
+
+		body.forEach((value: File | string, key: string) => {
+			serializedFormData[key] = value;
+		});
+
+		return {
+			__FORM_DATA__: serializedFormData,
+		};
+	}
+	else {
+		// warn about unserializable body type (eg. search params,
 		// readable stream),
 	}
 }
@@ -478,7 +490,8 @@ const SDK = Object.freeze({
 						message,
 						type: 'error',
 					});
-				} catch (error) {
+				}
+				catch (error) {
 					log(`Error caught while notifying listener: ${error}`);
 				}
 			});
@@ -496,7 +509,8 @@ const SDK = Object.freeze({
 		) {
 			if (state === 'disposed') {
 				log('ignoring message (disposed client)...', data);
-			} else if (state === 'registered' || force) {
+			}
+			else if (state === 'registered' || force) {
 				log('posting message...', data);
 
 				if (window.parent) {
@@ -511,15 +525,19 @@ const SDK = Object.freeze({
 							},
 							'*'
 						);
-					} catch (error) {
+					}
+					catch (error) {
 						log(`error sending message: ${error}`);
 					}
-				} else {
+				}
+				else {
 					log('no parent...');
 				}
-			} else if (state === 'invalid') {
+			}
+			else if (state === 'invalid') {
 				log('ignoring message (invalid client)...', data);
-			} else if (state === 'registering') {
+			}
+			else if (state === 'registering') {
 				log('enqueuing message...', data);
 
 				messageQueue.push(data);
@@ -546,19 +564,22 @@ const SDK = Object.freeze({
 
 				if (getString(data, 'appID') !== appID) {
 					log('appID mismatch');
-				} else if (kind === 'error') {
+				}
+				else if (kind === 'error') {
 					const message = getString(data, 'message', 'unknown');
 
 					const code = getNumber(data, 'code', ERROR_CODES.UNKNOWN);
 
 					handleError(message, code);
-				} else if (kind === 'fetch:reject') {
+				}
+				else if (kind === 'fetch:reject') {
 					const requestID = getString(data, 'requestID');
 
 					if (requestID) {
 						promises.fetch[requestID]?.reject?.(data.error);
 					}
-				} else if (kind === 'fetch:resolve') {
+				}
+				else if (kind === 'fetch:resolve') {
 					const requestID = getString(data, 'requestID');
 
 					if (requestID) {
@@ -676,7 +697,8 @@ const SDK = Object.freeze({
 							url: getString(data, 'url', ''),
 						});
 					}
-				} else if (kind === 'fetch:response:blob:reject') {
+				}
+				else if (kind === 'fetch:response:blob:reject') {
 					const requestID = getString(data, 'requestID');
 
 					if (requestID) {
@@ -684,7 +706,8 @@ const SDK = Object.freeze({
 							data.error
 						);
 					}
-				} else if (kind === 'fetch:response:blob:resolve') {
+				}
+				else if (kind === 'fetch:response:blob:resolve') {
 					const requestID = getString(data, 'requestID');
 
 					if (requestID) {
@@ -692,7 +715,8 @@ const SDK = Object.freeze({
 							data.blob
 						);
 					}
-				} else if (kind === 'fetch:response:json:reject') {
+				}
+				else if (kind === 'fetch:response:json:reject') {
 					const requestID = getString(data, 'requestID');
 
 					if (requestID) {
@@ -700,7 +724,8 @@ const SDK = Object.freeze({
 							data.error
 						);
 					}
-				} else if (kind === 'fetch:response:json:resolve') {
+				}
+				else if (kind === 'fetch:response:json:resolve') {
 					const requestID = getString(data, 'requestID');
 
 					if (requestID) {
@@ -708,7 +733,8 @@ const SDK = Object.freeze({
 							data.json
 						);
 					}
-				} else if (kind === 'fetch:response:text:reject') {
+				}
+				else if (kind === 'fetch:response:text:reject') {
 					const requestID = getString(data, 'requestID');
 
 					if (requestID) {
@@ -716,7 +742,8 @@ const SDK = Object.freeze({
 							data.error
 						);
 					}
-				} else if (kind === 'fetch:response:text:resolve') {
+				}
+				else if (kind === 'fetch:response:text:resolve') {
 					const requestID = getString(data, 'requestID');
 
 					if (requestID) {
@@ -724,19 +751,22 @@ const SDK = Object.freeze({
 							data.text
 						);
 					}
-				} else if (kind === 'get:reject') {
+				}
+				else if (kind === 'get:reject') {
 					const requestID = getString(data, 'requestID');
 
 					if (requestID) {
 						promises.get[requestID]?.reject?.(data.error);
 					}
-				} else if (kind === 'get:resolve') {
+				}
+				else if (kind === 'get:resolve') {
 					const requestID = getString(data, 'requestID');
 
 					if (requestID) {
 						promises.get[requestID]?.resolve?.(data.value);
 					}
-				} else if (kind === 'registered') {
+				}
+				else if (kind === 'registered') {
 					// TODO replace with actual reducer
 					state = 'registered';
 
@@ -863,7 +893,8 @@ const SDK = Object.freeze({
 						startsWith(contentType, 'application/json')
 					) {
 						return response.json();
-					} else {
+					}
+					else {
 						return response.text();
 					}
 				});

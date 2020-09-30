@@ -14,7 +14,8 @@
 
 package com.liferay.dispatch.internal.upgrade.v2_0_0;
 
-import com.liferay.dispatch.model.impl.DispatchTriggerModelImpl;
+import com.liferay.dispatch.internal.upgrade.v2_0_0.util.DispatchTriggerTable;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,38 +25,44 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_alterColumnName("type_", "taskType");
+
+		_alterColumnName("typeSettings", "taskProperties");
+
 		_alterTableAddColumn("endDate", "DATE");
 
 		_alterTableAddColumn("startDate", "DATE");
+	}
 
-		_alterTableColumnName("type_", "taskType");
+	private void _alterColumnName(String oldColumnName, String newColumnName)
+		throws Exception {
 
-		_alterTableColumnName("typeSettings", "taskProperties");
+		if (!hasColumn(DispatchTriggerTable.TABLE_NAME, oldColumnName)) {
+			if (hasColumn(DispatchTriggerTable.TABLE_NAME, newColumnName)) {
+				return;
+			}
+
+			throw new UpgradeException(
+				String.format(
+					"Unable to rename %s to %s in table %s", oldColumnName,
+					newColumnName, DispatchTriggerTable.TABLE_NAME));
+		}
+
+		alter(
+			DispatchTriggerTable.class,
+			new AlterColumnName(oldColumnName, newColumnName));
 	}
 
 	private void _alterTableAddColumn(String columnName, String columnType)
 		throws Exception {
 
-		if (hasColumn("DispatchTrigger", columnName)) {
+		if (hasColumn(DispatchTriggerTable.TABLE_NAME, columnName)) {
 			return;
 		}
 
 		alter(
-			DispatchTriggerModelImpl.class,
+			DispatchTriggerTable.class,
 			new AlterTableAddColumn(columnName, columnType));
-	}
-
-	private void _alterTableColumnName(
-			String oldColumnName, String newColumnName)
-		throws Exception {
-
-		if (!hasColumn("DispatchTrigger", oldColumnName)) {
-			return;
-		}
-
-		alter(
-			DispatchTriggerModelImpl.class,
-			new AlterColumnName(oldColumnName, newColumnName));
 	}
 
 }

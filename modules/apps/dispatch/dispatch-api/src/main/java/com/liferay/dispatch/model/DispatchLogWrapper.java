@@ -26,7 +26,7 @@ import java.util.Map;
  * This class is a wrapper for {@link DispatchLog}.
  * </p>
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchLog
  * @generated
  */

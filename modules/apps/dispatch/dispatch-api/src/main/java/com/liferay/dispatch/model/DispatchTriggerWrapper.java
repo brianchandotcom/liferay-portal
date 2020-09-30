@@ -26,7 +26,7 @@ import java.util.Map;
  * This class is a wrapper for {@link DispatchTrigger}.
  * </p>
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchTrigger
  * @generated
  */

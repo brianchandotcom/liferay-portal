@@ -21,7 +21,7 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @generated
  */
 public class DispatchPersistenceConstants {

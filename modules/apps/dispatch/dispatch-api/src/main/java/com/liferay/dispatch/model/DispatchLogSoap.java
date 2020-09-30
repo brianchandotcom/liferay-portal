@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.dispatch.service.http.DispatchLogServiceSoap}.
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */

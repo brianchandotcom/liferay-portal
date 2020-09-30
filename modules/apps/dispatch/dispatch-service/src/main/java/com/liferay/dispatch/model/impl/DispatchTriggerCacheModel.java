@@ -30,7 +30,7 @@ import java.util.Date;
 /**
  * The cache model class for representing DispatchTrigger in entity cache.
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @generated
  */
 public class DispatchTriggerCacheModel

@@ -25,7 +25,7 @@ import java.util.Date;
 /**
  * The table class for the &quot;DispatchTrigger&quot; database table.
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchTrigger
  * @generated
  */

@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.util.MethodKey;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  * @see DispatchLogServiceSoap
  * @generated
  */

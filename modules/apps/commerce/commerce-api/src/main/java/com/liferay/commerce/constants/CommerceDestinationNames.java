@@ -20,6 +20,8 @@ package com.liferay.commerce.constants;
  */
 public class CommerceDestinationNames {
 
+	public static final String BASE_PRICE_LIST = "liferay/base_price_list";
+
 	public static final String ORDER_STATUS = "liferay/order_status";
 
 	public static final String PAYMENT_STATUS = "liferay/payment_status";

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.internal.model.listener;
 
+import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -58,7 +59,8 @@ public class PortalInstanceLifecycleListenerImpl
 					"commerceCatalogId",
 					commerceCatalog.getCommerceCatalogId());
 
-				MessageBusUtil.sendMessage("liferay/base_price_list", message);
+				MessageBusUtil.sendMessage(
+					CommerceDestinationNames.BASE_PRICE_LIST, message);
 			}
 		}
 		catch (PortalException portalException) {

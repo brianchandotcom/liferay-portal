@@ -42,7 +42,7 @@ public class CommerceMessagingConfigurator {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_basePriceListServiceRegistration = _registerDestination(
-			bundleContext, "liferay/base_price_list");
+			bundleContext, CommerceDestinationNames.BASE_PRICE_LIST);
 		_orderStatusServiceRegistration = _registerDestination(
 			bundleContext, CommerceDestinationNames.ORDER_STATUS);
 		_paymentStatusServiceRegistration = _registerDestination(

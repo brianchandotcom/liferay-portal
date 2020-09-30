@@ -1198,11 +1198,23 @@ xpack.monitoring.collection.enabled: true</echo>
 						</exec>
 					</then>
 					<elseif>
-						<os family="unix" />
+						<and>
+							<isset property="env.JENKINS_HOME" />
+							<os family="unix" />
+						</and>
 						<then>
 							<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
 								<arg value="-c" />
 								<arg value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -v -p pid-elasticsearch'" />
+							</exec>
+						</then>
+					</elseif>
+					<elseif>
+						<os family="unix" />
+						<then>
+							<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
+								<arg value="-c" />
+								<arg value="./elasticsearch -d -v -p pid-elasticsearch'" />
 							</exec>
 						</then>
 					</elseif>

@@ -40,6 +40,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
@@ -120,6 +121,64 @@ public class StagingImplTest {
 		_group = GroupTestUtil.addGroup();
 		_remoteLiveGroup = GroupTestUtil.addGroup();
 		_remoteStagingGroup = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetRemoteLayout() throws Exception {
+		enableRemoteStaging(false);
+
+		Layout remoteStagingGroupLayout = LayoutTestUtil.addLayout(
+			_remoteStagingGroup);
+
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildFullPublishParameterMap();
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), _remoteStagingGroup.getGroupId(),
+			_remoteLiveGroup.getGroupId(), false, parameters);
+
+		Layout remoteLiveGroupLayout = StagingUtil.getRemoteLayout(
+			TestPropsValues.getUserId(), remoteStagingGroupLayout.getGroupId(),
+			remoteStagingGroupLayout.getPlid());
+
+		Assert.assertNotNull(remoteLiveGroupLayout);
+
+		Assert.assertEquals(
+			remoteStagingGroupLayout.getUuid(),
+			remoteLiveGroupLayout.getUuid());
+
+		Assert.assertEquals(
+			remoteStagingGroupLayout.getTitle(),
+			remoteLiveGroupLayout.getTitle());
+	}
+
+	@Test
+	public void testHasRemoteLayout() throws Exception {
+		enableRemoteStaging(false);
+
+		Layout remoteStagingGroupLayout = LayoutTestUtil.addLayout(
+			_remoteStagingGroup);
+
+		Assert.assertFalse(
+			StagingUtil.hasRemoteLayout(
+				TestPropsValues.getUserId(),
+				remoteStagingGroupLayout.getGroupId(),
+				remoteStagingGroupLayout.getPlid()));
+
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildFullPublishParameterMap();
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), _remoteStagingGroup.getGroupId(),
+			_remoteLiveGroup.getGroupId(), false, parameters);
+
+		Assert.assertTrue(
+			StagingUtil.hasRemoteLayout(
+				TestPropsValues.getUserId(),
+				remoteStagingGroupLayout.getGroupId(),
+				remoteStagingGroupLayout.getPlid()));
 	}
 
 	@Test

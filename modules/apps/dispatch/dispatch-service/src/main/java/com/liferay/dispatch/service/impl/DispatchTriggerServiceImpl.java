@@ -41,15 +41,15 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 
 	@Override
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, UnicodeProperties taskUnicodeProperties,
-			String taskType)
+			long userId, String name,
+			UnicodeProperties taskSettingsUnicodeProperties, String taskType)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
 			getPermissionChecker(), DispatchActionKeys.ADD_DISPATCH_TRIGGER);
 
 		return dispatchTriggerLocalService.addDispatchTrigger(
-			userId, name, false, taskUnicodeProperties, taskType);
+			userId, name, false, taskSettingsUnicodeProperties, taskType);
 	}
 
 	@Override
@@ -83,14 +83,14 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, String name,
-			UnicodeProperties taskUnicodeProperties)
+			UnicodeProperties taskSettingsUnicodeProperties)
 		throws PortalException {
 
 		_dispatchTriggerModelResourcePermission.check(
 			getPermissionChecker(), dispatchTriggerId, ActionKeys.UPDATE);
 
 		return dispatchTriggerLocalService.updateDispatchTrigger(
-			dispatchTriggerId, name, taskUnicodeProperties);
+			dispatchTriggerId, name, taskSettingsUnicodeProperties);
 	}
 
 	private static volatile ModelResourcePermission<DispatchTrigger>

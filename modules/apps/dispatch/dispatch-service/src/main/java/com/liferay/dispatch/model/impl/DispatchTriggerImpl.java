@@ -24,34 +24,34 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 	public DispatchTriggerImpl() {
 	}
 
-	public UnicodeProperties getTaskUnicodeProperties() {
-		if (_taskUnicodeProperties == null) {
-			_taskUnicodeProperties = new UnicodeProperties(true);
+	public UnicodeProperties getTaskSettingsUnicodeProperties() {
+		if (_taskSettingsUnicodeProperties == null) {
+			_taskSettingsUnicodeProperties = new UnicodeProperties(true);
 
-			_taskUnicodeProperties.fastLoad(getTaskProperties());
+			_taskSettingsUnicodeProperties.fastLoad(getTaskSettings());
 		}
 
-		return _taskUnicodeProperties;
+		return _taskSettingsUnicodeProperties;
 	}
 
-	public void setTaskProperties(String taskProperties) {
-		super.setTaskProperties(taskProperties);
+	public void setTaskSettings(String taskSettings) {
+		super.setTaskSettings(taskSettings);
 
-		_taskUnicodeProperties = null;
+		_taskSettingsUnicodeProperties = null;
 	}
 
-	public void setTaskUnicodeProperties(
-		UnicodeProperties taskUnicodeProperties) {
+	public void setTaskSettingsUnicodeProperties(
+		UnicodeProperties taskSettingsUnicodeProperties) {
 
-		_taskUnicodeProperties = taskUnicodeProperties;
+		_taskSettingsUnicodeProperties = taskSettingsUnicodeProperties;
 
-		if (_taskUnicodeProperties == null) {
-			_taskUnicodeProperties = new UnicodeProperties();
+		if (_taskSettingsUnicodeProperties == null) {
+			_taskSettingsUnicodeProperties = new UnicodeProperties();
 		}
 
-		super.setTaskProperties(_taskUnicodeProperties.toString());
+		super.setTaskSettings(_taskSettingsUnicodeProperties.toString());
 	}
 
-	private transient UnicodeProperties _taskUnicodeProperties;
+	private transient UnicodeProperties _taskSettingsUnicodeProperties;
 
 }

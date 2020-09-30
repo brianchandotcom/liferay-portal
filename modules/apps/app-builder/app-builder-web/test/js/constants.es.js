@@ -279,7 +279,7 @@ const dataDefinitionSelectField = {
 		en_US: 'Options',
 	},
 	name: 'SelectFromList',
-} 
+};
 
 export const DATA_DEFINITION_RESPONSES = {
 	ONE_ITEM: dataDefinition,
@@ -288,15 +288,12 @@ export const DATA_DEFINITION_RESPONSES = {
 		dataDefinitionFields: [
 			dataDefinitionField,
 			dataDefinitionSelectField,
-			dataDefinitionFieldSet
+			dataDefinitionFieldSet,
 		],
 	},
 	TWO_ITEMS: {
 		...dataDefinition,
-		dataDefinitionFields: [
-			dataDefinitionField,
-			dataDefinitionSelectField,
-		],
+		dataDefinitionFields: [dataDefinitionField, dataDefinitionSelectField],
 	},
 };
 

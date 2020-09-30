@@ -1028,7 +1028,8 @@ public class NodePlugin implements Plugin<Project> {
 			return false;
 		}
 
-		VersionNumber versionNumber = VersionNumber.parse(dependencyName);
+		VersionNumber versionNumber = VersionNumber.parse(
+			(String)devDependencies.get(dependencyName));
 
 		int majorVersion = versionNumber.getMajor();
 

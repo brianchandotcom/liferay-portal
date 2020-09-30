@@ -65,7 +65,7 @@
 		<column name="name" type="String" />
 		<column name="startDate" type="Date" />
 		<column name="system" type="boolean" />
-		<column name="taskProperties" type="String" />
+		<column name="taskSettings" type="String" />
 		<column name="taskType" type="String" />
 
 		<!-- Order -->

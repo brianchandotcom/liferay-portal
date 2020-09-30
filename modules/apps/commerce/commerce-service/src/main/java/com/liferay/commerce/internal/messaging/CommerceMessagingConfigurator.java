@@ -41,6 +41,8 @@ public class CommerceMessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_basePriceListServiceRegistration = _registerDestination(
+			bundleContext, "liferay/base_price_list");
 		_orderStatusServiceRegistration = _registerDestination(
 			bundleContext, CommerceDestinationNames.ORDER_STATUS);
 		_paymentStatusServiceRegistration = _registerDestination(
@@ -55,6 +57,10 @@ public class CommerceMessagingConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
+		if (_basePriceListServiceRegistration != null) {
+			_basePriceListServiceRegistration.unregister();
+		}
+
 		if (_orderStatusServiceRegistration != null) {
 			_orderStatusServiceRegistration.unregister();
 		}
@@ -93,6 +99,9 @@ public class CommerceMessagingConfigurator {
 		return bundleContext.registerService(
 			Destination.class, destination, dictionary);
 	}
+
+	private volatile ServiceRegistration<Destination>
+		_basePriceListServiceRegistration;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

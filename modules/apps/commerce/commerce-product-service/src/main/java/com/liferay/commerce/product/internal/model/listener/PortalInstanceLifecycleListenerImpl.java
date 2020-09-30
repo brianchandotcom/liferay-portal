@@ -21,6 +21,8 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Company;
 
 import java.util.List;
@@ -46,8 +48,17 @@ public class PortalInstanceLifecycleListenerImpl
 					company.getCompanyId(), true);
 
 			if (commerceCatalogs.isEmpty()) {
-				_commerceCatalogLocalService.addDefaultCommerceCatalog(
-					company.getCompanyId());
+				CommerceCatalog commerceCatalog =
+					_commerceCatalogLocalService.addDefaultCommerceCatalog(
+						company.getCompanyId());
+
+				Message message = new Message();
+
+				message.put(
+					"commerceCatalogId",
+					commerceCatalog.getCommerceCatalogId());
+
+				MessageBusUtil.sendMessage("liferay/base_price_list", message);
 			}
 		}
 		catch (PortalException portalException) {

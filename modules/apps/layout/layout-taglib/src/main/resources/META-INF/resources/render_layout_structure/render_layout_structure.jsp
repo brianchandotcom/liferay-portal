@@ -54,18 +54,31 @@ for (String childrenItemId : childrenItemIds) {
 							try {
 								request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, renderLayoutStructureDisplayContext.getCollectionLayoutDisplayPageProvider(collectionStyledLayoutStructureItem));
 
+								int columnIndex = 0;
+								int numberOfColumns = collectionStyledLayoutStructureItem.getNumberOfColumns();
+
+								int middleColumnIndex = numberOfColumns / 2;
+								int spareColumns = 12 % numberOfColumns;
+
 								for (Object collectionObject : renderLayoutStructureDisplayContext.getCollection(collectionStyledLayoutStructureItem)) {
 									request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collectionObject);
 									request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+
+									int size = 12 / numberOfColumns;
+
+									if (middleColumnIndex == columnIndex) {
+										size = size + spareColumns;
+									}
 							%>
 
 									<clay:col
-										md="<%= String.valueOf(12 / collectionStyledLayoutStructureItem.getNumberOfColumns()) %>"
+										md="<%= String.valueOf(size) %>"
 									>
 										<liferay-util:include page="/render_layout_structure/render_layout_structure.jsp" servletContext="<%= application %>" />
 									</clay:col>
 
 							<%
+										columnIndex = (columnIndex + 1) % numberOfColumns;
 								}
 							}
 							finally {

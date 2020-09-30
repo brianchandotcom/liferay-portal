@@ -71,6 +71,9 @@ const Grid = ({
 		maxNumberOfItems / collectionConfig.numberOfColumns
 	);
 
+	const middleIndex = Math.floor(collectionConfig.numberOfColumns / 2);
+	const spareColumns = 12 % collectionConfig.numberOfColumns;
+
 	return Array.from({length: numberOfRows}).map((_, i) => (
 		<ClayLayout.Row key={`row-${i}`}>
 			{Array.from({length: collectionConfig.numberOfColumns}).map(
@@ -78,11 +81,16 @@ const Grid = ({
 					const key = `col-${i}-${j}`;
 					const index = i * collectionConfig.numberOfColumns + j;
 
+					let size = Math.floor(
+						12 / collectionConfig.numberOfColumns
+					);
+
+					if (middleIndex === j) {
+						size += spareColumns;
+					}
+
 					return (
-						<ClayLayout.Col
-							key={key}
-							size={12 / collectionConfig.numberOfColumns}
-						>
+						<ClayLayout.Col key={key} size={size}>
 							{index < maxNumberOfItems && (
 								<ColumnContext
 									collectionConfig={collectionConfig}

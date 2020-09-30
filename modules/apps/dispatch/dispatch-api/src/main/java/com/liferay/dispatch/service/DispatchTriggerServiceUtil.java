@@ -40,12 +40,12 @@ public class DispatchTriggerServiceUtil {
 	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
 			long userId, String name,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				taskUnicodeProperties,
+				taskSettingsUnicodeProperties,
 			String taskType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addDispatchTrigger(
-			userId, name, taskUnicodeProperties, taskType);
+			userId, name, taskSettingsUnicodeProperties, taskType);
 	}
 
 	public static void deleteDispatchTrigger(long dispatchTriggerId)
@@ -82,11 +82,11 @@ public class DispatchTriggerServiceUtil {
 			updateDispatchTrigger(
 				long dispatchTriggerId, String name,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					taskUnicodeProperties)
+					taskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateDispatchTrigger(
-			dispatchTriggerId, name, taskUnicodeProperties);
+			dispatchTriggerId, name, taskSettingsUnicodeProperties);
 	}
 
 	public static DispatchTriggerService getService() {

@@ -55,7 +55,7 @@ public class DispatchTriggerWrapper
 		attributes.put("name", getName());
 		attributes.put("startDate", getStartDate());
 		attributes.put("system", isSystem());
-		attributes.put("taskProperties", getTaskProperties());
+		attributes.put("taskSettings", getTaskSettings());
 		attributes.put("taskType", getTaskType());
 
 		return attributes;
@@ -141,10 +141,10 @@ public class DispatchTriggerWrapper
 			setSystem(system);
 		}
 
-		String taskProperties = (String)attributes.get("taskProperties");
+		String taskSettings = (String)attributes.get("taskSettings");
 
-		if (taskProperties != null) {
-			setTaskProperties(taskProperties);
+		if (taskSettings != null) {
+			setTaskSettings(taskSettings);
 		}
 
 		String taskType = (String)attributes.get("taskType");
@@ -275,13 +275,20 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
-	 * Returns the task properties of this dispatch trigger.
+	 * Returns the task settings of this dispatch trigger.
 	 *
-	 * @return the task properties of this dispatch trigger
+	 * @return the task settings of this dispatch trigger
 	 */
 	@Override
-	public String getTaskProperties() {
-		return model.getTaskProperties();
+	public String getTaskSettings() {
+		return model.getTaskSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTaskSettingsUnicodeProperties() {
+
+		return model.getTaskSettingsUnicodeProperties();
 	}
 
 	/**
@@ -292,13 +299,6 @@ public class DispatchTriggerWrapper
 	@Override
 	public String getTaskType() {
 		return model.getTaskType();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTaskUnicodeProperties() {
-
-		return model.getTaskUnicodeProperties();
 	}
 
 	/**
@@ -477,13 +477,21 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
-	 * Sets the task properties of this dispatch trigger.
+	 * Sets the task settings of this dispatch trigger.
 	 *
-	 * @param taskProperties the task properties of this dispatch trigger
+	 * @param taskSettings the task settings of this dispatch trigger
 	 */
 	@Override
-	public void setTaskProperties(String taskProperties) {
-		model.setTaskProperties(taskProperties);
+	public void setTaskSettings(String taskSettings) {
+		model.setTaskSettings(taskSettings);
+	}
+
+	@Override
+	public void setTaskSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			taskSettingsUnicodeProperties) {
+
+		model.setTaskSettingsUnicodeProperties(taskSettingsUnicodeProperties);
 	}
 
 	/**
@@ -494,14 +502,6 @@ public class DispatchTriggerWrapper
 	@Override
 	public void setTaskType(String taskType) {
 		model.setTaskType(taskType);
-	}
-
-	@Override
-	public void setTaskUnicodeProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties
-			taskUnicodeProperties) {
-
-		model.setTaskUnicodeProperties(taskUnicodeProperties);
 	}
 
 	/**

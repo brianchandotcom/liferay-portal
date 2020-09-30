@@ -81,7 +81,7 @@ public interface DispatchTriggerLocalService
 
 	public DispatchTrigger addDispatchTrigger(
 			long userId, String name, boolean system,
-			UnicodeProperties taskUnicodeProperties, String taskType)
+			UnicodeProperties taskSettingsUnicodeProperties, String taskType)
 		throws PortalException;
 
 	/**
@@ -304,7 +304,7 @@ public interface DispatchTriggerLocalService
 
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, String name,
-			UnicodeProperties taskUnicodeProperties)
+			UnicodeProperties taskSettingsUnicodeProperties)
 		throws PortalException;
 
 }

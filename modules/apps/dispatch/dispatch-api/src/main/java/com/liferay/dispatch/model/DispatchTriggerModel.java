@@ -287,19 +287,19 @@ public interface DispatchTriggerModel
 	public void setSystem(boolean system);
 
 	/**
-	 * Returns the task properties of this dispatch trigger.
+	 * Returns the task settings of this dispatch trigger.
 	 *
-	 * @return the task properties of this dispatch trigger
+	 * @return the task settings of this dispatch trigger
 	 */
 	@AutoEscape
-	public String getTaskProperties();
+	public String getTaskSettings();
 
 	/**
-	 * Sets the task properties of this dispatch trigger.
+	 * Sets the task settings of this dispatch trigger.
 	 *
-	 * @param taskProperties the task properties of this dispatch trigger
+	 * @param taskSettings the task settings of this dispatch trigger
 	 */
-	public void setTaskProperties(String taskProperties);
+	public void setTaskSettings(String taskSettings);
 
 	/**
 	 * Returns the task type of this dispatch trigger.

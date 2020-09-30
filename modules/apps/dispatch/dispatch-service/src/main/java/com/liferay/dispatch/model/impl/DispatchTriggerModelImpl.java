@@ -79,7 +79,7 @@ public class DispatchTriggerModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
 		{"cronExpression", Types.VARCHAR}, {"endDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"startDate", Types.TIMESTAMP},
-		{"system_", Types.BOOLEAN}, {"taskProperties", Types.CLOB},
+		{"system_", Types.BOOLEAN}, {"taskSettings", Types.CLOB},
 		{"taskType", Types.VARCHAR}
 	};
 
@@ -100,12 +100,12 @@ public class DispatchTriggerModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("taskProperties", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("taskSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("taskType", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,endDate DATE null,name VARCHAR(75) null,startDate DATE null,system_ BOOLEAN,taskProperties TEXT null,taskType VARCHAR(75) null)";
+		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,endDate DATE null,name VARCHAR(75) null,startDate DATE null,system_ BOOLEAN,taskSettings TEXT null,taskType VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchTrigger";
 
@@ -188,7 +188,7 @@ public class DispatchTriggerModelImpl
 		model.setName(soapModel.getName());
 		model.setStartDate(soapModel.getStartDate());
 		model.setSystem(soapModel.isSystem());
-		model.setTaskProperties(soapModel.getTaskProperties());
+		model.setTaskSettings(soapModel.getTaskSettings());
 		model.setTaskType(soapModel.getTaskType());
 
 		return model;
@@ -407,11 +407,11 @@ public class DispatchTriggerModelImpl
 			"system",
 			(BiConsumer<DispatchTrigger, Boolean>)DispatchTrigger::setSystem);
 		attributeGetterFunctions.put(
-			"taskProperties", DispatchTrigger::getTaskProperties);
+			"taskSettings", DispatchTrigger::getTaskSettings);
 		attributeSetterBiConsumers.put(
-			"taskProperties",
+			"taskSettings",
 			(BiConsumer<DispatchTrigger, String>)
-				DispatchTrigger::setTaskProperties);
+				DispatchTrigger::setTaskSettings);
 		attributeGetterFunctions.put("taskType", DispatchTrigger::getTaskType);
 		attributeSetterBiConsumers.put(
 			"taskType",
@@ -688,22 +688,22 @@ public class DispatchTriggerModelImpl
 
 	@JSON
 	@Override
-	public String getTaskProperties() {
-		if (_taskProperties == null) {
+	public String getTaskSettings() {
+		if (_taskSettings == null) {
 			return "";
 		}
 		else {
-			return _taskProperties;
+			return _taskSettings;
 		}
 	}
 
 	@Override
-	public void setTaskProperties(String taskProperties) {
+	public void setTaskSettings(String taskSettings) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_taskProperties = taskProperties;
+		_taskSettings = taskSettings;
 	}
 
 	@JSON
@@ -802,7 +802,7 @@ public class DispatchTriggerModelImpl
 		dispatchTriggerImpl.setName(getName());
 		dispatchTriggerImpl.setStartDate(getStartDate());
 		dispatchTriggerImpl.setSystem(isSystem());
-		dispatchTriggerImpl.setTaskProperties(getTaskProperties());
+		dispatchTriggerImpl.setTaskSettings(getTaskSettings());
 		dispatchTriggerImpl.setTaskType(getTaskType());
 
 		dispatchTriggerImpl.resetOriginalValues();
@@ -957,12 +957,12 @@ public class DispatchTriggerModelImpl
 
 		dispatchTriggerCacheModel.system = isSystem();
 
-		dispatchTriggerCacheModel.taskProperties = getTaskProperties();
+		dispatchTriggerCacheModel.taskSettings = getTaskSettings();
 
-		String taskProperties = dispatchTriggerCacheModel.taskProperties;
+		String taskSettings = dispatchTriggerCacheModel.taskSettings;
 
-		if ((taskProperties != null) && (taskProperties.length() == 0)) {
-			dispatchTriggerCacheModel.taskProperties = null;
+		if ((taskSettings != null) && (taskSettings.length() == 0)) {
+			dispatchTriggerCacheModel.taskSettings = null;
 		}
 
 		dispatchTriggerCacheModel.taskType = getTaskType();
@@ -1060,7 +1060,7 @@ public class DispatchTriggerModelImpl
 	private String _name;
 	private Date _startDate;
 	private boolean _system;
-	private String _taskProperties;
+	private String _taskSettings;
 	private String _taskType;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1105,7 +1105,7 @@ public class DispatchTriggerModelImpl
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("startDate", _startDate);
 		_columnOriginalValues.put("system_", _system);
-		_columnOriginalValues.put("taskProperties", _taskProperties);
+		_columnOriginalValues.put("taskSettings", _taskSettings);
 		_columnOriginalValues.put("taskType", _taskType);
 	}
 
@@ -1157,7 +1157,7 @@ public class DispatchTriggerModelImpl
 
 		columnBitmasks.put("system_", 4096L);
 
-		columnBitmasks.put("taskProperties", 8192L);
+		columnBitmasks.put("taskSettings", 8192L);
 
 		columnBitmasks.put("taskType", 16384L);
 

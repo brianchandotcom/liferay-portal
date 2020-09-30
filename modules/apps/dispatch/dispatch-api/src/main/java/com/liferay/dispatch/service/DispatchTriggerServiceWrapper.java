@@ -36,12 +36,12 @@ public class DispatchTriggerServiceWrapper
 	public com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
 			long userId, String name,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				taskUnicodeProperties,
+				taskSettingsUnicodeProperties,
 			String taskType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchTriggerService.addDispatchTrigger(
-			userId, name, taskUnicodeProperties, taskType);
+			userId, name, taskSettingsUnicodeProperties, taskType);
 	}
 
 	@Override
@@ -80,11 +80,11 @@ public class DispatchTriggerServiceWrapper
 	public com.liferay.dispatch.model.DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, String name,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				taskUnicodeProperties)
+				taskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchTriggerService.updateDispatchTrigger(
-			dispatchTriggerId, name, taskUnicodeProperties);
+			dispatchTriggerId, name, taskSettingsUnicodeProperties);
 	}
 
 	@Override

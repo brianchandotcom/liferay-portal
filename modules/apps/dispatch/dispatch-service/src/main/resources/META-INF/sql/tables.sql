@@ -28,6 +28,6 @@ create table DispatchTrigger (
 	name VARCHAR(75) null,
 	startDate DATE null,
 	system_ BOOLEAN,
-	taskProperties TEXT null,
+	taskSettings TEXT null,
 	taskType VARCHAR(75) null
 );

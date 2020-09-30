@@ -46,7 +46,7 @@ public class DispatchTriggerSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setSystem(model.isSystem());
-		soapModel.setTaskProperties(model.getTaskProperties());
+		soapModel.setTaskSettings(model.getTaskSettings());
 		soapModel.setTaskType(model.getTaskType());
 
 		return soapModel;
@@ -219,12 +219,12 @@ public class DispatchTriggerSoap implements Serializable {
 		_system = system;
 	}
 
-	public String getTaskProperties() {
-		return _taskProperties;
+	public String getTaskSettings() {
+		return _taskSettings;
 	}
 
-	public void setTaskProperties(String taskProperties) {
-		_taskProperties = taskProperties;
+	public void setTaskSettings(String taskSettings) {
+		_taskSettings = taskSettings;
 	}
 
 	public String getTaskType() {
@@ -248,7 +248,7 @@ public class DispatchTriggerSoap implements Serializable {
 	private String _name;
 	private Date _startDate;
 	private boolean _system;
-	private String _taskProperties;
+	private String _taskSettings;
 	private String _taskType;
 
 }

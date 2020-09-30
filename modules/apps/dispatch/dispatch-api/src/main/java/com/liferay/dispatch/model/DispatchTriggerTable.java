@@ -62,9 +62,8 @@ public class DispatchTriggerTable extends BaseTable<DispatchTriggerTable> {
 		"startDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, Boolean> system = createColumn(
 		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<DispatchTriggerTable, Clob> taskProperties =
-		createColumn(
-			"taskProperties", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<DispatchTriggerTable, Clob> taskSettings = createColumn(
+		"taskSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, String> taskType = createColumn(
 		"taskType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 

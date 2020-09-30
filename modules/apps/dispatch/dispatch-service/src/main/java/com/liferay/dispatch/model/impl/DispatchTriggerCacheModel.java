@@ -106,8 +106,8 @@ public class DispatchTriggerCacheModel
 		sb.append(startDate);
 		sb.append(", system=");
 		sb.append(system);
-		sb.append(", taskProperties=");
-		sb.append(taskProperties);
+		sb.append(", taskSettings=");
+		sb.append(taskSettings);
 		sb.append(", taskType=");
 		sb.append(taskType);
 		sb.append("}");
@@ -177,11 +177,11 @@ public class DispatchTriggerCacheModel
 
 		dispatchTriggerImpl.setSystem(system);
 
-		if (taskProperties == null) {
-			dispatchTriggerImpl.setTaskProperties("");
+		if (taskSettings == null) {
+			dispatchTriggerImpl.setTaskSettings("");
 		}
 		else {
-			dispatchTriggerImpl.setTaskProperties(taskProperties);
+			dispatchTriggerImpl.setTaskSettings(taskSettings);
 		}
 
 		if (taskType == null) {
@@ -218,7 +218,7 @@ public class DispatchTriggerCacheModel
 		startDate = objectInput.readLong();
 
 		system = objectInput.readBoolean();
-		taskProperties = (String)objectInput.readObject();
+		taskSettings = (String)objectInput.readObject();
 		taskType = objectInput.readUTF();
 	}
 
@@ -264,11 +264,11 @@ public class DispatchTriggerCacheModel
 
 		objectOutput.writeBoolean(system);
 
-		if (taskProperties == null) {
+		if (taskSettings == null) {
 			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeObject(taskProperties);
+			objectOutput.writeObject(taskSettings);
 		}
 
 		if (taskType == null) {
@@ -292,7 +292,7 @@ public class DispatchTriggerCacheModel
 	public String name;
 	public long startDate;
 	public boolean system;
-	public String taskProperties;
+	public String taskSettings;
 	public String taskType;
 
 }

@@ -57,12 +57,12 @@ public class DispatchTriggerLocalServiceUtil {
 	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
 			long userId, String name, boolean system,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				taskUnicodeProperties,
+				taskSettingsUnicodeProperties,
 			String taskType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addDispatchTrigger(
-			userId, name, system, taskUnicodeProperties, taskType);
+			userId, name, system, taskSettingsUnicodeProperties, taskType);
 	}
 
 	/**
@@ -364,11 +364,11 @@ public class DispatchTriggerLocalServiceUtil {
 			updateDispatchTrigger(
 				long dispatchTriggerId, String name,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					taskUnicodeProperties)
+					taskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateDispatchTrigger(
-			dispatchTriggerId, name, taskUnicodeProperties);
+			dispatchTriggerId, name, taskSettingsUnicodeProperties);
 	}
 
 	public static DispatchTriggerLocalService getService() {

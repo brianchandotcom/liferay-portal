@@ -57,9 +57,10 @@ public interface DispatchTrigger extends DispatchTriggerModel, PersistedModel {
 		};
 
 	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTaskUnicodeProperties();
+		getTaskSettingsUnicodeProperties();
 
-	public void setTaskUnicodeProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties taskUnicodeProperties);
+	public void setTaskSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			taskSettingsUnicodeProperties);
 
 }

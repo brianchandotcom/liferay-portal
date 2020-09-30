@@ -31,7 +31,7 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 
 		_alterColumnName("type_", "taskType");
 
-		_alterColumnName("typeSettings", "taskProperties");
+		_alterColumnName("typeSettings", "taskSettings");
 	}
 
 	private void _alterColumnName(String oldColumnName, String newColumnName)

@@ -1012,14 +1012,23 @@ public class NodePlugin implements Plugin<Project> {
 		Map<String, Object> devDependencies =
 			(Map<String, Object>)packageJSONMap.get("devDependencies");
 
-		if ((devDependencies == null) ||
-			!devDependencies.containsKey("liferay-npm-scripts")) {
-
+		if (devDependencies == null) {
 			return false;
 		}
 
-		VersionNumber versionNumber = VersionNumber.parse(
-			(String)devDependencies.get("liferay-npm-scripts"));
+		String dependencyName = null;
+
+		if (devDependencies.containsKey("@liferay/npm-scripts")) {
+			dependencyName = "@liferay/npm-scripts";
+		}
+		else if (devDependencies.containsKey("liferay-npm-scripts")) {
+			dependencyName = "liferay-npm-scripts";
+		}
+		else {
+			return false;
+		}
+
+		VersionNumber versionNumber = VersionNumber.parse(dependencyName);
 
 		int majorVersion = versionNumber.getMajor();
 

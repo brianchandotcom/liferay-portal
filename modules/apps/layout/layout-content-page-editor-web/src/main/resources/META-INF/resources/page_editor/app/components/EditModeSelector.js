@@ -21,7 +21,7 @@ import selectCanSwitchEditMode from '../selectors/selectCanSwitchEditMode';
 import {useDispatch, useSelector} from '../store/index';
 
 const EDIT_MODES = {
-	contentEdition: Liferay.Language.get('content-edition'),
+	contentEditing: Liferay.Language.get('content-editing'),
 	pageDesign: Liferay.Language.get('page-design'),
 };
 
@@ -31,7 +31,7 @@ export default function EditModeSelector() {
 
 	const [active, setActive] = useState(false);
 	const [editMode, setEditMode] = useState(
-		canSwitchEditMode ? EDIT_MODES.pageDesign : EDIT_MODES.contentEdition
+		canSwitchEditMode ? EDIT_MODES.pageDesign : EDIT_MODES.contentEditing
 	);
 
 	return (
@@ -66,12 +66,12 @@ export default function EditModeSelector() {
 				<ClayDropDown.Item
 					onClick={() => {
 						setActive(false);
-						setEditMode(EDIT_MODES.contentEdition);
+						setEditMode(EDIT_MODES.contentEditing);
 
 						dispatch(togglePermission('UPDATE', false));
 					}}
 				>
-					{EDIT_MODES.contentEdition}
+					{EDIT_MODES.contentEditing}
 				</ClayDropDown.Item>
 			</ClayDropDown.ItemList>
 		</ClayDropDown>

@@ -33,7 +33,7 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 		`${namespace}openGraphImageAlt`
 	);
 	const openGraphImageAltFieldDefaultLocale = document.getElementById(
-		`${namespace}openGraphImageAlt_${Liferay.ThemeDisplay.getLanguageId()}`
+		`${namespace}openGraphImageAlt_${Liferay.ThemeDisplay.getDefaultLanguageId()}`
 	);
 	const openGraphImageAltLabel = document.querySelector(
 		`[for="${namespace}openGraphImageAlt"]`

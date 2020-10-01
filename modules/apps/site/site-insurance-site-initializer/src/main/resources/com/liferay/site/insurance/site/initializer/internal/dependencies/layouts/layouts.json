@@ -15,9 +15,6 @@
 		"path": "dashboard"
 	},
 	{
-		"path": "documents"
-	},
-	{
 		"path": "sign-in"
 	},
 	{
@@ -25,6 +22,9 @@
 	},
 	{
 		"path": "claims"
+	},
+	{
+		"path": "documents"
 	},
 	{
 		"path": "search"

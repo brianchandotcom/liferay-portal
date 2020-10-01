@@ -49,7 +49,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				"Lock_", "className", getClassNames(), WildcardMode.SURROUND);
 			upgradeTable(
 				"ResourceAction", "name", getClassNames(),
-				WildcardMode.SURROUND);
+				WildcardMode.SURROUND, true);
 			upgradeTable(
 				"ResourcePermission", "name", getClassNames(),
 				WildcardMode.SURROUND);
@@ -61,7 +61,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				"ListType", "type_", getClassNames(), WildcardMode.TRAILING);
 			upgradeTable(
 				"ResourceAction", "name", getResourceNames(),
-				WildcardMode.LEADING);
+				WildcardMode.LEADING, true);
 			upgradeTable(
 				"ResourcePermission", "name", getResourceNames(),
 				WildcardMode.LEADING);

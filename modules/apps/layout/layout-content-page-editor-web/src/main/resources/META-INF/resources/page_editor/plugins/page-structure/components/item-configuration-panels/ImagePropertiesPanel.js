@@ -12,14 +12,15 @@
  * details.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
-import React, {useEffect, useState} from 'react';
+import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
 import {config} from '../../../../app/config/index';
 import selectEditableValueContent from '../../../../app/selectors/selectEditableValueContent';
+import ImageService from '../../../../app/services/ImageService';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValues';
 import {useId} from '../../../../app/utils/useId';
@@ -29,6 +30,7 @@ import {getEditableItemPropTypes} from '../../../../prop-types/index';
 export function ImagePropertiesPanel({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;
 	const dispatch = useDispatch();
+	const imageConfigurationId = useId();
 	const imageDescriptionId = useId();
 	const state = useSelector((state) => state);
 
@@ -52,6 +54,15 @@ export function ImagePropertiesPanel({item}) {
 		editableConfig.alt || ''
 	);
 
+	const [imageConfiguration, setImageConfiguration] = useState('auto');
+
+	const [imageConfigurations, setImageConfigurations] = useState([
+		{
+			label: Liferay.Language.get('auto'),
+			value: 'auto',
+		},
+	]);
+
 	const editables = useSelector((state) => state.editables);
 
 	const editableElement = editables
@@ -63,12 +74,8 @@ export function ImagePropertiesPanel({item}) {
 	useEffect(() => {
 		if (editableElement != null) {
 			const setSize = () => {
-				if (
-					editableElement.naturalHeight &&
-					editableElement.naturalWidth
-				) {
+				if (editableElement.naturalWidth) {
 					setImageSize({
-						height: editableElement.naturalHeight,
 						width: editableElement.naturalWidth,
 					});
 				}
@@ -86,8 +93,42 @@ export function ImagePropertiesPanel({item}) {
 		}
 	}, [editableConfig.naturalHeight, editableElement, selectedViewportSize]);
 
+	const getAvailableImageConfigurations = useCallback(
+		(fileEntryId) => {
+			ImageService.getAvailableImageConfigurations({
+				fileEntryId,
+				onNetworkStatus: dispatch,
+			}).then((availableImageConfigurations) =>
+				setImageConfigurations([
+					{
+						label: Liferay.Language.get('auto'),
+						value: 'auto',
+					},
+					...availableImageConfigurations,
+				])
+			);
+		},
+		[dispatch]
+	);
+
 	useEffect(() => {
+		if (
+			editableValue[state.languageId] &&
+			editableValue[state.languageId].fileEntryId
+		) {
+			getAvailableImageConfigurations(
+				editableValue[state.languageId].fileEntryId
+			);
+		}
+
 		const editableConfig = editableValue ? editableValue.config || {} : {};
+
+		setImageConfiguration(
+			editableConfig.imageConfiguration
+				? editableConfig.imageConfiguration[selectedViewportSize] ||
+						'auto'
+				: 'auto'
+		);
 
 		setImageDescription((imageDescription) => {
 			if (imageDescription !== editableConfig.alt) {
@@ -96,7 +137,12 @@ export function ImagePropertiesPanel({item}) {
 
 			return imageDescription;
 		});
-	}, [editableValue]);
+	}, [
+		editableValue,
+		getAvailableImageConfigurations,
+		selectedViewportSize,
+		state.languageId,
+	]);
 
 	const imageUrl = useSelector((state) => {
 		const content = selectEditableValueContent(
@@ -196,6 +242,51 @@ export function ImagePropertiesPanel({item}) {
 				segmentsExperienceId: state.segmentsExperienceId,
 			})
 		);
+
+		if (fileEntryId > 0) {
+			getAvailableImageConfigurations(fileEntryId);
+		}
+	};
+
+	const onImageConfigurationChange = (event) => {
+		const {editableValues} = state.fragmentEntryLinks[fragmentEntryLinkId];
+
+		const editableProcessorValues = editableValues[processorKey];
+		const editableValue = editableProcessorValues[editableId];
+
+		const imageConfiguration =
+			editableValue.config.imageConfiguration || {};
+
+		imageConfiguration[selectedViewportSize] = event.target.value;
+
+		const nextEditableValueConfig = {
+			...editableValue.config,
+			imageConfiguration,
+		};
+
+		const nextEditableValue = {
+			...editableValue,
+			config: nextEditableValueConfig,
+		};
+
+		const nextEditableValues = {
+			...editableValues,
+
+			[processorKey]: {
+				...editableProcessorValues,
+				[editableId]: {
+					...nextEditableValue,
+				},
+			},
+		};
+
+		dispatch(
+			updateEditableValuesThunk({
+				editableValues: nextEditableValues,
+				fragmentEntryLinkId,
+				segmentsExperienceId: state.segmentsExperienceId,
+			})
+		);
 	};
 
 	return (
@@ -209,12 +300,26 @@ export function ImagePropertiesPanel({item}) {
 				}
 			/>
 
-			{imageTitle && imageSize && (
+			{imageConfigurations && imageConfigurations.length > 1 && (
+				<ClayForm.Group>
+					<label htmlFor={imageConfigurationId}>
+						{Liferay.Language.get('resolution')}
+					</label>
+					<ClaySelectWithOption
+						className={'form-control form-control-sm'}
+						id={imageConfigurationId}
+						name={imageConfigurationId}
+						onChange={onImageConfigurationChange}
+						options={imageConfigurations}
+						value={imageConfiguration}
+					/>
+				</ClayForm.Group>
+			)}
+
+			{imageUrl && imageSize && (
 				<div className="mb-2 small">
-					<b>{Liferay.Language.get('resolution')}:</b>
-					<span className="ml-2">
-						{imageSize.width}x{imageSize.height}px
-					</span>
+					<b>{Liferay.Language.get('width')}:</b>
+					<span className="ml-2">{imageSize.width}px</span>
 				</div>
 			)}
 

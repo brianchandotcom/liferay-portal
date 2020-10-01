@@ -83,7 +83,7 @@ export default ({data, height, totalEntries, width}) => {
 					<YAxis
 						dataKey="label"
 						stroke={blueDark}
-						tick={{fontSize: 14}}
+						tick={CustomizedYAxisTick}
 						tickLine={false}
 						tickMargin={16}
 						type="category"

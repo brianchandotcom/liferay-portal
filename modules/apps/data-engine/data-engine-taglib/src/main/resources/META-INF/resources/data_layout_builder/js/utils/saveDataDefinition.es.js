@@ -27,7 +27,8 @@ const normalizeField = (availableLanguageIds, field) => {
 
 	const toArray = (value) =>
 		availableLanguageIds.reduce((accumulator, currentValue) => {
-			accumulator[currentValue] = value[currentValue] || '';
+			accumulator[currentValue] =
+				value[currentValue] || value[defaultLanguageId] || '';
 
 			return accumulator;
 		}, {});

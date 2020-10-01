@@ -13,8 +13,6 @@
  */
 
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
-import dom from 'metal-dom';
-import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 
 import {sub} from '../../util/strings.es';
@@ -22,27 +20,6 @@ import formBuilderProps from './props.es';
 
 const withEditablePageHeader = (ChildComponent) => {
 	class EditablePageHeader extends Component {
-		attached() {
-			this._eventHandler = new EventHandler();
-
-			this._eventHandler.add(
-				this.delegate(
-					'input',
-					'.form-builder-page-header-title',
-					this._handlePageTitleChanged.bind(this)
-				),
-				this.delegate(
-					'input',
-					'.form-builder-page-header-description',
-					this._handlePageDescriptionChanged.bind(this)
-				)
-			);
-		}
-
-		disposed() {
-			this._eventHandler.removeAllListeners();
-		}
-
 		getPages() {
 			const {pages} = this.props;
 			const total = pages.length;
@@ -73,72 +50,6 @@ const withEditablePageHeader = (ChildComponent) => {
 				<div>
 					<ChildComponent {...this.props} pages={this.getPages()} />
 				</div>
-			);
-		}
-
-		_getPageNumber(node) {
-			let pageNumber;
-
-			const element = dom.closest(node, '[data-ddm-page]');
-
-			if (element) {
-				pageNumber = parseInt(element.dataset.ddmPage, 10);
-			}
-
-			return pageNumber;
-		}
-
-		_handlePageDescriptionChanged(event) {
-			const {editingLanguageId, pages} = this.props;
-			const {delegateTarget, target} = event;
-			const {dispatch} = this.context;
-			const currentPage = this._getPageNumber(target);
-			const value = delegateTarget.value;
-			const visitor = new PagesVisitor(pages);
-
-			dispatch(
-				'pagesUpdated',
-				visitor.mapPages((page, pageIndex) => {
-					if (pageIndex === currentPage) {
-						page = {
-							...page,
-							description: value,
-							localizedDescription: {
-								...page.localizedDescription,
-								[editingLanguageId]: value,
-							},
-						};
-					}
-
-					return page;
-				})
-			);
-		}
-
-		_handlePageTitleChanged(event) {
-			const {editingLanguageId, pages} = this.props;
-			const {delegateTarget, target} = event;
-			const {dispatch} = this.context;
-			const currentPage = this._getPageNumber(target);
-			const value = delegateTarget.value;
-			const visitor = new PagesVisitor(pages);
-
-			dispatch(
-				'pagesUpdated',
-				visitor.mapPages((page, pageIndex) => {
-					if (pageIndex === currentPage) {
-						page = {
-							...page,
-							localizedTitle: {
-								...page.localizedTitle,
-								[editingLanguageId]: value,
-							},
-							title: value,
-						};
-					}
-
-					return page;
-				})
 			);
 		}
 	}

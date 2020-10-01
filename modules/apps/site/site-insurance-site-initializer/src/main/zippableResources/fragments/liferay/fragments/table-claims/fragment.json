@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Table Claims",
+	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

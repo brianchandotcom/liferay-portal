@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Policy Content",
+	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

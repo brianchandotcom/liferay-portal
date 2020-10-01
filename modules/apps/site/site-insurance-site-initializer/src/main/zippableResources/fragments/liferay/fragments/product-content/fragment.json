@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Claim Content",
+	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

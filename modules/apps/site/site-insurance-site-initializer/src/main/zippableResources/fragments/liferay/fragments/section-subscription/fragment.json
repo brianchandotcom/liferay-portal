@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Section Subscription",
+	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

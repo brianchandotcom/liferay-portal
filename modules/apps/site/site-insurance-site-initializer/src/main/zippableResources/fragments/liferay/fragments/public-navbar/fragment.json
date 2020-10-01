@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Public Navbar",
+	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

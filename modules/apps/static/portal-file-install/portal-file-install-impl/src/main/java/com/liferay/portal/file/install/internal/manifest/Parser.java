@@ -33,7 +33,7 @@ public class Parser {
 	public static Map<String, Map<String, String>> parseHeader(String header)
 		throws IllegalArgumentException {
 
-		String[] imports = _parseDelimitedString(header, StringPool.COMMA);
+		String[] imports = _parseDelimitedString(header, CharPool.COMMA);
 
 		Map<String, Map<String, String>> clauses = _parseImports(imports);
 
@@ -45,39 +45,32 @@ public class Parser {
 	}
 
 	private static String[] _parseDelimitedString(
-		String value, String delimiter) {
+		String value, char delimiter) {
 
 		if (value == null) {
-			value = "";
+			return new String[0];
 		}
 
 		List<String> strings = new ArrayList<>();
 
 		StringBundler sb = new StringBundler();
 
-		int expecting = _DELIMITER | _STARTQUOTE;
+		boolean inQuotes = false;
 
 		for (int i = 0; i < value.length(); i++) {
 			char c = value.charAt(i);
 
-			if ((delimiter.indexOf(c) != -1) &&
-				((expecting & _DELIMITER) > 0)) {
-
+			if ((c == delimiter) && !inQuotes) {
 				String string = sb.toString();
 
 				strings.add(string.trim());
 
 				sb = new StringBundler();
+			}
+			else if (c == CharPool.QUOTE) {
+				sb.append(c);
 
-				expecting = _DELIMITER | _STARTQUOTE;
-			}
-			else if ((c == CharPool.QUOTE) && ((expecting & _STARTQUOTE) > 0)) {
-				sb.append(c);
-				expecting = _ENDQUOTE;
-			}
-			else if ((c == CharPool.QUOTE) && ((expecting & _ENDQUOTE) > 0)) {
-				sb.append(c);
-				expecting = _STARTQUOTE | _DELIMITER;
+				inQuotes = !inQuotes;
 			}
 			else {
 				sb.append(c);
@@ -106,8 +99,7 @@ public class Parser {
 		Map<String, Map<String, String>> finalImports = new HashMap<>();
 
 		for (String clause : imports) {
-			String[] tokens = _parseDelimitedString(
-				clause, StringPool.SEMICOLON);
+			String[] tokens = _parseDelimitedString(clause, CharPool.SEMICOLON);
 
 			int pathCount = 0;
 
@@ -168,11 +160,5 @@ public class Parser {
 
 		return finalImports;
 	}
-
-	private static final int _DELIMITER = 2;
-
-	private static final int _ENDQUOTE = 8;
-
-	private static final int _STARTQUOTE = 4;
 
 }

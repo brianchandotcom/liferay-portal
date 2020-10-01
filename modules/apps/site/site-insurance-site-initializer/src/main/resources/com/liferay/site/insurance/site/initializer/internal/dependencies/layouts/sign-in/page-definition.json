@@ -64,10 +64,5 @@
 			}
 		],
 		"type": "Root"
-	},
-	"settings": {
-		"masterPage": {
-			"key": "customer-portal"
-		}
 	}
 }

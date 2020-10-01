@@ -241,8 +241,13 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				typeSettingsUnicodeProperties.toString());
 		}
 
-		draftLayout = _updateLayoutTypeSettings(
-			draftLayout, pageDefinitionJSONObject.getJSONObject("settings"));
+		JSONObject settingsJSONObject = pageDefinitionJSONObject.getJSONObject(
+			"settings");
+
+		if (settingsJSONObject != null) {
+			draftLayout = _updateLayoutTypeSettings(
+				draftLayout, settingsJSONObject);
+		}
 
 		layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
 

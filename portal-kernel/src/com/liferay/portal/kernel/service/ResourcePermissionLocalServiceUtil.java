@@ -481,6 +481,14 @@ public class ResourcePermissionLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static java.util.Map
+		<String,
+		 java.util.List<com.liferay.portal.kernel.model.ResourcePermission>>
+			getIndividualPortletResourcePermissions(long companyId) {
+
+		return getService().getIndividualPortletResourcePermissions(companyId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

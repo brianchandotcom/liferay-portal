@@ -429,6 +429,10 @@ public interface ResourcePermissionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<String, List<ResourcePermission>>
+		getIndividualPortletResourcePermissions(long companyId);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -118,6 +118,20 @@ public class ViewCountEntryLocalServiceImpl
 		}
 	}
 
+	@Override
+	public boolean isViewCountEnabled() {
+		return PropsValues.VIEW_COUNT_ENABLED;
+	}
+
+	@Override
+	public boolean isViewCountEnabled(long classNameId) {
+		if (_disabledClassNameIds.contains(classNameId)) {
+			return false;
+		}
+
+		return isViewCountEnabled();
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -140,14 +154,6 @@ public class ViewCountEntryLocalServiceImpl
 				_disabledClassNameIds.add(className.getClassNameId());
 			}
 		}
-	}
-
-	protected boolean isViewCountEnabled(long classNameId) {
-		if (_disabledClassNameIds.contains(classNameId)) {
-			return false;
-		}
-
-		return PropsValues.VIEW_COUNT_ENABLED;
 	}
 
 	@Reference

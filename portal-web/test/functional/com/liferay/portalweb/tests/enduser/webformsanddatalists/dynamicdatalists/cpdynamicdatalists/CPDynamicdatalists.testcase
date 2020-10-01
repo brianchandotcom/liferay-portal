@@ -224,7 +224,7 @@ definition {
 			fieldName = "firstName");
 
 		DDLRecord.populateFieldSelect(
-			ddlRecordFieldData = "Google Talk",
+			ddlRecordFieldData = "Google Hangouts",
 			fieldFieldLabel = "Instant Messenger Service",
 			fieldName = "imService");
 

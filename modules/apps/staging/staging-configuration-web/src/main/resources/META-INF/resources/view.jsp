@@ -42,109 +42,117 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.MANAGE_STAGING) && GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.VIEW_STAGING) %>">
 		<%@ include file="/staging_configuration_exceptions.jspf" %>
 
-		<clay:sheet
-			cssClass="custom-sheet"
+		<clay:container-fluid
+			cssClass="main-content-body"
 		>
-			<liferay-ui:success key="stagingDisabled" message="staging-is-successfully-disabled" />
+			<liferay-ui:breadcrumb
+				showLayout="<%= false %>"
+			/>
 
-			<liferay-ui:success key="localStagingModified" message="local-staging-configuration-is-successfully-modified" />
+			<clay:sheet
+				cssClass="custom-sheet"
+			>
+				<liferay-ui:success key="stagingDisabled" message="staging-is-successfully-disabled" />
 
-			<liferay-ui:success key="remoteStagingModified" message="remote-staging-configuration-is-successfully-modified" />
+				<liferay-ui:success key="localStagingModified" message="local-staging-configuration-is-successfully-modified" />
 
-			<portlet:actionURL name="editStagingConfiguration" var="editStagingConfigurationURL">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-			</portlet:actionURL>
+				<liferay-ui:success key="remoteStagingModified" message="remote-staging-configuration-is-successfully-modified" />
 
-			<portlet:renderURL var="redirectURL">
-				<portlet:param name="mvcRenderCommandName" value="staging" />
-			</portlet:renderURL>
+				<portlet:actionURL name="editStagingConfiguration" var="editStagingConfigurationURL">
+					<portlet:param name="mvcPath" value="/view.jsp" />
+				</portlet:actionURL>
 
-			<aui:form action="<%= editStagingConfigurationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveGroup();" %>'>
-				<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-				<aui:input name="groupId" type="hidden" value="<%= liveGroupId %>" />
-				<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
-				<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
-				<aui:input name="forceDisable" type="hidden" value="<%= false %>" />
+				<portlet:renderURL var="redirectURL">
+					<portlet:param name="mvcRenderCommandName" value="staging" />
+				</portlet:renderURL>
 
-				<c:if test="<%= !privateLayoutSet.isLayoutSetPrototypeLinkActive() && !publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
-					<clay:sheet-header>
-						<div class="sheet-title">
-							<liferay-ui:message key="javax.portlet.title.com_liferay_staging_configuration_web_portlet_StagingConfigurationPortlet" />
-						</div>
-					</clay:sheet-header>
+				<aui:form action="<%= editStagingConfigurationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveGroup();" %>'>
+					<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+					<aui:input name="groupId" type="hidden" value="<%= liveGroupId %>" />
+					<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
+					<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
+					<aui:input name="forceDisable" type="hidden" value="<%= false %>" />
 
-					<%@ include file="/staging_configuration_select_staging_type.jspf" %>
-
-					<%@ include file="/staging_configuration_remote_options.jspf" %>
-
-					<%@ include file="/staging_configuration_staged_portlets.jspf" %>
-
-					<clay:sheet-footer>
-						<div class="btn-group-item">
-							<div class="btn-group-item">
-								<button class="btn btn-primary">
-									<span class="lfr-btn-label">
-										<%= LanguageUtil.get(request, "save") %>
-									</span>
-								</button>
+					<c:if test="<%= !privateLayoutSet.isLayoutSetPrototypeLinkActive() && !publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
+						<clay:sheet-header>
+							<div class="sheet-title">
+								<liferay-ui:message key="javax.portlet.title.com_liferay_staging_configuration_web_portlet_StagingConfigurationPortlet" />
 							</div>
-						</div>
-					</clay:sheet-footer>
+						</clay:sheet-header>
 
-					<aui:script require="metal-dom/src/dom as dom">
-						var pwcWarning = document.getElementById('<portlet:namespace />pwcWarning');
-						var remoteStagingOptions = document.getElementById(
-							'<portlet:namespace />remoteStagingOptions'
-						);
-						var stagedPortlets = document.getElementById(
-							'<portlet:namespace />stagedPortlets'
-						);
-						var trashWarning = document.getElementById('<portlet:namespace />trashWarning');
-						var stagingTypes = document.getElementById('<portlet:namespace />stagingTypes');
+						<%@ include file="/staging_configuration_select_staging_type.jspf" %>
 
-						if (
-							stagingTypes &&
-							pwcWarning &&
-							stagedPortlets &&
-							remoteStagingOptions &&
-							trashWarning
-						) {
-							dom.delegate(stagingTypes, 'click', 'input', function (event) {
-								var value = event.delegateTarget.value;
+						<%@ include file="/staging_configuration_remote_options.jspf" %>
 
-								if (value != '<%= StagingConstants.TYPE_LOCAL_STAGING %>') {
-									pwcWarning.classList.add('hide');
-								}
-								else {
-									pwcWarning.classList.remove('hide');
-								}
+						<%@ include file="/staging_configuration_staged_portlets.jspf" %>
 
-								if (value == '<%= StagingConstants.TYPE_NOT_STAGED %>') {
-									stagedPortlets.classList.add('hide');
-								}
-								else {
-									stagedPortlets.classList.remove('hide');
-								}
+						<clay:sheet-footer>
+							<div class="btn-group-item">
+								<div class="btn-group-item">
+									<button class="btn btn-primary">
+										<span class="lfr-btn-label">
+											<%= LanguageUtil.get(request, "save") %>
+										</span>
+									</button>
+								</div>
+							</div>
+						</clay:sheet-footer>
 
-								if (value != '<%= StagingConstants.TYPE_REMOTE_STAGING %>') {
-									remoteStagingOptions.classList.add('hide');
-								}
-								else {
-									remoteStagingOptions.classList.remove('hide');
-								}
+						<aui:script require="metal-dom/src/dom as dom">
+							var pwcWarning = document.getElementById('<portlet:namespace />pwcWarning');
+							var remoteStagingOptions = document.getElementById(
+								'<portlet:namespace />remoteStagingOptions'
+							);
+							var stagedPortlets = document.getElementById(
+								'<portlet:namespace />stagedPortlets'
+							);
+							var trashWarning = document.getElementById('<portlet:namespace />trashWarning');
+							var stagingTypes = document.getElementById('<portlet:namespace />stagingTypes');
 
-								if (value != '<%= StagingConstants.TYPE_LOCAL_STAGING %>') {
-									trashWarning.classList.add('hide');
-								}
-								else {
-									trashWarning.classList.remove('hide');
-								}
-							});
-						}
-					</aui:script>
-				</c:if>
-			</aui:form>
-		</clay:sheet>
+							if (
+								stagingTypes &&
+								pwcWarning &&
+								stagedPortlets &&
+								remoteStagingOptions &&
+								trashWarning
+							) {
+								dom.delegate(stagingTypes, 'click', 'input', function (event) {
+									var value = event.delegateTarget.value;
+
+									if (value != '<%= StagingConstants.TYPE_LOCAL_STAGING %>') {
+										pwcWarning.classList.add('hide');
+									}
+									else {
+										pwcWarning.classList.remove('hide');
+									}
+
+									if (value == '<%= StagingConstants.TYPE_NOT_STAGED %>') {
+										stagedPortlets.classList.add('hide');
+									}
+									else {
+										stagedPortlets.classList.remove('hide');
+									}
+
+									if (value != '<%= StagingConstants.TYPE_REMOTE_STAGING %>') {
+										remoteStagingOptions.classList.add('hide');
+									}
+									else {
+										remoteStagingOptions.classList.remove('hide');
+									}
+
+									if (value != '<%= StagingConstants.TYPE_LOCAL_STAGING %>') {
+										trashWarning.classList.add('hide');
+									}
+									else {
+										trashWarning.classList.remove('hide');
+									}
+								});
+							}
+						</aui:script>
+					</c:if>
+				</aui:form>
+			</clay:sheet>
+		</clay:container-fluid>
 	</c:when>
 	<c:otherwise>
 		<liferay-staging:alert

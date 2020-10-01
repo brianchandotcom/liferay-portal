@@ -19,5 +19,9 @@
 <clay:container-fluid
 	id='<%= liferayPortletResponse.getNamespace() + "scheduledProcessesContainer" %>'
 >
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+	/>
+
 	<liferay-util:include page="/scheduled_list/scheduled_publish_processes.jsp" servletContext="<%= application %>" />
 </clay:container-fluid>

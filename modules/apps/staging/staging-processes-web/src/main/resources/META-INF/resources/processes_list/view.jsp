@@ -44,6 +44,10 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	<clay:container-fluid
 		id='<%= liferayPortletResponse.getNamespace() + "processesContainer" %>'
 	>
+		<liferay-ui:breadcrumb
+			showLayout="<%= false %>"
+		/>
+
 		<liferay-util:include page="/processes_list/publish_layouts_processes.jsp" servletContext="<%= application %>" />
 	</clay:container-fluid>
 </div>

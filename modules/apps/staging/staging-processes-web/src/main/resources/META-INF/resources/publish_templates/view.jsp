@@ -69,6 +69,10 @@ StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPubl
 	cssClass="closed sidenav-container sidenav-right"
 	id='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 >
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+	/>
+
 	<aui:form action="<%= portletURL %>">
 		<liferay-ui:search-container
 			searchContainer="<%= stagingProcessesWebPublishTemplatesToolbarDisplayContext.getSearchContainer() %>"

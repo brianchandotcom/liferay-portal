@@ -16,6 +16,8 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionConstants;
+import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
@@ -772,6 +775,43 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		return availableActionIds;
+	}
+
+	@Override
+	public Map<String, List<ResourcePermission>>
+		getIndividualPortletResourcePermissions(long companyId) {
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			ResourcePermissionTable.INSTANCE
+		).from(
+			ResourcePermissionTable.INSTANCE
+		).where(
+			ResourcePermissionTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				ResourcePermissionTable.INSTANCE.scope.eq(
+					ResourceConstants.SCOPE_INDIVIDUAL)
+			).and(
+				ResourcePermissionTable.INSTANCE.name.eq(
+					ResourcePermissionTable.INSTANCE.primKey)
+			)
+		);
+
+		Map<String, List<ResourcePermission>> resourcePermissionsMap =
+			new HashMap<>();
+
+		for (ResourcePermission resourcePermission :
+				resourcePermissionPersistence.
+					<List<ResourcePermission>>dslQuery(dslQuery)) {
+
+			List<ResourcePermission> resourcePermissions =
+				resourcePermissionsMap.computeIfAbsent(
+					resourcePermission.getName(), key -> new ArrayList<>());
+
+			resourcePermissions.add(resourcePermission);
+		}
+
+		return resourcePermissionsMap;
 	}
 
 	/**

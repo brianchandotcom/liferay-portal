@@ -93,7 +93,6 @@ export const PageHeader = ({
 		<div>
 			<input
 				className="form-builder-page-header-title form-control p-0"
-				defaultValue={title}
 				maxLength="120"
 				onChange={(event) => {
 					const {value} = event.target;
@@ -106,7 +105,6 @@ export const PageHeader = ({
 			/>
 			<input
 				className="form-builder-page-header-description form-control p-0"
-				defaultValue={description}
 				maxLength="120"
 				onChange={(event) => {
 					const {value} = event.target;

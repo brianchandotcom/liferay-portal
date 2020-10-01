@@ -14,6 +14,13 @@
 
 export default [
 	{
+		description: 'Add a short description for this page.',
+		localizedDescription: {
+			en_US: 'Add a short description for this page.',
+		},
+		localizedTitle: {
+			en_US: 'Page title',
+		},
 		rows: [
 			{
 				columns: [
@@ -186,6 +193,6 @@ export default [
 				],
 			},
 		],
-		title: 'Untitled name',
+		title: 'Page title',
 	},
 ];

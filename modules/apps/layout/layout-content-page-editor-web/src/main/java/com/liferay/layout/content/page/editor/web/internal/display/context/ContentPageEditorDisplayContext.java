@@ -366,6 +366,10 @@ public class ContentPageEditorDisplayContext {
 						_getDefaultStyleBookEntry());
 				}
 			).put(
+				"getAvailableImageConfigurationsURL",
+				getResourceURL(
+					"/content_layout/get_available_image_configurations")
+			).put(
 				"getAvailableListItemRenderersURL",
 				getResourceURL(
 					"/content_layout/get_available_list_item_renderers")

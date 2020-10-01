@@ -171,6 +171,34 @@ public class AssetDisplayPageEntryServiceSoap {
 		}
 	}
 
+	public static
+		com.liferay.asset.display.page.model.AssetDisplayPageEntrySoap[]
+				getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+					long layoutPageTemplateEntryId, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.asset.display.page.model.
+							AssetDisplayPageEntry> orderByComparator)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.asset.display.page.model.AssetDisplayPageEntry>
+					returnValue =
+						AssetDisplayPageEntryServiceUtil.
+							getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+								layoutPageTemplateEntryId, start, end,
+								orderByComparator);
+
+			return com.liferay.asset.display.page.model.
+				AssetDisplayPageEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int
 			getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
 				long layoutPageTemplateEntryId)

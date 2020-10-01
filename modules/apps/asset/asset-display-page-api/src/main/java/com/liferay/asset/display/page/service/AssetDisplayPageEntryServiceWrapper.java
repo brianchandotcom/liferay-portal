@@ -87,6 +87,18 @@ public class AssetDisplayPageEntryServiceWrapper
 	}
 
 	@Override
+	public java.util.List<AssetDisplayPageEntry>
+		getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+			long layoutPageTemplateEntryId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetDisplayPageEntry> orderByComparator) {
+
+		return _assetDisplayPageEntryService.
+			getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+				layoutPageTemplateEntryId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
 		long layoutPageTemplateEntryId) {
 

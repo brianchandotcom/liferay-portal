@@ -327,6 +327,18 @@ public class AssetDisplayPageEntryLocalServiceWrapper
 				layoutPageTemplateEntryId);
 	}
 
+	@Override
+	public java.util.List<AssetDisplayPageEntry>
+		getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+			long layoutPageTemplateEntryId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetDisplayPageEntry> orderByComparator) {
+
+		return _assetDisplayPageEntryLocalService.
+			getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+				layoutPageTemplateEntryId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the asset display page entries matching the UUID and company.
 	 *

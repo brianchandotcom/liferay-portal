@@ -292,6 +292,13 @@ public class AssetDisplayPageEntryWrapper
 		return model.getPrimaryKey();
 	}
 
+	@Override
+	public String getTitle(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getTitle(locale);
+	}
+
 	/**
 	 * Returns the type of this asset display page entry.
 	 *

@@ -45,8 +45,9 @@ type GettableProperties =
 	| 'css'
 	| 'defaultLanguageId'
 	| 'isControlPanel'
-	| 'languageId'
 	| 'isSignedIn'
+	| 'languageId'
+	| 'siteGroupId'
 	| 'userId'
 	| 'userName';
 

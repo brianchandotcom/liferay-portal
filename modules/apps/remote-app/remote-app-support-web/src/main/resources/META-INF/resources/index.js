@@ -257,11 +257,14 @@ function receiveMessage(event) {
 
 						value = Liferay.ThemeDisplay.isControlPanel();
 					}
+					else if (property === 'isSignedIn') {
+						value = Liferay.ThemeDisplay.isSignedIn();
+					}
 					else if (property === 'languageId') {
 						value = Liferay.ThemeDisplay.getLanguageId();
 					}
-					else if (property === 'isSignedIn') {
-						value = Liferay.ThemeDisplay.isSignedIn();
+					else if (property === 'siteGroupId') {
+						value = Liferay.ThemeDisplay.getSiteGroupId();
 					}
 					else if (property === 'userId') {
 						value = Liferay.ThemeDisplay.getUserId();

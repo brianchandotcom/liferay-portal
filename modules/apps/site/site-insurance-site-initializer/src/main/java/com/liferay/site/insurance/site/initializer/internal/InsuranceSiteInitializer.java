@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -586,15 +587,23 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			Map<String, String> stringValuesMap)
 		throws Exception {
 
-		String content = StringUtil.read(url.openStream());
+		if (_isReplaceableTokenFileExtension(url)) {
+			String content = StringUtil.read(url.openStream());
 
-		content = StringUtil.replace(content, "\"£", "£\"", numberValuesMap);
+			content = StringUtil.replace(
+				content, "\"£", "£\"", numberValuesMap);
 
-		content = StringUtil.replace(
-			content, StringPool.DOLLAR, StringPool.DOLLAR, stringValuesMap);
+			content = StringUtil.replace(
+				content, StringPool.DOLLAR, StringPool.DOLLAR, stringValuesMap);
 
-		zipWriter.addEntry(
-			StringUtil.removeSubstring(url.getPath(), _PATH), content);
+			zipWriter.addEntry(
+				StringUtil.removeSubstring(url.getPath(), _PATH), content);
+		}
+		else {
+			zipWriter.addEntry(
+				StringUtil.removeSubstring(url.getPath(), _PATH),
+				url.openStream());
+		}
 	}
 
 	private void _createServiceContext(long groupId) throws Exception {
@@ -789,6 +798,16 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private boolean _isReplaceableTokenFileExtension(URL url) {
+		String filePath = url.getPath();
+
+		int index = filePath.lastIndexOf(".");
+
+		String extension = filePath.substring(index);
+
+		return ArrayUtil.contains(_REPLACEABLE_TOKEN_FILE_EXTENSION, extension);
+	}
+
 	private void _populateZipWriter(
 			ZipWriter zipWriter, URL url, Map<String, String> numberValuesMap,
 			Map<String, String> stringValuesMap)
@@ -940,6 +959,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	private static final String _PATH =
 		"com/liferay/site/insurance/site/initializer/internal/dependencies";
+
+	private static final String[] _REPLACEABLE_TOKEN_FILE_EXTENSION = {
+		".ftl", ".json", ".xml"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InsuranceSiteInitializer.class);

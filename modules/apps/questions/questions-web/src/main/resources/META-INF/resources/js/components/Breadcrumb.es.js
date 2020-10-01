@@ -24,6 +24,7 @@ import {
 	getSectionQuery,
 } from '../utils/client.es';
 import {historyPushWithSlug, stringToSlug} from '../utils/utils.es';
+import Alert from './Alert.es';
 import BreadcrumbNode from './BreadcrumbNode.es';
 import NewTopicModal from './NewTopicModal.es';
 
@@ -35,6 +36,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 	const MAX_SECTIONS_IN_BREADCRUMB = 3;
 	const historyPushParser = historyPushWithSlug(history.push);
 	const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);
+	const [error, setError] = useState({});
 	const [visible, setVisible] = useState(false);
 
 	const getSubSections = (section) =>
@@ -119,40 +121,44 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 	}, [buildBreadcrumbNodesData, rootTopicId, section]);
 
 	return (
-		<section className="align-items-center d-flex mb-0 questions-breadcrumb">
-			<ol className="breadcrumb m-0">
-				{breadcrumbNodes.length > MAX_SECTIONS_IN_BREADCRUMB ? (
-					<ShortenedBreadcrumb />
-				) : (
-					<AllBreadcrumb />
+		<>
+			<section className="align-items-center d-flex mb-0 questions-breadcrumb">
+				<ol className="breadcrumb m-0">
+					{breadcrumbNodes.length > MAX_SECTIONS_IN_BREADCRUMB ? (
+						<ShortenedBreadcrumb />
+					) : (
+						<AllBreadcrumb />
+					)}
+				</ol>
+				{((section &&
+					section.actions &&
+					section.actions['add-subcategory']) ||
+					allowCreateTopicInRootTopic) && (
+					<>
+						<NewTopicModal
+							currentSectionId={section && section.id}
+							onClose={() => setVisible(false)}
+							onCreateNavigateTo={(topic) =>
+								historyPushParser(
+									`/questions/${stringToSlug(topic)}`
+								)
+							}
+							setError={setError}
+							visible={visible}
+						/>
+						<ClayButton
+							className="breadcrumb-button c-ml-3 c-p-2"
+							displayType="unstyled"
+							onClick={() => setVisible(true)}
+						>
+							<ClayIcon className="c-mr-2" symbol="plus" />
+							{Liferay.Language.get('new-topic')}
+						</ClayButton>
+					</>
 				)}
-			</ol>
-			{((section &&
-				section.actions &&
-				section.actions['add-subcategory']) ||
-				allowCreateTopicInRootTopic) && (
-				<>
-					<NewTopicModal
-						currentSectionId={section && section.id}
-						onClose={() => setVisible(false)}
-						onCreateNavigateTo={(topic) =>
-							historyPushParser(
-								`/questions/${stringToSlug(topic)}`
-							)
-						}
-						visible={visible}
-					/>
-					<ClayButton
-						className="breadcrumb-button c-ml-3 c-p-2"
-						displayType="unstyled"
-						onClick={() => setVisible(true)}
-					>
-						<ClayIcon className="c-mr-2" symbol="plus" />
-						{Liferay.Language.get('new-topic')}
-					</ClayButton>
-				</>
-			)}
-		</section>
+			</section>
+			<Alert info={error} />
+		</>
 	);
 
 	function AllBreadcrumb() {

@@ -195,6 +195,7 @@ export default withRouter(({history}) => {
 							historyPushParser(`/tmp`);
 							history.goBack();
 						}}
+						setError={setError}
 						visible={topicModalVisibility}
 					/>
 				</div>

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dependency.manager.DependencyManagerSync;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +40,19 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 		_componentExecutorFactoryRegistration =
 			componentExecutorFactoryRegistration;
 		_syncTimeout = syncTimeout;
+	}
+
+	@Override
+	public void registerSyncCallable(Callable<Void> syncCallable) {
+		_syncDefaultNoticeableFuture.addFutureListener(
+			future -> {
+				try {
+					syncCallable.call();
+				}
+				catch (Exception exception) {
+					_log.error("Unable to sync callable", exception);
+				}
+			});
 	}
 
 	@Override

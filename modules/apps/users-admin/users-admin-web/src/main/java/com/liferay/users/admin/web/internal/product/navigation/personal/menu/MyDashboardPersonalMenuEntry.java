@@ -98,32 +98,26 @@ public class MyDashboardPersonalMenuEntry implements PersonalMenuEntry {
 			PortletRequest portletRequest, PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED &&
-			!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED) {
-
-			return true;
+		if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
+			return false;
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED &&
-			_hasPowerUserRole(themeDisplay.getUser())) {
+		if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED &&
+			!roleLocalService.hasUserRole(
+				themeDisplay.getUserId(), themeDisplay.getCompanyId(),
+				RoleConstants.POWER_USER, true)) {
 
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Reference
 	protected RoleLocalService roleLocalService;
-
-	private Boolean _hasPowerUserRole(User user) throws PortalException {
-		return roleLocalService.hasUserRole(
-			user.getUserId(), user.getCompanyId(), RoleConstants.POWER_USER,
-			true);
-	}
 
 	@Reference
 	private Portal _portal;

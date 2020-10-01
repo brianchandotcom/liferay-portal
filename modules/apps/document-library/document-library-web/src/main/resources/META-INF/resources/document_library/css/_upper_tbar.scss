@@ -43,12 +43,9 @@ $upper-tbar-height: 4rem;
 		left: 0;
 		position: fixed;
 		right: 0;
-		top: $control-menu-height;
 		z-index: 1;
 
 		@include media-breakpoint-up(sm) {
-			top: $control-menu-height-desktop;
-
 			body.open & {
 				left: $product-menu-width;
 			}

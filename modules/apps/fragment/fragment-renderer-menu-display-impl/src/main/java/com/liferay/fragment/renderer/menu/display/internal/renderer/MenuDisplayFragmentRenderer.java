@@ -75,8 +75,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 						).put(
 							"type", "select"
 						).put(
-							"type", "select"
-						).put(
 							"typeOptions",
 							JSONUtil.put(
 								"validValues",

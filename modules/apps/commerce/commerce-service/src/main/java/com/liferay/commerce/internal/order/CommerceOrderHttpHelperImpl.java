@@ -214,6 +214,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			httpServletRequest);
 
 		if ((commerceOrder != null) && commerceOrder.isGuestOrder()) {
+			PortletURL checkoutPortletURL = portletURL;
+
 			Layout currentLayout = (Layout)httpServletRequest.getAttribute(
 				WebKeys.LAYOUT);
 
@@ -254,6 +256,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				CookieKeys.addCookie(
 					httpServletRequest, themeDisplay.getResponse(), cookie);
 			}
+
+			portletURL.setParameter("redirect", checkoutPortletURL.toString());
 		}
 
 		return portletURL;

@@ -39,7 +39,6 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 		deleteCalEventClassName();
 		deleteDuplicateResourcePermissions();
-		deleteDuplicateResources();
 
 		super.doUpgrade();
 	}
@@ -98,32 +97,6 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 							"resourcePermissionId = " + rs.getLong(1);
 
 					runSQL(deleteSQL);
-				}
-			}
-			catch (Exception exception) {
-				throw new UpgradeException(exception);
-			}
-		}
-	}
-
-	protected void deleteDuplicateResources() throws UpgradeException {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String newName = _RESOURCE_NAMES[0][1];
-
-			String selectSQL =
-				"select actionId from ResourceAction where name = '" + newName +
-					"'";
-
-			try (PreparedStatement ps = connection.prepareStatement(selectSQL);
-				ResultSet rs = ps.executeQuery()) {
-
-				String oldName = _RESOURCE_NAMES[0][0];
-
-				while (rs.next()) {
-					runSQL(
-						StringBundler.concat(
-							"delete from ResourceAction where actionId = '",
-							rs.getString(1), "' and name= '", oldName, "'"));
 				}
 			}
 			catch (Exception exception) {

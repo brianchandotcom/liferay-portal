@@ -271,10 +271,10 @@ definition {
 			key_toggleSwitchLabel = "Create Site",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if (isSet(organizationSite)) {
+		if (isSet(siteTemplateName)) {
 			Select(
 				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
-				value1 = "${organizationSite}");
+				value1 = "${siteTemplateName}");
 
 			if ("${checkEnablePropagationCheckbox}" == "true") {
 				AssertChecked(locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX");

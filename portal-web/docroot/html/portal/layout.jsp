@@ -16,16 +16,21 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<c:if test="<%= SessionErrors.contains(request, NoSuchLayoutException.class) %>">
-	<div class="container pb-3 pt-3">
-		<%@ include file="/html/portal/status.jsp" %>
-	</div>
-</c:if>
+<c:choose>
+	<c:when test="<%= SessionErrors.contains(request, NoSuchLayoutException.class) %>">
+		<div class="container pb-3 pt-3">
+			<%@ include file="/html/portal/status.jsp" %>
+		</div>
+	</c:when>
+	<c:otherwise>
 
-<%
-StringBundler sb = (StringBundler)request.getAttribute(WebKeys.LAYOUT_CONTENT);
+		<%
+		StringBundler sb = (StringBundler)request.getAttribute(WebKeys.LAYOUT_CONTENT);
 
-sb.writeTo(out);
+		sb.writeTo(out);
 
-request.removeAttribute(WebKeys.LAYOUT_CONTENT);
-%>
+		request.removeAttribute(WebKeys.LAYOUT_CONTENT);
+		%>
+
+	</c:otherwise>
+</c:choose>

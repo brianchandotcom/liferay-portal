@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,7 +53,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  * @author Jorge Ferrer
  */
-@Component(service = InfoItemFieldValuesProvider.class)
+@Component(
+	immediate = true, property = Constants.SERVICE_RANKING + ":Integer=10",
+	service = InfoItemFieldValuesProvider.class
+)
 public class FileEntryInfoItemFieldValuesProvider
 	implements InfoItemFieldValuesProvider<FileEntry> {
 

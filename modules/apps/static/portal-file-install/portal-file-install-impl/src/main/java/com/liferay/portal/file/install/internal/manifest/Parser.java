@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class Parser {
 	public static Map<String, Map<String, String>> parseHeader(String header)
 		throws IllegalArgumentException {
 
-		String[] imports = _parseDelimitedString(header, CharPool.COMMA);
+		List<String> imports = _parseDelimitedString(header, CharPool.COMMA);
 
 		Map<String, Map<String, String>> clauses = _parseImports(imports);
 
@@ -44,11 +45,11 @@ public class Parser {
 		return clauses;
 	}
 
-	private static String[] _parseDelimitedString(
+	private static List<String> _parseDelimitedString(
 		String value, char delimiter) {
 
 		if (value == null) {
-			return new String[0];
+			return Collections.<String>emptyList();
 		}
 
 		List<String> strings = new ArrayList<>();
@@ -85,11 +86,11 @@ public class Parser {
 			strings.add(string);
 		}
 
-		return (String[])strings.toArray(new String[0]);
+		return strings;
 	}
 
 	private static Map<String, Map<String, String>> _parseImports(
-			String[] imports)
+			List<String> imports)
 		throws IllegalArgumentException {
 
 		if (imports == null) {
@@ -99,7 +100,8 @@ public class Parser {
 		Map<String, Map<String, String>> finalImports = new HashMap<>();
 
 		for (String clause : imports) {
-			String[] tokens = _parseDelimitedString(clause, CharPool.SEMICOLON);
+			List<String> tokens = _parseDelimitedString(
+				clause, CharPool.SEMICOLON);
 
 			int pathCount = 0;
 
@@ -118,10 +120,10 @@ public class Parser {
 
 			Map<String, String> attributes = new HashMap<>();
 
-			for (int pieceIndex = pathCount; pieceIndex < tokens.length;
+			for (int pieceIndex = pathCount; pieceIndex < tokens.size();
 				 pieceIndex++) {
 
-				String piece = tokens[pieceIndex];
+				String piece = tokens.get(pieceIndex);
 
 				int index = piece.indexOf(StringPool.EQUAL);
 
@@ -154,7 +156,7 @@ public class Parser {
 			for (int packageIndex = 0; packageIndex < pathCount;
 				 packageIndex++) {
 
-				finalImports.put(tokens[packageIndex], attributes);
+				finalImports.put(tokens.get(packageIndex), attributes);
 			}
 		}
 

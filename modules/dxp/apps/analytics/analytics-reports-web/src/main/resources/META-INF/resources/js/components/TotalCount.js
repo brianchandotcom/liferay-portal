@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {useIsMounted} from 'frontend-js-react-web';
+import {useStateSafe} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreContext, useWarning} from '../context/store';
@@ -31,9 +31,7 @@ function TotalCount({
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const [value, setValue] = useState('-');
-
-	const isMounted = useIsMounted();
+	const [value, setValue] = useStateSafe('-');
 
 	const [, addWarning] = useWarning();
 
@@ -42,20 +40,13 @@ function TotalCount({
 	useEffect(() => {
 		if (validAnalyticsConnection) {
 			dataProvider()
-				.then((value) => {
-					if (isMounted()) {
-						setValue(value);
-					}
-				})
+				.then((value) => setValue(value))
 				.catch(() => {
-					if (isMounted()) {
-						setValue('-');
-						addWarning();
-					}
+					setValue('-');
+					addWarning();
 				});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dataProvider, validAnalyticsConnection]);
+	}, [addWarning, dataProvider, setValue, validAnalyticsConnection]);
 
 	let displayValue = '-';
 

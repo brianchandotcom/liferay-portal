@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import className from 'classnames';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useStateSafe} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
@@ -55,26 +55,18 @@ export default function TrafficSources({
 
 	const [{publishedToday}] = useContext(StoreContext);
 
-	const [trafficSources, setTrafficSources] = useState([]);
-
-	const isMounted = useIsMounted();
+	const [trafficSources, setTrafficSources] = useStateSafe([]);
 
 	useEffect(() => {
 		if (validAnalyticsConnection) {
 			dataProvider()
-				.then((trafficSources) => {
-					if (isMounted()) {
-						setTrafficSources(trafficSources);
-					}
-				})
+				.then((trafficSources) => setTrafficSources(trafficSources))
 				.catch(() => {
 					setTrafficSources([]);
-					if (isMounted()) {
-						addWarning();
-					}
+					addWarning();
 				});
 		}
-	}, [addWarning, dataProvider, isMounted, validAnalyticsConnection]);
+	}, [addWarning, dataProvider, setTrafficSources, validAnalyticsConnection]);
 
 	const fullPieChart = useMemo(
 		() => trafficSources.some(({value}) => value),

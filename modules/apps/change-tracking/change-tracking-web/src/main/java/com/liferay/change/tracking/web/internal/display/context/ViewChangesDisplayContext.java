@@ -276,7 +276,7 @@ public class ViewChangesDisplayContext {
 				RenderURL discardURL = _renderResponse.createRenderURL();
 
 				discardURL.setParameter(
-					"mvcRenderCommandName", "/change_lists/view_discard");
+					"mvcRenderCommandName", "/publications/view_discard");
 
 				PortletURL redirect = PortletURLUtil.getCurrent(
 					_renderRequest, _renderResponse);
@@ -309,7 +309,7 @@ public class ViewChangesDisplayContext {
 				ResourceURL renderCTEntryURL =
 					_renderResponse.createResourceURL();
 
-				renderCTEntryURL.setResourceID("/change_lists/render_ct_entry");
+				renderCTEntryURL.setResourceID("/publications/render_ct_entry");
 
 				renderCTEntryURL.setParameter(
 					"ctCollectionId",
@@ -322,7 +322,7 @@ public class ViewChangesDisplayContext {
 			() -> {
 				ResourceURL renderDiffURL = _renderResponse.createResourceURL();
 
-				renderDiffURL.setResourceID("/change_lists/render_diff");
+				renderDiffURL.setResourceID("/publications/render_diff");
 
 				return renderDiffURL.toString();
 			}
@@ -349,7 +349,7 @@ public class ViewChangesDisplayContext {
 					_renderResponse.createResourceURL();
 
 				saveSessionStateURL.setResourceID(
-					"/change_lists/save_session_state");
+					"/publications/save_session_state");
 
 				return saveSessionStateURL.toString();
 			}

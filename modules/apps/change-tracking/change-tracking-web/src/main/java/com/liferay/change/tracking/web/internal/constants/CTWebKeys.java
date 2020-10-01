@@ -19,11 +19,11 @@ package com.liferay.change.tracking.web.internal.constants;
  */
 public interface CTWebKeys {
 
-	public static final String CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT =
-		"CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT";
+	public static final String PUBLICATIONS_CONFIGURATION_DISPLAY_CONTEXT =
+		"PUBLICATIONS_CONFIGURATION_DISPLAY_CONTEXT";
 
-	public static final String CHANGE_LISTS_DISPLAY_CONTEXT =
-		"CHANGE_LISTS_DISPLAY_CONTEXT";
+	public static final String PUBLICATIONS_DISPLAY_CONTEXT =
+		"PUBLICATIONS_DISPLAY_CONTEXT";
 
 	public static final String CONFLICT_INFO_MAP = "CONFLICT_INFO_MAP";
 

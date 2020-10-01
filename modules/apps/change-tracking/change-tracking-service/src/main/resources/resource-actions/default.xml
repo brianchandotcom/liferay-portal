@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.change.tracking</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_change_tracking_web_portlet_ChangeListsPortlet</portlet-name>
+			<portlet-name>com_liferay_change_tracking_web_portlet_PublicationsPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -23,7 +23,7 @@
 	<model-resource>
 		<model-name>com.liferay.change.tracking.model.CTCollection</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_change_tracking_web_portlet_ChangeListsPortlet</portlet-name>
+			<portlet-name>com_liferay_change_tracking_web_portlet_PublicationsPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

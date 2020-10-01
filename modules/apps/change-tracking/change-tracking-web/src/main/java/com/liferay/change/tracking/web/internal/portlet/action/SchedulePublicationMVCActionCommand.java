@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -43,10 +43,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/reschedule_publication",
-		"mvc.command.name=/change_lists/schedule_publication",
-		"mvc.command.name=/change_lists/unschedule_publication"
+		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
+		"mvc.command.name=/publications/reschedule_publication",
+		"mvc.command.name=/publications/schedule_publication",
+		"mvc.command.name=/publications/unschedule_publication"
 	},
 	service = MVCActionCommand.class
 )
@@ -65,7 +65,7 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 		String actionName = ParamUtil.getString(
 			actionRequest, ActionRequest.ACTION_NAME);
 
-		if (!actionName.equals("/change_lists/unschedule_publication")) {
+		if (!actionName.equals("/publications/unschedule_publication")) {
 			int month = ParamUtil.getInteger(actionRequest, "publishTimeMonth");
 			int day = ParamUtil.getInteger(actionRequest, "publishTimeDay");
 			int year = ParamUtil.getInteger(actionRequest, "publishTimeYear");
@@ -93,7 +93,7 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 				_portal.copyRequestParameters(actionRequest, actionResponse);
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/change_lists/schedule_publication.jsp");
+					"mvcPath", "/publications/schedule_publication.jsp");
 
 				return;
 			}
@@ -102,7 +102,7 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 		long ctCollectionId = ParamUtil.getLong(
 			actionRequest, "ctCollectionId");
 
-		if (!actionName.equals("/change_lists/schedule_publication")) {
+		if (!actionName.equals("/publications/schedule_publication")) {
 			_publishScheduler.unschedulePublish(ctCollectionId);
 		}
 
@@ -111,7 +111,7 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 				ctCollectionId, themeDisplay.getUserId(), publishDate);
 		}
 
-		if (actionName.equals("/change_lists/unschedule_publication")) {
+		if (actionName.equals("/publications/unschedule_publication")) {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
@@ -125,7 +125,7 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 			PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
 			redirectURL.setParameter(
-				"mvcRenderCommandName", "/change_lists/view_scheduled");
+				"mvcRenderCommandName", "/publications/view_scheduled");
 
 			sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 		}

@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.web.internal.portlet.configuration.icon;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -104,28 +104,28 @@ public class PermissionsPortletConfigurationIcon
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_changeListsServiceRegistration = bundleContext.registerService(
+		_publicationsServiceRegistration = bundleContext.registerService(
 			PortletConfigurationIcon.class, this,
 			MapUtil.singletonDictionary(
-				"javax.portlet.name", CTPortletKeys.CHANGE_LISTS));
+				"javax.portlet.name", CTPortletKeys.PUBLICATIONS));
 
-		_changeListsConfigurationServiceRegistration =
+		_publicationsConfigurationServiceRegistration =
 			bundleContext.registerService(
 				PortletConfigurationIcon.class, this,
 				MapUtil.singletonDictionary(
 					"javax.portlet.name",
-					CTPortletKeys.CHANGE_LISTS_CONFIGURATION));
+					CTPortletKeys.PUBLICATIONS_CONFIGURATION));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_changeListsServiceRegistration.unregister();
+		_publicationsServiceRegistration.unregister();
 
-		_changeListsConfigurationServiceRegistration.unregister();
+		_publicationsConfigurationServiceRegistration.unregister();
 	}
 
-	private ServiceRegistration<?> _changeListsConfigurationServiceRegistration;
-	private ServiceRegistration<?> _changeListsServiceRegistration;
+	private ServiceRegistration<?> _publicationsConfigurationServiceRegistration;
+	private ServiceRegistration<?> _publicationsServiceRegistration;
 
 	@Reference(target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

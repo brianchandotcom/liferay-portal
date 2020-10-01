@@ -29,12 +29,12 @@ const Component = ({
 }) => {
 	const onDestroyPortlet = function () {
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
-		Liferay.detach(namespace + 'openDialog', onSelectChangeList);
+		Liferay.detach(namespace + 'openDialog', onSelectPublication);
 	};
 
 	Liferay.on('destroyPortlet', onDestroyPortlet);
 
-	const onSelectChangeList = function () {
+	const onSelectPublication = function () {
 		openSelectionModal({
 			onSelect: (event) => {
 				const portletURL = createPortletURL(checkoutURL, {
@@ -43,13 +43,13 @@ const Component = ({
 
 				navigate(portletURL.toString());
 			},
-			selectEventName: namespace + 'selectChangeList',
+			selectEventName: namespace + 'selectPublication',
 			title: Liferay.Language.get('select-a-publication'),
 			url: selectURL,
 		});
 	};
 
-	Liferay.on(namespace + 'openDialog', onSelectChangeList);
+	Liferay.on(namespace + 'openDialog', onSelectPublication);
 
 	return (
 		<ClayDropDownWithItems

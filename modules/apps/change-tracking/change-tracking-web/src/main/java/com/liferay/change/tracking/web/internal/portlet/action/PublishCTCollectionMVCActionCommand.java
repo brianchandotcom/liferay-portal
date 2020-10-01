@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -42,8 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/publish_ct_collection"
+		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
+		"mvc.command.name=/publications/publish_ct_collection"
 	},
 	service = MVCActionCommand.class
 )
@@ -78,11 +78,11 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				false));
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, CTPortletKeys.CHANGE_LISTS,
+			actionRequest, CTPortletKeys.PUBLICATIONS,
 			PortletRequest.RENDER_PHASE);
 
 		redirectURL.setParameter(
-			"mvcRenderCommandName", "/change_lists/view_history");
+			"mvcRenderCommandName", "/publications/view_history");
 
 		sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 	}

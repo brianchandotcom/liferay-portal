@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/render_diff"
+		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
+		"mvc.command.name=/publications/render_diff"
 	},
 	service = MVCResourceCommand.class
 )
@@ -70,7 +70,7 @@ public class RenderDiffMVCResourceCommand extends BaseMVCResourceCommand {
 			CTWebKeys.CT_ENTRY_DIFF_DISPLAY, ctEntryDiffDisplay);
 
 		include(
-			resourceRequest, resourceResponse, "/change_lists/render_diff.jsp");
+			resourceRequest, resourceResponse, "/publications/render_diff.jsp");
 	}
 
 	@Reference

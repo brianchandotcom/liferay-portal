@@ -116,7 +116,7 @@ public class ViewDiscardDisplayContext {
 			() -> {
 				ResourceURL renderURL = _renderResponse.createResourceURL();
 
-				renderURL.setResourceID("/change_lists/render_diff");
+				renderURL.setResourceID("/publications/render_diff");
 
 				return renderURL.toString();
 			}
@@ -151,7 +151,7 @@ public class ViewDiscardDisplayContext {
 		ActionURL submitURL = _renderResponse.createActionURL();
 
 		submitURL.setParameter(
-			ActionRequest.ACTION_NAME, "/change_lists/discard_changes");
+			ActionRequest.ACTION_NAME, "/publications/discard_changes");
 		submitURL.setParameter("redirect", getRedirectURL());
 		submitURL.setParameter(
 			"ctCollectionId", String.valueOf(_ctCollectionId));

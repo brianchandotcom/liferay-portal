@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
@@ -42,8 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/undo_ct_collection"
+		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
+		"mvc.command.name=/publications/undo_ct_collection"
 	},
 	service = MVCActionCommand.class
 )
@@ -76,18 +76,18 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			ctCollectionId, themeDisplay.getUserId(), name, description);
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, CTPortletKeys.CHANGE_LISTS,
+			actionRequest, CTPortletKeys.PUBLICATIONS,
 			PortletRequest.RENDER_PHASE);
 
 		String publishTime = ParamUtil.get(actionRequest, "publishTime", "now");
 
 		if (publishTime.equals("now")) {
 			redirectURL.setParameter(
-				"mvcRenderCommandName", "/change_lists/view_conflicts");
+				"mvcRenderCommandName", "/publications/view_conflicts");
 		}
 		else {
 			redirectURL.setParameter(
-				"mvcRenderCommandName", "/change_lists/view_changes");
+				"mvcRenderCommandName", "/publications/view_changes");
 		}
 
 		redirectURL.setParameter(

@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
@@ -36,8 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/view_entry"
+		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
+		"mvc.command.name=/publications/view_entry"
 	},
 	service = MVCRenderCommand.class
 )
@@ -61,7 +61,7 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(portalException);
 		}
 
-		return "/change_lists/view_entry.jsp";
+		return "/publications/view_entry.jsp";
 	}
 
 	@Reference

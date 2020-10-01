@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/view_discard"
+		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
+		"mvc.command.name=/publications/view_discard"
 	},
 	service = MVCRenderCommand.class
 )
@@ -55,7 +55,7 @@ public class ViewDiscardMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_DISCARD_DISPLAY_CONTEXT, viewDiscardDisplayContext);
 
-		return "/change_lists/view_discard.jsp";
+		return "/publications/view_discard.jsp";
 	}
 
 	@Reference

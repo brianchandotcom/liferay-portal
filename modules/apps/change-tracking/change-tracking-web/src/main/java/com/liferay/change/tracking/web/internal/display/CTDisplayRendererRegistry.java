@@ -330,11 +330,11 @@ public class CTDisplayRendererRegistry {
 
 		if (viewDiff) {
 			portletURL.setParameter(
-				"mvcRenderCommandName", "/change_lists/view_diff");
+				"mvcRenderCommandName", "/publications/view_diff");
 		}
 		else {
 			portletURL.setParameter(
-				"mvcRenderCommandName", "/change_lists/view_entry");
+				"mvcRenderCommandName", "/publications/view_entry");
 		}
 
 		portletURL.setParameter(

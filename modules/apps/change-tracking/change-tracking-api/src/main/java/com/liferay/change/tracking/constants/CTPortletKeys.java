@@ -16,7 +16,9 @@ package com.liferay.change.tracking.constants;
 
 /**
  * @author Máté Thurzó
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class CTPortletKeys {
 
 	public static final String CHANGE_LISTS =

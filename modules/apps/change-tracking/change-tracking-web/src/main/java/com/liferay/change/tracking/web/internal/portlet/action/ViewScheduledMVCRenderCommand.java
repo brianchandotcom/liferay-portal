@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.ViewScheduledDisplayContext;
@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/view_scheduled"
+		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
+		"mvc.command.name=/publications/view_scheduled"
 	},
 	service = MVCRenderCommand.class
 )
@@ -56,7 +56,7 @@ public class ViewScheduledMVCRenderCommand implements MVCRenderCommand {
 			CTWebKeys.VIEW_SCHEDULED_DISPLAY_CONTEXT,
 			viewScheduledDisplayContext);
 
-		return "/change_lists/view_scheduled.jsp";
+		return "/publications/view_scheduled.jsp";
 	}
 
 	@Reference

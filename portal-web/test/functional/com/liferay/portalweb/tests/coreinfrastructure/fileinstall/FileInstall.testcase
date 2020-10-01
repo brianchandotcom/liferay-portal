@@ -31,6 +31,8 @@ definition {
 
 		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
 
+		Pause(locator1 = "10000");
+
 		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");

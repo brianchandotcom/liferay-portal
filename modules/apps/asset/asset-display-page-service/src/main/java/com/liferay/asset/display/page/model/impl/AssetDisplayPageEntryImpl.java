@@ -14,6 +14,15 @@
 
 package com.liferay.asset.display.page.model.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+
+import java.util.Locale;
+import java.util.Objects;
+
 /**
  * The extended model implementation for the AssetDisplayPageEntry service.
  * Represents a row in the &quot;AssetDisplayPageEntry&quot; database table,
@@ -39,6 +48,19 @@ public class AssetDisplayPageEntryImpl extends AssetDisplayPageEntryBaseImpl {
 	 * instead.
 	 */
 	public AssetDisplayPageEntryImpl() {
+	}
+
+	public String getTitle(Locale locale) throws PortalException {
+		String className = getClassName();
+
+		if (Objects.equals(className, FileEntry.class.getName())) {
+			className = DLFileEntry.class.getName();
+		}
+
+		AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(
+			className, getClassPK());
+
+		return assetEntry.getTitle(locale);
 	}
 
 }

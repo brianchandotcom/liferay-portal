@@ -60,7 +60,7 @@ export default function TrafficSources({
 	useEffect(() => {
 		if (validAnalyticsConnection) {
 			dataProvider()
-				.then((trafficSources) => setTrafficSources(trafficSources))
+				.then(setTrafficSources)
 				.catch(() => {
 					setTrafficSources([]);
 					addWarning();

@@ -40,7 +40,7 @@ function TotalCount({
 	useEffect(() => {
 		if (validAnalyticsConnection) {
 			dataProvider()
-				.then((value) => setValue(value))
+				.then(setValue)
 				.catch(() => {
 					setValue('-');
 					addWarning();

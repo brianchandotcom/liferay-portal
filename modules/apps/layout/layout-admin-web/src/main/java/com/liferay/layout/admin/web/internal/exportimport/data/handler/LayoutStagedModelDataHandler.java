@@ -1475,32 +1475,8 @@ public class LayoutStagedModelDataHandler
 			layout.getPrimaryKey(), importedLayout.getPrimaryKey());
 
 		for (Element friendlyURLEntryElement : friendlyURLEntryElements) {
-			String path = friendlyURLEntryElement.attributeValue("path");
-
-			FriendlyURLEntry friendlyURLEntry =
-				(FriendlyURLEntry)portletDataContext.getZipEntryAsObject(path);
-
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, friendlyURLEntryElement);
-
-			Map<Long, Long> friendlyURLEntries =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					FriendlyURLEntry.class);
-
-			long friendlyURLEntryId = MapUtil.getLong(
-				friendlyURLEntries, friendlyURLEntry.getFriendlyURLEntryId(),
-				friendlyURLEntry.getFriendlyURLEntryId());
-
-			FriendlyURLEntry existingFriendlyURLEntry =
-				_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-					friendlyURLEntryId);
-
-			if (existingFriendlyURLEntry != null) {
-				existingFriendlyURLEntry.setClassPK(importedLayout.getPlid());
-
-				_friendlyURLEntryLocalService.updateFriendlyURLEntry(
-					existingFriendlyURLEntry);
-			}
 		}
 	}
 

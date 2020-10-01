@@ -42,6 +42,59 @@ definition {
 		GogoShell.viewOutput(outputContent = "Active");
 	}
 
+	@priority = "5"
+	test CustomizeRecursiveSubdirectoryMode {
+		property custom.properties = "module.framework.properties.file.install.subdir.mode=recurse";
+		property test.name.skip.portal.instance = "FileInstall#CustomizeRecursiveSubdirectoryMode";
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var testBaseDirName = PropsUtil.get("test.base.dir.name");
+		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+		var deployDir = "${liferayHome}/osgi/modules/recurse";
+
+		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+
+		Pause(locator1 = "10000");
+
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
+
+		GogoShell.viewOutput(outputContent = "Liferay Cluster Test Module");
+
+		GogoShell.viewOutput(outputContent = "Active");
+	}
+
+	@priority = "5"
+	test CustomizeSkipSubdirectoryMode {
+		property custom.properties = "module.framework.properties.file.install.subdir.mode=skip";
+		property test.name.skip.portal.instance = "FileInstall#CustomizeSkipSubdirectoryMode";
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var testBaseDirName = PropsUtil.get("test.base.dir.name");
+		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+		var deployDir = "${liferayHome}/deploy/recurse";
+
+		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+
+		Pause(locator1 = "10000");
+
+		GogoShell.openGogoShellAdmin();
+
+		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.cluster.test.module_");
+
+		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
+
+		GogoShell.viewOutput(outputContent = "false");
+
+		GogoShell.viewNoOutput(outputContent = "Liferay Cluster Test Module");
+
+		GogoShell.viewNoOutput(outputContent = "Active");
+	}
+
+
 	@priority = "4"
 	test UninstallJarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";

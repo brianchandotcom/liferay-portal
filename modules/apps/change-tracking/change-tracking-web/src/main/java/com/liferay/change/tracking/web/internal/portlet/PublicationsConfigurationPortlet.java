@@ -14,8 +14,8 @@
 
 package com.liferay.change.tracking.web.internal.portlet;
 
-import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.PublicationsConfigurationDisplayContext;
 import com.liferay.portal.kernel.language.Language;

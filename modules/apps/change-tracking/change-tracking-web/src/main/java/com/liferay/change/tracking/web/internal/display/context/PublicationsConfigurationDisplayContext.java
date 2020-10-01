@@ -89,10 +89,10 @@ public class PublicationsConfigurationDisplayContext {
 		return _publicationsEnabled;
 	}
 
-	private final boolean _publicationsEnabled;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private String _navigation;
+	private final boolean _publicationsEnabled;
 	private final RenderResponse _renderResponse;
 
 }

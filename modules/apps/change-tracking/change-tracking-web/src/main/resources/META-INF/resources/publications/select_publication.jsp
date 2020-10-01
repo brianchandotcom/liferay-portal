@@ -56,11 +56,11 @@ searchContainer.setId("selectPublication");
 						<td class="table-cell-expand">
 							<c:choose>
 								<c:when test="<%= ctCollection.getCtCollectionId() == publicationsDisplayContext.getCtCollectionId() %>">
-									<div class="publication-name font-italic">
+									<div class="font-italic publication-name">
 										<%= HtmlUtil.escape(ctCollection.getName()) %>
 									</div>
 
-									<div class="publication-description font-italic">
+									<div class="font-italic publication-description">
 										<%= HtmlUtil.escape(ctCollection.getDescription()) %>
 									</div>
 								</c:when>

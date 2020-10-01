@@ -124,10 +124,11 @@ public class PermissionsPortletConfigurationIcon
 		_publicationsConfigurationServiceRegistration.unregister();
 	}
 
-	private ServiceRegistration<?> _publicationsConfigurationServiceRegistration;
-	private ServiceRegistration<?> _publicationsServiceRegistration;
-
 	@Reference(target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
+
+	private ServiceRegistration<?>
+		_publicationsConfigurationServiceRegistration;
+	private ServiceRegistration<?> _publicationsServiceRegistration;
 
 }

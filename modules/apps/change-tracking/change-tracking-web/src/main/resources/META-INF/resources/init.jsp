@@ -31,7 +31,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.change.tracking.conflict.ConflictInfo" %><%@
 page import="com.liferay.change.tracking.constants.CTActionKeys" %><%@
 page import="com.liferay.change.tracking.constants.CTConstants" %><%@
-page import="com.liferay.change.tracking.web.internal.constants.CTPortletKeys" %><%@
 page import="com.liferay.change.tracking.exception.CTCollectionDescriptionException" %><%@
 page import="com.liferay.change.tracking.exception.CTCollectionNameException" %><%@
 page import="com.liferay.change.tracking.model.CTCollection" %><%@
@@ -39,6 +38,7 @@ page import="com.liferay.change.tracking.model.CTEntry" %><%@
 page import="com.liferay.change.tracking.model.CTProcess" %><%@
 page import="com.liferay.change.tracking.service.CTCollectionLocalServiceUtil" %><%@
 page import="com.liferay.change.tracking.service.CTEntryLocalServiceUtil" %><%@
+page import="com.liferay.change.tracking.web.internal.constants.CTPortletKeys" %><%@
 page import="com.liferay.change.tracking.web.internal.constants.CTWebKeys" %><%@
 page import="com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry" %><%@
 page import="com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay" %><%@

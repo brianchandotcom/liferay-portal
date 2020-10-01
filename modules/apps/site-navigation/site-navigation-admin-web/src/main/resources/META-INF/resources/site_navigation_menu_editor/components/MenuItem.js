@@ -18,12 +18,14 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
+import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {useDrag} from 'react-dnd';
 
 import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
+import {useConstants} from '../contexts/ConstantsContext';
 import {
 	useSelectedMenuItemId,
 	useSetSelectedMenuItemId,
@@ -31,10 +33,20 @@ import {
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 
 export const MenuItem = ({item}) => {
+	const {deleteSiteNavigationMenuItemURL, portletNamespace} = useConstants();
 	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
 
 	const selected = useSelectedMenuItemId() === item.siteNavigationMenuItemId;
+
+	const deleteMenuItem = () => {
+		fetch(deleteSiteNavigationMenuItemURL, {
+			body: objectToFormData({
+				[`${portletNamespace}siteNavigationMenuItemId`]: item.siteNavigationMenuItemId,
+			}),
+			method: 'POST',
+		});
+	};
 
 	const [, handlerRef] = useDrag({
 		item: {
@@ -77,6 +89,7 @@ export const MenuItem = ({item}) => {
 						<ClayLayout.ContentCol gutters>
 							<ClayButtonWithIcon
 								displayType="unstyled"
+								onClick={deleteMenuItem}
 								small
 								symbol="times-circle"
 							/>

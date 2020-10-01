@@ -19,6 +19,7 @@ import com.liferay.fragment.entry.processor.editable.parser.EditableElementParse
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.WebImage;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -176,6 +178,14 @@ public class ImageEditableElementParser implements EditableElementParser {
 		if (fileEntryId > 0) {
 			replaceableElement.attr(
 				"data-fileentryid", String.valueOf(fileEntryId));
+
+			if ((configJSONObject != null) &&
+				configJSONObject.has("imageConfiguration")) {
+
+				_setImageConfiguration(
+					replaceableElement,
+					configJSONObject.getJSONObject("imageConfiguration"));
+			}
 		}
 
 		if (Validator.isNotNull(value)) {
@@ -227,6 +237,25 @@ public class ImageEditableElementParser implements EditableElementParser {
 					resourceBundle,
 					"each-editable-image-element-must-contain-an-img-tag",
 					new Object[] {"<em>", "</em>"}, false));
+		}
+	}
+
+	private void _setImageConfiguration(
+		Element element, JSONObject imageConfigurationJSONObject) {
+
+		for (ViewportSize viewportSize : ViewportSize.values()) {
+			String imageConfiguration = imageConfigurationJSONObject.getString(
+				viewportSize.getViewportSizeId());
+
+			if (Validator.isNull(imageConfiguration) ||
+				Objects.equals(imageConfiguration, "auto")) {
+
+				continue;
+			}
+
+			element.attr(
+				"data-" + viewportSize.getViewportSizeId() + "-configuration",
+				imageConfiguration);
 		}
 	}
 

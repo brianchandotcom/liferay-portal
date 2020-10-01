@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"base64-js": "^1.3.0"
+	},
+	"name": "multi-factor-authentication-fido2-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

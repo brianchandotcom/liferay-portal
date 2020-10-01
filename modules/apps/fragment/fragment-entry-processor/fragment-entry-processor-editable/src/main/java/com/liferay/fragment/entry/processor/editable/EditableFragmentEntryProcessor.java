@@ -272,7 +272,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					fragmentEntryProcessorContext.getMode(),
 					FragmentEntryLinkConstants.EDIT)) {
 
-				editableElementParser.replace(element, value);
+				editableElementParser.replace(
+					element, value,
+					editableValueJSONObject.getJSONObject("config"));
 			}
 			else {
 				JSONObject configJSONObject = JSONUtil.merge(

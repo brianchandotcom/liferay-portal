@@ -1053,11 +1053,9 @@ public class LayoutPageTemplatesImporterImpl
 
 			Settings settings = pageDefinition.getSettings();
 
-			if (settings != null) {
-				layout = _layoutLocalService.fetchLayout(layout.getPlid());
+			layout = _layoutLocalService.fetchLayout(layout.getPlid());
 
-				_updateLayoutSettings(layout, settings);
-			}
+			_updateLayoutSettings(layout, settings);
 		}
 
 		_updateLayoutPageTemplateStructure(layout, layoutStructure);
@@ -1217,6 +1215,16 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	private void _updateLayoutSettings(Layout layout, Settings settings) {
+		if (settings == null) {
+			layout.setThemeId(null);
+
+			layout.setColorSchemeId(null);
+
+			_layoutLocalService.updateLayout(layout);
+
+			return;
+		}
+
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 

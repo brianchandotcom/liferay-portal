@@ -54,31 +54,20 @@ for (String childrenItemId : childrenItemIds) {
 							try {
 								request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, renderLayoutStructureDisplayContext.getCollectionLayoutDisplayPageProvider(collectionStyledLayoutStructureItem));
 
-								int columnIndex = 0;
-								int numberOfColumns = collectionStyledLayoutStructureItem.getNumberOfColumns();
+								List<Object> collection = renderLayoutStructureDisplayContext.getCollection(collectionStyledLayoutStructureItem);
 
-								int middleColumnIndex = numberOfColumns / 2;
-								int spareColumns = 12 % numberOfColumns;
-
-								for (Object collectionObject : renderLayoutStructureDisplayContext.getCollection(collectionStyledLayoutStructureItem)) {
-									request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collectionObject);
+								for (int i = 0; i < collection.size(); i++) {
+									request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collection.get(i));
 									request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-
-									int size = 12 / numberOfColumns;
-
-									if (middleColumnIndex == columnIndex) {
-										size = size + spareColumns;
-									}
 							%>
 
 									<clay:col
-										md="<%= String.valueOf(size) %>"
+										md="<%= layoutStructure.getColumnSize(collectionStyledLayoutStructureItem.getNumberOfColumns() - 1, i) %>"
 									>
 										<liferay-util:include page="/render_layout_structure/render_layout_structure.jsp" servletContext="<%= application %>" />
 									</clay:col>
 
 							<%
-										columnIndex = (columnIndex + 1) % numberOfColumns;
 								}
 							}
 							finally {

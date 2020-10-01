@@ -3,6 +3,13 @@
 exports[`PagesVisitor is able to change columns 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -171,7 +178,7 @@ Array [
         ],
       },
     ],
-    "title": "Untitled name",
+    "title": "Page title",
   },
 ]
 `;
@@ -179,6 +186,13 @@ Array [
 exports[`PagesVisitor is able to change fields 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -347,7 +361,7 @@ Array [
         ],
       },
     ],
-    "title": "Untitled name",
+    "title": "Page title",
   },
 ]
 `;
@@ -355,6 +369,13 @@ Array [
 exports[`PagesVisitor is able to change pages 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -531,6 +552,13 @@ Array [
 exports[`PagesVisitor is able to change rows 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [],
@@ -545,7 +573,7 @@ Array [
         "columns": Array [],
       },
     ],
-    "title": "Untitled name",
+    "title": "Page title",
   },
 ]
 `;

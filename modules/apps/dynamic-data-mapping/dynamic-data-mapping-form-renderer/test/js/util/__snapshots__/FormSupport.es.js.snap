@@ -3,6 +3,13 @@
 exports[`FormSupport add a new field to column to the pages 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -176,7 +183,7 @@ Array [
         ],
       },
     ],
-    "title": "Untitled name",
+    "title": "Page title",
   },
 ]
 `;
@@ -184,6 +191,13 @@ Array [
 exports[`FormSupport add a new row to the pages and reorder 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -364,7 +378,7 @@ Array [
         ],
       },
     ],
-    "title": "Untitled name",
+    "title": "Page title",
   },
 ]
 `;
@@ -372,6 +386,13 @@ Array [
 exports[`FormSupport adds a new fields to column void 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -545,7 +566,7 @@ Array [
         ],
       },
     ],
-    "title": "Untitled name",
+    "title": "Page title",
   },
 ]
 `;
@@ -702,6 +723,13 @@ Object {
 exports[`FormSupport removes a column from pages and reorder 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -845,7 +873,7 @@ Array [
         ],
       },
     ],
-    "title": "Untitled name",
+    "title": "Page title",
   },
 ]
 `;
@@ -853,6 +881,13 @@ Array [
 exports[`FormSupport removes a fields to column from pages 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -1000,7 +1035,7 @@ Array [
         ],
       },
     ],
-    "title": "Untitled name",
+    "title": "Page title",
   },
 ]
 `;
@@ -1008,6 +1043,13 @@ Array [
 exports[`FormSupport removes a row from pages and reorder 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -1118,7 +1160,7 @@ Array [
         ],
       },
     ],
-    "title": "Untitled name",
+    "title": "Page title",
   },
 ]
 `;
@@ -1126,6 +1168,13 @@ Array [
 exports[`FormSupport updates a field 1`] = `
 Array [
   Object {
+    "description": "Add a short description for this page.",
+    "localizedDescription": Object {
+      "en_US": "Add a short description for this page.",
+    },
+    "localizedTitle": Object {
+      "en_US": "Page title",
+    },
     "rows": Array [
       Object {
         "columns": Array [
@@ -1294,7 +1343,7 @@ Array [
         ],
       },
     ],
-    "title": "Untitled name",
+    "title": "Page title",
   },
 ]
 `;

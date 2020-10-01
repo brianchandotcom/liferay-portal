@@ -48,7 +48,6 @@ import org.frutilla.FrutillaRule;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -209,7 +208,6 @@ public class CommercePriceListAccountGroupTest {
 		actualCommercePriceList.get();
 	}
 
-	@Ignore
 	@Test(expected = NoSuchElementException.class)
 	public void testPriceListWithUserAndDifferentRoleAccountGroups()
 		throws Exception {
@@ -254,7 +252,6 @@ public class CommercePriceListAccountGroupTest {
 		actualCommercePriceList.get();
 	}
 
-	@Ignore
 	@Test
 	public void testPriceListWithUserAndRoleAccountGroups() throws Exception {
 		frutillaRule.scenario(
@@ -301,7 +298,6 @@ public class CommercePriceListAccountGroupTest {
 			).getCommercePriceListId());
 	}
 
-	@Ignore
 	@Test
 	public void testPriceListWithUserAndRoleAndOrganizationAccountGroups()
 		throws Exception {

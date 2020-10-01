@@ -14,19 +14,27 @@
 
 package com.liferay.fragment.renderer.menu.display.internal.renderer;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.NavItem;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag;
 
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -110,21 +118,30 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		String displayStyle = _getDisplayStyle(fragmentRendererContext);
-
 		try {
-			RequestDispatcher requestDispatcher = null;
+			NavigationMenuTag navigationMenuTag = new NavigationMenuTag();
 
-			if (Objects.equals(displayStyle, "stacked")) {
-				requestDispatcher = _servletContext.getRequestDispatcher(
-					"/stacked_menu/stacked_menu.jsp");
-			}
-			else {
-				requestDispatcher = _servletContext.getRequestDispatcher(
-					"/horizontal_menu/horizontal_menu.jsp");
+			if (Objects.equals(
+					_getDisplayStyle(fragmentRendererContext), "stacked")) {
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				Group companyGroup = _groupLocalService.getCompanyGroup(
+					themeDisplay.getCompanyId());
+
+				DDMTemplate ddmTemplate = _ddmTemplateService.fetchTemplate(
+					companyGroup.getGroupId(),
+					_portal.getClassNameId(NavItem.class), "LIST-MENU-FTL");
+
+				navigationMenuTag.setDdmTemplateGroupId(
+					ddmTemplate.getGroupId());
+				navigationMenuTag.setDdmTemplateKey(
+					ddmTemplate.getTemplateKey());
 			}
 
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
+			navigationMenuTag.doTag(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -151,7 +168,16 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Reference
+	private DDMTemplateService _ddmTemplateService;
+
+	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	private ServletContext _servletContext;
 

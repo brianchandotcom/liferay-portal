@@ -55,7 +55,7 @@ public class Parser {
 
 		StringBundler sb = new StringBundler();
 
-		int expecting = _CHAR | _DELIMITER | _STARTQUOTE;
+		int expecting = _DELIMITER | _STARTQUOTE;
 
 		for (int i = 0; i < value.length(); i++) {
 			char c = value.charAt(i);
@@ -69,22 +69,18 @@ public class Parser {
 
 				sb = new StringBundler();
 
-				expecting = _CHAR | _DELIMITER | _STARTQUOTE;
+				expecting = _DELIMITER | _STARTQUOTE;
 			}
 			else if ((c == CharPool.QUOTE) && ((expecting & _STARTQUOTE) > 0)) {
 				sb.append(c);
-				expecting = _CHAR | _ENDQUOTE;
+				expecting = _ENDQUOTE;
 			}
 			else if ((c == CharPool.QUOTE) && ((expecting & _ENDQUOTE) > 0)) {
 				sb.append(c);
-				expecting = _CHAR | _STARTQUOTE | _DELIMITER;
-			}
-			else if ((expecting & _CHAR) > 0) {
-				sb.append(c);
+				expecting = _STARTQUOTE | _DELIMITER;
 			}
 			else {
-				throw new IllegalArgumentException(
-					"Invalid delimited string: " + value);
+				sb.append(c);
 			}
 		}
 
@@ -172,8 +168,6 @@ public class Parser {
 
 		return finalImports;
 	}
-
-	private static final int _CHAR = 1;
 
 	private static final int _DELIMITER = 2;
 

@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ResourceImpl;
@@ -1697,6 +1698,13 @@ public class ResourcePermissionLocalServiceImpl
 		}
 	}
 
+	public interface IndividualPortletResourcePermissionProvider {
+
+		public List<ResourcePermission> getResourcePermissions(
+			long companyId, String name);
+
+	}
+
 	protected void addGroupPermissions(
 			long groupId, Resource resource, String[] actionIds)
 		throws PortalException {
@@ -1956,9 +1964,22 @@ public class ResourcePermissionLocalServiceImpl
 			List<String> ownerActionIds, List<String> groupActionIds)
 		throws PortalException {
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P(
+		IndividualPortletResourcePermissionProvider
+			individualPortletResourcePermissionProvider =
+				_individualPortletResourcePermissionProvider;
+
+		List<ResourcePermission> resourcePermissions = null;
+
+		if (individualPortletResourcePermissionProvider != null) {
+			resourcePermissions =
+				individualPortletResourcePermissionProvider.
+					getResourcePermissions(companyId, name);
+		}
+
+		if (resourcePermissions == null) {
+			resourcePermissions = resourcePermissionPersistence.findByC_N_S_P(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name);
+		}
 
 		Map<Long, ResourcePermission> resourcePermissionsMap =
 			_getResourcePermissionsMap(resourcePermissions);
@@ -2210,5 +2231,12 @@ public class ResourcePermissionLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResourcePermissionLocalServiceImpl.class);
+
+	private static volatile IndividualPortletResourcePermissionProvider
+		_individualPortletResourcePermissionProvider =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				IndividualPortletResourcePermissionProvider.class,
+				ResourcePermissionLocalServiceImpl.class,
+				"_individualPortletResourcePermissionProvider", null, true);
 
 }

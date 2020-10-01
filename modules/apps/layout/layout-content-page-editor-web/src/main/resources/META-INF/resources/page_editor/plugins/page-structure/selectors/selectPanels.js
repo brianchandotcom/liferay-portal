@@ -121,7 +121,7 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 		return {activeItem, panelsIds};
 	}
 
-	const canUpdateEditables = selectCanUpdateEditables(state);
+	const canUpdateEditables = selectCanUpdateEditables(state, activeItem);
 	const canUpdateItemConfiguration = selectCanUpdateItemConfiguration(state);
 
 	if (canUpdateEditables && activeItem.editableId) {
@@ -134,17 +134,20 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 		const editableIsMapped = isMapped(editableValue);
 
 		panelsIds = {
-			[PANEL_IDS.editableLink]: [
-				EDITABLE_TYPES.text,
-				EDITABLE_TYPES.image,
-				EDITABLE_TYPES.link,
-			].includes(activeItem.type),
+			[PANEL_IDS.editableLink]:
+				[
+					EDITABLE_TYPES.text,
+					EDITABLE_TYPES.image,
+					EDITABLE_TYPES.link,
+				].includes(activeItem.type) &&
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.imageProperties]:
 				!editableIsMapped &&
 				[EDITABLE_TYPES.image, EDITABLE_TYPES.backgroundImage].includes(
 					activeItem.type
 				),
-			[PANEL_IDS.editableMapping]: true,
+			[PANEL_IDS.editableMapping]:
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.collection) {

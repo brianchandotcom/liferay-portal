@@ -182,7 +182,7 @@ function visit(
 			const type = editableTypes[editableId] || EDITABLE_TYPES.text;
 
 			children.push({
-				activable: canUpdateEditables,
+				activable: canUpdateEditables || type === EDITABLE_TYPES.image,
 				children: [],
 				disabled: !isMasterPage && itemInMasterLayout,
 				dragAndDropHoveredItemId,

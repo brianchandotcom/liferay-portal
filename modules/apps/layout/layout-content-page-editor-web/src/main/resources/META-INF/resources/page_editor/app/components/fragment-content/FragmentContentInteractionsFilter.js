@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useMemo} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {config} from '../../config/index';
@@ -261,7 +262,10 @@ function FragmentContentInteractionsFilter({
 			(editable) => editable.element === editableElement
 		);
 
-		if (editable) {
+		if (
+			editable &&
+			(canUpdateEditables || editable.type === EDITABLE_TYPES.image)
+		) {
 			event.stopPropagation();
 
 			if (isActive(editable.itemId)) {
@@ -277,10 +281,7 @@ function FragmentContentInteractionsFilter({
 
 	const props = {};
 
-	if (
-		canUpdateEditables &&
-		(siblingIds.some(isActive) || !canUpdatePageStructure)
-	) {
+	if (siblingIds.some(isActive) || !canUpdatePageStructure) {
 		props.onClickCapture = selectEditable;
 		props.onMouseLeave = () => hoverItem(null);
 		props.onMouseOverCapture = hoverEditable;

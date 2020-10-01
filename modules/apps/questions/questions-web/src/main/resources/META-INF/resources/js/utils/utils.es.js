@@ -122,27 +122,15 @@ export function normalize(ratingValue) {
 }
 
 export function stringToSlug(text) {
-	const hyphens = /-+/g;
 	const whiteSpaces = /\s+/g;
 
-	text = text.toLowerCase();
-
-	text = text.replace(hyphens, '--');
-
-	text = text.replace(whiteSpaces, '-');
-
-	return text;
+	return text.replace(whiteSpaces, '-').toLowerCase();
 }
 
 export function slugToText(slug) {
-	const encodedHyphens = /--+/g;
-	const hyphens = /(?<!-)-(?!-.)/g;
+	const hyphens = /-+/g;
 
-	slug = slug.replace(hyphens, ' ');
-
-	slug = slug.replace(encodedHyphens, '-').toLowerCase();
-
-	return slug;
+	return slug.replace(hyphens, ' ').toLowerCase();
 }
 
 export function historyPushWithSlug(push) {

@@ -21,31 +21,15 @@ describe('utils', () => {
 				'lorem ipsum dolor'
 			);
 		});
-
-		it('return a text with hyphens or spaces depending on the input text format', () => {
-			expect(
-				Utils.slugToText(
-					'Lorem-ipsum-dolor--sit-amet--consectetur-adipiscing--elit'
-				)
-			).toEqual('lorem ipsum dolor-sit amet-consectetur adipiscing-elit');
-		});
 	});
 
 	describe('stringToSlug', () => {
 		it('return a text with hyphens instead of spaces', () => {
-			expect(Utils.stringToSlug('Lorem ipsum dolor')).toEqual(
-				'lorem-ipsum-dolor'
-			);
-		});
-
-		it('return a text with hyphens instead of spaces or double hyphens instead of simple hyphens', () => {
 			expect(
 				Utils.stringToSlug(
-					'lorem ipsum dolor-sit amet-consectetur adipiscing-elit'
+					'lorem ipsum dolor sit amet consectetur adipiscing elit'
 				)
-			).toEqual(
-				'lorem-ipsum-dolor--sit-amet--consectetur-adipiscing--elit'
-			);
+			).toEqual('lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit');
 		});
 	});
 });

@@ -19,12 +19,16 @@ import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.web.internal.configuration.FFDepotStagingConfiguration;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.staging.constants.StagingProcessesPortletKeys;
 import com.liferay.trash.constants.TrashPortletKeys;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -38,7 +42,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = DepotApplicationController.class)
+@Component(
+	configurationPid = "com.liferay.depot.web.internal.configuration.FFDepotStagingConfiguration",
+	service = DepotApplicationController.class
+)
 public class DepotApplicationController {
 
 	public Collection<DepotApplication> getCustomizableDepotApplications() {
@@ -97,6 +104,12 @@ public class DepotApplicationController {
 	}
 
 	public boolean isEnabled(String portletId) {
+		if (portletId.equals(StagingProcessesPortletKeys.STAGING_PROCESSES) &&
+			!_ffDepotStagingConfiguration.enabled()) {
+
+			return false;
+		}
+
 		DepotApplication depotApplication = _serviceTrackerMap.getService(
 			portletId);
 
@@ -108,6 +121,12 @@ public class DepotApplicationController {
 	}
 
 	public boolean isEnabled(String portletId, long groupId) {
+		if (portletId.equals(StagingProcessesPortletKeys.STAGING_PROCESSES) &&
+			!_ffDepotStagingConfiguration.enabled()) {
+
+			return false;
+		}
+
 		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
 			groupId);
 
@@ -142,7 +161,12 @@ public class DepotApplicationController {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_ffDepotStagingConfiguration = ConfigurableUtil.createConfigurable(
+			FFDepotStagingConfiguration.class, properties);
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, DepotApplication.class, null,
 			(serviceReference, emitter) -> {
@@ -184,6 +208,7 @@ public class DepotApplicationController {
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
 
+	private FFDepotStagingConfiguration _ffDepotStagingConfiguration;
 	private ServiceTrackerMap<String, DepotApplication> _serviceTrackerMap;
 
 }

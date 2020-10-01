@@ -768,10 +768,8 @@
 		"type": "Root"
 	},
 	"settings": {
-		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "customer-portal"
-		},
-		"themeName": "Classic"
+		}
 	}
 }

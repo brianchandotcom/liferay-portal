@@ -553,16 +553,8 @@
 		"type": "Root"
 	},
 	"settings": {
-		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "customer-portal"
-		},
-		"themeName": "Classic",
-		"themeSettings": {
-			"lfr-theme:regular:show-footer": "false",
-			"lfr-theme:regular:show-header": "false",
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	}
 }

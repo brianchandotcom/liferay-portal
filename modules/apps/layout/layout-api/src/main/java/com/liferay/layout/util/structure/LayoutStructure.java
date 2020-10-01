@@ -335,6 +335,10 @@ public class LayoutStructure {
 		return false;
 	}
 
+	public int getColumnSize(int size, int column) {
+		return _COLUMN_SIZES[size][column];
+	}
+
 	public List<DeletedLayoutStructureItem> getDeletedLayoutStructureItems() {
 		return ListUtil.fromCollection(_deletedLayoutStructureItems.values());
 	}
@@ -599,12 +603,12 @@ public class LayoutStructure {
 						childrenItemId);
 
 				columnLayoutStructureItem.setSize(
-					_COLUMN_SIZES[numberOfColumns - 1][i]);
+					getColumnSize(numberOfColumns - 1, i));
 			}
 
 			for (int i = oldNumberOfColumns; i < numberOfColumns; i++) {
 				_addColumnLayoutStructureItem(
-					itemId, i, _COLUMN_SIZES[numberOfColumns - 1][i]);
+					itemId, i, getColumnSize(numberOfColumns - 1, i));
 			}
 
 			return Collections.emptyList();
@@ -618,7 +622,7 @@ public class LayoutStructure {
 					childrenItemId);
 
 			columnLayoutStructureItem.setSize(
-				_COLUMN_SIZES[numberOfColumns - 1][i]);
+				getColumnSize(numberOfColumns - 1, i));
 		}
 
 		List<LayoutStructureItem> deletedLayoutStructureItems =

@@ -184,7 +184,7 @@ describe('TextField', () => {
 
 		expect(ImageSelector).toBeCalledWith(
 			expect.objectContaining({
-				imageTitle: 'default-url.jpg',
+				imageTitle: '',
 				label: 'image',
 			}),
 			{}

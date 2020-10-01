@@ -26,6 +26,7 @@ const PUBLIC_EVENTS = {
 	PAGE_DELETED: 'pageDeleted',
 	PAGE_RESET: 'pageReset',
 	PAGE_SWAPPED: 'pagesSwapped',
+	PAGE_UPDATED: 'pagesUpdated',
 	PAGE_VALIDATION_FAILED: 'pageValidationFailed',
 	SUCCESS_CHANGED: 'successPageChanged',
 };

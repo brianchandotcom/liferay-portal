@@ -31,10 +31,7 @@ definition {
 
 		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
 
@@ -49,10 +46,7 @@ definition {
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.cluster.test.module.jar");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
 
@@ -68,10 +62,7 @@ definition {
 
 		Portlet.startServer(keepOSGiState = "true");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.cluster.test.module_");
 
@@ -90,10 +81,7 @@ definition {
 
 		Theme.deployThemeWar(themeName = "test-theme");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		AssertConsoleTextPresent(value1 = "STARTED test-theme_");
 
@@ -109,10 +97,7 @@ definition {
 
 		Portlet.startServer(keepOSGiState = "true");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		AssertConsoleTextNotPresent(value1 = "STARTED test-theme_");
 

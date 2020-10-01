@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Multi-Factor Authentication FIDO2 Web
+Bundle-SymbolicName: com.liferay.multi.factor.authentication.fido2.web
+Bundle-Version: 1.0.0
+Import-Package:\
+	!sun.security.x509.*,\
+	\
+	*
+Web-ContextPath: /multi-factor-authentication-fido2-web
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore

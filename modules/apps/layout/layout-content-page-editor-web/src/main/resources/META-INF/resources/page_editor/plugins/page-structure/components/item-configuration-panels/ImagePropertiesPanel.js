@@ -105,10 +105,12 @@ export function ImagePropertiesPanel({item}) {
 			processorKey
 		);
 
-		const url = content.url != null ? content.url : content;
-
-		return editableValue.defaulValue === url ? '' : url;
+		return content?.url ?? content;
 	});
+
+	const imageTitle =
+		editableConfig.imageTitle ||
+		(imageUrl === editableValue.defaultValue ? '' : imageUrl);
 
 	const updateEditableValues = (
 		alt,
@@ -198,7 +200,7 @@ export function ImagePropertiesPanel({item}) {
 	return (
 		<>
 			<ImageSelector
-				imageTitle={editableConfig.imageTitle || imageUrl}
+				imageTitle={imageTitle}
 				label={Liferay.Language.get('image')}
 				onClearButtonPressed={() => onImageChange('', '')}
 				onImageSelected={(image) =>
@@ -206,7 +208,7 @@ export function ImagePropertiesPanel({item}) {
 				}
 			/>
 
-			{imageUrl && imageSize && (
+			{imageTitle && imageSize && (
 				<div className="mb-2 small">
 					<b>{Liferay.Language.get('resolution')}:</b>
 					<span className="ml-2">

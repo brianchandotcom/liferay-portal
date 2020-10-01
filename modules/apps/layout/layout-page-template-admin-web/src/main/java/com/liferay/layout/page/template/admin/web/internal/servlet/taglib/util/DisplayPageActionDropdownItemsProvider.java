@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
@@ -130,6 +131,17 @@ public class DisplayPageActionDropdownItemsProvider {
 		).add(
 			() -> hasUpdatePermission && _isShowDiscardDraftAction(),
 			_getDiscardDraftActionUnsafeConsumer()
+		).add(
+			() -> {
+				int usagesCount =
+					AssetDisplayPageEntryServiceUtil.
+						getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+							_layoutPageTemplateEntry.
+								getLayoutPageTemplateEntryId());
+
+				return usagesCount > 0;
+			},
+			_getViewUsagesDisplayPageActionUnsafeConsumer()
 		).add(
 			() -> LayoutPageTemplateEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
@@ -453,6 +465,30 @@ public class DisplayPageActionDropdownItemsProvider {
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "change-thumbnail"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getViewUsagesDisplayPageActionUnsafeConsumer() {
+
+		PortletURL viewUsagesURL = PortalUtil.getControlPanelPortletURL(
+			_httpServletRequest,
+			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+			PortletRequest.RENDER_PHASE);
+
+		viewUsagesURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				viewUsagesURL, "mvcRenderCommandName",
+				"/layout_page_template/view_display_page_usages", "redirect",
+				_themeDisplay.getURLCurrent());
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "view-usages"));
 		};
 	}
 

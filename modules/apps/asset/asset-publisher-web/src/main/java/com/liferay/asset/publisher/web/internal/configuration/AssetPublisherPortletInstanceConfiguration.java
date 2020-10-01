@@ -117,4 +117,16 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	)
 	public LocalizedValuesMap emailAssetEntryAddedBody();
 
+	/**
+	 * Set this to <code>true</code> if you want to enable related assets by
+	 * default.
+	 *
+	 * @return <code>true</code> if related assets are enabled.
+	 */
+	@Meta.AD(
+		deflt = "false", description = "related-assets-enabled-description",
+		name = "related-assets-enabled", required = false
+	)
+	public boolean relatedAssetsEnabled();
+
 }

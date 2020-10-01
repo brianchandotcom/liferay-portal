@@ -180,8 +180,8 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
-			organizationSite = "Site Template Name 1",
-			orgName = "Organization Name 1");
+			orgName = "Organization Name 1",
+			siteTemplateName = "Site Template Name 1");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
 
@@ -203,8 +203,8 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
-			organizationSite = "Site Template Name 2",
-			orgName = "Organization Name 2");
+			orgName = "Organization Name 2",
+			siteTemplateName = "Site Template Name 2");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-2");
 
@@ -301,8 +301,8 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
-			organizationSite = "Site Template Name",
-			orgName = "Site Organization Name");
+			orgName = "Site Organization Name",
+			siteTemplateName = "Site Template Name");
 
 		User.openUsersAdmin();
 

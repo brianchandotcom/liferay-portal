@@ -54,8 +54,8 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(
-			organizationSite = "Site Template Name",
-			orgName = "Staging Organization Name");
+			orgName = "Staging Organization Name",
+			siteTemplateName = "Site Template Name");
 
 		JSONUser.addUser(
 			allowManualMembershipManagement = "true",

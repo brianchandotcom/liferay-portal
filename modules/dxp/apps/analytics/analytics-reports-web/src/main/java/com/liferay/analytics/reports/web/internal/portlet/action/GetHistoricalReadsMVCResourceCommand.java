@@ -16,14 +16,17 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
+import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -69,6 +72,26 @@ public class GetHistoricalReadsMVCResourceCommand
 		try {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(resourceRequest);
+
+			LayoutDisplayPageObjectProvider<Object>
+				layoutDisplayPageObjectProvider =
+					(LayoutDisplayPageObjectProvider<Object>)
+						LayoutDisplayPageProviderUtil.
+							getLayoutDisplayPageObjectProvider(
+								httpServletRequest,
+								_layoutDisplayPageProviderTracker, _portal);
+
+			if (layoutDisplayPageObjectProvider == null) {
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse,
+					JSONUtil.put(
+						"error",
+						_language.get(
+							httpServletRequest,
+							"an-unexpected-error-occurred")));
+
+				return;
+			}
 
 			AnalyticsReportsDataProvider analyticsReportsDataProvider =
 				new AnalyticsReportsDataProvider(_http);

@@ -434,9 +434,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		Organization.addSiteCP(
-			organizationSite = "Community Site",
-			orgName = "Organization Name");
+		Organization.addSiteCP(orgName = "Organization Name");
 
 		for (var userNum : list "1,2") {
 			JSONUser.addUser(
@@ -1103,9 +1101,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addSiteCP(
-			organizationSite = "Community Site",
-			orgName = "Organization Name 2");
+		Organization.addSiteCP(orgName = "Organization Name 2");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

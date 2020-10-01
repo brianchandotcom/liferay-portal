@@ -856,9 +856,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addSiteCP(
-			organizationSite = "Community Site",
-			orgName = "Organization Name 2");
+		Organization.addSiteCP(orgName = "Organization Name 2");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1385,9 +1383,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addSiteCP(
-			organizationSite = "Community Site",
-			orgName = "Organization Site Bravo");
+		Organization.addSiteCP(orgName = "Organization Site Bravo");
 
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsSitesCP(siteName = "Site Name Alpha");
 
@@ -1767,9 +1763,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addSiteCP(
-			organizationSite = "Community Site",
-			orgName = "United States");
+		Organization.addSiteCP(orgName = "United States");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1778,9 +1772,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addSiteCP(
-			organizationSite = "Community Site",
-			orgName = "Canada");
+		Organization.addSiteCP(orgName = "Canada");
 
 		JSONOrganization.assignUserToOrganization(
 			organizationName = "Canada",

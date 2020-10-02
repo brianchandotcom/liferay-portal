@@ -14,9 +14,9 @@
 
 const CHECK_AND_FIX_GLOBS = [
 	'!tsconfig.json',
-	'/{,dxp/}*.js',
-	'/{,dxp/}apps/*/*/*.{js,json}',
-	'/{,dxp/}apps/*/*/{src,test}/**/*.{js,scss}',
+	'/{,dxp/}*.{js,ts}',
+	'/{,dxp/}apps/*/*/*.{js,json,ts,tsx}',
+	'/{,dxp/}apps/*/*/{src,test}/**/*.{js,scss,ts,tsx}',
 	'/{,dxp/}apps/*/*/{src}/**/*.{jsp,jspf}',
 ];
 

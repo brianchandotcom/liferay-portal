@@ -103,44 +103,28 @@ public class Parser {
 			List<String> tokens = _parseDelimitedString(
 				clause, CharPool.SEMICOLON);
 
-			int pathCount = 0;
-
-			for (String token : tokens) {
-				if (token.indexOf(CharPool.EQUAL) != -1) {
-					break;
-				}
-
-				pathCount++;
-			}
-
-			if (pathCount == 0) {
-				throw new IllegalArgumentException(
-					"No path specified on clause: " + clause);
-			}
+			List<String> paths = new ArrayList<>();
 
 			Map<String, String> attributes = new HashMap<>();
 
-			for (int pieceIndex = pathCount; pieceIndex < tokens.size();
-				 pieceIndex++) {
+			for (String token : tokens) {
+				int index = token.indexOf(StringPool.EQUAL);
 
-				String piece = tokens.get(pieceIndex);
+				if (index == -1) {
+					paths.add(token);
 
-				int index = piece.indexOf(StringPool.EQUAL);
-
-				if (index <= 0) {
-					throw new IllegalArgumentException(
-						"Not a directive/attribute: " + clause);
+					continue;
 				}
 
-				String key = piece.substring(0, index);
+				String key = token.substring(0, index);
 
-				if (piece.charAt(index - 1) == CharPool.COLON) {
+				if (token.charAt(index - 1) == CharPool.COLON) {
 					key = key.substring(0, key.length() - 1);
 				}
 
 				key = key.trim();
 
-				String value = piece.substring(index + 1);
+				String value = token.substring(index + 1);
 
 				value = value.trim();
 
@@ -153,10 +137,8 @@ public class Parser {
 				attributes.put(key, value);
 			}
 
-			for (int packageIndex = 0; packageIndex < pathCount;
-				 packageIndex++) {
-
-				finalImports.put(tokens.get(packageIndex), attributes);
+			for (String path : paths) {
+				finalImports.put(path, attributes);
 			}
 		}
 

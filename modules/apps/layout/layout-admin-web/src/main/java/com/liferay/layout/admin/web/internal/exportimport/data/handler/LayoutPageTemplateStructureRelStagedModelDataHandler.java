@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -71,6 +72,13 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 				segmentsExperience, PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
+		String data = _dlReferencesExportImportContentProcessor.
+			replaceExportContentReferences(
+				portletDataContext, layoutPageTemplateStructureRel,
+				layoutPageTemplateStructureRel.getData(), false, false);
+
+		layoutPageTemplateStructureRel.setData(data);
+
 		portletDataContext.addClassedModel(
 			layoutPageTemplateStructureRelElement,
 			ExportImportPathUtil.getModelPath(layoutPageTemplateStructureRel),
@@ -112,6 +120,13 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 		importedLayoutPageTemplateStructureRel.setSegmentsExperienceId(
 			segmentsExperienceId);
 
+		String data = _dlReferencesExportImportContentProcessor.
+			replaceImportContentReferences(
+				portletDataContext, layoutPageTemplateStructureRel,
+				layoutPageTemplateStructureRel.getData());
+
+		importedLayoutPageTemplateStructureRel.setData(data);
+
 		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				layoutPageTemplateStructureRel.getUuid(),
@@ -148,6 +163,10 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	@Reference(target = "(content.processor.type=DLReferences)")
+	private ExportImportContentProcessor<String>
+		_dlReferencesExportImportContentProcessor;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

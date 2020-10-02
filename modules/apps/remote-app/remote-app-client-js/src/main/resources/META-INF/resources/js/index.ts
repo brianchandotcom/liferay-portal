@@ -336,6 +336,7 @@ function serializeBody(body: BodyInit | null): StructuredClonable {
 	else {
 		// warn about unserializable body type (eg. search params,
 		// readable stream),
+
 	}
 }
 
@@ -447,6 +448,7 @@ type Listeners = {
 
 const SDK = Object.freeze({
 	Client({debug}: ClientOptions = {debug: false}) {
+
 		// TODO: warn if no promise polyfill present
 		// (need that just like we expect DXP environment ot have it)
 		// or provide very minimal fallback ponyfill
@@ -767,6 +769,7 @@ const SDK = Object.freeze({
 					}
 				}
 				else if (kind === 'registered') {
+
 					// TODO replace with actual reducer
 
 					state = 'registered';
@@ -829,6 +832,7 @@ const SDK = Object.freeze({
 				resource: RequestInfo,
 				init: RequestInit = {}
 			): Promise<BasicResponse> {
+
 				// TODO: if Array.from Headers etc exist (ie. IE with polyfill
 				// or evergreen), try to extract headers from resource and merge
 				// them into init instead.

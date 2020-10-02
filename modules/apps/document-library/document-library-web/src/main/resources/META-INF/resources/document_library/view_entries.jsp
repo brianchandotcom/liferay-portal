@@ -329,10 +329,15 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 										/>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("downloads") %>'>
+
+										<%
+										boolean viewCountEnabled = ViewCountManagerUtil.isViewCountEnabled(PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()));
+										%>
+
 										<liferay-ui:search-container-column-text
 											cssClass="table-cell-expand-smallest"
 											name="downloads"
-											value="<%= String.valueOf(fileEntry.getReadCount()) %>"
+											value='<%= viewCountEnabled ? String.valueOf(fileEntry.getReadCount()) : "--" %>'
 										/>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("create-date") %>'>

@@ -1,9 +1,9 @@
-@component-name = "portal-change-list"
+@component-name = "portal-publications"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Change List";
+	property testray.main.component.name = "Publications";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -15,7 +15,7 @@ definition {
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enablePublications(gotoOverview = "true");
+		Publications.enablePublications(gotoOverview = "true");
 	}
 
 	tearDown {
@@ -30,67 +30,67 @@ definition {
 				panel = "Applications",
 				portlet = "Settings");
 
-			ChangeList.disablePublications();
+			Publications.disablePublications();
 		}
 	}
 
 	@priority = "3"
 	test CancelPublicationCreation {
-		property test.name.skip.portal.instance = "ChangeListManagePublications#CancelPublicationCreation";
+		property test.name.skip.portal.instance = "PublicationsManagePublications#CancelPublicationCreation";
 
-		ChangeList.cancelPublicationCreation(publicationName = "Publication Name");
+		Publications.cancelPublicationCreation(publicationsName = "Publication Name");
 
 		AssertElementNotPresent(
-			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME",
+			locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME",
 			value1 = "Publication Name");
 	}
 
 	@priority = "3"
 	test CreateNewPublicationWithLongName {
-		property test.name.skip.portal.instance = "ChangeListManagePublications#CreateNewPublicationWithLongName";
+		property test.name.skip.portal.instance = "PublicationsManagePublications#CreateNewPublicationWithLongName";
 
-		ChangeList.createNewPublication(
+		Publications.createNewPublication(
 			gotoManagePublications = "true",
-			publicationName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
+			publicationsName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
 
 		Alert.viewLengthValidationField();
 	}
 
 	@priority = "3"
 	test CreateNewPublicationWithoutName {
-		property test.name.skip.portal.instance = "ChangeListManagePublications#CreateNewPublicationWithoutName";
+		property test.name.skip.portal.instance = "PublicationsManagePublications#CreateNewPublicationWithoutName";
 
-		ChangeList.createNewPublication(gotoManagePublications = "true");
+		Publications.createNewPublication(gotoManagePublications = "true");
 
 		Alert.viewRequiredField();
 	}
 
 	@priority = "5"
 	test DeletePublication {
-		property test.name.skip.portal.instance = "ChangeListManagePublications#DeletePublication";
+		property test.name.skip.portal.instance = "PublicationsManagePublications#DeletePublication";
 
-		ChangeList.createNewPublication(
+		Publications.createNewPublication(
 			gotoManagePublications = "true",
-			publicationDescription = "Publication Description",
-			publicationName = "Publication Name");
+			publicationsDescription = "Publication Description",
+			publicationsName = "Publication Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
 			portlet = "Publications");
 
-		ChangeList.deletePublication(publicationName = "Publication Name");
+		Publications.deletePublication(publicationsName = "Publication Name");
 
 		AssertElementNotPresent(
-			key_publicationName = "Publication Name",
-			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME");
+			key_publicationsName = "Publication Name",
+			locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME");
 	}
 
 	@priority = "4"
 	test SwitchPublication {
-		property test.name.skip.portal.instance = "ChangeListManagePublications#SwitchPublication";
+		property test.name.skip.portal.instance = "PublicationsManagePublications#SwitchPublication";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -106,7 +106,7 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.createNewPublication(publicationName = "Publication 2 Name");
+		Publications.createNewPublication(publicationsName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -122,7 +122,7 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.selectPublication(publicationName = "Publication Name");
+		Publications.selectPublication(publicationsName = "Publication Name");
 
 		AssertElementPresent(
 			key_webContentTitle = "Web Content Title 1",
@@ -132,7 +132,7 @@ definition {
 			key_webContentTitle = "Web Content Title 2",
 			locator1 = "WC#ENTRY_LIST_TITLE");
 
-		ChangeList.selectPublication(publicationName = "Publication 2 Name");
+		Publications.selectPublication(publicationsName = "Publication 2 Name");
 
 		AssertElementPresent(
 			key_webContentTitle = "Web Content Title 2",
@@ -142,7 +142,7 @@ definition {
 			key_webContentTitle = "Web Content Title 1",
 			locator1 = "WC#ENTRY_LIST_TITLE");
 
-		ChangeList.workOnProduction();
+		Publications.workOnProduction();
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

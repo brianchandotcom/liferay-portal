@@ -1,0 +1,69 @@
+definition {
+
+	macro changeDisplayStyle {
+		Click(locator1 = "PublicationsChanges#CURRENT_DISPLAY_STYLE");
+
+		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
+	}
+
+	macro viewPublicationsViaChangesStyle {
+		if ("${publishedPublication}" == "true") {
+			Click(
+				key_publicationsName = "Publication Name",
+				locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME");
+		}
+		else {
+			PublicationsChanges.changeDisplayStyle(displayStyle = "Changes");
+		}
+
+		Pause(locator1 = "3000");
+
+		var key_publicationsCategory = "${publicationsCategory}";
+		var key_publicationsUser = "${publicationsUser}";
+		var key_publicationsSite = "${publicationsSite}";
+		var key_publicationsTitle = "${publicationsTitle}";
+		var key_publicationsType = "${publicationsType}";
+
+		if (isSet(publicationsOrder)) {
+			var publicationsOrder = "${publicationsOrder}";
+		}
+		else {
+			var publicationsOrder = "1";
+		}
+
+		AssertElementPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_USER");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_SITE",
+			value1 = "${publicationsSite}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
+			value1 = "${publicationsTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TYPE",
+			value1 = "${publicationsType}");
+	}
+
+	macro viewPublicationsViaContextStyle {
+		PublicationsChanges.changeDisplayStyle(displayStyle = "Context");
+
+		Pause(locator1 = "3000");
+
+		var key_publicationsCategory = "${publicationsCategory}";
+		var key_publicationsDescription = "${publicationsDescription}";
+		var key_publicationsTitle = "${publicationsTitle}";
+
+		Click.javaScriptClick(locator1 = "PublicationsChanges#CONTEXT_PUBLICATIONS_CATEGORY_RADIO");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PublicationsChanges#CONTEXT_PUBLICATIONS_TITLE",
+			value1 = "${publicationsTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PublicationsChanges#CONTEXT_PUBLICATIONS_DESCRIPTION",
+			value1 = "${publicationsDescription}");
+	}
+
+}

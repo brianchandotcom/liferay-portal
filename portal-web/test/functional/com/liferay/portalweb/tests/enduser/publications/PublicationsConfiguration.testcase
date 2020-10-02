@@ -1,9 +1,9 @@
-@component-name = "portal-change-list"
+@component-name = "portal-publications"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Change List";
+	property testray.main.component.name = "Publications";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -21,7 +21,7 @@ definition {
 
 	@priority = "5"
 	test CannotEnablePublicationsWhenStagingIsTurnedOn {
-		property test.name.skip.portal.instance = "ChangeListConfiguration#CannotEnablePublicationsWhenStagingIsTurnedOn";
+		property test.name.skip.portal.instance = "PublicationsConfiguration#CannotEnablePublicationsWhenStagingIsTurnedOn";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -37,7 +37,7 @@ definition {
 			panel = "Applications",
 			portlet = "Settings");
 
-		Check.checkToggleSwitch(locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH");
+		Check.checkToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
 
 		Click(locator1 = "Button#SUBMIT");
 
@@ -46,46 +46,46 @@ definition {
 
 	@priority = "5"
 	test EnableDisablePublications {
-		property test.name.skip.portal.instance = "ChangeListConfiguration#EnableDisablePublications";
+		property test.name.skip.portal.instance = "PublicationsConfiguration#EnableDisablePublications";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enablePublications();
+		Publications.enablePublications();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.disablePublications();
+		Publications.disablePublications();
 
-		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
+		AssertElementPresent(locator1 = "PublicationsSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
 	}
 
 	@priority = "5"
 	test EnablePublicationsAndGoToOverview {
-		property test.name.skip.portal.instance = "ChangeListConfiguration#EnablePublicationsAndGoToOverview";
+		property test.name.skip.portal.instance = "PublicationsConfiguration#EnablePublicationsAndGoToOverview";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enablePublications(gotoOverview = "true");
+		Publications.enablePublications(gotoOverview = "true");
 
 		AssertTextEquals(
-			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
+			locator1 = "Publications#MANGE_PUBLICATIONS_PAGE_TITLE",
 			value1 = "Publications");
 
 		AssertTextPresent(
-			key_publicationName = "Production",
-			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
+			key_publicationsName = "Production",
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
 			value1 = "Production");
 
-		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
+		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
 		for (var menuItem : list "Select a Publication,Create New Publication") {
 			MenuItem.viewPresent(menuItem = "${menuItem}");

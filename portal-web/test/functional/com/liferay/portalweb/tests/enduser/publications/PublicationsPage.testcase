@@ -1,9 +1,9 @@
-@component-name = "portal-change-list"
+@component-name = "portal-publications"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Change List";
+	property testray.main.component.name = "Publications";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -15,7 +15,7 @@ definition {
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enablePublications();
+		Publications.enablePublications();
 	}
 
 	tearDown {
@@ -30,13 +30,13 @@ definition {
 				panel = "Applications",
 				portlet = "Settings");
 
-			ChangeList.disablePublications();
+			Publications.disablePublications();
 		}
 	}
 
 	@priority = "4"
 	test PublishDeletedPageWithTag {
-		property test.name.skip.portal.instance = "ChangeListPage#PublishDeletedPageWithTag";
+		property test.name.skip.portal.instance = "PublicationsPage#PublishDeletedPageWithTag";
 
 		Navigator.openURL();
 
@@ -46,7 +46,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Test Page");
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -68,23 +68,23 @@ definition {
 
 		Page.viewNoPG(pageName = "Test Page");
 
-		ChangeList.gotoReviewChanges();
+		Publications.gotoReviewPublications();
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Page",
-			changeSite = "Guest",
-			changeTitle = "Test Page",
-			changeType = "Deleted",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Page",
+			publicationsSite = "Guest",
+			publicationsTitle = "Test Page",
+			publicationsType = "Deleted",
+			publicationsUser = "Test Test");
 
-		ChangeListChanges.viewChangesViaContextStyle(
-			changeCategory = "Page",
-			changeDescription = "Test Test deleted a Page in Guest",
-			changeTitle = "Test Page");
+		PublicationsChanges.viewPublicationsViaContextStyle(
+			publicationsCategory = "Page",
+			publicationsDescription = "Test Test deleted a Page in Guest",
+			publicationsTitle = "Test Page");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -94,9 +94,9 @@ definition {
 	@priority = "4"
 	test PublishPrivateContentPageWithFragment {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "ChangeListPage#PublishPrivateContentPageWithFragment";
+		property test.name.skip.portal.instance = "PublicationsPage#PublishPrivateContentPageWithFragment";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		JSONFragment.addFragmentCollection(
 			groupName = "Guest",
@@ -150,9 +150,9 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.gotoPrivateSitePage(
 			pageName = "Test Page",
@@ -165,7 +165,7 @@ definition {
 
 	@priority = "5"
 	test ViewPageFriendlyURLAfterRevertingPublication {
-		property test.name.skip.portal.instance = "ChangeListPage#ViewPageFriendlyURLAfterRevertingPublication";
+		property test.name.skip.portal.instance = "PublicationsPage#ViewPageFriendlyURLAfterRevertingPublication";
 
 		Navigator.openURL();
 
@@ -175,7 +175,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Test Page");
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -189,17 +189,17 @@ definition {
 			key_friendlyURL = "/test-page-edited",
 			locator1 = "SitePages#FRIENDLY_URL");
 
-		ChangeList.workOnProduction();
+		Publications.workOnProduction();
 
 		AssertVisible(
 			key_friendlyURL = "/test-page",
 			locator1 = "SitePages#FRIENDLY_URL");
 
-		ChangeList.selectPublication(publicationName = "Publication Name");
+		Publications.selectPublication(publicationsName = "Publication Name");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -218,7 +218,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "History");
 
-		ChangeList.revertPublication(publicationName = "Publication Name");
+		Publications.revertPublication(publicationsName = "Publication Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 

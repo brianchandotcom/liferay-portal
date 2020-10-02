@@ -84,7 +84,7 @@ definition {
 			templateName = "${templateName}",
 			templateScript = "${templateScript}");
 
-		DDLDataDefinition.save(changeListEnabled = "${changeListEnabled}");
+		DDLDataDefinition.save(publicationsEnabled = "${publicationsEnabled}");
 	}
 
 	@summary = "Attempt to add a blank template"
@@ -225,7 +225,7 @@ definition {
 			templateName = "${templateName}",
 			templateScript = "${templateScript}");
 
-		DDLDataDefinition.save(changeListEnabled = "${changeListEnabled}");
+		DDLDataDefinition.save(publicationsEnabled = "${publicationsEnabled}");
 	}
 
 	@summary = "Open Web Content Templates admin page for the site '${siteURLKey}'"

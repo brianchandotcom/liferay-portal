@@ -210,7 +210,7 @@
 </tr>
 <tr>
 	<td>SELECT_PUBLICATION</td>
-	<td>//iframe[contains(@id,'selectChangeList_iframe')]</td>
+	<td>//iframe[contains(@id,'selectPublication_iframe')]</td>
 	<td></td>
 </tr>
 <tr>

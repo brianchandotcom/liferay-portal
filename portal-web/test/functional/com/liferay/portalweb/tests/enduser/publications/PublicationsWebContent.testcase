@@ -1,9 +1,9 @@
-@component-name = "portal-change-list"
+@component-name = "portal-publications"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Change List";
+	property testray.main.component.name = "Publications";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -15,7 +15,7 @@ definition {
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enablePublications();
+		Publications.enablePublications();
 	}
 
 	tearDown {
@@ -30,15 +30,15 @@ definition {
 				panel = "Applications",
 				portlet = "Settings");
 
-			ChangeList.disablePublications();
+			Publications.disablePublications();
 		}
 	}
 
 	@priority = "4"
 	test PublishExpiredWebContentViaWCD {
-		property test.name.skip.portal.instance = "ChangeListWebContent#PublishExpiredWebContentViaWCD";
+		property test.name.skip.portal.instance = "PublicationsWebContent#PublishExpiredWebContentViaWCD";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -88,9 +88,9 @@ definition {
 			expiredContent = "true",
 			webContentTitle = "WC WebContent Title");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
@@ -101,9 +101,9 @@ definition {
 
 	@priority = "4"
 	test PublishWebContentWithCategory {
-		property test.name.skip.portal.instance = "ChangeListWebContent#PublishWebContentWithCategory";
+		property test.name.skip.portal.instance = "PublicationsWebContent#PublishWebContentWithCategory";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -139,11 +139,11 @@ definition {
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content");
 
-		ChangeList.gotoPublish(
+		Publications.gotoPublish(
 			gotoManagePublications = "true",
-			publicationName = "Publication Name");
+			publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -157,9 +157,9 @@ definition {
 	@priority = "4"
 	test PublishWebContentWithDMAndImageFields {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "ChangeListWebContent#PublishWebContentWithDMAndImageFields";
+		property test.name.skip.portal.instance = "PublicationsWebContent#PublishWebContentWithDMAndImageFields";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -228,40 +228,40 @@ definition {
 			key_webContentTitle = "WC WebContent Title",
 			locator1 = "WC#ENTRY_LIST_TITLE");
 
-		ChangeList.gotoReviewChanges();
+		Publications.gotoReviewPublications();
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Dynamic Data Mapping Structure",
-			changeSite = "Guest",
-			changeTitle = "WC Structure Name",
-			changeType = "Added",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Dynamic Data Mapping Structure",
+			publicationsSite = "Guest",
+			publicationsTitle = "WC Structure Name",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Dynamic Data Mapping Template",
-			changeSite = "Guest",
-			changeTitle = "WC Template Name",
-			changeType = "Added",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Dynamic Data Mapping Template",
+			publicationsSite = "Guest",
+			publicationsTitle = "WC Template Name",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Document",
-			changeSite = "Guest",
-			changeTitle = "DM Document Title",
-			changeType = "Added",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Document",
+			publicationsSite = "Guest",
+			publicationsTitle = "DM Document Title",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Document",
-			changeOrder = "2",
-			changeSite = "Guest",
-			changeTitle = "Document_1.jpg",
-			changeType = "Added",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Document",
+			publicationsOrder = "2",
+			publicationsSite = "Guest",
+			publicationsTitle = "Document_1.jpg",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -276,9 +276,9 @@ definition {
 
 	@priority = "4"
 	test PublishWebContentWithFriendlyURL {
-		property test.name.skip.portal.instance = "ChangeListWebContent#PublishWebContentWithFriendlyURL";
+		property test.name.skip.portal.instance = "PublicationsWebContent#PublishWebContentWithFriendlyURL";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -324,18 +324,18 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "WC WebContent Title");
 
-		ChangeList.gotoReviewChanges();
+		Publications.gotoReviewPublications();
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Widget",
-			changeSite = "Guest",
-			changeTitle = "Asset Publisher on Test Page",
-			changeType = "Added",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Widget",
+			publicationsSite = "Guest",
+			publicationsTitle = "Asset Publisher on Test Page",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/-/friendlyUrl");
 

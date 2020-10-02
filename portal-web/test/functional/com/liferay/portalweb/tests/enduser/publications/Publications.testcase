@@ -1,9 +1,9 @@
-@component-name = "portal-change-list"
+@component-name = "portal-publications"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Change List";
+	property testray.main.component.name = "Publications";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -15,7 +15,7 @@ definition {
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enablePublications();
+		Publications.enablePublications();
 	}
 
 	tearDown {
@@ -30,13 +30,13 @@ definition {
 				panel = "Applications",
 				portlet = "Settings");
 
-			ChangeList.disablePublications();
+			Publications.disablePublications();
 		}
 	}
 
 	@priority = "5"
-	test ConflictingChangesAutomaticallyResolved {
-		property test.name.skip.portal.instance = "ChangeList#ConflictingChangesAutomaticallyResolved";
+	test ConflictingPublicationsAutomaticallyResolved {
+		property test.name.skip.portal.instance = "Publications#ConflictingPublicationsAutomaticallyResolved";
 
 		Navigator.openURL();
 
@@ -52,7 +52,7 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -67,7 +67,7 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentTitleEdit = "WC WebContent Title");
 
-		ChangeList.createNewPublication(publicationName = "Publication 2 Name");
+		Publications.createNewPublication(publicationsName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -89,41 +89,41 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Ongoing");
 
-		ChangeList.assertDiscardIsUnavailableForInactivePublication(
-			changeCategory = "Web Content Article",
-			changeTitle = "WC WebContent Title",
-			publicationName = "Publication Name");
+		Publications.assertDiscardIsUnavailableForInactivePublication(
+			publicationsCategory = "Web Content Article",
+			publicationsName = "Publication Name",
+			publicationsTitle = "WC WebContent Title");
 
-		ChangeList.gotoPublish(publicationName = "Publication 2 Name");
+		Publications.gotoPublish(publicationsName = "Publication 2 Name");
 
-		ChangeList.publishPublication(publicationName = "Publication 2 Name");
+		Publications.publishPublication(publicationsName = "Publication 2 Name");
 
-		ChangeList.selectPublication(publicationName = "Publication Name");
+		Publications.selectPublication(publicationsName = "Publication Name");
 
-		ChangeList.gotoPublish(
+		Publications.gotoPublish(
 			gotoManagePublications = "true",
-			publicationName = "Publication Name");
+			publicationsName = "Publication Name");
 
-		ChangeList.viewAutomaticallyResolved(
+		Publications.viewAutomaticallyResolved(
 			entryTitle = "Test Test added a Web Content Article",
 			successMessage = "The article version was updated to latest.");
 
-		ChangeList.viewAutomaticallyResolved(
+		Publications.viewAutomaticallyResolved(
 			entryTitle = "Test Test modified a Asset",
 			successMessage = "The conflict was automatically resolved.");
 
-		AssertElementNotPresent(locator1 = "ChangeList#NEEDS_MANUAL_RESOLUTION_TABLE");
+		AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 
 		AssertElementNotPresent(
 			key_warningMessage = "The conflict cannot be automatically resolved.",
 			locator1 = "Message#WARNING_SPECIFIC");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 	}
 
 	@priority = "4"
-	test ConflictingChangesNeedManualResolution {
-		property test.name.skip.portal.instance = "ChangeList#ConflictingChangesNeedManualResolution";
+	test ConflictingPublicationsNeedManualResolution {
+		property test.name.skip.portal.instance = "Publications#ConflictingPublicationsNeedManualResolution";
 
 		Navigator.openURL();
 
@@ -139,7 +139,7 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -152,7 +152,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		ChangeList.createNewPublication(publicationName = "Publication 2 Name");
+		Publications.createNewPublication(publicationsName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -167,79 +167,79 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentTitleEdit = "WC WebContent Title 2 Edit");
 
-		ChangeList.selectPublication(publicationName = "Publication Name");
+		Publications.selectPublication(publicationsName = "Publication Name");
 
-		ChangeList.gotoReviewChanges();
+		Publications.gotoReviewPublications();
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Web Content Article",
-			changeSite = "Guest",
-			changeTitle = "WC WebContent Title",
-			changeType = "Deleted",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Web Content Article",
+			publicationsSite = "Guest",
+			publicationsTitle = "WC WebContent Title",
+			publicationsType = "Deleted",
+			publicationsUser = "Test Test");
 
-		ChangeListChanges.viewChangesViaContextStyle(
-			changeCategory = "Web Content Article",
-			changeDescription = "Test Test deleted a Web Content Article in Guest",
-			changeTitle = "WC WebContent Title");
+		PublicationsChanges.viewPublicationsViaContextStyle(
+			publicationsCategory = "Web Content Article",
+			publicationsDescription = "Test Test deleted a Web Content Article in Guest",
+			publicationsTitle = "WC WebContent Title");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
-		ChangeList.selectPublication(publicationName = "Publication 2 Name");
+		Publications.selectPublication(publicationsName = "Publication 2 Name");
 
 		Navigator.gotoNavTab(navTab = "History");
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Web Content Article",
-			changeSite = "Guest",
-			changeTitle = "WC WebContent Title",
-			changeType = "Deleted",
-			changeUser = "Test Test",
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Web Content Article",
+			publicationsSite = "Guest",
+			publicationsTitle = "WC WebContent Title",
+			publicationsType = "Deleted",
+			publicationsUser = "Test Test",
 			publishedPublication = "true");
 
-		ChangeList.gotoReviewChanges();
+		Publications.gotoReviewPublications();
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Web Content Article",
-			changeSite = "Guest",
-			changeTitle = "WC WebContent Title 2 Edit",
-			changeType = "Added",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Web Content Article",
+			publicationsSite = "Guest",
+			publicationsTitle = "WC WebContent Title 2 Edit",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
 
-		ChangeListChanges.viewChangesViaContextStyle(
-			changeCategory = "Web Content Article",
-			changeDescription = "Test Test added a Web Content Article in Guest",
-			changeTitle = "WC WebContent Title 2 Edit");
+		PublicationsChanges.viewPublicationsViaContextStyle(
+			publicationsCategory = "Web Content Article",
+			publicationsDescription = "Test Test added a Web Content Article in Guest",
+			publicationsTitle = "WC WebContent Title 2 Edit");
 
-		ChangeList.gotoPublish(publicationName = "Publication 2 Name");
+		Publications.gotoPublish(publicationsName = "Publication 2 Name");
 
-		ChangeList.viewNeedsManualResolution(
+		Publications.viewNeedsManualResolution(
 			entryTitle = "Test Test modified a Asset",
 			warningMessage = "Modification conflicts with a deletion.");
 
-		ChangeList.gotoViewDiffInConflictingChanges(entryTitle = "Test Test modified a Asset");
+		Publications.gotoViewDiffInConflictingPublications(entryTitle = "Test Test modified a Asset");
 
-		ChangeList.viewChangesDiff(
+		Publications.viewPublicationsDiff(
 			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
 			entryTitle = "Test Test modified a Asset",
-			publicationName = "Publication 2 Name");
+			publicationsName = "Publication 2 Name");
 
-		ChangeList.viewChangesDiff(
+		Publications.viewPublicationsDiff(
 			columnName = "ct-collection-id",
 			columnValueInPublication = "2",
 			entryTitle = "Test Test modified a Asset",
-			publicationName = "Publication 2 Name");
+			publicationsName = "Publication 2 Name");
 
 		IFrame.closeFrame();
 
-		ChangeList.discardChanges(
-			changeCategory = "Asset",
-			changeTitle = "WC WebContent Title 2 Edit",
-			conflictingChanges = "true",
-			entryTitle = "Test Test modified a Asset");
+		Publications.discardPublications(
+			conflictingPublications = "true",
+			entryTitle = "Test Test modified a Asset",
+			publicationsCategory = "Asset",
+			publicationsTitle = "WC WebContent Title 2 Edit");
 
 		Navigator.openURL();
 
@@ -251,9 +251,9 @@ definition {
 
 		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title");
 
-		ChangeList.gotoPublish(publicationName = "Publication 2 Name");
+		Publications.gotoPublish(publicationsName = "Publication 2 Name");
 
-		ChangeList.publishPublication(publicationName = "Publication 2 Name");
+		Publications.publishPublication(publicationsName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -268,9 +268,9 @@ definition {
 
 	@priority = "4"
 	test DiscardSubsetsofChangesInPublication {
-		property test.name.skip.portal.instance = "ChangeList#DiscardSubsetsofChangesInPublication";
+		property test.name.skip.portal.instance = "Publications#DiscardSubsetsofChangesInPublication";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -329,11 +329,11 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.gotoReviewChanges();
+		Publications.gotoReviewPublications();
 
-		ChangeList.discardChanges(
-			changeCategory = "Dynamic Data Mapping Structure",
-			changeTitle = "WC Structure Name");
+		Publications.discardPublications(
+			publicationsTitle = "WC Structure Name",
+			publicationsCategory = "Dynamic Data Mapping Structure");
 
 		Navigator.openURL();
 
@@ -357,9 +357,9 @@ definition {
 			key_ddlTemplateName = "WC Template Name",
 			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -386,7 +386,7 @@ definition {
 
 	@priority = "5"
 	test PublishParallelPublications {
-		property test.name.skip.portal.instance = "ChangeList#PublishParallelPublications";
+		property test.name.skip.portal.instance = "Publications#PublishParallelPublications";
 
 		Navigator.openURL();
 
@@ -398,7 +398,7 @@ definition {
 			folderDescription = "WC Folder Description",
 			folderName = "WC Folder Name");
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -418,7 +418,7 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.createNewPublication(publicationName = "Publication 2 Name");
+		Publications.createNewPublication(publicationsName = "Publication 2 Name");
 
 		Navigator.openURL();
 
@@ -438,15 +438,15 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.gotoPublish(publicationName = "Publication 2 Name");
+		Publications.gotoPublish(publicationsName = "Publication 2 Name");
 
-		ChangeList.publishPublication(publicationName = "Publication 2 Name");
+		Publications.publishPublication(publicationsName = "Publication 2 Name");
 
-		ChangeList.selectPublication(publicationName = "Publication Name");
+		Publications.selectPublication(publicationsName = "Publication Name");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -469,9 +469,9 @@ definition {
 
 	@priority = "5"
 	test RescheduleAndCancelScheduledPublication {
-		property test.name.skip.portal.instance = "ChangeList#RescheduleAndCancelScheduledPublication";
+		property test.name.skip.portal.instance = "Publications#RescheduleAndCancelScheduledPublication";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -487,15 +487,15 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.schedulePublication(publicationName = "Publication Name");
+		Publications.schedulePublication(publicationsName = "Publication Name");
 
-		ChangeList.gotoScheduledChanges();
+		Publications.gotoScheduledPublications();
 
-		ChangeList.schedulePublication(
-			publicationName = "Publication Name",
+		Publications.schedulePublication(
+			publicationsName = "Publication Name",
 			reschedule = "true");
 
-		ChangeList.unschedulePublication(publicationName = "Publication Name");
+		Publications.unschedulePublication(publicationsName = "Publication Name");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -504,9 +504,9 @@ definition {
 
 	@priority = "5"
 	test RevertPublicationAndPublishNow {
-		property test.name.skip.portal.instance = "ChangeList#RevertPublicationAndPublishNow";
+		property test.name.skip.portal.instance = "Publications#RevertPublicationAndPublishNow";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -522,17 +522,17 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
-		ChangeList.viewPublishedPublicationDetails(
-			publicationName = "Publication Name",
-			publicationPublishedBy = "Test Test");
+		Publications.viewPublishedPublicationDetails(
+			publicationPublishedBy = "Test Test",
+			publicationsName = "Publication Name");
 
 		AssertTextPresent(
-			key_publicationName = "Production",
-			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
+			key_publicationsName = "Production",
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
 			value1 = "Production");
 
 		Navigator.openURL();
@@ -552,11 +552,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "History");
 
-		ChangeList.revertPublication(
-			publicationName = "Publication Name",
+		Publications.revertPublication(
+			publicationsName = "Publication Name",
 			publishNow = "true");
 
-		ChangeList.publishPublication(publicationName = "Revert &quot;Publication Name&quot;");
+		Publications.publishPublication(publicationsName = "Revert &quot;Publication Name&quot;");
 
 		Navigator.openURL();
 
@@ -571,9 +571,9 @@ definition {
 
 	@priority = "5"
 	test SchedulePublication {
-		property test.name.skip.portal.instance = "ChangeList#SchedulePublication";
+		property test.name.skip.portal.instance = "Publications#SchedulePublication";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name 1");
+		Publications.createNewPublication(publicationsName = "Publication Name 1");
 
 		Navigator.openURL();
 
@@ -589,13 +589,13 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.schedulePublication(publicationName = "Publication Name 1");
+		Publications.schedulePublication(publicationsName = "Publication Name 1");
 
 		Pause(locator1 = "120000");
 
-		ChangeList.assertScheduledPublicationPublished(publicationName = "Publication Name 1");
+		Publications.assertScheduledPublicationPublished(publicationsName = "Publication Name 1");
 
-		ChangeList.createNewPublication(publicationName = "Publication Name 2");
+		Publications.createNewPublication(publicationsName = "Publication Name 2");
 
 		Navigator.openURL();
 
@@ -611,15 +611,15 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.schedulePublication(
+		Publications.schedulePublication(
 			gotoManagePublications = "true",
-			publicationName = "Publication Name 2");
+			publicationsName = "Publication Name 2");
 
 		Pause(locator1 = "120000");
 
-		ChangeList.assertScheduledPublicationPublished(publicationName = "Publication Name 2");
+		Publications.assertScheduledPublicationPublished(publicationsName = "Publication Name 2");
 
-		ChangeList.createNewPublication(publicationName = "Publication Name 3");
+		Publications.createNewPublication(publicationsName = "Publication Name 3");
 
 		Navigator.openURL();
 
@@ -635,24 +635,24 @@ definition {
 
 		PortletEntry.publish();
 
-		ChangeList.schedulePublication(
-			gotoReviewChanges = "true",
-			publicationName = "Publication Name 3");
+		Publications.schedulePublication(
+			gotoReviewPublications = "true",
+			publicationsName = "Publication Name 3");
 
 		Pause(locator1 = "120000");
 
-		ChangeList.assertScheduledPublicationPublished(publicationName = "Publication Name 3");
+		Publications.assertScheduledPublicationPublished(publicationsName = "Publication Name 3");
 	}
 
 	@priority = "5"
 	test SearchPublishedPublications {
-		property test.name.skip.portal.instance = "ChangeList#SearchPublishedPublications";
+		property test.name.skip.portal.instance = "Publications#SearchPublishedPublications";
 
-		ChangeList.createNewPublication(publicationName = "Apple");
+		Publications.createNewPublication(publicationsName = "Apple");
 
-		ChangeList.createNewPublication(publicationName = "Banana");
+		Publications.createNewPublication(publicationsName = "Banana");
 
-		ChangeList.createNewPublication(publicationName = "Cherry");
+		Publications.createNewPublication(publicationsName = "Cherry");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
@@ -661,8 +661,8 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Ongoing");
 
-		for (var publicationName : list "Apple,Banana,Cherry") {
-			ChangeList.search(publicationName = "${publicationName}");
+		for (var publicationsName : list "Apple,Banana,Cherry") {
+			Publications.search(publicationsName = "${publicationsName}");
 		}
 
 		Navigator.openURL();
@@ -673,11 +673,11 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Cherry");
 
-		ChangeList.gotoPublish(publicationName = "Cherry");
+		Publications.gotoPublish(publicationsName = "Cherry");
 
-		ChangeList.publishPublication(publicationName = "Cherry");
+		Publications.publishPublication(publicationsName = "Cherry");
 
-		ChangeList.selectPublication(publicationName = "Banana");
+		Publications.selectPublication(publicationsName = "Banana");
 
 		Navigator.openURL();
 
@@ -687,11 +687,11 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Banana");
 
-		ChangeList.gotoPublish(publicationName = "Banana");
+		Publications.gotoPublish(publicationsName = "Banana");
 
-		ChangeList.publishPublication(publicationName = "Banana");
+		Publications.publishPublication(publicationsName = "Banana");
 
-		ChangeList.selectPublication(publicationName = "Apple");
+		Publications.selectPublication(publicationsName = "Apple");
 
 		Navigator.openURL();
 
@@ -701,14 +701,14 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Apple");
 
-		ChangeList.gotoPublish(publicationName = "Apple");
+		Publications.gotoPublish(publicationsName = "Apple");
 
-		ChangeList.publishPublication(publicationName = "Apple");
+		Publications.publishPublication(publicationsName = "Apple");
 
 		Navigator.gotoNavTab(navTab = "History");
 
-		for (var publicationName : list "Apple,Banana,Cherry") {
-			ChangeList.search(publicationName = "${publicationName}");
+		for (var publicationsName : list "Apple,Banana,Cherry") {
+			Publications.search(publicationsName = "${publicationsName}");
 		}
 	}
 

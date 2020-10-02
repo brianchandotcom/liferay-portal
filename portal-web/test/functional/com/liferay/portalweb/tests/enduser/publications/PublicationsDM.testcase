@@ -1,9 +1,9 @@
-@component-name = "portal-change-list"
+@component-name = "portal-publications"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Change List";
+	property testray.main.component.name = "Publications";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -15,7 +15,7 @@ definition {
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enablePublications();
+		Publications.enablePublications();
 	}
 
 	tearDown {
@@ -30,16 +30,16 @@ definition {
 				panel = "Applications",
 				portlet = "Settings");
 
-			ChangeList.disablePublications();
+			Publications.disablePublications();
 		}
 	}
 
 	@priority = "4"
 	test CheckoutAndCheckinDocumentInPublication {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "ChangeListDM#CheckoutAndCheckinDocumentInPublication";
+		property test.name.skip.portal.instance = "PublicationsDM#CheckoutAndCheckinDocumentInPublication";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -74,9 +74,9 @@ definition {
 
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "2.0");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -91,7 +91,7 @@ definition {
 
 	@priority = "4"
 	test PublishDocumentFolderWithEditedDocument {
-		property test.name.skip.portal.instance = "ChangeListDM#PublishDocumentFolderWithEditedDocument";
+		property test.name.skip.portal.instance = "PublicationsDM#PublishDocumentFolderWithEditedDocument";
 
 		Navigator.openURL();
 
@@ -104,7 +104,7 @@ definition {
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "DM Document Title");
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -134,35 +134,35 @@ definition {
 			dmDocumentTitle = "DM Document Title Edit",
 			dmFolderName = "DM Folder Name");
 
-		ChangeList.gotoReviewChanges();
+		Publications.gotoReviewPublications();
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Document",
-			changeSite = "Guest",
-			changeTitle = "DM Document Title Edit",
-			changeType = "Modified",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Document",
+			publicationsSite = "Guest",
+			publicationsTitle = "DM Document Title Edit",
+			publicationsType = "Modified",
+			publicationsUser = "Test Test");
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Documents Folder",
-			changeSite = "Guest",
-			changeTitle = "DM Folder Name",
-			changeType = "Added",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Documents Folder",
+			publicationsSite = "Guest",
+			publicationsTitle = "DM Folder Name",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
 
-		ChangeListChanges.viewChangesViaContextStyle(
-			changeCategory = "Document",
-			changeDescription = "Test Test modified a Document in Guest",
-			changeTitle = "DM Document Title Edit");
+		PublicationsChanges.viewPublicationsViaContextStyle(
+			publicationsCategory = "Document",
+			publicationsDescription = "Test Test modified a Document in Guest",
+			publicationsTitle = "DM Document Title Edit");
 
-		ChangeListChanges.viewChangesViaContextStyle(
-			changeCategory = "Documents Folder",
-			changeDescription = "Test Test added a Documents Folder in Guest",
-			changeTitle = "DM Folder Name");
+		PublicationsChanges.viewPublicationsViaContextStyle(
+			publicationsCategory = "Documents Folder",
+			publicationsDescription = "Test Test added a Documents Folder in Guest",
+			publicationsTitle = "DM Folder Name");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -179,9 +179,9 @@ definition {
 
 	@priority = "4"
 	test PublishDocumentWithNewDocumentType {
-		property test.name.skip.portal.instance = "ChangeListDM#PublishDocumentWithNewDocumentType";
+		property test.name.skip.portal.instance = "PublicationsDM#PublishDocumentWithNewDocumentType";
 
-		ChangeList.createNewPublication(publicationName = "Publication Name");
+		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -213,30 +213,30 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		ChangeList.gotoReviewChanges();
+		Publications.gotoReviewPublications();
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Document",
-			changeSite = "Guest",
-			changeTitle = "DM Document Title",
-			changeType = "Added",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Document",
+			publicationsSite = "Guest",
+			publicationsTitle = "DM Document Title",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
 
-		ChangeListChanges.viewChangesViaChangesStyle(
-			changeCategory = "Dynamic Data Mapping Structure",
-			changeSite = "Guest",
-			changeTitle = "DM Document Type Name",
-			changeType = "Added",
-			changeUser = "Test Test");
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Dynamic Data Mapping Structure",
+			publicationsSite = "Guest",
+			publicationsTitle = "DM Document Type Name",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
 
-		ChangeListChanges.viewChangesViaContextStyle(
-			changeCategory = "Document",
-			changeDescription = "Test Test added a Document in Guest",
-			changeTitle = "DM Document Title");
+		PublicationsChanges.viewPublicationsViaContextStyle(
+			publicationsCategory = "Document",
+			publicationsDescription = "Test Test added a Document in Guest",
+			publicationsTitle = "DM Document Title");
 
-		ChangeList.gotoPublish(publicationName = "Publication Name");
+		Publications.gotoPublish(publicationsName = "Publication Name");
 
-		ChangeList.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
 

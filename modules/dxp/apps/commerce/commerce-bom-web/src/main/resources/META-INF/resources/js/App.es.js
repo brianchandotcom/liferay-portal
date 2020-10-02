@@ -196,8 +196,8 @@ function App(props) {
 
 				<PartFinder
 					areaApiEndpoint={props.areasEndpoint}
-					basename={props.basename}
 					basePathUrl={props.basePathUrl}
+					basename={props.basename}
 					connectorSettings={{
 						emitters: [
 							'carMakerDatalist',
@@ -233,8 +233,8 @@ function App(props) {
 		<div className="bom-wrapper container pt-3">
 			<PartFinder
 				areasEndpoint={props.areasEndpoint}
-				basename={props.basename}
 				basePathUrl={props.basePathUrl}
+				basename={props.basename}
 				foldersEndpoint={props.foldersEndpoint}
 				history={history}
 				spritemap={props.spritemap}

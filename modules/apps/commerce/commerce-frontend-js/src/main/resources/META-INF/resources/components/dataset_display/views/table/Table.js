@@ -137,11 +137,11 @@ function Table(props) {
 				<TableHeadRow
 					items={props.items}
 					schema={props.schema}
+					selectItems={selectItems}
 					selectable={selectable}
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}
 					selectionType={selectionType}
-					selectItems={selectItems}
 					showActionItems={showActionItems}
 					sorting={sorting}
 					updateSorting={updateSorting}

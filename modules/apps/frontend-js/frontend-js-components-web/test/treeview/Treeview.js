@@ -196,7 +196,6 @@ describe('Treeview', () => {
 
 		const {getByText} = render(
 			<Treeview
-				initialSelectedNodeIds={[]}
 				NodeComponent={({node}) => {
 					return (
 						<button
@@ -209,6 +208,7 @@ describe('Treeview', () => {
 						</button>
 					);
 				}}
+				initialSelectedNodeIds={[]}
 				nodes={[node]}
 			/>
 		);

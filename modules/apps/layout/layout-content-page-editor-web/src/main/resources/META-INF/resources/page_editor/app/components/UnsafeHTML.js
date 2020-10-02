@@ -147,8 +147,8 @@ export default class UnsafeHTML extends React.PureComponent {
 		return (
 			<>
 				<RawDOM
-					elementRef={this._updateRef}
 					TagName={this.props.TagName}
+					elementRef={this._updateRef}
 				/>
 
 				{this.state.portals.map(({Component, element}) =>

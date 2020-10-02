@@ -77,8 +77,8 @@ export default function ExperienceToolbarSection({selectId}) {
 				editSegmentsEntryURL={config.editSegmentsEntryURL}
 				experiences={experiences}
 				segments={segments}
-				selectedExperience={selectedExperience}
 				selectId={selectId}
+				selectedExperience={selectedExperience}
 			/>
 		</div>
 	);

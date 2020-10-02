@@ -153,11 +153,11 @@ function Table({items, itemsActions, schema, style}) {
 				<TableHeadRow
 					items={items}
 					schema={schema}
+					selectItems={selectItems}
 					selectable={selectable}
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}
 					selectionType={selectionType}
-					selectItems={selectItems}
 					sorting={sorting}
 					updateSorting={updateSorting}
 					visibleFields={visibleFields}

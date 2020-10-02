@@ -52,9 +52,9 @@ export default function NodeList({
 		>
 			{nodes.map((node) => (
 				<NodeListItem
+					NodeComponent={NodeComponent}
 					key={node.id}
 					node={node}
-					NodeComponent={NodeComponent}
 				/>
 			))}
 		</div>

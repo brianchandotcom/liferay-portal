@@ -130,7 +130,7 @@ export default function GlobalContextProvider({children, useIframe}) {
 	return (
 		<GlobalContext.Provider value={context}>
 			{content}
-			<RawDOM elementRef={setIframeElement} TagName="iframe" />
+			<RawDOM TagName="iframe" elementRef={setIframeElement} />
 		</GlobalContext.Provider>
 	);
 }

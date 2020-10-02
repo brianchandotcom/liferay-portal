@@ -308,12 +308,12 @@ function DatasetDisplay(props) {
 				filters={filters}
 				fluid={props.style === 'fluid'}
 				onFiltersChange={updateFilters}
-				selectable={selectable}
 				selectAllItems={() =>
 					selectItems(
 						items.map((item) => item[props.selectedItemsKey])
 					)
 				}
+				selectable={selectable}
 				selectedItemsKey={props.selectedItemsKey}
 				selectedItemsValue={selectedItemsValue}
 				selectionType={props.selectionType}

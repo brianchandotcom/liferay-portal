@@ -39,10 +39,10 @@
 
 	Liferay.RecurrenceUtil.POSITION_LABELS = {
 		'-1': '<liferay-ui:message key="position.last" />',
-		'1': '<liferay-ui:message key="position.first" />',
-		'2': '<liferay-ui:message key="position.second" />',
-		'3': '<liferay-ui:message key="position.third" />',
-		'4': '<liferay-ui:message key="position.fourth" />',
+		1: '<liferay-ui:message key="position.first" />',
+		2: '<liferay-ui:message key="position.second" />',
+		3: '<liferay-ui:message key="position.third" />',
+		4: '<liferay-ui:message key="position.fourth" />',
 	};
 
 	Liferay.RecurrenceUtil.RECURRENCE_SUMMARIES = {

@@ -136,6 +136,7 @@ export const mergePages = (
 					sourceField.displayErrors || field.fieldName === fieldName,
 				editingLanguageId,
 				valid: field.valid !== false,
+				value: field.valueChanged ? field.value : sourceField.value,
 			};
 
 			if (newField.type === 'options') {

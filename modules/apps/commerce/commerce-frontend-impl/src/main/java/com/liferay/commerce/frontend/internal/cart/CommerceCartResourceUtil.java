@@ -19,6 +19,7 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.frontend.internal.cart.model.Cart;
+import com.liferay.commerce.frontend.internal.cart.model.OrderStatusInfo;
 import com.liferay.commerce.frontend.internal.cart.model.Product;
 import com.liferay.commerce.frontend.internal.cart.model.Summary;
 import com.liferay.commerce.frontend.model.PriceModel;
@@ -38,7 +39,9 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
 
@@ -72,9 +75,17 @@ public class CommerceCartResourceUtil {
 			valid = false;
 		}
 
+		String orderStatusInfoLabel = WorkflowConstants.getStatusLabel(
+			commerceOrder.getStatus());
+
+		OrderStatusInfo orderStatusInfo = new OrderStatusInfo(
+			commerceOrder.getOrderStatus(), orderStatusInfoLabel,
+			LanguageUtil.get(locale, orderStatusInfoLabel));
+
 		return new Cart(
 			detailsUrl, commerceOrderId, product,
-			getSummary(commerceOrder, locale, commerceContext), valid);
+			getSummary(commerceOrder, locale, commerceContext), valid,
+			orderStatusInfo);
 	}
 
 	protected String[] getErrorMessages(

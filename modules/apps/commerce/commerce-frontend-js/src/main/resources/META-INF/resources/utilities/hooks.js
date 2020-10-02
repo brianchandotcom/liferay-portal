@@ -36,20 +36,21 @@ export function useLiferayModule(
 	return Component;
 }
 
-export function usePersistentState(
-	key,
-    initialState = null,
-) {
-    const [persistentState, setPersistentState] = useState(
-        () => JSON.parse(localStorage.getItem(key)) || initialState
-    );
-    useEffect(() => {
-		if(typeof persistentState === 'undefined' || persistentState === null ) {
-			localStorage.removeItem(key)
-		} else {
+export function usePersistentState(key, initialState = null) {
+	const [persistentState, setPersistentState] = useState(
+		() => JSON.parse(localStorage.getItem(key)) || initialState
+	);
+	useEffect(() => {
+		if (
+			typeof persistentState === 'undefined' ||
+			persistentState === null
+		) {
+			localStorage.removeItem(key);
+		}
+		else {
 			localStorage.setItem(key, JSON.stringify(persistentState));
 		}
-    }, [key, persistentState]);
+	}, [key, persistentState]);
 
-    return [persistentState, setPersistentState];
+	return [persistentState, setPersistentState];
 }

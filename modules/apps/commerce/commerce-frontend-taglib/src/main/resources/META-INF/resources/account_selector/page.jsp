@@ -24,8 +24,11 @@
 		'<%= accountSelectorId %>',
 		{
 			spritemap: '<%= spritemap %>',
-			createNewOrderUrl: '<%= createNewOrderUrl %>',
-			viewOrderUrl: '<%= viewOrderUrl %>',
+			createNewOrderURL: '<%= createNewOrderURL %>',
+			selectOrderURL: '<%= selectOrderURL %>',
+			setCurrentAccountURL: '<%= setCurrentAccountURL %>',
+			currentAccount: <%= Validator.isNotNull(currentAccount) ? jsonSerializer.serializeDeep(currentAccount) : null %>,
+			currentOrder: <%= Validator.isNotNull(currentAccount) ? jsonSerializer.serializeDeep(currentOrder) : null %>,
 		}
 	);
 </aui:script>

@@ -297,6 +297,7 @@ Autocomplete.propTypes = {
 	required: PropTypes.bool,
 
 	// spritemap: PropTypes.string,
+
 };
 
 Autocomplete.defaultProps = {

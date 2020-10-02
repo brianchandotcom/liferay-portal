@@ -19,7 +19,10 @@ import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 import '../../../../../frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/styles/main.scss';
 
 launcher('account_selector', 'account-selector', {
-	createNewOrderUrl: '/asdasdasd',
+	createNewOrderURL: '/asdasdasd',
+	currentAccount: null,
+	currentOrder: null,
+	selectOrderURL: '/test-url/{id}',
+	setCurrentAccountURL: '/account-selector/setCurrentAccounts',
 	spritemap: './assets/icons.svg',
-	viewOrderUrl: '/test-url/{id}',
 });

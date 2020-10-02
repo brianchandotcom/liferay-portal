@@ -16,23 +16,24 @@ package com.liferay.commerce.frontend.taglib.internal.model;
 
 /**
  * @author Marco Leo
+ * @author Luca Pellizzon
  */
 public class CurrentOrderModel {
 
-	public CurrentOrderModel(long id, String status) {
+	public CurrentOrderModel(long id, OrderStatusModel orderStatusInfo) {
 		_id = id;
-		_status = status;
+		_orderStatusInfo = orderStatusInfo;
 	}
 
 	public long getId() {
 		return _id;
 	}
 
-	public String getStatus() {
-		return _status;
+	public OrderStatusModel getOrderStatusInfo() {
+		return _orderStatusInfo;
 	}
 
 	private final long _id;
-	private final String _status;
+	private final OrderStatusModel _orderStatusInfo;
 
 }

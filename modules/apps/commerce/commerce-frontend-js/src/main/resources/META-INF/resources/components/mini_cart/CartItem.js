@@ -18,7 +18,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useState} from 'react';
 
-import {PRODUCT_REMOVED} from '../../utilities/eventsDefinitions';
+import {PRODUCT_REMOVED_FROM_CART} from '../../utilities/eventsDefinitions';
 import QuantitySelector from '../quantity_selector/QuantitySelector';
 import ItemInfoView from './CartItemViews/ItemInfoView';
 import ItemPriceView from './CartItemViews/ItemPriceView';
@@ -113,7 +113,7 @@ function CartItem({item: cartItem}) {
 							.then(() => updateCartModel({orderId}))
 							.then(() => {
 								setIsUpdating(false);
-								Liferay.fire(PRODUCT_REMOVED, {
+								Liferay.fire(PRODUCT_REMOVED_FROM_CART, {
 									skuId,
 								});
 							})
@@ -159,7 +159,7 @@ function CartItem({item: cartItem}) {
 
 						return Promise.resolve();
 					})
-					.then(() => updateCartModel({orderId}))
+					.then(() => updateCartModel(orderId))
 					.then(() => setIsUpdating(false));
 			}
 

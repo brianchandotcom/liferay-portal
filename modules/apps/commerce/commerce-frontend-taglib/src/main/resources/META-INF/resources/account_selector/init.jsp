@@ -17,15 +17,24 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %>
+<%@ page import="com.liferay.commerce.frontend.taglib.internal.model.CurrentAccountModel" %><%@
+page import="com.liferay.commerce.frontend.taglib.internal.model.CurrentOrderModel" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <liferay-theme:defineObjects />
 
 <%
+JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 String spritemap = (String)request.getAttribute("liferay-commerce:account-selector:spritemap");
-String createNewOrderUrl = (String)request.getAttribute("liferay-commerce:account-selector:createNewOrderUrl");
-String viewOrderUrl = (String)request.getAttribute("liferay-commerce:account-selector:viewOrderUrl");
+String createNewOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:createNewOrderURL");
+String selectOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:selectOrderURL");
+String setCurrentAccountURL = (String)request.getAttribute("liferay-commerce:account-selector:setCurrentAccountURL");
+CurrentAccountModel currentAccount = (CurrentAccountModel)request.getAttribute("liferay-commerce:account-selector:currentAccount");
+CurrentOrderModel currentOrder = (CurrentOrderModel)request.getAttribute("liferay-commerce:account-selector:currentOrder");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_account_selector") + StringPool.UNDERLINE;
 

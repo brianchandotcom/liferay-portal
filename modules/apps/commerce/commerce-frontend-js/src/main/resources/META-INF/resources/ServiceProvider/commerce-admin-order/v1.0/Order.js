@@ -23,6 +23,5 @@ function resolveCatalogPath(basePath = '') {
 }
 
 export default (basePath) => ({
-	getAccounts: () =>
-		AJAX.GET(resolveCatalogPath(basePath)),
+	getAccounts: () => AJAX.GET(resolveCatalogPath(basePath)),
 });

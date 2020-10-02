@@ -23,11 +23,15 @@ import '../quantity_selector/QuantitySelector.es';
 let notificationDidShow = false;
 
 const ALL = 'all';
+const CURRENT_ACCOUNT_UPDATED = 'current-account-updated';
+const CURRENT_ORDER_UPDATED = 'current-order-updated';
+const CURRENT_PRODUCT_STATUS_CHANGED = 'current-product-status-changed';
+const PRODUCT_REMOVED_FROM_CART = 'product-removed-from-cart';
 
 function showNotification(message, type) {
 	if (!notificationDidShow) {
 		AUI().use('liferay-notification', () => {
-			new Liferay.Notification({
+			new window.Notification({
 				closeable: true,
 				delay: {
 					hide: 5000,
@@ -49,80 +53,8 @@ function showNotification(message, type) {
 	}, 500);
 }
 
-function resetInputQuantity() {
-	this.inputQuantity =
-		this.settings.allowedQuantities &&
-		this.settings.allowedQuantities.length
-			? this.settings.allowedQuantities[0]
-			: this.settings.minQuantity;
-}
-
-function doSubmit() {
-	const formData = new FormData();
-
-	formData.append('commerceAccountId', this.accountId);
-	formData.append('groupId', themeDisplay.getScopeGroupId());
-	formData.append('productId', this.productId);
-	formData.append('languageId', themeDisplay.getLanguageId());
-	formData.append('quantity', this.inputQuantity);
-	formData.append('options', this.options);
-
-	if (this.orderId) {
-		formData.append('orderId', this.orderId);
-	}
-
-	return fetch(this.cartAPI, {
-		body: formData,
-		method: 'POST',
-	})
-		.then((response) => response.json())
-		.then((jsonresponse) => {
-			if (jsonresponse.success) {
-				if (jsonresponse.products) {
-					Liferay.fire('refreshCartUsingData', {
-						detailsUrl: jsonresponse.detailsUrl,
-						orderId: jsonresponse.orderId,
-						products: jsonresponse.products,
-						summary: jsonresponse.summary,
-						valid: jsonresponse.valid,
-					});
-				}
-
-				if (this.orderId !== jsonresponse.orderId) {
-					Liferay.fire('currentOrderChanged', {
-						id: jsonresponse.orderId
-					});
-					this.orderId = jsonresponse.orderId;
-				}
-
-				this._animateMarker(this.quantity);
-				this.quantity = this.inputQuantity;
-				resetInputQuantity.call(this);
-
-				Liferay.fire('commerce:productAddedToCart', jsonresponse);
-			}
-			else if (jsonresponse.errorMessages) {
-				showNotification(jsonresponse.errorMessages[0], 'danger');
-			}
-			else {
-				const validatorErrors = jsonresponse.validatorErrors;
-
-				if (validatorErrors) {
-					validatorErrors.forEach((validatorError) => {
-						showNotification(validatorError.message, 'danger');
-					});
-				}
-				else {
-					showNotification(jsonresponse.error, 'danger');
-				}
-			}
-		})
-		.catch((_weShouldHandleErrors) => {});
-}
-
 class AddToCartButton extends Component {
 	created() {
-		resetInputQuantity.call(this);
 		this._handleMarkerAnimation = this._handleMarkerAnimation.bind(this);
 	}
 
@@ -151,39 +83,40 @@ class AddToCartButton extends Component {
 	}
 
 	attached() {
-		window.Liferay.on('currentAccountChanged', this._handleAccountChange, this);
+		Liferay.on(CURRENT_ACCOUNT_UPDATED, this._handleAccountChange, this);
 
-		window.Liferay.on(
-			'productRemovedFromCart',
+		Liferay.on(CURRENT_ORDER_UPDATED, this._handleOrderChange, this);
+
+		Liferay.on(
+			PRODUCT_REMOVED_FROM_CART,
 			this._handleCartProductRemoval,
 			this
 		);
 
-		// TODO: event definition to be imported as a constant
-
-		window.Liferay.on(
-			'current-product-status-changed',
+		Liferay.on(
+			CURRENT_PRODUCT_STATUS_CHANGED,
 			this._handleCurrentProductStatusChange,
 			this
 		);
 	}
 
 	detached() {
-		window.Liferay.detach(
-			'currentAccountChanged',
+		Liferay.detach(
+			CURRENT_ACCOUNT_UPDATED,
 			this._handleAccountChange,
 			this
 		);
-		window.Liferay.detach(
-			'productRemovedFromCart',
+
+		Liferay.detach(CURRENT_ORDER_UPDATED, this._handleOrderChange, this);
+
+		Liferay.detach(
+			PRODUCT_REMOVED_FROM_CART,
 			this._handleCartProductRemoval,
 			this
 		);
 
-		// TODO: event definition to be imported as a constant
-
-		window.Liferay.detach(
-			'current-product-status-changed',
+		Liferay.detach(
+			CURRENT_PRODUCT_STATUS_CHANGED,
 			this._handleCurrentProductStatusChange,
 			this
 		);
@@ -216,26 +149,30 @@ class AddToCartButton extends Component {
 		}
 	}
 
-	_handleAccountChange({account}) {
-		this.accountId = account ? account.id : null;
-		this.orderId = null;
+	_handleOrderChange(evt) {
+		if (this.orderId === evt.id) {
+			return;
+		}
 
-		// TODO: quantity should be imported from the outside
-
+		this.orderId = evt.id;
 		this.quantity = 0;
-		resetInputQuantity.call(this);
+		this._resetInputQuantity();
+	}
+
+	_handleAccountChange({id}) {
+		this.accountId = id;
 	}
 
 	_handleCartProductRemoval({skuId}) {
 		if (skuId === parseInt(this.productId, 10) || skuId === ALL) {
 			this.quantity = 0;
-			resetInputQuantity.call(this);
+			this._resetInputQuantity();
 		}
 	}
 
 	_handleSubmitClick() {
 		if (!this.accountId) {
-			const message = Liferay.Language.get('no-account-selected');
+			const message = window.Language.get('no-account-selected');
 			const type = 'danger';
 
 			showNotification(message, type);
@@ -245,7 +182,68 @@ class AddToCartButton extends Component {
 			return null;
 		}
 
-		doSubmit.call(this);
+		this._doSubmit();
+	}
+
+	_doSubmit() {
+		const formData = new FormData();
+
+		formData.append('commerceAccountId', this.accountId);
+		formData.append('groupId', themeDisplay.getScopeGroupId());
+		formData.append('productId', this.productId);
+		formData.append('languageId', themeDisplay.getLanguageId());
+		formData.append('quantity', this.inputQuantity);
+		formData.append('options', this.options);
+
+		if (this.orderId) {
+			formData.append('orderId', this.orderId);
+		}
+
+		return fetch(this.cartAPI, {
+			body: formData,
+			method: 'POST',
+		})
+			.then((response) => response.json())
+			.then((jsonResponse) => {
+				if (jsonResponse.success) {
+					if (jsonResponse.orderId !== this.orderId) {
+						this.orderId = jsonResponse.orderId;
+					}
+
+					Liferay.fire(CURRENT_ORDER_UPDATED, {
+						id: jsonResponse.orderId,
+						orderStatusInfo: jsonResponse.orderStatusInfo,
+					});
+
+					this._animateMarker(this.quantity);
+					this.quantity = this.inputQuantity;
+					this._resetInputQuantity(this);
+				}
+				else if (jsonResponse.errorMessages) {
+					showNotification(jsonResponse.errorMessages[0], 'danger');
+				}
+				else {
+					const validatorErrors = jsonResponse.validatorErrors;
+
+					if (validatorErrors) {
+						validatorErrors.forEach((validatorError) => {
+							showNotification(validatorError.message, 'danger');
+						});
+					}
+					else {
+						showNotification(jsonResponse.error, 'danger');
+					}
+				}
+			})
+			.catch(console.error);
+	}
+
+	_resetInputQuantity() {
+		this.inputQuantity =
+			this.settings.allowedQuantities &&
+			this.settings.allowedQuantities.length
+				? this.settings.allowedQuantities[0]
+				: this.settings.minQuantity;
 	}
 }
 

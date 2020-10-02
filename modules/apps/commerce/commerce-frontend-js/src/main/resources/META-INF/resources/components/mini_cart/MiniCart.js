@@ -18,9 +18,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import ServiceProvider from '../../ServiceProvider/index';
 import {
-	ADD_TO_ORDER,
-	CURRENT_ACCOUNT_CHANGED,
-	CURRENT_ORDER_CHANGED,
+	CURRENT_ACCOUNT_UPDATED,
+	CURRENT_ORDER_UPDATED,
 } from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
 import MiniCartContext from './MiniCartContext';
@@ -102,35 +101,27 @@ function MiniCart({
 	}, [cartViews]);
 
 	useEffect(() => {
-		Liferay.on(ADD_TO_ORDER, updateCartModel);
-		Liferay.on(CURRENT_ORDER_CHANGED, updateCartModel);
+		Liferay.on(CURRENT_ORDER_UPDATED, updateCartModel);
 
-		return () => {
-			Liferay.detach(ADD_TO_ORDER, updateCartModel);
-			Liferay.detach(CURRENT_ORDER_CHANGED, updateCartModel);
-		};
+		return () => Liferay.detach(CURRENT_ORDER_UPDATED, updateCartModel);
 	}, [updateCartModel]);
 
 	useEffect(() => {
 		if (orderId && orderId !== 0) {
 			updateCartModel({orderId});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [orderId]);
+	}, [orderId, updateCartModel]);
 
 	useEffect(() => {
 		if (isOpen) {
 			updateCartModel({orderId: cartState.id});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isOpen]);
+	}, [cartState, isOpen, updateCartModel]);
 
 	useEffect(() => {
-		Liferay.on(CURRENT_ACCOUNT_CHANGED, resetCartState);
+		Liferay.on(CURRENT_ACCOUNT_UPDATED, resetCartState);
 
-		return () => {
-			Liferay.detach(CURRENT_ACCOUNT_CHANGED, resetCartState);
-		};
+		return () => Liferay.detach(CURRENT_ACCOUNT_UPDATED, resetCartState);
 	}, [resetCartState]);
 
 	return (

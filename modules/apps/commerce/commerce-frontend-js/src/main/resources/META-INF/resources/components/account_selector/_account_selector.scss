@@ -1,49 +1,34 @@
+.account-selector-info {
+	.order-details {
+		align-items: center;
+		color: #2c3a4b;
+		display: flex;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: normal;
+		line-height: 150%;
+		margin-top: 10px;
 
-.account-selector {
-	.dropdown {
-		
-	}
-	&-info {
-
-		.order-details {
-			font-style: normal;
-			font-weight: normal;
-			font-size: 12px;
-			line-height: 150%;
-			display: flex;
-			align-items: center;
-			margin-top: 10px;
-			color: #2C3A4B;
-
-			span:nth-child(2) {
-				padding-left: 10px;
-				border-left: 1px solid #000;
-				margin-left:10px;
-			}
+		span:nth-child(2) {
+			border-left: 1px solid #000;
+			padding-left: 10px;
+			margin-left: 10px;
 		}
 	}
 }
 
-.dropdown-menu {
-	width: 400px;
-	max-width: 400px;
+.account-selector .dropdown-menu {
 	height: 465px;
+	max-width: 400px;
+	width: 400px;
+
 	.list-unstyled {
 		height: 395px;
 	}
+
 	.inline-scroller {
-		max-height: 285px;
 		height: 285px;
+		max-height: 285px;
 		padding: 0.5rem 1.25rem;
-		
 	}
 }
-
-
-// .input-icon {
-// 	position:absolute;
-// 	bottom:20px;
-// 	right:20px;
-// 	width:16px;
-// 	height:16px;
-// }

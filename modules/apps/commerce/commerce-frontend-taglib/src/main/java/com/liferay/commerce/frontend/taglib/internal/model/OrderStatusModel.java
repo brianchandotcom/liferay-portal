@@ -12,13 +12,34 @@
  * details.
  */
 
-import {composeAPI} from '../composeAPI';
-import * as v1 from './v1.0/index';
+package com.liferay.commerce.frontend.taglib.internal.model;
 
-const BASE_ENDPOINT = '/o/headless-commerce-admin-account/';
+/**
+ * @author Luca Pellizzon
+ * @author Fabio Diego Mastrorilli
+ */
+public class OrderStatusModel {
 
-const APIs = {
-	v1,
-};
+	public OrderStatusModel(int code, String label, String localizedLabel) {
+		_code = code;
+		_label = label;
+		_label_i18n = localizedLabel;
+	}
 
-export default (version) => composeAPI(version, APIs, BASE_ENDPOINT);
+	public int getCode() {
+		return _code;
+	}
+
+	public String getLabel() {
+		return _label;
+	}
+
+	public String getLabel_i18n() {
+		return _label_i18n;
+	}
+
+	private final int _code;
+	private final String _label;
+	private final String _label_i18n;
+
+}

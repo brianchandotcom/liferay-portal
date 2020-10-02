@@ -12,11 +12,8 @@
  * details.
  */
 
-export const ADD_PRODUCT_TO_ORDER = 'refreshCartUsingData';
 export const AUTOCOMPLETE_VALUE_UPDATED = 'autocomplete-updated';
 export const CART_PRODUCT_QUANTITY_CHANGED = 'quantity-changed-from-cart';
-export const CURRENT_ACCOUNT_CHANGED = 'currentAccountChanged';
-export const CURRENT_ORDER_CHANGED = 'currentOrderChanged';
 export const CLOSE_MODAL = 'close-modal';
 export const CLOSE_SIDE_PANEL = 'close-side-panel';
 export const COMPARE_IS_AVAILABLE = 'compareIsAvailable';

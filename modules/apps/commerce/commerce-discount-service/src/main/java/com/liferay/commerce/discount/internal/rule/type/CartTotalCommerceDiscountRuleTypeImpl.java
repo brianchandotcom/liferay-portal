@@ -60,15 +60,15 @@ public class CartTotalCommerceDiscountRuleTypeImpl
 			return false;
 		}
 
-		CommerceMoney orderPriceMoney =
+		CommerceMoney orderPriceCommerceMoney =
 			_commerceOrderPriceCalculation.getSubtotal(
 				commerceOrder, commerceContext);
 
-		if (orderPriceMoney == null) {
+		if (orderPriceCommerceMoney == null) {
 			return false;
 		}
 
-		BigDecimal orderPrice = orderPriceMoney.getPrice();
+		BigDecimal orderPrice = orderPriceCommerceMoney.getPrice();
 
 		String settingsProperty = commerceDiscountRule.getSettingsProperty(
 			commerceDiscountRule.getType());

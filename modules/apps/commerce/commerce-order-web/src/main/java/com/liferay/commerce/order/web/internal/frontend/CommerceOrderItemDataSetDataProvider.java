@@ -145,10 +145,10 @@ public class CommerceOrderItemDataSetDataProvider
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
 
-		CommerceMoney discountAmount =
+		CommerceMoney discountAmountCommerceMoney =
 			commerceOrderItemPrice.getDiscountAmount();
 
-		return HtmlUtil.escape(discountAmount.format(locale));
+		return HtmlUtil.escape(discountAmountCommerceMoney.format(locale));
 	}
 
 	private String _getImage(CommerceOrderItem commerceOrderItem)
@@ -248,9 +248,10 @@ public class CommerceOrderItemDataSetDataProvider
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
 
-		CommerceMoney unitPrice = commerceOrderItemPrice.getUnitPrice();
+		CommerceMoney unitPriceCommerceMoney =
+			commerceOrderItemPrice.getUnitPrice();
 
-		return HtmlUtil.escape(unitPrice.format(locale));
+		return HtmlUtil.escape(unitPriceCommerceMoney.format(locale));
 	}
 
 	private String _getRequestedDeliveryDateTime(
@@ -425,9 +426,10 @@ public class CommerceOrderItemDataSetDataProvider
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
 
-		CommerceMoney finalPrice = commerceOrderItemPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceOrderItemPrice.getFinalPrice();
 
-		return HtmlUtil.escape(finalPrice.format(locale));
+		return HtmlUtil.escape(finalPriceCommerceMoney.format(locale));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -763,34 +763,36 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrderPriceCalculation.getCommerceOrderPrice(
 				commerceOrder, false, commerceContext);
 
-		CommerceMoney subtotal = commerceOrderPrice.getSubtotal();
-		CommerceMoney shippingValue = commerceOrderPrice.getShippingValue();
-		CommerceMoney taxValue = commerceOrderPrice.getTaxValue();
-		CommerceMoney total = commerceOrderPrice.getTotal();
-		CommerceMoney subtotalWithTaxAmount =
+		CommerceMoney subtotalCommerceMoney = commerceOrderPrice.getSubtotal();
+		CommerceMoney shippingValueCommerceMoney =
+			commerceOrderPrice.getShippingValue();
+		CommerceMoney taxValueCommerceMoney = commerceOrderPrice.getTaxValue();
+		CommerceMoney totalCommerceMoney = commerceOrderPrice.getTotal();
+		CommerceMoney subtotalWithTaxAmountCommerceMoney =
 			commerceOrderPrice.getSubtotalWithTaxAmount();
-		CommerceMoney shippingValueWithTaxAmount =
+		CommerceMoney shippingValueWithTaxAmountCommerceMoney =
 			commerceOrderPrice.getShippingValueWithTaxAmount();
-		CommerceMoney totalWithTaxAmount =
+		CommerceMoney totalWithTaxAmountCommerceMoney =
 			commerceOrderPrice.getTotalWithTaxAmount();
 
-		commerceOrder.setSubtotal(subtotal.getPrice());
-		commerceOrder.setShippingAmount(shippingValue.getPrice());
-		commerceOrder.setTaxAmount(taxValue.getPrice());
-		commerceOrder.setTotal(total.getPrice());
+		commerceOrder.setSubtotal(subtotalCommerceMoney.getPrice());
+		commerceOrder.setShippingAmount(shippingValueCommerceMoney.getPrice());
+		commerceOrder.setTaxAmount(taxValueCommerceMoney.getPrice());
+		commerceOrder.setTotal(totalCommerceMoney.getPrice());
 
-		if (subtotalWithTaxAmount != null) {
+		if (subtotalWithTaxAmountCommerceMoney != null) {
 			commerceOrder.setSubtotalWithTaxAmount(
-				subtotalWithTaxAmount.getPrice());
+				subtotalWithTaxAmountCommerceMoney.getPrice());
 		}
 
-		if (shippingValueWithTaxAmount != null) {
+		if (shippingValueWithTaxAmountCommerceMoney != null) {
 			commerceOrder.setShippingWithTaxAmount(
-				shippingValueWithTaxAmount.getPrice());
+				shippingValueWithTaxAmountCommerceMoney.getPrice());
 		}
 
-		if (totalWithTaxAmount != null) {
-			commerceOrder.setTotalWithTaxAmount(totalWithTaxAmount.getPrice());
+		if (totalWithTaxAmountCommerceMoney != null) {
+			commerceOrder.setTotalWithTaxAmount(
+				totalWithTaxAmountCommerceMoney.getPrice());
 		}
 
 		if (!commerceOrder.isManuallyAdjusted()) {
@@ -1053,22 +1055,23 @@ public class CommerceOrderLocalServiceImpl
 				commerceOrderPrice.getShippingDiscountValue();
 
 			if (shippingDiscountValue != null) {
-				CommerceMoney shippingDiscountAmount =
+				CommerceMoney shippingDiscountAmountCommerceMoney =
 					shippingDiscountValue.getDiscountAmount();
 
 				shippingAmount = shippingAmount.subtract(
-					shippingDiscountAmount.getPrice());
+					shippingDiscountAmountCommerceMoney.getPrice());
 			}
 
-			CommerceDiscountValue shippingDiscountValueWithTaxAmount =
+			CommerceDiscountValue shippingWithTaxAmountCommerceDiscountValue =
 				commerceOrderPrice.getShippingDiscountValueWithTaxAmount();
 
-			if (shippingDiscountValueWithTaxAmount != null) {
-				CommerceMoney shippingDiscountWithTaxAmount =
-					shippingDiscountValueWithTaxAmount.getDiscountAmount();
+			if (shippingWithTaxAmountCommerceDiscountValue != null) {
+				CommerceMoney shippingDiscountWithTaxAmountCommerceMoney =
+					shippingWithTaxAmountCommerceDiscountValue.
+						getDiscountAmount();
 
 				shippingWithTaxAmount = shippingWithTaxAmount.subtract(
-					shippingDiscountWithTaxAmount.getPrice());
+					shippingDiscountWithTaxAmountCommerceMoney.getPrice());
 			}
 		}
 
@@ -1150,11 +1153,11 @@ public class CommerceOrderLocalServiceImpl
 				commerceOrderPrice.getShippingDiscountValue();
 
 			if (shippingDiscountValue != null) {
-				CommerceMoney shippingDiscountAmount =
+				CommerceMoney shippingDiscountAmountCommerceMoney =
 					shippingDiscountValue.getDiscountAmount();
 
 				shippingAmount = shippingAmount.subtract(
-					shippingDiscountAmount.getPrice());
+					shippingDiscountAmountCommerceMoney.getPrice());
 			}
 		}
 

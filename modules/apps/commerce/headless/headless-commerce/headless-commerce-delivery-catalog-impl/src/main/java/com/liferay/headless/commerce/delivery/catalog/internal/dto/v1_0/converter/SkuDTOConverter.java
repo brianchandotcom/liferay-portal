@@ -212,47 +212,51 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
 
-		CommerceMoney unitPriceMoney = commerceProductPrice.getUnitPrice();
+		CommerceMoney unitPriceCommerceMoney =
+			commerceProductPrice.getUnitPrice();
 
-		CommerceMoney unitPromoPriceMoney =
+		CommerceMoney unitPromoPriceCommerceMoney =
 			commerceProductPrice.getUnitPromoPrice();
 
-		BigDecimal unitPromoPrice = unitPromoPriceMoney.getPrice();
+		BigDecimal unitPromoPrice = unitPromoPriceCommerceMoney.getPrice();
 
-		BigDecimal unitPrice = unitPriceMoney.getPrice();
+		BigDecimal unitPrice = unitPriceCommerceMoney.getPrice();
 
 		Price price = new Price() {
 			{
 				currency = commerceCurrency.getName(locale);
 				price = unitPrice.doubleValue();
-				priceFormatted = unitPriceMoney.format(locale);
+				priceFormatted = unitPriceCommerceMoney.format(locale);
 			}
 		};
 
 		if ((unitPromoPrice != null) &&
 			(unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-			(unitPromoPrice.compareTo(unitPriceMoney.getPrice()) < 0)) {
+			(unitPromoPrice.compareTo(unitPriceCommerceMoney.getPrice()) < 0)) {
 
 			price.setPromoPrice(unitPromoPrice.doubleValue());
-			price.setPromoPriceFormatted(unitPromoPriceMoney.format(locale));
+			price.setPromoPriceFormatted(
+				unitPromoPriceCommerceMoney.format(locale));
 		}
 
 		CommerceDiscountValue discountValue =
 			commerceProductPrice.getDiscountValue();
 
 		if (discountValue != null) {
-			CommerceMoney discountAmount = discountValue.getDiscountAmount();
+			CommerceMoney discountAmountCommerceMoney =
+				discountValue.getDiscountAmount();
 
-			CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
+			CommerceMoney finalPriceCommerceMoney =
+				commerceProductPrice.getFinalPrice();
 
-			price.setDiscount(discountAmount.format(locale));
+			price.setDiscount(discountAmountCommerceMoney.format(locale));
 			price.setDiscountPercentage(
 				_commercePriceFormatter.format(
 					discountValue.getDiscountPercentage(), locale));
 			price.setDiscountPercentages(
 				_getFormattedDiscountPercentages(
 					discountValue.getPercentages(), locale));
-			price.setFinalPrice(finalPrice.format(locale));
+			price.setFinalPrice(finalPriceCommerceMoney.format(locale));
 		}
 
 		return price;

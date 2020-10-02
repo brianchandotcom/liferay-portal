@@ -223,10 +223,11 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 		commerceOrder = _commerceOrderLocalService.applyCouponCode(
 			commerceOrder.getCommerceOrderId(), couponCode, commerceContext);
 
-		CommerceMoney total = _commerceOrderPriceCalculation.getTotal(
-			commerceOrder, commerceContext);
+		CommerceMoney totalCommerceMoney =
+			_commerceOrderPriceCalculation.getTotal(
+				commerceOrder, commerceContext);
 
-		BigDecimal totalPrice = total.getPrice();
+		BigDecimal totalPrice = totalCommerceMoney.getPrice();
 
 		BigDecimal priceWithTaxAmount =
 			CommerceTaxTestUtil.getPriceWithTaxAmount(
@@ -365,12 +366,15 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 			cpInstancePlain.getCPInstanceId(), orderedQuantity,
 			commerceContext);
 
-		CommerceMoney total = _commerceOrderPriceCalculation.getTotal(
-			commerceOrder, commerceContext);
-		CommerceMoney subtotal = _commerceOrderPriceCalculation.getSubtotal(
-			commerceOrder, commerceContext);
-		CommerceMoney taxValue = _commerceOrderPriceCalculation.getTaxValue(
-			commerceOrder, commerceContext);
+		CommerceMoney totalCommerceMoney =
+			_commerceOrderPriceCalculation.getTotal(
+				commerceOrder, commerceContext);
+		CommerceMoney subtotalCommerceMoney =
+			_commerceOrderPriceCalculation.getSubtotal(
+				commerceOrder, commerceContext);
+		CommerceMoney taxValueCommerceMoney =
+			_commerceOrderPriceCalculation.getTaxValue(
+				commerceOrder, commerceContext);
 
 		BigDecimal prod1Price = commercePriceEntryDiscount.getPrice();
 		BigDecimal prod2Price = commercePriceEntryPlain.getPrice();
@@ -396,13 +400,13 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 		BigDecimal expectedSubtotal = prod1DiscountedPrice.add(prod2TotalPrice);
 
 		BigDecimal expectedSubtotalWithTaxAmount = expectedSubtotal.add(
-			taxValue.getPrice());
+			taxValueCommerceMoney.getPrice());
 
 		BigDecimal expectedTotal = expectedSubtotalWithTaxAmount.subtract(
 			discount2Level1);
 
-		BigDecimal subtotalPrice = subtotal.getPrice();
-		BigDecimal totalPrice = total.getPrice();
+		BigDecimal subtotalPrice = subtotalCommerceMoney.getPrice();
+		BigDecimal totalPrice = totalCommerceMoney.getPrice();
 
 		Assert.assertEquals(
 			expectedSubtotal.stripTrailingZeros(),
@@ -538,12 +542,15 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 		commerceOrder = _commerceOrderLocalService.applyCouponCode(
 			commerceOrder.getCommerceOrderId(), couponCode, commerceContext);
 
-		CommerceMoney total = _commerceOrderPriceCalculation.getTotal(
-			commerceOrder, commerceContext);
-		CommerceMoney subtotal = _commerceOrderPriceCalculation.getSubtotal(
-			commerceOrder, commerceContext);
-		CommerceMoney taxValue = _commerceOrderPriceCalculation.getTaxValue(
-			commerceOrder, commerceContext);
+		CommerceMoney totalCommerceMoney =
+			_commerceOrderPriceCalculation.getTotal(
+				commerceOrder, commerceContext);
+		CommerceMoney subtotalCommerceMoney =
+			_commerceOrderPriceCalculation.getSubtotal(
+				commerceOrder, commerceContext);
+		CommerceMoney taxValueCommerceMoney =
+			_commerceOrderPriceCalculation.getTaxValue(
+				commerceOrder, commerceContext);
 
 		BigDecimal prod1Price = commercePriceEntryDiscount.getPrice();
 		BigDecimal prod2Price = commercePriceEntryPlain.getPrice();
@@ -569,13 +576,13 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 		BigDecimal expectedSubtotal = prod1DiscountedPrice.add(prod2TotalPrice);
 
 		BigDecimal expectedSubtotalWithTaxAmount = expectedSubtotal.add(
-			taxValue.getPrice());
+			taxValueCommerceMoney.getPrice());
 
 		BigDecimal expectedTotal = expectedSubtotalWithTaxAmount.subtract(
 			discount2Level1);
 
-		BigDecimal subtotalPrice = subtotal.getPrice();
-		BigDecimal totalPrice = total.getPrice();
+		BigDecimal subtotalPrice = subtotalCommerceMoney.getPrice();
+		BigDecimal totalPrice = totalCommerceMoney.getPrice();
 
 		Assert.assertEquals(
 			expectedSubtotal.stripTrailingZeros(),

@@ -203,21 +203,23 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-		CommerceMoney commerceOrderPriceShippingValue =
+		CommerceMoney commerceOrderPriceShippingValueCommerceMoney =
 			commerceOrder.getShippingMoney();
 
 		BigDecimal commerceOrderPriceShippingValuePrice =
-			commerceOrderPriceShippingValue.getPrice();
+			commerceOrderPriceShippingValueCommerceMoney.getPrice();
 
-		CommerceMoney commerceOrderPriceSubtotal =
+		CommerceMoney commerceOrderPriceSubtotalCommerceMoney =
 			commerceOrder.getSubtotalMoney();
 
 		BigDecimal orderPriceSubtotalPrice =
-			commerceOrderPriceSubtotal.getPrice();
+			commerceOrderPriceSubtotalCommerceMoney.getPrice();
 
-		CommerceMoney commerceOrderPriceTotal = commerceOrder.getTotalMoney();
+		CommerceMoney commerceOrderPriceTotalCommerceMoney =
+			commerceOrder.getTotalMoney();
 
-		BigDecimal orderPriceTotalPrice = commerceOrderPriceTotal.getPrice();
+		BigDecimal orderPriceTotalPrice =
+			commerceOrderPriceTotalCommerceMoney.getPrice();
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
@@ -246,13 +248,15 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 						commerceOrder.getCommerceOrderId());
 				shippingValue =
 					finalCommerceOrderPriceShippingValuePrice.doubleValue();
-				shippingValueFormatted = commerceOrderPriceShippingValue.format(
-					locale);
+				shippingValueFormatted =
+					commerceOrderPriceShippingValueCommerceMoney.format(locale);
 				subtotal = finalOrderPriceSubtotalPrice.doubleValue();
-				subtotalFormatted = commerceOrderPriceSubtotal.format(locale);
+				subtotalFormatted =
+					commerceOrderPriceSubtotalCommerceMoney.format(locale);
 
 				total = finalOrderPriceTotalPrice.doubleValue();
-				totalFormatted = commerceOrderPriceTotal.format(locale);
+				totalFormatted = commerceOrderPriceTotalCommerceMoney.format(
+					locale);
 			}
 		};
 

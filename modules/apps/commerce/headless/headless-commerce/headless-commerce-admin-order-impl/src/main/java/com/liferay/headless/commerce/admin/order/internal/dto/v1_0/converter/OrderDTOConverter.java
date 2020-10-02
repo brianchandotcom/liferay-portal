@@ -231,29 +231,29 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 			Order order, Locale locale)
 		throws Exception {
 
-		CommerceMoney commerceOrderShippingAmountMoney =
+		CommerceMoney commerceOrderShippingAmountCommerceMoney =
 			commerceOrder.getShippingMoney();
 
 		order.setShippingAmountFormatted(
-			commerceOrderShippingAmountMoney.format(locale));
+			commerceOrderShippingAmountCommerceMoney.format(locale));
 
 		BigDecimal commerceOrderShippingValue =
-			commerceOrderShippingAmountMoney.getPrice();
+			commerceOrderShippingAmountCommerceMoney.getPrice();
 
 		if (commerceOrderShippingValue != null) {
 			order.setShippingAmountValue(
 				commerceOrderShippingValue.doubleValue());
 		}
 
-		CommerceMoney commerceOrderShippingWithTaxAmountMoney =
+		CommerceMoney commerceOrderShippingWithTaxAmountCommerceMoney =
 			commerceOrder.getShippingWithTaxAmountMoney();
 
-		if (commerceOrderShippingWithTaxAmountMoney != null) {
+		if (commerceOrderShippingWithTaxAmountCommerceMoney != null) {
 			order.setShippingWithTaxAmountFormatted(
-				commerceOrderShippingWithTaxAmountMoney.format(locale));
+				commerceOrderShippingWithTaxAmountCommerceMoney.format(locale));
 
 			BigDecimal commerceOrderShippingWithTaxAmountValue =
-				commerceOrderShippingWithTaxAmountMoney.getPrice();
+				commerceOrderShippingWithTaxAmountCommerceMoney.getPrice();
 
 			if (commerceOrderShippingWithTaxAmountValue != null) {
 				order.setShippingWithTaxAmountValue(
@@ -342,15 +342,15 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 			Order order, Locale locale)
 		throws Exception {
 
-		CommerceMoney commerceOrderSubtotalMoney =
+		CommerceMoney commerceOrderSubtotalCommerceMoney =
 			commerceOrder.getSubtotalMoney();
 
-		if (commerceOrderSubtotalMoney != null) {
+		if (commerceOrderSubtotalCommerceMoney != null) {
 			order.setSubtotalFormatted(
-				commerceOrderSubtotalMoney.format(locale));
+				commerceOrderSubtotalCommerceMoney.format(locale));
 
 			BigDecimal commerceOrderSubtotalValue =
-				commerceOrderSubtotalMoney.getPrice();
+				commerceOrderSubtotalCommerceMoney.getPrice();
 
 			if (commerceOrderSubtotalValue != null) {
 				order.setSubtotalAmount(
@@ -358,15 +358,15 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 			}
 		}
 
-		CommerceMoney commerceOrderSubtotalWithTaxAmountMoney =
+		CommerceMoney commerceOrderSubtotalWithTaxAmountCommerceMoney =
 			commerceOrder.getSubtotalWithTaxAmountMoney();
 
-		if (commerceOrderSubtotalWithTaxAmountMoney != null) {
+		if (commerceOrderSubtotalWithTaxAmountCommerceMoney != null) {
 			order.setSubtotalWithTaxAmountFormatted(
-				commerceOrderSubtotalWithTaxAmountMoney.format(locale));
+				commerceOrderSubtotalWithTaxAmountCommerceMoney.format(locale));
 
 			BigDecimal commerceOrderSubtotalWithTaxAmountValue =
-				commerceOrderSubtotalWithTaxAmountMoney.getPrice();
+				commerceOrderSubtotalWithTaxAmountCommerceMoney.getPrice();
 
 			if (commerceOrderSubtotalWithTaxAmountValue != null) {
 				order.setSubtotalWithTaxAmountValue(
@@ -455,13 +455,15 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 			Order order, Locale locale)
 		throws Exception {
 
-		CommerceMoney commerceOrderTotalMoney = commerceOrder.getTotalMoney();
+		CommerceMoney commerceOrderTotalCommerceMoney =
+			commerceOrder.getTotalMoney();
 
-		if (commerceOrderTotalMoney != null) {
-			order.setTotalFormatted(commerceOrderTotalMoney.format(locale));
+		if (commerceOrderTotalCommerceMoney != null) {
+			order.setTotalFormatted(
+				commerceOrderTotalCommerceMoney.format(locale));
 
 			BigDecimal commerceOrderTotalValue =
-				commerceOrderTotalMoney.getPrice();
+				commerceOrderTotalCommerceMoney.getPrice();
 
 			if (commerceOrderTotalValue != null) {
 				order.setTotalAmount(commerceOrderTotalValue.doubleValue());

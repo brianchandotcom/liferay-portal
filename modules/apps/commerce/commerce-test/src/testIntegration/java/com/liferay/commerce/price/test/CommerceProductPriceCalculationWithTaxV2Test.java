@@ -282,18 +282,20 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		BigDecimal taxRate = BigDecimal.valueOf(rate);
 
-		CommerceMoney unitPriceMoney = commerceProductPrice.getUnitPrice();
+		CommerceMoney unitPriceCommerceMoney =
+			commerceProductPrice.getUnitPrice();
 
-		BigDecimal unitPrice = unitPriceMoney.getPrice();
+		BigDecimal unitPrice = unitPriceCommerceMoney.getPrice();
 
-		CommerceMoney unitPriceMoneyWithTaxAmount =
+		CommerceMoney unitPriceWithTaxAmountCommerceMoney =
 			commerceProductPrice.getUnitPriceWithTaxAmount();
 
 		Assert.assertEquals(
-			unitPriceMoney.isEmpty(), unitPriceMoneyWithTaxAmount.isEmpty());
+			unitPriceCommerceMoney.isEmpty(),
+			unitPriceWithTaxAmountCommerceMoney.isEmpty());
 
 		BigDecimal unitPriceWithTaxAmount =
-			unitPriceMoneyWithTaxAmount.getPrice();
+			unitPriceWithTaxAmountCommerceMoney.getPrice();
 
 		BigDecimal expectedUnitPrice =
 			CommerceTaxTestUtil.getPriceWithTaxAmount(
@@ -303,20 +305,21 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 			expectedUnitPrice.stripTrailingZeros(),
 			unitPriceWithTaxAmount.stripTrailingZeros());
 
-		CommerceMoney promoPriceMoney =
+		CommerceMoney promoPriceCommerceMoney =
 			commerceProductPrice.getUnitPromoPrice();
 
-		BigDecimal promoPrice = promoPriceMoney.getPrice();
+		BigDecimal promoPrice = promoPriceCommerceMoney.getPrice();
 
-		CommerceMoney promoPriceMoneyWithTaxAmount =
+		CommerceMoney promoPriceWithTaxAmountCommerceMoney =
 			commerceProductPrice.getUnitPromoPriceWithTaxAmount();
 
 		Assert.assertEquals(
-			promoPriceMoney.isEmpty(), promoPriceMoneyWithTaxAmount.isEmpty());
+			promoPriceCommerceMoney.isEmpty(),
+			promoPriceWithTaxAmountCommerceMoney.isEmpty());
 
-		if (!promoPriceMoney.isEmpty()) {
+		if (!promoPriceCommerceMoney.isEmpty()) {
 			BigDecimal promoPriceWithTaxAmount =
-				promoPriceMoneyWithTaxAmount.getPrice();
+				promoPriceWithTaxAmountCommerceMoney.getPrice();
 
 			BigDecimal expectedPromoPrice =
 				CommerceTaxTestUtil.getPriceWithTaxAmount(
@@ -327,15 +330,16 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 				promoPriceWithTaxAmount.stripTrailingZeros());
 		}
 
-		CommerceMoney finaPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finaPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finaPriceMoney.getPrice();
+		BigDecimal finalPrice = finaPriceCommerceMoney.getPrice();
 
-		CommerceMoney finaPriceMoneyWithTaxAmount =
+		CommerceMoney finaPriceWithTaxAmountCommerceMoney =
 			commerceProductPrice.getFinalPriceWithTaxAmount();
 
 		BigDecimal finalPriceWithTaxAmount =
-			finaPriceMoneyWithTaxAmount.getPrice();
+			finaPriceWithTaxAmountCommerceMoney.getPrice();
 
 		BigDecimal expectedFinalPrice =
 			CommerceTaxTestUtil.getPriceWithTaxAmount(

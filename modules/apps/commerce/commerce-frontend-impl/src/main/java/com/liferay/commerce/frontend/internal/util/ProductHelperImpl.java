@@ -65,7 +65,7 @@ public class ProductHelperImpl implements ProductHelper {
 			long cpDefinitionId, CommerceContext commerceContext, Locale locale)
 		throws PortalException {
 
-		CommerceMoney cpDefinitionMinimumPrice =
+		CommerceMoney cpDefinitionMinimumPriceCommerceMoney =
 			_commerceProductPriceCalculation.getCPDefinitionMinimumPrice(
 				cpDefinitionId, commerceContext);
 
@@ -75,7 +75,7 @@ public class ProductHelperImpl implements ProductHelper {
 		return new PriceModel(
 			LanguageUtil.format(
 				resourceBundle, "from-x",
-				cpDefinitionMinimumPrice.format(locale), false));
+				cpDefinitionMinimumPriceCommerceMoney.format(locale), false));
 	}
 
 	/**
@@ -282,10 +282,10 @@ public class ProductHelperImpl implements ProductHelper {
 			return priceModel;
 		}
 
-		CommerceMoney discountAmount =
+		CommerceMoney discountAmountCommerceMoney =
 			commerceDiscountValue.getDiscountAmount();
 
-		priceModel.setDiscount(discountAmount.format(locale));
+		priceModel.setDiscount(discountAmountCommerceMoney.format(locale));
 
 		priceModel.setDiscountPercentage(
 			_commercePriceFormatter.format(

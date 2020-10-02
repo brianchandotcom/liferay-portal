@@ -141,30 +141,32 @@ public class CommerceProductPriceCalculationV2Impl
 		long commercePriceListId = _getCommercePriceListId(
 			cpInstanceId, commerceContext);
 
-		CommerceMoney unitPriceMoney = _getUnitPrice(
+		CommerceMoney unitPriceCommerceMoney = _getUnitPrice(
 			commercePriceListId, cpInstanceId, quantity, commerceContext);
 
-		BigDecimal finalPrice = unitPriceMoney.getPrice();
+		BigDecimal finalPrice = unitPriceCommerceMoney.getPrice();
 
 		long commercePromoPriceListId = _getCommercePromoPriceListId(
 			cpInstanceId, commerceContext);
 
-		CommerceMoney promoPriceMoney = _getPromoPrice(
+		CommerceMoney promoPriceCommerceMoney = _getPromoPrice(
 			commercePromoPriceListId, cpInstanceId, quantity, commerceContext);
 
-		if (!promoPriceMoney.isEmpty() &&
+		if (!promoPriceCommerceMoney.isEmpty() &&
 			CommerceBigDecimalUtil.gt(
-				promoPriceMoney.getPrice(), BigDecimal.ZERO) &&
+				promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
 			CommerceBigDecimalUtil.lte(
-				promoPriceMoney.getPrice(), unitPriceMoney.getPrice())) {
+				promoPriceCommerceMoney.getPrice(),
+				unitPriceCommerceMoney.getPrice())) {
 
-			finalPrice = promoPriceMoney.getPrice();
+			finalPrice = promoPriceCommerceMoney.getPrice();
 
 			commercePriceListId = commercePromoPriceListId;
 		}
 
 		BigDecimal[] updatedPrices = getUpdatedPrices(
-			unitPriceMoney, promoPriceMoney, finalPrice, commerceContext,
+			unitPriceCommerceMoney, promoPriceCommerceMoney, finalPrice,
+			commerceContext,
 			commerceProductPriceRequest.getCommerceOptionValues());
 
 		finalPrice = updatedPrices[2];
@@ -193,11 +195,11 @@ public class CommerceProductPriceCalculationV2Impl
 			finalPrice = finalPrice.multiply(BigDecimal.valueOf(quantity));
 
 			if (commerceDiscountValue != null) {
-				CommerceMoney discountAmountMoney =
+				CommerceMoney discountAmountCommerceMoney =
 					commerceDiscountValue.getDiscountAmount();
 
 				finalPrice = finalPrice.subtract(
-					discountAmountMoney.getPrice());
+					discountAmountCommerceMoney.getPrice());
 			}
 
 			finalPriceWithTaxAmount = getConvertedPrice(
@@ -212,11 +214,11 @@ public class CommerceProductPriceCalculationV2Impl
 				BigDecimal.valueOf(quantity));
 
 			if (commerceDiscountValue != null) {
-				CommerceMoney discountAmountMoney =
+				CommerceMoney discountAmountCommerceMoney =
 					commerceDiscountValue.getDiscountAmount();
 
 				finalPriceWithTaxAmount = finalPriceWithTaxAmount.subtract(
-					discountAmountMoney.getPrice());
+					discountAmountCommerceMoney.getPrice());
 			}
 
 			finalPrice = getConvertedPrice(
@@ -448,12 +450,12 @@ public class CommerceProductPriceCalculationV2Impl
 		currentDiscountAmount = currentDiscountAmount.setScale(
 			_SCALE, roundingMode);
 
-		CommerceMoney discountAmount = commerceMoneyFactory.create(
+		CommerceMoney discountAmountCommerceMoney = commerceMoneyFactory.create(
 			commerceCurrency,
 			currentDiscountAmount.multiply(new BigDecimal(quantity)));
 
 		return new CommerceDiscountValue(
-			0, discountAmount,
+			0, discountAmountCommerceMoney,
 			_getDiscountPercentage(discountedAmount, finalPrice, roundingMode),
 			values);
 	}
@@ -783,7 +785,7 @@ public class CommerceProductPriceCalculationV2Impl
 
 	private BigDecimal _getCommercePrice(
 			long cpInstanceId, long commercePriceListId,
-			CommerceMoney unitPriceMoney)
+			CommerceMoney unitPriceCommerceMoney)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
@@ -799,7 +801,7 @@ public class CommerceProductPriceCalculationV2Impl
 
 		return _commercePriceModifierHelper.applyCommercePriceModifier(
 			commercePriceListId, cpInstance.getCPDefinitionId(),
-			unitPriceMoney);
+			unitPriceCommerceMoney);
 	}
 
 	private CommercePriceList _getCommercePriceList(
@@ -998,12 +1000,12 @@ public class CommerceProductPriceCalculationV2Impl
 			return commerceMoneyFactory.emptyCommerceMoney();
 		}
 
-		CommerceMoney unitPrice = getUnitPrice(
+		CommerceMoney unitPriceCommerceMoney = getUnitPrice(
 			cpInstanceId, quantity, commerceContext.getCommerceCurrency(),
 			false, commerceContext);
 
 		BigDecimal promoPrice = _getCommercePrice(
-			cpInstanceId, commercePriceListId, unitPrice);
+			cpInstanceId, commercePriceListId, unitPriceCommerceMoney);
 
 		if (!commercePriceList.isNetPrice()) {
 			promoPrice = getConvertedPrice(

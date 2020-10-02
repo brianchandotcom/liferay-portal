@@ -76,8 +76,9 @@ public class CPInstanceTierPriceEntryDataSetDataProvider
 			CommercePriceList commercePriceList =
 				commercePriceEntry.getCommercePriceList();
 
-			CommerceMoney priceMoney = commerceTierPriceEntry.getPriceMoney(
-				commercePriceList.getCommerceCurrencyId());
+			CommerceMoney priceCommerceMoney =
+				commerceTierPriceEntry.getPriceMoney(
+					commercePriceList.getCommerceCurrencyId());
 
 			Date createDate = commerceTierPriceEntry.getCreateDate();
 
@@ -89,7 +90,7 @@ public class CPInstanceTierPriceEntryDataSetDataProvider
 				new InstanceTierPriceEntry(
 					commerceTierPriceEntry.getCommerceTierPriceEntryId(),
 					HtmlUtil.escape(
-						priceMoney.format(
+						priceCommerceMoney.format(
 							_portal.getLocale(httpServletRequest))),
 					commerceTierPriceEntry.getMinQuantity(),
 					LanguageUtil.format(

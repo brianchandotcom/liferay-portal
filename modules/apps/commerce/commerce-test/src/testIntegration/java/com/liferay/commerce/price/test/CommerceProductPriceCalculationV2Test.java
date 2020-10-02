@@ -236,9 +236,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstancePrice1.add(cpInstancePrice2);
 
@@ -379,9 +380,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstancePrice1.add(cpInstancePrice2);
 
@@ -518,9 +520,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstancePrice1.add(
 			cpInstancePrice2.multiply(BigDecimal.valueOf(quantity1)));
@@ -675,9 +678,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstancePrice1.subtract(
 			BigDecimal.valueOf(discountAmount));
@@ -830,9 +834,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstancePrice1.add(cpInstancePromoPrice2);
 
@@ -980,9 +985,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal discountedPercentage1 = level1.divide(_HUNDRED);
 
@@ -1172,9 +1178,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstanceBasePrice1.add(modifierAmount);
 
@@ -1317,9 +1324,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstancePrice1.add(cpInstancePromoPrice2);
 
@@ -1445,9 +1453,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal tier1OptionValuePrice1 = cpInstancePrice2.multiply(
 			BigDecimal.valueOf(4));
@@ -1547,9 +1556,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstancePrice.add(optionValuePrice1);
 
@@ -1650,9 +1660,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstancePrice.add(optionValuePrice1);
 
@@ -1754,9 +1765,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstancePrice.add(optionValuePrice1);
 
@@ -1874,9 +1886,10 @@ public class CommerceProductPriceCalculationV2Test {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				commerceProductPriceRequest);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = cpInstancePrice1.add(
 			optionValuePrice1.multiply(BigDecimal.valueOf(quantity1)));
@@ -1959,9 +1972,11 @@ public class CommerceProductPriceCalculationV2Test {
 			parentPriceList.getCommercePriceListId(),
 			commerceProductPrice.getCommercePriceListId());
 
-		CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		Assert.assertEquals(cpInstancePrice, finalPrice.getPrice());
+		Assert.assertEquals(
+			cpInstancePrice, finalPriceCommerceMoney.getPrice());
 	}
 
 	@Rule

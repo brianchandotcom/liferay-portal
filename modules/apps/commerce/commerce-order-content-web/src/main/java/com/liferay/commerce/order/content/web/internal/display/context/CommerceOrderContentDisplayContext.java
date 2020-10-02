@@ -333,14 +333,15 @@ public class CommerceOrderContentDisplayContext {
 	public String getCommerceOrderTotal(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		CommerceMoney total = _commerceOrderPriceCalculation.getTotal(
-			commerceOrder, _commerceContext);
+		CommerceMoney totalCommerceMoney =
+			_commerceOrderPriceCalculation.getTotal(
+				commerceOrder, _commerceContext);
 
-		if (total == null) {
+		if (totalCommerceMoney == null) {
 			return StringPool.BLANK;
 		}
 
-		return total.format(_cpRequestHelper.getLocale());
+		return totalCommerceMoney.format(_cpRequestHelper.getLocale());
 	}
 
 	public String getCommercePriceDisplayType() {

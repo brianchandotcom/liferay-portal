@@ -201,7 +201,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 	protected CommerceOrderPriceImpl getEmptyCommerceOrderPrice(
 		CommerceCurrency commerceCurrency) {
 
-		CommerceMoney zero = commerceMoneyFactory.create(
+		CommerceMoney zeroCommerceMoney = commerceMoneyFactory.create(
 			commerceCurrency, BigDecimal.ZERO);
 
 		CommerceOrderPriceImpl commerceOrderPriceImpl =
@@ -209,17 +209,17 @@ public abstract class BaseCommerceOrderPriceCalculation
 
 		commerceOrderPriceImpl.setShippingDiscountValue(null);
 		commerceOrderPriceImpl.setShippingDiscountValueWithTaxAmount(null);
-		commerceOrderPriceImpl.setShippingValue(zero);
-		commerceOrderPriceImpl.setShippingValueWithTaxAmount(zero);
-		commerceOrderPriceImpl.setSubtotal(zero);
+		commerceOrderPriceImpl.setShippingValue(zeroCommerceMoney);
+		commerceOrderPriceImpl.setShippingValueWithTaxAmount(zeroCommerceMoney);
+		commerceOrderPriceImpl.setSubtotal(zeroCommerceMoney);
 		commerceOrderPriceImpl.setSubtotalDiscountValue(null);
 		commerceOrderPriceImpl.setSubtotalDiscountValueWithTaxAmount(null);
-		commerceOrderPriceImpl.setSubtotalWithTaxAmount(zero);
-		commerceOrderPriceImpl.setTaxValue(zero);
-		commerceOrderPriceImpl.setTotal(zero);
+		commerceOrderPriceImpl.setSubtotalWithTaxAmount(zeroCommerceMoney);
+		commerceOrderPriceImpl.setTaxValue(zeroCommerceMoney);
+		commerceOrderPriceImpl.setTotal(zeroCommerceMoney);
 		commerceOrderPriceImpl.setTotalDiscountValue(null);
 		commerceOrderPriceImpl.setTotalDiscountValueWithTaxAmount(null);
-		commerceOrderPriceImpl.setTotalWithTaxAmount(zero);
+		commerceOrderPriceImpl.setTotalWithTaxAmount(zeroCommerceMoney);
 
 		return commerceOrderPriceImpl;
 	}
@@ -362,13 +362,16 @@ public abstract class BaseCommerceOrderPriceCalculation
 
 		int parentQuantity = commerceOrderItem.getQuantity();
 
-		CommerceMoney unitPriceMoney = commerceOrderItem.getUnitPriceMoney();
-		CommerceMoney promoPriceMoney = commerceOrderItem.getPromoPriceMoney();
+		CommerceMoney unitPriceCommerceMoney =
+			commerceOrderItem.getUnitPriceMoney();
+		CommerceMoney promoPriceCommerceMoney =
+			commerceOrderItem.getPromoPriceMoney();
 
-		CommerceMoney discountAmountMoney =
+		CommerceMoney discountAmountCommerceMoney =
 			commerceOrderItem.getDiscountAmountMoney();
 
-		CommerceMoney finalPriceMoney = commerceOrderItem.getFinalPriceMoney();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceOrderItem.getFinalPriceMoney();
 
 		BigDecimal discountPercentageLevel1 =
 			commerceOrderItem.getDiscountPercentageLevel1();
@@ -388,11 +391,12 @@ public abstract class BaseCommerceOrderPriceCalculation
 		if (priceDisplayType.equals(
 				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 
-			unitPriceMoney = commerceOrderItem.getUnitPriceWithTaxAmountMoney();
-			promoPriceMoney =
+			unitPriceCommerceMoney =
+				commerceOrderItem.getUnitPriceWithTaxAmountMoney();
+			promoPriceCommerceMoney =
 				commerceOrderItem.getPromoPriceWithTaxAmountMoney();
 
-			discountAmountMoney =
+			discountAmountCommerceMoney =
 				commerceOrderItem.getDiscountWithTaxAmountMoney();
 
 			discountPercentageLevel1 =
@@ -404,14 +408,14 @@ public abstract class BaseCommerceOrderPriceCalculation
 			discountPercentageLevel4 =
 				commerceOrderItem.getDiscountPercentageLevel4WithTaxAmount();
 
-			finalPriceMoney =
+			finalPriceCommerceMoney =
 				commerceOrderItem.getFinalPriceWithTaxAmountMoney();
 		}
 
-		BigDecimal unitPrice = unitPriceMoney.getPrice();
-		BigDecimal promoPrice = promoPriceMoney.getPrice();
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
-		BigDecimal discountAmount = discountAmountMoney.getPrice();
+		BigDecimal unitPrice = unitPriceCommerceMoney.getPrice();
+		BigDecimal promoPrice = promoPriceCommerceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
+		BigDecimal discountAmount = discountAmountCommerceMoney.getPrice();
 
 		List<CommerceOrderItem> childCommerceOrderItems =
 			commerceOrderItem.getChildCommerceOrderItems();
@@ -542,13 +546,17 @@ public abstract class BaseCommerceOrderPriceCalculation
 
 		BigDecimal activePrice = unitPrice;
 
-		CommerceMoney promoPrice = commerceOrderItemPrice.getPromoPrice();
+		CommerceMoney promoPriceCommerceMoney =
+			commerceOrderItemPrice.getPromoPrice();
 
-		if ((promoPrice != null) && !promoPrice.isEmpty() &&
-			CommerceBigDecimalUtil.gt(promoPrice.getPrice(), BigDecimal.ZERO) &&
-			CommerceBigDecimalUtil.gt(unitPrice, promoPrice.getPrice())) {
+		if ((promoPriceCommerceMoney != null) &&
+			!promoPriceCommerceMoney.isEmpty() &&
+			CommerceBigDecimalUtil.gt(
+				promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
+			CommerceBigDecimalUtil.gt(
+				unitPrice, promoPriceCommerceMoney.getPrice())) {
 
-			activePrice = promoPrice.getPrice();
+			activePrice = promoPriceCommerceMoney.getPrice();
 		}
 
 		commerceOrderItemPrice.setDiscountAmount(

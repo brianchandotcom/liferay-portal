@@ -280,11 +280,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 		BigDecimal discountedAmount = activePrice.subtract(discountAmount);
 
-		CommerceMoney discountAmountMoney =
+		CommerceMoney discountAmountCommerceMoney =
 			commerceOrderItem.getDiscountAmountMoney();
 
 		CommerceCurrency commerceCurrency =
-			discountAmountMoney.getCommerceCurrency();
+			discountAmountCommerceMoney.getCommerceCurrency();
 
 		BigDecimal[] values = {
 			commerceOrderItem.getDiscountPercentageLevel1(),
@@ -294,7 +294,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		};
 
 		CommerceDiscountValue commerceDiscountValue = new CommerceDiscountValue(
-			0, discountAmountMoney,
+			0, discountAmountCommerceMoney,
 			_getDiscountPercentage(
 				discountedAmount, activePrice,
 				RoundingMode.valueOf(commerceCurrency.getRoundingMode())),
@@ -306,7 +306,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		activePriceWithTaxAmount = activePriceWithTaxAmount.multiply(
 			BigDecimal.valueOf(commerceOrderItem.getQuantity()));
 
-		CommerceMoney discountAmountMoneyWithTaxAmount =
+		CommerceMoney discountWithTaxAmountCommerceMoney =
 			commerceOrderItem.getDiscountWithTaxAmountMoney();
 
 		BigDecimal discountedAmountWithTaxAmount =
@@ -322,7 +322,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 		CommerceDiscountValue commerceDiscountValueWithTaxAmount =
 			new CommerceDiscountValue(
-				0, discountAmountMoneyWithTaxAmount,
+				0, discountWithTaxAmountCommerceMoney,
 				_getDiscountPercentage(
 					discountedAmountWithTaxAmount, activePriceWithTaxAmount,
 					RoundingMode.valueOf(commerceCurrency.getRoundingMode())),

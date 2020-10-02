@@ -42,13 +42,15 @@ public class CommercePriceConverterUtil {
 			return null;
 		}
 
-		CommerceMoney currentDiscountAmount =
+		CommerceMoney currentDiscountAmountCommerceMoney =
 			commerceDiscountValue.getDiscountAmount();
 
 		BigDecimal discountAmount = initialPrice.subtract(discountedPrice);
 
-		CommerceMoney convertedDiscountAmount = commerceMoneyFactory.create(
-			currentDiscountAmount.getCommerceCurrency(), discountAmount);
+		CommerceMoney convertedDiscountAmountCommerceMoney =
+			commerceMoneyFactory.create(
+				currentDiscountAmountCommerceMoney.getCommerceCurrency(),
+				discountAmount);
 
 		BigDecimal discountPercentage = _ONE_HUNDRED;
 
@@ -58,7 +60,7 @@ public class CommercePriceConverterUtil {
 		}
 
 		return new CommerceDiscountValue(
-			commerceDiscountValue.getId(), convertedDiscountAmount,
+			commerceDiscountValue.getId(), convertedDiscountAmountCommerceMoney,
 			discountPercentage,
 			_getPercentages(
 				commerceDiscountValue.getDiscountPercentage(),

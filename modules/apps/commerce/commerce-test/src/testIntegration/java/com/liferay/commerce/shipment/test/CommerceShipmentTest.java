@@ -373,9 +373,10 @@ public class CommerceShipmentTest {
 			_commerceOrderPriceCalculation.getCommerceOrderPrice(
 				commerceOrder, false, commerceContext);
 
-		CommerceMoney shippableValue = commerceOrderPrice.getShippingValue();
+		CommerceMoney shippableValueCommerceMoney =
+			commerceOrderPrice.getShippingValue();
 
-		Assert.assertEquals(value, shippableValue.getPrice());
+		Assert.assertEquals(value, shippableValueCommerceMoney.getPrice());
 	}
 
 	@Test
@@ -438,16 +439,19 @@ public class CommerceShipmentTest {
 			_commerceOrderPriceCalculation.getCommerceOrderPrice(
 				commerceOrder, false, commerceContext);
 
-		CommerceMoney shippableValue = commerceOrderPrice.getShippingValue();
+		CommerceMoney shippableValueCommerceMoney =
+			commerceOrderPrice.getShippingValue();
 
-		CommerceDiscountValue discountValue =
+		CommerceDiscountValue commerceDiscountValue =
 			commerceOrderPrice.getShippingDiscountValue();
 
-		CommerceMoney discountAmount = discountValue.getDiscountAmount();
-		BigDecimal[] percentages = discountValue.getPercentages();
+		CommerceMoney discountAmountCommerceMoney =
+			commerceDiscountValue.getDiscountAmount();
+		BigDecimal[] percentages = commerceDiscountValue.getPercentages();
 
-		Assert.assertEquals(value, shippableValue.getPrice());
-		Assert.assertEquals(expectedDiscountAmount, discountAmount.getPrice());
+		Assert.assertEquals(value, shippableValueCommerceMoney.getPrice());
+		Assert.assertEquals(
+			expectedDiscountAmount, discountAmountCommerceMoney.getPrice());
 		Assert.assertEquals(expectedL1Discount, percentages[0]);
 	}
 

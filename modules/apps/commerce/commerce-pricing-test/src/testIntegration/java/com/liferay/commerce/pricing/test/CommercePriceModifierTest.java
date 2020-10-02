@@ -170,30 +170,30 @@ public class CommercePriceModifierTest {
 			CommercePricingClass.class.getName(),
 			commercePricingClass.getCommercePricingClassId());
 
-		CommerceMoney priceMoney1 = commercePriceEntry1.getPriceMoney(
+		CommerceMoney priceCommerceMoney1 = commercePriceEntry1.getPriceMoney(
 			_commerceCurrency.getCommerceCurrencyId());
 
 		BigDecimal modifiedPrice1 =
 			_commercePriceModifierHelper.applyCommercePriceModifier(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance1.getCPDefinitionId(), priceMoney1);
+				cpInstance1.getCPDefinitionId(), priceCommerceMoney1);
 
-		CommerceMoney priceMoney2 = commercePriceEntry2.getPriceMoney(
+		CommerceMoney priceCommerceMoney2 = commercePriceEntry2.getPriceMoney(
 			_commerceCurrency.getCommerceCurrencyId());
 
 		BigDecimal modifiedPrice2 =
 			_commercePriceModifierHelper.applyCommercePriceModifier(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance2.getCPDefinitionId(), priceMoney2);
+				cpInstance2.getCPDefinitionId(), priceCommerceMoney2);
 
-		CommerceMoney finalMoney1 = _commerceMoneyFactory.create(
+		CommerceMoney finalCommerceMoney1 = _commerceMoneyFactory.create(
 			_commerceCurrency, price1.add(amount));
-		CommerceMoney finalMoney2 = _commerceMoneyFactory.create(
+		CommerceMoney finalCommerceMoney2 = _commerceMoneyFactory.create(
 			_commerceCurrency, price2.add(amount));
 
-		BigDecimal expectedPrice1 = finalMoney1.getPrice();
+		BigDecimal expectedPrice1 = finalCommerceMoney1.getPrice();
 
-		BigDecimal expectedPrice2 = finalMoney2.getPrice();
+		BigDecimal expectedPrice2 = finalCommerceMoney2.getPrice();
 
 		Assert.assertEquals(
 			expectedPrice1.stripTrailingZeros(),
@@ -293,21 +293,21 @@ public class CommercePriceModifierTest {
 			commercePriceModifier2.getCommercePriceModifierId(),
 			AssetCategory.class.getName(), assetCategory.getCategoryId());
 
-		CommerceMoney priceMoney1 = commercePriceEntry1.getPriceMoney(
+		CommerceMoney priceCommerceMoney1 = commercePriceEntry1.getPriceMoney(
 			_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceMoney priceMoney2 = commercePriceEntry2.getPriceMoney(
+		CommerceMoney priceCommerceMoney2 = commercePriceEntry2.getPriceMoney(
 			_commerceCurrency.getCommerceCurrencyId());
 
 		BigDecimal modifiedPrice1 =
 			_commercePriceModifierHelper.applyCommercePriceModifier(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance1.getCPDefinitionId(), priceMoney1);
+				cpInstance1.getCPDefinitionId(), priceCommerceMoney1);
 
 		BigDecimal modifiedPrice2 =
 			_commercePriceModifierHelper.applyCommercePriceModifier(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance2.getCPDefinitionId(), priceMoney2);
+				cpInstance2.getCPDefinitionId(), priceCommerceMoney2);
 
 		RoundingMode roundingMode = RoundingMode.valueOf(
 			_commerceCurrency.getRoundingMode());
@@ -318,12 +318,12 @@ public class CommercePriceModifierTest {
 		BigDecimal finalPrice1 = price1.multiply(
 			BigDecimal.valueOf(0.9), mathContext1);
 
-		CommerceMoney finalMoney1 = _commerceMoneyFactory.create(
+		CommerceMoney finalCommerceMoney1 = _commerceMoneyFactory.create(
 			_commerceCurrency, finalPrice1);
 
-		BigDecimal expectedPrice1 = finalMoney1.getPrice();
+		BigDecimal expectedPrice1 = finalCommerceMoney1.getPrice();
 
-		BigDecimal expectedPrice2 = priceMoney2.getPrice();
+		BigDecimal expectedPrice2 = priceCommerceMoney2.getPrice();
 
 		Assert.assertEquals(
 			expectedPrice1.stripTrailingZeros(),
@@ -382,13 +382,13 @@ public class CommercePriceModifierTest {
 			commercePriceModifier.getCommercePriceModifierId(),
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
-		CommerceMoney priceMoney = commercePriceEntry.getPriceMoney(
+		CommerceMoney priceCommerceMoney = commercePriceEntry.getPriceMoney(
 			_commerceCurrency.getCommerceCurrencyId());
 
 		BigDecimal finalPrice =
 			_commercePriceModifierHelper.applyCommercePriceModifier(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPDefinitionId(), priceMoney);
+				cpInstance.getCPDefinitionId(), priceCommerceMoney);
 
 		RoundingMode roundingMode = RoundingMode.valueOf(
 			_commerceCurrency.getRoundingMode());

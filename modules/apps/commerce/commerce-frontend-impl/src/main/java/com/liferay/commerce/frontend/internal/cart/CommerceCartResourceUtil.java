@@ -158,14 +158,14 @@ public class CommerceCartResourceUtil {
 			return null;
 		}
 
-		CommerceMoney subtotal = commerceOrderPrice.getSubtotal();
-		CommerceMoney total = commerceOrderPrice.getTotal();
+		CommerceMoney subtotalCommerceMoney = commerceOrderPrice.getSubtotal();
+		CommerceMoney totalCommerceMoney = commerceOrderPrice.getTotal();
 
 		int itemsQuantity =
 			_commerceOrderItemService.getCommerceOrderItemsQuantity(
 				commerceOrder.getCommerceOrderId());
 
-		CommerceDiscountValue totalDiscountValue =
+		CommerceDiscountValue totalCommerceDiscountValue =
 			commerceOrderPrice.getTotalDiscountValue();
 
 		CommerceChannel commerceChannel =
@@ -177,20 +177,22 @@ public class CommerceCartResourceUtil {
 		if (priceDisplayType.equals(
 				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 
-			subtotal = commerceOrderPrice.getSubtotalWithTaxAmount();
-			total = commerceOrderPrice.getTotalWithTaxAmount();
-			totalDiscountValue =
+			subtotalCommerceMoney =
+				commerceOrderPrice.getSubtotalWithTaxAmount();
+			totalCommerceMoney = commerceOrderPrice.getTotalWithTaxAmount();
+			totalCommerceDiscountValue =
 				commerceOrderPrice.getTotalDiscountValueWithTaxAmount();
 		}
 
 		Summary summary = new Summary(
-			subtotal.format(locale), total.format(locale), itemsQuantity);
+			subtotalCommerceMoney.format(locale),
+			totalCommerceMoney.format(locale), itemsQuantity);
 
-		if (totalDiscountValue != null) {
-			CommerceMoney discountAmount =
-				totalDiscountValue.getDiscountAmount();
+		if (totalCommerceDiscountValue != null) {
+			CommerceMoney discountAmountCommerceMoney =
+				totalCommerceDiscountValue.getDiscountAmount();
 
-			summary.setDiscount(discountAmount.format(locale));
+			summary.setDiscount(discountAmountCommerceMoney.format(locale));
 		}
 
 		return summary;
@@ -218,26 +220,28 @@ public class CommerceCartResourceUtil {
 	}
 
 	private PriceModel _getPriceModel(
-			CommerceMoney unitPriceMoney, CommerceMoney promoPriceMoney,
-			CommerceMoney discountAmountMoney, BigDecimal discountPercentage,
-			BigDecimal discountPercentageLevel1,
+			CommerceMoney unitPriceCommerceMoney,
+			CommerceMoney promoPriceCommerceMoney,
+			CommerceMoney discountAmountCommerceMoney,
+			BigDecimal discountPercentage, BigDecimal discountPercentageLevel1,
 			BigDecimal discountPercentageLevel2,
 			BigDecimal discountPercentageLevel3,
-			BigDecimal discountPercentageLevel4, CommerceMoney finalPriceMoney,
-			Locale locale)
+			BigDecimal discountPercentageLevel4,
+			CommerceMoney finalPriceCommerceMoney, Locale locale)
 		throws Exception {
 
-		PriceModel priceModel = new PriceModel(unitPriceMoney.format(locale));
+		PriceModel priceModel = new PriceModel(
+			unitPriceCommerceMoney.format(locale));
 
-		if (promoPriceMoney != null) {
-			priceModel.setPromoPrice(promoPriceMoney.format(locale));
+		if (promoPriceCommerceMoney != null) {
+			priceModel.setPromoPrice(promoPriceCommerceMoney.format(locale));
 		}
 
-		if (discountAmountMoney == null) {
+		if (discountAmountCommerceMoney == null) {
 			return priceModel;
 		}
 
-		BigDecimal discountAmount = discountAmountMoney.getPrice();
+		BigDecimal discountAmount = discountAmountCommerceMoney.getPrice();
 
 		if ((discountAmount == null) ||
 			(discountAmount.compareTo(BigDecimal.ZERO) == 0)) {
@@ -245,7 +249,7 @@ public class CommerceCartResourceUtil {
 			return priceModel;
 		}
 
-		priceModel.setDiscount(discountAmountMoney.format(locale));
+		priceModel.setDiscount(discountAmountCommerceMoney.format(locale));
 
 		priceModel.setDiscountPercentage(
 			_commercePriceFormatter.format(discountPercentage, locale));
@@ -278,7 +282,7 @@ public class CommerceCartResourceUtil {
 
 		priceModel.setDiscountPercentages(discountPercentages);
 
-		priceModel.setFinalPrice(finalPriceMoney.format(locale));
+		priceModel.setFinalPrice(finalPriceCommerceMoney.format(locale));
 
 		return priceModel;
 	}

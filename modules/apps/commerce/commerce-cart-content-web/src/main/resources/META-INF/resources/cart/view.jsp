@@ -136,14 +136,14 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						<c:if test="<%= commerceCartContentDisplayContext.hasViewPricePermission() %>">
 
 							<%
-							CommerceMoney unitPriceMoney = commerceOrderItem.getUnitPriceMoney();
+							CommerceMoney unitPriceCommerceMoney = commerceOrderItem.getUnitPriceMoney();
 
 							if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
-								unitPriceMoney = commerceOrderItem.getUnitPriceWithTaxAmountMoney();
+								unitPriceCommerceMoney = commerceOrderItem.getUnitPriceWithTaxAmountMoney();
 							}
 							%>
 
-							<%= HtmlUtil.escape(unitPriceMoney.format(locale)) %>
+							<%= HtmlUtil.escape(unitPriceCommerceMoney.format(locale)) %>
 						</c:if>
 					</liferay-ui:search-container-column-text>
 
@@ -163,14 +163,14 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						<c:if test="<%= commerceCartContentDisplayContext.hasViewPricePermission() %>">
 
 							<%
-							CommerceMoney finalPriceMoney = commerceOrderItem.getFinalPriceMoney();
+							CommerceMoney finalPriceCommerceMoney = commerceOrderItem.getFinalPriceMoney();
 
 							if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
-								finalPriceMoney = commerceOrderItem.getFinalPriceWithTaxAmountMoney();
+								finalPriceCommerceMoney = commerceOrderItem.getFinalPriceWithTaxAmountMoney();
 							}
 							%>
 
-							<%= HtmlUtil.escape(finalPriceMoney.format(locale)) %>
+							<%= HtmlUtil.escape(finalPriceCommerceMoney.format(locale)) %>
 
 							<commerce-ui:product-subscription-info
 								CPInstanceId="<%= commerceOrderItem.getCPInstanceId() %>"

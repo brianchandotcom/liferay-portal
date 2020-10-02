@@ -1389,49 +1389,51 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem,
 		CommerceProductPrice commerceProductPrice) {
 
-		CommerceMoney unitPriceMoney = commerceProductPrice.getUnitPrice();
+		CommerceMoney unitPriceCommerceMoney =
+			commerceProductPrice.getUnitPrice();
 
-		commerceOrderItem.setUnitPrice(unitPriceMoney.getPrice());
+		commerceOrderItem.setUnitPrice(unitPriceCommerceMoney.getPrice());
 
 		BigDecimal promoPrice = BigDecimal.ZERO;
 		BigDecimal promoPriceWithTaxAmount = BigDecimal.ZERO;
 
-		CommerceMoney unitPromoPriceMoney =
+		CommerceMoney unitPromoPriceCommerceMoney =
 			commerceProductPrice.getUnitPromoPrice();
 
-		if (!unitPromoPriceMoney.isEmpty()) {
-			promoPrice = unitPromoPriceMoney.getPrice();
+		if (!unitPromoPriceCommerceMoney.isEmpty()) {
+			promoPrice = unitPromoPriceCommerceMoney.getPrice();
 		}
 
-		CommerceMoney unitPromoMoneyPriceWithTaxAmount =
+		CommerceMoney unitPromoPriceWithTaxAmountCommerceMoney =
 			commerceProductPrice.getUnitPromoPriceWithTaxAmount();
 
-		if (!unitPromoMoneyPriceWithTaxAmount.isEmpty()) {
+		if (!unitPromoPriceWithTaxAmountCommerceMoney.isEmpty()) {
 			promoPriceWithTaxAmount =
-				unitPromoMoneyPriceWithTaxAmount.getPrice();
+				unitPromoPriceWithTaxAmountCommerceMoney.getPrice();
 		}
 
 		commerceOrderItem.setPromoPrice(promoPrice);
 		commerceOrderItem.setPromoPriceWithTaxAmount(promoPriceWithTaxAmount);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		commerceOrderItem.setFinalPrice(finalPriceMoney.getPrice());
+		commerceOrderItem.setFinalPrice(finalPriceCommerceMoney.getPrice());
 
-		CommerceMoney unitPriceMoneyWithTaxAmount =
+		CommerceMoney unitPriceWithTaxAmountCommerceMoney =
 			commerceProductPrice.getUnitPriceWithTaxAmount();
 
-		if (unitPriceMoneyWithTaxAmount != null) {
+		if (unitPriceWithTaxAmountCommerceMoney != null) {
 			commerceOrderItem.setUnitPriceWithTaxAmount(
-				unitPriceMoneyWithTaxAmount.getPrice());
+				unitPriceWithTaxAmountCommerceMoney.getPrice());
 		}
 
-		CommerceMoney finalPriceMoneyWithTaxAmount =
+		CommerceMoney finalPriceWithTaxAmountCommerceMoney =
 			commerceProductPrice.getFinalPriceWithTaxAmount();
 
-		if (finalPriceMoneyWithTaxAmount != null) {
+		if (finalPriceWithTaxAmountCommerceMoney != null) {
 			commerceOrderItem.setFinalPriceWithTaxAmount(
-				finalPriceMoneyWithTaxAmount.getPrice());
+				finalPriceWithTaxAmountCommerceMoney.getPrice());
 		}
 
 		commerceOrderItem.setCommercePriceListId(

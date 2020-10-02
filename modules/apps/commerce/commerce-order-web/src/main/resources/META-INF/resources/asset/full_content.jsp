@@ -54,13 +54,13 @@ CommerceOrder commerceOrder = (CommerceOrder)request.getAttribute(CommerceOrderC
 			/>
 
 			<%
-			CommerceMoney finalPriceMoney = commerceOrderItem.getFinalPriceMoney();
+			CommerceMoney finalPriceCommerceMoney = commerceOrderItem.getFinalPriceMoney();
 			%>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="price"
-				value="<%= finalPriceMoney.format(locale) %>"
+				value="<%= finalPriceCommerceMoney.format(locale) %>"
 			/>
 		</liferay-ui:search-container-row>
 

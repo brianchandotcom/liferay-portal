@@ -108,31 +108,35 @@ public class PriceCPContentContributor implements CPContentContributor {
 					cpInstance, cpDefinitionInventoryEngine, commerceContext,
 					commerceOptionValues));
 
-		CommerceMoney unitPrice = commerceProductPrice.getUnitPrice();
+		CommerceMoney unitPriceCommerceMoney =
+			commerceProductPrice.getUnitPrice();
 
-		if (unitPrice.isEmpty()) {
+		if (unitPriceCommerceMoney.isEmpty()) {
 			return jsonObject;
 		}
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
 		jsonObject.put(
-			CPContentContributorConstants.PRICE, unitPrice.format(locale));
+			CPContentContributorConstants.PRICE,
+			unitPriceCommerceMoney.format(locale));
 
-		CommerceMoney unitPromoPrice = commerceProductPrice.getUnitPromoPrice();
+		CommerceMoney unitPromoPriceCommerceMoney =
+			commerceProductPrice.getUnitPromoPrice();
 
-		if (unitPromoPrice.isEmpty()) {
+		if (unitPromoPriceCommerceMoney.isEmpty()) {
 			return jsonObject;
 		}
 
 		if (CommerceBigDecimalUtil.gt(
-				unitPromoPrice.getPrice(), BigDecimal.ZERO) &&
+				unitPromoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
 			CommerceBigDecimalUtil.lte(
-				unitPromoPrice.getPrice(), unitPrice.getPrice())) {
+				unitPromoPriceCommerceMoney.getPrice(),
+				unitPriceCommerceMoney.getPrice())) {
 
 			jsonObject.put(
 				CPContentContributorConstants.PROMO_PRICE,
-				unitPromoPrice.format(locale));
+				unitPromoPriceCommerceMoney.format(locale));
 		}
 
 		return jsonObject;

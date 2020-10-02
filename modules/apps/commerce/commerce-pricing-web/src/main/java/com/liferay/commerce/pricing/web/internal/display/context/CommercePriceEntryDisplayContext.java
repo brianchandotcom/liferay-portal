@@ -89,10 +89,12 @@ public class CommercePriceEntryDisplayContext
 			return StringPool.DASH;
 		}
 
-		CommerceMoney priceMoney = instanceBaseCommercePriceEntry.getPriceMoney(
-			commercePriceList.getCommerceCurrencyId());
+		CommerceMoney priceCommerceMoney =
+			instanceBaseCommercePriceEntry.getPriceMoney(
+				commercePriceList.getCommerceCurrencyId());
 
-		return priceMoney.format(commercePricingRequestHelper.getLocale());
+		return priceCommerceMoney.format(
+			commercePricingRequestHelper.getLocale());
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() throws PortalException {

@@ -56,14 +56,14 @@ boolean showPriceRange = (boolean)request.getAttribute("liferay-commerce:price:s
 				<c:if test="<%= commerceDiscountValue != null %>">
 
 					<%
-					CommerceMoney discountAmount = commerceDiscountValue.getDiscountAmount();
+					CommerceMoney discountAmountCommerceMoney = commerceDiscountValue.getDiscountAmount();
 					%>
 
 					<span class="commerce-discount">
 						<%= Validator.isNull(discountLabel) ? StringPool.BLANK : discountLabel %>
 
 						<c:if test='<%= (boolean)request.getAttribute("liferay-commerce:price:showDiscountAmount") %>'>
-							<span class="discount-amount"><%= HtmlUtil.escape(discountAmount.format(locale)) %></span>
+							<span class="discount-amount"><%= HtmlUtil.escape(discountAmountCommerceMoney.format(locale)) %></span>
 						</c:if>
 
 						<c:if test='<%= (boolean)request.getAttribute("liferay-commerce:price:showPercentage") %>'>

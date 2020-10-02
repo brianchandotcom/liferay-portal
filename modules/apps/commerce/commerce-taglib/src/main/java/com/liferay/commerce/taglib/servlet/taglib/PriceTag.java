@@ -320,20 +320,24 @@ public class PriceTag extends IncludeTag {
 				return;
 			}
 
-			CommerceMoney unitPriceMoney = commerceProductPrice.getUnitPrice();
+			CommerceMoney unitPriceCommerceMoney =
+				commerceProductPrice.getUnitPrice();
 
-			_formattedPrice = unitPriceMoney.format(locale);
+			_formattedPrice = unitPriceCommerceMoney.format(locale);
 
 			_formattedPromoPrice = StringPool.BLANK;
 
 			if (_showPromo) {
-				CommerceMoney finalPriceMoney =
+				CommerceMoney finalPriceCommerceMoney =
 					commerceProductPrice.getFinalPrice();
 
-				BigDecimal promoPrice = finalPriceMoney.getPrice();
+				BigDecimal promoPrice = finalPriceCommerceMoney.getPrice();
 
-				if (promoPrice.compareTo(unitPriceMoney.getPrice()) < 0) {
-					_formattedPromoPrice = finalPriceMoney.format(locale);
+				if (promoPrice.compareTo(unitPriceCommerceMoney.getPrice()) <
+						0) {
+
+					_formattedPromoPrice = finalPriceCommerceMoney.format(
+						locale);
 				}
 			}
 

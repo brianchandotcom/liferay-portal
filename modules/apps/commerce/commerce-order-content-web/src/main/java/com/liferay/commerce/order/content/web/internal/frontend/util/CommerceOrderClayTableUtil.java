@@ -99,16 +99,16 @@ public class CommerceOrderClayTableUtil {
 		for (CommerceOrder commerceOrder : commerceOrders) {
 			String amount = StringPool.BLANK;
 
-			CommerceMoney totalMoney = commerceOrder.getTotalMoney();
+			CommerceMoney totalCommerceMoney = commerceOrder.getTotalMoney();
 
 			if (priceDisplayType.equals(
 					CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 
-				totalMoney = commerceOrder.getTotalWithTaxAmountMoney();
+				totalCommerceMoney = commerceOrder.getTotalWithTaxAmountMoney();
 			}
 
-			if (totalMoney != null) {
-				amount = totalMoney.format(themeDisplay.getLocale());
+			if (totalCommerceMoney != null) {
+				amount = totalCommerceMoney.format(themeDisplay.getLocale());
 			}
 
 			Format dateFormat = FastDateFormatFactoryUtil.getDate(

@@ -118,9 +118,12 @@ public class CommerceCheckoutStepHelper {
 			_commerceOrderPriceCalculation.getCommerceOrderPrice(
 				commerceOrder, commerceContext);
 
-		CommerceMoney orderPriceTotal = commerceOrderPrice.getTotal();
+		CommerceMoney orderPriceTotalCommerceMoney =
+			commerceOrderPrice.getTotal();
 
-		if (CommerceBigDecimalUtil.isZero(orderPriceTotal.getPrice())) {
+		if (CommerceBigDecimalUtil.isZero(
+				orderPriceTotalCommerceMoney.getPrice())) {
+
 			return false;
 		}
 

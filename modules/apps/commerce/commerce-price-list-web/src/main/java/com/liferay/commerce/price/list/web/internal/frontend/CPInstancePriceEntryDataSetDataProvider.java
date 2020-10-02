@@ -69,7 +69,7 @@ public class CPInstancePriceEntryDataSetDataProvider
 			CommercePriceList commercePriceList =
 				commercePriceEntry.getCommercePriceList();
 
-			CommerceMoney priceMoney = commercePriceEntry.getPriceMoney(
+			CommerceMoney priceCommerceMoney = commercePriceEntry.getPriceMoney(
 				commercePriceList.getCommerceCurrencyId());
 
 			Date createDate = commercePriceEntry.getCreateDate();
@@ -83,7 +83,7 @@ public class CPInstancePriceEntryDataSetDataProvider
 					commercePriceEntry.getCommercePriceEntryId(),
 					commercePriceList.getName(),
 					HtmlUtil.escape(
-						priceMoney.format(
+						priceCommerceMoney.format(
 							_portal.getLocale(httpServletRequest))),
 					LanguageUtil.format(
 						httpServletRequest, "x-ago", createDateDescription,

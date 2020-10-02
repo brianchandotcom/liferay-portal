@@ -23,22 +23,22 @@ CommerceOrder commerceOrder = orderSummaryCheckoutStepDisplayContext.getCommerce
 CommerceOrderPrice commerceOrderPrice = orderSummaryCheckoutStepDisplayContext.getCommerceOrderPrice();
 
 CommerceDiscountValue shippingDiscountValue = commerceOrderPrice.getShippingDiscountValue();
-CommerceMoney shippingValue = commerceOrderPrice.getShippingValue();
-CommerceMoney subtotal = commerceOrderPrice.getSubtotal();
-CommerceDiscountValue subtotalDiscountValue = commerceOrderPrice.getSubtotalDiscountValue();
-CommerceMoney taxValue = commerceOrderPrice.getTaxValue();
-CommerceDiscountValue totalDiscountValue = commerceOrderPrice.getTotalDiscountValue();
-CommerceMoney totalOrder = commerceOrderPrice.getTotal();
+CommerceMoney shippingValueCommerceMoney = commerceOrderPrice.getShippingValue();
+CommerceMoney subtotalCommerceMoney = commerceOrderPrice.getSubtotal();
+CommerceDiscountValue subtotalCommerceDiscountValue = commerceOrderPrice.getSubtotalDiscountValue();
+CommerceMoney taxValueCommerceMoney = commerceOrderPrice.getTaxValue();
+CommerceDiscountValue totalCommerceDiscountValue = commerceOrderPrice.getTotalDiscountValue();
+CommerceMoney totalOrderCommerceMoney = commerceOrderPrice.getTotal();
 
 String priceDisplayType = orderSummaryCheckoutStepDisplayContext.getCommercePriceDisplayType();
 
 if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 	shippingDiscountValue = commerceOrderPrice.getShippingDiscountValueWithTaxAmount();
-	shippingValue = commerceOrderPrice.getShippingValueWithTaxAmount();
-	subtotal = commerceOrderPrice.getSubtotalWithTaxAmount();
-	subtotalDiscountValue = commerceOrderPrice.getSubtotalDiscountValueWithTaxAmount();
-	totalDiscountValue = commerceOrderPrice.getTotalDiscountValueWithTaxAmount();
-	totalOrder = commerceOrderPrice.getTotalWithTaxAmount();
+	shippingValueCommerceMoney = commerceOrderPrice.getShippingValueWithTaxAmount();
+	subtotalCommerceMoney = commerceOrderPrice.getSubtotalWithTaxAmount();
+	subtotalCommerceDiscountValue = commerceOrderPrice.getSubtotalDiscountValueWithTaxAmount();
+	totalCommerceDiscountValue = commerceOrderPrice.getTotalDiscountValueWithTaxAmount();
+	totalOrderCommerceMoney = commerceOrderPrice.getTotalWithTaxAmount();
 }
 
 String commercePaymentMethodName = StringPool.BLANK;
@@ -161,29 +161,29 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 							<c:if test="<%= commerceProductPrice != null %>">
 
 								<%
-								CommerceMoney unitPriceMoney = commerceProductPrice.getUnitPrice();
-								CommerceMoney unitPromoPriceMoney = commerceProductPrice.getUnitPromoPrice();
+								CommerceMoney unitPriceCommerceMoney = commerceProductPrice.getUnitPrice();
+								CommerceMoney unitPromoPriceCommerceMoney = commerceProductPrice.getUnitPromoPrice();
 
 								if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
-									unitPriceMoney = commerceProductPrice.getUnitPriceWithTaxAmount();
-									unitPromoPriceMoney = commerceProductPrice.getUnitPromoPriceWithTaxAmount();
+									unitPriceCommerceMoney = commerceProductPrice.getUnitPriceWithTaxAmount();
+									unitPromoPriceCommerceMoney = commerceProductPrice.getUnitPromoPriceWithTaxAmount();
 								}
 								%>
 
 								<div class="value-section">
 									<span class="price">
 										<c:choose>
-											<c:when test="<%= !unitPromoPriceMoney.isEmpty() && CommerceBigDecimalUtil.gt(unitPromoPriceMoney.getPrice(), BigDecimal.ZERO) %>">
+											<c:when test="<%= !unitPromoPriceCommerceMoney.isEmpty() && CommerceBigDecimalUtil.gt(unitPromoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) %>">
 												<span class="price-value price-value-promo">
-													<%= HtmlUtil.escape(unitPromoPriceMoney.format(locale)) %>
+													<%= HtmlUtil.escape(unitPromoPriceCommerceMoney.format(locale)) %>
 												</span>
 												<span class="price-value price-value-inactive">
-													<%= HtmlUtil.escape(unitPriceMoney.format(locale)) %>
+													<%= HtmlUtil.escape(unitPriceCommerceMoney.format(locale)) %>
 												</span>
 											</c:when>
 											<c:otherwise>
 												<span class="price-value {$additionalPriceClasses}">
-													<%= HtmlUtil.escape(unitPriceMoney.format(locale)) %>
+													<%= HtmlUtil.escape(unitPriceCommerceMoney.format(locale)) %>
 												</span>
 											</c:otherwise>
 										</c:choose>
@@ -213,16 +213,16 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 									discountValue = commerceProductPrice.getDiscountValueWithTaxAmount();
 								}
 
-								CommerceMoney discountAmount = null;
+								CommerceMoney discountAmountCommerceMoney = null;
 
 								if (discountValue != null) {
-									discountAmount = discountValue.getDiscountAmount();
+									discountAmountCommerceMoney = discountValue.getDiscountAmount();
 								}
 								%>
 
 								<div class="value-section">
 									<span class="commerce-value">
-										<%= (discountAmount == null) ? StringPool.BLANK : HtmlUtil.escape(discountAmount.format(locale)) %>
+										<%= (discountAmountCommerceMoney == null) ? StringPool.BLANK : HtmlUtil.escape(discountAmountCommerceMoney.format(locale)) %>
 									</span>
 								</div>
 							</c:if>
@@ -234,16 +234,16 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 							<c:if test="<%= commerceProductPrice != null %>">
 
 								<%
-								CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+								CommerceMoney finalPriceCommerceMoney = commerceProductPrice.getFinalPrice();
 
 								if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
-									finalPriceMoney = commerceProductPrice.getFinalPriceWithTaxAmount();
+									finalPriceCommerceMoney = commerceProductPrice.getFinalPriceWithTaxAmount();
 								}
 								%>
 
 								<div class="value-section">
 									<span class="commerce-value">
-										<%= HtmlUtil.escape(finalPriceMoney.format(locale)) %>
+										<%= HtmlUtil.escape(finalPriceCommerceMoney.format(locale)) %>
 									</span>
 								</div>
 							</c:if>
@@ -265,14 +265,14 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					</div>
 
 					<div class="autofit-col">
-						<div class="commerce-value"><%= HtmlUtil.escape(subtotal.format(locale)) %></div>
+						<div class="commerce-value"><%= HtmlUtil.escape(subtotalCommerceMoney.format(locale)) %></div>
 					</div>
 				</li>
 
-				<c:if test="<%= subtotalDiscountValue != null %>">
+				<c:if test="<%= subtotalCommerceDiscountValue != null %>">
 
 					<%
-					CommerceMoney subtotalDiscountAmount = subtotalDiscountValue.getDiscountAmount();
+					CommerceMoney subtotalDiscountAmountCommerceMoney = subtotalCommerceDiscountValue.getDiscountAmount();
 					%>
 
 					<li class="autofit-row commerce-subtotal-discount">
@@ -281,14 +281,14 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						</div>
 
 						<div class="commerce-value">
-							<%= HtmlUtil.escape(subtotalDiscountAmount.format(locale)) %>
+							<%= HtmlUtil.escape(subtotalDiscountAmountCommerceMoney.format(locale)) %>
 						</div>
 					</li>
 					<li class="autofit-row commerce-subtotal-discount">
 						<div class="autofit-col autofit-col-expand"></div>
 
 						<div class="commerce-value">
-							<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getLocalizedPercentage(subtotalDiscountValue.getDiscountPercentage(), locale)) %>
+							<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getLocalizedPercentage(subtotalCommerceDiscountValue.getDiscountPercentage(), locale)) %>
 						</div>
 					</li>
 				</c:if>
@@ -299,14 +299,14 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					</div>
 
 					<div class="autofit-col">
-						<div class="commerce-value"><%= HtmlUtil.escape(shippingValue.format(locale)) %></div>
+						<div class="commerce-value"><%= HtmlUtil.escape(shippingValueCommerceMoney.format(locale)) %></div>
 					</div>
 				</li>
 
 				<c:if test="<%= shippingDiscountValue != null %>">
 
 					<%
-					CommerceMoney shippingDiscountAmount = shippingDiscountValue.getDiscountAmount();
+					CommerceMoney shippingDiscountAmountCommerceMoney = shippingDiscountValue.getDiscountAmount();
 					%>
 
 					<li class="autofit-row commerce-delivery-discount">
@@ -315,7 +315,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						</div>
 
 						<div class="commerce-value">
-							<%= HtmlUtil.escape(shippingDiscountAmount.format(locale)) %>
+							<%= HtmlUtil.escape(shippingDiscountAmountCommerceMoney.format(locale)) %>
 						</div>
 					</li>
 					<li class="autofit-row commerce-delivery-discount">
@@ -334,15 +334,15 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						</div>
 
 						<div class="autofit-col">
-							<div class="commerce-value"><%= HtmlUtil.escape(taxValue.format(locale)) %></div>
+							<div class="commerce-value"><%= HtmlUtil.escape(taxValueCommerceMoney.format(locale)) %></div>
 						</div>
 					</li>
 				</c:if>
 
-				<c:if test="<%= totalDiscountValue != null %>">
+				<c:if test="<%= totalCommerceDiscountValue != null %>">
 
 					<%
-					CommerceMoney totalDiscountAmount = totalDiscountValue.getDiscountAmount();
+					CommerceMoney totalDiscountAmountCommerceAmount = totalCommerceDiscountValue.getDiscountAmount();
 					%>
 
 					<li class="autofit-row commerce-total-discount">
@@ -351,14 +351,14 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						</div>
 
 						<div class="autofit-col commerce-value">
-							<%= HtmlUtil.escape(totalDiscountAmount.format(locale)) %>
+							<%= HtmlUtil.escape(totalDiscountAmountCommerceAmount.format(locale)) %>
 						</div>
 					</li>
 					<li class="autofit-row commerce-total-discount">
 						<div class="autofit-col autofit-col-expand"></div>
 
 						<div class="autofit-col commerce-value">
-							<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getLocalizedPercentage(totalDiscountValue.getDiscountPercentage(), locale)) %>
+							<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getLocalizedPercentage(totalCommerceDiscountValue.getDiscountPercentage(), locale)) %>
 						</div>
 					</li>
 				</c:if>
@@ -369,7 +369,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					</div>
 
 					<div class="autofit-col">
-						<div class="commerce-value"><%= HtmlUtil.escape(totalOrder.format(locale)) %></div>
+						<div class="commerce-value"><%= HtmlUtil.escape(totalOrderCommerceMoney.format(locale)) %></div>
 					</div>
 				</li>
 			</ul>
@@ -425,7 +425,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					</div>
 
 					<div class="shipping-cost">
-						<%= HtmlUtil.escape(shippingValue.format(locale)) %>
+						<%= HtmlUtil.escape(shippingValueCommerceMoney.format(locale)) %>
 					</div>
 				</div>
 			</c:if>

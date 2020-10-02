@@ -196,9 +196,10 @@ public class CommerceDiscountUsageTest {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				cpInstance.getCPInstanceId(), 1, commerceContext);
 
-		CommerceMoney finalPriceMoney = commerceProductPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		Assert.assertEquals(
 			priceEntryPrice.stripTrailingZeros(),
@@ -225,9 +226,9 @@ public class CommerceDiscountUsageTest {
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				cpInstance.getCPInstanceId(), 1, commerceContext);
 
-		finalPriceMoney = commerceProductPrice.getFinalPrice();
+		finalPriceCommerceMoney = commerceProductPrice.getFinalPrice();
 
-		finalPrice = finalPriceMoney.getPrice();
+		finalPrice = finalPriceCommerceMoney.getPrice();
 
 		Assert.assertEquals(
 			priceEntryPrice.stripTrailingZeros(),
@@ -549,17 +550,18 @@ public class CommerceDiscountUsageTest {
 					cpInstance.getCPInstanceId(), 1, commerceContext);
 
 			if (commerceProductPrice != null) {
-				CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
+				CommerceMoney finalPriceCommerceMoney =
+					commerceProductPrice.getFinalPrice();
 
-				actualPrice = finalPrice.getPrice();
+				actualPrice = finalPriceCommerceMoney.getPrice();
 
 				CommerceDiscountValue discountValue =
 					commerceProductPrice.getDiscountValue();
 
-				CommerceMoney discountAmount =
+				CommerceMoney discountAmountCommerceMoney =
 					discountValue.getDiscountAmount();
 
-				discountPrice = discountAmount.getPrice();
+				discountPrice = discountAmountCommerceMoney.getPrice();
 			}
 
 			BigDecimal expectedPrice = commerceDiscount.getLevel1();
@@ -609,16 +611,18 @@ public class CommerceDiscountUsageTest {
 				cpInstance.getCPInstanceId(), 1, commerceContext);
 
 		if (commerceProductPrice != null) {
-			CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
+			CommerceMoney finalPriceCommerceMoney =
+				commerceProductPrice.getFinalPrice();
 
-			actualPrice = finalPrice.getPrice();
+			actualPrice = finalPriceCommerceMoney.getPrice();
 
 			CommerceDiscountValue discountValue =
 				commerceProductPrice.getDiscountValue();
 
-			CommerceMoney discountAmount = discountValue.getDiscountAmount();
+			CommerceMoney discountAmountCommerceMoney =
+				discountValue.getDiscountAmount();
 
-			discountPrice = discountAmount.getPrice();
+			discountPrice = discountAmountCommerceMoney.getPrice();
 		}
 
 		BigDecimal expectedPrice = commerceDiscount.getLevel1();

@@ -106,38 +106,42 @@ public class CartItemDTOConverter
 			_commerceOrderPriceCalculation.getCommerceOrderItemPricePerUnit(
 				commerceCurrency, commerceOrderItem);
 
-		CommerceMoney unitPriceMoney = commerceOrderItemPrice.getUnitPrice();
+		CommerceMoney unitPriceCommerceMoney =
+			commerceOrderItemPrice.getUnitPrice();
 
-		BigDecimal unitPrice = unitPriceMoney.getPrice();
+		BigDecimal unitPrice = unitPriceCommerceMoney.getPrice();
 
 		Price price = new Price() {
 			{
 				currency = commerceCurrency.getName(locale);
 				price = unitPrice.doubleValue();
-				priceFormatted = unitPriceMoney.format(locale);
+				priceFormatted = unitPriceCommerceMoney.format(locale);
 			}
 		};
 
-		CommerceMoney promoPriceMoney = commerceOrderItemPrice.getPromoPrice();
+		CommerceMoney promoPriceCommerceMoney =
+			commerceOrderItemPrice.getPromoPrice();
 
-		if (promoPriceMoney != null) {
-			BigDecimal unitPromoPrice = promoPriceMoney.getPrice();
+		if (promoPriceCommerceMoney != null) {
+			BigDecimal unitPromoPrice = promoPriceCommerceMoney.getPrice();
 
 			if (unitPromoPrice != null) {
 				price.setPromoPrice(unitPromoPrice.doubleValue());
-				price.setPromoPriceFormatted(promoPriceMoney.format(locale));
+				price.setPromoPriceFormatted(
+					promoPriceCommerceMoney.format(locale));
 			}
 		}
 
-		CommerceMoney discountAmountMoney =
+		CommerceMoney discountAmountCommerceMoney =
 			commerceOrderItemPrice.getDiscountAmount();
 
-		if (discountAmountMoney != null) {
-			BigDecimal discountAmount = discountAmountMoney.getPrice();
+		if (discountAmountCommerceMoney != null) {
+			BigDecimal discountAmount = discountAmountCommerceMoney.getPrice();
 
 			if (discountAmount != null) {
 				price.setDiscount(discountAmount.doubleValue());
-				price.setDiscountFormatted(discountAmountMoney.format(locale));
+				price.setDiscountFormatted(
+					discountAmountCommerceMoney.format(locale));
 				price.setDiscountPercentage(
 					_commercePriceFormatter.format(
 						commerceOrderItemPrice.getDiscountPercentage(),
@@ -163,12 +167,14 @@ public class CartItemDTOConverter
 			}
 		}
 
-		CommerceMoney finalPriceMoney = commerceOrderItemPrice.getFinalPrice();
+		CommerceMoney finalPriceCommerceMoney =
+			commerceOrderItemPrice.getFinalPrice();
 
-		BigDecimal finalPrice = finalPriceMoney.getPrice();
+		BigDecimal finalPrice = finalPriceCommerceMoney.getPrice();
 
 		if (finalPrice != null) {
-			price.setFinalPriceFormatted(finalPriceMoney.format(locale));
+			price.setFinalPriceFormatted(
+				finalPriceCommerceMoney.format(locale));
 			price.setFinalPrice(finalPrice.doubleValue());
 		}
 

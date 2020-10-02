@@ -96,15 +96,16 @@ public class CommerceTierPriceEntryDataSetDataProvider
 		for (CommerceTierPriceEntry commerceTierPriceEntry :
 				commerceTierPriceEntryBaseModelSearchResult.getBaseModels()) {
 
-			CommerceMoney priceMoney = commerceTierPriceEntry.getPriceMoney(
-				commercePriceList.getCommerceCurrencyId());
+			CommerceMoney priceCommerceMoney =
+				commerceTierPriceEntry.getPriceMoney(
+					commercePriceList.getCommerceCurrencyId());
 
 			tierPriceEntries.add(
 				new TierPriceEntry(
 					_getDiscountLevels(commerceTierPriceEntry),
 					_getEndDate(commerceTierPriceEntry, dateTimeFormat),
 					_getOverride(commerceTierPriceEntry, httpServletRequest),
-					priceMoney.format(themeDisplay.getLocale()),
+					priceCommerceMoney.format(themeDisplay.getLocale()),
 					commerceTierPriceEntry.getMinQuantity(),
 					dateTimeFormat.format(
 						commerceTierPriceEntry.getDisplayDate()),

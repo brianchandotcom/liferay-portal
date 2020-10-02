@@ -100,20 +100,23 @@ public class CommerceSubscriptionOrderItemDataSetDataProvider
 				commerceOrderItem.getQuantity(), commerceContext);
 
 		if (commerceProductPrice != null) {
-			CommerceMoney unitPrice = commerceProductPrice.getUnitPrice();
-			CommerceMoney finalPrice = commerceProductPrice.getFinalPrice();
+			CommerceMoney unitPriceCommerceMoney =
+				commerceProductPrice.getUnitPrice();
+			CommerceMoney finalPriceCommerceMoney =
+				commerceProductPrice.getFinalPrice();
 
-			price = HtmlUtil.escape(unitPrice.format(locale));
-			total = HtmlUtil.escape(finalPrice.format(locale));
+			price = HtmlUtil.escape(unitPriceCommerceMoney.format(locale));
+			total = HtmlUtil.escape(finalPriceCommerceMoney.format(locale));
 
 			CommerceDiscountValue discountValue =
 				commerceProductPrice.getDiscountValue();
 
 			if (discountValue != null) {
-				CommerceMoney discountAmount =
+				CommerceMoney discountAmountCommerceMoney =
 					discountValue.getDiscountAmount();
 
-				discount = HtmlUtil.escape(discountAmount.format(locale));
+				discount = HtmlUtil.escape(
+					discountAmountCommerceMoney.format(locale));
 			}
 		}
 

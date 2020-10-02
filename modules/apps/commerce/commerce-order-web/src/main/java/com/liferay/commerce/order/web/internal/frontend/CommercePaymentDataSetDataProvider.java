@@ -80,10 +80,10 @@ public class CommercePaymentDataSetDataProvider
 
 		String amount = StringPool.BLANK;
 
-		CommerceMoney totalMoney = commerceOrder.getTotalMoney();
+		CommerceMoney totalCommerceMoney = commerceOrder.getTotalMoney();
 
-		if (totalMoney != null) {
-			amount = totalMoney.format(themeDisplay.getLocale());
+		if (totalCommerceMoney != null) {
+			amount = totalCommerceMoney.format(themeDisplay.getLocale());
 		}
 
 		List<CommerceOrderPayment> commerceOrderPayments =

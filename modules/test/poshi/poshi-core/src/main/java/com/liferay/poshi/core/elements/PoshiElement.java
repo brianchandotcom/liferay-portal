@@ -910,6 +910,10 @@ public abstract class PoshiElement
 	}
 
 	protected boolean isValidUtilityClassName(String classCommandName) {
+		if (PropsValues.IGNORE_ERRORS_UTIL_CLASSES) {
+			return true;
+		}
+
 		String className = getClassName(classCommandName);
 
 		if (className.equals("selenium")) {

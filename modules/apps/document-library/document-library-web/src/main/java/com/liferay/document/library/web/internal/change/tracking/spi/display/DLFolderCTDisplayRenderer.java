@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
 
@@ -84,6 +85,10 @@ public class DLFolderCTDisplayRenderer extends BaseCTDisplayRenderer<DLFolder> {
 
 	@Override
 	public String getTitle(Locale locale, DLFolder dlFolder) {
+		if (dlFolder.isInTrash()) {
+			return TrashUtil.getOriginalTitle(dlFolder.getName());
+		}
+
 		return dlFolder.getName();
 	}
 

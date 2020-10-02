@@ -123,14 +123,8 @@ public class UpstreamFailureUtil {
 				_upstreamFailuresJobJSONObject = new JSONObject(fileContent);
 			}
 			else {
-				String url = JenkinsResultsParserUtil.getLocalURL(
-					JenkinsResultsParserUtil.combine(
-						_URL_BASE_UPSTREAM_FAILURES_JOB,
-						topLevelBuild.getAcceptanceUpstreamJobName(),
-						"/builds/latest/test.results.json"));
-
 				_upstreamFailuresJobJSONObject =
-					JenkinsResultsParserUtil.toJSONObject(url, false, 5000);
+					_getUpstreamJobFailuresJSONObject(topLevelBuild);
 
 				JenkinsResultsParserUtil.write(
 					upstreamJobFailuresJSONFile,
@@ -241,6 +235,72 @@ public class UpstreamFailureUtil {
 		String jobVariant, String testName) {
 
 		return JenkinsResultsParserUtil.combine(testName, ",", jobVariant);
+	}
+
+	private static int _getLastCompletedUpstreamBuildNumber(
+		TopLevelBuild topLevelBuild) {
+
+		try {
+			JSONObject lastCompletedBuildJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					topLevelBuild.getAcceptanceUpstreamJobURL() +
+						"/lastCompletedBuild/api/json?tree=number",
+					false);
+
+			return lastCompletedBuildJSONObject.getInt("number");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private static JSONObject _getUpstreamJobFailuresJSONObject(
+			String jobName, String buildNumber)
+		throws IOException {
+
+		return JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(
+				JenkinsResultsParserUtil.combine(
+					_URL_BASE_UPSTREAM_FAILURES_JOB, jobName, "/builds/",
+					buildNumber, "/test.results.json")),
+			false, 5000);
+	}
+
+	private static JSONObject _getUpstreamJobFailuresJSONObject(
+		TopLevelBuild topLevelBuild) {
+
+		int buildNumber = _getLastCompletedUpstreamBuildNumber(topLevelBuild);
+
+		int oldestBuildNumber = Math.max(0, buildNumber - 20);
+
+		String acceptanceUpstreamJobName =
+			topLevelBuild.getAcceptanceUpstreamJobName();
+
+		while (buildNumber > oldestBuildNumber) {
+			try {
+				JSONObject jsonObject = _getUpstreamJobFailuresJSONObject(
+					acceptanceUpstreamJobName, String.valueOf(buildNumber));
+
+				String sha = jsonObject.getString("SHA");
+
+				GitWorkingDirectory gitWorkingDirectory =
+					GitWorkingDirectoryFactory.newGitWorkingDirectory(
+						topLevelBuild.getBranchName(), (File)null,
+						topLevelBuild.getBaseGitRepositoryName());
+
+				if (gitWorkingDirectory.refContainsSHA("HEAD", sha)) {
+					return jsonObject;
+				}
+			}
+			catch (IOException ioException) {
+				System.out.println(ioException);
+			}
+
+			buildNumber--;
+		}
+
+		throw new RuntimeException(
+			"Unable to find upstream comparison with valid SHA");
 	}
 
 	private static boolean _isBuildFailingInUpstreamJob(Build build) {

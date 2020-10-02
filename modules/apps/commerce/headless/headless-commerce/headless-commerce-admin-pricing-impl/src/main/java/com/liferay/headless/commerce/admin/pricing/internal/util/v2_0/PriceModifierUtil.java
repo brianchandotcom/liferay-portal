@@ -46,7 +46,7 @@ public class PriceModifierUtil {
 		throws PortalException {
 
 		PriceModifierCategory[] priceModifierCategories =
-			priceModifier.getPriceModifierCategory();
+			priceModifier.getPriceModifierCategories();
 
 		if (priceModifierCategories != null) {
 			for (PriceModifierCategory priceModifierCategory :
@@ -71,7 +71,7 @@ public class PriceModifierUtil {
 		}
 
 		PriceModifierProductGroup[] priceModifierProductGroups =
-			priceModifier.getPriceModifierProductGroup();
+			priceModifier.getPriceModifierProductGroups();
 
 		if (priceModifierProductGroups != null) {
 			for (PriceModifierProductGroup priceModifierProductGroup :
@@ -96,7 +96,7 @@ public class PriceModifierUtil {
 		}
 
 		PriceModifierProduct[] priceModifierProducts =
-			priceModifier.getPriceModifierProduct();
+			priceModifier.getPriceModifierProducts();
 
 		if (priceModifierProducts != null) {
 			for (PriceModifierProduct priceModifierProduct :

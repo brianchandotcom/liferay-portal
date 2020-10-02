@@ -446,7 +446,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.upsertCommercePriceEntry(
-				GetterUtil.getLong(priceEntry.getId()), cProductId,
+				GetterUtil.getLong(priceEntry.getPriceEntryId()), cProductId,
 				cpInstanceUuid, commercePriceList.getCommercePriceListId(),
 				priceEntry.getExternalReferenceCode(),
 				BigDecimal.valueOf(priceEntry.getPrice()),

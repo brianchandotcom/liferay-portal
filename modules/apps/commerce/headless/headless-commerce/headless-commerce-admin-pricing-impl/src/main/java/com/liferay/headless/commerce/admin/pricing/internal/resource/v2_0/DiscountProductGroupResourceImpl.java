@@ -21,6 +21,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Discount;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountProductGroup;
 import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.DiscountProductGroupDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountProductGroupUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -92,6 +94,7 @@ public class DiscountProductGroupResourceImpl
 			totalItems);
 	}
 
+	@NestedField(parentClass = Discount.class, value = "discountProductGroups")
 	@Override
 	public Page<DiscountProductGroup> getDiscountIdDiscountProductGroupsPage(
 			Long id, String search, Filter filter, Pagination pagination,

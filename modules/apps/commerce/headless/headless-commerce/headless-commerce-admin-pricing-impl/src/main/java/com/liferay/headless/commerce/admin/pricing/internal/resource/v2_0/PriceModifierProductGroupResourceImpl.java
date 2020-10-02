@@ -21,6 +21,7 @@ import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePriceModifierRelService;
 import com.liferay.commerce.pricing.service.CommercePriceModifierService;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifier;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifierProductGroup;
 import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.PriceModifierProductGroupDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceModifierProductGroupUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -92,6 +94,9 @@ public class PriceModifierProductGroupResourceImpl
 			pagination, totalItems);
 	}
 
+	@NestedField(
+		parentClass = PriceModifier.class, value = "priceModifierProductGroups"
+	)
 	@Override
 	public Page<PriceModifierProductGroup>
 			getPriceModifierIdPriceModifierProductGroupsPage(

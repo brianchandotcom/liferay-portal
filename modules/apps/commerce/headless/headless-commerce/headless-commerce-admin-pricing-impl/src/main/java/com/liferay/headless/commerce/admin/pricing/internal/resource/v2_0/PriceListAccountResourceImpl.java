@@ -20,6 +20,7 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListAccountRel;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListAccount;
 import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.PriceListAccountDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceListAccountUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -90,6 +92,7 @@ public class PriceListAccountResourceImpl
 			totalItems);
 	}
 
+	@NestedField(parentClass = PriceList.class, value = "priceListAccounts")
 	@Override
 	public Page<PriceListAccount> getPriceListIdPriceListAccountsPage(
 			Long id, String search, Filter filter, Pagination pagination,

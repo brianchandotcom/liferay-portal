@@ -15,7 +15,7 @@ import React from 'react';
 import App from './App.es';
 import {StoreProvider} from './components/StoreContext.es';
 
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 let instance = null;
 
 function BOM(props) {

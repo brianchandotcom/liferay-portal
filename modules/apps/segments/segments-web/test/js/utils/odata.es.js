@@ -38,7 +38,9 @@ function testConversionToAndFrom(testQuery, {properties, queryConjunction}) {
 
 describe('odata-util', () => {
 	beforeAll(() => {
-		Utils.generateGroupId = jest.fn(() => 'group_01');
+		jest.spyOn(Utils, 'generateGroupId').mockImplementation(
+			() => 'group_01'
+		);
 	});
 
 	describe('buildQueryString', () => {

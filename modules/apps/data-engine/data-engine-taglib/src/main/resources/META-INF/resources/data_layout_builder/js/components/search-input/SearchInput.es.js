@@ -28,7 +28,8 @@ const SearchInput = React.forwardRef(
 		ref
 	) => {
 		const [value, setValue] = useState(searchText);
-		const searchInputRef = ref ? ref : useRef(null);
+		const fallbackRef = useRef(null);
+		const searchInputRef = ref ? ref : fallbackRef;
 
 		useEffect(() => {
 			setValue(searchText);

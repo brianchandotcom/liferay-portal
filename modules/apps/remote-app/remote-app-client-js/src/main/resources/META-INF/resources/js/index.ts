@@ -455,7 +455,8 @@ const SDK = Object.freeze({
 
 		// TODO: consider renaming this to clientID for consistency with name of
 		// constructor
-		let appID = getUUID();
+
+		const appID = getUUID();
 
 		let listenerID = 0;
 
@@ -554,6 +555,7 @@ const SDK = Object.freeze({
 			log('received', data);
 
 			// TODO: may want to parse event into structured type in one place
+
 			if (
 				data &&
 				getString(data, 'protocol') === REMOTE_APP_PROTOCOL &&
@@ -768,6 +770,7 @@ const SDK = Object.freeze({
 				}
 				else if (kind === 'registered') {
 					// TODO replace with actual reducer
+
 					state = 'registered';
 
 					log('registered');
@@ -835,6 +838,7 @@ const SDK = Object.freeze({
 				// TODO: if Array.from Headers etc exist (ie. IE with polyfill
 				// or evergreen), try to extract headers from resource and merge
 				// them into init instead.
+
 				const requestID = getUUID();
 
 				postMessage({

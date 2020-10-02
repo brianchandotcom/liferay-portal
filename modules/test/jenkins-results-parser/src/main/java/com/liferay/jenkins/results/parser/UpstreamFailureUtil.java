@@ -78,7 +78,7 @@ public class UpstreamFailureUtil {
 		TopLevelBuild topLevelBuild) {
 
 		if (_upstreamFailuresJobJSONObject == null) {
-			loadUpstreamJobFailuresJSONObject(topLevelBuild);
+			initUpstreamJobFailuresJSONObject(topLevelBuild);
 		}
 
 		return _upstreamFailuresJobJSONObject;
@@ -100,6 +100,50 @@ public class UpstreamFailureUtil {
 			jsonException.printStackTrace();
 
 			return "";
+		}
+	}
+
+	public static void initUpstreamJobFailuresJSONObject(
+		TopLevelBuild topLevelBuild) {
+
+		_upstreamFailuresJobJSONObject = _defaultUpstreamFailuresJSONObject;
+
+		if (!topLevelBuild.isCompareToUpstream()) {
+			return;
+		}
+
+		try {
+			File upstreamJobFailuresJSONFile = new File(
+				System.getenv("WORKSPACE"), "upstream-failures.json");
+
+			if (upstreamJobFailuresJSONFile.exists()) {
+				String fileContent = JenkinsResultsParserUtil.read(
+					upstreamJobFailuresJSONFile);
+
+				_upstreamFailuresJobJSONObject = new JSONObject(fileContent);
+			}
+			else {
+				String url = JenkinsResultsParserUtil.getLocalURL(
+					JenkinsResultsParserUtil.combine(
+						_URL_BASE_UPSTREAM_FAILURES_JOB,
+						topLevelBuild.getAcceptanceUpstreamJobName(),
+						"/builds/latest/test.results.json"));
+
+				_upstreamFailuresJobJSONObject =
+					JenkinsResultsParserUtil.toJSONObject(url, false, 5000);
+			}
+
+			System.out.println(
+				"Using upstream failures at: " +
+					getUpstreamJobFailuresSHA(topLevelBuild));
+		}
+		catch (IOException ioException) {
+			System.out.println(ioException);
+
+			System.out.println(
+				"Unable to load upstream acceptance failure data");
+
+			_upstreamComparisonAvailable = false;
 		}
 	}
 
@@ -175,50 +219,6 @@ public class UpstreamFailureUtil {
 
 	public static boolean isUpstreamComparisonAvailable() {
 		return _upstreamComparisonAvailable;
-	}
-
-	public static void loadUpstreamJobFailuresJSONObject(
-		TopLevelBuild topLevelBuild) {
-
-		_upstreamFailuresJobJSONObject = _defaultUpstreamFailuresJSONObject;
-
-		if (!topLevelBuild.isCompareToUpstream()) {
-			return;
-		}
-
-		try {
-			File upstreamJobFailuresJSONFile = new File(
-				System.getenv("WORKSPACE"), "upstream-failures.json");
-
-			if (upstreamJobFailuresJSONFile.exists()) {
-				String fileContent = JenkinsResultsParserUtil.read(
-					upstreamJobFailuresJSONFile);
-
-				_upstreamFailuresJobJSONObject = new JSONObject(fileContent);
-			}
-			else {
-				String url = JenkinsResultsParserUtil.getLocalURL(
-					JenkinsResultsParserUtil.combine(
-						_URL_BASE_UPSTREAM_FAILURES_JOB,
-						topLevelBuild.getAcceptanceUpstreamJobName(),
-						"/builds/latest/test.results.json"));
-
-				_upstreamFailuresJobJSONObject =
-					JenkinsResultsParserUtil.toJSONObject(url, false, 5000);
-			}
-
-			System.out.println(
-				"Using upstream failures at: " +
-					getUpstreamJobFailuresSHA(topLevelBuild));
-		}
-		catch (IOException ioException) {
-			System.out.println(ioException);
-
-			System.out.println(
-				"Unable to load upstream acceptance failure data");
-
-			_upstreamComparisonAvailable = false;
-		}
 	}
 
 	private static String _formatJobVariant(String jobVariant) {

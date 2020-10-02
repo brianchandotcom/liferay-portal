@@ -72,8 +72,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
@@ -840,7 +840,8 @@ public class JournalContentDisplayContext {
 					enableViewCountIncrement());
 		}
 		else {
-			_enableViewCountIncrement = PropsValues.VIEW_COUNT_ENABLED;
+			_enableViewCountIncrement =
+				ViewCountManagerUtil.isViewCountEnabled();
 		}
 
 		return _enableViewCountIncrement;

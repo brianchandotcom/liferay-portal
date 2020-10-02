@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -158,7 +159,7 @@ public class DLPortletInstanceSettingsHelper {
 	private String[] _getAllEntryColumns() {
 		String allEntryColumns = "name,description,size,status";
 
-		if (PropsValues.VIEW_COUNT_ENABLED) {
+		if (ViewCountManagerUtil.isViewCountEnabled()) {
 			allEntryColumns += ",downloads";
 		}
 

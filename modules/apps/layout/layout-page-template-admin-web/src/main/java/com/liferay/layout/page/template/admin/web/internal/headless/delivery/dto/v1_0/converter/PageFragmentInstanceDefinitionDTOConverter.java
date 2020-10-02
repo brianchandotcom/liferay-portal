@@ -253,17 +253,18 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 						"BackgroundImageFragmentEntryProcessor"),
 				saveMapping));
 
-		Map<String, String> editableTypes =
-			EditableFragmentEntryProcessorUtil.getEditableTypes(
-				fragmentEntryLink.getHtml());
+		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
+			"com.liferay.fragment.entry.processor.editable." +
+				"EditableFragmentEntryProcessor");
 
-		fragmentFields.addAll(
-			_getTextFragmentFields(
-				editableTypes,
-				editableValuesJSONObject.getJSONObject(
-					"com.liferay.fragment.entry.processor.editable." +
-						"EditableFragmentEntryProcessor"),
-				saveMapping));
+		if (jsonObject != null) {
+			Map<String, String> editableTypes =
+				EditableFragmentEntryProcessorUtil.getEditableTypes(
+					fragmentEntryLink.getHtml());
+
+			fragmentFields.addAll(
+				_getTextFragmentFields(editableTypes, jsonObject, saveMapping));
+		}
 
 		return fragmentFields.toArray(new FragmentField[0]);
 	}

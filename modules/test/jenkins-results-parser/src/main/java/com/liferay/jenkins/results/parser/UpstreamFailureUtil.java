@@ -114,7 +114,7 @@ public class UpstreamFailureUtil {
 
 		try {
 			File upstreamJobFailuresJSONFile = new File(
-				System.getenv("WORKSPACE"), "upstream-failures.json");
+				System.getenv("WORKSPACE"), "test.results.json");
 
 			if (upstreamJobFailuresJSONFile.exists()) {
 				String fileContent = JenkinsResultsParserUtil.read(
@@ -131,6 +131,10 @@ public class UpstreamFailureUtil {
 
 				_upstreamFailuresJobJSONObject =
 					JenkinsResultsParserUtil.toJSONObject(url, false, 5000);
+
+				JenkinsResultsParserUtil.write(
+					upstreamJobFailuresJSONFile,
+					_upstreamFailuresJobJSONObject.toString());
 			}
 
 			System.out.println(

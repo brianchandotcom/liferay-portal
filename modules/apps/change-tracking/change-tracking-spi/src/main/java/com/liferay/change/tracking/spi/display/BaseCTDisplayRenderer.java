@@ -123,7 +123,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		Writer writer = httpServletResponse.getWriter();
 
 		writer.write("<div class=\"table-responsive\"><table class=\"");
-		writer.write("change-lists-render-table table table-autofit ");
+		writer.write("publications-render-table table table-autofit ");
 		writer.write("table-nowrap\">");
 
 		HttpServletRequest httpServletRequest =
@@ -194,7 +194,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			try {
 				Writer writer = httpServletResponse.getWriter();
 
-				writer.write("<tr><td class=\"change-lists-key-td ");
+				writer.write("<tr><td class=\"publications-key-td ");
 				writer.write("table-cell-expand-small\">");
 				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
 				writer.write("</td><td class=\"table-cell-expand\">");
@@ -246,7 +246,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			try {
 				Writer writer = httpServletResponse.getWriter();
 
-				writer.write("<tr><td class=\"change-lists-key-td ");
+				writer.write("<tr><td class=\"publications-key-td ");
 				writer.write("table-cell-expand-small\">");
 				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
 				writer.write("</td><td class=\"table-cell-expand\">");

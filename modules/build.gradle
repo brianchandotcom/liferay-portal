@@ -344,6 +344,16 @@ gradle.beforeProject {
 				projectTemplatesMain project.project(":sdk:project-templates:project-templates")
 			}
 
+			eclipse {
+				classpath {
+					file {
+						whenMerged {
+							entries.removeAll { it.kind == "src" && it.path == "src/main/resources" }
+						}
+					}
+				}
+			}
+
 			generateSampleProject {
 				args "--archetypes-dirs", jar.archivePath.parent, "--destination", "${buildDir}", "--template", project.name.replaceFirst("project-templates-", ""), "--template-version", version
 				classpath = configurations.projectTemplatesMain

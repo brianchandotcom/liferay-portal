@@ -89,7 +89,15 @@
 	}
 	{@param conditions: list<[
 			binaryOperator: bool,
+			firstOperandColumns: list<[
+				label: string,
+				value: string
+			]>,
 			firstOperandOptions: list<[
+				label: string,
+				value: string
+			]>,
+			firstOperandRows: list<[
 				label: string,
 				value: string
 			]>,
@@ -201,7 +209,9 @@
 					{param _handleSecondOperandValueEdited: $_handleSecondOperandValueEdited /}
 					{param binaryOperator: $condition.binaryOperator /}
 					{param fieldOptions: $conditionsFieldOptions /}
+					{param firstOperandColumns: $condition.firstOperandColumns /}
 					{param firstOperandOptions: $condition.firstOperandOptions /}
+					{param firstOperandRows: $condition.firstOperandRows /}
 					{param firstOperandType: $condition.operands[0].type /}
 					{param firstOperandValueSelected: $condition.operands[0].value /}
 					{param fixedOptions: $fixedOptions /}
@@ -628,7 +638,15 @@
 	{@param? _handleSecondOperandTypeEdited: any}
 	{@param? _handleSecondOperandValueEdited: any}
 	{@param? firstOperandType: string}
+	{@param? firstOperandColumns: list<[
+		label: string,
+		value: string
+	]>}
 	{@param? firstOperandOptions: list<[
+		label: string,
+		value: string
+	]>}
+	{@param? firstOperandRows: list<[
 		label: string,
 		value: string
 	]>}

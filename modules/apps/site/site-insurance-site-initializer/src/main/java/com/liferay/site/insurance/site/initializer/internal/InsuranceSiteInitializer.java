@@ -353,6 +353,20 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			JSONObject journalArticleJSONObject =
 				JSONFactoryUtil.createJSONObject(content);
 
+			List<String> assetTagNames = new ArrayList<>();
+
+			JSONArray assetTagNamesJSONArray =
+				journalArticleJSONObject.getJSONArray("tags");
+
+			if (assetTagNamesJSONArray != null) {
+				for (int i = 0; i < assetTagNamesJSONArray.length(); i++) {
+					assetTagNames.add(assetTagNamesJSONArray.getString(i));
+				}
+			}
+
+			_serviceContext.setAssetTagNames(
+				assetTagNames.toArray(new String[0]));
+
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				_serviceContext.getTimeZone());
 
@@ -400,6 +414,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				resourceClassNameId, article.getResourcePrimKey(),
 				defaultLayoutPageTemplateEntryId,
 				AssetDisplayPageConstants.TYPE_DEFAULT, _serviceContext);
+
+			_serviceContext.setAssetTagNames(null);
 		}
 	}
 

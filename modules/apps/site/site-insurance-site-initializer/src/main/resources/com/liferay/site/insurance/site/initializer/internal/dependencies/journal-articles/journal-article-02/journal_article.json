@@ -3,5 +3,8 @@
 	"ddmStructureKey": "CLAIM",
 	"ddmTemplateKey": "CLAIM-CARD",
 	"folder": "Claims",
-	"name": "Sepulveda Blvd - CHM2546333"
+	"name": "Sepulveda Blvd - CHM2546333",
+	"tags": [
+		"open"
+	]
 }

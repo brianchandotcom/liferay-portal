@@ -3,5 +3,8 @@
 	"ddmStructureKey": "CLAIM",
 	"ddmTemplateKey": "CLAIM-CARD",
 	"folder": "Claims",
-	"name": "David Aragonés - CHE3326955"
+	"name": "David Aragonés - CHE3326955",
+	"tags": [
+		"open"
+	]
 }

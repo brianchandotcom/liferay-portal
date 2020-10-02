@@ -21,6 +21,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.exception.CommerceOrderAccountLimitException;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
@@ -100,9 +101,20 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
 				themeDisplay.getScopeGroupId());
 
-		return _commerceOrderService.addCommerceOrder(
-			commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
-			commerceCurrencyId, 0, StringPool.BLANK);
+		try {
+			return _commerceOrderService.addCommerceOrder(
+				commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
+				commerceCurrencyId, 0, StringPool.BLANK);
+		}
+		catch (Exception exception) {
+			if (exception instanceof CommerceOrderAccountLimitException) {
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				return null;
+			}
+
+			throw exception;
+		}
 	}
 
 	protected void checkoutCommerceOrder(

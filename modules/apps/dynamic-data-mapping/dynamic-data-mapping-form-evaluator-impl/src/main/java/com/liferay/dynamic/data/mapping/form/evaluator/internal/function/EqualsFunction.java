@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -43,7 +44,7 @@ public class EqualsFunction
 	}
 
 	private Object _getValue(Object object) {
-		if (object instanceof BigDecimal) {
+		if (object instanceof BigDecimal || object instanceof JSONObject) {
 			return object.toString();
 		}
 		else if (object instanceof JSONArray) {

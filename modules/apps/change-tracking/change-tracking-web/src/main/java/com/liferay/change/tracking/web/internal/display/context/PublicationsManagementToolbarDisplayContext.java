@@ -39,10 +39,10 @@ public class PublicationsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public PublicationsManagementToolbarDisplayContext(
-		PublicationsDisplayContext publicationsDisplayContext,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		PublicationsDisplayContext publicationsDisplayContext,
 		SearchContainer<CTCollection> searchContainer) {
 
 		super(

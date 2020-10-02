@@ -19,7 +19,7 @@
 <%
 SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSearchContainer();
 
-PublicationsManagementToolbarDisplayContext publicationsManagementToolbarDisplayContext = new PublicationsManagementToolbarDisplayContext(publicationsDisplayContext, request, liferayPortletRequest, liferayPortletResponse, searchContainer);
+PublicationsManagementToolbarDisplayContext publicationsManagementToolbarDisplayContext = new PublicationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, publicationsDisplayContext, searchContainer);
 %>
 
 <clay:navigation-bar

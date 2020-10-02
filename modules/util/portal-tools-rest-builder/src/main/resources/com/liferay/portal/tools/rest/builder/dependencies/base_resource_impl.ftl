@@ -297,9 +297,13 @@ public abstract class Base${schemaName}ResourceImpl
 		public void delete(java.util.Collection<${schemaName}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
 
-			<#if deleteBatchJavaMethodSignature?? && properties?keys?seq_contains('id')??>
+			<#if deleteBatchJavaMethodSignature?? && properties?keys?seq_contains('id')>
 				for (${schemaName} ${schemaVarName} : ${schemaVarNames}) {
 					delete${schemaName}(${schemaVarName}.getId());
+				}
+			<#elseif deleteBatchJavaMethodSignature?? && properties?keys?seq_contains(schemaVarName + 'Id')>
+				for (${schemaName} ${schemaVarName} : ${schemaVarNames}) {
+					delete${schemaName}(${schemaVarName}.get${schemaName}Id());
 				}
 			</#if>
 		}

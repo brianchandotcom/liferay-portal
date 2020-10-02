@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.view.count.configuration.ViewCountConfiguration;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
@@ -120,7 +119,7 @@ public class ViewCountEntryLocalServiceImpl
 
 	@Override
 	public boolean isViewCountEnabled() {
-		return PropsValues.VIEW_COUNT_ENABLED;
+		return _viewCountConfiguration.enabled();
 	}
 
 	@Override

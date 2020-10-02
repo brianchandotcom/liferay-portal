@@ -25,11 +25,18 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ExtendedObjectClassDefinition(category = "infrastructure")
 @Meta.OCD(
+	description = "view-count-configuration-name-help",
 	id = "com.liferay.view.count.configuration.ViewCountConfiguration",
 	localization = "content/Language", name = "view-count-configuration-name"
 )
 @ProviderType
 public interface ViewCountConfiguration {
+
+	@Meta.AD(
+		deflt = "true", description = "enabled-help", name = "enabled",
+		required = false
+	)
+	public boolean enabled();
 
 	@Meta.AD(
 		deflt = "", description = "disabled-class-names-help",

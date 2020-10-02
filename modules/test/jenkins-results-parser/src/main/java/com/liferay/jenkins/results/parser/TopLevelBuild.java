@@ -446,6 +446,11 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
+	public boolean isCompareToUpstream() {
+		return _compareToUpstream;
+	}
+
+	@Override
 	public boolean isUniqueFailure() {
 		return true;
 	}
@@ -1556,11 +1561,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return upstreamBranchSHA;
 	}
 
-	@Override
-	protected boolean isCompareToUpstream() {
-		return _compareToUpstream;
-	}
-
 	protected void sendBuildMetrics(String message) {
 		if (_sendBuildMetrics) {
 			DatagramRequestUtil.send(
@@ -1675,7 +1675,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 	private static ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
 
-	private boolean _compareToUpstream = true;
+	private boolean _compareToUpstream;
 	private Build _controllerBuild;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
 	private String _metricsHostName;

@@ -104,7 +104,7 @@ public class UpstreamFailureUtil {
 	}
 
 	public static boolean isBuildFailingInUpstreamJob(Build build) {
-		if (!isUpstreamComparisonAvailable()) {
+		if (!isUpstreamComparisonAvailable() || !build.isCompareToUpstream()) {
 			return false;
 		}
 
@@ -137,11 +137,11 @@ public class UpstreamFailureUtil {
 	}
 
 	public static boolean isTestFailingInUpstreamJob(TestResult testResult) {
-		if (!isUpstreamComparisonAvailable()) {
+		Build build = testResult.getBuild();
+
+		if (!isUpstreamComparisonAvailable() || !build.isCompareToUpstream()) {
 			return false;
 		}
-
-		Build build = testResult.getBuild();
 
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 

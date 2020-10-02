@@ -35,6 +35,8 @@ public class PullRequestPortalTopLevelBuild
 
 		super(url, topLevelBuild);
 
+		setCompareToUpstream(true);
+
 		try {
 			String testSuiteName = getTestSuiteName();
 
@@ -97,7 +99,9 @@ public class PullRequestPortalTopLevelBuild
 					"pull.request.forward.upstream.failure.comparison." +
 						"enabled"));
 
-		if (!pullRequestForwardUpstreamFailureComparisonEnabled) {
+		if (!pullRequestForwardUpstreamFailureComparisonEnabled ||
+			!isCompareToUpstream()) {
+
 			return result;
 		}
 

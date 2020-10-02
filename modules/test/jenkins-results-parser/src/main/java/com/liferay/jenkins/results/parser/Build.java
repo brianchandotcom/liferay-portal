@@ -187,6 +187,8 @@ public interface Build {
 
 	public boolean isBuildModified();
 
+	public boolean isCompareToUpstream();
+
 	public boolean isFromArchive();
 
 	public boolean isFromCompletedBuild();

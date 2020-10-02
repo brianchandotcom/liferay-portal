@@ -22,6 +22,8 @@ CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (Commerc
 CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerceAccount();
 %>
 
+<liferay-ui:error exception="<%= CommerceOrderAccountLimitException.class %>" message="unable-to-create-a-new-order-as-the-open-order-limit-has-been-reached" />
+
 <liferay-ddm:template-renderer
 	className="<%= CommerceOpenOrderContentPortlet.class.getName() %>"
 	contextObjects='<%=

@@ -35,6 +35,7 @@ page import="com.liferay.commerce.constants.CommerceOrderActionKeys" %><%@
 page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.commerce.currency.model.CommerceMoney" %><%@
 page import="com.liferay.commerce.discount.CommerceDiscountValue" %><%@
+page import="com.liferay.commerce.exception.CommerceOrderAccountLimitException" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderNoteContentException" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderValidatorException" %><%@
 page import="com.liferay.commerce.exception.NoSuchOrderException" %><%@

@@ -854,3 +854,25 @@ Update the path to reference `clay` instead of `lexicon`
 This change was made to unify references to the icon sprite map.
 
 ---------------------------------------
+
+### Replaced portal property view.count.enabled
+- **Date:** 2020-Oct-01
+- **JIRA Ticket:** [LPS-121145](https://issues.liferay.com/browse/LPS-121145)
+
+#### What changed?
+
+The portal property `view.count.enabled` has been replaced by the `enabled` property in the View Count OSGI Configuration.
+
+#### Who is affected?
+
+This affects anyone who has set the `view.count.enabled` property to `false`.
+
+#### How should I update my code?
+
+The `enabled` property for the View Count OSGI Configuration can be found in *System Settings* &rarr; *Infrastructure* &rarr; *View Count*.
+
+#### Why was this change made?
+
+This change was made to allow users to better manage and configure the View Count behavior.
+
+---------------------------------------

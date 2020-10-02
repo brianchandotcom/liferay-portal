@@ -1346,7 +1346,7 @@ public class PoshiRunnerExecutor {
 	}
 
 	private static final Pattern _locatorKeyPattern = Pattern.compile(
-		"(?<namespace>[\\w]+\\.)?[\\w]+#[A-Z0-9_]+");
+		"((?<namespace>[\\w]+)\\.)?(\\w+)#(\\$\\{\\w+\\}|[A-Z0-9_]+)");
 	private static final Pattern _parameterPattern = Pattern.compile(
 		"('([^'\\\\]|\\\\.)*'|[^',\\s]+)");
 	private static final Pattern _variablePattern = Pattern.compile(

@@ -169,14 +169,11 @@ describe('remote-app-support-web', () => {
 			const headers = new Headers();
 			headers.append('Content-Type', 'application/json');
 
-			global.fetch = jest.fn(() =>
-				Promise.resolve({
+			fetch.mockResponse(
+				JSON.stringify({
 					headers,
 					ok: true,
 					redirected: false,
-					status: 200,
-					statusText: '{"data": []}',
-					type: '',
 					url: '/o/example-url',
 				})
 			);
@@ -200,17 +197,17 @@ describe('remote-app-support-web', () => {
 
 			expect(receiveMessage.mock.calls[0][0].data).toEqual({
 				appID: 'some UUID',
-				headers: [['content-type', 'application/json']],
+				headers: [['content-type', 'text/plain;charset=UTF-8']],
 				kind: 'fetch:resolve',
 				ok: true,
-				protocol: REMOTE_APP_PROTOCOL,
+				protocol: 'com.liferay.remote.app.protocol',
 				redirected: false,
 				requestID: undefined,
 				role: 'host',
 				status: 200,
-				statusText: '{"data": []}',
-				type: '',
-				url: '/o/example-url',
+				statusText: 'OK',
+				type: undefined,
+				url: '',
 				version: VERSION,
 			});
 		});

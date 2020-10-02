@@ -20,6 +20,24 @@ definition {
 	}
 
 	@priority = "5"
+	test CustomizeFileFilter {
+		property custom.properties = "module.framework.properties.file.install.filter=^(?!test-theme).*\\..*"
+		property test.name.skip.portal.instance = "FileInstall#CustomizeFileFilter";
+
+		GogoShell.openGogoShellAdmin();
+
+		AssertConsoleTextNotPresent(value1 = "STARTED test-theme_");
+
+		GogoShell.executeCommand(commandName = "lb | grep test-theme");
+
+		GogoShell.viewOutput(outputContent = "false");
+
+		GogoShell.viewNoOutput(outputContent = "test-theme");
+
+		GogoShell.viewNoOutput(outputContent = "Active");
+	}
+
+	@priority = "5"
 	test CustomizeNewWatchedDirectory {
 		property custom.properties = "module.framework.properties.file.install.dir=${liferay.home}/daploy";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeNewWatchedDirectory";

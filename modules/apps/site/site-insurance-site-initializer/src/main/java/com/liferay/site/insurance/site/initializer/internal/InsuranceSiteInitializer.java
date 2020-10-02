@@ -187,17 +187,19 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private void _addAssetListEntries() throws Exception {
 		_assetListEntryLocalService.addDynamicAssetListEntry(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-			"Policies", _getDynamicCollectionTypeSettings("POLICY"),
+			"Policies", _getDynamicCollectionTypeSettings("POLICY", null),
 			_serviceContext);
 
 		_assetListEntryLocalService.addDynamicAssetListEntry(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-			"Closed Claims", _getDynamicCollectionTypeSettings("CLAIM"),
+			"Closed Claims",
+			_getDynamicCollectionTypeSettings("CLAIM", new String[] {"closed"}),
 			_serviceContext);
 
 		_assetListEntryLocalService.addDynamicAssetListEntry(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-			"Open Claims", _getDynamicCollectionTypeSettings("CLAIM"),
+			"Open Claims",
+			_getDynamicCollectionTypeSettings("CLAIM", new String[] {"open"}),
 			_serviceContext);
 	}
 
@@ -690,7 +692,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		return defaultAssetDisplayPage.getLayoutPageTemplateEntryId();
 	}
 
-	private String _getDynamicCollectionTypeSettings(String ddmStructureKey)
+	private String _getDynamicCollectionTypeSettings(
+			String ddmStructureKey, String[] assetTagNames)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
@@ -718,6 +721,15 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		unicodeProperties.put("orderByColumn2", "title");
 		unicodeProperties.put("orderByType1", "ASC");
 		unicodeProperties.put("orderByType2", "ASC");
+
+		if (ArrayUtil.isNotEmpty(assetTagNames)) {
+			for (int i = 0; i < assetTagNames.length; i++) {
+				unicodeProperties.put("queryAndOperator" + i, "true");
+				unicodeProperties.put("queryContains" + i, "true");
+				unicodeProperties.put("queryName" + i, "assetTags");
+				unicodeProperties.put("queryValues" + i, assetTagNames[i]);
+			}
+		}
 
 		return unicodeProperties.toString();
 	}

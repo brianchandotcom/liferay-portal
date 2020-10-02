@@ -20,33 +20,37 @@ import mockPages from '../../../__mock__/mockPages.es';
 
 describe('LayoutProvider/handlers/fieldDeletedHandler', () => {
 	describe('handleFieldDeleted(state, event)', () => {
-		it('calls removeRow() when row is left with no fields after delete operation', () => {
+		it('calls removeEmptyRows() when row is left with no fields after delete operation', () => {
 			const event = {
-				columnIndex: 0,
-				pageIndex: 0,
-				rowIndex: 0,
+				activePage: 0,
+				fieldName: 'radio',
+				removeEmptyRows: true,
 			};
 			const state = {
 				pages: mockPages,
 				rules: [],
 			};
 
-			const removeRowSpy = jest.spyOn(FormSupport, 'removeRow');
+			const removeEmptyRowsSpy = jest.spyOn(
+				FormSupport,
+				'removeEmptyRows'
+			);
 
-			removeRowSpy.mockImplementation(() => []);
+			removeEmptyRowsSpy.mockImplementation(() => []);
 
-			fieldDeletedHandler.handleFieldDeleted(state, event);
+			fieldDeletedHandler.handleFieldDeleted({}, state, event);
 
-			expect(removeRowSpy).toHaveBeenCalled();
+			expect(removeEmptyRowsSpy).toHaveBeenCalled();
 
-			removeRowSpy.mockRestore();
+			removeEmptyRowsSpy.mockRestore();
 		});
 
-		it('calls clearAllConditionFieldValues() when deleting a field used as the first operand of a condition', () => {
+		it('do not call formatRules when moving a field', () => {
 			const event = {
-				columnIndex: 0,
-				pageIndex: 0,
-				rowIndex: 0,
+				activePage: 0,
+				editRule: false,
+				fieldName: 'text1',
+				removeEmptyRows: true,
 			};
 			const state = {
 				pages: mockPages,
@@ -57,7 +61,7 @@ describe('LayoutProvider/handlers/fieldDeletedHandler', () => {
 							{
 								operands: [
 									{
-										value: 'radio',
+										value: 'text1',
 									},
 								],
 							},
@@ -66,18 +70,15 @@ describe('LayoutProvider/handlers/fieldDeletedHandler', () => {
 				],
 			};
 
-			const clearAllConditionFieldValuesSpy = jest.spyOn(
-				RulesSupport,
-				'clearAllConditionFieldValues'
-			);
+			const formatRulesSpy = jest.spyOn(RulesSupport, 'formatRules');
 
-			clearAllConditionFieldValuesSpy.mockImplementation(() => []);
+			formatRulesSpy.mockImplementation(() => []);
 
-			fieldDeletedHandler.handleFieldDeleted(state, event);
+			fieldDeletedHandler.handleFieldDeleted({}, state, event);
 
-			expect(clearAllConditionFieldValuesSpy).toHaveBeenCalled();
+			expect(formatRulesSpy).not.toHaveBeenCalled();
 
-			clearAllConditionFieldValuesSpy.mockRestore();
+			formatRulesSpy.mockRestore();
 		});
 	});
 });

@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceSubscriptionNotificationConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -31,10 +32,12 @@ import com.liferay.commerce.notification.service.CommerceNotificationTemplateLoc
 import com.liferay.commerce.notification.test.util.CommerceNotificationTestUtil;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelConstants;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
+import com.liferay.commerce.subscription.CommerceSubscriptionEntryHelper;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -42,6 +45,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -86,6 +92,11 @@ public class CommerceSubscriptionsNotificationTest {
 
 		_user = UserTestUtil.addUser(_company);
 
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _user.getUserId(), 0);
 
@@ -95,13 +106,13 @@ public class CommerceSubscriptionsNotificationTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
-		_commerceChannelLocalService.addCommerceChannel(
+		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
 			_group.getGroupId(),
 			_group.getName(_serviceContext.getLanguageId()) + " Portal",
-			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
-			StringPool.BLANK, _serviceContext);
+			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
+			_commerceCurrency.getCode(), StringPool.BLANK, _serviceContext);
 
-		User user = UserTestUtil.addUser(
+		_toUser = UserTestUtil.addUser(
 			_user.getCompanyId(), _user.getUserId(), "businessUser",
 			_serviceContext.getLocale(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
@@ -110,7 +121,7 @@ public class CommerceSubscriptionsNotificationTest {
 		_commerceAccount = CommerceAccountTestUtil.addBusinessCommerceAccount(
 			_user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new long[] {user.getUserId()}, null, _serviceContext);
+			new long[] {_toUser.getUserId()}, null, _serviceContext);
 
 		CommerceAccountTestUtil.addCommerceAccountGroupAndAccountRel(
 			_company.getCompanyId(), RandomTestUtil.randomString(),
@@ -134,11 +145,26 @@ public class CommerceSubscriptionsNotificationTest {
 	@Test
 	public void testSubscriptionStatusNotification() throws Exception {
 		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
+
+		_commerceNotificationTemplateLocalService.
+			addCommerceNotificationTemplate(
+				_user.getUserId(), _commerceOrder.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				String.valueOf(_toUser.getUserId()),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				CommerceOrderConstants.ORDER_NOTIFICATION_PLACED, true,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), _serviceContext);
 
 		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToUserOrder(
 			_commerceOrder, _user.getUserId(), true);
+
+		_commerceSubscriptionEntryHelper.checkCommerceSubscriptions(
+			_commerceOrder);
 
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
@@ -229,6 +255,9 @@ public class CommerceSubscriptionsNotificationTest {
 
 	private CommerceAccount _commerceAccount;
 
+	@DeleteAfterTestRun
+	private CommerceChannel _commerceChannel;
+
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
@@ -258,6 +287,9 @@ public class CommerceSubscriptionsNotificationTest {
 	private CommerceSubscriptionEngine _commerceSubscriptionEngine;
 
 	@Inject
+	private CommerceSubscriptionEntryHelper _commerceSubscriptionEntryHelper;
+
+	@Inject
 	private CommerceSubscriptionEntryLocalService
 		_commerceSubscriptionEntryLocalService;
 
@@ -266,6 +298,7 @@ public class CommerceSubscriptionsNotificationTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _toUser;
 	private User _user;
 
 }

@@ -146,7 +146,7 @@
 								"paddingLeft": 1,
 								"paddingRight": 1,
 								"paddingTop": 0,
-								"widthType": "Fluid"
+								"widthType": "Fixed"
 							}
 						},
 						"pageElements": [
@@ -217,7 +217,7 @@
 														"fontSize": "",
 														"fontWeight": "",
 														"height": "",
-														"marginBottom": "",
+														"marginBottom": "5",
 														"marginLeft": "",
 														"marginRight": "",
 														"marginTop": "",

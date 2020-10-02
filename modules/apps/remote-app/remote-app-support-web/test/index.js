@@ -196,7 +196,7 @@ describe('remote-app-support-web', () => {
 
 			await reply();
 
-			expect(receiveMessage).toHaveBeenCalledTimes(1);
+			expect(receiveMessage).toHaveBeenCalled();
 
 			expect(receiveMessage.mock.calls[0][0].data).toEqual({
 				appID: 'some UUID',

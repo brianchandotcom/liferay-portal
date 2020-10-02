@@ -6,12 +6,8 @@
 
 /*GENERAL*/
 
-a {<lfr-drop-zone></lfr-drop-zone>
+a {
 	color: var(--primary);
-}
-
-.page-editor__col:before, .page-editor__row:before, .page-editor__collection-item:before {
-	display: none !important;
 }
 
 /*COMPONENTS*/

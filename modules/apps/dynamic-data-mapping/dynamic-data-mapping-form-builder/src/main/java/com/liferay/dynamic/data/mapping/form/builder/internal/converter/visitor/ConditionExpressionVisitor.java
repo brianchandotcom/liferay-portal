@@ -100,6 +100,14 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 		List<Expression> parameterExpressions =
 			functionCallExpression.getParameterExpressions();
 
+		if (Objects.equals(functionName, "getJSONValue")) {
+			SPIDDMFormRuleCondition.Operand operand = doVisit(
+				parameterExpressions.get(0));
+
+			return new SPIDDMFormRuleCondition.Operand(
+				"json", operand.getValue());
+		}
+
 		if (Objects.equals(functionName, "getOptionLabel")) {
 			SPIDDMFormRuleCondition.Operand operand = doVisit(
 				parameterExpressions.get(1));

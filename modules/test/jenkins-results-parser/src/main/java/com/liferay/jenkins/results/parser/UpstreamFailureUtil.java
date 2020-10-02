@@ -15,10 +15,10 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -180,32 +180,15 @@ public class UpstreamFailureUtil {
 	public static void loadUpstreamJobFailuresJSONObject(
 		TopLevelBuild topLevelBuild) {
 
-		String jobName = topLevelBuild.getJobName();
+		_upstreamFailuresJobJSONObject = _defaultUpstreamFailuresJSONObject;
 
-		if (!jobName.contains("pullrequest") ||
-			!topLevelBuild.isCompareToUpstream()) {
-
-			_upstreamFailuresJobJSONObject = new JSONObject(
-				"{\"SHA\":\"\",\"failedBatches\":[]}");
-
+		if (!topLevelBuild.isCompareToUpstream()) {
 			return;
 		}
 
-		String url = JenkinsResultsParserUtil.getLocalURL(
-			JenkinsResultsParserUtil.combine(
-				_URL_BASE_UPSTREAM_FAILURES_JOB,
-				topLevelBuild.getAcceptanceUpstreamJobName(),
-				"/builds/latest/test.results.json"));
-
 		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			String jenkinsDirName = buildProperties.getProperty(
-				"jenkins.dir[master]");
-
 			File upstreamJobFailuresJSONFile = new File(
-				jenkinsDirName, "upstream-failures.json");
+				System.getenv("WORKSPACE"), "upstream-failures.json");
 
 			if (upstreamJobFailuresJSONFile.exists()) {
 				String fileContent = JenkinsResultsParserUtil.read(
@@ -214,6 +197,12 @@ public class UpstreamFailureUtil {
 				_upstreamFailuresJobJSONObject = new JSONObject(fileContent);
 			}
 			else {
+				String url = JenkinsResultsParserUtil.getLocalURL(
+					JenkinsResultsParserUtil.combine(
+						_URL_BASE_UPSTREAM_FAILURES_JOB,
+						topLevelBuild.getAcceptanceUpstreamJobName(),
+						"/builds/latest/test.results.json"));
+
 				_upstreamFailuresJobJSONObject =
 					JenkinsResultsParserUtil.toJSONObject(url, false, 5000);
 			}
@@ -222,15 +211,11 @@ public class UpstreamFailureUtil {
 				"Using upstream failures at: " +
 					getUpstreamJobFailuresSHA(topLevelBuild));
 		}
-		catch (Exception exception) {
-			System.out.println(exception);
+		catch (IOException ioException) {
+			System.out.println(ioException);
 
 			System.out.println(
-				"Unable to load upstream acceptance failure data from URL: " +
-					url);
-
-			_upstreamFailuresJobJSONObject = new JSONObject(
-				"{\"SHA\":\"\",\"failedBatches\":[]}");
+				"Unable to load upstream acceptance failure data");
 
 			_upstreamComparisonAvailable = false;
 		}
@@ -287,6 +272,8 @@ public class UpstreamFailureUtil {
 	private static final String _URL_BASE_UPSTREAM_FAILURES_JOB =
 		"https://test-1-0.liferay.com/userContent/testResults/";
 
+	private static final JSONObject _defaultUpstreamFailuresJSONObject =
+		new JSONObject("{\"SHA\":\"\",\"failedBatches\":[]}");
 	private static boolean _upstreamComparisonAvailable = true;
 	private static JSONObject _upstreamFailuresJobJSONObject;
 

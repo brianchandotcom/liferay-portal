@@ -63,7 +63,8 @@ public class DiscountProductGroupDTOConverter
 				discountExternalReferenceCode =
 					commerceDiscount.getExternalReferenceCode();
 				discountId = commerceDiscount.getCommerceDiscountId();
-				id = commerceDiscountRel.getCommerceDiscountRelId();
+				discountProductGroupId =
+					commerceDiscountRel.getCommerceDiscountRelId();
 				productGroupExternalReferenceCode =
 					commercePricingClass.getExternalReferenceCode();
 				productGroupId =

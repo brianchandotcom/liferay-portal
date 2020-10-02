@@ -62,10 +62,11 @@ public class DiscountCategoryDTOConverter
 				categoryExternalReferenceCode =
 					assetCategory.getExternalReferenceCode();
 				categoryId = assetCategory.getCategoryId();
+				discountCategoryId =
+					commerceDiscountRel.getCommerceDiscountRelId();
 				discountExternalReferenceCode =
 					commerceDiscount.getExternalReferenceCode();
 				discountId = commerceDiscount.getCommerceDiscountId();
-				id = commerceDiscountRel.getCommerceDiscountRelId();
 			}
 		};
 	}

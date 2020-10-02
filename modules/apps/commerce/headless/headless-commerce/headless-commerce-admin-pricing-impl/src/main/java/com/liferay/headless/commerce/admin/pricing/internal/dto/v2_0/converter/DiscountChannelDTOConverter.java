@@ -63,10 +63,11 @@ public class DiscountChannelDTOConverter
 				channelExternalReferenceCode =
 					commerceChannel.getExternalReferenceCode();
 				channelId = commerceChannel.getCommerceChannelId();
+				discountChannelId =
+					commerceDiscountChannelRel.getCommerceChannelRelId();
 				discountExternalReferenceCode =
 					commerceDiscount.getExternalReferenceCode();
 				discountId = commerceDiscount.getCommerceDiscountId();
-				id = commerceDiscountChannelRel.getCommerceChannelRelId();
 			}
 		};
 	}

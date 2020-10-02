@@ -60,10 +60,10 @@ public class PriceListAccountDTOConverter
 					commerceAccount.getExternalReferenceCode();
 				accountId = commerceAccount.getCommerceAccountId();
 				actions = dtoConverterContext.getActions();
-				id =
+				order = commercePriceListAccountRel.getOrder();
+				priceListAccountId =
 					commercePriceListAccountRel.
 						getCommercePriceListAccountRelId();
-				order = commercePriceListAccountRel.getOrder();
 				priceListExternalReferenceCode =
 					commercePriceList.getExternalReferenceCode();
 				priceListId = commercePriceList.getCommercePriceListId();

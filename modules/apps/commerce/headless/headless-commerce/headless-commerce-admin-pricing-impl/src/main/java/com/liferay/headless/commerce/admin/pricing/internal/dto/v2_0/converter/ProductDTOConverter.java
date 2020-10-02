@@ -50,9 +50,8 @@ public class ProductDTOConverter
 	public Product toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(
-				(Long)dtoConverterContext.getId());
+		CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
+			(Long)dtoConverterContext.getId());
 
 		return new Product() {
 			{

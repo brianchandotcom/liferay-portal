@@ -62,7 +62,8 @@ public class PriceModifierCategoryDTOConverter
 				categoryExternalReferenceCode =
 					assetCategory.getExternalReferenceCode();
 				categoryId = assetCategory.getCategoryId();
-				id = commercePriceModifierRel.getCommercePriceModifierRelId();
+				priceModifierCategoryId =
+					commercePriceModifierRel.getCommercePriceModifierRelId();
 				priceModifierExternalReferenceCode =
 					commercePriceModifier.getExternalReferenceCode();
 				priceModifierId =

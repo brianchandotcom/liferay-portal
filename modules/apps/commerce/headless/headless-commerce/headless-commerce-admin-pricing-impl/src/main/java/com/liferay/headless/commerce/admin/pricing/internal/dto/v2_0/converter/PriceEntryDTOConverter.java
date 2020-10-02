@@ -88,8 +88,8 @@ public class PriceEntryDTOConverter
 				externalReferenceCode =
 					commercePriceEntry.getExternalReferenceCode();
 				hasTierPrice = commercePriceEntry.isHasTierPrice();
-				id = commercePriceEntry.getCommercePriceEntryId();
 				price = priceEntryPrice.doubleValue();
+				priceEntryId = commercePriceEntry.getCommercePriceEntryId();
 				priceFormatted = _formatPrice(
 					priceEntryPrice, commerceCurrency, locale);
 				priceListId = commercePriceEntry.getCommercePriceListId();

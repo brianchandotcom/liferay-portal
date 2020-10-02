@@ -64,12 +64,12 @@ public class DiscountAccountGroupDTOConverter
 				accountGroupId =
 					commerceAccountGroup.getCommerceAccountGroupId();
 				actions = dtoConverterContext.getActions();
+				discountAccountGroupId =
+					commerceDiscountCommerceAccountGroupRel.
+						getCommerceDiscountCommerceAccountGroupRelId();
 				discountExternalReferenceCode =
 					commerceDiscount.getExternalReferenceCode();
 				discountId = commerceDiscount.getCommerceDiscountId();
-				id =
-					commerceDiscountCommerceAccountGroupRel.
-						getCommerceDiscountCommerceAccountGroupRelId();
 			}
 		};
 	}

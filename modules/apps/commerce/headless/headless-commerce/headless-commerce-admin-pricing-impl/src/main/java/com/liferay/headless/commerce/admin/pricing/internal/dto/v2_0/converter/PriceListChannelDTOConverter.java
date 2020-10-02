@@ -60,10 +60,10 @@ public class PriceListChannelDTOConverter
 				channelExternalReferenceCode =
 					commerceChannel.getExternalReferenceCode();
 				channelId = commerceChannel.getCommerceChannelId();
-				id =
+				order = commercePriceListChannelRel.getOrder();
+				priceListChannelId =
 					commercePriceListChannelRel.
 						getCommercePriceListChannelRelId();
-				order = commercePriceListChannelRel.getOrder();
 				priceListExternalReferenceCode =
 					commercePriceList.getExternalReferenceCode();
 				priceListId = commercePriceList.getCommercePriceListId();

@@ -64,10 +64,10 @@ public class PriceListAccountGroupDTOConverter
 				accountGroupId =
 					commerceAccountGroup.getCommerceAccountGroupId();
 				actions = dtoConverterContext.getActions();
-				id =
+				order = commercePriceListCommerceAccountGroupRel.getOrder();
+				priceListAccountGroupId =
 					commercePriceListCommerceAccountGroupRel.
 						getCommercePriceListCommerceAccountGroupRelId();
-				order = commercePriceListCommerceAccountGroupRel.getOrder();
 				priceListExternalReferenceCode =
 					commercePriceList.getExternalReferenceCode();
 				priceListId = commercePriceList.getCommercePriceListId();

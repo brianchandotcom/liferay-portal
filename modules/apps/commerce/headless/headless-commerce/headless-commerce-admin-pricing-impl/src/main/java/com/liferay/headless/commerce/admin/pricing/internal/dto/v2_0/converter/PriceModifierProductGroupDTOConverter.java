@@ -62,11 +62,12 @@ public class PriceModifierProductGroupDTOConverter
 		return new PriceModifierProductGroup() {
 			{
 				actions = dtoConverterContext.getActions();
-				id = commercePriceModifierRel.getCommercePriceModifierRelId();
 				priceModifierExternalReferenceCode =
 					commercePriceModifier.getExternalReferenceCode();
 				priceModifierId =
 					commercePriceModifier.getCommercePriceModifierId();
+				priceModifierProductGroupId =
+					commercePriceModifierRel.getCommercePriceModifierRelId();
 				productGroupExternalReferenceCode =
 					commercePricingClass.getExternalReferenceCode();
 				productGroupId =

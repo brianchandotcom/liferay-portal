@@ -63,10 +63,10 @@ public class PriceListDiscountDTOConverter
 					commerceDiscount.getExternalReferenceCode();
 				discountId = commerceDiscount.getCommerceDiscountId();
 				discountName = commerceDiscount.getTitle();
-				id =
+				order = commercePriceListDiscountRel.getOrder();
+				priceListDiscountId =
 					commercePriceListDiscountRel.
 						getCommercePriceListDiscountRelId();
-				order = commercePriceListDiscountRel.getOrder();
 				priceListExternalReferenceCode =
 					commercePriceList.getExternalReferenceCode();
 				priceListId = commercePriceList.getCommercePriceListId();

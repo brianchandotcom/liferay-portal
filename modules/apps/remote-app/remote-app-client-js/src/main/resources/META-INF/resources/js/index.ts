@@ -446,8 +446,6 @@ type Listeners = {
 };
 
 const SDK = Object.freeze({
-	VERSION,
-
 	Client({debug}: ClientOptions = {debug: false}) {
 		// TODO: warn if no promise polyfill present
 		// (need that just like we expect DXP environment ot have it)
@@ -596,8 +594,8 @@ const SDK = Object.freeze({
 									promises['fetch:response:blob'][
 										requestID
 									] = {
-										resolve,
 										reject,
+										resolve,
 									};
 								});
 							},
@@ -669,8 +667,8 @@ const SDK = Object.freeze({
 									promises['fetch:response:json'][
 										requestID
 									] = {
-										resolve,
 										reject,
+										resolve,
 									};
 								});
 							},
@@ -690,8 +688,8 @@ const SDK = Object.freeze({
 									promises['fetch:response:text'][
 										requestID
 									] = {
-										resolve,
 										reject,
+										resolve,
 									};
 								});
 							},
@@ -813,10 +811,6 @@ const SDK = Object.freeze({
 				return debug;
 			},
 
-			get state() {
-				return state;
-			},
-
 			set debug(value) {
 				debug = value;
 			},
@@ -850,8 +844,8 @@ const SDK = Object.freeze({
 
 				return new Promise<BasicResponse>((resolve, reject) => {
 					promises.fetch[requestID] = {
-						resolve,
 						reject,
+						resolve,
 					};
 				});
 			},
@@ -861,14 +855,14 @@ const SDK = Object.freeze({
 
 				postMessage({
 					command: 'get',
-					requestID,
 					property,
+					requestID,
 				});
 
 				return new Promise<string>((resolve, reject) => {
 					promises.get[requestID] = {
-						resolve,
 						reject,
+						resolve,
 					};
 				});
 			},
@@ -941,10 +935,16 @@ const SDK = Object.freeze({
 					type,
 				});
 			},
+
+			get state() {
+				return state;
+			},
 		};
 
 		return Public;
 	},
+
+	VERSION,
 });
 
 /**

@@ -1703,6 +1703,8 @@ public class ResourcePermissionLocalServiceImpl
 		public List<ResourcePermission> getResourcePermissions(
 			long companyId, String name);
 
+		public void removeResourcePermissions(long companyId, String name);
+
 	}
 
 	protected void addGroupPermissions(
@@ -2032,6 +2034,11 @@ public class ResourcePermissionLocalServiceImpl
 				PermissionCacheUtil.clearResourcePermissionCache(
 					ResourceConstants.SCOPE_INDIVIDUAL, name, name);
 
+				if (individualPortletResourcePermissionProvider != null) {
+					individualPortletResourcePermissionProvider.
+						removeResourcePermissions(companyId, name);
+				}
+
 				IndexWriterHelperUtil.updatePermissionFields(name, name);
 			}
 		}
@@ -2237,6 +2244,7 @@ public class ResourcePermissionLocalServiceImpl
 			ServiceProxyFactory.newServiceTrackedInstance(
 				IndividualPortletResourcePermissionProvider.class,
 				ResourcePermissionLocalServiceImpl.class,
-				"_individualPortletResourcePermissionProvider", null, true);
+				"_individualPortletResourcePermissionProvider", null, false,
+				true);
 
 }

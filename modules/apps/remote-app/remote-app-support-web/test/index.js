@@ -163,4 +163,56 @@ describe('remote-app-support-web', () => {
 			expect(receiveMessage).not.toHaveBeenCalled();
 		});
 	});
+
+	describe('"fetch" command', () => {
+		it('doesn\'t throw an error if "body" is undefined', async () => {
+			const headers = new Headers();
+			headers.append('Content-Type', 'application/json');
+
+			global.fetch = jest.fn(() =>
+				Promise.resolve({
+					headers,
+					ok: true,
+					redirected: false,
+					status: 200,
+					statusText: '{"data": []}',
+					type: '',
+					url: '/o/example-url',
+				})
+			);
+
+			iframe.contentWindow.parent.postMessage(
+				{
+					appID: 'some UUID',
+					command: 'fetch',
+					init: {},
+					protocol: REMOTE_APP_PROTOCOL,
+					resource: '/o/test/foo',
+					role: 'client',
+					version: VERSION,
+				},
+				'*'
+			);
+
+			await reply();
+
+			expect(receiveMessage).toHaveBeenCalledTimes(1);
+
+			expect(receiveMessage.mock.calls[0][0].data).toEqual({
+				appID: 'some UUID',
+				headers: [['content-type', 'application/json']],
+				kind: 'fetch:resolve',
+				ok: true,
+				protocol: REMOTE_APP_PROTOCOL,
+				redirected: false,
+				requestID: undefined,
+				role: 'host',
+				status: 200,
+				statusText: '{"data": []}',
+				type: '',
+				url: '/o/example-url',
+				version: VERSION,
+			});
+		});
+	});
 });

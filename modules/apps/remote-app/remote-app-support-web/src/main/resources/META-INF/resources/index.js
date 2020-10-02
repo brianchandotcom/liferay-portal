@@ -125,7 +125,7 @@ function receiveMessage(event) {
 
 					const {body} = init;
 
-					if (body.__FORM_DATA__) {
+					if (body?.__FORM_DATA__) {
 						const formData = new FormData();
 
 						Object.entries(body.__FORM_DATA__).forEach(

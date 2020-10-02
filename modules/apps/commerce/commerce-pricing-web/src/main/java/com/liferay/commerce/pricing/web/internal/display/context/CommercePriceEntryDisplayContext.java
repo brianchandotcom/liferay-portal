@@ -155,7 +155,7 @@ public class CommercePriceEntryDisplayContext
 			"redirect", commercePricingRequestHelper.getCurrentURL());
 		portletURL.setParameter(
 			"commercePriceListId", String.valueOf(getCommercePriceListId()));
-		portletURL.setParameter("commercePriceEntryId", "{id}");
+		portletURL.setParameter("commercePriceEntryId", "{priceEntryId}");
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

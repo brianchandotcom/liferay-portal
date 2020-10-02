@@ -279,6 +279,12 @@ public interface ViewCountEntryLocalService
 	public void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isViewCountEnabled();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isViewCountEnabled(long classNameId);
+
 	/**
 	 * Updates the view count entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -317,6 +317,14 @@ public class ViewCountEntryLocalServiceUtil {
 			companyId, classNameId, classPK, increment);
 	}
 
+	public static boolean isViewCountEnabled() {
+		return getService().isViewCountEnabled();
+	}
+
+	public static boolean isViewCountEnabled(long classNameId) {
+		return getService().isViewCountEnabled(classNameId);
+	}
+
 	/**
 	 * Updates the view count entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

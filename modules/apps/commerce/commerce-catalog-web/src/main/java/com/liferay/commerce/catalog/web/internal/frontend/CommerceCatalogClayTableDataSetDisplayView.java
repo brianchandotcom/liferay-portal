@@ -50,7 +50,7 @@ public class CommerceCatalogClayTableDataSetDisplayView
 			"defaultLanguageId", "default-language");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"currencyCode", "currency");
+			"currencyCode", "default-currency");
 
 		return clayTableSchemaBuilder.build();
 	}

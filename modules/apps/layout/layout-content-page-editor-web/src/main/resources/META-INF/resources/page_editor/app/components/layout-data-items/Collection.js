@@ -15,6 +15,7 @@
 import ClayLayout from '@clayui/layout';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
 import CollectionService from '../../services/CollectionService';
 import {useDispatch, useSelector} from '../../store/index';
 import {CollectionItemContextProvider} from '../CollectionItemContext';
@@ -71,9 +72,6 @@ const Grid = ({
 		maxNumberOfItems / collectionConfig.numberOfColumns
 	);
 
-	const middleIndex = Math.floor(collectionConfig.numberOfColumns / 2);
-	const spareColumns = 12 % collectionConfig.numberOfColumns;
-
 	return Array.from({length: numberOfRows}).map((_, i) => (
 		<ClayLayout.Row key={`row-${i}`}>
 			{Array.from({length: collectionConfig.numberOfColumns}).map(
@@ -81,16 +79,15 @@ const Grid = ({
 					const key = `col-${i}-${j}`;
 					const index = i * collectionConfig.numberOfColumns + j;
 
-					let size = Math.floor(
-						12 / collectionConfig.numberOfColumns
-					);
-
-					if (middleIndex === j) {
-						size += spareColumns;
-					}
-
 					return (
-						<ClayLayout.Col key={key} size={size}>
+						<ClayLayout.Col
+							key={key}
+							size={
+								COLUMN_SIZE_MODULE_PER_ROW_SIZES[
+									collectionConfig.numberOfColumns
+								][collectionConfig.numberOfColumns][j]
+							}
+						>
 							{index < maxNumberOfItems && (
 								<ColumnContext
 									collectionConfig={collectionConfig}

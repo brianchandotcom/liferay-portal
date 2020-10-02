@@ -3022,6 +3022,12 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VERIFY_PROCESS_CONCURRENCY_THRESHOLD));
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             com.liferay.view.count.configuration.ViewCountsConfiguration
+	 *             #enabled()}
+	 */
+	@Deprecated
 	public static final boolean VIEW_COUNT_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.VIEW_COUNT_ENABLED));
 

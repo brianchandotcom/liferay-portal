@@ -1,6 +1,10 @@
+[#assign
+	homeFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+/]
+
 <nav class="navbar navbar-expand-lg navbar-light public-site-navbar">
 	<div class="container">
-		<a class="navbar-brand" href="#">
+		<a class="navbar-brand" href="${homeFriendlyURL}">
 			<img alt="" class="navbar-logo d-inline-block align-top" data-lfr-editable-id="image-logo" data-lfr-editable-type="image" loading="lazy" src="[resources:raylife_logo.svg]" />
 		</a>
 

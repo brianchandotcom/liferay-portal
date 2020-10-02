@@ -194,6 +194,33 @@ class RuleList extends Component {
 			) {
 				label = this._getOptionLabel(operands[0].value, operand.value);
 			}
+			else if (operand.type === 'json') {
+				label = '';
+
+				const operandValueJSON = JSON.parse(operand.value);
+
+				for (const key in operandValueJSON) {
+					const keyLabel = this._getPropertyLabel(
+						operands[0].value,
+						'rows',
+						key
+					);
+
+					const valueLabel = this._getPropertyLabel(
+						operands[0].value,
+						'columns',
+						operandValueJSON[key]
+					);
+
+					label += keyLabel + ':' + valueLabel + ', ';
+				}
+
+				const lastCommaPosition = label.lastIndexOf(', ');
+
+				if (lastCommaPosition != -1) {
+					label = label.substr(0, lastCommaPosition);
+				}
+			}
 			else {
 				label = operand.value;
 			}

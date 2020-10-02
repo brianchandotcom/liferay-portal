@@ -296,7 +296,9 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		return file;
 	}
 
-	private String _getNodeModulesCacheDigest(NpmInstallTask npmInstallTask) {
+	private static String _getNodeModulesCacheDigest(
+		NpmInstallTask npmInstallTask) {
+
 		Logger logger = npmInstallTask.getLogger();
 
 		JsonSlurper jsonSlurper = new JsonSlurper();
@@ -403,7 +405,7 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		}
 	}
 
-	private synchronized void _npmInstallCached(
+	private static synchronized void _npmInstallCached(
 			NpmInstallTask npmInstallTask, boolean reset)
 		throws Exception {
 

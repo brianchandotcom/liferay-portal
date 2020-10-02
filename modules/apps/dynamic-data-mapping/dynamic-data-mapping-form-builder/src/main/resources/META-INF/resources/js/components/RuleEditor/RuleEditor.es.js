@@ -1357,6 +1357,16 @@ class RuleEditor extends Component {
 
 			if (condition.operands[1]) {
 				condition.operands[1].label = condition.operands[1].value;
+
+				const secondOperandValue = condition.operands[1].value;
+				const secondOperandValueString = JSON.stringify(
+					secondOperandValue
+				);
+
+				if (typeof secondOperandValue == 'object') {
+					condition.operands[1].label = secondOperandValueString;
+					condition.operands[1].value = secondOperandValueString;
+				}
 			}
 		});
 

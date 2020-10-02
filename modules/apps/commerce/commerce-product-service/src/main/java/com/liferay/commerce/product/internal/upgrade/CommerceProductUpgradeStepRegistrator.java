@@ -37,6 +37,7 @@ import com.liferay.commerce.product.internal.upgrade.v2_1_0.SubscriptionUpgradeP
 import com.liferay.commerce.product.internal.upgrade.v2_2_0.CPDefinitionOptionValueRelUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v2_3_0.CommerceChannelUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v2_5_0.FriendlyURLEntryUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v3_1_0.CPTaxCategoryUpgradeProcess;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -176,6 +177,8 @@ public class CommerceProductUpgradeStepRegistrator
 			"2.6.0", "3.0.0",
 			new com.liferay.commerce.product.internal.upgrade.v3_0_0.
 				CPFriendlyURLEntryUpgradeProcess());
+
+		registry.register("3.0.0", "3.1.0", new CPTaxCategoryUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

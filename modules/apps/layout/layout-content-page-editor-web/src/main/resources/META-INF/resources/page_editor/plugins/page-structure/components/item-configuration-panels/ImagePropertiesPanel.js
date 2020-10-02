@@ -161,12 +161,8 @@ export function ImagePropertiesPanel({item}) {
 		const nextEditableValueConfig = {
 			...editableValue.config,
 			alt: '',
-			imageTitle: '',
+			imageTitle: imageTitle || '',
 		};
-
-		if (imageTitle) {
-			nextEditableValueConfig.imageTitle = imageTitle;
-		}
 
 		nextEditableValue = {
 			...editableValue,

@@ -74,7 +74,7 @@ export default function FragmentContentProcessor({
 
 		editable.processor.createEditor(
 			editable.element,
-			(value) => {
+			(value, config = {}) => {
 				const defaultValue = editableValue.defaultValue?.trim() ?? '';
 				const previousValue = editableValue[languageId];
 
@@ -84,6 +84,11 @@ export default function FragmentContentProcessor({
 				) {
 					return;
 				}
+
+				const editableConfig = {
+					...(editableValue.config || {}),
+					...config,
+				};
 
 				dispatch(
 					updateEditableValues({
@@ -95,6 +100,7 @@ export default function FragmentContentProcessor({
 								],
 								[editable.editableId]: {
 									...editableValue,
+									config: editableConfig,
 									[languageId]: value,
 								},
 							},

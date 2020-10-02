@@ -23,9 +23,15 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -80,15 +86,18 @@ public class RoleUtil {
 	}
 
 	public static int getRoleType(String roleType) {
-		if (roleType.equals(RoleConstants.TYPE_DEPOT_LABEL)) {
-			return RoleConstants.TYPE_DEPOT;
-		}
-		else if (roleType.equals(RoleConstants.TYPE_ORGANIZATION_LABEL)) {
-			return RoleConstants.TYPE_ORGANIZATION;
-		}
-		else if (roleType.equals(RoleConstants.TYPE_SITE_LABEL) ||
-				 roleType.equals(_LEGACY_TYPE_COMMUNITY_LABEL)) {
+		RoleTypeContributorProvider roleTypeContributorProvider =
+			_serviceTracker.getService();
 
+		for (RoleTypeContributor roleTypeContributor :
+				roleTypeContributorProvider.getRoleTypeContributors()) {
+
+			if (roleType.equals(roleTypeContributor.getTypeLabel())) {
+				return roleTypeContributor.getType();
+			}
+		}
+
+		if (roleType.equals(_LEGACY_TYPE_COMMUNITY_LABEL)) {
 			return RoleConstants.TYPE_SITE;
 		}
 
@@ -96,5 +105,23 @@ public class RoleUtil {
 	}
 
 	private static final String _LEGACY_TYPE_COMMUNITY_LABEL = "community";
+
+	private static final ServiceTracker
+		<RoleTypeContributorProvider, RoleTypeContributorProvider>
+			_serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			RoleTypeContributorProvider.class);
+
+		ServiceTracker<RoleTypeContributorProvider, RoleTypeContributorProvider>
+			serviceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), RoleTypeContributorProvider.class,
+				null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 
 }

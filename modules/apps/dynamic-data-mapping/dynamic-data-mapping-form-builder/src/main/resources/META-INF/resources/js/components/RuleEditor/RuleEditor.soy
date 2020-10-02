@@ -753,6 +753,21 @@
 											{param spritemap: $spritemap /}
 											{param value: [$secondOperandValue] /}
 										{/call}
+									{elseif $secondOperandType == 'grid'}
+										{call ReactFieldAdapter.render}
+											{param columns: $firstOperandColumns /}
+											{param dataType: $secondOperandDataType /}
+											{param events: [
+												'fieldEdited': $_handleSecondOperandValueEdited
+											] /}
+											{param fieldType: $secondOperandType /}
+											{param name: $secondOperandFieldName /}
+											{param readOnly: $readOnly /}
+											{param ref: 'secondOperandValue' + $index /}
+											{param rows: $firstOperandRows /}
+											{param spritemap: $spritemap /}
+											{param value: $secondOperandValue /}
+										{/call}
 									{elseif $secondOperandType != ''}
 										{call ReactFieldAdapter.render}
 											{param dataType: $secondOperandDataType /}

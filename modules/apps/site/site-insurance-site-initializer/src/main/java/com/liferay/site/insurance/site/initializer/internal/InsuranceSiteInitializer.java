@@ -42,6 +42,7 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -79,12 +80,15 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.insurance.site.initializer.internal.util.ImagesImporterUtil;
+import com.liferay.site.insurance.site.initializer.internal.util.StyleBookEntriesImporterUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.File;
 
@@ -158,11 +162,13 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			_addFragmentEntries();
 			_addSiteNavigationMenus();
 
+			_addStyleBookEntries();
+			_setDefaultStyleBookEntry();
+
 			_addLayoutPageTemplateEntries();
+			_setDefaultLayoutPageTemplateEntries();
 
 			_addLayouts();
-
-			_setDefaultLayoutPageTemplateEntries();
 
 			_updateLayoutSetLookAndFeel("private");
 			_updateLayoutSetLookAndFeel("public");
@@ -591,6 +597,16 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addStyleBookEntries() throws Exception {
+		URL url = _bundle.getEntry("/style-books.zip");
+
+		File file = FileUtil.createTempFile(url.openStream());
+
+		StyleBookEntriesImporterUtil.importStyleBookEntries(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			file, false);
+	}
+
 	private Layout _addWidgetLayout(JSONObject jsonObject) throws Exception {
 		String name = jsonObject.getString("name");
 
@@ -892,6 +908,15 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
 	}
 
+	private void _setDefaultStyleBookEntry() throws PortalException {
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				_serviceContext.getScopeGroupId(), "raylife");
+
+		_styleBookEntryLocalService.updateDefaultStyleBookEntry(
+			styleBookEntry.getStyleBookEntryId(), true);
+	}
+
 	private void _updateLayoutSetLookAndFeel(String type) throws Exception {
 		boolean privateLayoutSet = false;
 
@@ -1079,6 +1104,9 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 	private Map<String, Long> _siteNavigationMenuMap;
+
+	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

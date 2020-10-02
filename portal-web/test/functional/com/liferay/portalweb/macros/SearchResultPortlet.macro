@@ -15,7 +15,7 @@ definition {
 
 		DragAndDrop.javaScriptDragAndDropToBottom(
 			key_targetFragmentName = "${targetFragmentName}",
-			locator1 = "//li[contains(@class,'page-editor__fragments-widgets__tab-item')][normalize-space()='${key_portletName}'][2]",
+			locator1 = "//*[contains(@class,'sheet-subtitle')][normalize-space()='Search']//following-sibling::div//div[text()='${key_portletName}']",
 			locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
 			value1 = "${portletName}");
 

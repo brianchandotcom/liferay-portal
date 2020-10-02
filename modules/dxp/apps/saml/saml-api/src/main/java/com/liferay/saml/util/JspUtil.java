@@ -15,7 +15,9 @@
 package com.liferay.saml.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Definition;
 import com.liferay.portal.struts.TilesUtil;
 
@@ -66,7 +68,26 @@ public class JspUtil {
 			httpServletRequest.getRequestDispatcher(
 				_PATH_HTML_COMMON_THEMES_PORTAL);
 
-		requestDispatcher.include(httpServletRequest, httpServletResponse);
+		if (popUp) {
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+
+			return;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		boolean stateMaximized = themeDisplay.isStateMaximized();
+
+		themeDisplay.setStateMaximized(true);
+
+		try {
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		}
+		finally {
+			themeDisplay.setStateMaximized(stateMaximized);
+		}
 	}
 
 	private static final String _PATH_HTML_COMMON_THEMES_PORTAL =

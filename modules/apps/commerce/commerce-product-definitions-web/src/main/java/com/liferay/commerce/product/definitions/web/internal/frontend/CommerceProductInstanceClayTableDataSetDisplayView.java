@@ -44,7 +44,7 @@ public class CommerceProductInstanceClayTableDataSetDisplayView
 	@Override
 	protected void addFields(ClayTableSchemaBuilder clayTableSchemaBuilder) {
 		clayTableSchemaBuilder.addClayTableSchemaField("options", "options");
-		clayTableSchemaBuilder.addClayTableSchemaField("price", "price");
+		clayTableSchemaBuilder.addClayTableSchemaField("price", "base-price");
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"availableQuantity", "available-quantity");
 

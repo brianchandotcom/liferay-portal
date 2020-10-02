@@ -97,23 +97,23 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 			String error = StringPool.BLANK;
 
-			if (causeThrowable instanceof ContactNameException) {
+			if (causeThrowable instanceof MustNotUseCompanyMx) {
+				error = MustNotUseCompanyMx.class.getSimpleName();
+			}
+			else if (causeThrowable instanceof AuthnAgeException) {
+				error = AuthnAgeException.class.getSimpleName();
+			}
+			else if (causeThrowable instanceof ContactNameException) {
 				error = ContactNameException.class.getSimpleName();
 			}
 			else if (causeThrowable instanceof SubjectException) {
 				error = SubjectException.class.getSimpleName();
-			}
-			else if (causeThrowable instanceof MustNotUseCompanyMx) {
-				error = MustNotUseCompanyMx.class.getSimpleName();
 			}
 			else if (causeThrowable instanceof UserEmailAddressException) {
 				error = UserEmailAddressException.class.getSimpleName();
 			}
 			else if (causeThrowable instanceof UserScreenNameException) {
 				error = UserScreenNameException.class.getSimpleName();
-			}
-			else if (causeThrowable instanceof AuthnAgeException) {
-				error = AuthnAgeException.class.getSimpleName();
 			}
 			else {
 				Class<?> clazz = causeThrowable.getClass();

@@ -3539,8 +3539,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Map<Long, Integer> counts = new HashMap<>();
 
-		int count = 0;
-
 		try {
 			for (long groupId : groupIds) {
 				Group group = groupLocalService.fetchGroup(groupId);
@@ -3548,6 +3546,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				if (group == null) {
 					continue;
 				}
+
+				int count = 0;
 
 				if (group.isOrganization()) {
 					count = getOrganizationUsersCount(

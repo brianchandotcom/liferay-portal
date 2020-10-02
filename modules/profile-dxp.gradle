@@ -62,6 +62,11 @@ checkoutDXPScript {
 		}
 
 		exec {
+			commandLine "git", "log", "--no-decorate", "-1"
+			workingDir = gitRepositoryDir
+		}
+
+		exec {
 			commandLine "git", "checkout", "refs/heads/" + gitBranchName, "--", "build-working-dir.xml", "working.dir.properties"
 			workingDir = gitRepositoryDir
 		}

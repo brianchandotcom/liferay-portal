@@ -54,6 +54,19 @@ public class DispatchTriggerServiceUtil {
 		getService().deleteDispatchTrigger(dispatchTriggerId);
 	}
 
+	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
+			getDispatchTriggers(int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getDispatchTriggers(start, end);
+	}
+
+	public static int getDispatchTriggersCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getDispatchTriggersCount();
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -51,6 +51,21 @@ public class DispatchTriggerServiceWrapper
 		_dispatchTriggerService.deleteDispatchTrigger(dispatchTriggerId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
+			getDispatchTriggers(int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchTriggerService.getDispatchTriggers(start, end);
+	}
+
+	@Override
+	public int getDispatchTriggersCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchTriggerService.getDispatchTriggersCount();
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

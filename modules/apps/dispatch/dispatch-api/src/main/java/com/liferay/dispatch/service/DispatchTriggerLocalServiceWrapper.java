@@ -355,6 +355,21 @@ public class DispatchTriggerLocalServiceWrapper
 			dispatchTriggerId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
+		getUserDispatchTriggers(
+			long companyId, long userId, int start, int end) {
+
+		return _dispatchTriggerLocalService.getUserDispatchTriggers(
+			companyId, userId, start, end);
+	}
+
+	@Override
+	public int getUserDispatchTriggersCount(long companyId, long userId) {
+		return _dispatchTriggerLocalService.getUserDispatchTriggersCount(
+			companyId, userId);
+	}
+
 	/**
 	 * Updates the dispatch trigger in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

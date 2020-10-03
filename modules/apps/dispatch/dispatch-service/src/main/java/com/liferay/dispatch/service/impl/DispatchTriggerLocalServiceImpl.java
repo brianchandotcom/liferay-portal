@@ -17,6 +17,7 @@ package com.liferay.dispatch.service.impl;
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.exception.DispatchTriggerEndDateException;
 import com.liferay.dispatch.exception.DispatchTriggerNameException;
+import com.liferay.dispatch.exception.DispatchTriggerSchedulerException;
 import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -273,8 +274,9 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	private void _addSchedulerJob(
-		long dispatchTriggerId, String cronExpression, Date startDate,
-		Date endDate) {
+			long dispatchTriggerId, String cronExpression, Date startDate,
+			Date endDate)
+		throws DispatchTriggerSchedulerException {
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			_getJobName(dispatchTriggerId), _getGroupName(dispatchTriggerId),
@@ -293,7 +295,7 @@ public class DispatchTriggerLocalServiceImpl
 			}
 		}
 		catch (SchedulerException schedulerException) {
-			_log.error(
+			throw new DispatchTriggerSchedulerException(
 				"Unable to create scheduler entry for dispatch trigger " +
 					dispatchTriggerId,
 				schedulerException);

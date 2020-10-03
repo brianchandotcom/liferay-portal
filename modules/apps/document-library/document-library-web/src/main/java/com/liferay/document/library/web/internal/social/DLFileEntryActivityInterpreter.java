@@ -61,11 +61,6 @@ public class DLFileEntryActivityInterpreter
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
-	@Override
 	protected String getBody(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -217,6 +212,11 @@ public class DLFileEntryActivityInterpreter
 
 		return _fileEntryModelResourcePermission.contains(
 			permissionChecker, activity.getClassPK(), actionId);
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	@Reference(unbind = "-")

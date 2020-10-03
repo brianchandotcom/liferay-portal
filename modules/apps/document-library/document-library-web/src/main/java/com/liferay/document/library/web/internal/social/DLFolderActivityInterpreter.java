@@ -51,11 +51,6 @@ public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
-	@Override
 	protected String getPath(
 		SocialActivity activity, ServiceContext serviceContext) {
 
@@ -98,6 +93,11 @@ public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 		return ModelResourcePermissionUtil.contains(
 			_folderModelResourcePermission, permissionChecker,
 			activity.getGroupId(), activity.getClassPK(), actionId);
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	private static final String[] _CLASS_NAMES = {DLFolder.class.getName()};

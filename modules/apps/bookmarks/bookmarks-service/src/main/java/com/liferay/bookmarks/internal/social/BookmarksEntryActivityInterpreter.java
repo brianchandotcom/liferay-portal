@@ -52,11 +52,6 @@ public class BookmarksEntryActivityInterpreter
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
-	@Override
 	protected String getPath(
 		SocialActivity activity, ServiceContext serviceContext) {
 
@@ -111,6 +106,11 @@ public class BookmarksEntryActivityInterpreter
 
 		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, activity.getClassPK(), actionId);
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	private static final String[] _CLASS_NAMES = {

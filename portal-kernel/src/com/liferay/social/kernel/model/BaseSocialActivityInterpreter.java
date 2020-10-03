@@ -123,8 +123,6 @@ public abstract class BaseSocialActivityInterpreter
 		}
 	}
 
-	protected abstract ResourceBundleLoader acquireResourceBundleLoader();
-
 	protected String addNoSuchEntryRedirect(
 			String url, String className, long classPK,
 			ServiceContext serviceContext)
@@ -338,14 +336,13 @@ public abstract class BaseSocialActivityInterpreter
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #acquireResourceBundleLoader}
+	 *             #loadResourceBundleLoader}
 	 */
 	@Deprecated
 	protected com.liferay.portal.kernel.util.ResourceBundleLoader
 		getResourceBundleLoader() {
 
-		ResourceBundleLoader resourceBundleLoader =
-			acquireResourceBundleLoader();
+		ResourceBundleLoader resourceBundleLoader = loadResourceBundleLoader();
 
 		return locale -> resourceBundleLoader.loadResourceBundle(locale);
 	}
@@ -370,8 +367,7 @@ public abstract class BaseSocialActivityInterpreter
 			groupName, activity, getLink(activity, serviceContext),
 			getEntryTitle(activity, serviceContext), serviceContext);
 
-		ResourceBundleLoader resourceBundleLoader =
-			acquireResourceBundleLoader();
+		ResourceBundleLoader resourceBundleLoader = loadResourceBundleLoader();
 
 		if (resourceBundleLoader == null) {
 			return serviceContext.translate(titlePattern, titleArguments);
@@ -499,6 +495,8 @@ public abstract class BaseSocialActivityInterpreter
 		return false;
 	}
 
+	protected abstract ResourceBundleLoader loadResourceBundleLoader();
+
 	protected String wrapLink(String link, String title) {
 		title = HtmlUtil.escape(title);
 
@@ -512,8 +510,7 @@ public abstract class BaseSocialActivityInterpreter
 	protected String wrapLink(
 		String link, String key, ServiceContext serviceContext) {
 
-		ResourceBundleLoader resourceBundleLoader =
-			acquireResourceBundleLoader();
+		ResourceBundleLoader resourceBundleLoader = loadResourceBundleLoader();
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			serviceContext.getLocale());

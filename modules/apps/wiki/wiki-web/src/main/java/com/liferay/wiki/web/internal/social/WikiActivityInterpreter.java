@@ -61,11 +61,6 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		return _CLASS_NAMES;
 	}
 
-	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
 	protected String getAttachmentTitle(
 			SocialActivity activity, WikiPageResource pageResource,
 			ServiceContext serviceContext)
@@ -266,6 +261,11 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 
 		return true;
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	private static final String[] _CLASS_NAMES = {WikiPage.class.getName()};

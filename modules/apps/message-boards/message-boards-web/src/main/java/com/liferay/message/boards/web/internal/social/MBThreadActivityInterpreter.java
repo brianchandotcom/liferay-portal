@@ -52,11 +52,6 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
-	@Override
 	protected String getBody(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -157,6 +152,11 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		return _messageModelResourcePermission.contains(
 			permissionChecker, message.getMessageId(), actionId);
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	private static final String[] _CLASS_NAMES = {MBThread.class.getName()};

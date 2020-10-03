@@ -55,11 +55,6 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
-	@Override
 	protected String getEntryTitle(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -230,6 +225,11 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 
 		return false;
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	@Reference(unbind = "-")

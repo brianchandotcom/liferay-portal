@@ -62,11 +62,6 @@ public class JournalArticleActivityInterpreter
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return JournalResourceBundleLoader.INSTANCE;
-	}
-
-	@Override
 	protected String getPath(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -182,6 +177,11 @@ public class JournalArticleActivityInterpreter
 
 		return _journalArticleModelResourcePermission.contains(
 			permissionChecker, activity.getClassPK(), actionId);
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return JournalResourceBundleLoader.INSTANCE;
 	}
 
 	@Reference(unbind = "-")

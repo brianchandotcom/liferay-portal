@@ -51,11 +51,6 @@ public class BookmarksFolderActivityInterpreter
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
-	@Override
 	protected String getPath(
 		SocialActivity activity, ServiceContext serviceContext) {
 
@@ -97,6 +92,11 @@ public class BookmarksFolderActivityInterpreter
 		return ModelResourcePermissionUtil.contains(
 			_bookmarksFolderModelResourcePermission, permissionChecker,
 			activity.getGroupId(), activity.getClassPK(), actionId);
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	private static final String[] _CLASS_NAMES = {

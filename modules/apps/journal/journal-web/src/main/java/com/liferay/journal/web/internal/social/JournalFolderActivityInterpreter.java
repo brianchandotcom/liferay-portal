@@ -47,11 +47,6 @@ public class JournalFolderActivityInterpreter
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return JournalResourceBundleLoader.INSTANCE;
-	}
-
-	@Override
 	protected String getLink(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -104,6 +99,11 @@ public class JournalFolderActivityInterpreter
 		return ModelResourcePermissionUtil.contains(
 			_journalFolderModelResourcePermission, permissionChecker,
 			activity.getGroupId(), activity.getClassPK(), actionId);
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return JournalResourceBundleLoader.INSTANCE;
 	}
 
 	private static final String[] _CLASS_NAMES = {

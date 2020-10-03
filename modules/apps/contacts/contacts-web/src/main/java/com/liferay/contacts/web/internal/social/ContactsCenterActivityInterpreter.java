@@ -46,11 +46,6 @@ public class ContactsCenterActivityInterpreter
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
-	@Override
 	protected String getLink(
 		SocialActivity activity, ServiceContext serviceContext) {
 
@@ -91,6 +86,11 @@ public class ContactsCenterActivityInterpreter
 		String actionId, ServiceContext serviceContext) {
 
 		return true;
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	private static final String[] _CLASS_NAMES = {User.class.getName()};

@@ -55,11 +55,6 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
-	@Override
 	protected String getPath(
 		SocialActivity activity, ServiceContext serviceContext) {
 
@@ -169,6 +164,11 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		return _blogsEntryModelResourcePermission.contains(
 			permissionChecker, activity.getClassPK(), actionId);
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	@Reference(unbind = "-")

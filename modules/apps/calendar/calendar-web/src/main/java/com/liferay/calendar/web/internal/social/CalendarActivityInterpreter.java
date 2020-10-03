@@ -57,11 +57,6 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
-	@Override
 	protected String getPath(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -138,6 +133,11 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		return _calendarModelResourcePermission.contains(
 			permissionChecker, calendarBooking.getCalendarId(), actionId);
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	private static final String[] _CLASS_NAMES = {

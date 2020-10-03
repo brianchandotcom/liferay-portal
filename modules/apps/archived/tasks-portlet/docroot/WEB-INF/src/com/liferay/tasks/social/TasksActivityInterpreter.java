@@ -40,11 +40,6 @@ public class TasksActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
-	}
-
-	@Override
 	protected String getBody(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -144,6 +139,11 @@ public class TasksActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		return TasksEntryPermission.contains(
 			permissionChecker, tasksEntry, ActionKeys.VIEW);
+	}
+
+	@Override
+	protected ResourceBundleLoader loadResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	private static final String[] _CLASS_NAMES = {TasksEntry.class.getName()};

@@ -97,8 +97,7 @@ public class CommerceOrderAssetRenderer
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundleLoader resourceBundleLoader =
-			acquireResourceBundleLoader();
+		ResourceBundleLoader resourceBundleLoader = loadResourceBundleLoader();
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);

@@ -29,9 +29,9 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 
 		_alterTableAddColumn("startDate", "DATE");
 
-		_alterColumnName("typeSettings", "taskSettings");
+		_alterColumnName("typeSettings", "taskSettings longtext");
 
-		_alterColumnName("type_", "taskType");
+		_alterColumnName("type_", "taskType varchar(75)");
 	}
 
 	private void _alterColumnName(String oldColumnName, String newColumnName)

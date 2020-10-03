@@ -17,12 +17,16 @@ package com.liferay.portal.internal.servlet;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.events.GlobalStartupAction;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -107,6 +111,7 @@ import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -448,6 +453,34 @@ public class MainServlet extends HttpServlet {
 		StartupHelperUtil.setStartupFinished(true);
 
 		_registerPortalInitialized();
+
+		// Auto deploy
+
+		try {
+			File deployDir = new File(PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
+			File destDir = new File(DeployUtil.getAutoDeployDestDir());
+			long interval = PropsValues.AUTO_DEPLOY_INTERVAL;
+
+			AutoDeployDir autoDeployDir = new AutoDeployDir(
+				AutoDeployDir.DEFAULT_NAME, deployDir, destDir, interval,
+				GlobalStartupAction.getAutoDeployListeners(false));
+
+			if (PropsValues.AUTO_DEPLOY_ENABLED) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Registering auto deploy directories");
+				}
+
+				AutoDeployUtil.registerDir(autoDeployDir);
+			}
+			else {
+				if (_log.isInfoEnabled()) {
+					_log.info("Not registering auto deploy directories");
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error("Unable to register auto deploy directories", exception);
+		}
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}

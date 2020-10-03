@@ -456,30 +456,29 @@ public class MainServlet extends HttpServlet {
 
 		// Auto deploy
 
-		try {
-			File deployDir = new File(PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
-			File destDir = new File(DeployUtil.getAutoDeployDestDir());
-			long interval = PropsValues.AUTO_DEPLOY_INTERVAL;
-
-			AutoDeployDir autoDeployDir = new AutoDeployDir(
-				AutoDeployDir.DEFAULT_NAME, deployDir, destDir, interval,
-				GlobalStartupAction.getAutoDeployListeners(false));
-
-			if (PropsValues.AUTO_DEPLOY_ENABLED) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Registering auto deploy directories");
-				}
-
-				AutoDeployUtil.registerDir(autoDeployDir);
+		if (PropsValues.AUTO_DEPLOY_ENABLED) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Registering auto deploy directories");
 			}
-			else {
-				if (_log.isInfoEnabled()) {
-					_log.info("Not registering auto deploy directories");
-				}
+
+			try {
+				AutoDeployUtil.registerDir(
+					new AutoDeployDir(
+						AutoDeployDir.DEFAULT_NAME,
+						new File(PropsValues.AUTO_DEPLOY_DEPLOY_DIR),
+						new File(DeployUtil.getAutoDeployDestDir()),
+						PropsValues.AUTO_DEPLOY_INTERVAL,
+						GlobalStartupAction.getAutoDeployListeners(false)));
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to register auto deploy directories", exception);
 			}
 		}
-		catch (Exception exception) {
-			_log.error("Unable to register auto deploy directories", exception);
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info("Not registering auto deploy directories");
+			}
 		}
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);

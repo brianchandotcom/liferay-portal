@@ -95,6 +95,7 @@
 	<exceptions>
 		<exception>DispatchTriggerEndDate</exception>
 		<exception>DispatchTriggerName</exception>
+		<exception>DispatchTriggerScheduler</exception>
 		<exception>DispatchTriggerStartDate</exception>
 		<exception>DuplicateDispatchTrigger</exception>
 	</exceptions>

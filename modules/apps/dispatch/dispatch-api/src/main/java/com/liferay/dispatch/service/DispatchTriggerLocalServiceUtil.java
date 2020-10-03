@@ -328,6 +328,20 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().getPreviousFireDate(dispatchTriggerId);
 	}
 
+	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
+		getUserDispatchTriggers(
+			long companyId, long userId, int start, int end) {
+
+		return getService().getUserDispatchTriggers(
+			companyId, userId, start, end);
+	}
+
+	public static int getUserDispatchTriggersCount(
+		long companyId, long userId) {
+
+		return getService().getUserDispatchTriggersCount(companyId, userId);
+	}
+
 	/**
 	 * Updates the dispatch trigger in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -131,6 +131,85 @@ public class DispatchTriggerServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
+			getDispatchTriggers(HttpPrincipal httpPrincipal, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DispatchTriggerServiceUtil.class, "getDispatchTriggers",
+				_getDispatchTriggersParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.dispatch.model.DispatchTrigger>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getDispatchTriggersCount(HttpPrincipal httpPrincipal)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DispatchTriggerServiceUtil.class, "getDispatchTriggersCount",
+				_getDispatchTriggersCountParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.dispatch.model.DispatchTrigger
 			updateDispatchTrigger(
 				HttpPrincipal httpPrincipal, long dispatchTriggerId,
@@ -144,7 +223,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "updateDispatchTrigger",
-				_updateDispatchTriggerParameterTypes2);
+				_updateDispatchTriggerParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, dispatchTriggerId, active, cronExpression,
@@ -191,7 +270,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "updateDispatchTrigger",
-				_updateDispatchTriggerParameterTypes3);
+				_updateDispatchTriggerParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, dispatchTriggerId, name,
@@ -235,13 +314,17 @@ public class DispatchTriggerServiceHttp {
 		};
 	private static final Class<?>[] _deleteDispatchTriggerParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateDispatchTriggerParameterTypes2 =
+	private static final Class<?>[] _getDispatchTriggersParameterTypes2 =
+		new Class[] {int.class, int.class};
+	private static final Class<?>[] _getDispatchTriggersCountParameterTypes3 =
+		new Class[] {};
+	private static final Class<?>[] _updateDispatchTriggerParameterTypes4 =
 		new Class[] {
 			long.class, boolean.class, String.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class, int.class,
 			int.class, int.class, int.class, int.class
 		};
-	private static final Class<?>[] _updateDispatchTriggerParameterTypes3 =
+	private static final Class<?>[] _updateDispatchTriggerParameterTypes5 =
 		new Class[] {
 			long.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class

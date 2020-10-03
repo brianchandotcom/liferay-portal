@@ -76,6 +76,39 @@ public class DispatchTriggerServiceSoap {
 		}
 	}
 
+	public static com.liferay.dispatch.model.DispatchTriggerSoap[]
+			getDispatchTriggers(int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.dispatch.model.DispatchTrigger>
+				returnValue = DispatchTriggerServiceUtil.getDispatchTriggers(
+					start, end);
+
+			return com.liferay.dispatch.model.DispatchTriggerSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getDispatchTriggersCount() throws RemoteException {
+		try {
+			int returnValue =
+				DispatchTriggerServiceUtil.getDispatchTriggersCount();
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.dispatch.model.DispatchTriggerSoap
 			updateDispatchTrigger(
 				long dispatchTriggerId, boolean active, String cronExpression,

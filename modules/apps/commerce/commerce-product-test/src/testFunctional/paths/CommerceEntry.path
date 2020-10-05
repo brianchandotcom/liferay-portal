@@ -515,6 +515,11 @@
 	<td>//div[contains(@class,'data-set-filter')]//div[contains(.,'${key_filterItem}') and @class='custom-control custom-${key_inputType}']//input</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILTER_INPUT_TYPE</td>
+	<td>//div[contains(@class,'data-set-filter')]//div[contains(@class,'${key_inputType}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

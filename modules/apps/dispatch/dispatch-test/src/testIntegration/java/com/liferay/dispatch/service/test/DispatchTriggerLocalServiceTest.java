@@ -247,30 +247,30 @@ public class DispatchTriggerLocalServiceTest {
 		throws Exception {
 
 		Assert.assertEquals(
-			"Dispatch trigger active value", expected.isActive(),
+			"Dispatch trigger active value", expectedDispatchTrigger.isActive(),
 			actual.isActive());
 
 		Assert.assertEquals(
 			"Dispatch trigger cron expression value",
-			expected.getCronExpression(), actual.getCronExpression());
+			expectedDispatchTrigger.getCronExpression(), actual.getCronExpression());
 
 		Assert.assertNotNull(
 			"Dispatch trigger start date value", actual.getStartDate());
 	}
 
 	private void _basicAssertEquals(
-		DispatchTrigger actual, DispatchTriggerValues expected) {
+		DispatchTrigger actualDispatchTrigger, DispatchTriggerValues expected) {
 
-		Assert.assertNotNull(actual);
-		Assert.assertEquals(expected.getUserId(), actual.getUserId());
-		Assert.assertEquals(expected.getName(), actual.getName());
-		Assert.assertEquals(expected.isSystem(), actual.isSystem());
-		Assert.assertEquals(expected.getTaskType(), actual.getTaskType());
+		Assert.assertNotNull(actualDispatchTrigger);
+		Assert.assertEquals(expectedDispatchTrigger.getUserId(), actualDispatchTrigger.getUserId());
+		Assert.assertEquals(expectedDispatchTrigger.getName(), actualDispatchTrigger.getName());
+		Assert.assertEquals(expectedDispatchTrigger.isSystem(), actualDispatchTrigger.isSystem());
+		Assert.assertEquals(expectedDispatchTrigger.getTaskType(), actualDispatchTrigger.getTaskType());
 
 		UnicodeProperties actualTaskSettingsUnicodeProperties =
-			actual.getTaskSettingsUnicodeProperties();
+			actualDispatchTrigger.getTaskSettingsUnicodeProperties();
 
-		if (expected.getTaskSettingsUnicodeProperties() == null) {
+		if (expectedDispatchTrigger.getTaskSettingsUnicodeProperties() == null) {
 			Assert.assertNull(
 				"Dispatch trigger job properties",
 				actualTaskSettingsUnicodeProperties);
@@ -283,13 +283,13 @@ public class DispatchTriggerLocalServiceTest {
 
 		Assert.assertEquals(
 			"Dispatch trigger job properties size",
-			expected.getTaskSettingsUnicodePropertiesSize(),
+			expectedDispatchTrigger.getTaskSettingsUnicodePropertiesSize(),
 			actualTaskSettingsUnicodeProperties.size());
 
 		actualTaskSettingsUnicodeProperties.forEach(
 			(key, value) -> Assert.assertEquals(
 				String.format("Dispatch trigger job property for key %s", key),
-				expected.getTaskSettingsProperty(key), value));
+				expectedDispatchTrigger.getTaskSettingsProperty(key), value));
 	}
 
 	@Inject

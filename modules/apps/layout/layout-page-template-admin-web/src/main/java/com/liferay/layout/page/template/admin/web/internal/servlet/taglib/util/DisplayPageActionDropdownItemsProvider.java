@@ -474,10 +474,7 @@ public class DisplayPageActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getViewUsagesDisplayPageActionUnsafeConsumer() {
 
-		PortletURL viewUsagesURL = PortalUtil.getControlPanelPortletURL(
-			_httpServletRequest,
-			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-			PortletRequest.RENDER_PHASE);
+		PortletURL viewUsagesURL = _renderResponse.createRenderURL();
 
 		viewUsagesURL.setParameter(
 			"layoutPageTemplateEntryId",

@@ -75,6 +75,24 @@ export function ImagePropertiesPanel({item}) {
 
 	const [imageSize, setImageSize] = useState(null);
 
+	const editableContent = useSelector((state) => {
+		const content = selectEditableValueContent(
+			state,
+			fragmentEntryLinkId,
+			editableId,
+			processorKey
+		);
+
+		return content;
+	});
+
+	const imageUrl = editableContent?.url ?? editableContent;
+
+	const imageTitle =
+		editableConfig.imageTitle ||
+		(imageUrl === editableValue.defaultValue ? '' : imageUrl);
+
+
 	useEffect(() => {
 		if (editableElement != null) {
 			const setSize = () => {
@@ -150,21 +168,6 @@ export function ImagePropertiesPanel({item}) {
 		selectedViewportSize,
 		state.languageId,
 	]);
-
-	const imageUrl = useSelector((state) => {
-		const content = selectEditableValueContent(
-			state,
-			fragmentEntryLinkId,
-			editableId,
-			processorKey
-		);
-
-		return content?.url ?? content;
-	});
-
-	const imageTitle =
-		editableConfig.imageTitle ||
-		(imageUrl === editableValue.defaultValue ? '' : imageUrl);
 
 	const updateEditableValues = (
 		alt,
@@ -300,7 +303,7 @@ export function ImagePropertiesPanel({item}) {
 		<>
 			{canUpdateImage && (
 				<ImageSelector
-					imageTitle={editableConfig.imageTitle || imageUrl}
+					imageTitle={imageTitle}
 					label={Liferay.Language.get('image')}
 					onClearButtonPressed={() => onImageChange('', '')}
 					onImageSelected={(image) =>
@@ -325,14 +328,14 @@ export function ImagePropertiesPanel({item}) {
 				</ClayForm.Group>
 			)}
 
-			{imageUrl && imageSize && (
+			{imageTitle && imageSize && (
 				<div className="mb-2 small">
 					<b>{Liferay.Language.get('width')}:</b>
 					<span className="ml-2">{imageSize.width}px</span>
 				</div>
 			)}
 
-			{imageUrl && imageFileSize && (
+			{imageTitle && imageFileSize && (
 				<div className="mb-2 small">
 					<b>{Liferay.Language.get('file-size')}:</b>
 					<span className="ml-2">

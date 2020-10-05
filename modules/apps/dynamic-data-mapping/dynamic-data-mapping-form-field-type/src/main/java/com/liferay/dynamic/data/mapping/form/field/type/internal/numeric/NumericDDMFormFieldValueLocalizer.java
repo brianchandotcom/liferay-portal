@@ -65,7 +65,7 @@ public class NumericDDMFormFieldValueLocalizer
 				String lastChar = String.valueOf(
 					value.charAt(value.length() - 1));
 
-				if (_editing &&
+				if (isEditingFieldValue() &&
 					(lastChar.equals(StringPool.COMMA) ||
 					 lastChar.equals(StringPool.PERIOD))) {
 

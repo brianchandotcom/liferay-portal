@@ -16,26 +16,30 @@ import React, {useState} from 'react';
 
 import {AppContextProvider} from '../../AppContext.es';
 import useLazy from '../../hooks/useLazy.es';
+import {PermissionsContextProvider} from './PermissionsContext.es';
 import TranslationManagerEntry, {
 	getStorageLanguageId,
 } from './TranslationManagerEntry.es';
 
 export default ({appTab, ...props}) => {
 	const EditPage = useLazy(true);
-	const defaultLanguageId = getStorageLanguageId(props.appId);
+	const {appId, dataDefinitionId} = props;
+	const defaultLanguageId = getStorageLanguageId(appId);
 	const [userLanguageId, setUserLanguageId] = useState(defaultLanguageId);
 
 	props.userLanguageId = userLanguageId;
 
 	return (
 		<AppContextProvider {...props}>
-			<TranslationManagerEntry
-				dataDefinitionId={props.dataDefinitionId}
-				setUserLanguageId={setUserLanguageId}
-				userLanguageId={userLanguageId}
-			/>
+			<PermissionsContextProvider dataDefinitionId={dataDefinitionId}>
+				<TranslationManagerEntry
+					dataDefinitionId={props.dataDefinitionId}
+					setUserLanguageId={setUserLanguageId}
+					userLanguageId={userLanguageId}
+				/>
 
-			<EditPage module={appTab.editEntryPoint} props={props} />
+				<EditPage module={appTab.editEntryPoint} props={props} />
+			</PermissionsContextProvider>
 		</AppContextProvider>
 	);
 };

@@ -17,6 +17,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import {AppContext} from '../../AppContext.es';
+import usePermissions from '../../hooks/usePermissions.es';
 import {getItem} from '../../utils/client.es';
 import {getLocalizedUserPreferenceValue} from '../../utils/lang.es';
 
@@ -40,6 +41,8 @@ export default ({
 	userLanguageId,
 }) => {
 	const {appId} = useContext(AppContext);
+	const {view: viewPermission} = usePermissions();
+
 	const [{app, dataDefinition}, setState] = useState({
 		app: {
 			name: {},
@@ -58,7 +61,7 @@ export default ({
 	};
 
 	useEffect(() => {
-		if (showAppName) {
+		if (viewPermission && showAppName) {
 			getItem(`/o/app-builder/v1.0/apps/${appId}`).then((app) =>
 				setState((prevState) => ({
 					...prevState,
@@ -66,10 +69,10 @@ export default ({
 				}))
 			);
 		}
-	}, [appId, showAppName]);
+	}, [appId, showAppName, viewPermission]);
 
 	useEffect(() => {
-		if (dataDefinitionId) {
+		if (viewPermission && dataDefinitionId) {
 			getItem(
 				`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
 			).then((dataDefinition) =>
@@ -79,7 +82,7 @@ export default ({
 				}))
 			);
 		}
-	}, [dataDefinitionId]);
+	}, [dataDefinitionId, viewPermission]);
 
 	const availableLanguageIds = dataDefinition.availableLanguageIds.reduce(
 		(acc, cur) => {
@@ -102,6 +105,10 @@ export default ({
 	const appTranslationManager = document.querySelector(
 		'#appTranslationManager'
 	);
+
+	if (!viewPermission) {
+		return <></>;
+	}
 
 	return (
 		<div>

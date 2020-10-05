@@ -120,6 +120,7 @@ const FragmentEditor = ({
 			});
 	};
 
+	/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	const saveDraft = useCallback(
 		debounce(() => {
 			setChangesStatus(CHANGES_STATUS.saving);

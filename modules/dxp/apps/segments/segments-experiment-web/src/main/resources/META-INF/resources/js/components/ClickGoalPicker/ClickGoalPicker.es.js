@@ -320,6 +320,7 @@ function Overlay({allowEdit, root, targetableElements}) {
 
 	const [geometry, setGeometry] = useState(getRootElementGeometry(root));
 
+	/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	const handleResize = useCallback(
 		throttle(() => {
 			setGeometry(getRootElementGeometry(root));

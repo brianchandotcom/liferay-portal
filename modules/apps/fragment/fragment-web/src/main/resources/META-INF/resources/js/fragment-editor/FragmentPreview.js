@@ -76,6 +76,7 @@ const FragmentPreview = ({
 
 	const isMounted = useIsMounted();
 
+	/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	const updatePreview = useCallback(
 		debounce(() => {
 			if (!loading && isMounted()) {
@@ -108,6 +109,7 @@ const FragmentPreview = ({
 		[configuration, css, html, js, iframeRef]
 	);
 
+	/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	const updatePreviewStyles = useCallback(
 		debounce(() => {
 			const ratio = SIZE_RATIOS[currentPreviewSize];

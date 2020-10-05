@@ -41,6 +41,7 @@ export default function ForecastChart({
 	function startLoading() {
 		setLoading(true);
 	}
+	/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	useEffect(updateData, [accountsId]);
 	useEffect(stopLoading, [chartData]);
 

@@ -131,6 +131,7 @@ export const useSelectorCallback = (
 		initialState
 	);
 
+	/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	const selectorCallback = useCallback(selector, dependencies);
 
 	useEffect(() => {

@@ -42,14 +42,18 @@ public class DisplayPageUsageDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+	}
+
+	public int getAssetDisplayPageEntriesCount() {
+		if (_assetDisplayPageEntriesCount != null) {
+			return _assetDisplayPageEntriesCount;
+		}
 
 		_assetDisplayPageEntriesCount =
 			AssetDisplayPageEntryServiceUtil.
 				getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
 					getLayoutPageTemplateEntryId());
-	}
 
-	public int getAssetDisplayPageEntriesCount() {
 		return _assetDisplayPageEntriesCount;
 	}
 
@@ -142,14 +146,14 @@ public class DisplayPageUsageDisplayContext {
 
 		searchContainer.setResults(assetDisplayPageEntries);
 
-		searchContainer.setTotal(_assetDisplayPageEntriesCount);
+		searchContainer.setTotal(getAssetDisplayPageEntriesCount());
 
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
 	}
 
-	private final int _assetDisplayPageEntriesCount;
+	private Integer _assetDisplayPageEntriesCount;
 	private final HttpServletRequest _httpServletRequest;
 	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;

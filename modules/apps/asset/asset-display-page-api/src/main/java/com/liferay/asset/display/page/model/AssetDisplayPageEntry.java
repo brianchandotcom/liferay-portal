@@ -60,7 +60,4 @@ public interface AssetDisplayPageEntry
 
 			};
 
-	public String getTitle(java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

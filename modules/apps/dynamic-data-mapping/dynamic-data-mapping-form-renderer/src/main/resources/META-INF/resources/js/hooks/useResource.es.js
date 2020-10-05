@@ -17,7 +17,7 @@ import {fetch} from 'frontend-js-web';
 
 import {useStorage} from './useStorage.es';
 
-const ENDPOINT_FIELD_TYPES = `${window.location.origin}/o/dynamic-data-mapping-form-field-types`;
+const ENDPOINT_FIELD_TYPES = `${window.location.origin}${themeDisplay.getPathContext()}/o/dynamic-data-mapping-form-field-types`;
 
 const HEADERS = {
 	Accept: 'application/json',

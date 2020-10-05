@@ -40,9 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Rubén Pulido
  */
-public class DisplayPageUsageDisplayContext {
+public class DisplayPageUsagesDisplayContext {
 
-	public DisplayPageUsageDisplayContext(
+	public DisplayPageUsagesDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 

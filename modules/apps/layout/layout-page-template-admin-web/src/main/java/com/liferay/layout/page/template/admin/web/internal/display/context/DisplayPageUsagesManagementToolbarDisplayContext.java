@@ -25,10 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Rubén Pulido
  */
-public class DisplayPageUsageManagementToolbarDisplayContext
+public class DisplayPageUsagesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public DisplayPageUsageManagementToolbarDisplayContext(
+	public DisplayPageUsagesManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -41,7 +41,7 @@ public class DisplayPageUsageManagementToolbarDisplayContext
 
 	@Override
 	public String getComponentId() {
-		return "displayPageUsageManagementToolbar";
+		return "displayPageUsagesManagementToolbar";
 	}
 
 	@Override

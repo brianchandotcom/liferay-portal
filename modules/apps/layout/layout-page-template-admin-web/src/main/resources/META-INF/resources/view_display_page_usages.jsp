@@ -17,23 +17,23 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DisplayPageUsageDisplayContext displayPageUsageDisplayContext = new DisplayPageUsageDisplayContext(request, renderRequest, renderResponse);
+DisplayPageUsagesDisplayContext displayPageUsagesDisplayContext = new DisplayPageUsagesDisplayContext(request, renderRequest, renderResponse);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
 
-LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(displayPageUsageDisplayContext.getLayoutPageTemplateEntryId());
+LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(displayPageUsagesDisplayContext.getLayoutPageTemplateEntryId());
 
 renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTemplateEntry.getName()));
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new DisplayPageUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, displayPageUsageDisplayContext.getSearchContainer()) %>"
+	displayContext="<%= new DisplayPageUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, displayPageUsagesDisplayContext.getSearchContainer()) %>"
 />
 
 <clay:container-fluid>
 	<liferay-ui:search-container
-		searchContainer="<%= displayPageUsageDisplayContext.getSearchContainer() %>"
+		searchContainer="<%= displayPageUsagesDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.display.page.model.AssetDisplayPageEntry"
@@ -43,7 +43,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTempl
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				name="title"
-				value="<%= HtmlUtil.escape(displayPageUsageDisplayContext.getTitle(assetDisplayPageEntry, themeDisplay.getLocale())) %>"
+				value="<%= HtmlUtil.escape(displayPageUsagesDisplayContext.getTitle(assetDisplayPageEntry, themeDisplay.getLocale())) %>"
 			/>
 
 			<liferay-ui:search-container-column-date

@@ -117,11 +117,13 @@ public class ViewCountEntryLocalServiceImpl
 	}
 
 	@Override
+	@Transactional(enabled = false)
 	public boolean isViewCountEnabled() {
 		return _viewCountConfiguration.enabled();
 	}
 
 	@Override
+	@Transactional(enabled = false)
 	public boolean isViewCountEnabled(long classNameId) {
 		if (_disabledClassNameIds.contains(classNameId)) {
 			return false;

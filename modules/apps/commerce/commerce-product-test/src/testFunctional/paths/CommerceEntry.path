@@ -525,6 +525,11 @@
 	<td>//div[contains(@class,'dropdown-menu show')]//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>HEALTH_CHECK_ICON_CHECK_N</td>
+	<td>//div[contains(@class,'commerce-health-status-check-row-icon-check${key_value}')][not(contains(@class,'hide'))]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

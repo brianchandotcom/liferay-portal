@@ -3,8 +3,8 @@ dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	testCompile group: "org.jodd", name: "jodd-bean", version: "5.1.4"
-	testCompile group: "org.jodd", name: "jodd-json", version: "5.1.4"
+	testCompile group: "org.jodd", name: "jodd-bean", version: "3.6.4"
+	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.json", name: "json", version: "20180813"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	testCompile project(":apps:sync:sync-api")

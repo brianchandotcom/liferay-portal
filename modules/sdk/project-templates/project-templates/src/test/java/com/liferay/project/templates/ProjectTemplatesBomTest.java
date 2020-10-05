@@ -177,10 +177,10 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 			File modulesDir, String template, File workspaceDir, String product)
 		throws Exception {
 
-		File apiProjectDir = buildTemplateWithGradle(
+		File projectDir = buildTemplateWithGradle(
 			modulesDir, template, template + "test", "--product", product);
 
-		testOutput(apiProjectDir, template, workspaceDir);
+		testOutput(projectDir, template, workspaceDir);
 
 		if (!template.contains("war")) {
 			_resolveProject(template, workspaceDir);

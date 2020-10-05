@@ -18,11 +18,11 @@ import com.liferay.frontend.css.variables.ScopedCSSVariables;
 import com.liferay.frontend.css.variables.ScopedCSSVariablesProvider;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.frontend.token.definition.parsed.FrontendToken;
+import com.liferay.frontend.token.definition.parsed.FrontendTokenCategory;
+import com.liferay.frontend.token.definition.parsed.FrontendTokenMapping;
+import com.liferay.frontend.token.definition.parsed.FrontendTokenSet;
+import com.liferay.frontend.token.definition.parsed.ParsedFrontendTokenDefinition;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,13 +41,18 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Chema Balsas
  */
-@Component(service = ScopedCSSVariablesProvider.class)
+@Component(
+	property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = ScopedCSSVariablesProvider.class
+)
 public class DefaultThemeScopedCSSVariablesProvider
 	implements ScopedCSSVariablesProvider {
 
 	@Override
 	public Collection<ScopedCSSVariables> getScopedCSSVariablesCollection(
 		HttpServletRequest httpServletRequest) {
+
+		Map<String, String> cssVariables = new HashMap<>();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -60,103 +65,54 @@ public class DefaultThemeScopedCSSVariablesProvider
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				layoutSet.getThemeId());
 
+		ParsedFrontendTokenDefinition parsedFrontendTokenDefinition =
+			frontendTokenDefinition.getParsedFrontendTokenDefinition(
+				themeDisplay.getLocale());
+
+		Collection<FrontendTokenCategory> frontendTokenCategories =
+			parsedFrontendTokenDefinition.getFrontendTokenCategories();
+
+		for (FrontendTokenCategory frontendTokenCategory :
+				frontendTokenCategories) {
+
+			for (FrontendTokenSet frontendTokenSet :
+					frontendTokenCategory.getFrontendTokenSets()) {
+
+				for (FrontendToken frontendToken :
+						frontendTokenSet.getFrontendTokens()) {
+
+					for (FrontendTokenMapping frontendTokenMapping :
+							frontendToken.getFrontendTokenMappings()) {
+
+						String type = frontendTokenMapping.getType();
+
+						if (!type.equals("cssVariable")) {
+							continue;
+						}
+
+						cssVariables.put(
+							frontendTokenMapping.getValue(),
+							frontendToken.getDefaultValue());
+					}
+				}
+			}
+		}
+
 		return Collections.singletonList(
 			new ScopedCSSVariables() {
 
+				@Override
 				public Map<String, String> getCSSVariables() {
-					Map<String, String> cssVariables = new HashMap<>();
-
-					try {
-						JSONObject frontendTokenDefinitionJSONObject =
-							JSONFactoryUtil.createJSONObject(
-								frontendTokenDefinition.getJSON(
-									themeDisplay.getLocale()));
-
-						JSONArray frontendTokenCategoriesJSONArray =
-							frontendTokenDefinitionJSONObject.getJSONArray(
-								"frontendTokenCategories");
-
-						if (frontendTokenCategoriesJSONArray != null) {
-							for (Object frontendTokenCategory :
-									frontendTokenCategoriesJSONArray) {
-
-								JSONArray frontendTokenSetsJSONArray =
-									((JSONObject)frontendTokenCategory).
-										getJSONArray("frontendTokenSets");
-
-								if (frontendTokenSetsJSONArray != null) {
-									for (Object frontendTokenSet :
-											frontendTokenSetsJSONArray) {
-
-										JSONArray frontendTokensJSONArray =
-											((JSONObject)frontendTokenSet).
-												getJSONArray("frontendTokens");
-
-										if (frontendTokensJSONArray != null) {
-											for (Object frontendToken :
-													frontendTokensJSONArray) {
-
-												JSONObject
-													frontendTokenJSONObject =
-														(JSONObject)
-															frontendTokensJSONArray;
-
-												JSONArray
-													frontendTokenMappingsJSONArray =
-														frontendTokenJSONObject.
-															getJSONArray(
-																"mappings");
-
-												for (Object
-														frontendTokenMapping :
-															frontendTokenMappingsJSONArray) {
-
-													JSONObject
-														frontendTokenMappingJSONObject =
-															(JSONObject)
-																frontendTokenMapping;
-
-													if (frontendTokenMappingJSONObject.
-															getString(
-																"type"
-															).equals(
-																"cssVariable"
-															)) {
-
-														cssVariables.put(
-															frontendTokenMappingJSONObject.
-																getString(
-																	"value"),
-															frontendTokenJSONObject.
-																getString(
-																	"defaultValue"));
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-					catch (JSONException jsonException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug("Unable to parse JSON", jsonException);
-						}
-					}
-
 					return cssVariables;
 				}
 
+				@Override
 				public String getScope() {
-					return "#wrapper";
+					return ":root";
 				}
 
 			});
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultThemeScopedCSSVariablesProvider.class);
 
 	@Reference
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;

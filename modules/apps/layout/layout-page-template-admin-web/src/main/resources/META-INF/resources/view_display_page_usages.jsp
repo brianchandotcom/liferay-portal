@@ -20,7 +20,7 @@
 DisplayPageUsagesDisplayContext displayPageUsagesDisplayContext = new DisplayPageUsagesDisplayContext(request, renderRequest, renderResponse);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
+portletDisplay.setURLBack(displayPageUsagesDisplayContext.getRedirect());
 
 LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(displayPageUsagesDisplayContext.getLayoutPageTemplateEntryId());
 

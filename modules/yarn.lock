@@ -1024,7 +1024,7 @@
     "@babel/plugin-transform-react-jsx-source" "^7.10.4"
     "@babel/plugin-transform-react-pure-annotations" "^7.10.4"
 
-"@babel/preset-typescript@7.10.4":
+"@babel/preset-typescript@7.10.4", "@babel/preset-typescript@^7.10.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.10.4.tgz#7d5d052e52a682480d6e2cc5aa31be61c8c25e36"
   integrity sha512-SdYnvGPv+bLlwkF2VkJnaX/ni1sMNetcGI1+nThF1gyv6Ph8Qucc4ZZAjM5yZcE/AKRXIOTZz7eSRDWOEjPyRQ==
@@ -1908,10 +1908,10 @@
   dependencies:
     stream "^0.0.2"
 
-"@liferay/eslint-config@21.2.0":
-  version "21.2.0"
-  resolved "https://registry.yarnpkg.com/@liferay/eslint-config/-/eslint-config-21.2.0.tgz#fc7b4d3af5b1c59bcd62ef4584e4707c13fec170"
-  integrity sha512-k4InjysWu8avwITtK7xmmjd3up9+G/8FM/hHoUZ9bhW0jUCf9jxLp0cmWjPfWOlaNJ30e2X1+LXNYSQFgcxSyw==
+"@liferay/eslint-config@21.2.1":
+  version "21.2.1"
+  resolved "https://registry.yarnpkg.com/@liferay/eslint-config/-/eslint-config-21.2.1.tgz#cd29c21140098a49d566c37082467d5787aeb90b"
+  integrity sha512-fPnX6Un8zypPeAQ+GHSp67JnooBq56S39oCAQvP6fubgxOCD9vzeGG1lkeEhgMwpvo3D2zn2hNc0zlKJhtnOcA==
   dependencies:
     "@typescript-eslint/eslint-plugin" "4.3.0"
     "@typescript-eslint/parser" "4.3.0"
@@ -1919,7 +1919,7 @@
     eslint-plugin-no-for-of-loops "^1.0.0"
     eslint-plugin-no-only-tests "^2.1.0"
     eslint-plugin-notice "0.9.10"
-    eslint-plugin-react "^7.21.2"
+    eslint-plugin-react "^7.21.3"
     eslint-plugin-react-hooks "^4.1.2"
     eslint-plugin-sort-destructure-keys "^1.3.5"
 
@@ -1945,10 +1945,10 @@
     liferay-npm-bundler-plugin-replace-browser-modules "2.19.3"
     liferay-npm-bundler-plugin-resolve-linked-dependencies "2.19.3"
 
-"@liferay/npm-scripts@33.1.1":
-  version "33.1.1"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-33.1.1.tgz#513a4e27c61614081a99cf186e8ac138b1bee1c9"
-  integrity sha512-U+1dFboMHVXGcNOMhJY8ENzMUe4MUTP6UljrqHAmW1YbnCilWZB1qnPw6deOmYfmWcOn2dCcKABkQROf5eyapQ==
+"@liferay/npm-scripts@33.1.2":
+  version "33.1.2"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-33.1.2.tgz#7ac078842eafdeb5f9a16802f6627b4b9f42d3d6"
+  integrity sha512-OcKliuh0hP3l3aw6IxA+VdwYBRviJRC/hUXBmt5yBi/zttmUT2ZOlRNvuKRcppMszK6e9eiumwBuwk4cjfknyg==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -1959,7 +1959,8 @@
     "@babel/plugin-proposal-optional-chaining" "^7.8.3"
     "@babel/preset-env" "^7.4.2"
     "@babel/preset-react" "^7.8.3"
-    "@liferay/eslint-config" "21.2.0"
+    "@babel/preset-typescript" "^7.10.4"
+    "@liferay/eslint-config" "21.2.1"
     "@liferay/jest-junit-reporter" "1.2.0"
     "@liferay/npm-bundler-preset-liferay-dev" "4.6.3"
     "@storybook/addon-a11y" "^5.1.9"
@@ -1973,6 +1974,7 @@
     "@testing-library/react" "^8.0.9"
     "@testing-library/react-hooks" "^3.4.2"
     "@testing-library/user-event" "^4.2.4"
+    "@types/jest" "^26.0.14"
     babel-eslint "^10.0.3"
     babel-jest "^25.1.0"
     babel-loader "^8.1.0"
@@ -2010,6 +2012,8 @@
     style-ext-html-webpack-plugin "4.1.2"
     style-loader "^1.1.3"
     stylelint "^13.2.0"
+    ts-loader "^8.0.4"
+    typescript "^4.0.3"
     webpack "^4.39.1"
     webpack-cli "^3.3.6"
     webpack-dev-server "^3.7.2"
@@ -3169,6 +3173,14 @@
   version "26.0.9"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.9.tgz#0543b57da5f0cd949c5f423a00c56c492289c989"
   integrity sha512-k4qFfJ5AUKrWok5KYXp2EPm89b0P/KZpl7Vg4XuOTVVQEhLDBDBU3iBFrjjdgd8fLw96aAtmnwhXHl63bWeBQQ==
+  dependencies:
+    jest-diff "^25.2.1"
+    pretty-format "^25.2.1"
+
+"@types/jest@^26.0.14":
+  version "26.0.14"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.14.tgz#078695f8f65cb55c5a98450d65083b2b73e5a3f3"
+  integrity sha512-Hz5q8Vu0D288x3iWXePSn53W7hAjP0H7EQ6QvDO9c7t46mR0lNOLlfuwQ+JkVxuhygHzlzPX+0jKdA3ZgSh+Vg==
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
@@ -8078,10 +8090,10 @@ eslint-plugin-react-hooks@^4.1.2:
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.1.2.tgz#2eb53731d11c95826ef7a7272303eabb5c9a271e"
   integrity sha512-ykUeqkGyUGgwTtk78C0o8UG2fzwmgJ0qxBGPp2WqRKsTwcLuVf01kTDRAtOsd4u6whX2XOC8749n2vPydP82fg==
 
-eslint-plugin-react@^7.21.2:
-  version "7.21.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.21.2.tgz#3bd5d2c4c36d5a0428d0d6dda301ac9a84d681b2"
-  integrity sha512-j3XKvrK3rpBzveKFbgAeGsWb9uz6iUOrR0jixRfjwdFeGSRsXvVTFtHDQYCjsd1/6Z/xvb8Vy3LiI5Reo7fDrg==
+eslint-plugin-react@^7.21.3:
+  version "7.21.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.21.3.tgz#71655d2af5155b19285ec929dd2cdc67a4470b52"
+  integrity sha512-OI4GwTCqyIb4ipaOEGLWdaOHCXZZydStAsBEPB2e1ZfNM37bojpgO1BoOQbFb0eLVz3QLDx7b+6kYcrxCuJfhw==
   dependencies:
     array-includes "^3.1.1"
     array.prototype.flatmap "^1.2.3"
@@ -18572,6 +18584,17 @@ ts-loader@8.0.2:
     micromatch "^4.0.0"
     semver "^6.0.0"
 
+ts-loader@^8.0.4:
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-8.0.4.tgz#02b9c91fbcfdb3114d8b1e98a3829265270eee7a"
+  integrity sha512-5u8KF1SW8eCUb/Ff7At81e3wznPmT/27fvaGRO9CziVy+6NlPVRvrzSox4OwU0/e6OflOUB32Err4VquysCSAQ==
+  dependencies:
+    chalk "^2.3.0"
+    enhanced-resolve "^4.0.0"
+    loader-utils "^1.0.2"
+    micromatch "^4.0.0"
+    semver "^6.0.0"
+
 ts-pnp@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.1.2.tgz#be8e4bfce5d00f0f58e0666a82260c34a57af552"
@@ -18679,6 +18702,11 @@ typescript@3.9.7:
   version "3.9.7"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
   integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
+
+typescript@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.3.tgz#153bbd468ef07725c1df9c77e8b453f8d36abba5"
+  integrity sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
 
 ua-parser-js@^0.7.18:
   version "0.7.19"

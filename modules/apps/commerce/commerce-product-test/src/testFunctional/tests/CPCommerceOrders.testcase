@@ -89,11 +89,13 @@ definition {
 			category = "Order Management",
 			portlet = "Orders");
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Pending");
+		CommerceEntry.addNewFilters(
+			filterCategory = "Order Status",
+			filterItem = "Pending");
 
 		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
-		CommerceEntry.clickNoError(menuItem = "Edit");
+		CommerceEntry.clickNoError(menuItem = "View");
 
 		CommerceOrders.editOrderItemDetails(
 			orderItemQuantity = "4",
@@ -103,11 +105,13 @@ definition {
 			category = "Order Management",
 			portlet = "Orders");
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Pending");
+		CommerceEntry.addNewFilters(
+			filterCategory = "Order Status",
+			filterItem = "Pending");
 
 		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
-		CommerceEntry.clickNoError(menuItem = "Edit");
+		CommerceEntry.clickNoError(menuItem = "View");
 
 		CommerceOrders.viewOrdersEntry(
 			addressAddress = "Test Address",

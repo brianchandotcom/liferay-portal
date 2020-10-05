@@ -26,6 +26,7 @@ import {useDrag} from 'react-dnd';
 import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
 import {useConstants} from '../contexts/ConstantsContext';
+import {useItems, useSetItems} from '../contexts/ItemsContext';
 import {
 	useSelectedMenuItemId,
 	useSetSelectedMenuItemId,
@@ -34,23 +35,30 @@ import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 
 export const MenuItem = ({item}) => {
 	const {deleteSiteNavigationMenuItemURL, portletNamespace} = useConstants();
+	const {siteNavigationMenuItemId, title, type} = item;
+	const items = useItems();
+	const setItems = useSetItems();
 	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
 
-	const selected = useSelectedMenuItemId() === item.siteNavigationMenuItemId;
+	const selected = useSelectedMenuItemId() === siteNavigationMenuItemId;
 
 	const deleteMenuItem = () => {
 		fetch(deleteSiteNavigationMenuItemURL, {
 			body: objectToFormData({
-				[`${portletNamespace}siteNavigationMenuItemId`]: item.siteNavigationMenuItemId,
+				[`${portletNamespace}siteNavigationMenuItemId`]: siteNavigationMenuItemId,
 			}),
 			method: 'POST',
+		}).then(() => {
+			const newItems = deleteItem(items, siteNavigationMenuItemId);
+
+			setItems(newItems);
 		});
 	};
 
 	const [, handlerRef] = useDrag({
 		item: {
-			id: item.siteNavigationMenuItemId,
+			id: siteNavigationMenuItemId,
 			type: ACCEPTING_ITEM_TYPE,
 		},
 	});
@@ -66,7 +74,7 @@ export const MenuItem = ({item}) => {
 			<ClayCheckbox
 				checked={selected}
 				onChange={() => {
-					setSelectedMenuItemId(item.siteNavigationMenuItemId);
+					setSelectedMenuItemId(siteNavigationMenuItemId);
 					setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
 				}}
 			>
@@ -78,11 +86,11 @@ export const MenuItem = ({item}) => {
 
 						<ClayLayout.ContentCol expand>
 							<ClayCard.Description displayType="title">
-								{item.title}
+								{title}
 							</ClayCard.Description>
 
 							<ClayCard.Description displayType="subtitle">
-								{item.type}
+								{type}
 							</ClayCard.Description>
 						</ClayLayout.ContentCol>
 
@@ -109,3 +117,15 @@ MenuItem.propTypes = {
 		type: PropTypes.string.isRequired,
 	}),
 };
+
+const deleteItem = (items, itemId) =>
+	items.reduce(
+		(acc, item) =>
+			item.siteNavigationMenuItemId === itemId
+				? [...acc, ...item.children]
+				: [
+						...acc,
+						{...item, children: deleteItem(item.children, itemId)},
+				  ],
+		[]
+	);

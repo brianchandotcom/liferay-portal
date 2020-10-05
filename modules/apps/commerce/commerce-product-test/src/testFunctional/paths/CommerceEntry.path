@@ -520,6 +520,11 @@
 	<td>//div[contains(@class,'data-set-filter')]//div[contains(@class,'${key_inputType}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILTER_BACK_ARROW</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

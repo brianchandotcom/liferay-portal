@@ -15,10 +15,12 @@
 package com.liferay.document.library.web.internal.display.context.logic;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -159,7 +161,10 @@ public class DLPortletInstanceSettingsHelper {
 	private String[] _getAllEntryColumns() {
 		String allEntryColumns = "name,description,size,status";
 
-		if (ViewCountManagerUtil.isViewCountEnabled()) {
+		if (ViewCountManagerUtil.isViewCountEnabled(
+				ClassNameLocalServiceUtil.getClassNameId(
+					DLFileEntryConstants.getClassName()))) {
+
 			allEntryColumns += ",downloads";
 		}
 

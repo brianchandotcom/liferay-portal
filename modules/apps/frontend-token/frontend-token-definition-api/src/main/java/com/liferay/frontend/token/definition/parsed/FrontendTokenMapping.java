@@ -12,20 +12,15 @@
  * details.
  */
 
-package com.liferay.frontend.token.definition;
-
-import com.liferay.frontend.token.definition.parsed.ParsedFrontendTokenDefinition;
-
-import java.util.Locale;
+package com.liferay.frontend.token.definition.parsed;
 
 /**
  * @author Iván Zaera
  */
-public interface FrontendTokenDefinition {
+public interface FrontendTokenMapping {
 
-	public String getJSON(Locale locale);
+	public String getType();
 
-	public ParsedFrontendTokenDefinition getParsedFrontendTokenDefinition(
-		Locale locale);
+	public String getValue();
 
 }

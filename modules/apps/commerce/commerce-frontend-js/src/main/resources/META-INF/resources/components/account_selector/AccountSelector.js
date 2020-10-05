@@ -32,8 +32,8 @@ import InfiniteScroller from '../infinite_scroller/InfiniteScroller';
 import Autocomplete from './../autocomplete/Autocomplete';
 import OrdersTable from './OrdersTable';
 
-const ordersHeadlessAPIEndpoint = ServiceProvider.AdminOrderAPI('v1').baseURL;
-const accountsHeadlessAPIEndpoint = ServiceProvider.AdminAccountAPI('v1')
+const ORDERS_HEADLESS_API_ENDPOINT = ServiceProvider.AdminOrderAPI('v1').baseURL;
+const ACCOUNTS_HEADLESS_API_ENDPOINT = ServiceProvider.AdminAccountAPI('v1')
 	.baseURL;
 
 function formatStickerName(name) {
@@ -181,7 +181,9 @@ function AccountSelector(props) {
 					<>
 						<ClayDropDown.Section>
 							<Autocomplete
-								apiUrl={accountsHeadlessAPIEndpoint}
+								apiUrl = {
+									ACCOUNTS_HEADLESS_API_ENDPOINT
+								}
 								contentWrapperRef={accountsListWrapperRef}
 								customView={({
 									getPage,
@@ -280,7 +282,9 @@ function AccountSelector(props) {
 						<ClayDropDown.Divider />
 						<ClayDropDown.Section>
 							<Autocomplete
-								apiUrl={`${ordersHeadlessAPIEndpoint}?sort=modifiedDate:desc&filter=(accountId/any(x:(x eq ${currentAccount.id})))`}
+								apiUrl = {
+									`${ORDERS_HEADLESS_API_ENDPOINT}?sort=modifiedDate:desc&filter=(accountId/any(x:(x eq ${currentAccount.id})))`
+								}
 								contentWrapperRef={ordersListWrapperRef}
 								customView={({
 									getPage,

@@ -40,6 +40,11 @@ public class NumericDDMFormFieldValueLocalizer
 	implements DDMFormFieldValueEditingAware, DDMFormFieldValueLocalizer {
 
 	@Override
+	public boolean isEditingFieldValue() {
+		return _editingFieldValue;
+	}
+
+	@Override
 	public String localize(String value, Locale locale) {
 		try {
 			DecimalFormat decimalFormat =

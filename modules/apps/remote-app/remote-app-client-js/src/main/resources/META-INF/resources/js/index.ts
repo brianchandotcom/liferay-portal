@@ -334,6 +334,7 @@ function serializeBody(body: BodyInit | null): StructuredClonable {
 		};
 	}
 	else {
+
 		// warn about unserializable body type (eg. search params,
 		// readable stream),
 

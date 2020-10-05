@@ -25,12 +25,10 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
 LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(displayPageUsageDisplayContext.getLayoutPageTemplateEntryId());
 
 renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTemplateEntry.getName()));
-
-DisplayPageUsageManagementToolbarDisplayContext displayPageUsageManagementToolbarDisplayContext = new DisplayPageUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, displayPageUsageDisplayContext.getSearchContainer());
 %>
 
 <clay:management-toolbar
-	displayContext="<%= displayPageUsageManagementToolbarDisplayContext %>"
+	displayContext="<%= new DisplayPageUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, displayPageUsageDisplayContext.getSearchContainer()) %>"
 />
 
 <clay:container-fluid>
@@ -61,8 +59,3 @@ DisplayPageUsageManagementToolbarDisplayContext displayPageUsageManagementToolba
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	componentId="<%= displayPageUsageManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/DisplayPageUsageManagementToolbarDefaultEventHandler.es"
-/>

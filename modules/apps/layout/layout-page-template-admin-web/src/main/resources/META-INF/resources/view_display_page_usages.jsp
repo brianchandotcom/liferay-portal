@@ -43,11 +43,13 @@ DisplayPageUsageManagementToolbarDisplayContext displayPageUsageManagementToolba
 			modelVar="assetDisplayPageEntry"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				name="title"
 				value="<%= HtmlUtil.escape(assetDisplayPageEntry.getTitle(themeDisplay.getLocale())) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
+				cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 				name="modified-date"
 				value="<%= assetDisplayPageEntry.getModifiedDate() %>"
 			/>

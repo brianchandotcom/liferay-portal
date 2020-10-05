@@ -43,7 +43,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTempl
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				name="title"
-				value="<%= HtmlUtil.escape(assetDisplayPageEntry.getTitle(themeDisplay.getLocale())) %>"
+				value="<%= HtmlUtil.escape(displayPageUsageDisplayContext.getTitle(assetDisplayPageEntry, themeDisplay.getLocale())) %>"
 			/>
 
 			<liferay-ui:search-container-column-date

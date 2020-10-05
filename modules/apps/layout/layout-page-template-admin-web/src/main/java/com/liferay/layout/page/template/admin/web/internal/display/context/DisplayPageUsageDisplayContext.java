@@ -16,13 +16,20 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.layout.page.template.admin.web.internal.util.comparator.AssetDisplayPageEntryModifiedDateComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -147,6 +154,22 @@ public class DisplayPageUsageDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
+	}
+
+	public String getTitle(
+			AssetDisplayPageEntry assetDisplayPageEntry, Locale locale)
+		throws PortalException {
+
+		String className = assetDisplayPageEntry.getClassName();
+
+		if (Objects.equals(className, FileEntry.class.getName())) {
+			className = DLFileEntry.class.getName();
+		}
+
+		AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(
+			className, assetDisplayPageEntry.getClassPK());
+
+		return assetEntry.getTitle(locale);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

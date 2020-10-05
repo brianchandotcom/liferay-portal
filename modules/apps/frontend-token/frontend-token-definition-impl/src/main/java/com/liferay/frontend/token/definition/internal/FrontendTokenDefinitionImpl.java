@@ -15,6 +15,8 @@
 package com.liferay.frontend.token.definition.internal;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.internal.parsed.ParsedFrontendTokenDefinitionImpl;
+import com.liferay.frontend.token.definition.parsed.ParsedFrontendTokenDefinition;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -61,6 +63,22 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 		}
 
 		return json;
+	}
+
+	@Override
+	public ParsedFrontendTokenDefinition getParsedFrontendTokenDefinition(
+		Locale locale) {
+
+		try {
+			return new ParsedFrontendTokenDefinitionImpl(
+				locale, _jsonFactory.createJSONObject(getJSON(locale)));
+		}
+		catch (JSONException jsonException) {
+			throw new RuntimeException(
+				"Unable to parse frontend-token-definition.json for theme " +
+					_themeId,
+				jsonException);
+		}
 	}
 
 	public String getThemeId() {

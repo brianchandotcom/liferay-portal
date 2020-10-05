@@ -115,6 +115,10 @@ public class DisplayPageUsageDisplayContext {
 	}
 
 	public SearchContainer<AssetDisplayPageEntry> getSearchContainer() {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
 		SearchContainer<AssetDisplayPageEntry> searchContainer =
 			new SearchContainer<>(
 				_renderRequest, getPortletURL(), null,

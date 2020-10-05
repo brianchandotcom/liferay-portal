@@ -82,13 +82,13 @@ public class NumericDDMFormFieldValueLocalizer
 	}
 
 	@Override
-	public void setEditing(boolean editing) {
-		_editing = editing;
+	public void setEditingFieldValue(boolean editingFieldValue) {
+		_editingFieldValue = editingFieldValue;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NumericDDMFormFieldValueLocalizer.class);
 
-	private boolean _editing;
+	private boolean _editingFieldValue;
 
 }

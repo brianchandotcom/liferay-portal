@@ -34,7 +34,7 @@ public class NumericDDMFormFieldValueLocalizerTest {
 
 	@Test
 	public void testLocalizeWithEditingValueEndingWithPeriod() {
-		_numericDDMFormFieldValueLocalizer.setEditing(true);
+		_numericDDMFormFieldValueLocalizer.setEditingFieldValue(true);
 
 		String localizedValue = _numericDDMFormFieldValueLocalizer.localize(
 			"1000.", LocaleUtil.US);
@@ -44,7 +44,7 @@ public class NumericDDMFormFieldValueLocalizerTest {
 
 	@Test
 	public void testLocalizeWithNotEditingValueEndingWithPeriod() {
-		_numericDDMFormFieldValueLocalizer.setEditing(false);
+		_numericDDMFormFieldValueLocalizer.setEditingFieldValue(false);
 
 		String localizedValue = _numericDDMFormFieldValueLocalizer.localize(
 			"1000.", LocaleUtil.US);

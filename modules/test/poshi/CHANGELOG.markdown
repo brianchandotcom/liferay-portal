@@ -1,5 +1,16 @@
 # Poshi Runner Change Log
 
+## 1.0.283
+
+### PQL
+
+* [POSHI-117](https://issues.liferay.com/browse/POSHI-117) - Ignore errors for Util classes to find Test Cases using PQL
+
+### Runner
+
+* [POSHI-107](https://issues.liferay.com/browse/POSHI-107) - Split Poshi Runner into 2 different modules
+* [POSHI-118](https://issues.liferay.com/browse/POSHI-118) - Path locators are not parsed correctly
+
 ## 1.0.280
 
 ### Runner

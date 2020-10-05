@@ -1,4 +1,5 @@
 .portlet-remote-app iframe {
-    min-height: 500px;
-    width: 100%;
+	border: none;
+	min-height: 500px;
+	width: 100%;
 }

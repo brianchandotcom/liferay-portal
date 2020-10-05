@@ -505,6 +505,11 @@
 	<td>//div[contains(@class,'filters')]/button</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILTER_SELECT_CATEGORY</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(.,'${key_categoryFilter}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

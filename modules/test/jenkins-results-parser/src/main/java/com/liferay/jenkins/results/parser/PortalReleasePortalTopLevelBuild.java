@@ -20,8 +20,7 @@ import java.net.URL;
 /**
  * @author Michael Hashimoto
  */
-public class PortalReleasePortalTopLevelBuild
-	extends PortalTopLevelBuild implements PortalReleaseBuild {
+public class PortalReleasePortalTopLevelBuild extends PortalTopLevelBuild {
 
 	public PortalReleasePortalTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {

@@ -21,8 +21,7 @@ import java.net.URL;
  * @author Michael Hashimoto
  */
 public class PortalFixpackReleasePortalTopLevelBuild
-	extends PortalTopLevelBuild
-	implements PortalFixpackReleaseBuild, PortalReleaseBuild {
+	extends PortalTopLevelBuild {
 
 	public PortalFixpackReleasePortalTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {

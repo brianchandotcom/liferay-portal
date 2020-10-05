@@ -20,8 +20,6 @@ import com.liferay.portlet.expando.service.impl.ExpandoValueLocalServiceImpl;
 
 import java.math.BigDecimal;
 
-import java.time.format.DateTimeParseException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -156,7 +154,7 @@ public class ExpandoValueConversionTest {
 		Assert.assertEquals(time, convertedDate.getTime());
 	}
 
-	@Test(expected = DateTimeParseException.class)
+	@Test(expected = NumberFormatException.class)
 	public void testDate2() {
 		_converter.convertType(ExpandoColumnConstants.DATE, "other");
 	}
@@ -218,19 +216,19 @@ public class ExpandoValueConversionTest {
 		Assert.assertEquals(time2, convertedDates[1].getTime());
 	}
 
-	@Test(expected = DateTimeParseException.class)
+	@Test(expected = NumberFormatException.class)
 	public void testDateArray5() {
 		_converter.convertType(
 			ExpandoColumnConstants.DATE_ARRAY, "1376510136750, other");
 	}
 
-	@Test(expected = DateTimeParseException.class)
+	@Test(expected = NumberFormatException.class)
 	public void testDateArray6() {
 		_converter.convertType(
 			ExpandoColumnConstants.DATE_ARRAY, "[1376510136750, other]");
 	}
 
-	@Test(expected = DateTimeParseException.class)
+	@Test(expected = NumberFormatException.class)
 	public void testDateArray7() {
 		_converter.convertType(ExpandoColumnConstants.DATE_ARRAY, "other");
 	}

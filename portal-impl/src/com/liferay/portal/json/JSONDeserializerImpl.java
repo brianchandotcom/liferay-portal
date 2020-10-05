@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONDeserializerTransformer;
 import com.liferay.portal.kernel.util.JavaDetector;
 
-import jodd.core.JoddCore;
-
 import jodd.json.JsonParser;
 import jodd.json.ValueConverter;
+
+import jodd.util.SystemUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,7 +30,7 @@ public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 
 	public JSONDeserializerImpl() {
 		if (JavaDetector.isIBM()) {
-			JoddCore.unsafeUsageEnabled = false;
+			SystemUtil.disableUnsafeUsage();
 		}
 
 		_jsonDeserializer = new PortalJsonParser();
@@ -54,7 +54,7 @@ public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 		ValueConverter<K, V> valueConverter =
 			new JoddJsonDeserializerTransformer<>(jsonDeserializerTransformer);
 
-		_jsonDeserializer.withValueConverter(field, valueConverter);
+		_jsonDeserializer.use(field, valueConverter);
 
 		return this;
 	}

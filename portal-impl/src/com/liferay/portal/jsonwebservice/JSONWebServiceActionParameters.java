@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -38,6 +37,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+
+import jodd.util.NameValue;
 
 /**
  * @author Igor Spasic
@@ -67,9 +68,7 @@ public class JSONWebServiceActionParameters {
 		_collectFromMap(parameterMap);
 	}
 
-	public List<ObjectValuePair<String, Object>> getInnerParameters(
-		String baseName) {
-
+	public List<NameValue<String, Object>> getInnerParameters(String baseName) {
 		return _jsonWebServiceActionParameters.getInnerParameters(baseName);
 	}
 

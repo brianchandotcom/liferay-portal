@@ -38,7 +38,7 @@ public class JSONRPCRequest {
 		HttpServletRequest httpServletRequest) {
 
 		try {
-			String requestBody = ServletUtil.readRequestBodyFromReader(
+			String requestBody = ServletUtil.readRequestBody(
 				httpServletRequest);
 
 			if (Validator.isNull(requestBody) ||

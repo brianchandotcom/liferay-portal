@@ -51,7 +51,7 @@ public class TransactionManagerFactory {
 
 			String value = properties.getProperty(key);
 
-			BeanUtil.pojo.setProperty(hibernateTransactionManager, key, value);
+			BeanUtil.setProperty(hibernateTransactionManager, key, value);
 		}
 
 		hibernateTransactionManager.setDataSource(dataSource);

@@ -40,7 +40,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.ArrayList;
 import java.util.List;
 
-import jodd.net.MimeTypes;
+import jodd.util.MimeTypes;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

@@ -302,7 +302,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			// Set C3PO property
 
 			try {
-				BeanUtil.pojo.setProperty(comboPooledDataSource, key, value);
+				BeanUtil.setProperty(comboPooledDataSource, key, value);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -383,7 +383,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			// Set HikariCP property
 
 			try {
-				BeanUtil.pojo.setProperty(
+				BeanUtil.setProperty(
 					hikariDataSource, key, (String)entry.getValue());
 			}
 			catch (Exception exception) {
@@ -429,7 +429,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			// Set Tomcat JDBC property
 
 			try {
-				BeanUtil.pojo.setProperty(
+				BeanUtil.setProperty(
 					poolProperties, key, (String)entry.getValue());
 			}
 			catch (Exception exception) {

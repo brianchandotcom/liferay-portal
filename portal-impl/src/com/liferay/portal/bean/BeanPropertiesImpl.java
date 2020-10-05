@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
-import jodd.typeconverter.Converter;
+import jodd.typeconverter.Convert;
 
 /**
  * @author Brian Wing Shun Chan
@@ -125,9 +125,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toBooleanValue(value, defaultValue);
+				beanValue = Convert.toBooleanValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -150,9 +150,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toBooleanValue(value, defaultValue);
+				beanValue = Convert.toBooleanValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 			}
@@ -172,9 +172,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toByteValue(value, defaultValue);
+				beanValue = Convert.toByteValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -195,9 +195,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toByteValue(value, defaultValue);
+				beanValue = Convert.toByteValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 			}
@@ -217,9 +217,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toDoubleValue(value, defaultValue);
+				beanValue = Convert.toDoubleValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -242,9 +242,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toDoubleValue(value, defaultValue);
+				beanValue = Convert.toDoubleValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 			}
@@ -264,9 +264,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toFloatValue(value, defaultValue);
+				beanValue = Convert.toFloatValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -287,9 +287,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toFloatValue(value, defaultValue);
+				beanValue = Convert.toFloatValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 			}
@@ -309,9 +309,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toIntValue(value, defaultValue);
+				beanValue = Convert.toIntValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -332,9 +332,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toIntValue(value, defaultValue);
+				beanValue = Convert.toIntValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 			}
@@ -354,9 +354,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toLongValue(value, defaultValue);
+				beanValue = Convert.toLongValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -377,9 +377,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toLongValue(value, defaultValue);
+				beanValue = Convert.toLongValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 			}
@@ -399,11 +399,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				if (Validator.isNull(param)) {
-					return bean;
-				}
-
-				beanValue = BeanUtil.pojo.getProperty(bean, param);
+				beanValue = BeanUtil.getProperty(bean, param);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -430,7 +426,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				beanValue = BeanUtil.pojo.getProperty(bean, param);
+				beanValue = BeanUtil.getProperty(bean, param);
 			}
 			catch (Exception exception) {
 			}
@@ -456,7 +452,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				beanType = BeanUtil.pojo.getPropertyType(bean, param);
+				beanType = BeanUtil.getPropertyType(bean, param);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -483,7 +479,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				beanType = BeanUtil.pojo.getPropertyType(bean, param);
+				beanType = BeanUtil.getPropertyType(bean, param);
 			}
 			catch (Exception exception) {
 			}
@@ -507,9 +503,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toShortValue(value, defaultValue);
+				beanValue = Convert.toShortValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -530,9 +526,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toShortValue(value, defaultValue);
+				beanValue = Convert.toShortValue(value, defaultValue);
 			}
 			catch (Exception exception) {
 			}
@@ -552,9 +548,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toString(value, defaultValue);
+				beanValue = Convert.toString(value, defaultValue);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -577,9 +573,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		if (bean != null) {
 			try {
-				Object value = BeanUtil.pojo.getProperty(bean, param);
+				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = _converter.toString(value, defaultValue);
+				beanValue = Convert.toString(value, defaultValue);
 			}
 			catch (Exception exception) {
 			}
@@ -618,7 +614,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 				value = String.valueOf(0);
 			}
 
-			BeanUtil.forcedSilent.setProperty(bean, name, value);
+			BeanUtil.setPropertyForcedSilent(bean, name, value);
 
 			if (name.endsWith("Month")) {
 				String dateParam = name.substring(0, name.lastIndexOf("Month"));
@@ -627,7 +623,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 					continue;
 				}
 
-				Class<?> propertyTypeClass = BeanUtil.pojo.getPropertyType(
+				Class<?> propertyTypeClass = BeanUtil.getPropertyType(
 					bean, dateParam);
 
 				if ((propertyTypeClass == null) ||
@@ -639,7 +635,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 				Date date = getDate(dateParam, httpServletRequest);
 
 				if (date != null) {
-					BeanUtil.forcedSilent.setProperty(bean, dateParam, date);
+					BeanUtil.setPropertyForcedSilent(bean, dateParam, date);
 				}
 			}
 		}
@@ -648,7 +644,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 	@Override
 	public void setProperty(Object bean, String param, Object value) {
 		try {
-			BeanUtil.pojo.setProperty(bean, param, value);
+			BeanUtil.setProperty(bean, param, value);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -657,7 +653,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 	@Override
 	public void setPropertySilent(Object bean, String param, Object value) {
-		BeanUtil.forcedSilent.setProperty(bean, param, value);
+		BeanUtil.setPropertyForcedSilent(bean, param, value);
 	}
 
 	protected Date getDate(
@@ -704,7 +700,5 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BeanPropertiesImpl.class);
-
-	private static final Converter _converter = Converter.get();
 
 }

@@ -45,8 +45,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import jodd.typeconverter.Converter;
 import jodd.typeconverter.TypeConverterManager;
+import jodd.typeconverter.TypeConverterManagerBean;
 
 /**
  * @author Raymond Augé
@@ -57,12 +57,19 @@ public class ExpandoValueLocalServiceImpl
 	extends ExpandoValueLocalServiceBaseImpl {
 
 	public ExpandoValueLocalServiceImpl() {
-		TypeConverterManager typeConverterManager = TypeConverterManager.get();
+		TypeConverterManagerBean defaultTypeConverterManager =
+			TypeConverterManager.getDefaultTypeConverterManager();
 
-		typeConverterManager.register(Date[].class, new DateArrayConverter());
-		typeConverterManager.register(Number.class, new NumberConverter());
-		typeConverterManager.register(
-			Number[].class, new NumberArrayConverter(Converter.get()));
+		defaultTypeConverterManager.register(
+			Date[].class,
+			new DateArrayConverter(
+				defaultTypeConverterManager.getConvertBean()));
+		defaultTypeConverterManager.register(
+			Number.class, new NumberConverter());
+		defaultTypeConverterManager.register(
+			Number[].class,
+			new NumberArrayConverter(
+				defaultTypeConverterManager.getConvertBean()));
 	}
 
 	@Override
@@ -1637,106 +1644,55 @@ public class ExpandoValueLocalServiceImpl
 		data = handleStrings(type, data);
 
 		if (type == ExpandoColumnConstants.BOOLEAN) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, Boolean.TYPE
-			);
+			data = TypeConverterManager.convertType(data, Boolean.TYPE);
 		}
 		else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, boolean[].class
-			);
+			data = TypeConverterManager.convertType(data, boolean[].class);
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, Date.class
-			);
+			data = TypeConverterManager.convertType(data, Date.class);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, Date[].class
-			);
+			data = TypeConverterManager.convertType(data, Date[].class);
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, Double.TYPE
-			);
+			data = TypeConverterManager.convertType(data, Double.TYPE);
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, double[].class
-			);
+			data = TypeConverterManager.convertType(data, double[].class);
 		}
 		else if (type == ExpandoColumnConstants.FLOAT) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, Float.TYPE
-			);
+			data = TypeConverterManager.convertType(data, Float.TYPE);
 		}
 		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, float[].class
-			);
+			data = TypeConverterManager.convertType(data, float[].class);
 		}
 		else if (type == ExpandoColumnConstants.INTEGER) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, Integer.TYPE
-			);
+			data = TypeConverterManager.convertType(data, Integer.TYPE);
 		}
 		else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, int[].class
-			);
+			data = TypeConverterManager.convertType(data, int[].class);
 		}
 		else if (type == ExpandoColumnConstants.LONG) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, Long.TYPE
-			);
+			data = TypeConverterManager.convertType(data, Long.TYPE);
 		}
 		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, long[].class
-			);
+			data = TypeConverterManager.convertType(data, long[].class);
 		}
 		else if (type == ExpandoColumnConstants.NUMBER) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, Number.class
-			);
+			data = TypeConverterManager.convertType(data, Number.class);
 		}
 		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, Number[].class
-			);
+			data = TypeConverterManager.convertType(data, Number[].class);
 		}
 		else if (type == ExpandoColumnConstants.SHORT) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, Short.TYPE
-			);
+			data = TypeConverterManager.convertType(data, Short.TYPE);
 		}
 		else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, short[].class
-			);
+			data = TypeConverterManager.convertType(data, short[].class);
 		}
 		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
-			data = TypeConverterManager.get(
-			).convertType(
-				data, String[].class
-			);
+			data = TypeConverterManager.convertType(data, String[].class);
 		}
 
 		return (T)data;

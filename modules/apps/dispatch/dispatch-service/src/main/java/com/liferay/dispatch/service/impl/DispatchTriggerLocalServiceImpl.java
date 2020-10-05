@@ -276,7 +276,7 @@ public class DispatchTriggerLocalServiceImpl
 	private void _addSchedulerJob(
 			long dispatchTriggerId, String cronExpression, Date startDate,
 			Date endDate)
-		throws DispatchTriggerSchedulerException {
+		throws PortalException {
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			_getJobName(dispatchTriggerId), _getGroupName(dispatchTriggerId),

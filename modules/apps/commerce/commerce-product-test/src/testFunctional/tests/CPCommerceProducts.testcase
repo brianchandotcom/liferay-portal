@@ -122,7 +122,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceProducts#TranslateProductName";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",

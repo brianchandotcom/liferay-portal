@@ -32,7 +32,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CommerceAccelerators#DeactivateCommerceAccount";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
@@ -110,7 +110,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CommerceAccelerators#InitializeNewMiniumSite";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -163,7 +163,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CommerceAccelerators#InitializeNewSpeedwellSite";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -215,7 +215,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CommerceAccelerators#MiniumSiteFullFlow";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -370,7 +370,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CommerceAccelerators#SpeedwellSiteFullFlow";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",

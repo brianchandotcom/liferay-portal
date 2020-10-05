@@ -38,7 +38,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCartIsTransferredToAccount";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -138,7 +138,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCartItemIsNotTransferredIfSkuIsAlreadyPresent";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -268,7 +268,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCartItemIsTransferredToExistingCart";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -398,7 +398,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCheckoutAuthenticationPage";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -450,7 +450,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestsWithSameEmailHaveDifferentAccounts";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -571,7 +571,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertNewAccountIsCreatedAfterGuestCheckout";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -647,7 +647,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestAccountIsNotCombinedWithExistingUserAccount";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -812,7 +812,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutDisabled";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -912,7 +912,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutEnabled";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -975,7 +975,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutWithNoShippableProduct";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -1055,7 +1055,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutWithShippableProduct";
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",
@@ -1132,7 +1132,7 @@ definition {
 
 		Refresh();
 
-		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Commerce",

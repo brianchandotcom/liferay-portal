@@ -2,7 +2,7 @@ definition {
 
 	macro initializeNewSiteViaAccelerator {
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");

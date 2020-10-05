@@ -981,4 +981,44 @@ definition {
 		}
 	}
 
+	macro addNewFilters {
+		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
+
+		Click(
+			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY",
+			key_categoryFilter = "${filterCategory}");
+
+		if (IsElementPresent(key_inputType = "checkbox", locator1 = "CommerceEntry#FILTER_INPUT_TYPE")) {
+
+			for (var item : list "${filterItem}") {
+				Click.clickAtNotVisible(
+					locator1 = "CommerceEntry#FILTER_SELECT_FILTER",
+					key_inputType = "checkbox",
+					key_filterItem = "${item}");
+			}
+		}
+		else if (IsElementPresent(key_inputType = "radio", locator1 = "CommerceEntry#FILTER_INPUT_TYPE")) {
+			Click.clickAtNotVisible(
+				locator1 = "CommerceEntry#FILTER_SELECT_FILTER",
+				key_inputType = "radio",
+				key_filterItem = "${filterItem}");
+		}
+
+		if (IsElementPresent(key_menuItem = "Add Filter", locator1 = "CommerceEntry#ANY_MENU_ITEM")) {
+			Click(
+				locator1 = "CommerceEntry#ANY_MENU_ITEM",
+				key_menuItem = "Add Filter");
+		}
+		else {
+			Click(
+				locator1 = "CommerceEntry#ANY_MENU_ITEM",
+				key_menuItem = "Edit Filter");
+		}
+
+		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
+
+		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
+
+	}
+
 }

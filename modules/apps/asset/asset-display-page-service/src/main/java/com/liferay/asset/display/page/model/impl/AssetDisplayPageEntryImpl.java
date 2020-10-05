@@ -24,31 +24,9 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * The extended model implementation for the AssetDisplayPageEntry service.
- * Represents a row in the &quot;AssetDisplayPageEntry&quot; database table,
- * with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class.
- * Whenever methods are added, rerun ServiceBuilder to copy their definitions
- * into the {@link com.liferay.asset.display.page.model.AssetDisplayPageEntry}
- * interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Rubén Pulido
  */
 public class AssetDisplayPageEntryImpl extends AssetDisplayPageEntryBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a asset
-	 * display page entry model instance should use the {@link
-	 * com.liferay.asset.display.page.model.AssetDisplayPageEntry} interface
-	 * instead.
-	 */
-	public AssetDisplayPageEntryImpl() {
-	}
 
 	public String getTitle(Locale locale) throws PortalException {
 		String className = getClassName();

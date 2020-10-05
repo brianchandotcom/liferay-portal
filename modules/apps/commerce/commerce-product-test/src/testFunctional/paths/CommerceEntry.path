@@ -510,6 +510,11 @@
 	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(.,'${key_categoryFilter}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILTER_SELECT_FILTER</td>
+	<td>//div[contains(@class,'data-set-filter')]//div[contains(.,'${key_filterItem}') and @class='custom-control custom-${key_inputType}']//input</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

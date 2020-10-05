@@ -269,8 +269,8 @@ definition {
 					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_N");
 
 				WaitForElementPresent(
-					locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_N",
-					key_value = "${buttonRowNumber}");
+					key_value = "${buttonRowNumber}",
+					locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_N");
 			}
 		}
 

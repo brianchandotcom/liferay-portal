@@ -196,6 +196,45 @@ definition {
 		Button.clickPublish();
 	}
 
+	macro addNewFilters {
+		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
+
+		Click(
+			key_categoryFilter = "${filterCategory}",
+			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY");
+
+		if (IsElementPresent(key_inputType = "checkbox", locator1 = "CommerceEntry#FILTER_INPUT_TYPE")) {
+
+			for (var item : list "${filterItem}") {
+				Click.clickAtNotVisible(
+					key_filterItem = "${item}",
+					key_inputType = "checkbox",
+					locator1 = "CommerceEntry#FILTER_SELECT_FILTER");
+			}
+		}
+		else if (IsElementPresent(key_inputType = "radio", locator1 = "CommerceEntry#FILTER_INPUT_TYPE")) {
+			Click.clickAtNotVisible(
+				key_filterItem = "${filterItem}",
+				key_inputType = "radio",
+				locator1 = "CommerceEntry#FILTER_SELECT_FILTER");
+		}
+
+		if (IsElementPresent(key_menuItem = "Add Filter", locator1 = "CommerceEntry#ANY_MENU_ITEM")) {
+			Click(
+				key_menuItem = "Add Filter",
+				locator1 = "CommerceEntry#ANY_MENU_ITEM");
+		}
+		else {
+			Click(
+				key_menuItem = "Edit Filter",
+				locator1 = "CommerceEntry#ANY_MENU_ITEM");
+		}
+
+		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
+
+		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
+	}
+
 	macro addNewNotificationTemplate {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -979,46 +1018,6 @@ definition {
 				key_rowEntry = "${specificationLabelsEntry}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 		}
-	}
-
-	macro addNewFilters {
-		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
-
-		Click(
-			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY",
-			key_categoryFilter = "${filterCategory}");
-
-		if (IsElementPresent(key_inputType = "checkbox", locator1 = "CommerceEntry#FILTER_INPUT_TYPE")) {
-
-			for (var item : list "${filterItem}") {
-				Click.clickAtNotVisible(
-					locator1 = "CommerceEntry#FILTER_SELECT_FILTER",
-					key_inputType = "checkbox",
-					key_filterItem = "${item}");
-			}
-		}
-		else if (IsElementPresent(key_inputType = "radio", locator1 = "CommerceEntry#FILTER_INPUT_TYPE")) {
-			Click.clickAtNotVisible(
-				locator1 = "CommerceEntry#FILTER_SELECT_FILTER",
-				key_inputType = "radio",
-				key_filterItem = "${filterItem}");
-		}
-
-		if (IsElementPresent(key_menuItem = "Add Filter", locator1 = "CommerceEntry#ANY_MENU_ITEM")) {
-			Click(
-				locator1 = "CommerceEntry#ANY_MENU_ITEM",
-				key_menuItem = "Add Filter");
-		}
-		else {
-			Click(
-				locator1 = "CommerceEntry#ANY_MENU_ITEM",
-				key_menuItem = "Edit Filter");
-		}
-
-		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
-
-		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
-
 	}
 
 }

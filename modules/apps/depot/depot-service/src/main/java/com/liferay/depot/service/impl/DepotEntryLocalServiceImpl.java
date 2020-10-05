@@ -15,6 +15,7 @@
 package com.liferay.depot.service.impl;
 
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.exception.DepotEntryGroupException;
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -69,6 +71,14 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	@Override
 	public DepotEntry addDepotEntry(Group group, ServiceContext serviceContext)
 		throws PortalException {
+
+		if (!group.isDepot() ||
+			!ParamUtil.getBoolean(serviceContext, "staging")) {
+
+			throw new DepotEntryGroupException(
+				"Cannot create staged depot entry for group " +
+					group.getGroupId());
+		}
 
 		_validateNameMap(group.getNameMap(), LocaleUtil.getDefault());
 

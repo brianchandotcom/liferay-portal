@@ -19,7 +19,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -137,28 +136,22 @@ public class ViewCountEntryLocalServiceImpl
 		_viewCountConfiguration = ConfigurableUtil.createConfigurable(
 			ViewCountConfiguration.class, properties);
 
-		_disabledClassNameIds.clear();
+		Set<Long> disabledClassNameIds = new HashSet<>();
 
-		for (String entryClassName :
-				_viewCountConfiguration.disabledClassNames()) {
-
-			if (Validator.isNull(entryClassName)) {
-				continue;
-			}
-
-			ClassName className = _classNameLocalService.fetchClassName(
-				entryClassName);
-
-			if (entryClassName.equals(className.getValue())) {
-				_disabledClassNameIds.add(className.getClassNameId());
+		for (String className : _viewCountConfiguration.disabledClassNames()) {
+			if (Validator.isNotNull(className)) {
+				disabledClassNameIds.add(
+					_classNameLocalService.getClassNameId(className));
 			}
 		}
+
+		_disabledClassNameIds = disabledClassNameIds;
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private final Set<Long> _disabledClassNameIds = new HashSet<>();
+	private volatile Set<Long> _disabledClassNameIds;
 	private volatile ViewCountConfiguration _viewCountConfiguration;
 
 }

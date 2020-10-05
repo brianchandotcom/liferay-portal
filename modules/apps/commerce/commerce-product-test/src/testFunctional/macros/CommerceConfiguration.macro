@@ -268,7 +268,9 @@ definition {
 					key_buttonStatus = "",
 					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_N");
 
-				Pause(locator1 = "3000");
+				WaitForElementPresent(
+					locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_N",
+					key_value = "${buttonRowNumber}");
 			}
 		}
 

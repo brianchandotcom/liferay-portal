@@ -1538,6 +1538,12 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.template.velocity"
 		},
 
+		// View Count
+
+		{
+			"view.count.enabled", "enabled", "com.liferay.view.count.service"
+		},
+
 		// XSL Content
 
 		{

@@ -17,16 +17,16 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation");
+DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(request);
 %>
 
 <liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
 
 <c:choose>
-	<c:when test='<%= navigation.equals("file_entry_types") %>'>
+	<c:when test="<%= dlViewDisplayContext.isFileEntryTypesNavigation() %>">
 		<liferay-util:include page="/document_library/view_file_entry_types.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= navigation.equals("file_entry_metadata_sets") %>'>
+	<c:when test="<%= dlViewDisplayContext.isFileEntryMetadataSetsNavigation() %>">
 		<liferay-util:include page="/document_library/view_file_entry_metadata_sets.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>

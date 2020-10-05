@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.service.impl;
 
+import com.liferay.dispatch.exception.NoSuchLogException;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.service.base.DispatchLogLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -62,6 +63,14 @@ public class DispatchLogLocalServiceImpl
 	@Override
 	public void deleteDispatchLogs(long dispatchTriggerId) {
 		dispatchLogPersistence.removeByDispatchTriggerId(dispatchTriggerId);
+	}
+
+	@Override
+	public DispatchLog fetchLatestDispatchLog(long dispatchTriggerId)
+		throws NoSuchLogException {
+
+		return dispatchLogPersistence.fetchByDispatchTriggerId_First(
+			dispatchTriggerId, null);
 	}
 
 	@Override

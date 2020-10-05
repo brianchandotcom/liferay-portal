@@ -296,6 +296,7 @@ public class AssetLinksTag extends IncludeTag {
 
 		viewAssetURL.setParameter(
 			"assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
+		viewAssetURL.setParameter("showRelatedAssets", Boolean.TRUE.toString());
 		viewAssetURL.setParameter("type", type);
 
 		String urlTitle = assetRenderer.getUrlTitle(themeDisplay.getLocale());

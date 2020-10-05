@@ -1375,11 +1375,8 @@ public class AssetPublisherDisplayContext {
 		}
 
 		_enableRelatedAssets = GetterUtil.getBoolean(
-			_portletPreferences.getValue(
-				"enableRelatedAssets",
-				String.valueOf(
-					_assetPublisherPortletInstanceConfiguration.
-						relatedAssetsEnabled())));
+			_portletPreferences.getValue("enableRelatedAssets", null),
+			_isShowRelatedAssets());
 
 		return _enableRelatedAssets;
 	}
@@ -2137,6 +2134,17 @@ public class AssetPublisherDisplayContext {
 			_portletRequest.getAttribute(SegmentsWebKeys.SEGMENTS_ENTRY_IDS));
 	}
 
+	private boolean _isShowRelatedAssets() {
+		if (_showRelatedAssets != null) {
+			return _showRelatedAssets;
+		}
+
+		_showRelatedAssets = ParamUtil.getBoolean(
+			_httpServletRequest, "showRelatedAssets");
+
+		return _showRelatedAssets;
+	}
+
 	private Integer _abstractLength;
 	private long[] _allAssetCategoryIds;
 	private String[] _allAssetTagNames;
@@ -2219,6 +2227,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _showOnlyLayoutAssets;
 	private Boolean _showPriority;
 	private Boolean _showPublishDate;
+	private Boolean _showRelatedAssets;
 	private Boolean _showTags;
 	private Boolean _showViewCount;
 	private String _socialBookmarksDisplayStyle;

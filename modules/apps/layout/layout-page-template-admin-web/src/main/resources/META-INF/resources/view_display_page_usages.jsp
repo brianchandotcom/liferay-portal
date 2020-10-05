@@ -29,48 +29,36 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTempl
 DisplayPageUsageManagementToolbarDisplayContext displayPageUsageManagementToolbarDisplayContext = new DisplayPageUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, displayPageUsageDisplayContext.getSearchContainer());
 %>
 
-<clay:container-fluid
-	cssClass="container-form-lg"
->
-	<clay:row>
-		<clay:col
-			lg="12"
+<clay:management-toolbar
+	displayContext="<%= displayPageUsageManagementToolbarDisplayContext %>"
+/>
+
+<clay:container-fluid>
+	<liferay-ui:search-container
+		searchContainer="<%= displayPageUsageDisplayContext.getSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.asset.display.page.model.AssetDisplayPageEntry"
+			keyProperty="assetDisplayPageEntryId"
+			modelVar="assetDisplayPageEntry"
 		>
-			<clay:sheet
-				size="full"
-			>
-				<clay:management-toolbar
-					displayContext="<%= displayPageUsageManagementToolbarDisplayContext %>"
-				/>
+			<liferay-ui:search-container-column-text
+				name="title"
+				value="<%= HtmlUtil.escape(assetDisplayPageEntry.getTitle(themeDisplay.getLocale())) %>"
+			/>
 
-				<liferay-ui:search-container
-					searchContainer="<%= displayPageUsageDisplayContext.getSearchContainer() %>"
-				>
-					<liferay-ui:search-container-row
-						className="com.liferay.asset.display.page.model.AssetDisplayPageEntry"
-						keyProperty="assetDisplayPageEntryId"
-						modelVar="assetDisplayPageEntry"
-					>
-						<liferay-ui:search-container-column-text
-							name="title"
-							value="<%= HtmlUtil.escape(assetDisplayPageEntry.getTitle(themeDisplay.getLocale())) %>"
-						/>
+			<liferay-ui:search-container-column-date
+				name="modified-date"
+				value="<%= assetDisplayPageEntry.getModifiedDate() %>"
+			/>
+		</liferay-ui:search-container-row>
 
-						<liferay-ui:search-container-column-date
-							name="modified-date"
-							value="<%= assetDisplayPageEntry.getModifiedDate() %>"
-						/>
-					</liferay-ui:search-container-row>
-
-					<liferay-ui:search-iterator
-						displayStyle="list"
-						markupView="lexicon"
-						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-					/>
-				</liferay-ui:search-container>
-			</clay:sheet>
-		</clay:col>
-	</clay:row>
+		<liferay-ui:search-iterator
+			displayStyle="list"
+			markupView="lexicon"
+			searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+		/>
+	</liferay-ui:search-container>
 </clay:container-fluid>
 
 <liferay-frontend:component

@@ -279,10 +279,10 @@ public interface ViewCountEntryLocalService
 	public void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public boolean isViewCountEnabled();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public boolean isViewCountEnabled(long classNameId);
 
 	/**

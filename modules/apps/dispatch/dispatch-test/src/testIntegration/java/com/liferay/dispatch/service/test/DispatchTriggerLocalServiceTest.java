@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -41,9 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,6 +49,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Igor Beslic
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class DispatchTriggerLocalServiceTest {
 
@@ -63,38 +61,11 @@ public class DispatchTriggerLocalServiceTest {
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		List<DispatchTrigger> dispatchTriggers =
-			_dispatchTriggerLocalService.getDispatchTriggers(
-				_company.getCompanyId(), -1, -1);
-
-		for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
-			if (dispatchTrigger.getCompanyId() != _company.getCompanyId()) {
-				continue;
-			}
-
-			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
-		}
-
-		List<User> companyUsers = UserLocalServiceUtil.getCompanyUsers(
-			_company.getCompanyId(), -1, -1);
-
-		for (User user : companyUsers) {
-			UserLocalServiceUtil.deleteUser(user.getUserId());
-		}
-
-		CompanyLocalServiceUtil.deleteCompany(_company);
-	}
-
 	@Test
 	public void testAddDispatchTriggerExceptions() throws Exception {
-		User user = UserTestUtil.addUser(_company);
+		Company company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addUser(company);
 
 		_addDispatchTrigger(
 			DispatchTriggerValues.randomDispatchTriggerValues(user, 1));
@@ -133,7 +104,9 @@ public class DispatchTriggerLocalServiceTest {
 		Map<User, Integer> userDispatchTriggersCounts = new HashMap<>();
 
 		while (userCount-- > 0) {
-			User user = UserTestUtil.addUser(_company);
+			Company company = CompanyTestUtil.addCompany();
+
+			User user = UserTestUtil.addUser(company);
 
 			int dispatchTriggersCount = RandomTestUtil.randomInt(10, 20);
 
@@ -171,7 +144,9 @@ public class DispatchTriggerLocalServiceTest {
 
 	@Test
 	public void testUpdateDispatchTrigger() throws Exception {
-		User user = UserTestUtil.addUser(_company);
+		Company company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addUser(company);
 
 		DispatchTriggerValues dispatchTriggerValues =
 			DispatchTriggerValues.randomDispatchTriggerValues(user, 1);
@@ -217,7 +192,9 @@ public class DispatchTriggerLocalServiceTest {
 
 	@Test
 	public void testUpdateDispatchTriggerExceptions() throws Exception {
-		User user = UserTestUtil.addUser(_company);
+		Company company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addUser(company);
 
 		DispatchTrigger dispatchTrigger1 = _addDispatchTrigger(
 			DispatchTriggerValues.randomDispatchTriggerValues(user, 1));
@@ -323,8 +300,6 @@ public class DispatchTriggerLocalServiceTest {
 				String.format("Dispatch trigger job property for key %s", key),
 				expected.getTaskSettingsProperty(key), value));
 	}
-
-	private Company _company;
 
 	@Inject
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

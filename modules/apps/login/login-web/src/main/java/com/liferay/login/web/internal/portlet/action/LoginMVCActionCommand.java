@@ -237,20 +237,11 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 		if (Validator.isNotNull(redirect)) {
 			if (!themeDisplay.isSignedIn()) {
-				LiferayPortletResponse liferayPortletResponse =
-					_portal.getLiferayPortletResponse(actionResponse);
-
-				PortletURL actionURL = liferayPortletResponse.createActionURL(
-					_portal.getPortletId(actionRequest));
-
-				actionURL.setParameter(
-					ActionRequest.ACTION_NAME, "/login/login");
-				actionURL.setParameter(
-					"saveLastPath", Boolean.FALSE.toString());
-				actionURL.setParameter("redirect", redirect);
-
 				actionRequest.setAttribute(
-					WebKeys.REDIRECT, actionURL.toString());
+					WebKeys.REDIRECT,
+					_http.addParameter(
+						_portal.getPathMain() + "/portal/login", "redirect",
+						redirect));
 
 				return;
 			}
@@ -323,6 +314,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AuthenticatedSessionManager _authenticatedSessionManager;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private Portal _portal;

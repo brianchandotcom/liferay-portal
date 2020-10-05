@@ -56,7 +56,6 @@ DisplayPageUsageManagementToolbarDisplayContext displayPageUsageManagementToolba
 		<liferay-ui:search-iterator
 			displayStyle="list"
 			markupView="lexicon"
-			searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>

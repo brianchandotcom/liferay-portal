@@ -27,9 +27,10 @@ import jodd.util.CsvUtil;
 public class DateArrayConverter implements TypeConverter<Date[]> {
 
 	public DateArrayConverter() {
-		TypeConverterManager typeConverterManager = TypeConverterManager.get();
-
-		_converter = typeConverterManager.lookup(Date.class);
+		_converter = TypeConverterManager.get(
+		).lookup(
+			Date.class
+		);
 	}
 
 	@Override

@@ -73,10 +73,10 @@ public class JSONInit {
 
 		ClassIntrospector.Implementation.set(classIntrospector);
 
-		JsonAnnotationManager jsonAnnotationManager =
-			JsonAnnotationManager.get();
-
-		jsonAnnotationManager.setJsonAnnotation(JSON.class);
+		JsonAnnotationManager.get(
+		).setJsonAnnotation(
+			JSON.class
+		);
 
 		JsonSerializer.Defaults.excludedTypes = new Class<?>[] {
 			ExpandoBridge.class, InputStream.class, LiferayPortletRequest.class,

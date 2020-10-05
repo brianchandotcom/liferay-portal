@@ -144,17 +144,22 @@ public class JSONSerializerImpl implements JSONSerializer {
 	}
 
 	static {
-		TypeJsonSerializerMap typeJsonSerializerMap =
-			TypeJsonSerializerMap.get();
-
-		typeJsonSerializerMap.register(
-			JSONArray.class, new JSONArrayTypeJSONSerializer());
-		typeJsonSerializerMap.register(
-			JSONObject.class, new JSONObjectTypeJSONSerializer());
-		typeJsonSerializerMap.register(
-			Long.TYPE, new LongToStringTypeJSONSerializer());
-		typeJsonSerializerMap.register(
-			Long.class, new LongToStringTypeJSONSerializer());
+		TypeJsonSerializerMap.get(
+		).register(
+			JSONArray.class, new JSONArrayTypeJSONSerializer()
+		);
+		TypeJsonSerializerMap.get(
+		).register(
+			JSONObject.class, new JSONObjectTypeJSONSerializer()
+		);
+		TypeJsonSerializerMap.get(
+		).register(
+			Long.TYPE, new LongToStringTypeJSONSerializer()
+		);
+		TypeJsonSerializerMap.get(
+		).register(
+			Long.class, new LongToStringTypeJSONSerializer()
+		);
 	}
 
 }

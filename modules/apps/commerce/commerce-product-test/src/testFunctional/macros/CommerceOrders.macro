@@ -1,11 +1,9 @@
 definition {
 
 	macro editOrderItemDetails {
-		Click(
-			key_productSKU = "${orderItemSKU}",
-			locator1 = "CommerceOrders#ORDER_ITEMS_PRODUCT_DETAILS");
+		CommerceNavigator.gotoEntry(entryName = "${orderItemSKU}");
 
-		SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		if (isSet(orderItemQuantity)) {
 			Type(

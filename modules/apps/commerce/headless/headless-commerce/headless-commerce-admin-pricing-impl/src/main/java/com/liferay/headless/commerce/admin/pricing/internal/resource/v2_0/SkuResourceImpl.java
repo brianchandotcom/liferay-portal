@@ -14,13 +14,15 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Sku;
 import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.SkuDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.SkuResource;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldId;
 
 import javax.validation.constraints.NotNull;
 
@@ -39,14 +41,20 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 	@NestedField(parentClass = PriceEntry.class, value = "sku")
 	@Override
-	public Sku getPriceEntryIdSku(
-			@NestedFieldId(value = "skuId") @NotNull Long id)
-		throws Exception {
+	public Sku getPriceEntryIdSku(@NotNull Long id) throws Exception {
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryService.getCommercePriceEntry(id);
+
+		CPInstance cpInstance = commercePriceEntry.getCPInstance();
 
 		return _skuDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				id, contextAcceptLanguage.getPreferredLocale()));
+				cpInstance.getCPInstanceId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
+
+	@Reference
+	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference
 	private SkuDTOConverter _skuDTOConverter;

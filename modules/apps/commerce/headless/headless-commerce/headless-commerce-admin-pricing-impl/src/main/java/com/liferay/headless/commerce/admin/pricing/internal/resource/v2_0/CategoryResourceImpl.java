@@ -14,6 +14,10 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
+import com.liferay.commerce.discount.model.CommerceDiscountRel;
+import com.liferay.commerce.discount.service.CommerceDiscountRelService;
+import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
+import com.liferay.commerce.pricing.service.CommercePriceModifierRelService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Category;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountCategory;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifierCategory;
@@ -21,7 +25,6 @@ import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.C
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.CategoryResource;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldId;
 
 import javax.validation.constraints.NotNull;
 
@@ -41,27 +44,39 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 
 	@NestedField(parentClass = DiscountCategory.class, value = "category")
 	@Override
-	public Category getDiscountIdCategoryPage(
-			@NestedFieldId(value = "categoryId") @NotNull Long id)
+	public Category getDiscountCategoryCategory(@NotNull Long id)
 		throws Exception {
+
+		CommerceDiscountRel commerceDiscountRel =
+			_commerceDiscountRelService.getCommerceDiscountRel(id);
 
 		return _categoryDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				id, contextAcceptLanguage.getPreferredLocale()));
+				commerceDiscountRel.getClassPK(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@NestedField(parentClass = PriceModifierCategory.class, value = "category")
 	@Override
-	public Category getPriceModifierIdCategory(
-			@NestedFieldId(value = "categoryId") @NotNull Long id)
+	public Category getPriceModifierCategoryCategory(@NotNull Long id)
 		throws Exception {
+
+		CommercePriceModifierRel commercePriceModifierRel =
+			_commercePriceModifierRelService.getCommercePriceModifierRel(id);
 
 		return _categoryDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				id, contextAcceptLanguage.getPreferredLocale()));
+				commercePriceModifierRel.getClassPK(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Reference
 	private CategoryDTOConverter _categoryDTOConverter;
+
+	@Reference
+	private CommerceDiscountRelService _commerceDiscountRelService;
+
+	@Reference
+	private CommercePriceModifierRelService _commercePriceModifierRelService;
 
 }

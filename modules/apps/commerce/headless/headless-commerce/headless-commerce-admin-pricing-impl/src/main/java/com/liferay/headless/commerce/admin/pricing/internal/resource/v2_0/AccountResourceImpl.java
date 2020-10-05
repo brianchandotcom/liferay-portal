@@ -14,6 +14,10 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
+import com.liferay.commerce.discount.model.CommerceDiscountAccountRel;
+import com.liferay.commerce.discount.service.CommerceDiscountAccountRelService;
+import com.liferay.commerce.price.list.model.CommercePriceListAccountRel;
+import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Account;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountAccount;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListAccount;
@@ -21,7 +25,6 @@ import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.A
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.AccountResource;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldId;
 
 import javax.validation.constraints.NotNull;
 
@@ -41,27 +44,43 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@NestedField(parentClass = DiscountAccount.class, value = "account")
 	@Override
-	public Account getDiscountIdAccount(
-			@NestedFieldId(value = "accountId") @NotNull Long id)
+	public Account getDiscountAccountAccount(@NotNull Long id)
 		throws Exception {
+
+		CommerceDiscountAccountRel commerceDiscountAccountRel =
+			_commerceDiscountAccountRelService.getCommerceDiscountAccountRel(
+				id);
 
 		return _accountDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				id, contextAcceptLanguage.getPreferredLocale()));
+				commerceDiscountAccountRel.getCommerceAccountId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@NestedField(parentClass = PriceListAccount.class, value = "account")
 	@Override
-	public Account getPriceListIdAccount(
-			@NestedFieldId(value = "accountId") @NotNull Long id)
+	public Account getPriceListAccountAccount(@NotNull Long id)
 		throws Exception {
+
+		CommercePriceListAccountRel commercePriceListAccountRel =
+			_commercePriceListAccountRelService.getCommercePriceListAccountRel(
+				id);
 
 		return _accountDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				id, contextAcceptLanguage.getPreferredLocale()));
+				commercePriceListAccountRel.getCommerceAccountId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Reference
 	private AccountDTOConverter _accountDTOConverter;
+
+	@Reference
+	private CommerceDiscountAccountRelService
+		_commerceDiscountAccountRelService;
+
+	@Reference
+	private CommercePriceListAccountRelService
+		_commercePriceListAccountRelService;
 
 }

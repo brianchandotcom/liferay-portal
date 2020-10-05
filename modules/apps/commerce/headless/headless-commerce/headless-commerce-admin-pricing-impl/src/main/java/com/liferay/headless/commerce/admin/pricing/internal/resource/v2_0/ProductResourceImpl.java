@@ -14,9 +14,13 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
-import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.discount.model.CommerceDiscountRel;
+import com.liferay.commerce.discount.service.CommerceDiscountRelService;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
+import com.liferay.commerce.pricing.service.CommercePriceModifierRelService;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountProduct;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifierProduct;
@@ -25,7 +29,6 @@ import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.P
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.ProductResource;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldId;
 
 import javax.validation.constraints.NotNull;
 
@@ -45,44 +48,54 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@NestedField(parentClass = DiscountProduct.class, value = "product")
 	@Override
-	public Product getDiscountIdProductPage(
-			@NestedFieldId(value = "productId") @NotNull Long id)
+	public Product getDiscountProductProduct(@NotNull Long id)
 		throws Exception {
+
+		CommerceDiscountRel commerceDiscountRel =
+			_commerceDiscountRelService.getCommerceDiscountRel(id);
 
 		return _productDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				id, contextAcceptLanguage.getPreferredLocale()));
+				commerceDiscountRel.getClassPK(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@NestedField(parentClass = PriceEntry.class, value = "product")
 	@Override
-	public Product getPriceEntryIdProduct(
-			@NestedFieldId(value = "skuId") @NotNull Long id)
-		throws Exception {
+	public Product getPriceEntryIdProduct(@NotNull Long id) throws Exception {
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryService.getCommercePriceEntry(id);
 
-		CPInstance cpInstance = _cpInstanceService.getCPInstance(id);
-
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+		CPInstance cpInstance = commercePriceEntry.getCPInstance();
 
 		return _productDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				cpDefinition.getCProductId(),
+				cpInstance.getCPDefinitionId(),
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@NestedField(parentClass = PriceModifierProduct.class, value = "product")
 	@Override
-	public Product getPriceModifierIdProduct(
-			@NestedFieldId(value = "productId") @NotNull Long id)
+	public Product getPriceModifierProductProduct(@NotNull Long id)
 		throws Exception {
+
+		CommercePriceModifierRel commercePriceModifierRel =
+			_commercePriceModifierRelService.getCommercePriceModifierRel(id);
 
 		return _productDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				id, contextAcceptLanguage.getPreferredLocale()));
+				commercePriceModifierRel.getClassPK(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Reference
-	private CPInstanceService _cpInstanceService;
+	private CommerceDiscountRelService _commerceDiscountRelService;
+
+	@Reference
+	private CommercePriceEntryService _commercePriceEntryService;
+
+	@Reference
+	private CommercePriceModifierRelService _commercePriceModifierRelService;
 
 	@Reference
 	private ProductDTOConverter _productDTOConverter;

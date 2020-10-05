@@ -205,39 +205,12 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 
 	@Test
 	public void testDeleteDiscountCategory() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountCategory discountCategory =
-			testDeleteDiscountCategory_addDiscountCategory();
-
-		assertHttpResponseStatusCode(
-			204,
-			discountCategoryResource.deleteDiscountCategoryHttpResponse(
-				discountCategory.getId()));
-	}
-
-	protected DiscountCategory testDeleteDiscountCategory_addDiscountCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeleteDiscountCategory() throws Exception {
-		DiscountCategory discountCategory =
-			testGraphQLDiscountCategory_addDiscountCategory();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDiscountCategory",
-						new HashMap<String, Object>() {
-							{
-								put("id", discountCategory.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDiscountCategory"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -295,12 +268,6 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 			Arrays.asList(discountCategory1, discountCategory2),
 			(List<DiscountCategory>)page.getItems());
 		assertValid(page);
-
-		discountCategoryResource.deleteDiscountCategory(
-			discountCategory1.getId());
-
-		discountCategoryResource.deleteDiscountCategory(
-			discountCategory2.getId());
 	}
 
 	@Test
@@ -450,12 +417,6 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 			Arrays.asList(discountCategory1, discountCategory2),
 			(List<DiscountCategory>)page.getItems());
 		assertValid(page);
-
-		discountCategoryResource.deleteDiscountCategory(
-			discountCategory1.getId());
-
-		discountCategoryResource.deleteDiscountCategory(
-			discountCategory2.getId());
 	}
 
 	@Test
@@ -753,13 +714,6 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected DiscountCategory testGraphQLDiscountCategory_addDiscountCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -821,10 +775,6 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 
 		boolean valid = true;
 
-		if (discountCategory.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -859,6 +809,16 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 
 			if (Objects.equals("categoryId", additionalAssertFieldName)) {
 				if (discountCategory.getCategoryId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"discountCategoryId", additionalAssertFieldName)) {
+
+				if (discountCategory.getDiscountCategoryId() == null) {
 					valid = false;
 				}
 
@@ -1028,6 +988,19 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"discountCategoryId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						discountCategory1.getDiscountCategoryId(),
+						discountCategory2.getDiscountCategoryId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"discountExternalReferenceCode",
 					additionalAssertFieldName)) {
 
@@ -1045,16 +1018,6 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 				if (!Objects.deepEquals(
 						discountCategory1.getDiscountId(),
 						discountCategory2.getDiscountId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						discountCategory1.getId(), discountCategory2.getId())) {
 
 					return false;
 				}
@@ -1172,6 +1135,11 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("discountCategoryId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("discountExternalReferenceCode")) {
 			sb.append("'");
 			sb.append(
@@ -1183,11 +1151,6 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("discountId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1239,10 +1202,10 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 				categoryExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				categoryId = RandomTestUtil.randomLong();
+				discountCategoryId = RandomTestUtil.randomLong();
 				discountExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				discountId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
 			}
 		};
 	}

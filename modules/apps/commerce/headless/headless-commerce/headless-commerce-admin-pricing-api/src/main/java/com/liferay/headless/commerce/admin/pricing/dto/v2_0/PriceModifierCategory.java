@@ -177,18 +177,21 @@ public class PriceModifierCategory {
 
 	@DecimalMin("0")
 	@Schema
-	public Long getId() {
-		return id;
+	public Long getPriceModifierCategoryId() {
+		return priceModifierCategoryId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setPriceModifierCategoryId(Long priceModifierCategoryId) {
+		this.priceModifierCategoryId = priceModifierCategoryId;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setPriceModifierCategoryId(
+		UnsafeSupplier<Long, Exception> priceModifierCategoryIdUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			priceModifierCategoryId =
+				priceModifierCategoryIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -200,7 +203,7 @@ public class PriceModifierCategory {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	protected Long priceModifierCategoryId;
 
 	@Schema
 	public String getPriceModifierExternalReferenceCode() {
@@ -337,14 +340,14 @@ public class PriceModifierCategory {
 			sb.append(categoryId);
 		}
 
-		if (id != null) {
+		if (priceModifierCategoryId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"priceModifierCategoryId\": ");
 
-			sb.append(id);
+			sb.append(priceModifierCategoryId);
 		}
 
 		if (priceModifierExternalReferenceCode != null) {

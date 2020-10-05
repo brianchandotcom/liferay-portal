@@ -76,16 +76,21 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/account-group'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-account-groups/{discountAccountGroupId}/account-group'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/discounts/{id}/account-group")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "discountAccountGroupId")
+		}
+	)
+	@Path("/discount-account-groups/{discountAccountGroupId}/account-group")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountGroup")})
-	public AccountGroup getDiscountIdAccountGroup(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public AccountGroup getDiscountAccountGroupAccountGroup(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("discountAccountGroupId") Long discountAccountGroupId)
 		throws Exception {
 
 		return new AccountGroup();
@@ -94,16 +99,21 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/account-group'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-list-account-groups/{priceListAccountGroupId}/account-group'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-lists/{id}/account-group")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "priceListAccountGroupId")
+		}
+	)
+	@Path("/price-list-account-groups/{priceListAccountGroupId}/account-group")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountGroup")})
-	public AccountGroup getPriceListIdAccountGroup(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public AccountGroup getPriceListAccountGroupAccountGroup(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("priceListAccountGroupId") Long priceListAccountGroupId)
 		throws Exception {
 
 		return new AccountGroup();

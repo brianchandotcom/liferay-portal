@@ -63,15 +63,14 @@ public interface PriceEntryResource {
 			String externalReferenceCode, PriceEntry priceEntry)
 		throws Exception;
 
-	public void deletePriceEntry(Long id) throws Exception;
+	public void deletePriceEntry(Long priceEntryId) throws Exception;
 
-	public Response deletePriceEntryBatch(
-			Long id, String callbackURL, Object object)
+	public Response deletePriceEntryBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public PriceEntry getPriceEntry(Long id) throws Exception;
+	public PriceEntry getPriceEntry(Long priceEntryId) throws Exception;
 
-	public PriceEntry patchPriceEntry(Long id, PriceEntry priceEntry)
+	public PriceEntry patchPriceEntry(Long priceEntryId, PriceEntry priceEntry)
 		throws Exception;
 
 	public Page<PriceEntry> getPriceListByExternalReferenceCodePriceEntriesPage(

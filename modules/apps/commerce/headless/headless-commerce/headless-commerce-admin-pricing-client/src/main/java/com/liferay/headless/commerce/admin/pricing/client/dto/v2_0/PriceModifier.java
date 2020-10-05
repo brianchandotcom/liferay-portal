@@ -270,78 +270,79 @@ public class PriceModifier implements Cloneable {
 
 	protected Long priceListId;
 
-	public PriceModifierCategory[] getPriceModifierCategory() {
-		return priceModifierCategory;
+	public PriceModifierCategory[] getPriceModifierCategories() {
+		return priceModifierCategories;
 	}
 
-	public void setPriceModifierCategory(
-		PriceModifierCategory[] priceModifierCategory) {
+	public void setPriceModifierCategories(
+		PriceModifierCategory[] priceModifierCategories) {
 
-		this.priceModifierCategory = priceModifierCategory;
+		this.priceModifierCategories = priceModifierCategories;
 	}
 
-	public void setPriceModifierCategory(
+	public void setPriceModifierCategories(
 		UnsafeSupplier<PriceModifierCategory[], Exception>
-			priceModifierCategoryUnsafeSupplier) {
+			priceModifierCategoriesUnsafeSupplier) {
 
 		try {
-			priceModifierCategory = priceModifierCategoryUnsafeSupplier.get();
+			priceModifierCategories =
+				priceModifierCategoriesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected PriceModifierCategory[] priceModifierCategory;
+	protected PriceModifierCategory[] priceModifierCategories;
 
-	public PriceModifierProduct[] getPriceModifierProduct() {
-		return priceModifierProduct;
+	public PriceModifierProductGroup[] getPriceModifierProductGroups() {
+		return priceModifierProductGroups;
 	}
 
-	public void setPriceModifierProduct(
-		PriceModifierProduct[] priceModifierProduct) {
+	public void setPriceModifierProductGroups(
+		PriceModifierProductGroup[] priceModifierProductGroups) {
 
-		this.priceModifierProduct = priceModifierProduct;
+		this.priceModifierProductGroups = priceModifierProductGroups;
 	}
 
-	public void setPriceModifierProduct(
-		UnsafeSupplier<PriceModifierProduct[], Exception>
-			priceModifierProductUnsafeSupplier) {
-
-		try {
-			priceModifierProduct = priceModifierProductUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected PriceModifierProduct[] priceModifierProduct;
-
-	public PriceModifierProductGroup[] getPriceModifierProductGroup() {
-		return priceModifierProductGroup;
-	}
-
-	public void setPriceModifierProductGroup(
-		PriceModifierProductGroup[] priceModifierProductGroup) {
-
-		this.priceModifierProductGroup = priceModifierProductGroup;
-	}
-
-	public void setPriceModifierProductGroup(
+	public void setPriceModifierProductGroups(
 		UnsafeSupplier<PriceModifierProductGroup[], Exception>
-			priceModifierProductGroupUnsafeSupplier) {
+			priceModifierProductGroupsUnsafeSupplier) {
 
 		try {
-			priceModifierProductGroup =
-				priceModifierProductGroupUnsafeSupplier.get();
+			priceModifierProductGroups =
+				priceModifierProductGroupsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected PriceModifierProductGroup[] priceModifierProductGroup;
+	protected PriceModifierProductGroup[] priceModifierProductGroups;
+
+	public PriceModifierProduct[] getPriceModifierProducts() {
+		return priceModifierProducts;
+	}
+
+	public void setPriceModifierProducts(
+		PriceModifierProduct[] priceModifierProducts) {
+
+		this.priceModifierProducts = priceModifierProducts;
+	}
+
+	public void setPriceModifierProducts(
+		UnsafeSupplier<PriceModifierProduct[], Exception>
+			priceModifierProductsUnsafeSupplier) {
+
+		try {
+			priceModifierProducts = priceModifierProductsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected PriceModifierProduct[] priceModifierProducts;
 
 	public Double getPriority() {
 		return priority;

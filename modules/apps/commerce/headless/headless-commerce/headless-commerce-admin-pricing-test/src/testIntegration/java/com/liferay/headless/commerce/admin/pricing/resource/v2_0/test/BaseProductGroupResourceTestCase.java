@@ -186,19 +186,19 @@ public abstract class BaseProductGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscountIdProductGroupPage() throws Exception {
+	public void testGetDiscountProductGroupProductGroup() throws Exception {
 		ProductGroup postProductGroup =
-			testGetDiscountIdProductGroupPage_addProductGroup();
+			testGetDiscountProductGroupProductGroup_addProductGroup();
 
 		ProductGroup getProductGroup =
-			productGroupResource.getDiscountIdProductGroupPage(
-				postProductGroup.getId());
+			productGroupResource.getDiscountProductGroupProductGroup(null);
 
 		assertEquals(postProductGroup, getProductGroup);
 		assertValid(getProductGroup);
 	}
 
-	protected ProductGroup testGetDiscountIdProductGroupPage_addProductGroup()
+	protected ProductGroup
+			testGetDiscountProductGroupProductGroup_addProductGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -206,7 +206,9 @@ public abstract class BaseProductGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetDiscountIdProductGroupPage() throws Exception {
+	public void testGraphQLGetDiscountProductGroupProductGroup()
+		throws Exception {
+
 		ProductGroup productGroup = testGraphQLProductGroup_addProductGroup();
 
 		Assert.assertTrue(
@@ -216,32 +218,34 @@ public abstract class BaseProductGroupResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"discountIdProductGroupPage",
+								"discountProductGroupProductGroup",
 								new HashMap<String, Object>() {
 									{
-										put("id", productGroup.getId());
+										put("discountProductGroupId", null);
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
-						"Object/discountIdProductGroupPage"))));
+						"Object/discountProductGroupProductGroup"))));
 	}
 
 	@Test
-	public void testGraphQLGetDiscountIdProductGroupPageNotFound()
+	public void testGraphQLGetDiscountProductGroupProductGroupNotFound()
 		throws Exception {
 
-		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantDiscountProductGroupId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"discountIdProductGroupPage",
+						"discountProductGroupProductGroup",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put(
+									"discountProductGroupId",
+									irrelevantDiscountProductGroupId);
 							}
 						},
 						getGraphQLFields())),
@@ -250,19 +254,21 @@ public abstract class BaseProductGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetPriceModifierIdProductGroup() throws Exception {
+	public void testGetPriceModifierProductGroupProductGroup()
+		throws Exception {
+
 		ProductGroup postProductGroup =
-			testGetPriceModifierIdProductGroup_addProductGroup();
+			testGetPriceModifierProductGroupProductGroup_addProductGroup();
 
 		ProductGroup getProductGroup =
-			productGroupResource.getPriceModifierIdProductGroup(
-				postProductGroup.getId());
+			productGroupResource.getPriceModifierProductGroupProductGroup(null);
 
 		assertEquals(postProductGroup, getProductGroup);
 		assertValid(getProductGroup);
 	}
 
-	protected ProductGroup testGetPriceModifierIdProductGroup_addProductGroup()
+	protected ProductGroup
+			testGetPriceModifierProductGroupProductGroup_addProductGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -270,7 +276,9 @@ public abstract class BaseProductGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPriceModifierIdProductGroup() throws Exception {
+	public void testGraphQLGetPriceModifierProductGroupProductGroup()
+		throws Exception {
+
 		ProductGroup productGroup = testGraphQLProductGroup_addProductGroup();
 
 		Assert.assertTrue(
@@ -280,32 +288,37 @@ public abstract class BaseProductGroupResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"priceModifierIdProductGroup",
+								"priceModifierProductGroupProductGroup",
 								new HashMap<String, Object>() {
 									{
-										put("id", productGroup.getId());
+										put(
+											"priceModifierProductGroupId",
+											null);
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
-						"Object/priceModifierIdProductGroup"))));
+						"Object/priceModifierProductGroupProductGroup"))));
 	}
 
 	@Test
-	public void testGraphQLGetPriceModifierIdProductGroupNotFound()
+	public void testGraphQLGetPriceModifierProductGroupProductGroupNotFound()
 		throws Exception {
 
-		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantPriceModifierProductGroupId =
+			RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"priceModifierIdProductGroup",
+						"priceModifierProductGroupProductGroup",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put(
+									"priceModifierProductGroupId",
+									irrelevantPriceModifierProductGroupId);
 							}
 						},
 						getGraphQLFields())),

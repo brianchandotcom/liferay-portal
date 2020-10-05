@@ -94,16 +94,6 @@ public class PriceListDiscountSerDes {
 			sb.append("\"");
 		}
 
-		if (priceListDiscount.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(priceListDiscount.getId());
-		}
-
 		if (priceListDiscount.getOrder() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -112,6 +102,16 @@ public class PriceListDiscountSerDes {
 			sb.append("\"order\": ");
 
 			sb.append(priceListDiscount.getOrder());
+		}
+
+		if (priceListDiscount.getPriceListDiscountId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceListDiscountId\": ");
+
+			sb.append(priceListDiscount.getPriceListDiscountId());
 		}
 
 		if (priceListDiscount.getPriceListExternalReferenceCode() != null) {
@@ -188,18 +188,20 @@ public class PriceListDiscountSerDes {
 				String.valueOf(priceListDiscount.getDiscountName()));
 		}
 
-		if (priceListDiscount.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(priceListDiscount.getId()));
-		}
-
 		if (priceListDiscount.getOrder() == null) {
 			map.put("order", null);
 		}
 		else {
 			map.put("order", String.valueOf(priceListDiscount.getOrder()));
+		}
+
+		if (priceListDiscount.getPriceListDiscountId() == null) {
+			map.put("priceListDiscountId", null);
+		}
+		else {
+			map.put(
+				"priceListDiscountId",
+				String.valueOf(priceListDiscount.getPriceListDiscountId()));
 		}
 
 		if (priceListDiscount.getPriceListExternalReferenceCode() == null) {
@@ -262,16 +264,18 @@ public class PriceListDiscountSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					priceListDiscount.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "order")) {
 				if (jsonParserFieldValue != null) {
 					priceListDiscount.setOrder(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "priceListDiscountId")) {
+
+				if (jsonParserFieldValue != null) {
+					priceListDiscount.setPriceListDiscountId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

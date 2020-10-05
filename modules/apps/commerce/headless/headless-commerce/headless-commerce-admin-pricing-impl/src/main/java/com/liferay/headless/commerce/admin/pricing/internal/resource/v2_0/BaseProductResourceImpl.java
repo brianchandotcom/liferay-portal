@@ -76,16 +76,19 @@ public abstract class BaseProductResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/product'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-products/{discountProductId}/product'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/discounts/{id}/product")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "discountProductId")}
+	)
+	@Path("/discount-products/{discountProductId}/product")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Product")})
-	public Product getDiscountIdProductPage(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public Product getDiscountProductProduct(
+			@NotNull @Parameter(hidden = true) @PathParam("discountProductId")
+				Long discountProductId)
 		throws Exception {
 
 		return new Product();
@@ -94,16 +97,19 @@ public abstract class BaseProductResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-entries/{id}/product'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}/product'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-entries/{id}/product")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "priceEntryId")}
+	)
+	@Path("/price-entries/{priceEntryId}/product")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Product")})
 	public Product getPriceEntryIdProduct(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+			@NotNull @Parameter(hidden = true) @PathParam("priceEntryId") Long
+				priceEntryId)
 		throws Exception {
 
 		return new Product();
@@ -112,16 +118,21 @@ public abstract class BaseProductResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/product'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-products/{priceModifierProductId}/product'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-modifiers/{id}/product")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "priceModifierProductId")
+		}
+	)
+	@Path("/price-modifier-products/{priceModifierProductId}/product")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Product")})
-	public Product getPriceModifierIdProduct(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public Product getPriceModifierProductProduct(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("priceModifierProductId") Long priceModifierProductId)
 		throws Exception {
 
 		return new Product();

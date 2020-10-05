@@ -175,6 +175,35 @@ public class DiscountAccount {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@DecimalMin("0")
+	@Schema
+	public Long getDiscountAccountId() {
+		return discountAccountId;
+	}
+
+	public void setDiscountAccountId(Long discountAccountId) {
+		this.discountAccountId = discountAccountId;
+	}
+
+	@JsonIgnore
+	public void setDiscountAccountId(
+		UnsafeSupplier<Long, Exception> discountAccountIdUnsafeSupplier) {
+
+		try {
+			discountAccountId = discountAccountIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long discountAccountId;
+
 	@Schema
 	public String getDiscountExternalReferenceCode() {
 		return discountExternalReferenceCode;
@@ -236,33 +265,6 @@ public class DiscountAccount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long discountId;
-
-	@DecimalMin("0")
-	@Schema
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
 
 	@Override
 	public boolean equals(Object object) {
@@ -335,6 +337,16 @@ public class DiscountAccount {
 			sb.append(_toJSON(actions));
 		}
 
+		if (discountAccountId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountAccountId\": ");
+
+			sb.append(discountAccountId);
+		}
+
 		if (discountExternalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -357,16 +369,6 @@ public class DiscountAccount {
 			sb.append("\"discountId\": ");
 
 			sb.append(discountId);
-		}
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
 		}
 
 		sb.append("}");

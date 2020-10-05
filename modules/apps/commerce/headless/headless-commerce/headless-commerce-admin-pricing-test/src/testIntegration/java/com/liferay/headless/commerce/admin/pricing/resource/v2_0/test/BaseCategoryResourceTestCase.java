@@ -195,17 +195,17 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscountIdCategoryPage() throws Exception {
-		Category postCategory = testGetDiscountIdCategoryPage_addCategory();
+	public void testGetDiscountCategoryCategory() throws Exception {
+		Category postCategory = testGetDiscountCategoryCategory_addCategory();
 
-		Category getCategory = categoryResource.getDiscountIdCategoryPage(
-			postCategory.getId());
+		Category getCategory = categoryResource.getDiscountCategoryCategory(
+			null);
 
 		assertEquals(postCategory, getCategory);
 		assertValid(getCategory);
 	}
 
-	protected Category testGetDiscountIdCategoryPage_addCategory()
+	protected Category testGetDiscountCategoryCategory_addCategory()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -213,7 +213,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetDiscountIdCategoryPage() throws Exception {
+	public void testGraphQLGetDiscountCategoryCategory() throws Exception {
 		Category category = testGraphQLCategory_addCategory();
 
 		Assert.assertTrue(
@@ -223,31 +223,34 @@ public abstract class BaseCategoryResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"discountIdCategoryPage",
+								"discountCategoryCategory",
 								new HashMap<String, Object>() {
 									{
-										put("id", category.getId());
+										put("discountCategoryId", null);
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/discountIdCategoryPage"))));
+						"JSONObject/data",
+						"Object/discountCategoryCategory"))));
 	}
 
 	@Test
-	public void testGraphQLGetDiscountIdCategoryPageNotFound()
+	public void testGraphQLGetDiscountCategoryCategoryNotFound()
 		throws Exception {
 
-		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantDiscountCategoryId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"discountIdCategoryPage",
+						"discountCategoryCategory",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put(
+									"discountCategoryId",
+									irrelevantDiscountCategoryId);
 							}
 						},
 						getGraphQLFields())),
@@ -256,17 +259,18 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testGetPriceModifierIdCategory() throws Exception {
-		Category postCategory = testGetPriceModifierIdCategory_addCategory();
+	public void testGetPriceModifierCategoryCategory() throws Exception {
+		Category postCategory =
+			testGetPriceModifierCategoryCategory_addCategory();
 
-		Category getCategory = categoryResource.getPriceModifierIdCategory(
-			postCategory.getId());
+		Category getCategory =
+			categoryResource.getPriceModifierCategoryCategory(null);
 
 		assertEquals(postCategory, getCategory);
 		assertValid(getCategory);
 	}
 
-	protected Category testGetPriceModifierIdCategory_addCategory()
+	protected Category testGetPriceModifierCategoryCategory_addCategory()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -274,7 +278,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPriceModifierIdCategory() throws Exception {
+	public void testGraphQLGetPriceModifierCategoryCategory() throws Exception {
 		Category category = testGraphQLCategory_addCategory();
 
 		Assert.assertTrue(
@@ -284,31 +288,34 @@ public abstract class BaseCategoryResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"priceModifierIdCategory",
+								"priceModifierCategoryCategory",
 								new HashMap<String, Object>() {
 									{
-										put("id", category.getId());
+										put("priceModifierCategoryId", null);
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/priceModifierIdCategory"))));
+						"JSONObject/data",
+						"Object/priceModifierCategoryCategory"))));
 	}
 
 	@Test
-	public void testGraphQLGetPriceModifierIdCategoryNotFound()
+	public void testGraphQLGetPriceModifierCategoryCategoryNotFound()
 		throws Exception {
 
-		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantPriceModifierCategoryId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"priceModifierIdCategory",
+						"priceModifierCategoryCategory",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put(
+									"priceModifierCategoryId",
+									irrelevantPriceModifierCategoryId);
 							}
 						},
 						getGraphQLFields())),

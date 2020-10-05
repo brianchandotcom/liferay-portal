@@ -61,11 +61,12 @@ public interface TierPriceResource {
 			Long id, Pagination pagination)
 		throws Exception;
 
-	public TierPrice postPriceEntryIdTierPrice(Long id, TierPrice tierPrice)
+	public TierPrice postPriceEntryIdTierPrice(
+			Long priceEntryId, TierPrice tierPrice)
 		throws Exception;
 
 	public Response postPriceEntryIdTierPriceBatch(
-			Long id, String callbackURL, Object object)
+			Long priceEntryId, String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteTierPriceByExternalReferenceCode(

@@ -212,41 +212,12 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 
 	@Test
 	public void testDeletePriceModifierCategory() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceModifierCategory priceModifierCategory =
-			testDeletePriceModifierCategory_addPriceModifierCategory();
-
-		assertHttpResponseStatusCode(
-			204,
-			priceModifierCategoryResource.
-				deletePriceModifierCategoryHttpResponse(
-					priceModifierCategory.getId()));
-	}
-
-	protected PriceModifierCategory
-			testDeletePriceModifierCategory_addPriceModifierCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeletePriceModifierCategory() throws Exception {
-		PriceModifierCategory priceModifierCategory =
-			testGraphQLPriceModifierCategory_addPriceModifierCategory();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceModifierCategory",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceModifierCategory.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceModifierCategory"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -304,12 +275,6 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 			Arrays.asList(priceModifierCategory1, priceModifierCategory2),
 			(List<PriceModifierCategory>)page.getItems());
 		assertValid(page);
-
-		priceModifierCategoryResource.deletePriceModifierCategory(
-			priceModifierCategory1.getId());
-
-		priceModifierCategoryResource.deletePriceModifierCategory(
-			priceModifierCategory2.getId());
 	}
 
 	@Test
@@ -472,12 +437,6 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 			Arrays.asList(priceModifierCategory1, priceModifierCategory2),
 			(List<PriceModifierCategory>)page.getItems());
 		assertValid(page);
-
-		priceModifierCategoryResource.deletePriceModifierCategory(
-			priceModifierCategory1.getId());
-
-		priceModifierCategoryResource.deletePriceModifierCategory(
-			priceModifierCategory2.getId());
 	}
 
 	@Test
@@ -794,14 +753,6 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected PriceModifierCategory
-			testGraphQLPriceModifierCategory_addPriceModifierCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -871,10 +822,6 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 
 		boolean valid = true;
 
-		if (priceModifierCategory.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -909,6 +856,18 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 
 			if (Objects.equals("categoryId", additionalAssertFieldName)) {
 				if (priceModifierCategory.getCategoryId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceModifierCategoryId", additionalAssertFieldName)) {
+
+				if (priceModifierCategory.getPriceModifierCategoryId() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -1079,10 +1038,12 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"priceModifierCategoryId", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						priceModifierCategory1.getId(),
-						priceModifierCategory2.getId())) {
+						priceModifierCategory1.getPriceModifierCategoryId(),
+						priceModifierCategory2.getPriceModifierCategoryId())) {
 
 					return false;
 				}
@@ -1227,7 +1188,7 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("priceModifierCategoryId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1297,7 +1258,7 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 				categoryExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				categoryId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
+				priceModifierCategoryId = RandomTestUtil.randomLong();
 				priceModifierExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				priceModifierId = RandomTestUtil.randomLong();

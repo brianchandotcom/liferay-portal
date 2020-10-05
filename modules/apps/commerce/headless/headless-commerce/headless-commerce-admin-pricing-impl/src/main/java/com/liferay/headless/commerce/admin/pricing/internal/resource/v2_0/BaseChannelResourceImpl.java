@@ -76,16 +76,19 @@ public abstract class BaseChannelResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/channel'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-channels/{discountChannelId}/channel'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/discounts/{id}/channel")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "discountChannelId")}
+	)
+	@Path("/discount-channels/{discountChannelId}/channel")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Channel")})
-	public Channel getDiscountIdChannel(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public Channel getDiscountChannelChannel(
+			@NotNull @Parameter(hidden = true) @PathParam("discountChannelId")
+				Long discountChannelId)
 		throws Exception {
 
 		return new Channel();
@@ -94,16 +97,19 @@ public abstract class BaseChannelResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/channel'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-list-channels/{priceListChannelId}/channel'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-lists/{id}/channel")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "priceListChannelId")}
+	)
+	@Path("/price-list-channels/{priceListChannelId}/channel")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Channel")})
-	public Channel getPriceListIdChannel(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public Channel getPriceListChannelChannel(
+			@NotNull @Parameter(hidden = true) @PathParam("priceListChannelId")
+				Long priceListChannelId)
 		throws Exception {
 
 		return new Channel();

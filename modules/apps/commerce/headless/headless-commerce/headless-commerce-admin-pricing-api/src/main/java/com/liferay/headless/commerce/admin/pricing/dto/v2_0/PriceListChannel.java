@@ -177,33 +177,6 @@ public class PriceListChannel {
 
 	@DecimalMin("0")
 	@Schema
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
-
-	@DecimalMin("0")
-	@Schema
 	public Integer getOrder() {
 		return order;
 	}
@@ -230,6 +203,35 @@ public class PriceListChannel {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
+
+	@DecimalMin("0")
+	@Schema
+	public Long getPriceListChannelId() {
+		return priceListChannelId;
+	}
+
+	public void setPriceListChannelId(Long priceListChannelId) {
+		this.priceListChannelId = priceListChannelId;
+	}
+
+	@JsonIgnore
+	public void setPriceListChannelId(
+		UnsafeSupplier<Long, Exception> priceListChannelIdUnsafeSupplier) {
+
+		try {
+			priceListChannelId = priceListChannelIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long priceListChannelId;
 
 	@Schema
 	public String getPriceListExternalReferenceCode() {
@@ -364,16 +366,6 @@ public class PriceListChannel {
 			sb.append(channelId);
 		}
 
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
 		if (order != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -382,6 +374,16 @@ public class PriceListChannel {
 			sb.append("\"order\": ");
 
 			sb.append(order);
+		}
+
+		if (priceListChannelId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceListChannelId\": ");
+
+			sb.append(priceListChannelId);
 		}
 
 		if (priceListExternalReferenceCode != null) {

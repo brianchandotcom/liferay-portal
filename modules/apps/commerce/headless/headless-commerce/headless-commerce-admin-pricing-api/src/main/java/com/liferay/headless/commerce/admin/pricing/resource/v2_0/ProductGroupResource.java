@@ -46,9 +46,12 @@ public interface ProductGroupResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public ProductGroup getDiscountIdProductGroupPage(Long id) throws Exception;
+	public ProductGroup getDiscountProductGroupProductGroup(
+			Long discountProductGroupId)
+		throws Exception;
 
-	public ProductGroup getPriceModifierIdProductGroup(Long id)
+	public ProductGroup getPriceModifierProductGroupProductGroup(
+			Long priceModifierProductGroupId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

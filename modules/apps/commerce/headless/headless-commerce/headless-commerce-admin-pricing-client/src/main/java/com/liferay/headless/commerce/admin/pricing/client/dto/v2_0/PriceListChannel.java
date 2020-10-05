@@ -122,25 +122,6 @@ public class PriceListChannel implements Cloneable {
 
 	protected Long channelId;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
-
 	public Integer getOrder() {
 		return order;
 	}
@@ -161,6 +142,27 @@ public class PriceListChannel implements Cloneable {
 	}
 
 	protected Integer order;
+
+	public Long getPriceListChannelId() {
+		return priceListChannelId;
+	}
+
+	public void setPriceListChannelId(Long priceListChannelId) {
+		this.priceListChannelId = priceListChannelId;
+	}
+
+	public void setPriceListChannelId(
+		UnsafeSupplier<Long, Exception> priceListChannelIdUnsafeSupplier) {
+
+		try {
+			priceListChannelId = priceListChannelIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long priceListChannelId;
 
 	public String getPriceListExternalReferenceCode() {
 		return priceListExternalReferenceCode;

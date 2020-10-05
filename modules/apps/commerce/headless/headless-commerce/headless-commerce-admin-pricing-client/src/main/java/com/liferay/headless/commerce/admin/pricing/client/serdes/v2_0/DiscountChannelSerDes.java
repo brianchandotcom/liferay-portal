@@ -100,6 +100,16 @@ public class DiscountChannelSerDes {
 			sb.append(discountChannel.getChannelId());
 		}
 
+		if (discountChannel.getDiscountChannelId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountChannelId\": ");
+
+			sb.append(discountChannel.getDiscountChannelId());
+		}
+
 		if (discountChannel.getDiscountExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -123,16 +133,6 @@ public class DiscountChannelSerDes {
 			sb.append("\"discountId\": ");
 
 			sb.append(discountChannel.getDiscountId());
-		}
-
-		if (discountChannel.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(discountChannel.getId());
 		}
 
 		sb.append("}");
@@ -186,6 +186,15 @@ public class DiscountChannelSerDes {
 				"channelId", String.valueOf(discountChannel.getChannelId()));
 		}
 
+		if (discountChannel.getDiscountChannelId() == null) {
+			map.put("discountChannelId", null);
+		}
+		else {
+			map.put(
+				"discountChannelId",
+				String.valueOf(discountChannel.getDiscountChannelId()));
+		}
+
 		if (discountChannel.getDiscountExternalReferenceCode() == null) {
 			map.put("discountExternalReferenceCode", null);
 		}
@@ -202,13 +211,6 @@ public class DiscountChannelSerDes {
 		else {
 			map.put(
 				"discountId", String.valueOf(discountChannel.getDiscountId()));
-		}
-
-		if (discountChannel.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(discountChannel.getId()));
 		}
 
 		return map;
@@ -259,6 +261,12 @@ public class DiscountChannelSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "discountChannelId")) {
+				if (jsonParserFieldValue != null) {
+					discountChannel.setDiscountChannelId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "discountExternalReferenceCode")) {
 
@@ -270,12 +278,6 @@ public class DiscountChannelSerDes {
 			else if (Objects.equals(jsonParserFieldName, "discountId")) {
 				if (jsonParserFieldValue != null) {
 					discountChannel.setDiscountId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					discountChannel.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

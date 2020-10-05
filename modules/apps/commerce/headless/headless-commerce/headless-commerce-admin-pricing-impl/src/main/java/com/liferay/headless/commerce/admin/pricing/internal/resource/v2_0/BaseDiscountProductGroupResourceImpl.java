@@ -83,16 +83,21 @@ public abstract class BaseDiscountProductGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-product-groups/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-product-groups/{discountProductGroupId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/discount-product-groups/{id}")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "discountProductGroupId")
+		}
+	)
+	@Path("/discount-product-groups/{discountProductGroupId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DiscountProductGroup")})
 	public void deleteDiscountProductGroup(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("discountProductGroupId") Long discountProductGroupId)
 		throws Exception {
 	}
 
@@ -105,16 +110,12 @@ public abstract class BaseDiscountProductGroupResourceImpl
 	@Consumes("application/json")
 	@DELETE
 	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/discount-product-groups/batch")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscountProductGroup")})
 	public Response deleteDiscountProductGroupBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -302,7 +303,8 @@ public abstract class BaseDiscountProductGroupResourceImpl
 		for (DiscountProductGroup discountProductGroup :
 				discountProductGroups) {
 
-			deleteDiscountProductGroup(discountProductGroup.getId());
+			deleteDiscountProductGroup(
+				discountProductGroup.getDiscountProductGroupId());
 		}
 	}
 

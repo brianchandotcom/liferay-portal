@@ -205,39 +205,12 @@ public abstract class BaseDiscountAccountResourceTestCase {
 
 	@Test
 	public void testDeleteDiscountAccount() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountAccount discountAccount =
-			testDeleteDiscountAccount_addDiscountAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			discountAccountResource.deleteDiscountAccountHttpResponse(
-				discountAccount.getId()));
-	}
-
-	protected DiscountAccount testDeleteDiscountAccount_addDiscountAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeleteDiscountAccount() throws Exception {
-		DiscountAccount discountAccount =
-			testGraphQLDiscountAccount_addDiscountAccount();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDiscountAccount",
-						new HashMap<String, Object>() {
-							{
-								put("id", discountAccount.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDiscountAccount"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -295,10 +268,6 @@ public abstract class BaseDiscountAccountResourceTestCase {
 			Arrays.asList(discountAccount1, discountAccount2),
 			(List<DiscountAccount>)page.getItems());
 		assertValid(page);
-
-		discountAccountResource.deleteDiscountAccount(discountAccount1.getId());
-
-		discountAccountResource.deleteDiscountAccount(discountAccount2.getId());
 	}
 
 	@Test
@@ -447,10 +416,6 @@ public abstract class BaseDiscountAccountResourceTestCase {
 			Arrays.asList(discountAccount1, discountAccount2),
 			(List<DiscountAccount>)page.getItems());
 		assertValid(page);
-
-		discountAccountResource.deleteDiscountAccount(discountAccount1.getId());
-
-		discountAccountResource.deleteDiscountAccount(discountAccount2.getId());
 	}
 
 	@Test
@@ -747,13 +712,6 @@ public abstract class BaseDiscountAccountResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected DiscountAccount testGraphQLDiscountAccount_addDiscountAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -812,10 +770,6 @@ public abstract class BaseDiscountAccountResourceTestCase {
 
 		boolean valid = true;
 
-		if (discountAccount.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -848,6 +802,16 @@ public abstract class BaseDiscountAccountResourceTestCase {
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (discountAccount.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"discountAccountId", additionalAssertFieldName)) {
+
+				if (discountAccount.getDiscountAccountId() == null) {
 					valid = false;
 				}
 
@@ -1016,6 +980,19 @@ public abstract class BaseDiscountAccountResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"discountAccountId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						discountAccount1.getDiscountAccountId(),
+						discountAccount2.getDiscountAccountId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"discountExternalReferenceCode",
 					additionalAssertFieldName)) {
 
@@ -1033,16 +1010,6 @@ public abstract class BaseDiscountAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						discountAccount1.getDiscountId(),
 						discountAccount2.getDiscountId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						discountAccount1.getId(), discountAccount2.getId())) {
 
 					return false;
 				}
@@ -1160,6 +1127,11 @@ public abstract class BaseDiscountAccountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("discountAccountId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("discountExternalReferenceCode")) {
 			sb.append("'");
 			sb.append(
@@ -1171,11 +1143,6 @@ public abstract class BaseDiscountAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("discountId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1227,10 +1194,10 @@ public abstract class BaseDiscountAccountResourceTestCase {
 				accountExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				accountId = RandomTestUtil.randomLong();
+				discountAccountId = RandomTestUtil.randomLong();
 				discountExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				discountId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
 			}
 		};
 	}

@@ -40,19 +40,21 @@ public interface PriceModifierProductGroupResource {
 		return new Builder();
 	}
 
-	public void deletePriceModifierProductGroup(Long id) throws Exception;
+	public void deletePriceModifierProductGroup(
+			Long priceModifierProductGroupId)
+		throws Exception;
 
 	public HttpInvoker.HttpResponse deletePriceModifierProductGroupHttpResponse(
-			Long id)
+			Long priceModifierProductGroupId)
 		throws Exception;
 
 	public void deletePriceModifierProductGroupBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			deletePriceModifierProductGroupBatchHttpResponse(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 		throws Exception;
 
 	public Page<PriceModifierProductGroup>
@@ -164,9 +166,13 @@ public interface PriceModifierProductGroupResource {
 	public static class PriceModifierProductGroupResourceImpl
 		implements PriceModifierProductGroupResource {
 
-		public void deletePriceModifierProductGroup(Long id) throws Exception {
+		public void deletePriceModifierProductGroup(
+				Long priceModifierProductGroupId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				deletePriceModifierProductGroupHttpResponse(id);
+				deletePriceModifierProductGroupHttpResponse(
+					priceModifierProductGroupId);
 
 			String content = httpResponse.getContent();
 
@@ -189,7 +195,8 @@ public interface PriceModifierProductGroupResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deletePriceModifierProductGroupHttpResponse(Long id)
+				deletePriceModifierProductGroupHttpResponse(
+					Long priceModifierProductGroupId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -216,8 +223,8 @@ public interface PriceModifierProductGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/{id}",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/{priceModifierProductGroupId}",
+				priceModifierProductGroupId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -226,12 +233,12 @@ public interface PriceModifierProductGroupResource {
 		}
 
 		public void deletePriceModifierProductGroupBatch(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				deletePriceModifierProductGroupBatchHttpResponse(
-					id, callbackURL, object);
+					callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -244,7 +251,7 @@ public interface PriceModifierProductGroupResource {
 
 		public HttpInvoker.HttpResponse
 				deletePriceModifierProductGroupBatchHttpResponse(
-					Long id, String callbackURL, Object object)
+					String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -276,8 +283,7 @@ public interface PriceModifierProductGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/batch",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

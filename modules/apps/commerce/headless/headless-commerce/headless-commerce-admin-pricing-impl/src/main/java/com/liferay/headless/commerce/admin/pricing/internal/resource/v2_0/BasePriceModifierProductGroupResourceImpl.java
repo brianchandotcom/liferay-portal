@@ -83,16 +83,24 @@ public abstract class BasePriceModifierProductGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/{priceModifierProductGroupId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-modifier-product-groups/{id}")
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "priceModifierProductGroupId"
+			)
+		}
+	)
+	@Path("/price-modifier-product-groups/{priceModifierProductGroupId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceModifierProductGroup")})
 	public void deletePriceModifierProductGroup(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("priceModifierProductGroupId") Long
+				priceModifierProductGroupId)
 		throws Exception {
 	}
 
@@ -105,16 +113,12 @@ public abstract class BasePriceModifierProductGroupResourceImpl
 	@Consumes("application/json")
 	@DELETE
 	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/price-modifier-product-groups/batch")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PriceModifierProductGroup")})
 	public Response deletePriceModifierProductGroupBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -307,7 +311,8 @@ public abstract class BasePriceModifierProductGroupResourceImpl
 		for (PriceModifierProductGroup priceModifierProductGroup :
 				priceModifierProductGroups) {
 
-			deletePriceModifierProductGroup(priceModifierProductGroup.getId());
+			deletePriceModifierProductGroup(
+				priceModifierProductGroup.getPriceModifierProductGroupId());
 		}
 	}
 

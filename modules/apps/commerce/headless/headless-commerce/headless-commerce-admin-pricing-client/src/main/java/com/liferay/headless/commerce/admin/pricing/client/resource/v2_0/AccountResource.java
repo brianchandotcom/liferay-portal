@@ -37,14 +37,18 @@ public interface AccountResource {
 		return new Builder();
 	}
 
-	public Account getDiscountIdAccount(Long id) throws Exception;
-
-	public HttpInvoker.HttpResponse getDiscountIdAccountHttpResponse(Long id)
+	public Account getDiscountAccountAccount(Long discountAccountId)
 		throws Exception;
 
-	public Account getPriceListIdAccount(Long id) throws Exception;
+	public HttpInvoker.HttpResponse getDiscountAccountAccountHttpResponse(
+			Long discountAccountId)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse getPriceListIdAccountHttpResponse(Long id)
+	public Account getPriceListAccountAccount(Long priceListAccountId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getPriceListAccountAccountHttpResponse(
+			Long priceListAccountId)
 		throws Exception;
 
 	public static class Builder {
@@ -102,9 +106,11 @@ public interface AccountResource {
 
 	public static class AccountResourceImpl implements AccountResource {
 
-		public Account getDiscountIdAccount(Long id) throws Exception {
+		public Account getDiscountAccountAccount(Long discountAccountId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getDiscountIdAccountHttpResponse(id);
+				getDiscountAccountAccountHttpResponse(discountAccountId);
 
 			String content = httpResponse.getContent();
 
@@ -127,8 +133,8 @@ public interface AccountResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getDiscountIdAccountHttpResponse(
-				Long id)
+		public HttpInvoker.HttpResponse getDiscountAccountAccountHttpResponse(
+				Long discountAccountId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -155,8 +161,8 @@ public interface AccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/account",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/discount-accounts/{discountAccountId}/account",
+				discountAccountId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -164,9 +170,11 @@ public interface AccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public Account getPriceListIdAccount(Long id) throws Exception {
+		public Account getPriceListAccountAccount(Long priceListAccountId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getPriceListIdAccountHttpResponse(id);
+				getPriceListAccountAccountHttpResponse(priceListAccountId);
 
 			String content = httpResponse.getContent();
 
@@ -189,8 +197,8 @@ public interface AccountResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getPriceListIdAccountHttpResponse(
-				Long id)
+		public HttpInvoker.HttpResponse getPriceListAccountAccountHttpResponse(
+				Long priceListAccountId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -217,8 +225,8 @@ public interface AccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/account",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-list-accounts/{priceListAccountId}/account",
+				priceListAccountId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

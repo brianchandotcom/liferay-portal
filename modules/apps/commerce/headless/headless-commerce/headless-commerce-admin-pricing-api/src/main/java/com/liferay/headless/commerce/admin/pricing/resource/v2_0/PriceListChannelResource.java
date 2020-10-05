@@ -51,10 +51,11 @@ public interface PriceListChannelResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deletePriceListChannel(Long id) throws Exception;
+	public void deletePriceListChannel(Long priceListChannelId)
+		throws Exception;
 
 	public Response deletePriceListChannelBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Page<PriceListChannel>

@@ -40,17 +40,18 @@ public interface PriceListChannelResource {
 		return new Builder();
 	}
 
-	public void deletePriceListChannel(Long id) throws Exception;
-
-	public HttpInvoker.HttpResponse deletePriceListChannelHttpResponse(Long id)
+	public void deletePriceListChannel(Long priceListChannelId)
 		throws Exception;
 
-	public void deletePriceListChannelBatch(
-			Long id, String callbackURL, Object object)
+	public HttpInvoker.HttpResponse deletePriceListChannelHttpResponse(
+			Long priceListChannelId)
+		throws Exception;
+
+	public void deletePriceListChannelBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deletePriceListChannelBatchHttpResponse(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Page<PriceListChannel>
@@ -157,9 +158,11 @@ public interface PriceListChannelResource {
 	public static class PriceListChannelResourceImpl
 		implements PriceListChannelResource {
 
-		public void deletePriceListChannel(Long id) throws Exception {
+		public void deletePriceListChannel(Long priceListChannelId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				deletePriceListChannelHttpResponse(id);
+				deletePriceListChannelHttpResponse(priceListChannelId);
 
 			String content = httpResponse.getContent();
 
@@ -182,7 +185,7 @@ public interface PriceListChannelResource {
 		}
 
 		public HttpInvoker.HttpResponse deletePriceListChannelHttpResponse(
-				Long id)
+				Long priceListChannelId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -209,8 +212,8 @@ public interface PriceListChannelResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-list-channels/{id}",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-list-channels/{priceListChannelId}",
+				priceListChannelId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -219,12 +222,11 @@ public interface PriceListChannelResource {
 		}
 
 		public void deletePriceListChannelBatch(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deletePriceListChannelBatchHttpResponse(
-					id, callbackURL, object);
+				deletePriceListChannelBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -236,7 +238,7 @@ public interface PriceListChannelResource {
 		}
 
 		public HttpInvoker.HttpResponse deletePriceListChannelBatchHttpResponse(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -268,8 +270,7 @@ public interface PriceListChannelResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-list-channels/batch",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-list-channels/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

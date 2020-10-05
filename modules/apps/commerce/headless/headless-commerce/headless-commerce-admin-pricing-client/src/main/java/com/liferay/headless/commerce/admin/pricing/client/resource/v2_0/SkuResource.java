@@ -37,9 +37,10 @@ public interface SkuResource {
 		return new Builder();
 	}
 
-	public Sku getPriceEntryIdSku(Long id) throws Exception;
+	public Sku getPriceEntryIdSku(Long priceEntryId) throws Exception;
 
-	public HttpInvoker.HttpResponse getPriceEntryIdSkuHttpResponse(Long id)
+	public HttpInvoker.HttpResponse getPriceEntryIdSkuHttpResponse(
+			Long priceEntryId)
 		throws Exception;
 
 	public static class Builder {
@@ -97,9 +98,9 @@ public interface SkuResource {
 
 	public static class SkuResourceImpl implements SkuResource {
 
-		public Sku getPriceEntryIdSku(Long id) throws Exception {
+		public Sku getPriceEntryIdSku(Long priceEntryId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				getPriceEntryIdSkuHttpResponse(id);
+				getPriceEntryIdSkuHttpResponse(priceEntryId);
 
 			String content = httpResponse.getContent();
 
@@ -122,7 +123,8 @@ public interface SkuResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getPriceEntryIdSkuHttpResponse(Long id)
+		public HttpInvoker.HttpResponse getPriceEntryIdSkuHttpResponse(
+				Long priceEntryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -149,8 +151,8 @@ public interface SkuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{id}/sku",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}/sku",
+				priceEntryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

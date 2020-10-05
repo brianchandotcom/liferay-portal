@@ -122,6 +122,27 @@ public class DiscountChannel implements Cloneable {
 
 	protected Long channelId;
 
+	public Long getDiscountChannelId() {
+		return discountChannelId;
+	}
+
+	public void setDiscountChannelId(Long discountChannelId) {
+		this.discountChannelId = discountChannelId;
+	}
+
+	public void setDiscountChannelId(
+		UnsafeSupplier<Long, Exception> discountChannelIdUnsafeSupplier) {
+
+		try {
+			discountChannelId = discountChannelIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long discountChannelId;
+
 	public String getDiscountExternalReferenceCode() {
 		return discountExternalReferenceCode;
 	}
@@ -167,25 +188,6 @@ public class DiscountChannel implements Cloneable {
 	}
 
 	protected Long discountId;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
 
 	@Override
 	public DiscountChannel clone() throws CloneNotSupportedException {

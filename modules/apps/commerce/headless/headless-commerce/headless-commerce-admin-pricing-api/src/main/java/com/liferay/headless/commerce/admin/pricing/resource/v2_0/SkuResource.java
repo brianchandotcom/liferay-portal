@@ -46,7 +46,7 @@ public interface SkuResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Sku getPriceEntryIdSku(Long id) throws Exception;
+	public Sku getPriceEntryIdSku(Long priceEntryId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

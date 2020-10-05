@@ -46,9 +46,11 @@ public interface AccountResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Account getDiscountIdAccount(Long id) throws Exception;
+	public Account getDiscountAccountAccount(Long discountAccountId)
+		throws Exception;
 
-	public Account getPriceListIdAccount(Long id) throws Exception;
+	public Account getPriceListAccountAccount(Long priceListAccountId)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

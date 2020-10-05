@@ -383,23 +383,24 @@ public class PriceModifier {
 
 	@Schema
 	@Valid
-	public PriceModifierCategory[] getPriceModifierCategory() {
-		return priceModifierCategory;
+	public PriceModifierCategory[] getPriceModifierCategories() {
+		return priceModifierCategories;
 	}
 
-	public void setPriceModifierCategory(
-		PriceModifierCategory[] priceModifierCategory) {
+	public void setPriceModifierCategories(
+		PriceModifierCategory[] priceModifierCategories) {
 
-		this.priceModifierCategory = priceModifierCategory;
+		this.priceModifierCategories = priceModifierCategories;
 	}
 
 	@JsonIgnore
-	public void setPriceModifierCategory(
+	public void setPriceModifierCategories(
 		UnsafeSupplier<PriceModifierCategory[], Exception>
-			priceModifierCategoryUnsafeSupplier) {
+			priceModifierCategoriesUnsafeSupplier) {
 
 		try {
-			priceModifierCategory = priceModifierCategoryUnsafeSupplier.get();
+			priceModifierCategories =
+				priceModifierCategoriesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -411,60 +412,28 @@ public class PriceModifier {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PriceModifierCategory[] priceModifierCategory;
+	protected PriceModifierCategory[] priceModifierCategories;
 
 	@Schema
 	@Valid
-	public PriceModifierProduct[] getPriceModifierProduct() {
-		return priceModifierProduct;
+	public PriceModifierProductGroup[] getPriceModifierProductGroups() {
+		return priceModifierProductGroups;
 	}
 
-	public void setPriceModifierProduct(
-		PriceModifierProduct[] priceModifierProduct) {
+	public void setPriceModifierProductGroups(
+		PriceModifierProductGroup[] priceModifierProductGroups) {
 
-		this.priceModifierProduct = priceModifierProduct;
-	}
-
-	@JsonIgnore
-	public void setPriceModifierProduct(
-		UnsafeSupplier<PriceModifierProduct[], Exception>
-			priceModifierProductUnsafeSupplier) {
-
-		try {
-			priceModifierProduct = priceModifierProductUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PriceModifierProduct[] priceModifierProduct;
-
-	@Schema
-	@Valid
-	public PriceModifierProductGroup[] getPriceModifierProductGroup() {
-		return priceModifierProductGroup;
-	}
-
-	public void setPriceModifierProductGroup(
-		PriceModifierProductGroup[] priceModifierProductGroup) {
-
-		this.priceModifierProductGroup = priceModifierProductGroup;
+		this.priceModifierProductGroups = priceModifierProductGroups;
 	}
 
 	@JsonIgnore
-	public void setPriceModifierProductGroup(
+	public void setPriceModifierProductGroups(
 		UnsafeSupplier<PriceModifierProductGroup[], Exception>
-			priceModifierProductGroupUnsafeSupplier) {
+			priceModifierProductGroupsUnsafeSupplier) {
 
 		try {
-			priceModifierProductGroup =
-				priceModifierProductGroupUnsafeSupplier.get();
+			priceModifierProductGroups =
+				priceModifierProductGroupsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -476,7 +445,39 @@ public class PriceModifier {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PriceModifierProductGroup[] priceModifierProductGroup;
+	protected PriceModifierProductGroup[] priceModifierProductGroups;
+
+	@Schema
+	@Valid
+	public PriceModifierProduct[] getPriceModifierProducts() {
+		return priceModifierProducts;
+	}
+
+	public void setPriceModifierProducts(
+		PriceModifierProduct[] priceModifierProducts) {
+
+		this.priceModifierProducts = priceModifierProducts;
+	}
+
+	@JsonIgnore
+	public void setPriceModifierProducts(
+		UnsafeSupplier<PriceModifierProduct[], Exception>
+			priceModifierProductsUnsafeSupplier) {
+
+		try {
+			priceModifierProducts = priceModifierProductsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected PriceModifierProduct[] priceModifierProducts;
 
 	@Schema
 	public Double getPriority() {
@@ -724,19 +725,19 @@ public class PriceModifier {
 			sb.append(priceListId);
 		}
 
-		if (priceModifierCategory != null) {
+		if (priceModifierCategories != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"priceModifierCategory\": ");
+			sb.append("\"priceModifierCategories\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < priceModifierCategory.length; i++) {
-				sb.append(String.valueOf(priceModifierCategory[i]));
+			for (int i = 0; i < priceModifierCategories.length; i++) {
+				sb.append(String.valueOf(priceModifierCategories[i]));
 
-				if ((i + 1) < priceModifierCategory.length) {
+				if ((i + 1) < priceModifierCategories.length) {
 					sb.append(", ");
 				}
 			}
@@ -744,19 +745,19 @@ public class PriceModifier {
 			sb.append("]");
 		}
 
-		if (priceModifierProduct != null) {
+		if (priceModifierProductGroups != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"priceModifierProduct\": ");
+			sb.append("\"priceModifierProductGroups\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < priceModifierProduct.length; i++) {
-				sb.append(String.valueOf(priceModifierProduct[i]));
+			for (int i = 0; i < priceModifierProductGroups.length; i++) {
+				sb.append(String.valueOf(priceModifierProductGroups[i]));
 
-				if ((i + 1) < priceModifierProduct.length) {
+				if ((i + 1) < priceModifierProductGroups.length) {
 					sb.append(", ");
 				}
 			}
@@ -764,19 +765,19 @@ public class PriceModifier {
 			sb.append("]");
 		}
 
-		if (priceModifierProductGroup != null) {
+		if (priceModifierProducts != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"priceModifierProductGroup\": ");
+			sb.append("\"priceModifierProducts\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < priceModifierProductGroup.length; i++) {
-				sb.append(String.valueOf(priceModifierProductGroup[i]));
+			for (int i = 0; i < priceModifierProducts.length; i++) {
+				sb.append(String.valueOf(priceModifierProducts[i]));
 
-				if ((i + 1) < priceModifierProductGroup.length) {
+				if ((i + 1) < priceModifierProducts.length) {
 					sb.append(", ");
 				}
 			}

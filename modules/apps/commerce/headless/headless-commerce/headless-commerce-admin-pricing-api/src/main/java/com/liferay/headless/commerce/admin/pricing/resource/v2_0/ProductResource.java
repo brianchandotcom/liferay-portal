@@ -46,11 +46,13 @@ public interface ProductResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Product getDiscountIdProductPage(Long id) throws Exception;
+	public Product getDiscountProductProduct(Long discountProductId)
+		throws Exception;
 
-	public Product getPriceEntryIdProduct(Long id) throws Exception;
+	public Product getPriceEntryIdProduct(Long priceEntryId) throws Exception;
 
-	public Product getPriceModifierIdProduct(Long id) throws Exception;
+	public Product getPriceModifierProductProduct(Long priceModifierProductId)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

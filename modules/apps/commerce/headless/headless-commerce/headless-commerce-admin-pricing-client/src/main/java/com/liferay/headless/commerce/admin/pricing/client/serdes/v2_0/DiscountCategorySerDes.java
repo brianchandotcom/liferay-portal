@@ -100,6 +100,16 @@ public class DiscountCategorySerDes {
 			sb.append(discountCategory.getCategoryId());
 		}
 
+		if (discountCategory.getDiscountCategoryId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountCategoryId\": ");
+
+			sb.append(discountCategory.getDiscountCategoryId());
+		}
+
 		if (discountCategory.getDiscountExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -123,16 +133,6 @@ public class DiscountCategorySerDes {
 			sb.append("\"discountId\": ");
 
 			sb.append(discountCategory.getDiscountId());
-		}
-
-		if (discountCategory.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(discountCategory.getId());
 		}
 
 		sb.append("}");
@@ -186,6 +186,15 @@ public class DiscountCategorySerDes {
 				"categoryId", String.valueOf(discountCategory.getCategoryId()));
 		}
 
+		if (discountCategory.getDiscountCategoryId() == null) {
+			map.put("discountCategoryId", null);
+		}
+		else {
+			map.put(
+				"discountCategoryId",
+				String.valueOf(discountCategory.getDiscountCategoryId()));
+		}
+
 		if (discountCategory.getDiscountExternalReferenceCode() == null) {
 			map.put("discountExternalReferenceCode", null);
 		}
@@ -202,13 +211,6 @@ public class DiscountCategorySerDes {
 		else {
 			map.put(
 				"discountId", String.valueOf(discountCategory.getDiscountId()));
-		}
-
-		if (discountCategory.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(discountCategory.getId()));
 		}
 
 		return map;
@@ -260,6 +262,14 @@ public class DiscountCategorySerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "discountCategoryId")) {
+
+				if (jsonParserFieldValue != null) {
+					discountCategory.setDiscountCategoryId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "discountExternalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
@@ -270,12 +280,6 @@ public class DiscountCategorySerDes {
 			else if (Objects.equals(jsonParserFieldName, "discountId")) {
 				if (jsonParserFieldValue != null) {
 					discountCategory.setDiscountId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					discountCategory.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

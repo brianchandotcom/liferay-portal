@@ -122,6 +122,27 @@ public class DiscountCategory implements Cloneable {
 
 	protected Long categoryId;
 
+	public Long getDiscountCategoryId() {
+		return discountCategoryId;
+	}
+
+	public void setDiscountCategoryId(Long discountCategoryId) {
+		this.discountCategoryId = discountCategoryId;
+	}
+
+	public void setDiscountCategoryId(
+		UnsafeSupplier<Long, Exception> discountCategoryIdUnsafeSupplier) {
+
+		try {
+			discountCategoryId = discountCategoryIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long discountCategoryId;
+
 	public String getDiscountExternalReferenceCode() {
 		return discountExternalReferenceCode;
 	}
@@ -167,25 +188,6 @@ public class DiscountCategory implements Cloneable {
 	}
 
 	protected Long discountId;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
 
 	@Override
 	public DiscountCategory clone() throws CloneNotSupportedException {

@@ -65,16 +65,6 @@ public class PriceModifierProductSerDes {
 			sb.append(_toJSON(priceModifierProduct.getActions()));
 		}
 
-		if (priceModifierProduct.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(priceModifierProduct.getId());
-		}
-
 		if (priceModifierProduct.getPriceModifierExternalReferenceCode() !=
 				null) {
 
@@ -102,6 +92,16 @@ public class PriceModifierProductSerDes {
 			sb.append("\"priceModifierId\": ");
 
 			sb.append(priceModifierProduct.getPriceModifierId());
+		}
+
+		if (priceModifierProduct.getPriceModifierProductId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceModifierProductId\": ");
+
+			sb.append(priceModifierProduct.getPriceModifierProductId());
 		}
 
 		if (priceModifierProduct.getProduct() != null) {
@@ -169,13 +169,6 @@ public class PriceModifierProductSerDes {
 				"actions", String.valueOf(priceModifierProduct.getActions()));
 		}
 
-		if (priceModifierProduct.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(priceModifierProduct.getId()));
-		}
-
 		if (priceModifierProduct.getPriceModifierExternalReferenceCode() ==
 				null) {
 
@@ -196,6 +189,16 @@ public class PriceModifierProductSerDes {
 			map.put(
 				"priceModifierId",
 				String.valueOf(priceModifierProduct.getPriceModifierId()));
+		}
+
+		if (priceModifierProduct.getPriceModifierProductId() == null) {
+			map.put("priceModifierProductId", null);
+		}
+		else {
+			map.put(
+				"priceModifierProductId",
+				String.valueOf(
+					priceModifierProduct.getPriceModifierProductId()));
 		}
 
 		if (priceModifierProduct.getProduct() == null) {
@@ -253,12 +256,6 @@ public class PriceModifierProductSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					priceModifierProduct.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(
 						jsonParserFieldName,
 						"priceModifierExternalReferenceCode")) {
@@ -271,6 +268,14 @@ public class PriceModifierProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "priceModifierId")) {
 				if (jsonParserFieldValue != null) {
 					priceModifierProduct.setPriceModifierId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "priceModifierProductId")) {
+
+				if (jsonParserFieldValue != null) {
+					priceModifierProduct.setPriceModifierProductId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

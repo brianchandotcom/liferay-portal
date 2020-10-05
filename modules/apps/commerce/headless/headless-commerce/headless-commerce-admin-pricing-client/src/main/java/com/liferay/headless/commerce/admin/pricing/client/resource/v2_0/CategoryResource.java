@@ -37,16 +37,20 @@ public interface CategoryResource {
 		return new Builder();
 	}
 
-	public Category getDiscountIdCategoryPage(Long id) throws Exception;
-
-	public HttpInvoker.HttpResponse getDiscountIdCategoryPageHttpResponse(
-			Long id)
+	public Category getDiscountCategoryCategory(Long discountCategoryId)
 		throws Exception;
 
-	public Category getPriceModifierIdCategory(Long id) throws Exception;
+	public HttpInvoker.HttpResponse getDiscountCategoryCategoryHttpResponse(
+			Long discountCategoryId)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse getPriceModifierIdCategoryHttpResponse(
-			Long id)
+	public Category getPriceModifierCategoryCategory(
+			Long priceModifierCategoryId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getPriceModifierCategoryCategoryHttpResponse(
+				Long priceModifierCategoryId)
 		throws Exception;
 
 	public static class Builder {
@@ -104,9 +108,11 @@ public interface CategoryResource {
 
 	public static class CategoryResourceImpl implements CategoryResource {
 
-		public Category getDiscountIdCategoryPage(Long id) throws Exception {
+		public Category getDiscountCategoryCategory(Long discountCategoryId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getDiscountIdCategoryPageHttpResponse(id);
+				getDiscountCategoryCategoryHttpResponse(discountCategoryId);
 
 			String content = httpResponse.getContent();
 
@@ -129,8 +135,8 @@ public interface CategoryResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getDiscountIdCategoryPageHttpResponse(
-				Long id)
+		public HttpInvoker.HttpResponse getDiscountCategoryCategoryHttpResponse(
+				Long discountCategoryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -157,8 +163,8 @@ public interface CategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/category",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/discount-categories/{discountCategoryId}/category",
+				discountCategoryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -166,9 +172,13 @@ public interface CategoryResource {
 			return httpInvoker.invoke();
 		}
 
-		public Category getPriceModifierIdCategory(Long id) throws Exception {
+		public Category getPriceModifierCategoryCategory(
+				Long priceModifierCategoryId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getPriceModifierIdCategoryHttpResponse(id);
+				getPriceModifierCategoryCategoryHttpResponse(
+					priceModifierCategoryId);
 
 			String content = httpResponse.getContent();
 
@@ -191,8 +201,9 @@ public interface CategoryResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getPriceModifierIdCategoryHttpResponse(
-				Long id)
+		public HttpInvoker.HttpResponse
+				getPriceModifierCategoryCategoryHttpResponse(
+					Long priceModifierCategoryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -219,8 +230,8 @@ public interface CategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/category",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/{priceModifierCategoryId}/category",
+				priceModifierCategoryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

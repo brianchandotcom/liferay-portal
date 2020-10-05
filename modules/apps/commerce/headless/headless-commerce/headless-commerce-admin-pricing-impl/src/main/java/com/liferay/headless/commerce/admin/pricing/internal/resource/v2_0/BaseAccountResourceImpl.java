@@ -76,16 +76,19 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/account'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-accounts/{discountAccountId}/account'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/discounts/{id}/account")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "discountAccountId")}
+	)
+	@Path("/discount-accounts/{discountAccountId}/account")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
-	public Account getDiscountIdAccount(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public Account getDiscountAccountAccount(
+			@NotNull @Parameter(hidden = true) @PathParam("discountAccountId")
+				Long discountAccountId)
 		throws Exception {
 
 		return new Account();
@@ -94,16 +97,19 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/account'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-list-accounts/{priceListAccountId}/account'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-lists/{id}/account")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "priceListAccountId")}
+	)
+	@Path("/price-list-accounts/{priceListAccountId}/account")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
-	public Account getPriceListIdAccount(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public Account getPriceListAccountAccount(
+			@NotNull @Parameter(hidden = true) @PathParam("priceListAccountId")
+				Long priceListAccountId)
 		throws Exception {
 
 		return new Account();

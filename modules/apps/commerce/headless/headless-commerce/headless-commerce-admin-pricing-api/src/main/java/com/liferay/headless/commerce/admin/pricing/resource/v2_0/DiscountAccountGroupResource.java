@@ -51,10 +51,11 @@ public interface DiscountAccountGroupResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deleteDiscountAccountGroup(Long id) throws Exception;
+	public void deleteDiscountAccountGroup(Long discountAccountGroupId)
+		throws Exception;
 
 	public Response deleteDiscountAccountGroupBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Page<DiscountAccountGroup>

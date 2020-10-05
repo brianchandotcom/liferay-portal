@@ -51,10 +51,10 @@ public interface DiscountChannelResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deleteDiscountChannel(Long id) throws Exception;
+	public void deleteDiscountChannel(Long discountChannelId) throws Exception;
 
 	public Response deleteDiscountChannelBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Page<DiscountChannel>

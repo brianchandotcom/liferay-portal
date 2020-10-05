@@ -49,10 +49,11 @@ public interface PriceListDiscountResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deletePriceListDiscount(Long id) throws Exception;
+	public void deletePriceListDiscount(Long priceListDiscountId)
+		throws Exception;
 
 	public Response deletePriceListDiscountBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Page<PriceListDiscount>

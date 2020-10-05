@@ -46,9 +46,12 @@ public interface CategoryResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Category getDiscountIdCategoryPage(Long id) throws Exception;
+	public Category getDiscountCategoryCategory(Long discountCategoryId)
+		throws Exception;
 
-	public Category getPriceModifierIdCategory(Long id) throws Exception;
+	public Category getPriceModifierCategoryCategory(
+			Long priceModifierCategoryId)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

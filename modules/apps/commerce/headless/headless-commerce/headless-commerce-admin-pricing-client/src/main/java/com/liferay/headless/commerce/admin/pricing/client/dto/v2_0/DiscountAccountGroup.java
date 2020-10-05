@@ -123,6 +123,27 @@ public class DiscountAccountGroup implements Cloneable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Long getDiscountAccountGroupId() {
+		return discountAccountGroupId;
+	}
+
+	public void setDiscountAccountGroupId(Long discountAccountGroupId) {
+		this.discountAccountGroupId = discountAccountGroupId;
+	}
+
+	public void setDiscountAccountGroupId(
+		UnsafeSupplier<Long, Exception> discountAccountGroupIdUnsafeSupplier) {
+
+		try {
+			discountAccountGroupId = discountAccountGroupIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long discountAccountGroupId;
+
 	public String getDiscountExternalReferenceCode() {
 		return discountExternalReferenceCode;
 	}
@@ -168,25 +189,6 @@ public class DiscountAccountGroup implements Cloneable {
 	}
 
 	protected Long discountId;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
 
 	@Override
 	public DiscountAccountGroup clone() throws CloneNotSupportedException {

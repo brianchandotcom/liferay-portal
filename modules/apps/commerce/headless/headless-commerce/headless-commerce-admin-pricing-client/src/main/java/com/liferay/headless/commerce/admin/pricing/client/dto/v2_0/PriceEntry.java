@@ -333,25 +333,6 @@ public class PriceEntry implements Cloneable {
 
 	protected Boolean hasTierPrice;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
-
 	public Boolean getNeverExpire() {
 		return neverExpire;
 	}
@@ -393,6 +374,27 @@ public class PriceEntry implements Cloneable {
 	}
 
 	protected Double price;
+
+	public Long getPriceEntryId() {
+		return priceEntryId;
+	}
+
+	public void setPriceEntryId(Long priceEntryId) {
+		this.priceEntryId = priceEntryId;
+	}
+
+	public void setPriceEntryId(
+		UnsafeSupplier<Long, Exception> priceEntryIdUnsafeSupplier) {
+
+		try {
+			priceEntryId = priceEntryIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long priceEntryId;
 
 	public String getPriceFormatted() {
 		return priceFormatted;

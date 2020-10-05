@@ -209,40 +209,12 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 
 	@Test
 	public void testDeleteDiscountProductGroup() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountProductGroup discountProductGroup =
-			testDeleteDiscountProductGroup_addDiscountProductGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			discountProductGroupResource.deleteDiscountProductGroupHttpResponse(
-				discountProductGroup.getId()));
-	}
-
-	protected DiscountProductGroup
-			testDeleteDiscountProductGroup_addDiscountProductGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeleteDiscountProductGroup() throws Exception {
-		DiscountProductGroup discountProductGroup =
-			testGraphQLDiscountProductGroup_addDiscountProductGroup();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDiscountProductGroup",
-						new HashMap<String, Object>() {
-							{
-								put("id", discountProductGroup.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDiscountProductGroup"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -300,12 +272,6 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 			Arrays.asList(discountProductGroup1, discountProductGroup2),
 			(List<DiscountProductGroup>)page.getItems());
 		assertValid(page);
-
-		discountProductGroupResource.deleteDiscountProductGroup(
-			discountProductGroup1.getId());
-
-		discountProductGroupResource.deleteDiscountProductGroup(
-			discountProductGroup2.getId());
 	}
 
 	@Test
@@ -463,12 +429,6 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 			Arrays.asList(discountProductGroup1, discountProductGroup2),
 			(List<DiscountProductGroup>)page.getItems());
 		assertValid(page);
-
-		discountProductGroupResource.deleteDiscountProductGroup(
-			discountProductGroup1.getId());
-
-		discountProductGroupResource.deleteDiscountProductGroup(
-			discountProductGroup2.getId());
 	}
 
 	@Test
@@ -779,14 +739,6 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected DiscountProductGroup
-			testGraphQLDiscountProductGroup_addDiscountProductGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -855,10 +807,6 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 
 		boolean valid = true;
 
-		if (discountProductGroup.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -885,6 +833,16 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 
 			if (Objects.equals("discountId", additionalAssertFieldName)) {
 				if (discountProductGroup.getDiscountId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"discountProductGroupId", additionalAssertFieldName)) {
+
+				if (discountProductGroup.getDiscountProductGroupId() == null) {
 					valid = false;
 				}
 
@@ -1052,10 +1010,12 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"discountProductGroupId", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						discountProductGroup1.getId(),
-						discountProductGroup2.getId())) {
+						discountProductGroup1.getDiscountProductGroupId(),
+						discountProductGroup2.getDiscountProductGroupId())) {
 
 					return false;
 				}
@@ -1206,7 +1166,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("discountProductGroupId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1281,7 +1241,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 				discountExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				discountId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
+				discountProductGroupId = RandomTestUtil.randomLong();
 				productGroupExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				productGroupId = RandomTestUtil.randomLong();

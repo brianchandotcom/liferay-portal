@@ -83,16 +83,21 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-account-groups/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-account-groups/{discountAccountGroupId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/discount-account-groups/{id}")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "discountAccountGroupId")
+		}
+	)
+	@Path("/discount-account-groups/{discountAccountGroupId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DiscountAccountGroup")})
 	public void deleteDiscountAccountGroup(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("discountAccountGroupId") Long discountAccountGroupId)
 		throws Exception {
 	}
 
@@ -105,16 +110,12 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	@Consumes("application/json")
 	@DELETE
 	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/discount-account-groups/batch")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscountAccountGroup")})
 	public Response deleteDiscountAccountGroupBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -302,7 +303,8 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 		for (DiscountAccountGroup discountAccountGroup :
 				discountAccountGroups) {
 
-			deleteDiscountAccountGroup(discountAccountGroup.getId());
+			deleteDiscountAccountGroup(
+				discountAccountGroup.getDiscountAccountGroupId());
 		}
 	}
 

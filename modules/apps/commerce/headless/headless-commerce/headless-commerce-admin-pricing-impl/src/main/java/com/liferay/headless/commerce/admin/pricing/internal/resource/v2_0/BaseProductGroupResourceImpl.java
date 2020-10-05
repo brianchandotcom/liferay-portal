@@ -76,16 +76,21 @@ public abstract class BaseProductGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/product-group'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-product-groups/{discountProductGroupId}/product-group'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/discounts/{id}/product-group")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "discountProductGroupId")
+		}
+	)
+	@Path("/discount-product-groups/{discountProductGroupId}/product-group")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductGroup")})
-	public ProductGroup getDiscountIdProductGroupPage(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public ProductGroup getDiscountProductGroupProductGroup(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("discountProductGroupId") Long discountProductGroupId)
 		throws Exception {
 
 		return new ProductGroup();
@@ -94,16 +99,26 @@ public abstract class BaseProductGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/product-group'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/{priceModifierProductGroupId}/product-group'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-modifiers/{id}/product-group")
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "priceModifierProductGroupId"
+			)
+		}
+	)
+	@Path(
+		"/price-modifier-product-groups/{priceModifierProductGroupId}/product-group"
+	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductGroup")})
-	public ProductGroup getPriceModifierIdProductGroup(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public ProductGroup getPriceModifierProductGroupProductGroup(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("priceModifierProductGroupId") Long
+				priceModifierProductGroupId)
 		throws Exception {
 
 		return new ProductGroup();

@@ -83,16 +83,19 @@ public abstract class BaseDiscountProductResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-products/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-products/{discountProductId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/discount-products/{id}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "discountProductId")}
+	)
+	@Path("/discount-products/{discountProductId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DiscountProduct")})
 	public void deleteDiscountProduct(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+			@NotNull @Parameter(hidden = true) @PathParam("discountProductId")
+				Long discountProductId)
 		throws Exception {
 	}
 
@@ -105,16 +108,12 @@ public abstract class BaseDiscountProductResourceImpl
 	@Consumes("application/json")
 	@DELETE
 	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/discount-products/batch")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscountProduct")})
 	public Response deleteDiscountProductBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -298,7 +297,7 @@ public abstract class BaseDiscountProductResourceImpl
 		throws Exception {
 
 		for (DiscountProduct discountProduct : discountProducts) {
-			deleteDiscountProduct(discountProduct.getId());
+			deleteDiscountProduct(discountProduct.getDiscountProductId());
 		}
 	}
 

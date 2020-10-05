@@ -104,16 +104,6 @@ public class PriceListAccountGroupSerDes {
 			sb.append(_toJSON(priceListAccountGroup.getActions()));
 		}
 
-		if (priceListAccountGroup.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(priceListAccountGroup.getId());
-		}
-
 		if (priceListAccountGroup.getOrder() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -122,6 +112,16 @@ public class PriceListAccountGroupSerDes {
 			sb.append("\"order\": ");
 
 			sb.append(priceListAccountGroup.getOrder());
+		}
+
+		if (priceListAccountGroup.getPriceListAccountGroupId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceListAccountGroupId\": ");
+
+			sb.append(priceListAccountGroup.getPriceListAccountGroupId());
 		}
 
 		if (priceListAccountGroup.getPriceListExternalReferenceCode() != null) {
@@ -210,18 +210,21 @@ public class PriceListAccountGroupSerDes {
 				"actions", String.valueOf(priceListAccountGroup.getActions()));
 		}
 
-		if (priceListAccountGroup.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(priceListAccountGroup.getId()));
-		}
-
 		if (priceListAccountGroup.getOrder() == null) {
 			map.put("order", null);
 		}
 		else {
 			map.put("order", String.valueOf(priceListAccountGroup.getOrder()));
+		}
+
+		if (priceListAccountGroup.getPriceListAccountGroupId() == null) {
+			map.put("priceListAccountGroupId", null);
+		}
+		else {
+			map.put(
+				"priceListAccountGroupId",
+				String.valueOf(
+					priceListAccountGroup.getPriceListAccountGroupId()));
 		}
 
 		if (priceListAccountGroup.getPriceListExternalReferenceCode() == null) {
@@ -292,16 +295,18 @@ public class PriceListAccountGroupSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					priceListAccountGroup.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "order")) {
 				if (jsonParserFieldValue != null) {
 					priceListAccountGroup.setOrder(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "priceListAccountGroupId")) {
+
+				if (jsonParserFieldValue != null) {
+					priceListAccountGroup.setPriceListAccountGroupId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

@@ -205,39 +205,12 @@ public abstract class BasePriceListAccountResourceTestCase {
 
 	@Test
 	public void testDeletePriceListAccount() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceListAccount priceListAccount =
-			testDeletePriceListAccount_addPriceListAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			priceListAccountResource.deletePriceListAccountHttpResponse(
-				priceListAccount.getId()));
-	}
-
-	protected PriceListAccount testDeletePriceListAccount_addPriceListAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeletePriceListAccount() throws Exception {
-		PriceListAccount priceListAccount =
-			testGraphQLPriceListAccount_addPriceListAccount();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceListAccount",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceListAccount.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceListAccount"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -295,12 +268,6 @@ public abstract class BasePriceListAccountResourceTestCase {
 			Arrays.asList(priceListAccount1, priceListAccount2),
 			(List<PriceListAccount>)page.getItems());
 		assertValid(page);
-
-		priceListAccountResource.deletePriceListAccount(
-			priceListAccount1.getId());
-
-		priceListAccountResource.deletePriceListAccount(
-			priceListAccount2.getId());
 	}
 
 	@Test
@@ -450,12 +417,6 @@ public abstract class BasePriceListAccountResourceTestCase {
 			Arrays.asList(priceListAccount1, priceListAccount2),
 			(List<PriceListAccount>)page.getItems());
 		assertValid(page);
-
-		priceListAccountResource.deletePriceListAccount(
-			priceListAccount1.getId());
-
-		priceListAccountResource.deletePriceListAccount(
-			priceListAccount2.getId());
 	}
 
 	@Test
@@ -753,13 +714,6 @@ public abstract class BasePriceListAccountResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected PriceListAccount testGraphQLPriceListAccount_addPriceListAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -821,10 +775,6 @@ public abstract class BasePriceListAccountResourceTestCase {
 
 		boolean valid = true;
 
-		if (priceListAccount.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -867,6 +817,16 @@ public abstract class BasePriceListAccountResourceTestCase {
 
 			if (Objects.equals("order", additionalAssertFieldName)) {
 				if (priceListAccount.getOrder() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceListAccountId", additionalAssertFieldName)) {
+
+				if (priceListAccount.getPriceListAccountId() == null) {
 					valid = false;
 				}
 
@@ -1035,9 +995,10 @@ public abstract class BasePriceListAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
+			if (Objects.equals("order", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						priceListAccount1.getId(), priceListAccount2.getId())) {
+						priceListAccount1.getOrder(),
+						priceListAccount2.getOrder())) {
 
 					return false;
 				}
@@ -1045,10 +1006,12 @@ public abstract class BasePriceListAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("order", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"priceListAccountId", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						priceListAccount1.getOrder(),
-						priceListAccount2.getOrder())) {
+						priceListAccount1.getPriceListAccountId(),
+						priceListAccount2.getPriceListAccountId())) {
 
 					return false;
 				}
@@ -1192,12 +1155,12 @@ public abstract class BasePriceListAccountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("order")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("order")) {
+		if (entityFieldName.equals("priceListAccountId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1264,8 +1227,8 @@ public abstract class BasePriceListAccountResourceTestCase {
 				accountExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				accountId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
 				order = RandomTestUtil.randomInt();
+				priceListAccountId = RandomTestUtil.randomLong();
 				priceListExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				priceListId = RandomTestUtil.randomLong();

@@ -175,6 +175,35 @@ public class DiscountCategory {
 	@NotNull
 	protected Long categoryId;
 
+	@DecimalMin("0")
+	@Schema
+	public Long getDiscountCategoryId() {
+		return discountCategoryId;
+	}
+
+	public void setDiscountCategoryId(Long discountCategoryId) {
+		this.discountCategoryId = discountCategoryId;
+	}
+
+	@JsonIgnore
+	public void setDiscountCategoryId(
+		UnsafeSupplier<Long, Exception> discountCategoryIdUnsafeSupplier) {
+
+		try {
+			discountCategoryId = discountCategoryIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long discountCategoryId;
+
 	@Schema
 	public String getDiscountExternalReferenceCode() {
 		return discountExternalReferenceCode;
@@ -236,33 +265,6 @@ public class DiscountCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long discountId;
-
-	@DecimalMin("0")
-	@Schema
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
 
 	@Override
 	public boolean equals(Object object) {
@@ -335,6 +337,16 @@ public class DiscountCategory {
 			sb.append(categoryId);
 		}
 
+		if (discountCategoryId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountCategoryId\": ");
+
+			sb.append(discountCategoryId);
+		}
+
 		if (discountExternalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -357,16 +369,6 @@ public class DiscountCategory {
 			sb.append("\"discountId\": ");
 
 			sb.append(discountId);
-		}
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
 		}
 
 		sb.append("}");

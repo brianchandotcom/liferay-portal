@@ -205,39 +205,12 @@ public abstract class BaseDiscountProductResourceTestCase {
 
 	@Test
 	public void testDeleteDiscountProduct() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountProduct discountProduct =
-			testDeleteDiscountProduct_addDiscountProduct();
-
-		assertHttpResponseStatusCode(
-			204,
-			discountProductResource.deleteDiscountProductHttpResponse(
-				discountProduct.getId()));
-	}
-
-	protected DiscountProduct testDeleteDiscountProduct_addDiscountProduct()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeleteDiscountProduct() throws Exception {
-		DiscountProduct discountProduct =
-			testGraphQLDiscountProduct_addDiscountProduct();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDiscountProduct",
-						new HashMap<String, Object>() {
-							{
-								put("id", discountProduct.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDiscountProduct"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -295,10 +268,6 @@ public abstract class BaseDiscountProductResourceTestCase {
 			Arrays.asList(discountProduct1, discountProduct2),
 			(List<DiscountProduct>)page.getItems());
 		assertValid(page);
-
-		discountProductResource.deleteDiscountProduct(discountProduct1.getId());
-
-		discountProductResource.deleteDiscountProduct(discountProduct2.getId());
 	}
 
 	@Test
@@ -447,10 +416,6 @@ public abstract class BaseDiscountProductResourceTestCase {
 			Arrays.asList(discountProduct1, discountProduct2),
 			(List<DiscountProduct>)page.getItems());
 		assertValid(page);
-
-		discountProductResource.deleteDiscountProduct(discountProduct1.getId());
-
-		discountProductResource.deleteDiscountProduct(discountProduct2.getId());
 	}
 
 	@Test
@@ -747,13 +712,6 @@ public abstract class BaseDiscountProductResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected DiscountProduct testGraphQLDiscountProduct_addDiscountProduct()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -812,10 +770,6 @@ public abstract class BaseDiscountProductResourceTestCase {
 
 		boolean valid = true;
 
-		if (discountProduct.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -842,6 +796,16 @@ public abstract class BaseDiscountProductResourceTestCase {
 
 			if (Objects.equals("discountId", additionalAssertFieldName)) {
 				if (discountProduct.getDiscountId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"discountProductId", additionalAssertFieldName)) {
+
+				if (discountProduct.getDiscountProductId() == null) {
 					valid = false;
 				}
 
@@ -1004,9 +968,12 @@ public abstract class BaseDiscountProductResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"discountProductId", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						discountProduct1.getId(), discountProduct2.getId())) {
+						discountProduct1.getDiscountProductId(),
+						discountProduct2.getDiscountProductId())) {
 
 					return false;
 				}
@@ -1155,7 +1122,7 @@ public abstract class BaseDiscountProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("discountProductId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1227,7 +1194,7 @@ public abstract class BaseDiscountProductResourceTestCase {
 				discountExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				discountId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
+				discountProductId = RandomTestUtil.randomLong();
 				productExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				productId = RandomTestUtil.randomLong();

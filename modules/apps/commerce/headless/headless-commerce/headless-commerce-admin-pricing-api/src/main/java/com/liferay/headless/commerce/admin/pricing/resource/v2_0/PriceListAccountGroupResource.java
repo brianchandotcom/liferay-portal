@@ -51,10 +51,11 @@ public interface PriceListAccountGroupResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deletePriceListAccountGroup(Long id) throws Exception;
+	public void deletePriceListAccountGroup(Long priceListAccountGroupId)
+		throws Exception;
 
 	public Response deletePriceListAccountGroupBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Page<PriceListAccountGroup>

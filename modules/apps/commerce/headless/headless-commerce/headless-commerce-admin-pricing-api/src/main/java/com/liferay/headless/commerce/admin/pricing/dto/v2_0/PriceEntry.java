@@ -465,33 +465,6 @@ public class PriceEntry {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasTierPrice;
 
-	@DecimalMin("0")
-	@Schema
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
-
 	@Schema
 	public Boolean getNeverExpire() {
 		return neverExpire;
@@ -548,6 +521,35 @@ public class PriceEntry {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Double price;
+
+	@DecimalMin("0")
+	@Schema
+	public Long getPriceEntryId() {
+		return priceEntryId;
+	}
+
+	public void setPriceEntryId(Long priceEntryId) {
+		this.priceEntryId = priceEntryId;
+	}
+
+	@JsonIgnore
+	public void setPriceEntryId(
+		UnsafeSupplier<Long, Exception> priceEntryIdUnsafeSupplier) {
+
+		try {
+			priceEntryId = priceEntryIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long priceEntryId;
 
 	@Schema
 	public String getPriceFormatted() {
@@ -968,16 +970,6 @@ public class PriceEntry {
 			sb.append(hasTierPrice);
 		}
 
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
 		if (neverExpire != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -996,6 +988,16 @@ public class PriceEntry {
 			sb.append("\"price\": ");
 
 			sb.append(price);
+		}
+
+		if (priceEntryId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceEntryId\": ");
+
+			sb.append(priceEntryId);
 		}
 
 		if (priceFormatted != null) {

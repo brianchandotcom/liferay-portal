@@ -191,19 +191,19 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscountIdAccountGroup() throws Exception {
+	public void testGetDiscountAccountGroupAccountGroup() throws Exception {
 		AccountGroup postAccountGroup =
-			testGetDiscountIdAccountGroup_addAccountGroup();
+			testGetDiscountAccountGroupAccountGroup_addAccountGroup();
 
 		AccountGroup getAccountGroup =
-			accountGroupResource.getDiscountIdAccountGroup(
-				postAccountGroup.getId());
+			accountGroupResource.getDiscountAccountGroupAccountGroup(null);
 
 		assertEquals(postAccountGroup, getAccountGroup);
 		assertValid(getAccountGroup);
 	}
 
-	protected AccountGroup testGetDiscountIdAccountGroup_addAccountGroup()
+	protected AccountGroup
+			testGetDiscountAccountGroupAccountGroup_addAccountGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -211,7 +211,9 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetDiscountIdAccountGroup() throws Exception {
+	public void testGraphQLGetDiscountAccountGroupAccountGroup()
+		throws Exception {
+
 		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
 
 		Assert.assertTrue(
@@ -221,31 +223,34 @@ public abstract class BaseAccountGroupResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"discountIdAccountGroup",
+								"discountAccountGroupAccountGroup",
 								new HashMap<String, Object>() {
 									{
-										put("id", accountGroup.getId());
+										put("discountAccountGroupId", null);
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/discountIdAccountGroup"))));
+						"JSONObject/data",
+						"Object/discountAccountGroupAccountGroup"))));
 	}
 
 	@Test
-	public void testGraphQLGetDiscountIdAccountGroupNotFound()
+	public void testGraphQLGetDiscountAccountGroupAccountGroupNotFound()
 		throws Exception {
 
-		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantDiscountAccountGroupId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"discountIdAccountGroup",
+						"discountAccountGroupAccountGroup",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put(
+									"discountAccountGroupId",
+									irrelevantDiscountAccountGroupId);
 							}
 						},
 						getGraphQLFields())),
@@ -254,19 +259,19 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetPriceListIdAccountGroup() throws Exception {
+	public void testGetPriceListAccountGroupAccountGroup() throws Exception {
 		AccountGroup postAccountGroup =
-			testGetPriceListIdAccountGroup_addAccountGroup();
+			testGetPriceListAccountGroupAccountGroup_addAccountGroup();
 
 		AccountGroup getAccountGroup =
-			accountGroupResource.getPriceListIdAccountGroup(
-				postAccountGroup.getId());
+			accountGroupResource.getPriceListAccountGroupAccountGroup(null);
 
 		assertEquals(postAccountGroup, getAccountGroup);
 		assertValid(getAccountGroup);
 	}
 
-	protected AccountGroup testGetPriceListIdAccountGroup_addAccountGroup()
+	protected AccountGroup
+			testGetPriceListAccountGroupAccountGroup_addAccountGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -274,7 +279,9 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPriceListIdAccountGroup() throws Exception {
+	public void testGraphQLGetPriceListAccountGroupAccountGroup()
+		throws Exception {
+
 		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
 
 		Assert.assertTrue(
@@ -284,31 +291,34 @@ public abstract class BaseAccountGroupResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"priceListIdAccountGroup",
+								"priceListAccountGroupAccountGroup",
 								new HashMap<String, Object>() {
 									{
-										put("id", accountGroup.getId());
+										put("priceListAccountGroupId", null);
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/priceListIdAccountGroup"))));
+						"JSONObject/data",
+						"Object/priceListAccountGroupAccountGroup"))));
 	}
 
 	@Test
-	public void testGraphQLGetPriceListIdAccountGroupNotFound()
+	public void testGraphQLGetPriceListAccountGroupAccountGroupNotFound()
 		throws Exception {
 
-		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantPriceListAccountGroupId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"priceListIdAccountGroup",
+						"priceListAccountGroupAccountGroup",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put(
+									"priceListAccountGroupId",
+									irrelevantPriceListAccountGroupId);
 							}
 						},
 						getGraphQLFields())),

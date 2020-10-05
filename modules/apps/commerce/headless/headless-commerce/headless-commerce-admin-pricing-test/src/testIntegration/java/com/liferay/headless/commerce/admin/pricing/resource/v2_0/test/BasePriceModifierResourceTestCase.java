@@ -1152,9 +1152,9 @@ public abstract class BasePriceModifierResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"priceModifierCategory", additionalAssertFieldName)) {
+					"priceModifierCategories", additionalAssertFieldName)) {
 
-				if (priceModifier.getPriceModifierCategory() == null) {
+				if (priceModifier.getPriceModifierCategories() == null) {
 					valid = false;
 				}
 
@@ -1162,9 +1162,9 @@ public abstract class BasePriceModifierResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"priceModifierProduct", additionalAssertFieldName)) {
+					"priceModifierProductGroups", additionalAssertFieldName)) {
 
-				if (priceModifier.getPriceModifierProduct() == null) {
+				if (priceModifier.getPriceModifierProductGroups() == null) {
 					valid = false;
 				}
 
@@ -1172,9 +1172,9 @@ public abstract class BasePriceModifierResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"priceModifierProductGroup", additionalAssertFieldName)) {
+					"priceModifierProducts", additionalAssertFieldName)) {
 
-				if (priceModifier.getPriceModifierProductGroup() == null) {
+				if (priceModifier.getPriceModifierProducts() == null) {
 					valid = false;
 				}
 
@@ -1423,11 +1423,11 @@ public abstract class BasePriceModifierResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"priceModifierCategory", additionalAssertFieldName)) {
+					"priceModifierCategories", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						priceModifier1.getPriceModifierCategory(),
-						priceModifier2.getPriceModifierCategory())) {
+						priceModifier1.getPriceModifierCategories(),
+						priceModifier2.getPriceModifierCategories())) {
 
 					return false;
 				}
@@ -1436,11 +1436,11 @@ public abstract class BasePriceModifierResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"priceModifierProduct", additionalAssertFieldName)) {
+					"priceModifierProductGroups", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						priceModifier1.getPriceModifierProduct(),
-						priceModifier2.getPriceModifierProduct())) {
+						priceModifier1.getPriceModifierProductGroups(),
+						priceModifier2.getPriceModifierProductGroups())) {
 
 					return false;
 				}
@@ -1449,11 +1449,11 @@ public abstract class BasePriceModifierResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"priceModifierProductGroup", additionalAssertFieldName)) {
+					"priceModifierProducts", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						priceModifier1.getPriceModifierProductGroup(),
-						priceModifier2.getPriceModifierProductGroup())) {
+						priceModifier1.getPriceModifierProducts(),
+						priceModifier2.getPriceModifierProducts())) {
 
 					return false;
 				}
@@ -1700,17 +1700,17 @@ public abstract class BasePriceModifierResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("priceModifierCategory")) {
+		if (entityFieldName.equals("priceModifierCategories")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("priceModifierProduct")) {
+		if (entityFieldName.equals("priceModifierProductGroups")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("priceModifierProductGroup")) {
+		if (entityFieldName.equals("priceModifierProducts")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

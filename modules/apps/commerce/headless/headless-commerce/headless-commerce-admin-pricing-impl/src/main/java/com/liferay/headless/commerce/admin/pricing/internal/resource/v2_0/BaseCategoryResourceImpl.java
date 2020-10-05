@@ -76,16 +76,19 @@ public abstract class BaseCategoryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/category'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-categories/{discountCategoryId}/category'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/discounts/{id}/category")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "discountCategoryId")}
+	)
+	@Path("/discount-categories/{discountCategoryId}/category")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Category")})
-	public Category getDiscountIdCategoryPage(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public Category getDiscountCategoryCategory(
+			@NotNull @Parameter(hidden = true) @PathParam("discountCategoryId")
+				Long discountCategoryId)
 		throws Exception {
 
 		return new Category();
@@ -94,16 +97,21 @@ public abstract class BaseCategoryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/category'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/{priceModifierCategoryId}/category'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-modifiers/{id}/category")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "priceModifierCategoryId")
+		}
+	)
+	@Path("/price-modifier-categories/{priceModifierCategoryId}/category")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Category")})
-	public Category getPriceModifierIdCategory(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	public Category getPriceModifierCategoryCategory(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("priceModifierCategoryId") Long priceModifierCategoryId)
 		throws Exception {
 
 		return new Category();

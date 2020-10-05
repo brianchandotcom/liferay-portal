@@ -51,10 +51,12 @@ public interface PriceModifierProductGroupResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deletePriceModifierProductGroup(Long id) throws Exception;
+	public void deletePriceModifierProductGroup(
+			Long priceModifierProductGroupId)
+		throws Exception;
 
 	public Response deletePriceModifierProductGroupBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Page<PriceModifierProductGroup>

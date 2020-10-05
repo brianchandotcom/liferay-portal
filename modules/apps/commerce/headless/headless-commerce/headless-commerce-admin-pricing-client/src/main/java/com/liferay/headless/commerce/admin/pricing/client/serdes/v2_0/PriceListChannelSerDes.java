@@ -100,16 +100,6 @@ public class PriceListChannelSerDes {
 			sb.append(priceListChannel.getChannelId());
 		}
 
-		if (priceListChannel.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(priceListChannel.getId());
-		}
-
 		if (priceListChannel.getOrder() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -118,6 +108,16 @@ public class PriceListChannelSerDes {
 			sb.append("\"order\": ");
 
 			sb.append(priceListChannel.getOrder());
+		}
+
+		if (priceListChannel.getPriceListChannelId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceListChannelId\": ");
+
+			sb.append(priceListChannel.getPriceListChannelId());
 		}
 
 		if (priceListChannel.getPriceListExternalReferenceCode() != null) {
@@ -196,18 +196,20 @@ public class PriceListChannelSerDes {
 				"channelId", String.valueOf(priceListChannel.getChannelId()));
 		}
 
-		if (priceListChannel.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(priceListChannel.getId()));
-		}
-
 		if (priceListChannel.getOrder() == null) {
 			map.put("order", null);
 		}
 		else {
 			map.put("order", String.valueOf(priceListChannel.getOrder()));
+		}
+
+		if (priceListChannel.getPriceListChannelId() == null) {
+			map.put("priceListChannelId", null);
+		}
+		else {
+			map.put(
+				"priceListChannelId",
+				String.valueOf(priceListChannel.getPriceListChannelId()));
 		}
 
 		if (priceListChannel.getPriceListExternalReferenceCode() == null) {
@@ -277,16 +279,18 @@ public class PriceListChannelSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					priceListChannel.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "order")) {
 				if (jsonParserFieldValue != null) {
 					priceListChannel.setOrder(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "priceListChannelId")) {
+
+				if (jsonParserFieldValue != null) {
+					priceListChannel.setPriceListChannelId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

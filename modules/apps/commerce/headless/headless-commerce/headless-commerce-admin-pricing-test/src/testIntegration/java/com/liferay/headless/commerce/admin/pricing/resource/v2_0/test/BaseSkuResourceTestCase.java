@@ -198,7 +198,7 @@ public abstract class BaseSkuResourceTestCase {
 	public void testGetPriceEntryIdSku() throws Exception {
 		Sku postSku = testGetPriceEntryIdSku_addSku();
 
-		Sku getSku = skuResource.getPriceEntryIdSku(postSku.getId());
+		Sku getSku = skuResource.getPriceEntryIdSku(null);
 
 		assertEquals(postSku, getSku);
 		assertValid(getSku);
@@ -223,7 +223,7 @@ public abstract class BaseSkuResourceTestCase {
 								"priceEntryIdSku",
 								new HashMap<String, Object>() {
 									{
-										put("id", sku.getId());
+										put("priceEntryId", null);
 									}
 								},
 								getGraphQLFields())),
@@ -232,7 +232,7 @@ public abstract class BaseSkuResourceTestCase {
 
 	@Test
 	public void testGraphQLGetPriceEntryIdSkuNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantPriceEntryId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
@@ -242,7 +242,7 @@ public abstract class BaseSkuResourceTestCase {
 						"priceEntryIdSku",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put("priceEntryId", irrelevantPriceEntryId);
 							}
 						},
 						getGraphQLFields())),

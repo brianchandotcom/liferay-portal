@@ -66,19 +66,20 @@ public interface TierPriceResource {
 			Long id, Pagination pagination)
 		throws Exception;
 
-	public TierPrice postPriceEntryIdTierPrice(Long id, TierPrice tierPrice)
+	public TierPrice postPriceEntryIdTierPrice(
+			Long priceEntryId, TierPrice tierPrice)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postPriceEntryIdTierPriceHttpResponse(
-			Long id, TierPrice tierPrice)
+			Long priceEntryId, TierPrice tierPrice)
 		throws Exception;
 
 	public void postPriceEntryIdTierPriceBatch(
-			Long id, String callbackURL, Object object)
+			Long priceEntryId, String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postPriceEntryIdTierPriceBatchHttpResponse(
-			Long id, String callbackURL, Object object)
+			Long priceEntryId, String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteTierPriceByExternalReferenceCode(
@@ -391,7 +392,7 @@ public interface TierPriceResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{id}/tier-prices",
+						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}/tier-prices",
 				id);
 
 			httpInvoker.userNameAndPassword(
@@ -400,11 +401,12 @@ public interface TierPriceResource {
 			return httpInvoker.invoke();
 		}
 
-		public TierPrice postPriceEntryIdTierPrice(Long id, TierPrice tierPrice)
+		public TierPrice postPriceEntryIdTierPrice(
+				Long priceEntryId, TierPrice tierPrice)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postPriceEntryIdTierPriceHttpResponse(id, tierPrice);
+				postPriceEntryIdTierPriceHttpResponse(priceEntryId, tierPrice);
 
 			String content = httpResponse.getContent();
 
@@ -427,7 +429,7 @@ public interface TierPriceResource {
 		}
 
 		public HttpInvoker.HttpResponse postPriceEntryIdTierPriceHttpResponse(
-				Long id, TierPrice tierPrice)
+				Long priceEntryId, TierPrice tierPrice)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -456,8 +458,8 @@ public interface TierPriceResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{id}/tier-prices",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}/tier-prices",
+				priceEntryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -466,12 +468,12 @@ public interface TierPriceResource {
 		}
 
 		public void postPriceEntryIdTierPriceBatch(
-				Long id, String callbackURL, Object object)
+				Long priceEntryId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postPriceEntryIdTierPriceBatchHttpResponse(
-					id, callbackURL, object);
+					priceEntryId, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -484,7 +486,7 @@ public interface TierPriceResource {
 
 		public HttpInvoker.HttpResponse
 				postPriceEntryIdTierPriceBatchHttpResponse(
-					Long id, String callbackURL, Object object)
+					Long priceEntryId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -518,8 +520,8 @@ public interface TierPriceResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-entries/tier-prices/batch",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}/tier-prices/batch",
+				priceEntryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

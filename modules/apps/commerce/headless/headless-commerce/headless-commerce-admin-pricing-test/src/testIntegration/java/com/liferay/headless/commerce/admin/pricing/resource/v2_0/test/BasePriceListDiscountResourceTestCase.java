@@ -201,40 +201,12 @@ public abstract class BasePriceListDiscountResourceTestCase {
 
 	@Test
 	public void testDeletePriceListDiscount() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceListDiscount priceListDiscount =
-			testDeletePriceListDiscount_addPriceListDiscount();
-
-		assertHttpResponseStatusCode(
-			204,
-			priceListDiscountResource.deletePriceListDiscountHttpResponse(
-				priceListDiscount.getId()));
-	}
-
-	protected PriceListDiscount
-			testDeletePriceListDiscount_addPriceListDiscount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeletePriceListDiscount() throws Exception {
-		PriceListDiscount priceListDiscount =
-			testGraphQLPriceListDiscount_addPriceListDiscount();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceListDiscount",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceListDiscount.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceListDiscount"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -292,12 +264,6 @@ public abstract class BasePriceListDiscountResourceTestCase {
 			Arrays.asList(priceListDiscount1, priceListDiscount2),
 			(List<PriceListDiscount>)page.getItems());
 		assertValid(page);
-
-		priceListDiscountResource.deletePriceListDiscount(
-			priceListDiscount1.getId());
-
-		priceListDiscountResource.deletePriceListDiscount(
-			priceListDiscount2.getId());
 	}
 
 	@Test
@@ -449,12 +415,6 @@ public abstract class BasePriceListDiscountResourceTestCase {
 			Arrays.asList(priceListDiscount1, priceListDiscount2),
 			(List<PriceListDiscount>)page.getItems());
 		assertValid(page);
-
-		priceListDiscountResource.deletePriceListDiscount(
-			priceListDiscount1.getId());
-
-		priceListDiscountResource.deletePriceListDiscount(
-			priceListDiscount2.getId());
 	}
 
 	@Test
@@ -550,14 +510,6 @@ public abstract class BasePriceListDiscountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected PriceListDiscount
-			testGraphQLPriceListDiscount_addPriceListDiscount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -619,10 +571,6 @@ public abstract class BasePriceListDiscountResourceTestCase {
 
 		boolean valid = true;
 
-		if (priceListDiscount.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -657,6 +605,16 @@ public abstract class BasePriceListDiscountResourceTestCase {
 
 			if (Objects.equals("order", additionalAssertFieldName)) {
 				if (priceListDiscount.getOrder() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceListDiscountId", additionalAssertFieldName)) {
+
+				if (priceListDiscount.getPriceListDiscountId() == null) {
 					valid = false;
 				}
 
@@ -815,10 +773,10 @@ public abstract class BasePriceListDiscountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
+			if (Objects.equals("order", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						priceListDiscount1.getId(),
-						priceListDiscount2.getId())) {
+						priceListDiscount1.getOrder(),
+						priceListDiscount2.getOrder())) {
 
 					return false;
 				}
@@ -826,10 +784,12 @@ public abstract class BasePriceListDiscountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("order", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"priceListDiscountId", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						priceListDiscount1.getOrder(),
-						priceListDiscount2.getOrder())) {
+						priceListDiscount1.getPriceListDiscountId(),
+						priceListDiscount2.getPriceListDiscountId())) {
 
 					return false;
 				}
@@ -971,12 +931,12 @@ public abstract class BasePriceListDiscountResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("order")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("order")) {
+		if (entityFieldName.equals("priceListDiscountId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1045,8 +1005,8 @@ public abstract class BasePriceListDiscountResourceTestCase {
 				discountId = RandomTestUtil.randomLong();
 				discountName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				id = RandomTestUtil.randomLong();
 				order = RandomTestUtil.randomInt();
+				priceListDiscountId = RandomTestUtil.randomLong();
 				priceListExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				priceListId = RandomTestUtil.randomLong();

@@ -83,16 +83,19 @@ public abstract class BaseDiscountChannelResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-channels/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-channels/{discountChannelId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/discount-channels/{id}")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "discountChannelId")}
+	)
+	@Path("/discount-channels/{discountChannelId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DiscountChannel")})
 	public void deleteDiscountChannel(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+			@NotNull @Parameter(hidden = true) @PathParam("discountChannelId")
+				Long discountChannelId)
 		throws Exception {
 	}
 
@@ -105,16 +108,12 @@ public abstract class BaseDiscountChannelResourceImpl
 	@Consumes("application/json")
 	@DELETE
 	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/discount-channels/batch")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscountChannel")})
 	public Response deleteDiscountChannelBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -298,7 +297,7 @@ public abstract class BaseDiscountChannelResourceImpl
 		throws Exception {
 
 		for (DiscountChannel discountChannel : discountChannels) {
-			deleteDiscountChannel(discountChannel.getId());
+			deleteDiscountChannel(discountChannel.getDiscountChannelId());
 		}
 	}
 

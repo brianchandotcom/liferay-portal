@@ -221,16 +221,6 @@ public class PriceEntrySerDes {
 			sb.append(priceEntry.getHasTierPrice());
 		}
 
-		if (priceEntry.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(priceEntry.getId());
-		}
-
 		if (priceEntry.getNeverExpire() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -249,6 +239,16 @@ public class PriceEntrySerDes {
 			sb.append("\"price\": ");
 
 			sb.append(priceEntry.getPrice());
+		}
+
+		if (priceEntry.getPriceEntryId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceEntryId\": ");
+
+			sb.append(priceEntry.getPriceEntryId());
 		}
 
 		if (priceEntry.getPriceFormatted() != null) {
@@ -492,13 +492,6 @@ public class PriceEntrySerDes {
 				"hasTierPrice", String.valueOf(priceEntry.getHasTierPrice()));
 		}
 
-		if (priceEntry.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(priceEntry.getId()));
-		}
-
 		if (priceEntry.getNeverExpire() == null) {
 			map.put("neverExpire", null);
 		}
@@ -511,6 +504,14 @@ public class PriceEntrySerDes {
 		}
 		else {
 			map.put("price", String.valueOf(priceEntry.getPrice()));
+		}
+
+		if (priceEntry.getPriceEntryId() == null) {
+			map.put("priceEntryId", null);
+		}
+		else {
+			map.put(
+				"priceEntryId", String.valueOf(priceEntry.getPriceEntryId()));
 		}
 
 		if (priceEntry.getPriceFormatted() == null) {
@@ -683,12 +684,6 @@ public class PriceEntrySerDes {
 					priceEntry.setHasTierPrice((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					priceEntry.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {
 				if (jsonParserFieldValue != null) {
 					priceEntry.setNeverExpire((Boolean)jsonParserFieldValue);
@@ -698,6 +693,12 @@ public class PriceEntrySerDes {
 				if (jsonParserFieldValue != null) {
 					priceEntry.setPrice(
 						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "priceEntryId")) {
+				if (jsonParserFieldValue != null) {
+					priceEntry.setPriceEntryId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "priceFormatted")) {

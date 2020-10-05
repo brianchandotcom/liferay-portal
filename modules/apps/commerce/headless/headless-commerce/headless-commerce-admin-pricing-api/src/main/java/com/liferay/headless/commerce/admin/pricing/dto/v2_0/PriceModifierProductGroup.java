@@ -85,33 +85,6 @@ public class PriceModifierProductGroup {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@DecimalMin("0")
-	@Schema
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
-
 	@Schema
 	public String getPriceModifierExternalReferenceCode() {
 		return priceModifierExternalReferenceCode;
@@ -174,6 +147,39 @@ public class PriceModifierProductGroup {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long priceModifierId;
+
+	@DecimalMin("0")
+	@Schema
+	public Long getPriceModifierProductGroupId() {
+		return priceModifierProductGroupId;
+	}
+
+	public void setPriceModifierProductGroupId(
+		Long priceModifierProductGroupId) {
+
+		this.priceModifierProductGroupId = priceModifierProductGroupId;
+	}
+
+	@JsonIgnore
+	public void setPriceModifierProductGroupId(
+		UnsafeSupplier<Long, Exception>
+			priceModifierProductGroupIdUnsafeSupplier) {
+
+		try {
+			priceModifierProductGroupId =
+				priceModifierProductGroupIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long priceModifierProductGroupId;
 
 	@Schema
 	@Valid
@@ -305,16 +311,6 @@ public class PriceModifierProductGroup {
 			sb.append(_toJSON(actions));
 		}
 
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
 		if (priceModifierExternalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -337,6 +333,16 @@ public class PriceModifierProductGroup {
 			sb.append("\"priceModifierId\": ");
 
 			sb.append(priceModifierId);
+		}
+
+		if (priceModifierProductGroupId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceModifierProductGroupId\": ");
+
+			sb.append(priceModifierProductGroupId);
 		}
 
 		if (productGroup != null) {

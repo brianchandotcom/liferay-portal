@@ -37,21 +37,24 @@ public interface ProductResource {
 		return new Builder();
 	}
 
-	public Product getDiscountIdProductPage(Long id) throws Exception;
-
-	public HttpInvoker.HttpResponse getDiscountIdProductPageHttpResponse(
-			Long id)
+	public Product getDiscountProductProduct(Long discountProductId)
 		throws Exception;
 
-	public Product getPriceEntryIdProduct(Long id) throws Exception;
-
-	public HttpInvoker.HttpResponse getPriceEntryIdProductHttpResponse(Long id)
+	public HttpInvoker.HttpResponse getDiscountProductProductHttpResponse(
+			Long discountProductId)
 		throws Exception;
 
-	public Product getPriceModifierIdProduct(Long id) throws Exception;
+	public Product getPriceEntryIdProduct(Long priceEntryId) throws Exception;
 
-	public HttpInvoker.HttpResponse getPriceModifierIdProductHttpResponse(
-			Long id)
+	public HttpInvoker.HttpResponse getPriceEntryIdProductHttpResponse(
+			Long priceEntryId)
+		throws Exception;
+
+	public Product getPriceModifierProductProduct(Long priceModifierProductId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getPriceModifierProductProductHttpResponse(
+			Long priceModifierProductId)
 		throws Exception;
 
 	public static class Builder {
@@ -109,9 +112,11 @@ public interface ProductResource {
 
 	public static class ProductResourceImpl implements ProductResource {
 
-		public Product getDiscountIdProductPage(Long id) throws Exception {
+		public Product getDiscountProductProduct(Long discountProductId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getDiscountIdProductPageHttpResponse(id);
+				getDiscountProductProductHttpResponse(discountProductId);
 
 			String content = httpResponse.getContent();
 
@@ -134,8 +139,8 @@ public interface ProductResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getDiscountIdProductPageHttpResponse(
-				Long id)
+		public HttpInvoker.HttpResponse getDiscountProductProductHttpResponse(
+				Long discountProductId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -162,8 +167,8 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/product",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/discount-products/{discountProductId}/product",
+				discountProductId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -171,9 +176,11 @@ public interface ProductResource {
 			return httpInvoker.invoke();
 		}
 
-		public Product getPriceEntryIdProduct(Long id) throws Exception {
+		public Product getPriceEntryIdProduct(Long priceEntryId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getPriceEntryIdProductHttpResponse(id);
+				getPriceEntryIdProductHttpResponse(priceEntryId);
 
 			String content = httpResponse.getContent();
 
@@ -197,7 +204,7 @@ public interface ProductResource {
 		}
 
 		public HttpInvoker.HttpResponse getPriceEntryIdProductHttpResponse(
-				Long id)
+				Long priceEntryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -224,8 +231,8 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{id}/product",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}/product",
+				priceEntryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -233,9 +240,13 @@ public interface ProductResource {
 			return httpInvoker.invoke();
 		}
 
-		public Product getPriceModifierIdProduct(Long id) throws Exception {
+		public Product getPriceModifierProductProduct(
+				Long priceModifierProductId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getPriceModifierIdProductHttpResponse(id);
+				getPriceModifierProductProductHttpResponse(
+					priceModifierProductId);
 
 			String content = httpResponse.getContent();
 
@@ -258,8 +269,9 @@ public interface ProductResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getPriceModifierIdProductHttpResponse(
-				Long id)
+		public HttpInvoker.HttpResponse
+				getPriceModifierProductProductHttpResponse(
+					Long priceModifierProductId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -286,8 +298,8 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/product",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-products/{priceModifierProductId}/product",
+				priceModifierProductId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

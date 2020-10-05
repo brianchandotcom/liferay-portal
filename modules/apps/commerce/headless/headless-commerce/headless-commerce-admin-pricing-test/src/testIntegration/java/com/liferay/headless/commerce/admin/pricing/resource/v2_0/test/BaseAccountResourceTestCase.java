@@ -191,23 +191,24 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscountIdAccount() throws Exception {
-		Account postAccount = testGetDiscountIdAccount_addAccount();
+	public void testGetDiscountAccountAccount() throws Exception {
+		Account postAccount = testGetDiscountAccountAccount_addAccount();
 
-		Account getAccount = accountResource.getDiscountIdAccount(
-			postAccount.getId());
+		Account getAccount = accountResource.getDiscountAccountAccount(null);
 
 		assertEquals(postAccount, getAccount);
 		assertValid(getAccount);
 	}
 
-	protected Account testGetDiscountIdAccount_addAccount() throws Exception {
+	protected Account testGetDiscountAccountAccount_addAccount()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGraphQLGetDiscountIdAccount() throws Exception {
+	public void testGraphQLGetDiscountAccountAccount() throws Exception {
 		Account account = testGraphQLAccount_addAccount();
 
 		Assert.assertTrue(
@@ -217,29 +218,33 @@ public abstract class BaseAccountResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"discountIdAccount",
+								"discountAccountAccount",
 								new HashMap<String, Object>() {
 									{
-										put("id", account.getId());
+										put("discountAccountId", null);
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/discountIdAccount"))));
+						"JSONObject/data", "Object/discountAccountAccount"))));
 	}
 
 	@Test
-	public void testGraphQLGetDiscountIdAccountNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
+	public void testGraphQLGetDiscountAccountAccountNotFound()
+		throws Exception {
+
+		Long irrelevantDiscountAccountId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"discountIdAccount",
+						"discountAccountAccount",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put(
+									"discountAccountId",
+									irrelevantDiscountAccountId);
 							}
 						},
 						getGraphQLFields())),
@@ -248,23 +253,24 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetPriceListIdAccount() throws Exception {
-		Account postAccount = testGetPriceListIdAccount_addAccount();
+	public void testGetPriceListAccountAccount() throws Exception {
+		Account postAccount = testGetPriceListAccountAccount_addAccount();
 
-		Account getAccount = accountResource.getPriceListIdAccount(
-			postAccount.getId());
+		Account getAccount = accountResource.getPriceListAccountAccount(null);
 
 		assertEquals(postAccount, getAccount);
 		assertValid(getAccount);
 	}
 
-	protected Account testGetPriceListIdAccount_addAccount() throws Exception {
+	protected Account testGetPriceListAccountAccount_addAccount()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGraphQLGetPriceListIdAccount() throws Exception {
+	public void testGraphQLGetPriceListAccountAccount() throws Exception {
 		Account account = testGraphQLAccount_addAccount();
 
 		Assert.assertTrue(
@@ -274,29 +280,33 @@ public abstract class BaseAccountResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"priceListIdAccount",
+								"priceListAccountAccount",
 								new HashMap<String, Object>() {
 									{
-										put("id", account.getId());
+										put("priceListAccountId", null);
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/priceListIdAccount"))));
+						"JSONObject/data", "Object/priceListAccountAccount"))));
 	}
 
 	@Test
-	public void testGraphQLGetPriceListIdAccountNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
+	public void testGraphQLGetPriceListAccountAccountNotFound()
+		throws Exception {
+
+		Long irrelevantPriceListAccountId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"priceListIdAccount",
+						"priceListAccountAccount",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put(
+									"priceListAccountId",
+									irrelevantPriceListAccountId);
 							}
 						},
 						getGraphQLFields())),

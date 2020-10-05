@@ -148,18 +148,20 @@ public class DiscountProduct {
 
 	@DecimalMin("0")
 	@Schema
-	public Long getId() {
-		return id;
+	public Long getDiscountProductId() {
+		return discountProductId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setDiscountProductId(Long discountProductId) {
+		this.discountProductId = discountProductId;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setDiscountProductId(
+		UnsafeSupplier<Long, Exception> discountProductIdUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			discountProductId = discountProductIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -171,7 +173,7 @@ public class DiscountProduct {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	protected Long discountProductId;
 
 	@Schema
 	@Valid
@@ -325,14 +327,14 @@ public class DiscountProduct {
 			sb.append(discountId);
 		}
 
-		if (id != null) {
+		if (discountProductId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"discountProductId\": ");
 
-			sb.append(id);
+			sb.append(discountProductId);
 		}
 
 		if (product != null) {

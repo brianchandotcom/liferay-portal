@@ -101,14 +101,14 @@ public class PriceModifierCategorySerDes {
 			sb.append(priceModifierCategory.getCategoryId());
 		}
 
-		if (priceModifierCategory.getId() != null) {
+		if (priceModifierCategory.getPriceModifierCategoryId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"priceModifierCategoryId\": ");
 
-			sb.append(priceModifierCategory.getId());
+			sb.append(priceModifierCategory.getPriceModifierCategoryId());
 		}
 
 		if (priceModifierCategory.getPriceModifierExternalReferenceCode() !=
@@ -197,11 +197,14 @@ public class PriceModifierCategorySerDes {
 				String.valueOf(priceModifierCategory.getCategoryId()));
 		}
 
-		if (priceModifierCategory.getId() == null) {
-			map.put("id", null);
+		if (priceModifierCategory.getPriceModifierCategoryId() == null) {
+			map.put("priceModifierCategoryId", null);
 		}
 		else {
-			map.put("id", String.valueOf(priceModifierCategory.getId()));
+			map.put(
+				"priceModifierCategoryId",
+				String.valueOf(
+					priceModifierCategory.getPriceModifierCategoryId()));
 		}
 
 		if (priceModifierCategory.getPriceModifierExternalReferenceCode() ==
@@ -274,9 +277,11 @@ public class PriceModifierCategorySerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "priceModifierCategoryId")) {
+
 				if (jsonParserFieldValue != null) {
-					priceModifierCategory.setId(
+					priceModifierCategory.setPriceModifierCategoryId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

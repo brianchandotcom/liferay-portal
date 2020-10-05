@@ -51,10 +51,10 @@ public interface DiscountProductResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deleteDiscountProduct(Long id) throws Exception;
+	public void deleteDiscountProduct(Long discountProductId) throws Exception;
 
 	public Response deleteDiscountProductBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Page<DiscountProduct>

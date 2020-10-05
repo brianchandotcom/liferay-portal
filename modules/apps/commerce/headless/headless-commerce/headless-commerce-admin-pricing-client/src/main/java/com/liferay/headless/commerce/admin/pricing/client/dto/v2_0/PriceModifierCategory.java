@@ -122,24 +122,27 @@ public class PriceModifierCategory implements Cloneable {
 
 	protected Long categoryId;
 
-	public Long getId() {
-		return id;
+	public Long getPriceModifierCategoryId() {
+		return priceModifierCategoryId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setPriceModifierCategoryId(Long priceModifierCategoryId) {
+		this.priceModifierCategoryId = priceModifierCategoryId;
 	}
 
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setPriceModifierCategoryId(
+		UnsafeSupplier<Long, Exception> priceModifierCategoryIdUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			priceModifierCategoryId =
+				priceModifierCategoryIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long id;
+	protected Long priceModifierCategoryId;
 
 	public String getPriceModifierExternalReferenceCode() {
 		return priceModifierExternalReferenceCode;

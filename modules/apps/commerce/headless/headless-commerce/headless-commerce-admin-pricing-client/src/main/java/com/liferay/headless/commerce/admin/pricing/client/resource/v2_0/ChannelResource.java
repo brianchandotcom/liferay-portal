@@ -37,14 +37,18 @@ public interface ChannelResource {
 		return new Builder();
 	}
 
-	public Channel getDiscountIdChannel(Long id) throws Exception;
-
-	public HttpInvoker.HttpResponse getDiscountIdChannelHttpResponse(Long id)
+	public Channel getDiscountChannelChannel(Long discountChannelId)
 		throws Exception;
 
-	public Channel getPriceListIdChannel(Long id) throws Exception;
+	public HttpInvoker.HttpResponse getDiscountChannelChannelHttpResponse(
+			Long discountChannelId)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse getPriceListIdChannelHttpResponse(Long id)
+	public Channel getPriceListChannelChannel(Long priceListChannelId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getPriceListChannelChannelHttpResponse(
+			Long priceListChannelId)
 		throws Exception;
 
 	public static class Builder {
@@ -102,9 +106,11 @@ public interface ChannelResource {
 
 	public static class ChannelResourceImpl implements ChannelResource {
 
-		public Channel getDiscountIdChannel(Long id) throws Exception {
+		public Channel getDiscountChannelChannel(Long discountChannelId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getDiscountIdChannelHttpResponse(id);
+				getDiscountChannelChannelHttpResponse(discountChannelId);
 
 			String content = httpResponse.getContent();
 
@@ -127,8 +133,8 @@ public interface ChannelResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getDiscountIdChannelHttpResponse(
-				Long id)
+		public HttpInvoker.HttpResponse getDiscountChannelChannelHttpResponse(
+				Long discountChannelId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -155,8 +161,8 @@ public interface ChannelResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/channel",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/discount-channels/{discountChannelId}/channel",
+				discountChannelId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -164,9 +170,11 @@ public interface ChannelResource {
 			return httpInvoker.invoke();
 		}
 
-		public Channel getPriceListIdChannel(Long id) throws Exception {
+		public Channel getPriceListChannelChannel(Long priceListChannelId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getPriceListIdChannelHttpResponse(id);
+				getPriceListChannelChannelHttpResponse(priceListChannelId);
 
 			String content = httpResponse.getContent();
 
@@ -189,8 +197,8 @@ public interface ChannelResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getPriceListIdChannelHttpResponse(
-				Long id)
+		public HttpInvoker.HttpResponse getPriceListChannelChannelHttpResponse(
+				Long priceListChannelId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -217,8 +225,8 @@ public interface ChannelResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/channel",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-list-channels/{priceListChannelId}/channel",
+				priceListChannelId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

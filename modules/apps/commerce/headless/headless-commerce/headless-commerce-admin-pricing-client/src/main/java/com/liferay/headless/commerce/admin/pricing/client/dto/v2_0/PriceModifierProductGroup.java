@@ -55,25 +55,6 @@ public class PriceModifierProductGroup implements Cloneable {
 
 	protected Map<String, Map<String, String>> actions;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
-
 	public String getPriceModifierExternalReferenceCode() {
 		return priceModifierExternalReferenceCode;
 	}
@@ -120,6 +101,31 @@ public class PriceModifierProductGroup implements Cloneable {
 	}
 
 	protected Long priceModifierId;
+
+	public Long getPriceModifierProductGroupId() {
+		return priceModifierProductGroupId;
+	}
+
+	public void setPriceModifierProductGroupId(
+		Long priceModifierProductGroupId) {
+
+		this.priceModifierProductGroupId = priceModifierProductGroupId;
+	}
+
+	public void setPriceModifierProductGroupId(
+		UnsafeSupplier<Long, Exception>
+			priceModifierProductGroupIdUnsafeSupplier) {
+
+		try {
+			priceModifierProductGroupId =
+				priceModifierProductGroupIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long priceModifierProductGroupId;
 
 	public ProductGroup getProductGroup() {
 		return productGroup;

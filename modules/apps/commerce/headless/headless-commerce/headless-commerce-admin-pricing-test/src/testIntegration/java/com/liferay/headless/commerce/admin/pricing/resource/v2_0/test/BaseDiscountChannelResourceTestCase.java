@@ -205,39 +205,12 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 	@Test
 	public void testDeleteDiscountChannel() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountChannel discountChannel =
-			testDeleteDiscountChannel_addDiscountChannel();
-
-		assertHttpResponseStatusCode(
-			204,
-			discountChannelResource.deleteDiscountChannelHttpResponse(
-				discountChannel.getId()));
-	}
-
-	protected DiscountChannel testDeleteDiscountChannel_addDiscountChannel()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeleteDiscountChannel() throws Exception {
-		DiscountChannel discountChannel =
-			testGraphQLDiscountChannel_addDiscountChannel();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDiscountChannel",
-						new HashMap<String, Object>() {
-							{
-								put("id", discountChannel.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDiscountChannel"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -295,10 +268,6 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			Arrays.asList(discountChannel1, discountChannel2),
 			(List<DiscountChannel>)page.getItems());
 		assertValid(page);
-
-		discountChannelResource.deleteDiscountChannel(discountChannel1.getId());
-
-		discountChannelResource.deleteDiscountChannel(discountChannel2.getId());
 	}
 
 	@Test
@@ -447,10 +416,6 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			Arrays.asList(discountChannel1, discountChannel2),
 			(List<DiscountChannel>)page.getItems());
 		assertValid(page);
-
-		discountChannelResource.deleteDiscountChannel(discountChannel1.getId());
-
-		discountChannelResource.deleteDiscountChannel(discountChannel2.getId());
 	}
 
 	@Test
@@ -747,13 +712,6 @@ public abstract class BaseDiscountChannelResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected DiscountChannel testGraphQLDiscountChannel_addDiscountChannel()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -812,10 +770,6 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 		boolean valid = true;
 
-		if (discountChannel.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -848,6 +802,16 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 			if (Objects.equals("channelId", additionalAssertFieldName)) {
 				if (discountChannel.getChannelId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"discountChannelId", additionalAssertFieldName)) {
+
+				if (discountChannel.getDiscountChannelId() == null) {
 					valid = false;
 				}
 
@@ -1016,6 +980,19 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"discountChannelId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						discountChannel1.getDiscountChannelId(),
+						discountChannel2.getDiscountChannelId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"discountExternalReferenceCode",
 					additionalAssertFieldName)) {
 
@@ -1033,16 +1010,6 @@ public abstract class BaseDiscountChannelResourceTestCase {
 				if (!Objects.deepEquals(
 						discountChannel1.getDiscountId(),
 						discountChannel2.getDiscountId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						discountChannel1.getId(), discountChannel2.getId())) {
 
 					return false;
 				}
@@ -1160,6 +1127,11 @@ public abstract class BaseDiscountChannelResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("discountChannelId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("discountExternalReferenceCode")) {
 			sb.append("'");
 			sb.append(
@@ -1171,11 +1143,6 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		}
 
 		if (entityFieldName.equals("discountId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1227,10 +1194,10 @@ public abstract class BaseDiscountChannelResourceTestCase {
 				channelExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				channelId = RandomTestUtil.randomLong();
+				discountChannelId = RandomTestUtil.randomLong();
 				discountExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				discountId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
 			}
 		};
 	}

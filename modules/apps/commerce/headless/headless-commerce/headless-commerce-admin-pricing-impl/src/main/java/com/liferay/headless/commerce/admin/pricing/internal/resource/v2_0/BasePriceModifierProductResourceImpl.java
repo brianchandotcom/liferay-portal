@@ -83,16 +83,21 @@ public abstract class BasePriceModifierProductResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-products/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-products/{priceModifierProductId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-modifier-products/{id}")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "priceModifierProductId")
+		}
+	)
+	@Path("/price-modifier-products/{priceModifierProductId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceModifierProduct")})
 	public void deletePriceModifierProduct(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("priceModifierProductId") Long priceModifierProductId)
 		throws Exception {
 	}
 
@@ -105,16 +110,12 @@ public abstract class BasePriceModifierProductResourceImpl
 	@Consumes("application/json")
 	@DELETE
 	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/price-modifier-products/batch")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PriceModifierProduct")})
 	public Response deletePriceModifierProductBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -303,7 +304,8 @@ public abstract class BasePriceModifierProductResourceImpl
 		for (PriceModifierProduct priceModifierProduct :
 				priceModifierProducts) {
 
-			deletePriceModifierProduct(priceModifierProduct.getId());
+			deletePriceModifierProduct(
+				priceModifierProduct.getPriceModifierProductId());
 		}
 	}
 

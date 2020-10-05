@@ -177,33 +177,6 @@ public class PriceListAccount {
 
 	@DecimalMin("0")
 	@Schema
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
-
-	@DecimalMin("0")
-	@Schema
 	public Integer getOrder() {
 		return order;
 	}
@@ -230,6 +203,35 @@ public class PriceListAccount {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
+
+	@DecimalMin("0")
+	@Schema
+	public Long getPriceListAccountId() {
+		return priceListAccountId;
+	}
+
+	public void setPriceListAccountId(Long priceListAccountId) {
+		this.priceListAccountId = priceListAccountId;
+	}
+
+	@JsonIgnore
+	public void setPriceListAccountId(
+		UnsafeSupplier<Long, Exception> priceListAccountIdUnsafeSupplier) {
+
+		try {
+			priceListAccountId = priceListAccountIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long priceListAccountId;
 
 	@Schema
 	public String getPriceListExternalReferenceCode() {
@@ -364,16 +366,6 @@ public class PriceListAccount {
 			sb.append(_toJSON(actions));
 		}
 
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
 		if (order != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -382,6 +374,16 @@ public class PriceListAccount {
 			sb.append("\"order\": ");
 
 			sb.append(order);
+		}
+
+		if (priceListAccountId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceListAccountId\": ");
+
+			sb.append(priceListAccountId);
 		}
 
 		if (priceListExternalReferenceCode != null) {

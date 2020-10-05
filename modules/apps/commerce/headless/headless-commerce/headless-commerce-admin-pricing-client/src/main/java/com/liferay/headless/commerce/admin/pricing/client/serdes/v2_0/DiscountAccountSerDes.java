@@ -100,6 +100,16 @@ public class DiscountAccountSerDes {
 			sb.append(_toJSON(discountAccount.getActions()));
 		}
 
+		if (discountAccount.getDiscountAccountId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountAccountId\": ");
+
+			sb.append(discountAccount.getDiscountAccountId());
+		}
+
 		if (discountAccount.getDiscountExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -123,16 +133,6 @@ public class DiscountAccountSerDes {
 			sb.append("\"discountId\": ");
 
 			sb.append(discountAccount.getDiscountId());
-		}
-
-		if (discountAccount.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(discountAccount.getId());
 		}
 
 		sb.append("}");
@@ -186,6 +186,15 @@ public class DiscountAccountSerDes {
 			map.put("actions", String.valueOf(discountAccount.getActions()));
 		}
 
+		if (discountAccount.getDiscountAccountId() == null) {
+			map.put("discountAccountId", null);
+		}
+		else {
+			map.put(
+				"discountAccountId",
+				String.valueOf(discountAccount.getDiscountAccountId()));
+		}
+
 		if (discountAccount.getDiscountExternalReferenceCode() == null) {
 			map.put("discountExternalReferenceCode", null);
 		}
@@ -202,13 +211,6 @@ public class DiscountAccountSerDes {
 		else {
 			map.put(
 				"discountId", String.valueOf(discountAccount.getDiscountId()));
-		}
-
-		if (discountAccount.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(discountAccount.getId()));
 		}
 
 		return map;
@@ -259,6 +261,12 @@ public class DiscountAccountSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "discountAccountId")) {
+				if (jsonParserFieldValue != null) {
+					discountAccount.setDiscountAccountId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "discountExternalReferenceCode")) {
 
@@ -270,12 +278,6 @@ public class DiscountAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "discountId")) {
 				if (jsonParserFieldValue != null) {
 					discountAccount.setDiscountId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					discountAccount.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

@@ -201,72 +201,76 @@ public class PriceModifierSerDes {
 			sb.append(priceModifier.getPriceListId());
 		}
 
-		if (priceModifier.getPriceModifierCategory() != null) {
+		if (priceModifier.getPriceModifierCategories() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"priceModifierCategory\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < priceModifier.getPriceModifierCategory().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(
-						priceModifier.getPriceModifierCategory()[i]));
-
-				if ((i + 1) < priceModifier.getPriceModifierCategory().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (priceModifier.getPriceModifierProduct() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"priceModifierProduct\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < priceModifier.getPriceModifierProduct().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(priceModifier.getPriceModifierProduct()[i]));
-
-				if ((i + 1) < priceModifier.getPriceModifierProduct().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (priceModifier.getPriceModifierProductGroup() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"priceModifierProductGroup\": ");
+			sb.append("\"priceModifierCategories\": ");
 
 			sb.append("[");
 
 			for (int i = 0;
-				 i < priceModifier.getPriceModifierProductGroup().length; i++) {
+				 i < priceModifier.getPriceModifierCategories().length; i++) {
 
 				sb.append(
 					String.valueOf(
-						priceModifier.getPriceModifierProductGroup()[i]));
+						priceModifier.getPriceModifierCategories()[i]));
 
 				if ((i + 1) <
-						priceModifier.getPriceModifierProductGroup().length) {
+						priceModifier.getPriceModifierCategories().length) {
 
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (priceModifier.getPriceModifierProductGroups() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceModifierProductGroups\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < priceModifier.getPriceModifierProductGroups().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						priceModifier.getPriceModifierProductGroups()[i]));
+
+				if ((i + 1) <
+						priceModifier.getPriceModifierProductGroups().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (priceModifier.getPriceModifierProducts() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceModifierProducts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < priceModifier.getPriceModifierProducts().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						priceModifier.getPriceModifierProducts()[i]));
+
+				if ((i + 1) < priceModifier.getPriceModifierProducts().length) {
 					sb.append(", ");
 				}
 			}
@@ -427,31 +431,31 @@ public class PriceModifierSerDes {
 				"priceListId", String.valueOf(priceModifier.getPriceListId()));
 		}
 
-		if (priceModifier.getPriceModifierCategory() == null) {
-			map.put("priceModifierCategory", null);
+		if (priceModifier.getPriceModifierCategories() == null) {
+			map.put("priceModifierCategories", null);
 		}
 		else {
 			map.put(
-				"priceModifierCategory",
-				String.valueOf(priceModifier.getPriceModifierCategory()));
+				"priceModifierCategories",
+				String.valueOf(priceModifier.getPriceModifierCategories()));
 		}
 
-		if (priceModifier.getPriceModifierProduct() == null) {
-			map.put("priceModifierProduct", null);
+		if (priceModifier.getPriceModifierProductGroups() == null) {
+			map.put("priceModifierProductGroups", null);
 		}
 		else {
 			map.put(
-				"priceModifierProduct",
-				String.valueOf(priceModifier.getPriceModifierProduct()));
+				"priceModifierProductGroups",
+				String.valueOf(priceModifier.getPriceModifierProductGroups()));
 		}
 
-		if (priceModifier.getPriceModifierProductGroup() == null) {
-			map.put("priceModifierProductGroup", null);
+		if (priceModifier.getPriceModifierProducts() == null) {
+			map.put("priceModifierProducts", null);
 		}
 		else {
 			map.put(
-				"priceModifierProductGroup",
-				String.valueOf(priceModifier.getPriceModifierProductGroup()));
+				"priceModifierProducts",
+				String.valueOf(priceModifier.getPriceModifierProducts()));
 		}
 
 		if (priceModifier.getPriority() == null) {
@@ -566,10 +570,10 @@ public class PriceModifierSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "priceModifierCategory")) {
+						jsonParserFieldName, "priceModifierCategories")) {
 
 				if (jsonParserFieldValue != null) {
-					priceModifier.setPriceModifierCategory(
+					priceModifier.setPriceModifierCategories(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -581,25 +585,10 @@ public class PriceModifierSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "priceModifierProduct")) {
+						jsonParserFieldName, "priceModifierProductGroups")) {
 
 				if (jsonParserFieldValue != null) {
-					priceModifier.setPriceModifierProduct(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PriceModifierProductSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new PriceModifierProduct[size]
-						));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "priceModifierProductGroup")) {
-
-				if (jsonParserFieldValue != null) {
-					priceModifier.setPriceModifierProductGroup(
+					priceModifier.setPriceModifierProductGroups(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -607,6 +596,21 @@ public class PriceModifierSerDes {
 								(String)object)
 						).toArray(
 							size -> new PriceModifierProductGroup[size]
+						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "priceModifierProducts")) {
+
+				if (jsonParserFieldValue != null) {
+					priceModifier.setPriceModifierProducts(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> PriceModifierProductSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new PriceModifierProduct[size]
 						));
 				}
 			}

@@ -197,23 +197,24 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscountIdChannel() throws Exception {
-		Channel postChannel = testGetDiscountIdChannel_addChannel();
+	public void testGetDiscountChannelChannel() throws Exception {
+		Channel postChannel = testGetDiscountChannelChannel_addChannel();
 
-		Channel getChannel = channelResource.getDiscountIdChannel(
-			postChannel.getId());
+		Channel getChannel = channelResource.getDiscountChannelChannel(null);
 
 		assertEquals(postChannel, getChannel);
 		assertValid(getChannel);
 	}
 
-	protected Channel testGetDiscountIdChannel_addChannel() throws Exception {
+	protected Channel testGetDiscountChannelChannel_addChannel()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGraphQLGetDiscountIdChannel() throws Exception {
+	public void testGraphQLGetDiscountChannelChannel() throws Exception {
 		Channel channel = testGraphQLChannel_addChannel();
 
 		Assert.assertTrue(
@@ -223,29 +224,33 @@ public abstract class BaseChannelResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"discountIdChannel",
+								"discountChannelChannel",
 								new HashMap<String, Object>() {
 									{
-										put("id", channel.getId());
+										put("discountChannelId", null);
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/discountIdChannel"))));
+						"JSONObject/data", "Object/discountChannelChannel"))));
 	}
 
 	@Test
-	public void testGraphQLGetDiscountIdChannelNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
+	public void testGraphQLGetDiscountChannelChannelNotFound()
+		throws Exception {
+
+		Long irrelevantDiscountChannelId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"discountIdChannel",
+						"discountChannelChannel",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put(
+									"discountChannelId",
+									irrelevantDiscountChannelId);
 							}
 						},
 						getGraphQLFields())),
@@ -254,23 +259,24 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	@Test
-	public void testGetPriceListIdChannel() throws Exception {
-		Channel postChannel = testGetPriceListIdChannel_addChannel();
+	public void testGetPriceListChannelChannel() throws Exception {
+		Channel postChannel = testGetPriceListChannelChannel_addChannel();
 
-		Channel getChannel = channelResource.getPriceListIdChannel(
-			postChannel.getId());
+		Channel getChannel = channelResource.getPriceListChannelChannel(null);
 
 		assertEquals(postChannel, getChannel);
 		assertValid(getChannel);
 	}
 
-	protected Channel testGetPriceListIdChannel_addChannel() throws Exception {
+	protected Channel testGetPriceListChannelChannel_addChannel()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGraphQLGetPriceListIdChannel() throws Exception {
+	public void testGraphQLGetPriceListChannelChannel() throws Exception {
 		Channel channel = testGraphQLChannel_addChannel();
 
 		Assert.assertTrue(
@@ -280,29 +286,33 @@ public abstract class BaseChannelResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"priceListIdChannel",
+								"priceListChannelChannel",
 								new HashMap<String, Object>() {
 									{
-										put("id", channel.getId());
+										put("priceListChannelId", null);
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/priceListIdChannel"))));
+						"JSONObject/data", "Object/priceListChannelChannel"))));
 	}
 
 	@Test
-	public void testGraphQLGetPriceListIdChannelNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
+	public void testGraphQLGetPriceListChannelChannelNotFound()
+		throws Exception {
+
+		Long irrelevantPriceListChannelId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"priceListIdChannel",
+						"priceListChannelChannel",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put(
+									"priceListChannelId",
+									irrelevantPriceListChannelId);
 							}
 						},
 						getGraphQLFields())),

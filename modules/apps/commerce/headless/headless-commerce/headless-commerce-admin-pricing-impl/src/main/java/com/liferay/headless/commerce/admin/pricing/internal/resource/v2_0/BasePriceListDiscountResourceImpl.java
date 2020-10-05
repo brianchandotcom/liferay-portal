@@ -83,16 +83,21 @@ public abstract class BasePriceListDiscountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-list-discounts/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-list-discounts/{priceListDiscountId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-list-discounts/{id}")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "priceListDiscountId")
+		}
+	)
+	@Path("/price-list-discounts/{priceListDiscountId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceListDiscount")})
 	public void deletePriceListDiscount(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+			@NotNull @Parameter(hidden = true) @PathParam("priceListDiscountId")
+				Long priceListDiscountId)
 		throws Exception {
 	}
 
@@ -105,16 +110,12 @@ public abstract class BasePriceListDiscountResourceImpl
 	@Consumes("application/json")
 	@DELETE
 	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/price-list-discounts/batch")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PriceListDiscount")})
 	public Response deletePriceListDiscountBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -295,7 +296,7 @@ public abstract class BasePriceListDiscountResourceImpl
 		throws Exception {
 
 		for (PriceListDiscount priceListDiscount : priceListDiscounts) {
-			deletePriceListDiscount(priceListDiscount.getId());
+			deletePriceListDiscount(priceListDiscount.getPriceListDiscountId());
 		}
 	}
 

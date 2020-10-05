@@ -123,25 +123,6 @@ public class PriceListAccountGroup implements Cloneable {
 
 	protected Map<String, Map<String, String>> actions;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
-
 	public Integer getOrder() {
 		return order;
 	}
@@ -162,6 +143,28 @@ public class PriceListAccountGroup implements Cloneable {
 	}
 
 	protected Integer order;
+
+	public Long getPriceListAccountGroupId() {
+		return priceListAccountGroupId;
+	}
+
+	public void setPriceListAccountGroupId(Long priceListAccountGroupId) {
+		this.priceListAccountGroupId = priceListAccountGroupId;
+	}
+
+	public void setPriceListAccountGroupId(
+		UnsafeSupplier<Long, Exception> priceListAccountGroupIdUnsafeSupplier) {
+
+		try {
+			priceListAccountGroupId =
+				priceListAccountGroupIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long priceListAccountGroupId;
 
 	public String getPriceListExternalReferenceCode() {
 		return priceListExternalReferenceCode;

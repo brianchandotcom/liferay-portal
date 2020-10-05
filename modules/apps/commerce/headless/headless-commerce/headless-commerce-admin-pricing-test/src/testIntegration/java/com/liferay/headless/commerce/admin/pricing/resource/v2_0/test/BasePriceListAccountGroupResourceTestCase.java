@@ -212,41 +212,12 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 
 	@Test
 	public void testDeletePriceListAccountGroup() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceListAccountGroup priceListAccountGroup =
-			testDeletePriceListAccountGroup_addPriceListAccountGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			priceListAccountGroupResource.
-				deletePriceListAccountGroupHttpResponse(
-					priceListAccountGroup.getId()));
-	}
-
-	protected PriceListAccountGroup
-			testDeletePriceListAccountGroup_addPriceListAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeletePriceListAccountGroup() throws Exception {
-		PriceListAccountGroup priceListAccountGroup =
-			testGraphQLPriceListAccountGroup_addPriceListAccountGroup();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceListAccountGroup",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceListAccountGroup.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceListAccountGroup"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -304,12 +275,6 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 			Arrays.asList(priceListAccountGroup1, priceListAccountGroup2),
 			(List<PriceListAccountGroup>)page.getItems());
 		assertValid(page);
-
-		priceListAccountGroupResource.deletePriceListAccountGroup(
-			priceListAccountGroup1.getId());
-
-		priceListAccountGroupResource.deletePriceListAccountGroup(
-			priceListAccountGroup2.getId());
 	}
 
 	@Test
@@ -472,12 +437,6 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 			Arrays.asList(priceListAccountGroup1, priceListAccountGroup2),
 			(List<PriceListAccountGroup>)page.getItems());
 		assertValid(page);
-
-		priceListAccountGroupResource.deletePriceListAccountGroup(
-			priceListAccountGroup1.getId());
-
-		priceListAccountGroupResource.deletePriceListAccountGroup(
-			priceListAccountGroup2.getId());
 	}
 
 	@Test
@@ -792,14 +751,6 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected PriceListAccountGroup
-			testGraphQLPriceListAccountGroup_addPriceListAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -869,10 +820,6 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 
 		boolean valid = true;
 
-		if (priceListAccountGroup.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -915,6 +862,18 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 
 			if (Objects.equals("order", additionalAssertFieldName)) {
 				if (priceListAccountGroup.getOrder() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceListAccountGroupId", additionalAssertFieldName)) {
+
+				if (priceListAccountGroup.getPriceListAccountGroupId() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -1085,10 +1044,10 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
+			if (Objects.equals("order", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						priceListAccountGroup1.getId(),
-						priceListAccountGroup2.getId())) {
+						priceListAccountGroup1.getOrder(),
+						priceListAccountGroup2.getOrder())) {
 
 					return false;
 				}
@@ -1096,10 +1055,12 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("order", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"priceListAccountGroupId", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						priceListAccountGroup1.getOrder(),
-						priceListAccountGroup2.getOrder())) {
+						priceListAccountGroup1.getPriceListAccountGroupId(),
+						priceListAccountGroup2.getPriceListAccountGroupId())) {
 
 					return false;
 				}
@@ -1245,12 +1206,12 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("order")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("order")) {
+		if (entityFieldName.equals("priceListAccountGroupId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1319,8 +1280,8 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 				accountGroupExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				accountGroupId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
 				order = RandomTestUtil.randomInt();
+				priceListAccountGroupId = RandomTestUtil.randomLong();
 				priceListExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				priceListId = RandomTestUtil.randomLong();

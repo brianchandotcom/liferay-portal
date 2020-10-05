@@ -31,7 +31,6 @@ import com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0.PriceEntry
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -49,8 +48,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -79,7 +76,6 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -213,284 +209,61 @@ public abstract class BasePriceEntryResourceTestCase {
 
 	@Test
 	public void testDeletePriceEntryByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceEntry priceEntry =
-			testDeletePriceEntryByExternalReferenceCode_addPriceEntry();
-
-		assertHttpResponseStatusCode(
-			204,
-			priceEntryResource.
-				deletePriceEntryByExternalReferenceCodeHttpResponse(
-					priceEntry.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			priceEntryResource.getPriceEntryByExternalReferenceCodeHttpResponse(
-				priceEntry.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			priceEntryResource.getPriceEntryByExternalReferenceCodeHttpResponse(
-				priceEntry.getExternalReferenceCode()));
-	}
-
-	protected PriceEntry
-			testDeletePriceEntryByExternalReferenceCode_addPriceEntry()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGetPriceEntryByExternalReferenceCode() throws Exception {
-		PriceEntry postPriceEntry =
-			testGetPriceEntryByExternalReferenceCode_addPriceEntry();
-
-		PriceEntry getPriceEntry =
-			priceEntryResource.getPriceEntryByExternalReferenceCode(
-				postPriceEntry.getExternalReferenceCode());
-
-		assertEquals(postPriceEntry, getPriceEntry);
-		assertValid(getPriceEntry);
-	}
-
-	protected PriceEntry
-			testGetPriceEntryByExternalReferenceCode_addPriceEntry()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLGetPriceEntryByExternalReferenceCode()
 		throws Exception {
 
-		PriceEntry priceEntry = testGraphQLPriceEntry_addPriceEntry();
-
-		Assert.assertTrue(
-			equals(
-				priceEntry,
-				PriceEntrySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"priceEntryByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												priceEntry.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/priceEntryByExternalReferenceCode"))));
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGraphQLGetPriceEntryByExternalReferenceCodeNotFound()
 		throws Exception {
 
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"priceEntryByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testPatchPriceEntryByExternalReferenceCode() throws Exception {
-		PriceEntry postPriceEntry =
-			testPatchPriceEntryByExternalReferenceCode_addPriceEntry();
-
-		PriceEntry randomPatchPriceEntry = randomPatchPriceEntry();
-
-		PriceEntry patchPriceEntry =
-			priceEntryResource.patchPriceEntryByExternalReferenceCode(
-				postPriceEntry.getExternalReferenceCode(),
-				randomPatchPriceEntry);
-
-		PriceEntry expectedPatchPriceEntry = postPriceEntry.clone();
-
-		_beanUtilsBean.copyProperties(
-			expectedPatchPriceEntry, randomPatchPriceEntry);
-
-		PriceEntry getPriceEntry = priceEntryResource.getPriceEntry(
-			patchPriceEntry.getId());
-
-		assertEquals(expectedPatchPriceEntry, getPriceEntry);
-		assertValid(getPriceEntry);
-	}
-
-	protected PriceEntry
-			testPatchPriceEntryByExternalReferenceCode_addPriceEntry()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testDeletePriceEntry() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceEntry priceEntry = testDeletePriceEntry_addPriceEntry();
-
-		assertHttpResponseStatusCode(
-			204,
-			priceEntryResource.deletePriceEntryHttpResponse(
-				priceEntry.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			priceEntryResource.getPriceEntryHttpResponse(priceEntry.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			priceEntryResource.getPriceEntryHttpResponse(priceEntry.getId()));
-	}
-
-	protected PriceEntry testDeletePriceEntry_addPriceEntry() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeletePriceEntry() throws Exception {
-		PriceEntry priceEntry = testGraphQLPriceEntry_addPriceEntry();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceEntry",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceEntry.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceEntry"));
-
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"graphql.execution.SimpleDataFetcherExceptionHandler",
-					Level.WARN)) {
-
-			JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"priceEntry",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceEntry.getId());
-							}
-						},
-						new GraphQLField("id"))),
-				"JSONArray/errors");
-
-			Assert.assertTrue(errorsJSONArray.length() > 0);
-		}
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGetPriceEntry() throws Exception {
-		PriceEntry postPriceEntry = testGetPriceEntry_addPriceEntry();
-
-		PriceEntry getPriceEntry = priceEntryResource.getPriceEntry(
-			postPriceEntry.getId());
-
-		assertEquals(postPriceEntry, getPriceEntry);
-		assertValid(getPriceEntry);
-	}
-
-	protected PriceEntry testGetPriceEntry_addPriceEntry() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLGetPriceEntry() throws Exception {
-		PriceEntry priceEntry = testGraphQLPriceEntry_addPriceEntry();
-
-		Assert.assertTrue(
-			equals(
-				priceEntry,
-				PriceEntrySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"priceEntry",
-								new HashMap<String, Object>() {
-									{
-										put("id", priceEntry.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/priceEntry"))));
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGraphQLGetPriceEntryNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"priceEntry",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testPatchPriceEntry() throws Exception {
-		PriceEntry postPriceEntry = testPatchPriceEntry_addPriceEntry();
-
-		PriceEntry randomPatchPriceEntry = randomPatchPriceEntry();
-
-		PriceEntry patchPriceEntry = priceEntryResource.patchPriceEntry(
-			postPriceEntry.getId(), randomPatchPriceEntry);
-
-		PriceEntry expectedPatchPriceEntry = postPriceEntry.clone();
-
-		_beanUtilsBean.copyProperties(
-			expectedPatchPriceEntry, randomPatchPriceEntry);
-
-		PriceEntry getPriceEntry = priceEntryResource.getPriceEntry(
-			patchPriceEntry.getId());
-
-		assertEquals(expectedPatchPriceEntry, getPriceEntry);
-		assertValid(getPriceEntry);
-	}
-
-	protected PriceEntry testPatchPriceEntry_addPriceEntry() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -548,10 +321,6 @@ public abstract class BasePriceEntryResourceTestCase {
 			Arrays.asList(priceEntry1, priceEntry2),
 			(List<PriceEntry>)page.getItems());
 		assertValid(page);
-
-		priceEntryResource.deletePriceEntry(priceEntry1.getId());
-
-		priceEntryResource.deletePriceEntry(priceEntry2.getId());
 	}
 
 	@Test
@@ -711,10 +480,6 @@ public abstract class BasePriceEntryResourceTestCase {
 			Arrays.asList(priceEntry1, priceEntry2),
 			(List<PriceEntry>)page.getItems());
 		assertValid(page);
-
-		priceEntryResource.deletePriceEntry(priceEntry1.getId());
-
-		priceEntryResource.deletePriceEntry(priceEntry2.getId());
 	}
 
 	@Test
@@ -1008,13 +773,6 @@ public abstract class BasePriceEntryResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected PriceEntry testGraphQLPriceEntry_addPriceEntry()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -1067,10 +825,6 @@ public abstract class BasePriceEntryResourceTestCase {
 
 	protected void assertValid(PriceEntry priceEntry) throws Exception {
 		boolean valid = true;
-
-		if (priceEntry.getId() == null) {
-			valid = false;
-		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
@@ -1203,6 +957,14 @@ public abstract class BasePriceEntryResourceTestCase {
 
 			if (Objects.equals("price", additionalAssertFieldName)) {
 				if (priceEntry.getPrice() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("priceEntryId", additionalAssertFieldName)) {
+				if (priceEntry.getPriceEntryId() == null) {
 					valid = false;
 				}
 
@@ -1527,16 +1289,6 @@ public abstract class BasePriceEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						priceEntry1.getId(), priceEntry2.getId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("neverExpire", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						priceEntry1.getNeverExpire(),
@@ -1551,6 +1303,17 @@ public abstract class BasePriceEntryResourceTestCase {
 			if (Objects.equals("price", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						priceEntry1.getPrice(), priceEntry2.getPrice())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("priceEntryId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						priceEntry1.getPriceEntryId(),
+						priceEntry2.getPriceEntryId())) {
 
 					return false;
 				}
@@ -1862,17 +1625,17 @@ public abstract class BasePriceEntryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("neverExpire")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("price")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("priceEntryId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1981,9 +1744,9 @@ public abstract class BasePriceEntryResourceTestCase {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				hasTierPrice = RandomTestUtil.randomBoolean();
-				id = RandomTestUtil.randomLong();
 				neverExpire = RandomTestUtil.randomBoolean();
 				price = RandomTestUtil.randomDouble();
+				priceEntryId = RandomTestUtil.randomLong();
 				priceFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				priceListExternalReferenceCode = StringUtil.toLowerCase(

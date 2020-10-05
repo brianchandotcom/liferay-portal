@@ -210,40 +210,12 @@ public abstract class BasePriceModifierProductResourceTestCase {
 
 	@Test
 	public void testDeletePriceModifierProduct() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceModifierProduct priceModifierProduct =
-			testDeletePriceModifierProduct_addPriceModifierProduct();
-
-		assertHttpResponseStatusCode(
-			204,
-			priceModifierProductResource.deletePriceModifierProductHttpResponse(
-				priceModifierProduct.getId()));
-	}
-
-	protected PriceModifierProduct
-			testDeletePriceModifierProduct_addPriceModifierProduct()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeletePriceModifierProduct() throws Exception {
-		PriceModifierProduct priceModifierProduct =
-			testGraphQLPriceModifierProduct_addPriceModifierProduct();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceModifierProduct",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceModifierProduct.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceModifierProduct"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -301,12 +273,6 @@ public abstract class BasePriceModifierProductResourceTestCase {
 			Arrays.asList(priceModifierProduct1, priceModifierProduct2),
 			(List<PriceModifierProduct>)page.getItems());
 		assertValid(page);
-
-		priceModifierProductResource.deletePriceModifierProduct(
-			priceModifierProduct1.getId());
-
-		priceModifierProductResource.deletePriceModifierProduct(
-			priceModifierProduct2.getId());
 	}
 
 	@Test
@@ -469,12 +435,6 @@ public abstract class BasePriceModifierProductResourceTestCase {
 			Arrays.asList(priceModifierProduct1, priceModifierProduct2),
 			(List<PriceModifierProduct>)page.getItems());
 		assertValid(page);
-
-		priceModifierProductResource.deletePriceModifierProduct(
-			priceModifierProduct1.getId());
-
-		priceModifierProductResource.deletePriceModifierProduct(
-			priceModifierProduct2.getId());
 	}
 
 	@Test
@@ -789,14 +749,6 @@ public abstract class BasePriceModifierProductResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected PriceModifierProduct
-			testGraphQLPriceModifierProduct_addPriceModifierProduct()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -865,10 +817,6 @@ public abstract class BasePriceModifierProductResourceTestCase {
 
 		boolean valid = true;
 
-		if (priceModifierProduct.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -895,6 +843,16 @@ public abstract class BasePriceModifierProductResourceTestCase {
 
 			if (Objects.equals("priceModifierId", additionalAssertFieldName)) {
 				if (priceModifierProduct.getPriceModifierId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceModifierProductId", additionalAssertFieldName)) {
+
+				if (priceModifierProduct.getPriceModifierProductId() == null) {
 					valid = false;
 				}
 
@@ -1035,17 +993,6 @@ public abstract class BasePriceModifierProductResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						priceModifierProduct1.getId(),
-						priceModifierProduct2.getId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals(
 					"priceModifierExternalReferenceCode",
 					additionalAssertFieldName)) {
@@ -1066,6 +1013,19 @@ public abstract class BasePriceModifierProductResourceTestCase {
 				if (!Objects.deepEquals(
 						priceModifierProduct1.getPriceModifierId(),
 						priceModifierProduct2.getPriceModifierId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceModifierProductId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						priceModifierProduct1.getPriceModifierProductId(),
+						priceModifierProduct2.getPriceModifierProductId())) {
 
 					return false;
 				}
@@ -1200,11 +1160,6 @@ public abstract class BasePriceModifierProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("priceModifierExternalReferenceCode")) {
 			sb.append("'");
 			sb.append(
@@ -1217,6 +1172,11 @@ public abstract class BasePriceModifierProductResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priceModifierId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("priceModifierProductId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1287,10 +1247,10 @@ public abstract class BasePriceModifierProductResourceTestCase {
 
 		return new PriceModifierProduct() {
 			{
-				id = RandomTestUtil.randomLong();
 				priceModifierExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				priceModifierId = RandomTestUtil.randomLong();
+				priceModifierProductId = RandomTestUtil.randomLong();
 				productExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				productId = RandomTestUtil.randomLong();

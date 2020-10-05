@@ -205,39 +205,12 @@ public abstract class BasePriceListChannelResourceTestCase {
 
 	@Test
 	public void testDeletePriceListChannel() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceListChannel priceListChannel =
-			testDeletePriceListChannel_addPriceListChannel();
-
-		assertHttpResponseStatusCode(
-			204,
-			priceListChannelResource.deletePriceListChannelHttpResponse(
-				priceListChannel.getId()));
-	}
-
-	protected PriceListChannel testDeletePriceListChannel_addPriceListChannel()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGraphQLDeletePriceListChannel() throws Exception {
-		PriceListChannel priceListChannel =
-			testGraphQLPriceListChannel_addPriceListChannel();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceListChannel",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceListChannel.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceListChannel"));
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -295,12 +268,6 @@ public abstract class BasePriceListChannelResourceTestCase {
 			Arrays.asList(priceListChannel1, priceListChannel2),
 			(List<PriceListChannel>)page.getItems());
 		assertValid(page);
-
-		priceListChannelResource.deletePriceListChannel(
-			priceListChannel1.getId());
-
-		priceListChannelResource.deletePriceListChannel(
-			priceListChannel2.getId());
 	}
 
 	@Test
@@ -450,12 +417,6 @@ public abstract class BasePriceListChannelResourceTestCase {
 			Arrays.asList(priceListChannel1, priceListChannel2),
 			(List<PriceListChannel>)page.getItems());
 		assertValid(page);
-
-		priceListChannelResource.deletePriceListChannel(
-			priceListChannel1.getId());
-
-		priceListChannelResource.deletePriceListChannel(
-			priceListChannel2.getId());
 	}
 
 	@Test
@@ -753,13 +714,6 @@ public abstract class BasePriceListChannelResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected PriceListChannel testGraphQLPriceListChannel_addPriceListChannel()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -821,10 +775,6 @@ public abstract class BasePriceListChannelResourceTestCase {
 
 		boolean valid = true;
 
-		if (priceListChannel.getId() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -867,6 +817,16 @@ public abstract class BasePriceListChannelResourceTestCase {
 
 			if (Objects.equals("order", additionalAssertFieldName)) {
 				if (priceListChannel.getOrder() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceListChannelId", additionalAssertFieldName)) {
+
+				if (priceListChannel.getPriceListChannelId() == null) {
 					valid = false;
 				}
 
@@ -1035,9 +995,10 @@ public abstract class BasePriceListChannelResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
+			if (Objects.equals("order", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						priceListChannel1.getId(), priceListChannel2.getId())) {
+						priceListChannel1.getOrder(),
+						priceListChannel2.getOrder())) {
 
 					return false;
 				}
@@ -1045,10 +1006,12 @@ public abstract class BasePriceListChannelResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("order", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"priceListChannelId", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						priceListChannel1.getOrder(),
-						priceListChannel2.getOrder())) {
+						priceListChannel1.getPriceListChannelId(),
+						priceListChannel2.getPriceListChannelId())) {
 
 					return false;
 				}
@@ -1192,12 +1155,12 @@ public abstract class BasePriceListChannelResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("order")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("order")) {
+		if (entityFieldName.equals("priceListChannelId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1264,8 +1227,8 @@ public abstract class BasePriceListChannelResourceTestCase {
 				channelExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				channelId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
 				order = RandomTestUtil.randomInt();
+				priceListChannelId = RandomTestUtil.randomLong();
 				priceListExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				priceListId = RandomTestUtil.randomLong();

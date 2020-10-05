@@ -46,9 +46,11 @@ public interface ChannelResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Channel getDiscountIdChannel(Long id) throws Exception;
+	public Channel getDiscountChannelChannel(Long discountChannelId)
+		throws Exception;
 
-	public Channel getPriceListIdChannel(Long id) throws Exception;
+	public Channel getPriceListChannelChannel(Long priceListChannelId)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

@@ -91,14 +91,14 @@ public class DiscountProductGroupSerDes {
 			sb.append(discountProductGroup.getDiscountId());
 		}
 
-		if (discountProductGroup.getId() != null) {
+		if (discountProductGroup.getDiscountProductGroupId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"discountProductGroupId\": ");
 
-			sb.append(discountProductGroup.getId());
+			sb.append(discountProductGroup.getDiscountProductGroupId());
 		}
 
 		if (discountProductGroup.getProductGroup() != null) {
@@ -188,11 +188,14 @@ public class DiscountProductGroupSerDes {
 				String.valueOf(discountProductGroup.getDiscountId()));
 		}
 
-		if (discountProductGroup.getId() == null) {
-			map.put("id", null);
+		if (discountProductGroup.getDiscountProductGroupId() == null) {
+			map.put("discountProductGroupId", null);
 		}
 		else {
-			map.put("id", String.valueOf(discountProductGroup.getId()));
+			map.put(
+				"discountProductGroupId",
+				String.valueOf(
+					discountProductGroup.getDiscountProductGroupId()));
 		}
 
 		if (discountProductGroup.getProductGroup() == null) {
@@ -268,9 +271,11 @@ public class DiscountProductGroupSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "discountProductGroupId")) {
+
 				if (jsonParserFieldValue != null) {
-					discountProductGroup.setId(
+					discountProductGroup.setDiscountProductGroupId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

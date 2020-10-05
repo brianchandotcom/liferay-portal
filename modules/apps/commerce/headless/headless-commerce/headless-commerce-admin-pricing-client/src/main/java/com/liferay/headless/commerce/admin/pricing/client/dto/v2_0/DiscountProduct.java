@@ -101,24 +101,26 @@ public class DiscountProduct implements Cloneable {
 
 	protected Long discountId;
 
-	public Long getId() {
-		return id;
+	public Long getDiscountProductId() {
+		return discountProductId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setDiscountProductId(Long discountProductId) {
+		this.discountProductId = discountProductId;
 	}
 
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setDiscountProductId(
+		UnsafeSupplier<Long, Exception> discountProductIdUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			discountProductId = discountProductIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long id;
+	protected Long discountProductId;
 
 	public Product getProduct() {
 		return product;

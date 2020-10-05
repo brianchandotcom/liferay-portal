@@ -51,10 +51,11 @@ public interface PriceModifierCategoryResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deletePriceModifierCategory(Long id) throws Exception;
+	public void deletePriceModifierCategory(Long priceModifierCategoryId)
+		throws Exception;
 
 	public Response deletePriceModifierCategoryBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Page<PriceModifierCategory>

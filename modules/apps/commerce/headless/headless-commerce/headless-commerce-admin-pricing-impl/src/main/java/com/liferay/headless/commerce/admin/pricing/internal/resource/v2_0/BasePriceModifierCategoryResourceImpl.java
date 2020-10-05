@@ -83,16 +83,21 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/{priceModifierCategoryId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@DELETE
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/price-modifier-categories/{id}")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "priceModifierCategoryId")
+		}
+	)
+	@Path("/price-modifier-categories/{priceModifierCategoryId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceModifierCategory")})
 	public void deletePriceModifierCategory(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("priceModifierCategoryId") Long priceModifierCategoryId)
 		throws Exception {
 	}
 
@@ -105,16 +110,12 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	@Consumes("application/json")
 	@DELETE
 	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/price-modifier-categories/batch")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PriceModifierCategory")})
 	public Response deletePriceModifierCategoryBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -304,7 +305,8 @@ public abstract class BasePriceModifierCategoryResourceImpl
 		for (PriceModifierCategory priceModifierCategory :
 				priceModifierCategories) {
 
-			deletePriceModifierCategory(priceModifierCategory.getId());
+			deletePriceModifierCategory(
+				priceModifierCategory.getPriceModifierCategoryId());
 		}
 	}
 

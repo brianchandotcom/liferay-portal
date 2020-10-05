@@ -63,6 +63,8 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 				<aui:fieldset>
 					<aui:input name="active" />
 
+					<aui:input name="overlapAllowed" />
+
 					<aui:input name="cronExpression" />
 
 					<aui:field-wrapper label="start-date">

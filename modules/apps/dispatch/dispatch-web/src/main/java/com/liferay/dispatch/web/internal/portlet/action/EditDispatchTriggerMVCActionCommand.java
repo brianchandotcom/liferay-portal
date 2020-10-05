@@ -169,6 +169,8 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		boolean neverEnd = ParamUtil.getBoolean(actionRequest, "neverEnd");
+		boolean overlapAllowed = ParamUtil.getBoolean(
+			actionRequest, "overlapAllowed");
 
 		int startDateMonth = ParamUtil.getInteger(
 			actionRequest, "startDateMonth");
@@ -189,8 +191,9 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 
 		_dispatchTriggerService.updateDispatchTrigger(
 			dispatchTriggerId, active, cronExpression, endDateMonth, endDateDay,
-			endDateYear, endDateHour, endDateMinute, neverEnd, startDateMonth,
-			startDateDay, startDateYear, startDateHour, startDateMinute);
+			endDateYear, endDateHour, endDateMinute, neverEnd, overlapAllowed,
+			startDateMonth, startDateDay, startDateYear, startDateHour,
+			startDateMinute);
 	}
 
 	protected DispatchTrigger updateDispatchTrigger(

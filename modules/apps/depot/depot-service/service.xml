@@ -106,6 +106,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DepotEntryGroup</exception>
 		<exception>DepotEntryGroupRelStagedGroup</exception>
 		<exception>DepotEntryName</exception>
 	</exceptions>

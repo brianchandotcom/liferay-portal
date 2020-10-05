@@ -1904,7 +1904,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/javassist.jar</file-name>
-				<version>3.19.0 GA</version>
+				<version>3.18.2 GA</version>
 				<project-name>Javassist</project-name>
 				<project-url>http://www.csg.is.titech.ac.jp/~chiba/javassist</project-url>
 				<licenses>
@@ -2244,7 +2244,7 @@
 					</license>
 				</licenses>
 			</library>
-			<library>
+				<library>
 				<file-name>lib/portal/jodd-lagarto.jar</file-name>
 				<version>5.1.4</version>
 				<project-name>Jodd Lagarto</project-name>

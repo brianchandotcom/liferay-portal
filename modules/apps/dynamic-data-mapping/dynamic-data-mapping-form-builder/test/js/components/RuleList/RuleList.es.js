@@ -207,4 +207,65 @@ describe('RuleList', () => {
 
 		expect(component).toMatchSnapshot();
 	});
+
+	it('shows rule with json type operand', () => {
+		const rule = {
+			actions: [
+				{
+					action: 'require',
+					label: 'label text 1',
+					target: 'text1',
+				},
+			],
+			conditions: [
+				{
+					operands: [
+						{
+							type: 'field',
+							value: 'grid1',
+						},
+						{
+							type: 'json',
+							value: '{"value1" : "value2"}',
+						},
+					],
+					operator: 'equals-to',
+				},
+			],
+			['logical-operator']: 'OR',
+		};
+
+		const config = {
+			pages: [
+				{
+					rows: [
+						{
+							columns: [
+								{
+									fields: [
+										{
+											fieldName: 'grid1',
+											label: 'label grid 1',
+										},
+										{
+											fieldName: 'text1',
+											label: 'label text 1',
+										},
+									],
+								},
+							],
+						},
+					],
+				},
+			],
+			rules: [rule],
+			spritemap,
+		};
+
+		component = new RuleList(config);
+
+		expect(component._getOperandLabel(rule.conditions[0].operands, 1)).toBe(
+			'value1:value2'
+		);
+	});
 });

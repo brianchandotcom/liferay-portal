@@ -261,20 +261,11 @@ public class DispatchTriggerLocalServiceTest {
 	private void _basicAssertEquals(
 		DispatchTrigger actual, DispatchTriggerValues expected) {
 
-		Assert.assertNotNull("Dispatch trigger object", actual);
-
-		Assert.assertEquals(
-			"Dispatch trigger user ID value", expected.getUserId(),
-			actual.getUserId());
-		Assert.assertEquals(
-			"Dispatch trigger name value", expected.getName(),
-			actual.getName());
-		Assert.assertEquals(
-			"Dispatch trigger system value", expected.isSystem(),
-			actual.isSystem());
-		Assert.assertEquals(
-			"Dispatch trigger type value", expected.getTaskType(),
-			actual.getTaskType());
+		Assert.assertNotNull(actual);
+		Assert.assertEquals(expected.getUserId(), actual.getUserId());
+		Assert.assertEquals(expected.getName(), actual.getName());
+		Assert.assertEquals(expected.isSystem(), actual.isSystem());
+		Assert.assertEquals(expected.getTaskType(), actual.getTaskType());
 
 		UnicodeProperties actualTaskSettingsUnicodeProperties =
 			actual.getTaskSettingsUnicodeProperties();

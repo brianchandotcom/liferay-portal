@@ -101,6 +101,10 @@ definition {
 
 		PortletEntry.publish();
 
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
+
 		Click(
 			key_text = "Link to Document",
 			locator1 = "Link#ANY");
@@ -132,6 +136,10 @@ definition {
 			pageName = "${pageName}");
 
 		PortletEntry.publish();
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
 
 		Click(
 			key_text = "Link to Page",

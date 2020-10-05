@@ -15,6 +15,7 @@
 package com.liferay.roles.admin.role.type.contributor;
 
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Locale;
@@ -108,6 +109,10 @@ public interface RoleTypeContributor {
 	 * @return an integer that represents the role type
 	 */
 	public int getType();
+
+	public default String getTypeLabel() {
+		return RoleConstants.getTypeLabel(getType());
+	}
 
 	/**
 	 * Returns <code>true</code> if users are allowed to assign members to the

@@ -474,19 +474,14 @@ public class DisplayPageActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getViewUsagesDisplayPageActionUnsafeConsumer() {
 
-		PortletURL viewUsagesURL = _renderResponse.createRenderURL();
-
-		viewUsagesURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				viewUsagesURL, "mvcRenderCommandName",
-				"/layout_page_template/view_display_page_usages", "redirect",
-				_themeDisplay.getURLCurrent());
-
+				_renderResponse.createRenderURL(), "mvcRenderCommandName",
+				"/layout_page_template/view_display_page_usages",
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
+				"redirect", _themeDisplay.getURLCurrent());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-usages"));
 		};

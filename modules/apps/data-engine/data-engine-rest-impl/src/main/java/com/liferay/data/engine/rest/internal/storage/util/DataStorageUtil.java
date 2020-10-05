@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.internal.storage.util;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -24,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -60,13 +60,11 @@ public class DataStorageUtil {
 			return Collections.emptyMap();
 		}
 
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		_addMissingDDMFormFieldValues(
-			ddmForm.getDDMFormFields(), ddmFormValues);
-
 		Map<String, DDMFormField> ddmFormFields =
 			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
+
+		_addMissingDDMFormFieldValues(
+			ListUtil.fromMapValues(ddmFormFields), ddmFormValues);
 
 		Map<String, Object> values = new HashMap<>(ddmFormFields.size());
 
@@ -126,12 +124,10 @@ public class DataStorageUtil {
 			if (!ddmFormFieldValues.containsKey(ddmFormField.getName()) &&
 				!_isFieldSet(ddmFormField)) {
 
-				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue() {
-					{
-						setInstanceId(StringUtil.randomString());
-						setName(ddmFormField.getName());
-					}
-				};
+				Locale locale = ddmFormValues.getDefaultLocale();
+
+				DDMFormFieldValue ddmFormFieldValue = _createDDMFormFieldValue(
+					ddmFormField, locale);
 
 				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
@@ -140,7 +136,7 @@ public class DataStorageUtil {
 
 					_addMissingDDMFormFieldValues(
 						ddmFormField.getNestedDDMFormFields(),
-						ddmFormFieldValues, ddmFormFieldValue);
+						ddmFormFieldValues, locale, ddmFormFieldValue);
 				}
 			}
 		}
@@ -148,17 +144,13 @@ public class DataStorageUtil {
 
 	private static void _addMissingDDMFormFieldValues(
 		List<DDMFormField> ddmFormFields,
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValues,
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValues, Locale locale,
 		DDMFormFieldValue parentDDMFormFieldValue) {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			if (!ddmFormFieldValues.containsKey(ddmFormField.getName())) {
-				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue() {
-					{
-						setInstanceId(StringUtil.randomString());
-						setName(ddmFormField.getName());
-					}
-				};
+				DDMFormFieldValue ddmFormFieldValue = _createDDMFormFieldValue(
+					ddmFormField, locale);
 
 				parentDDMFormFieldValue.addNestedDDMFormFieldValue(
 					ddmFormFieldValue);
@@ -168,7 +160,7 @@ public class DataStorageUtil {
 
 					_addMissingDDMFormFieldValues(
 						ddmFormField.getNestedDDMFormFields(),
-						ddmFormFieldValues, ddmFormFieldValue);
+						ddmFormFieldValues, locale, ddmFormFieldValue);
 				}
 			}
 		}
@@ -278,6 +270,22 @@ public class DataStorageUtil {
 		else {
 			_addValue(ddmFormField, ddmFormFieldValue, values);
 		}
+	}
+
+	private static DDMFormFieldValue _createDDMFormFieldValue(
+		DDMFormField ddmFormField, Locale locale) {
+
+		LocalizedValue localizedValue = new LocalizedValue(locale);
+
+		localizedValue.addString(locale, StringPool.BLANK);
+
+		return new DDMFormFieldValue() {
+			{
+				setInstanceId(StringUtil.randomString());
+				setName(ddmFormField.getName());
+				setValue(localizedValue);
+			}
+		};
 	}
 
 	private static boolean _isFieldSet(DDMFormField ddmFormField) {

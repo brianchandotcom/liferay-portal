@@ -40,9 +40,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -140,9 +139,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -270,9 +268,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -400,9 +397,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -452,9 +448,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -573,9 +568,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -649,9 +643,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -838,9 +831,8 @@ definition {
 			siteName = "Speedwell",
 			userScreenName = "buyer");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -914,9 +906,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -977,9 +968,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -1000,9 +990,8 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CommerceProducts.searchProduct(search = "U-Joint");
@@ -1057,9 +1046,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -1134,9 +1122,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");

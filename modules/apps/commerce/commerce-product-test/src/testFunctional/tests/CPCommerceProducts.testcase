@@ -33,9 +33,8 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceProducts#ProductPublishing";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Options");
@@ -69,9 +68,8 @@ definition {
 
 		CommerceProductImages.addProductImages(optionValuesList = "Black,Blue,White");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
@@ -82,9 +80,8 @@ definition {
 			specificationDescription = "SpecificationGroups",
 			specificationTitle = "SpecificationGroups");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
@@ -94,9 +91,8 @@ definition {
 			specificationGroupTitle = "SpecificationGroups",
 			specificationTitle = "SpecificationLabel");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
@@ -124,9 +120,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CommerceNavigator.searchEntry(entryName = "Shock Absorber");

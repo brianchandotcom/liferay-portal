@@ -24,9 +24,8 @@ definition {
 
 			CommerceConfiguration.commerceInitializersTearDown();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Commerce",
-				panel = "Control Panel",
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
 				portlet = "Products");
 
 			CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
@@ -49,9 +48,8 @@ definition {
 		property environment.acceptance = "quarantine";
 		property portal.acceptance = "quarantine";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
@@ -64,9 +62,8 @@ definition {
 			specificationDescription = "Specification-1 Description",
 			specificationTitle = "specification-1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Mangement",
 			portlet = "Products");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
@@ -87,18 +84,16 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CommerceSmoke#PublishSimpleProduct";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CPCommerceCatalog.newProductsEntry(
 			productName = "Simple T-Shirt",
 			productType = "Simple");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");

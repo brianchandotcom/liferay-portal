@@ -42,6 +42,13 @@ definition {
 		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 	}
 
+	macro gotoPortlet {
+		ApplicationsMenu.gotoPortlet(
+			category = "${category}",
+			panel = "Commerce",
+			portlet = "${portlet}");
+	}
+
 	macro gotoSpeedwellAccountDropdownItem {
 		Click(locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN");
 

@@ -112,9 +112,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
@@ -126,9 +125,8 @@ definition {
 			channelType = "Site",
 			commerceSiteType = "B2B");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Catalogs");
 
 		CommerceNavigator.gotoEntry(entryName = "Minium");
@@ -138,9 +136,8 @@ definition {
 			catalogLanguage = "English (United States)",
 			catalogName = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CommerceEntry.viewPaginationResults(results = "Showing 1 to 10 of 50 entries.");
@@ -165,9 +162,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -179,9 +175,8 @@ definition {
 			channelType = "Site",
 			commerceSiteType = "B2C");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Catalogs");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell");
@@ -191,9 +186,8 @@ definition {
 			catalogLanguage = "English (United States)",
 			catalogName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		CommerceEntry.viewPaginationResults(results = "Showing 1 to 10 of 50 entries.");
@@ -217,9 +211,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
@@ -325,9 +318,8 @@ definition {
 			productSKU = "MIN93015",
 			productUnitPrice = "50.00");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
 			portlet = "Orders");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Open");
@@ -343,9 +335,8 @@ definition {
 			productSKU = "MIN93015",
 			productUnitPrice = "50.00");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
 			portlet = "Orders");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Pending");
@@ -372,9 +363,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
@@ -474,9 +464,8 @@ definition {
 
 		Refresh();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
 			portlet = "Orders");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Open");
@@ -492,9 +481,8 @@ definition {
 			productSKU = "SPEED93015",
 			productUnitPrice = "50.00");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
 			portlet = "Orders");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Pending");

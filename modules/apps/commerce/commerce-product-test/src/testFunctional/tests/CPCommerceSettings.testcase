@@ -26,12 +26,9 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewAvailabilityEstimate";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
-			portlet = "Settings");
-
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Availability Estimates");
+		CommerceNavigator.gotoPortlet(
+			category = "Settings",
+			portlet = "Availability Estimates");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -46,12 +43,9 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewCountry";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
-			portlet = "Settings");
-
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Countries");
+		CommerceNavigator.gotoPortlet(
+			category = "Settings",
+			portlet = "Countries");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -78,12 +72,9 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewMeasurementUnits";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
-			portlet = "Settings");
-
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Measurement Units");
+		CommerceNavigator.gotoPortlet(
+			category = "Settings",
+			portlet = "Measurement Units");
 
 		Click(locator1 = "Button#PLUS");
 

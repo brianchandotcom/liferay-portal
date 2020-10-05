@@ -342,7 +342,7 @@ definition {
 	}
 
 	macro createNewAccountGroup {
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -354,7 +354,7 @@ definition {
 			entryName = "${accountsEntryName}",
 			user = "${user}");
 
-		ProductMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Account Groups");
@@ -379,12 +379,9 @@ definition {
 	}
 
 	macro createNewCurrenciesEntry {
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
-			portlet = "Settings");
-
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Currencies");
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Currencies");
 
 		Click(locator1 = "Button#PLUS");
 

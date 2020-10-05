@@ -27,9 +27,8 @@ definition {
 	test ViewStoreFrontSimpleProduct {
 		property portal.acceptance = "quarantine";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 			portlet = "Products");
 
 		echo("Creating new Option complete with Values...");

@@ -34,9 +34,8 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
@@ -79,9 +78,8 @@ definition {
 			productUnitPrice = "50",
 			shippingMethod = "Standard");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
 			portlet = "Orders");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Pending");
@@ -94,9 +92,8 @@ definition {
 			orderItemQuantity = "4",
 			orderItemSKU = "MIN93015");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
 			portlet = "Orders");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Pending");

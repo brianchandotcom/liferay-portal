@@ -65,6 +65,8 @@ export function ImagePropertiesPanel({item}) {
 		},
 	]);
 
+	const [imageFileSize, setImageFileSize] = useState('');
+
 	const editables = useSelector((state) => state.editables);
 
 	const editableElement = editables
@@ -101,13 +103,7 @@ export function ImagePropertiesPanel({item}) {
 				fileEntryId,
 				onNetworkStatus: dispatch,
 			}).then((availableImageConfigurations) =>
-				setImageConfigurations([
-					{
-						label: Liferay.Language.get('auto'),
-						value: 'auto',
-					},
-					...availableImageConfigurations,
-				])
+				setImageConfigurations(availableImageConfigurations)
 			);
 		},
 		[dispatch]
@@ -125,12 +121,16 @@ export function ImagePropertiesPanel({item}) {
 
 		const editableConfig = editableValue ? editableValue.config || {} : {};
 
-		setImageConfiguration(
-			editableConfig.imageConfiguration
-				? editableConfig.imageConfiguration[selectedViewportSize] ||
-						'auto'
-				: 'auto'
+		const selectedImageConfigurationValue = editableConfig.imageConfiguration
+			? editableConfig.imageConfiguration[selectedViewportSize] || 'auto'
+			: 'auto';
+
+		const selectedImageConfiguration = imageConfigurations.find(
+			(imageConfiguration) =>
+				imageConfiguration.value === selectedImageConfigurationValue
 		);
+
+		setImageConfiguration(selectedImageConfigurationValue);
 
 		setImageDescription((imageDescription) => {
 			if (imageDescription !== editableConfig.alt) {
@@ -139,9 +139,14 @@ export function ImagePropertiesPanel({item}) {
 
 			return imageDescription;
 		});
+
+		setImageFileSize(
+			selectedImageConfiguration ? selectedImageConfiguration.size : ''
+		);
 	}, [
 		editableValue,
 		getAvailableImageConfigurations,
+		imageConfigurations,
 		selectedViewportSize,
 		state.languageId,
 	]);
@@ -324,6 +329,15 @@ export function ImagePropertiesPanel({item}) {
 				<div className="mb-2 small">
 					<b>{Liferay.Language.get('width')}:</b>
 					<span className="ml-2">{imageSize.width}px</span>
+				</div>
+			)}
+
+			{imageUrl && imageFileSize && (
+				<div className="mb-2 small">
+					<b>{Liferay.Language.get('file-size')}:</b>
+					<span className="ml-2">
+						{Number(imageFileSize).toFixed(2)}kB
+					</span>
 				</div>
 			)}
 

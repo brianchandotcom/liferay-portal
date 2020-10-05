@@ -19,19 +19,22 @@ import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,11 +58,21 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		long fileEntryId = ParamUtil.getLong(resourceRequest, "fileEntryId");
 
 		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
+
+		JSONArray jsonArray = JSONUtil.put(
+			JSONUtil.put(
+				"label", LanguageUtil.get(httpServletRequest, "auto")
+			).put(
+				"size", fileEntry.getSize() / 1000
+			).put(
+				"value", "auto"
+			));
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -71,6 +84,8 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 			jsonArray.put(
 				JSONUtil.put(
 					"label", amImageEntry.getConfigurationUuid()
+				).put(
+					"size", amImageEntry.getSize() / 1000
 				).put(
 					"value", amImageEntry.getConfigurationUuid()
 				));
@@ -85,5 +100,8 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private Portal _portal;
 
 }

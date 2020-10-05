@@ -44,19 +44,6 @@ public class DisplayPageUsageDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public int getAssetDisplayPageEntriesCount() {
-		if (_assetDisplayPageEntriesCount != null) {
-			return _assetDisplayPageEntriesCount;
-		}
-
-		_assetDisplayPageEntriesCount =
-			AssetDisplayPageEntryServiceUtil.
-				getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
-					getLayoutPageTemplateEntryId());
-
-		return _assetDisplayPageEntriesCount;
-	}
-
 	public long getLayoutPageTemplateEntryId() {
 		if (Validator.isNotNull(_layoutPageTemplateEntryId)) {
 			return _layoutPageTemplateEntryId;
@@ -150,14 +137,18 @@ public class DisplayPageUsageDisplayContext {
 
 		searchContainer.setResults(assetDisplayPageEntries);
 
-		searchContainer.setTotal(getAssetDisplayPageEntriesCount());
+		int count =
+			AssetDisplayPageEntryServiceUtil.
+				getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+					getLayoutPageTemplateEntryId());
+
+		searchContainer.setTotal(count);
 
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
 	}
 
-	private Integer _assetDisplayPageEntriesCount;
 	private final HttpServletRequest _httpServletRequest;
 	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;

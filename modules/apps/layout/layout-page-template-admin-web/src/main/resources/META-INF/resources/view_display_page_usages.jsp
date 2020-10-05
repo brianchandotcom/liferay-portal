@@ -39,16 +39,6 @@ DisplayPageUsageManagementToolbarDisplayContext displayPageUsageManagementToolba
 			<clay:sheet
 				size="full"
 			>
-				<h2 class="sheet-title">
-					<clay:content-row
-						verticalAlign="center"
-					>
-						<clay:content-col>
-							<liferay-ui:message arguments="<%= displayPageUsageDisplayContext.getAssetDisplayPageEntriesCount() %>" key="all-x" />
-						</clay:content-col>
-					</clay:content-row>
-				</h2>
-
 				<clay:management-toolbar
 					displayContext="<%= displayPageUsageManagementToolbarDisplayContext %>"
 				/>

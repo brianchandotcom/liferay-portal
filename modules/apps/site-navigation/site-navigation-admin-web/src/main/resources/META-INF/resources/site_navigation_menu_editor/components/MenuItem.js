@@ -18,7 +18,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import {fetch, objectToFormData} from 'frontend-js-web';
+import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {useDrag} from 'react-dnd';
@@ -49,11 +49,20 @@ export const MenuItem = ({item}) => {
 				[`${portletNamespace}siteNavigationMenuItemId`]: siteNavigationMenuItemId,
 			}),
 			method: 'POST',
-		}).then(() => {
-			const newItems = deleteItem(items, siteNavigationMenuItemId);
+		})
+			.then(() => {
+				const newItems = deleteItem(items, siteNavigationMenuItemId);
 
-			setItems(newItems);
-		});
+				setItems(newItems);
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			});
 	};
 
 	const [, handlerRef] = useDrag({

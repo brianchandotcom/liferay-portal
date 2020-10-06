@@ -14,6 +14,11 @@
 
 package com.liferay.frontend.token.definition.internal;
 
+import com.liferay.frontend.token.definition.FrontendToken;
+import com.liferay.frontend.token.definition.FrontendTokenCategory;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenMapping;
+import com.liferay.frontend.token.definition.FrontendTokenSet;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -26,6 +31,8 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
@@ -39,7 +46,188 @@ import org.mockito.Mockito;
 public class FrontendTokenDefinitionImplTest {
 
 	@Test
-	public void testTranslateJSON() {
+	public void testDescendantsNavigation() throws JSONException {
+		JSONFactory jsonFactory = new JSONFactoryImpl();
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			new FrontendTokenDefinitionImpl(
+				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
+				jsonFactory, null, "theme_id");
+
+		Collection<FrontendTokenCategory> frontendTokenCategories =
+			frontendTokenDefinition.getFrontendTokenCategories();
+
+		Iterator<FrontendTokenCategory> frontendTokenCategoryIterator =
+			frontendTokenCategories.iterator();
+
+		FrontendTokenCategory frontendTokenCategory =
+			frontendTokenCategoryIterator.next();
+
+		Collection<FrontendTokenSet> frontendTokenSets =
+			frontendTokenCategory.getFrontendTokenSets();
+
+		Iterator<FrontendTokenSet> frontendTokenSetIterator =
+			frontendTokenSets.iterator();
+
+		FrontendTokenSet frontendTokenSet = frontendTokenSetIterator.next();
+
+		Collection<FrontendToken> frontendTokens =
+			frontendTokenSet.getFrontendTokens();
+
+		Iterator<FrontendToken> frontendTokenIterator =
+			frontendTokens.iterator();
+
+		FrontendToken frontendToken = frontendTokenIterator.next();
+
+		assertCollectionEquals(
+			frontendTokenDefinition.getFrontendTokenSets(),
+			frontendTokenCategory.getFrontendTokenSets());
+
+		assertCollectionEquals(
+			frontendTokenDefinition.getFrontendTokens(),
+			frontendTokenCategory.getFrontendTokens());
+
+		assertCollectionEquals(
+			frontendTokenDefinition.getFrontendTokens(),
+			frontendTokenSet.getFrontendTokens());
+
+		assertCollectionEquals(
+			frontendTokenDefinition.getFrontendTokenMappings(),
+			frontendTokenCategory.getFrontendTokenMappings());
+
+		assertCollectionEquals(
+			frontendTokenDefinition.getFrontendTokenMappings(),
+			frontendTokenSet.getFrontendTokenMappings());
+
+		assertCollectionEquals(
+			frontendTokenDefinition.getFrontendTokenMappings(),
+			frontendToken.getFrontendTokenMappings());
+	}
+
+	@Test
+	public void testParentGetters() throws JSONException {
+		JSONFactory jsonFactory = new JSONFactoryImpl();
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			new FrontendTokenDefinitionImpl(
+				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
+				jsonFactory, null, "theme_id");
+
+		Collection<FrontendTokenCategory> frontendTokenCategories =
+			frontendTokenDefinition.getFrontendTokenCategories();
+
+		Iterator<FrontendTokenCategory> frontendTokenCategoryIterator =
+			frontendTokenCategories.iterator();
+
+		FrontendTokenCategory frontendTokenCategory =
+			frontendTokenCategoryIterator.next();
+
+		Assert.assertSame(
+			frontendTokenDefinition,
+			frontendTokenCategory.getFrontendTokenDefinition());
+
+		Collection<FrontendTokenSet> frontendTokenSets =
+			frontendTokenCategory.getFrontendTokenSets();
+
+		Iterator<FrontendTokenSet> frontendTokenSetIterator =
+			frontendTokenSets.iterator();
+
+		FrontendTokenSet frontendTokenSet = frontendTokenSetIterator.next();
+
+		Assert.assertSame(
+			frontendTokenCategory, frontendTokenSet.getFrontendTokenCategory());
+
+		Collection<FrontendToken> frontendTokens =
+			frontendTokenSet.getFrontendTokens();
+
+		Iterator<FrontendToken> frontendTokenIterator =
+			frontendTokens.iterator();
+
+		FrontendToken frontendToken = frontendTokenIterator.next();
+
+		Assert.assertSame(
+			frontendTokenSet, frontendToken.getFrontendTokenSet());
+
+		Collection<FrontendTokenMapping> frontendTokenMappings =
+			frontendToken.getFrontendTokenMappings();
+
+		Iterator<FrontendTokenMapping> frontendTokenMappingIterator =
+			frontendTokenMappings.iterator();
+
+		FrontendTokenMapping frontendTokenMapping =
+			frontendTokenMappingIterator.next();
+
+		Assert.assertSame(
+			frontendToken, frontendTokenMapping.getFrontendToken());
+	}
+
+	@Test
+	public void testParsedModel() throws JSONException {
+		JSONFactory jsonFactory = new JSONFactoryImpl();
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			new FrontendTokenDefinitionImpl(
+				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
+				jsonFactory, null, "theme_id");
+
+		Collection<FrontendTokenCategory> frontendTokenCategories =
+			frontendTokenDefinition.getFrontendTokenCategories();
+
+		Assert.assertEquals(
+			frontendTokenCategories.toString(), 1,
+			frontendTokenCategories.size());
+
+		Iterator<FrontendTokenCategory> frontendTokenCategoryIterator =
+			frontendTokenCategories.iterator();
+
+		FrontendTokenCategory frontendTokenCategory =
+			frontendTokenCategoryIterator.next();
+
+		Collection<FrontendTokenSet> frontendTokenSets =
+			frontendTokenCategory.getFrontendTokenSets();
+
+		Assert.assertEquals(
+			frontendTokenSets.toString(), 1, frontendTokenSets.size());
+
+		Iterator<FrontendTokenSet> frontendTokenSetIterator =
+			frontendTokenSets.iterator();
+
+		FrontendTokenSet frontendTokenSet = frontendTokenSetIterator.next();
+
+		Collection<FrontendToken> frontendTokens =
+			frontendTokenSet.getFrontendTokens();
+
+		Assert.assertEquals(
+			frontendTokens.toString(), 1, frontendTokens.size());
+
+		Iterator<FrontendToken> frontendTokenIterator =
+			frontendTokens.iterator();
+
+		FrontendToken frontendToken = frontendTokenIterator.next();
+
+		Assert.assertEquals(FrontendToken.Type.STRING, frontendToken.getType());
+
+		Assert.assertEquals("#FFF", frontendToken.getDefaultValue());
+
+		Collection<FrontendTokenMapping> frontendTokenMappings =
+			frontendToken.getFrontendTokenMappings();
+
+		Assert.assertEquals(
+			frontendTokenMappings.toString(), 1, frontendTokenMappings.size());
+
+		Iterator<FrontendTokenMapping> frontendTokenMappingIterator =
+			frontendTokenMappings.iterator();
+
+		FrontendTokenMapping frontendTokenMapping =
+			frontendTokenMappingIterator.next();
+
+		Assert.assertEquals("cssVariable", frontendTokenMapping.getType());
+
+		Assert.assertEquals("white", frontendTokenMapping.getValue());
+	}
+
+	@Test
+	public void testTranslateJSON() throws JSONException {
 		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
 			ResourceBundleLoader.class);
 
@@ -52,15 +240,22 @@ public class FrontendTokenDefinitionImplTest {
 				pkg.getName() + ".dependencies.Language", LocaleUtil.ENGLISH)
 		);
 
+		JSONFactory jsonFactory = new JSONFactoryImpl();
+
 		FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
 			new FrontendTokenDefinitionImpl(
-				_FRONTEND_TOKEN_DEFINITION_JSON, new JSONFactoryImpl(),
-				resourceBundleLoader, "theme_id");
+				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
+				jsonFactory, resourceBundleLoader, "theme_id");
 
-		String json = frontendTokenDefinitionImpl.translateJSON(
-			LocaleUtil.ENGLISH);
+		Assert.assertEquals(
+			_TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON,
+			frontendTokenDefinitionImpl.getJSON(LocaleUtil.ENGLISH));
+	}
 
-		Assert.assertEquals(_TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON, json);
+	protected void assertCollectionEquals(
+		Collection<?> expected, Collection<?> actual) {
+
+		Assert.assertArrayEquals(expected.toArray(), actual.toArray());
 	}
 
 	private static final String _FRONTEND_TOKEN_DEFINITION_JSON;

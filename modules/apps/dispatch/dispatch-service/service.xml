@@ -94,6 +94,8 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DispatchLogStartDate</exception>
+		<exception>DispatchLogStatus</exception>
 		<exception>DispatchTriggerEndDate</exception>
 		<exception>DispatchTriggerName</exception>
 		<exception>DispatchTriggerScheduler</exception>

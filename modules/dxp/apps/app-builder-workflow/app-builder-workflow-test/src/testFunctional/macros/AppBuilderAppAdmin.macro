@@ -1,5 +1,10 @@
 definition {
 
+	macro clickOnCreateNewAppButton {
+
+		Button.click(button = "Create New App");
+	}
+
 	macro clickOnPlusButton {
 
 		Click(locator1 = "AppBuilderAppAdmin#PLUS_BUTTON");
@@ -20,7 +25,7 @@ definition {
 		}
 		else {
 
-			Button.click(button = "Create New App");
+			AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		}
 
 		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "${workflowAppName}");
@@ -96,7 +101,7 @@ definition {
 
 	macro validateObjectSearchBoxDisabled {
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 
 		AppBuilderAppAdmin.clickOnSelectObject();
 

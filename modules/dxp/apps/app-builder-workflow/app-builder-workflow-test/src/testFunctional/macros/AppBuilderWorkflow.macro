@@ -19,6 +19,16 @@ definition {
 			locator1 = "Button#ANY_DISABLED");
 	}
 
+	macro assertButtonNotPresent {
+
+		Button.viewNotPresent(button = "${buttonName}");
+	}
+
+	macro assertButtonPresent {
+
+		Button.viewPresent(button = "${buttonName}");
+	}
+
 	macro assertFieldDisabled {
 
 		AssertVisible(
@@ -63,6 +73,11 @@ definition {
 		Click(locator1 = "AppBuilderWorkflow#BACK_BUTTON");
 	}
 
+	macro clickOnAddNewActionButton {
+
+		Button.click(button = "Add New Action");
+	}
+
 	macro clickOnSelectFormView {
 
 		Click(locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON");
@@ -78,9 +93,27 @@ definition {
 		Click(locator1 = "AppBuilderWorkflow#SELECT_TABLE_VIEW_BUTTON");
 	}
 
-	macro selectDataAndViews {
+	macro clickStepConfigurationBackButton {
 
-		Click(locator1 = "AppBuilderWorkflow#DATA_AND_VIEWS_BUTTON");
+		Click(locator1 = "AppBuilderWorkflow#STEP_CONFIGURATION_BACK_BUTTON");
+	}
+
+	macro defineActionName {
+
+		Type(
+			key_action = "${action}",
+			locator1 = "AppBuilderWorkflow#ACTION_ITEM_NAME_INPUT",
+			value1 = "${actionName}");
+	}
+
+	macro selectActionsCard {
+
+		Click(locator1 = "AppBuilderWorkflow#ACTIONS_CARD");
+	}
+
+	macro selectDataAndViewsCard {
+
+		Click(locator1 = "AppBuilderWorkflow#DATA_AND_VIEWS_CARD");
 	}
 
 	macro selectFormView {
@@ -99,7 +132,9 @@ definition {
 
 	macro selectStartStepDataAndViews {
 
-		AppBuilderWorkflow.selectDataAndViews();
+		AppBuilderWorkflow.selectStep(step = "Start");
+
+		AppBuilderWorkflow.selectDataAndViewsCard();
 
 		AppBuilderWorkflow.clickOnSelectObject();
 		AppBuilderWorkflow.selectObject(objectName = "${objectName}");
@@ -114,13 +149,13 @@ definition {
 	macro selectStep {
 
 		Click(
-			key_stepNumber = "${stepNumber}",
+			key_step = "${step}",
 			locator1 = "AppBuilderWorkflow#STEP_CARD");
 	}
 
 	macro selectStepAssignee {
 
-		AppBuilderWorkflow.selectStep(stepNumber = "${stepNumber}");
+		AppBuilderWorkflow.selectStep(step = "${step}");
 
 		Click(locator1 = "AppBuilderWorkflow#SELECT_ASSIGNEE_FIELD");
 
@@ -131,9 +166,9 @@ definition {
 
 	macro selectStepSingleFormView {
 
-		AppBuilderWorkflow.selectStep(stepNumber = "${stepNumber}");
+		AppBuilderWorkflow.selectStep(step = "${step}");
 
-		AppBuilderWorkflow.selectDataAndViews();
+		AppBuilderWorkflow.selectDataAndViewsCard();
 
 		if (!(IsTextEqual.isPartialText(locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON_TEXT", value1 = "${formViewName}"))) {
 			AppBuilderWorkflow.clickOnSelectFormView();
@@ -162,6 +197,29 @@ definition {
 		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Submit");
 	}
 
+	macro validateActionNotPresent {
+
+		AssertElementNotPresent(
+			key_action = "${action}",
+			locator1 = "AppBuilderWorkflow#ACTION_ITEM");
+	}
+
+	macro validateActionsNamesInsideActionsCards {
+
+		AssertElementPresent(
+			key_action = "Primary Action",
+			key_actionName = "${primaryActionName}",
+			locator1 = "AppBuilderWorkflow#ACTION_NAME_INSIDE_ACTIONS_CARD");
+
+		if (isSet(secondaryActionName)) {
+
+			AssertElementPresent(
+				key_action = "Secondary Action",
+				key_actionName = "${secondaryActionName}",
+				locator1 = "AppBuilderWorkflow#ACTION_NAME_INSIDE_ACTIONS_CARD");
+		}
+	}
+
 	macro validateFormOrTableViewResultNotPresent {
 
 		AssertElementNotPresent(
@@ -179,6 +237,13 @@ definition {
 	macro waitForButtonNotPresent {
 
 		while (IsElementPresent(key_text = "${buttonName}", locator1 = "Button#ANY")) {
+			Pause(locator1 = "1000");
+		}
+	}
+
+	macro waitForButtonPresent {
+
+		while (IsElementNotPresent(key_text = "${buttonName}", locator1 = "Button#ANY")) {
 			Pause(locator1 = "1000");
 		}
 	}

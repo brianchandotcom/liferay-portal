@@ -15,13 +15,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STEP_CONFIGURATION_BACK_BUTTON</td>
+	<td>//div[contains(@class,'tab-title')]//button[contains(@class,'btn btn-sm')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_APP_NAME_FIELD</td>
 	<td>//input[contains(@placeholder,'Untitled App')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DATA_AND_VIEWS_BUTTON</td>
+	<td>DATA_AND_VIEWS_CARD</td>
 	<td>//button//span[contains(text(),'Data and Views')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_CARD</td>
+	<td>//button//span[contains(text(),'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTION_ITEM</td>
+	<td>//label[contains(text(),'${key_action}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTION_ITEM_NAME_INPUT</td>
+	<td>//label[contains(text(),'${key_action}')]/following-sibling::div[1]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTION_NAME_INSIDE_ACTIONS_CARD</td>
+	<td>//span[contains(text(),'${key_action}')]/parent::div[contains(text(),'${key_actionName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,7 +91,7 @@
 </tr>
 <tr>
 	<td>STEP_CARD</td>
-	<td>//span[contains(text(),'${key_stepNumber}')]/parent::span/following-sibling::div</td>
+	<td>//span[contains(text(),'${key_step}')]/parent::span/following-sibling::div</td>
 	<td></td>
 </tr>
 <tr>

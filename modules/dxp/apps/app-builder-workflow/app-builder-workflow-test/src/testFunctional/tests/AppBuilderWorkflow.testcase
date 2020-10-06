@@ -17,6 +17,11 @@ definition {
 		JSONGroup.addGroup(groupName = "App Builder Workflow Site Name");
 
 		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
 	}
 
 	tearDown {
@@ -38,11 +43,6 @@ definition {
 	@priority = "5"
 	test CreateBasicWorkflowApp {
 		property portal.acceptance = "true";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Objects");
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -97,11 +97,6 @@ definition {
 	@priority = "4"
 	test CreateBasicWorkflowAppWithDifferentDeployments {
 
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Objects");
-
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object 1",
 			isCreatingFormView = "true",
@@ -138,16 +133,16 @@ definition {
 			portlet = "Apps");
 
 		AppBuilderAppAdmin.goToWorkflowPoweredTab();
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		AppBuilderWorkflow.clickBackButton();
 		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		Button.click(button = "Cancel");
 		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
 
-		Button.click(button = "Create New App");
-		AppBuilderWorkflow.selectDataAndViews();
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+		AppBuilderWorkflow.selectDataAndViewsCard();
 		AppBuilderWorkflow.clickOnSelectObject();
 		AppBuilderAppAdmin.searchItem(itemName = "my custom object 1");
 		AppBuilderAppAdmin.validateObjectResultPresent(objectName = "my custom object 1");
@@ -185,11 +180,11 @@ definition {
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Deploy");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
 		Button.click(button = "Cancel");
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "Widget Workflow App");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Deploy");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
-		AppBuilderWorkflow.selectDataAndViews();
+		AppBuilderWorkflow.selectDataAndViewsCard();
 		AppBuilderWorkflow.clickOnSelectObject();
 		AppBuilderWorkflow.selectObject(objectName = "my custom object 1");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Deploy");
@@ -301,7 +296,7 @@ definition {
 			panel = "Applications",
 			portlet = "Apps");
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		AppBuilderAppAdmin.clickOnSelectObject();
 		AppBuilderAppAdmin.searchItem(itemName = "Not Existent Object");
 		AppBuilderAppAdmin.validateNoObjectResultMessage();
@@ -314,14 +309,14 @@ definition {
 		Button.click(button = "Cancel");
 		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		AppBuilderAppAdmin.clickOnSelectObject();
 		AppBuilderAppAdmin.searchItem(itemName = "my custom object 1");
 		AppBuilderAppAdmin.selectObject(objectName = "my custom object 1");
 		AppBuilderStandardApp.clickBackButton();
 		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		AppBuilderAppAdmin.clickOnSelectObject();
 		AppBuilderAppAdmin.searchItem(itemName = "my custom object 1");
 		AppBuilderAppAdmin.selectObject(objectName = "my custom object 1");
@@ -374,11 +369,6 @@ definition {
 	@priority = "5"
 	test FilterAndOrderStandardApps {
 		property portal.acceptance = "true";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Objects");
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -550,11 +540,6 @@ definition {
 		var formViewName = "My Form View";
 		var tableViewName = "My Table View";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Objects");
-
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
@@ -572,7 +557,7 @@ definition {
 
 		AppBuilderAppAdmin.goToWorkflowPoweredTab();
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 
 		AppBuilderWorkflow.selectStartStepDataAndViews(
 			formViewName = "${formViewName}",
@@ -583,18 +568,18 @@ definition {
 
 		AppBuilderWorkflow.selectStepAssignee(
 			assignee = "Administrator",
-			stepNumber = "1");
+			step = "1");
 
 		AppBuilderWorkflow.selectStepSingleFormView(
 			formViewMode = "Editable",
 			formViewName = "${formViewName}",
-			stepNumber = "1");
+			step = "1");
 
 		AppBuilderWorkflow.addNewStep();
 
 		AppBuilderWorkflow.selectStepAssignee(
 			assignee = "Administrator",
-			stepNumber = "2");
+			step = "2");
 
 		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
 		Button.click(button = "Deploy");
@@ -645,11 +630,6 @@ definition {
 	@priority = "5"
 	test ValidateListOfStandardApps {
 		property portal.acceptance = "true";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Objects");
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "My Custom Object",
@@ -735,6 +715,111 @@ definition {
 		Navigator.closeWindow();
 
 		AppBuilderAdmin.deleteApp(itemName = "My App");
+	}
+
+	@description = "Validate steps while running an App"
+	@priority = "4"
+	test ValidateStepsWhileRunningApp {
+
+		var formViewName = "My Form View";
+		var tableViewName = "My Table View";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "${formViewName}",
+			tableViewName = "${tableViewName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnPlusButton();
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectStep(step = "Start");
+		AppBuilderWorkflow.selectActionsCard();
+		AppBuilderWorkflow.assertButtonNotPresent(button = "Add New Action");
+		AppBuilderWorkflow.selectStep(step = "1");
+		AppBuilderWorkflow.selectActionsCard();
+		AppBuilderWorkflow.assertButtonNotPresent(button = "Add New Action");
+		AppBuilderWorkflow.selectStep(step = "End");
+		AppBuilderWorkflow.assertButtonNotPresent(button = "Actions");
+
+		AppBuilderWorkflow.selectStep(step = "1");
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectStartStepDataAndViews(
+			formViewName = "${formViewName}",
+			objectName = "my custom object",
+			tableViewName = "${tableViewName}");
+		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
+
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "1");
+
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "2");
+
+		AppBuilderWorkflow.selectActionsCard();
+		AppBuilderWorkflow.clickOnAddNewActionButton();
+		Button.click(button = "Remove");
+		AppBuilderWorkflow.validateActionNotPresent(action = "Secondary Action");
+
+		AppBuilderWorkflow.clickOnAddNewActionButton();
+
+		AppBuilderWorkflow.defineActionName(
+			action = "Primary Action",
+			actionName = "Go Next");
+
+		AppBuilderWorkflow.defineActionName(
+			action = "Secondary Action",
+			actionName = "Go Back");
+
+		AppBuilderWorkflow.clickStepConfigurationBackButton();
+
+		AppBuilderWorkflow.validateActionsNamesInsideActionsCards(
+			primaryActionName = "Go Next",
+			secondaryActionName = "Go Back");
+
+		Button.click(button = "Deploy");
+		App.toggleDeploy(deployOption = "Product Menu");
+		Button.click(button = "Done");
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content");
+
+		AppBuilderWorkflow.submit();
+		Refresh();
+
+		AppBuilderWorkflow.assignEntry(
+			assignee = "Test Test",
+			itemName = "Content");
+
+		AppBuilderAdmin.editItem(itemName = "Content");
+		AppBuilderWorkflow.submit();
+		Refresh();
+
+		AppBuilderWorkflow.assignEntry(
+			assignee = "Test Test",
+			itemName = "Content");
+
+		AppBuilderAdmin.editItem(itemName = "Content");
+		AppBuilderWorkflow.waitForButtonPresent(buttonName = "Go Next");
+		AppBuilderWorkflow.assertButtonPresent(buttonName = "Go Next");
+		AppBuilderWorkflow.assertButtonPresent(buttonName = "Go Back");
 	}
 
 }

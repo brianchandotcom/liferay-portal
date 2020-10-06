@@ -592,6 +592,7 @@ public interface BaseProjectTemplatesTestCase {
 			Validator.isNotNull(projectTemplateVersion));
 
 		completeArgs.add("-DarchetypeVersion=" + projectTemplateVersion);
+
 		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
 		completeArgs.add("-DgroupId=" + groupId);

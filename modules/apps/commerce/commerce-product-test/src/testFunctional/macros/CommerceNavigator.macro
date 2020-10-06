@@ -71,6 +71,12 @@ definition {
 			locator1 = "CommerceAccelerators#SPEEDWELL_TOPBAR_MENU_ITEM");
 	}
 
+	macro gotoTableListEntry {
+		Click(
+			key_entryName = "${entryName}",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+	}
+
 	macro searchEntry {
 		AssertElementPresent(locator1 = "CommerceNavigation#SEARCH_FIELD");
 

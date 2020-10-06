@@ -215,7 +215,7 @@ definition {
 			category = "Store Management",
 			portlet = "Channels");
 
-		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
 		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
 

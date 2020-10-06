@@ -197,7 +197,7 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		CommerceEntry.viewPaginationResults(results = "Showing 1 to 10 of 50 entries.");
+		CommerceEntry.viewPaginationResults(results = "Showing 1 to 10 of 50");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Options");
 

@@ -58,52 +58,58 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 				return SKIP_BODY;
 			}
 
-			_length = cpSubscriptionInfo.getSubscriptionLength();
+			if (cpInstance.isSubscriptionEnabled()) {
+				_length = cpSubscriptionInfo.getSubscriptionLength();
 
-			_deliveryLength =
-				cpSubscriptionInfo.getDeliverySubscriptionLength();
+				_duration =
+					_length * cpSubscriptionInfo.getMaxSubscriptionCycles();
 
-			_duration = _length * cpSubscriptionInfo.getMaxSubscriptionCycles();
+				String subscriptionType =
+					cpSubscriptionInfo.getSubscriptionType();
 
-			_deliveryDuration =
-				_deliveryLength *
-					cpSubscriptionInfo.getDeliveryMaxSubscriptionCycles();
+				String period = StringPool.BLANK;
 
-			String subscriptionType = cpSubscriptionInfo.getSubscriptionType();
+				CPSubscriptionType cpSubscriptionType =
+					cpSubscriptionTypeRegistry.getCPSubscriptionType(
+						subscriptionType);
 
-			String deliverySubscriptionType =
-				cpSubscriptionInfo.getDeliverySubscriptionType();
+				if (cpSubscriptionType != null) {
+					period = cpSubscriptionType.getLabel(LocaleUtil.US);
+				}
 
-			String period = StringPool.BLANK;
+				_subscriptionPeriodKey = _getPeriodKey(period, _length != 1);
 
-			String deliveryPeriod = StringPool.BLANK;
-
-			CPSubscriptionType cpSubscriptionType =
-				cpSubscriptionTypeRegistry.getCPSubscriptionType(
-					subscriptionType);
-
-			CPSubscriptionType cpDeliverySubscriptionType =
-				cpSubscriptionTypeRegistry.getCPSubscriptionType(
-					deliverySubscriptionType);
-
-			if (cpSubscriptionType != null) {
-				period = cpSubscriptionType.getLabel(LocaleUtil.US);
+				_durationPeriodKey = _getPeriodKey(period, _duration != 1);
 			}
 
-			if (cpDeliverySubscriptionType != null) {
-				deliveryPeriod = cpDeliverySubscriptionType.getLabel(
-					LocaleUtil.US);
+			if (cpInstance.isDeliverySubscriptionEnabled()) {
+				_deliveryLength =
+					cpSubscriptionInfo.getDeliverySubscriptionLength();
+
+				_deliveryDuration =
+					_deliveryLength *
+						cpSubscriptionInfo.getDeliveryMaxSubscriptionCycles();
+
+				String deliverySubscriptionType =
+					cpSubscriptionInfo.getDeliverySubscriptionType();
+
+				String deliveryPeriod = StringPool.BLANK;
+
+				CPSubscriptionType cpDeliverySubscriptionType =
+					cpSubscriptionTypeRegistry.getCPSubscriptionType(
+						deliverySubscriptionType);
+
+				if (cpDeliverySubscriptionType != null) {
+					deliveryPeriod = cpDeliverySubscriptionType.getLabel(
+						LocaleUtil.US);
+				}
+
+				_deliverySubscriptionPeriodKey = _getPeriodKey(
+					deliveryPeriod, _deliveryLength != 1);
+
+				_deliveryDurationPeriodKey = _getPeriodKey(
+					deliveryPeriod, _deliveryDuration != 1);
 			}
-
-			_subscriptionPeriodKey = _getPeriodKey(period, _length != 1);
-
-			_deliverySubscriptionPeriodKey = _getPeriodKey(
-				deliveryPeriod, _deliveryLength != 1);
-
-			_durationPeriodKey = _getPeriodKey(period, _duration != 1);
-
-			_deliveryDurationPeriodKey = _getPeriodKey(
-				deliveryPeriod, _deliveryDuration != 1);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

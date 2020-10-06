@@ -45,13 +45,16 @@ import com.liferay.commerce.internal.order.comparator.CommerceOrderModifiedDateC
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceOrderPriceCalculationFactory;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.search.facet.NegatableMultiValueFacet;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
+import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -102,6 +105,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.function.BiConsumer;
@@ -1626,6 +1630,53 @@ public class CommerceOrderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public CommerceOrder updateShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String shippingOptionName, CommerceContext commerceContext,
+			Locale locale)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodLocalService.getCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		commerceOrder.setCommerceShippingMethodId(
+			commerceShippingMethod.getCommerceShippingMethodId());
+
+		commerceOrder.setShippingOptionName(shippingOptionName);
+
+		CommerceShippingEngine commerceShippingEngine =
+			_commerceShippingEngineRegistry.getCommerceShippingEngine(
+				commerceShippingMethod.getEngineKey());
+
+		List<CommerceShippingOption> commerceShippingOptions =
+			commerceShippingEngine.getCommerceShippingOptions(
+				commerceContext, commerceOrder, locale);
+
+		for (CommerceShippingOption commerceShippingOption :
+				commerceShippingOptions) {
+
+			if (Validator.isNotNull(shippingOptionName) &&
+				shippingOptionName.equals(commerceShippingOption.getName())) {
+
+				commerceOrder.setShippingAmount(
+					commerceShippingOption.getAmount());
+
+				break;
+			}
+		}
+
+		commerceOrder = commerceOrderPersistence.update(commerceOrder);
+
+		return commerceOrderLocalService.recalculatePrice(
+			commerceOrder.getCommerceOrderId(), commerceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceOrder updateStatus(
 			long userId, long commerceOrderId, int status,
 			ServiceContext serviceContext,
@@ -2339,6 +2390,9 @@ public class CommerceOrderLocalServiceImpl
 	@ServiceReference(type = CommerceOrderPriceCalculationFactory.class)
 	private CommerceOrderPriceCalculationFactory
 		_commerceOrderPriceCalculationFactory;
+
+	@ServiceReference(type = CommerceShippingEngineRegistry.class)
+	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
 
 	@ServiceReference(type = CommerceShippingHelper.class)
 	private CommerceShippingHelper _commerceShippingHelper;

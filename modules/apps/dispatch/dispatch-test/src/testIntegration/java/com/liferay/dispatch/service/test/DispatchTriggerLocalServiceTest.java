@@ -67,14 +67,12 @@ public class DispatchTriggerLocalServiceTest {
 
 		User user = UserTestUtil.addUser(company);
 
-		_addDispatchTrigger(
-			DispatchTriggerValues.randomDispatchTriggerValues(user, 1));
+		_addDispatchTrigger(DispatchTriggerValues.randomInstance(user, 1));
 
 		Class<?> exceptionClass = Exception.class;
 
 		try {
-			_addDispatchTrigger(
-				DispatchTriggerValues.randomDispatchTriggerValues(user, 1));
+			_addDispatchTrigger(DispatchTriggerValues.randomInstance(user, 1));
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -85,8 +83,7 @@ public class DispatchTriggerLocalServiceTest {
 			DuplicateDispatchTriggerException.class, exceptionClass);
 
 		try {
-			_addDispatchTrigger(
-				DispatchTriggerValues.randomDispatchTriggerValues(user, -1));
+			_addDispatchTrigger(DispatchTriggerValues.randomInstance(user, -1));
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -114,7 +111,7 @@ public class DispatchTriggerLocalServiceTest {
 
 			while (dispatchTriggersCount-- > 0) {
 				_addDispatchTrigger(
-					DispatchTriggerValues.randomDispatchTriggerValues(
+					DispatchTriggerValues.randomInstance(
 						user, dispatchTriggersCount));
 			}
 		}
@@ -147,29 +144,28 @@ public class DispatchTriggerLocalServiceTest {
 
 		User user = UserTestUtil.addUser(company);
 
-		DispatchTriggerValues dispatchTriggerValues =
-			DispatchTriggerValues.randomDispatchTriggerValues(user, 1);
+		DispatchTrigger expectedDispatchTrigger =
+			DispatchTriggerValues.randomInstance(user, 1);
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
-			dispatchTriggerValues);
+			expectedDispatchTrigger);
 
-		_basicAssertEquals(dispatchTriggerValues, dispatchTrigger);
+		_basicAssertEquals(expectedDispatchTrigger, dispatchTrigger);
 
-		dispatchTriggerValues =
-			DispatchTriggerValues.randomDispatchTriggerValues(
-				dispatchTriggerValues, 1);
+		expectedDispatchTrigger = DispatchTriggerValues.randomInstance(
+			expectedDispatchTrigger, 1);
 
 		try {
 			dispatchTrigger =
 				_dispatchTriggerLocalService.updateDispatchTrigger(
 					dispatchTrigger.getDispatchTriggerId(),
-					dispatchTriggerValues.isActive(),
-					dispatchTriggerValues.getCronExpression(), 5, 5, 2024, 11,
+					expectedDispatchTrigger.isActive(),
+					expectedDispatchTrigger.getCronExpression(), 5, 5, 2024, 11,
 					11, false, 4, 4, 2024, 12, 0);
 
-			_basicAssertEquals(dispatchTriggerValues, dispatchTrigger);
+			_basicAssertEquals(expectedDispatchTrigger, dispatchTrigger);
 
-			_advancedAssertEquals(dispatchTriggerValues, dispatchTrigger);
+			_advancedAssertEquals(expectedDispatchTrigger, dispatchTrigger);
 		}
 		catch (Exception exception) {
 			if (!(exception instanceof DispatchTriggerSchedulerException)) {
@@ -196,9 +192,9 @@ public class DispatchTriggerLocalServiceTest {
 		User user = UserTestUtil.addUser(company);
 
 		DispatchTrigger dispatchTrigger1 = _addDispatchTrigger(
-			DispatchTriggerValues.randomDispatchTriggerValues(user, 1));
+			DispatchTriggerValues.randomInstance(user, 1));
 		DispatchTrigger dispatchTrigger2 = _addDispatchTrigger(
-			DispatchTriggerValues.randomDispatchTriggerValues(user, 2));
+			DispatchTriggerValues.randomInstance(user, 2));
 
 		Class<?> exceptionClass = Exception.class;
 
@@ -230,56 +226,55 @@ public class DispatchTriggerLocalServiceTest {
 			DispatchTriggerNameException.class, exceptionClass);
 	}
 
-	private DispatchTrigger _addDispatchTrigger(
-			DispatchTriggerValues dispatchTriggerValues)
+	private DispatchTrigger _addDispatchTrigger(DispatchTrigger dispatchTrigger)
 		throws Exception {
 
 		return _dispatchTriggerLocalService.addDispatchTrigger(
-			dispatchTriggerValues.getUserId(), dispatchTriggerValues.getName(),
-			dispatchTriggerValues.isSystem(),
-			dispatchTriggerValues.getTaskSettingsUnicodeProperties(),
-			dispatchTriggerValues.getTaskType());
+			dispatchTrigger.getUserId(), dispatchTrigger.getName(),
+			dispatchTrigger.isSystem(),
+			dispatchTrigger.getTaskSettingsUnicodeProperties(),
+			dispatchTrigger.getTaskType());
 	}
 
 	private void _advancedAssertEquals(
-		DispatchTriggerValues expectedDispatchTriggerValues,
+		DispatchTrigger expectedDispatchTrigger,
 		DispatchTrigger actualDispatchTrigger) {
 
 		Assert.assertEquals(
-			expectedDispatchTriggerValues.isActive(),
+			expectedDispatchTrigger.isActive(),
 			actualDispatchTrigger.isActive());
 
 		Assert.assertEquals(
-			expectedDispatchTriggerValues.getCronExpression(),
+			expectedDispatchTrigger.getCronExpression(),
 			actualDispatchTrigger.getCronExpression());
 
 		Assert.assertNotNull(actualDispatchTrigger.getStartDate());
 	}
 
 	private void _basicAssertEquals(
-		DispatchTriggerValues expectedDispatchTriggerValues,
+		DispatchTrigger expectedDispatchTrigger,
 		DispatchTrigger actualDispatchTrigger) {
 
 		Assert.assertNotNull(actualDispatchTrigger);
 		Assert.assertEquals(
-			expectedDispatchTriggerValues.getUserId(),
+			expectedDispatchTrigger.getUserId(),
 			actualDispatchTrigger.getUserId());
 		Assert.assertEquals(
-			expectedDispatchTriggerValues.getName(),
-			actualDispatchTrigger.getName());
+			expectedDispatchTrigger.getName(), actualDispatchTrigger.getName());
 		Assert.assertEquals(
-			expectedDispatchTriggerValues.isSystem(),
+			expectedDispatchTrigger.isSystem(),
 			actualDispatchTrigger.isSystem());
 		Assert.assertEquals(
-			expectedDispatchTriggerValues.getTaskType(),
+			expectedDispatchTrigger.getTaskType(),
 			actualDispatchTrigger.getTaskType());
 
 		UnicodeProperties actualTaskSettingsUnicodeProperties =
 			actualDispatchTrigger.getTaskSettingsUnicodeProperties();
 
-		if (expectedDispatchTriggerValues.getTaskSettingsUnicodeProperties() ==
-				null) {
+		UnicodeProperties expectedTaskSettingsUnicodeProperties =
+			expectedDispatchTrigger.getTaskSettingsUnicodeProperties();
 
+		if (expectedTaskSettingsUnicodeProperties == null) {
 			Assert.assertNull(actualTaskSettingsUnicodeProperties);
 
 			return;
@@ -288,15 +283,12 @@ public class DispatchTriggerLocalServiceTest {
 		Assert.assertNotNull(actualTaskSettingsUnicodeProperties);
 
 		Assert.assertEquals(
-			expectedDispatchTriggerValues.
-				getTaskSettingsUnicodePropertiesSize(),
+			expectedTaskSettingsUnicodeProperties.size(),
 			actualTaskSettingsUnicodeProperties.size());
 
 		actualTaskSettingsUnicodeProperties.forEach(
 			(key, value) -> Assert.assertEquals(
-				String.format("Dispatch trigger job property for key %s", key),
-				expectedDispatchTriggerValues.getTaskSettingsProperty(key),
-				value));
+				expectedTaskSettingsUnicodeProperties.getProperty(key), value));
 	}
 
 	@Inject

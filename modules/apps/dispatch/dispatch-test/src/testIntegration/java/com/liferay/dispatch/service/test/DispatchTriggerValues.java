@@ -14,10 +14,19 @@
 
 package com.liferay.dispatch.service.test;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.Map;
 
 /**
  * Dispatch trigger values holder
@@ -27,40 +36,34 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 public class DispatchTriggerValues {
 
 	/**
-	 * Returns DispatchTriggerValues object with <code>active</code> and
+	 * Returns DispatchTrigger instance with <code>active</code> and
 	 * <code>cronExpression</code> updated with new random values.
 	 *
-	 * If <code>nameSalt</code> less then <code>0</code> {@link #getName()}
+	 * If <code>nameSalt</code> less then <code>0</code> {@link
+	 * DispatchTrigger#getName()}
 	 * method
 	 * returns <code>null</code>.
 	 *
-	 * @param  dispatchTriggerValues the original dispatch trigger values
+	 * @param  dispatchTrigger the original dispatch trigger
 	 * @param  nameSalt the dispatch trigger name suffix
 	 * @return updated random DispatchTriggerValues
 	 */
-	public static DispatchTriggerValues randomDispatchTriggerValues(
-		DispatchTriggerValues dispatchTriggerValues, int nameSalt) {
+	public static DispatchTrigger randomInstance(
+		DispatchTrigger dispatchTrigger, int nameSalt) {
 
-		String name = null;
-
-		if (nameSalt > -1) {
-			name = String.format(
-				_NAME_PATTERN, dispatchTriggerValues.getUserId(), nameSalt);
-		}
-
-		return new DispatchTriggerValues(
-			RandomTestUtil.randomBoolean(),
-			dispatchTriggerValues.getCompanyId(), _randomCronExpression(),
-			dispatchTriggerValues.getTaskType(),
-			dispatchTriggerValues.getTaskSettingsUnicodeProperties(), name,
-			dispatchTriggerValues.isSystem(),
-			dispatchTriggerValues.getUserId());
+		return _randomInstance(
+			RandomTestUtil.randomBoolean(), dispatchTrigger.getCompanyId(),
+			_randomCronExpression(), dispatchTrigger.getTaskType(),
+			dispatchTrigger.getTaskSettingsUnicodeProperties(),
+			_randomName(dispatchTrigger.getUserId(), nameSalt),
+			dispatchTrigger.isSystem(), dispatchTrigger.getUserId());
 	}
 
 	/**
-	 * Returns DispatchTriggerValues object initialized with random values.
+	 * Returns DispatchTrigger object initialized with random values.
 	 *
-	 * If <code>nameSalt</code> less then <code>0</code> {@link #getName()}
+	 * If <code>nameSalt</code> less then <code>0</code> {@link
+	 * DispatchTrigger#getName()}
 	 * method
 	 * returns <code>null</code>.
 	 *
@@ -68,69 +71,14 @@ public class DispatchTriggerValues {
 	 * @param  nameSalt the dispatch trigger name suffix
 	 * @return random dispatch trigger
 	 */
-	public static DispatchTriggerValues randomDispatchTriggerValues(
-		User user, int nameSalt) {
-
-		String name = null;
-
-		if (nameSalt > -1) {
-			name = String.format(_NAME_PATTERN, user.getUserId(), nameSalt);
-		}
-
-		return new DispatchTriggerValues(
+	public static DispatchTrigger randomInstance(User user, int nameSalt) {
+		return _randomInstance(
 			RandomTestUtil.randomBoolean(), user.getCompanyId(),
 			_randomCronExpression(), RandomTestUtil.randomString(20),
 			RandomTestUtil.randomUnicodeProperties(
 				RandomTestUtil.randomInt(10, 30), 32, 64),
-			name, RandomTestUtil.randomBoolean(), user.getUserId());
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public String getCronExpression() {
-		return _cronExpression;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public String getTaskSettingsProperty(String key) {
-		if (_taskSettingsUnicodeProperties == null) {
-			return StringPool.BLANK;
-		}
-
-		return _taskSettingsUnicodeProperties.getProperty(key);
-	}
-
-	public UnicodeProperties getTaskSettingsUnicodeProperties() {
-		return _taskSettingsUnicodeProperties;
-	}
-
-	public int getTaskSettingsUnicodePropertiesSize() {
-		if (_taskSettingsUnicodeProperties == null) {
-			return 0;
-		}
-
-		return _taskSettingsUnicodeProperties.size();
-	}
-
-	public String getTaskType() {
-		return _taskType;
-	}
-
-	public long getUserId() {
-		return _userId;
-	}
-
-	public boolean isActive() {
-		return _active;
-	}
-
-	public boolean isSystem() {
-		return _system;
+			_randomName(user.getUserId(), nameSalt),
+			RandomTestUtil.randomBoolean(), user.getUserId());
 	}
 
 	private static String _randomCronExpression() {
@@ -138,30 +86,350 @@ public class DispatchTriggerValues {
 			"0 0 0 ? %d/2 * 2077", RandomTestUtil.randomInt(1, 12));
 	}
 
-	private DispatchTriggerValues(
+	private static DispatchTrigger _randomInstance(
 		boolean active, long companyId, String cronExpression, String taskType,
 		UnicodeProperties unicodeProperties, String name, boolean system,
 		long userId) {
 
-		_active = active;
-		_companyId = companyId;
-		_cronExpression = cronExpression;
-		_taskType = taskType;
-		_taskSettingsUnicodeProperties = unicodeProperties;
-		_name = name;
-		_system = system;
-		_userId = userId;
+		return new DispatchTrigger() {
+
+			@Override
+			public Object clone() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public int compareTo(DispatchTrigger o) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean getActive() {
+				return _active;
+			}
+
+			@Override
+			public long getCompanyId() {
+				return _companyId;
+			}
+
+			@Override
+			public Date getCreateDate() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public String getCronExpression() {
+				return _cronExpression;
+			}
+
+			@Override
+			public long getDispatchTriggerId() {
+				return 0;
+			}
+
+			@Override
+			public Date getEndDate() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public ExpandoBridge getExpandoBridge() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public Map<String, Object> getModelAttributes() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public Class<?> getModelClass() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public String getModelClassName() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public Date getModifiedDate() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public long getMvccVersion() {
+				return 0;
+			}
+
+			@Override
+			public String getName() {
+				return _name;
+			}
+
+			@Override
+			public long getPrimaryKey() {
+				return 0;
+			}
+
+			@Override
+			public Serializable getPrimaryKeyObj() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public Date getStartDate() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean getSystem() {
+				return _system;
+			}
+
+			@Override
+			public String getTaskSettings() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public UnicodeProperties getTaskSettingsUnicodeProperties() {
+				return _taskSettingsUnicodeProperties;
+			}
+
+			@Override
+			public String getTaskType() {
+				return _taskType;
+			}
+
+			@Override
+			public long getUserId() {
+				return _userId;
+			}
+
+			@Override
+			public String getUserName() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public String getUserUuid() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isActive() {
+				return _active;
+			}
+
+			@Override
+			public boolean isCachedModel() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isEntityCacheEnabled() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isEscapedModel() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isFinderCacheEnabled() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isNew() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isSystem() {
+				return _system;
+			}
+
+			@Override
+			public void persist() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void resetOriginalValues() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setActive(boolean active) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setCachedModel(boolean cachedModel) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setCompanyId(long companyId) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setCreateDate(Date createDate) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setCronExpression(String cronExpression) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setDispatchTriggerId(long dispatchTriggerId) {
+			}
+
+			@Override
+			public void setEndDate(Date endDate) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setExpandoBridgeAttributes(
+				ExpandoBridge expandoBridge) {
+
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setExpandoBridgeAttributes(
+				ServiceContext serviceContext) {
+
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setModelAttributes(Map<String, Object> attributes) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setModifiedDate(Date modifiedDate) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setMvccVersion(long mvccVersion) {
+			}
+
+			@Override
+			public void setName(String name) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setNew(boolean n) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setPrimaryKey(long primaryKey) {
+			}
+
+			@Override
+			public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setStartDate(Date startDate) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setSystem(boolean system) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setTaskSettings(String taskSettings) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setTaskSettingsUnicodeProperties(
+				UnicodeProperties taskSettingsUnicodeProperties) {
+			}
+
+			@Override
+			public void setTaskType(String taskType) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setUserId(long userId) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setUserName(String userName) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setUserUuid(String userUuid) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public CacheModel<DispatchTrigger> toCacheModel() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public DispatchTrigger toEscapedModel() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public DispatchTrigger toUnescapedModel() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public String toXmlString() {
+				throw new UnsupportedOperationException();
+			}
+
+			private final boolean _active = active;
+			private final long _companyId = companyId;
+			private final String _cronExpression = cronExpression;
+			private final String _name = name;
+			private final boolean _system = system;
+			private final UnicodeProperties _taskSettingsUnicodeProperties =
+				unicodeProperties;
+			private final String _taskType = taskType;
+			private final long _userId = userId;
+
+		};
+	}
+
+	private static String _randomName(long userId, int nameSalt) {
+		if (nameSalt < 0) {
+			return null;
+		}
+
+		return String.format(_NAME_PATTERN, userId, nameSalt);
 	}
 
 	private static final String _NAME_PATTERN = "TEST-TRIGGER-%06d-%06d";
-
-	private final boolean _active;
-	private final long _companyId;
-	private final String _cronExpression;
-	private final String _name;
-	private final boolean _system;
-	private final UnicodeProperties _taskSettingsUnicodeProperties;
-	private final String _taskType;
-	private final long _userId;
 
 }

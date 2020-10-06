@@ -265,13 +265,23 @@ definition {
 	}
 
 	macro addNewPriceListsEntry {
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Pause(locator1 = "3000");
+		
 		Type(
-			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = "${entryName}");
+			locator1 = "TextInput#NAME",
+			value1 = "${priceListName}");
 
 		Select(
-			locator1 = "CommerceEntry#CURRENCY_SELECT",
-			value1 = "${currencyCode}");
+			key_fieldLabel = "Catalog",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${priceListCatalog}");
+
+		Select(
+			key_fieldLabel = "Currency",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${priceListCurrency}");
 	}
 
 	macro addNewRegionsEntry {

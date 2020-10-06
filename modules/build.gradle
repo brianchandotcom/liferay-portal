@@ -270,6 +270,7 @@ gradle.beforeProject {
 		if (project.path.startsWith(":sdk:project-templates")) {
 			if (configurations.findByName("portalTest") != null) {
 				configurations.portalTest.exclude group: "com.liferay.portal", module: "com.liferay.portal.test"
+				configurations.portalTest.exclude group: "com.liferay.portal", module: "com.liferay.portal.test.integration"
 			}
 
 			if (configurations.findByName("portalTestSnapshot") != null) {

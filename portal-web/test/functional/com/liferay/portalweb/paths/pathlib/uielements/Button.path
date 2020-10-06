@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANGLE_DOWN</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-down')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY</td>
 	<td>//*[contains(@class,'btn')][normalize-space(text())='${key_text}']</td>
 	<td></td>

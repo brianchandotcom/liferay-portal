@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_ITEM</td>
+	<td>//div[contains(@class,'dropdown-menu show') and contains(.,'${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_SEARCH_CONTAINER</td>
 	<td>//div[contains (@class,'empty-result-message-header')]</td>
 	<td></td>

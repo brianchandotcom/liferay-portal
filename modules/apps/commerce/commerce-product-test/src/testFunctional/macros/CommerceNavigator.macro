@@ -42,6 +42,16 @@ definition {
 		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 	}
 
+	macro gotoOrderEntryViaAdmin {
+		ClickNoError(
+			key_value = "${status}",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		Click(
+			key_menuItem = "View",
+			locator1 = "CommerceNavigation#DROPDOWN_ITEM");
+	}
+
 	macro gotoPortlet {
 		ApplicationsMenu.gotoPortlet(
 			category = "${category}",

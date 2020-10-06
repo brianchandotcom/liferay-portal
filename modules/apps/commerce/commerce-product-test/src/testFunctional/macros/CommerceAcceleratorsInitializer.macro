@@ -66,7 +66,7 @@ definition {
 	}
 
 	macro createNewOrderFromAccountSelectorDropdown {
-		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+		Click(locator1 = "Button#ANGLE_DOWN");
 
 		Click(
 			key_button = "Create New Order",
@@ -85,7 +85,7 @@ definition {
 
 	macro inviteNewMemberWithRoleToAccount {
 		Click(
-			key_text = "Invite User",
+			key_text = "Invite user",
 			locator1 = "Button#ANY");
 
 		Type(

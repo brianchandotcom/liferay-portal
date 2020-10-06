@@ -20,32 +20,32 @@
 </tr>
 <tr>
     <td>ORDER_DETAILS_PRODUCT_DISCOUNT</td>
-    <td>//tbody//td[8]</td>
+    <td>//table[contains(@class,'table')]//td[contains(.,'${key_productDiscount}')]</td>
     <td></td>
 </tr>
 <tr>
     <td>ORDER_DETAILS_PRODUCT_NAME</td>
-    <td>//tbody//td[3]</td>
+    <td>//table[contains(@class,'table')]//td[contains(.,'${key_productName}')]</td>
     <td></td>
 </tr>
 <tr>
-    <td>ORDER_DETAILS_PRODUCT_PRICE</td>
-    <td>//tbody//td[10]</td>
+    <td>ORDER_DETAILS_TOTAL_PRICE</td>
+    <td>//table[contains(@class,'table')]//td[contains(.,'${key_productTotalPrice}')]</td>
     <td></td>
 </tr>
 <tr>
     <td>ORDER_DETAILS_PRODUCT_QUANTITY</td>
-    <td>//tbody//td[9]</td>
+    <td>//table[contains(@class,'table')]//td[contains(.,'${key_productQuantity}')]</td>
     <td></td>
 </tr>
 <tr>
     <td>ORDER_DETAILS_PRODUCT_SKU</td>
-    <td>//div[@class='table-list-title']/button</td>
+    <td>//table[contains(@class,'table')]//td[2]//a[contains(.,'${key_productSKU}')]</td>
     <td></td>
 </tr>
 <tr>
-    <td>ORDER_DETAILS_PRODUCT_UNIT_PRICE</td>
-    <td>//tbody//td[7]</td>
+    <td>ORDER_DETAILS_PRODUCT_LIST_PRICE</td>
+    <td>//table[contains(@class,'table')]//td[contains(.,'${key_productListPrice}')]</td>
     <td></td>
 </tr>
 <tr>

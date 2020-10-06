@@ -79,36 +79,36 @@ definition {
 		}
 
 		AssertTextEquals(
-			key_paymentMethod = "${productSKU}",
+			key_productSKU = "${productSKU}",
 			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_SKU",
 			value1 = "${productSKU}");
 
 		AssertTextEquals(
-			key_paymentMethod = "${productName}",
+			key_productName = "${productName}",
 			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME",
 			value1 = "${productName}");
 
-		AssertTextEquals(
-			key_paymentMethod = "${productUnitPrice}",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_UNIT_PRICE",
-			value1 = "$ ${productUnitPrice}");
+		AssertTextEquals.assertPartialText(
+			key_productListPrice = "${productListPrice}",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_LIST_PRICE",
+			value1 = "${productListPrice}");
 
 		if (isSet(productDiscount)) {
 			AssertTextEquals(
-				key_paymentMethod = "${productDiscount}",
+				key_productDiscount = "$ ${productDiscount}",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_DISCOUNT",
-				value1 = "$ ${productDiscount}");
+				value1 = "${productDiscount");
 		}
 
 		AssertTextEquals(
-			key_paymentMethod = "${productQuantity}",
+			key_productQuantity = "${productQuantity}",
 			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY",
 			value1 = "${productQuantity}");
 
-		AssertTextEquals(
-			key_paymentMethod = "${productPrice}",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_PRICE",
-			value1 = "$ ${productPrice}");
+		AssertTextEquals.assertPartialText(
+			key_productTotalPrice = "${productTotalPrice}",
+			locator1 = "CommerceOrders#ORDER_DETAILS_TOTAL_PRICE",
+			value1 = "${productTotalPrice}");
 
 		if (isSet(paymentMethod)) {
 			Click(

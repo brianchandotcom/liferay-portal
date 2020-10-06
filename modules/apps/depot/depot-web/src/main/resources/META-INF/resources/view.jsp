@@ -111,6 +111,12 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 								<aui:a href="<%= depotAdminDisplayContext.getViewDepotURL(depotEntry) %>" label="<%= HtmlUtil.escape(depotEntryGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 							</liferay-ui:search-container-column-text>
 
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand table-cell-minw-200"
+								name="num-of-connections"
+								value="<%= String.valueOf(depotAdminDisplayContext.getDepotEntryConnectedGroupsCount(depotEntry)) %>"
+							/>
+
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
 									defaultEventHandler="<%= DepotAdminWebKeys.DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"

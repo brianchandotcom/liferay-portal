@@ -15,13 +15,16 @@
 package com.liferay.depot.web.internal.servlet.taglib.clay;
 
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelServiceUtil;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -98,6 +101,28 @@ public class DepotEntryVerticalCard
 		}
 
 		return String.valueOf(_depotEntry.getDepotEntryId());
+	}
+
+	@Override
+	public String getSubtitle() {
+		try {
+			int depotEntryConnectedGroupsCount =
+				DepotEntryGroupRelServiceUtil.getDepotEntryGroupRelsCount(
+					_depotEntry);
+
+			if (depotEntryConnectedGroupsCount != 1) {
+				return LanguageUtil.format(
+					_liferayPortletRequest.getHttpServletRequest(),
+					"x-connected-sites", depotEntryConnectedGroupsCount);
+			}
+
+			return LanguageUtil.format(
+				_liferayPortletRequest.getHttpServletRequest(),
+				"x-connected-site", depotEntryConnectedGroupsCount);
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	@Override

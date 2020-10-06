@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 
+import com.liferay.commerce.product.exception.CPAttachmentFileEntryProtocolException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
@@ -46,6 +47,7 @@ import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Alessio Antonio Rendina
@@ -66,11 +68,15 @@ public class AttachmentUtil {
 		if (Validator.isNotNull(attachment.getSrc())) {
 			URL url = new URL(attachment.getSrc());
 
+			if (Objects.equals("file", url.getProtocol())) {
+				throw new CPAttachmentFileEntryProtocolException("Unsupported URL protocol");
+			}
 			URLConnection urlConnection = url.openConnection();
 
 			urlConnection.connect();
 
-			File file = FileUtil.createTempFile(urlConnection.getInputStream());
+			File file = FileUtil.createTempFile(
+				urlConnection.getInputStream());
 
 			return _addFileEntry(
 				groupId, userId, file, MimeTypesUtil.getContentType(file),

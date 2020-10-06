@@ -34,6 +34,7 @@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.LayoutFriendlyURLException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.LayoutConstants" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

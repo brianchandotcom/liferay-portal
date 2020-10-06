@@ -90,6 +90,10 @@ else {
 				<liferay-ui:message key="the-source-url-is-too-long" />
 			</c:if>
 
+			<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_LONG %>">
+				<liferay-ui:message arguments="<%= LayoutConstants.FRIENDLY_URL_MAX_LENGTH %>" key="the-friendly-url-exceeds-the-limit-of-x-characters-in-its-encoded-format.-please-enter-a-shorter-url" translateArguments="<%= false %>" />
+			</c:if>
+
 			<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_SHORT %>">
 				<liferay-ui:message key="please-enter-a-source-url-that-is-at-least-two-characters-long" />
 			</c:if>

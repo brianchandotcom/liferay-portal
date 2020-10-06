@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
@@ -27,8 +28,11 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -254,6 +258,54 @@ public class DLViewDisplayContext {
 
 	public boolean isFileEntryTypesNavigation() {
 		if (Objects.equals(_getNavigation(), "file_entry_types")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isOpenInMSOfficeEnabled() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (portletDisplay.isWebDAVEnabled() &&
+			BrowserSnifferUtil.isIeOnWin32(_httpServletRequest)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSearch() {
+		return _dlAdminDisplayContext.isSearch();
+	}
+
+	public boolean isShowFolderDescription() {
+		if (_dlAdminDisplayContext.isDefaultFolderView()) {
+			return false;
+		}
+
+		Folder folder = _dlAdminDisplayContext.getFolder();
+
+		if (folder == null) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletName = portletDisplay.getPortletName();
+
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+
 			return true;
 		}
 

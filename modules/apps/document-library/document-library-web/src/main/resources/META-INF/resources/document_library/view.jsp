@@ -33,10 +33,6 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#pre" />
 
 		<%
-		String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
-
-		boolean defaultFolderView = dlAdminDisplayContext.isDefaultFolderView();
-
 		String displayStyle = dlAdminDisplayContext.getDisplayStyle();
 
 		Folder folder = dlAdminDisplayContext.getFolder();
@@ -97,12 +93,12 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 
 				<div class="sidenav-content">
 					<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-						<c:if test='<%= !mvcRenderCommandName.equals("/document_library/search") %>'>
+						<c:if test="<%= !dlViewDisplayContext.isSearch() %>">
 							<liferay-util:include page="/document_library/breadcrumb.jsp" servletContext="<%= application %>" />
 						</c:if>
 					</div>
 
-					<c:if test="<%= portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
+					<c:if test="<%= dlViewDisplayContext.isOpenInMSOfficeEnabled() %>">
 						<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
 					</c:if>
 
@@ -126,7 +122,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 
 						<div class="document-container">
 							<c:choose>
-								<c:when test='<%= mvcRenderCommandName.equals("/document_library/search") %>'>
+								<c:when test="<%= dlViewDisplayContext.isSearch() %>">
 									<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
 								</c:when>
 								<c:otherwise>
@@ -144,7 +140,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		</div>
 
 		<%
-		if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN))) {
+		if (dlViewDisplayContext.isShowFolderDescription()) {
 			PortalUtil.setPageDescription(folder.getDescription(), request);
 		}
 		%>

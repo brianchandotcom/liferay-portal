@@ -26,6 +26,10 @@
 			continue;
 		}
 
+		if (!GroupCapabilityUtil.isSupportsPortlet(liveGroup, portlet)) {
+			continue;
+		}
+
 		PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
 		Class<?> portletDataHandlerClass = portletDataHandler.getClass();

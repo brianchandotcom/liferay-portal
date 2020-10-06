@@ -127,6 +127,32 @@ public class FinderCacheImplTest {
 	}
 
 	@Test
+	public void testPutNonbaseModelList() {
+		FinderPath finderPath = new FinderPath(
+			FinderCacheImplTest.class.getName(), "test-non-base-model",
+			new String[0], new String[0], false);
+
+		FinderCache finderCache = _activateFinderCache(
+			_notSerializedMultiVMPool);
+
+		// Empty list
+
+		finderCache.putResult(finderPath, _KEY1, Collections.emptyList(), true);
+
+		Assert.assertSame(
+			Collections.emptyList(),
+			finderCache.getResult(finderPath, _KEY1, null));
+
+		// Not empty list
+
+		List<Long> list = Collections.singletonList(1L);
+
+		finderCache.putResult(finderPath, _KEY1, list, true);
+
+		Assert.assertSame(list, finderCache.getResult(finderPath, _KEY1, null));
+	}
+
+	@Test
 	public void testTestKeysCollide() {
 		Assert.assertEquals(
 			_cacheKeyGenerator.getCacheKey(_KEY1),

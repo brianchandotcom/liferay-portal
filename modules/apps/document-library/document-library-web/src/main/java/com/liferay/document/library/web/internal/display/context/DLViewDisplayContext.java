@@ -140,6 +140,18 @@ public class DLViewDisplayContext {
 		return renderURL.toString();
 	}
 
+	public Folder getFolder() {
+		return _dlAdminDisplayContext.getFolder();
+	}
+
+	public long getFolderId() {
+		return _dlAdminDisplayContext.getFolderId();
+	}
+
+	public long getRepositoryId() {
+		return _dlAdminDisplayContext.getRepositoryId();
+	}
+
 	public String getRestoreTrashEntriesURL() {
 		ActionURL actionURL = _renderResponse.createActionURL();
 

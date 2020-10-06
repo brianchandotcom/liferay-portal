@@ -46,6 +46,12 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTempl
 				value="<%= HtmlUtil.escape(displayPageUsagesDisplayContext.getTitle(assetDisplayPageEntry, themeDisplay.getLocale())) %>"
 			/>
 
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
+				name="author"
+				value="<%= HtmlUtil.escape(assetDisplayPageEntry.getUserName()) %>"
+			/>
+
 			<liferay-ui:search-container-column-date
 				cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 				name="modified-date"

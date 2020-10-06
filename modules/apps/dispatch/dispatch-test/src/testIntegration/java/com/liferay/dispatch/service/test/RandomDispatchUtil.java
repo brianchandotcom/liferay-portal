@@ -27,13 +27,14 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Dispatch trigger values holder
  *
  * @author Igor Beslic
  */
-public class DispatchTriggerValues {
+public class RandomDispatchUtil {
 
 	/**
 	 * Returns DispatchTrigger instance with <code>active</code> and
@@ -46,12 +47,14 @@ public class DispatchTriggerValues {
 	 *
 	 * @param  dispatchTrigger the original dispatch trigger
 	 * @param  nameSalt the dispatch trigger name suffix
-	 * @return updated random DispatchTriggerValues
+	 * @return updated random RandomDispatchUtil
 	 */
-	public static DispatchTrigger randomInstance(
+	public static DispatchTrigger randomDispatchTrigger(
 		DispatchTrigger dispatchTrigger, int nameSalt) {
 
-		return _randomInstance(
+		Objects.requireNonNull(dispatchTrigger);
+
+		return _randomDispatchTrigger(
 			RandomTestUtil.randomBoolean(), dispatchTrigger.getCompanyId(),
 			_randomCronExpression(), dispatchTrigger.getTaskType(),
 			dispatchTrigger.getTaskSettingsUnicodeProperties(),
@@ -71,8 +74,12 @@ public class DispatchTriggerValues {
 	 * @param  nameSalt the dispatch trigger name suffix
 	 * @return random dispatch trigger
 	 */
-	public static DispatchTrigger randomInstance(User user, int nameSalt) {
-		return _randomInstance(
+	public static DispatchTrigger randomDispatchTrigger(
+		User user, int nameSalt) {
+
+		Objects.requireNonNull(user);
+
+		return _randomDispatchTrigger(
 			RandomTestUtil.randomBoolean(), user.getCompanyId(),
 			_randomCronExpression(), RandomTestUtil.randomString(20),
 			RandomTestUtil.randomUnicodeProperties(
@@ -86,7 +93,7 @@ public class DispatchTriggerValues {
 			"0 0 0 ? %d/2 * 2077", RandomTestUtil.randomInt(1, 12));
 	}
 
-	private static DispatchTrigger _randomInstance(
+	private static DispatchTrigger _randomDispatchTrigger(
 		boolean active, long companyId, String cronExpression, String taskType,
 		UnicodeProperties unicodeProperties, String name, boolean system,
 		long userId) {
@@ -99,7 +106,7 @@ public class DispatchTriggerValues {
 			}
 
 			@Override
-			public int compareTo(DispatchTrigger o) {
+			public int compareTo(DispatchTrigger dispatchTrigger) {
 				throw new UnsupportedOperationException();
 			}
 
@@ -125,7 +132,7 @@ public class DispatchTriggerValues {
 
 			@Override
 			public long getDispatchTriggerId() {
-				return 0;
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
@@ -290,6 +297,7 @@ public class DispatchTriggerValues {
 
 			@Override
 			public void setDispatchTriggerId(long dispatchTriggerId) {
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
@@ -328,6 +336,7 @@ public class DispatchTriggerValues {
 
 			@Override
 			public void setMvccVersion(long mvccVersion) {
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
@@ -342,6 +351,7 @@ public class DispatchTriggerValues {
 
 			@Override
 			public void setPrimaryKey(long primaryKey) {
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
@@ -367,6 +377,8 @@ public class DispatchTriggerValues {
 			@Override
 			public void setTaskSettingsUnicodeProperties(
 				UnicodeProperties taskSettingsUnicodeProperties) {
+
+				throw new UnsupportedOperationException();
 			}
 
 			@Override

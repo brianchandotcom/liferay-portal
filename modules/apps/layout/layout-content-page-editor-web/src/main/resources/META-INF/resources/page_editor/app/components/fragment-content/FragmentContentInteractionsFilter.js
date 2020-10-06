@@ -18,6 +18,7 @@ import React, {useEffect, useMemo} from 'react';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
+import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {config} from '../../config/index';
 import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
@@ -203,7 +204,10 @@ function FragmentContentInteractionsFilter({
 			);
 
 			if (activeEditable) {
-				if (canUpdateEditables) {
+				if (
+					canUpdateEditables &&
+					selectedViewportSize === VIEWPORT_SIZES.desktop
+				) {
 					requestAnimationFrame(() => {
 						activeEditable.element.addEventListener(
 							'dblclick',
@@ -242,6 +246,7 @@ function FragmentContentInteractionsFilter({
 		isActive,
 		itemId,
 		setEditableProcessorUniqueId,
+		selectedViewportSize,
 	]);
 
 	const hoverEditable = (event) => {

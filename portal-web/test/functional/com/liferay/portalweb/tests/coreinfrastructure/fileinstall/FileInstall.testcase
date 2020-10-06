@@ -21,7 +21,7 @@ definition {
 
 	@priority = "3"
 	test CustomizeFileFilter {
-		property custom.properties = "module.framework.properties.file.install.filter=^(?!test-theme).*\\..*"
+		property custom.properties = "module.framework.properties.file.install.filter=^(?!test-theme).*\\..*";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeFileFilter";
 
 		GogoShell.openGogoShellAdmin();

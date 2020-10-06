@@ -540,14 +540,14 @@ definition {
 				rowPosition = "1");
 
 			Ratings.rateStarCollectionItem(
-				colPosition = "2",
+				colPosition = "1",
 				ratingStarCount = "3 stars",
-				rowPosition = "1");
+				rowPosition = "2");
 
 			Ratings.rateStarCollectionItem(
-				colPosition = "3",
+				colPosition = "1",
 				ratingStarCount = "5 stars",
-				rowPosition = "1");
+				rowPosition = "3");
 		}
 
 		task ("Assert the display order of collection items") {
@@ -559,9 +559,9 @@ definition {
 
 			for (var title : list "First Web Content,Second Web Content,Third Web Content") {
 				AssertTextEquals(
-					key_colPosition = "${n}",
+					key_colPosition = "1",
 					key_fragmentName = "heading",
-					key_rowPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 					value1 = "${title}");
 
@@ -574,9 +574,9 @@ definition {
 
 			for (var ratingStarCount : list "5 stars,3 stars,1 star") {
 				AssertElementPresent(
-					key_colPosition = "${n}",
+					key_colPosition = "1",
 					key_ratingStarCount = "${ratingStarCount}",
-					key_rowPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_RESULT");
 
 				var n = ${n} + 1;
@@ -586,8 +586,8 @@ definition {
 
 			for (var averageStarCount : list "5.0,3.0,1.0") {
 				AssertTextEquals.assertPartialText(
-					key_colPosition = "${n}",
-					key_rowPosition = "1",
+					key_colPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR_RESULT",
 					value1 = "${averageStarCount}");
 
@@ -741,9 +741,9 @@ definition {
 
 			for (var title : list "Web Content Title,Document Title,Blogs Entry Title") {
 				AssertTextEquals(
-					key_colPosition = "${n}",
+					key_colPosition = "1",
 					key_fragmentName = "heading",
-					key_rowPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 					value1 = "${title}");
 
@@ -756,9 +756,9 @@ definition {
 
 			for (var count : list "1,0,0") {
 				AssertTextEquals(
-					key_colPosition = "${n}",
+					key_colPosition = "1",
 					key_fragmentName = "paragraph",
-					key_rowPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 					value1 = "${count}");
 
@@ -785,9 +785,9 @@ definition {
 
 			for (var title : list "Blogs Entry Title,Web Content Title,Document Title") {
 				AssertTextEquals(
-					key_colPosition = "${n}",
+					key_colPosition = "1",
 					key_fragmentName = "heading",
-					key_rowPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 					value1 = "${title}");
 
@@ -800,9 +800,9 @@ definition {
 
 			for (var count : list "2,1,0") {
 				AssertTextEquals(
-					key_colPosition = "${n}",
+					key_colPosition = "1",
 					key_fragmentName = "paragraph",
-					key_rowPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 					value1 = "${count}");
 
@@ -938,9 +938,9 @@ definition {
 
 			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
 				AssertTextEquals(
-					key_colPosition = "${n}",
+					key_colPosition = "1",
 					key_fragmentName = "heading",
-					key_rowPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 					value1 = "${title}");
 
@@ -953,9 +953,9 @@ definition {
 
 			for (var modifiedDate : list "${thirdModifiedDate},${secondModifiedDate},${firstModifiedDate}") {
 				AssertTextEquals(
-					key_colPosition = "${n}",
+					key_colPosition = "1",
 					key_fragmentName = "paragraph",
-					key_rowPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 					value1 = "${modifiedDate}");
 
@@ -995,9 +995,9 @@ definition {
 
 			for (var title : list "First Web Content,Third Web Content,Second Web Content") {
 				AssertTextEquals(
-					key_colPosition = "${n}",
+					key_colPosition = "1",
 					key_fragmentName = "heading",
-					key_rowPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 					value1 = "${title}");
 
@@ -1010,9 +1010,9 @@ definition {
 
 			for (var modifiedDate : list "${firstModifiedDate},${thirdModifiedDate},${secondModifiedDate}") {
 				AssertTextEquals(
-					key_colPosition = "${n}",
+					key_colPosition = "1",
 					key_fragmentName = "paragraph",
-					key_rowPosition = "1",
+					key_rowPosition = "${n}",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 					value1 = "${modifiedDate}");
 
@@ -2144,9 +2144,9 @@ definition {
 
 		for (var description : list "Blogs Entry Custom Abstract,DM Document Description,Web Content Discription") {
 			AssertVisible(
-				key_colPosition = "${n}",
+				key_colPosition = "1",
 				key_entryContent = "${description}",
-				key_rowPosition = "1",
+				key_rowPosition = "${n}",
 				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 			var n = ${n} + 1;
@@ -2591,9 +2591,9 @@ definition {
 
 		for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 			AssertVisible(
-				key_colPosition = "${n}",
+				key_colPosition = "1",
 				key_entryContent = "${title}",
-				key_rowPosition = "1",
+				key_rowPosition = "${n}",
 				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 			var n = ${n} + 1;
@@ -2927,9 +2927,9 @@ definition {
 
 		for (var content : list "Blogs Entry Content,Web Content Content") {
 			AssertVisible(
-				key_colPosition = "${n}",
+				key_colPosition = "1",
 				key_entryContent = "${content}",
-				key_rowPosition = "1",
+				key_rowPosition = "${n}",
 				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 			var n = ${n} + 1;

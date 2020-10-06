@@ -74,6 +74,8 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -81,6 +83,7 @@
 
 		<column name="ddmStructuresAvailable" type="boolean" />
 		<column name="depotEntryId" type="long" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="searchable" type="boolean" />
 		<column name="toGroupId" type="long" />
 

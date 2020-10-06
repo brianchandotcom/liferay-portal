@@ -112,7 +112,6 @@ definition {
 		GogoShell.viewNoOutput(outputContent = "Active");
 	}
 
-
 	@priority = "4"
 	test UninstallJarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";

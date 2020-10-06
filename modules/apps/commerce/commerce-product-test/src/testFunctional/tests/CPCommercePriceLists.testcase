@@ -58,7 +58,7 @@ definition {
 		AssertClickNoError(
 			locator1 = "Button#SUBMIT",
 			value1 = "Submit");
-		
+
 		Refresh();
 
 		CommerceNavigator.gotoPortlet(

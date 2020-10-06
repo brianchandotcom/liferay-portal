@@ -16,20 +16,57 @@ package com.liferay.frontend.token.definition;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Iván Zaera
  */
-public interface FrontendTokenDefinition {
+public interface FrontendToken {
 
-	public Collection<FrontendTokenCategory> getFrontendTokenCategories();
+	/**
+	 * Get the default token value
+	 *
+	 * @see Type for a list of valid token values
+	 */
+	public <T> T getDefaultValue();
 
 	public Collection<FrontendTokenMapping> getFrontendTokenMappings();
 
-	public Collection<FrontendToken> getFrontendTokens();
-
-	public Collection<FrontendTokenSet> getFrontendTokenSets();
+	public FrontendTokenSet getFrontendTokenSet();
 
 	public String getJSON(Locale locale);
+
+	public Type getType();
+
+	public static enum Type {
+
+		BOOLEAN("Boolean"), DOUBLE("Number"), INT("Integer"), STRING("String");
+
+		public static Type parse(String value) {
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Unknown value: " + value);
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 }

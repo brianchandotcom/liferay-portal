@@ -209,13 +209,11 @@ create index IX_BD3CB13A on Group_ (classNameId, groupId, companyId, parentGroup
 create index IX_8B5402E5 on Group_ (companyId, active_, ctCollectionId);
 create unique index IX_504CABF5 on Group_ (companyId, classNameId, classPK, ctCollectionId);
 create index IX_2442742A on Group_ (companyId, classNameId, ctCollectionId);
-create unique index IX_B894AE04 on Group_ (companyId, classNameId, liveGroupId, groupKey[$COLUMN_LENGTH:150$], ctCollectionId);
 create index IX_B7EBDBB2 on Group_ (companyId, classNameId, parentGroupId, ctCollectionId);
 create index IX_A67A0AA5 on Group_ (companyId, classNameId, site, ctCollectionId);
 create index IX_286EE120 on Group_ (companyId, ctCollectionId);
 create unique index IX_9A7D6AD0 on Group_ (companyId, friendlyURL[$COLUMN_LENGTH:255$], ctCollectionId);
 create unique index IX_BE219CF4 on Group_ (companyId, groupKey[$COLUMN_LENGTH:150$], ctCollectionId);
-create unique index IX_94AE0C4E on Group_ (companyId, liveGroupId, groupKey[$COLUMN_LENGTH:150$], ctCollectionId);
 create index IX_A20523FC on Group_ (companyId, parentGroupId, ctCollectionId);
 create index IX_121A14F7 on Group_ (companyId, parentGroupId, site, ctCollectionId);
 create index IX_162053E9 on Group_ (companyId, parentGroupId, site, inheritContent, ctCollectionId);
@@ -406,7 +404,6 @@ create index IX_3078CBE6 on ResourcePermission (roleId, ctCollectionId);
 create index IX_F3870DDF on ResourcePermission (scope, ctCollectionId);
 
 create unique index IX_C0F6BCAC on Role_ (companyId, classNameId, classPK, ctCollectionId);
-create unique index IX_D303FC25 on Role_ (companyId, classNameId, classPK, type_, ctCollectionId);
 create index IX_4EA65517 on Role_ (companyId, ctCollectionId);
 create unique index IX_4CC99816 on Role_ (companyId, name[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_7037255A on Role_ (companyId, type_, ctCollectionId);

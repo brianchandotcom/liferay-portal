@@ -78,7 +78,7 @@ public class DepotEntryGroupRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -90,6 +90,10 @@ public class DepotEntryGroupRelCacheModel
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -98,6 +102,8 @@ public class DepotEntryGroupRelCacheModel
 		sb.append(ddmStructuresAvailable);
 		sb.append(", depotEntryId=");
 		sb.append(depotEntryId);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", searchable=");
 		sb.append(searchable);
 		sb.append(", toGroupId=");
@@ -124,6 +130,14 @@ public class DepotEntryGroupRelCacheModel
 		depotEntryGroupRelImpl.setDepotEntryGroupRelId(depotEntryGroupRelId);
 		depotEntryGroupRelImpl.setGroupId(groupId);
 		depotEntryGroupRelImpl.setCompanyId(companyId);
+		depotEntryGroupRelImpl.setUserId(userId);
+
+		if (userName == null) {
+			depotEntryGroupRelImpl.setUserName("");
+		}
+		else {
+			depotEntryGroupRelImpl.setUserName(userName);
+		}
 
 		if (createDate == Long.MIN_VALUE) {
 			depotEntryGroupRelImpl.setCreateDate(null);
@@ -142,6 +156,15 @@ public class DepotEntryGroupRelCacheModel
 		depotEntryGroupRelImpl.setDdmStructuresAvailable(
 			ddmStructuresAvailable);
 		depotEntryGroupRelImpl.setDepotEntryId(depotEntryId);
+
+		if (lastPublishDate == Long.MIN_VALUE) {
+			depotEntryGroupRelImpl.setLastPublishDate(null);
+		}
+		else {
+			depotEntryGroupRelImpl.setLastPublishDate(
+				new Date(lastPublishDate));
+		}
+
 		depotEntryGroupRelImpl.setSearchable(searchable);
 		depotEntryGroupRelImpl.setToGroupId(toGroupId);
 
@@ -160,12 +183,16 @@ public class DepotEntryGroupRelCacheModel
 		groupId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
 		ddmStructuresAvailable = objectInput.readBoolean();
 
 		depotEntryId = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 
 		searchable = objectInput.readBoolean();
 
@@ -188,12 +215,23 @@ public class DepotEntryGroupRelCacheModel
 		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeBoolean(ddmStructuresAvailable);
 
 		objectOutput.writeLong(depotEntryId);
+		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeBoolean(searchable);
 
@@ -205,10 +243,13 @@ public class DepotEntryGroupRelCacheModel
 	public long depotEntryGroupRelId;
 	public long groupId;
 	public long companyId;
+	public long userId;
+	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public boolean ddmStructuresAvailable;
 	public long depotEntryId;
+	public long lastPublishDate;
 	public boolean searchable;
 	public long toGroupId;
 

@@ -69,14 +69,15 @@ public class AttachmentUtil {
 			URL url = new URL(attachment.getSrc());
 
 			if (Objects.equals("file", url.getProtocol())) {
-				throw new CPAttachmentFileEntryProtocolException("Unsupported URL protocol");
+				throw new CPAttachmentFileEntryProtocolException(
+					"Unsupported URL protocol");
 			}
+
 			URLConnection urlConnection = url.openConnection();
 
 			urlConnection.connect();
 
-			File file = FileUtil.createTempFile(
-				urlConnection.getInputStream());
+			File file = FileUtil.createTempFile(urlConnection.getInputStream());
 
 			return _addFileEntry(
 				groupId, userId, file, MimeTypesUtil.getContentType(file),

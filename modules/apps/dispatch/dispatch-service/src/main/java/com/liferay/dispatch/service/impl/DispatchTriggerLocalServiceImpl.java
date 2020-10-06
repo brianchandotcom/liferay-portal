@@ -116,7 +116,10 @@ public class DispatchTriggerLocalServiceImpl
 	public DispatchTrigger deleteDispatchTrigger(long dispatchTriggerId)
 		throws PortalException {
 
-		return dispatchTriggerPersistence.remove(dispatchTriggerId);
+		DispatchTrigger dispatchTrigger =
+			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
+
+		return deleteDispatchTrigger(dispatchTrigger);
 	}
 
 	@Override

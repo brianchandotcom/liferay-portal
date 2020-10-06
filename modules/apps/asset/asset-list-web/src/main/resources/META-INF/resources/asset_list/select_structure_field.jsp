@@ -100,6 +100,12 @@ portletURL.setParameter("eventName", eventName);
 			<liferay-ui:search-container-column-text>
 
 				<%
+				JSONObject jsonObject = JSONUtil.put(
+					"ddmStructureFieldName", ddmStructureFieldName
+				).put(
+					"ddmStructureFieldValue", ddmStructureFieldValue
+				);
+
 				Map<String, Object> data = HashMapBuilder.<String, Object>put(
 					"fieldsnamespace", fieldsNamespace
 				).put(
@@ -108,6 +114,8 @@ portletURL.setParameter("eventName", eventName);
 					"label", field.getLabel()
 				).put(
 					"name", field.getName()
+				).put(
+					"value", jsonObject
 				).build();
 				%>
 
@@ -126,9 +134,29 @@ portletURL.setParameter("eventName", eventName);
 		A.all('.selector-button').each(function () {
 			var selectorButton = this;
 
-			Liferay.component(
-				'<portlet:namespace />' + this.getData().fieldsnamespace + 'ddmForm'
+			var data = this.getData();
+
+			var initialDDMForm = Liferay.component(
+				'<portlet:namespace />' + data.fieldsnamespace + 'ddmForm'
 			);
+
+			initialDDMForm.updateDDMFormInputValue();
+
+			var name = data.name;
+			var value = JSON.parse(data.value);
+
+			var ddmStructureFieldName = value['ddmStructureFieldName'];
+			var ddmStructureFieldValue = value['ddmStructureFieldValue'];
+
+			if (name == ddmStructureFieldName) {
+				var initialForm = document.getElementById(data.form);
+
+				var formData = new FormData(initialForm);
+
+				var keyInput = Object.keys(Object.fromEntries(formData))[1];
+
+				document.getElementById(keyInput).value = ddmStructureFieldValue;
+			}
 		});
 	});
 

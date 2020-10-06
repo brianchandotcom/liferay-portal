@@ -1,12 +1,11 @@
 {
 	"frontendTokenCategories": [
 		{
-			"label": "color-system",
-			"name": "colorSystem",
-			"tokenSets": [
+			"frontendTokenSets": [
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "#FFF",
 							"editorType": "ColorPicker",
 							"label": "white",
 							"mappings": [
@@ -22,7 +21,9 @@
 					"label": "grays",
 					"name": "grays"
 				}
-			]
+			],
+			"label": "color-system",
+			"name": "colorSystem"
 		}
 	]
 }

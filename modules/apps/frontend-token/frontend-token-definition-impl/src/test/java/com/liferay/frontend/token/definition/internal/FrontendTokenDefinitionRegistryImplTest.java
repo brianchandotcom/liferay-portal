@@ -16,12 +16,13 @@ package com.liferay.frontend.token.definition.internal;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalImpl;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -41,11 +42,12 @@ import org.osgi.framework.Bundle;
 public class FrontendTokenDefinitionRegistryImplTest {
 
 	@Test
-	public void testGetJSON() throws IOException {
+	public void testGetJSON() throws Exception {
 		FrontendTokenDefinitionRegistryImpl
 			frontendTokenDefinitionRegistryImpl =
 				new FrontendTokenDefinitionRegistryImpl();
 
+		frontendTokenDefinitionRegistryImpl.jsonFactory = new JSONFactoryImpl();
 		frontendTokenDefinitionRegistryImpl.resourceBundleLoaders =
 			Mockito.mock(ServiceTrackerMap.class);
 
@@ -70,8 +72,11 @@ public class FrontendTokenDefinitionRegistryImplTest {
 		try (InputStream inputStream =
 				_frontendTokenDefinitionJSONURL.openStream()) {
 
+			JSONFactory jsonFactory = new JSONFactoryImpl();
+
 			Assert.assertEquals(
-				StringUtil.read(inputStream),
+				jsonFactory.looseSerializeDeep(
+					jsonFactory.createJSONObject(StringUtil.read(inputStream))),
 				frontendTokenDefinition.getJSON(LocaleUtil.ENGLISH));
 		}
 	}

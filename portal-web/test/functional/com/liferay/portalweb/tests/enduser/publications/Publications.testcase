@@ -332,8 +332,8 @@ definition {
 		Publications.gotoReviewPublications();
 
 		Publications.discardPublications(
-			publicationsTitle = "WC Structure Name",
-			publicationsCategory = "Dynamic Data Mapping Structure");
+			publicationsCategory = "Dynamic Data Mapping Structure",
+			publicationsTitle = "WC Structure Name");
 
 		Navigator.openURL();
 

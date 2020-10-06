@@ -104,6 +104,9 @@ public class DepotAdminPortletDataHandler extends BasePortletDataHandler {
 
 		portletDataContext.addPortletPermissions(DepotConstants.RESOURCE_NAME);
 
+		rootElement.addAttribute(
+			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			_depotEntryGroupRelLocalService.getExportActionableDynamicQuery(
 				portletDataContext);

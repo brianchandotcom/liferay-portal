@@ -28,7 +28,7 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
-String displayStyle = GetterUtil.getString((String)request.getAttribute("view.jsp-displayStyle"));
+String displayStyle = dlAdminDisplayContext.getDisplayStyle();
 
 FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(dlTrashHelper, request, liferayPortletResponse);
 

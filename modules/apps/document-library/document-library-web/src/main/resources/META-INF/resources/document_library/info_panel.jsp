@@ -30,12 +30,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 
 	folders = new ArrayList<>();
 
-	Folder folder = (Folder)request.getAttribute("view.jsp-folder");
-
-	if (folder != null) {
-		folders.add(folder);
-	}
-	else if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		folders.add(DLAppLocalServiceUtil.getFolder(folderId));
 	}
 	else {

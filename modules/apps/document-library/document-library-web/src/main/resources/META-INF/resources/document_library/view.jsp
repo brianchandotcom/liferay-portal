@@ -33,21 +33,15 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#pre" />
 
 		<%
-		String displayStyle = dlAdminDisplayContext.getDisplayStyle();
-
 		Folder folder = dlAdminDisplayContext.getFolder();
 
 		long folderId = dlAdminDisplayContext.getFolderId();
 
 		long repositoryId = dlAdminDisplayContext.getRepositoryId();
 
-		request.setAttribute("view.jsp-folder", folder);
-
 		request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 		request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
-
-		request.setAttribute("view.jsp-displayStyle", displayStyle);
 		%>
 
 		<liferay-trash:undo
@@ -224,7 +218,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					%>
 
 					decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
-					displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
+					displayStyle:
+						'<%= HtmlUtil.escapeJS(dlAdminDisplayContext.getDisplayStyle()) %>',
 					editEntryUrl: '<%= dlViewDisplayContext.getEditEntryURL() %>',
 					downloadEntryUrl: '<%= dlViewDisplayContext.getDownloadEntryURL() %>',
 					folders: {

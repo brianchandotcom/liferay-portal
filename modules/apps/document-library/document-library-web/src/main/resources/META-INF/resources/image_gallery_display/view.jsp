@@ -84,8 +84,6 @@ String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 	portletURL.setParameter("topLink", topLink);
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 
-	request.setAttribute("view.jsp-folder", folder);
-
 	request.setAttribute("view.jsp-rootFolderId", String.valueOf(rootFolderId));
 
 	request.setAttribute("view.jsp-folderId", String.valueOf(folderId));

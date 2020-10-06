@@ -158,8 +158,8 @@ export function ImagePropertiesPanel({item}) {
 		state.languageId,
 	]);
 
-	const updateEditableValues = (
-		alt,
+	const updateEditableConfig = (
+		newConfig = {},
 		editableValues,
 		editableId,
 		processorKey
@@ -178,7 +178,7 @@ export function ImagePropertiesPanel({item}) {
 					...editableProcessorValues[editableId],
 					config: {
 						...editableConfig,
-						alt,
+						...newConfig,
 					},
 				},
 			},
@@ -243,47 +243,6 @@ export function ImagePropertiesPanel({item}) {
 		);
 	};
 
-	const onImageConfigurationChange = (event) => {
-		const {editableValues} = state.fragmentEntryLinks[fragmentEntryLinkId];
-
-		const editableProcessorValues = editableValues[processorKey];
-		const editableValue = editableProcessorValues[editableId];
-
-		const imageConfiguration =
-			editableValue.config.imageConfiguration || {};
-
-		imageConfiguration[selectedViewportSize] = event.target.value;
-
-		const nextEditableValueConfig = {
-			...editableValue.config,
-			imageConfiguration,
-		};
-
-		const nextEditableValue = {
-			...editableValue,
-			config: nextEditableValueConfig,
-		};
-
-		const nextEditableValues = {
-			...editableValues,
-
-			[processorKey]: {
-				...editableProcessorValues,
-				[editableId]: {
-					...nextEditableValue,
-				},
-			},
-		};
-
-		dispatch(
-			updateEditableValuesThunk({
-				editableValues: nextEditableValues,
-				fragmentEntryLinkId,
-				segmentsExperienceId: state.segmentsExperienceId,
-			})
-		);
-	};
-
 	return (
 		<>
 			{canUpdateImage && (
@@ -306,7 +265,22 @@ export function ImagePropertiesPanel({item}) {
 						className={'form-control form-control-sm'}
 						id={imageConfigurationId}
 						name={imageConfigurationId}
-						onChange={onImageConfigurationChange}
+						onChange={(event) => {
+							const imageConfiguration =
+								editableConfig.imageConfiguration || {};
+
+							const nextImageConfiguration = {
+								...imageConfiguration,
+								[selectedViewportSize]: event.target.value,
+							};
+
+							updateEditableConfig(
+								{imageConfiguration: nextImageConfiguration},
+								editableValues,
+								editableId,
+								processorKey
+							);
+						}}
 						options={imageConfigurations}
 						value={imageConfiguration}
 					/>
@@ -340,8 +314,8 @@ export function ImagePropertiesPanel({item}) {
 							const previousValue = editableConfig.alt || '';
 
 							if (previousValue !== imageDescription) {
-								updateEditableValues(
-									imageDescription,
+								updateEditableConfig(
+									{alt: imageDescription},
 									editableValues,
 									editableId,
 									processorKey

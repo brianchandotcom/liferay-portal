@@ -16,6 +16,7 @@ package com.liferay.asset.display.page.service.base;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryService;
+import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryFinder;
 import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -116,6 +117,9 @@ public abstract class AssetDisplayPageEntryServiceBaseImpl
 
 	@Reference
 	protected AssetDisplayPageEntryPersistence assetDisplayPageEntryPersistence;
+
+	@Reference
+	protected AssetDisplayPageEntryFinder assetDisplayPageEntryFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

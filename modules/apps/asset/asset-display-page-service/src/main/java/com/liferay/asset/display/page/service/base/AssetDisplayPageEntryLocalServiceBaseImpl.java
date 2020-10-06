@@ -16,6 +16,7 @@ package com.liferay.asset.display.page.service.base;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryFinder;
 import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -640,6 +641,9 @@ public abstract class AssetDisplayPageEntryLocalServiceBaseImpl
 
 	@Reference
 	protected AssetDisplayPageEntryPersistence assetDisplayPageEntryPersistence;
+
+	@Reference
+	protected AssetDisplayPageEntryFinder assetDisplayPageEntryFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

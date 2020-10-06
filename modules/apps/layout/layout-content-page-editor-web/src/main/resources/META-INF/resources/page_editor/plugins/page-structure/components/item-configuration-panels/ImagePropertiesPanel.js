@@ -13,7 +13,7 @@
  */
 
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
@@ -26,6 +26,8 @@ import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValu
 import {useId} from '../../../../app/utils/useId';
 import {ImageSelector} from '../../../../common/components/ImageSelector';
 import {getEditableItemPropTypes} from '../../../../prop-types/index';
+
+const DEFAULT_IMAGE_CONFIGURATION = 'auto';
 
 export function ImagePropertiesPanel({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;
@@ -56,14 +58,11 @@ export function ImagePropertiesPanel({item}) {
 		editableConfig.alt || ''
 	);
 
-	const [imageConfiguration, setImageConfiguration] = useState('auto');
+	const [imageConfiguration, setImageConfiguration] = useState(
+		DEFAULT_IMAGE_CONFIGURATION
+	);
 
-	const [imageConfigurations, setImageConfigurations] = useState([
-		{
-			label: Liferay.Language.get('auto'),
-			value: 'auto',
-		},
-	]);
+	const [imageConfigurations, setImageConfigurations] = useState([]);
 
 	const [imageFileSize, setImageFileSize] = useState('');
 
@@ -92,7 +91,6 @@ export function ImagePropertiesPanel({item}) {
 		editableConfig.imageTitle ||
 		(imageUrl === editableValue.defaultValue ? '' : imageUrl);
 
-
 	useEffect(() => {
 		if (editableElement != null) {
 			const setSize = () => {
@@ -115,40 +113,32 @@ export function ImagePropertiesPanel({item}) {
 		}
 	}, [editableConfig.naturalHeight, editableElement, selectedViewportSize]);
 
-	const getAvailableImageConfigurations = useCallback(
-		(fileEntryId) => {
+	useEffect(() => {
+		const fileEntryId = editableContent?.fileEntryId;
+
+		if (fileEntryId > 0) {
 			ImageService.getAvailableImageConfigurations({
 				fileEntryId,
 				onNetworkStatus: dispatch,
 			}).then((availableImageConfigurations) =>
 				setImageConfigurations(availableImageConfigurations)
 			);
-		},
-		[dispatch]
-	);
+		}
+	}, [dispatch, editableContent.fileEntryId]);
 
 	useEffect(() => {
-		if (
-			editableValue[state.languageId] &&
-			editableValue[state.languageId].fileEntryId
-		) {
-			getAvailableImageConfigurations(
-				editableValue[state.languageId].fileEntryId
-			);
-		}
-
-		const editableConfig = editableValue ? editableValue.config || {} : {};
-
-		const selectedImageConfigurationValue = editableConfig.imageConfiguration
-			? editableConfig.imageConfiguration[selectedViewportSize] || 'auto'
-			: 'auto';
+		const selectedImageConfigurationValue =
+			editableConfig.imageConfiguration?.[selectedViewportSize] ??
+			DEFAULT_IMAGE_CONFIGURATION;
 
 		const selectedImageConfiguration = imageConfigurations.find(
 			(imageConfiguration) =>
 				imageConfiguration.value === selectedImageConfigurationValue
 		);
 
-		setImageConfiguration(selectedImageConfigurationValue);
+		if (selectedImageConfiguration) {
+			setImageConfiguration(selectedImageConfiguration.value);
+		}
 
 		setImageDescription((imageDescription) => {
 			if (imageDescription !== editableConfig.alt) {
@@ -158,12 +148,11 @@ export function ImagePropertiesPanel({item}) {
 			return imageDescription;
 		});
 
-		setImageFileSize(
-			selectedImageConfiguration ? selectedImageConfiguration.size : ''
-		);
+		setImageFileSize(selectedImageConfiguration?.size);
 	}, [
+		editableConfig.alt,
+		editableConfig.imageConfiguration,
 		editableValue,
-		getAvailableImageConfigurations,
 		imageConfigurations,
 		selectedViewportSize,
 		state.languageId,
@@ -252,10 +241,6 @@ export function ImagePropertiesPanel({item}) {
 				segmentsExperienceId: state.segmentsExperienceId,
 			})
 		);
-
-		if (fileEntryId > 0) {
-			getAvailableImageConfigurations(fileEntryId);
-		}
 	};
 
 	const onImageConfigurationChange = (event) => {
@@ -312,7 +297,7 @@ export function ImagePropertiesPanel({item}) {
 				/>
 			)}
 
-			{imageConfigurations && imageConfigurations.length > 1 && (
+			{imageConfigurations?.length > 0 && (
 				<ClayForm.Group>
 					<label htmlFor={imageConfigurationId}>
 						{Liferay.Language.get('resolution')}

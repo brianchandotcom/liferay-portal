@@ -16,13 +16,10 @@ package com.liferay.frontend.token.definition.internal.frontend.css.variables;
 
 import com.liferay.frontend.css.variables.ScopedCSSVariables;
 import com.liferay.frontend.css.variables.ScopedCSSVariablesProvider;
+import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.frontend.token.definition.parsed.FrontendToken;
-import com.liferay.frontend.token.definition.parsed.FrontendTokenCategory;
-import com.liferay.frontend.token.definition.parsed.FrontendTokenMapping;
-import com.liferay.frontend.token.definition.parsed.FrontendTokenSet;
-import com.liferay.frontend.token.definition.parsed.ParsedFrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,37 +62,24 @@ public class DefaultThemeScopedCSSVariablesProvider
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				layoutSet.getThemeId());
 
-		ParsedFrontendTokenDefinition parsedFrontendTokenDefinition =
-			frontendTokenDefinition.getParsedFrontendTokenDefinition(
-				themeDisplay.getLocale());
+		Collection<FrontendTokenMapping> frontendTokenMappings =
+			frontendTokenDefinition.getFrontendTokenMappings();
 
-		Collection<FrontendTokenCategory> frontendTokenCategories =
-			parsedFrontendTokenDefinition.getFrontendTokenCategories();
+		for (FrontendTokenMapping frontendTokenMapping :
+				frontendTokenMappings) {
 
-		for (FrontendTokenCategory frontendTokenCategory :
-				frontendTokenCategories) {
+			String type = frontendTokenMapping.getType();
 
-			for (FrontendTokenSet frontendTokenSet :
-					frontendTokenCategory.getFrontendTokenSets()) {
-
-				for (FrontendToken frontendToken :
-						frontendTokenSet.getFrontendTokens()) {
-
-					for (FrontendTokenMapping frontendTokenMapping :
-							frontendToken.getFrontendTokenMappings()) {
-
-						String type = frontendTokenMapping.getType();
-
-						if (!type.equals("cssVariable")) {
-							continue;
-						}
-
-						cssVariables.put(
-							frontendTokenMapping.getValue(),
-							frontendToken.getDefaultValue());
-					}
-				}
+			if (!type.equals("cssVariable")) {
+				continue;
 			}
+
+			FrontendToken frontendToken =
+				frontendTokenMapping.getFrontendToken();
+
+			cssVariables.put(
+				frontendTokenMapping.getValue(),
+				frontendToken.getDefaultValue());
 		}
 
 		return Collections.singletonList(

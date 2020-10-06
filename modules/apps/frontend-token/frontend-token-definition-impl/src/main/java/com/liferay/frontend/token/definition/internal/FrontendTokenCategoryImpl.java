@@ -16,14 +16,11 @@ package com.liferay.frontend.token.definition.internal;
 
 import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenCategory;
-import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.frontend.token.definition.FrontendTokenSet;
 import com.liferay.frontend.token.definition.internal.util.CachedJSONTranslator;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,45 +29,40 @@ import java.util.Locale;
 /**
  * @author Iván Zaera
  */
-public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
+public class FrontendTokenCategoryImpl implements FrontendTokenCategory {
 
-	public FrontendTokenDefinitionImpl(
-		JSONObject jsonObject, JSONFactory jsonFactory,
-		ResourceBundleLoader resourceBundleLoader, String themeId) {
+	public FrontendTokenCategoryImpl(
+		FrontendTokenDefinitionImpl frontendTokenDefinitionImpl,
+		JSONObject jsonObject) {
 
-		_jsonFactory = jsonFactory;
-		_resourceBundleLoader = resourceBundleLoader;
-		_themeId = themeId;
+		_frontendTokenDefinitionImpl = frontendTokenDefinitionImpl;
 
-		_cachedJSONTranslator = createCachedJSONTranslator(jsonObject);
+		_cachedJSONTranslator =
+			frontendTokenDefinitionImpl.createCachedJSONTranslator(jsonObject);
 
-		JSONArray frontendTokenCategoriesJSONArray = jsonObject.getJSONArray(
-			"frontendTokenCategories");
+		JSONArray frontendTokenSetsJSONArray = jsonObject.getJSONArray(
+			"frontendTokenSets");
 
-		if (frontendTokenCategoriesJSONArray == null) {
+		if (frontendTokenSetsJSONArray == null) {
 			return;
 		}
 
-		for (int i = 0; i < frontendTokenCategoriesJSONArray.length(); i++) {
-			FrontendTokenCategory frontendTokenCategory =
-				new FrontendTokenCategoryImpl(
-					this, frontendTokenCategoriesJSONArray.getJSONObject(i));
+		for (int i = 0; i < frontendTokenSetsJSONArray.length(); i++) {
+			FrontendTokenSet frontendTokenSet = new FrontendTokenSetImpl(
+				this, frontendTokenSetsJSONArray.getJSONObject(i));
 
-			_frontendTokenCategories.add(frontendTokenCategory);
+			_frontendTokenSets.add(frontendTokenSet);
 
-			_frontendTokenSets.addAll(
-				frontendTokenCategory.getFrontendTokenSets());
-
-			_frontendTokens.addAll(frontendTokenCategory.getFrontendTokens());
+			_frontendTokens.addAll(frontendTokenSet.getFrontendTokens());
 
 			_frontendTokenMappings.addAll(
-				frontendTokenCategory.getFrontendTokenMappings());
+				frontendTokenSet.getFrontendTokenMappings());
 		}
 	}
 
 	@Override
-	public Collection<FrontendTokenCategory> getFrontendTokenCategories() {
-		return _frontendTokenCategories;
+	public FrontendTokenDefinitionImpl getFrontendTokenDefinition() {
+		return _frontendTokenDefinitionImpl;
 	}
 
 	@Override
@@ -93,28 +85,12 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 		return _cachedJSONTranslator.getJSON(locale);
 	}
 
-	public String getThemeId() {
-		return _themeId;
-	}
-
-	protected CachedJSONTranslator createCachedJSONTranslator(
-		JSONObject jsonObject) {
-
-		return new CachedJSONTranslator(
-			_jsonFactory.looseSerializeDeep(jsonObject), _jsonFactory,
-			_resourceBundleLoader, _themeId);
-	}
-
 	private final CachedJSONTranslator _cachedJSONTranslator;
-	private final Collection<FrontendTokenCategory> _frontendTokenCategories =
-		new ArrayList<>();
+	private final FrontendTokenDefinitionImpl _frontendTokenDefinitionImpl;
 	private final Collection<FrontendTokenMapping> _frontendTokenMappings =
 		new ArrayList<>();
 	private final Collection<FrontendToken> _frontendTokens = new ArrayList<>();
 	private final Collection<FrontendTokenSet> _frontendTokenSets =
 		new ArrayList<>();
-	private final JSONFactory _jsonFactory;
-	private final ResourceBundleLoader _resourceBundleLoader;
-	private final String _themeId;
 
 }

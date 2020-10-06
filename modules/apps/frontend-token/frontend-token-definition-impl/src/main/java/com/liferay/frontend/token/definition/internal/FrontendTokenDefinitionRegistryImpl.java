@@ -19,7 +19,10 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Portal;
@@ -97,10 +100,22 @@ public class FrontendTokenDefinitionRegistryImpl
 			return null;
 		}
 
-		return new FrontendTokenDefinitionImpl(
-			json, jsonFactory,
-			resourceBundleLoaders.getService(bundle.getSymbolicName()),
-			getThemeId(bundle));
+		String themeId = getThemeId(bundle);
+
+		try {
+			return new FrontendTokenDefinitionImpl(
+				jsonFactory.createJSONObject(json), jsonFactory,
+				resourceBundleLoaders.getService(bundle.getSymbolicName()),
+				themeId);
+		}
+		catch (JSONException | RuntimeException exception) {
+			_log.error(
+				"Unable to parse frontend token definitions for theme " +
+					themeId,
+				exception);
+		}
+
+		return null;
 	}
 
 	protected String getFrontendTokenDefinitionJSON(Bundle bundle) {
@@ -188,6 +203,9 @@ public class FrontendTokenDefinitionRegistryImpl
 		resourceBundleLoaders;
 	protected Map<String, FrontendTokenDefinitionImpl>
 		themeIdFrontendTokenDefinitionImpls = new ConcurrentHashMap<>();
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FrontendTokenDefinitionRegistryImpl.class);
 
 	private static final Pattern _themeIdPattern = Pattern.compile(
 		".*<theme id=\"([^\"]*)\"[^>]*>.*");

@@ -124,9 +124,7 @@ String friendlyURLBase = StringPool.BLANK;
 				</div>
 
 				<div class="form-group friendly-url">
-					<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%=
-					LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false)
-					.concat(LanguageUtil.get(themeDisplay.getLocale(),"friendly-url-char-limitation")) %>' /></label>
+					<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x.-please-note-that-there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls", new String[] {"<em>/news</em>", String.valueOf(LayoutConstants.FRIENDLY_URL_MAX_LENGTH)}, false) %>' /></label>
 
 					<liferay-ui:input-localized
 						defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"

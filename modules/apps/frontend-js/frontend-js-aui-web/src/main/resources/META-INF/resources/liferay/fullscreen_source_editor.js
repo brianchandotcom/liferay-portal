@@ -135,9 +135,11 @@ AUI.add(
 				_onEditorChange(event) {
 					var instance = this;
 
-					instance._previewPanel.html(
-						instance._getHtml(event.newVal)
-					);
+					if (event.newVal) {
+						instance._previewPanel.html(
+							instance._getHtml(event.newVal)
+						);
+					}
 				},
 
 				_onLayoutChange(event) {

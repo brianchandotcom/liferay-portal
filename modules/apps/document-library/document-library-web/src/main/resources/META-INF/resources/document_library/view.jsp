@@ -44,7 +44,9 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 
 		<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
-		<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
+		<clay:management-toolbar
+			displayContext="<%= dlAdminDisplayContextProvider.getDLAdminManagementToolbarDisplayContext(request, response) %>"
+		/>
 
 		<%
 		BulkSelectionRunner bulkSelectionRunner = BulkSelectionRunnerUtil.getBulkSelectionRunner();

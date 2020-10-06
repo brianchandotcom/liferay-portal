@@ -35,30 +35,48 @@ definition {
 		property test.name.skip.portal.instance = "CPCommercePriceLists#CreateNewPriceList";
 
 		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			panel = "Commerce",
+			portlet = "Catalogs");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCatalogsEntry(
+			catalogCurrency = "US Dollar",
+			catalogLanguage = "English (United States)",
+			catalogName = "Test Catalog");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+		
+		Refresh();
+
+		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
 			portlet = "Price Lists");
 
 		Click(locator1 = "Button#PLUS");
 
 		CommerceEntry.addNewPriceListsEntry(
-			currencyCode = "USD",
-			entryName = "New Price List");
+			priceListCatalog = "Test Catalog",
+			priceListCurrency = "USD",
+			priceListName = "Test Price List");
 
-		Button.clickPublish();
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
 			portlet = "Price Lists");
 
-		Click(
-			key_entry = "New Price List",
-			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+		CommerceNavigator.gotoEntry(entryName = "Test Price List");
 
 		CommerceEntry.viewPriceListEntry(
-			currencyCode = "USD",
-			entryName = "New Price List");
+			priceListCatalog = "Test Catalog",
+			priceListCurrency = "USD",
+			priceListName = "Test Price List");
 	}
 
 }

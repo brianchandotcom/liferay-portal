@@ -857,8 +857,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				sb = new StringBundler();
 			}
 			else if (c == CharPool.QUOTE) {
-				sb.append(c);
-
 				inQuotes = !inQuotes;
 			}
 			else {
@@ -926,12 +924,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				String value = token.substring(index + 1);
 
 				value = value.trim();
-
-				if (value.startsWith(StringPool.QUOTE) &&
-					value.endsWith(StringPool.QUOTE)) {
-
-					value = value.substring(1, value.length() - 1);
-				}
 
 				attributes.put(key, value);
 			}

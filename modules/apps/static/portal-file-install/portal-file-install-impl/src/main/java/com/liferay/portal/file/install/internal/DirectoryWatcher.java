@@ -877,9 +877,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		return strings;
 	}
 
-	private Map<String, Map<String, String>> _parseHeader(String header)
-		throws IllegalArgumentException {
-
+	private Map<String, Map<String, String>> _parseHeader(String header) {
 		List<String> imports = _parseDelimitedString(header, CharPool.COMMA);
 
 		Map<String, Map<String, String>> headers = _parseImports(imports);

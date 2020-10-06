@@ -94,7 +94,17 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				<div class="sidenav-content">
 					<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 						<c:if test="<%= !dlViewDisplayContext.isSearch() %>">
-							<liferay-util:include page="/document_library/breadcrumb.jsp" servletContext="<%= application %>" />
+
+							<%
+							DLBreadcrumbUtil.addPortletBreadcrumbEntries(folder, request, liferayPortletResponse);
+							%>
+
+							<liferay-ui:breadcrumb
+								showCurrentGroup="<%= false %>"
+								showGuestGroup="<%= false %>"
+								showLayout="<%= false %>"
+								showParentGroups="<%= false %>"
+							/>
 						</c:if>
 					</div>
 

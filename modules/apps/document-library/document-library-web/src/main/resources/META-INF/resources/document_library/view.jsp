@@ -140,7 +140,47 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 								</c:otherwise>
 							</c:choose>
 
-							<%@ include file="/document_library/file_entries_template.jspf" %>
+							<div class="lfr-template" id="<portlet:namespace />appViewEntryTemplates">
+
+								<%
+								String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/default.png";
+								%>
+
+								<liferay-frontend:vertical-card
+									cssClass="display-icon entry-display-style"
+									imageUrl="<%= thumbnailSrc %>"
+									title="{title}"
+									url="<%= dlViewDisplayContext.getUploadURL() %>"
+								>
+									<liferay-frontend:vertical-card-header>
+										<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
+									</liferay-frontend:vertical-card-header>
+								</liferay-frontend:vertical-card>
+
+								<li class="display-descriptive entry-display-style list-group-item">
+									<div class="list-group-item-field"></div>
+
+									<div class="list-group-item-field">
+										<div class="click-selector user-icon user-icon-square user-icon-xl">
+											<img alt="thumbnail" class="img-responsive img-rounded" src="<%= thumbnailSrc %>" />
+										</div>
+									</div>
+
+									<div class="list-group-item-content">
+										<h5 class="text-default">
+											<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
+										</h5>
+
+										<h4>
+											<aui:a href="<%= dlViewDisplayContext.getUploadURL() %>">
+												{title}
+											</aui:a>
+										</h4>
+									</div>
+
+									<div class="list-group-item-field"></div>
+								</li>
+							</div>
 						</div>
 					</aui:form>
 				</div>

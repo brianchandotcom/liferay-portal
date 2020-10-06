@@ -899,11 +899,17 @@ definition {
 	macro viewPriceListEntry {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = "${entryName}");
+			value1 = "${priceListName}");
 
 		AssertSelectedLabel(
-			locator1 = "CommerceEntry#CURRENCY_SELECT",
-			value1 = "${currencyCode}");
+			key_fieldLabel = "Catalog",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${priceListCatalog}");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Currency",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${priceListCurrency}");
 	}
 
 	macro viewProductOptions {

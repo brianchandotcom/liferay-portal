@@ -203,11 +203,15 @@ export function ImagePropertiesPanel({item}) {
 
 		let nextEditableValue = {};
 
+		setImageConfiguration(DEFAULT_IMAGE_CONFIGURATION);
+		setImageConfigurations([]);
 		setImageDescription('');
+		setImageFileSize('');
 
 		const nextEditableValueConfig = {
 			...editableValue.config,
 			alt: '',
+			imageConfiguration: {},
 			imageTitle: imageTitle || '',
 		};
 

@@ -515,4 +515,31 @@ describe('Options', () => {
 
 		expect(valueInput.value).toBe('Bar');
 	});
+
+	it('removes an option when click on remove button', () => {
+		const {container} = render(
+			<OptionsWithProvider
+				defaultLanguageId={themeDisplay.getLanguageId()}
+				editingLanguageId="pt_BR"
+				name="options"
+				onChange={jest.fn()}
+				spritemap={spritemap}
+				value={optionsValue}
+			/>
+		);
+
+		let options = container.querySelectorAll('.ddm-field-options');
+
+		expect(options.length).toEqual(3);
+
+		const removeOptionButton = document.querySelector(
+			'.ddm-option-entry .close'
+		);
+
+		fireEvent.click(removeOptionButton);
+
+		options = container.querySelectorAll('.ddm-field-options');
+
+		expect(options.length).toEqual(2);
+	});
 });

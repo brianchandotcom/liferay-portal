@@ -263,6 +263,12 @@ public interface AssetDisplayPageEntryLocalService
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetDisplayPageEntry> getAssetDisplayPageEntries(
+		long classNameId, boolean defaultTemplate,
+		long layoutPageTemplateEntryId, int start, int end,
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetDisplayPageEntry>
 		getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
 			long layoutPageTemplateEntryId);
@@ -308,6 +314,11 @@ public interface AssetDisplayPageEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetDisplayPageEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetDisplayPageEntriesCount(
+		long classNameId, boolean defaultTemplate,
+		long layoutPageTemplateEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(

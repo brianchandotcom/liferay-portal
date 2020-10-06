@@ -311,7 +311,7 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 		_siteMemberUserDemoDataCreator.delete();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}

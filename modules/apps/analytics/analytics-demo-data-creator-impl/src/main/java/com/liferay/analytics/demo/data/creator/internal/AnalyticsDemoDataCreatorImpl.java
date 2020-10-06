@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -175,11 +174,6 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
 		}
-	}
-
-	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private long[] _addEntries(CSVRecord csvRecord, String header)

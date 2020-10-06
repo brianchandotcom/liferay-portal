@@ -33,8 +33,6 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#pre" />
 
 		<%
-		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-
 		String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 		boolean defaultFolderView = dlAdminDisplayContext.isDefaultFolderView();
@@ -149,31 +147,6 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN))) {
 			PortalUtil.setPageDescription(folder.getDescription(), request);
 		}
-
-		boolean uploadable = true;
-
-		if (!DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT)) {
-			uploadable = false;
-		}
-		else {
-			List<AssetVocabulary> assetVocabularies = new ArrayList<>();
-
-			assetVocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId)));
-
-			assetVocabularies.sort(new AssetVocabularyGroupLocalizedTitleComparator(scopeGroupId, themeDisplay.getLocale(), true));
-
-			if (!assetVocabularies.isEmpty()) {
-				long classNameId = ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName());
-
-				for (AssetVocabulary assetVocabulary : assetVocabularies) {
-					if (assetVocabulary.isRequired(classNameId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
-						uploadable = false;
-
-						break;
-					}
-				}
-			}
-		}
 		%>
 
 		<aui:script>
@@ -195,20 +168,10 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		</aui:script>
 
 		<aui:script use="liferay-document-library">
-
-			<%
-			String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
-			String[] escapedEntryColumns = new String[entryColumns.length];
-
-			for (int i = 0; i < entryColumns.length; i++) {
-				escapedEntryColumns[i] = HtmlUtil.escapeJS(entryColumns[i]);
-			}
-			%>
-
 			Liferay.component(
 				'<portlet:namespace />DocumentLibrary',
 				new Liferay.Portlet.DocumentLibrary({
-					columnNames: ['<%= StringUtil.merge(escapedEntryColumns, "','") %>'],
+					columnNames: ['<%= dlViewDisplayContext.getColumnNames() %>'],
 
 					<%
 					DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
@@ -243,7 +206,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					scopeGroupId: <%= scopeGroupId %>,
 					searchContainerId: 'entries',
 					trashEnabled: <%= (scopeGroupId == repositoryId) && dlTrashHelper.isTrashEnabled(scopeGroupId, repositoryId) %>,
-					uploadable: <%= uploadable %>,
+					uploadable: <%= dlViewDisplayContext.isUploadable() %>,
 					uploadURL: '<%= dlViewDisplayContext.getUploadURL() %>',
 					viewFileEntryTypeURL:
 						'<%= dlViewDisplayContext.getViewFileEntryURL() %>',

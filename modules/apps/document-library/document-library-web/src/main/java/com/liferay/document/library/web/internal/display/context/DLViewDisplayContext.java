@@ -15,17 +15,33 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
+import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
+import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
@@ -53,6 +69,9 @@ public class DLViewDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
+			new DLRequestHelper(httpServletRequest));
 	}
 
 	public String getAddFileEntryURL() {
@@ -77,6 +96,16 @@ public class DLViewDisplayContext {
 			"folderId", String.valueOf(_dlAdminDisplayContext.getFolderId()));
 
 		return renderURL.toString();
+	}
+
+	public String getColumnNames() {
+		return Stream.of(
+			_dlPortletInstanceSettingsHelper.getEntryColumns()
+		).map(
+			HtmlUtil::escapeJS
+		).collect(
+			Collectors.joining("','")
+		);
 	}
 
 	public String getDownloadEntryURL() {
@@ -231,6 +260,46 @@ public class DLViewDisplayContext {
 		return false;
 	}
 
+	public boolean isUploadable() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!DLFolderPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				_dlAdminDisplayContext.getFolderId(),
+				ActionKeys.ADD_DOCUMENT)) {
+
+			return false;
+		}
+
+		List<AssetVocabulary> assetVocabularies = new ArrayList<>(
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId())));
+
+		assetVocabularies.sort(
+			new AssetVocabularyGroupLocalizedTitleComparator(
+				themeDisplay.getScopeGroupId(), themeDisplay.getLocale(),
+				true));
+
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			DLFileEntryConstants.getClassName());
+
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			if (assetVocabulary.isRequired(
+					classNameId,
+					DLFileEntryTypeConstants.
+						FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private PortletURL _getCurrentPortletURL() {
 		return PortletURLUtil.getCurrent(_renderRequest, _renderResponse);
 	}
@@ -256,6 +325,8 @@ public class DLViewDisplayContext {
 	}
 
 	private final DLAdminDisplayContext _dlAdminDisplayContext;
+	private final DLPortletInstanceSettingsHelper
+		_dlPortletInstanceSettingsHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private String _navigation;
 	private final RenderRequest _renderRequest;

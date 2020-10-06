@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.dao.db;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -158,6 +159,20 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 
 	public Boolean redundantTo(IndexMetadata indexMetadata) {
 		String[] indexMetadataColumnNames = indexMetadata._columnNames;
+
+		if (indexMetadata.isUnique() && isUnique()) {
+			if ((_columnNames.length <= indexMetadataColumnNames.length) &&
+				ArrayUtil.containsAll(indexMetadataColumnNames, _columnNames)) {
+
+				return Boolean.FALSE;
+			}
+
+			if ((_columnNames.length > indexMetadataColumnNames.length) &&
+				ArrayUtil.containsAll(_columnNames, indexMetadataColumnNames)) {
+
+				return Boolean.TRUE;
+			}
+		}
 
 		if (_columnNames.length <= indexMetadataColumnNames.length) {
 			for (int i = 0; i < _columnNames.length; i++) {

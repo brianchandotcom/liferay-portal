@@ -67,7 +67,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -168,7 +167,6 @@ public class CommerceOrderStatusNotificationTest {
 			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED);
 	}
 
-	@Ignore
 	@Test
 	public void testOrderStatusNotifications() throws Exception {
 		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
@@ -241,7 +239,7 @@ public class CommerceOrderStatusNotificationTest {
 				getCommerceNotificationQueueEntriesCount(
 					_commerceChannel.getGroupId());
 
-		Assert.assertEquals(3, commerceNotificationQueueEntriesCount);
+		Assert.assertEquals(4, commerceNotificationQueueEntriesCount);
 
 		_checkCommerceNotificationTemplate(
 			CommerceOrderConstants.ORDER_NOTIFICATION_SHIPPED);
@@ -255,7 +253,7 @@ public class CommerceOrderStatusNotificationTest {
 				getCommerceNotificationQueueEntriesCount(
 					_commerceChannel.getGroupId());
 
-		Assert.assertEquals(4, commerceNotificationQueueEntriesCount);
+		Assert.assertEquals(5, commerceNotificationQueueEntriesCount);
 
 		_checkCommerceNotificationTemplate(
 			CommerceOrderConstants.ORDER_NOTIFICATION_COMPLETED);

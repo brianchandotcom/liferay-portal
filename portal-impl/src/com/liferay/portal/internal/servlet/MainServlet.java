@@ -154,6 +154,7 @@ public class MainServlet extends HttpServlet {
 			unregister();
 		_servletContextServiceRegistration.unregister();
 		_systemCheckModuleServiceLifecycleServiceRegistration.unregister();
+		_licenseInstallModuleServiceLifecycleServiceRegistration.unregister();
 
 		PortalLifecycleUtil.flushDestroys();
 
@@ -1328,6 +1329,21 @@ public class MainServlet extends HttpServlet {
 				new ModuleServiceLifecycle() {
 				},
 				properties);
+
+		properties = HashMapBuilder.<String, Object>put(
+			"module.service.lifecycle", "license.install"
+		).put(
+			"service.vendor", ReleaseInfo.getVendor()
+		).put(
+			"service.version", ReleaseInfo.getVersion()
+		).build();
+
+		_licenseInstallModuleServiceLifecycleServiceRegistration =
+			registry.registerService(
+				ModuleServiceLifecycle.class,
+				new ModuleServiceLifecycle() {
+				},
+				properties);
 	}
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =
@@ -1348,6 +1364,8 @@ public class MainServlet extends HttpServlet {
 			InactiveRequestHandler.class, MainServlet.class,
 			"_inactiveRequestHandler", false);
 
+	private ServiceRegistration<ModuleServiceLifecycle>
+		_licenseInstallModuleServiceLifecycleServiceRegistration;
 	private ServiceRegistration<ModuleServiceLifecycle>
 		_portalInitializedModuleServiceLifecycleServiceRegistration;
 	private ServiceRegistration<ModuleServiceLifecycle>

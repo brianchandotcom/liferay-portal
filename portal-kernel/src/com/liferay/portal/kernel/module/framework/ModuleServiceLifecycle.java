@@ -26,6 +26,9 @@ public interface ModuleServiceLifecycle {
 	public String DATABASE_INITIALIZED =
 		"(module.service.lifecycle=database.initialized)";
 
+	public String LICENSE_INSTALL =
+		"(module.service.lifecycle=license.install)";
+
 	public String PORTAL_INITIALIZED =
 		"(module.service.lifecycle=portal.initialized)";
 

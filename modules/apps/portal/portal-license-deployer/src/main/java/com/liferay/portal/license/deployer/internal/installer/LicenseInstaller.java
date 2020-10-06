@@ -81,7 +81,7 @@ public class LicenseInstaller implements FileInstaller {
 	public void uninstall(File file) {
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	@Reference(target = ModuleServiceLifecycle.LICENSE_INSTALL)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

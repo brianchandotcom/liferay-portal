@@ -5,7 +5,7 @@ definition {
 			key_entryName = "${paymentMethod}",
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
-		SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Type(
 			locator1 = "TextInput#NAME",

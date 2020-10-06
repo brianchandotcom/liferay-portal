@@ -19,6 +19,8 @@ package com.liferay.product.navigation.user.personal.bar.web.internal.constants;
  */
 public class ProductNavigationUserPersonalBarWebKeys {
 
+	public static final String ADD_RECENT_GROUP = "ADD_RECENT_GROUP";
+
 	public static final String NOTIFICATIONS_COUNT = "NOTIFICATIONS_COUNT";
 
 }

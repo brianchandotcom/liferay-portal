@@ -26,6 +26,8 @@ String mvcPath = ParamUtil.getString(request, PortalUtil.getPortletNamespace(por
 if (mvcPath.startsWith("/edit_entry.jsp")) {
 	editEntryCssClass = "edit-entry";
 }
+
+request.setAttribute("ADD_RECENT_GROUP", false);
 %>
 
 <div class="app-builder-standalone">

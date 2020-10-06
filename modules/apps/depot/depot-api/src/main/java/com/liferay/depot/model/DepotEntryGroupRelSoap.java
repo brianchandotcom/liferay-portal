@@ -38,12 +38,15 @@ public class DepotEntryGroupRelSoap implements Serializable {
 		soapModel.setDepotEntryGroupRelId(model.getDepotEntryGroupRelId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setDdmStructuresAvailable(model.isDdmStructuresAvailable());
 		soapModel.setDepotEntryId(model.getDepotEntryId());
 		soapModel.setSearchable(model.isSearchable());
 		soapModel.setToGroupId(model.getToGroupId());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -146,6 +149,22 @@ public class DepotEntryGroupRelSoap implements Serializable {
 		_companyId = companyId;
 	}
 
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -202,16 +221,27 @@ public class DepotEntryGroupRelSoap implements Serializable {
 		_toGroupId = toGroupId;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _depotEntryGroupRelId;
 	private long _groupId;
 	private long _companyId;
+	private long _userId;
+	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _ddmStructuresAvailable;
 	private long _depotEntryId;
 	private boolean _searchable;
 	private long _toGroupId;
+	private Date _lastPublishDate;
 
 }

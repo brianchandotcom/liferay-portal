@@ -26,11 +26,14 @@
 		<field name="depotEntryGroupRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="ddmStructuresAvailable" type="boolean" />
 		<field name="depotEntryId" type="long" />
 		<field name="searchable" type="boolean" />
 		<field name="toGroupId" type="long" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

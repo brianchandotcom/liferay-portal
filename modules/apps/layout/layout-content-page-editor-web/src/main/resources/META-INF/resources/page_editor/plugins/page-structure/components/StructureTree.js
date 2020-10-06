@@ -27,6 +27,7 @@ import {config} from '../../../app/config/index';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../../app/store/index';
+import canActivateEditable from '../../../app/utils/canActivateEditable';
 import {DragAndDropContextProvider} from '../../../app/utils/dragAndDrop/useDragAndDrop';
 import getLayoutDataItemLabel from '../../../app/utils/getLayoutDataItemLabel';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
@@ -64,6 +65,10 @@ export default function PageStructureSidebar() {
 		(state) => state.masterLayout?.masterLayoutData
 	);
 
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
 	const [dragAndDropHoveredItemId, setDragAndDropHoveredItemId] = useState(
 		null
 	);
@@ -88,6 +93,7 @@ export default function PageStructureSidebar() {
 				layoutData,
 				masterLayoutData,
 				onHoverNode,
+				selectedViewportSize,
 			}).children,
 		[
 			activeItemId,
@@ -101,6 +107,7 @@ export default function PageStructureSidebar() {
 			layoutData,
 			masterLayoutData,
 			onHoverNode,
+			selectedViewportSize,
 		]
 	);
 
@@ -154,6 +161,7 @@ function visit(
 		layoutData,
 		masterLayoutData,
 		onHoverNode,
+		selectedViewportSize,
 	}
 ) {
 	const children = [];
@@ -182,7 +190,9 @@ function visit(
 			const type = editableTypes[editableId] || EDITABLE_TYPES.text;
 
 			children.push({
-				activable: canUpdateEditables || type === EDITABLE_TYPES.image,
+				activable:
+					canUpdateEditables &&
+					canActivateEditable(selectedViewportSize, type),
 				children: [],
 				disabled: !isMasterPage && itemInMasterLayout,
 				dragAndDropHoveredItemId,
@@ -210,6 +220,7 @@ function visit(
 					layoutData,
 					masterLayoutData,
 					onHoverNode,
+					selectedViewportSize,
 				}),
 
 				name: Liferay.Language.get('drop-zone'),
@@ -245,6 +256,7 @@ function visit(
 						layoutData,
 						masterLayoutData,
 						onHoverNode,
+						selectedViewportSize,
 					}
 				).children;
 
@@ -261,6 +273,7 @@ function visit(
 					layoutData,
 					masterLayoutData,
 					onHoverNode,
+					selectedViewportSize,
 				});
 
 				children.push(child);

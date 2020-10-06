@@ -16,13 +16,13 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useMemo} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
-import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {config} from '../../config/index';
 import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import {useSelector, useSelectorCallback} from '../../store/index';
+import canActivateEditable from '../../utils/canActivateEditable';
 import {deepEqual} from '../../utils/checkDeepEqual';
 import isMapped from '../../utils/isMapped';
 import {useToControlsId} from '../CollectionItemContext';
@@ -65,6 +65,9 @@ function FragmentContentInteractionsFilter({
 	const isHovered = useIsHovered();
 	const languageId = useSelector((state) => state.languageId);
 	const selectItem = useSelectItem();
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const toControlsId = useToControlsId();
 
@@ -264,7 +267,8 @@ function FragmentContentInteractionsFilter({
 
 		if (
 			editable &&
-			(canUpdateEditables || editable.type === EDITABLE_TYPES.image)
+			canUpdateEditables &&
+			canActivateEditable(selectedViewportSize, editable.type)
 		) {
 			event.stopPropagation();
 

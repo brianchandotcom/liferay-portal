@@ -19,7 +19,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = "3"
 	test CustomizeFileFilter {
 		property custom.properties = "module.framework.properties.file.install.filter=^(?!test-theme).*\\..*"
 		property test.name.skip.portal.instance = "FileInstall#CustomizeFileFilter";
@@ -37,7 +37,7 @@ definition {
 		GogoShell.viewNoOutput(outputContent = "Active");
 	}
 
-	@priority = "5"
+	@priority = "3"
 	test CustomizeNewWatchedDirectory {
 		property custom.properties = "module.framework.properties.file.install.dir=${liferay.home}/daploy";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeNewWatchedDirectory";
@@ -60,7 +60,7 @@ definition {
 		GogoShell.viewOutput(outputContent = "Active");
 	}
 
-	@priority = "5"
+	@priority = "3"
 	test CustomizeRecursiveSubdirectoryMode {
 		property custom.properties = "module.framework.properties.file.install.subdir.mode=recurse";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeRecursiveSubdirectoryMode";
@@ -85,7 +85,7 @@ definition {
 		GogoShell.viewOutput(outputContent = "Active");
 	}
 
-	@priority = "5"
+	@priority = "3"
 	test CustomizeSkipSubdirectoryMode {
 		property custom.properties = "module.framework.properties.file.install.subdir.mode=skip";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeSkipSubdirectoryMode";

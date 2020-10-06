@@ -223,7 +223,6 @@ create index IX_8060F096 on Group_ (liveGroupId, ctCollectionId);
 create index IX_5263ACD8 on Group_ (type_, active_, ctCollectionId);
 create index IX_21CBD878 on Group_ (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_BFEBCBAC on Group_ (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
-create unique index IX_7478D97A on Group_ (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_8BFD4548 on Groups_Orgs (companyId);
 create index IX_6BBB7682 on Groups_Orgs (organizationId);
@@ -559,7 +558,6 @@ create index IX_79724177 on User_ (companyId, modifiedDate, ctCollectionId);
 create index IX_952F78E5 on User_ (companyId, openId[$COLUMN_LENGTH:1024$], ctCollectionId);
 create unique index IX_EEC1E477 on User_ (companyId, screenName[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_BC478292 on User_ (companyId, status, ctCollectionId);
-create unique index IX_8E3173E6 on User_ (companyId, userId, ctCollectionId);
 create unique index IX_C15FB5CF on User_ (contactId, ctCollectionId);
 create index IX_E1D5EE24 on User_ (emailAddress[$COLUMN_LENGTH:254$], ctCollectionId);
 create index IX_64D54302 on User_ (portraitId, ctCollectionId);

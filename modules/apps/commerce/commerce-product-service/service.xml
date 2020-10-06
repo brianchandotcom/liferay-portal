@@ -1084,6 +1084,7 @@
 		<exception>CPAttachmentFileEntryDisplayDate</exception>
 		<exception>CPAttachmentFileEntryExpirationDate</exception>
 		<exception>CPAttachmentFileEntryName</exception>
+		<exception>CPAttachmentFileEntryProtocol</exception>
 		<exception>CPAttachmentFileEntrySize</exception>
 		<exception>CPDefinitionDisplayDate</exception>
 		<exception>CPDefinitionExpirationDate</exception>

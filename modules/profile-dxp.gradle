@@ -18,6 +18,10 @@ checkoutDXPScript {
 
 	doLast {
 		if (System.getenv("JENKINS_HOME")) {
+			if (gitRepositoryDir.exists()) {
+				delete gitRepositoryDir
+			}
+
 			logger.lifecycle "git clone --branch={} --depth=1 --no-checkout --single-branch {} {}", gitBranchName, "git@github-dev.liferay.com:liferay/liferay-portal-ee.git", gitRepositoryDir.name
 
 			exec {

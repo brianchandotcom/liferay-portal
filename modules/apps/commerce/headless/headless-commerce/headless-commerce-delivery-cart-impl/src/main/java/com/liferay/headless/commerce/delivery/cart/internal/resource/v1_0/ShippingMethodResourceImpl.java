@@ -48,6 +48,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Andrea Sbarra
  */
 @Component(
+	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/shipping-method.properties",
 	scope = ServiceScope.PROTOTYPE, service = ShippingMethodResource.class
 )
@@ -72,8 +73,8 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 					_commerceShippingMethodService.getCommerceShippingMethods(
 						commerceChannel.getGroupId(),
 						shippingAddress.getCommerceCountryId(), true),
-					shippingMethod -> _toShippingMethod(shippingMethod,
-					commerceChannel, commerceOrder)));
+					shippingMethod -> _toShippingMethod(
+						shippingMethod, commerceChannel, commerceOrder)));
 		}
 
 		return super.getCartShippingMethodsPage(cartId);

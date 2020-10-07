@@ -88,6 +88,10 @@ public class OpenAPIResourceImpl {
 
 			add(CartItemResourceImpl.class);
 
+			add(PaymentMethodResourceImpl.class);
+
+			add(ShippingMethodResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

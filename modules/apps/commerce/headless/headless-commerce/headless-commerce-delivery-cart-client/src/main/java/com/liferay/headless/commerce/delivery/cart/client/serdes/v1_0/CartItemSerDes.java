@@ -84,6 +84,30 @@ public class CartItemSerDes {
 			sb.append(_toJSON(cartItem.getCustomFields()));
 		}
 
+		if (cartItem.getErrorMessages() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"errorMessages\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < cartItem.getErrorMessages().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(cartItem.getErrorMessages()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < cartItem.getErrorMessages().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (cartItem.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -220,6 +244,16 @@ public class CartItemSerDes {
 			sb.append("\"");
 		}
 
+		if (cartItem.getValid() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"valid\": ");
+
+			sb.append(cartItem.getValid());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -250,6 +284,14 @@ public class CartItemSerDes {
 		}
 		else {
 			map.put("customFields", String.valueOf(cartItem.getCustomFields()));
+		}
+
+		if (cartItem.getErrorMessages() == null) {
+			map.put("errorMessages", null);
+		}
+		else {
+			map.put(
+				"errorMessages", String.valueOf(cartItem.getErrorMessages()));
 		}
 
 		if (cartItem.getId() == null) {
@@ -338,6 +380,13 @@ public class CartItemSerDes {
 			map.put("thumbnail", String.valueOf(cartItem.getThumbnail()));
 		}
 
+		if (cartItem.getValid() == null) {
+			map.put("valid", null);
+		}
+		else {
+			map.put("valid", String.valueOf(cartItem.getValid()));
+		}
+
 		return map;
 	}
 
@@ -375,6 +424,12 @@ public class CartItemSerDes {
 					cartItem.setCustomFields(
 						(Map)CartItemSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "errorMessages")) {
+				if (jsonParserFieldValue != null) {
+					cartItem.setErrorMessages(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -441,6 +496,11 @@ public class CartItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
 				if (jsonParserFieldValue != null) {
 					cartItem.setThumbnail((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "valid")) {
+				if (jsonParserFieldValue != null) {
+					cartItem.setValid((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (jsonParserFieldName.equals("status")) {

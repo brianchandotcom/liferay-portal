@@ -129,6 +129,16 @@ public class Mutation {
 			cartResource -> cartResource.putCartBatch(callbackURL, object));
 	}
 
+	@GraphQLField
+	public Cart createCartCheckout(@GraphQLName("cartId") Long cartId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartResource -> cartResource.postCartCheckout(cartId));
+	}
+
 	@GraphQLField(
 		description = "Add new Items to a Cart, return the whole Cart updated."
 	)

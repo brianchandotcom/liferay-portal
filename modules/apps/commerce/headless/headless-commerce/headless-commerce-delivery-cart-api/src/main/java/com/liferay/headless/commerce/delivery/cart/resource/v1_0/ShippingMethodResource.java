@@ -14,13 +14,11 @@
 
 package com.liferay.headless.commerce.delivery.cart.resource.v1_0;
 
-import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
-import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CouponCode;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingMethod;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Locale;
 
@@ -29,7 +27,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -44,35 +41,14 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface CartResource {
+public interface ShippingMethodResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Response deleteCart(Long cartId) throws Exception;
-
-	public Response deleteCartBatch(String callbackURL, Object object)
+	public Page<ShippingMethod> getCartShippingMethodsPage(Long cartId)
 		throws Exception;
-
-	public Cart getCart(Long cartId) throws Exception;
-
-	public Cart patchCart(Long cartId, Cart cart) throws Exception;
-
-	public Cart putCart(Long cartId, Cart cart) throws Exception;
-
-	public Response putCartBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Cart postCartCheckout(Long cartId) throws Exception;
-
-	public Cart postCartCouponCode(Long cartId, CouponCode couponCode)
-		throws Exception;
-
-	public Page<Cart> getChannelCartsPage(Long channelId, Pagination pagination)
-		throws Exception;
-
-	public Cart postChannelCart(Long channelId, Cart cart) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -108,7 +84,7 @@ public interface CartResource {
 	@ProviderType
 	public interface Builder {
 
-		public CartResource build();
+		public ShippingMethodResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

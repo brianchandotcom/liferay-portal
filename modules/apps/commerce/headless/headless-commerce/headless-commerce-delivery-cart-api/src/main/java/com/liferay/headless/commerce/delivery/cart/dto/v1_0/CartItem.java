@@ -112,6 +112,34 @@ public class CartItem implements Serializable {
 	protected Map<String, ?> customFields;
 
 	@Schema
+	public String[] getErrorMessages() {
+		return errorMessages;
+	}
+
+	public void setErrorMessages(String[] errorMessages) {
+		this.errorMessages = errorMessages;
+	}
+
+	@JsonIgnore
+	public void setErrorMessages(
+		UnsafeSupplier<String[], Exception> errorMessagesUnsafeSupplier) {
+
+		try {
+			errorMessages = errorMessagesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] errorMessages;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -439,6 +467,34 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String thumbnail;
 
+	@Schema
+	public Boolean getValid() {
+		return valid;
+	}
+
+	public void setValid(Boolean valid) {
+		this.valid = valid;
+	}
+
+	@JsonIgnore
+	public void setValid(
+		UnsafeSupplier<Boolean, Exception> validUnsafeSupplier) {
+
+		try {
+			valid = validUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean valid;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -494,6 +550,30 @@ public class CartItem implements Serializable {
 			sb.append("\"customFields\": ");
 
 			sb.append(_toJSON(customFields));
+		}
+
+		if (errorMessages != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"errorMessages\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < errorMessages.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(errorMessages[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < errorMessages.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (id != null) {
@@ -630,6 +710,16 @@ public class CartItem implements Serializable {
 			sb.append(_escape(thumbnail));
 
 			sb.append("\"");
+		}
+
+		if (valid != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"valid\": ");
+
+			sb.append(valid);
 		}
 
 		sb.append("}");

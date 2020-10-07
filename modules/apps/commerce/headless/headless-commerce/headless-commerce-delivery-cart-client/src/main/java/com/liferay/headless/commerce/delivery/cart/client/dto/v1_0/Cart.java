@@ -267,6 +267,27 @@ public class Cart implements Cloneable, Serializable {
 
 	protected Map<String, ?> customFields;
 
+	public String[] getErrorMessages() {
+		return errorMessages;
+	}
+
+	public void setErrorMessages(String[] errorMessages) {
+		this.errorMessages = errorMessages;
+	}
+
+	public void setErrorMessages(
+		UnsafeSupplier<String[], Exception> errorMessagesUnsafeSupplier) {
+
+		try {
+			errorMessages = errorMessagesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] errorMessages;
+
 	public Long getId() {
 		return id;
 	}
@@ -684,6 +705,27 @@ public class Cart implements Cloneable, Serializable {
 	}
 
 	protected Boolean useAsBilling;
+
+	public Boolean getValid() {
+		return valid;
+	}
+
+	public void setValid(Boolean valid) {
+		this.valid = valid;
+	}
+
+	public void setValid(
+		UnsafeSupplier<Boolean, Exception> validUnsafeSupplier) {
+
+		try {
+			valid = validUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean valid;
 
 	public Status getWorkflowStatusInfo() {
 		return workflowStatusInfo;

@@ -379,6 +379,21 @@ public abstract class BaseCartResourceTestCase {
 	}
 
 	@Test
+	public void testPostCartCheckout() throws Exception {
+		Cart randomCart = randomCart();
+
+		Cart postCart = testPostCartCheckout_addCart(randomCart);
+
+		assertEquals(randomCart, postCart);
+		assertValid(postCart);
+	}
+
+	protected Cart testPostCartCheckout_addCart(Cart cart) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostCartCouponCode() throws Exception {
 		Cart randomCart = randomCart();
 
@@ -647,6 +662,14 @@ public abstract class BaseCartResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
+				if (cart.getErrorMessages() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"lastPriceUpdateDate", additionalAssertFieldName)) {
 
@@ -805,6 +828,14 @@ public abstract class BaseCartResourceTestCase {
 
 			if (Objects.equals("useAsBilling", additionalAssertFieldName)) {
 				if (cart.getUseAsBilling() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("valid", additionalAssertFieldName)) {
+				if (cart.getValid() == null) {
 					valid = false;
 				}
 
@@ -1014,6 +1045,16 @@ public abstract class BaseCartResourceTestCase {
 				if (!equals(
 						(Map)cart1.getCustomFields(),
 						(Map)cart2.getCustomFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						cart1.getErrorMessages(), cart2.getErrorMessages())) {
 
 					return false;
 				}
@@ -1235,6 +1276,14 @@ public abstract class BaseCartResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("valid", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(cart1.getValid(), cart2.getValid())) {
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"workflowStatusInfo", additionalAssertFieldName)) {
 
@@ -1425,6 +1474,11 @@ public abstract class BaseCartResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("errorMessages")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1606,6 +1660,11 @@ public abstract class BaseCartResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("valid")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("workflowStatusInfo")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1688,6 +1747,7 @@ public abstract class BaseCartResourceTestCase {
 					RandomTestUtil.randomString());
 				status = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				useAsBilling = RandomTestUtil.randomBoolean();
+				valid = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

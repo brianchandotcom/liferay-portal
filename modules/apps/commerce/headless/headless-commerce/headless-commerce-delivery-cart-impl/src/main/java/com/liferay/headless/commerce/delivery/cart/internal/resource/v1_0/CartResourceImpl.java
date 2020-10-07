@@ -24,28 +24,34 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
+import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CouponCode;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Error;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -501,7 +507,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	private void _validateBillingAddressSelected(
 			CommerceOrder commerceOrder, List<Error> errors)
-		throws PortalException {
+		throws Exception {
 
 		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
 		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
@@ -514,8 +520,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			errors.add(error);
 		}
 
-		if (shippingAddress != null && shippingAddress.getType() ==
-				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING) {
+		if ((shippingAddress != null) &&
+			(shippingAddress.getType() ==
+				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING)) {
 
 			if (billingAddress.getCommerceAddressId() !=
 					shippingAddress.getCommerceAddressId()) {
@@ -556,7 +563,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	private List<Error> _validateOrder(CommerceOrder commerceOrder)
-		throws PortalException {
+		throws Exception {
 
 		List<Error> errors = new ArrayList<>();
 
@@ -588,7 +595,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	private void _validateShippingAddressSelected(
 			CommerceOrder commerceOrder, List<Error> errors)
-		throws PortalException {
+		throws Exception {
 
 		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
 
@@ -613,7 +620,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	private void _validateShippingMethodSelected(
 			CommerceOrder commerceOrder, List<Error> errors)
-		throws PortalException {
+		throws Exception {
 
 		if (!_commerceShippingHelper.isShippable(commerceOrder)) {
 			Error error = new Error();

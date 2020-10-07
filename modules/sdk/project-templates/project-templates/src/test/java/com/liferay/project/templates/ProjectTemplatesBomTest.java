@@ -28,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.Properties;
+import java.util.stream.IntStream;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -61,8 +62,20 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 	public void testBomVersion() throws Exception {
 		Assume.assumeTrue(_isBomTest());
 
-		Version version = Version.parseVersion(
-			_BOM_VERSION.replaceAll("-", "."));
+		String normalizedBomVersion = _BOM_VERSION.replaceAll("-", ".");
+
+		IntStream intStream = normalizedBomVersion.chars();
+
+		long componentCount = intStream.filter(
+			components -> components == '.'
+		).count();
+
+		if (componentCount > 3) {
+			normalizedBomVersion = normalizedBomVersion.substring(
+				0, normalizedBomVersion.lastIndexOf("."));
+		}
+
+		Version version = Version.parseVersion(normalizedBomVersion);
 
 		File workspaceDir = buildWorkspace(
 			temporaryFolder, version.getMajor() + "." + version.getMinor());

@@ -18,10 +18,6 @@ checkoutDXPScript {
 
 	doLast {
 		if (System.getenv("JENKINS_HOME")) {
-			if (gitRepositoryDir.exists()) {
-				delete gitRepositoryDir
-			}
-
 			logger.lifecycle "git clone --branch={} --depth=1 --no-checkout --single-branch {} {}", gitBranchName, "git@github-dev.liferay.com:liferay/liferay-portal-ee.git", gitRepositoryDir.name
 
 			exec {
@@ -66,24 +62,17 @@ checkoutDXPScript {
 		}
 
 		exec {
-			commandLine "git", "log", "--no-decorate", "-1"
-			workingDir = gitRepositoryDir
-		}
-
-		exec {
 			commandLine "git", "checkout", "refs/heads/" + gitBranchName, "--", "build-working-dir.xml", "working.dir.properties"
 			workingDir = gitRepositoryDir
 		}
 
 		ant.move(file: new File(gitRepositoryDir, "build-working-dir.xml"), todir: projectDir.parentFile)
 		ant.move(file: new File(gitRepositoryDir, "working.dir.properties"), todir: projectDir.parentFile)
-
-		delete gitRepositoryDir
 	}
 }
 
 removeDXPScript {
 	doLast {
-		delete new File(projectDir.parentFile, "build-working-dir.xml"), new File(projectDir.parentFile, "working.dir.properties")
+		delete gitRepositoryDir, new File(projectDir.parentFile, "build-working-dir.xml"), new File(projectDir.parentFile, "working.dir.properties")
 	}
 }

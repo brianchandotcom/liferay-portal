@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -112,7 +113,7 @@ public class StyleBookEntryUtil {
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"cssVariable",
+			FrontendTokenMapping.TYPE_CSS_VARIABLE,
 			() -> {
 				JSONArray mappingsJSONArray =
 					frontendTokenJSONObject.getJSONArray("mappings");
@@ -123,7 +124,7 @@ public class StyleBookEntryUtil {
 
 					if (Objects.equals(
 							mappingJSONObject.getString("type"),
-							"cssVariable")) {
+							FrontendTokenMapping.TYPE_CSS_VARIABLE)) {
 
 						return mappingJSONObject.getString("value");
 					}

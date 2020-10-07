@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Analytics Settings Web
 Bundle-SymbolicName: com.liferay.analytics.settings.web
-Bundle-Version: 4.0.35
+Bundle-Version: 5.0.0
 Web-ContextPath: /analytics-settings-web
 -dsannotations-options: inherit
 -liferay-aggregate-resource-bundles: com.liferay.portal.settings.lang

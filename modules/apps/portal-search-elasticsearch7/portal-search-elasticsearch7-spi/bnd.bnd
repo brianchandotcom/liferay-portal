@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search Elasticsearch 7 SPI
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch7.spi
-Bundle-Version: 2.0.7
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.portal.search.elasticsearch7.spi.index,\
 	com.liferay.portal.search.elasticsearch7.spi.index.helper

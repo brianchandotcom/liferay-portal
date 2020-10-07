@@ -1,6 +1,6 @@
 Bundle-Name: Liferay App Builder Workflow API
 Bundle-SymbolicName: com.liferay.app.builder.workflow.api
-Bundle-Version: 3.0.4
+Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.app.builder.workflow.exception,\
 	com.liferay.app.builder.workflow.model,\

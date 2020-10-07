@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Export Import Resources Importer
 Bundle-SymbolicName: com.liferay.exportimport.resources.importer
-Bundle-Version: 5.0.16
+Bundle-Version: 6.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.staging.lang)";\

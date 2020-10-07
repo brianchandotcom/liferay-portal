@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Segments Simulation Web
 Bundle-SymbolicName: com.liferay.segments.simulation.web
-Bundle-Version: 2.0.11
+Bundle-Version: 3.0.0
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Provide-Capability:\
 	liferay.resource.bundle;\

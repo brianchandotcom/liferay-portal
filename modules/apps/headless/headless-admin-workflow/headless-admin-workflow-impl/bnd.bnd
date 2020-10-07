@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Headless Admin Workflow Implementation
 Bundle-SymbolicName: com.liferay.headless.admin.workflow.impl
-Bundle-Version: 4.0.29
+Bundle-Version: 5.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.headless.admin.workflow.impl),(bundle.symbolic.name=com.liferay.portal.workflow.lang)";\

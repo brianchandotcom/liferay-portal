@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Application API
 Bundle-SymbolicName: com.liferay.commerce.application.api
-Bundle-Version: 4.0.8
+Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.commerce.application.constants,\
 	com.liferay.commerce.application.exception,\

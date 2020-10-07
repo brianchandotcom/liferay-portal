@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Social Bookmarks Taglib
 Bundle-SymbolicName: com.liferay.social.bookmarks.taglib
-Bundle-Version: 3.0.11
+Bundle-Version: 4.0.0
 Export-Package: com.liferay.social.bookmarks.taglib.servlet.taglib
 Provide-Capability:\
 	osgi.extender;\

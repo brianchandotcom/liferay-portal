@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Trash Test Utilities
 Bundle-SymbolicName: com.liferay.trash.test.util
-Bundle-Version: 4.2.6
+Bundle-Version: 5.0.0
 Export-Package: com.liferay.trash.test.util

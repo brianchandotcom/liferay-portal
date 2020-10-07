@@ -19,5 +19,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "1.0.19"
+	"version": "2.0.0"
 }

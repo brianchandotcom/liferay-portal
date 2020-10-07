@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal OSGi Web WAB Generator Implementation
 Bundle-SymbolicName: com.liferay.portal.osgi.web.wab.generator.impl
-Bundle-Version: 3.0.12
+Bundle-Version: 4.0.0
 Import-Package:\
 	!com.liferay.util.xml,\
 	\

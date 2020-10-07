@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Machine Learning API
 Bundle-SymbolicName: com.liferay.commerce.machine.learning.api
-Bundle-Version: 4.0.8
+Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.commerce.machine.learning.forecast.model,\
 	com.liferay.commerce.machine.learning.forecast.service,\

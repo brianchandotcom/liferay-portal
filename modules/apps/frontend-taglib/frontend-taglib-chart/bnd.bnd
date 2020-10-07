@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Taglib Chart
 Bundle-SymbolicName: com.liferay.frontend.taglib.chart
-Bundle-Version: 3.0.12
+Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.frontend.taglib.chart.model,\
 	com.liferay.frontend.taglib.chart.model.area,\

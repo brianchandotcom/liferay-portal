@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Analytics API
 Bundle-SymbolicName: com.liferay.analytics.api
-Bundle-Version: 4.0.7
+Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.analytics.client,\
 	com.liferay.analytics.data.binding,\

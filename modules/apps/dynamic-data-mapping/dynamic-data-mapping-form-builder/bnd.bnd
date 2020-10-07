@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Form Builder
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.builder
-Bundle-Version: 3.0.51
+Bundle-Version: 4.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\

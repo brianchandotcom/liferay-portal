@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Application List
 Bundle-SymbolicName: com.liferay.commerce.application.list
-Bundle-Version: 5.1.2
+Bundle-Version: 6.0.0
 Export-Package: com.liferay.commerce.application.list.constants
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
 Provide-Capability:\

@@ -52,9 +52,6 @@ portletName = dlRequestHelper.getResourcePortletName();
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServiceSettings();
 DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
-
-boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 %>
 
 <%@ include file="/document_library/init-ext.jsp" %>

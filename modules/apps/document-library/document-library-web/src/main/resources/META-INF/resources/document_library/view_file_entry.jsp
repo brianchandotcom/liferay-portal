@@ -115,6 +115,10 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="rowIdsFolder" type="hidden" />
 	</aui:form>
 
+	<%
+	boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+	%>
+
 	<c:if test="<%= !portletTitleBasedNavigation && showHeader && (folder != null) %>">
 		<liferay-ui:header
 			backURL="<%= redirect %>"
@@ -215,6 +219,10 @@ if (portletTitleBasedNavigation) {
 				%>
 
 			</c:if>
+
+			<%
+			boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
+			%>
 
 			<c:if test="<%= showComments && fileEntry.isRepositoryCapabilityProvided(CommentCapability.class) %>">
 				<liferay-comment:discussion

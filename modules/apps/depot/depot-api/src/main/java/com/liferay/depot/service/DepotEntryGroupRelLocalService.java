@@ -216,6 +216,10 @@ public interface DepotEntryGroupRelLocalService
 	public DepotEntryGroupRel fetchDepotEntryGroupRel(
 		long depotEntryGroupRelId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DepotEntryGroupRel fetchDepotEntryGroupRelByDepotEntryIdToGroupId(
+		long depotEntryId, long toGroupId);
+
 	/**
 	 * Returns the depot entry group rel matching the UUID and group.
 	 *

@@ -36,6 +36,7 @@
 			"<rootDir>/test/utilities"
 		]
 	},
+	"main": "index.js",
 	"name": "commerce-frontend-js",
 	"private": true,
 	"scripts": {

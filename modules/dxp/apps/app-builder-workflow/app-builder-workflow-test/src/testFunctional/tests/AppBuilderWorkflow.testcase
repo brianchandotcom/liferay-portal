@@ -39,6 +39,57 @@ definition {
 		}
 	}
 
+	@description = "Assign an entry (task) through the App's table view"
+	@priority = "5"
+	test AssignEntryThroughTableView {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.createBasicWorkflowAppWith1ExtraStep(
+			assignee = "Administrator",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			isCreatingViaPlusIcon = "false",
+			objectName = "my custom object",
+			tableViewName = "My Table View",
+			workflowAppName = "My Workflow App");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content");
+
+		AppBuilderWorkflow.submit();
+		Refresh();
+
+		AppBuilderWorkflow.verifyAssignToOption(itemName = "Content");
+
+		AppBuilderWorkflow.assignEntry(
+			assignee = "Test Test",
+			itemName = "Content");
+
+		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "Test Test");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Test Test");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Administrator");
+	}
+
 	@description = "Create a Basic Workflow App"
 	@priority = "5"
 	test CreateBasicWorkflowApp {

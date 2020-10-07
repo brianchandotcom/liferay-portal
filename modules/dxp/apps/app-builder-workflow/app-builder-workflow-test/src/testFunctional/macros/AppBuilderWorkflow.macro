@@ -234,6 +234,27 @@ definition {
 			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
 	}
 
+	macro verifyAssignToOption {
+
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+
+		while (IsElementNotPresent(key_menuItem = "Assign to", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+
+			Refresh();
+			Pause(locator1 = "3000");
+			Click(
+				key_itemName = "${itemName}",
+				locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+		}
+
+		AssertTextEquals(
+			key_menuItem = "Assign to",
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			value1 = "Assign to");
+	}
+
 	macro waitForButtonNotPresent {
 
 		while (IsElementPresent(key_text = "${buttonName}", locator1 = "Button#ANY")) {

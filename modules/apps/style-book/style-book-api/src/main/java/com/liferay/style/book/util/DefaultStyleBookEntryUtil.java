@@ -25,15 +25,10 @@ import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
  */
 public class DefaultStyleBookEntryUtil {
 
-	public static StyleBookEntry getDefaultStyleBookEntry(Layout layout) {
+	public static StyleBookEntry getDefaultMasterStyleBookEntry(Layout layout) {
 		StyleBookEntry styleBookEntry = null;
 
-		if (layout.getStyleBookEntryId() > 0) {
-			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-				layout.getStyleBookEntryId());
-		}
-
-		if ((styleBookEntry == null) && (layout.getMasterLayoutPlid() > 0)) {
+		if (layout.getMasterLayoutPlid() > 0) {
 			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
 				layout.getMasterLayoutPlid());
 
@@ -48,6 +43,21 @@ public class DefaultStyleBookEntryUtil {
 		}
 
 		return styleBookEntry;
+	}
+
+	public static StyleBookEntry getDefaultStyleBookEntry(Layout layout) {
+		StyleBookEntry styleBookEntry = null;
+
+		if (layout.getStyleBookEntryId() > 0) {
+			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+				layout.getStyleBookEntryId());
+		}
+
+		if (styleBookEntry != null) {
+			return styleBookEntry;
+		}
+
+		return getDefaultMasterStyleBookEntry(layout);
 	}
 
 }

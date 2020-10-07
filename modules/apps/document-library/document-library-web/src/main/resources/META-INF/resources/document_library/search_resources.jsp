@@ -17,6 +17,8 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
+
 long repositoryId = ParamUtil.getLong(request, "repositoryId");
 
 if (repositoryId == 0) {

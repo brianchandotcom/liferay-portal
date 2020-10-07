@@ -17,6 +17,8 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
+
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
 String currentFolder = ParamUtil.getString(request, "curFolder");
@@ -52,7 +54,7 @@ String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
-if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != rootFolderId)) {
+if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != dlAdminDisplayContext.getRootFolderId())) {
 	String redirect = ParamUtil.getString(request, "redirect");
 
 	if (Validator.isNotNull(redirect)) {

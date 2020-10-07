@@ -17,11 +17,13 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
+
 long folderId = ParamUtil.getLong(request, "folderId");
 
 Folder folder = null;
 
-if (folderId != rootFolderId) {
+if (folderId != dlAdminDisplayContext.getRootFolderId()) {
 	folder = DLAppServiceUtil.getFolder(folderId);
 }
 
@@ -75,7 +77,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 			<c:if test="<%= mountFolders.isEmpty() && (folder != null) %>">
 				<clay:link
-					cssClass='<%= (searchFolderId == rootFolderId) ? "active" : "" %>'
+					cssClass='<%= (searchFolderId == dlAdminDisplayContext.getRootFolderId()) ? "active" : "" %>'
 					displayType="secondary"
 					href="<%= searchEverywhereURL.toString() %>"
 					label="everywhere"
@@ -108,7 +110,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 				%>
 
 				<clay:link
-					cssClass='<%= ((searchRepositoryId == scopeGroupId) && (searchFolderId == rootFolderId)) ? "active" : "" %>'
+					cssClass='<%= ((searchRepositoryId == scopeGroupId) && (searchFolderId == dlAdminDisplayContext.getRootFolderId())) ? "active" : "" %>'
 					displayType="secondary"
 					href="<%= searchRepositoryURL.toString() %>"
 					icon="repository"

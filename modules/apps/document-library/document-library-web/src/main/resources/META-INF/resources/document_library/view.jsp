@@ -17,6 +17,8 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
+
 DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisplayContext, request, renderRequest, renderResponse);
 %>
 

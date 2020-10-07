@@ -49,14 +49,9 @@ String portletId = dlRequestHelper.getResourcePortletId();
 
 portletName = dlRequestHelper.getResourcePortletName();
 
-DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
-
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServiceSettings();
 DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
-
-long rootFolderId = dlAdminDisplayContext.getRootFolderId();
-String rootFolderName = dlAdminDisplayContext.getRootFolderName();
 
 boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);

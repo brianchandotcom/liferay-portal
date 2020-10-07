@@ -198,6 +198,8 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		).put(
 			"Bunyan", "6.0.x"
 		).put(
+			"Cavanaugh", "7.4.x"
+		).put(
 			"Judson", "7.1.x"
 		).put(
 			"Mueller", "7.2.x"

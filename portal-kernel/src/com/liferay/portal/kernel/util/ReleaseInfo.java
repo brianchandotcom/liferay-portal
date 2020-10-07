@@ -129,7 +129,7 @@ public class ReleaseInfo {
 
 	private static final int _BUILD_NUMBER = GetterUtil.getInteger(_BUILD);
 
-	private static final String _CODE_NAME = "Athanasius";
+	private static final String _CODE_NAME = "Cavanaugh";
 
 	private static final String _DATE = "@release.info.date@";
 

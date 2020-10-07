@@ -86,15 +86,12 @@ public class UpdateAnnouncementsDeliveriesMVCActionCommand
 		for (String type : AnnouncementsEntryConstants.TYPES) {
 			boolean email = ParamUtil.getBoolean(
 				actionRequest, "announcementsType" + type + "Email");
-			boolean sms = ParamUtil.getBoolean(
-				actionRequest, "announcementsType" + type + "Sms");
 
 			AnnouncementsDelivery announcementsDelivery =
 				new AnnouncementsDeliveryImpl();
 
 			announcementsDelivery.setType(type);
 			announcementsDelivery.setEmail(email);
-			announcementsDelivery.setSms(sms);
 
 			announcementsDeliveries.add(announcementsDelivery);
 		}

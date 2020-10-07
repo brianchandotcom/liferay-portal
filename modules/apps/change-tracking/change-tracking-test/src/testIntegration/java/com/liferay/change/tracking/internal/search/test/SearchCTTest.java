@@ -87,9 +87,12 @@ public class SearchCTTest {
 		JournalArticle deletedJournalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
-		JournalArticle modifiedJournalArticle = JournalTestUtil.addArticle(
+
+		JournalArticle modifiedJournalArticle1 = JournalTestUtil.addArticle(
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
+
+		JournalArticle modifiedJournalArticle2 = null;
 
 		Layout addedLayout = null;
 
@@ -104,15 +107,11 @@ public class SearchCTTest {
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString());
 
-			deletedJournalArticle =
-				_journalArticleLocalService.deleteJournalArticle(
-					deletedJournalArticle);
+			deletedJournalArticle = _journalArticleLocalService.deleteArticle(
+				deletedJournalArticle);
 
-			modifiedJournalArticle.setTitle("testModifyJournalArticle");
-
-			modifiedJournalArticle =
-				_journalArticleLocalService.updateJournalArticle(
-					modifiedJournalArticle);
+			modifiedJournalArticle2 = JournalTestUtil.updateArticle(
+				modifiedJournalArticle1, "testModifyJournalArticle");
 
 			addedLayout = LayoutTestUtil.addLayout(_group);
 
@@ -125,42 +124,81 @@ public class SearchCTTest {
 
 		assertCollectionHits(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, _LEGACY_INDEXER_CLASSES,
-			deletedJournalArticle, modifiedJournalArticle);
+			deletedJournalArticle, modifiedJournalArticle1);
+
+		assertCollectionHits(
+			_ctCollection.getCtCollectionId(), _LEGACY_INDEXER_CLASSES,
+			addedJournalArticle, modifiedJournalArticle2);
 
 		assertCollectionHits(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, _NEW_INDEXER_CLASSES,
 			deletedLayout, modifiedLayout);
 
 		assertCollectionHits(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, _ALL_INDEXER_CLASSES,
-			deletedJournalArticle, deletedLayout, modifiedJournalArticle,
-			modifiedLayout);
-
-		assertCollectionHits(
-			_ctCollection.getCtCollectionId(), _LEGACY_INDEXER_CLASSES,
-			addedJournalArticle, modifiedJournalArticle);
-
-		assertCollectionHits(
 			_ctCollection.getCtCollectionId(), _NEW_INDEXER_CLASSES,
 			addedLayout, modifiedLayout);
-
-		assertCollectionHits(
-			_ctCollection.getCtCollectionId(), _ALL_INDEXER_CLASSES,
-			addedJournalArticle, addedLayout, modifiedJournalArticle,
-			modifiedLayout);
 
 		assertAllHits(
 			_ALL_INDEXER_CLASSES,
 			getUIDs(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, deletedJournalArticle,
-				deletedLayout, modifiedJournalArticle, modifiedLayout),
+				deletedLayout, modifiedJournalArticle1, modifiedLayout),
 			getUIDs(
 				_ctCollection.getCtCollectionId(), addedJournalArticle,
-				addedLayout, modifiedJournalArticle, modifiedLayout));
+				addedLayout, modifiedJournalArticle2, modifiedLayout));
 	}
 
 	@Test
-	public void testPublishAndUndo() throws Exception {
+	public void testPublishAndUndoArticle() throws Exception {
+		JournalArticle addedJournalArticle = null;
+
+		JournalArticle deletedJournalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		JournalArticle modifiedJournalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		JournalArticle modifiedJournalArticle2 = null;
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			addedJournalArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+
+			deletedJournalArticle = _journalArticleLocalService.deleteArticle(
+				deletedJournalArticle);
+
+			modifiedJournalArticle2 = JournalTestUtil.updateArticle(
+				modifiedJournalArticle1, "testModifyJournalArticle");
+		}
+
+		assertCollectionHits(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION, _LEGACY_INDEXER_CLASSES,
+			deletedJournalArticle, modifiedJournalArticle1);
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		assertCollectionHits(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION, _LEGACY_INDEXER_CLASSES,
+			addedJournalArticle, modifiedJournalArticle2);
+
+		_undoCTCollection = _ctCollectionLocalService.undoCTCollection(
+			_ctCollection.getCtCollectionId(), _ctCollection.getUserId(),
+			"(undo) " + _ctCollection.getName(), StringPool.BLANK);
+
+		assertCollectionHits(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION, _LEGACY_INDEXER_CLASSES,
+			addedJournalArticle, modifiedJournalArticle2);
+	}
+
+	@Test
+	public void testPublishAndUndoLayout() throws Exception {
 		Layout addedLayout = null;
 
 		Layout deletedLayout = LayoutTestUtil.addLayout(_group);

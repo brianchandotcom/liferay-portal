@@ -51,6 +51,16 @@ public class DisplayPageUsagesDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
+	public long getClassNameId() {
+		if (Validator.isNotNull(_classNameId)) {
+			return _classNameId;
+		}
+
+		_classNameId = ParamUtil.getLong(_httpServletRequest, "classNameId");
+
+		return _classNameId;
+	}
+
 	public long getLayoutPageTemplateEntryId() {
 		if (Validator.isNotNull(_layoutPageTemplateEntryId)) {
 			return _layoutPageTemplateEntryId;
@@ -172,6 +182,19 @@ public class DisplayPageUsagesDisplayContext {
 		return assetEntry.getTitle(locale);
 	}
 
+	public boolean isDefaultTemplate() {
+		if (_defaultTemplate != null) {
+			return _defaultTemplate;
+		}
+
+		_defaultTemplate = ParamUtil.getBoolean(
+			_httpServletRequest, "defaultTemplate");
+
+		return _defaultTemplate;
+	}
+
+	private Long _classNameId;
+	private Boolean _defaultTemplate;
 	private final HttpServletRequest _httpServletRequest;
 	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;

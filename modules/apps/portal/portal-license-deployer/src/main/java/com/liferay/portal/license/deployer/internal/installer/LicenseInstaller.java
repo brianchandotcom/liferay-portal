@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Amos Fong
  */
-@Component(immediate = true, service = FileInstaller.class)
+@Component(enabled = false, immediate = true, service = FileInstaller.class)
 public class LicenseInstaller implements FileInstaller {
 
 	@Override

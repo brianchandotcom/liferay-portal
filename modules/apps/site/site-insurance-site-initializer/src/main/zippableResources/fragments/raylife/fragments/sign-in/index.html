@@ -1,32 +1,22 @@
+[#if themeDisplay.isSignedIn()]
+	<script>
+		window.location.replace("${themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()}");
+	</script>
+
+	[@liferay_aui.script]
+		window.location.replace("${themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()}");
+	[/@]
+[/#if]
+
 <div class="sign-in vh-100">
 	<div class="row no-gutters h-100">
 		<div class="col-6 col-lg-5 form-column">
 			<div class="sign-in-form">
 				<a href="#" data-lfr-editable-id="home" data-lfr-editable-type="link"><img class="sign-in-logo" src="[resources:logo_inv.svg]" alt="" /></a>
 
-				<form>
-					<h4 class="login-title">Sign in to Raylife</h4>
-
-					<div class="form-group">
-						<label for="exampleInputEmail1">Email address</label>
-
-						<input aria-describedby="emailHelp" class="form-control" id="exampleInputEmail1" placeholder="Enter email" type="email" />
-					</div>
-
-					<div class="form-group">
-						<label for="exampleInputPassword1">Password</label>
-
-						<input class="form-control" id="exampleInputPassword1" placeholder="Password" type="password" />
-					</div>
-
-					<div class="form-check">
-						<input class="form-check-input" id="exampleCheck1" type="checkbox" />
-
-						<label class="form-check-label" for="exampleCheck1">Remember Me</label>
-					</div>
-
-					<a class="btn btn-primary btn-block" href="#" role="button" data-lfr-editable-id="nav" data-lfr-editable-type="link">Sign In</a>
-				</form>
+				[@liferay_portlet.runtime
+					portletName="com_liferay_login_web_portlet_LoginPortlet"
+				/]
 			</div>
 		</div>
 

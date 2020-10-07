@@ -415,7 +415,7 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private String[] _getAssetTagNames(UnicodeProperties unicodeProperties) {
-		String[] allAssetTagNames = new String[0];
+		List<String> allAssetTagNames = new ArrayList<>();
 
 		for (int i = 0; true; i++) {
 			String[] queryValues = StringUtil.split(
@@ -438,11 +438,11 @@ public class AssetListAssetEntryProviderImpl
 				queryContains &&
 				(queryAndOperator || (queryValues.length == 1))) {
 
-				allAssetTagNames = queryValues;
+				Collections.addAll(allAssetTagNames, queryValues);
 			}
 		}
 
-		return allAssetTagNames;
+		return allAssetTagNames.toArray(new String[0]);
 	}
 
 	private long[] _getClassNameIds(

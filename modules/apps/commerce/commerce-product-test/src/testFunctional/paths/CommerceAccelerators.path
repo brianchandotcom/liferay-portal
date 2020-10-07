@@ -98,6 +98,11 @@
 	<td>//div/button[contains(.,'Sort By')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ACCOUNT_MANAGEMENT_ROLE_TABLE_NAME</td>
+	<td>//div[contains(@class,'table-responsive')]</td>
+	<td></td>
+</tr>
 <!--SPEEDWELL-->
 <tr>
 	<td>SPEEDWELL_ACCOUNT_DASHBOARD_ITEM</td>

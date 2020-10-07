@@ -404,6 +404,7 @@ public abstract class UserGroupLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -420,6 +421,7 @@ public abstract class UserGroupLocalServiceBaseImpl
 		return userGroupLocalService.deleteUserGroup((UserGroup)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<UserGroup> getBasePersistence() {
 		return userGroupPersistence;
 	}

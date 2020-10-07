@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.powwow.exception.NoSuchMeetingException;
 import com.liferay.powwow.model.PowwowMeeting;
+import com.liferay.powwow.model.PowwowMeetingTable;
 import com.liferay.powwow.model.impl.PowwowMeetingImpl;
 import com.liferay.powwow.model.impl.PowwowMeetingModelImpl;
 import com.liferay.powwow.service.persistence.PowwowMeetingPersistence;
@@ -3044,6 +3045,8 @@ public class PowwowMeetingPersistenceImpl
 
 		setModelImplClass(PowwowMeetingImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(PowwowMeetingTable.INSTANCE);
 	}
 
 	/**

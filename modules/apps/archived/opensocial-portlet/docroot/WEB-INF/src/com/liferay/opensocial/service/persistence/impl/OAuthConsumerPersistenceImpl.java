@@ -16,6 +16,7 @@ package com.liferay.opensocial.service.persistence.impl;
 
 import com.liferay.opensocial.exception.NoSuchOAuthConsumerException;
 import com.liferay.opensocial.model.OAuthConsumer;
+import com.liferay.opensocial.model.OAuthConsumerTable;
 import com.liferay.opensocial.model.impl.OAuthConsumerImpl;
 import com.liferay.opensocial.model.impl.OAuthConsumerModelImpl;
 import com.liferay.opensocial.service.persistence.OAuthConsumerPersistence;
@@ -928,6 +929,8 @@ public class OAuthConsumerPersistenceImpl
 
 		setModelImplClass(OAuthConsumerImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(OAuthConsumerTable.INSTANCE);
 	}
 
 	/**

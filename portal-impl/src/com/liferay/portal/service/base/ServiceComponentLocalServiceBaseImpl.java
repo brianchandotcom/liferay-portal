@@ -299,6 +299,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -317,6 +318,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 			(ServiceComponent)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ServiceComponent> getBasePersistence() {
 		return serviceComponentPersistence;
 	}

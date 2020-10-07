@@ -16,6 +16,7 @@ package com.liferay.opensocial.service.persistence.impl;
 
 import com.liferay.opensocial.exception.NoSuchOAuthTokenException;
 import com.liferay.opensocial.model.OAuthToken;
+import com.liferay.opensocial.model.OAuthTokenTable;
 import com.liferay.opensocial.model.impl.OAuthTokenImpl;
 import com.liferay.opensocial.model.impl.OAuthTokenModelImpl;
 import com.liferay.opensocial.service.persistence.OAuthTokenPersistence;
@@ -1112,6 +1113,8 @@ public class OAuthTokenPersistenceImpl
 
 		setModelImplClass(OAuthTokenImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(OAuthTokenTable.INSTANCE);
 	}
 
 	/**

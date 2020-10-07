@@ -285,6 +285,7 @@ public abstract class AccountLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -301,6 +302,7 @@ public abstract class AccountLocalServiceBaseImpl
 		return accountLocalService.deleteAccount((Account)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Account> getBasePersistence() {
 		return accountPersistence;
 	}

@@ -384,6 +384,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -402,6 +403,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 			(MBThreadFlag)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MBThreadFlag> getBasePersistence() {
 		return mbThreadFlagPersistence;
 	}

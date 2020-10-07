@@ -308,6 +308,7 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -326,6 +327,7 @@ public abstract class SocialRequestLocalServiceBaseImpl
 			(SocialRequest)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<SocialRequest> getBasePersistence() {
 		return socialRequestPersistence;
 	}

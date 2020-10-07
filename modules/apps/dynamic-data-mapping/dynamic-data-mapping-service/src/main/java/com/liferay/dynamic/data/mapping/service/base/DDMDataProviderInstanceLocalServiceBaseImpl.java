@@ -413,6 +413,7 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -432,6 +433,7 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 				(DDMDataProviderInstance)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DDMDataProviderInstance> getBasePersistence() {
 		return ddmDataProviderInstancePersistence;
 	}

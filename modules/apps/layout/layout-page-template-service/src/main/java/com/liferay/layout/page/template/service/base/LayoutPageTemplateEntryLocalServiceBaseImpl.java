@@ -505,6 +505,7 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -524,6 +525,7 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 				(LayoutPageTemplateEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<LayoutPageTemplateEntry> getBasePersistence() {
 		return layoutPageTemplateEntryPersistence;
 	}

@@ -316,6 +316,7 @@ public abstract class AppBuilderWorkflowTaskLinkLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -335,6 +336,7 @@ public abstract class AppBuilderWorkflowTaskLinkLocalServiceBaseImpl
 				(AppBuilderWorkflowTaskLink)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AppBuilderWorkflowTaskLink> getBasePersistence() {
 		return appBuilderWorkflowTaskLinkPersistence;
 	}

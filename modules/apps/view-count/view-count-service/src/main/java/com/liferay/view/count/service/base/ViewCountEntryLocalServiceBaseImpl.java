@@ -301,6 +301,7 @@ public abstract class ViewCountEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -319,6 +320,7 @@ public abstract class ViewCountEntryLocalServiceBaseImpl
 			(ViewCountEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ViewCountEntry> getBasePersistence() {
 		return viewCountEntryPersistence;
 	}

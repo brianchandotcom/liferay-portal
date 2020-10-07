@@ -295,6 +295,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -313,6 +314,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 			(AnnouncementsFlag)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AnnouncementsFlag> getBasePersistence() {
 		return announcementsFlagPersistence;
 	}

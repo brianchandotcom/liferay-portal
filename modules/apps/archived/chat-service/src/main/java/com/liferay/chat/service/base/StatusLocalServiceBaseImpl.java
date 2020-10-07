@@ -288,6 +288,7 @@ public abstract class StatusLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -304,6 +305,7 @@ public abstract class StatusLocalServiceBaseImpl
 		return statusLocalService.deleteStatus((Status)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Status> getBasePersistence() {
 		return statusPersistence;
 	}

@@ -300,6 +300,7 @@ public abstract class MFAEmailOTPEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -318,6 +319,7 @@ public abstract class MFAEmailOTPEntryLocalServiceBaseImpl
 			(MFAEmailOTPEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MFAEmailOTPEntry> getBasePersistence() {
 		return mfaEmailOTPEntryPersistence;
 	}

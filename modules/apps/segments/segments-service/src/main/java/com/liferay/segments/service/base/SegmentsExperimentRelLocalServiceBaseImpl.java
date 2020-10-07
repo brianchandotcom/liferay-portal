@@ -323,6 +323,7 @@ public abstract class SegmentsExperimentRelLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -341,6 +342,7 @@ public abstract class SegmentsExperimentRelLocalServiceBaseImpl
 			(SegmentsExperimentRel)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<SegmentsExperimentRel> getBasePersistence() {
 		return segmentsExperimentRelPersistence;
 	}

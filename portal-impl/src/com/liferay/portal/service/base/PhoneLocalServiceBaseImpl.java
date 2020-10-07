@@ -395,6 +395,7 @@ public abstract class PhoneLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -411,6 +412,7 @@ public abstract class PhoneLocalServiceBaseImpl
 		return phoneLocalService.deletePhone((Phone)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Phone> getBasePersistence() {
 		return phonePersistence;
 	}

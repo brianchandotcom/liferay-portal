@@ -294,6 +294,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -312,6 +313,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 			(PluginSetting)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<PluginSetting> getBasePersistence() {
 		return pluginSettingPersistence;
 	}

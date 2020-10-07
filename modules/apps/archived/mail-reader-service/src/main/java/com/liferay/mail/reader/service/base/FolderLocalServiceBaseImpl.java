@@ -289,6 +289,7 @@ public abstract class FolderLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -305,6 +306,7 @@ public abstract class FolderLocalServiceBaseImpl
 		return folderLocalService.deleteFolder((Folder)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Folder> getBasePersistence() {
 		return folderPersistence;
 	}

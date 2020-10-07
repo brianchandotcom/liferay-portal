@@ -410,6 +410,7 @@ public abstract class KBCommentLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -426,6 +427,7 @@ public abstract class KBCommentLocalServiceBaseImpl
 		return kbCommentLocalService.deleteKBComment((KBComment)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<KBComment> getBasePersistence() {
 		return kbCommentPersistence;
 	}

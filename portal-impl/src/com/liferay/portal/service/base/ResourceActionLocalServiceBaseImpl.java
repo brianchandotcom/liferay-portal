@@ -293,6 +293,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -311,6 +312,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 			(ResourceAction)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ResourceAction> getBasePersistence() {
 		return resourceActionPersistence;
 	}

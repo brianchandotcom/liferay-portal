@@ -291,6 +291,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -308,6 +309,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 			(WebDAVProps)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<WebDAVProps> getBasePersistence() {
 		return webDAVPropsPersistence;
 	}

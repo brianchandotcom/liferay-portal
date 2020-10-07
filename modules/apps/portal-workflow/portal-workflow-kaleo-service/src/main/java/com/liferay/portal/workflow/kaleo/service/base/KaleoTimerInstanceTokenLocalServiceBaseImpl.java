@@ -335,6 +335,7 @@ public abstract class KaleoTimerInstanceTokenLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -354,6 +355,7 @@ public abstract class KaleoTimerInstanceTokenLocalServiceBaseImpl
 				(KaleoTimerInstanceToken)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<KaleoTimerInstanceToken> getBasePersistence() {
 		return kaleoTimerInstanceTokenPersistence;
 	}

@@ -293,6 +293,7 @@ public abstract class AttachmentLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -310,6 +311,7 @@ public abstract class AttachmentLocalServiceBaseImpl
 			(Attachment)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Attachment> getBasePersistence() {
 		return attachmentPersistence;
 	}

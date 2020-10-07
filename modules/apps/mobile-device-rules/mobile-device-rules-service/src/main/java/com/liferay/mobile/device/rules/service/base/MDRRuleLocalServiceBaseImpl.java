@@ -376,6 +376,7 @@ public abstract class MDRRuleLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -392,6 +393,7 @@ public abstract class MDRRuleLocalServiceBaseImpl
 		return mdrRuleLocalService.deleteMDRRule((MDRRule)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MDRRule> getBasePersistence() {
 		return mdrRulePersistence;
 	}

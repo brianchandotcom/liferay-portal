@@ -293,6 +293,7 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -311,6 +312,7 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 			(ChangesetEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ChangesetEntry> getBasePersistence() {
 		return changesetEntryPersistence;
 	}

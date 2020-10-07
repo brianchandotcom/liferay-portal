@@ -289,6 +289,7 @@ public abstract class CTProcessLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -305,6 +306,7 @@ public abstract class CTProcessLocalServiceBaseImpl
 		return ctProcessLocalService.deleteCTProcess((CTProcess)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CTProcess> getBasePersistence() {
 		return ctProcessPersistence;
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.powwow.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -136,6 +137,11 @@ public abstract class PowwowServerLocalServiceBaseImpl
 	@Override
 	public PowwowServer deletePowwowServer(PowwowServer powwowServer) {
 		return powwowServerPersistence.remove(powwowServer);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return powwowServerPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -289,6 +295,7 @@ public abstract class PowwowServerLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -307,6 +314,7 @@ public abstract class PowwowServerLocalServiceBaseImpl
 			(PowwowServer)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<PowwowServer> getBasePersistence() {
 		return powwowServerPersistence;
 	}

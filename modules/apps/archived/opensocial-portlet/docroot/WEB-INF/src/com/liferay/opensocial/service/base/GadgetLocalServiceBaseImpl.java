@@ -24,6 +24,7 @@ import com.liferay.opensocial.service.GadgetLocalService;
 import com.liferay.opensocial.service.persistence.GadgetPersistence;
 import com.liferay.opensocial.service.persistence.OAuthConsumerPersistence;
 import com.liferay.opensocial.service.persistence.OAuthTokenPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -141,6 +142,11 @@ public abstract class GadgetLocalServiceBaseImpl
 	@Override
 	public Gadget deleteGadget(Gadget gadget) throws PortalException {
 		return gadgetPersistence.remove(gadget);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return gadgetPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -367,6 +373,7 @@ public abstract class GadgetLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -383,6 +390,7 @@ public abstract class GadgetLocalServiceBaseImpl
 		return gadgetLocalService.deleteGadget((Gadget)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Gadget> getBasePersistence() {
 		return gadgetPersistence;
 	}

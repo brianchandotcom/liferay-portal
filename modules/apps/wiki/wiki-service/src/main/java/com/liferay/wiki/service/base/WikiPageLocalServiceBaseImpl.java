@@ -451,6 +451,7 @@ public abstract class WikiPageLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -467,6 +468,7 @@ public abstract class WikiPageLocalServiceBaseImpl
 		return wikiPageLocalService.deleteWikiPage((WikiPage)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<WikiPage> getBasePersistence() {
 		return wikiPagePersistence;
 	}

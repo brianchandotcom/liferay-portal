@@ -288,6 +288,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -305,6 +306,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 			(DLFileRank)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DLFileRank> getBasePersistence() {
 		return dlFileRankPersistence;
 	}

@@ -376,6 +376,7 @@ public abstract class DepotEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -393,6 +394,7 @@ public abstract class DepotEntryLocalServiceBaseImpl
 			(DepotEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DepotEntry> getBasePersistence() {
 		return depotEntryPersistence;
 	}

@@ -435,6 +435,7 @@ public abstract class CPDefinitionOptionValueRelLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -454,6 +455,7 @@ public abstract class CPDefinitionOptionValueRelLocalServiceBaseImpl
 				(CPDefinitionOptionValueRel)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CPDefinitionOptionValueRel> getBasePersistence() {
 		return cpDefinitionOptionValueRelPersistence;
 	}

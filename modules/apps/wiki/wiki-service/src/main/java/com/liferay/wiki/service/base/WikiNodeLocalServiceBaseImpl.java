@@ -443,6 +443,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -459,6 +460,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 		return wikiNodeLocalService.deleteWikiNode((WikiNode)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<WikiNode> getBasePersistence() {
 		return wikiNodePersistence;
 	}

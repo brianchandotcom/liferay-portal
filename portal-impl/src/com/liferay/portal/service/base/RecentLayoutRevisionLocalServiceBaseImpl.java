@@ -310,6 +310,7 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -328,6 +329,7 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 			(RecentLayoutRevision)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<RecentLayoutRevision> getBasePersistence() {
 		return recentLayoutRevisionPersistence;
 	}

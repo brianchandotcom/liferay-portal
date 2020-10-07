@@ -388,6 +388,7 @@ public abstract class AssetEntryUsageLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -406,6 +407,7 @@ public abstract class AssetEntryUsageLocalServiceBaseImpl
 			(AssetEntryUsage)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AssetEntryUsage> getBasePersistence() {
 		return assetEntryUsagePersistence;
 	}

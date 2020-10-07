@@ -407,6 +407,7 @@ public abstract class SiteNavigationMenuItemLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -425,6 +426,7 @@ public abstract class SiteNavigationMenuItemLocalServiceBaseImpl
 			(SiteNavigationMenuItem)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<SiteNavigationMenuItem> getBasePersistence() {
 		return siteNavigationMenuItemPersistence;
 	}

@@ -293,6 +293,7 @@ public abstract class UADPartialEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -311,6 +312,7 @@ public abstract class UADPartialEntryLocalServiceBaseImpl
 			(UADPartialEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<UADPartialEntry> getBasePersistence() {
 		return uadPartialEntryPersistence;
 	}

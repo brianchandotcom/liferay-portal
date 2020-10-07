@@ -413,6 +413,7 @@ public abstract class ReadingTimeEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -431,6 +432,7 @@ public abstract class ReadingTimeEntryLocalServiceBaseImpl
 			(ReadingTimeEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ReadingTimeEntry> getBasePersistence() {
 		return readingTimeEntryPersistence;
 	}

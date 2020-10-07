@@ -333,6 +333,7 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -352,6 +353,7 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 				(CommerceInventoryReplenishmentItem)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceInventoryReplenishmentItem>
 		getBasePersistence() {
 

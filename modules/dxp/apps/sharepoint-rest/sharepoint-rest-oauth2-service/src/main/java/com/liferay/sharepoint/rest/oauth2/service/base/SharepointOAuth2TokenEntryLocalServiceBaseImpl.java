@@ -316,6 +316,7 @@ public abstract class SharepointOAuth2TokenEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -335,6 +336,7 @@ public abstract class SharepointOAuth2TokenEntryLocalServiceBaseImpl
 				(SharepointOAuth2TokenEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<SharepointOAuth2TokenEntry> getBasePersistence() {
 		return sharepointOAuth2TokenEntryPersistence;
 	}

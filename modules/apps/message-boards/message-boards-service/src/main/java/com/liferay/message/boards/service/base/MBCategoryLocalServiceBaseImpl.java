@@ -447,6 +447,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -464,6 +465,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 			(MBCategory)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MBCategory> getBasePersistence() {
 		return mbCategoryPersistence;
 	}

@@ -286,6 +286,7 @@ public abstract class ListTypeLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -302,6 +303,7 @@ public abstract class ListTypeLocalServiceBaseImpl
 		return listTypeLocalService.deleteListType((ListType)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ListType> getBasePersistence() {
 		return listTypePersistence;
 	}

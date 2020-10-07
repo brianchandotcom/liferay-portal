@@ -314,6 +314,7 @@ public abstract class KaleoTransitionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -332,6 +333,7 @@ public abstract class KaleoTransitionLocalServiceBaseImpl
 			(KaleoTransition)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<KaleoTransition> getBasePersistence() {
 		return kaleoTransitionPersistence;
 	}

@@ -381,6 +381,7 @@ public abstract class LayoutSEOEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -399,6 +400,7 @@ public abstract class LayoutSEOEntryLocalServiceBaseImpl
 			(LayoutSEOEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<LayoutSEOEntry> getBasePersistence() {
 		return layoutSEOEntryPersistence;
 	}

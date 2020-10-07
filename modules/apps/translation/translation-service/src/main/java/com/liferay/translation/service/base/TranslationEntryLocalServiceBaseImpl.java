@@ -454,6 +454,7 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -472,6 +473,7 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 			(TranslationEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<TranslationEntry> getBasePersistence() {
 		return translationEntryPersistence;
 	}

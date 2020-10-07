@@ -416,6 +416,7 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -434,6 +435,7 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 			(CPMeasurementUnit)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CPMeasurementUnit> getBasePersistence() {
 		return cpMeasurementUnitPersistence;
 	}

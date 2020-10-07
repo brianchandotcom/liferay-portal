@@ -303,6 +303,7 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -321,6 +322,7 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 			(LayoutSetBranch)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<LayoutSetBranch> getBasePersistence() {
 		return layoutSetBranchPersistence;
 	}

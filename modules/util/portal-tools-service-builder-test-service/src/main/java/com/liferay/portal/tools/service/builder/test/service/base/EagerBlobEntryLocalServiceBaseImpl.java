@@ -305,6 +305,7 @@ public abstract class EagerBlobEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -323,6 +324,7 @@ public abstract class EagerBlobEntryLocalServiceBaseImpl
 			(EagerBlobEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<EagerBlobEntry> getBasePersistence() {
 		return eagerBlobEntryPersistence;
 	}

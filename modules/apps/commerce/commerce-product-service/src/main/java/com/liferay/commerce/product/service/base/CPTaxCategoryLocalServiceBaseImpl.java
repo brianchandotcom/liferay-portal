@@ -336,6 +336,7 @@ public abstract class CPTaxCategoryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -354,6 +355,7 @@ public abstract class CPTaxCategoryLocalServiceBaseImpl
 			(CPTaxCategory)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CPTaxCategory> getBasePersistence() {
 		return cpTaxCategoryPersistence;
 	}

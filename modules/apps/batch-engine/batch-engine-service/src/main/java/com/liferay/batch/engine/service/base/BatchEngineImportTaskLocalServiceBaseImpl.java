@@ -412,6 +412,7 @@ public abstract class BatchEngineImportTaskLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -430,6 +431,7 @@ public abstract class BatchEngineImportTaskLocalServiceBaseImpl
 			(BatchEngineImportTask)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<BatchEngineImportTask> getBasePersistence() {
 		return batchEngineImportTaskPersistence;
 	}

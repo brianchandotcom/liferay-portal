@@ -296,6 +296,7 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -314,6 +315,7 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 			(LocalizedEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<LocalizedEntry> getBasePersistence() {
 		return localizedEntryPersistence;
 	}

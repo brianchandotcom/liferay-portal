@@ -290,6 +290,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -308,6 +309,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 			(BrowserTracker)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<BrowserTracker> getBasePersistence() {
 		return browserTrackerPersistence;
 	}

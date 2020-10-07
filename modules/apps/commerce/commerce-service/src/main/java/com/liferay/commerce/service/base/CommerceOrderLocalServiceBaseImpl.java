@@ -464,6 +464,7 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -482,6 +483,7 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 			(CommerceOrder)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceOrder> getBasePersistence() {
 		return commerceOrderPersistence;
 	}

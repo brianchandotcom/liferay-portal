@@ -291,6 +291,7 @@ public abstract class ContactLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -307,6 +308,7 @@ public abstract class ContactLocalServiceBaseImpl
 		return contactLocalService.deleteContact((Contact)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Contact> getBasePersistence() {
 		return contactPersistence;
 	}

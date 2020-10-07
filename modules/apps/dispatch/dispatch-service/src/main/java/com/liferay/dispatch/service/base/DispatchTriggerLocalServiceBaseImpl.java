@@ -298,6 +298,7 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -316,6 +317,7 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 			(DispatchTrigger)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DispatchTrigger> getBasePersistence() {
 		return dispatchTriggerPersistence;
 	}

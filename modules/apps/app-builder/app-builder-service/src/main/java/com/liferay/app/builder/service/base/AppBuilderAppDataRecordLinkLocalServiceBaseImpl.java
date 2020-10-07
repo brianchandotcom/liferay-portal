@@ -316,6 +316,7 @@ public abstract class AppBuilderAppDataRecordLinkLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -335,6 +336,7 @@ public abstract class AppBuilderAppDataRecordLinkLocalServiceBaseImpl
 				(AppBuilderAppDataRecordLink)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AppBuilderAppDataRecordLink> getBasePersistence() {
 		return appBuilderAppDataRecordLinkPersistence;
 	}

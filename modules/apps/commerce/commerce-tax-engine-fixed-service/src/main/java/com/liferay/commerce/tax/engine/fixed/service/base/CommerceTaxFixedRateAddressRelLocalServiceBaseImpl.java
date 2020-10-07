@@ -321,6 +321,7 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -340,6 +341,7 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 				(CommerceTaxFixedRateAddressRel)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceTaxFixedRateAddressRel>
 		getBasePersistence() {
 

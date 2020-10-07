@@ -419,6 +419,7 @@ public abstract class CommerceDiscountAccountRelLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -438,6 +439,7 @@ public abstract class CommerceDiscountAccountRelLocalServiceBaseImpl
 				(CommerceDiscountAccountRel)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceDiscountAccountRel> getBasePersistence() {
 		return commerceDiscountAccountRelPersistence;
 	}

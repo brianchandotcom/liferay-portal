@@ -292,6 +292,7 @@ public abstract class CTPreferencesLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -310,6 +311,7 @@ public abstract class CTPreferencesLocalServiceBaseImpl
 			(CTPreferences)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CTPreferences> getBasePersistence() {
 		return ctPreferencesPersistence;
 	}

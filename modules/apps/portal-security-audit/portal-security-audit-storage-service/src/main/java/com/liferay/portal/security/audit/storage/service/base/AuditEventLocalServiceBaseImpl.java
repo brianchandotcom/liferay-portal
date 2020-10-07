@@ -290,6 +290,7 @@ public abstract class AuditEventLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -307,6 +308,7 @@ public abstract class AuditEventLocalServiceBaseImpl
 			(AuditEvent)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AuditEvent> getBasePersistence() {
 		return auditEventPersistence;
 	}

@@ -319,6 +319,7 @@ public abstract class OAuth2ApplicationScopeAliasesLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -338,6 +339,7 @@ public abstract class OAuth2ApplicationScopeAliasesLocalServiceBaseImpl
 				(OAuth2ApplicationScopeAliases)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<OAuth2ApplicationScopeAliases> getBasePersistence() {
 		return oAuth2ApplicationScopeAliasesPersistence;
 	}

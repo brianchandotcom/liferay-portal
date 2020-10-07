@@ -306,6 +306,7 @@ public abstract class AMImageEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -324,6 +325,7 @@ public abstract class AMImageEntryLocalServiceBaseImpl
 			(AMImageEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AMImageEntry> getBasePersistence() {
 		return amImageEntryPersistence;
 	}

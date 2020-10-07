@@ -14,6 +14,7 @@
 
 package com.liferay.powwow.service;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -131,6 +132,9 @@ public interface PowwowParticipantLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public PowwowParticipant deletePowwowParticipant(
 		PowwowParticipant powwowParticipant);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

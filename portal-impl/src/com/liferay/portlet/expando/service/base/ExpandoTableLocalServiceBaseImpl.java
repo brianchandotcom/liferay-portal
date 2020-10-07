@@ -295,6 +295,7 @@ public abstract class ExpandoTableLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -313,6 +314,7 @@ public abstract class ExpandoTableLocalServiceBaseImpl
 			(ExpandoTable)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ExpandoTable> getBasePersistence() {
 		return expandoTablePersistence;
 	}

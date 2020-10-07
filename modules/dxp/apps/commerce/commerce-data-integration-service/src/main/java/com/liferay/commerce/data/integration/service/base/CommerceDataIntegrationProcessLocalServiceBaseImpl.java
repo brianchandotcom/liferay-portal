@@ -323,6 +323,7 @@ public abstract class CommerceDataIntegrationProcessLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -342,6 +343,7 @@ public abstract class CommerceDataIntegrationProcessLocalServiceBaseImpl
 				(CommerceDataIntegrationProcess)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceDataIntegrationProcess>
 		getBasePersistence() {
 

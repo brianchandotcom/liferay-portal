@@ -307,6 +307,7 @@ public abstract class CacheDisabledEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -325,6 +326,7 @@ public abstract class CacheDisabledEntryLocalServiceBaseImpl
 			(CacheDisabledEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CacheDisabledEntry> getBasePersistence() {
 		return cacheDisabledEntryPersistence;
 	}

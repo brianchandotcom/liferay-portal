@@ -310,6 +310,7 @@ public abstract class NestedSetsTreeEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -328,6 +329,7 @@ public abstract class NestedSetsTreeEntryLocalServiceBaseImpl
 			(NestedSetsTreeEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<NestedSetsTreeEntry> getBasePersistence() {
 		return nestedSetsTreeEntryPersistence;
 	}

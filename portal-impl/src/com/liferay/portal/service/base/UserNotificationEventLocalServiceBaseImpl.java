@@ -326,6 +326,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -344,6 +345,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 			(UserNotificationEvent)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<UserNotificationEvent> getBasePersistence() {
 		return userNotificationEventPersistence;
 	}

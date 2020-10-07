@@ -312,6 +312,7 @@ public abstract class MFATimeBasedOTPEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -330,6 +331,7 @@ public abstract class MFATimeBasedOTPEntryLocalServiceBaseImpl
 			(MFATimeBasedOTPEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MFATimeBasedOTPEntry> getBasePersistence() {
 		return mfaTimeBasedOTPEntryPersistence;
 	}

@@ -301,6 +301,7 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -319,6 +320,7 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 			(CommerceTaxMethod)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceTaxMethod> getBasePersistence() {
 		return commerceTaxMethodPersistence;
 	}

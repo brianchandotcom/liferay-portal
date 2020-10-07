@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryFinder.countByCNI_DT_LPTEI">
+		<![CDATA[
+			SELECT
+				COUNT(AssetDisplayPageEntry.assetDisplayPageEntryId) AS COUNT_VALUE
+			FROM
+				AssetDisplayPageEntry
+			WHERE
+				(AssetDisplayPageEntry.classNameId = ?) AND
+				(
+					(
+						(AssetDisplayPageEntry.type_ = 1) AND
+						(1 = ?)
+					) OR
+					(
+						(AssetDisplayPageEntry.layoutPageTemplateEntryId = ?) AND
+						(AssetDisplayPageEntry.type_ = 2)
+					)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryFinder.findByCNI_DT_LPTEI">
+		<![CDATA[
+			SELECT
+				AssetDisplayPageEntry.*
+			FROM
+				AssetDisplayPageEntry
+			WHERE
+				(AssetDisplayPageEntry.classNameId = ?) AND
+				(
+					(
+						(AssetDisplayPageEntry.type_ = 1) AND
+						(1 = ?)
+					) OR
+					(
+						(AssetDisplayPageEntry.layoutPageTemplateEntryId = ?) AND
+						(AssetDisplayPageEntry.type_ = 2)
+					)
+				)
+		]]>
+	</sql>
+</custom-sql>

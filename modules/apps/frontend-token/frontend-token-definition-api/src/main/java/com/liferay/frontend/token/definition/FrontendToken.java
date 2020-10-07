@@ -32,6 +32,9 @@ public interface FrontendToken {
 
 	public Collection<FrontendTokenMapping> getFrontendTokenMappings();
 
+	public Collection<FrontendTokenMapping> getFrontendTokenMappingsByType(
+		String type);
+
 	public FrontendTokenSet getFrontendTokenSet();
 
 	public String getJSON(Locale locale);

@@ -1102,6 +1102,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 	<target name="setup-profile-dxp">
 		<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
 			<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
+			<arg value="-Dprofile.dxp.commit.id=${build.setup.profile.dxp.commit.id}" />
 		</gradle-execute>
 
 		<condition else="${git.working.branch.name}-private" property="to.branch.name" value="${git.working.branch.name}">

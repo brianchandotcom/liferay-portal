@@ -118,6 +118,10 @@ public class DLAdminDisplayContext {
 	}
 
 	public String getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
 		String displayStyle = ParamUtil.getString(
 			_httpServletRequest, "displayStyle");
 
@@ -143,7 +147,9 @@ public class DLAdminDisplayContext {
 			displayStyle = displayViews[0];
 		}
 
-		return displayStyle;
+		_displayStyle = displayStyle;
+
+		return _displayStyle;
 	}
 
 	public Folder getFolder() {
@@ -155,10 +161,21 @@ public class DLAdminDisplayContext {
 	}
 
 	public String getNavigation() {
-		return ParamUtil.getString(_httpServletRequest, "navigation", "home");
+		if (_navigation != null) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation", "home");
+
+		return _navigation;
 	}
 
 	public String getOrderByCol() {
+		if (_orderByCol != null) {
+			return _orderByCol;
+		}
+
 		String orderByCol = ParamUtil.getString(
 			_httpServletRequest, "orderByCol");
 
@@ -178,10 +195,16 @@ public class DLAdminDisplayContext {
 				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", "modifiedDate");
 		}
 
-		return orderByCol;
+		_orderByCol = orderByCol;
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
+		if (_orderByType != null) {
+			return _orderByType;
+		}
+
 		String orderByType = ParamUtil.getString(
 			_httpServletRequest, "orderByType");
 
@@ -194,7 +217,9 @@ public class DLAdminDisplayContext {
 				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", "desc");
 		}
 
-		return orderByType;
+		_orderByType = orderByType;
+
+		return _orderByType;
 	}
 
 	public String getRememberCheckBoxStateURLRegex() {
@@ -218,15 +243,22 @@ public class DLAdminDisplayContext {
 	}
 
 	public long getRepositoryId() {
+		if (_repositoryId != null) {
+			return _repositoryId;
+		}
+
 		Folder folder = getFolder();
 
 		if (folder != null) {
-			return folder.getRepositoryId();
+			_repositoryId = folder.getRepositoryId();
+		}
+		else {
+			_repositoryId = ParamUtil.getLong(
+				_httpServletRequest, "repositoryId",
+				_themeDisplay.getScopeGroupId());
 		}
 
-		return ParamUtil.getLong(
-			_httpServletRequest, "repositoryId",
-			_themeDisplay.getScopeGroupId());
+		return _repositoryId;
 	}
 
 	public long getRootFolderId() {
@@ -726,6 +758,7 @@ public class DLAdminDisplayContext {
 		DLAdminDisplayContext.class);
 
 	private boolean _defaultFolderView;
+	private String _displayStyle;
 	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
@@ -735,8 +768,12 @@ public class DLAdminDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _navigation;
+	private String _orderByCol;
+	private String _orderByType;
 	private final PermissionChecker _permissionChecker;
 	private final PortalPreferences _portalPreferences;
+	private Long _repositoryId;
 	private long _rootFolderId;
 	private String _rootFolderName;
 	private SearchContainer<Object> _searchContainer;

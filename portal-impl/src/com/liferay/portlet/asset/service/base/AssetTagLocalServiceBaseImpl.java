@@ -382,6 +382,7 @@ public abstract class AssetTagLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -398,6 +399,7 @@ public abstract class AssetTagLocalServiceBaseImpl
 		return assetTagLocalService.deleteAssetTag((AssetTag)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AssetTag> getBasePersistence() {
 		return assetTagPersistence;
 	}

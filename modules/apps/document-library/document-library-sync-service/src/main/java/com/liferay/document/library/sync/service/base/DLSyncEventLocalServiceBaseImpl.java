@@ -290,6 +290,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -307,6 +308,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 			(DLSyncEvent)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DLSyncEvent> getBasePersistence() {
 		return dlSyncEventPersistence;
 	}

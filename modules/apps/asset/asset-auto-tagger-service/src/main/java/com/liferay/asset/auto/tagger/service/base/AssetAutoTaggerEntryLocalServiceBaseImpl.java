@@ -315,6 +315,7 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -333,6 +334,7 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 			(AssetAutoTaggerEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AssetAutoTaggerEntry> getBasePersistence() {
 		return assetAutoTaggerEntryPersistence;
 	}

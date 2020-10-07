@@ -301,6 +301,7 @@ public abstract class OAuth2ApplicationLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -319,6 +320,7 @@ public abstract class OAuth2ApplicationLocalServiceBaseImpl
 			(OAuth2Application)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<OAuth2Application> getBasePersistence() {
 		return oAuth2ApplicationPersistence;
 	}

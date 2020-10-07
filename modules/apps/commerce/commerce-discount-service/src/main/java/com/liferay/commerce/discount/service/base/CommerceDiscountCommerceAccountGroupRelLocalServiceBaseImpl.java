@@ -342,6 +342,7 @@ public abstract class
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -361,6 +362,7 @@ public abstract class
 				(CommerceDiscountCommerceAccountGroupRel)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceDiscountCommerceAccountGroupRel>
 		getBasePersistence() {
 

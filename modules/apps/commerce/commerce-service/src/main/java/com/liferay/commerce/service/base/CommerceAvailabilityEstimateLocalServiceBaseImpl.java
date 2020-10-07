@@ -433,6 +433,7 @@ public abstract class CommerceAvailabilityEstimateLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -452,6 +453,7 @@ public abstract class CommerceAvailabilityEstimateLocalServiceBaseImpl
 				(CommerceAvailabilityEstimate)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceAvailabilityEstimate> getBasePersistence() {
 		return commerceAvailabilityEstimatePersistence;
 	}

@@ -411,6 +411,7 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -430,6 +431,7 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 				(CommerceMLForecastAlertEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceMLForecastAlertEntry> getBasePersistence() {
 		return commerceMLForecastAlertEntryPersistence;
 	}

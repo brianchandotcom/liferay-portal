@@ -287,6 +287,7 @@ public abstract class RSVEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -303,6 +304,7 @@ public abstract class RSVEntryLocalServiceBaseImpl
 		return rsvEntryLocalService.deleteRSVEntry((RSVEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<RSVEntry> getBasePersistence() {
 		return rsvEntryPersistence;
 	}

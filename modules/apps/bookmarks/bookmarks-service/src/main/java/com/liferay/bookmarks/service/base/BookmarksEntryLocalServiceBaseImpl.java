@@ -449,6 +449,7 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -467,6 +468,7 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 			(BookmarksEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<BookmarksEntry> getBasePersistence() {
 		return bookmarksEntryPersistence;
 	}

@@ -320,6 +320,7 @@ public abstract class KaleoNotificationLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -338,6 +339,7 @@ public abstract class KaleoNotificationLocalServiceBaseImpl
 			(KaleoNotification)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<KaleoNotification> getBasePersistence() {
 		return kaleoNotificationPersistence;
 	}

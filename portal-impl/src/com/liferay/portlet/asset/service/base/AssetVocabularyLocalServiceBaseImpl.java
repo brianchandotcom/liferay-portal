@@ -405,6 +405,7 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -423,6 +424,7 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 			(AssetVocabulary)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AssetVocabulary> getBasePersistence() {
 		return assetVocabularyPersistence;
 	}

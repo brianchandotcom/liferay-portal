@@ -292,6 +292,7 @@ public abstract class OAuthUserLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -308,6 +309,7 @@ public abstract class OAuthUserLocalServiceBaseImpl
 		return oAuthUserLocalService.deleteOAuthUser((OAuthUser)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<OAuthUser> getBasePersistence() {
 		return oAuthUserPersistence;
 	}

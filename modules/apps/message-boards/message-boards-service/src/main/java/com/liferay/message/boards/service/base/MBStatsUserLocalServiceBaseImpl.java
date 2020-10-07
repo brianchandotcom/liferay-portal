@@ -293,6 +293,7 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -310,6 +311,7 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 			(MBStatsUser)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MBStatsUser> getBasePersistence() {
 		return mbStatsUserPersistence;
 	}

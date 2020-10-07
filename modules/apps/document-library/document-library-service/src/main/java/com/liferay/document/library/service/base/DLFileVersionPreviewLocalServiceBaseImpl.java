@@ -315,6 +315,7 @@ public abstract class DLFileVersionPreviewLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -333,6 +334,7 @@ public abstract class DLFileVersionPreviewLocalServiceBaseImpl
 			(DLFileVersionPreview)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DLFileVersionPreview> getBasePersistence() {
 		return dlFileVersionPreviewPersistence;
 	}

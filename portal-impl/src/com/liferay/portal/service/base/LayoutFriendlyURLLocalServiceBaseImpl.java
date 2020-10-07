@@ -392,6 +392,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -410,6 +411,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 			(LayoutFriendlyURL)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<LayoutFriendlyURL> getBasePersistence() {
 		return layoutFriendlyURLPersistence;
 	}

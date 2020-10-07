@@ -422,6 +422,7 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -440,6 +441,7 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 			(FriendlyURLEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<FriendlyURLEntry> getBasePersistence() {
 		return friendlyURLEntryPersistence;
 	}

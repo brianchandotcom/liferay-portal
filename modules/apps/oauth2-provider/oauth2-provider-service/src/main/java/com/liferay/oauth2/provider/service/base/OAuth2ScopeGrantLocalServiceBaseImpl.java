@@ -303,6 +303,7 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -321,6 +322,7 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 			(OAuth2ScopeGrant)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<OAuth2ScopeGrant> getBasePersistence() {
 		return oAuth2ScopeGrantPersistence;
 	}

@@ -381,6 +381,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -399,6 +400,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 			(MBMailingList)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MBMailingList> getBasePersistence() {
 		return mbMailingListPersistence;
 	}

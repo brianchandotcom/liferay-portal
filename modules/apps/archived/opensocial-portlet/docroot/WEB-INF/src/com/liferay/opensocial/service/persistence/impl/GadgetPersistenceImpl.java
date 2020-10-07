@@ -16,6 +16,7 @@ package com.liferay.opensocial.service.persistence.impl;
 
 import com.liferay.opensocial.exception.NoSuchGadgetException;
 import com.liferay.opensocial.model.Gadget;
+import com.liferay.opensocial.model.GadgetTable;
 import com.liferay.opensocial.model.impl.GadgetImpl;
 import com.liferay.opensocial.model.impl.GadgetModelImpl;
 import com.liferay.opensocial.service.persistence.GadgetPersistence;
@@ -3165,6 +3166,8 @@ public class GadgetPersistenceImpl
 
 		setModelImplClass(GadgetImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(GadgetTable.INSTANCE);
 	}
 
 	/**

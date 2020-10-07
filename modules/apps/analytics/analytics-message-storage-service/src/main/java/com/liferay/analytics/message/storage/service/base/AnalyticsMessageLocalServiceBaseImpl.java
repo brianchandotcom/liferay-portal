@@ -310,6 +310,7 @@ public abstract class AnalyticsMessageLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -328,6 +329,7 @@ public abstract class AnalyticsMessageLocalServiceBaseImpl
 			(AnalyticsMessage)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AnalyticsMessage> getBasePersistence() {
 		return analyticsMessagePersistence;
 	}

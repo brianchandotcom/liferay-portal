@@ -288,6 +288,7 @@ public abstract class CTMessageLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -304,6 +305,7 @@ public abstract class CTMessageLocalServiceBaseImpl
 		return ctMessageLocalService.deleteCTMessage((CTMessage)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CTMessage> getBasePersistence() {
 		return ctMessagePersistence;
 	}

@@ -286,6 +286,7 @@ public abstract class TestEntityLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -303,6 +304,7 @@ public abstract class TestEntityLocalServiceBaseImpl
 			(TestEntity)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<TestEntity> getBasePersistence() {
 		return testEntityPersistence;
 	}

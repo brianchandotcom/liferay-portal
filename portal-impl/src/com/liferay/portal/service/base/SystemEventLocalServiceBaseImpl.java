@@ -297,6 +297,7 @@ public abstract class SystemEventLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -314,6 +315,7 @@ public abstract class SystemEventLocalServiceBaseImpl
 			(SystemEvent)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<SystemEvent> getBasePersistence() {
 		return systemEventPersistence;
 	}

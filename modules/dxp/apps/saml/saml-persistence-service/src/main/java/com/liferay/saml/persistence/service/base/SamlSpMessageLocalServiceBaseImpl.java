@@ -298,6 +298,7 @@ public abstract class SamlSpMessageLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -316,6 +317,7 @@ public abstract class SamlSpMessageLocalServiceBaseImpl
 			(SamlSpMessage)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<SamlSpMessage> getBasePersistence() {
 		return samlSpMessagePersistence;
 	}

@@ -540,6 +540,7 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -558,6 +559,7 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 			(CPAttachmentFileEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CPAttachmentFileEntry> getBasePersistence() {
 		return cpAttachmentFileEntryPersistence;
 	}

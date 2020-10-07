@@ -381,6 +381,7 @@ public abstract class CalendarLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -397,6 +398,7 @@ public abstract class CalendarLocalServiceBaseImpl
 		return calendarLocalService.deleteCalendar((Calendar)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Calendar> getBasePersistence() {
 		return calendarPersistence;
 	}

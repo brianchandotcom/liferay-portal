@@ -335,6 +335,7 @@ public abstract class KaleoDefinitionVersionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -353,6 +354,7 @@ public abstract class KaleoDefinitionVersionLocalServiceBaseImpl
 			(KaleoDefinitionVersion)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<KaleoDefinitionVersion> getBasePersistence() {
 		return kaleoDefinitionVersionPersistence;
 	}

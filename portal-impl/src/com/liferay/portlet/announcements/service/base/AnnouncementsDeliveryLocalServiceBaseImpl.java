@@ -300,6 +300,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -318,6 +319,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 			(AnnouncementsDelivery)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AnnouncementsDelivery> getBasePersistence() {
 		return announcementsDeliveryPersistence;
 	}

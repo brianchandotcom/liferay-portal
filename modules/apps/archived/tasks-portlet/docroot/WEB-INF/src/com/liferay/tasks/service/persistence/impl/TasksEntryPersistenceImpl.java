@@ -43,6 +43,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.tasks.exception.NoSuchTasksEntryException;
 import com.liferay.tasks.model.TasksEntry;
+import com.liferay.tasks.model.TasksEntryTable;
 import com.liferay.tasks.model.impl.TasksEntryImpl;
 import com.liferay.tasks.model.impl.TasksEntryModelImpl;
 import com.liferay.tasks.service.persistence.TasksEntryPersistence;
@@ -9887,6 +9888,8 @@ public class TasksEntryPersistenceImpl
 
 		setModelImplClass(TasksEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(TasksEntryTable.INSTANCE);
 	}
 
 	/**

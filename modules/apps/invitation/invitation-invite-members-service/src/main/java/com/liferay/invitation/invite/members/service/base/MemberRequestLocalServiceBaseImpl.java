@@ -292,6 +292,7 @@ public abstract class MemberRequestLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -310,6 +311,7 @@ public abstract class MemberRequestLocalServiceBaseImpl
 			(MemberRequest)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MemberRequest> getBasePersistence() {
 		return memberRequestPersistence;
 	}

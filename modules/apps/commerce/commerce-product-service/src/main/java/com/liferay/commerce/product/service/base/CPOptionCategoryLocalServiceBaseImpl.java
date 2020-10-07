@@ -414,6 +414,7 @@ public abstract class CPOptionCategoryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -432,6 +433,7 @@ public abstract class CPOptionCategoryLocalServiceBaseImpl
 			(CPOptionCategory)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CPOptionCategory> getBasePersistence() {
 		return cpOptionCategoryPersistence;
 	}

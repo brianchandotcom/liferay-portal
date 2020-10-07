@@ -298,6 +298,7 @@ public abstract class ManyColumnsEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -316,6 +317,7 @@ public abstract class ManyColumnsEntryLocalServiceBaseImpl
 			(ManyColumnsEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ManyColumnsEntry> getBasePersistence() {
 		return manyColumnsEntryPersistence;
 	}

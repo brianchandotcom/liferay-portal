@@ -391,6 +391,7 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -409,6 +410,7 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 			(StyleBookEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<StyleBookEntry> getBasePersistence() {
 		return styleBookEntryPersistence;
 	}

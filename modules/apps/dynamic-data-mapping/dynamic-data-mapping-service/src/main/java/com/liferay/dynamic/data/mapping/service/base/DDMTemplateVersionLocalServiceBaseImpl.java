@@ -305,6 +305,7 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -323,6 +324,7 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 			(DDMTemplateVersion)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DDMTemplateVersion> getBasePersistence() {
 		return ddmTemplateVersionPersistence;
 	}

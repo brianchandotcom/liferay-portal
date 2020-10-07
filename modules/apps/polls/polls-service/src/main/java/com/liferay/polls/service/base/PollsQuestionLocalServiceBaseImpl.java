@@ -383,6 +383,7 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -401,6 +402,7 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 			(PollsQuestion)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<PollsQuestion> getBasePersistence() {
 		return pollsQuestionPersistence;
 	}

@@ -313,6 +313,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -331,6 +332,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 			(UserGroupGroupRole)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<UserGroupGroupRole> getBasePersistence() {
 		return userGroupGroupRolePersistence;
 	}

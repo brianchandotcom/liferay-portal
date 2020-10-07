@@ -457,6 +457,7 @@ public abstract class KBArticleLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -473,6 +474,7 @@ public abstract class KBArticleLocalServiceBaseImpl
 		return kbArticleLocalService.deleteKBArticle((KBArticle)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<KBArticle> getBasePersistence() {
 		return kbArticlePersistence;
 	}

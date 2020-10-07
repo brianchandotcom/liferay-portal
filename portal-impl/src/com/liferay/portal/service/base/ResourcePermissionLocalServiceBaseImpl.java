@@ -312,6 +312,7 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -330,6 +331,7 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 			(ResourcePermission)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ResourcePermission> getBasePersistence() {
 		return resourcePermissionPersistence;
 	}

@@ -328,6 +328,7 @@ public abstract class KaleoInstanceTokenLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -346,6 +347,7 @@ public abstract class KaleoInstanceTokenLocalServiceBaseImpl
 			(KaleoInstanceToken)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<KaleoInstanceToken> getBasePersistence() {
 		return kaleoInstanceTokenPersistence;
 	}

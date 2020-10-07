@@ -320,6 +320,7 @@ public abstract class CommerceApplicationBrandLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -339,6 +340,7 @@ public abstract class CommerceApplicationBrandLocalServiceBaseImpl
 				(CommerceApplicationBrand)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceApplicationBrand> getBasePersistence() {
 		return commerceApplicationBrandPersistence;
 	}

@@ -309,6 +309,7 @@ public abstract class DDLRecordSetVersionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -327,6 +328,7 @@ public abstract class DDLRecordSetVersionLocalServiceBaseImpl
 			(DDLRecordSetVersion)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DDLRecordSetVersion> getBasePersistence() {
 		return ddlRecordSetVersionPersistence;
 	}

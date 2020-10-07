@@ -401,6 +401,7 @@ public abstract class AddressLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -417,6 +418,7 @@ public abstract class AddressLocalServiceBaseImpl
 		return addressLocalService.deleteAddress((Address)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Address> getBasePersistence() {
 		return addressPersistence;
 	}

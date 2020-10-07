@@ -14,6 +14,7 @@
 
 package com.liferay.powwow.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -139,6 +140,11 @@ public abstract class PowwowMeetingLocalServiceBaseImpl
 		throws PortalException {
 
 		return powwowMeetingPersistence.remove(powwowMeeting);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return powwowMeetingPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -292,6 +298,7 @@ public abstract class PowwowMeetingLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -310,6 +317,7 @@ public abstract class PowwowMeetingLocalServiceBaseImpl
 			(PowwowMeeting)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<PowwowMeeting> getBasePersistence() {
 		return powwowMeetingPersistence;
 	}

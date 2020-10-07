@@ -307,6 +307,7 @@ public abstract class SamlIdpSsoSessionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -325,6 +326,7 @@ public abstract class SamlIdpSsoSessionLocalServiceBaseImpl
 			(SamlIdpSsoSession)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<SamlIdpSsoSession> getBasePersistence() {
 		return samlIdpSsoSessionPersistence;
 	}

@@ -317,6 +317,7 @@ public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -335,6 +336,7 @@ public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 			(SyncDLFileVersionDiff)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<SyncDLFileVersionDiff> getBasePersistence() {
 		return syncDLFileVersionDiffPersistence;
 	}

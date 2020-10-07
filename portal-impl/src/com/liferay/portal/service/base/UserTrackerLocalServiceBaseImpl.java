@@ -291,6 +291,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -308,6 +309,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 			(UserTracker)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<UserTracker> getBasePersistence() {
 		return userTrackerPersistence;
 	}

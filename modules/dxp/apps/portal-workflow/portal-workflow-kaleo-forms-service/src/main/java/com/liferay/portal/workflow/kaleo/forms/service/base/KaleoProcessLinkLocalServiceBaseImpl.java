@@ -302,6 +302,7 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -320,6 +321,7 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 			(KaleoProcessLink)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<KaleoProcessLink> getBasePersistence() {
 		return kaleoProcessLinkPersistence;
 	}

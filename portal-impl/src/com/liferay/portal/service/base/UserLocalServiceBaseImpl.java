@@ -420,6 +420,7 @@ public abstract class UserLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -436,6 +437,7 @@ public abstract class UserLocalServiceBaseImpl
 		return userLocalService.deleteUser((User)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<User> getBasePersistence() {
 		return userPersistence;
 	}

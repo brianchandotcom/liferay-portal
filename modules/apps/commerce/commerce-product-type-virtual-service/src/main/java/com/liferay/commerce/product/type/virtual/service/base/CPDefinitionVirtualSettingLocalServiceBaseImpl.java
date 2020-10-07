@@ -438,6 +438,7 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -457,6 +458,7 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 				(CPDefinitionVirtualSetting)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CPDefinitionVirtualSetting> getBasePersistence() {
 		return cpDefinitionVirtualSettingPersistence;
 	}

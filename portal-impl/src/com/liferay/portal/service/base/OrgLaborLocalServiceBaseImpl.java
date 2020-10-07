@@ -286,6 +286,7 @@ public abstract class OrgLaborLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -302,6 +303,7 @@ public abstract class OrgLaborLocalServiceBaseImpl
 		return orgLaborLocalService.deleteOrgLabor((OrgLabor)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<OrgLabor> getBasePersistence() {
 		return orgLaborPersistence;
 	}

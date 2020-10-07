@@ -312,6 +312,7 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -330,6 +331,7 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 			(RedirectNotFoundEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<RedirectNotFoundEntry> getBasePersistence() {
 		return redirectNotFoundEntryPersistence;
 	}

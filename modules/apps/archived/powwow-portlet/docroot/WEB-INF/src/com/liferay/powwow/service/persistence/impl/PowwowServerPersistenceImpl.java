@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.powwow.exception.NoSuchServerException;
 import com.liferay.powwow.model.PowwowServer;
+import com.liferay.powwow.model.PowwowServerTable;
 import com.liferay.powwow.model.impl.PowwowServerImpl;
 import com.liferay.powwow.model.impl.PowwowServerModelImpl;
 import com.liferay.powwow.service.persistence.PowwowServerPersistence;
@@ -681,6 +682,8 @@ public class PowwowServerPersistenceImpl
 
 		setModelImplClass(PowwowServerImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(PowwowServerTable.INSTANCE);
 	}
 
 	/**

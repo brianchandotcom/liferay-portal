@@ -302,6 +302,7 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -320,6 +321,7 @@ public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 			(HtmlPreviewEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<HtmlPreviewEntry> getBasePersistence() {
 		return htmlPreviewEntryPersistence;
 	}

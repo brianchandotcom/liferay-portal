@@ -293,6 +293,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -311,6 +312,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 			(RatingsStats)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<RatingsStats> getBasePersistence() {
 		return ratingsStatsPersistence;
 	}

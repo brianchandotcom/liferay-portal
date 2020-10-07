@@ -421,6 +421,7 @@ public abstract class CPDefinitionInventoryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -439,6 +440,7 @@ public abstract class CPDefinitionInventoryLocalServiceBaseImpl
 			(CPDefinitionInventory)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CPDefinitionInventory> getBasePersistence() {
 		return cpDefinitionInventoryPersistence;
 	}

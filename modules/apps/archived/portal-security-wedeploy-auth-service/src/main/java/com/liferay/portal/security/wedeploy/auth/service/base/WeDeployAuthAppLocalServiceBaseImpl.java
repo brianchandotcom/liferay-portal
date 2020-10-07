@@ -296,6 +296,7 @@ public abstract class WeDeployAuthAppLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -314,6 +315,7 @@ public abstract class WeDeployAuthAppLocalServiceBaseImpl
 			(WeDeployAuthApp)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<WeDeployAuthApp> getBasePersistence() {
 		return weDeployAuthAppPersistence;
 	}

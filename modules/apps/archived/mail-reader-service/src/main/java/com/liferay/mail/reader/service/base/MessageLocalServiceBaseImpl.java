@@ -291,6 +291,7 @@ public abstract class MessageLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -307,6 +308,7 @@ public abstract class MessageLocalServiceBaseImpl
 		return messageLocalService.deleteMessage((Message)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Message> getBasePersistence() {
 		return messagePersistence;
 	}

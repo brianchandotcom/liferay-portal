@@ -293,6 +293,7 @@ public abstract class PortletItemLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -310,6 +311,7 @@ public abstract class PortletItemLocalServiceBaseImpl
 			(PortletItem)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<PortletItem> getBasePersistence() {
 		return portletItemPersistence;
 	}

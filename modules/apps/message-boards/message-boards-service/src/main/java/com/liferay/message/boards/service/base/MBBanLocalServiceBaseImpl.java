@@ -372,6 +372,7 @@ public abstract class MBBanLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -388,6 +389,7 @@ public abstract class MBBanLocalServiceBaseImpl
 		return mbBanLocalService.deleteMBBan((MBBan)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MBBan> getBasePersistence() {
 		return mbBanPersistence;
 	}

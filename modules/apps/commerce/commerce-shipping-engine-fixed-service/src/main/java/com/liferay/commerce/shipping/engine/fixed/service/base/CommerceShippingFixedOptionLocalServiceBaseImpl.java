@@ -319,6 +319,7 @@ public abstract class CommerceShippingFixedOptionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -338,6 +339,7 @@ public abstract class CommerceShippingFixedOptionLocalServiceBaseImpl
 				(CommerceShippingFixedOption)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceShippingFixedOption> getBasePersistence() {
 		return commerceShippingFixedOptionPersistence;
 	}

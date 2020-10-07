@@ -310,6 +310,7 @@ public abstract class AccountEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -328,6 +329,7 @@ public abstract class AccountEntryLocalServiceBaseImpl
 			(AccountEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AccountEntry> getBasePersistence() {
 		return accountEntryPersistence;
 	}

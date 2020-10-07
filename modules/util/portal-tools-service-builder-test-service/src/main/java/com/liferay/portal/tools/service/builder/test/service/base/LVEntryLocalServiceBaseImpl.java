@@ -321,6 +321,7 @@ public abstract class LVEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -337,6 +338,7 @@ public abstract class LVEntryLocalServiceBaseImpl
 		return lvEntryLocalService.deleteLVEntry((LVEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<LVEntry> getBasePersistence() {
 		return lvEntryPersistence;
 	}

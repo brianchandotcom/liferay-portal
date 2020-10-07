@@ -15,6 +15,7 @@
 package com.liferay.tasks.service.base;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -140,6 +141,11 @@ public abstract class TasksEntryLocalServiceBaseImpl
 		throws PortalException {
 
 		return tasksEntryPersistence.remove(tasksEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return tasksEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -291,6 +297,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -308,6 +315,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 			(TasksEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<TasksEntry> getBasePersistence() {
 		return tasksEntryPersistence;
 	}

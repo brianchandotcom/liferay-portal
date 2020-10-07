@@ -408,6 +408,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -426,6 +427,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 			(EmailAddress)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<EmailAddress> getBasePersistence() {
 		return emailAddressPersistence;
 	}

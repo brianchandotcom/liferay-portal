@@ -315,6 +315,7 @@ public abstract class DDMFormInstanceReportLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -333,6 +334,7 @@ public abstract class DDMFormInstanceReportLocalServiceBaseImpl
 			(DDMFormInstanceReport)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DDMFormInstanceReport> getBasePersistence() {
 		return ddmFormInstanceReportPersistence;
 	}

@@ -313,6 +313,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -331,6 +332,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 			(WikiPageResource)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<WikiPageResource> getBasePersistence() {
 		return wikiPageResourcePersistence;
 	}

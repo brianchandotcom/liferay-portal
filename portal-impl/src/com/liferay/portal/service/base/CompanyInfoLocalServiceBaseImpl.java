@@ -290,6 +290,7 @@ public abstract class CompanyInfoLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -307,6 +308,7 @@ public abstract class CompanyInfoLocalServiceBaseImpl
 			(CompanyInfo)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CompanyInfo> getBasePersistence() {
 		return companyInfoPersistence;
 	}

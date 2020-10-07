@@ -296,6 +296,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -313,6 +314,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 			(VirtualHost)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<VirtualHost> getBasePersistence() {
 		return virtualHostPersistence;
 	}

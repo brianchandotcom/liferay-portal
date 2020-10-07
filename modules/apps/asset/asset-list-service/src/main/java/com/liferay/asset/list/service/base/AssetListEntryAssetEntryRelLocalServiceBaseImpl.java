@@ -414,6 +414,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -433,6 +434,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 				(AssetListEntryAssetEntryRel)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AssetListEntryAssetEntryRel> getBasePersistence() {
 		return assetListEntryAssetEntryRelPersistence;
 	}

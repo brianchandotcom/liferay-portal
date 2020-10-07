@@ -303,6 +303,7 @@ public abstract class CTSContentLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -320,6 +321,7 @@ public abstract class CTSContentLocalServiceBaseImpl
 			(CTSContent)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CTSContent> getBasePersistence() {
 		return ctsContentPersistence;
 	}

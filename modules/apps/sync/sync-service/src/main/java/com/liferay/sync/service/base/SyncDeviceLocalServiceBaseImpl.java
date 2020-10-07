@@ -379,6 +379,7 @@ public abstract class SyncDeviceLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -396,6 +397,7 @@ public abstract class SyncDeviceLocalServiceBaseImpl
 			(SyncDevice)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<SyncDevice> getBasePersistence() {
 		return syncDevicePersistence;
 	}

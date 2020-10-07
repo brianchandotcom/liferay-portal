@@ -19,6 +19,7 @@ import com.liferay.opensocial.service.OAuthTokenLocalService;
 import com.liferay.opensocial.service.persistence.GadgetPersistence;
 import com.liferay.opensocial.service.persistence.OAuthConsumerPersistence;
 import com.liferay.opensocial.service.persistence.OAuthTokenPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -135,6 +136,11 @@ public abstract class OAuthTokenLocalServiceBaseImpl
 	@Override
 	public OAuthToken deleteOAuthToken(OAuthToken oAuthToken) {
 		return oAuthTokenPersistence.remove(oAuthToken);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return oAuthTokenPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -286,6 +292,7 @@ public abstract class OAuthTokenLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -303,6 +310,7 @@ public abstract class OAuthTokenLocalServiceBaseImpl
 			(OAuthToken)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<OAuthToken> getBasePersistence() {
 		return oAuthTokenPersistence;
 	}

@@ -296,6 +296,7 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -314,6 +315,7 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 			(PasswordTracker)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<PasswordTracker> getBasePersistence() {
 		return passwordTrackerPersistence;
 	}

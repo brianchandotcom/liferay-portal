@@ -459,6 +459,7 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -477,6 +478,7 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 			(CalendarBooking)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CalendarBooking> getBasePersistence() {
 		return calendarBookingPersistence;
 	}

@@ -419,6 +419,7 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -438,6 +439,7 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 				(CalendarNotificationTemplate)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CalendarNotificationTemplate> getBasePersistence() {
 		return calendarNotificationTemplatePersistence;
 	}

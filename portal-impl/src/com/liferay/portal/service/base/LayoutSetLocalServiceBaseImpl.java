@@ -296,6 +296,7 @@ public abstract class LayoutSetLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -312,6 +313,7 @@ public abstract class LayoutSetLocalServiceBaseImpl
 		return layoutSetLocalService.deleteLayoutSet((LayoutSet)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<LayoutSet> getBasePersistence() {
 		return layoutSetPersistence;
 	}

@@ -292,6 +292,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -310,6 +311,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 			(TrashVersion)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<TrashVersion> getBasePersistence() {
 		return trashVersionPersistence;
 	}

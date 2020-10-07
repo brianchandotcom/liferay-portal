@@ -406,6 +406,7 @@ public abstract class CPDefinitionGroupedEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -425,6 +426,7 @@ public abstract class CPDefinitionGroupedEntryLocalServiceBaseImpl
 				(CPDefinitionGroupedEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CPDefinitionGroupedEntry> getBasePersistence() {
 		return cpDefinitionGroupedEntryPersistence;
 	}

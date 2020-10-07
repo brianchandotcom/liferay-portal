@@ -320,6 +320,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -338,6 +339,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 			(VersionedEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<VersionedEntry> getBasePersistence() {
 		return versionedEntryPersistence;
 	}

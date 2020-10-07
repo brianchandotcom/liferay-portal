@@ -378,6 +378,7 @@ public abstract class DEDataListViewLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -396,6 +397,7 @@ public abstract class DEDataListViewLocalServiceBaseImpl
 			(DEDataListView)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DEDataListView> getBasePersistence() {
 		return deDataListViewPersistence;
 	}

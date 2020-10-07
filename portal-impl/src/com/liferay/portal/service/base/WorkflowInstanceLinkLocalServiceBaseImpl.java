@@ -316,6 +316,7 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -334,6 +335,7 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 			(WorkflowInstanceLink)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<WorkflowInstanceLink> getBasePersistence() {
 		return workflowInstanceLinkPersistence;
 	}

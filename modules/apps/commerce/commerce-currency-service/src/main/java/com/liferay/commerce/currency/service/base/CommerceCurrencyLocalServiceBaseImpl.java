@@ -388,6 +388,7 @@ public abstract class CommerceCurrencyLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -406,6 +407,7 @@ public abstract class CommerceCurrencyLocalServiceBaseImpl
 			(CommerceCurrency)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceCurrency> getBasePersistence() {
 		return commerceCurrencyPersistence;
 	}

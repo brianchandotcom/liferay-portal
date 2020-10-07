@@ -298,6 +298,7 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -316,6 +317,7 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 			(MicroblogsEntry)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MicroblogsEntry> getBasePersistence() {
 		return microblogsEntryPersistence;
 	}

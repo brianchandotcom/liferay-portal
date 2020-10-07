@@ -415,6 +415,7 @@ public abstract class RepositoryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -432,6 +433,7 @@ public abstract class RepositoryLocalServiceBaseImpl
 			(Repository)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Repository> getBasePersistence() {
 		return repositoryPersistence;
 	}

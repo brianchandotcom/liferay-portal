@@ -300,6 +300,7 @@ public abstract class DLContentLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -316,6 +317,7 @@ public abstract class DLContentLocalServiceBaseImpl
 		return dlContentLocalService.deleteDLContent((DLContent)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DLContent> getBasePersistence() {
 		return dlContentPersistence;
 	}

@@ -16,6 +16,7 @@ package com.liferay.opensocial.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.opensocial.model.Gadget;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -142,6 +143,9 @@ public interface GadgetLocalService
 	public void destroyGadget(String uuid, long companyId);
 
 	public void destroyGadgets();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

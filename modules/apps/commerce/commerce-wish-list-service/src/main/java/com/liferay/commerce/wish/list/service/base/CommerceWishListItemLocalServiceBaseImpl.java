@@ -313,6 +313,7 @@ public abstract class CommerceWishListItemLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -331,6 +332,7 @@ public abstract class CommerceWishListItemLocalServiceBaseImpl
 			(CommerceWishListItem)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceWishListItem> getBasePersistence() {
 		return commerceWishListItemPersistence;
 	}

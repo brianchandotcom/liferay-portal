@@ -407,6 +407,7 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -425,6 +426,7 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 			(FragmentCollection)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<FragmentCollection> getBasePersistence() {
 		return fragmentCollectionPersistence;
 	}

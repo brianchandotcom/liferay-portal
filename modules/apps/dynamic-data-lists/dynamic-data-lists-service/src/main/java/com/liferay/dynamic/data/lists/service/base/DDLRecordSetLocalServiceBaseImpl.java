@@ -383,6 +383,7 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -401,6 +402,7 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 			(DDLRecordSet)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DDLRecordSet> getBasePersistence() {
 		return ddlRecordSetPersistence;
 	}

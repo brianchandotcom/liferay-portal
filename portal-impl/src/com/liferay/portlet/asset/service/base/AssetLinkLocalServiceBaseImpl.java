@@ -293,6 +293,7 @@ public abstract class AssetLinkLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -309,6 +310,7 @@ public abstract class AssetLinkLocalServiceBaseImpl
 		return assetLinkLocalService.deleteAssetLink((AssetLink)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<AssetLink> getBasePersistence() {
 		return assetLinkPersistence;
 	}

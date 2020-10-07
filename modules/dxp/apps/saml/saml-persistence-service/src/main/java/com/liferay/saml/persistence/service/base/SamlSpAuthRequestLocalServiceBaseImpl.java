@@ -311,6 +311,7 @@ public abstract class SamlSpAuthRequestLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -329,6 +330,7 @@ public abstract class SamlSpAuthRequestLocalServiceBaseImpl
 			(SamlSpAuthRequest)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<SamlSpAuthRequest> getBasePersistence() {
 		return samlSpAuthRequestPersistence;
 	}

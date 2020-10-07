@@ -318,6 +318,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -337,6 +338,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 				(ExportImportConfiguration)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ExportImportConfiguration> getBasePersistence() {
 		return exportImportConfigurationPersistence;
 	}

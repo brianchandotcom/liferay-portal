@@ -434,6 +434,7 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -452,6 +453,7 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 			(CPDisplayLayout)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CPDisplayLayout> getBasePersistence() {
 		return cpDisplayLayoutPersistence;
 	}

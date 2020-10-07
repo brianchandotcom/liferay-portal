@@ -452,6 +452,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -470,6 +471,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 			(BookmarksFolder)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<BookmarksFolder> getBasePersistence() {
 		return bookmarksFolderPersistence;
 	}

@@ -299,6 +299,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -317,6 +318,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 			(CTCollection)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CTCollection> getBasePersistence() {
 		return ctCollectionPersistence;
 	}

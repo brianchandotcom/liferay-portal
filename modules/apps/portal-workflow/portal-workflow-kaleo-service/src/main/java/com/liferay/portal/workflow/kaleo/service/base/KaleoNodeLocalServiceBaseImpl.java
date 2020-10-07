@@ -307,6 +307,7 @@ public abstract class KaleoNodeLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -323,6 +324,7 @@ public abstract class KaleoNodeLocalServiceBaseImpl
 		return kaleoNodeLocalService.deleteKaleoNode((KaleoNode)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<KaleoNode> getBasePersistence() {
 		return kaleoNodePersistence;
 	}

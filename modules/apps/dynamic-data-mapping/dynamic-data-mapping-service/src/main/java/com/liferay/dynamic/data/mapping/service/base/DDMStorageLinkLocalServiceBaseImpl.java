@@ -310,6 +310,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -328,6 +329,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 			(DDMStorageLink)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<DDMStorageLink> getBasePersistence() {
 		return ddmStorageLinkPersistence;
 	}

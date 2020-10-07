@@ -428,6 +428,7 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -446,6 +447,7 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 			(MDRRuleGroupInstance)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<MDRRuleGroupInstance> getBasePersistence() {
 		return mdrRuleGroupInstancePersistence;
 	}

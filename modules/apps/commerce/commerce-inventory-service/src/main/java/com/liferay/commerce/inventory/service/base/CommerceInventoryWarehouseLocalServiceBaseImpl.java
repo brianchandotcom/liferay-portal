@@ -341,6 +341,7 @@ public abstract class CommerceInventoryWarehouseLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -360,6 +361,7 @@ public abstract class CommerceInventoryWarehouseLocalServiceBaseImpl
 				(CommerceInventoryWarehouse)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceInventoryWarehouse> getBasePersistence() {
 		return commerceInventoryWarehousePersistence;
 	}

@@ -400,6 +400,7 @@ public abstract class WebsiteLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -416,6 +417,7 @@ public abstract class WebsiteLocalServiceBaseImpl
 		return websiteLocalService.deleteWebsite((Website)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Website> getBasePersistence() {
 		return websitePersistence;
 	}

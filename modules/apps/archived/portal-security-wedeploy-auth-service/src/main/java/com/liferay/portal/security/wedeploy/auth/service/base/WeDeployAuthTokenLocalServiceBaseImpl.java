@@ -302,6 +302,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -320,6 +321,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 			(WeDeployAuthToken)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<WeDeployAuthToken> getBasePersistence() {
 		return weDeployAuthTokenPersistence;
 	}

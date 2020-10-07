@@ -316,6 +316,7 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -334,6 +335,7 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 			(PortletPreferences)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<PortletPreferences> getBasePersistence() {
 		return portletPreferencesPersistence;
 	}

@@ -324,6 +324,7 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -342,6 +343,7 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 			(CommerceAccount)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<CommerceAccount> getBasePersistence() {
 		return commerceAccountPersistence;
 	}

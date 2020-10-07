@@ -35,6 +35,7 @@
 			"<rootDir>/test/dev/"
 		]
 	},
+	"main": "index.js",
 	"name": "commerce-frontend-js",
 	"private": true,
 	"scripts": {

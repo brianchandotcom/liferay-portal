@@ -15,6 +15,9 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContext;
+import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
+import com.liferay.document.library.web.internal.display.context.DLAdminManagementToolbarDisplayContext;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -22,6 +25,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -54,6 +58,22 @@ public class EditFileEntryMVCRenderCommand
 			DDMFormValuesToMapConverter.class.getName(),
 			_ddmFormValuesToMapConverter);
 
+		DLAdminDisplayContext dlAdminDisplayContext =
+			_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
+				_portal.getHttpServletResponse(renderResponse));
+
+		renderRequest.setAttribute(
+			DLAdminDisplayContext.class.getName(), dlAdminDisplayContext);
+
+		renderRequest.setAttribute(
+			DLAdminManagementToolbarDisplayContext.class.getName(),
+			_dlAdminDisplayContextProvider.
+				getDLAdminManagementToolbarDisplayContext(
+					_portal.getHttpServletRequest(renderRequest),
+					_portal.getHttpServletResponse(renderResponse),
+					dlAdminDisplayContext));
+
 		return super.render(renderRequest, renderResponse);
 	}
 
@@ -74,10 +94,16 @@ public class EditFileEntryMVCRenderCommand
 	@Reference
 	private DDMFormValuesToMapConverter _ddmFormValuesToMapConverter;
 
+	@Reference
+	private DLAdminDisplayContextProvider _dlAdminDisplayContextProvider;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
 	private volatile ModelResourcePermission<FileEntry>
 		_fileEntryModelResourcePermission;
+
+	@Reference
+	private Portal _portal;
 
 }

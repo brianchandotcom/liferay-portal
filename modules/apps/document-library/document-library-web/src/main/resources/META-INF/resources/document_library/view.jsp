@@ -45,7 +45,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 		<clay:management-toolbar
-			displayContext="<%= dlAdminDisplayContextProvider.getDLAdminManagementToolbarDisplayContext(request, response) %>"
+			displayContext="<%= (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName()) %>"
 		/>
 
 		<%

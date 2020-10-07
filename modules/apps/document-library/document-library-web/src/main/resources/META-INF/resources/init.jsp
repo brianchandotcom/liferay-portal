@@ -103,7 +103,6 @@ page import="com.liferay.document.library.web.internal.constants.DLWebKeys" %><%
 page import="com.liferay.document.library.web.internal.dao.search.DLResultRowSplitter" %><%@
 page import="com.liferay.document.library.web.internal.dao.search.IGResultRowSplitter" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAdminDisplayContext" %><%@
-page import="com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAdminNavigationDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditDDMStructureDisplayContext" %><%@
@@ -260,7 +259,6 @@ DLTrashHelper dlTrashHelper = (DLTrashHelper)request.getAttribute(DLWebKeys.DOCU
 
 DLWebComponentProvider dlWebComponentProvider = DLWebComponentProvider.getDLWebComponentProvider();
 
-DLAdminDisplayContextProvider dlAdminDisplayContextProvider = dlWebComponentProvider.getDLAdminDisplayContextProvider();
 DLDisplayContextProvider dlDisplayContextProvider = dlWebComponentProvider.getDLDisplayContextProvider();
 IGDisplayContextProvider igDisplayContextProvider = dlWebComponentProvider.getIGDisplayContextProvider();
 

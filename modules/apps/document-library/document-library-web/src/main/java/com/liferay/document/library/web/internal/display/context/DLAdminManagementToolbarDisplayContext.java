@@ -90,7 +90,8 @@ public class DLAdminManagementToolbarDisplayContext
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		DLAdminDisplayContext dlAdminDisplayContext) {
+		DLAdminDisplayContext dlAdminDisplayContext,
+		DLTrashHelper dlTrashHelper) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
@@ -100,6 +101,7 @@ public class DLAdminManagementToolbarDisplayContext
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_dlAdminDisplayContext = dlAdminDisplayContext;
+		_dlTrashHelper = dlTrashHelper;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
@@ -108,9 +110,6 @@ public class DLAdminManagementToolbarDisplayContext
 
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
-
-		_dlTrashHelper = (DLTrashHelper)_httpServletRequest.getAttribute(
-			DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER);
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

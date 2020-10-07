@@ -65,7 +65,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 <div class="document-container" id="<portlet:namespace />entriesContainer">
 
 	<%
-	DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = dlAdminDisplayContextProvider.getDLAdminManagementToolbarDisplayContext(request, response);
+	DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName());
 
 	SearchContainer<Object> dlSearchContainer = dlAdminDisplayContext.getSearchContainer();
 	%>

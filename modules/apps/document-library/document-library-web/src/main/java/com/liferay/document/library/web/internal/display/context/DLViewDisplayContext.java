@@ -143,6 +143,8 @@ public class DLViewDisplayContext {
 	public String getRestoreTrashEntriesURL() {
 		ActionURL actionURL = _renderResponse.createActionURL();
 
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME, "/document_library/edit_entry");
 		actionURL.setParameter(Constants.CMD, Constants.RESTORE);
 
 		return actionURL.toString();

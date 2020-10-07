@@ -148,7 +148,6 @@ public class ProjectTemplatesRESTBuilderTest
 		throws Exception {
 
 		String liferayVersion = getDefaultLiferayVersion();
-
 		String name = "sample";
 
 		File gradleWorkspaceDir = buildWorkspace(

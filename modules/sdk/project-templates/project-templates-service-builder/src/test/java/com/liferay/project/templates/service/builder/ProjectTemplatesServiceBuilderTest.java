@@ -180,7 +180,6 @@ public class ProjectTemplatesServiceBuilderTest
 		throws Exception {
 
 		String liferayVersion = getDefaultLiferayVersion();
-
 		String name = "sample";
 
 		File gradleWorkspaceDir = buildWorkspace(

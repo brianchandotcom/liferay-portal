@@ -46,11 +46,15 @@ public class MiniCartTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		CommerceContext commerceContext = (CommerceContext)request.getAttribute(
-			CommerceWebKeys.COMMERCE_CONTEXT);
+		HttpServletRequest httpServletRequest = getRequest();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (Validator.isNull(_spritemap)) {
 			_spritemap = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
@@ -64,7 +68,7 @@ public class MiniCartTag extends IncludeTag {
 
 				PortletURL commerceCartPortletURL =
 					_commerceOrderHttpHelper.getCommerceCartPortletURL(
-						request, commerceOrder);
+						httpServletRequest, commerceOrder);
 
 				if (commerceCartPortletURL != null) {
 					_orderDetailURL = String.valueOf(commerceCartPortletURL);
@@ -78,7 +82,8 @@ public class MiniCartTag extends IncludeTag {
 			_checkoutURL = StringPool.BLANK;
 
 			PortletURL commerceCheckoutPortletURL =
-				_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(request);
+				_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(
+					httpServletRequest);
 
 			if (commerceCheckoutPortletURL != null) {
 				_checkoutURL = String.valueOf(commerceCheckoutPortletURL);
@@ -95,8 +100,30 @@ public class MiniCartTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getCartItemsListViewRendererURL() {
+		return _cartItemsListViewRendererURL;
+	}
+
+	public String getCartViewRendererURL() {
+		return _cartViewRendererURL;
+	}
+
 	public String getSpritemap() {
 		return _spritemap;
+	}
+
+	public boolean isToggleable() {
+		return _toggleable;
+	}
+
+	public void setCartItemsListViewRendererURL(
+		String cartItemsListViewRendererURL) {
+
+		_cartItemsListViewRendererURL = cartItemsListViewRendererURL;
+	}
+
+	public void setCartViewRendererURL(String cartViewRendererURL) {
+		_cartViewRendererURL = cartViewRendererURL;
 	}
 
 	@Override
@@ -113,16 +140,23 @@ public class MiniCartTag extends IncludeTag {
 		_spritemap = spritemap;
 	}
 
+	public void setToggleable(boolean toggleable) {
+		_toggleable = toggleable;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_cartItemsListViewRendererURL = StringPool.BLANK;
+		_cartViewRendererURL = StringPool.BLANK;
 		_checkoutURL = null;
 		_commerceOrderHttpHelper = null;
 		_configurationProvider = null;
 		_orderDetailURL = null;
 		_orderId = 0;
 		_spritemap = null;
+		_toggleable = true;
 	}
 
 	@Override
@@ -136,6 +170,13 @@ public class MiniCartTag extends IncludeTag {
 			"liferay-commerce:cart:checkoutURL", _checkoutURL);
 
 		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:cartViewRendererURL", _cartViewRendererURL);
+
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:cartItemsListViewRendererURL",
+			_cartItemsListViewRendererURL);
+
+		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:displayDiscountLevels",
 			_isDisplayDiscountLevels());
 
@@ -147,6 +188,9 @@ public class MiniCartTag extends IncludeTag {
 
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:spritemap", _spritemap);
+
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:toggleable", _toggleable);
 	}
 
 	private boolean _isDisplayDiscountLevels() {
@@ -170,11 +214,14 @@ public class MiniCartTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(MiniCartTag.class);
 
+	private String _cartItemsListViewRendererURL = StringPool.BLANK;
+	private String _cartViewRendererURL = StringPool.BLANK;
 	private String _checkoutURL;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private ConfigurationProvider _configurationProvider;
 	private String _orderDetailURL;
 	private long _orderId;
 	private String _spritemap;
+	private boolean _toggleable = true;
 
 }

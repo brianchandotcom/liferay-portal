@@ -19,7 +19,7 @@
 <div class="cart-root" id="<%= miniCartId %>"></div>
 
 <aui:script require="commerce-frontend-js/components/mini_cart/entry as Cart">
-	Cart.default('<%= miniCartId %>', '<%= miniCartId %>', {
+	var initialProps = {
 		cartActionURLs: {
 			checkoutURL: '<%= checkoutURL %>',
 			orderDetailURL: '<%= orderDetailURL %>',
@@ -27,5 +27,23 @@
 		displayDiscountLevels: <%= displayDiscountLevels %>,
 		orderId: <%= orderId %>,
 		spritemap: '<%= spritemap %>',
-	});
+		toggleable: <%= toggleable %>,
+	};
+
+	var cartViewRendererURL = '<%= cartViewRendererURL %>',
+		cartItemsListViewRendererURL = '<%= cartItemsListViewRendererURL %>';
+
+	if (cartViewRendererURL) {
+		initialProps.cartView = {
+			contentRendererModuleURL: cartViewRendererURL,
+		};
+	}
+
+	if (cartItemsListViewRendererURL) {
+		initialProps.cartItemsListView = {
+			contentRendererModuleURL: cartItemsListViewRendererURL,
+		};
+	}
+
+	Cart.default('<%= miniCartId %>', '<%= miniCartId %>', initialProps);
 </aui:script>

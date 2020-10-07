@@ -95,6 +95,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STEP_CARD_KEBAB_MENU</td>
+	<td>//span[contains(text(),'${key_step}')]/parent::span/following-sibling::div//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ASSIGNEE_FIELD</td>
 	<td>//input[contains(@class,'form-control-inset')]</td>
 	<td></td>

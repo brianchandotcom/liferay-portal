@@ -1,7 +1,6 @@
 definition {
 
 	macro addNewStep {
-
 		Click(locator1 = "AppBuilderWorkflow#NEW_STEP_BUTTON");
 	}
 
@@ -34,6 +33,12 @@ definition {
 		AssertVisible(
 			key_fieldName = "${fieldName}",
 			locator1 = "AppBuilderWorkflow#TEXT_FIELD_DISABLED");
+	}
+
+	macro assertStepNotPresent {
+		AssertElementNotPresent(
+			key_step = "${step}",
+			locator1 = "AppBuilderWorkflow#STEP_CARD");
 	}
 
 	macro assignEntry {
@@ -104,6 +109,14 @@ definition {
 			key_action = "${action}",
 			locator1 = "AppBuilderWorkflow#ACTION_ITEM_NAME_INPUT",
 			value1 = "${actionName}");
+	}
+
+	macro deleteStep {
+		Click(
+			key_step = "${step}",
+			locator1 = "AppBuilderWorkflow#STEP_CARD_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete Step");
 	}
 
 	macro selectActionsCard {

@@ -15,7 +15,7 @@
 import React from 'react';
 
 const MiniCartContext = React.createContext({
-	AJAX: {},
+	CartResource: {},
 	actionURLs: {},
 	cartState: {},
 	closeCart: () => {},

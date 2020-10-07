@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal Search Learning To Rank API
 Bundle-SymbolicName: com.liferay.portal.search.learning.to.rank.api
-Bundle-Version: 2.0.10
+Bundle-Version: 3.0.0
 Export-Package: com.liferay.portal.search.learning.to.rank.configuration
 -fixupmessages: Classes found in the wrong directory: ...;is:=ignore

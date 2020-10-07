@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Segments Context Vocabulary
 Bundle-SymbolicName: com.liferay.segments.context.vocabulary
-Bundle-Version: 1.0.8
+Bundle-Version: 2.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.segments.context.vocabulary),(bundle.symbolic.name=com.liferay.segments.lang)";\

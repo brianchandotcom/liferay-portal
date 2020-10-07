@@ -26,5 +26,5 @@
 		"test": "env TZ=utc liferay-npm-scripts test",
 		"test:watch": "env TZ=utc liferay-npm-scripts test --watch"
 	},
-	"version": "1.0.20"
+	"version": "2.0.0"
 }

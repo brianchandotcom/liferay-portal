@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Flags Service
 Bundle-SymbolicName: com.liferay.flags.service
-Bundle-Version: 5.0.10
+Bundle-Version: 6.0.0
 Liferay-Require-SchemaVersion: 2.0.1
 Liferay-Service: true
 -dsannotations-options: inherit

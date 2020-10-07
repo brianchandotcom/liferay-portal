@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Data Engine REST API
 Bundle-SymbolicName: com.liferay.data.engine.rest.api
-Bundle-Version: 17.4.1
+Bundle-Version: 18.0.0
 Export-Package:\
 	com.liferay.data.engine.rest.dto.v2_0,\
 	com.liferay.data.engine.rest.resource.exception,\

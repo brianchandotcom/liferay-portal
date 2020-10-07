@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal Settings Authentication Facebook Connect Web
 Bundle-SymbolicName: com.liferay.portal.settings.authentication.facebook.connect.web
-Bundle-Version: 4.0.8
+Bundle-Version: 5.0.0
 Web-ContextPath: /portal-settings-authentication-facebook-connect-web
 -liferay-aggregate-resource-bundles: com.liferay.portal.settings.lang

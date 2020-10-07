@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Cache Ehcache Implementation
 Bundle-SymbolicName: com.liferay.portal.cache.ehcache.impl
-Bundle-Version: 3.0.11
+Bundle-Version: 4.0.0
 DynamicImport-Package: *
 Import-Package:\
 	!org.quartz,\

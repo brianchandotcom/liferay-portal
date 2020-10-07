@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Fragment Implementation
 Bundle-SymbolicName: com.liferay.fragment.impl
-Bundle-Version: 3.0.27
+Bundle-Version: 4.0.0
 Web-ContextPath: /fragment-impl
 -dsannotations-options: inherit

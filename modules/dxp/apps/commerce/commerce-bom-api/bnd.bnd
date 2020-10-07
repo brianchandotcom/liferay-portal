@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce BOM API
 Bundle-SymbolicName: com.liferay.commerce.bom.api
-Bundle-Version: 4.0.8
+Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.commerce.bom.constants,\
 	com.liferay.commerce.bom.exception,\

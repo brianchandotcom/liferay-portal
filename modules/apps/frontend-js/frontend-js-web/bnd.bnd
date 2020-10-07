@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend JS Web
 Bundle-SymbolicName: com.liferay.frontend.js.web
-Bundle-Version: 4.0.30
+Bundle-Version: 5.0.0
 Liferay-JS-Resources-Top-Head:\
 	/loader/config.js,\
 	/loader/loader.js,\

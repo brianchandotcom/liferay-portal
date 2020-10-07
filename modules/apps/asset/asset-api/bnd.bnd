@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset API
 Bundle-SymbolicName: com.liferay.asset.api
-Bundle-Version: 3.3.8
+Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.asset.constants,\
 	com.liferay.asset.exception,\

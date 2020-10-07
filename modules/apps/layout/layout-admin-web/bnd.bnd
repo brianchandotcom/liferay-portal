@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Layout Admin Web
 Bundle-SymbolicName: com.liferay.layout.admin.web
-Bundle-Version: 4.0.55
+Bundle-Version: 5.0.0
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Require-Capability:\
 	liferay.resource.bundle;\

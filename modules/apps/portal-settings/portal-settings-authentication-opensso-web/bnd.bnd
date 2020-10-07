@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal Settings Authentication OpenSSO Web
 Bundle-SymbolicName: com.liferay.portal.settings.authentication.opensso.web
-Bundle-Version: 4.0.11
+Bundle-Version: 5.0.0
 Web-ContextPath: /portal-settings-authentication-opensso-web
 -liferay-aggregate-resource-bundles: com.liferay.portal.settings.lang

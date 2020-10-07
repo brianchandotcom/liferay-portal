@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Petra Salesforce Client
 Bundle-SymbolicName: com.liferay.petra.salesforce.client
-Bundle-Version: 4.0.10
+Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.petra.salesforce.client,\
 	com.liferay.petra.salesforce.client.bulk,\

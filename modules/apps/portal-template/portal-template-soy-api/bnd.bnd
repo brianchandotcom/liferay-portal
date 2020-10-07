@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Template Soy API
 Bundle-SymbolicName: com.liferay.portal.template.soy.api
-Bundle-Version: 3.0.7
+Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.portal.template.soy,\
 	com.liferay.portal.template.soy.constants,\

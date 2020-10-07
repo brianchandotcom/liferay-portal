@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Journal Terms Of Use
 Bundle-SymbolicName: com.liferay.journal.terms.of.use
-Bundle-Version: 5.0.8
+Bundle-Version: 6.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.journal.lang)";\

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Message Boards Service
 Bundle-SymbolicName: com.liferay.message.boards.service
-Bundle-Version: 4.0.25
+Bundle-Version: 5.0.0
 Import-Package:\
 	com.liferay.portal.kernel.search;version="[8.1.0,9.3.0)",\
 	\

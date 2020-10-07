@@ -1,6 +1,6 @@
 Bundle-Name: Liferay OSGi Felix Lang
 Bundle-SymbolicName: com.liferay.osgi.felix.lang
-Bundle-Version: 3.0.12
+Bundle-Version: 4.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		bundle.symbolic.name="org.apache.felix.eventadmin";\

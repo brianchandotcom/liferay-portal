@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Batch Engine Service
 Bundle-SymbolicName: com.liferay.batch.engine.service
-Bundle-Version: 3.0.15
+Bundle-Version: 4.0.0
 Import-Package:\
 	com.github.*;resolution:=optional,\
 	\

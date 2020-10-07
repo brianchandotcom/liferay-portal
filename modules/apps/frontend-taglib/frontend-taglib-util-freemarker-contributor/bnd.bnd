@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Taglib Utilities FreeMarker Contributor
 Bundle-SymbolicName: com.liferay.frontend.taglib.util.freemarker.contributor
-Bundle-Version: 4.0.7
+Bundle-Version: 5.0.0
 Import-Package:\
 	com.liferay.alloy.taglib.alloy,\
 	com.liferay.alloy.taglib.alloy.base,\

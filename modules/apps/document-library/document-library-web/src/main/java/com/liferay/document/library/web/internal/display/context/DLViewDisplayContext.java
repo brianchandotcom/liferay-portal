@@ -205,6 +205,8 @@ public class DLViewDisplayContext {
 	public String getUploadURL() {
 		ActionURL actionURL = _renderResponse.createActionURL();
 
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME, "/document_library/edit_file_entry");
 		actionURL.setParameter(Constants.CMD, Constants.ADD_DYNAMIC);
 		actionURL.setParameter("folderId", "{folderId}");
 		actionURL.setParameter(

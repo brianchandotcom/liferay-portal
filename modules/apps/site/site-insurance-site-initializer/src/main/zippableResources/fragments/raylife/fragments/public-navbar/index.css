@@ -3,21 +3,26 @@
     padding-bottom: var(--spacer-3);
 }
 
+.public-site-navbar .dropdown-menu {
+	left: auto;
+	right: 0;
+}
+
 .public-site-navbar .portlet {
 	margin-left: auto;
 }
 
 .public-site-navbar .portlet .nav-item .nav-link {
-	 color: var(--gray-500);
-	 padding: var(--spacer-3) 0 var(--spacer-3);
-   border-bottom: 4px solid transparent;
+	border-bottom: 4px solid transparent;
+	color: var(--gray-500);
+	padding: var(--spacer-3) 0 var(--spacer-3);
 }
 
 .public-site-navbar .portlet .nav-item .nav-link:hover {
-	 color: var(--gray-900);
+	color: var(--gray-900);
 }
 
 .public-site-navbar .portlet .nav-item.active a {
-   color: var(--gray-900);
-	 border-bottom: 4px solid var(--primary);
+	border-bottom: 4px solid var(--primary);
+	color: var(--gray-900);
 }

@@ -1,10 +1,11 @@
 [#assign
-	homeFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+	privateFriendlyURL = themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getSiteGroup().getFriendlyURL()
+	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
 /]
 
 <nav class="navbar navbar-expand-lg navbar-light public-site-navbar">
 	<div class="container">
-		<a class="navbar-brand" href="${homeFriendlyURL}">
+		<a class="navbar-brand" href="${publicFriendlyURL}">
 			<img alt="" class="navbar-logo d-inline-block align-top" data-lfr-editable-id="image-logo" data-lfr-editable-type="image" loading="lazy" src="[resources:raylife_logo.svg]" />
 		</a>
 
@@ -14,7 +15,22 @@
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<lfr-widget-nav id="nav"></lfr-widget-nav>
-			<a data-lfr-editable-id="link-button" data-lfr-editable-type="link" class="btn btn-outline-primary" href="sign_in.html" role="button">Sign In</a>
+
+			[#if themeDisplay.isSignedIn()]
+				<div class="dropdown position-relative">
+					<button aria-expanded="false" aria-haspopup="true" class="component-action dropdown-toggle" data-toggle="dropdown" id="${fragmentEntryLinkNamespace}_dropdown_menu" type="button">
+						[@liferay_ui["user-portrait"] user=user /]
+					</button>
+
+					<ul aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu" class="dropdown-menu right">
+						<li><a class="dropdown-item" href="${privateFriendlyURL}">My Raylife</a></li>
+						<li><a class="dropdown-item" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}">Sign out</a></li>
+					</ul>
+				</div>
+			[#else]
+				<a class="btn btn-outline-primary" href="${publicFriendlyURL}/sign-in" role="button">Sign In</a>
+			[/#if]
+
 		</div>
 	</div>
 </nav>

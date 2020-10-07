@@ -17,7 +17,9 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <%
-String referer = ParamUtil.getString(request, WebKeys.REFERER, themeDisplay.getPathMain());
+String currentURL = PortalUtil.getCurrentURL(request);
+
+String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
 
 if (referer.equals(themeDisplay.getPathMain() + "/portal/update_email_address")) {
 	referer = themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId();

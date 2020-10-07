@@ -1,5 +1,10 @@
 # Liferay Gradle Plugins Lang Builder Change Log
 
+## 3.0.20 - 2020-09-04
+
+### Dependencies
+- [LPS-48290] Update the com.liferay.lang.builder dependency to version 1.0.38.
+
 ## 3.0.19 - 2020-07-21
 
 ### Dependencies
@@ -439,6 +444,7 @@ version 2.4.
 - [LPS-51081] Update the groovy-all dependency to version 2.3.10.
 
 [LPS-10661]: https://issues.liferay.com/browse/LPS-10661
+[LPS-48290]: https://issues.liferay.com/browse/LPS-48290
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-51801]: https://issues.liferay.com/browse/LPS-51801
 [LPS-55187]: https://issues.liferay.com/browse/LPS-55187

@@ -1,5 +1,89 @@
 # Liferay Gradle Plugins Service Builder Change Log
 
+## 4.0.35 - 2020-09-09
+
+### Dependencies
+- [LPS-119524] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.365.
+
+## 4.0.34 - 2020-09-08
+
+### Dependencies
+- [LPS-120266] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.364.
+
+## 4.0.33 - 2020-09-08
+
+### Dependencies
+- [LPS-120350] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.363.
+
+## 4.0.32 - 2020-08-30
+
+### Dependencies
+- [LPS-119879] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.362.
+
+## 4.0.31 - 2020-08-25
+
+### Dependencies
+- [LPS-119694] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.361.
+
+## 4.0.30 - 2020-08-24
+
+### Dependencies
+- [LPS-119598] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.360.
+
+## 4.0.29 - 2020-08-21
+
+### Dependencies
+- [LPS-115420] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.359.
+
+## 4.0.28 - 2020-08-20
+
+### Dependencies
+- [LPS-119390] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.358.
+
+## 4.0.27 - 2020-08-19
+
+### Dependencies
+- [LPS-108614] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.357.
+
+## 4.0.26 - 2020-08-17
+
+### Dependencies
+- [LPS-119013] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.356.
+
+## 4.0.25 - 2020-08-13
+
+### Dependencies
+- [LPS-118951] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.355.
+
+## 4.0.24 - 2020-08-03
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.354.
+
+## 4.0.23 - 2020-08-01
+
+### Dependencies
+- [LRDOCS-8120] Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.353.
+
+## 4.0.22 - 2020-07-28
+
+### Dependencies
+- [LPS-108525] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.352.
+
 ## 4.0.21 - 2020-07-15
 
 ### Dependencies
@@ -1945,6 +2029,8 @@ version 2.4.
 [LPS-108120]: https://issues.liferay.com/browse/LPS-108120
 [LPS-108328]: https://issues.liferay.com/browse/LPS-108328
 [LPS-108386]: https://issues.liferay.com/browse/LPS-108386
+[LPS-108525]: https://issues.liferay.com/browse/LPS-108525
+[LPS-108614]: https://issues.liferay.com/browse/LPS-108614
 [LPS-109743]: https://issues.liferay.com/browse/LPS-109743
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110414]: https://issues.liferay.com/browse/LPS-110414
@@ -1956,13 +2042,24 @@ version 2.4.
 [LPS-113024]: https://issues.liferay.com/browse/LPS-113024
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-115420]: https://issues.liferay.com/browse/LPS-115420
 [LPS-115531]: https://issues.liferay.com/browse/LPS-115531
 [LPS-115687]: https://issues.liferay.com/browse/LPS-115687
 [LPS-115699]: https://issues.liferay.com/browse/LPS-115699
 [LPS-116049]: https://issues.liferay.com/browse/LPS-116049
+[LPS-118951]: https://issues.liferay.com/browse/LPS-118951
+[LPS-119013]: https://issues.liferay.com/browse/LPS-119013
+[LPS-119390]: https://issues.liferay.com/browse/LPS-119390
+[LPS-119524]: https://issues.liferay.com/browse/LPS-119524
+[LPS-119598]: https://issues.liferay.com/browse/LPS-119598
+[LPS-119694]: https://issues.liferay.com/browse/LPS-119694
+[LPS-119879]: https://issues.liferay.com/browse/LPS-119879
+[LPS-120266]: https://issues.liferay.com/browse/LPS-120266
+[LPS-120350]: https://issues.liferay.com/browse/LPS-120350
 [LRDOCS-2547]: https://issues.liferay.com/browse/LRDOCS-2547
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319
 [LRDOCS-5050]: https://issues.liferay.com/browse/LRDOCS-5050
 [LRDOCS-5776]: https://issues.liferay.com/browse/LRDOCS-5776
 [LRDOCS-6300]: https://issues.liferay.com/browse/LRDOCS-6300
+[LRDOCS-8120]: https://issues.liferay.com/browse/LRDOCS-8120
 [LRQA-54214]: https://issues.liferay.com/browse/LRQA-54214

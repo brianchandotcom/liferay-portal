@@ -1,5 +1,50 @@
 # Liferay Gradle Plugins Poshi Runner Change Log
 
+## 3.0.5 - 2020-10-01
+
+### Commits
+- [POSHI-118] Revert com.liferay.poshi.runner to 1.0.278 (2b94e0b54c)
+
+## 3.0.4 - 2020-09-30
+
+### Commits
+- [POSHI-107] reset to 1.0.282, regressions are still better than forgetting to
+revert 27dea935 (d2526ee2ca)
+
+## 3.0.3 - 2020-09-30
+
+### Commits
+- [POSHI-107] Revert "POSHI-107 Update com.liferay.poshi.runner to '1.0.282'"
+(c286104b83)
+
+## 3.0.2 - 2020-09-29
+
+### Commits
+- [POSHI-107] Update com.liferay.poshi.runner to '1.0.282' (d71cfcb5e4)
+- [POSHI-107] Update references to the new Poshi classes found in poshi-core
+(27dea9350d)
+
+## 3.0.1 - 2020-09-25
+
+### Commits
+- [POSHI-107] Update com.liferay.poshi.runner to '1.0.280' (53b8154fd0)
+
+## 2.2.33 - 2020-08-21
+
+### Commits
+- [LPS-119415] Extension (629013246f)
+- [LPS-119415] Copy multiple directories (cb65081e3b)
+
+## 2.2.32 - 2020-08-14
+
+### Commits
+- [POSHI-100] Update default poshi runner version to 1.0.274 (0a29c684c7)
+
+## 2.2.31 - 2020-08-07
+
+### Commits
+- [POSHI-97] Update default Poshi Runner to 1.0.272 (c9d0bc0adb)
+
 ## 2.2.30 - 2020-07-16
 
 ### Commits
@@ -464,6 +509,7 @@ up-to-date check (59fd9e696c)
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-119415]: https://issues.liferay.com/browse/LPS-119415
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350
@@ -484,3 +530,7 @@ up-to-date check (59fd9e696c)
 [POSHI-87]: https://issues.liferay.com/browse/POSHI-87
 [POSHI-90]: https://issues.liferay.com/browse/POSHI-90
 [POSHI-94]: https://issues.liferay.com/browse/POSHI-94
+[POSHI-97]: https://issues.liferay.com/browse/POSHI-97
+[POSHI-100]: https://issues.liferay.com/browse/POSHI-100
+[POSHI-107]: https://issues.liferay.com/browse/POSHI-107
+[POSHI-118]: https://issues.liferay.com/browse/POSHI-118

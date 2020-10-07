@@ -1,5 +1,54 @@
 # Liferay Gradle Plugins Workspace Change Log
 
+## 3.0.10 - 2020-10-01
+
+### Commits
+- [LPS-105380] Methods don't need to be static (c42da838cc)
+
+## 3.0.9 - 2020-09-25
+
+### Commits
+- [LPS-105280] Auto SF, inline (37eb8a5bf4)
+
+## 3.0.8 - 2020-08-21
+
+### Commits
+- [LPS-108380] SF, use String.valueOf (7ca7e14c1f)
+
+## 3.0.7 - 2020-08-19
+
+### Commits
+- [LPS-119389] root project also needs to be configured to not use npm
+(6cedd42dbf)
+
+## 3.0.6 - 2020-08-18
+
+### Commits
+- [LPS-118868] Add Test (e1eef89458)
+- [LPS-118868] Add EP versions to TargetPlatform (0fbdf87c00)
+
+## 3.0.5 - 2020-08-15
+
+### Commits
+- [LPS-118918] Update test (102c1f9465)
+- [LPS-118918] Exclude themes from included with Portlet type projects
+(6a78c09465)
+- [LPS-118918] Remove portlet requirement (58ef0ee916)
+- [LPS-118918] Add Test (b7abb65924)
+
+## 3.0.4 - 2020-08-12
+
+### Commits
+- [LPS-118936] setUpYarn should format package.json before writing it to file
+(08b5fe4cc5)
+- [LPS-105380] Move variable inside if statement (4ba0e61ee5)
+- [LRDOCS-8120] ant format-javadoc (001fa4addd)
+
+## 3.0.3 - 2020-07-30
+
+### Commits
+- [LPS-118113] Update constants in gradle-plugins (2ef9ab88dd)
+
 ## 3.0.0 - 2020-07-21
 
 ### Dependencies
@@ -4888,6 +4937,7 @@ from settings.gradle (b4be4c57fd)
 [LPS-104540]: https://issues.liferay.com/browse/LPS-104540
 [LPS-104646]: https://issues.liferay.com/browse/LPS-104646
 [LPS-104679]: https://issues.liferay.com/browse/LPS-104679
+[LPS-105280]: https://issues.liferay.com/browse/LPS-105280
 [LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-105502]: https://issues.liferay.com/browse/LPS-105502
 [LPS-105873]: https://issues.liferay.com/browse/LPS-105873
@@ -4900,6 +4950,7 @@ from settings.gradle (b4be4c57fd)
 [LPS-107612]: https://issues.liferay.com/browse/LPS-107612
 [LPS-107812]: https://issues.liferay.com/browse/LPS-107812
 [LPS-107862]: https://issues.liferay.com/browse/LPS-107862
+[LPS-108380]: https://issues.liferay.com/browse/LPS-108380
 [LPS-109312]: https://issues.liferay.com/browse/LPS-109312
 [LPS-109787]: https://issues.liferay.com/browse/LPS-109787
 [LPS-109820]: https://issues.liferay.com/browse/LPS-109820
@@ -4928,6 +4979,11 @@ from settings.gradle (b4be4c57fd)
 [LPS-116049]: https://issues.liferay.com/browse/LPS-116049
 [LPS-116282]: https://issues.liferay.com/browse/LPS-116282
 [LPS-117314]: https://issues.liferay.com/browse/LPS-117314
+[LPS-118113]: https://issues.liferay.com/browse/LPS-118113
+[LPS-118868]: https://issues.liferay.com/browse/LPS-118868
+[LPS-118918]: https://issues.liferay.com/browse/LPS-118918
+[LPS-118936]: https://issues.liferay.com/browse/LPS-118936
+[LPS-119389]: https://issues.liferay.com/browse/LPS-119389
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350
@@ -4939,6 +4995,7 @@ from settings.gradle (b4be4c57fd)
 [LRDOCS-4111]: https://issues.liferay.com/browse/LRDOCS-4111
 [LRDOCS-6300]: https://issues.liferay.com/browse/LRDOCS-6300
 [LRDOCS-6412]: https://issues.liferay.com/browse/LRDOCS-6412
+[LRDOCS-8120]: https://issues.liferay.com/browse/LRDOCS-8120
 [LRQA-25540]: https://issues.liferay.com/browse/LRQA-25540
 [LRQA-25824]: https://issues.liferay.com/browse/LRQA-25824
 [LRQA-45313]: https://issues.liferay.com/browse/LRQA-45313

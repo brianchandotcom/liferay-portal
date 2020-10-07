@@ -1,5 +1,23 @@
 # Liferay Gradle Plugins JS Transpiler Change Log
 
+## 2.4.59 - 2020-10-02
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.3.
+
+## 2.4.58 - 2020-10-01
+
+### Dependencies
+- [LPS-121567 LPS-105380] Update the com.liferay.gradle.plugins.node dependency
+to version 7.2.2.
+
+## 2.4.57 - 2020-08-17
+
+### Dependencies
+- [LPS-100168] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.1.
+
 ## 2.4.56 - 2020-07-21
 
 ### Commits
@@ -1102,6 +1120,7 @@ Gradle (2bc0205a18)
 [LPS-110486]: https://issues.liferay.com/browse/LPS-110486
 [LPS-111192]: https://issues.liferay.com/browse/LPS-111192
 [LPS-116808]: https://issues.liferay.com/browse/LPS-116808
+[LPS-121567]: https://issues.liferay.com/browse/LPS-121567
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319
 [LRDOCS-6412]: https://issues.liferay.com/browse/LRDOCS-6412

@@ -1,5 +1,115 @@
 # Liferay Gradle Plugins REST Builder Change Log
 
+## 1.1.11 - 2020-10-02
+
+### Dependencies
+- [LPS-121712] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.136.
+
+## 1.1.10 - 2020-09-28
+
+### Dependencies
+- [LPS-121245] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.135.
+
+## 1.1.9 - 2020-09-10
+
+### Dependencies
+- [LPS-102001] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.134.
+
+## 1.1.8 - 2020-09-09
+
+### Dependencies
+- [LPS-120603] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.133.
+
+## 1.1.7 - 2020-09-02
+
+### Dependencies
+- [LPS-120101] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.132.
+- [COMMERCE-4052] Update the com\.liferay\.gradle\.plugins\.rest\.builder
+dependency to version (\d.+)"/,
+"../../../modules/dxp/apps/commerce-punchout/headless/headless-commerce-punchout-impl/build.gradle.
+
+## 1.1.6 - 2020-08-24
+
+### Dependencies
+- [LPS-119653] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.131.
+
+## 1.1.5 - 2020-08-20
+
+### Dependencies
+- [LPS-119414] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.130.
+
+## 1.1.4 - 2020-08-17
+
+### Dependencies
+- [LPS-118035] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.129.
+
+## 1.1.3 - 2020-08-16
+
+### Dependencies
+- [LPS-118716] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.128.
+
+## 1.1.2 - 2020-08-13
+
+### Dependencies
+- [LPS-102581] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.127.
+
+## 1.1.1 - 2020-08-12
+
+### Dependencies
+- [LPS-119019] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.126.
+
+## 1.1.0 - 2020-08-10
+
+### Dependencies
+- [LPS-118748] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.125.
+
+## 1.0.126 - 2020-08-10
+
+### Commits
+- [LPS-118748] Gradle (11db64a4b8)
+
+## 1.0.125 - 2020-08-04
+
+### Dependencies
+- [LPS-114591] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.124.
+
+## 1.0.124 - 2020-08-03
+
+### Dependencies
+- [LPS-118433] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.123.
+
+## 1.0.123 - 2020-08-01
+
+### Dependencies
+- [LPS-106992] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.122.
+
+## 1.0.122 - 2020-07-28
+
+### Dependencies
+- [LPS-106992] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.121.
+
+## 1.0.121 - 2020-07-26
+
+### Dependencies
+- [LPS-117730] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.120.
+
 ## 1.0.120 - 2020-07-22
 
 ### Dependencies
@@ -796,6 +906,7 @@ version 1.0.1.
 - [LPS-89415] Added `model` FreeMarker Java template.
 
 [COMMERCE-1067]: https://issues.liferay.com/browse/COMMERCE-1067
+[COMMERCE-4052]: https://issues.liferay.com/browse/COMMERCE-4052
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-85855]: https://issues.liferay.com/browse/LPS-85855
 [LPS-88645]: https://issues.liferay.com/browse/LPS-88645
@@ -812,11 +923,13 @@ version 1.0.1.
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
 [LPS-101605]: https://issues.liferay.com/browse/LPS-101605
 [LPS-101995]: https://issues.liferay.com/browse/LPS-101995
+[LPS-102001]: https://issues.liferay.com/browse/LPS-102001
 [LPS-102388]: https://issues.liferay.com/browse/LPS-102388
 [LPS-102452]: https://issues.liferay.com/browse/LPS-102452
 [LPS-102481]: https://issues.liferay.com/browse/LPS-102481
 [LPS-102573]: https://issues.liferay.com/browse/LPS-102573
 [LPS-102577]: https://issues.liferay.com/browse/LPS-102577
+[LPS-102581]: https://issues.liferay.com/browse/LPS-102581
 [LPS-102721]: https://issues.liferay.com/browse/LPS-102721
 [LPS-103252]: https://issues.liferay.com/browse/LPS-103252
 [LPS-103547]: https://issues.liferay.com/browse/LPS-103547
@@ -838,6 +951,7 @@ version 1.0.1.
 [LPS-106317]: https://issues.liferay.com/browse/LPS-106317
 [LPS-106646]: https://issues.liferay.com/browse/LPS-106646
 [LPS-106886]: https://issues.liferay.com/browse/LPS-106886
+[LPS-106992]: https://issues.liferay.com/browse/LPS-106992
 [LPS-107004]: https://issues.liferay.com/browse/LPS-107004
 [LPS-107224]: https://issues.liferay.com/browse/LPS-107224
 [LPS-107377]: https://issues.liferay.com/browse/LPS-107377
@@ -890,4 +1004,16 @@ version 1.0.1.
 [LPS-116860]: https://issues.liferay.com/browse/LPS-116860
 [LPS-117377]: https://issues.liferay.com/browse/LPS-117377
 [LPS-117558]: https://issues.liferay.com/browse/LPS-117558
+[LPS-117730]: https://issues.liferay.com/browse/LPS-117730
+[LPS-118035]: https://issues.liferay.com/browse/LPS-118035
+[LPS-118433]: https://issues.liferay.com/browse/LPS-118433
+[LPS-118716]: https://issues.liferay.com/browse/LPS-118716
+[LPS-118748]: https://issues.liferay.com/browse/LPS-118748
+[LPS-119019]: https://issues.liferay.com/browse/LPS-119019
+[LPS-119414]: https://issues.liferay.com/browse/LPS-119414
+[LPS-119653]: https://issues.liferay.com/browse/LPS-119653
+[LPS-120101]: https://issues.liferay.com/browse/LPS-120101
+[LPS-120603]: https://issues.liferay.com/browse/LPS-120603
+[LPS-121245]: https://issues.liferay.com/browse/LPS-121245
+[LPS-121712]: https://issues.liferay.com/browse/LPS-121712
 [LRDOCS-6650]: https://issues.liferay.com/browse/LRDOCS-6650

@@ -1,5 +1,23 @@
 # Liferay Gradle Plugins Node Change Log
 
+## 7.2.3 - 2020-10-02
+
+### Commits
+- [LPS-105380] Lock the class instead of the object (ac7dc533ff)
+
+## 7.2.2 - 2020-10-01
+
+### Commits
+- [LPS-121567] Fix logic (daaaee90b9)
+- [LPS-121567] Teach Gradle NodePlugin about new @liferay/npm-scripts
+(3c026b7688)
+- [LPS-105380] Methods don't need to be static (c42da838cc)
+
+## 7.2.1 - 2020-08-17
+
+### Commits
+- [LPS-100168] Set default package manager to npm (ecfaf97f9b)
+
 ## 7.1.3 - 2020-07-21
 
 ### Commits
@@ -1237,6 +1255,7 @@ symbolic links in it will be lost (0a1438b324)
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-116808]: https://issues.liferay.com/browse/LPS-116808
+[LPS-121567]: https://issues.liferay.com/browse/LPS-121567
 [LRDOCS-3663]: https://issues.liferay.com/browse/LRDOCS-3663
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129
 [LRQA-52072]: https://issues.liferay.com/browse/LRQA-52072

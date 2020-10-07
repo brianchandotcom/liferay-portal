@@ -1,5 +1,21 @@
 # Liferay Ant Mirrors Get Change Log
 
+## 1.2.10 - 2020-07-26
+
+### Commits
+- [LRCI-1523] Implement support for https (241ed2b21a)
+- [LPS-117490] Simplify (102bd24143)
+- [LPS-117490] Guarantee that getMirrorsHostname() will never return null.
+(8215b8a8e7)
+- [LPS-117490] Check that mirrorsHostname is not null (637a66b368)
+- [LPS-117490] Do not use mirrors.hostname in case it is an empty string
+(0ca3d5a9e4)
+- [LPS-115364] Update ant to 1.9.15 (2c4390c048)
+- [LPS-91599] Update version. (aa44e5240c)
+
+### Dependencies
+- [LPS-115364] Update the ant dependency to version 1.9.15.
+
 ## 1.2.9 - 2020-04-15
 
 ### Commits
@@ -118,12 +134,16 @@ verification (95fbf498b6)
 [LPS-75049]: https://issues.liferay.com/browse/LPS-75049
 [LPS-77425]: https://issues.liferay.com/browse/LPS-77425
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
+[LPS-91599]: https://issues.liferay.com/browse/LPS-91599
 [LPS-96095]: https://issues.liferay.com/browse/LPS-96095
 [LPS-98801]: https://issues.liferay.com/browse/LPS-98801
 [LPS-104973]: https://issues.liferay.com/browse/LPS-104973
 [LPS-105380]: https://issues.liferay.com/browse/LPS-105380
+[LPS-115364]: https://issues.liferay.com/browse/LPS-115364
+[LPS-117490]: https://issues.liferay.com/browse/LPS-117490
 [LRCI-901]: https://issues.liferay.com/browse/LRCI-901
 [LRCI-941]: https://issues.liferay.com/browse/LRCI-941
+[LRCI-1523]: https://issues.liferay.com/browse/LRCI-1523
 [LRQA-28693]: https://issues.liferay.com/browse/LRQA-28693
 [LRQA-29376]: https://issues.liferay.com/browse/LRQA-29376
 [LRQA-29640]: https://issues.liferay.com/browse/LRQA-29640

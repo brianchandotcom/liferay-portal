@@ -1,5 +1,185 @@
 # Liferay Gradle Plugins Source Formatter Change Log
 
+## 4.0.40 - 2020-10-02
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1057.
+
+## 4.0.39 - 2020-10-01
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1056.
+
+## 4.0.38 - 2020-09-30
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1055.
+
+## 4.0.37 - 2020-09-29
+
+### Dependencies
+- [LPS-120746 LPS-105380] Update the com.liferay.source.formatter dependency to
+version 1.0.1054.
+
+## 4.0.36 - 2020-09-29
+
+### Dependencies
+- [LPS-121386] Update the com.liferay.source.formatter dependency to version
+1.0.1053.
+
+## 4.0.35 - 2020-09-25
+
+### Dependencies
+- [LPS-121386 LPS-105380] Update the com.liferay.source.formatter dependency to
+version 1.0.1052.
+
+## 4.0.34 - 2020-09-21
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1051.
+
+## 4.0.33 - 2020-09-18
+
+### Commits
+- [LPS-105380] Add property validate.commit.messages (default value is false)
+(fadc7ae02d)
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1050.
+
+## 4.0.32 - 2020-09-15
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1049.
+
+## 4.0.31 - 2020-09-13
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1048.
+
+## 4.0.30 - 2020-09-10
+
+### Dependencies
+- [LPS-102001] Update the com.liferay.source.formatter dependency to version
+1.0.1047.
+
+## 4.0.29 - 2020-09-08
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1046.
+
+## 4.0.28 - 2020-09-04
+
+### Dependencies
+- [LPS-115714] Update the com.liferay.source.formatter dependency to version
+1.0.1045.
+
+## 4.0.27 - 2020-09-01
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1044.
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1043.
+
+## 4.0.26 - 2020-08-29
+
+### Dependencies
+- [LPS-118225] Update the com.liferay.source.formatter dependency to version
+1.0.1042.
+
+## 4.0.25 - 2020-08-26
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1041.
+
+## 4.0.24 - 2020-08-21
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1040.
+
+## 4.0.23 - 2020-08-21
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1039.
+
+## 4.0.22 - 2020-08-21
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1038.
+
+## 4.0.21 - 2020-08-20
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1037.
+
+## 4.0.20 - 2020-08-17
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1036.
+
+## 4.0.19 - 2020-08-13
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1035.
+
+## 4.0.18 - 2020-08-11
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1034.
+
+## 4.0.17 - 2020-08-07
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1033.
+
+## 4.0.16 - 2020-08-03
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1032.
+
+## 4.0.15 - 2020-08-02
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1031.
+
+## 4.0.14 - 2020-07-27
+
+### Dependencies
+- [LPS-113863] Update the com.liferay.source.formatter dependency to version
+1.0.1030.
+
+## 4.0.13 - 2020-07-24
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.source.formatter dependency to version
+1.0.1029.
+
+## 4.0.12 - 2020-07-23
+
+### Dependencies
+- [LPS-116863] Update the com.liferay.source.formatter dependency to version
+1.0.1028.
+
 ## 4.0.11 - 2020-07-21
 
 ### Dependencies
@@ -5332,6 +5512,7 @@ version 2.4.
 [LPS-101089]: https://issues.liferay.com/browse/LPS-101089
 [LPS-101108]: https://issues.liferay.com/browse/LPS-101108
 [LPS-101549]: https://issues.liferay.com/browse/LPS-101549
+[LPS-102001]: https://issues.liferay.com/browse/LPS-102001
 [LPS-102481]: https://issues.liferay.com/browse/LPS-102481
 [LPS-102700]: https://issues.liferay.com/browse/LPS-102700
 [LPS-103170]: https://issues.liferay.com/browse/LPS-103170
@@ -5381,6 +5562,10 @@ version 2.4.
 [LPS-116041]: https://issues.liferay.com/browse/LPS-116041
 [LPS-116530]: https://issues.liferay.com/browse/LPS-116530
 [LPS-116604]: https://issues.liferay.com/browse/LPS-116604
+[LPS-116863]: https://issues.liferay.com/browse/LPS-116863
+[LPS-118225]: https://issues.liferay.com/browse/LPS-118225
+[LPS-120746]: https://issues.liferay.com/browse/LPS-120746
+[LPS-121386]: https://issues.liferay.com/browse/LPS-121386
 [LRCI-642]: https://issues.liferay.com/browse/LRCI-642
 [LRDOCS-2647]: https://issues.liferay.com/browse/LRDOCS-2647
 [RELEASE-1607]: https://issues.liferay.com/browse/RELEASE-1607

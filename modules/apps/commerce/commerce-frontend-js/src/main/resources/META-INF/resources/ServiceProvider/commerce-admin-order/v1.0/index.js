@@ -12,4 +12,4 @@
  * details.
  */
 
-export {default as accountAPI} from './Order';
+export {default as orderAPI} from './Order';

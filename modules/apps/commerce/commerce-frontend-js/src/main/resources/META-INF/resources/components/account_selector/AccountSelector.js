@@ -14,23 +14,27 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {ClayIconSpriteContext} from '@clayui/icon';
+import ClayIcon, {ClayIconSpriteContext} from '@clayui/icon';
+import {Col, Row} from '@clayui/layout';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
-import ClayTable from '@clayui/table';
+import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
+import ServiceProvider from '../../ServiceProvider/index';
 import {
 	CURRENT_ACCOUNT_UPDATED,
 	CURRENT_ORDER_UPDATED,
 } from '../../utilities/eventsDefinitions';
-import {formatActionUrl} from '../../utilities/index';
-import DateRenderer from '../data_renderers/DateRenderer';
-import StatusRenderer from '../data_renderers/StatusRenderer';
+import InfiniteScroller from '../infinite_scroller/InfiniteScroller';
 import Autocomplete from './../autocomplete/Autocomplete';
+import OrdersTable from './OrdersTable';
+
+const ordersHeadlessAPIEndpoint = ServiceProvider.AdminOrderAPI('v1').baseURL;
+const accountsHeadlessAPIEndpoint = ServiceProvider.AdminAccountAPI('v1')
+	.baseURL;
 
 function formatStickerName(name) {
 	const words = name.split(' ');
@@ -42,9 +46,9 @@ function formatStickerName(name) {
 	return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
 }
 
-function AccountSticker({name, thumbnail}) {
+function AccountSticker({name, thumbnail}, size="xl") {
 	return (
-		<ClaySticker className="mr-3" shape="user-icon" size="xl">
+		<ClaySticker shape="user-icon" size={size}>
 			{thumbnail ? (
 				<ClaySticker.Image alt={name} src={thumbnail} />
 			) : (
@@ -58,7 +62,7 @@ function updateRemoteCurrentAccount(id, url) {
 	const formData = new FormData();
 	formData.append('accountId', id);
 
-	const formattedURL = new URL(url);
+	const formattedURL = new URL(url, themeDisplay.getPortalURL());
 	formattedURL.searchParams.append('groupId', themeDisplay.getScopeGroupId());
 	formattedURL.searchParams.append('p_auth', Liferay.authToken);
 
@@ -76,7 +80,11 @@ function AccountSelector(props) {
 		props.currentAccount
 	);
 	const [currentOrder, updateCurrentOrder] = useState(props.currentOrder);
-	const [currentView, setCurrentView] = useState('accounts');
+	const [currentView, setCurrentView] = useState(
+		props.currentOrder ? 'orders' : 'accounts'
+	);
+	const accountsListWrapperRef = useRef();
+	const ordersListWrapperRef = useRef();
 
 	useEffect(() => {
 		function handleOrderUpdated({id, orderStatusInfo}) {
@@ -97,267 +105,255 @@ function AccountSelector(props) {
 		return () => Liferay.detach(CURRENT_ORDER_UPDATED, handleOrderUpdated);
 	}, [updateCurrentOrder]);
 
+	const loadingView = (
+		<ClayDropDown.Caption>
+			{Liferay.Language.get('loading')}
+		</ClayDropDown.Caption>
+	);
+
 	return (
-		<>
-			<ClayIconSpriteContext.Provider value={props.spritemap}>
-				<ClayDropDown
-					active={active}
-					className="dropdown-wide dropdown-wide-container"
-					onActiveChange={setActive}
-					trigger={
-						<ClayButton className="d-flex" displayType="secondary">
-							{currentAccount && (
-								<AccountSticker {...currentAccount} />
-							)}
-							<div className="account-selector-info">
-								{currentAccount ? (
-									<>
-										<h4 className="text-left">
-											{currentAccount.name}
-										</h4>
-										<small className="order-details">
-											{currentOrder ? (
-												<>
-													<span className="order-id">
-														{currentOrder?.id}
-													</span>
-													<span className="order-label">
-														{currentOrder?.status ||
-															currentOrder
-																?.orderStatusInfo
-																.label_i18n}
-													</span>
-												</>
-											) : (
-												Liferay.Language.get(
-													'no-orders-available'
-												)
-											)}
-										</small>
-									</>
-								) : (
-									<h4>
-										{Liferay.Language.get(
-											'select-account-and-order'
-										)}
+		<ClayIconSpriteContext.Provider value={props.spritemap}>
+			<ClayDropDown
+				active={active}
+				alignmentPosition={props.alignmentPosition}
+				className="account-selector-dropdown"
+				menuElementAttrs={{className: 'account-selector-dropdown-menu'}}
+				onActiveChange={setActive}
+				trigger={
+					<ClayButton
+						className={classNames(
+							'btn-account-selector',
+							currentAccount && 'account-selected'
+						)}
+						displayType="secondary"
+					>
+						{currentAccount ? (
+							<>
+								<AccountSticker
+									className="current-account-thumbnail"
+									{...currentAccount}
+								/>
+								<div className="current-info-container">
+									<h4 className="account-name text-truncate">
+										{currentAccount.name}
 									</h4>
+									<small className="order-details">
+										{currentOrder ? (
+											<Row>
+												<Col
+													className="border-right order-id"
+													size="auto"
+												>
+													{currentOrder.id}
+												</Col>
+												<Col className="order-label">
+													{
+														currentOrder
+															.orderStatusInfo
+															.label_i18n
+													}
+												</Col>
+											</Row>
+										) : (
+											<Row>
+												<Col className="no-account-selected-placeholder">
+													{Liferay.Language.get(
+														'no-orders-available'
+													)}
+												</Col>
+											</Row>
+										)}
+									</small>
+								</div>
+							</>
+						) : (
+							<h4 className="no-account-selected-placeholder text-truncate">
+								{Liferay.Language.get(
+									'select-account-and-order'
 								)}
-							</div>
-						</ClayButton>
-					}
-				>
-					{currentView === 'accounts' && (
-						<Autocomplete
-							alwaysActive={true}
-							apiUrl="/o/headless-commerce-admin-account/v1.0/accounts/"
-							autofill={true}
-							customView={({items}) => {
-								if (items && items.length) {
+							</h4>
+						)}
+						<ClayIcon symbol={active ? 'angle-up' : 'angle-down'} />
+					</ClayButton>
+				}
+			>
+				{currentView === 'accounts' && (
+					<>
+						<ClayDropDown.Section>
+							<Autocomplete
+								apiUrl={accountsHeadlessAPIEndpoint}
+								contentWrapperRef={accountsListWrapperRef}
+								customView={({
+									getPage,
+									items,
+									loading,
+									totalCount,
+								}) => {
+									if (!items && loading) {
+										return loadingView;
+									}
+
+									if ((!items || !items.length) && !loading) {
+										return (
+											<ClayDropDown.Caption>
+												{Liferay.Language.get(
+													'no-accounts-were-found'
+												)}
+											</ClayDropDown.Caption>
+										);
+									}
+
 									return (
-										<ClayDropDown.ItemList className="dropdown-section">
+										<ClayDropDown.ItemList className="mb-0">
 											<ClayDropDown.Group
 												header={Liferay.Language.get(
 													'select-accounts'
 												)}
 											>
-												{items.map((item) => (
-													<ClayDropDown.Item
-														key={item.id}
-														onClick={(_) => {
-															updateRemoteCurrentAccount(
-																item.id,
-																props.setCurrentAccountURL
-															);
-															updateCurrentAccount(
-																item
-															);
-															setCurrentView(
-																'orders'
-															);
-															updateCurrentOrder(
-																null
-															);
-														}}
-													>
-														{item.name}
-													</ClayDropDown.Item>
-												))}
+												<InfiniteScroller
+													onBottomTouched={() =>
+														!loading && getPage()
+													}
+													scrollCompleted={
+														items &&
+														items.length ===
+															totalCount
+													}
+												>
+													{items.map((item) => (
+														<ClayDropDown.Item
+															key={item.id}
+															onClick={(_) => {
+																updateRemoteCurrentAccount(
+																	item.id,
+																	props.setCurrentAccountURL
+																);
+																updateCurrentAccount(
+																	item
+																);
+																setCurrentView(
+																	'orders'
+																);
+																updateCurrentOrder(
+																	null
+																);
+															}}
+														>
+															{item.name}
+														</ClayDropDown.Item>
+													))}
+												</InfiniteScroller>
 											</ClayDropDown.Group>
 										</ClayDropDown.ItemList>
 									);
-								}
-								if (items && !items.length) {
-									return (
-										<ClayDropDown.Caption>
-											{Liferay.Language.get(
-												'orders-not-found'
-											)}
-										</ClayDropDown.Caption>
-									);
-								}
-
-								return (
-									<ClayLoadingIndicator className="mt-3" />
-								);
-							}}
-							infinityScrollMode={true}
-							inputClass="p-2"
-							inputName="account-search"
-							inputPlaceholder={Liferay.Language.get(
-								'search-accounts'
-							)}
-							itemsKey="id"
-							itemsLabel="name"
-						/>
-					)}
-					{currentView === 'orders' && (
-						<>
-							<div className="dropdown-section inline-item">
-								<ClayButtonWithIcon
-									displayType="secondary"
-									onClick={() => {
-										setCurrentView('accounts');
-									}}
-									symbol="angle-left-small"
-								/>
-								<h4
-									className="dropdown-section m-auto pl-4 text-center"
-									href="#"
-								>
-									{currentAccount?.name}
-								</h4>
-							</div>
+								}}
+								infinityScrollMode={true}
+								inputName="account-search"
+								inputPlaceholder={Liferay.Language.get(
+									'search-accounts'
+								)}
+								itemsKey="id"
+								itemsLabel="name"
+								pageSize={10}
+							/>
+						</ClayDropDown.Section>
+						<ClayDropDown.Divider />
+						<div ref={accountsListWrapperRef} />
+					</>
+				)}
+				{currentView === 'orders' && (
+					<>
+						<ClayDropDown.Section className="d-flex">
+							<ClayButtonWithIcon
+								className="flex-shrink-0"
+								displayType="secondary"
+								monospaced
+								onClick={() => {
+									setCurrentView('accounts');
+								}}
+								symbol="angle-left-small"
+							/>
+							<h4 className="m-auto pl-2 text-center text-truncate">
+								{currentAccount.name}
+							</h4>
+						</ClayDropDown.Section>
+						<ClayDropDown.Divider />
+						<ClayDropDown.Section>
 							<Autocomplete
-								alwaysActive={true}
-								apiUrl={`/o/headless-commerce-admin-order/v1.0/orders?sort=modifiedDate:desc&filter=(accountId/any(x:(x eq ${currentAccount.id})))`}
-								autofill={true}
-								customView={({items}) => {
-									if (items && items.length) {
-										return (
-											<>
-												<ClayDropDown.ItemList className="dropdown-list-padding inline-scroller">
-													<ClayDropDown.Group>
-														<ClayTable
-															borderless
-															hover
-														>
-															<ClayTable.Head>
-																<ClayTable.Row>
-																	<ClayTable.Cell
-																		headingCell
-																	>
-																		{Liferay.Language.get(
-																			'order-number'
-																		)}
-																	</ClayTable.Cell>
-																	<ClayTable.Cell
-																		headingCell
-																	>
-																		{Liferay.Language.get(
-																			'status'
-																		)}
-																	</ClayTable.Cell>
-																	<ClayTable.Cell
-																		headingCell
-																	>
-																		{Liferay.Language.get(
-																			'last-modified'
-																		)}
-																	</ClayTable.Cell>
-																</ClayTable.Row>
-															</ClayTable.Head>
-															<ClayTable.Body>
-																{items.map(
-																	(item) => (
-																		<ClayTable.Row
-																			key={
-																				item.id
-																			}
-																		>
-																			<ClayTable.Cell
-																				headingTitle
-																			>
-																				<a
-																					href={formatActionUrl(
-																						props.selectOrderURL,
-																						item
-																					)}
-																				>
-																					{
-																						item.id
-																					}
-																				</a>
-																			</ClayTable.Cell>
-																			<ClayTable.Cell>
-																				<StatusRenderer
-																					value={
-																						item.orderStatusInfo
-																					}
-																				/>
-																			</ClayTable.Cell>
-																			<ClayTable.Cell>
-																				<DateRenderer
-																					value={
-																						item.modifiedDate
-																					}
-																				/>
-																			</ClayTable.Cell>
-																		</ClayTable.Row>
-																	)
-																)}
-															</ClayTable.Body>
-														</ClayTable>
-													</ClayDropDown.Group>
-												</ClayDropDown.ItemList>
-												<div className="dropdown-section">
-													<ClayLink
-														className="btn btn-primary d-block"
-														displayType="unstyled"
-														href={
-															props.createNewOrderURL
-														}
-													>
-														{Liferay.Language.get(
-															'create-new-order'
-														)}
-													</ClayLink>
-												</div>
-											</>
-										);
+								apiUrl={`${ordersHeadlessAPIEndpoint}?sort=modifiedDate:desc&filter=(accountId/any(x:(x eq ${currentAccount.id})))`}
+								contentWrapperRef={ordersListWrapperRef}
+								customView={({
+									getPage,
+									items,
+									loading,
+									totalCount,
+								}) => {
+									if (!items && loading) {
+										return loadingView;
 									}
-									else if (items && !items.length) {
+
+									if ((!items || !items.length) && !loading) {
 										return (
 											<ClayDropDown.Caption>
 												{Liferay.Language.get(
-													'orders-not-found'
+													'no-orders-were-found'
 												)}
 											</ClayDropDown.Caption>
 										);
 									}
-									else {
-										return (
-											<ClayLoadingIndicator className="mt-3" />
-										);
-									}
+
+									return (
+										<ClayDropDown.Group>
+											<InfiniteScroller
+												onBottomTouched={() =>
+													!loading && getPage()
+												}
+												scrollCompleted={
+													items &&
+													items.length === totalCount
+												}
+											>
+												<OrdersTable
+													orders={items}
+													selectOrderURL={
+														props.selectOrderURL
+													}
+												/>
+											</InfiniteScroller>
+										</ClayDropDown.Group>
+									);
 								}}
 								infinityScrollMode={true}
-								inputClass="dropdown-section"
 								inputName="order-search"
 								inputPlaceholder={Liferay.Language.get(
 									'search-order'
 								)}
 								itemsKey="id"
 								itemsLabel="name"
+								pageSize={10}
 							/>
-						</>
-					)}
-				</ClayDropDown>
-			</ClayIconSpriteContext.Provider>
-		</>
+						</ClayDropDown.Section>
+						<ClayDropDown.Divider />
+						<div ref={ordersListWrapperRef} />
+						<ClayDropDown.Divider />
+						<ClayDropDown.Section>
+							<ClayLink
+								className="btn btn-primary d-block"
+								displayType="unstyled"
+								href={props.createNewOrderURL}
+							>
+								{Liferay.Language.get('create-new-order')}
+							</ClayLink>
+						</ClayDropDown.Section>
+					</>
+				)}
+			</ClayDropDown>
+		</ClayIconSpriteContext.Provider>
 	);
 }
 
 AccountSelector.propTypes = {
+	alignmentPosition: PropTypes.number,
 	createNewOrderURL: PropTypes.string.isRequired,
 	currentAccount: PropTypes.shape({
 		id: PropTypes.string,
@@ -373,6 +369,10 @@ AccountSelector.propTypes = {
 	selectOrderURL: PropTypes.string.isRequired,
 	setCurrentAccountURL: PropTypes.string.isRequired,
 	spritemap: PropTypes.string.isRequired,
+};
+
+AccountSelector.defaultProps = {
+	alignmentPosition: 3,
 };
 
 export default AccountSelector;

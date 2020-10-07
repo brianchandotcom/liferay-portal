@@ -16,11 +16,16 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-function InfiniteScroller({children, maxHeight, onBottomTouched, scrollCompleted}) {
+function InfiniteScroller({
+	children,
+	maxHeight,
+	onBottomTouched,
+	scrollCompleted,
+}) {
 	const [scrollingAreaRendered, setScrollingAreaRendered] = useState(false);
 	const infiniteLoader = useRef(null);
 	const [infiniteLoaderRendered, setInfiniteLoaderRendered] = useState(false);
-    const scrollingArea = useRef(null);
+	const scrollingArea = useRef(null);
 
 	const setScrollingArea = useCallback((node) => {
 		scrollingArea.current = node;
@@ -30,7 +35,7 @@ function InfiniteScroller({children, maxHeight, onBottomTouched, scrollCompleted
 	const setInfiniteLoader = useCallback((node) => {
 		infiniteLoader.current = node;
 		setInfiniteLoaderRendered(true);
-    }, []);
+	}, []);
 
 	const setObserver = useCallback(() => {
 		if (
@@ -49,15 +54,19 @@ function InfiniteScroller({children, maxHeight, onBottomTouched, scrollCompleted
 
 		const observer = new IntersectionObserver((entries) => {
 			if (entries[0].intersectionRatio === 1) {
-				onBottomTouched()
-            }
+				onBottomTouched();
+			}
 		}, options);
 
 		observer.observe(infiniteLoader.current);
 	}, [onBottomTouched]);
 
 	useEffect(() => {
-		if (scrollingAreaRendered && infiniteLoaderRendered && !scrollCompleted) {
+		if (
+			scrollingAreaRendered &&
+			infiniteLoaderRendered &&
+			!scrollCompleted
+		) {
 			setObserver();
 		}
 	}, [
@@ -68,26 +77,23 @@ function InfiniteScroller({children, maxHeight, onBottomTouched, scrollCompleted
 	]);
 
 	return (
-        <div
-            className="inline-scroller"
-            ref={setScrollingArea} 
-            style={{maxHeight}}
-        >
+		<div
+			className="inline-scroller"
+			ref={setScrollingArea}
+			style={maxHeight ? {maxHeight} : null}
+		>
 			{children}
-            {!scrollCompleted && (
-                <ClayLoadingIndicator
-                    ref={setInfiniteLoader}
-                    small
-                />
-            )}
+			{!scrollCompleted && (
+				<ClayLoadingIndicator ref={setInfiniteLoader} small />
+			)}
 		</div>
 	);
 }
 
 InfiniteScroller.propTypes = {
-    maxHeight: PropTypes.number.isRequired,
-    onBottomTouched: PropTypes.func.isRequired,
-    scrollCompleted: PropTypes.bool.isRequired,
+	maxHeight: PropTypes.number,
+	onBottomTouched: PropTypes.func.isRequired,
+	scrollCompleted: PropTypes.bool.isRequired,
 };
 
 export default InfiniteScroller;

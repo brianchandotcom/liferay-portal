@@ -16,12 +16,18 @@ import launcher from '../../../src/main/resources/META-INF/resources/components/
 
 import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 
-import '../../../../../frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/styles/main.scss';
-
 launcher('account_selector', 'account-selector', {
 	createNewOrderURL: '/asdasdasd',
-	currentAccount: null,
-	currentOrder: null,
+	currentAccount: {
+		id: 42332,
+		name: 'My AccountName',
+	},
+	currentOrder: {
+		id: '34234',
+		orderStatusInfo: {
+			label_i18n: 'Completed',
+		},
+	},
 	selectOrderURL: '/test-url/{id}',
 	setCurrentAccountURL: '/account-selector/setCurrentAccounts',
 	spritemap: './assets/icons.svg',

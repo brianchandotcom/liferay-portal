@@ -14,25 +14,23 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
-
-// import ClayIcon from '@clayui/icon';
-
 import {FocusScope} from '@clayui/shared';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
+import {createPortal} from 'react-dom';
 
 import {debouncePromise} from '../../utilities/debounce';
 import {AUTOCOMPLETE_VALUE_UPDATED} from '../../utilities/eventsDefinitions';
-import {getData, getValueFromItem} from '../../utilities/index';
 import {useLiferayModule} from '../../utilities/hooks';
+import {getData, getValueFromItem} from '../../utilities/index';
 import {showErrorNotification} from '../../utilities/notifications';
 
 function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 	const [query, setQuery] = useState(props.initialLabel || '');
-	const [initialised, setInitialised] = useState(props.alwaysActive);
-	const [debouncedGetItems, updateDebouncedGetItems] = useState(() =>
-		debouncePromise(getData, props.fetchDataDebounce)
+	const [initialised, setInitialised] = useState(
+		Boolean(props.customViewModuleUrl || props.customView)
 	);
+	const [debouncedGetItems, updateDebouncedGetItems] = useState(null);
 	const [active, setActive] = useState(false);
 	const [selectedItem, updateSelectedItem] = useState(props.initialValue);
 	const [items, updateItems] = useState(null);
@@ -83,40 +81,27 @@ function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 	}, [query]);
 
 	useEffect(() => {
-		if (initialised) {
+		if (initialised && debouncedGetItems) {
 			setLoading(true);
 
 			debouncedGetItems(props.apiUrl, query, page, pageSize)
 				.then((jsonResponse) => {
-					if (props.infinityScrollMode) {
-						updateItems((prevItems) => {
-							return prevItems?.length && page > 1
-								? [...prevItems, ...jsonResponse.items]
-								: jsonResponse.items;
-						});
-					}
-					else {
-						updateItems(jsonResponse.items);
-					}
-
 					updateItems((prevItems) => {
-						const items = jsonResponse.items;
-
 						if (
 							props.infinityScrollMode &&
 							prevItems?.length &&
 							page > 1
 						) {
-							items.push(...prevItems);
+							return [...prevItems, ...jsonResponse.items];
 						}
 
-						return items;
+						return jsonResponse.items;
 					});
 
 					updateTotalCount(jsonResponse.totalCount);
 					updateLastPage(jsonResponse.lastPage);
-
 					setLoading(false);
+
 					if (!query) {
 						return;
 					}
@@ -181,6 +166,28 @@ function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 
 	const CustomView = props.customView || FetchedCustomView;
 
+	const results =
+		!loading || !props.loadingView ? (
+			<CustomView
+				getPage={() =>
+					updatePage((current) =>
+						current < lastPage ? current + 1 : current
+					)
+				}
+				items={items}
+				lastPage={lastPage}
+				loading={loading}
+				page={page}
+				pageSize={pageSize}
+				totalCount={totalCount}
+				updatePage={updatePage}
+				updatePageSize={updatePageSize}
+				updateSelectedItem={updateSelectedItem}
+			/>
+		) : (
+			props.loadingView
+		);
+
 	return (
 		<>
 			<FocusScope>
@@ -209,9 +216,6 @@ function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 						required={props.required || false}
 						value={currentLabel || query}
 					/>
-					{/* {props.inputIcon &&  (
-						<ClayIcon className="input-icon" spritemap={props.spritemap} symbol={props.inputIcon} />
-					)} */}
 					{!CustomView && (
 						<ClayAutocomplete.DropDown active={active && !loading}>
 							<div
@@ -252,25 +256,18 @@ function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 					{loading && <ClayAutocomplete.LoadingIndicator />}
 				</ClayAutocomplete>
 			</FocusScope>
-			{CustomView && (
-				<CustomView
-					items={items}
-					lastPage={lastPage}
-					page={page}
-					pageSize={pageSize}
-					totalCount={totalCount}
-					updatePage={updatePage}
-					updatePageSize={updatePageSize}
-				/>
-			)}
+			{CustomView &&
+				props.contentWrapperRef?.current &&
+				createPortal(results, props.contentWrapperRef?.current)}
+			{CustomView && !props.contentWrapperRef && results}
 		</>
 	);
 }
 
 Autocomplete.propTypes = {
-	alwaysActive: PropTypes.bool,
 	apiUrl: PropTypes.string.isRequired,
 	autofill: PropTypes.bool,
+	contentWrapperRef: PropTypes.object,
 	customView: PropTypes.func,
 	customViewModuleUrl: PropTypes.string,
 	fetchDataDebounce: PropTypes.number,
@@ -281,9 +278,6 @@ Autocomplete.propTypes = {
 	initialValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 		.isRequired,
 	inputClass: PropTypes.string,
-
-	// inputIcon: PropTypes.string,
-
 	inputId: PropTypes.string,
 	inputName: PropTypes.string.isRequired,
 	inputPlaceholder: PropTypes.string,
@@ -292,16 +286,13 @@ Autocomplete.propTypes = {
 		PropTypes.string,
 		PropTypes.arrayOf(PropTypes.string),
 	]).isRequired,
+	loadingView: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 	onItemsUpdated: PropTypes.func,
 	onValueUpdated: PropTypes.func,
 	required: PropTypes.bool,
-
-	// spritemap: PropTypes.string,
-
 };
 
 Autocomplete.defaultProps = {
-	alwaysActive: true,
 	autofill: false,
 	fetchDataDebounce: 200,
 	infinityScrollMode: false,

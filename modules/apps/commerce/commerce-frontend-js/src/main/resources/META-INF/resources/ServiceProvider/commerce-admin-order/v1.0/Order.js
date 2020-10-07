@@ -14,14 +14,15 @@
 
 import AJAX from '../../../utilities/AJAX/index';
 
-const ACCOUNTS_PATH = '/orders';
+const ORDERS_PATH = '/orders';
 
 const VERSION = 'v1.0';
 
 function resolveCatalogPath(basePath = '') {
-	return `${basePath}${VERSION}${ACCOUNTS_PATH}`;
+	return `${basePath}${VERSION}${ORDERS_PATH}`;
 }
 
 export default (basePath) => ({
-	getAccounts: () => AJAX.GET(resolveCatalogPath(basePath)),
+	baseURL: resolveCatalogPath(basePath),
+	getOrders: () => AJAX.GET(resolveCatalogPath(basePath)),
 });

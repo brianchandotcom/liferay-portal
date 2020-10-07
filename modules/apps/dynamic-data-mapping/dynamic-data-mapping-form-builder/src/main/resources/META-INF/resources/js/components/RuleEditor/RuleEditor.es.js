@@ -172,10 +172,10 @@ class RuleEditor extends Component {
 	}
 
 	getFieldColumnsAndRows(fieldName) {
-		const visitor = new PagesVisitor(this.pages);
-
 		let columns = [];
 		let rows = [];
+
+		const visitor = new PagesVisitor(this.pages);
 
 		const field = visitor.findField((field) => {
 			return field.fieldName === fieldName;
@@ -344,7 +344,7 @@ class RuleEditor extends Component {
 						if (
 							firstOperandType === 'grid' &&
 							!!operand.value &&
-							typeof operand.value == 'string'
+							typeof operand.value === 'string'
 						) {
 							operand.value = JSON.parse(operand.value);
 						}
@@ -1353,7 +1353,7 @@ class RuleEditor extends Component {
 					secondOperandValue
 				);
 
-				if (typeof secondOperandValue == 'object') {
+				if (typeof secondOperandValue === 'object') {
 					condition.operands[1].label = secondOperandValueString;
 					condition.operands[1].value = secondOperandValueString;
 				}

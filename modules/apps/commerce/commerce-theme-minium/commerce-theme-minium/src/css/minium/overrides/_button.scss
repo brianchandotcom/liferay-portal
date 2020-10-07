@@ -182,28 +182,28 @@
 
 	&.btn-warning {
 		background: transparent;
-		border-color: $color-mood-neutral;
+		border-color: $color-mood-warning;
 		color: $color-bg;
 
 		&:not([disabled]):not(.disabled) {
 			&::before {
-				background-color: $color-mood-neutral;
+				background-color: $color-mood-warning;
 			}
 
 			&:hover::before {
-				background-color: darken($color-mood-neutral, 10%);
+				background-color: darken($color-mood-warning, 10%);
 			}
 
 			&::after {
-				background-color: darken($color-mood-neutral, 10%);
+				background-color: darken($color-mood-warning, 10%);
 			}
 		}
 
 		&[disabled] {
-			border-color: lighten($color-mood-neutral, 20%);
+			border-color: lighten($color-mood-warning, 20%);
 
 			&::before {
-				background-color: lighten($color-mood-neutral, 20%);
+				background-color: lighten($color-mood-warning, 20%);
 			}
 		}
 	}

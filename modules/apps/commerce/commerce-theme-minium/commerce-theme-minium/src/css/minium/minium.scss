@@ -5,6 +5,7 @@
 @import './mixins';
 @import './utilities';
 
+@import 'overrides/account_selector';
 @import 'overrides/base';
 @import 'overrides/button';
 @import 'overrides/card';
@@ -20,10 +21,9 @@
 @import 'overrides/panel';
 @import 'overrides/portlet';
 @import 'overrides/search_bar';
+@import 'overrides/status';
 @import 'overrides/table';
 
-@import 'components/commerce_account_list';
-@import 'components/commerce_account_selector';
 @import 'components/commerce_account_switcher';
 @import 'components/commerce_add_to_tick';
 @import 'components/commerce_button';

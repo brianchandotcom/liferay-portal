@@ -27,7 +27,7 @@
 	}
 
 	&--neutral::before {
-		background-color: $color-mood-neutral;
+		background-color: $color-mood-warning;
 	}
 
 	&--bad::before {

@@ -1,0 +1,32 @@
+.workflow-value.status {
+	background-color: #fff;
+	border-color: $color-mood-default;
+	border-radius: 5px;
+	color: $color-mood-default;
+
+	&.awaiting-pickup,
+	&.in-progress,
+	&.partially-refunded,
+	&.partially-shipped,
+	&.pending,
+	&.processing,
+	&.on-hold,
+	&.shipped {
+		border-color: $color-mood-warning;
+		color: $color-mood-warning;
+	}
+
+	&.disputed,
+	&.cancelled,
+	&.declined {
+		border-color: $color-mood-bad;
+		color: $color-mood-bad;
+	}
+
+	&.refunded,
+	&.subscription,
+	&.completed {
+		border-color: $color-mood-good;
+		color: $color-mood-good;
+	}
+}

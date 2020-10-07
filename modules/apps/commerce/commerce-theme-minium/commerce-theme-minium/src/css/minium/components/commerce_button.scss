@@ -36,7 +36,7 @@
 	}
 
 	&--neutral {
-		background-color: $color-mood-neutral;
+		background-color: $color-mood-warning;
 	}
 
 	&--outline {
@@ -53,7 +53,7 @@
 		}
 
 		&.commerce-button--neutral {
-			color: $color-mood-neutral;
+			color: $color-mood-warning;
 		}
 
 		&.commerce-button--disabled {
@@ -74,7 +74,7 @@
 		}
 
 		&.commerce-button--neutral {
-			color: $color-mood-neutral;
+			color: $color-mood-warning;
 		}
 
 		&.commerce-button--disabled {

@@ -15,8 +15,9 @@ $color-theme-transparent: rgba($color-theme, 0.067);
 
 $color-modal-mask: rgba(52, 55, 62, 0.6);
 
+$color-mood-default: $color-theme;
 $color-mood-good: #4bc286;
-$color-mood-neutral: #fee4b8;
+$color-mood-warning: #fee4b8;
 $color-mood-bad: #ec676a;
 $color-mood-bad-bg: #fef7f7;
 

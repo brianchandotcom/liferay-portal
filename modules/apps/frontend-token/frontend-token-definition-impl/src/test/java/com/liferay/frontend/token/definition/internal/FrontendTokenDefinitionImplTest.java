@@ -221,7 +221,9 @@ public class FrontendTokenDefinitionImplTest {
 		FrontendTokenMapping frontendTokenMapping =
 			frontendTokenMappingIterator.next();
 
-		Assert.assertEquals("cssVariable", frontendTokenMapping.getType());
+		Assert.assertEquals(
+			FrontendTokenMapping.TYPE_CSS_VARIABLE,
+			frontendTokenMapping.getType());
 
 		Assert.assertEquals("white", frontendTokenMapping.getValue());
 	}

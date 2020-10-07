@@ -21,6 +21,8 @@ import java.util.Locale;
  */
 public interface FrontendTokenMapping {
 
+	public static final String TYPE_CSS_VARIABLE = "cssVariable";
+
 	public FrontendToken getFrontendToken();
 
 	public String getJSON(Locale locale);

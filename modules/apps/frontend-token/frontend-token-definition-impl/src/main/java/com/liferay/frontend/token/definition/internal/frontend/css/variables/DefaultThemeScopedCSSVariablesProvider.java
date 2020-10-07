@@ -67,7 +67,8 @@ public class DefaultThemeScopedCSSVariablesProvider
 
 		for (FrontendToken frontendToken : frontendTokens) {
 			Collection<FrontendTokenMapping> frontendTokenMappings =
-				frontendToken.getFrontendTokenMappingsByType("cssVariable");
+				frontendToken.getFrontendTokenMappingsByType(
+					FrontendTokenMapping.TYPE_CSS_VARIABLE);
 
 			for (FrontendTokenMapping frontendTokenMapping :
 					frontendTokenMappings) {

@@ -147,10 +147,10 @@ public class DisplayPageUsagesDisplayContext {
 		searchContainer.setOrderByType(getOrderByType());
 
 		List<AssetDisplayPageEntry> assetDisplayPageEntries =
-			AssetDisplayPageEntryServiceUtil.
-				getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
-					getLayoutPageTemplateEntryId(), searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator);
+			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntries(
+				getClassNameId(), isDefaultTemplate(),
+				getLayoutPageTemplateEntryId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(assetDisplayPageEntries);
 

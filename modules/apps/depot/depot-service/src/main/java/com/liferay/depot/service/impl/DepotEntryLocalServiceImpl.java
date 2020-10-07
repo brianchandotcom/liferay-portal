@@ -85,8 +85,6 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		DepotEntry depotEntry = depotEntryPersistence.create(
 			counterLocalService.increment());
 
-		group.setClassPK(depotEntry.getDepotEntryId());
-
 		depotEntry.setUuid(serviceContext.getUuid());
 
 		depotEntry.setGroupId(group.getGroupId());

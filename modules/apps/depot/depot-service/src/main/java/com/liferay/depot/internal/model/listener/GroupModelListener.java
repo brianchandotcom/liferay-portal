@@ -14,6 +14,7 @@
 
 package com.liferay.depot.internal.model.listener;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -43,7 +45,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				ServiceContextThreadLocal.getServiceContext();
 
 			if (group.isDepot() && _isStaging(serviceContext)) {
-				_depotEntryLocalService.addDepotEntry(group, serviceContext);
+				DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+					group, serviceContext);
+
+				group.setClassPK(depotEntry.getDepotEntryId());
 			}
 		}
 		catch (PortalException portalException) {
@@ -76,5 +81,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>RemoteApps</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RemoteApps</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>NEW_REMOTEAPP</td>
+	<td>//button[@class="btn btn-monospaced btn-primary"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME</td>
+	<td>//input[@id='_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>Url</td>
+	<td>//input[@id='_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK</td>
+	<td>//ul[@id="menu"]/li/a[@href="#companyId"]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

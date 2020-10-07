@@ -1,0 +1,18 @@
+definition {
+	macro new {
+		Click(locator1 = "RemoteApps#NEW_REMOTEAPP");
+	}
+
+	macro name{
+	Type(
+	locator1 ="RemoteApps#NAME",
+	value1 = "${EnterName}");
+	}
+
+	macro url{
+	Type(
+	locator1 ="RemoteApps#Url",
+	value1 = "${EnterUrl}");
+	}
+
+}

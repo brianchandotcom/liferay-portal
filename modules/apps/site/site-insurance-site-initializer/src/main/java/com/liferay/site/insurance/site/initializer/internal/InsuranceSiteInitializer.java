@@ -137,7 +137,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	@Override
 	public String getName(Locale locale) {
-		return "Insurance Demo Site";
+		return "Raylife";
 	}
 
 	@Override
@@ -946,6 +946,17 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			_serviceContext.getScopeGroupId(), privateLayoutSet,
 			layoutSet.getThemeId(), layoutSet.getColorSchemeId(),
 			_read("/layout-set/" + type + "/css.css"));
+
+		URL logoURL = _bundle.getEntry(
+			StringBundler.concat(_PATH, "/layout-set/", type, "/logo.png"));
+
+		if (logoURL != null) {
+			File file = FileUtil.createTempFile(logoURL.openStream());
+
+			_layoutSetLocalService.updateLogo(
+				_serviceContext.getScopeGroupId(), privateLayoutSet, true,
+				file);
+		}
 	}
 
 	private Layout _updateLayoutTypeSettings(

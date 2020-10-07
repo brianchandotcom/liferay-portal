@@ -16,6 +16,8 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -42,6 +44,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -144,6 +149,23 @@ public class GroupFinderImpl
 
 	public static final String JOIN_BY_USERS_GROUPS =
 		GroupFinder.class.getName() + ".joinByUsersGroups";
+
+	public void afterPropertiesSet() {
+		_finderPathWithoutPaginationFindByC_A = new FinderPath(
+			GroupPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"GroupFinderImpl_findByC_A",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"companyId", "active_"}, false);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			FinderPath.class, _finderPathWithoutPaginationFindByC_A,
+			HashMapBuilder.<String, Object>put(
+				"cache.name",
+				GroupPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION
+			).build());
+	}
 
 	@Override
 	public int countByLayouts(
@@ -339,6 +361,10 @@ public class GroupFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	public void destroy() {
+		_serviceRegistration.unregister();
 	}
 
 	@Override
@@ -690,6 +716,15 @@ public class GroupFinderImpl
 
 	@Override
 	public List<Long> findByC_A(long companyId, boolean active) {
+		Object[] finderArgs = {companyId, active};
+
+		List<Long> list = (List<Long>)FinderCacheUtil.getResult(
+			_finderPathWithoutPaginationFindByC_A, finderArgs, null);
+
+		if (list != null) {
+			return list;
+		}
+
 		Session session = null;
 
 		try {
@@ -706,7 +741,12 @@ public class GroupFinderImpl
 			queryPos.add(companyId);
 			queryPos.add(active);
 
-			return sqlQuery.list(true);
+			list = sqlQuery.list(true);
+
+			FinderCacheUtil.putResult(
+				_finderPathWithoutPaginationFindByC_A, finderArgs, list);
+
+			return list;
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -1545,10 +1585,12 @@ public class GroupFinderImpl
 		new ConcurrentHashMap<>();
 	private final Map<String, String> _findByC_C_PG_N_DSQLCache =
 		new ConcurrentHashMap<>();
+	private FinderPath _finderPathWithoutPaginationFindByC_A;
 	private volatile long[] _groupOrganizationClassNameIds;
 	private volatile Map<String, String> _joinMap;
 	private final Map<String, String> _replaceJoinAndWhereSQLCache =
 		new ConcurrentHashMap<>();
+	private ServiceRegistration<FinderPath> _serviceRegistration;
 	private volatile Map<String, String> _whereMap;
 
 }

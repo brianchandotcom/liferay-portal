@@ -141,6 +141,10 @@ components:
                     additionalProperties: true
                     readOnly: true
                     type: object
+                errorMessages:
+                    items:
+                        type: string
+                    type: array
                 id:
                     format: int64
                     readOnly: true
@@ -158,7 +162,8 @@ components:
                         $ref: "#/components/schemas/CartComment"
                     type: array
                 orderStatusInfo:
-                    $ref: "#/components/schemas/Status"
+                    allOf:
+                        - $ref: "#/components/schemas/Status"
                     readOnly: true
                 orderUUID:
                     readOnly: true
@@ -173,7 +178,8 @@ components:
                     readOnly: true
                     type: integer
                 paymentStatusInfo:
-                    $ref: "#/components/schemas/Status"
+                    allOf:
+                        - $ref: "#/components/schemas/Status"
                     readOnly: true
                 paymentStatusLabel:
                     readOnly: true
@@ -199,8 +205,12 @@ components:
                     $ref: "#/components/schemas/Summary"
                 useAsBilling:
                     type: boolean
+                valid:
+                    readOnly: true
+                    type: boolean
                 workflowStatusInfo:
-                    $ref: "#/components/schemas/Status"
+                    allOf:
+                        - $ref: "#/components/schemas/Status"
                     readOnly: true
             type: object
         CartComment:
@@ -230,6 +240,10 @@ components:
                 customFields:
                     additionalProperties: true
                     type: object
+                errorMessages:
+                    items:
+                        type: string
+                    type: array
                 id:
                     format: int64
                     readOnly: true
@@ -266,6 +280,9 @@ components:
                 thumbnail:
                     readOnly: true
                     type: string
+                valid:
+                    readOnly: true
+                    type: boolean
             type: object
         CouponCode:
             properties:
@@ -301,6 +318,15 @@ components:
                 - errorDescription
                 - message
                 - status
+            type: object
+        PaymentMethod:
+            properties:
+                description:
+                    type: string
+                key:
+                    type: string
+                name:
+                    type: string
             type: object
         Price:
             properties:
@@ -357,6 +383,32 @@ components:
                 multipleQuantity:
                     format: int32
                     type: integer
+            type: object
+        ShippingMethod:
+            properties:
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                shippingOptions:
+                    items:
+                        $ref: "#/components/schemas/ShippingOption"
+                    type: array
+            type: object
+        ShippingOption:
+            properties:
+                amount:
+                    format: double
+                    type: number
+                amountFormatted:
+                    type: string
+                label:
+                    type: string
+                name:
+                    type: string
             type: object
         Status:
             properties:
@@ -446,12 +498,12 @@ paths:
                   required: true
                   schema:
                       description:
-                          Comment Id
+                          Note Id
                       format: int64
                       type: integer
                   style: simple
             responses:
-                "204":
+                204:
                     description:
                         No content
                 401:
@@ -475,7 +527,7 @@ paths:
                   required: true
                   schema:
                       description:
-                          Comment Id
+                          Note Id
                       format: int64
                       type: integer
                   style: simple
@@ -523,7 +575,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Gets a Comment by ID.
+            summary: Gets a Note by ID.
             tags: ["CartComment"]
         patch:
             operationId: patchCartComment
@@ -534,7 +586,7 @@ paths:
                   required: true
                   schema:
                       description:
-                          Comment Id
+                          Note Id
                       format: int64
                       type: integer
                   style: simple
@@ -591,7 +643,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
-            summary: Updates an Cart Comment by ID.
+            summary: Updates an Cart Note by ID.
             tags: ["CartComment"]
         put:
             operationId: putCartComment
@@ -602,7 +654,7 @@ paths:
                   required: true
                   schema:
                       description:
-                          Comment Id
+                          Note Id
                       format: int64
                       type: integer
                   style: simple
@@ -678,7 +730,7 @@ paths:
                       type: integer
                   style: simple
             responses:
-                "204":
+                204:
                     description:
                         No content
                 401:
@@ -890,7 +942,7 @@ paths:
                       type: integer
                   style: simple
             responses:
-                "204":
+                204:
                     description:
                         No content
                 401:
@@ -1152,6 +1204,28 @@ paths:
                     description:
                         Unexpected error
             tags: ["Address"]
+    /carts/{cartId}/checkout:
+        post:
+            operationId: postCartCheckout
+            parameters:
+                - in: path
+                  name: cartId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Cart"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Cart"
+                    description:
+                        ""
+            tags: ["Cart"]
     /carts/{cartId}/comments:
         get:
             operationId: getCartCommentsPage
@@ -1499,6 +1573,66 @@ paths:
                     description:
                         Unexpected error
             tags: ["CartItem"]
+    /carts/{cartId}/payment-methods:
+        get:
+            description:
+                Retrive payment methods available for the Cart.
+            operationId: getCartPaymentMethodsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PaymentMethod"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PaymentMethod"
+                                type: array
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PaymentMethod"]
     /carts/{cartId}/shipping-address:
         get:
             description:
@@ -1555,10 +1689,72 @@ paths:
                     description:
                         Unexpected error
             tags: ["Address"]
+    /carts/{cartId}/shipping-methods:
+        get:
+            description:
+                Retrive payment methods available for the Cart.
+            operationId: getCartShippingMethodsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: cartId
+                  required: true
+                  schema:
+                      description:
+                          Cart Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ShippingMethod"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ShippingMethod"
+                                type: array
+                    description:
+                        Retrieve the available shipping methods for the order
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["ShippingMethod"]
     /channels/{channelId}/carts:
         get:
             description:
-                Retrieves carts for specific account in the given channl.
+                Retrieves carts for specific account in the given channel.
             operationId: getChannelCartsPage
             parameters:
                 - in: path

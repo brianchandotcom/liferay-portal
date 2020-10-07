@@ -1,7 +1,7 @@
 <!--
 <!DOCTYPE user-notification-definitions PUBLIC
-	"-//Liferay//DTD User Notification Definition 7.3.0//EN"
-	"http://www.liferay.com/dtd/liferay-user-notification-definitions_7_3_0.dtd">
+	"-//Liferay//DTD User Notification Definition 7.4.0//EN"
+	"http://www.liferay.com/dtd/liferay-user-notification-definitions_7_4_0.dtd">
 -->
 
 <!ELEMENT user-notification-definitions (definition*)>

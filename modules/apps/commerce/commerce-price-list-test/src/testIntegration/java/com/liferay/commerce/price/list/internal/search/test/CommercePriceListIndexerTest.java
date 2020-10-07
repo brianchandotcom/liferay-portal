@@ -20,7 +20,7 @@ import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -112,15 +112,15 @@ public class CommercePriceListIndexerTest {
 			"The result will be 'only one', the price list added"
 		);
 
-		List<CommerceCatalog> commerceCatalogs =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
-				_group.getCompanyId(), true);
-
-		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
-
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyTestUtil.addCommerceCurrency(
 				_company.getCompanyId());
+
+		User defaultUser = _company.getDefaultUser();
+
+		CommerceCatalog commerceCatalog = CommerceTestUtil.addCommerceCatalog(
+			_company.getCompanyId(), _group.getGroupId(),
+			defaultUser.getUserId(), commerceCurrency.getCode());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());

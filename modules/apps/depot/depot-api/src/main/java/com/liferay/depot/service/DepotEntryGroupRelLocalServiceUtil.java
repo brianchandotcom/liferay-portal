@@ -246,6 +246,14 @@ public class DepotEntryGroupRelLocalServiceUtil {
 		return getService().fetchDepotEntryGroupRel(depotEntryGroupRelId);
 	}
 
+	public static com.liferay.depot.model.DepotEntryGroupRel
+		fetchDepotEntryGroupRelByDepotEntryIdToGroupId(
+			long depotEntryId, long toGroupId) {
+
+		return getService().fetchDepotEntryGroupRelByDepotEntryIdToGroupId(
+			depotEntryId, toGroupId);
+	}
+
 	/**
 	 * Returns the depot entry group rel matching the UUID and group.
 	 *

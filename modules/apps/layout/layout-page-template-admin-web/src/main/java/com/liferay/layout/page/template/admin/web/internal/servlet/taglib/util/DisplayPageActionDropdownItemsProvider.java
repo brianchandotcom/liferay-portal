@@ -136,9 +136,12 @@ public class DisplayPageActionDropdownItemsProvider {
 			() -> {
 				int count =
 					AssetDisplayPageEntryServiceUtil.
-						getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+						getAssetDisplayPageEntriesCount(
+							_layoutPageTemplateEntry.getClassNameId(),
+							_layoutPageTemplateEntry.getClassTypeId(),
 							_layoutPageTemplateEntry.
-								getLayoutPageTemplateEntryId());
+								getLayoutPageTemplateEntryId(),
+							_layoutPageTemplateEntry.isDefaultTemplate());
 
 				return FFDisplayPageAdminWebConfigurationUtil.
 					viewUsagesEnabled() &&

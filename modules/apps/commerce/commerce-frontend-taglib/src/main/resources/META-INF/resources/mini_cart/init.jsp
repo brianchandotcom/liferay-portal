@@ -24,11 +24,14 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%
 String checkoutURL = (String)request.getAttribute("liferay-commerce:cart:checkoutURL");
+String cartViewRendererURL = (String)request.getAttribute("liferay-commerce:cart:cartViewRendererURL");
+String cartItemsListViewRendererURL = (String)request.getAttribute("liferay-commerce:cart:cartItemsListViewRendererURL");
 boolean displayDiscountLevels = (boolean)request.getAttribute("liferay-commerce:cart:displayDiscountLevels");
 String orderDetailURL = (String)request.getAttribute("liferay-commerce:cart:orderDetailURL");
 long orderId = (long)request.getAttribute("liferay-commerce:cart:orderId");
-String spritemap = (String)request.getAttribute("liferay-commerce:cart:spritemap");
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE;
+String spritemap = (String)request.getAttribute("liferay-commerce:cart:spritemap");
+boolean toggleable = (boolean)request.getAttribute("liferay-commerce:cart:toggleable");
 
 String miniCartId = randomNamespace + "cart";
 %>

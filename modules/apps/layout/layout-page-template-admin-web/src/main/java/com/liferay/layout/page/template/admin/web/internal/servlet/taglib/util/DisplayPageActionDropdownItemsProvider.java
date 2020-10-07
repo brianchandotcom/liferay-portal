@@ -479,7 +479,10 @@ public class DisplayPageActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
-				"/layout_page_template/view_display_page_usages",
+				"/layout_page_template/view_display_page_usages", "classNameId",
+				String.valueOf(_layoutPageTemplateEntry.getClassNameId()),
+				"defaultTemplate",
+				String.valueOf(_layoutPageTemplateEntry.isDefaultTemplate()),
 				"layoutPageTemplateEntryId",
 				String.valueOf(
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),

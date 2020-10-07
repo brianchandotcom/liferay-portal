@@ -77,6 +77,48 @@ public class GroupFinderTest {
 	}
 
 	@Test
+	public void testFindByC_A() throws Exception {
+		Group group1 = GroupTestUtil.addGroup();
+
+		_groups.add(group1);
+
+		List<Long> groups = _groupFinder.findByC_A(
+			TestPropsValues.getCompanyId(), true);
+
+		Assert.assertTrue(
+			groups.toString(), groups.contains(group1.getGroupId()));
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		_groups.add(group2);
+
+		groups = _groupFinder.findByC_A(TestPropsValues.getCompanyId(), true);
+
+		Assert.assertTrue(
+			groups.toString(), groups.contains(group1.getGroupId()));
+		Assert.assertTrue(
+			groups.toString(), groups.contains(group2.getGroupId()));
+
+		group2.setActive(false);
+
+		_groupLocalService.updateGroup(group2);
+
+		groups = _groupFinder.findByC_A(TestPropsValues.getCompanyId(), true);
+
+		Assert.assertTrue(
+			groups.toString(), groups.contains(group1.getGroupId()));
+		Assert.assertFalse(
+			groups.toString(), groups.contains(group2.getGroupId()));
+
+		groups = _groupFinder.findByC_A(TestPropsValues.getCompanyId(), false);
+
+		Assert.assertFalse(
+			groups.toString(), groups.contains(group1.getGroupId()));
+		Assert.assertTrue(
+			groups.toString(), groups.contains(group2.getGroupId()));
+	}
+
+	@Test
 	public void testFindByC_C_N_DJoinByRoleResourcePermissions()
 		throws Exception {
 

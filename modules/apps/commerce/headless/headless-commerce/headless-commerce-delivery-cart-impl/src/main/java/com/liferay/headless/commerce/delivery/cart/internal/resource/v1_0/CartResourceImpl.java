@@ -21,13 +21,19 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
+import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
+import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -38,6 +44,7 @@ import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
+import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
@@ -46,12 +53,12 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CouponCode;
-import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Error;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartDTOConverter;
+import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -60,6 +67,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.validation.constraints.NotNull;
 
@@ -128,6 +136,19 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
+	public Cart postCartCheckout(Long cartId) throws Exception {
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			cartId);
+
+		_validateOrder(commerceOrder);
+
+		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder, contextUser.getUserId());
+
+		return _toCart(commerceOrder);
+	}
+
+	@Override
 	public Cart postCartCouponCode(@NotNull Long cartId, CouponCode couponCode)
 		throws Exception {
 
@@ -165,27 +186,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			cartId);
 
 		_updateOrder(commerceOrder, cart);
-
-		return _toCart(commerceOrder);
-	}
-
-	@Override
-	public Cart putCartCheckout(Long cartId) throws Exception {
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			cartId);
-
-		List<Error> errors = _validateOrder(commerceOrder);
-
-		if (ListUtil.isNotEmpty(errors)) {
-			Cart cart = _toCart(commerceOrder);
-
-			cart.setErrors(errors.toArray(new Error[0]));
-
-			return cart;
-		}
-
-		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
-			commerceOrder, contextUser.getUserId());
 
 		return _toCart(commerceOrder);
 	}
@@ -255,6 +255,61 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				address.getRegionISOCode());
 
 		return commerceRegion.getCommerceRegionId();
+	}
+
+	private CartItem[] _getValidatedCommerceOrderItems(
+			CommerceOrder commerceOrder)
+		throws Exception {
+
+		Map<Long, List<CommerceOrderValidatorResult>>
+			commerceOrderValidatorResults =
+				_commerceOrderValidatorRegistry.
+					getCommerceOrderValidatorResults(null, commerceOrder);
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		List<CartItem> cartItems = new ArrayList<>();
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			CartItem cartItem = _cartItemDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					commerceOrderItem.getCommerceOrderItemId(),
+					contextAcceptLanguage.getPreferredLocale()));
+
+			if (commerceOrderValidatorResults.containsKey(
+					commerceOrderItem.getCommerceOrderItemId())) {
+
+				List<CommerceOrderValidatorResult>
+					commerceOrderItemValidatorResults =
+						commerceOrderValidatorResults.get(
+							commerceOrderItem.getCommerceOrderItemId());
+
+				Stream<CommerceOrderValidatorResult>
+					commerceOrderValidatorResultStream =
+						commerceOrderItemValidatorResults.stream();
+
+				cartItem.setValid(
+					commerceOrderValidatorResultStream.map(
+						commerceOrderItemValidatorResult ->
+							commerceOrderItemValidatorResult.isValid()
+					).reduce(
+						true, Boolean::logicalAnd
+					));
+				cartItem.setErrorMessages(
+					commerceOrderValidatorResultStream.map(
+						commerceOrderItemValidatorResult ->
+							commerceOrderItemValidatorResult.
+								getLocalizedMessage()
+					).toArray(
+						String[]::new
+					));
+			}
+
+			cartItems.add(cartItem);
+		}
+
+		return cartItems.toArray(new CartItem[0]);
 	}
 
 	private Cart _toCart(CommerceOrder commerceOrder) throws Exception {
@@ -505,147 +560,73 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getAdvanceStatus(), commerceContext);
 	}
 
-	private void _validateBillingAddressSelected(
-			CommerceOrder commerceOrder, List<Error> errors)
-		throws Exception {
+	private void _validateBillingAddress(
+		CommerceOrder commerceOrder, List<String> errorMessages) {
 
-		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
-		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
-
-		if (billingAddress == null) {
-			Error error = new Error();
-
-			error.setErrorDescription("No billing address selected");
-
-			errors.add(error);
+		try {
+			_commerceOrderValidatorRegistry.validateBillingAddress(
+				null, commerceOrder);
 		}
+		catch (PortalException portalException) {
+			if (portalException instanceof
+					CommerceOrderBillingAddressException) {
 
-		if ((shippingAddress != null) &&
-			(shippingAddress.getType() ==
-				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING)) {
-
-			if (billingAddress.getCommerceAddressId() !=
-					shippingAddress.getCommerceAddressId()) {
-
-				Error error = new Error();
-
-				error.setErrorDescription(
-					"Shipping and billing address are not the same");
-
-				errors.add(error);
+				errorMessages.add("Invalid billing address");
 			}
 		}
-		else if (billingAddress.getType() !=
-					CommerceAddressConstants.ADDRESS_TYPE_BILLING) {
-
-			Error error = new Error();
-
-			error.setErrorDescription(
-				"Billing address is not a billing address");
-
-			errors.add(error);
-		}
 	}
 
-	private void _validateCommerceOrderItems(
-		CommerceOrder commerceOrder, List<Error> errors) {
+	private Cart _validateOrder(CommerceOrder commerceOrder) throws Exception {
+		List<String> errorMessages = new ArrayList<>();
 
-		List<CommerceOrderItem> commerceOrderItems =
-			commerceOrder.getCommerceOrderItems();
+		_validateBillingAddress(commerceOrder, errorMessages);
+		_validateShipping(commerceOrder, errorMessages);
 
-		if (commerceOrderItems.isEmpty()) {
-			Error error = new Error();
+		Cart cart = _toCart(commerceOrder);
 
-			error.setErrorDescription("The cart is empty");
+		if (!errorMessages.isEmpty()) {
+			cart.setValid(false);
 
-			errors.add(error);
+			cart.setErrorMessages(errorMessages.toArray(new String[0]));
 		}
+
+		CartItem[] validatedCartItems = _getValidatedCommerceOrderItems(
+			commerceOrder);
+
+		cart.setCartItems(validatedCartItems);
+
+		return cart;
 	}
 
-	private List<Error> _validateOrder(CommerceOrder commerceOrder)
+	private void _validateShipping(
+			CommerceOrder commerceOrder, List<String> errorMessages)
 		throws Exception {
 
-		List<Error> errors = new ArrayList<>();
-
-		_validateCommerceOrderItems(commerceOrder, errors);
-		_validateBillingAddressSelected(commerceOrder, errors);
-		_validateShippingAddressSelected(commerceOrder, errors);
-		_validateShippingMethodSelected(commerceOrder, errors);
-		_validatePaymentMethodSelected(commerceOrder, errors);
-
-		return errors;
-	}
-
-	private void _validatePaymentMethodSelected(
-		CommerceOrder commerceOrder, List<Error> errors) {
-
-		String commercePaymentMethodKey =
-			commerceOrder.getCommercePaymentMethodKey();
-
-		if ((commercePaymentMethodKey == null) ||
-			commercePaymentMethodKey.isEmpty()) {
-
-			Error error = new Error();
-
-			error.setErrorDescription("No payment method selected");
-
-			errors.add(error);
+		try {
+			_commerceOrderValidatorRegistry.validateShipping(
+				null, commerceOrder, _commerceShippingMethodLocalService,
+				_commerceShippingHelper);
 		}
-	}
+		catch (PortalException portalException) {
+			if (portalException instanceof
+					CommerceOrderShippingMethodException) {
 
-	private void _validateShippingAddressSelected(
-			CommerceOrder commerceOrder, List<Error> errors)
-		throws Exception {
+				errorMessages.add("Invalid shipping method");
+			}
 
-		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+			if (portalException instanceof
+					CommerceOrderShippingAddressException) {
 
-		if (shippingAddress == null) {
-			Error error = new Error();
-
-			error.setErrorDescription("No shipping address selected");
-
-			errors.add(error);
-		}
-
-		if (shippingAddress.getType() ==
-				CommerceAddressConstants.ADDRESS_TYPE_BILLING) {
-
-			Error error = new Error();
-
-			error.setErrorDescription("Shipping address of billing type");
-
-			errors.add(error);
-		}
-	}
-
-	private void _validateShippingMethodSelected(
-			CommerceOrder commerceOrder, List<Error> errors)
-		throws Exception {
-
-		if (!_commerceShippingHelper.isShippable(commerceOrder)) {
-			Error error = new Error();
-
-			error.setErrorDescription("Not shippable item");
-
-			errors.add(error);
-
-			return;
-		}
-
-		CommerceShippingMethod commerceShippingMethod =
-			commerceOrder.getCommerceShippingMethod();
-
-		if (commerceShippingMethod == null) {
-			Error error = new Error();
-
-			error.setErrorDescription("No shipping method selected");
-
-			errors.add(error);
+				errorMessages.add("Invalid shipping address");
+			}
 		}
 	}
 
 	@Reference
 	private CartDTOConverter _cartDTOConverter;
+
+	@Reference
+	private CartItemDTOConverter _cartItemDTOConverter;
 
 	@Reference
 	private CommerceAccountService _commerceAccountService;
@@ -678,10 +659,20 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
+	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
+
+	@Reference
+	private CommercePaymentEngine _commercePaymentEngine;
+
+	@Reference
 	private CommerceRegionLocalService _commerceRegionLocalService;
 
 	@Reference
 	private CommerceShippingHelper _commerceShippingHelper;
+
+	@Reference
+	private CommerceShippingMethodLocalService
+		_commerceShippingMethodLocalService;
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;

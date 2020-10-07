@@ -1,4 +1,3 @@
-
 .account-selector-dropdown {
 	.btn-account-selector {
 		background-color: transparent !important;
@@ -23,13 +22,19 @@
 	&::after {
 		display: none;
 	}
-	
+
+	.inline-scroller {
+		max-height: 260px;
+		min-height: 260px;
+	}
+
 	.table {
 		tr {
 			height: auto;
 		}
-		
-		th, td {
+
+		th,
+		td {
 			padding: 5px 10px;
 
 			&:first-child {

@@ -15,6 +15,7 @@
 	position: relative;
 	text-decoration: none;
 	text-transform: uppercase;
+	transition: border-color 0.3s ease-in;
 	white-space: nowrap;
 	z-index: 2;
 
@@ -77,8 +78,12 @@
 				background-color: $color-theme;
 			}
 
-			&:hover::before {
-				background-color: $color-theme-dark;
+			&:hover {
+				border-color: $color-theme-dark;
+
+				&::before {
+					background-color: $color-theme-dark;
+				}
 			}
 
 			&::after {
@@ -134,8 +139,12 @@
 				background-color: $color-mood-good;
 			}
 
-			&:hover::before {
-				background-color: darken($color-mood-good, 10%);
+			&:hover {
+				border-color: darken($color-mood-good, 10%);
+
+				&::before {
+					background-color: darken($color-mood-good, 10%);
+				}
 			}
 
 			&::after {
@@ -162,8 +171,12 @@
 				background-color: $color-mood-bad;
 			}
 
-			&:hover::before {
-				background-color: darken($color-mood-bad, 10%);
+			&:hover {
+				border-color: darken($color-mood-bad, 10%);
+
+				&::before {
+					background-color: darken($color-mood-bad, 10%);
+				}
 			}
 
 			&::after {
@@ -190,8 +203,12 @@
 				background-color: $color-mood-warning;
 			}
 
-			&:hover::before {
-				background-color: darken($color-mood-warning, 10%);
+			&:hover {
+				border-color: darken($color-mood-warning, 10%);
+
+				&::before {
+					background-color: darken($color-mood-warning, 10%);
+				}
 			}
 
 			&::after {

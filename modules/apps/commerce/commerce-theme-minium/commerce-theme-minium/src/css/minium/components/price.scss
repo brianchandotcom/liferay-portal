@@ -19,14 +19,11 @@
 			margin-right: 0;
 		}
 
-		&-discount {
-			color: $color-mood-bad !important;
-		}
-
 		&-big,
+		&-discount,
 		&-final,
 		&-promo {
-			color: $color-mood-bad;
+			color: $color-mood-bad !important;
 			font-weight: 600;
 		}
 

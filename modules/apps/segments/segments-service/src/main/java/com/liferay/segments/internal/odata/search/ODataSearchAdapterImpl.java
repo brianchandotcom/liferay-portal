@@ -15,19 +15,20 @@
 package com.liferay.segments.internal.odata.search;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilter;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -59,28 +60,15 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 			SearchContext searchContext = _createSearchContext(
 				companyId, start, end);
 
-			Query query = _getQuery(
-				filterString, className, entityModel, filterParser, locale,
-				searchContext);
+			Indexer<?> indexer = _indexerRegistry.getIndexer(className);
 
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
+			searchContext.setBooleanClauses(
+				new BooleanClause[] {
+					_getBooleanClause(
+						filterString, entityModel, filterParser, locale)
+				});
 
-			if (permissionChecker == null) {
-				return IndexSearcherHelperUtil.search(searchContext, query);
-			}
-
-			if (searchContext.getUserId() == 0) {
-				searchContext.setUserId(permissionChecker.getUserId());
-			}
-
-			SearchResultPermissionFilter searchResultPermissionFilter =
-				_searchResultPermissionFilterFactory.create(
-					searchContext2 -> IndexSearcherHelperUtil.search(
-						searchContext2, query),
-					permissionChecker);
-
-			return searchResultPermissionFilter.search(searchContext);
+			return indexer.search(searchContext);
 		}
 		catch (Exception exception) {
 			throw new PortalException(
@@ -97,31 +85,15 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 		try {
 			SearchContext searchContext = _createSearchContext(companyId, 0, 0);
 
-			Query query = _getQuery(
-				filterString, className, entityModel, filterParser, locale,
-				searchContext);
+			Indexer<?> indexer = _indexerRegistry.getIndexer(className);
 
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
+			searchContext.setBooleanClauses(
+				new BooleanClause[] {
+					_getBooleanClause(
+						filterString, entityModel, filterParser, locale)
+				});
 
-			if (permissionChecker == null) {
-				return (int)IndexSearcherHelperUtil.searchCount(
-					searchContext, query);
-			}
-
-			if (searchContext.getUserId() == 0) {
-				searchContext.setUserId(permissionChecker.getUserId());
-			}
-
-			SearchResultPermissionFilter searchResultPermissionFilter =
-				_searchResultPermissionFilterFactory.create(
-					searchContext2 -> IndexSearcherHelperUtil.search(
-						searchContext2, query),
-					permissionChecker);
-
-			Hits hits = searchResultPermissionFilter.search(searchContext);
-
-			return hits.getLength();
+			return (int)indexer.searchCount(searchContext);
 		}
 		catch (Exception exception) {
 			throw new PortalException(
@@ -138,6 +110,13 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 		searchContext.setEnd(end);
 		searchContext.setStart(start);
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			searchContext.setUserId(permissionChecker.getUserId());
+		}
+
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
@@ -146,24 +125,35 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 		return searchContext;
 	}
 
-	private Query _getQuery(
-			String filterString, String className, EntityModel entityModel,
-			FilterParser filterParser, Locale locale,
-			SearchContext searchContext)
+	private BooleanClause<Query> _getBooleanClause(
+			String filterString, EntityModel entityModel,
+			FilterParser filterParser, Locale locale)
 		throws Exception {
 
-		Indexer<Organization> indexer = _indexerRegistry.getIndexer(className);
+		return BooleanClauseFactoryUtil.create(
+			_getBooleanQuery(filterString, entityModel, filterParser, locale),
+			BooleanClauseOccur.MUST.getName());
+	}
 
-		BooleanQuery booleanQuery = indexer.getFullQuery(searchContext);
+	private BooleanQuery _getBooleanQuery(
+			String filterString, EntityModel entityModel,
+			FilterParser filterParser, Locale locale)
+		throws Exception {
 
-		com.liferay.portal.kernel.search.filter.Filter searchFilter =
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		com.liferay.portal.kernel.search.filter.Filter filter =
 			_getSearchFilter(filterString, entityModel, filterParser, locale);
 
-		if (searchFilter != null) {
-			BooleanFilter preBooleanFilter = booleanQuery.getPreBooleanFilter();
-
-			preBooleanFilter.add(searchFilter, BooleanClauseOccur.MUST);
+		if (filter != null) {
+			booleanFilter.add(filter, BooleanClauseOccur.MUST);
 		}
+
+		booleanQuery.setPreBooleanFilter(booleanFilter);
 
 		return booleanQuery;
 	}

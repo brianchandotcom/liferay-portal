@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayEmptyState from '@clayui/empty-state';
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext.es';
@@ -23,6 +22,7 @@ import useDataListView from '../../hooks/useDataListView.es';
 import useEntriesActions from '../../hooks/useEntriesActions.es';
 import usePermissions from '../../hooks/usePermissions.es';
 import {getLocalizedUserPreferenceValue} from '../../utils/lang.es';
+import EmptyStateEntry from './EmptyStateEntry.es';
 import {buildEntries, navigateToEditPage} from './utils.es';
 
 export default function ListEntries() {
@@ -58,13 +58,7 @@ export default function ListEntries() {
 	};
 
 	if (!permissions.view) {
-		return (
-			<ClayEmptyState
-				description={Liferay.Language.get('insufficient-permission')}
-				imgSrc="https://clayui.com/images/success_state.gif"
-				title={Liferay.Language.get('sorry')}
-			></ClayEmptyState>
-		);
+		return <EmptyStateEntry />;
 	}
 
 	return (

@@ -163,6 +163,27 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		return _toCart(commerceOrder);
 	}
 
+	@Override
+	public Cart putCartCheckout(Long cartId) throws Exception {
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			cartId);
+
+		List<Error> errors = _validateOrder(commerceOrder);
+
+		if (ListUtil.isNotEmpty(errors)) {
+			Cart cart = _toCart(commerceOrder);
+
+			cart.setErrors(errors.toArray(new Error[0]));
+
+			return cart;
+		}
+
+		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder, contextUser.getUserId());
+
+		return _toCart(commerceOrder);
+	}
+
 	private CommerceAddress _addCommerceAddress(
 			CommerceOrder commerceOrder, Address address, int type,
 			ServiceContext serviceContext)
@@ -478,6 +499,144 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getAdvanceStatus(), commerceContext);
 	}
 
+	private void _validateBillingAddressSelected(
+			CommerceOrder commerceOrder, List<Error> errors)
+		throws PortalException {
+
+		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
+		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+
+		if (billingAddress == null) {
+			Error error = new Error();
+
+			error.setErrorDescription("No billing address selected");
+
+			errors.add(error);
+		}
+
+		if (shippingAddress != null && shippingAddress.getType() ==
+				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING) {
+
+			if (billingAddress.getCommerceAddressId() !=
+					shippingAddress.getCommerceAddressId()) {
+
+				Error error = new Error();
+
+				error.setErrorDescription(
+					"Shipping and billing address are not the same");
+
+				errors.add(error);
+			}
+		}
+		else if (billingAddress.getType() !=
+					CommerceAddressConstants.ADDRESS_TYPE_BILLING) {
+
+			Error error = new Error();
+
+			error.setErrorDescription(
+				"Billing address is not a billing address");
+
+			errors.add(error);
+		}
+	}
+
+	private void _validateCommerceOrderItems(
+		CommerceOrder commerceOrder, List<Error> errors) {
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		if (commerceOrderItems.isEmpty()) {
+			Error error = new Error();
+
+			error.setErrorDescription("The cart is empty");
+
+			errors.add(error);
+		}
+	}
+
+	private List<Error> _validateOrder(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		List<Error> errors = new ArrayList<>();
+
+		_validateCommerceOrderItems(commerceOrder, errors);
+		_validateBillingAddressSelected(commerceOrder, errors);
+		_validateShippingAddressSelected(commerceOrder, errors);
+		_validateShippingMethodSelected(commerceOrder, errors);
+		_validatePaymentMethodSelected(commerceOrder, errors);
+
+		return errors;
+	}
+
+	private void _validatePaymentMethodSelected(
+		CommerceOrder commerceOrder, List<Error> errors) {
+
+		String commercePaymentMethodKey =
+			commerceOrder.getCommercePaymentMethodKey();
+
+		if ((commercePaymentMethodKey == null) ||
+			commercePaymentMethodKey.isEmpty()) {
+
+			Error error = new Error();
+
+			error.setErrorDescription("No payment method selected");
+
+			errors.add(error);
+		}
+	}
+
+	private void _validateShippingAddressSelected(
+			CommerceOrder commerceOrder, List<Error> errors)
+		throws PortalException {
+
+		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+
+		if (shippingAddress == null) {
+			Error error = new Error();
+
+			error.setErrorDescription("No shipping address selected");
+
+			errors.add(error);
+		}
+
+		if (shippingAddress.getType() ==
+				CommerceAddressConstants.ADDRESS_TYPE_BILLING) {
+
+			Error error = new Error();
+
+			error.setErrorDescription("Shipping address of billing type");
+
+			errors.add(error);
+		}
+	}
+
+	private void _validateShippingMethodSelected(
+			CommerceOrder commerceOrder, List<Error> errors)
+		throws PortalException {
+
+		if (!_commerceShippingHelper.isShippable(commerceOrder)) {
+			Error error = new Error();
+
+			error.setErrorDescription("Not shippable item");
+
+			errors.add(error);
+
+			return;
+		}
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceOrder.getCommerceShippingMethod();
+
+		if (commerceShippingMethod == null) {
+			Error error = new Error();
+
+			error.setErrorDescription("No shipping method selected");
+
+			errors.add(error);
+		}
+	}
+
 	@Reference
 	private CartDTOConverter _cartDTOConverter;
 
@@ -491,6 +650,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
+	private CommerceChannelService _commerceChannelService;
+
+	@Reference
 	private CommerceContextFactory _commerceContextFactory;
 
 	@Reference
@@ -500,6 +662,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
+	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
@@ -507,6 +672,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Reference
 	private CommerceRegionLocalService _commerceRegionLocalService;
+
+	@Reference
+	private CommerceShippingHelper _commerceShippingHelper;
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;

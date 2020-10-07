@@ -189,19 +189,6 @@ class RuleEditor extends Component {
 		return {columns, rows};
 	}
 
-	getFieldOptions(fieldName) {
-		let options = [];
-		const visitor = new PagesVisitor(this.pages);
-
-		const field = visitor.findField((field) => {
-			return field.fieldName === fieldName;
-		});
-
-		options = field ? field.options : [];
-
-		return options;
-	}
-
 	getFieldsByTypes(fields, types) {
 		return fields.filter((field) =>
 			types.some((fieldType) => field.type == fieldType)
@@ -334,7 +321,10 @@ class RuleEditor extends Component {
 				firstOperandColumns = columns;
 				firstOperandRows = rows;
 
-				firstOperandOptions = this.getFieldOptions(fieldName);
+				firstOperandOptions = RulesSupport.getFieldOptions(
+					fieldName,
+					pages
+				);
 			}
 
 			return {

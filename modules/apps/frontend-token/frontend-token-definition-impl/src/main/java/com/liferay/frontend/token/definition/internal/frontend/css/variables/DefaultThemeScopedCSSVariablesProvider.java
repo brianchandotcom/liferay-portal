@@ -62,24 +62,20 @@ public class DefaultThemeScopedCSSVariablesProvider
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				layoutSet.getThemeId());
 
-		Collection<FrontendTokenMapping> frontendTokenMappings =
-			frontendTokenDefinition.getFrontendTokenMappings();
+		Collection<FrontendToken> frontendTokens =
+			frontendTokenDefinition.getFrontendTokens();
 
-		for (FrontendTokenMapping frontendTokenMapping :
-				frontendTokenMappings) {
+		for (FrontendToken frontendToken : frontendTokens) {
+			Collection<FrontendTokenMapping> frontendTokenMappings =
+				frontendToken.getFrontendTokenMappingsByType("cssVariable");
 
-			String type = frontendTokenMapping.getType();
+			for (FrontendTokenMapping frontendTokenMapping :
+					frontendTokenMappings) {
 
-			if (!type.equals("cssVariable")) {
-				continue;
+				cssVariables.put(
+					frontendTokenMapping.getValue(),
+					frontendToken.getDefaultValue());
 			}
-
-			FrontendToken frontendToken =
-				frontendTokenMapping.getFrontendToken();
-
-			cssVariables.put(
-				frontendTokenMapping.getValue(),
-				frontendToken.getDefaultValue());
 		}
 
 		return Collections.singletonList(

@@ -17,6 +17,7 @@ package com.liferay.asset.display.page.service.impl;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.base.AssetDisplayPageEntryLocalServiceBaseImpl;
+import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryFinder;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -139,6 +140,17 @@ public class AssetDisplayPageEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetDisplayPageEntry> getAssetDisplayPageEntries(
+		long classNameId, boolean defaultTemplate,
+		long layoutPageTemplateEntryId, int start, int end,
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
+
+		return _assetDisplayPageEntryFinder.findByCNI_DT_LPTEI(
+			classNameId, defaultTemplate, layoutPageTemplateEntryId, start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public List<AssetDisplayPageEntry>
 		getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
 			long layoutPageTemplateEntryId) {
@@ -155,6 +167,15 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		return assetDisplayPageEntryPersistence.findByLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getAssetDisplayPageEntriesCount(
+		long classNameId, boolean defaultTemplate,
+		long layoutPageTemplateEntryId) {
+
+		return _assetDisplayPageEntryFinder.countByCNI_DT_LPTEI(
+			classNameId, defaultTemplate, layoutPageTemplateEntryId);
 	}
 
 	@Override
@@ -287,6 +308,9 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetDisplayPageEntryLocalServiceImpl.class);
+
+	@Reference
+	private AssetDisplayPageEntryFinder _assetDisplayPageEntryFinder;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

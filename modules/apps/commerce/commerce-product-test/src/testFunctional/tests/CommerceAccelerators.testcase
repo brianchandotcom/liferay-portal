@@ -118,7 +118,7 @@ definition {
 
 		CommerceAcceleratorsInitializer.viewAllAccountsFromAccountSelector();
 
-		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ROLE_TABLE_NAME");
 	}
 
 	test InitializeNewMiniumSite {

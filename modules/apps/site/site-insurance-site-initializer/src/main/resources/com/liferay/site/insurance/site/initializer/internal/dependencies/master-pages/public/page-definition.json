@@ -25,17 +25,6 @@
 									"target": "Self"
 								}
 							}
-						},
-						{
-							"id": "link-button",
-							"value": {
-								"fragmentLink": {
-									"href": {
-										"value": "/web/guest/sign-in"
-									},
-									"target": "Self"
-								}
-							}
 						}
 					],
 					"fragmentStyle": {

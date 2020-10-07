@@ -14,7 +14,7 @@
 							"value": {
 								"fragmentLink": {
 									"href": {
-										"value": "/web/guest/claims"
+										"value": "#"
 									},
 									"target": "Self"
 								},
@@ -250,7 +250,11 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
+																		"mapping": {
+																			"fieldKey": "ExpertStatusImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
 																		}
 																	}
 																}
@@ -261,7 +265,11 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
+																		"mapping": {
+																			"fieldKey": "OpeningStatusImaget055",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
 																		}
 																	}
 																}
@@ -272,7 +280,11 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
+																		"mapping": {
+																			"fieldKey": "RepairStatusImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
 																		}
 																	}
 																}
@@ -283,7 +295,11 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
+																		"mapping": {
+																			"fieldKey": "ReportStatusImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
 																		}
 																	}
 																}
@@ -359,7 +375,11 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
+																		"mapping": {
+																			"fieldKey": "ClosingStatusImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
 																		}
 																	}
 																}
@@ -383,7 +403,11 @@
 															"value": {
 																"fragmentImage": {
 																	"url": {
-																		"value_i18n": {
+																		"mapping": {
+																			"fieldKey": "InvoiceStatusImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
 																		}
 																	}
 																}

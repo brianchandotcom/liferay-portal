@@ -94,7 +94,7 @@ definition {
 			AssertTextEquals(
 				key_productDiscount = "$ ${productDiscount}",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_DISCOUNT",
-				value1 = "${productDiscount");
+				value1 = "${productDiscount}");
 		}
 
 		AssertTextEquals(

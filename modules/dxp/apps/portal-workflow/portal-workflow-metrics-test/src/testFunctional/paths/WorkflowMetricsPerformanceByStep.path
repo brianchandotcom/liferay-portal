@@ -35,12 +35,12 @@
 </tr>
 <tr>
     <td>METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_AVG_COMPLETION_TIME_VALUE</td>
-    <td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[contains(@data-testid, 'durationTaskAvg')]</td>
+    <td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[2]</td>
     <td></td>
 </tr>
 <tr>
     <td>METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_SLA_BREACHED_VALUE</td>
-    <td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[contains(@data-testid, 'stepSla')]</td>
+    <td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[1]</td>
     <td></td>
 </tr>
 <tr>

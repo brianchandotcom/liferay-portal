@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>BULK_REASSIGN_MODAL</td>
-	<td>//div[@data-testid="bulkReassignModal"]</td>
+	<td>//div[contains(@class,'fade modal')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>REASSIGN_MODAL</td>
-	<td>//div[@data-testid="reassignModal"]</td>
+	<td>//div[contains(@class,'fade modal')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_ALL</td>
-	<td>xpath=(//div[@data-testid="bulkReassignModal"]//label)</td>
+	<td>xpath=(//div[contains(@class,'fade modal')]//label)</td>
 	<td></td>
 </tr>S
 <tr>
 	<td>NEXT_BUTTON</td>
-	<td>//button[@data-testid="nextButton"]</td>
+	<td>//button[contains(@class, 'btn-primary') and contains(text(),'Next')] | //button[contains(@class, 'btn-primary') and contains(text(),'Reassign')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEXT_BUTTON_DISABLED</td>
-	<td>//button[@data-testid="nextButton" and @disabled]</td>
+	<td>//button[contains(text(),'Next') and @disabled] | //button[contains(text(),'Reassign') and @disabled]</td>
 	<td></td>
 </tr>
 <tr>
@@ -70,12 +70,12 @@
 </tr>
 <tr>
 	<td>SEARCH_NEW_ASSIGNEE</td>
-	<td>//input[contains(@data-testid,'autocompleteInput')]</td>
+	<td>//input[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_NEW_ASSIGNEE_SPECIFIC</td>
-	<td>//td[contains(text(),"${key_itemName}")]/parent::tr//input[contains(@data-testid,'autocompleteInput')]</td>
+	<td>//td[contains(text(),"${key_itemName}")]/parent::tr//input[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>SELECT_ALL_REASSIGN</td>
-	<td>//button[@data-testid="selectAll"]</td>
+	<td>//button[contains(text(),'Select All')]</td>
 	<td></td>
 </tr>
 

@@ -135,12 +135,12 @@
 </tr>
 <tr>
 	<td>WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE</td>
-	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_workflowInstanceName}')]/following-sibling::td[contains(@data-testid,'assigneesCell') and contains(text(),'${key_workflowInstanceAssignee}')]</td>
+	<td>//td[(3) and contains(text(),'${key_workflowInstanceName}')]/following-sibling::td[(5) and contains(text(),'${key_workflowInstanceAssignee}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WORKFLOW_INSTANCE_ID</td>
-	<td>//td[contains(@class,'table-title')]//strong | //span[contains(@data-testid,'instanceIdLink')]//strong</td>
+	<td>//td[contains(@class,'table-title')]//strong | //span[contains(@class,'link-text')]//strong</td>
 	<td></td>
 </tr>
 <tr>
@@ -150,7 +150,7 @@
 </tr>
 <tr>
 	<td>CLEAR_ALL_BUTTON</td>
-	<td>//button[@data-testid='clearAll']</td>
+	<td>//button[contains(text(),'Clear All')]</td>
 	<td></td>
 </tr>
 <tr>

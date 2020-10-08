@@ -12,7 +12,9 @@
  * details.
  */
 
+import {useEffect} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
+import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
 import {useItems} from '../contexts/ItemsContext';
@@ -24,7 +26,7 @@ export function useDragItem(item) {
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 
-	const [{isDragging}, handlerRef] = useDrag({
+	const [{isDragging}, handlerRef, previewRef] = useDrag({
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
@@ -36,6 +38,10 @@ export function useDragItem(item) {
 			type: ACCEPTING_ITEM_TYPE,
 		},
 	});
+
+	useEffect(() => {
+		previewRef(getEmptyImage(), {captureDraggingState: true});
+	}, [previewRef]);
 
 	return {
 		handlerRef,

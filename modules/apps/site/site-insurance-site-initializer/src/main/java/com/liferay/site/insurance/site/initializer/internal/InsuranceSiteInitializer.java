@@ -31,7 +31,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -893,19 +892,21 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private void _setDefaultLayoutPageTemplateEntries() {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), "policy",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				_serviceContext.getScopeGroupId(), "policy");
 
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		if (layoutPageTemplateEntry != null) {
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		}
 
 		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), "claim",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				_serviceContext.getScopeGroupId(), "claim");
 
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		if (layoutPageTemplateEntry != null) {
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		}
 	}
 
 	private void _setDefaultStyleBookEntry() throws PortalException {

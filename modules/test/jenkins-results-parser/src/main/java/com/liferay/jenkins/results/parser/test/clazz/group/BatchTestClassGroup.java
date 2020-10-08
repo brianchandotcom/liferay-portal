@@ -432,21 +432,21 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
 
-		int id = 0;
+		int batchIndex = 0;
 
 		for (List<TestClass> axisTestClasses :
 				Lists.partition(testClasses, axisSize)) {
 
 			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-				this, id);
+				this, batchIndex);
 
 			for (TestClass axisTestClass : axisTestClasses) {
 				axisTestClassGroup.addTestClass(axisTestClass);
 			}
 
-			axisTestClassGroups.put(id, axisTestClassGroup);
+			axisTestClassGroups.put(batchIndex, axisTestClassGroup);
 
-			id++;
+			batchIndex++;
 		}
 	}
 

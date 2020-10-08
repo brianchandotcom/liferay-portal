@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>ANSWER</td>
-	<td>//div[label[contains(.,'Answer')]]/input[@type='text']</td>
+	<td>//div[label[contains(.,'Answer')]]/input[@type='password']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANSWER_LOCALIZED</td>
-	<td>//div[label[contains(.,'${key_localizedAnswer}')]]/input[@type='text']</td>
+	<td>//div[label[contains(.,'${key_localizedAnswer}')]]/input[@type='password']</td>
 	<td></td>
 </tr>
 <tr>

@@ -198,10 +198,6 @@
 		},
 		{
 			"genericTypeCount": 1,
-			"name": "com.liferay.digital.signature.model.field.DSField"
-		},
-		{
-			"genericTypeCount": 1,
 			"name": "com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler"
 		},
 		{

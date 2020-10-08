@@ -13,6 +13,7 @@
  */
 
 import {ClayModalProvider} from '@clayui/modal';
+import classNames from 'classnames';
 import React, {useContext} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -54,7 +55,13 @@ export default (props) => (
 		<AppContextProvider {...props}>
 			<ClayModalProvider>
 				<Router>
-					<div className="custom-object-app">
+					<div
+						className={classNames('custom-object-app', {
+							'publications-enabled': document.querySelector(
+								'.change-tracking-indicator'
+							),
+						})}
+					>
 						<Switch>
 							<Route
 								component={ListCustomObjects}

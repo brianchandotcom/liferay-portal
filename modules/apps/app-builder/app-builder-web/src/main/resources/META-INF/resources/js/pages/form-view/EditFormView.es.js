@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -61,20 +62,30 @@ const EditFormView = (props) => {
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<FormViewContextProvider dataLayoutBuilder={dataLayoutBuilder}>
-				<FormViewControlMenu
-					backURL={backURL}
-					dataLayoutId={dataLayoutId}
-				/>
+				<div
+					className={classNames({
+						'publications-enabled': document.querySelector(
+							'.change-tracking-indicator'
+						),
+					})}
+				>
+					<FormViewControlMenu
+						backURL={backURL}
+						dataLayoutId={dataLayoutId}
+					/>
 
-				<FormViewUpperToolbar
-					newCustomObject={newCustomObject}
-					showTranslationManager={showTranslationManager}
-				/>
+					<FormViewUpperToolbar
+						newCustomObject={newCustomObject}
+						showTranslationManager={showTranslationManager}
+					/>
 
-				{createPortal(
-					<CustomObjectSidebar />,
-					document.querySelector(`#${customObjectSidebarElementId}`)
-				)}
+					{createPortal(
+						<CustomObjectSidebar />,
+						document.querySelector(
+							`#${customObjectSidebarElementId}`
+						)
+					)}
+				</div>
 			</FormViewContextProvider>
 		</DndProvider>
 	);

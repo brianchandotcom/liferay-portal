@@ -182,6 +182,14 @@
 			}
 		}
 	}
+
+	.multi-panel-sidebar.publications-enabled {
+		top: 144px;
+
+		.taglib-empty-result-message {
+			margin-bottom: 24px;
+		}
+	}
 }
 
 .field-type-drag-preview .custom-object-field {

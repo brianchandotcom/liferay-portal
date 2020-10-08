@@ -32,6 +32,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -202,6 +203,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 	@Test
 	public void testCompareServiceBuilderPluginVersions() throws Exception {
+		Assume.assumeTrue(isBuildProjects());
 		String liferayVersion = getDefaultLiferayVersion();
 		String name = "sample";
 		String packageName = "com.test.sample";

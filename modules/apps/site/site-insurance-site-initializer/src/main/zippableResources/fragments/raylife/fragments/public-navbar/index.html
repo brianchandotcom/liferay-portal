@@ -17,18 +17,18 @@
 			<lfr-widget-nav id="nav"></lfr-widget-nav>
 
 			[#if themeDisplay.isSignedIn()]
-				<div class="dropdown position-relative">
-					<button aria-expanded="false" aria-haspopup="true" class="component-action dropdown-toggle" data-toggle="dropdown" id="${fragmentEntryLinkNamespace}_dropdown_menu" type="button">
-						[@liferay_ui["user-portrait"] user=user /]
-					</button>
+			<div class="dropdown">
+				<button aria-expanded="false" aria-haspopup="true" class="btn btn-unstyled dropdown-toggle" data-toggle="dropdown" id="${fragmentEntryLinkNamespace}_dropdown_menu" type="button">
+					[@liferay_ui["user-portrait"] user=user /]
+				</button>
 
-					<ul aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu" class="dropdown-menu right">
-						<li><a class="dropdown-item" href="${privateFriendlyURL}">My Raylife</a></li>
-						<li><a class="dropdown-item" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}">Sign out</a></li>
-					</ul>
-				</div>
+				<ul aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu" class="dropdown-menu right">
+					<li><a class="dropdown-item" href="${privateFriendlyURL}">My Raylife</a></li>
+					<li><a class="dropdown-item" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}">Sign out</a></li>
+				</ul>
+			</div>
 			[#else]
-				<a class="btn btn-outline-primary" href="${publicFriendlyURL}/sign-in" role="button">Sign In</a>
+			<a class="btn btn-outline-primary" href="${publicFriendlyURL}/sign-in" role="button">Sign In</a>
 			[/#if]
 
 		</div>

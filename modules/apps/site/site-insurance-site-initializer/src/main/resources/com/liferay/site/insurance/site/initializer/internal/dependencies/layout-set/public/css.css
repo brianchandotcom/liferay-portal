@@ -65,7 +65,8 @@ a {
 	padding-left: var(--spacer-3);
 	padding-right: var(--spacer-3);
 }
-.layout-content .navbar .navbar-collapse img {
+.layout-content .navbar .navbar-collapse .sticker {
+	height: 36px;
 	width: 36px;
 }
 .layout-content .navbar .user-menu .btn  {

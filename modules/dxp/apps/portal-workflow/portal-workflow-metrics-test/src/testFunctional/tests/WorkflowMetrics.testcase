@@ -1954,6 +1954,7 @@ definition {
 	@description = "LRQA-53646 - Automate LPS-88573: Search and order the reports list"
 	@priority = "5"
 	test ValidateWorkflowProcessListOnMetrics {
+		property test.name.skip.portal.instance = "WorkflowMetrics#ValidateWorkflowProcessListOnMetrics";
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(

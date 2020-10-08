@@ -59,7 +59,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			return axisTestClassGroups.get(axisId);
 		}
 
-		return new AxisTestClassGroup(this, axisId);
+		return new AxisTestClassGroup(this);
 	}
 
 	public Map<File, NPMTestBatchTestClass> getNPMTestBatchTestClasses() {
@@ -268,7 +268,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(this, 0);
+		AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(this);
 
 		for (File moduleDir : moduleDirs) {
 			NPMTestBatchTestClass npmTestBatchTestClass =

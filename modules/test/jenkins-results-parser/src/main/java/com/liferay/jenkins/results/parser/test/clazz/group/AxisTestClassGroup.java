@@ -19,10 +19,6 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
  */
 public class AxisTestClassGroup extends BaseTestClassGroup {
 
-	public int getBatchIndex() {
-		return _batchIndex;
-	}
-
 	public String getBatchName() {
 		return _batchTestClassGroup.getBatchName();
 	}
@@ -31,37 +27,27 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return _batchTestClassGroup;
 	}
 
-	public int getSegmentIndex() {
-		return _segmentIndex;
-	}
-
 	public SegmentTestClassGroup getSegmentTestClassGroup() {
 		return _segmentTestClassGroup;
 	}
 
-	protected AxisTestClassGroup(
-		BatchTestClassGroup batchTestClassGroup, int batchIndex) {
-
-		setBatchTestClassGroup(batchTestClassGroup, batchIndex);
+	protected AxisTestClassGroup(BatchTestClassGroup batchTestClassGroup) {
+		setBatchTestClassGroup(batchTestClassGroup);
 	}
 
 	protected void setBatchTestClassGroup(
-		BatchTestClassGroup batchTestClassGroup, int batchIndex) {
+		BatchTestClassGroup batchTestClassGroup) {
 
 		_batchTestClassGroup = batchTestClassGroup;
-		_batchIndex = batchIndex;
 	}
 
 	protected void setSegmentTestClassGroup(
-		SegmentTestClassGroup segmentTestClassGroup, int segmentIndex) {
+		SegmentTestClassGroup segmentTestClassGroup) {
 
 		_segmentTestClassGroup = segmentTestClassGroup;
-		_segmentIndex = segmentIndex;
 	}
 
-	private int _batchIndex;
 	private BatchTestClassGroup _batchTestClassGroup;
-	private int _segmentIndex;
 	private SegmentTestClassGroup _segmentTestClassGroup;
 
 }

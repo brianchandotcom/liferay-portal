@@ -16,20 +16,16 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * @author Michael Hashimoto
  */
 public class SegmentTestClassGroup extends BaseTestClassGroup {
 
-	public void addAxisTestClassGroup(
-		int segmentIndex, AxisTestClassGroup axisTestClassGroup) {
+	public void addAxisTestClassGroup(AxisTestClassGroup axisTestClassGroup) {
+		_axisTestClassGroups.add(axisTestClassGroup);
 
-		_axisTestClassGroups.put(segmentIndex, axisTestClassGroup);
-
-		axisTestClassGroup.setSegmentTestClassGroup(this, segmentIndex);
+		axisTestClassGroup.setSegmentTestClassGroup(this);
 	}
 
 	public int getAxisCount() {
@@ -41,7 +37,7 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public List<AxisTestClassGroup> getChildAxisTestClassGroups() {
-		return new ArrayList<>(_axisTestClassGroups.values());
+		return new ArrayList<>(_axisTestClassGroups);
 	}
 
 	public BatchTestClassGroup getParentBatchTestClassGroup() {
@@ -54,8 +50,8 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		_parentBatchTestClassGroup = parentBatchTestClassGroup;
 	}
 
-	private final Map<Integer, AxisTestClassGroup> _axisTestClassGroups =
-		new TreeMap<>();
+	private final List<AxisTestClassGroup> _axisTestClassGroups =
+		new ArrayList<>();
 	private final BatchTestClassGroup _parentBatchTestClassGroup;
 
 }

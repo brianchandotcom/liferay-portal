@@ -60,7 +60,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, buildProfile, portalTestClassJob);
 
-		axisTestClassGroups.add(0, new AxisTestClassGroup(this, 0));
+		axisTestClassGroups.add(0, new AxisTestClassGroup(this));
 
 		_setRelevantTestBatchRunPropertyQuery();
 	}

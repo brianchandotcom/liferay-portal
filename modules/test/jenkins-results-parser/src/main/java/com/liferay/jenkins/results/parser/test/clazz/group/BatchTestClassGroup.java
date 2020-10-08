@@ -28,9 +28,7 @@ import java.nio.file.PathMatcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -444,7 +442,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				Lists.partition(testClasses, axisSize)) {
 
 			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-				this, axisTestClassGroups.size());
+				this);
 
 			for (TestClass axisTestClass : axisTestClasses) {
 				axisTestClassGroup.addTestClass(axisTestClass);
@@ -475,14 +473,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				segmentTestClassGroup = new SegmentTestClassGroup(
 					this, segmentBatchIndex);
 
-				_segmentTestClassGroups.put(
-					segmentBatchIndex, segmentTestClassGroup);
+				_segmentTestClassGroups.add(segmentTestClassGroup);
 			}
 
-			int axisSegmentIndex = i % segmentMaxChildren;
-
 			segmentTestClassGroup.addAxisTestClassGroup(
-				axisSegmentIndex, axisTestClassGroups.get(i));
+				axisTestClassGroups.get(i));
 		}
 	}
 
@@ -674,7 +669,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;
 
-	private final Map<Integer, SegmentTestClassGroup> _segmentTestClassGroups =
-		new HashMap<>();
+	private final List<SegmentTestClassGroup> _segmentTestClassGroups =
+		new ArrayList<>();
 
 }

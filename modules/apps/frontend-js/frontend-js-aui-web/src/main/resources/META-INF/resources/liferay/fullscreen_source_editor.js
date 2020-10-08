@@ -135,7 +135,7 @@ AUI.add(
 				_onEditorChange(event) {
 					var instance = this;
 
-					if (event.newVal) {
+					if (event.newVal || event.newVal === '') {
 						instance._previewPanel.html(
 							instance._getHtml(event.newVal)
 						);

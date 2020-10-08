@@ -94,33 +94,63 @@ public class PoshiContext {
 		_seleniumParameterCounts.clear();
 	}
 
-	public static void executePQLQuery() throws Exception {
-		readFiles();
+	public static List<String> executePQLQuery() throws Exception {
+		return executePQLQuery(PropsValues.TEST_BATCH_PROPERTY_QUERY, true);
+	}
 
-		String propertyQuery = PropsValues.TEST_BATCH_PROPERTY_QUERY;
+	public static List<String> executePQLQuery(String query, boolean readFiles)
+		throws Exception {
 
-		List<String> namespacedClassCommandNames = _executePQLQuery(
-			propertyQuery);
+		if (readFiles) {
+			clear();
 
-		int numCommandsFound = namespacedClassCommandNames.size();
+			readFiles();
+		}
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("The following query returned ");
-		sb.append(numCommandsFound);
-		sb.append(" test class command names:\n");
-		sb.append(propertyQuery);
+		sb.append("(");
+		sb.append(query);
+		sb.append(") AND (ignored != true)");
 
-		if (numCommandsFound > 0) {
-			sb.append("\n\n");
-			sb.append(
-				StringUtil.join(
-					namespacedClassCommandNames.toArray(
-						new String[numCommandsFound]),
-					","));
+		if (Validator.isNotNull(PropsValues.TEST_RUN_ENVIRONMENT)) {
+			sb.append(" AND (test.run.environment == \"");
+			sb.append(PropsValues.TEST_RUN_ENVIRONMENT);
+			sb.append("\" OR test.run.environment == null)");
 		}
 
+		query = sb.toString();
+
+		List<String> classCommandNames = new ArrayList<>();
+
+		PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(query);
+
+		for (String testCaseNamespacedClassCommandName :
+				_testCaseNamespacedClassCommandNames) {
+
+			Properties properties =
+				_namespacedClassCommandNamePropertiesMap.get(
+					testCaseNamespacedClassCommandName);
+
+			Boolean pqlResultBoolean = (Boolean)pqlEntity.getPQLResult(
+				properties);
+
+			if (pqlResultBoolean) {
+				classCommandNames.add(testCaseNamespacedClassCommandName);
+			}
+		}
+
+		sb = new StringBuilder();
+
+		sb.append("The following query returned ");
+		sb.append(classCommandNames.size());
+		sb.append(" test class command names:\n");
+		sb.append(query);
+		sb.append("\n");
+
 		System.out.println(sb.toString());
+
+		return classCommandNames;
 	}
 
 	public static String getDefaultNamespace() {
@@ -270,6 +300,63 @@ public class PoshiContext {
 		return _seleniumParameterCounts.get(commandName);
 	}
 
+	public static List<List<String>> getTestBatchGroups(
+			String propertyQuery, int maxGroupSize)
+		throws Exception {
+
+		if (maxGroupSize <= 0) {
+			maxGroupSize = 1;
+		}
+
+		List<String> classCommandNames = executePQLQuery(propertyQuery, false);
+
+		Multimap<Properties, String> multimap = HashMultimap.create();
+
+		for (String classCommandName : classCommandNames) {
+			Properties properties = new Properties();
+
+			properties.putAll(
+				_namespacedClassCommandNamePropertiesMap.get(classCommandName));
+
+			if (Validator.isNotNull(
+					PropsValues.TEST_BATCH_GROUP_IGNORE_REGEX)) {
+
+				Set<String> propertyNames = properties.stringPropertyNames();
+
+				for (String propertyName : propertyNames) {
+					if (propertyName.matches(
+							PropsValues.TEST_BATCH_GROUP_IGNORE_REGEX)) {
+
+						properties.remove(propertyName);
+					}
+				}
+			}
+
+			multimap.put(properties, classCommandName);
+		}
+
+		Map<Properties, Collection<String>> map = multimap.asMap();
+
+		List<List<String>> testBatchGroups = new ArrayList<>();
+
+		for (Collection<String> value : map.values()) {
+			List<String> classCommandNameGroup = new ArrayList<>(value);
+
+			Collections.sort(classCommandNameGroup);
+
+			int testCount = classCommandNameGroup.size();
+
+			int groupCount = MathUtil.quotient(testCount, maxGroupSize, true);
+
+			int groupSize = MathUtil.quotient(testCount, groupCount, true);
+
+			testBatchGroups.addAll(
+				Lists.partition(classCommandNameGroup, groupSize));
+		}
+
+		return testBatchGroups;
+	}
+
 	public static Element getTestCaseCommandElement(
 		String classCommandName, String namespace) {
 
@@ -378,39 +465,6 @@ public class PoshiContext {
 			throw new TimeoutException(
 				"Timed out while loading " + poshiFileType + " Poshi files");
 		}
-	}
-
-	private static List<String> _executePQLQuery(String query)
-		throws Exception {
-
-		List<String> namespacedClassCommandNames = new ArrayList<>();
-
-		PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(query);
-
-		for (String testCaseNamespacedClassCommandName :
-				_testCaseNamespacedClassCommandNames) {
-
-			Properties properties =
-				_namespacedClassCommandNamePropertiesMap.get(
-					testCaseNamespacedClassCommandName);
-
-			Boolean pqlResultBoolean = (Boolean)pqlEntity.getPQLResult(
-				properties);
-
-			if (pqlResultBoolean) {
-				namespacedClassCommandNames.add(
-					testCaseNamespacedClassCommandName);
-			}
-		}
-
-		return namespacedClassCommandNames;
-	}
-
-	private static int _getAllocatedTestGroupSize(int testCount) {
-		int groupCount = MathUtil.quotient(
-			testCount, PropsValues.TEST_BATCH_MAX_GROUP_SIZE, true);
-
-		return MathUtil.quotient(testCount, groupCount, true);
 	}
 
 	private static Properties _getClassCommandNameProperties(
@@ -528,209 +582,6 @@ public class PoshiContext {
 		throws Exception {
 
 		return _getPoshiURLs(null, includes, baseDirName);
-	}
-
-	private static String _getTestBatchGroups() throws Exception {
-		String propertyQuery = PropsValues.TEST_BATCH_PROPERTY_QUERY;
-
-		if (Validator.isNotNull(PropsValues.TEST_RUN_ENVIRONMENT)) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("(");
-			sb.append(propertyQuery);
-			sb.append(") AND (ignored != true) AND ");
-			sb.append("(test.run.environment == \"");
-			sb.append(PropsValues.TEST_RUN_ENVIRONMENT);
-			sb.append("\" OR test.run.environment == null)");
-
-			propertyQuery = sb.toString();
-		}
-
-		List<String> namespacedClassCommandNames = _executePQLQuery(
-			propertyQuery);
-
-		System.out.println(
-			"The following query returned " +
-				namespacedClassCommandNames.size() +
-					" test class command names:");
-
-		System.out.println(propertyQuery);
-
-		if (PropsValues.TEST_BATCH_RUN_TYPE.equals("sequential")) {
-			return _getTestBatchSequentialGroups(namespacedClassCommandNames);
-		}
-		else if (PropsValues.TEST_BATCH_RUN_TYPE.equals("single")) {
-			return _getTestBatchSingleGroups(namespacedClassCommandNames);
-		}
-
-		throw new Exception(
-			"'test.batch.run.type' must be set to 'single' or 'sequential'");
-	}
-
-	private static String _getTestBatchSequentialGroups(
-			List<String> namespacedClassCommandNames)
-		throws Exception {
-
-		Multimap<Properties, String> multimap = HashMultimap.create();
-
-		for (String namespacedClassCommandName : namespacedClassCommandNames) {
-			Properties properties = new Properties();
-
-			properties.putAll(
-				_namespacedClassCommandNamePropertiesMap.get(
-					namespacedClassCommandName));
-
-			if (Validator.isNotNull(
-					PropsValues.TEST_BATCH_GROUP_IGNORE_REGEX)) {
-
-				Set<String> propertyNames = properties.stringPropertyNames();
-
-				for (String propertyName : propertyNames) {
-					if (propertyName.matches(
-							PropsValues.TEST_BATCH_GROUP_IGNORE_REGEX)) {
-
-						properties.remove(propertyName);
-					}
-				}
-			}
-
-			multimap.put(properties, namespacedClassCommandName);
-		}
-
-		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
-		int classCommandNameIndex = 0;
-		Map<Properties, Collection<String>> map = multimap.asMap();
-
-		for (Collection<String> value : map.values()) {
-			List<String> classCommandNameGroup = new ArrayList<>(value);
-
-			Collections.sort(classCommandNameGroup);
-
-			int groupSize = _getAllocatedTestGroupSize(
-				classCommandNameGroup.size());
-
-			List<List<String>> partitions = Lists.partition(
-				classCommandNameGroup, groupSize);
-
-			for (List<String> partition : partitions) {
-				classCommandNameGroups.put(classCommandNameIndex, partition);
-
-				classCommandNameIndex++;
-			}
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < classCommandNameGroups.size(); i++) {
-			List<String> classCommandNameGroup = classCommandNameGroups.get(i);
-			int subgroupSize = PropsValues.TEST_BATCH_MAX_SUBGROUP_SIZE;
-
-			int subgroupCount = MathUtil.quotient(
-				classCommandNameGroup.size(), subgroupSize, true);
-
-			sb.append("RUN_TEST_CASE_METHOD_GROUP_");
-			sb.append(i);
-			sb.append("=");
-
-			for (int j = 0; j < subgroupCount; j++) {
-				sb.append(i);
-				sb.append("_");
-				sb.append(j);
-
-				if (j < (subgroupCount - 1)) {
-					sb.append(" ");
-				}
-			}
-
-			sb.append("\n");
-
-			for (int j = 0; j < classCommandNameGroup.size(); j++) {
-				if ((j % subgroupSize) == 0) {
-					sb.append("RUN_TEST_CASE_METHOD_GROUP_");
-					sb.append(i);
-					sb.append("_");
-					sb.append(j / subgroupSize);
-					sb.append("=");
-					sb.append(classCommandNameGroup.get(j));
-				}
-				else if (((j + 1) % subgroupSize) == 0) {
-					sb.append(",");
-					sb.append(classCommandNameGroup.get(j));
-					sb.append("\n");
-				}
-				else {
-					sb.append(",");
-					sb.append(classCommandNameGroup.get(j));
-				}
-			}
-
-			sb.append("\n");
-		}
-
-		sb.append("RUN_TEST_CASE_METHOD_GROUPS=");
-
-		for (int i = 0; i < classCommandNameGroups.size(); i++) {
-			sb.append(i);
-
-			if (i < (classCommandNameGroups.size() - 1)) {
-				sb.append(" ");
-			}
-		}
-
-		return sb.toString();
-	}
-
-	private static String _getTestBatchSingleGroups(
-		List<String> namespacedClassCommandNames) {
-
-		StringBuilder sb = new StringBuilder();
-
-		int groupSize = 15;
-
-		List<List<String>> partitions = Lists.partition(
-			namespacedClassCommandNames, groupSize);
-
-		for (int i = 0; i < partitions.size(); i++) {
-			sb.append("RUN_TEST_CASE_METHOD_GROUP_");
-			sb.append(i);
-			sb.append("=");
-
-			List<String> partition = partitions.get(i);
-
-			for (int j = 0; j < partition.size(); j++) {
-				sb.append(i);
-				sb.append("_");
-				sb.append(j);
-
-				if (j < (partition.size() - 1)) {
-					sb.append(" ");
-				}
-			}
-
-			sb.append("\n");
-
-			for (int j = 0; j < partition.size(); j++) {
-				sb.append("RUN_TEST_CASE_METHOD_GROUP_");
-				sb.append(i);
-				sb.append("_");
-				sb.append(j);
-				sb.append("=");
-				sb.append(partition.get(j));
-				sb.append("\n");
-			}
-		}
-
-		sb.append("RUN_TEST_CASE_METHOD_GROUPS=");
-
-		for (int i = 0; i < partitions.size(); i++) {
-			sb.append(i);
-
-			if (i < (partitions.size() - 1)) {
-				sb.append(" ");
-			}
-		}
-
-		return sb.toString();
 	}
 
 	private static void _initComponentCommandNamesMap() {
@@ -1450,10 +1301,60 @@ public class PoshiContext {
 	private static void _writeTestCaseMethodNamesProperties() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		if ((PropsValues.TEST_BATCH_MAX_GROUP_SIZE > 0) &&
-			(PropsValues.TEST_BATCH_PROPERTY_QUERY != null)) {
+		if (PropsValues.TEST_BATCH_PROPERTY_QUERY != null) {
+			int maxSubgroupSize = PropsValues.TEST_BATCH_MAX_SUBGROUP_SIZE;
 
-			sb.append(_getTestBatchGroups());
+			if (PropsValues.TEST_BATCH_RUN_TYPE.equals("single")) {
+				maxSubgroupSize = 1;
+			}
+
+			List<List<String>> testBatchGroups = getTestBatchGroups(
+				PropsValues.TEST_BATCH_PROPERTY_QUERY, maxSubgroupSize);
+
+			List<List<List<String>>> segments = Lists.partition(
+				testBatchGroups, PropsValues.TEST_BATCH_MAX_GROUP_SIZE);
+
+			for (int i = 0; i < segments.size(); i++) {
+				List<List<String>> segment = segments.get(i);
+
+				List<String> axisNames = new ArrayList<>();
+
+				for (int j = 0; j < segment.size(); j++) {
+					sb.append("RUN_TEST_CASE_METHOD_GROUP_");
+					sb.append(i);
+					sb.append("_");
+					sb.append(j);
+					sb.append("=");
+
+					List<String> axis = segment.get(j);
+
+					sb.append(
+						StringUtil.join(axis.toArray(new String[0]), ","));
+
+					sb.append("\n");
+
+					axisNames.add(i + "_" + j);
+				}
+
+				sb.append("RUN_TEST_CASE_METHOD_GROUP_");
+				sb.append(i);
+				sb.append("=");
+
+				sb.append(
+					StringUtil.join(axisNames.toArray(new String[0]), " "));
+
+				sb.append("\n");
+			}
+
+			List<String> segmentNames = new ArrayList<>();
+
+			for (int i = 0; i < segments.size(); i++) {
+				segmentNames.add(String.valueOf(i));
+			}
+
+			sb.append("RUN_TEST_CASE_METHOD_GROUPS=");
+			sb.append(
+				StringUtil.join(segmentNames.toArray(new String[0]), " "));
 		}
 
 		FileUtil.write("test.case.method.names.properties", sb.toString());

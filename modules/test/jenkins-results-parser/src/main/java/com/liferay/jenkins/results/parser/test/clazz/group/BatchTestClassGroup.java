@@ -100,6 +100,14 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return portalGitWorkingDirectory;
 	}
 
+	public int getSegmentCount() {
+		return _segmentTestClassGroups.size();
+	}
+
+	public SegmentTestClassGroup getSegmentTestClassGroup(int segmentId) {
+		return _segmentTestClassGroups.get(segmentId);
+	}
+
 	public static class BatchTestClass extends BaseTestClass {
 
 		protected static BatchTestClass getInstance(
@@ -450,6 +458,38 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 	}
 
+	protected void setSegmentTestClassGroups() {
+		if (!_isSegmentEnabled()) {
+			return;
+		}
+
+		if (!_segmentTestClassGroups.isEmpty()) {
+			return;
+		}
+
+		int segmentMaxChildren = _getSegmentMaxChildren();
+
+		for (int i = 0; i < axisTestClassGroups.size(); i++) {
+			int segmentBatchIndex = i / segmentMaxChildren;
+
+			SegmentTestClassGroup segmentTestClassGroup =
+				_segmentTestClassGroups.get(segmentBatchIndex);
+
+			if (segmentTestClassGroup == null) {
+				segmentTestClassGroup = new SegmentTestClassGroup(
+					this, segmentBatchIndex);
+
+				_segmentTestClassGroups.put(
+					segmentBatchIndex, segmentTestClassGroup);
+			}
+
+			int axisSegmentIndex = i % segmentMaxChildren;
+
+			segmentTestClassGroup.addAxisTestClassGroup(
+				axisSegmentIndex, axisTestClassGroups.get(i));
+		}
+	}
+
 	protected static final String NAME_STABLE_TEST_SUITE = "stable";
 
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
@@ -568,6 +608,30 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return Lists.newArrayList(requiredModuleDirs);
 	}
 
+	private int _getSegmentMaxChildren() {
+		String segmentMaxChildren = getFirstPropertyValue(
+			"test.batch.segment.max.children");
+
+		if ((segmentMaxChildren == null) ||
+			!segmentMaxChildren.matches("\\d+")) {
+
+			return _SEGMENT_MAX_CHILDREN_DEFAULT;
+		}
+
+		return Integer.valueOf(segmentMaxChildren);
+	}
+
+	private boolean _isSegmentEnabled() {
+		String segmentEnabled = getFirstPropertyValue(
+			"test.batch.segment.enabled");
+
+		if ((segmentEnabled != null) && segmentEnabled.equals("true")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _setIncludeStableTestSuite() {
 		includeStableTestSuite = testRelevantChanges;
 	}
@@ -611,5 +675,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private static final boolean _ENABLE_TEST_RELEASE_BUNDLE_DEFAULT = false;
 
 	private static final boolean _ENABLE_TEST_RELEVANT_CHANGES_DEFAULT = false;
+
+	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;
+
+	private final Map<Integer, SegmentTestClassGroup> _segmentTestClassGroups =
+		new HashMap<>();
 
 }

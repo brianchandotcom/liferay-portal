@@ -292,7 +292,8 @@ public class EditCommerceAccountUserMVCActionCommand
 		_userLocalService.updatePasswordReset(user.getUserId(), passwordReset);
 
 		if (Validator.isNotNull(reminderQueryQuestion) &&
-			Validator.isNotNull(reminderQueryAnswer)) {
+			Validator.isNotNull(reminderQueryAnswer) &&
+			!reminderQueryAnswer.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
 
 			_userLocalService.updateReminderQuery(
 				user.getUserId(), reminderQueryQuestion, reminderQueryAnswer);

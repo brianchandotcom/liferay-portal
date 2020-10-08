@@ -171,7 +171,15 @@ else {
 			</div>
 		</c:if>
 
-		<aui:input autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>' label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" size="50" value="<%= selUser.getReminderQueryAnswer() %>" />
+		<%
+		String answer = selUser.getReminderQueryAnswer();
+
+		if (!PropsValues.USERS_REMINDER_QUERIES_DISPLAY_PLAIN_TEXT && Validator.isNotNull(answer)) {
+			answer = Portal.TEMP_OBFUSCATION_VALUE;
+		}
+		%>
+
+		<aui:input autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>' label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" size="50" type='<%= PropsValues.USERS_REMINDER_QUERIES_DISPLAY_PLAIN_TEXT ? "text" : "password" %>' value="<%= answer %>" />
 	</clay:sheet-section>
 
 	<aui:script sandbox="<%= true %>">

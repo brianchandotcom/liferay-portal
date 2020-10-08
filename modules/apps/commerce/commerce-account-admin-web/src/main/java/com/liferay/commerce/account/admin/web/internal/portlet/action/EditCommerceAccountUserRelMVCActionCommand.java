@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.UserGroupRoleService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -118,9 +117,6 @@ public class EditCommerceAccountUserRelMVCActionCommand
 
 				addCommerceAccountUserRel(actionRequest);
 			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				updateCommerceUserRoles(actionRequest);
-			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceAccountUserRels(actionRequest);
 			}
@@ -139,34 +135,10 @@ public class EditCommerceAccountUserRelMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceUserRoles(ActionRequest actionRequest)
-		throws Exception {
-
-		long commerceAccountGroupId = ParamUtil.getLong(
-			actionRequest, "commerceAccountGroupId");
-
-		long commerceAccountUserId = ParamUtil.getLong(
-			actionRequest, "commerceAccountUserId");
-
-		long[] roleIds = ParamUtil.getLongValues(actionRequest, "roleIds");
-		long[] originalRoleIds = ParamUtil.getLongValues(
-			actionRequest, "originalRoleIds");
-
-		_userGroupRoleService.updateUserGroupRoles(
-			commerceAccountUserId, commerceAccountGroupId, roleIds,
-			originalRoleIds);
-
-		_userGroupRoleService.addUserGroupRoles(
-			commerceAccountUserId, commerceAccountGroupId, roleIds);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditCommerceAccountUserRelMVCActionCommand.class);
 
 	@Reference
 	private CommerceAccountUserRelService _commerceAccountUserRelService;
-
-	@Reference
-	private UserGroupRoleService _userGroupRoleService;
 
 }

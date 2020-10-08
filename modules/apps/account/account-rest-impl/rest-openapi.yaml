@@ -312,6 +312,7 @@ paths:
                     # @review
                     description:
                         "Account successfully updated"
+            tags: ["Account"]
         put:
             # @review
             description:
@@ -578,6 +579,7 @@ paths:
                     # @review
                     description:
                         "Account successfully updated"
+            tags: ["Account"]
         put:
             # @review
             description:

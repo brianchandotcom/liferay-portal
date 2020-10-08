@@ -230,7 +230,7 @@ public abstract class BaseAccountResourceImpl
 	)
 	@Path("/accounts/by-external-reference-code/{externalReferenceCode}")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {})
+	@Tags(value = {@Tag(name = "Account")})
 	public Account patchAccountByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("externalReferenceCode") String externalReferenceCode,
@@ -391,7 +391,7 @@ public abstract class BaseAccountResourceImpl
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
 	@Path("/accounts/{accountId}")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {})
+	@Tags(value = {@Tag(name = "Account")})
 	public Account patchAccount(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,

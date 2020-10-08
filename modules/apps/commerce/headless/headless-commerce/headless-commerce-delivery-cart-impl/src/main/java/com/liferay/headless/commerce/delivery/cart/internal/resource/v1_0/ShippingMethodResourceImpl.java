@@ -37,7 +37,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -99,11 +98,13 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 				commerceContext, commerceOrder,
 				contextAcceptLanguage.getPreferredLocale());
 
-		return _toShippingOptions(
+		return transformToArray(
 			ListUtil.sort(
 				commerceShippingOptions,
 				new CommerceShippingOptionLabelComparator()),
-			commerceOrder);
+			shippingOption -> _toShippingOption(
+				shippingOption, commerceContext),
+			ShippingOption.class);
 	}
 
 	private ShippingMethod _toShippingMethod(
@@ -126,7 +127,7 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 
 	private ShippingOption _toShippingOption(
 			CommerceShippingOption commerceShippingOption,
-			CommerceOrder commerceOrder)
+			CommerceContext commerceContext)
 		throws PortalException {
 
 		BigDecimal commerceShippingOptionAmount =
@@ -136,30 +137,13 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 			{
 				amount = commerceShippingOptionAmount.doubleValue();
 				amountFormatted = _commercePriceFormatter.format(
-					commerceOrder.getCommerceCurrency(),
+					commerceContext.getCommerceCurrency(),
 					commerceShippingOption.getAmount(),
 					contextAcceptLanguage.getPreferredLocale());
 				label = commerceShippingOption.getLabel();
 				name = commerceShippingOption.getName();
 			}
 		};
-	}
-
-	private ShippingOption[] _toShippingOptions(
-			List<CommerceShippingOption> commerceShippingOptions,
-			CommerceOrder commerceOrder)
-		throws PortalException {
-
-		List<ShippingOption> shippingOptions = new ArrayList<>();
-
-		for (CommerceShippingOption commerceShippingOption :
-				commerceShippingOptions) {
-
-			shippingOptions.add(
-				_toShippingOption(commerceShippingOption, commerceOrder));
-		}
-
-		return shippingOptions.toArray(new ShippingOption[0]);
 	}
 
 	@Reference

@@ -14,10 +14,10 @@
 
 package com.liferay.dispatch.talend.web.internal.executor;
 
+import com.liferay.dispatch.executor.BaseScheduledTaskExecutor;
 import com.liferay.dispatch.executor.ScheduledTaskExecutor;
-import com.liferay.dispatch.model.DispatchLog;
+import com.liferay.dispatch.executor.log.ScheduledTaskExecutorDispatchLogs;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
@@ -27,7 +27,6 @@ import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -36,8 +35,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.nio.charset.StandardCharsets;
 
 import java.text.SimpleDateFormat;
 
@@ -59,17 +56,19 @@ import org.osgi.service.component.annotations.Reference;
 	service = ScheduledTaskExecutor.class
 )
 public class DispatchTalendScheduledTaskExecutor
-	implements ScheduledTaskExecutor {
+	extends BaseScheduledTaskExecutor {
 
 	public static final String SCHEDULED_TASK_EXECUTOR_TYPE_TALEND = "talend";
 
 	@Override
-	public void execute(long dispatchTriggerId)
+	public void doExecute(
+			DispatchTrigger dispatchTrigger,
+			ScheduledTaskExecutorDispatchLogs scheduledTaskExecutorDispatchLogs)
 		throws IOException, PortalException {
 
 		FileEntry fileEntry =
 			_dispatchTalendScheduledTaskExecutorHelper.getFileEntry(
-				dispatchTriggerId);
+				dispatchTrigger.getDispatchTriggerId());
 
 		InputStream inputStream = fileEntry.getContentStream();
 
@@ -85,14 +84,6 @@ public class DispatchTalendScheduledTaskExecutor
 
 		_addExecutePermission(shFileName);
 
-		DispatchTrigger dispatchTrigger =
-			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
-
-		DispatchLog dispatchLog = _dispatchLogLocalService.addDispatchLog(
-			dispatchTrigger.getUserId(), dispatchTrigger.getDispatchTriggerId(),
-			null, null, null, new Date(),
-			BackgroundTaskConstants.STATUS_IN_PROGRESS);
-
 		DispatchTalendCollectorOutputProcessor
 			dispatchTalendCollectorOutputProcessor =
 				new DispatchTalendCollectorOutputProcessor();
@@ -104,19 +95,12 @@ public class DispatchTalendScheduledTaskExecutor
 
 			Map.Entry<byte[], byte[]> entry = future.get();
 
-			_dispatchLogLocalService.updateDispatchLog(
-				dispatchLog.getDispatchLogId(), new Date(),
-				new String(entry.getValue(), StandardCharsets.UTF_8),
-				new String(entry.getKey(), StandardCharsets.UTF_8),
-				BackgroundTaskConstants.STATUS_SUCCESSFUL);
+			scheduledTaskExecutorDispatchLogs.setError(entry.getValue());
+			scheduledTaskExecutorDispatchLogs.setOutput(entry.getKey());
 		}
 		catch (Exception exception) {
-			_dispatchLogLocalService.updateDispatchLog(
-				dispatchLog.getDispatchLogId(), new Date(),
-				new String(
-					dispatchTalendCollectorOutputProcessor._stdErrByteArray,
-					StandardCharsets.UTF_8),
-				null, BackgroundTaskConstants.STATUS_FAILED);
+			scheduledTaskExecutorDispatchLogs.setError(
+				dispatchTalendCollectorOutputProcessor._stdErrByteArray);
 
 			throw new PortalException(exception);
 		}
@@ -198,9 +182,6 @@ public class DispatchTalendScheduledTaskExecutor
 
 		return strings[0];
 	}
-
-	@Reference
-	private DispatchLogLocalService _dispatchLogLocalService;
 
 	@Reference
 	private DispatchTalendScheduledTaskExecutorHelper

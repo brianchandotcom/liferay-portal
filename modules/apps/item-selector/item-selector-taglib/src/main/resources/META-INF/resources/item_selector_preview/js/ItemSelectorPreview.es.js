@@ -96,8 +96,12 @@ const ItemSelectorPreview = ({
 	};
 
 	const handleClickDone = () => {
-		handleSelectedItem(currentItem);
+
+		// LPS-120692
+
 		close();
+
+		handleSelectedItem(currentItem);
 	};
 
 	const handleClickEdit = () => {

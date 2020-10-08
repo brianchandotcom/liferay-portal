@@ -176,16 +176,19 @@
 										{
 											"id": "landscapeMobile",
 											"rowViewportDefinition": {
+												"modulesPerRow": 1
 											}
 										},
 										{
 											"id": "portraitMobile",
 											"rowViewportDefinition": {
+												"modulesPerRow": 1
 											}
 										},
 										{
 											"id": "tablet",
 											"rowViewportDefinition": {
+												"modulesPerRow": 1
 											}
 										}
 									]
@@ -196,16 +199,19 @@
 											"columnViewports": [
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "landscapeMobile"
 												},
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "portraitMobile"
 												},
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "tablet"
 												}
@@ -388,16 +394,19 @@
 											"columnViewports": [
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "landscapeMobile"
 												},
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "portraitMobile"
 												},
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "tablet"
 												}
@@ -547,16 +556,19 @@
 										{
 											"id": "landscapeMobile",
 											"rowViewportDefinition": {
+												"modulesPerRow": 1
 											}
 										},
 										{
 											"id": "portraitMobile",
 											"rowViewportDefinition": {
+												"modulesPerRow": 1
 											}
 										},
 										{
 											"id": "tablet",
 											"rowViewportDefinition": {
+												"modulesPerRow": 1
 											}
 										}
 									]
@@ -771,16 +783,19 @@
 										{
 											"id": "landscapeMobile",
 											"rowViewportDefinition": {
+												"modulesPerRow": 1
 											}
 										},
 										{
 											"id": "portraitMobile",
 											"rowViewportDefinition": {
+												"modulesPerRow": 1
 											}
 										},
 										{
 											"id": "tablet",
 											"rowViewportDefinition": {
+												"modulesPerRow": 1
 											}
 										}
 									]
@@ -791,16 +806,19 @@
 											"columnViewports": [
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "landscapeMobile"
 												},
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "portraitMobile"
 												},
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "tablet"
 												}
@@ -911,16 +929,19 @@
 											"columnViewports": [
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "landscapeMobile"
 												},
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "portraitMobile"
 												},
 												{
 													"columnViewportDefinition": {
+														"size": 12
 													},
 													"id": "tablet"
 												}

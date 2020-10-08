@@ -40,10 +40,6 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		return _axisTestClassGroups.get(segmentIndex);
 	}
 
-	public int getBatchIndex() {
-		return _batchIndex;
-	}
-
 	public List<AxisTestClassGroup> getChildAxisTestClassGroups() {
 		return new ArrayList<>(_axisTestClassGroups.values());
 	}
@@ -56,12 +52,10 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		BatchTestClassGroup parentBatchTestClassGroup, int batchIndex) {
 
 		_parentBatchTestClassGroup = parentBatchTestClassGroup;
-		_batchIndex = batchIndex;
 	}
 
 	private final Map<Integer, AxisTestClassGroup> _axisTestClassGroups =
 		new TreeMap<>();
-	private final int _batchIndex;
 	private final BatchTestClassGroup _parentBatchTestClassGroup;
 
 }

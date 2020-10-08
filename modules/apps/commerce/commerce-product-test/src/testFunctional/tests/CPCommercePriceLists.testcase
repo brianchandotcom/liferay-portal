@@ -30,7 +30,6 @@ definition {
 
 			CommerceNavigator.gotoPortlet(
 				category = "Product Management",
-				panel = "Commerce",
 				portlet = "Catalogs");
 
 			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
@@ -45,7 +44,6 @@ definition {
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
-			panel = "Commerce",
 			portlet = "Catalogs");
 
 		Click(locator1 = "Button#PLUS");

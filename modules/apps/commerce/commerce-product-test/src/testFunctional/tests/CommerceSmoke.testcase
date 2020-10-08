@@ -29,7 +29,6 @@ definition {
 
 			CommerceNavigator.gotoPortlet(
 				category = "Product Management",
-				panel = "Commerce",
 				portlet = "Products");
 
 			while (IsElementPresent(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS") && (maxIterations = "50")) {

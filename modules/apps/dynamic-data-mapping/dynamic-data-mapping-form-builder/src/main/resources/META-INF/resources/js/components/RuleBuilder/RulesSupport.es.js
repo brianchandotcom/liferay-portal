@@ -257,11 +257,15 @@ const syncActions = (pages, actions) => {
 
 			Object.keys(inputs)
 				.filter((key) => !targetFieldExists(inputs[key], pages))
-				.map((key) => delete inputs[key]);
+				.map((key) => {
+					inputs[key] = '';
+				});
 
 			Object.keys(outputs)
 				.filter((key) => !targetFieldExists(outputs[key], pages))
-				.map((key) => delete outputs[key]);
+				.map((key) => {
+					outputs[key] = '';
+				});
 		}
 		else if (action.action === 'calculate') {
 			const expressionFields = getExpressionFields(action);

@@ -36,6 +36,7 @@
 
 				ul {
 					font-size: 14px;
+					padding-left: 0;
 
 					li {
 						display: flex;
@@ -43,7 +44,7 @@
 
 						p {
 							margin-bottom: 0;
-							max-width: 94%;
+							max-width: 90%;
 							min-width: auto;
 							padding-left: 8px;
 							position: relative;
@@ -201,7 +202,6 @@
 
 	.custom-chart-size {
 		display: flex;
-		height: 400px !important;
 		min-height: 400px;
 		min-width: 400px;
 		width: 100%;

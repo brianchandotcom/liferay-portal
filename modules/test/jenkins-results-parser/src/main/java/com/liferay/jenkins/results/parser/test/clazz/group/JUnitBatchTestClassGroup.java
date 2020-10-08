@@ -415,6 +415,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		_setIncludeAutoBalanceTests();
 
 		setAxisTestClassGroups();
+
+		setSegmentTestClassGroups();
 	}
 
 	protected List<String> getReleaseTestClassNamesRelativeIncludesGlobs(

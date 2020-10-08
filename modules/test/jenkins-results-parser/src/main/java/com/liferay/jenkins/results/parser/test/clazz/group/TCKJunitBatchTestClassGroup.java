@@ -98,6 +98,8 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		setTestClasses();
 
 		setAxisTestClassGroups();
+
+		setSegmentTestClassGroups();
 	}
 
 	protected void setTestClasses() {

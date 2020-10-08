@@ -40,6 +40,8 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 			BatchTestClass.getInstance(batchName, portalGitWorkingDirectory));
 
 		setAxisTestClassGroups();
+
+		setSegmentTestClassGroups();
 	}
 
 }

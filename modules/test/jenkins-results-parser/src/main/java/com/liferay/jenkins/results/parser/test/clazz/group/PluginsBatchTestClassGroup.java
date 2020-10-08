@@ -111,6 +111,8 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		setTestClasses();
 
 		setAxisTestClassGroups();
+
+		setSegmentTestClassGroups();
 	}
 
 	protected void setTestClasses() {

@@ -170,18 +170,16 @@ renderResponse.setTitle(categoryDisplayName);
 									</c:otherwise>
 								</c:choose>
 
-								<c:if test="<%= ExtendedObjectClassDefinition.Scope.SYSTEM.equals(configurationScopeDisplayContext.getScope()) %>">
-									<portlet:resourceURL id="export" var="exportURL">
-										<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
-										<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
-									</portlet:resourceURL>
+								<portlet:resourceURL id="export" var="exportURL">
+									<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
+									<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
+								</portlet:resourceURL>
 
-									<liferay-ui:icon
-										message="export"
-										method="get"
-										url="<%= exportURL %>"
-									/>
-								</c:if>
+								<liferay-ui:icon
+									message="export"
+									method="get"
+									url="<%= exportURL %>"
+								/>
 
 								<%
 								List<ConfigurationMenuItem> configurationMenuItems = (List<ConfigurationMenuItem>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MENU_ITEMS);

@@ -75,6 +75,10 @@ public class BuildDatabaseUtil {
 		return _buildDatabase;
 	}
 
+	public static void reset() {
+		_buildDatabase = null;
+	}
+
 	private static void _downloadBuildDatabaseFile(File baseDir, Build build) {
 		JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
 

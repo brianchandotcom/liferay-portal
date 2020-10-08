@@ -116,6 +116,14 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		return _searchContainer;
 	}
 
+	public boolean isDescriptiveDisplayStyle() {
+		if (Objects.equals(getDisplayStyle(), "descriptive")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isIconDisplayStyle() {
 		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;

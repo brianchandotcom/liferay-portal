@@ -82,7 +82,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:otherwise>
+				<c:when test="<%= itemSelectorViewDescriptorRendererDisplayContext.isDescriptiveDisplayStyle() %>">
 
 					<%
 					row.setCssClass("item-selector-list-row " + row.getCssClass());
@@ -133,6 +133,37 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 						<p class="h6 text-default">
 							<%= itemDescriptor.getSubtitle(locale) %>
 						</p>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-cell-minw-200 table-title"
+						name="title"
+						value="<%= itemDescriptor.getTitle(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller table-cell-minw-150"
+						name="user"
+						value="<%= itemDescriptor.getUserName() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller table-cell-minw-150"
+						name="modified-date"
+					>
+						<c:if test="<%= Objects.nonNull(itemDescriptor.getModifiedDate()) %>">
+
+							<%
+							Date modifiedDate = itemDescriptor.getModifiedDate();
+
+							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+							%>
+
+							<span class="text-default">
+								<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" />
+							</span>
+						</c:if>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>

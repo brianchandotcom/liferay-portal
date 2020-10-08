@@ -81,7 +81,7 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getDisplayViews() {
-		return new String[] {"descriptive", "icon"};
+		return new String[] {"descriptive", "icon", "list"};
 	}
 
 	private final ItemSelectorViewDescriptor<Object>

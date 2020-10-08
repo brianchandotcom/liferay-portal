@@ -132,8 +132,13 @@ public class UpstreamFailureUtil {
 			}
 
 			System.out.println(
-				"Using upstream failures at: " +
-					getUpstreamJobFailuresSHA(topLevelBuild));
+				JenkinsResultsParserUtil.combine(
+					"Comparing with test results from ",
+					topLevelBuild.getAcceptanceUpstreamJobURL(), "/",
+					String.valueOf(
+						_upstreamFailuresJobJSONObject.getInt("buildNumber")),
+					" at SHA ",
+					_upstreamFailuresJobJSONObject.getString("SHA")));
 		}
 		catch (IOException ioException) {
 			System.out.println(ioException);

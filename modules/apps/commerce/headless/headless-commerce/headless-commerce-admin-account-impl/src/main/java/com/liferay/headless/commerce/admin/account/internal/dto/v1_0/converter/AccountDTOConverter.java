@@ -19,9 +19,11 @@ import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -77,12 +79,19 @@ public class AccountDTOConverter
 					commerceAccount.getExternalReferenceCode();
 				id = commerceAccount.getCommerceAccountId();
 				logoId = commerceAccount.getLogoId();
+				logoURL = _getLogoURL(commerceAccount.getLogoId());
 				name = commerceAccount.getName();
 				root = commerceAccount.isRoot();
 				taxId = commerceAccount.getTaxId();
 				type = commerceAccount.getType();
 			}
 		};
+	}
+
+	private String _getLogoURL(long logoId) {
+		return StringBundler.concat(
+			"/image/organization_logo?img_id=", logoId, "&t=",
+			WebServerServletTokenUtil.getToken(logoId));
 	}
 
 	@Reference

@@ -44,7 +44,6 @@ definition {
 
 		while (IsElementPresent(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS")) {
 			CommerceEntry.deleteCommerceEntry();
-
 		}
 
 		Pause(locator1 = "3000");
@@ -251,7 +250,7 @@ definition {
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
-		
+
 		PortletEntry.selectAll();
 
 		if (IsElementPresent(locator1 = "Icon#DELETE")) {
@@ -264,7 +263,6 @@ definition {
 	}
 
 	macro commerceStoreFrontSetUp {
-
 		CommerceNavigator.gotoPortlet(
 			category = "Settings",
 			portlet = "Health Check");

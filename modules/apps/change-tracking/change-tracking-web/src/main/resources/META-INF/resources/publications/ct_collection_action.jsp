@@ -79,17 +79,19 @@ CTCollection ctCollection = (CTCollection)row.getObject();
 			url="<%= publishURL %>"
 		/>
 
-		<liferay-portlet:renderURL var="scheduleURL">
-			<portlet:param name="mvcRenderCommandName" value="/publications/view_conflicts" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-			<portlet:param name="schedule" value="<%= Boolean.TRUE.toString() %>" />
-		</liferay-portlet:renderURL>
+		<c:if test="<%= PropsValues.SCHEDULER_ENABLED %>">
+			<liferay-portlet:renderURL var="scheduleURL">
+				<portlet:param name="mvcRenderCommandName" value="/publications/view_conflicts" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
+				<portlet:param name="schedule" value="<%= Boolean.TRUE.toString() %>" />
+			</liferay-portlet:renderURL>
 
-		<liferay-ui:icon
-			message="schedule"
-			url="<%= scheduleURL %>"
-		/>
+			<liferay-ui:icon
+				message="schedule"
+				url="<%= scheduleURL %>"
+			/>
+		</c:if>
 	</c:if>
 
 	<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, ActionKeys.PERMISSIONS) %>">

@@ -48,18 +48,21 @@ portletDisplay.setShowBackIcon(true);
 					</li>
 
 					<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, CTActionKeys.PUBLISH) %>">
-						<li class="tbar-item">
-							<liferay-portlet:renderURL var="scheduleURL">
-								<portlet:param name="mvcRenderCommandName" value="/publications/view_conflicts" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-								<portlet:param name="schedule" value="<%= Boolean.TRUE.toString() %>" />
-							</liferay-portlet:renderURL>
+						<c:if test="<%= PropsValues.SCHEDULER_ENABLED %>">
+							<li class="tbar-item">
+								<liferay-portlet:renderURL var="scheduleURL">
+									<portlet:param name="mvcRenderCommandName" value="/publications/view_conflicts" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
+									<portlet:param name="schedule" value="<%= Boolean.TRUE.toString() %>" />
+								</liferay-portlet:renderURL>
 
-							<a class="btn btn-secondary btn-sm <%= viewChangesDisplayContext.hasChanges() ? StringPool.BLANK : "disabled" %>" href="<%= scheduleURL %>" type="button">
-								<liferay-ui:message key="schedule" />
-							</a>
-						</li>
+								<a class="btn btn-secondary btn-sm <%= viewChangesDisplayContext.hasChanges() ? StringPool.BLANK : "disabled" %>" href="<%= scheduleURL %>" type="button">
+									<liferay-ui:message key="schedule" />
+								</a>
+							</li>
+						</c:if>
+
 						<li class="tbar-item">
 							<liferay-portlet:renderURL var="publishURL">
 								<portlet:param name="mvcRenderCommandName" value="/publications/view_conflicts" />
@@ -131,7 +134,7 @@ portletDisplay.setShowBackIcon(true);
 						<div class="publication-description"><%= HtmlUtil.escape(viewChangesDisplayContext.getScheduledDescription()) %></div>
 					</li>
 
-					<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, CTActionKeys.PUBLISH) %>">
+					<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, CTActionKeys.PUBLISH) && PropsValues.SCHEDULER_ENABLED %>">
 						<li class="tbar-item">
 							<liferay-portlet:actionURL name="/publications/unschedule_publication" var="unscheduleURL">
 								<portlet:param name="redirect" value="<%= currentURL %>" />

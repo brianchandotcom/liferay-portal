@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.HtmlTopTag;
 
 import java.io.IOException;
@@ -375,16 +376,19 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						"symbolLeft", "change"
 					));
 
-				publishURL.setParameter("schedule", Boolean.TRUE.toString());
+				if (PropsValues.SCHEDULER_ENABLED) {
+					publishURL.setParameter(
+						"schedule", Boolean.TRUE.toString());
 
-				jsonArray.put(
-					JSONUtil.put(
-						"href", publishURL.toString()
-					).put(
-						"label", _language.get(resourceBundle, "schedule")
-					).put(
-						"symbolLeft", "calendar"
-					));
+					jsonArray.put(
+						JSONUtil.put(
+							"href", publishURL.toString()
+						).put(
+							"label", _language.get(resourceBundle, "schedule")
+						).put(
+							"symbolLeft", "calendar"
+						));
+				}
 			}
 		}
 

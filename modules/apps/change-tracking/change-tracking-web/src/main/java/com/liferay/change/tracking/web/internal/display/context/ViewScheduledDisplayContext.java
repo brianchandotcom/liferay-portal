@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -162,6 +163,7 @@ public class ViewScheduledDisplayContext {
 					_language.get(_httpServletRequest, "ongoing"));
 			}
 		).add(
+			() -> PropsValues.SCHEDULER_ENABLED,
 			navigationItem -> {
 				navigationItem.setActive(true);
 				navigationItem.setHref(

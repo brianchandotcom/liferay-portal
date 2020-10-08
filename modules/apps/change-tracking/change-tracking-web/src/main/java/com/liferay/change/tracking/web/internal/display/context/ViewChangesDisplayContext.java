@@ -415,6 +415,10 @@ public class ViewChangesDisplayContext {
 	}
 
 	public String getScheduledDescription() throws PortalException {
+		if (_publishScheduler == null) {
+			return StringPool.BLANK;
+		}
+
 		ScheduledPublishInfo scheduledPublishInfo =
 			_publishScheduler.getScheduledPublishInfo(_ctCollection);
 

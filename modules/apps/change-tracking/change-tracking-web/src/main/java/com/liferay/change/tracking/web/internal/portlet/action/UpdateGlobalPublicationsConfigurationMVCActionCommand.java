@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
@@ -56,6 +57,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Samuel Trong Tran
@@ -128,15 +132,17 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 				themeDisplay.getCompanyId(), 0);
 		}
 		else {
-			List<CTCollection> ctCollections =
-				_ctCollectionLocalService.getCTCollections(
-					themeDisplay.getCompanyId(),
-					WorkflowConstants.STATUS_SCHEDULED, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+			if (PropsValues.SCHEDULER_ENABLED) {
+				List<CTCollection> ctCollections =
+					_ctCollectionLocalService.getCTCollections(
+						themeDisplay.getCompanyId(),
+						WorkflowConstants.STATUS_SCHEDULED, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null);
 
-			for (CTCollection ctCollection : ctCollections) {
-				_publishScheduler.unschedulePublish(
-					ctCollection.getCtCollectionId());
+				for (CTCollection ctCollection : ctCollections) {
+					_publishScheduler.unschedulePublish(
+						ctCollection.getCtCollectionId());
+				}
 			}
 
 			List<CTPreferences> ctPreferencesList =
@@ -201,7 +207,11 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 	@Reference
 	private PortletPermission _portletPermission;
 
-	@Reference
-	private PublishScheduler _publishScheduler;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile PublishScheduler _publishScheduler;
 
 }

@@ -52,6 +52,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Samuel Trong Tran
@@ -166,8 +169,12 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private PublishScheduler _publishScheduler;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile PublishScheduler _publishScheduler;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -182,7 +182,7 @@ public class FileEntryInfoItemFieldValuesProvider
 			fileEntryFieldValues.add(
 				new InfoFieldValue<>(
 					FileEntryInfoItemFields.titleInfoField,
-					fileEntry.getDescription()));
+					fileEntry.getTitle()));
 			fileEntryFieldValues.add(
 				new InfoFieldValue<>(
 					FileEntryInfoItemFields.descriptionInfoField,

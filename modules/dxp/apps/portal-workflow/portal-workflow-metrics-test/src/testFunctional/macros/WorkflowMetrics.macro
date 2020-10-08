@@ -235,6 +235,12 @@ definition {
 			value1 = "Current Assignee");
 	}
 
+	macro assertWorkflowProcessPresent {
+		AssertElementPresent(
+			key_workflowProcessName = "${workflowProcessName}",
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
+	}
+
 	macro assertWorkloadByAssigneeCardEmptyMessage {
 		var key_tabName = "${tabName}";
 		var key_emptyMessage = "${emptyMessage}";
@@ -675,13 +681,6 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
-	}
-
-	macro assertWorkflowProcessPresent {
-
-		AssertElementPresent(
-			key_workflowProcessName = "${workflowProcessName}",
-			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
 	}
 
 	macro goToWorkflowProcessMetrics {

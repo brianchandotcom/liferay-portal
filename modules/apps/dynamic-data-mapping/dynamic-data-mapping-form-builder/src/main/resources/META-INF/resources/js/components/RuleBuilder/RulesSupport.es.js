@@ -14,8 +14,9 @@
 
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
-import {DEFAULT_FIELD_NAME_REGEX, EMPTY_FIELD_REGEX} from '../../util/regex.es';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
+
+const DEFAULT_FIELD_NAME_REGEX = /Field[0-9]{8}/g;
 
 const clearTargetValue = (actions, index) => {
 	if (actions[index]) {
@@ -165,25 +166,18 @@ const fieldNameBelongsToAction = (fieldName, actions) => {
 				);
 			}
 			else if (action.action === 'calculate') {
-				const expressionFields = getExpressionFields(action);
+				const {expression, target} = action;
 
 				if (fieldName === '') {
-					const expressionEmptyFields = getExpressionFields(
-						action,
-						EMPTY_FIELD_REGEX
-					);
-
 					return (
-						(expressionEmptyFields &&
-							expressionEmptyFields.indexOf(emptyField) !== -1) ||
-						action.target === fieldName
+						expression.indexOf(emptyField) !== -1 ||
+						target === fieldName
 					);
 				}
 				else {
 					return (
-						!expressionFields ||
-						expressionFields.indexOf(fieldName) >= 0 ||
-						action.target === fieldName
+						expression.indexOf(fieldName) !== -1 ||
+						target === fieldName
 					);
 				}
 			}

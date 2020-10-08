@@ -149,6 +149,11 @@ public class DispatchTriggerTestUtil {
 			}
 
 			@Override
+			public boolean getOverlapAllowed() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
 			public long getPrimaryKey() {
 				return 0;
 			}
@@ -225,6 +230,11 @@ public class DispatchTriggerTestUtil {
 
 			@Override
 			public boolean isNew() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isOverlapAllowed() {
 				throw new UnsupportedOperationException();
 			}
 
@@ -319,6 +329,11 @@ public class DispatchTriggerTestUtil {
 
 			@Override
 			public void setNew(boolean n) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setOverlapAllowed(boolean overlapAllowed) {
 				throw new UnsupportedOperationException();
 			}
 

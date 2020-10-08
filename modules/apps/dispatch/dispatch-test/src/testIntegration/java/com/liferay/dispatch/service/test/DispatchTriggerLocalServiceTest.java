@@ -165,7 +165,7 @@ public class DispatchTriggerLocalServiceTest {
 					dispatchTrigger.getDispatchTriggerId(),
 					expectedDispatchTrigger.isActive(),
 					expectedDispatchTrigger.getCronExpression(), 5, 5, 2024, 11,
-					11, false, 4, 4, 2024, 12, 0);
+					11, false, true, 4, 4, 2024, 12, 0);
 
 			_basicAssertEquals(expectedDispatchTrigger, dispatchTrigger);
 

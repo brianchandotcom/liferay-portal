@@ -140,12 +140,16 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
-		_validateOrder(commerceOrder);
+		Cart cart = _validateOrder(commerceOrder);
 
-		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
-			commerceOrder, contextUser.getUserId());
+		if (cart.getValid()) {
+			commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, contextUser.getUserId());
 
-		return _toCart(commerceOrder);
+			cart = _toCart(commerceOrder);
+		}
+
+		return cart;
 	}
 
 	@Override
@@ -258,7 +262,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	private CartItem[] _getValidatedCommerceOrderItems(
-			CommerceOrder commerceOrder)
+			CommerceOrder commerceOrder, Cart cart)
 		throws Exception {
 
 		Map<Long, List<CommerceOrderValidatorResult>>
@@ -289,13 +293,20 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 					commerceOrderValidatorResultStream =
 						commerceOrderItemValidatorResults.stream();
 
-				cartItem.setValid(
-					commerceOrderValidatorResultStream.map(
-						commerceOrderItemValidatorResult ->
-							commerceOrderItemValidatorResult.isValid()
-					).reduce(
-						true, Boolean::logicalAnd
-					));
+				boolean cartItemValid = commerceOrderValidatorResultStream.map(
+					commerceOrderItemValidatorResult ->
+						commerceOrderItemValidatorResult.isValid()
+				).reduce(
+					true, Boolean::logicalAnd
+				);
+
+				cartItem.setValid(cartItemValid);
+
+				cart.setValid(cartItemValid);
+
+				commerceOrderValidatorResultStream =
+					commerceOrderItemValidatorResults.stream();
+
 				cartItem.setErrorMessages(
 					commerceOrderValidatorResultStream.map(
 						commerceOrderItemValidatorResult ->
@@ -591,7 +602,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		}
 
 		CartItem[] validatedCartItems = _getValidatedCommerceOrderItems(
-			commerceOrder);
+			commerceOrder, cart);
 
 		cart.setCartItems(validatedCartItems);
 

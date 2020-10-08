@@ -1,8 +1,16 @@
 definition {
 
+	macro assertCreateObjectShortLinkPresent {
+		AssertElementPresent(locator1 = "AppBuilderAppAdmin#CREATE_NEW_OBJECT_SHORT_LINK");
+	}
+
 	macro clickOnCreateNewAppButton {
 
 		Button.click(button = "Create New App");
+	}
+
+	macro clickOnCreateObjectShortLink {
+		Click(locator1 = "AppBuilderAppAdmin#CREATE_NEW_OBJECT_SHORT_LINK");
 	}
 
 	macro clickOnPlusButton {

@@ -44,10 +44,14 @@
 	<td>//button[contains(@class,'nav-btn')]</td>
 	<td></td>
 </tr>
-<!--APPS_TABS-->
 <tr>
 	<td>APP_TAB</td>
 	<td>//a[contains(@class,'nav-link') and contains (@href,'${key_tabName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_NEW_OBJECT_SHORT_LINK</td>
+	<td>//a[contains(text(),'Create New Object')]</td>
 	<td></td>
 </tr>
 </tbody>

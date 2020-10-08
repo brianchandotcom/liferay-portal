@@ -89,6 +89,12 @@ definition {
 		Button.clickSave();
 	}
 
+	macro assertCheckboxPresent {
+		AssertElementPresent(
+			key_checkboxOption = "${checkboxOption}",
+			locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
+	}
+
 	macro assertNewButtonIsVisible {
 		AssertTextEquals(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",

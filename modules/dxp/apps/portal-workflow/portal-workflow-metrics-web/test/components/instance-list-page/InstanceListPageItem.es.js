@@ -85,70 +85,70 @@ describe('The instance list item should', () => {
 	afterEach(cleanup);
 
 	test('Be rendered with "User 1", "Jan 01, 2019, 12:00 AM", and "Review, Update" columns', () => {
-		const {getByTestId} = render(<Table.Item {...instance} />, {
+		const {getByText} = render(<Table.Item {...instance} />, {
 			wrapper: ContainerMock,
 		});
 
-		const creatorCell = getByTestId('creatorCell');
-		const dateCreatedCell = getByTestId('dateCreatedCell');
-		const taskNamesCell = getByTestId('taskNamesCell');
+		const creatorCell = getByText('User 1');
+		const dateCreatedCell = getByText('Jan 01, 2019, 12:00 AM');
+		const taskNamesCell = getByText('Review, Update');
 
-		expect(creatorCell.innerHTML).toBe('User 1');
-		expect(dateCreatedCell.innerHTML).toBe('Jan 01, 2019, 12:00 AM');
-		expect(taskNamesCell.innerHTML).toBe('Review, Update');
+		expect(creatorCell).toBeTruthy();
+		expect(dateCreatedCell).toBeTruthy();
+		expect(taskNamesCell).toBeTruthy();
 	});
 
 	test('Be rendered with check icon when the slaStatus is "OnTime"', () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<Table.Item {...instance} slaStatus="OnTime" />,
 			{
 				wrapper: ContainerMock,
 			}
 		);
 
-		const instanceStatusIcon = getByTestId('statusIcon');
-
-		expect([...instanceStatusIcon.classList]).toContain(
-			'lexicon-icon-check-circle'
+		const instanceStatusIcon = container.querySelector(
+			'.lexicon-icon-check-circle'
 		);
+
+		expect(instanceStatusIcon).toBeTruthy();
 	});
 
 	test('Be rendered with exclamation icon when the slaStatus is "Overdue"', () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<Table.Item {...instance} slaStatus="Overdue" />,
 			{
 				wrapper: ContainerMock,
 			}
 		);
 
-		const instanceStatusIcon = getByTestId('statusIcon');
-
-		expect([...instanceStatusIcon.classList]).toContain(
-			'lexicon-icon-exclamation-circle'
+		const instanceStatusIcon = container.querySelector(
+			'.lexicon-icon-exclamation-circle'
 		);
+
+		expect(instanceStatusIcon).toBeTruthy();
 	});
 
 	test('Be rendered with hr icon when the slaStatus is "Untracked"', () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<Table.Item {...instance} slaStatus="Untracked" />,
 			{
 				wrapper: ContainerMock,
 			}
 		);
 
-		const instanceStatusIcon = getByTestId('statusIcon');
+		const instanceStatusIcon = container.querySelector('.lexicon-icon-hr');
 
-		expect([...instanceStatusIcon.classList]).toContain('lexicon-icon-hr');
+		expect(instanceStatusIcon).toBeTruthy();
 	});
 
 	test('Call setInstanceId with "1" as instance id param', () => {
 		instance.status = 'Completed';
 
-		const {getByTestId} = render(<Table.Item {...instance} />, {
+		const {container} = render(<Table.Item {...instance} />, {
 			wrapper: ContainerMock,
 		});
 
-		const instanceIdLink = getByTestId('instanceIdLink');
+		const instanceIdLink = container.querySelector('.link-text');
 
 		fireEvent.click(instanceIdLink);
 
@@ -262,11 +262,13 @@ describe('The InstanceListPageItem instance checkbox component should', () => {
 	};
 
 	test('Set checkbox value by clicking it', () => {
-		const {getByTestId} = render(<Table.Item {...instance} />, {
+		const {container} = render(<Table.Item {...instance} />, {
 			wrapper: ContainerMock,
 		});
 
-		const instanceCheckbox = getByTestId('instanceCheckbox');
+		const instanceCheckbox = container.querySelector(
+			'input.custom-control-input'
+		);
 
 		expect(instanceCheckbox.checked).toEqual(true);
 

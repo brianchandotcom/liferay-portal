@@ -44,7 +44,7 @@ const ContainerMock = ({children}) => {
 };
 
 describe('The SingleReassignModal component should', () => {
-	let getByTestId, getByText;
+	let getByText;
 
 	const items = [
 		{
@@ -91,42 +91,42 @@ describe('The SingleReassignModal component should', () => {
 				wrapper: ContainerMock,
 			}
 		);
-		getByTestId = renderResult.getByTestId;
+
 		getByText = renderResult.getByText;
 
 		jest.runAllTimers();
 	});
 
 	test('Render modal with error message and retry', () => {
-		const alertError = getByTestId('alertError');
+		const alertError = getByText('your-request-has-failed');
 		const emptyStateMessage = getByText('unable-to-retrieve-data');
 		const retryBtn = getByText('retry');
 
-		expect(alertError).toHaveTextContent('your-request-has-failed');
+		expect(alertError).toBeTruthy();
 		expect(emptyStateMessage).toBeTruthy();
 
 		fireEvent.click(retryBtn);
 	});
 
 	test('Render modal with items', () => {
-		const table = getByTestId('singleReassignModalTable');
+		const cancelBtn = getByText('cancel');
+		const reassignBtn = getByText('reassign');
+		const table = document.querySelector('.table');
+
 		const item = table.children[1].children[0];
-		const cancelBtn = getByTestId('cancelButton');
-		const reassignBtn = getByTestId('reassignButton');
 
 		expect(cancelBtn).not.toHaveAttribute('disabled');
 		expect(reassignBtn).toHaveAttribute('disabled');
-
 		expect(item.children[0]).toHaveTextContent('1');
 		expect(item.children[1]).toHaveTextContent('Blogs Entry: Blog1');
 		expect(item.children[2]).toHaveTextContent('Review');
 		expect(item.children[3]).toHaveTextContent('Test Test');
 
-		const autocompleteInput = getByTestId('autocompleteInput');
+		const autocompleteInput = document.querySelector('input.form-control');
 
 		fireEvent.change(autocompleteInput, {target: {value: 'test'}});
 
-		fireEvent.mouseDown(getByTestId('dropDownListItem'));
+		fireEvent.mouseDown(document.querySelector('.dropdown-item'));
 
 		expect(reassignBtn).not.toHaveAttribute('disabled');
 
@@ -137,24 +137,25 @@ describe('The SingleReassignModal component should', () => {
 	});
 
 	test('Render modal reassign error and retry', () => {
-		const alertError = getByTestId('alertError');
-		const reassignBtn = getByTestId('reassignButton');
+		const alertError = getByText('your-request-has-failed');
+		const reassignBtn = getByText('reassign');
 
-		expect(alertError).toHaveTextContent('your-request-has-failed');
+		expect(alertError).toBeTruthy();
 		expect(reassignBtn).not.toHaveAttribute('disabled');
 
 		fireEvent.click(reassignBtn);
 	});
 
 	test('Render alert with success message and close modal', async () => {
-		const alertToast = getByTestId('alertToast');
+		const alertToast = document.querySelector('.alert-dismissible');
+
 		const alertClose = alertToast.children[1];
 
 		expect(alertToast).toHaveTextContent('this-task-has-been-reassigned');
 
 		fireEvent.click(alertClose);
 
-		const alertContainer = getByTestId('alertContainer');
+		const alertContainer = document.querySelector('.alert-container');
 		expect(alertContainer.children[0].children.length).toBe(0);
 	});
 });

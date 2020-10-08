@@ -281,141 +281,138 @@ const ContainerMockSecondary = ({children}) => {
 };
 
 describe('The BulkTransitionModal component should', () => {
-	let getAllByTestId, getAllByText, getByTestId, getByText;
+	let getAllByRole, getAllByText, getByText;
 
 	beforeAll(() => {
 		const component = render(<BulkTransitionModal />, {
 			wrapper: ContainerMockPrimary,
 		});
-		getAllByTestId = component.getAllByTestId;
+
+		getAllByRole = component.getAllByRole;
 		getAllByText = component.getAllByText;
-		getByTestId = component.getByTestId;
 		getByText = component.getByText;
 
 		jest.runAllTimers();
 	});
 
 	test('Render "Select tasks" step with fetch error and retrying', () => {
-		const alertError = getByTestId('alertError');
+		const alertError = getByText('your-request-has-failed');
 		const emptyStateMessage = getByText('unable-to-retrieve-data');
 		const retryButton = getByText('retry');
 
-		expect(alertError).toHaveTextContent('your-request-has-failed');
-
+		expect(alertError).toBeTruthy();
 		expect(emptyStateMessage).toBeTruthy();
 
 		fireEvent.click(retryButton);
 	});
 
 	test('Render "Select tasks" step with items', () => {
-		const modal = getByTestId('bulkTransitionModal');
-		const stepBar = getByTestId('stepBar');
-		const cancelBtn = getByTestId('cancelButton');
-		const nextBtn = getByTestId('nextButton');
+		const cancelBtn = getByText('cancel');
+		const checkAllButton = document.querySelectorAll(
+			'.custom-control-input'
+		)[0];
+		const modal = document.querySelector('.modal');
+		const nextBtn = getByText('next');
+		const rows = getAllByRole('row');
+		const stepBar = document.querySelector('.step-of-bar');
+		const table = document.querySelector('.table');
 
-		const table = getByTestId('selectTaskStepTable');
-		const checkbox = getAllByTestId('itemCheckbox');
-		const checkAllButton = getByTestId('checkAllButton');
 		const content = modal.children[0].children[0];
+		const checkbox1 = rows[1].querySelector('input.custom-control-input');
+		const checkbox2 = rows[2].querySelector('input.custom-control-input');
+
 		const header = content.children[0];
 
 		expect(header).toHaveTextContent('select-steps-to-transition');
-
 		expect(stepBar.children[0]).toHaveTextContent('select-steps');
 		expect(stepBar.children[1]).toHaveTextContent('step-x-of-x');
-
 		expect(getAllByText('process-step').length).toBe(2);
-
 		expect(cancelBtn).toHaveTextContent('cancel');
-		expect(nextBtn).toHaveTextContent('next');
 		expect(nextBtn).toHaveAttribute('disabled');
 
 		const items = table.children[1].children;
 
-		expect(checkbox[0].checked).toBe(false);
+		expect(checkbox1.checked).toBe(false);
 		expect(items[0].children[1]).toHaveTextContent('1');
 		expect(items[0].children[2]).toHaveTextContent('Blogs Entry: title1');
 		expect(items[0].children[3]).toHaveTextContent('Review');
 		expect(items[0].children[4]).toHaveTextContent('Test Test');
-
-		expect(checkbox[1].checked).toBe(false);
+		expect(checkbox2.checked).toBe(false);
 		expect(items[1].children[1]).toHaveTextContent('2');
 		expect(items[1].children[2]).toHaveTextContent('Blogs Entry: title2');
 		expect(items[1].children[3]).toHaveTextContent('Review');
 		expect(items[1].children[4]).toHaveTextContent('Test Test');
-
 		expect(checkAllButton.checked).toBe(false);
 
 		fireEvent.click(checkAllButton);
 
-		let label = getByTestId('toolbarLabel');
+		let label = getByText('x-of-x-selected');
 
-		expect(checkbox[0].checked).toBe(true);
-		expect(checkbox[1].checked).toBe(true);
+		expect(checkbox1.checked).toBe(true);
+		expect(checkbox2.checked).toBe(true);
 		expect(checkAllButton.checked).toBe(true);
-		expect(label).toHaveTextContent('x-of-x-selected');
+		expect(label).toBeTruthy();
 
-		const clearButton = getByTestId('clear');
+		const clearButton = getByText('clear');
 
 		fireEvent.click(clearButton);
 
-		expect(checkbox[0].checked).toBe(false);
-		expect(checkbox[1].checked).toBe(false);
+		expect(checkbox1.checked).toBe(false);
+		expect(checkbox2.checked).toBe(false);
 		expect(checkAllButton.checked).toBe(false);
 
-		fireEvent.click(checkbox[0]);
+		fireEvent.click(checkbox1);
 
-		label = getByTestId('toolbarLabel');
+		label = getByText('x-of-x-selected');
 
-		expect(checkbox[0].checked).toBe(true);
-		expect(checkbox[1].checked).toBe(false);
+		expect(checkbox1.checked).toBe(true);
+		expect(checkbox2.checked).toBe(false);
 		expect(checkAllButton.checked).toBe(false);
-		expect(label).toHaveTextContent('x-of-x-selected');
+		expect(label).toBeTruthy();
 
-		fireEvent.click(checkbox[0]);
+		fireEvent.click(checkbox1);
 
-		expect(checkbox[0].checked).toBe(false);
-		expect(checkbox[1].checked).toBe(false);
+		expect(checkbox1.checked).toBe(false);
+		expect(checkbox2.checked).toBe(false);
 		expect(checkAllButton.checked).toBe(false);
 
 		fireEvent.click(checkAllButton);
 
-		expect(checkbox[0].checked).toBe(true);
-		expect(checkbox[1].checked).toBe(true);
+		expect(checkbox1.checked).toBe(true);
+		expect(checkbox2.checked).toBe(true);
 		expect(checkAllButton.checked).toBe(true);
 		expect(label).toHaveTextContent('x-of-x-selected');
-
 		expect(nextBtn).not.toBeDisabled();
 
-		const selectAllButton = getByTestId('selectAll');
+		const selectAllButton = getByText('select-all');
 
 		fireEvent.click(selectAllButton);
 
-		label = getByTestId('toolbarLabel');
+		label = getByText('all-selected');
 
-		expect(label).toHaveTextContent('all-selected');
-
+		expect(label).toBeTruthy();
 		expect(nextBtn).not.toBeDisabled();
 
 		fireEvent.click(nextBtn);
 	});
 
 	test('Render "Select transitions" step failing the fetch and retry then', () => {
-		const alertError = getByTestId('alertError');
-		const nextButton = getByTestId('nextButton');
+		const alertError = getByText('your-request-has-failed');
+		const nextButton = getByText('done');
 
-		expect(alertError).toHaveTextContent('your-request-has-failed');
+		expect(alertError).toBeTruthy();
 
 		fireEvent.click(nextButton);
 	});
 
 	test('Load the second step and all transitions successfully', () => {
-		const modal = getByTestId('bulkTransitionModal');
+		const modal = document.querySelector('.modal');
+		const nextBtn = getByText('done');
+		const stepBar = document.querySelector('.step-of-bar');
 
 		const content = modal.children[0].children[0];
+
 		const header = content.children[0];
-		const stepBar = getByTestId('stepBar');
-		const nextBtn = getByTestId('nextButton');
 
 		expect(header).toHaveTextContent('choose-transition-per-step');
 		expect(stepBar.children[0]).toHaveTextContent('choose-transition');
@@ -425,29 +422,30 @@ describe('The BulkTransitionModal component should', () => {
 	});
 
 	test('Load transitions and show alert message when select "done" and fail the patch request and retry the request', () => {
-		const alertError = getByTestId('alertError');
-		const nextBtn = getByTestId('nextButton');
-
-		expect(alertError).toHaveTextContent(
+		const alertError = getByText(
 			'your-request-has-failed select-done-to-retry'
 		);
+		const nextBtn = getByText('done');
+
+		expect(alertError).toBeTruthy();
 
 		fireEvent.click(nextBtn);
 	});
 
 	test('Show alert message when attempt to transition without selecting any transition go to previous step and forward', () => {
-		const alertError = getByTestId('alertError');
+		const alertError = getByText(
+			'your-request-has-failed select-done-to-retry'
+		);
 
-		expect(alertError).toHaveTextContent('your-request-has-failed');
+		expect(alertError).toBeTruthy();
 
-		const nextBtn = getByTestId('nextButton');
-		const modal = getByTestId('bulkTransitionModal');
+		const modal = document.querySelector('.modal');
+		const nextBtn = getByText('done');
 
 		const content = modal.children[0].children[0];
 
 		const header = content.children[0];
-
-		const previousButton = getByTestId('previousButton');
+		const previousButton = getByText('previous');
 
 		fireEvent.click(previousButton);
 
@@ -457,31 +455,26 @@ describe('The BulkTransitionModal component should', () => {
 	});
 
 	test('Select a transition to "approve", click "Show All" button, add a comment and retry patch request successfully', async () => {
-		const addCommentButton = getByTestId('addCommentButton');
-		const nextBtn = getByTestId('nextButton');
-		const selectTransitionFooter = getByTestId('selectTransitionFooter');
-		const showAllButton = getByTestId('showAllButton');
-		const transitionSelect = getByTestId('transitionSelect');
+		const addCommentButton = getByText('add-comment');
+		const nextBtn = getByText('done');
+		const showAllButton = getByText('show-all');
+		const transitionSelect = document.querySelector('#transitionSelect0_0');
 
 		fireEvent.change(transitionSelect, {target: {value: 'approve'}});
 
 		expect(transitionSelect.value).toEqual('approve');
 
-		expect(showAllButton).toHaveTextContent('show-all');
-
 		fireEvent.click(showAllButton);
 
 		expect(showAllButton).toHaveTextContent('show-less');
 
-		expect(selectTransitionFooter.children).toHaveLength(1);
-		expect(selectTransitionFooter.children[0].type).toEqual('button');
-
 		fireEvent.click(addCommentButton);
 
-		expect(selectTransitionFooter.children).toHaveLength(2);
-		expect(selectTransitionFooter.children[1].type).toEqual('textarea');
+		expect(document.querySelector('.panel-footer')).toHaveTextContent(
+			'comment (optional)'
+		);
 
-		const commentField = getByTestId('commentField');
+		const commentField = document.querySelector('#commentTextArea');
 
 		fireEvent.change(commentField, {
 			target: {value: 'Transition comment text'},
@@ -491,7 +484,9 @@ describe('The BulkTransitionModal component should', () => {
 
 		await fireEvent.click(nextBtn);
 
-		const alertToast = await getAllByTestId('alertToast');
+		const alertToast = await document.querySelectorAll(
+			'.alert-dismissible'
+		);
 
 		expect(alertToast[0]).toHaveTextContent(
 			'the-selected-step-has-transitioned-successfully'
@@ -500,17 +495,19 @@ describe('The BulkTransitionModal component should', () => {
 
 	test('Check all tasks and step forward to "Select Transition" step and show loading view', async () => {
 		cleanup();
-		const {getByTestId} = render(<BulkTransitionModal />, {
+		const {getByText} = render(<BulkTransitionModal />, {
 			wrapper: ContainerMockSecondary,
 		});
 
 		await jest.runAllTimers();
-		const checkAllButton = getByTestId('checkAllButton');
-		const nextBtn = getByTestId('nextButton');
+		const checkAllButton = document.querySelectorAll(
+			'.custom-control-input'
+		)[0];
+		const nextBtn = getByText('next');
 
 		await fireEvent.click(checkAllButton);
 
-		const selectAll = getByTestId('selectAll');
+		const selectAll = getByText('select-all');
 
 		fireEvent.click(selectAll);
 

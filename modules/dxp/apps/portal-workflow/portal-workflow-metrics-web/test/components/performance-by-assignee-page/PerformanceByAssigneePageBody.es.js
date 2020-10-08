@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
@@ -43,7 +44,7 @@ const wrapper = ({children}) => (
 );
 
 describe('The performance by assignee page body should', () => {
-	let getAllByTestId;
+	let getAllByRole;
 
 	afterEach(cleanup);
 
@@ -57,15 +58,15 @@ describe('The performance by assignee page body should', () => {
 			{wrapper}
 		);
 
-		getAllByTestId = renderResult.getAllByTestId;
+		getAllByRole = renderResult.getAllByRole;
 	});
 
 	test('Be rendered with assignees names', () => {
-		const assigneeNames = getAllByTestId('assigneeName');
+		const rows = getAllByRole('row');
 
-		expect(assigneeNames[0].innerHTML).toEqual('User Test First');
-		expect(assigneeNames[1].innerHTML).toEqual('User Test Second');
-		expect(assigneeNames[2].innerHTML).toEqual('User Test Third');
+		expect(rows[1]).toHaveTextContent('User Test First');
+		expect(rows[2]).toHaveTextContent('User Test Second');
+		expect(rows[3]).toHaveTextContent('User Test Third');
 	});
 });
 

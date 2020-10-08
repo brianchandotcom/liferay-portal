@@ -63,7 +63,7 @@ describe('The SLAListPage component should', () => {
 	});
 
 	describe('Be rendered correctly with items', () => {
-		let container, getAllByTestId, getByTestId, getByText;
+		let container, getByText;
 
 		const data = {
 			actions: {},
@@ -105,8 +105,6 @@ describe('The SLAListPage component should', () => {
 			);
 
 			container = renderResult.container;
-			getAllByTestId = renderResult.getAllByTestId;
-			getByTestId = renderResult.getByTestId;
 			getByText = renderResult.getByText;
 		});
 
@@ -125,7 +123,7 @@ describe('The SLAListPage component should', () => {
 		});
 
 		test('Show items info and kebab menu', () => {
-			const kebab = getByTestId('kebab');
+			const kebab = container.querySelector('.dropdown-toggle');
 			const slaDateModified = getByText('Apr 03');
 			const slaDescription = slaDateModified.parentNode.children[1];
 			const slaDuration = getByText('1min');
@@ -137,9 +135,10 @@ describe('The SLAListPage component should', () => {
 			expect(slaStatus).toBeTruthy();
 			expect(slaDuration).toBeTruthy();
 			expect(slaDateModified).toBeTruthy();
+
 			fireEvent.click(kebab);
 
-			const dropDownItems = getAllByTestId('kebabDropItems');
+			const dropDownItems = document.querySelectorAll('.dropdown-item');
 
 			expect(dropDownItems[0]).toHaveTextContent('edit');
 			expect(dropDownItems[1]).toHaveTextContent('delete');
@@ -164,15 +163,16 @@ describe('The SLAListPage component should', () => {
 		});
 
 		test('Display toast when failure occur while trying to confirm item delete', () => {
-			const alertToast = getByTestId('alertToast');
-			const alertClose = alertToast.children[1];
+			const alertToast = document.querySelector('.alert-dismissible');
 			const deleteButton = getByText('ok');
+
+			const alertClose = alertToast.children[1];
 
 			expect(alertToast).toHaveTextContent('your-request-has-failed');
 
 			fireEvent.click(alertClose);
 
-			const alertContainer = getByTestId('alertContainer');
+			const alertContainer = document.querySelector('.alert-container');
 
 			expect(alertContainer.children[0].children.length).toBe(0);
 
@@ -180,14 +180,15 @@ describe('The SLAListPage component should', () => {
 		});
 
 		test('Display toast when confirm item delete', () => {
-			const alertToast = getByTestId('alertToast');
+			const alertToast = document.querySelector('.alert-dismissible');
+
 			const alertClose = alertToast.children[1];
 
 			expect(alertToast).toHaveTextContent('sla-was-deleted');
 
 			fireEvent.click(alertClose);
 
-			const alertContainer = getByTestId('alertContainer');
+			const alertContainer = document.querySelector('.alert-container');
 
 			expect(alertContainer.children[0].children.length).toBe(0);
 		});

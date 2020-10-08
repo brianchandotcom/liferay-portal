@@ -41,7 +41,7 @@ describe('The instance list table should', () => {
 	afterEach(cleanup);
 
 	test('Be rendered with two items', () => {
-		const {getAllByTestId} = render(
+		const {getAllByRole} = render(
 			<MockRouter>
 				<InstanceListContext.Provider
 					value={{setInstanceId: jest.fn()}}
@@ -55,8 +55,8 @@ describe('The instance list table should', () => {
 			</MockRouter>
 		);
 
-		const instanceRows = getAllByTestId('instanceRow');
+		const instanceRows = getAllByRole('row');
 
-		expect(instanceRows.length).toBe(2);
+		expect(instanceRows.length).toBe(3);
 	});
 });

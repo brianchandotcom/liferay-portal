@@ -82,7 +82,7 @@ describe('The SingleReassignModalTable component should', () => {
 	const setAssigneeId = jest.fn();
 
 	test('Render with statuses Completed and Overdue', () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<SingleReassignModal.Table
 				data={data}
 				setAssigneeId={setAssigneeId}
@@ -92,16 +92,15 @@ describe('The SingleReassignModalTable component should', () => {
 				wrapper: ContainerMock,
 			}
 		);
-		const singleReassignModalTable = getByTestId(
-			'singleReassignModalTable'
-		);
+
+		const singleReassignModalTable = container.querySelector('.table');
 
 		expect(singleReassignModalTable.innerHTML).not.toBeUndefined();
 		expect(singleReassignModalTable.innerHTML).not.toBeNull();
 	});
 
 	test('Render with no taskName', () => {
-		const {getAllByTestId} = render(
+		const {container} = render(
 			<SingleReassignModal.Table
 				data={data}
 				setAssigneeId={setAssigneeId}
@@ -111,16 +110,15 @@ describe('The SingleReassignModalTable component should', () => {
 				wrapper: ContainerMock,
 			}
 		);
-		const singleReassignModalTable = getAllByTestId(
-			'singleReassignModalTable'
-		);
 
-		expect(singleReassignModalTable[0].innerHTML).not.toBeUndefined();
-		expect(singleReassignModalTable[0].innerHTML).not.toBeNull();
+		const singleReassignModalTable = container.querySelector('.table');
+
+		expect(singleReassignModalTable.innerHTML).not.toBeUndefined();
+		expect(singleReassignModalTable.innerHTML).not.toBeNull();
 	});
 
 	test('Render with no data', () => {
-		const {getAllByTestId} = render(
+		const {container} = render(
 			<SingleReassignModal.Table
 				data={{}}
 				setAssigneeId={setAssigneeId}
@@ -130,12 +128,11 @@ describe('The SingleReassignModalTable component should', () => {
 				wrapper: ContainerMock,
 			}
 		);
-		const singleReassignModalTable = getAllByTestId(
-			'singleReassignModalTable'
-		);
 
-		expect(singleReassignModalTable[0].innerHTML).not.toBeUndefined();
-		expect(singleReassignModalTable[0].innerHTML).not.toBeNull();
+		const singleReassignModalTable = container.querySelector('.table');
+
+		expect(singleReassignModalTable.innerHTML).not.toBeUndefined();
+		expect(singleReassignModalTable.innerHTML).not.toBeNull();
 	});
 
 	test('Render with taskNames', () => {
@@ -160,7 +157,7 @@ describe('The SingleReassignModalTable component should', () => {
 			],
 		};
 
-		const {getAllByTestId} = render(
+		const {container} = render(
 			<SingleReassignModal.Table
 				data={data}
 				setAssigneeId={setAssigneeId}
@@ -170,12 +167,11 @@ describe('The SingleReassignModalTable component should', () => {
 				wrapper: ContainerMock,
 			}
 		);
-		const singleReassignModalTable = getAllByTestId(
-			'singleReassignModalTable'
-		);
 
-		expect(singleReassignModalTable[0].innerHTML).not.toBeUndefined();
-		expect(singleReassignModalTable[0].innerHTML).not.toBeNull();
+		const singleReassignModalTable = container.querySelector('.table');
+
+		expect(singleReassignModalTable.innerHTML).not.toBeUndefined();
+		expect(singleReassignModalTable.innerHTML).not.toBeNull();
 	});
 });
 
@@ -190,7 +186,7 @@ describe('The AssigneeInput component should', () => {
 	test('Render change assignee input text to Test', () => {
 		cleanup();
 
-		const {getByTestId} = render(
+		render(
 			<MockRouter client={clientMock}>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{
@@ -201,9 +197,11 @@ describe('The AssigneeInput component should', () => {
 				/>
 			</MockRouter>
 		);
-		const autocompleteInput = getByTestId('autocompleteInput');
+
+		const autocompleteInput = document.querySelector('input.form-control');
 
 		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
+
 		expect(autocompleteInput.value).toBe('Test');
 	});
 
@@ -227,13 +225,14 @@ describe('The AssigneeInput component should', () => {
 				/>
 			</MockRouter>
 		);
+
 		expect(clientMock.get).toHaveBeenCalled();
 	});
 
-	test('Select a new assignee', async () => {
+	test('Select a new assignee', () => {
 		cleanup();
 
-		const {getByTestId} = await render(
+		render(
 			<MockRouter client={clientMock}>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{tasks: []}}
@@ -242,18 +241,22 @@ describe('The AssigneeInput component should', () => {
 				/>
 			</MockRouter>
 		);
-		const autocompleteInput = getByTestId('autocompleteInput');
+
+		const autocompleteInput = document.querySelector('input.form-control');
 
 		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
+
 		fireEvent.blur(autocompleteInput);
-		const dropDownListItem = getByTestId('dropDownListItem');
+
+		const dropDownListItem = document.querySelector('.dropdown-item');
+
 		fireEvent.click(dropDownListItem);
 	});
 
-	test('Select a new assignee with input already filled', async () => {
+	test('Select a new assignee with input already filled', () => {
 		cleanup();
 
-		const {getByTestId} = await render(
+		render(
 			<MockRouter client={clientMock}>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{tasks: [{assigneeId: 20124, id: 39347}]}}
@@ -262,11 +265,15 @@ describe('The AssigneeInput component should', () => {
 				/>
 			</MockRouter>
 		);
-		const autocompleteInput = getByTestId('autocompleteInput');
+
+		const autocompleteInput = document.querySelector('input.form-control');
 
 		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
+
 		fireEvent.blur(autocompleteInput);
-		const dropDownListItem = getByTestId('dropDownListItem');
+
+		const dropDownListItem = document.querySelector('.dropdown-item');
+
 		fireEvent.click(dropDownListItem);
 	});
 });

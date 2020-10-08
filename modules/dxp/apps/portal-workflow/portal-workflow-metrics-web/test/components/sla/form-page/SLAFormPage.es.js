@@ -74,8 +74,6 @@ describe('The SLAFormPage component should', () => {
 			durationDaysField,
 			durationHoursField,
 			durationHoursInput,
-			getAllByTestId,
-			getByTestId,
 			getByText,
 			nameField,
 			nameInput,
@@ -157,8 +155,6 @@ describe('The SLAFormPage component should', () => {
 			);
 
 			container = renderResult.container;
-			getAllByTestId = renderResult.getAllByTestId;
-			getByTestId = renderResult.getByTestId;
 			getByText = renderResult.getByText;
 		});
 
@@ -171,7 +167,6 @@ describe('The SLAFormPage component should', () => {
 			saveButton = getByText('save');
 			startField = getByText('start').parentNode;
 			stopField = getByText('stop').parentNode;
-
 			const bodySheetTitle = getByText('sla-definition');
 			const calendar = container.querySelector('#slaCalendarKey');
 			const cancelButton = getByText('cancel');
@@ -258,12 +253,16 @@ describe('The SLAFormPage component should', () => {
 		});
 
 		test('Dismiss errors when the inputs receive valid values and submit', () => {
-			const dropDownListItems = getAllByTestId('dropDownListItem');
+			const dropDownListItems = document.querySelectorAll(
+				'.dropdown-item'
+			);
 
 			fireEvent.change(nameInput, {target: {value: 'SLA'}});
 
 			fireEvent.blur(nameInput);
+
 			fireEvent.mouseDown(dropDownListItems[0]);
+
 			fireEvent.mouseDown(dropDownListItems[11]);
 
 			fireEvent.change(durationHoursInput, {target: {value: '00:01'}});
@@ -280,14 +279,17 @@ describe('The SLAFormPage component should', () => {
 		});
 
 		test('Display an error when a SLA submission failure happens and resubmit', async () => {
-			const alertToast = await getByTestId('alertToast');
+			const alertToast = await document.querySelector(
+				'.alert-dismissible'
+			);
+
 			const alertClose = alertToast.children[1];
 
 			expect(alertToast).toHaveTextContent('your-request-has-failed');
 
 			fireEvent.click(alertClose);
 
-			const alertContainer = getByTestId('alertContainer');
+			const alertContainer = document.querySelector('.alert-container');
 
 			expect(alertContainer.children[0].children.length).toBe(0);
 
@@ -308,7 +310,7 @@ describe('The SLAFormPage component should', () => {
 	});
 
 	describe('Edit a SLA', () => {
-		let container, getAllByTestId, getByText, renderResult;
+		let container, getByText, renderResult;
 
 		const data = {
 			calendarKey: 'default',
@@ -372,7 +374,6 @@ describe('The SLAFormPage component should', () => {
 			);
 
 			container = renderResult.container;
-			getAllByTestId = renderResult.getAllByTestId;
 			getByText = renderResult.getByText;
 		});
 
@@ -383,7 +384,9 @@ describe('The SLAFormPage component should', () => {
 			const durationHoursInput = container.querySelector(
 				'#slaDurationHours'
 			);
-			const multiSelectItems = getAllByTestId('multiSelectItem');
+			const multiSelectItems = container.querySelectorAll(
+				'.label-dismissible'
+			);
 			const nameField = getByText('name').parentNode;
 			const nameInput = container.querySelector('#slaName');
 			const startField = getByText('start').parentNode;

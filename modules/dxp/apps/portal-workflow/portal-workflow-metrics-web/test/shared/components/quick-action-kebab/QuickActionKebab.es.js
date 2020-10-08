@@ -25,11 +25,11 @@ describe('The QuickActionKebab component should', () => {
 				title: Liferay.Language.get('reassign-task'),
 			},
 		];
-		const {getByTestId} = render(
+		const {container} = render(
 			<QuickActionKebab iconItems={kebabIconItems} />
 		);
 
-		const iconItemButton = getByTestId('iconItemButton');
+		const iconItemButton = container.querySelector('.quick-action-item');
 
 		expect(iconItemButton).not.toBeUndefined();
 	});

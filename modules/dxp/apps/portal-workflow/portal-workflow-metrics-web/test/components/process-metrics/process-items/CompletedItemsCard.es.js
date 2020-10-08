@@ -59,7 +59,7 @@ const timeRangeData = {
 };
 
 describe('The completed items card component should', () => {
-	let container, getAllByText, getByTestId;
+	let container, getAllByText;
 
 	afterEach(cleanup);
 
@@ -85,7 +85,6 @@ describe('The completed items card component should', () => {
 
 		container = renderResult.container;
 		getAllByText = renderResult.getAllByText;
-		getByTestId = renderResult.getByTestId;
 	});
 
 	test('Be rendered with time range filter', async () => {
@@ -96,7 +95,7 @@ describe('The completed items card component should', () => {
 	});
 
 	test('Be rendered with overdue count "1"', () => {
-		const panelBody = getByTestId('panelBody');
+		const panelBody = container.querySelector('.panel-body');
 
 		const overdueLink = panelBody.children[0].children[0];
 		const overdueHeader = overdueLink.children[0].children[0];
@@ -112,7 +111,7 @@ describe('The completed items card component should', () => {
 	});
 
 	test('Be rendered with onTime count "2"', () => {
-		const panelBody = getByTestId('panelBody');
+		const panelBody = container.querySelector('.panel-body');
 
 		const onTimeLink = panelBody.children[0].children[1];
 		const onTimeHeader = onTimeLink.children[0].children[0];
@@ -128,7 +127,7 @@ describe('The completed items card component should', () => {
 	});
 
 	test('Be rendered with untracked count "3"', () => {
-		const panelBody = getByTestId('panelBody');
+		const panelBody = container.querySelector('.panel-body');
 
 		const untrackedLink = panelBody.children[0].children[2];
 		const untrackedHeader = untrackedLink.children[0].children[0];
@@ -145,7 +144,7 @@ describe('The completed items card component should', () => {
 	});
 
 	test('Be rendered with total completed count "6"', () => {
-		const panelBody = getByTestId('panelBody');
+		const panelBody = container.querySelector('.panel-body');
 
 		const totalLink = panelBody.children[0].children[3];
 		const totalHeader = totalLink.children[0].children[0];

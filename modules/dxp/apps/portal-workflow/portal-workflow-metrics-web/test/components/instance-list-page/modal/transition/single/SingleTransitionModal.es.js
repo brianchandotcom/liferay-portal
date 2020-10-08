@@ -53,7 +53,7 @@ const ContainerMock = ({children}) => {
 	);
 };
 
-let getByPlaceholderText, getByTestId, getByText;
+let getByPlaceholderText, getByText;
 
 const items = [
 	{
@@ -88,7 +88,6 @@ describe('The SingleTransitionModal component should', () => {
 		);
 
 		getByPlaceholderText = renderResult.getByPlaceholderText;
-		getByTestId = renderResult.getByTestId;
 		getByText = renderResult.getByText;
 
 		jest.runAllTimers();
@@ -101,7 +100,7 @@ describe('The SingleTransitionModal component should', () => {
 
 	test('Change comment field value, click in "Done" button', () => {
 		const commentField = getByPlaceholderText('comment');
-		const doneButton = getByTestId('doneButton');
+		const doneButton = getByText('done');
 
 		fireEvent.change(commentField, {target: {value: 'Comment field test'}});
 
@@ -111,17 +110,18 @@ describe('The SingleTransitionModal component should', () => {
 	});
 
 	test('Show error alert after failing request and click in "Done" to retry request', () => {
-		const alertError = getByTestId('alertError');
-		expect(alertError).toHaveTextContent(
+		const alertError = getByText(
 			'your-request-has-failed select-done-to-retry'
 		);
+		const doneButton = getByText('done');
 
-		const doneButton = getByTestId('doneButton');
+		expect(alertError).toBeTruthy();
+
 		fireEvent.click(doneButton);
 	});
 
 	test('Show success alert message after post request success', () => {
-		const alertToast = getByTestId('alertToast');
+		const alertToast = document.querySelector('.alert-dismissible');
 
 		expect(alertToast).toHaveTextContent(
 			'the-selected-step-has-transitioned-successfully'

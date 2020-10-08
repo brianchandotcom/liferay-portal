@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render, waitForElement} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import PerformanceByStepPage from '../../../src/main/resources/META-INF/resources/js/components/performance-by-step-page/PerformanceByStepPage.es';
@@ -44,7 +45,7 @@ const wrapper = ({children}) => (
 );
 
 describe('The performance by step page body should', () => {
-	let getAllByTestId;
+	let getAllByRole;
 
 	afterEach(cleanup);
 
@@ -57,14 +58,14 @@ describe('The performance by step page body should', () => {
 			{wrapper}
 		);
 
-		getAllByTestId = renderResult.getAllByTestId;
+		getAllByRole = renderResult.getAllByRole;
 	});
 
-	test('Be rendered with step names', async () => {
-		const stepName = await waitForElement(() => getAllByTestId('stepName'));
+	test('Be rendered with step names', () => {
+		const rows = getAllByRole('row');
 
-		expect(stepName[0].innerHTML).toEqual('Review');
-		expect(stepName[1].innerHTML).toEqual('Update');
+		expect(rows[1]).toHaveTextContent('Review');
+		expect(rows[2]).toHaveTextContent('Update');
 	});
 });
 

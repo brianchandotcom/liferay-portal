@@ -54,7 +54,7 @@ const ContainerMock = ({children}) => {
 };
 
 describe('The SingleUpdateDueDateModal component should', () => {
-	let getByTestId, getByText;
+	let getByPlaceholderText, getByText;
 
 	const items = [{dateDue: '2020-02-01T10:00:00', id: 1}];
 
@@ -78,34 +78,34 @@ describe('The SingleUpdateDueDateModal component should', () => {
 				wrapper: ContainerMock,
 			}
 		);
-		getByTestId = renderResult.getByTestId;
+
+		getByPlaceholderText = renderResult.getByPlaceholderText;
 		getByText = renderResult.getByText;
 
 		jest.runAllTimers();
 	});
 
 	test('Render modal with error message and retry', () => {
-		const alertError = getByTestId('alertError');
+		const alertError = getByText('your-request-has-failed');
 		const emptyStateMessage = getByText('unable-to-retrieve-data');
 		const retryBtn = getByText('retry');
 
-		expect(alertError).toHaveTextContent('your-request-has-failed');
+		expect(alertError).toBeTruthy();
 		expect(emptyStateMessage).toBeTruthy();
 
 		fireEvent.click(retryBtn);
 	});
 
 	test('Render modal with form inputs with defaultValues', () => {
-		const cancelBtn = getByTestId('cancelButton');
-		const commentInput = getByTestId('commentInput');
-		const dateInput = getByTestId('dateInput');
-		const doneBtn = getByTestId('doneButton');
-		const timeInput = getByTestId('timeInput');
+		const cancelBtn = getByText('cancel');
+		const commentInput = getByPlaceholderText('write-a-note');
+		const dateInput = getByPlaceholderText('MM/DD/YYYY');
+		const doneBtn = getByText('done');
+		const timeInput = getByPlaceholderText('HH:mm am/pm');
 
 		expect(dateInput.value).toBe('02/01/2020');
 		expect(timeInput.value).toBe('10:00 AM');
 		expect(commentInput.value).toBe('');
-
 		expect(cancelBtn).not.toHaveAttribute('disabled');
 		expect(doneBtn).toHaveAttribute('disabled');
 
@@ -125,26 +125,25 @@ describe('The SingleUpdateDueDateModal component should', () => {
 
 		expect(dateInput.parentNode).not.toHaveClass('has-error');
 		expect(timeInput.parentNode).not.toHaveClass('has-error');
-
 		expect(doneBtn).not.toHaveAttribute('disabled');
 
 		fireEvent.click(doneBtn);
 	});
 
 	test('Render modal reassign error and retry', () => {
-		const alertError = getByTestId('alertError');
-		const doneBtn = getByTestId('doneButton');
-
-		expect(alertError).toHaveTextContent(
+		const alertError = getByText(
 			'your-request-has-failed select-done-to-retry'
 		);
+		const doneBtn = getByText('done');
+
+		expect(alertError).toBeTruthy();
 		expect(doneBtn).not.toHaveAttribute('disabled');
 
 		fireEvent.click(doneBtn);
 	});
 
 	test('Render alert with success message and close modal', () => {
-		const alertToast = getByTestId('alertToast');
+		const alertToast = document.querySelector('.alert-dismissible');
 		const alertClose = alertToast.children[1];
 
 		expect(alertToast).toHaveTextContent(
@@ -153,7 +152,7 @@ describe('The SingleUpdateDueDateModal component should', () => {
 
 		fireEvent.click(alertClose);
 
-		const alertContainer = getByTestId('alertContainer');
+		const alertContainer = document.querySelector('.alert-container');
 		expect(alertContainer.children[0].children.length).toBe(0);
 	});
 });

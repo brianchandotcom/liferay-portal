@@ -161,137 +161,130 @@ const ContainerMock = ({children}) => {
 };
 
 describe('The BulkReassignModal component should', () => {
-	let getAllByTestId, getAllByText, getByTestId, getByText, renderResult;
+	let getAllByRole, getAllByText, getByText, renderResult;
 
 	beforeAll(() => {
 		renderResult = render(<BulkReassignModal />, {
 			wrapper: ContainerMock,
 		});
 
-		getAllByTestId = renderResult.getAllByTestId;
+		getAllByRole = renderResult.getAllByRole;
 		getAllByText = renderResult.getAllByText;
-		getByTestId = renderResult.getByTestId;
 		getByText = renderResult.getByText;
 
 		jest.runAllTimers();
 	});
 
 	test('Render "Select tasks" step with fetch error and retrying', () => {
-		const alertError = getByTestId('alertError');
+		const alertError = getByText('your-request-has-failed');
 		const emptyStateMessage = getByText('unable-to-retrieve-data');
 		const retryBtn = getByText('retry');
 
-		expect(alertError).toHaveTextContent('your-request-has-failed');
-
+		expect(alertError).toBeTruthy();
 		expect(emptyStateMessage).toBeTruthy();
 
 		fireEvent.click(retryBtn);
 	});
 
 	test('Render "Select tasks" step with items', () => {
-		const modal = getByTestId('bulkReassignModal');
-		const stepBar = getByTestId('stepBar');
-		const cancelBtn = getByTestId('cancelButton');
-		const nextBtn = getByTestId('nextButton');
-
-		const table = getByTestId('selectTaskStepTable');
-		const checkbox = getAllByTestId('itemCheckbox');
-		const checkAllButton = getByTestId('checkAllButton');
 		const assigneeFilter = getByText('assignee');
+		const cancelBtn = getByText('cancel');
+		const checkAllButton = document.querySelectorAll(
+			'.custom-control-input'
+		)[0];
+		const modal = document.querySelector('.modal');
+		const nextBtn = getByText('next');
+		const rows = getAllByRole('row');
+		const stepBar = document.querySelector('.step-of-bar');
+		const table = document.querySelector('.table');
 
 		const content = modal.children[0].children[0];
+		const checkbox1 = rows[1].querySelector('input.custom-control-input');
+		const checkbox2 = rows[2].querySelector('input.custom-control-input');
+
 		const header = content.children[0];
 
 		expect(header).toHaveTextContent('select-tasks-to-reassign');
-
 		expect(stepBar.children[0]).toHaveTextContent('select-tasks');
 		expect(stepBar.children[1]).toHaveTextContent('step-x-of-x');
-
 		expect(getAllByText('process-step').length).toBe(2);
 		expect(assigneeFilter).not.toBeUndefined();
-
-		expect(cancelBtn).toHaveTextContent('cancel');
-		expect(nextBtn).toHaveTextContent('next');
+		expect(cancelBtn).toBeTruthy();
 		expect(nextBtn).toHaveAttribute('disabled');
 
 		const items = table.children[1].children;
 
-		expect(checkbox[0].checked).toBe(false);
+		expect(checkbox1.checked).toBe(false);
 		expect(items[0].children[1]).toHaveTextContent('1');
 		expect(items[0].children[2]).toHaveTextContent('Blog: Blog 1');
 		expect(items[0].children[3]).toHaveTextContent('Review');
 		expect(items[0].children[4]).toHaveTextContent('Test Test');
-
-		expect(checkbox[1].checked).toBe(false);
+		expect(checkbox2.checked).toBe(false);
 		expect(items[1].children[1]).toHaveTextContent('2');
 		expect(items[1].children[2]).toHaveTextContent('Blog: Blog 2');
 		expect(items[1].children[3]).toHaveTextContent('Update');
 		expect(items[1].children[4]).toHaveTextContent('Test Test');
-
 		expect(checkAllButton.checked).toBe(false);
 
 		fireEvent.click(checkAllButton);
 
-		let label = getByTestId('toolbarLabel');
+		let label = getByText('x-of-x-selected');
 
-		expect(checkbox[0].checked).toBe(true);
-		expect(checkbox[1].checked).toBe(true);
+		expect(checkbox1.checked).toBe(true);
+		expect(checkbox2.checked).toBe(true);
 		expect(checkAllButton.checked).toBe(true);
-		expect(label).toHaveTextContent('x-of-x-selected');
+		expect(label).toBeTruthy();
 
-		const clearButton = getByTestId('clear');
+		const clearButton = getByText('clear');
 
 		fireEvent.click(clearButton);
 
-		expect(checkbox[0].checked).toBe(false);
-		expect(checkbox[1].checked).toBe(false);
+		expect(checkbox1.checked).toBe(false);
+		expect(checkbox2.checked).toBe(false);
 		expect(checkAllButton.checked).toBe(false);
 
-		fireEvent.click(checkbox[0]);
+		fireEvent.click(checkbox1);
 
-		label = getByTestId('toolbarLabel');
+		label = getByText('x-of-x-selected');
 
-		expect(checkbox[0].checked).toBe(true);
-		expect(checkbox[1].checked).toBe(false);
+		expect(checkbox1.checked).toBe(true);
+		expect(checkbox2.checked).toBe(false);
 		expect(checkAllButton.checked).toBe(false);
-		expect(label).toHaveTextContent('x-of-x-selected');
+		expect(label).toBeTruthy();
 
-		fireEvent.click(checkbox[0]);
+		fireEvent.click(checkbox1);
 
-		expect(checkbox[0].checked).toBe(false);
-		expect(checkbox[1].checked).toBe(false);
+		expect(checkbox1.checked).toBe(false);
+		expect(checkbox2.checked).toBe(false);
 		expect(checkAllButton.checked).toBe(false);
 
 		fireEvent.click(checkAllButton);
 
-		label = getByTestId('toolbarLabel');
+		label = getByText('x-of-x-selected');
 
-		expect(checkbox[0].checked).toBe(true);
-		expect(checkbox[1].checked).toBe(true);
+		expect(checkbox1.checked).toBe(true);
+		expect(checkbox2.checked).toBe(true);
 		expect(checkAllButton.checked).toBe(true);
-		expect(label).toHaveTextContent('x-of-x-selected');
-
+		expect(label).toBeTruthy();
 		expect(nextBtn).not.toBeDisabled();
 
-		const selectAllButton = getByTestId('selectAll');
+		const selectAllButton = getByText('select-all');
 
 		fireEvent.click(selectAllButton);
 
-		label = getByTestId('toolbarLabel');
+		label = getByText('all-selected');
 
-		expect(label).toHaveTextContent('all-selected');
-
+		expect(label).toBeTruthy();
 		expect(nextBtn).not.toBeDisabled();
 
 		fireEvent.click(nextBtn);
 	});
 
 	test('Render "Select tasks" step with next error and retrying', () => {
-		const alertError = getByTestId('alertError');
-		const nextBtn = getByTestId('nextButton');
+		const alertError = getByText('your-request-has-failed');
+		const nextBtn = getByText('next');
 
-		expect(alertError).toHaveTextContent('your-request-has-failed');
-
+		expect(alertError).toBeTruthy();
 		expect(nextBtn).not.toBeDisabled();
 
 		fireEvent.click(nextBtn);
@@ -300,24 +293,23 @@ describe('The BulkReassignModal component should', () => {
 	});
 
 	test('Render "Select assignees" step with fetch error and retrying', () => {
-		const alertError = getByTestId('alertError');
+		const alertError = getByText('your-request-has-failed');
 		const emptyStateMessage = getByText('failed-to-retrieve-assignees');
 		const retryBtn = getByText('retry');
 
-		expect(alertError).toHaveTextContent('your-request-has-failed');
-
+		expect(alertError).toBeTruthy();
 		expect(emptyStateMessage).toBeTruthy();
 
 		fireEvent.click(retryBtn);
 	});
 
 	test('Render "Select assignees" step with items and back to previous step', async () => {
-		const modal = getByTestId('bulkReassignModal');
-
-		const previousBtn = getByTestId('previousButton');
-		const nextBtn = getByTestId('nextButton');
+		const modal = document.querySelector('.modal');
+		const nextBtn = getByText('reassign');
+		const previousBtn = getByText('previous');
 
 		const content = modal.children[0].children[0];
+
 		const header = content.children[0];
 
 		expect(header).toHaveTextContent('select-new-assignees');
@@ -330,28 +322,26 @@ describe('The BulkReassignModal component should', () => {
 	});
 
 	test('Render "Select assignees" step with items', async () => {
-		const modal = getByTestId('bulkReassignModal');
-		const stepBar = getByTestId('stepBar');
-
-		const cancelBtn = getByTestId('cancelButton');
-		const previousBtn = getByTestId('previousButton');
-		const nextBtn = getByTestId('nextButton');
-
-		const table = getByTestId('bulkReassignModalTable');
-		const useSameAssignee = getByTestId('useSameAssignee');
-		const assigneeInputs = getAllByTestId('autocompleteInput');
+		const assigneeInputs = document.querySelectorAll('input.form-control');
+		const cancelBtn = getByText('cancel');
+		const modal = document.querySelector('.modal');
+		const nextBtn = getByText('reassign');
+		const previousBtn = getByText('previous');
+		const stepBar = document.querySelector('.step-of-bar');
+		const table = document.querySelector('.table');
+		const useSameAssignee = document.querySelector(
+			'input.custom-control-input'
+		);
 
 		const content = modal.children[0].children[0];
+
 		const header = content.children[0];
 
 		expect(header).toHaveTextContent('select-new-assignees');
-
 		expect(stepBar.children[0]).toHaveTextContent('select-assignees');
 		expect(stepBar.children[1]).toHaveTextContent('step-x-of-x');
-
-		expect(cancelBtn).toHaveTextContent('cancel');
-		expect(previousBtn).toHaveTextContent('previous');
-		expect(nextBtn).toHaveTextContent('reassign');
+		expect(cancelBtn).toBeTruthy();
+		expect(previousBtn).toBeTruthy();
 		expect(nextBtn).toHaveAttribute('disabled');
 
 		const items = table.children[1].children;
@@ -360,7 +350,6 @@ describe('The BulkReassignModal component should', () => {
 		expect(items[0].children[1]).toHaveTextContent('Blog: Blog 1');
 		expect(items[0].children[2]).toHaveTextContent('Review');
 		expect(items[0].children[3]).toHaveTextContent('Test Test');
-
 		expect(assigneeInputs[0]).toHaveAttribute('disabled');
 		expect(assigneeInputs[1]).not.toHaveAttribute('disabled');
 		expect(useSameAssignee.checked).toBe(false);
@@ -374,7 +363,7 @@ describe('The BulkReassignModal component should', () => {
 
 		await fireEvent.change(assigneeInputs[0], {target: {value: 'test'}});
 
-		const dropDownLists = await getAllByTestId('dropDownList');
+		const dropDownLists = document.querySelectorAll('#dropDownList');
 
 		await fireEvent.mouseDown(dropDownLists[0].children[0].children[0]);
 
@@ -385,7 +374,6 @@ describe('The BulkReassignModal component should', () => {
 
 		expect(assigneeInputs[0]).toHaveAttribute('disabled');
 		expect(assigneeInputs[1]).not.toHaveAttribute('disabled');
-
 		expect(assigneeInputs[0].value).toBe('');
 		expect(assigneeInputs[1].value).toBe('');
 
@@ -394,7 +382,6 @@ describe('The BulkReassignModal component should', () => {
 		fireEvent.mouseDown(dropDownLists[1].children[0].children[0]);
 
 		expect(assigneeInputs[1].value).toBe('1test test1');
-
 		expect(nextBtn).not.toHaveAttribute('disabled');
 
 		fireEvent.click(nextBtn);
@@ -403,23 +390,24 @@ describe('The BulkReassignModal component should', () => {
 	});
 
 	test('Render "Select assignees" step with reassign fetch error and retrying', async () => {
-		const alertError = getByTestId('alertError');
-		const nextBtn = getByTestId('nextButton');
-
-		expect(alertError).toHaveTextContent(
+		const alertError = getByText(
 			'your-request-has-failed select-reassign-to-retry'
 		);
+		const nextBtn = getByText('reassign');
+
+		expect(alertError).toBeTruthy();
 
 		await fireEvent.click(nextBtn);
 
-		const alertToast = await getByTestId('alertToast');
+		const alertToast = document.querySelector('.alert-dismissible');
+
 		const alertClose = alertToast.children[1];
 
 		expect(alertToast).toHaveTextContent('this-task-has-been-reassigned');
 
 		fireEvent.click(alertClose);
 
-		const alertContainer = getByTestId('alertContainer');
+		const alertContainer = document.querySelector('.alert-container');
 
 		expect(alertContainer.children[0].children.length).toBe(0);
 	});

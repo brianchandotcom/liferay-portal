@@ -20,21 +20,21 @@ describe('The Panel component should', () => {
 	afterEach(cleanup);
 
 	test('Not render child components without content', () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<Panel>
 				<Panel.Body />
 				<Panel.Footer />
 			</Panel>
 		);
 
-		const panel = getByTestId('panel');
+		const panel = container.querySelector('.panel');
 
 		expect(panel.children[0]).toBeUndefined();
 		expect(panel.children[1]).toBeUndefined();
 	});
 
 	test('Render components correctly', () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<Panel>
 				<Panel.Header>{'Header'}</Panel.Header>
 				<Panel.Body>{'Body'}</Panel.Body>
@@ -42,7 +42,7 @@ describe('The Panel component should', () => {
 			</Panel>
 		);
 
-		const panel = getByTestId('panel');
+		const panel = container.querySelector('.panel');
 
 		expect(panel.children.length).toBe(3);
 		expect(panel.children[0]).toHaveTextContent('Header');
@@ -51,7 +51,7 @@ describe('The Panel component should', () => {
 	});
 
 	test('Render class passed by props', () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<Panel elementClasses={'custom-class'}>
 				<Panel.Header elementClasses={'custom-class-header'}>
 					{'Header'}
@@ -65,7 +65,7 @@ describe('The Panel component should', () => {
 			</Panel>
 		);
 
-		const panel = getByTestId('panel');
+		const panel = container.querySelector('.panel');
 
 		expect(panel.classList[2]).toBe('custom-class');
 		expect(panel.children[0].classList[1]).toBe('custom-class-header');
@@ -74,13 +74,13 @@ describe('The Panel component should', () => {
 	});
 
 	test('Render header with title', () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<Panel>
 				<Panel.Header title={'Lorem Ipsum'}>{'Header'}</Panel.Header>
 			</Panel>
 		);
 
-		const panelHeader = getByTestId('panelHeader');
+		const panelHeader = container.querySelector('.panel-header');
 
 		expect(panelHeader.children[0]).toHaveTextContent('Lorem Ipsum');
 		expect(panelHeader.children[1]).toHaveTextContent('Header');

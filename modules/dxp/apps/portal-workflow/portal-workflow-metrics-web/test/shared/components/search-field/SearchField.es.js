@@ -19,36 +19,38 @@ describe('The SearchField component should', () => {
 	afterEach(cleanup);
 
 	test('Be render with empty value', () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<MockRouter>
 				<SearchField />
 			</MockRouter>
 		);
 
-		const searchInput = getByTestId('searchField');
+		const searchInput = container.querySelector('input.form-control');
+
 		expect(searchInput.value).toBe('');
 	});
 
 	test('Be render with "test" value', () => {
-		const {getByTestId} = render(
+		const {container} = render(
 			<MockRouter query="?search=test">
 				<SearchField />
 			</MockRouter>
 		);
 
-		const searchInput = getByTestId('searchField');
+		const searchInput = container.querySelector('input.form-control');
+
 		expect(searchInput.value).toBe('test');
 	});
 
 	test('Be render with empty value, change for "test" and submit', () => {
-		const {getByTestId} = render(
+		const {container, getByRole} = render(
 			<MockRouter>
 				<SearchField />
 			</MockRouter>
 		);
 
-		const searchInput = getByTestId('searchField');
-		const searchForm = getByTestId('searchFieldForm');
+		const searchInput = container.querySelector('input.form-control');
+		const searchForm = getByRole('search');
 
 		expect(searchInput.value).toBe('');
 
@@ -60,14 +62,14 @@ describe('The SearchField component should', () => {
 	});
 
 	test('Be render with "test" value, change for "testing" and submit', () => {
-		const {getByTestId} = render(
+		const {container, getByRole} = render(
 			<MockRouter query="?search=test">
 				<SearchField />
 			</MockRouter>
 		);
 
-		const searchInput = getByTestId('searchField');
-		const searchForm = getByTestId('searchFieldForm');
+		const searchInput = container.querySelector('input.form-control');
+		const searchForm = getByRole('search');
 
 		expect(searchInput.value).toBe('test');
 

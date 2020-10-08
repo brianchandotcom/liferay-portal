@@ -73,7 +73,7 @@ const data = {
 };
 
 describe('The InstanceDetailsModal component should', () => {
-	let getAllByTestId, getByTestId, renderResult;
+	let getByText, renderResult;
 
 	const renderComponent = (clientMock) => {
 		cleanup();
@@ -84,8 +84,7 @@ describe('The InstanceDetailsModal component should', () => {
 			</ContainerMock>
 		);
 
-		getAllByTestId = renderResult.getAllByTestId;
-		getByTestId = renderResult.getByTestId;
+		getByText = renderResult.getByText;
 
 		jest.runAllTimers();
 	};
@@ -98,52 +97,51 @@ describe('The InstanceDetailsModal component should', () => {
 		});
 
 		test('Render Modal title with correct item id and status icon', () => {
-			const instanceDetailsTitle = getByTestId('instanceDetailsTitle');
-			const instanceIconTitle = getByTestId('iconTitle');
-
-			expect(instanceDetailsTitle).toHaveTextContent('item #37634');
-			expect(instanceIconTitle.classList).toContain(
-				'lexicon-icon-check-circle'
+			const instanceDetailsTitle = getByText('item #37634');
+			const instanceIconTitle = document.querySelector(
+				'.lexicon-icon-check-circle'
 			);
+
+			expect(instanceDetailsTitle).toBeTruthy();
+			expect(instanceIconTitle).toBeTruthy();
 		});
 
 		test('Render SLA details with correct status', () => {
-			const instanceSubTitles = getAllByTestId('instanceSectionSubTitle');
-			const resultIcons = getAllByTestId('resultIcon');
-			const resultStatus = getAllByTestId('resultStatus');
+			const resultIcons = document.querySelectorAll('.sticker');
+			const resultStatus = document.querySelectorAll('.sla-result');
 
-			expect(instanceSubTitles[0]).toHaveTextContent('OPEN (1)');
+			expect(getByText('OPEN (1)')).toBeTruthy();
 			expect(resultStatus[0]).toHaveTextContent(
 				'Jan 24, 2020, 10:08 AM (0d 03h 43min overdue)'
 			);
-			expect(resultIcons[0].classList).toContain(
+			expect(resultIcons[0].children[0].classList).toContain(
 				'lexicon-icon-exclamation-circle'
 			);
-			expect(instanceSubTitles[1]).toHaveTextContent('RESOLVED (1)');
+			expect(getByText('RESOLVED (1)')).toBeTruthy();
 			expect(resultStatus[1]).toHaveTextContent('(resolved-on-time)');
-			expect(resultIcons[1].classList).toContain(
+			expect(resultIcons[1].children[0].classList).toContain(
 				'lexicon-icon-check-circle'
 			);
 		});
 
 		test('Render Process details with correct infos', () => {
-			const instanceDetailSpan = getAllByTestId('instanceDetailSpan');
+			const instanceDetailsRows = document.querySelectorAll('p.row');
 
-			expect(instanceDetailSpan.length).toBe(6);
-			expect(instanceDetailSpan[0]).toHaveTextContent('completed');
-			expect(instanceDetailSpan[1]).toHaveTextContent('Test Test');
-			expect(instanceDetailSpan[2]).toHaveTextContent(
+			expect(instanceDetailsRows.length).toBe(6);
+			expect(instanceDetailsRows[0]).toHaveTextContent('completed');
+			expect(instanceDetailsRows[1]).toHaveTextContent('Test Test');
+			expect(instanceDetailsRows[2]).toHaveTextContent(
 				'Jan 20, 2020, 11:08 AM'
 			);
-			expect(instanceDetailSpan[3]).toHaveTextContent('Blogs Entry');
-			expect(instanceDetailSpan[4]).toHaveTextContent('Blog 01');
-			expect(instanceDetailSpan[5]).toHaveTextContent(
+			expect(instanceDetailsRows[3]).toHaveTextContent('Blogs Entry');
+			expect(instanceDetailsRows[4]).toHaveTextContent('Blog 01');
+			expect(instanceDetailsRows[5]).toHaveTextContent(
 				'Jan 21, 2020, 10:08 AM'
 			);
 		});
 
 		test('Render Go to Submission Page button with correct link', () => {
-			const submissionPageButton = getByTestId('submissionPageButton');
+			const submissionPageButton = getByText('go-to-submission-page');
 
 			expect(submissionPageButton.getAttribute('href')).toContain(
 				'37634'
@@ -165,18 +163,18 @@ describe('The InstanceDetailsModal component should', () => {
 		});
 
 		test('Render Process details with correct infos', () => {
-			const instanceDetailSpan = getAllByTestId('instanceDetailSpan');
+			const instanceDetailsRows = document.querySelectorAll('p.row');
 
-			expect(instanceDetailSpan.length).toBe(7);
-			expect(instanceDetailSpan[0]).toHaveTextContent('pending');
-			expect(instanceDetailSpan[1]).toHaveTextContent('Test Test');
-			expect(instanceDetailSpan[2]).toHaveTextContent(
+			expect(instanceDetailsRows.length).toBe(7);
+			expect(instanceDetailsRows[0]).toHaveTextContent('pending');
+			expect(instanceDetailsRows[1]).toHaveTextContent('Test Test');
+			expect(instanceDetailsRows[2]).toHaveTextContent(
 				'Jan 20, 2020, 11:08 AM'
 			);
-			expect(instanceDetailSpan[3]).toHaveTextContent('Blogs Entry');
-			expect(instanceDetailSpan[4]).toHaveTextContent('Blog 01');
-			expect(instanceDetailSpan[5]).toHaveTextContent('Review');
-			expect(instanceDetailSpan[6]).toHaveTextContent('unassigned');
+			expect(instanceDetailsRows[3]).toHaveTextContent('Blogs Entry');
+			expect(instanceDetailsRows[4]).toHaveTextContent('Blog 01');
+			expect(instanceDetailsRows[5]).toHaveTextContent('Review');
+			expect(instanceDetailsRows[6]).toHaveTextContent('unassigned');
 		});
 	});
 });

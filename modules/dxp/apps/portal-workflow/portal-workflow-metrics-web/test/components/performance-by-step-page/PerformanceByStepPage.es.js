@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {render, waitForElement} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import PerformanceByStepPage from '../../../src/main/resources/META-INF/resources/js/components/performance-by-step-page/PerformanceByStepPage.es';
@@ -19,7 +19,7 @@ import {MockRouter} from '../../mock/MockRouter.es';
 import '@testing-library/jest-dom/extend-expect';
 
 describe('The PerformanceByStepPage component having data should', () => {
-	let getAllByTestId;
+	let getAllByRole, rows;
 
 	const items = [
 		{
@@ -77,27 +77,23 @@ describe('The PerformanceByStepPage component having data should', () => {
 			{wrapper}
 		);
 
-		getAllByTestId = renderResult.getAllByTestId;
+		getAllByRole = renderResult.getAllByRole;
 	});
 
 	test('Be rendered with step names', async () => {
-		const stepName = await waitForElement(() => getAllByTestId('stepName'));
+		rows = getAllByRole('row');
 
-		expect(stepName[0]).toHaveTextContent('Review');
-		expect(stepName[1]).toHaveTextContent('Update');
+		expect(rows[1]).toHaveTextContent('Review');
+		expect(rows[2]).toHaveTextContent('Update');
 	});
 
 	test('Be rendered with SLA Breached (%)', () => {
-		const slas = getAllByTestId('stepSla');
-
-		expect(slas[0]).toHaveTextContent('4 (0%)');
-		expect(slas[1]).toHaveTextContent('2 (0%)');
+		expect(rows[1]).toHaveTextContent('4 (0%)');
+		expect(rows[2]).toHaveTextContent('2 (0%)');
 	});
 
 	test('Be rendered with average completion time', () => {
-		const durations = getAllByTestId('durationTaskAvg');
-
-		expect(durations[0]).toHaveTextContent('3h');
-		expect(durations[1]).toHaveTextContent('5d 12h');
+		expect(rows[1]).toHaveTextContent('3h');
+		expect(rows[2]).toHaveTextContent('5d 12h');
 	});
 });

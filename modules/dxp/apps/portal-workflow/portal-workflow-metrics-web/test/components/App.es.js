@@ -72,7 +72,7 @@ const mockProps = {
 };
 
 describe('The App component should', () => {
-	let container, getAllByTestId, getByText;
+	let container, getByText;
 
 	beforeAll(() => {
 		const header = document.createElement('div');
@@ -85,7 +85,6 @@ describe('The App component should', () => {
 		const renderResult = render(<App {...mockProps} />);
 
 		container = renderResult.container;
-		getAllByTestId = renderResult.getAllByTestId;
 		getByText = renderResult.getByText;
 	});
 
@@ -107,11 +106,11 @@ describe('The App component should', () => {
 	});
 
 	test('Return to process list page', () => {
-		const processName = getAllByTestId('processName');
+		const processName = container.querySelectorAll('.table-title');
+
 		const processNameLink = processName[0].children[0];
 
 		expect(processNameLink).toHaveTextContent('Single Approver');
-
 		expect(window.location.hash).toContain('#/processes');
 
 		fireEvent.click(processNameLink);

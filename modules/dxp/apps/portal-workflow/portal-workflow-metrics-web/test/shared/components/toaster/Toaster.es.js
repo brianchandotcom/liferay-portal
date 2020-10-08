@@ -41,25 +41,23 @@ const ComponentMock = () => {
 
 describe('The Toaster component should', () => {
 	test('Render all alerts and clear all', () => {
-		const {
-			getAllByTestId,
-			getByTestId,
-			getByText,
-		} = render(<ComponentMock />, {wrapper: ToasterProvider});
+		const {container, getByText} = render(<ComponentMock />, {
+			wrapper: ToasterProvider,
+		});
 
-		const alertContainer = getByTestId('alertContainer');
+		const alertContainer = container.querySelector('.alert-container');
 		const addBtn = getByText('add');
 		const clearBtn = getByText('clear');
 
 		fireEvent.click(addBtn);
 
-		let alerts = getAllByTestId('alertToast');
+		let alerts = container.querySelectorAll('.alert-dismissible');
 
 		expect(alerts.length).toBe(4);
 
 		fireEvent.click(alerts[0].children[1]);
 
-		alerts = getAllByTestId('alertToast');
+		alerts = container.querySelectorAll('.alert-dismissible');
 
 		expect(alerts.length).toBe(3);
 

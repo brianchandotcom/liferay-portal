@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
@@ -34,53 +35,55 @@ describe('The workload by assignee page table should', () => {
 		},
 	];
 
+	let rows;
+
 	afterEach(cleanup);
 
 	test('Be rendered with "User 1" and "User 2" names', () => {
-		const {getAllByTestId} = render(
+		const {getAllByRole} = render(
 			<WorkloadByAssigneePage.Body.Table items={items} />,
 			{wrapper: MockRouter}
 		);
 
-		const assigneeNames = getAllByTestId('assigneeName');
+		rows = getAllByRole('row');
 
-		expect(assigneeNames[0].innerHTML).toBe('User 1');
-		expect(assigneeNames[1].innerHTML).toBe('User 2');
+		expect(rows[1]).toHaveTextContent('User 1');
+		expect(rows[2]).toHaveTextContent('User 2');
 	});
 
 	test('Be rendered with "10" and "3" values as "On Time" column', () => {
-		const {getAllByTestId} = render(
+		const {getAllByRole} = render(
 			<WorkloadByAssigneePage.Body.Table items={items} />,
 			{wrapper: MockRouter}
 		);
 
-		const onTimeTaskCounts = getAllByTestId('onTimeTaskCount');
+		rows = getAllByRole('row');
 
-		expect(onTimeTaskCounts[0].children[0].innerHTML).toBe('10');
-		expect(onTimeTaskCounts[1].children[0].innerHTML).toBe('3');
+		expect(rows[1]).toHaveTextContent('10');
+		expect(rows[2]).toHaveTextContent('3');
 	});
 
 	test('Be rendered with "5" and "7" values as "Overdue" column', () => {
-		const {getAllByTestId} = render(
+		const {getAllByRole} = render(
 			<WorkloadByAssigneePage.Body.Table items={items} />,
 			{wrapper: MockRouter}
 		);
 
-		const overdueTaskCounts = getAllByTestId('overdueTaskCount');
+		rows = getAllByRole('row');
 
-		expect(overdueTaskCounts[0].children[0].innerHTML).toBe('5');
-		expect(overdueTaskCounts[1].children[0].innerHTML).toBe('7');
+		expect(rows[1]).toHaveTextContent('5');
+		expect(rows[2]).toHaveTextContent('7');
 	});
 
 	test('Be rendered with "15" and "10" values as "Total Pending" column', () => {
-		const {getAllByTestId} = render(
+		const {getAllByRole} = render(
 			<WorkloadByAssigneePage.Body.Table items={items} />,
 			{wrapper: MockRouter}
 		);
 
-		const taskCounts = getAllByTestId('taskCount');
+		rows = getAllByRole('row');
 
-		expect(taskCounts[0].children[0].innerHTML).toBe('15');
-		expect(taskCounts[1].children[0].innerHTML).toBe('10');
+		expect(rows[1]).toHaveTextContent('15');
+		expect(rows[2]).toHaveTextContent('10');
 	});
 });

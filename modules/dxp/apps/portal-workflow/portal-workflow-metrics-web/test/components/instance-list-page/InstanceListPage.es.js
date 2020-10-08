@@ -56,7 +56,7 @@ describe('The instance list card should', () => {
 			.fn()
 			.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
 	};
-	let container, getByTestId, getAllByTestId;
+	let container, getByText;
 
 	beforeAll(() => {
 		const renderResult = render(
@@ -67,8 +67,7 @@ describe('The instance list card should', () => {
 		);
 
 		container = renderResult.container;
-		getByTestId = renderResult.getByTestId;
-		getAllByTestId = renderResult.getAllByTestId;
+		getByText = renderResult.getByText;
 	});
 
 	test('Be rendered with "sla-status", "process-status", "process-step" and "assignee" filters', () => {
@@ -81,66 +80,88 @@ describe('The instance list card should', () => {
 	});
 
 	test('Select all page by clicking on check all button', () => {
-		const checkAllButton = getByTestId('checkAllButton');
-		const instanceCheckbox = getAllByTestId('instanceCheckbox');
+		const checkAllButton = container.querySelectorAll(
+			'input.custom-control-input'
+		)[0];
+		const firstTableElements = container.querySelectorAll(
+			'.table-first-element-group'
+		);
+
+		const instanceCheckbox1 = firstTableElements[0].querySelector(
+			'input.custom-control-input'
+		);
+		const instanceCheckbox2 = firstTableElements[1].querySelector(
+			'input.custom-control-input'
+		);
 
 		expect(checkAllButton.checked).toEqual(false);
-		expect(instanceCheckbox[0].checked).toEqual(false);
-		expect(instanceCheckbox[1].checked).toEqual(false);
+		expect(instanceCheckbox1.checked).toEqual(false);
+		expect(instanceCheckbox2.checked).toEqual(false);
 
 		fireEvent.click(checkAllButton);
 
-		const label = getByTestId('toolbarLabel');
+		const label = getByText('x-of-x-selected');
 
 		expect(checkAllButton.checked).toEqual(true);
-		expect(label).toHaveTextContent('x-of-x-selected');
-		expect(instanceCheckbox[0].checked).toEqual(true);
-		expect(instanceCheckbox[1].checked).toEqual(true);
+		expect(label).toBeTruthy();
+		expect(instanceCheckbox1.checked).toEqual(true);
+		expect(instanceCheckbox2.checked).toEqual(true);
 
 		fireEvent.click(checkAllButton);
 
 		expect(checkAllButton.checked).toEqual(false);
-		expect(instanceCheckbox[0].checked).toEqual(false);
-		expect(instanceCheckbox[1].checked).toEqual(false);
+		expect(instanceCheckbox1.checked).toEqual(false);
+		expect(instanceCheckbox2.checked).toEqual(false);
 	});
 
 	test('Select all instances by clicking on select all button', () => {
-		const checkAllButton = getByTestId('checkAllButton');
-		const instanceCheckbox = getAllByTestId('instanceCheckbox');
+		const checkAllButton = container.querySelectorAll(
+			'input.custom-control-input'
+		)[0];
+		const firstTableElements = container.querySelectorAll(
+			'.table-first-element-group'
+		);
+
+		const instanceCheckbox1 = firstTableElements[0].querySelector(
+			'input.custom-control-input'
+		);
+		const instanceCheckbox2 = firstTableElements[1].querySelector(
+			'input.custom-control-input'
+		);
 
 		expect(checkAllButton.checked).toEqual(false);
-		expect(instanceCheckbox[0].checked).toEqual(false);
-		expect(instanceCheckbox[1].checked).toEqual(false);
+		expect(instanceCheckbox1.checked).toEqual(false);
+		expect(instanceCheckbox2.checked).toEqual(false);
 
-		fireEvent.click(instanceCheckbox[0]);
+		fireEvent.click(instanceCheckbox1);
 
-		let label = getByTestId('toolbarLabel');
+		let label = getByText('x-of-x-selected');
 
 		expect(checkAllButton.checked).toEqual(false);
-		expect(instanceCheckbox[0].checked).toEqual(true);
-		expect(instanceCheckbox[1].checked).toEqual(false);
+		expect(instanceCheckbox1.checked).toEqual(true);
+		expect(instanceCheckbox2.checked).toEqual(false);
 
-		const clearButton = getByTestId('clear');
+		const clearButton = getByText('clear');
 
 		fireEvent.click(clearButton);
 
 		expect(checkAllButton.checked).toEqual(false);
-		expect(instanceCheckbox[0].checked).toEqual(false);
-		expect(instanceCheckbox[1].checked).toEqual(false);
+		expect(instanceCheckbox1.checked).toEqual(false);
+		expect(instanceCheckbox2.checked).toEqual(false);
 
 		fireEvent.click(checkAllButton);
 
 		expect(checkAllButton.checked).toEqual(true);
-		expect(label).toHaveTextContent('x-of-x-selected');
-		expect(instanceCheckbox[0].checked).toEqual(true);
-		expect(instanceCheckbox[1].checked).toEqual(true);
+		expect(label).toBeTruthy();
+		expect(instanceCheckbox1.checked).toEqual(true);
+		expect(instanceCheckbox2.checked).toEqual(true);
 
-		const selectAllButton = getByTestId('selectAll');
+		const selectAllButton = getByText('select-all');
 
 		fireEvent.click(selectAllButton);
 
-		label = getByTestId('toolbarLabel');
+		label = getByText('all-selected');
 
-		expect(label).toHaveTextContent('all-selected');
+		expect(label).toBeTruthy();
 	});
 });

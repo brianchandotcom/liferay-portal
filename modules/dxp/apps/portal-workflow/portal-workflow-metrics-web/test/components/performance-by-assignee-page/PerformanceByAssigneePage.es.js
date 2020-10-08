@@ -69,7 +69,7 @@ const timeRangeData = {
 };
 
 describe('The PerformanceByAssigneePage component having data should', () => {
-	let getAllByTestId;
+	let getAllByRole, rows;
 
 	beforeAll(() => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
@@ -91,36 +91,36 @@ describe('The PerformanceByAssigneePage component having data should', () => {
 			{wrapper}
 		);
 
-		getAllByTestId = renderResult.getAllByTestId;
+		getAllByRole = renderResult.getAllByRole;
 	});
 
 	test('Be rendered with user avatar or lexicon user icon', async () => {
-		const assigneeProfileInfo = getAllByTestId('assigneeProfileInfo');
+		rows = getAllByRole('row');
 
-		expect(assigneeProfileInfo[0].children[0].innerHTML).toContain(
+		const assigneeProfileInfo1 = rows[1].children[0].children[0];
+		const assigneeProfileInfo2 = rows[1].children[0].children[0];
+		const assigneeProfileInfo3 = rows[3].children[0].children[0];
+
+		expect(assigneeProfileInfo1.children[0].innerHTML).toContain(
 			'path/to/image'
 		);
-		expect(assigneeProfileInfo[1].children[0].innerHTML).toContain(
+		expect(assigneeProfileInfo2.children[0].innerHTML).toContain(
 			'path/to/image'
 		);
-		expect(assigneeProfileInfo[2].children[0].innerHTML).toContain(
+		expect(assigneeProfileInfo3.children[0].innerHTML).toContain(
 			'lexicon-icon-user'
 		);
 	});
 
 	test('Be rendered with assignee names', async () => {
-		const assigneeName = getAllByTestId('assigneeName');
-
-		expect(assigneeName[0]).toHaveTextContent('User Test First');
-		expect(assigneeName[1]).toHaveTextContent('User Test Second');
-		expect(assigneeName[2]).toHaveTextContent('User Test Third');
+		expect(rows[1]).toHaveTextContent('User Test First');
+		expect(rows[2]).toHaveTextContent('User Test Second');
+		expect(rows[3]).toHaveTextContent('User Test Third');
 	});
 
 	test('Be rendered with average completion time', () => {
-		const durations = getAllByTestId('durationTaskAvg');
-
-		expect(durations[0]).toHaveTextContent('3h');
-		expect(durations[1]).toHaveTextContent('5d 12h');
-		expect(durations[2]).toHaveTextContent('0min');
+		expect(rows[1]).toHaveTextContent('3h');
+		expect(rows[2]).toHaveTextContent('5d 12h');
+		expect(rows[3]).toHaveTextContent('0min');
 	});
 });

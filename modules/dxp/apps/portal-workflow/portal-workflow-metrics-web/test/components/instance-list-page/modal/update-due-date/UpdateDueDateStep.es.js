@@ -30,19 +30,19 @@ describe('The TimePickerInput component should be render with AM/PM format', () 
 	afterEach(cleanup);
 
 	test('Render with error state and select any option', () => {
-		const {getAllByTestId, getByTestId} = render(
+		const {getAllByRole, getByPlaceholderText} = render(
 			<UpdateDueDateStep.TimePickerInput format="H:mm a" isAmPm />,
 			wrapperMock
 		);
 
-		const timeInput = getByTestId('timeInput');
+		const timeInput = getByPlaceholderText('HH:mm am/pm');
 
 		expect(timeInput.parentNode).toHaveClass('has-error');
 		expect(timeInput.value).toBe('');
 
 		fireEvent.focus(timeInput);
 
-		const items = getAllByTestId('timeListItem');
+		const items = getAllByRole('listitem');
 
 		items.forEach((item) => {
 			expect(item.innerHTML).toMatch(/[0-9]{1,2}:[0-9]{2}\s(AM|PM)/);
@@ -70,20 +70,19 @@ describe('The TimePickerInput component should be render with AM/PM format', () 
 
 describe('The TimePickerInput component should be render without AM/PM format', () => {
 	test('Render with error state and select any option', () => {
-		const {getAllByTestId, getByTestId} = render(
+		const {getAllByRole, getByPlaceholderText} = render(
 			<UpdateDueDateStep.TimePickerInput format="H:mm" />,
 			wrapperMock
 		);
 
-		const timeInput = getByTestId('timeInput');
-		const timePicker = getByTestId('timePicker');
+		const timeInput = getByPlaceholderText('HH:mm');
 
 		expect(timeInput.parentNode).toHaveClass('has-error');
 		expect(timeInput.value).toBe('');
 
 		fireEvent.focus(timeInput);
 
-		const items = getAllByTestId('timeListItem');
+		const items = getAllByRole('listitem');
 
 		items.forEach((item) => {
 			expect(item.innerHTML).toMatch(/[0-9]{1,2}:[0-9]{2}/);
@@ -109,10 +108,14 @@ describe('The TimePickerInput component should be render without AM/PM format', 
 
 		fireEvent.focus(timeInput);
 
-		expect(timePicker.children.length).toBe(2);
+		let timePickerPopover = document.querySelector('.clay-popover-bottom');
+
+		expect(timePickerPopover).toBeTruthy();
 
 		fireEvent.blur(timeInput);
 
-		expect(timePicker.children.length).toBe(1);
+		timePickerPopover = document.querySelector('.clay-popover-bottom');
+
+		expect(timePickerPopover).toBeFalsy();
 	});
 });

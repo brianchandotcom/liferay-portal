@@ -495,26 +495,22 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				return;
 			}
 
-			axisTestClassGroups.put(0, new AxisTestClassGroup(this, 0));
+			axisTestClassGroups.add(0, new AxisTestClassGroup(this, 0));
 		}
 		else {
 			int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
-
-			int id = 0;
 
 			for (List<TestClassGroup.TestClass> axisTestClasses :
 					Lists.partition(testClasses, axisSize)) {
 
 				AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-					this, id);
+					this, axisTestClassGroups.size());
 
 				for (TestClassGroup.TestClass axisTestClass : axisTestClasses) {
 					axisTestClassGroup.addTestClass(axisTestClass);
 				}
 
-				axisTestClassGroups.put(id, axisTestClassGroup);
-
-				id++;
+				axisTestClassGroups.add(axisTestClassGroup);
 			}
 		}
 

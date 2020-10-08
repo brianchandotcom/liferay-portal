@@ -440,21 +440,17 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
 
-		int batchIndex = 0;
-
 		for (List<TestClass> axisTestClasses :
 				Lists.partition(testClasses, axisSize)) {
 
 			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-				this, batchIndex);
+				this, axisTestClassGroups.size());
 
 			for (TestClass axisTestClass : axisTestClasses) {
 				axisTestClassGroup.addTestClass(axisTestClass);
 			}
 
-			axisTestClassGroups.put(batchIndex, axisTestClassGroup);
-
-			batchIndex++;
+			axisTestClassGroups.add(axisTestClassGroup);
 		}
 	}
 
@@ -492,8 +488,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	protected static final String NAME_STABLE_TEST_SUITE = "stable";
 
-	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
-		new HashMap<>();
+	protected final List<AxisTestClassGroup> axisTestClassGroups =
+		new ArrayList<>();
 	protected final String batchName;
 	protected final BuildProfile buildProfile;
 	protected final List<PathMatcher> excludesPathMatchers = new ArrayList<>();

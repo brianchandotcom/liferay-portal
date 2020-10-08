@@ -17,8 +17,11 @@ package com.liferay.mentions.internal.util;
 import com.liferay.mentions.util.MentionsUserFinder;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -58,20 +61,29 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 
 		int[] types = {SocialRelationConstants.TYPE_BI_FRIEND};
 
+		long[] groupIds = new long[0];
+
+		List<Group> groups = _groupLocalService.getUserSitesGroups(
+			user.getUserId());
+
+		for (Group group : groups) {
+			groupIds = ArrayUtil.append(groupIds, group.getGroupId());
+		}
+
 		if (socialInteractionsConfiguration.
 				isSocialInteractionsFriendsEnabled() &&
 			socialInteractionsConfiguration.
 				isSocialInteractionsSitesEnabled()) {
 
 			return _userLocalService.searchSocial(
-				user.getGroupIds(), userId, types, query, 0, _MAX_USERS);
+				groupIds, userId, types, query, 0, _MAX_USERS);
 		}
 
 		if (socialInteractionsConfiguration.
 				isSocialInteractionsSitesEnabled()) {
 
 			return _userLocalService.searchSocial(
-				companyId, user.getGroupIds(), query, 0, _MAX_USERS);
+				companyId, groupIds, query, 0, _MAX_USERS);
 		}
 
 		if (socialInteractionsConfiguration.
@@ -85,12 +97,18 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 	}
 
 	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 
 	private static final int _MAX_USERS = 20;
 
+	private GroupLocalService _groupLocalService;
 	private UserLocalService _userLocalService;
 
 }

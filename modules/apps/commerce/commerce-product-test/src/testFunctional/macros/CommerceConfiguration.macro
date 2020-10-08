@@ -121,8 +121,6 @@ definition {
 			category = "Pricing",
 			portlet = "Price Lists");
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Price Lists");
-
 		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 			CommerceEntry.deleteCommerceEntry();
 		}
@@ -159,7 +157,9 @@ definition {
 			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected availability estimates?");
 		}
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Countries");
+		CommerceNavigator.gotoPortlet(
+			category = "Settings",
+			portlet = "Countries");
 
 		if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 			if (IsElementPresent(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT")) {
@@ -171,13 +171,17 @@ definition {
 			}
 		}
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Currencies");
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Currencies");
 
 		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected currencies?");
 		}
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Measurement Units");
+		CommerceNavigator.gotoPortlet(
+			category = "Settings",
+			portlet = "Measurement Units");
 
 		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected measurement units?");
@@ -189,13 +193,17 @@ definition {
 			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected measurement units?");
 		}
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Tax Categories");
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Tax Categories");
 
 		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected measurement units?");
 		}
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Warehouses");
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Warehouses");
 
 		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
@@ -302,7 +310,9 @@ definition {
 			CommerceProducts.moveCatalogEntriesToRecycleBin();
 		}
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Options");
+		CommerceNavigator.gotoPortlet(
+			category = "Settings",
+			portlet = "Options");
 
 		Pause(locator1 = "3000");
 

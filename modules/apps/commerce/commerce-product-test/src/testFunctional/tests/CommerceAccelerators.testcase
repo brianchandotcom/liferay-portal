@@ -158,11 +158,15 @@ definition {
 
 		CommerceEntry.viewPaginationResults(results = "Showing 1 to 10 of 50");
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Options");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
 
 		CommerceEntry.viewOptionsEntry(optionName = "Package Quantity");
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Specifications");
 
 		CommerceEntry.viewSpecificationLabelsEntries(specificationLabelsEntries = "Quantity,Dimensions,Fit,Warranty,Length,Weight,Height,Material,Width");
 
@@ -208,11 +212,15 @@ definition {
 
 		CommerceEntry.viewPaginationResults(results = "Showing 1 to 10 of 50");
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Options");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
 
 		CommerceEntry.viewOptionsEntry(optionName = "Package Quantity");
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Specifications");
 
 		CommerceEntry.viewSpecificationLabelsEntries(specificationLabelsEntries = "Quantity,Material,Fit,Dimensions,Weight,Width,Warranty,Length,Height");
 

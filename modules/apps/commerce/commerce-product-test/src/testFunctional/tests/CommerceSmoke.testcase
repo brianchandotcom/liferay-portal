@@ -37,9 +37,7 @@ definition {
 
 			CommerceNavigator.gotoPortlet(
 				category = "Product Management",
-				portlet = "Products");
-
-			CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+				portlet = "Specifications");
 
 			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 				PortletEntry.deleteViaMenuItem(rowEntry = "");
@@ -61,9 +59,7 @@ definition {
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
-			portlet = "Products");
-
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+			portlet = "Specifications");
 
 		CommerceEntry.createNewSpecificationLabels(
 			specificationDescription = "Specification-1 Description",
@@ -74,10 +70,8 @@ definition {
 			specificationTitle = "specification-1");
 
 		CommerceNavigator.gotoPortlet(
-			category = "Product Mangement",
-			portlet = "Products");
-
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+			category = "Product Management",
+			portlet = "Specifications");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
 

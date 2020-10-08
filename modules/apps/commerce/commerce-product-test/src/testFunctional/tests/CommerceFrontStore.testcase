@@ -39,11 +39,9 @@ definition {
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
-			portlet = "Products");
+			portlet = "Options");
 
 		echo("Creating new Option complete with Values...");
-
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Options");
 
 		Pause(locator1 = "2000");
 
@@ -56,7 +54,9 @@ definition {
 
 		echo("Creating new Product...");
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Products");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
 
 		CPCommerceCatalog.newProductsEntry(
 			productName = "Simple T-Shirt",

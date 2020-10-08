@@ -44,9 +44,7 @@ definition {
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
-			portlet = "Products");
-
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Options");
+			portlet = "Options");
 
 		Pause(locator1 = "2000");
 
@@ -57,7 +55,9 @@ definition {
 			optionValuesList = "Black,Blue,White",
 			valuePriority = "1");
 
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Products");
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
 
 		CPCommerceCatalog.newProductsEntry(
 			productName = "Simple T-Shirt",
@@ -79,9 +79,7 @@ definition {
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
-			portlet = "Products");
-
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+			portlet = "Specifications");
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
 
@@ -91,9 +89,7 @@ definition {
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
-			portlet = "Products");
-
-		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specifications");
+			portlet = "Specifications");
 
 		CommerceEntry.createNewSpecificationLabels(
 			specificationDescription = "SpecificationLabel",

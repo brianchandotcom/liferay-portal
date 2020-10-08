@@ -890,7 +890,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private Map<String, Map<String, String>> _parseImports(
 		List<String> imports) {
 
-		if (imports == null) {
+		if (imports.isEmpty()) {
 			return null;
 		}
 

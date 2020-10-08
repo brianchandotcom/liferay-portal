@@ -25,8 +25,8 @@ const getItemsMap = (items) => {
 	return map;
 };
 
-export const ItemsContext = React.createContext({});
-export const SetItemsContext = React.createContext({});
+export const ItemsContext = React.createContext([]);
+export const SetItemsContext = React.createContext(() => {});
 
 export const useItems = () => useContext(ItemsContext);
 export const useItemsMap = () => getItemsMap(useContext(ItemsContext));

@@ -15,7 +15,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-const SelectedMenuItemIdContext = React.createContext({});
+const SelectedMenuItemIdContext = React.createContext(null);
 const SetSelectedMenuItemIdContext = React.createContext(() => {});
 
 export const useSetSelectedMenuItemId = () =>

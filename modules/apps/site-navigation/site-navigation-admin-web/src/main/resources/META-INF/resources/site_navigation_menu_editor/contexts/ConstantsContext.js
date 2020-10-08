@@ -15,7 +15,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-const ConstantsContext = React.createContext(() => {});
+const ConstantsContext = React.createContext({});
 
 export const useConstants = () => useContext(ConstantsContext);
 

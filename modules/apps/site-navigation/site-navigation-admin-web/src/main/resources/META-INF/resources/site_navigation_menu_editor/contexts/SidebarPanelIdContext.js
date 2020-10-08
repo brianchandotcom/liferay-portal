@@ -15,8 +15,8 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-const SidebarPanelIdContext = React.createContext({});
-const SetSidebarPanelIdContext = React.createContext({});
+const SidebarPanelIdContext = React.createContext(null);
+const SetSidebarPanelIdContext = React.createContext(() => {});
 
 export const useSetSidebarPanelId = () => useContext(SetSidebarPanelIdContext);
 export const useSidebarPanelId = () => useContext(SidebarPanelIdContext);

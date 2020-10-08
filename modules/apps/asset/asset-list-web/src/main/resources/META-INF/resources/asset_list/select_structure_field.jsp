@@ -136,27 +136,17 @@ portletURL.setParameter("eventName", eventName);
 
 			var data = this.getData();
 
+			var value = JSON.parse(data.value);
+
 			var initialDDMForm = Liferay.component(
 				'<portlet:namespace />' + data.fieldsnamespace + 'ddmForm'
 			);
 
-			initialDDMForm.updateDDMFormInputValue();
-
-			var name = data.name;
-			var value = JSON.parse(data.value);
-
-			var ddmStructureFieldName = value['ddmStructureFieldName'];
-			var ddmStructureFieldValue = value['ddmStructureFieldValue'];
-
-			if (name == ddmStructureFieldName) {
-				var initialForm = document.getElementById(data.form);
-
-				var formData = new FormData(initialForm);
-
-				var keyInput = Object.keys(Object.fromEntries(formData))[1];
-
-				document.getElementById(keyInput).value = ddmStructureFieldValue;
-			}
+			initialDDMForm.get('fields').forEach(function (field) {
+				if (field.get('name') === value.ddmStructureFieldName) {
+					field.setValue(value.ddmStructureFieldValue);
+				}
+			});
 		});
 	});
 

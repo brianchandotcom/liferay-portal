@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -102,6 +103,13 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		}
 
 		if (configJSONObject.has("target")) {
+			if (Objects.equals(
+					configJSONObject.getString("target"), "_parent") ||
+				Objects.equals(configJSONObject.getString("target"), "_top")) {
+
+				configJSONObject.put("target", "_self");
+			}
+
 			linkElement.attr("target", configJSONObject.getString("target"));
 		}
 

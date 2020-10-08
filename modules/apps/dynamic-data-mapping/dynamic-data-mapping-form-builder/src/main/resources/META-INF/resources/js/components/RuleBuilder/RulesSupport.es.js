@@ -161,8 +161,13 @@ const fieldNameBelongsToAction = (fieldName, actions) => {
 	return actions
 		.map((action) => {
 			if (action.action === 'auto-fill') {
-				return Object.values(action.outputs).some(
-					(output) => output === fieldName
+				return (
+					Object.values(action.inputs).some(
+						(input) => input === fieldName
+					) ||
+					Object.values(action.outputs).some(
+						(output) => output === fieldName
+					)
 				);
 			}
 			else if (action.action === 'calculate') {

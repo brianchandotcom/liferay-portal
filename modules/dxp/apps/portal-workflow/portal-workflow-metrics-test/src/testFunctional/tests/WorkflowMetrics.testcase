@@ -2478,6 +2478,104 @@ definition {
 			key_untracked = "1");
 	}
 
+	@description = "LRQA-53657 - Automate LPS-86650: [Reports] View the summary of all completed items and what's their SLA status"
+	@priority = "5"
+	test ViewCompletedItems {
+		property portal.acceptance = "true";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0001",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content 2",
+			entryTitle = "Blogs Entry Title 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content 3",
+			entryTitle = "Blogs Entry Title 3");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.waitForSLA(
+			key_expectedValue = "0",
+			key_status = "OVERDUE");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 3",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 3",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetrics.waitForCompletedSLA(
+			key_expectedValue = "0",
+			key_status = "OVERDUE");
+
+		WorkflowMetrics.checkCompletedWorkflowValues(
+			key_completed = "3",
+			key_ontime = "1",
+			key_overdue = "1",
+			key_untracked = "1");
+	}
+
 	@description = "LRQA-53654 Automate LPS-88968: [Reports] View the summary of all pending items and what's their SLA status"
 	@priority = "5"
 	test ViewPendingItems {

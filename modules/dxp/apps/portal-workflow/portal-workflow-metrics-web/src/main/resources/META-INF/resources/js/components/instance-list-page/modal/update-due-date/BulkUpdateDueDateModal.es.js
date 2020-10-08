@@ -198,7 +198,6 @@ const BulkUpdateDueDateModal = () => {
 
 	return (
 		<ModalWithSteps
-			dataTestId="bulkUpdateDueDateModal"
 			error={errorToast}
 			observer={observer}
 			step={step}

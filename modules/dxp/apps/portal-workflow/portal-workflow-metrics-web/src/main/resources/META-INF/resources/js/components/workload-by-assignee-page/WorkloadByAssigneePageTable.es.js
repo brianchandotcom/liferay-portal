@@ -56,14 +56,11 @@ const Item = ({
 					query={{filters: getFiltersQuery()}}
 					to={instancesListPath}
 				>
-					<span data-testid="assigneeName">{name}</span>
+					<span>{name}</span>
 				</ChildLink>
 			</td>
 
-			<td
-				className="table-cell-minw-75 text-right"
-				data-testid="overdueTaskCount"
-			>
+			<td className="table-cell-minw-75 text-right">
 				<ChildLink
 					className="workload-by-step-link"
 					query={{
@@ -75,10 +72,7 @@ const Item = ({
 				</ChildLink>
 			</td>
 
-			<td
-				className="table-cell-minw-75 text-right"
-				data-testid="onTimeTaskCount"
-			>
+			<td className="table-cell-minw-75 text-right">
 				<ChildLink
 					className="workload-by-step-link"
 					query={{
@@ -90,10 +84,7 @@ const Item = ({
 				</ChildLink>
 			</td>
 
-			<td
-				className="table-cell-minw-75 text-right"
-				data-testid="taskCount"
-			>
+			<td className="table-cell-minw-75 text-right">
 				<ChildLink
 					className="workload-by-step-link"
 					query={{filters: getFiltersQuery()}}

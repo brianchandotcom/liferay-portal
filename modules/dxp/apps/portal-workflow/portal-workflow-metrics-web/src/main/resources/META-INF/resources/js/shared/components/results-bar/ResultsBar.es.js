@@ -63,7 +63,6 @@ const Clear = ({filters = [], filterKeys = [], withoutRouteParams}) => {
 			<div className="tbar-section text-right">
 				<ClayButton
 					className="component-link tbar-link"
-					data-testid="clearAll"
 					displayType="link"
 					onClick={handleClearAll}
 					small
@@ -120,7 +119,6 @@ const FilterItem = ({filter, item, withoutRouteParams}) => {
 						<span className="label-item label-item-after">
 							<ClayButton
 								className="text-dark"
-								data-testid="removeFilter"
 								displayType="unstyled"
 								onClick={removeFilter}
 							>
@@ -153,7 +151,7 @@ const TotalCount = ({search, totalCount}) => {
 		<li className="tbar-item">
 			<div className="tbar-section">
 				<span className="component-text text-truncate-inline">
-					<span className="text-truncate" data-testid="totalCount">
+					<span className="text-truncate">
 						{sub(resultText, [totalCount, search])}
 					</span>
 				</span>

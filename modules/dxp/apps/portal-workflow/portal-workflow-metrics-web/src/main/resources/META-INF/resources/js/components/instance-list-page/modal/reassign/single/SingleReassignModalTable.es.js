@@ -76,7 +76,7 @@ const Item = ({
 
 const Table = ({items, setAssigneeId}) => {
 	return (
-		<ClayTable data-testid="singleReassignModalTable">
+		<ClayTable>
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell

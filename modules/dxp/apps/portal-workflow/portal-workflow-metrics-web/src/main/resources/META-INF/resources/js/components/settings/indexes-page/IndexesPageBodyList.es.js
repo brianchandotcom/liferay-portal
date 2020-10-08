@@ -21,11 +21,9 @@ const Item = ({
 	item: {completionPercentage = 0, key, label, reindexing},
 }) => (
 	<ClayList.Item className="autofit-row-center reindex-action" flex key={key}>
-		<ClayList.ItemField data-testid="indexLabel" expand>
-			{label}
-		</ClayList.ItemField>
+		<ClayList.ItemField expand>{label}</ClayList.ItemField>
 
-		<ClayList.ItemField data-testid="indexAction">
+		<ClayList.ItemField>
 			{reindexing ? (
 				<ClayProgressBar value={completionPercentage} />
 			) : (
@@ -60,7 +58,7 @@ const List = ({
 	});
 
 	return (
-		<ClayList data-testid="indexesList">
+		<ClayList>
 			<ClayList.Header>{label}</ClayList.Header>
 
 			{items.map((item, index) => (

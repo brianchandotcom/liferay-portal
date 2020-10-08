@@ -47,7 +47,6 @@ const SearchField = ({
 
 	return (
 		<ClayManagementToolbar.Search
-			data-testid="searchFieldForm"
 			method="GET"
 			onSubmit={handleSubmit}
 			showMobile={true}
@@ -57,7 +56,6 @@ const SearchField = ({
 					<ClayInput
 						aria-label="Search"
 						className="form-control input-group-inset input-group-inset-after"
-						data-testid="searchField"
 						disabled={disabled}
 						onChange={handleChange}
 						placeholder={placeholder}

@@ -38,14 +38,11 @@ const Header = ({completed, id = '', slaResults = [], slaStatus}) => {
 	const iconColor = iconColors[slaStatus] || 'text-success';
 
 	return (
-		<ClayModal.Header data-testid="instanceDetailsHeader">
+		<ClayModal.Header>
 			<PromisesResolver.Resolved>
-				<div
-					className="font-weight-medium"
-					data-testid="instanceDetailsTitle"
-				>
+				<div className="font-weight-medium">
 					<span className={`modal-title-indicator ${iconColor}`}>
-						<ClayIcon data-testid="iconTitle" symbol={iconClass} />
+						<ClayIcon symbol={iconClass} />
 					</span>
 
 					{`${Liferay.Language.get('item')} #${id}`}

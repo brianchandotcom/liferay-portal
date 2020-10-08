@@ -14,11 +14,10 @@ import React from 'react';
 
 const Toaster = ({removeToast, toasts = []}) => {
 	return (
-		<ClayAlert.ToastContainer data-testid="alertContainer">
+		<ClayAlert.ToastContainer>
 			{toasts.map(({message, type, ...toast}, index) => (
 				<ClayAlert
 					{...toast}
-					data-testid="alertToast"
 					displayType={type}
 					key={index}
 					onClose={() => {

@@ -124,11 +124,7 @@ const SingleReassignModal = () => {
 		<>
 			<PromisesResolver promises={promises}>
 				{visibleModal === 'singleReassign' && (
-					<ClayModal
-						data-testid="reassignModal"
-						observer={observer}
-						size="lg"
-					>
+					<ClayModal observer={observer} size="lg">
 						<ClayModal.Header>
 							{Liferay.Language.get('select-new-assignee')}
 						</ClayModal.Header>
@@ -136,7 +132,6 @@ const SingleReassignModal = () => {
 						{errorToast && (
 							<ClayAlert
 								className="mb-0"
-								data-testid="alertError"
 								displayType="danger"
 								title={Liferay.Language.get('error')}
 							>
@@ -163,7 +158,6 @@ const SingleReassignModal = () => {
 						<ClayModal.Footer
 							first={
 								<ClayButton
-									data-testid="cancelButton"
 									disabled={sendingPost}
 									displayType="secondary"
 									onClick={onClose}
@@ -173,7 +167,6 @@ const SingleReassignModal = () => {
 							}
 							last={
 								<ClayButton
-									data-testid="reassignButton"
 									disabled={sendingPost || !assigneeId}
 									onClick={reassignButtonHandler}
 								>

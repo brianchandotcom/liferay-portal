@@ -94,7 +94,6 @@ const Header = ({data}) => {
 					<ClayManagementToolbar.Item className="pt-2">
 						<ClayCheckbox
 							checked={useSameAssignee}
-							data-testid="useSameAssignee"
 							disabled={disableBulk}
 							label={Liferay.Language.get(
 								'use-the-same-assignee-for-all-tasks'

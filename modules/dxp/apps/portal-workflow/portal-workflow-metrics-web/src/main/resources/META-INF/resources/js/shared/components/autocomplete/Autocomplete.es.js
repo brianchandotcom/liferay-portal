@@ -132,7 +132,6 @@ const Autocomplete = ({
 									? 'input-group-inset input-group-inset-after'
 									: ''
 							}`}
-							data-testid="autocompleteInput"
 							disabled={disabled}
 							onBlur={handleBlur}
 							onChange={handleChange}

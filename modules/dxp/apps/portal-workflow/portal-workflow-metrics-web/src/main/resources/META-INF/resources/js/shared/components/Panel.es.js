@@ -22,11 +22,7 @@ const Body = ({children, elementClasses}) => {
 		return null;
 	}
 
-	return (
-		<div className={classes} data-testid="panelBody">
-			{children}
-		</div>
-	);
+	return <div className={classes}>{children}</div>;
 };
 
 const Footer = ({children, elementClasses, label}) => {
@@ -49,7 +45,7 @@ const Header = ({children, elementClasses, title}) => {
 	const classes = getCN('panel-header', elementClasses);
 
 	return (
-		<div className={classes} data-testid="panelHeader">
+		<div className={classes}>
 			{title && <div className="panel-title">{title}</div>}
 			{!!children && <div>{children}</div>}
 		</div>
@@ -93,9 +89,7 @@ const Panel = ({children, elementClasses}) => {
 
 	return (
 		<ClayLayout.ContainerFluid className="mt-4">
-			<div className={classes} data-testid="panel">
-				{children}
-			</div>
+			<div className={classes}>{children}</div>
 		</ClayLayout.ContainerFluid>
 	);
 };

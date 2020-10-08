@@ -161,7 +161,6 @@ const Body = ({
 				<ClayTooltipProvider>
 					<a
 						className="btn btn-secondary btn-sm font-weight-medium mb-1 mt-3"
-						data-testid="submissionPageButton"
 						data-tooltip-align="bottom"
 						data-tooltip-delay="0"
 						href={`/group/control_panel/manage/-/workflow_instance/view/${id}`}
@@ -188,10 +187,7 @@ const SectionTitle = ({children, className = ''}) => {
 
 const SectionSubTitle = ({children}) => {
 	return (
-		<h5
-			className="font-weight-medium mb-4 mt-4 text-secondary"
-			data-testid="instanceSectionSubTitle"
-		>
+		<h5 className="font-weight-medium mb-4 mt-4 text-secondary">
 			{children}
 		</h5>
 	);
@@ -208,11 +204,7 @@ const SectionAttribute = ({description, detail}) => {
 				{`${description}`}
 			</ClayLayout.Col>
 
-			<ClayLayout.Col
-				className="small"
-				containerElement="span"
-				data-testid="instanceDetailSpan"
-			>
+			<ClayLayout.Col className="small" containerElement="span">
 				{detail}
 			</ClayLayout.Col>
 		</ClayLayout.Row>
@@ -263,20 +255,14 @@ const SLAResultItem = ({dateOverdue, name, onTime, remainingTime, status}) => {
 	return (
 		<div className="sla-result">
 			<span className={`bg-${bgColor}-light inline-item sticker`}>
-				<ClayIcon
-					className={`text-${bgColor}`}
-					data-testid="resultIcon"
-					symbol={iconName}
-				/>
+				<ClayIcon className={`text-${bgColor}`} symbol={iconName} />
 			</span>
 
 			<span className="font-weight-medium small text-secondary">
 				{`${name}`}{' '}
 			</span>
 
-			<span className="small" data-testid="resultStatus">
-				{getStatusText(status)}
-			</span>
+			<span className="small">{getStatusText(status)}</span>
 		</div>
 	);
 };

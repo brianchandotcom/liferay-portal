@@ -23,7 +23,7 @@ const IndexesPage = () => {
 
 	return (
 		<ClayLayout.ContainerFluid>
-			<h3 className="font-weight-semi-bold my-4" data-testid="pageTitle">
+			<h3 className="font-weight-semi-bold my-4">
 				{Liferay.Language.get('workflow-index-actions')}
 			</h3>
 

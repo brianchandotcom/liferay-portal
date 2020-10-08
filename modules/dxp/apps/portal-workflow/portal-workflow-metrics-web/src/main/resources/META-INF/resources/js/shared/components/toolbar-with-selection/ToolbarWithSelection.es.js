@@ -36,7 +36,6 @@ const ToolbarWithSelection = ({
 				<ClayManagementToolbar.Item className="ml-2">
 					<ClayCheckbox
 						checked={checked}
-						data-testid="checkAllButton"
 						indeterminate={indeterminate}
 						onChange={handleCheck}
 					/>
@@ -45,10 +44,7 @@ const ToolbarWithSelection = ({
 				{active && (
 					<>
 						<ClayManagementToolbar.Item>
-							<span
-								className="ml-0 mr-0 navbar-text"
-								data-testid="toolbarLabel"
-							>
+							<span className="ml-0 mr-0 navbar-text">
 								{selectAll
 									? Liferay.Language.get('all-selected')
 									: sub(
@@ -63,7 +59,6 @@ const ToolbarWithSelection = ({
 						<ClayManagementToolbar.Item>
 							<button
 								className="btn btn-sm btn-unstyled font-weight-bold nav-link"
-								data-testid="clear"
 								onClick={handleClear}
 							>
 								{Liferay.Language.get('clear')}
@@ -74,7 +69,6 @@ const ToolbarWithSelection = ({
 							<ClayManagementToolbar.Item>
 								<button
 									className="btn btn-sm btn-unstyled font-weight-bold nav-link"
-									data-testid="selectAll"
 									onClick={handleSelectAll}
 								>
 									{Liferay.Language.get('select-all')}

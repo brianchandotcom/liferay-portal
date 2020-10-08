@@ -19,7 +19,6 @@ const IconItem = ({icon, onClick}) => {
 		<>
 			<button
 				className="component-action quick-action-item"
-				data-testid="iconItemButton"
 				onClick={onClick}
 				role="button"
 			>
@@ -42,7 +41,6 @@ const QuickActionKebab = ({
 
 	dropDownItems = dropDownItems.map((item) => ({
 		...item,
-		['data-testid']: 'kebabDropItems',
 	}));
 
 	return (
@@ -69,7 +67,6 @@ const KebabDropDown = ({disabled, items}) => {
 			trigger={
 				<ClayButton
 					className="component-action"
-					data-testid="kebab"
 					disabled={disabled}
 					displayType="unstyled"
 					monospaced

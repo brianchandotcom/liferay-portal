@@ -105,17 +105,12 @@ const SingleTransitionModal = () => {
 	return (
 		<>
 			{visibleModal === 'singleTransition' && (
-				<ClayModal
-					data-testid="transitionModal"
-					observer={observer}
-					size="md"
-				>
+				<ClayModal observer={observer} size="md">
 					<ClayModal.Header>{title}</ClayModal.Header>
 
 					{errorToast && (
 						<ClayAlert
 							className="mb-0"
-							data-testid="alertError"
 							displayType="danger"
 							title={Liferay.Language.get('error')}
 						>
@@ -141,17 +136,13 @@ const SingleTransitionModal = () => {
 							<>
 								<ClayButton
 									className="mr-3"
-									data-testid="cancelButton"
 									displayType="secondary"
 									onClick={onClose}
 								>
 									{Liferay.Language.get('cancel')}
 								</ClayButton>
 
-								<ClayButton
-									data-testid="doneButton"
-									onClick={handleDone}
-								>
+								<ClayButton onClick={handleDone}>
 									{Liferay.Language.get('done')}
 								</ClayButton>
 							</>

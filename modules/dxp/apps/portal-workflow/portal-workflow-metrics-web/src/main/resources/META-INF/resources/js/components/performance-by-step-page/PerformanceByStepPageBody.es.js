@@ -34,10 +34,7 @@ const Body = ({filtered, items, page, pageSize, totalCount}) => {
 	);
 
 	return (
-		<ClayLayout.ContainerFluid
-			className="mt-4 workflow-process-dashboard"
-			data-testid="performanceByStepBody"
-		>
+		<ClayLayout.ContainerFluid className="mt-4 workflow-process-dashboard">
 			<ContentView {...statesProps}>
 				{totalCount > 0 && (
 					<>

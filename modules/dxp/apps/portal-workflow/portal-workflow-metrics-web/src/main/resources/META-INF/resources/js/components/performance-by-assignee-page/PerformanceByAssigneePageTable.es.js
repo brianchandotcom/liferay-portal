@@ -21,26 +21,18 @@ const Item = ({assignee: {image, name}, durationTaskAvg, id, taskCount}) => {
 
 	return (
 		<ClayTable.Row>
-			<ClayTable.Cell data-testid="assigneeProfileInfo">
+			<ClayTable.Cell>
 				<UserAvatar className="mr-3" image={image} />
 
-				<span data-testid="assigneeName">{name || id}</span>
+				<span>{name || id}</span>
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>
-				<span
-					className="task-count-value text-right"
-					data-testid="taskCount"
-				>
-					{taskCount}
-				</span>
+				<span className="task-count-value text-right">{taskCount}</span>
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>
-				<span
-					className="task-count-value text-right"
-					data-testid="durationTaskAvg"
-				>
+				<span className="task-count-value text-right">
 					{formattedDuration}
 				</span>
 			</ClayTable.Cell>

@@ -17,7 +17,6 @@ import React from 'react';
 import StepBar from '../step-bar/StepBar.es';
 
 const ModalWithSteps = ({
-	dataTestId = 'modalWithSteps',
 	error,
 	modalSize = 'lg',
 	observer,
@@ -28,17 +27,12 @@ const ModalWithSteps = ({
 	return (
 		<>
 			{visible && (
-				<ClayModal
-					data-testid={dataTestId}
-					observer={observer}
-					size={modalSize}
-				>
+				<ClayModal observer={observer} size={modalSize}>
 					<ClayModal.Header>{step.title}</ClayModal.Header>
 
 					{error && (
 						<ClayAlert
 							className="mb-0"
-							data-testid="alertError"
 							displayType="danger"
 							title={Liferay.Language.get('error')}
 						>
@@ -58,7 +52,6 @@ const ModalWithSteps = ({
 						first={
 							step.cancelBtn && (
 								<ClayButton
-									data-testid="cancelButton"
 									disabled={step.cancelBtn.disabled}
 									displayType="secondary"
 									onClick={step.cancelBtn.handle}
@@ -72,7 +65,6 @@ const ModalWithSteps = ({
 								{step.previousBtn && (
 									<ClayButton
 										className="mr-3"
-										data-testid="previousButton"
 										disabled={step.previousBtn.disabled}
 										displayType="secondary"
 										onClick={step.previousBtn.handle}
@@ -82,7 +74,6 @@ const ModalWithSteps = ({
 								)}
 
 								<ClayButton
-									data-testid="nextButton"
 									disabled={step.nextBtn.disabled}
 									onClick={step.nextBtn.handle}
 								>

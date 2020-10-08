@@ -38,11 +38,7 @@ const Item = ({totalCount, ...task}) => {
 	return (
 		<ClayTable.Row className={checked ? 'table-active' : ''}>
 			<ClayTable.Cell>
-				<ClayCheckbox
-					checked={checked}
-					data-testid="itemCheckbox"
-					onChange={handleCheck}
-				/>
+				<ClayCheckbox checked={checked} onChange={handleCheck} />
 			</ClayTable.Cell>
 
 			<ClayTable.Cell className="font-weight-bold">
@@ -62,7 +58,7 @@ const Item = ({totalCount, ...task}) => {
 
 const Table = ({items, totalCount}) => {
 	return (
-		<ClayTable data-testid="selectTaskStepTable">
+		<ClayTable>
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell

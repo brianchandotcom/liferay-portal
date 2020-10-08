@@ -21,7 +21,7 @@ const UserAvatar = ({className, image}) => {
 
 	return (
 		<span className={avatarClassName}>
-			<span className="sticker-overlay" data-testid="assigneeImage">
+			<span className="sticker-overlay">
 				{image ? (
 					<img className="img-fluid" src={image} />
 				) : (

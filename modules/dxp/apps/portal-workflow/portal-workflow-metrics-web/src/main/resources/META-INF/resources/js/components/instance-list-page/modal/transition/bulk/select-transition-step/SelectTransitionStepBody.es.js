@@ -96,7 +96,7 @@ const Body = ({data, setRetry, tasks}) => {
 	);
 
 	return (
-		<ClayModal.Body data-testid="selectTransitionStep">
+		<ClayModal.Body>
 			<ContentView {...statesProps}>
 				{versionedCards.map((versionedCard, versionIndex) =>
 					versionedCard.map(([taskLabel, tasks], cardIndex) => (

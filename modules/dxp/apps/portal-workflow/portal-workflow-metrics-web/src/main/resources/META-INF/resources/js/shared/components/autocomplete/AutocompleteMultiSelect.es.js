@@ -164,7 +164,6 @@ const AutocompleteMultiSelect = ({
 
 					<input
 						className="form-control-inset"
-						data-testid="multiSelectInput"
 						onChange={({target}) => setSearch(target.value)}
 						onFocus={handleFocus}
 						onKeyDown={handleKeyDown}
@@ -201,18 +200,13 @@ const AutocompleteMultiSelect = ({
 
 const Item = ({key, name, onRemove}) => {
 	return (
-		<span
-			className="label label-dismissible label-secondary"
-			data-testid="multiSelectItem"
-			key={key}
-		>
+		<span className="label label-dismissible label-secondary" key={key}>
 			<span className="label-item label-item-expand">{name}</span>
 
 			<span className="label-item label-item-after">
 				<button
 					aria-label="Close"
 					className="close"
-					data-testid="multiSelectItemRemove"
 					onClick={onRemove}
 					type="button"
 				>

@@ -30,21 +30,16 @@ const Item = ({
 
 	return (
 		<ClayTable.Row>
-			<ClayTable.Cell className="table-title" data-testid="stepName">
-				{label}
-			</ClayTable.Cell>
+			<ClayTable.Cell className="table-title">{label}</ClayTable.Cell>
 
-			<ClayTable.Cell className="text-right" data-testid="stepSla">
+			<ClayTable.Cell className="text-right">
 				{isValidNumber(breachedInstanceCount)
 					? breachedInstanceCount
 					: 0}{' '}
 				({formattedPercentage})
 			</ClayTable.Cell>
 
-			<ClayTable.Cell
-				className="text-right"
-				data-testid="durationTaskAvg"
-			>
+			<ClayTable.Cell className="text-right">
 				{formattedDuration}
 			</ClayTable.Cell>
 		</ClayTable.Row>

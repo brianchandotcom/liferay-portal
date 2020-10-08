@@ -41,7 +41,6 @@ const Body = ({items = []}) => {
 				>
 					<ClayList.ItemField
 						className="font-weight-semi-bold"
-						data-testid="reindexAllLabel"
 						expand
 					>
 						{Liferay.Language.get('workflow-indexes')}
@@ -49,13 +48,9 @@ const Body = ({items = []}) => {
 
 					<ClayList.ItemField>
 						{isReindexing(ALL_INDEXES_KEY) ? (
-							<ClayProgressBar
-								data-testid="reindexAllStatus"
-								value={completionPercentage}
-							/>
+							<ClayProgressBar value={completionPercentage} />
 						) : (
 							<ClayButton
-								data-testid="reindexAllBtn"
 								displayType="primary"
 								onClick={() => handleReindex(ALL_INDEXES_KEY)}
 								small

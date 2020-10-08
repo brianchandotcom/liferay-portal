@@ -117,7 +117,6 @@ const UpdateDueDateStep = ({className, dueDate = new Date()}) => {
 
 						<MaskedInput
 							className="form-control"
-							data-testid="dateInput"
 							mask={dateMask}
 							onChange={({target}) => setDate(target.value)}
 							placeholder={dateFormat}
@@ -140,7 +139,6 @@ const UpdateDueDateStep = ({className, dueDate = new Date()}) => {
 
 					<textarea
 						className="form-control"
-						data-testid="commentInput"
 						onChange={({target}) => setComment(target.value)}
 						placeholder={Liferay.Language.get('write-a-note')}
 					/>
@@ -171,10 +169,8 @@ const TimePickerInputWithOptions = ({format, isAmPm, setValue, value}) => {
 			className={`form-group-item form-group-item-label-spacer ${
 				invalidTime ? 'has-error' : ''
 			}`}
-			data-testid="timePicker"
 		>
 			<ClayInput
-				data-testid="timeInput"
 				onBlur={() => setShowOptions(false)}
 				onChange={({target}) => setValue(target.value)}
 				onFocus={() => setShowOptions(true)}
@@ -193,7 +189,6 @@ const TimePickerInputWithOptions = ({format, isAmPm, setValue, value}) => {
 						<div className="popover-body">
 							{options.map((option, index) => (
 								<li
-									data-testid="timeListItem"
 									key={index}
 									onMouseDown={() => setValue(option)}
 								>

@@ -93,15 +93,11 @@ const Item = ({totalCount, ...instance}) => {
 	};
 
 	return (
-		<ClayTable.Row
-			className={checked ? 'table-active' : ''}
-			data-testid="instanceRow"
-		>
+		<ClayTable.Row className={checked ? 'table-active' : ''}>
 			<ClayTable.Cell>
 				<div className="table-first-element-group">
 					<ClayCheckbox
 						checked={checked}
-						data-testid="instanceCheckbox"
 						disabled={disableCheckbox}
 						onChange={handleCheck}
 					/>
@@ -112,7 +108,6 @@ const Item = ({totalCount, ...instance}) => {
 						<span className="inline-item">
 							<ClayIcon
 								className={slaStatusIcon.iconColor}
-								data-testid="statusIcon"
 								symbol={slaStatusIcon.iconName}
 							/>
 						</span>
@@ -123,7 +118,6 @@ const Item = ({totalCount, ...instance}) => {
 			<ClayTable.Cell>
 				<span
 					className="link-text"
-					data-testid="instanceIdLink"
 					onClick={() => {
 						setInstanceId(id);
 
@@ -135,23 +129,15 @@ const Item = ({totalCount, ...instance}) => {
 				</span>
 			</ClayTable.Cell>
 
-			<ClayTable.Cell data-testid="assetInfoCell">
-				{`${assetType}: ${assetTitle}`}
-			</ClayTable.Cell>
+			<ClayTable.Cell>{`${assetType}: ${assetTitle}`}</ClayTable.Cell>
 
-			<ClayTable.Cell data-testid="taskNamesCell">
-				{formattedTaskNames}
-			</ClayTable.Cell>
+			<ClayTable.Cell>{formattedTaskNames}</ClayTable.Cell>
 
-			<ClayTable.Cell data-testid="assigneesCell">
-				{formattedAssignees}
-			</ClayTable.Cell>
+			<ClayTable.Cell>{formattedAssignees}</ClayTable.Cell>
 
-			<ClayTable.Cell data-testid="creatorCell">
-				{creator ? creator.name : ''}
-			</ClayTable.Cell>
+			<ClayTable.Cell>{creator ? creator.name : ''}</ClayTable.Cell>
 
-			<ClayTable.Cell data-testid="dateCreatedCell">
+			<ClayTable.Cell>
 				{moment
 					.utc(dateCreated)
 					.format(Liferay.Language.get('mmm-dd-yyyy-lt'))}

@@ -24,15 +24,11 @@ const DropDown = ({
 }) => {
 	return (
 		<ClayAutocomplete.DropDown active={active}>
-			<ClayDropDown.ItemList
-				data-testid="dropDownList"
-				id={`dropDownList${id}`}
-			>
+			<ClayDropDown.ItemList id={`dropDownList${id}`}>
 				{items.length > 0 ? (
 					items.map((item, index) => (
 						<ClayAutocomplete.Item
 							className={index === activeItem ? 'active' : ''}
-							data-testid="dropDownListItem"
 							key={index}
 							match={match}
 							onMouseDown={() => onSelect(item)}
@@ -41,10 +37,7 @@ const DropDown = ({
 						/>
 					))
 				) : (
-					<ClayDropDown.Item
-						className="disabled"
-						data-testid="dropDownEmpty"
-					>
+					<ClayDropDown.Item className="disabled">
 						{Liferay.Language.get('no-results-were-found')}
 					</ClayDropDown.Item>
 				)}

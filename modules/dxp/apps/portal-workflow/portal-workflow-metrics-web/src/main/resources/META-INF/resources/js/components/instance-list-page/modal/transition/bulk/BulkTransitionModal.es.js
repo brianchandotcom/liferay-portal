@@ -200,7 +200,6 @@ const BulkTransitionModal = () => {
 
 	return (
 		<ModalWithSteps
-			dataTestId="bulkTransitionModal"
 			error={errorToast}
 			observer={observer}
 			step={step}

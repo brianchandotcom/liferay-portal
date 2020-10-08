@@ -83,7 +83,7 @@ const Item = ({
 
 const Table = ({data, items}) => {
 	return (
-		<ClayTable data-testid="bulkReassignModalTable">
+		<ClayTable>
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell

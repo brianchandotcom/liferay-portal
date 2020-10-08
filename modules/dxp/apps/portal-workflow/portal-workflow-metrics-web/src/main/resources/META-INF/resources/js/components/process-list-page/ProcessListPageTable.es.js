@@ -23,7 +23,7 @@ const Item = ({
 }) => {
 	return (
 		<ClayTable.Row>
-			<ClayTable.Cell className="table-title" data-testid="processName">
+			<ClayTable.Cell className="table-title">
 				<ChildLink to={`/metrics/${id}`}>{title}</ChildLink>
 			</ClayTable.Cell>
 

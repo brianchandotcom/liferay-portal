@@ -197,7 +197,7 @@ const Header = ({
 			>
 				{toolbarActive ? (
 					<ClayManagementToolbar.Item className="navbar-nav-last">
-						<ClayLayout.ContentCol data-testid="headerQuickAction">
+						<ClayLayout.ContentCol>
 							<QuickActionKebab items={kebabItems} />
 						</ClayLayout.ContentCol>
 					</ClayManagementToolbar.Item>

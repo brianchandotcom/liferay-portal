@@ -142,11 +142,7 @@ const SingleUpdateDueDateModal = () => {
 		<>
 			<PromisesResolver promises={promises}>
 				{visibleModal === 'updateDueDate' && (
-					<ClayModal
-						data-testid="updateDueDateModal"
-						observer={observer}
-						size="md"
-					>
+					<ClayModal observer={observer} size="md">
 						<ClayModal.Header>
 							{Liferay.Language.get('update-task-due-date')}
 						</ClayModal.Header>
@@ -154,7 +150,6 @@ const SingleUpdateDueDateModal = () => {
 						{errorToast && (
 							<ClayAlert
 								className="mb-0"
-								data-testid="alertError"
 								displayType="danger"
 								title={Liferay.Language.get('error')}
 							>
@@ -171,7 +166,6 @@ const SingleUpdateDueDateModal = () => {
 								<>
 									<ClayButton
 										className="mr-3"
-										data-testid="cancelButton"
 										disabled={sendingPost}
 										displayType="secondary"
 										onClick={onClose}
@@ -180,7 +174,6 @@ const SingleUpdateDueDateModal = () => {
 									</ClayButton>
 
 									<ClayButton
-										data-testid="doneButton"
 										disabled={sendingPost || !dueDate}
 										onClick={handleDone}
 									>

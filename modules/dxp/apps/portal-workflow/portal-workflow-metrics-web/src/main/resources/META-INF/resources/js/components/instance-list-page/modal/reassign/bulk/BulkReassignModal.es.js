@@ -198,7 +198,6 @@ const BulkReassignModal = () => {
 
 	return (
 		<ModalWithSteps
-			dataTestId="bulkReassignModal"
 			error={errorToast}
 			observer={observer}
 			step={step}

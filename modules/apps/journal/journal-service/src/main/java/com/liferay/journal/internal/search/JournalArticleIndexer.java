@@ -31,6 +31,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -958,6 +959,12 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _deleteDocument(JournalArticle article) throws Exception {
+		if ((article.getCtCollectionId() == 0) &&
+			!CTCollectionThreadLocal.isProductionMode()) {
+
+			return;
+		}
+
 		deleteDocument(
 			article.getCompanyId(), "UID=" + uidFactory.getUID(article));
 	}
@@ -986,8 +993,17 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		if (isIndexAllArticleVersions()) {
 			List<Document> documents = new ArrayList<>(journalArticles.size());
 
-			for (JournalArticle journalArticle : journalArticles) {
-				documents.add(getDocument(journalArticle));
+			if (CTCollectionThreadLocal.isProductionMode()) {
+				for (JournalArticle journalArticle : journalArticles) {
+					documents.add(getDocument(journalArticle));
+				}
+			}
+			else {
+				for (JournalArticle journalArticle : journalArticles) {
+					if (journalArticle.getCtCollectionId() != 0) {
+						documents.add(getDocument(journalArticle));
+					}
+				}
 			}
 
 			_indexWriterHelper.updateDocuments(

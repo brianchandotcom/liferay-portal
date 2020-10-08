@@ -52,6 +52,43 @@ definition {
 		}
 	}
 
+	@description = "LRQA-53646 - Automate LPS-88573: Search and order the reports list"
+	@priority = "5"
+	test ValidateWorkflowProcessListOnMetrics {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 1");
+		PortletEntry.publish();
+		Navigator.gotoBack();
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 2");
+		PortletEntry.publish();
+		Navigator.gotoBack();
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 3");
+		PortletEntry.publish();
+		Navigator.gotoBack();
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 4");
+		PortletEntry.publish();
+		Navigator.gotoBack();
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "New Workflow 3");
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "New Workflow 4");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "Single Approver");
+		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 1");
+		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 2");
+		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 3");
+		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 4");
+	}
+
 	@description = "LRQA-53648 Automate LPS-89014: [SLA] Create new SLA for total process resolution"
 	@priority = "5"
 	test AddSLAForTotalProcessResolution {

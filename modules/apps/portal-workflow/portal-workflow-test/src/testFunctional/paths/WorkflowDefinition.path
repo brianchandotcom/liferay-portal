@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_DEFINITION_UNPUBLISHED_EXTRA_ELLIPSIS</td>
-	<td>//tbody//tr[4]//td[4]//div/a</td>
+	<td>//tbody//tr[4]//td[4]//div/a | //tbody//tr[5]//td[4]//div/a</td>
 	<td></td>
 </tr>
 <tr>

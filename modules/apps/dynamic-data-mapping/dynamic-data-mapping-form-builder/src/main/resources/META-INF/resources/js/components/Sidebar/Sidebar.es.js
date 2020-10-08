@@ -31,6 +31,7 @@ import {EventHandler} from 'metal-events';
 import Component, {Fragment} from 'metal-jsx';
 import {Config} from 'metal-state';
 
+import RulesSupport from '../../components/RuleBuilder/RulesSupport.es';
 import {focusedFieldStructure} from '../../util/config.es';
 import {selectText} from '../../util/dom.es';
 import {
@@ -328,6 +329,36 @@ class Sidebar extends Component {
 						'cancel-field-changes-question'
 					)}
 				/>
+				<ClayModal
+					body={Liferay.Language.get(
+						'a-rule-is-applied-to-this-field'
+					)}
+					elementClasses={'lfr-ddm-forms-delete-rule'}
+					events={{
+						clickButton: this._handleDeleteFieldModalButtonClicked.bind(
+							this
+						),
+					}}
+					footerButtons={[
+						{
+							alignment: 'right',
+							label: Liferay.Language.get('cancel'),
+							style: 'secondary',
+							type: 'close',
+						},
+						{
+							alignment: 'right',
+							label: Liferay.Language.get('delete'),
+							style: 'primary',
+							type: 'button',
+						},
+					]}
+					ref={'existingRuleModal'}
+					size={'lg'}
+					title={Liferay.Language.get(
+						'delete-field-with-rule-applied'
+					)}
+				/>
 			</div>
 		);
 	}
@@ -531,6 +562,14 @@ class Sidebar extends Component {
 		this.close();
 	}
 
+	_handleDeleteFieldModalButtonClicked(event) {
+		const {fieldName} = this.refs.existingRuleModal.data;
+
+		if (event.target.classList.contains('btn-primary')) {
+			this._deleteField(fieldName);
+		}
+	}
+
 	_handleDocumentMouseDown({target}) {
 		const {transitionEnd} = this;
 		const {open} = this.state;
@@ -691,7 +730,18 @@ class Sidebar extends Component {
 				this._duplicateField(fieldName);
 			}
 			else if (settingsItem === 'delete-field') {
-				this._deleteField(fieldName);
+				const {rules} = this.props;
+
+				if (RulesSupport.findRuleByFieldName(fieldName, rules)) {
+					this.refs.existingRuleModal.data = {
+						fieldName,
+					};
+
+					this.refs.existingRuleModal.show();
+				}
+				else {
+					this._deleteField(fieldName);
+				}
 			}
 			else if (settingsItem === 'cancel-field-changes') {
 				this._cancelFieldChanges(indexes);

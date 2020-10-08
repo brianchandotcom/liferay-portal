@@ -22,7 +22,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
-import com.liferay.portal.file.install.internal.manifest.Parser;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,6 +38,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -354,7 +354,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			String importHeader = header.get(Constants.IMPORT_PACKAGE);
 
-			Map<String, Map<String, String>> imports = Parser.parseHeader(
+			Map<String, Map<String, String>> imports = _parseHeader(
 				importHeader);
 
 			Collection<Map<String, String>> set = imports.values();
@@ -396,7 +396,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				String bundleExports = headers.get(Constants.EXPORT_PACKAGE);
 
 				if (bundleExports != null) {
-					exportMap.putAll(Parser.parseHeader(bundleExports));
+					exportMap.putAll(_parseHeader(bundleExports));
 				}
 			}
 		}
@@ -833,6 +833,117 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	private boolean _isStateChanged() {
 		return _stateChanged.get();
+	}
+
+	private List<String> _parseDelimitedString(String value, char delimiter) {
+		if (value == null) {
+			return Collections.<String>emptyList();
+		}
+
+		List<String> strings = new ArrayList<>();
+
+		StringBundler sb = new StringBundler();
+
+		boolean inQuotes = false;
+
+		for (int i = 0; i < value.length(); i++) {
+			char c = value.charAt(i);
+
+			if ((c == delimiter) && !inQuotes) {
+				String string = sb.toString();
+
+				strings.add(string.trim());
+
+				sb = new StringBundler();
+			}
+			else if (c == CharPool.QUOTE) {
+				sb.append(c);
+
+				inQuotes = !inQuotes;
+			}
+			else {
+				sb.append(c);
+			}
+		}
+
+		String string = sb.toString();
+
+		string = string.trim();
+
+		if (string.length() > 0) {
+			strings.add(string);
+		}
+
+		return strings;
+	}
+
+	private Map<String, Map<String, String>> _parseHeader(String header)
+		throws IllegalArgumentException {
+
+		List<String> imports = _parseDelimitedString(header, CharPool.COMMA);
+
+		Map<String, Map<String, String>> headers = _parseImports(imports);
+
+		if (headers == null) {
+			return Collections.emptyMap();
+		}
+
+		return headers;
+	}
+
+	private Map<String, Map<String, String>> _parseImports(
+		List<String> imports) {
+
+		if (imports == null) {
+			return null;
+		}
+
+		Map<String, Map<String, String>> finalImports = new HashMap<>();
+
+		for (String clause : imports) {
+			List<String> tokens = _parseDelimitedString(
+				clause, CharPool.SEMICOLON);
+
+			List<String> paths = new ArrayList<>();
+
+			Map<String, String> attributes = new HashMap<>();
+
+			for (String token : tokens) {
+				int index = token.indexOf(StringPool.EQUAL);
+
+				if (index == -1) {
+					paths.add(token);
+
+					continue;
+				}
+
+				String key = token.substring(0, index);
+
+				if (token.charAt(index - 1) == CharPool.COLON) {
+					key = key.substring(0, key.length() - 1);
+				}
+
+				key = key.trim();
+
+				String value = token.substring(index + 1);
+
+				value = value.trim();
+
+				if (value.startsWith(StringPool.QUOTE) &&
+					value.endsWith(StringPool.QUOTE)) {
+
+					value = value.substring(1, value.length() - 1);
+				}
+
+				attributes.put(key, value);
+			}
+
+			for (String path : paths) {
+				finalImports.put(path, attributes);
+			}
+		}
+
+		return finalImports;
 	}
 
 	private void _process(Set<File> files) throws InterruptedException {

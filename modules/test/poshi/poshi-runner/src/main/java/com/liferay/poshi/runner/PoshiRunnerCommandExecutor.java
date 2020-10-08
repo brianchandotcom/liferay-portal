@@ -103,7 +103,9 @@ public class PoshiRunnerCommandExecutor {
 	protected static void executePQLQuery() throws Exception {
 		System.out.println("Executing task: executePQLQuery");
 
-		PoshiContext.executePQLQuery();
+		for (String classCommandName : PoshiContext.executePQLQuery()) {
+			System.out.println(classCommandName);
+		}
 	}
 
 	protected static void populateSystemProperties() throws Exception {

@@ -49,11 +49,7 @@ public class TypedProperties {
 
 		String string = entry.getKey();
 
-		if (string != null) {
-			return _convertFromString(string);
-		}
-
-		return string;
+		return _convertFromString(string);
 	}
 
 	public Set<String> keySet() {

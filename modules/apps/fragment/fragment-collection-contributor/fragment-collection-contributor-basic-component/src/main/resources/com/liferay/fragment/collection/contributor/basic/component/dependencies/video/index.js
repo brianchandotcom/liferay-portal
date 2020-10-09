@@ -87,14 +87,20 @@ const youtubeProvider = {
 			const videoId = url.searchParams.get('v');
 
 			if (videoId) {
-				return {videoId: videoId, start: start};
+				return {
+					start: start,
+					videoId: videoId,
+				};
 			}
 		}
 		else if (['www.youtu.be', 'youtu.be'].includes(url.hostname)) {
 			const videoId = url.pathname.substr(1);
 
 			if (videoId) {
-				return {videoId: videoId, start: start};
+				return {
+					start: start,
+					videoId: videoId,
+				};
 			}
 		}
 	},
@@ -102,18 +108,6 @@ const youtubeProvider = {
 	showVideo: function (parameters) {
 		const handleAPIReady = function () {
 			const player = new YT.Player(videoContainer, {
-				height: height,
-				width: width,
-				videoId: parameters.videoId,
-				playerVars: {
-					autoplay: configuration.autoPlay,
-					controls: configuration.hideControls ? 0 : 1,
-					loop: configuration.loop ? 1 : 0,
-					playlist: configuration.loop
-						? parameters.videoId
-						: undefined,
-					start: !parameters.start ? 0 : parameters.start,
-				},
 				events: {
 					onReady: function () {
 						if (configuration.mute) {
@@ -123,6 +117,18 @@ const youtubeProvider = {
 						showVideo();
 					},
 				},
+				height: height,
+				playerVars: {
+					autoplay: configuration.autoPlay,
+					controls: configuration.hideControls ? 0 : 1,
+					loop: configuration.loop ? 1 : 0,
+					playlist: configuration.loop
+						? parameters.videoId
+						: undefined,
+					start: !parameters.start ? 0 : parameters.start,
+				},
+				videoId: parameters.videoId,
+				width: width,
 			});
 		};
 

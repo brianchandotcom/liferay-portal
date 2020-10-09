@@ -35,10 +35,10 @@
 
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
-					const linkToLayoutName = document.getElementById(
+					var linkToLayoutName = document.getElementById(
 						'<portlet:namespace />linkToLayoutName'
 					);
-					const linkToLayoutUuid = document.getElementById(
+					var linkToLayoutUuid = document.getElementById(
 						'<portlet:namespace />linkToLayoutUuid'
 					);
 

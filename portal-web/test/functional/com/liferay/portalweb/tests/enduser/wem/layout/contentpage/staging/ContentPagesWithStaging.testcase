@@ -180,13 +180,13 @@ definition {
 
 		for (var i : list "1,2,3") {
 			AssertVisible(
-				key_colPosition = "${i}",
-				key_rowPosition = "1",
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
 				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_DISABLE");
 
 			AssertVisible(
-				key_colPosition = "${i}",
-				key_rowPosition = "1",
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
 				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
 
 			AssertVisible(
@@ -198,9 +198,9 @@ definition {
 
 		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
 			AssertVisible(
-				key_colPosition = "${n}",
+				key_colPosition = "1",
 				key_entryContent = "${content}",
-				key_rowPosition = "1",
+				key_rowPosition = "${n}",
 				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 			var n = ${n} + 1;
@@ -216,13 +216,13 @@ definition {
 
 		for (var i : list "1,2,3") {
 			AssertVisible(
-				key_colPosition = "${i}",
-				key_rowPosition = "1",
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
 				locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
 
 			AssertVisible(
-				key_colPosition = "${i}",
-				key_rowPosition = "1",
+				key_colPosition = "1",
+				key_rowPosition = "${i}",
 				locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
 
 			AssertVisible(
@@ -234,9 +234,9 @@ definition {
 
 		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
 			AssertVisible(
-				key_colPosition = "${n}",
+				key_colPosition = "1",
 				key_entryContent = "${content}",
-				key_rowPosition = "1",
+				key_rowPosition = "${n}",
 				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 			var n = ${n} + 1;
@@ -759,9 +759,9 @@ definition {
 
 		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
 			AssertVisible(
-				key_colPosition = "${n}",
+				key_colPosition = "1",
 				key_entryContent = "${content}",
-				key_rowPosition = "1",
+				key_rowPosition = "${n}",
 				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 			var n = ${n} + 1;
@@ -779,9 +779,9 @@ definition {
 
 		for (var content : list "Web Content Content 3,Web Content Content 2,Web Content Content 1") {
 			AssertVisible(
-				key_colPosition = "${n}",
+				key_colPosition = "1",
 				key_entryContent = "${content}",
-				key_rowPosition = "1",
+				key_rowPosition = "${n}",
 				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 			var n = ${n} + 1;

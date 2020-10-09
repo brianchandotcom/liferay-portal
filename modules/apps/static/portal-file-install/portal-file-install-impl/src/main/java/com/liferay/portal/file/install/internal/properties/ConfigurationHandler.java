@@ -509,7 +509,7 @@ public class ConfigurationHandler {
 		}
 	}
 
-	private static final String _COLLECTION_LINE_BREAK = " \\\r\n";
+	private static final String _COLLECTION_LINE_BREAK = "\\\r\n";
 
 	private static final String _INDENT = "  ";
 

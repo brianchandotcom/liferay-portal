@@ -12,18 +12,25 @@
  * details.
  */
 
-const CHECK_AND_FIX_GLOBS = [
-	'!tsconfig.json',
-	'/{,dxp/}*.{js,ts}',
-	'/{,dxp/}apps/*/*/*.{js,json,ts,tsx}',
-	'/{,dxp/}apps/*/*/*/{src,test}/**/*.{js,scss,ts,tsx}',
-	'/{,dxp/}apps/*/*/*/{src}/**/*.{jsp,jspf}',
-	'/{,dxp/}apps/*/*/{src,test}/**/*.{js,scss,ts,tsx}',
-	'/{,dxp/}apps/*/*/{src}/**/*.{jsp,jspf}',
-];
-
 module.exports = {
-	check: CHECK_AND_FIX_GLOBS,
-	fix: CHECK_AND_FIX_GLOBS,
-	preset: '@liferay/npm-scripts/src/presets/standard',
+	globals: {
+		YT: true,
+		configuration: true,
+		fragmentElement: true,
+		fragmentNamespace: true,
+	},
+	overrides: [
+		{
+			files: '**/src/**/*.js',
+			rules: {
+
+				// For IE compatibility because JS here doesn't get transpiled.
+
+				'notice/notice': 'off',
+				'object-shorthand': 'off',
+				'prefer-arrow-callback': 'off',
+				'prefer-object-spread': 'off',
+			},
+		},
+	],
 };

@@ -15,6 +15,7 @@
 package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -24,12 +25,17 @@ import java.util.Arrays;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Matthew Tambara
  */
 public class TypedPropertiesTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor coverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testKeySet() throws IOException {

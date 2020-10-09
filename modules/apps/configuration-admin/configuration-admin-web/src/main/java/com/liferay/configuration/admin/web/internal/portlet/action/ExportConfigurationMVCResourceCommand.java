@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -254,6 +255,13 @@ public class ExportConfigurationMVCResourceCommand
 
 		if (Validator.isNotNull(factoryPid) && !factoryPid.equals(pid)) {
 			String factoryInstanceId = pid.substring(factoryPid.length() + 1);
+
+			if (factoryInstanceId.startsWith("scoped")) {
+				factoryPid = factoryPid + ".scoped";
+
+				factoryInstanceId = StringUtil.removeSubstring(
+					factoryInstanceId, "scoped.");
+			}
 
 			fileName = factoryPid + StringPool.DASH + factoryInstanceId;
 		}

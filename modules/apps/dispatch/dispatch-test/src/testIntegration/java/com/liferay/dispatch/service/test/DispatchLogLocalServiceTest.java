@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.exception.DispatchLogStartDateException;
 import com.liferay.dispatch.exception.DispatchLogStatusException;
 import com.liferay.dispatch.exception.NoSuchTriggerException;
+import com.liferay.dispatch.executor.TaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
@@ -77,7 +78,8 @@ public class DispatchLogLocalServiceTest {
 			_dispatchLogLocalService.addDispatchLog(
 				user.getUserId(), 444, dispatchLog.getEndDate(),
 				dispatchLog.getError(), dispatchLog.getOutput(),
-				dispatchLog.getStartDate(), dispatchLog.getStatus());
+				dispatchLog.getStartDate(),
+				TaskStatus.valueOf(dispatchLog.getStatus()));
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -96,7 +98,8 @@ public class DispatchLogLocalServiceTest {
 			_dispatchLogLocalService.addDispatchLog(
 				user.getUserId(), dispatchTrigger.getDispatchTriggerId(),
 				new Date(startDate.getTime() - 60000), dispatchLog.getError(),
-				dispatchLog.getOutput(), startDate, dispatchLog.getStatus());
+				dispatchLog.getOutput(), startDate,
+				TaskStatus.valueOf(dispatchLog.getStatus()));
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -109,7 +112,7 @@ public class DispatchLogLocalServiceTest {
 		try {
 			_dispatchLogLocalService.addDispatchLog(
 				user.getUserId(), dispatchTrigger.getDispatchTriggerId(), null,
-				null, null, null, dispatchLog.getStatus());
+				null, null, null, TaskStatus.valueOf(dispatchLog.getStatus()));
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -123,8 +126,7 @@ public class DispatchLogLocalServiceTest {
 			_dispatchLogLocalService.addDispatchLog(
 				user.getUserId(), dispatchTrigger.getDispatchTriggerId(),
 				dispatchLog.getEndDate(), dispatchLog.getError(),
-				dispatchLog.getOutput(), dispatchLog.getStartDate(),
-				BackgroundTaskConstants.STATUS_QUEUED);
+				dispatchLog.getOutput(), dispatchLog.getStartDate(), null);
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -155,7 +157,7 @@ public class DispatchLogLocalServiceTest {
 				user.getUserId(), dispatchTrigger.getDispatchTriggerId(),
 				dispatchLog.getEndDate(), dispatchLog.getError(),
 				dispatchLog.getOutput(), dispatchLog.getStartDate(),
-				dispatchLog.getStatus());
+				TaskStatus.valueOf(dispatchLog.getStatus()));
 		}
 
 		List<DispatchLog> dispatchLogs =
@@ -182,7 +184,7 @@ public class DispatchLogLocalServiceTest {
 		DispatchLog dispatchLog = _dispatchLogLocalService.addDispatchLog(
 			user.getUserId(), dispatchTrigger.getDispatchTriggerId(), null,
 			null, null, expectedDispatchLog.getStartDate(),
-			BackgroundTaskConstants.STATUS_IN_PROGRESS);
+			TaskStatus.IN_PROGRESS);
 
 		Assert.assertNull(dispatchLog.getEndDate());
 
@@ -197,7 +199,7 @@ public class DispatchLogLocalServiceTest {
 		dispatchLog = _dispatchLogLocalService.updateDispatchLog(
 			dispatchLog.getDispatchLogId(), expectedDispatchLog.getEndDate(),
 			expectedDispatchLog.getError(), expectedDispatchLog.getOutput(),
-			expectedDispatchLog.getStatus());
+			TaskStatus.valueOf(expectedDispatchLog.getStatus()));
 
 		Assert.assertEquals(
 			dispatchTrigger.getDispatchTriggerId(),
@@ -223,7 +225,7 @@ public class DispatchLogLocalServiceTest {
 		DispatchLog dispatchLog = _dispatchLogLocalService.addDispatchLog(
 			user.getUserId(), dispatchTrigger.getDispatchTriggerId(), null,
 			null, null, expectedDispatchLog.getStartDate(),
-			expectedDispatchLog.getStatus());
+			TaskStatus.valueOf(expectedDispatchLog.getStatus()));
 
 		try {
 			Date startDate = expectedDispatchLog.getStartDate();
@@ -231,7 +233,7 @@ public class DispatchLogLocalServiceTest {
 			_dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(),
 				new Date(startDate.getTime() - 60000), null, null,
-				BackgroundTaskConstants.STATUS_SUCCESSFUL);
+				TaskStatus.SUCCESSFUL);
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -244,8 +246,7 @@ public class DispatchLogLocalServiceTest {
 		try {
 			_dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(),
-				expectedDispatchLog.getEndDate(), null, null,
-				BackgroundTaskConstants.STATUS_QUEUED);
+				expectedDispatchLog.getEndDate(), null, null, null);
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();

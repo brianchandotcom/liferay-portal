@@ -646,9 +646,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 									newCommentsContainer
 								);
 
-								domAll.globalEval.runScriptsInElement(
-									newCommentsContainer
-								);
+								domAll.globalEval.runScriptsInElement(newCommentsContainer);
 							}
 						})
 						.catch(function () {

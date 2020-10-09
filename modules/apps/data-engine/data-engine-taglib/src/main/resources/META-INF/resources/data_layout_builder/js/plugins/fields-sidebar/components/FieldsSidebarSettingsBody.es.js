@@ -30,7 +30,13 @@ export default function () {
 
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [
-		{config, editingLanguageId, focusedCustomObjectField, focusedField},
+		{
+			config,
+			dataLayout: {dataRules},
+			editingLanguageId,
+			focusedCustomObjectField,
+			focusedField,
+		},
 		dispatch,
 	] = useContext(AppContext);
 	const [activePage, setActivePage] = useState(0);
@@ -101,6 +107,7 @@ export default function () {
 				value={{
 					...filteredSettingsContext,
 					activePage,
+					builderRules: dataRules,
 					editable: true,
 					editingLanguageId,
 					spritemap,

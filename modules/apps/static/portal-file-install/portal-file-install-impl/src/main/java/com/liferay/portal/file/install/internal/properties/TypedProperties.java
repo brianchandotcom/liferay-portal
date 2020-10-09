@@ -115,7 +115,7 @@ public class TypedProperties {
 
 			List<String> layout = valuesEntry.getValue();
 
-			if ((layout == null) || layout.isEmpty()) {
+			if (layout == null) {
 				sb.append(entry.getKey());
 				sb.append(_EQUALS_WITH_SPACES);
 				sb.append(valuesEntry.getKey());

@@ -266,7 +266,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testWriteNontyped() {
+	public void testWriteNontyped() throws IOException {
 		TypedProperties typedProperties = new TypedProperties();
 
 		typedProperties.put("testKey", "testValue");
@@ -275,7 +275,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testWriteTyped() {
+	public void testWriteTyped() throws IOException {
 		TypedProperties typedProperties = new TypedProperties();
 
 		typedProperties.put("testKey", 1);

@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
  */
 public class TypedProperties {
 
-	public Object get(String key) {
+	public Object get(String key) throws IOException {
 		Map.Entry<String, List<String>> entry = _storage.get(key);
 
 		if (entry == null) {
@@ -49,7 +49,7 @@ public class TypedProperties {
 
 		String string = entry.getKey();
 
-		return _convertFromString(string);
+		return ConfigurationHandler.read(string);
 	}
 
 	public Set<String> keySet() {
@@ -70,13 +70,13 @@ public class TypedProperties {
 		_header = propertiesReader.getComment();
 	}
 
-	public void put(String key, Object value) {
+	public void put(String key, Object value) throws IOException {
 		Map.Entry<String, List<String>> oldEntry = _storage.get(key);
 
 		List<String> values = null;
 
 		if (oldEntry != null) {
-			Object oldObject = _convertFromString(oldEntry.getKey());
+			Object oldObject = ConfigurationHandler.read(oldEntry.getKey());
 
 			if (Objects.equals(oldObject, value)) {
 				values = oldEntry.getValue();
@@ -93,7 +93,7 @@ public class TypedProperties {
 		_storage.put(
 			key,
 			new AbstractMap.SimpleImmutableEntry<>(
-				_convertToString(value), values));
+				ConfigurationHandler.write(value), values));
 	}
 
 	public void remove(String key) {
@@ -142,24 +142,6 @@ public class TypedProperties {
 		sb.setIndex(sb.index() - 1);
 
 		writer.write(sb.toString());
-	}
-
-	private Object _convertFromString(String value) {
-		try {
-			return ConfigurationHandler.read(value);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	private String _convertToString(Object value) {
-		try {
-			return ConfigurationHandler.write(value);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	private boolean _isCommentLine(String line) {

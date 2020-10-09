@@ -288,7 +288,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Polls#POLL_QUESTION",
-			value1 = "What is your favorite Liferay portlet?");
+			value1 = "${pollsQuestion}");
 
 		for (var questionChoiceList : list "${pollsQuestionChoiceList}") {
 			var key_pollsQuestionChoice = "${questionChoiceList}";

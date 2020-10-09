@@ -382,7 +382,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-116106. Page Creator can change style book of widget page via Look and Feel settings in Staging site."
+	@description = "This is for LPS-116106 and LPS-121004. Page Creator can change style book of widget page via Look and Feel settings in Staging site."
 	@priority = "3"
 	test ChangeStyleBookOfWidgetPageViaLookAndFeelInStagingSite {
 		task ("Edit the style book and Publish it") {
@@ -407,6 +407,18 @@ definition {
 				key_groupLabel = "Button Secondary",
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#FF0000");
+
+			StyleBooks.waitForAutoSave();
+
+			Pause(locator1 = "3000");
+
+			StyleBooks.expandSection(sectionName = "Button Outline Secondary");
+
+			Type(
+				key_fieldLabel = "Color",
+				key_groupLabel = "Button Outline Secondary",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "#0000FF");
 
 			StyleBooks.waitForAutoSave();
 
@@ -471,6 +483,12 @@ definition {
 				locator1 = "Button#ANY",
 				locator2 = "color",
 				value1 = "rgba(255, 0, 0, 1)");
+
+			AssertCssValue(
+				key_text = "RSS",
+				locator1 = "Button#ANY",
+				locator2 = "color",
+				value1 = "rgba(0, 0, 255, 1)");
 		}
 
 		task ("Change to default style book via Look and Feel") {
@@ -509,6 +527,12 @@ definition {
 
 			AssertCssValue(
 				key_text = "Subscribe",
+				locator1 = "Button#ANY",
+				locator2 = "color",
+				value1 = "rgba(107, 108, 126, 1)");
+
+			AssertCssValue(
+				key_text = "RSS",
 				locator1 = "Button#ANY",
 				locator2 = "color",
 				value1 = "rgba(107, 108, 126, 1)");

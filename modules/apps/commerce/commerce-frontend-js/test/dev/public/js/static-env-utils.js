@@ -12,14 +12,9 @@
  * details.
  */
 
-window.Liferay = {
+const Liferay = {
 	Language: {
-		get(v) {
-			const charZero = v.charAt(0).toUpperCase(),
-				rest = v.substring(1, v.length).split('-').join(' ');
-
-			return `${charZero}${rest}`;
-		},
+		get: (v) => v,
 	},
 	ThemeDisplay: {
 		getCanonicalURL: () => '/',
@@ -53,4 +48,5 @@ window.Liferay = {
 	}),
 };
 
-window.themeDisplay = window.Liferay.ThemeDisplay;
+window.Liferay = Liferay;
+window.themeDisplay = Liferay.ThemeDisplay;

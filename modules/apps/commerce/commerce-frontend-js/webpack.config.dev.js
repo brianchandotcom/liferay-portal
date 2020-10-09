@@ -37,6 +37,9 @@ module.exports = {
 		openPage: 'index.html',
 		port: 9000,
 		proxy: {
+			'/image': {
+				target: 'http://localhost:8080/',
+			},
 			'/o': {
 				target: 'http://localhost:8080/',
 			},

@@ -27,12 +27,13 @@
 		"frontend-js-web": "*"
 	},
 	"devDependencies": {
-		"clay-css": "^2.16.2"
+		"clay-css": "^2.16.2",
+		"faker": "^5.1.0"
 	},
 	"jest": {
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/dev/",
-			"<rootDir>/test/utilities"
+			"<rootDir>/test/test_utilities"
 		]
 	},
 	"main": "index.js",

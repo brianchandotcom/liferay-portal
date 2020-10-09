@@ -23,7 +23,7 @@ launcher('account_selector', 'account-selector', {
 		name: 'My AccountName',
 	},
 	currentOrder: {
-		id: '34234',
+		id: 34234,
 		orderStatusInfo: {
 			label_i18n: 'Completed',
 		},

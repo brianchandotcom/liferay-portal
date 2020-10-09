@@ -14,7 +14,6 @@
 
 package com.liferay.dispatch.executor;
 
-import com.liferay.dispatch.executor.log.ScheduledTaskExecutorDispatchLogs;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
@@ -38,7 +37,7 @@ public abstract class BaseScheduledTaskExecutor
 
 	public abstract void doExecute(
 			DispatchTrigger dispatchTrigger,
-			ScheduledTaskExecutorDispatchLogs scheduledTaskExecutorDispatchLogs)
+			ScheduledTaskExecutorOutput scheduledTaskExecutorOutput)
 		throws IOException, PortalException;
 
 	@Override
@@ -59,23 +58,23 @@ public abstract class BaseScheduledTaskExecutor
 			null, null, null, new Date(),
 			BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
-		ScheduledTaskExecutorDispatchLogs scheduledTaskExecutorDispatchLogs =
-			new ScheduledTaskExecutorDispatchLogs();
+		ScheduledTaskExecutorOutput scheduledTaskExecutorOutput =
+			new ScheduledTaskExecutorOutput();
 
 		try {
-			doExecute(dispatchTrigger, scheduledTaskExecutorDispatchLogs);
+			doExecute(dispatchTrigger, scheduledTaskExecutorOutput);
 
 			dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
-				scheduledTaskExecutorDispatchLogs.getError(),
-				scheduledTaskExecutorDispatchLogs.getOutput(),
+				scheduledTaskExecutorOutput.getError(),
+				scheduledTaskExecutorOutput.getOutput(),
 				BackgroundTaskConstants.STATUS_SUCCESSFUL);
 		}
 		catch (Throwable throwable) {
 			dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
-				scheduledTaskExecutorDispatchLogs.getError(),
-				scheduledTaskExecutorDispatchLogs.getOutput(),
+				scheduledTaskExecutorOutput.getError(),
+				scheduledTaskExecutorOutput.getOutput(),
 				BackgroundTaskConstants.STATUS_FAILED);
 
 			throw throwable;

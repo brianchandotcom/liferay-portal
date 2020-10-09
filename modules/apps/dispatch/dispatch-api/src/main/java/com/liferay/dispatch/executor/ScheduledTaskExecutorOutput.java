@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.dispatch.executor.log;
+package com.liferay.dispatch.executor;
 
 import java.nio.charset.StandardCharsets;
 
 /**
  * @author Matija Petanjek
  */
-public class ScheduledTaskExecutorDispatchLogs {
+public class ScheduledTaskExecutorOutput {
 
 	public String getError() {
 		return _error;

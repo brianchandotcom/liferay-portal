@@ -18,6 +18,7 @@ import React, {useEffect, useState} from 'react';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
+import {config} from '../../../../app/config/index';
 import selectEditableValueContent from '../../../../app/selectors/selectEditableValueContent';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValues';
@@ -164,13 +165,17 @@ export function ImagePropertiesPanel({item}) {
 			imageTitle: imageTitle || '',
 		};
 
+		const nextEditableValueContent = config.adaptiveMediaEnabled
+			? {
+					fileEntryId,
+					url: imageUrl,
+			  }
+			: imageUrl;
+
 		nextEditableValue = {
 			...editableValue,
 			config: nextEditableValueConfig,
-			[state.languageId]: {
-				fileEntryId,
-				url: imageUrl,
-			},
+			[state.languageId]: nextEditableValueContent,
 		};
 
 		const nextEditableValues = {

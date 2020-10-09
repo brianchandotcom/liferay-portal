@@ -13,6 +13,7 @@
  */
 
 import {openImageSelector} from '../../core/openImageSelector';
+import {config} from '../config/index';
 
 /**
  * @param {HTMLElement} element HTMLElement where the editor
@@ -25,17 +26,19 @@ import {openImageSelector} from '../../core/openImageSelector';
  *  to be called if the editor is destroyed with destroyEditor function.
  */
 function createEditor(element, changeCallback, destroyCallback) {
-	openImageSelector(
-		(image) =>
-			changeCallback(
-				{
-					fileEntryId: image ? image.fileEntryId : undefined,
-					url: image && image.url ? image.url : '',
-				},
-				{imageTitle: image && image.title ? image.title : ''}
-			),
-		destroyCallback
-	);
+	openImageSelector((image) => {
+		const url = image && image.url ? image.url : '';
+
+		changeCallback(
+			config.adaptiveMediaEnabled
+				? {
+						fileEntryId: image ? image.fileEntryId : undefined,
+						url,
+				  }
+				: url,
+			{imageTitle: image && image.title ? image.title : ''}
+		);
+	}, destroyCallback);
 }
 
 /**

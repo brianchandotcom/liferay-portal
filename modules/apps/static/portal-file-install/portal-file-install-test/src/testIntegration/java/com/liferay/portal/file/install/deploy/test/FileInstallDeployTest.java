@@ -478,7 +478,9 @@ public class FileInstallDeployTest {
 
 			String filter = directives.get(Constants.FILTER_DIRECTIVE);
 
-			Assert.assertTrue(filter.contains(optionalPackage));
+			Assert.assertTrue(
+				filter + " does not contain " + optionalPackage,
+				filter.contains(optionalPackage));
 		}
 		finally {
 			_bundleContext.removeBundleListener(bundleListener);

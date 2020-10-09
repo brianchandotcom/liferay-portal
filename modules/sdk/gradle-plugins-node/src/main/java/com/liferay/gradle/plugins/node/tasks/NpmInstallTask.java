@@ -284,18 +284,6 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		return completeArgs;
 	}
 
-	private File _getExistentFile(String fileName) {
-		Project project = getProject();
-
-		File file = project.file(fileName);
-
-		if (!file.exists()) {
-			file = null;
-		}
-
-		return file;
-	}
-
 	private String _getNodeModulesCacheDigest(NpmInstallTask npmInstallTask) {
 		Logger logger = npmInstallTask.getLogger();
 
@@ -332,75 +320,6 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		map.remove("version");
 
 		return String.valueOf(map.hashCode());
-	}
-
-	private boolean _isCacheEnabled() {
-		Project project = getProject();
-
-		PluginContainer pluginContainer = project.getPlugins();
-
-		if (!pluginContainer.hasPlugin("com.liferay.cache") &&
-			(getNodeModulesCacheDir() != null)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private void _npmCacheVerify() {
-		Logger logger = getLogger();
-
-		try {
-			_npmCacheVerify = true;
-
-			super.executeNode();
-		}
-		catch (Exception exception) {
-			if (logger.isWarnEnabled()) {
-				String message = "Unable to run \"npm cache verify\"";
-
-				if (Validator.isNotNull(exception.getMessage())) {
-					message = exception.getMessage() + ". " + message;
-				}
-
-				logger.warn(message);
-			}
-		}
-		finally {
-			_npmCacheVerify = false;
-		}
-	}
-
-	private void _npmInstall(boolean reset) throws Exception {
-		Logger logger = getLogger();
-		int npmInstallRetries = getNpmInstallRetries();
-		Project project = getProject();
-
-		for (int i = 0; i < (npmInstallRetries + 1); i++) {
-			if (reset || (i > 0)) {
-				project.delete(getNodeModulesDir());
-			}
-
-			try {
-				super.executeNode();
-
-				break;
-			}
-			catch (IOException ioException) {
-				if (i == npmInstallRetries) {
-					throw ioException;
-				}
-
-				if (logger.isWarnEnabled()) {
-					logger.warn(
-						ioException.getMessage() +
-							". Running \"npm install\" again");
-				}
-
-				_npmCacheVerify();
-			}
-		}
 	}
 
 	private synchronized void _npmInstallCached(
@@ -470,6 +389,87 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 			}
 
 			FileUtil.createBinDirLinks(logger, nodeModulesDir);
+		}
+	}
+
+	private File _getExistentFile(String fileName) {
+		Project project = getProject();
+
+		File file = project.file(fileName);
+
+		if (!file.exists()) {
+			file = null;
+		}
+
+		return file;
+	}
+
+	private boolean _isCacheEnabled() {
+		Project project = getProject();
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		if (!pluginContainer.hasPlugin("com.liferay.cache") &&
+			(getNodeModulesCacheDir() != null)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _npmCacheVerify() {
+		Logger logger = getLogger();
+
+		try {
+			_npmCacheVerify = true;
+
+			super.executeNode();
+		}
+		catch (Exception exception) {
+			if (logger.isWarnEnabled()) {
+				String message = "Unable to run \"npm cache verify\"";
+
+				if (Validator.isNotNull(exception.getMessage())) {
+					message = exception.getMessage() + ". " + message;
+				}
+
+				logger.warn(message);
+			}
+		}
+		finally {
+			_npmCacheVerify = false;
+		}
+	}
+
+	private void _npmInstall(boolean reset) throws Exception {
+		Logger logger = getLogger();
+		int npmInstallRetries = getNpmInstallRetries();
+		Project project = getProject();
+
+		for (int i = 0; i < (npmInstallRetries + 1); i++) {
+			if (reset || (i > 0)) {
+				project.delete(getNodeModulesDir());
+			}
+
+			try {
+				super.executeNode();
+
+				break;
+			}
+			catch (IOException ioException) {
+				if (i == npmInstallRetries) {
+					throw ioException;
+				}
+
+				if (logger.isWarnEnabled()) {
+					logger.warn(
+						ioException.getMessage() +
+							". Running \"npm install\" again");
+				}
+
+				_npmCacheVerify();
+			}
 		}
 	}
 

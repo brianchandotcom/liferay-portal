@@ -19,6 +19,7 @@ import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.PublicationsConfigurationDisplayContext;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -104,5 +105,10 @@ public class PublicationsConfigurationPortlet extends MVCPortlet {
 
 	@Reference
 	private PortletPermission _portletPermission;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.change.tracking.web)(&(release.schema.version>=1.0.1)(!(release.schema.version>=2.0.0))))"
+	)
+	private Release _release;
 
 }

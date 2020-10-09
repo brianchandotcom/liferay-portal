@@ -87,10 +87,24 @@ definition {
 				siteType = "Site Template");
 		}
 
+		task ("Add a poll via Polls admin") {
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Polls");
+
+			Polls.addPollCP(
+				pollsQuestion = "What is the most important issue for this election?",
+				pollsQuestionChoiceA = "The Economy",
+				pollsQuestionChoiceB = "The National Debt",
+				pollsQuestionTitle = "Election Poll");
+		}
+
 		task ("Assert permissions of each widgets in Home page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Home",
 				siteName = "Site Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 
 			PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
 
@@ -146,22 +160,12 @@ definition {
 			IFrame.closeFrame();
 		}
 
-		task ("Add poll in Polls Display") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Home",
-				siteName = "Site Name");
-
-			Polls.addPollPG(
-				pollsQuestion = "What is the most important issue for this election?",
-				pollsQuestionChoiceA = "The Economy",
-				pollsQuestionChoiceB = "The National Debt",
-				pollsQuestionTitle = "Election Poll");
+		task ("Select poll in Polls Display") {
+			Polls.selectPollPageEditor(pollsQuestionTitle = "Election Poll");
 
 			IFrame.closeFrame();
 
-			Polls.selectPollPG(pollsQuestionTitle = "Election Poll");
-
-			IFrame.closeFrame();
+			Refresh();
 
 			Polls.viewPollPG(
 				pollsQuestion = "What is the most important issue for this election?",
@@ -205,13 +209,9 @@ definition {
 				threadBody = "This is the message boards thread.",
 				threadSubject = "Thread");
 
-			Polls.viewPollPG(
+			Polls.viewPollAsGuestPG(
 				pollsQuestion = "What is the most important issue for this election?",
 				pollsQuestionChoiceList = "The Economy,The National Debt");
-
-			AssertTextEquals(
-				locator1 = "Message#INFO",
-				value1 = "Please sign in to vote.");
 
 			AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 		}
@@ -224,6 +224,8 @@ definition {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Home",
 				siteName = "Site Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 
 			PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
 

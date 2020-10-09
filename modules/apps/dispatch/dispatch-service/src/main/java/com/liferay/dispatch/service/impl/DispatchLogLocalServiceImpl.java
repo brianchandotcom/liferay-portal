@@ -14,7 +14,11 @@
 
 package com.liferay.dispatch.service.impl;
 
+import com.liferay.dispatch.exception.DispatchLogStartDateException;
+import com.liferay.dispatch.exception.DispatchLogStatusException;
+import com.liferay.dispatch.executor.TaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
+import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.base.DispatchLogLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 @Component(
 	property = "model.class.name=com.liferay.dispatch.model.DispatchLog",
@@ -38,8 +43,14 @@ public class DispatchLogLocalServiceImpl
 	@Override
 	public DispatchLog addDispatchLog(
 			long userId, long dispatchTriggerId, Date endDate, String error,
-			String output, Date startDate, int status)
+			String output, Date startDate, TaskStatus taskStatus)
 		throws PortalException {
+
+		_checkDispatchLogPeriod(startDate, endDate);
+		_checkStatus(taskStatus);
+
+		DispatchTrigger dispatchTrigger =
+			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
 
 		User user = userLocalService.getUser(userId);
 
@@ -49,12 +60,13 @@ public class DispatchLogLocalServiceImpl
 		dispatchLog.setCompanyId(user.getCompanyId());
 		dispatchLog.setUserId(user.getUserId());
 		dispatchLog.setUserName(user.getFullName());
-		dispatchLog.setDispatchTriggerId(dispatchTriggerId);
+		dispatchLog.setDispatchTriggerId(
+			dispatchTrigger.getDispatchTriggerId());
 		dispatchLog.setEndDate(endDate);
 		dispatchLog.setError(error);
 		dispatchLog.setOutput(output);
 		dispatchLog.setStartDate(startDate);
-		dispatchLog.setStatus(status);
+		dispatchLog.setStatus(taskStatus.getStatus());
 
 		return dispatchLogPersistence.update(dispatchLog);
 	}
@@ -87,18 +99,45 @@ public class DispatchLogLocalServiceImpl
 	@Override
 	public DispatchLog updateDispatchLog(
 			long dispatchLogId, Date endDate, String error, String output,
-			int status)
+			TaskStatus taskStatus)
 		throws PortalException {
 
 		DispatchLog dispatchLog = dispatchLogPersistence.findByPrimaryKey(
 			dispatchLogId);
 
+		_checkDispatchLogPeriod(dispatchLog.getStartDate(), endDate);
+
+		_checkStatus(taskStatus);
+
 		dispatchLog.setEndDate(endDate);
 		dispatchLog.setError(error);
 		dispatchLog.setOutput(output);
-		dispatchLog.setStatus(status);
+		dispatchLog.setStatus(taskStatus.getStatus());
 
 		return dispatchLogPersistence.update(dispatchLog);
+	}
+
+	private void _checkDispatchLogPeriod(Date startDate, Date endDate)
+		throws PortalException {
+
+		if (startDate == null) {
+			throw new DispatchLogStartDateException("Start date is required");
+		}
+
+		if (endDate == null) {
+			return;
+		}
+
+		if (startDate.after(endDate)) {
+			throw new DispatchLogStartDateException(
+				"Start date must precede end date");
+		}
+	}
+
+	private void _checkStatus(TaskStatus taskStatus) throws PortalException {
+		if (taskStatus == null) {
+			throw new DispatchLogStatusException("Status is required");
+		}
 	}
 
 }

@@ -60,18 +60,19 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
+		CommerceAddress shippingCommerceAddress =
+			commerceOrder.getShippingAddress();
 
-		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+		if (shippingCommerceAddress != null) {
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+					commerceOrder.getGroupId());
 
-		if (shippingAddress != null) {
 			return Page.of(
 				transform(
 					_commerceShippingMethodService.getCommerceShippingMethods(
 						commerceChannel.getGroupId(),
-						shippingAddress.getCommerceCountryId(), true),
+						shippingCommerceAddress.getCommerceCountryId(), true),
 					shippingMethod -> _toShippingMethod(
 						shippingMethod, commerceChannel, commerceOrder)));
 		}

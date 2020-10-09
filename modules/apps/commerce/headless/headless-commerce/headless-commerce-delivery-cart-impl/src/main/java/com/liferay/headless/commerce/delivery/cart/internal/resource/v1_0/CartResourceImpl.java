@@ -22,8 +22,10 @@ import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
+import com.liferay.commerce.exception.CommerceOrderGuestCheckoutException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
+import com.liferay.commerce.exception.CommerceOrderStatusException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
@@ -56,7 +58,6 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CouponCode;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -143,10 +144,52 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		Cart cart = _validateOrder(commerceOrder);
 
 		if (cart.getValid()) {
-			commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
-				commerceOrder, contextUser.getUserId());
+			try {
+				commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+					commerceOrder, contextUser.getUserId());
 
-			cart = _toCart(commerceOrder);
+				cart = _toCart(commerceOrder);
+			}
+			catch (Exception exception) {
+				if (exception.getCause() instanceof
+						CommerceOrderShippingMethodException) {
+
+					cart.setValid(false);
+					cart.setErrorMessages(
+						new String[] {"Invalid shipping method"});
+				}
+
+				if (exception.getCause() instanceof
+						CommerceOrderShippingAddressException) {
+
+					cart.setValid(false);
+					cart.setErrorMessages(
+						new String[] {"Invalid shipping address"});
+				}
+
+				if (exception.getCause() instanceof
+						CommerceOrderBillingAddressException) {
+
+					cart.setValid(false);
+					cart.setErrorMessages(
+						new String[] {"Invalid billing address"});
+				}
+
+				if (exception.getCause() instanceof
+						CommerceOrderGuestCheckoutException) {
+
+					cart.setValid(false);
+					cart.setErrorMessages(
+						new String[] {"Invalid guest checkout"});
+				}
+
+				if (exception.getCause() instanceof
+						CommerceOrderStatusException) {
+
+					cart.setValid(false);
+					cart.setErrorMessages(new String[] {"Invalid cart status"});
+				}
+			}
 		}
 
 		return cart;
@@ -265,6 +308,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			CommerceOrder commerceOrder, Cart cart)
 		throws Exception {
 
+		List<CartItem> cartItems = new ArrayList<>();
+
 		Map<Long, List<CommerceOrderValidatorResult>>
 			commerceOrderValidatorResults =
 				_commerceOrderValidatorRegistry.
@@ -272,8 +317,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
-
-		List<CartItem> cartItems = new ArrayList<>();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CartItem cartItem = _cartItemDTOConverter.toDTO(
@@ -571,27 +614,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getAdvanceStatus(), commerceContext);
 	}
 
-	private void _validateBillingAddress(
-		CommerceOrder commerceOrder, List<String> errorMessages) {
-
-		try {
-			_commerceOrderValidatorRegistry.validateBillingAddress(
-				null, commerceOrder);
-		}
-		catch (PortalException portalException) {
-			if (portalException instanceof
-					CommerceOrderBillingAddressException) {
-
-				errorMessages.add("Invalid billing address");
-			}
-		}
-	}
-
 	private Cart _validateOrder(CommerceOrder commerceOrder) throws Exception {
 		List<String> errorMessages = new ArrayList<>();
-
-		_validateBillingAddress(commerceOrder, errorMessages);
-		_validateShipping(commerceOrder, errorMessages);
 
 		Cart cart = _toCart(commerceOrder);
 
@@ -607,30 +631,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		cart.setCartItems(validatedCartItems);
 
 		return cart;
-	}
-
-	private void _validateShipping(
-			CommerceOrder commerceOrder, List<String> errorMessages)
-		throws Exception {
-
-		try {
-			_commerceOrderValidatorRegistry.validateShipping(
-				null, commerceOrder, _commerceShippingMethodLocalService,
-				_commerceShippingHelper);
-		}
-		catch (PortalException portalException) {
-			if (portalException instanceof
-					CommerceOrderShippingMethodException) {
-
-				errorMessages.add("Invalid shipping method");
-			}
-
-			if (portalException instanceof
-					CommerceOrderShippingAddressException) {
-
-				errorMessages.add("Invalid shipping address");
-			}
-		}
 	}
 
 	@Reference

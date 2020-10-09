@@ -147,7 +147,7 @@ public class TypedProperties {
 	private boolean _isCommentLine(String line) {
 		String string = line.trim();
 
-		if ((string.length() < 1) || (CharPool.POUND == string.charAt(0))) {
+		if (CharPool.POUND == string.charAt(0)) {
 			return true;
 		}
 

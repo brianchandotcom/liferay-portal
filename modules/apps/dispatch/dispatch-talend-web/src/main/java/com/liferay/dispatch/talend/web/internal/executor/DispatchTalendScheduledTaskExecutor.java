@@ -16,7 +16,7 @@ package com.liferay.dispatch.talend.web.internal.executor;
 
 import com.liferay.dispatch.executor.BaseScheduledTaskExecutor;
 import com.liferay.dispatch.executor.ScheduledTaskExecutor;
-import com.liferay.dispatch.executor.log.ScheduledTaskExecutorDispatchLogs;
+import com.liferay.dispatch.executor.ScheduledTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.petra.io.StreamUtil;
@@ -63,7 +63,7 @@ public class DispatchTalendScheduledTaskExecutor
 	@Override
 	public void doExecute(
 			DispatchTrigger dispatchTrigger,
-			ScheduledTaskExecutorDispatchLogs scheduledTaskExecutorDispatchLogs)
+			ScheduledTaskExecutorOutput scheduledTaskExecutorOutput)
 		throws IOException, PortalException {
 
 		FileEntry fileEntry =
@@ -95,11 +95,11 @@ public class DispatchTalendScheduledTaskExecutor
 
 			Map.Entry<byte[], byte[]> entry = future.get();
 
-			scheduledTaskExecutorDispatchLogs.setError(entry.getValue());
-			scheduledTaskExecutorDispatchLogs.setOutput(entry.getKey());
+			scheduledTaskExecutorOutput.setError(entry.getValue());
+			scheduledTaskExecutorOutput.setOutput(entry.getKey());
 		}
 		catch (Exception exception) {
-			scheduledTaskExecutorDispatchLogs.setError(
+			scheduledTaskExecutorOutput.setError(
 				dispatchTalendCollectorOutputProcessor._stdErrByteArray);
 
 			throw new PortalException(exception);

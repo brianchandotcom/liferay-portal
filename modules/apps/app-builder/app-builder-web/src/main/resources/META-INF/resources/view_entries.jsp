@@ -47,6 +47,8 @@
 				"showFormView", request.getAttribute(AppBuilderWebKeys.SHOW_FORM_VIEW)
 			).put(
 				"showTableView", request.getAttribute(AppBuilderWebKeys.SHOW_TABLE_VIEW)
+			).put(
+				"userPortraitURL", request.getAttribute(AppBuilderWebKeys.APP_USER_PORTRAIT_URL)
 			).build()
 		%>'
 	/>

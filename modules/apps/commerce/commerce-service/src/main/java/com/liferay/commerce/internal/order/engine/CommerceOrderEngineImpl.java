@@ -424,6 +424,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 		if ((commerceOrder.getPaymentStatus() ==
 				CommerceOrderConstants.PAYMENT_STATUS_PAID) ||
+			(commercePaymentMethod == null) ||
 			((commercePaymentMethod != null) &&
 			 (commercePaymentMethod.getPaymentType() ==
 				 CommercePaymentConstants.

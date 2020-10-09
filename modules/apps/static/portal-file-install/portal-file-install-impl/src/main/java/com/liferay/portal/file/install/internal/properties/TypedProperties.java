@@ -101,6 +101,10 @@ public class TypedProperties {
 	}
 
 	public void save(Writer writer) throws IOException {
+		if ((_header == null) && _storage.isEmpty()) {
+			return;
+		}
+
 		StringBundler sb = new StringBundler();
 
 		if (_header != null) {

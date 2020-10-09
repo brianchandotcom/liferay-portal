@@ -638,13 +638,16 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 							);
 
 							if (moreCommentsContainer) {
-								moreCommentsContainer.insertAdjacentHTML(
+								var newCommentsContainer = document.createElement('div');
+								newCommentsContainer.innerHTML = response;
+
+								moreCommentsContainer.insertAdjacentElement(
 									'beforebegin',
-									response
+									newCommentsContainer
 								);
 
 								domAll.globalEval.runScriptsInElement(
-									moreCommentsContainer.parentElement
+									newCommentsContainer
 								);
 							}
 						})

@@ -10,7 +10,11 @@
  */
 
 module.exports = {
-	setupFilesAfterEnv: ['./setupTests.js'],
-	testMatch: ['./test'],
-	verbose: true,
+	overrides: [{
+		files: ['**/dev/**', '**/jest.config.js'],
+		env: {
+			node: true,
+		}
+	}],
 };
+

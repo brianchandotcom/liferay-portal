@@ -13,6 +13,7 @@
  */
 
 const CHECK_AND_FIX_GLOBS = [
+	'!settings.json',
 	'!tsconfig.json',
 	'/{,dxp/}*.{js,ts}',
 	'/{,dxp/}apps/*/*/*.{js,json,ts,tsx}',

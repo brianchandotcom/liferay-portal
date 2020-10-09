@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-/* eslint-disable require-jsdoc */
 const faker = require('faker');
 
 const apiEndpointDefinitions = require('./apiEndpointDefinitions');
@@ -26,71 +25,71 @@ function generateArray(max, min = 1) {
 
 function getFakeArea() {
 	return {
+		id: 'areaIdTest',
 		imageUrl: '/schema.jpg',
 		name: 'frozen metal chair',
-		id: 'areaIdTest',
+		products: [
+			{
+				id: 'IS01',
+				name: 'Product 1',
+				price: '$ 12.99',
+				sku: 'SKU01',
+				thumbnailUrl: '/product_thumbnail.png',
+				url: '/productUrl',
+			},
+			{
+				id: 'IS03',
+				name: 'Product 2',
+				price: '$ 345.99',
+				sku: 'SKU02',
+				thumbnailUrl: '/product_thumbnail.png',
+				url: '/productUrl',
+			},
+			{
+				id: 'IS02',
+				name: 'Product 3',
+				price: '$ 345.99',
+				sku: 'SKU03',
+				thumbnailUrl: '/product_thumbnail.png',
+				url: '/productUrl',
+			},
+		],
 		spots: [
 			{
-				number: 3,
 				id: 'zxc',
-				position: {
-					y: 0,
-					x: 0,
-				},
-				productId: 'IS01',
-			},
-			{
 				number: 3,
-				id: 'cvb',
 				position: {
-					y: 66.43,
-					x: 56.34,
+					x: 0,
+					y: 0,
 				},
 				productId: 'IS01',
 			},
 			{
-				number: 7,
-				id: 'dfg',
+				id: 'cvb',
+				number: 3,
 				position: {
-					y: 63.43,
+					x: 56.34,
+					y: 66.43,
+				},
+				productId: 'IS01',
+			},
+			{
+				id: 'dfg',
+				number: 7,
+				position: {
 					x: 20.14,
+					y: 63.43,
 				},
 				productId: 'IS02',
 			},
 			{
-				number: 12,
 				id: 'bnm',
+				number: 12,
 				position: {
-					y: 3.93,
 					x: 37.94,
+					y: 3.93,
 				},
 				productId: 'IS03',
-			},
-		],
-		products: [
-			{
-				id: 'IS01',
-				sku: 'SKU01',
-				name: 'Product 1',
-				thumbnailUrl: '/product_thumbnail.png',
-				url: '/productUrl',
-				price: '$ 12.99',
-			},
-			{
-				id: 'IS03',
-				sku: 'SKU02',
-				name: 'Product 2',
-				thumbnailUrl: '/product_thumbnail.png',
-				url: '/productUrl',
-				price: '$ 345.99',
-			},
-			{
-				id: 'IS02',
-				sku: 'SKU03',
-				name: 'Product 3',
-				thumbnailUrl: '/product_thumbnail.png',
-				url: '/productUrl',
-				price: '$ 345.99',
 			},
 		],
 	};
@@ -99,11 +98,11 @@ function getFakeArea() {
 function generateProducts() {
 	return generateArray(25, 10).map(() => ({
 		id: faker.random.uuid().substring(0, 8),
-		sku: 'sdfasd',
 		name: faker.commerce.productName(),
+		price: `$ ${Math.random() * 300 + 10}.99`,
+		sku: 'sdfasd',
 		thumbnailUrl: '/detail.jpg',
 		url: '/productUrl',
-		price: `$ ${Math.random() * 300 + 10}.99`,
 	}));
 }
 

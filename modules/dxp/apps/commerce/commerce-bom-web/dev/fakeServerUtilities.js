@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-/* eslint-disable require-jsdoc */
 const faker = require('faker');
 
 const apiEndpointDefinitions = require('./apiEndpointDefinitions');
@@ -29,9 +28,9 @@ function generateFolderShape() {
 	const type = ['folder', 'area'][Math.round(Math.random())];
 
 	return {
+		id: faker.random.uuid(),
 		name: productName,
 		slug: faker.helpers.slugify(productName).toLowerCase(),
-		id: faker.random.uuid(),
 		thumbnail: '/schema.jpg',
 		type,
 		url:
@@ -56,7 +55,6 @@ function generateBreadcrumbs(type = 'folder') {
 
 function generateBrands() {
 	return generateArray(4, 2).map(() => ({
-		name: faker.commerce.productName(),
 		models: generateArray(10).map(() => {
 			const productionYear = generateRandomInt(2000, 60);
 
@@ -66,6 +64,7 @@ function generateBrands() {
 				productionYears: [productionYear, productionYear + 2],
 			};
 		}),
+		name: faker.commerce.productName(),
 	}));
 }
 
@@ -75,13 +74,39 @@ function generateFolders() {
 
 function getFakeArea() {
 	return {
+		id: 'areaIdTest',
 		imageUrl: '/schema.jpg',
 		name: 'frozen metal chair',
-		id: 'areaIdTest',
+		products: [
+			{
+				id: 'IS01',
+				name: 'Product 1',
+				price: '$ 12.99',
+				sku: 'SKU01',
+				thumbnailUrl: '/product_thumbnail.png',
+				url: '/productUrl',
+			},
+			{
+				id: 'IS03',
+				name: 'Product 2',
+				price: '$ 345.99',
+				sku: 'SKU02',
+				thumbnailUrl: '/product_thumbnail.png',
+				url: '/productUrl',
+			},
+			{
+				id: 'IS02',
+				name: 'Product 3',
+				price: '$ 345.99',
+				sku: 'SKU03',
+				thumbnailUrl: '/product_thumbnail.png',
+				url: '/productUrl',
+			},
+		],
 		spots: [
 			{
-				number: 3,
 				id: 'zxc',
+				number: 3,
 				position: {
 					x: 73.34,
 					y: 33.43,
@@ -89,57 +114,31 @@ function getFakeArea() {
 				productId: 'IS01',
 			},
 			{
-				number: 3,
 				id: 'cvb',
+				number: 3,
 				position: {
-					y: 66.43,
 					x: 56.34,
+					y: 66.43,
 				},
 				productId: 'IS01',
 			},
 			{
-				number: 7,
 				id: 'dfg',
+				number: 7,
 				position: {
-					y: 100,
 					x: 100,
+					y: 100,
 				},
 				productId: 'IS02',
 			},
 			{
-				number: 12,
 				id: 'bnm',
+				number: 12,
 				position: {
 					x: 0,
 					y: 0,
 				},
 				productId: 'IS03',
-			},
-		],
-		products: [
-			{
-				id: 'IS01',
-				sku: 'SKU01',
-				name: 'Product 1',
-				thumbnailUrl: '/product_thumbnail.png',
-				url: '/productUrl',
-				price: '$ 12.99',
-			},
-			{
-				id: 'IS03',
-				sku: 'SKU02',
-				name: 'Product 2',
-				thumbnailUrl: '/product_thumbnail.png',
-				url: '/productUrl',
-				price: '$ 345.99',
-			},
-			{
-				id: 'IS02',
-				sku: 'SKU03',
-				name: 'Product 3',
-				thumbnailUrl: '/product_thumbnail.png',
-				url: '/productUrl',
-				price: '$ 345.99',
 			},
 		],
 	};
@@ -193,8 +192,8 @@ function defineServerResponses(app) {
 
 	app.get(apiEndpointDefinitions.AREAS + '/:areaId', (_, res) => {
 		res.json({
-			data: getFakeArea(),
 			breadcrumbs: generateBreadcrumbs('area'),
+			data: getFakeArea(),
 		});
 	});
 
@@ -205,11 +204,11 @@ function defineServerResponses(app) {
 		],
 		(_, res) => {
 			res.json({
-				data: {
-					content: generateFolders(),
-					brands: generateBrands(),
-				},
 				breadcrumbs: generateBreadcrumbs(),
+				data: {
+					brands: generateBrands(),
+					content: generateFolders(),
+				},
 			});
 		}
 	);

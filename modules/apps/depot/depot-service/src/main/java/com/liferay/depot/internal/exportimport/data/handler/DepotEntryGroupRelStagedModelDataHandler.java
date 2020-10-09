@@ -78,12 +78,14 @@ public class DepotEntryGroupRelStagedModelDataHandler
 				portletDataContext, importedDepotEntryGroupRel);
 		}
 		else {
-			importedDepotEntryGroupRel.setMvccVersion(
-				existingDepotEntryGroupRel.getMvccVersion());
+			existingDepotEntryGroupRel.setDdmStructuresAvailable(
+				importedDepotEntryGroupRel.isDdmStructuresAvailable());
+			existingDepotEntryGroupRel.setSearchable(
+				importedDepotEntryGroupRel.isSearchable());
 
 			importedDepotEntryGroupRel =
-				_stagedModelRepository.updateStagedModel(
-					portletDataContext, importedDepotEntryGroupRel);
+				_depotEntryGroupRelLocalService.updateDepotEntryGroupRel(
+					existingDepotEntryGroupRel);
 		}
 
 		portletDataContext.importClassedModel(

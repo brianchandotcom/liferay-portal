@@ -45,7 +45,7 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected SegmentTestClassGroup(
-		BatchTestClassGroup parentBatchTestClassGroup, int batchIndex) {
+		BatchTestClassGroup parentBatchTestClassGroup) {
 
 		_parentBatchTestClassGroup = parentBatchTestClassGroup;
 	}

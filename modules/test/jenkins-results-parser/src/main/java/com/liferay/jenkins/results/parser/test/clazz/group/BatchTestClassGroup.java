@@ -99,7 +99,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public int getSegmentCount() {
-		return _segmentTestClassGroups.size();
+		return (int)Math.ceil(
+			(double)getAxisCount() / _getSegmentMaxChildren());
 	}
 
 	public SegmentTestClassGroup getSegmentTestClassGroup(int segmentId) {
@@ -461,23 +462,24 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return;
 		}
 
-		int segmentMaxChildren = _getSegmentMaxChildren();
+		if (axisTestClassGroups.isEmpty()) {
+			return;
+		}
 
-		for (int i = 0; i < axisTestClassGroups.size(); i++) {
-			int segmentBatchIndex = i / segmentMaxChildren;
+		int segmentSize = (int)Math.ceil(
+			(double)getAxisCount() / getSegmentCount());
+
+		for (List<AxisTestClassGroup> axisTestClassGroups :
+				Lists.partition(axisTestClassGroups, segmentSize)) {
 
 			SegmentTestClassGroup segmentTestClassGroup =
-				_segmentTestClassGroups.get(segmentBatchIndex);
+				new SegmentTestClassGroup(this);
 
-			if (segmentTestClassGroup == null) {
-				segmentTestClassGroup = new SegmentTestClassGroup(
-					this, segmentBatchIndex);
-
-				_segmentTestClassGroups.add(segmentTestClassGroup);
+			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+				segmentTestClassGroup.addAxisTestClassGroup(axisTestClassGroup);
 			}
 
-			segmentTestClassGroup.addAxisTestClassGroup(
-				axisTestClassGroups.get(i));
+			_segmentTestClassGroups.add(segmentTestClassGroup);
 		}
 	}
 

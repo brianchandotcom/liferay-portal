@@ -1,5 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 /* eslint-disable require-jsdoc */
 const faker = require('faker');
+
 const apiEndpointDefinitions = require('./apiEndpointDefinitions');
 
 function generateRandomInt(min, max) {
@@ -22,7 +34,8 @@ function generateFolderShape() {
 		id: faker.random.uuid(),
 		thumbnail: '/schema.jpg',
 		type,
-		url: (type === 'folder' ? '/folders/' : '/areas/') + faker.random.uuid(),
+		url:
+			(type === 'folder' ? '/folders/' : '/areas/') + faker.random.uuid(),
 	};
 }
 
@@ -30,16 +43,14 @@ function generateBreadcrumbs(type = 'folder') {
 	const array = generateArray(4, 2);
 
 	return array.map((_, i) => {
-		return i === (array.length - 1)
+		return i === array.length - 1
 			? {
-				label: type === 'folder'
-					? `Folder ${i}`
-					: `Area ${i}`,
-			}
+					label: type === 'folder' ? `Folder ${i}` : `Area ${i}`,
+			  }
 			: {
-				label: `Folder ${i}`,
-				url: `/folders/folder-${i}`,
-			};
+					label: `Folder ${i}`,
+					url: `/folders/folder-${i}`,
+			  };
 	});
 }
 
@@ -139,40 +150,46 @@ function getFakeArea() {
  * @param {*} app
  */
 function defineServerResponses(app) {
-	app.get([
-		apiEndpointDefinitions.MAKER,
-		apiEndpointDefinitions.MAKER + '/:params',
-	], (_, res) => {
-		res.json({
-			data: generateArray(20, 4).map(() => ({
-				id: faker.random.uuid(),
-				name: faker.company.companyName(),
-			})),
-		});
-	});
+	app.get(
+		[
+			apiEndpointDefinitions.MAKER,
+			apiEndpointDefinitions.MAKER + '/:params',
+		],
+		(_, res) => {
+			res.json({
+				data: generateArray(20, 4).map(() => ({
+					id: faker.random.uuid(),
+					name: faker.company.companyName(),
+				})),
+			});
+		}
+	);
 
-	app.get([
-		apiEndpointDefinitions.YEAR,
-		apiEndpointDefinitions.YEAR + '/:params',
-	], (_, res) => {
-		res.json({
-			data: generateArray(15, 5).map(() => ({
-				year: generateRandomInt(2000, 2019),
-			})),
-		});
-	});
+	app.get(
+		[apiEndpointDefinitions.YEAR, apiEndpointDefinitions.YEAR + '/:params'],
+		(_, res) => {
+			res.json({
+				data: generateArray(15, 5).map(() => ({
+					year: generateRandomInt(2000, 2019),
+				})),
+			});
+		}
+	);
 
-	app.get([
-		apiEndpointDefinitions.MODEL,
-		apiEndpointDefinitions.MODEL + '/:params',
-	], (_, res) => {
-		res.json({
-			data: generateArray(15, 5).map(() => ({
-				id: faker.random.uuid(),
-				name: faker.commerce.product(),
-			})),
-		});
-	});
+	app.get(
+		[
+			apiEndpointDefinitions.MODEL,
+			apiEndpointDefinitions.MODEL + '/:params',
+		],
+		(_, res) => {
+			res.json({
+				data: generateArray(15, 5).map(() => ({
+					id: faker.random.uuid(),
+					name: faker.commerce.product(),
+				})),
+			});
+		}
+	);
 
 	app.get(apiEndpointDefinitions.AREAS + '/:areaId', (_, res) => {
 		res.json({
@@ -181,18 +198,21 @@ function defineServerResponses(app) {
 		});
 	});
 
-	app.get([
-		apiEndpointDefinitions.FOLDERS,
-		apiEndpointDefinitions.FOLDERS + '/:folderId'
-	], (_, res) => {
-		res.json({
-			data: {
-				content: generateFolders(),
-				brands: generateBrands(),
-			},
-			breadcrumbs: generateBreadcrumbs(),
-		});
-	});
+	app.get(
+		[
+			apiEndpointDefinitions.FOLDERS,
+			apiEndpointDefinitions.FOLDERS + '/:folderId',
+		],
+		(_, res) => {
+			res.json({
+				data: {
+					content: generateFolders(),
+					brands: generateBrands(),
+				},
+				breadcrumbs: generateBreadcrumbs(),
+			});
+		}
+	);
 }
 
 // eslint-disable-next-line no-undef

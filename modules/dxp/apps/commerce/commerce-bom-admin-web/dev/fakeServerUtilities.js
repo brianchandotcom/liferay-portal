@@ -1,5 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 /* eslint-disable require-jsdoc */
 const faker = require('faker');
+
 const apiEndpointDefinitions = require('./apiEndpointDefinitions');
 
 function generateRandomInt(min, max) {
@@ -85,25 +97,21 @@ function getFakeArea() {
 }
 
 function generateProducts() {
-	return generateArray(25, 10).map(
-	  () => ({
-		id: faker.random.uuid().substring(0,8),
+	return generateArray(25, 10).map(() => ({
+		id: faker.random.uuid().substring(0, 8),
 		sku: 'sdfasd',
 		name: faker.commerce.productName(),
 		thumbnailUrl: '/detail.jpg',
 		url: '/productUrl',
-		price: `$ ${(Math.random() * 300) + 10}.99`
-	  })
-	)
-  }
-
+		price: `$ ${Math.random() * 300 + 10}.99`,
+	}));
+}
 
 /**
  *
  * @param {*} app
  */
 function defineServerResponses(app) {
-
 	app.get(apiEndpointDefinitions.AREA + '/:areaId', (_, res) => {
 		res.json({
 			data: getFakeArea(),
@@ -112,30 +120,33 @@ function defineServerResponses(app) {
 
 	app.post(apiEndpointDefinitions.AREA + '/:areaId', (_, res) => {
 		res.json({
-			success: true //placeholder: if statusCode === 200 then it calls the main get again
+			success: true, //placeholder: if statusCode === 200 then it calls the main get again
 		});
 	});
 
 	app.put(apiEndpointDefinitions.AREA + '/:areaId/:spotId', (_, res) => {
 		res.json({
-			success: true //placeholder: if statusCode === 200 then it calls the main get again
+			success: true, //placeholder: if statusCode === 200 then it calls the main get again
 		});
 	});
 
 	app.delete(apiEndpointDefinitions.AREA + '/:areaId/:spotId', (_, res) => {
 		res.json({
-			success: true //placeholder: if statusCode === 200 then it calls the main get again
+			success: true, //placeholder: if statusCode === 200 then it calls the main get again
 		});
 	});
 
-	app.get([
-		apiEndpointDefinitions.PRODUCTS,
-		apiEndpointDefinitions.PRODUCTS + '/:query',
-	], (_, res) => {
-		res.json({
-			items: generateProducts(),
-		});
-	});
+	app.get(
+		[
+			apiEndpointDefinitions.PRODUCTS,
+			apiEndpointDefinitions.PRODUCTS + '/:query',
+		],
+		(_, res) => {
+			res.json({
+				items: generateProducts(),
+			});
+		}
+	);
 }
 
 // eslint-disable-next-line no-undef

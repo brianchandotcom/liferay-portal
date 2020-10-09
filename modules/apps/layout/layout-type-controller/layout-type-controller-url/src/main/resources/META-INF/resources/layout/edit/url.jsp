@@ -45,7 +45,7 @@ if (selLayout != null) {
 		if (!(fieldName in rules)) {
 			rules[fieldName] = {
 				custom: false,
-				required: true
+				required: true,
 			};
 		}
 	}

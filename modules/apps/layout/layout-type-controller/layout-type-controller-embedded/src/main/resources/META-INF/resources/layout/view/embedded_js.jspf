@@ -20,24 +20,21 @@
 	if (iframe) {
 		iframe.plug(A.Plugin.AutosizeIframe);
 
-		iframe.on(
-			'load',
-			function() {
-				var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
+		iframe.on('load', function () {
+			var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
 
-				if (height == null) {
-					if (themeDisplay.isStateMaximized()) {
-						height = A.getDoc().get('docHeight');
-					}
-					else {
-						height = 600;
-
-						iframe.autosizeiframe.set('monitorHeight', false);
-					}
+			if (height == null) {
+				if (themeDisplay.isStateMaximized()) {
+					height = A.getDoc().get('docHeight');
 				}
+				else {
+					height = 600;
 
-				iframe.setStyle('height', height);
+					iframe.autosizeiframe.set('monitorHeight', false);
+				}
 			}
-		);
+
+			iframe.setStyle('height', height);
+		});
 	}
 </aui:script>

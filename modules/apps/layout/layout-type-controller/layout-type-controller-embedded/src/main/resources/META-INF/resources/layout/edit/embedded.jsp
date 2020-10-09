@@ -40,12 +40,13 @@ if (selLayout != null) {
 	if (form) {
 		var rules = form.formValidator.get('rules');
 
-		var fieldName = '<portlet:namespace />TypeSettingsProperties--embeddedLayoutURL--';
+		var fieldName =
+			'<portlet:namespace />TypeSettingsProperties--embeddedLayoutURL--';
 
 		if (!(fieldName in rules)) {
 			rules[fieldName] = {
 				custom: false,
-				required: true
+				required: true,
 			};
 		}
 	}

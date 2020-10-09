@@ -26,28 +26,33 @@
 	<aui:button name="selectLayoutButton" value="select" />
 
 	<aui:script sandbox="<%= true %>">
-		var selectLayoutButton = document.getElementById('<portlet:namespace />selectLayoutButton');
-
-		selectLayoutButton.addEventListener(
-			'click',
-			function(event) {
-				event.preventDefault();
-
-				Liferay.Util.openSelectionModal({
-					onSelect: function(selectedItem) {
-						const linkToLayoutName = document.getElementById('<portlet:namespace />linkToLayoutName');
-						const linkToLayoutUuid = document.getElementById('<portlet:namespace />linkToLayoutUuid');
-
-						if (selectedItem && linkToLayoutName && linkToLayoutUuid) {
-							linkToLayoutName.value = selectedItem.name;
-							linkToLayoutUuid.value = selectedItem.id;
-						}
-					},
-					selectEventName: '<%= linkToPageLayoutTypeControllerDisplayContext.getEventName() %>',
-					title: '<liferay-ui:message key="select-layout" />',
-					url: '<%= linkToPageLayoutTypeControllerDisplayContext.getItemSelectorURL() %>'
-				});
-			}
+		var selectLayoutButton = document.getElementById(
+			'<portlet:namespace />selectLayoutButton'
 		);
+
+		selectLayoutButton.addEventListener('click', function (event) {
+			event.preventDefault();
+
+			Liferay.Util.openSelectionModal({
+				onSelect: function (selectedItem) {
+					const linkToLayoutName = document.getElementById(
+						'<portlet:namespace />linkToLayoutName'
+					);
+					const linkToLayoutUuid = document.getElementById(
+						'<portlet:namespace />linkToLayoutUuid'
+					);
+
+					if (selectedItem && linkToLayoutName && linkToLayoutUuid) {
+						linkToLayoutName.value = selectedItem.name;
+						linkToLayoutUuid.value = selectedItem.id;
+					}
+				},
+				selectEventName:
+					'<%= linkToPageLayoutTypeControllerDisplayContext.getEventName() %>',
+				title: '<liferay-ui:message key="select-layout" />',
+				url:
+					'<%= linkToPageLayoutTypeControllerDisplayContext.getItemSelectorURL() %>',
+			});
+		});
 	</aui:script>
 </div>

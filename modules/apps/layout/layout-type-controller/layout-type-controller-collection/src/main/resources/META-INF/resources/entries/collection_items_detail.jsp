@@ -27,16 +27,17 @@ CollectionItemsDetailDisplayContext collectionItemsDetailDisplayContext = (Colle
 </li>
 
 <aui:script>
-
 	var viewCollectionItems = document.getElementById(
 		'<%= collectionItemsDetailDisplayContext.getNamespace() %>viewCollectionItems'
 	);
 
 	viewCollectionItems.addEventListener('click', function (event) {
 		Liferay.Util.openModal({
-			id: '<%= collectionItemsDetailDisplayContext.getNamespace() %>viewCollectionItemsDialog',
+			id:
+				'<%= collectionItemsDetailDisplayContext.getNamespace() %>viewCollectionItemsDialog',
 			title: '<liferay-ui:message key="collection-items" />',
-			url: '<%= collectionItemsDetailDisplayContext.getViewCollectionItemsURL() %>'
+			url:
+				'<%= collectionItemsDetailDisplayContext.getViewCollectionItemsURL() %>',
 		});
 	});
 
@@ -45,5 +46,4 @@ CollectionItemsDetailDisplayContext collectionItemsDetailDisplayContext = (Colle
 	};
 
 	Liferay.on('destroyPortlet', onDestroyPortlet);
-
 </aui:script>

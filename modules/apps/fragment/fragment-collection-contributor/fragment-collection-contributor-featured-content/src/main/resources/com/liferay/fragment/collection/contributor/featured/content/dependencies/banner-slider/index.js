@@ -11,9 +11,7 @@ const items = [].slice.call(fragmentElement.querySelectorAll('.carousel-item'));
 let moving = false;
 
 function getActiveIndicator() {
-	return fragmentElement.querySelector(
-		'.carousel-navigation .active'
-	);
+	return fragmentElement.querySelector('.carousel-navigation .active');
 }
 
 function move(movement, index = null) {

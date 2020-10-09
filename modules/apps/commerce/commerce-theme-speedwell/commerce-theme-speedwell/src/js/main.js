@@ -14,7 +14,7 @@
 
 AUI().ready(() => {
 	const Speedwell = window.Speedwell;
-	
+
 	const RETRY_TIMES = 3,
 		RETRY_INTERVAL = 333;
 
@@ -38,7 +38,9 @@ AUI().ready(() => {
 					clearInterval(retryCycle);
 
 					reject(
-						new Error('SpeedwellSlider component failed to initialize')
+						new Error(
+							'SpeedwellSlider component failed to initialize'
+						)
 					);
 				}
 			}, RETRY_INTERVAL);

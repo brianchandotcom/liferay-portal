@@ -45,68 +45,69 @@ if (selLayout != null) {
 <div id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(idPrefix) + "selectPortletsTree" %>" style="margin: 4px;"></div>
 
 <aui:script use="aui-tree-view">
-	var panelSelectedPortletsEl = A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>panelSelectedPortlets');
+	var panelSelectedPortletsEl = A.one(
+		'#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>panelSelectedPortlets'
+	);
 
 	var selectedPortlets = A.Array.hash(panelSelectedPortletsEl.val().split(','));
 
 	var TreeUtil = {
-		formatJSONResults: function(json) {
+		formatJSONResults: function (json) {
 			var output = [];
 
-			A.each(
-				json.children.list,
-				function(item, index) {
-					var childPortlets = [];
-					var total = 0;
+			A.each(json.children.list, function (item, index) {
+				var childPortlets = [];
+				var total = 0;
 
-					var nodeChildren = item.children;
-					var plid = item.objId;
+				var nodeChildren = item.children;
+				var plid = item.objId;
 
-					var checked = plid && (plid in selectedPortlets);
+				var checked = plid && plid in selectedPortlets;
 
-					if (nodeChildren) {
-						childPortlets = nodeChildren.list;
-						total = childPortlets.length;
-					}
+				if (nodeChildren) {
+					childPortlets = nodeChildren.list;
+					total = childPortlets.length;
+				}
 
-					var newNode = {
-						after: {
-							checkedChange: function(event) {
-								if (plid) {
-									if (event.newVal) {
-										selectedPortlets[plid] = true;
-									}
-									else if (selectedPortlets[plid]) {
-										delete selectedPortlets[plid];
-									}
-
-									panelSelectedPortletsEl.val(A.Object.keys(selectedPortlets));
+				var newNode = {
+					after: {
+						checkedChange: function (event) {
+							if (plid) {
+								if (event.newVal) {
+									selectedPortlets[plid] = true;
 								}
+								else if (selectedPortlets[plid]) {
+									delete selectedPortlets[plid];
+								}
+
+								panelSelectedPortletsEl.val(
+									A.Object.keys(selectedPortlets)
+								);
 							}
 						},
-						alwaysShowHitArea: total,
-						checked: checked,
-						draggable: false,
-						expanded: false,
-						id: item.id,
-						label: item.name,
-						leaf: item.leaf,
-						type: 'task'
-					};
+					},
+					alwaysShowHitArea: total,
+					checked: checked,
+					draggable: false,
+					expanded: false,
+					id: item.id,
+					label: item.name,
+					leaf: item.leaf,
+					type: 'task',
+				};
 
-					if (nodeChildren) {
-						newNode.children = TreeUtil.formatJSONResults(item);
-					}
-
-					output.push(newNode);
+				if (nodeChildren) {
+					newNode.children = TreeUtil.formatJSONResults(item);
 				}
-			);
+
+				output.push(newNode);
+			});
 
 			return output;
-		}
+		},
 	};
 
-	var initPanelSelectPortlets = function(event) {
+	var initPanelSelectPortlets = function (event) {
 
 		<%
 		PortletLister portletLister = PortletListerFactoryUtil.getPortletLister();
@@ -130,24 +131,26 @@ if (selLayout != null) {
 			children: TreeUtil.formatJSONResults(portletList),
 			draggable: false,
 			expanded: true,
-			id: '<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsRootNode',
+			id:
+				'<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsRootNode',
 			label: portletList.name,
 			leaf: false,
-			type: 'task'
+			type: 'task',
 		};
 
-		var treeview = new A.TreeView(
-			{
-				after: {
-					render: function() {
-						A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsTreeLoading').hide();
-					}
+		var treeview = new A.TreeView({
+			after: {
+				render: function () {
+					A.one(
+						'#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsTreeLoading'
+					).hide();
 				},
-				boundingBox: '#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsTree',
-				children: [rootNode],
-				type: 'file'
-			}
-		).render();
+			},
+			boundingBox:
+				'#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>selectPortletsTree',
+			children: [rootNode],
+			type: 'file',
+		}).render();
 
 		initPanelSelectPortlets = A.Lang.emptyFn;
 	};
@@ -156,12 +159,9 @@ if (selLayout != null) {
 		initPanelSelectPortlets();
 	</c:if>
 
-	Liferay.on(
-		'<portlet:namespace />toggleLayoutTypeFields',
-		function(event) {
-			if (event.type == 'panel') {
-				initPanelSelectPortlets();
-			}
+	Liferay.on('<portlet:namespace />toggleLayoutTypeFields', function (event) {
+		if (event.type == 'panel') {
+			initPanelSelectPortlets();
 		}
-	);
+	});
 </aui:script>

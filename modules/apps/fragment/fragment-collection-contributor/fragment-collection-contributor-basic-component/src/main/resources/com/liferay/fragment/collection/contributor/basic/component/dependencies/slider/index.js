@@ -14,9 +14,7 @@ const prev = fragmentElement.querySelector('.carousel-control-prev');
 let moving = false;
 
 function getActiveIndicator() {
-	return fragmentElement.querySelector(
-		'.carousel-navigation .active'
-	);
+	return fragmentElement.querySelector('.carousel-navigation .active');
 }
 
 function move(movement, index = null) {
@@ -107,4 +105,4 @@ function createInterval() {
 			intervalId = createInterval();
 		});
 	});
-}());
+})();

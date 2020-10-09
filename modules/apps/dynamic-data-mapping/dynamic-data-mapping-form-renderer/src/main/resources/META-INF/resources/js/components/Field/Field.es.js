@@ -215,24 +215,21 @@ export const Field = ({field, ...otherProps}) => {
 
 	return (
 		<ErrorBoundary onError={setHasError}>
-			<Suspense fallback={<ClayLoadingIndicator />}>
-				<ParentFieldContext.Provider
-					value={getRootParentField(field, parentField)}
-				>
-					<AutoFocus>
-						<div
-							className="ddm-field"
-							data-field-name={field.fieldName}
+			<AutoFocus>
+				<div className="ddm-field" data-field-name={field.fieldName}>
+					<Suspense fallback={<ClayLoadingIndicator />}>
+						<ParentFieldContext.Provider
+							value={getRootParentField(field, parentField)}
 						>
 							<FieldLazy
 								field={field}
 								fieldTypes={fieldTypes}
 								{...otherProps}
 							/>
-						</div>
-					</AutoFocus>
-				</ParentFieldContext.Provider>
-			</Suspense>
+						</ParentFieldContext.Provider>
+					</Suspense>
+				</div>
+			</AutoFocus>
 		</ErrorBoundary>
 	);
 };

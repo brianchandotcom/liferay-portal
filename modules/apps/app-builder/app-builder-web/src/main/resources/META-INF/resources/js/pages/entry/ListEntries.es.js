@@ -22,7 +22,7 @@ import useDataListView from '../../hooks/useDataListView.es';
 import useEntriesActions from '../../hooks/useEntriesActions.es';
 import usePermissions from '../../hooks/usePermissions.es';
 import {getLocalizedUserPreferenceValue} from '../../utils/lang.es';
-import EmptyStateEntry from './EmptyStateEntry.es';
+import NoPermissionEntry from './NoPermissionEntry.es';
 import {buildEntries, navigateToEditPage} from './utils.es';
 
 export default function ListEntries() {
@@ -58,7 +58,7 @@ export default function ListEntries() {
 	};
 
 	if (!permissions.view) {
-		return <EmptyStateEntry />;
+		return <NoPermissionEntry />;
 	}
 
 	return (

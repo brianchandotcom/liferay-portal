@@ -13,11 +13,11 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayEmptyState from '@clayui/empty-state';
 import {fetch, openModal} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
+import NoPermissionState from '../../components/empty-state/NoPermissionState.es';
 import {errorToast} from '../../utils/toast.es';
 
 export default () => {
@@ -63,7 +63,7 @@ export default () => {
 	};
 
 	return (
-		<ClayEmptyState
+		<NoPermissionState
 			description={
 				isSignedIn
 					? Liferay.Language.get(
@@ -73,7 +73,6 @@ export default () => {
 							'you-do-not-have-access-to-this-app-sign-in-to-access-it'
 					  )
 			}
-			imgSrc={`${themeDisplay.getPathThemeImages()}/app_builder/illustration-locker.svg`}
 			title={Liferay.Language.get('no-permissions')}
 		>
 			{showLoginButton && (
@@ -81,6 +80,6 @@ export default () => {
 					{Liferay.Language.get('sign-in')}
 				</ClayButton>
 			)}
-		</ClayEmptyState>
+		</NoPermissionState>
 	);
 };

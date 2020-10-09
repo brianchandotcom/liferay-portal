@@ -563,12 +563,7 @@ public class DispatchLogModelImpl
 	@JSON
 	@Override
 	public String getError() {
-		if (_error == null) {
-			return "";
-		}
-		else {
-			return _error;
-		}
+		return _error;
 	}
 
 	@Override
@@ -583,12 +578,7 @@ public class DispatchLogModelImpl
 	@JSON
 	@Override
 	public String getOutput() {
-		if (_output == null) {
-			return "";
-		}
-		else {
-			return _output;
-		}
+		return _output;
 	}
 
 	@Override

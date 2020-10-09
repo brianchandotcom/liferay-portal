@@ -23,6 +23,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface GroupFinder {
 
+	public void afterPropertiesSet();
+
 	public int countByLayouts(long companyId, long parentGroupId, boolean site);
 
 	public int countByLayouts(
@@ -34,6 +36,8 @@ public interface GroupFinder {
 		long companyId, long[] classNameIds, long parentGroupId, String[] names,
 		String[] descriptions, java.util.LinkedHashMap<String, Object> params,
 		boolean andOperator);
+
+	public void destroy();
 
 	public java.util.List<Long> findByActiveGroupIds(long userId);
 

@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
  */
 public class GroupFinderUtil {
 
+	public static void afterPropertiesSet() {
+		getFinder().afterPropertiesSet();
+	}
+
 	public static int countByLayouts(
 		long companyId, long parentGroupId, boolean site) {
 
@@ -47,6 +51,10 @@ public class GroupFinderUtil {
 		return getFinder().countByC_C_PG_N_D(
 			companyId, classNameIds, parentGroupId, names, descriptions, params,
 			andOperator);
+	}
+
+	public static void destroy() {
+		getFinder().destroy();
 	}
 
 	public static java.util.List<Long> findByActiveGroupIds(long userId) {

@@ -20,6 +20,7 @@ import {AppContext} from '../../AppContext.es';
 import usePermissions from '../../hooks/usePermissions.es';
 import {getItem} from '../../utils/client.es';
 import {getLocalizedUserPreferenceValue} from '../../utils/lang.es';
+import PersonalMenu from './PersonalMenuEntry.es';
 
 const STORAGE_KEY = '@app-builder/standalone/language';
 
@@ -34,13 +35,13 @@ export const getStorageLanguageId = (appId) => {
 	);
 };
 
-export default ({
+const TranslationManagerPortal = ({
+	appId,
 	dataDefinitionId,
 	setUserLanguageId,
 	showAppName,
 	userLanguageId,
 }) => {
-	const {appId} = useContext(AppContext);
 	const {view: viewPermission} = usePermissions();
 
 	const [{app, dataDefinition}, setState] = useState({
@@ -134,5 +135,39 @@ export default ({
 					appTranslationManager
 				)}
 		</div>
+	);
+};
+
+export default (props) => {
+	const {appId, userPortraitURL} = useContext(AppContext);
+	const appPersonalMenu = document.querySelector('#app-personal-menu');
+
+	return (
+		<>
+			{appPersonalMenu &&
+				themeDisplay.isSignedIn() &&
+				createPortal(
+					<PersonalMenu
+						items={[
+							{
+								label: themeDisplay.getUserName(),
+								type: 'group',
+							},
+							{
+								type: 'divider',
+							},
+							{
+								label: Liferay.Language.get('sign-out'),
+								onClick: () => {
+									window.location.href = `${window.location.origin}/c/portal/logout`;
+								},
+							},
+						]}
+						userPortraitURL={userPortraitURL}
+					/>,
+					appPersonalMenu
+				)}
+			<TranslationManagerPortal appId={appId} {...props} />
+		</>
 	);
 };

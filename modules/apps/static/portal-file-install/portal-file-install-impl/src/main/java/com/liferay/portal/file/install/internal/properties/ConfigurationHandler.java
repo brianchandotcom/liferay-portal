@@ -373,10 +373,17 @@ public class ConfigurationHandler {
 		writer.write(_COLLECTION_LINE_BREAK);
 
 		for (int i = 0; i < size; i++) {
-			_writeCollectionElement(writer, Array.get(arrayValue, i));
+			writer.write(_INDENT);
+
+			_writeSimple(writer, Array.get(arrayValue, i));
+
+			if (i != (size - 1)) {
+				writer.write(CharPool.COMMA);
+			}
+
+			writer.write(_COLLECTION_LINE_BREAK);
 		}
 
-		writer.write(_INDENT);
 		writer.write(CharPool.CLOSE_BRACKET);
 	}
 
@@ -399,25 +406,21 @@ public class ConfigurationHandler {
 			writer.write(CharPool.OPEN_PARENTHESIS);
 			writer.write(_COLLECTION_LINE_BREAK);
 
-			_writeCollectionElement(writer, firstElement);
+			writer.write(_INDENT);
+
+			_writeSimple(writer, firstElement);
 
 			while (iterator.hasNext()) {
-				_writeCollectionElement(writer, iterator.next());
+				writer.write(CharPool.COMMA);
+				writer.write(_COLLECTION_LINE_BREAK);
+				writer.write(_INDENT);
+
+				_writeSimple(writer, iterator.next());
 			}
 
+			writer.write(_COLLECTION_LINE_BREAK);
 			writer.write(CharPool.CLOSE_PARENTHESIS);
 		}
-	}
-
-	private static void _writeCollectionElement(Writer writer, Object element)
-		throws IOException {
-
-		writer.write(_INDENT);
-
-		_writeSimple(writer, element);
-
-		writer.write(CharPool.COMMA);
-		writer.write(_COLLECTION_LINE_BREAK);
 	}
 
 	private static void _writeQuoted(Writer writer, String simple)

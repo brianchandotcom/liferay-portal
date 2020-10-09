@@ -32,6 +32,10 @@ $sidebarWidth: 320px;
 				padding-right: $sidebarWidth;
 			}
 		}
+
+		.rtl & {
+			transition: padding-left ease 0.5s;
+		}
 	}
 
 	&-sidebar {
@@ -52,6 +56,14 @@ $sidebarWidth: 320px;
 
 			@include media-breakpoint-up(md) {
 				box-shadow: none;
+			}
+		}
+
+		.rtl & {
+			transform: translateX(-$sidebarWidth);
+
+			&--visible {
+				transform: translateX(0);
 			}
 		}
 

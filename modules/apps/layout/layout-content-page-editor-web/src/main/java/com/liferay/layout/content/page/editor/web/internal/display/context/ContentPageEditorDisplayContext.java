@@ -236,6 +236,9 @@ public class ContentPageEditorDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			HashMapBuilder.<String, Object>put(
+				"adaptiveMediaEnabled",
+				_ffLayoutContentPageEditorConfiguration.adaptiveMediaEnabled()
+			).put(
 				"addFragmentCompositionURL",
 				getFragmentEntryActionURL(
 					"/content_layout/add_fragment_composition")

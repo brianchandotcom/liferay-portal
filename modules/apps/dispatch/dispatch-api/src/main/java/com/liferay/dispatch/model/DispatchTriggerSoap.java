@@ -44,6 +44,7 @@ public class DispatchTriggerSoap implements Serializable {
 		soapModel.setCronExpression(model.getCronExpression());
 		soapModel.setEndDate(model.getEndDate());
 		soapModel.setName(model.getName());
+		soapModel.setOverlapAllowed(model.isOverlapAllowed());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setSystem(model.isSystem());
 		soapModel.setTaskSettings(model.getTaskSettings());
@@ -199,6 +200,18 @@ public class DispatchTriggerSoap implements Serializable {
 		_name = name;
 	}
 
+	public boolean getOverlapAllowed() {
+		return _overlapAllowed;
+	}
+
+	public boolean isOverlapAllowed() {
+		return _overlapAllowed;
+	}
+
+	public void setOverlapAllowed(boolean overlapAllowed) {
+		_overlapAllowed = overlapAllowed;
+	}
+
 	public Date getStartDate() {
 		return _startDate;
 	}
@@ -246,6 +259,7 @@ public class DispatchTriggerSoap implements Serializable {
 	private String _cronExpression;
 	private Date _endDate;
 	private String _name;
+	private boolean _overlapAllowed;
 	private Date _startDate;
 	private boolean _system;
 	private String _taskSettings;

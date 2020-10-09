@@ -53,6 +53,7 @@ public class DispatchTriggerWrapper
 		attributes.put("cronExpression", getCronExpression());
 		attributes.put("endDate", getEndDate());
 		attributes.put("name", getName());
+		attributes.put("overlapAllowed", isOverlapAllowed());
 		attributes.put("startDate", getStartDate());
 		attributes.put("system", isSystem());
 		attributes.put("taskSettings", getTaskSettings());
@@ -127,6 +128,12 @@ public class DispatchTriggerWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean overlapAllowed = (Boolean)attributes.get("overlapAllowed");
+
+		if (overlapAllowed != null) {
+			setOverlapAllowed(overlapAllowed);
 		}
 
 		Date startDate = (Date)attributes.get("startDate");
@@ -245,6 +252,16 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
+	 * Returns the overlap allowed of this dispatch trigger.
+	 *
+	 * @return the overlap allowed of this dispatch trigger
+	 */
+	@Override
+	public boolean getOverlapAllowed() {
+		return model.getOverlapAllowed();
+	}
+
+	/**
 	 * Returns the primary key of this dispatch trigger.
 	 *
 	 * @return the primary key of this dispatch trigger
@@ -339,6 +356,16 @@ public class DispatchTriggerWrapper
 	@Override
 	public boolean isActive() {
 		return model.isActive();
+	}
+
+	/**
+	 * Returns <code>true</code> if this dispatch trigger is overlap allowed.
+	 *
+	 * @return <code>true</code> if this dispatch trigger is overlap allowed; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isOverlapAllowed() {
+		return model.isOverlapAllowed();
 	}
 
 	/**
@@ -444,6 +471,16 @@ public class DispatchTriggerWrapper
 	@Override
 	public void setName(String name) {
 		model.setName(name);
+	}
+
+	/**
+	 * Sets whether this dispatch trigger is overlap allowed.
+	 *
+	 * @param overlapAllowed the overlap allowed of this dispatch trigger
+	 */
+	@Override
+	public void setOverlapAllowed(boolean overlapAllowed) {
+		model.setOverlapAllowed(overlapAllowed);
 	}
 
 	/**

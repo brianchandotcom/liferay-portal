@@ -240,6 +240,14 @@ public class DispatchLogLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.dispatch.model.DispatchLog fetchLatestDispatchLog(
+		long dispatchTriggerId) {
+
+		return _dispatchLogLocalService.fetchLatestDispatchLog(
+			dispatchTriggerId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

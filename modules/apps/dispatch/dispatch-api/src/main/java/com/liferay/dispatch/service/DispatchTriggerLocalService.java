@@ -304,9 +304,9 @@ public interface DispatchTriggerLocalService
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, boolean active, String cronExpression,
 			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-			int endDateMinute, boolean neverEnd, int startDateMonth,
-			int startDateDay, int startDateYear, int startDateHour,
-			int startDateMinute)
+			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
+			int startDateMonth, int startDateDay, int startDateYear,
+			int startDateHour, int startDateMinute)
 		throws PortalException;
 
 	public DispatchTrigger updateDispatchTrigger(

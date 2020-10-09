@@ -78,7 +78,7 @@ public class DispatchTriggerCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -102,6 +102,8 @@ public class DispatchTriggerCacheModel
 		sb.append(endDate);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", overlapAllowed=");
+		sb.append(overlapAllowed);
 		sb.append(", startDate=");
 		sb.append(startDate);
 		sb.append(", system=");
@@ -168,6 +170,8 @@ public class DispatchTriggerCacheModel
 			dispatchTriggerImpl.setName(name);
 		}
 
+		dispatchTriggerImpl.setOverlapAllowed(overlapAllowed);
+
 		if (startDate == Long.MIN_VALUE) {
 			dispatchTriggerImpl.setStartDate(null);
 		}
@@ -215,6 +219,8 @@ public class DispatchTriggerCacheModel
 		cronExpression = objectInput.readUTF();
 		endDate = objectInput.readLong();
 		name = objectInput.readUTF();
+
+		overlapAllowed = objectInput.readBoolean();
 		startDate = objectInput.readLong();
 
 		system = objectInput.readBoolean();
@@ -260,6 +266,7 @@ public class DispatchTriggerCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		objectOutput.writeBoolean(overlapAllowed);
 		objectOutput.writeLong(startDate);
 
 		objectOutput.writeBoolean(system);
@@ -290,6 +297,7 @@ public class DispatchTriggerCacheModel
 	public String cronExpression;
 	public long endDate;
 	public String name;
+	public boolean overlapAllowed;
 	public long startDate;
 	public boolean system;
 	public String taskSettings;

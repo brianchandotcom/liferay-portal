@@ -225,6 +225,7 @@ definition {
 			metaTagsKeywords = "space, education, space travel, graduateschool");
 	}
 
+	@description = "This is a use case for LPS-121346. The Home page is shown when access to a non existing page."
 	@priority = "3"
 	test SitesPanelLayout {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -250,15 +251,19 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Page Name");
+		task ("Assert the Home page is not shown") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/usersn/page-name");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/usersn/page-name?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&amp;p_p_state=maximized");
+			AssertTextEquals(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "You do not have the roles required to access this portlet.");
+			AssertTextPresent(value1 = "The requested resource could not be found.");
+
+			AssertElementNotPresent(
+				key_portletTitleName = "Profile",
+				locator1 = "Home#PORTLET_HEADER");
+		}
 
 		User.firstLoginPG(
 			password = "test",

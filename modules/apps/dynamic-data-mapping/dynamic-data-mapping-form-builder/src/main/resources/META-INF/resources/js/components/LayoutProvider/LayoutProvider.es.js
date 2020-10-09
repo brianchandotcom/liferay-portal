@@ -327,8 +327,8 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	_handleDeleteFieldModalButtonClicked(activePage, fieldName) {
-		this.dispatch('fieldDeleted', {activePage, fieldName});
+	_handleDeleteFieldModalButtonClicked(event) {
+		this.setState(handleFieldDeleted(this.props, this.state, event));
 	}
 
 	_fieldActionsValueFn() {
@@ -340,41 +340,7 @@ class LayoutProvider extends Component {
 			},
 			{
 				action: ({activePage, fieldName}) => {
-					const {rules} = this.state;
-
-					if (RulesSupport.findRuleByFieldName(fieldName, rules)) {
-						openModal({
-							bodyHTML: Liferay.Language.get(
-								'a-rule-is-applied-to-this-field'
-							),
-							buttons: [
-								{
-									displayType: 'secondary',
-									label: Liferay.Language.get('cancel'),
-									type: 'cancel',
-								},
-								{
-									displayType: 'danger',
-									label: Liferay.Language.get('confirm'),
-									onClick: () => {
-										this._handleDeleteFieldModalButtonClicked(
-											activePage,
-											fieldName
-										);
-									},
-									type: 'cancel',
-								},
-							],
-							id: 'ddm-delete-field-with-rule-modal',
-							size: 'md',
-							title: Liferay.Language.get(
-								'delete-field-with-rule-applied'
-							),
-						});
-					}
-					else {
-						this.dispatch('fieldDeleted', {activePage, fieldName});
-					}
+					this.dispatch('fieldDeleted', {activePage, fieldName});
 				},
 				label: Liferay.Language.get('delete'),
 			},
@@ -474,7 +440,36 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFieldDeleted(event) {
-		this.setState(handleFieldDeleted(this.props, this.state, event));
+		const {rules} = this.state;
+
+		if (rules && RulesSupport.findRuleByFieldName(event.fieldName, rules)) {
+			openModal({
+				bodyHTML: Liferay.Language.get(
+					'a-rule-is-applied-to-this-field'
+				),
+				buttons: [
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('cancel'),
+						type: 'cancel',
+					},
+					{
+						displayType: 'danger',
+						label: Liferay.Language.get('confirm'),
+						onClick: () => {
+							this._handleDeleteFieldModalButtonClicked(event);
+						},
+						type: 'cancel',
+					},
+				],
+				id: 'ddm-delete-field-with-rule-modal',
+				size: 'md',
+				title: Liferay.Language.get('delete-field-with-rule-applied'),
+			});
+		}
+		else {
+			this.setState(handleFieldDeleted(this.props, this.state, event));
+		}
 	}
 
 	_handleFieldDuplicated(event) {

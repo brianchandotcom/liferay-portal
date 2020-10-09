@@ -22,6 +22,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHel
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import java.util.List;
 
@@ -51,11 +52,18 @@ public class DepotEntryGroupRelStagedModelRepository
 			serviceContext.setUuid(depotEntryGroupRel.getUuid());
 		}
 
-		return _depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			depotEntryGroupRel.isDdmStructuresAvailable(),
-			depotEntryGroupRel.getDepotEntryId(),
-			depotEntryGroupRel.getToGroupId(),
-			depotEntryGroupRel.isSearchable());
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			return _depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+				depotEntryGroupRel.isDdmStructuresAvailable(),
+				depotEntryGroupRel.getDepotEntryId(),
+				depotEntryGroupRel.getToGroupId(),
+				depotEntryGroupRel.isSearchable());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Override

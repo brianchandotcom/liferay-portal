@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -56,22 +56,12 @@ public class EditDisplayPageMenuDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getDropdownItems() throws Exception {
-		String editURL = _infoEditURLProvider.getURL(
-			_layoutDisplayPageObjectProvider.getDisplayObject(),
-			_httpServletRequest);
+	public List<DropdownItem> getDropdownItems() {
+		UnsafeConsumer<DropdownItem, Exception> editURLDropdownItem =
+			getEditURLDropdownItem(_infoEditURLProvider);
 
 		return DropdownItemListBuilder.add(
-			() ->
-				(_infoEditURLProvider != null) && Validator.isNotNull(editURL),
-			dropdownItem -> {
-				dropdownItem.setHref(editURL);
-				dropdownItem.setLabel(
-					LanguageUtil.format(
-						_httpServletRequest, "edit-x",
-						_layoutDisplayPageObjectProvider.getTitle(
-							_themeDisplay.getLocale())));
-			}
+			() -> editURLDropdownItem != null, editURLDropdownItem
 		).add(
 			() -> LayoutPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
@@ -100,6 +90,28 @@ public class EditDisplayPageMenuDisplayContext {
 						resourceBundle, "edit-display-page-template"));
 			}
 		).build();
+	}
+
+	protected UnsafeConsumer<DropdownItem, Exception> getEditURLDropdownItem(
+		InfoEditURLProvider<Object> infoEditURLProvider) {
+
+		if (infoEditURLProvider == null) {
+			return null;
+		}
+
+		return dropdownItem -> {
+			String editURL = _infoEditURLProvider.getURL(
+				_layoutDisplayPageObjectProvider.getDisplayObject(),
+				_httpServletRequest);
+
+			dropdownItem.setHref(editURL);
+
+			dropdownItem.setLabel(
+				LanguageUtil.format(
+					_httpServletRequest, "edit-x",
+					_layoutDisplayPageObjectProvider.getTitle(
+						_themeDisplay.getLocale())));
+		};
 	}
 
 	private final HttpServletRequest _httpServletRequest;

@@ -12,7 +12,7 @@
  * details.
  */
 
-import RulesSupport from '../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RulesSupport.es';
+import RulesSupport from '../../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RulesSupport.es';
 
 const mockActions = [
 	{
@@ -74,5 +74,149 @@ describe('RulesSupport', () => {
 
 		expect(condition.operands[1].type).toEqual('');
 		expect(condition.operands[1].value).toEqual('');
+	});
+
+	describe('findRuleByFieldName(fieldName, rules)', () => {
+		it('returns false if field does not belong to rule', () => {
+			const rules = [
+				{
+					actions: [
+						{
+							action: 'require',
+							target: 'text1',
+						},
+					],
+					conditions: [
+						{
+							operands: [
+								{
+									type: 'field',
+									value: 'text1',
+								},
+								{
+									type: 'field',
+									value: 'text2',
+								},
+							],
+							operator: 'equals-to',
+						},
+					],
+				},
+			];
+
+			expect(
+				RulesSupport.findRuleByFieldName('text3', rules)
+			).toBeFalsy();
+		});
+
+		it('returns true if field belongs to rule', () => {
+			const rules = [
+				{
+					actions: [
+						{
+							action: 'enable',
+							target: 'date1',
+						},
+					],
+					conditions: [
+						{
+							operands: [
+								{
+									type: 'field',
+									value: 'text1',
+								},
+								{
+									type: 'field',
+									value: 'text2',
+								},
+							],
+							operator: 'equals-to',
+						},
+					],
+				},
+			];
+
+			expect(
+				RulesSupport.findRuleByFieldName('date1', rules)
+			).toBeTruthy();
+
+			expect(
+				RulesSupport.findRuleByFieldName('text1', rules)
+			).toBeTruthy();
+
+			expect(
+				RulesSupport.findRuleByFieldName('text2', rules)
+			).toBeTruthy();
+		});
+
+		it('returns true if field belongs to calculate rule', () => {
+			const rules = [
+				{
+					actions: [
+						{
+							action: 'calculate',
+							expression: '[num1]+([num2]*2)',
+							target: 'num3',
+						},
+					],
+					conditions: [
+						{
+							operands: [
+								{
+									type: 'field',
+									value: 'text1',
+								},
+							],
+							operator: 'is-empty',
+						},
+					],
+				},
+			];
+
+			expect(
+				RulesSupport.findRuleByFieldName('num1', rules)
+			).toBeTruthy();
+
+			expect(
+				RulesSupport.findRuleByFieldName('num2', rules)
+			).toBeTruthy();
+		});
+
+		it('returns true if field belongs to auto-fill rule', () => {
+			const rules = [
+				{
+					actions: [
+						{
+							action: 'auto-fill',
+							inputs: {
+								key: 'text2',
+							},
+							outputs: {
+								key: 'select1',
+							},
+						},
+					],
+					conditions: [
+						{
+							operands: [
+								{
+									type: 'field',
+									value: 'text1',
+								},
+							],
+							operator: 'is-empty',
+						},
+					],
+				},
+			];
+
+			expect(
+				RulesSupport.findRuleByFieldName('select1', rules)
+			).toBeTruthy();
+
+			expect(
+				RulesSupport.findRuleByFieldName('text2', rules)
+			).toBeTruthy();
+		});
 	});
 });

@@ -26,6 +26,7 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-121422. The elements are still shown in edit mode after executing reset changes."
 	@priority = "3"
 	test SitesTemplatePermissionPersistence {
 		property testray.component.names = "Permissions,Site Administration";
@@ -123,11 +124,15 @@ definition {
 				locator1 = "Home#PORTLET_BORDERLESS");
 
 			SiteTemplates.resetPageChanges(widgetName = "Asset Publisher");
+
+			ContentPages.clickPencil();
+
+			AssertElementNotPresent(
+				key_fragmentName = "Asset Publisher",
+				locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		task ("Assert permissions of each widgets in Home page") {
-			ContentPages.clickPencil();
-
 			PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
 
 			PermissionsInline.assertDefaultPG(roleList = "Guest,Owner,Power User,Site Member,User");

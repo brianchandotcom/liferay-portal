@@ -238,7 +238,7 @@ public class FileInstallDeployTest {
 			JarBuilder jarBuilder = new JarBuilder(
 				path, _TEST_JAR_SYMBOLIC_NAME);
 
-			jarBuilder.addVersion(
+			jarBuilder.setVersion(
 				baseVersion
 			).build();
 
@@ -253,7 +253,7 @@ public class FileInstallDeployTest {
 
 			jarBuilder = new JarBuilder(path, _TEST_JAR_SYMBOLIC_NAME);
 
-			jarBuilder.addVersion(
+			jarBuilder.setVersion(
 				updateVersion
 			).build();
 
@@ -344,7 +344,7 @@ public class FileInstallDeployTest {
 
 			jarBuilder = new JarBuilder(fragmentPath, testFragmentSymbolicName);
 
-			jarBuilder.addFragmentHost(
+			jarBuilder.setFragmentHost(
 				_TEST_JAR_SYMBOLIC_NAME
 			).build();
 
@@ -432,7 +432,7 @@ public class FileInstallDeployTest {
 			JarBuilder jarBuilder = new JarBuilder(
 				path, _TEST_JAR_SYMBOLIC_NAME);
 
-			jarBuilder.addImport(
+			jarBuilder.setImport(
 				optionalPackage + ";resolution:=optional"
 			).build();
 
@@ -453,7 +453,7 @@ public class FileInstallDeployTest {
 			jarBuilder = new JarBuilder(
 				optionalProviderPath, testOptionalProviderSymbolicName);
 
-			jarBuilder.addExport(
+			jarBuilder.setExport(
 				optionalPackage
 			).build();
 
@@ -556,30 +556,6 @@ public class FileInstallDeployTest {
 			_symbolicName = symbolicName;
 		}
 
-		public JarBuilder addExport(String exports) {
-			_exports = exports;
-
-			return this;
-		}
-
-		public JarBuilder addFragmentHost(String fragmentHost) {
-			_fragmentHost = fragmentHost;
-
-			return this;
-		}
-
-		public JarBuilder addImport(String imports) {
-			_imports = imports;
-
-			return this;
-		}
-
-		public JarBuilder addVersion(Version version) {
-			_version = version;
-
-			return this;
-		}
-
 		public void build() throws IOException {
 			try (OutputStream outputStream = Files.newOutputStream(_path);
 				JarOutputStream jarOutputStream = new JarOutputStream(
@@ -617,6 +593,30 @@ public class FileInstallDeployTest {
 
 				jarOutputStream.closeEntry();
 			}
+		}
+
+		public JarBuilder setExport(String exports) {
+			_exports = exports;
+
+			return this;
+		}
+
+		public JarBuilder setFragmentHost(String fragmentHost) {
+			_fragmentHost = fragmentHost;
+
+			return this;
+		}
+
+		public JarBuilder setImport(String imports) {
+			_imports = imports;
+
+			return this;
+		}
+
+		public JarBuilder setVersion(Version version) {
+			_version = version;
+
+			return this;
 		}
 
 		private String _exports;

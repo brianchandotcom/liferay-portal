@@ -20,13 +20,17 @@ import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
 import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.app.builder.web.internal.deploy.AppDeployUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -134,6 +138,21 @@ public class AppPortlet extends MVCPortlet {
 			AppBuilderWebKeys.SHOW_FORM_VIEW, _showFormView);
 		renderRequest.setAttribute(
 			AppBuilderWebKeys.SHOW_TABLE_VIEW, _showTableView);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
+
+		try {
+			String userPortraitURL = user.getPortraitURL(themeDisplay);
+
+			renderRequest.setAttribute(
+				AppBuilderWebKeys.APP_USER_PORTRAIT_URL, userPortraitURL);
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
 
 		super.render(renderRequest, renderResponse);
 	}

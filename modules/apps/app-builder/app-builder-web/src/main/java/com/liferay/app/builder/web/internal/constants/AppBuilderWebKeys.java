@@ -27,6 +27,8 @@ public class AppBuilderWebKeys {
 
 	public static final String APP_TAB_CONTEXT = "APP_TAB_CONTEXT";
 
+	public static final String APP_USER_PORTRAIT_URL = "APP_USER_PORTRAIT_URL";
+
 	public static final String APPS_TABS = "APPS_TABS";
 
 	/**

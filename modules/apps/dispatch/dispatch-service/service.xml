@@ -22,8 +22,8 @@
 
 		<column name="dispatchTriggerId" type="long" />
 		<column name="endDate" type="Date" />
-		<column name="error" type="String" />
-		<column name="output" type="String" />
+		<column convert-null="false" name="error" type="String" />
+		<column convert-null="false" name="output" type="String" />
 		<column name="startDate" type="Date" />
 		<column name="status" type="int" />
 

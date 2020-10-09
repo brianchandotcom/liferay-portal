@@ -1,5 +1,3 @@
-const handleProviderResize = function () {};
-
 let content = null;
 let videoContainer = null;
 let errorMessage = null;

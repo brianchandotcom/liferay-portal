@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.builder.internal.converter.seriali
 
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.action.DefaultDDMFormRuleAction;
 import com.liferay.dynamic.data.mapping.spi.converter.serializer.SPIDDMFormRuleSerializerContext;
+import com.liferay.petra.string.StringPool;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,6 +27,20 @@ import org.mockito.Mock;
  * @author Leonardo Barros
  */
 public class DefaultDDMFormRuleActionSerializerTest {
+
+	@Test
+	public void testSerializeWithEmptyTarget() {
+		DefaultDDMFormRuleAction defaultDDMFormRuleAction =
+			new DefaultDDMFormRuleAction("show", StringPool.BLANK);
+
+		DefaultDDMFormRuleActionSerializer defaultDDMFormRuleActionSerializer =
+			new DefaultDDMFormRuleActionSerializer(defaultDDMFormRuleAction);
+
+		String result = defaultDDMFormRuleActionSerializer.serialize(
+			_spiDDMFormRuleSerializerContext);
+
+		Assert.assertNull(result);
+	}
 
 	@Test
 	public void testSerializeSetEnabled() {

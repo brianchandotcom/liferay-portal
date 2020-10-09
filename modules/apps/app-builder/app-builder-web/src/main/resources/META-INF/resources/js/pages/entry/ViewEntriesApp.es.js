@@ -18,9 +18,7 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import {AppContextProvider} from '../../AppContext.es';
 import useLazy from '../../hooks/useLazy.es';
 import {PermissionsContextProvider} from './PermissionsContext.es';
-import TranslationManagerEntry, {
-	getStorageLanguageId,
-} from './TranslationManagerEntry.es';
+import PortalEntry, {getStorageLanguageId} from './PortalEntry.es';
 
 export default function ({appTab, ...props}) {
 	const PageComponent = useLazy();
@@ -51,7 +49,7 @@ export default function ({appTab, ...props}) {
 		<div className="app-builder-root">
 			<AppContextProvider {...props}>
 				<PermissionsContextProvider dataDefinitionId={dataDefinitionId}>
-					<TranslationManagerEntry
+					<PortalEntry
 						dataDefinitionId={dataDefinitionId}
 						setUserLanguageId={setUserLanguageId}
 						showAppName={showAppName}

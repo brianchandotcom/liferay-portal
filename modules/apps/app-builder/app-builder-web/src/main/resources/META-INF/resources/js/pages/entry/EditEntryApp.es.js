@@ -17,9 +17,7 @@ import React, {useState} from 'react';
 import {AppContextProvider} from '../../AppContext.es';
 import useLazy from '../../hooks/useLazy.es';
 import {PermissionsContextProvider} from './PermissionsContext.es';
-import TranslationManagerEntry, {
-	getStorageLanguageId,
-} from './TranslationManagerEntry.es';
+import PortalEntry, {getStorageLanguageId} from './PortalEntry.es';
 
 export default ({appTab, ...props}) => {
 	const EditPage = useLazy(true);
@@ -32,7 +30,7 @@ export default ({appTab, ...props}) => {
 	return (
 		<AppContextProvider {...props}>
 			<PermissionsContextProvider dataDefinitionId={dataDefinitionId}>
-				<TranslationManagerEntry
+				<PortalEntry
 					dataDefinitionId={props.dataDefinitionId}
 					setUserLanguageId={setUserLanguageId}
 					userLanguageId={userLanguageId}

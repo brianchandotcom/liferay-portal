@@ -35,11 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(
-	immediate = true,
-	property = "javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
-	service = PortletConfigurationIcon.class
-)
+@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 
 	@Override
@@ -64,7 +60,7 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 
 		LiferayPortletURL liferayPortletURL =
 			(LiferayPortletURL)_portal.getControlPanelPortletURL(
-				portletRequest, ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
+				portletRequest, _portal.getPortletId(portletRequest),
 				PortletRequest.RESOURCE_PHASE);
 
 		liferayPortletURL.setResourceID("export");
@@ -79,7 +75,15 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		return true;
+		String portletId = _portal.getPortletId(portletRequest);
+
+		if (portletId.equals(ConfigurationAdminPortletKeys.INSTANCE_SETTINGS) ||
+			portletId.equals(ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

@@ -39,11 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
-		"path=/view_factory_instances"
-	},
+	immediate = true, property = "path=/view_factory_instances",
 	service = PortletConfigurationIcon.class
 )
 public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
@@ -92,6 +88,15 @@ public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		String portletId = _portal.getPortletId(portletRequest);
+
+		if (!portletId.equals(
+				ConfigurationAdminPortletKeys.INSTANCE_SETTINGS) &&
+			!portletId.equals(ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)) {
+
+			return false;
+		}
+
 		ConfigurationModelIterator configurationModelIterator =
 			(ConfigurationModelIterator)portletRequest.getAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);

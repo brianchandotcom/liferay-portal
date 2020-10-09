@@ -474,6 +474,29 @@ describe('LayoutProvider', () => {
 
 				const mockEvent = {
 					activePage: 0,
+					fieldName: 'text2',
+				};
+
+				const {dispatch} = child.context;
+
+				dispatch('fieldDeleted', mockEvent);
+
+				expect(
+					provider.state.pages[0].rows[1].columns[0].fields.length
+				).toEqual(1);
+			});
+
+			it('does not delete field that belongs to rules', () => {
+				component = new Parent();
+
+				const {child, provider} = component.refs;
+
+				expect(
+					provider.state.pages[0].rows[1].columns[0].fields.length
+				).toEqual(2);
+
+				const mockEvent = {
+					activePage: 0,
 					fieldName: 'text1',
 				};
 
@@ -481,12 +504,9 @@ describe('LayoutProvider', () => {
 
 				dispatch('fieldDeleted', mockEvent);
 
-				jest.runAllTimers();
-
 				expect(
 					provider.state.pages[0].rows[1].columns[0].fields.length
-				).toEqual(1);
-				expect(provider.state.pages).toMatchSnapshot();
+				).toEqual(2);
 			});
 		});
 

@@ -551,11 +551,6 @@ public class FileInstallDeployTest {
 
 	private class JarBuilder {
 
-		public JarBuilder(Path path, String symbolicName) {
-			_path = path;
-			_symbolicName = symbolicName;
-		}
-
 		public void build() throws IOException {
 			try (OutputStream outputStream = Files.newOutputStream(_path);
 				JarOutputStream jarOutputStream = new JarOutputStream(
@@ -617,6 +612,11 @@ public class FileInstallDeployTest {
 			_version = version;
 
 			return this;
+		}
+
+		private JarBuilder(Path path, String symbolicName) {
+			_path = path;
+			_symbolicName = symbolicName;
 		}
 
 		private String _exports;

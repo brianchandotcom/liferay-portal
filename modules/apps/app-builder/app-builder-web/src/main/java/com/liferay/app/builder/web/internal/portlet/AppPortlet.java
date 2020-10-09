@@ -21,6 +21,8 @@ import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.app.builder.web.internal.deploy.AppDeployUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -134,25 +136,26 @@ public class AppPortlet extends MVCPortlet {
 				_appBuilderApp,
 				ParamUtil.getLong(renderRequest, "dataRecordId")));
 
-		renderRequest.setAttribute(
-			AppBuilderWebKeys.SHOW_FORM_VIEW, _showFormView);
-		renderRequest.setAttribute(
-			AppBuilderWebKeys.SHOW_TABLE_VIEW, _showTableView);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		User user = themeDisplay.getUser();
 
 		try {
-			String userPortraitURL = user.getPortraitURL(themeDisplay);
-
 			renderRequest.setAttribute(
-				AppBuilderWebKeys.APP_USER_PORTRAIT_URL, userPortraitURL);
+				AppBuilderWebKeys.APP_USER_PORTRAIT_URL,
+				user.getPortraitURL(themeDisplay));
 		}
 		catch (PortalException portalException) {
-			throw new PortletException(portalException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
 		}
+
+		renderRequest.setAttribute(
+			AppBuilderWebKeys.SHOW_FORM_VIEW, _showFormView);
+		renderRequest.setAttribute(
+			AppBuilderWebKeys.SHOW_TABLE_VIEW, _showTableView);
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -217,6 +220,8 @@ public class AppPortlet extends MVCPortlet {
 				ServiceWrapper::getService)
 		);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(AppPortlet.class);
 
 	private final AppBuilderApp _appBuilderApp;
 	private final String _appDeploymentType;

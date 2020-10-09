@@ -17,7 +17,11 @@ import {openImageSelector} from '../../../../src/main/resources/META-INF/resourc
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({config: {}})
+	() => ({
+		config: {
+			adaptiveMediaEnabled: true,
+		},
+	})
 );
 
 jest.mock(

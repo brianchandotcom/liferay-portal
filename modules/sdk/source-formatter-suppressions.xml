@@ -38,6 +38,7 @@
 		<suppress checks="JavaPackagePathCheck" files="gradle-plugins/src/gradleTest/extAlternative/.*" />
 		<suppress checks="JavaPackagePathCheck" files="gradle-plugins/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
 		<suppress checks="JavaPackagePathCheck" files="project-templates/project-templates-api/src/test/java.*" />
+		<suppress checks="JavaStaticMethodCheck" files="gradle-plugins-node/src/main/java/com/liferay/gradle/plugins/node/tasks/NpmInstallTask\.java" />
 		<suppress checks="JavaTermOrderCheck" files="gradle-plugins-source-formatter/src/gradleTest/smoke/src/main/java/com/liferay/sample/GreetingBuilder\.java" />
 		<suppress checks="JavaTestMethodAnnotationsCheck" files="project-templates/project-templates/src/test/java/com/liferay/project/templates/BaseProjectTemplatesTestCase\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="ant-bnd/src/main/java/com/liferay/ant/bnd/jsp/JspAnalyzerPlugin\.java" />

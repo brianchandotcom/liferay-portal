@@ -22,7 +22,7 @@ import StatusRenderer from '../data_renderers/StatusRenderer';
 
 function OrdersTable(props) {
 	return (
-		<ClayTable borderless>
+		<ClayTable borderless className="orders-list">
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell headingCell>

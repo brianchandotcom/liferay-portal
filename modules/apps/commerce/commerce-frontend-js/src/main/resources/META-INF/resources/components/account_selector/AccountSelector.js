@@ -28,11 +28,11 @@ import {
 	CURRENT_ACCOUNT_UPDATED,
 	CURRENT_ORDER_UPDATED,
 } from '../../utilities/eventsDefinitions';
-import InfiniteScroller from '../infinite_scroller/InfiniteScroller';
 import Autocomplete from './../autocomplete/Autocomplete';
 import OrdersTable from './OrdersTable';
 
-const ORDERS_HEADLESS_API_ENDPOINT = ServiceProvider.AdminOrderAPI('v1').baseURL;
+const ORDERS_HEADLESS_API_ENDPOINT = ServiceProvider.AdminOrderAPI('v1')
+	.baseURL;
 const ACCOUNTS_HEADLESS_API_ENDPOINT = ServiceProvider.AdminAccountAPI('v1')
 	.baseURL;
 
@@ -46,11 +46,11 @@ function formatStickerName(name) {
 	return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
 }
 
-function AccountSticker({name, thumbnail}, size="xl") {
+function AccountSticker({className, logoURL, name, size}) {
 	return (
-		<ClaySticker shape="user-icon" size={size}>
-			{thumbnail ? (
-				<ClaySticker.Image alt={name} src={thumbnail} />
+		<ClaySticker className={className} shape="user-icon" size={size}>
+			{logoURL ? (
+				<ClaySticker.Image alt={name} src={logoURL} />
 			) : (
 				formatStickerName(name)
 			)}
@@ -81,7 +81,7 @@ function AccountSelector(props) {
 	);
 	const [currentOrder, updateCurrentOrder] = useState(props.currentOrder);
 	const [currentView, setCurrentView] = useState(
-		props.currentOrder ? 'orders' : 'accounts'
+		props.currentAccount ? 'orders' : 'accounts'
 	);
 	const accountsListWrapperRef = useRef();
 	const ordersListWrapperRef = useRef();
@@ -131,6 +131,7 @@ function AccountSelector(props) {
 							<>
 								<AccountSticker
 									className="current-account-thumbnail"
+									size="xl"
 									{...currentAccount}
 								/>
 								<div className="current-info-container">
@@ -158,7 +159,7 @@ function AccountSelector(props) {
 											<Row>
 												<Col className="no-account-selected-placeholder">
 													{Liferay.Language.get(
-														'no-orders-available'
+														'no-order-selected'
 													)}
 												</Col>
 											</Row>
@@ -178,19 +179,12 @@ function AccountSelector(props) {
 				}
 			>
 				{currentView === 'accounts' && (
-					<>
+					<ClayDropDown.ItemList>
 						<ClayDropDown.Section>
 							<Autocomplete
-								apiUrl = {
-									ACCOUNTS_HEADLESS_API_ENDPOINT
-								}
+								apiUrl={ACCOUNTS_HEADLESS_API_ENDPOINT}
 								contentWrapperRef={accountsListWrapperRef}
-								customView={({
-									getPage,
-									items,
-									loading,
-									totalCount,
-								}) => {
+								customView={({items, loading}) => {
 									if (!items && loading) {
 										return loadingView;
 									}
@@ -206,53 +200,41 @@ function AccountSelector(props) {
 									}
 
 									return (
-										<ClayDropDown.ItemList className="mb-0">
-											<ClayDropDown.Group
-												header={Liferay.Language.get(
-													'select-accounts'
-												)}
-											>
-												<InfiniteScroller
-													onBottomTouched={() =>
-														!loading && getPage()
-													}
-													scrollCompleted={
-														items &&
-														items.length ===
-															totalCount
-													}
+										<ClayDropDown.ItemList className="accounts-list">
+											{items.map((item) => (
+												<ClayDropDown.Item
+													key={item.id}
+													onClick={(_) => {
+														updateRemoteCurrentAccount(
+															item.id,
+															props.setCurrentAccountURL
+														);
+														updateCurrentAccount(
+															item
+														);
+														setCurrentView(
+															'orders'
+														);
+														updateCurrentOrder(
+															null
+														);
+													}}
 												>
-													{items.map((item) => (
-														<ClayDropDown.Item
-															key={item.id}
-															onClick={(_) => {
-																updateRemoteCurrentAccount(
-																	item.id,
-																	props.setCurrentAccountURL
-																);
-																updateCurrentAccount(
-																	item
-																);
-																setCurrentView(
-																	'orders'
-																);
-																updateCurrentOrder(
-																	null
-																);
-															}}
-														>
-															{item.name}
-														</ClayDropDown.Item>
-													))}
-												</InfiniteScroller>
-											</ClayDropDown.Group>
+													<AccountSticker
+														className="current-account-thumbnail mr-2"
+														{...item}
+													/>
+													{item.name}
+												</ClayDropDown.Item>
+											))}
 										</ClayDropDown.ItemList>
 									);
 								}}
-								infinityScrollMode={true}
+								disabled={!active}
+								infiniteScrollMode={true}
 								inputName="account-search"
 								inputPlaceholder={Liferay.Language.get(
-									'search-accounts'
+									'search-account'
 								)}
 								itemsKey="id"
 								itemsLabel="name"
@@ -260,11 +242,13 @@ function AccountSelector(props) {
 							/>
 						</ClayDropDown.Section>
 						<ClayDropDown.Divider />
-						<div ref={accountsListWrapperRef} />
-					</>
+						<li>
+							<div ref={accountsListWrapperRef} />
+						</li>
+					</ClayDropDown.ItemList>
 				)}
 				{currentView === 'orders' && (
-					<>
+					<ClayDropDown.ItemList>
 						<ClayDropDown.Section className="d-flex">
 							<ClayButtonWithIcon
 								className="flex-shrink-0"
@@ -282,16 +266,9 @@ function AccountSelector(props) {
 						<ClayDropDown.Divider />
 						<ClayDropDown.Section>
 							<Autocomplete
-								apiUrl = {
-									`${ORDERS_HEADLESS_API_ENDPOINT}?sort=modifiedDate:desc&filter=(accountId/any(x:(x eq ${currentAccount.id})))`
-								}
+								apiUrl={`${ORDERS_HEADLESS_API_ENDPOINT}?sort=modifiedDate:desc&filter=(accountId/any(x:(x eq ${currentAccount.id})))`}
 								contentWrapperRef={ordersListWrapperRef}
-								customView={({
-									getPage,
-									items,
-									loading,
-									totalCount,
-								}) => {
+								customView={({items, loading}) => {
 									if (!items && loading) {
 										return loadingView;
 									}
@@ -307,27 +284,16 @@ function AccountSelector(props) {
 									}
 
 									return (
-										<ClayDropDown.Group>
-											<InfiniteScroller
-												onBottomTouched={() =>
-													!loading && getPage()
-												}
-												scrollCompleted={
-													items &&
-													items.length === totalCount
-												}
-											>
-												<OrdersTable
-													orders={items}
-													selectOrderURL={
-														props.selectOrderURL
-													}
-												/>
-											</InfiniteScroller>
-										</ClayDropDown.Group>
+										<OrdersTable
+											orders={items}
+											selectOrderURL={
+												props.selectOrderURL
+											}
+										/>
 									);
 								}}
-								infinityScrollMode={true}
+								disabled={!active}
+								infiniteScrollMode={true}
 								inputName="order-search"
 								inputPlaceholder={Liferay.Language.get(
 									'search-order'
@@ -338,7 +304,9 @@ function AccountSelector(props) {
 							/>
 						</ClayDropDown.Section>
 						<ClayDropDown.Divider />
-						<div ref={ordersListWrapperRef} />
+						<li>
+							<div ref={ordersListWrapperRef} />
+						</li>
 						<ClayDropDown.Divider />
 						<ClayDropDown.Section>
 							<ClayLink
@@ -349,7 +317,7 @@ function AccountSelector(props) {
 								{Liferay.Language.get('create-new-order')}
 							</ClayLink>
 						</ClayDropDown.Section>
-					</>
+					</ClayDropDown.ItemList>
 				)}
 			</ClayDropDown>
 		</ClayIconSpriteContext.Provider>
@@ -360,12 +328,12 @@ AccountSelector.propTypes = {
 	alignmentPosition: PropTypes.number,
 	createNewOrderURL: PropTypes.string.isRequired,
 	currentAccount: PropTypes.shape({
-		id: PropTypes.string,
+		id: PropTypes.number,
+		logoURL: PropTypes.string,
 		name: PropTypes.string,
-		thumbnail: PropTypes.string,
 	}),
 	currentOrder: PropTypes.shape({
-		id: PropTypes.string,
+		id: PropTypes.number,
 		orderStatusInfo: PropTypes.shape({
 			label_i18n: PropTypes.string,
 		}),

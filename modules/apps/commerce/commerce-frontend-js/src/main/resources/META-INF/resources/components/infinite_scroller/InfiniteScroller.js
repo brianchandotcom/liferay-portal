@@ -18,6 +18,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 function InfiniteScroller({
 	children,
+	customLoader: CustomLoader,
 	maxHeight,
 	onBottomTouched,
 	scrollCompleted,
@@ -83,14 +84,18 @@ function InfiniteScroller({
 			style={maxHeight ? {maxHeight} : null}
 		>
 			{children}
-			{!scrollCompleted && (
-				<ClayLoadingIndicator ref={setInfiniteLoader} small />
-			)}
+			{!scrollCompleted &&
+				(CustomLoader ? (
+					<CustomLoader ref={setInfiniteLoader} />
+				) : (
+					<ClayLoadingIndicator ref={setInfiniteLoader} small />
+				))}
 		</div>
 	);
 }
 
 InfiniteScroller.propTypes = {
+	customLoader: PropTypes.element,
 	maxHeight: PropTypes.number,
 	onBottomTouched: PropTypes.func.isRequired,
 	scrollCompleted: PropTypes.bool.isRequired,

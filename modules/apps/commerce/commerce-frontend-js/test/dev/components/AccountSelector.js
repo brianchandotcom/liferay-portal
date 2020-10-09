@@ -16,6 +16,8 @@ import launcher from '../../../src/main/resources/META-INF/resources/components/
 
 import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 
+import '../../../../../frontend-theme/frontend-theme-styled/src/main/resources/META-INF/resources/_styled/css/application/_account_selector.scss';
+
 launcher('account_selector', 'account-selector', {
 	createNewOrderURL: '/asdasdasd',
 	currentAccount: {

@@ -15,8 +15,10 @@
 package com.liferay.petra.url.pattern.mapper.internal;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Arthur Chan
@@ -69,6 +71,54 @@ public class SimpleURLPatternMapper<T> extends BaseURLPatternMapper<T> {
 		}
 
 		return _extensionURLPatternValues.get("*" + urlPath.substring(index));
+	}
+
+	@Override
+	public Set<T> getValues(String urlPath) {
+		Set<T> values = new HashSet<>(64);
+
+		if (Objects.isNull(urlPath)) {
+			return values;
+		}
+
+		T value = _exactURLPatternValues.get(urlPath);
+
+		if (Objects.nonNull(value)) {
+			values.add(value);
+		}
+
+		value = _wildcardURLPatternValues.get(urlPath + "/*");
+
+		if (Objects.nonNull(value)) {
+			values.add(value);
+		}
+
+		int index = 0;
+
+		for (int i = urlPath.length(); i > 0; --i) {
+			if ((index < 1) && (urlPath.charAt(i - 1) == '.')) {
+				index = i - 1;
+			}
+
+			if (urlPath.charAt(i - 1) != '/') {
+				continue;
+			}
+
+			value = _wildcardURLPatternValues.get(
+				urlPath.substring(0, i) + "*");
+
+			if (Objects.nonNull(value)) {
+				values.add(value);
+			}
+		}
+
+		value = _extensionURLPatternValues.get("*" + urlPath.substring(index));
+
+		if (Objects.nonNull(value)) {
+			values.add(value);
+		}
+
+		return values;
 	}
 
 	@Override

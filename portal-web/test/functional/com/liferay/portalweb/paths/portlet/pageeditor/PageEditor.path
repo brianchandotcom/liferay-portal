@@ -313,7 +313,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_BODY</td>
-	<td>//div[@class='page-editor__sidebar']</td>
+	<td>//div[contains(@class,'page-editor__sidebar')][contains(@class,'theme-adapter-forms')]</td>
 	<td></td>
 </tr>
 <tr>

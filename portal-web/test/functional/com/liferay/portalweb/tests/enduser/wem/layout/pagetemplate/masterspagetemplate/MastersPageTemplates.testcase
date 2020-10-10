@@ -1498,7 +1498,7 @@ definition {
 
 		WebContentDisplayPortlet.viewDefaultMessage();
 
-		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 	}
 
 	@description = "This is for LPS-109298. If move the Drop Zone of master to one tab, only can add elements to that tab in content page."

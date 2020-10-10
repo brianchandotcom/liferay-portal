@@ -65,7 +65,7 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 	}
 
 	@description = "This is a test for LPS-98325. Assert that multiple pages with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, all widget pages are converted."
@@ -1016,7 +1016,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Button#EDIT_PENCIL");
 
-		AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+		AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 

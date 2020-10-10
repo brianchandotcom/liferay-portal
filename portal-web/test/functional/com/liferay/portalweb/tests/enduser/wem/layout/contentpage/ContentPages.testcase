@@ -390,7 +390,7 @@ definition {
 		}
 
 		task ("Assert the page cannot be edited in 'View Mode' by asserting the fragments side bar is not present") {
-			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 		}
 
 		task ("Navigate to the content page's 'Edit Mode'") {
@@ -398,7 +398,7 @@ definition {
 		}
 
 		task ("Assert the content page can be edited in 'Edit Mode' by asserting the fragments side bar is present") {
-			AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+			AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 		}
 
 		task ("Navigate back to the content page") {
@@ -406,7 +406,7 @@ definition {
 		}
 
 		task ("Assert the page cannot be edited by asserting the fragments side bar is not present") {
-			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 		}
 	}
 

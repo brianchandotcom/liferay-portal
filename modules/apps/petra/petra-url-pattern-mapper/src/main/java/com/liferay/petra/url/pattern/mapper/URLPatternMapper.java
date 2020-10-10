@@ -14,11 +14,15 @@
 
 package com.liferay.petra.url.pattern.mapper;
 
+import java.util.Set;
+
 /**
  * @author Carlos Sierra Andrés
  */
 public interface URLPatternMapper<T> {
 
 	public T getValue(String urlPath);
+
+	public Set<T> getValues(String urlPath);
 
 }

@@ -19,7 +19,6 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
@@ -55,8 +54,7 @@ public abstract class BaseScheduledTaskExecutor
 
 		DispatchLog dispatchLog = dispatchLogLocalService.addDispatchLog(
 			dispatchTrigger.getUserId(), dispatchTrigger.getDispatchTriggerId(),
-			null, null, null, new Date(),
-			BackgroundTaskConstants.STATUS_IN_PROGRESS);
+			null, null, null, new Date(), TaskStatus.IN_PROGRESS);
 
 		ScheduledTaskExecutorOutput scheduledTaskExecutorOutput =
 			new ScheduledTaskExecutorOutput();
@@ -67,15 +65,13 @@ public abstract class BaseScheduledTaskExecutor
 			dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
 				scheduledTaskExecutorOutput.getError(),
-				scheduledTaskExecutorOutput.getOutput(),
-				BackgroundTaskConstants.STATUS_SUCCESSFUL);
+				scheduledTaskExecutorOutput.getOutput(), TaskStatus.SUCCESSFUL);
 		}
 		catch (Throwable throwable) {
 			dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
 				scheduledTaskExecutorOutput.getError(),
-				scheduledTaskExecutorOutput.getOutput(),
-				BackgroundTaskConstants.STATUS_FAILED);
+				scheduledTaskExecutorOutput.getOutput(), TaskStatus.FAILED);
 
 			throw throwable;
 		}

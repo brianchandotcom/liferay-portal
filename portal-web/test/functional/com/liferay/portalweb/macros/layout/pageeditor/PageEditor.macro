@@ -541,7 +541,7 @@ definition {
 
 		Click(locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 
-		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+		PageEditor.clickManagementBar();
 
 		AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME");
 	}

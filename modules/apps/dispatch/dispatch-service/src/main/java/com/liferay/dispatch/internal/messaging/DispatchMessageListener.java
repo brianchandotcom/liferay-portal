@@ -16,13 +16,13 @@ package com.liferay.dispatch.internal.messaging;
 
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.executor.ScheduledTaskExecutor;
+import com.liferay.dispatch.executor.TaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalServiceUtil;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -63,13 +63,13 @@ public class DispatchMessageListener extends BaseMessageListener {
 					dispatchTriggerId);
 
 			if ((dispatchLog != null) &&
-				(dispatchLog.getStatus() ==
-					BackgroundTaskConstants.STATUS_IN_PROGRESS)) {
+				(TaskStatus.valueOf(dispatchLog.getStatus()) ==
+					TaskStatus.IN_PROGRESS)) {
 
 				DispatchLogLocalServiceUtil.addDispatchLog(
 					dispatchTrigger.getUserId(),
 					dispatchTrigger.getDispatchTriggerId(), null, null, null,
-					new Date(), BackgroundTaskConstants.STATUS_CANCELLED);
+					new Date(), TaskStatus.CANCELED);
 
 				return;
 			}

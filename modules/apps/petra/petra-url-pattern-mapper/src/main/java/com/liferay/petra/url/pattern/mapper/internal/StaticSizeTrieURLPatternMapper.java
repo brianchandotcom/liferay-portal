@@ -15,9 +15,11 @@
 package com.liferay.petra.url.pattern.mapper.internal;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Arthur Chan
@@ -167,6 +169,22 @@ public class StaticSizeTrieURLPatternMapper<T>
 	}
 
 	@Override
+	protected Set<T> getWildcardValues(String urlPath) {
+		long valuesBitmask = _getWildcardValuesBitmask(urlPath);
+
+		Set<T> values = new HashSet<>(Long.SIZE);
+
+		while (valuesBitmask != 0) {
+			values.add(
+				_wildcardValues.get(_getFirstSetBitIndex(valuesBitmask)));
+
+			valuesBitmask &= valuesBitmask - 1;
+		}
+
+		return values;
+	}
+
+	@Override
 	protected void put(String urlPattern, T value, boolean wildcard) {
 		List<T> values = null;
 		long[][][] trieMatrix = null;
@@ -265,6 +283,86 @@ public class StaticSizeTrieURLPatternMapper<T>
 		}
 
 		return firstSetBitIndex;
+	}
+
+	private long _getWildcardValuesBitmask(String urlPath) {
+		long valuesBitmask = 0;
+
+		boolean exact = false;
+		boolean wildcard = false;
+
+		if (urlPath.charAt(0) != '/') {
+			exact = true;
+		}
+		else if ((urlPath.length() > 1) &&
+				 (urlPath.charAt(urlPath.length() - 2) == '/') &&
+				 (urlPath.charAt(urlPath.length() - 1) == '*')) {
+
+			wildcard = true;
+		}
+
+		int column = 0;
+		long currentBitmask = _BITMASK;
+		int maxRow = Math.min(urlPath.length(), _maxURLPatternLength - 1);
+		int row = 0;
+
+		for (; row < maxRow; ++row) {
+			char character = urlPath.charAt(row);
+
+			column = character - ASCII_PRINTABLE_OFFSET;
+
+			currentBitmask &= _wildCardTrieMatrix[0][row][column];
+
+			if (currentBitmask == 0) {
+				break;
+			}
+
+			if (!exact && (character == '/')) {
+				long bitmask =
+					currentBitmask &
+					_wildCardTrieMatrix[1][row + 1][_INDEX_STAR];
+
+				if (bitmask != 0) {
+					valuesBitmask |= bitmask;
+				}
+			}
+		}
+
+		if (currentBitmask == 0) {
+			return valuesBitmask;
+		}
+
+		if (exact) {
+			long bitmask =
+				currentBitmask & _wildCardTrieMatrix[1][row - 1][column];
+
+			if (bitmask != 0) {
+				valuesBitmask |= bitmask;
+			}
+
+			return valuesBitmask;
+		}
+
+		if (!wildcard) {
+			long bitmask =
+				currentBitmask & _wildCardTrieMatrix[1][row - 1][column];
+
+			if (bitmask != 0) {
+				valuesBitmask |= bitmask;
+			}
+		}
+
+		long extraBitmask =
+			currentBitmask & _wildCardTrieMatrix[0][row][_INDEX_SLASH];
+
+		extraBitmask &= _wildCardTrieMatrix[0][row + 1][_INDEX_STAR];
+		extraBitmask &= _wildCardTrieMatrix[1][row + 1][_INDEX_STAR];
+
+		if (extraBitmask != 0) {
+			valuesBitmask |= extraBitmask;
+		}
+
+		return valuesBitmask;
 	}
 
 	private static final long _BITMASK = ~0;

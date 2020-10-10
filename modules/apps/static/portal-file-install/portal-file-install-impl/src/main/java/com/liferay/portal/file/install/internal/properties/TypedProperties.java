@@ -223,15 +223,7 @@ public class TypedProperties {
 		}
 
 		private boolean _checkCombineLines(String line) {
-			int bsCount = 0;
-
-			for (int i = line.length() - 1;
-				 (i >= 0) && (line.charAt(i) == '\\'); i--) {
-
-				bsCount++;
-			}
-
-			if ((bsCount % 2) != 0) {
+			if (line.charAt(line.length() - 1) == '\\') {
 				return true;
 			}
 

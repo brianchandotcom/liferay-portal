@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -479,6 +480,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				String.valueOf(
 					_siteNavigationMenuMap.get("Customer Portal Menu"))
 			).put(
+				"LAYOUT_URL_CLAIMS", _getPrivateFriendlyURL("claims")
+			).put(
+				"LAYOUT_URL_POLICIES", _getPrivateFriendlyURL("policies")
+			).put(
 				"PUBLIC_SITE_NAVIGATION_MENU_ID",
 				String.valueOf(_siteNavigationMenuMap.get("Public Menu"))
 			).put(
@@ -769,6 +774,14 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 
 		return fileEntriesMap;
+	}
+
+	private String _getPrivateFriendlyURL(String layoutName) throws Exception {
+		Group scopeGroup = _serviceContext.getScopeGroup();
+
+		return StringBundler.concat(
+			_portal.getPathFriendlyURLPrivateGroup(),
+			scopeGroup.getFriendlyURL(), StringPool.FORWARD_SLASH, layoutName);
 	}
 
 	private Map<String, String> _getResourcesMap() {

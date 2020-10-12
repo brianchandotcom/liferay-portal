@@ -14,7 +14,7 @@
 							"value": {
 								"fragmentLink": {
 									"href": {
-										"value": "$LAYOUT_URL_POLICIES$"
+										"value": "[$LAYOUT_URL_POLICIES$]"
 									},
 									"target": "Self"
 								},

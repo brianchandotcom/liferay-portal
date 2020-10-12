@@ -216,7 +216,7 @@
 									"collectionConfig": {
 										"collectionReference": {
 											"className": "com.liferay.asset.list.model.AssetListEntry",
-											"classPK": "$OPEN-CLAIMS$"
+											"classPK": "[$OPEN-CLAIMS$]"
 										},
 										"collectionType": "Collection"
 									},
@@ -361,7 +361,7 @@
 									"collectionConfig": {
 										"collectionReference": {
 											"className": "com.liferay.asset.list.model.AssetListEntry",
-											"classPK": "$CLOSED-CLAIMS$"
+											"classPK": "[$CLOSED-CLAIMS$]"
 										},
 										"collectionType": "Collection"
 									},

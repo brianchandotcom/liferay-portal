@@ -155,7 +155,7 @@
 									"collectionConfig": {
 										"collectionReference": {
 											"className": "com.liferay.asset.list.model.AssetListEntry",
-											"classPK": "$POLICIES$"
+											"classPK": "[$POLICIES$]"
 										},
 										"collectionType": "Collection"
 									},

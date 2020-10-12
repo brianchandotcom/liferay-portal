@@ -396,8 +396,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 					journalArticleJSONObject.getString("name")),
 				null,
 				StringUtil.replace(
-					_read("journal_article.xml", url), StringPool.DOLLAR,
-					StringPool.DOLLAR, fileEntriesMap),
+					_read("journal_article.xml", url), "[$", "$]",
+					fileEntriesMap),
 				journalArticleJSONObject.getString("ddmStructureKey"),
 				journalArticleJSONObject.getString("ddmTemplateKey"), null,
 				displayDateMonth, displayDateDay, displayDateYear,
@@ -525,7 +525,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 						StringBundler.concat(
 							"/layouts/", path, StringPool.SLASH,
 							"page-definition.json")),
-					"\"$", "$\"", resourcesMap);
+					"\"[$", "$]\"", resourcesMap);
 
 				layout = _addContentLayout(
 					pageJSONObject,
@@ -634,10 +634,9 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			String content = StringUtil.read(url.openStream());
 
 			content = StringUtil.replace(
-				content, "\"£", "£\"", numberValuesMap);
+				content, "\"[£", "£]\"", numberValuesMap);
 
-			content = StringUtil.replace(
-				content, StringPool.DOLLAR, StringPool.DOLLAR, stringValuesMap);
+			content = StringUtil.replace(content, "[$", "$]", stringValuesMap);
 
 			zipWriter.addEntry(
 				StringUtil.removeSubstring(url.getPath(), _PATH), content);

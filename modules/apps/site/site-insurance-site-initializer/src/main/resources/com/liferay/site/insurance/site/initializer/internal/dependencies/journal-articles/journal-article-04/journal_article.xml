@@ -15,7 +15,7 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="tjcakpfv" name="CurrentStatusImage" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[$JSON_open.svg$]]>
+			<![CDATA[[$JSON_open.svg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="wcjwnyoc" name="ClaimOpening1q33" type="text">
@@ -23,7 +23,7 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="amepbveq" name="OpeningStatusImaget055" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[$JSON_check.svg$]]>
+			<![CDATA[[$JSON_check.svg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="guhzlnap" name="ExpertVisit" type="text">
@@ -31,7 +31,7 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="zclntkjq" name="ExpertStatusImage" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[$JSON_open.svg$]]>
+			<![CDATA[[$JSON_open.svg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="utfomeem" name="ExpertReport" type="text">
@@ -39,7 +39,7 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="nysifvdn" name="ReportStatusImage" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[$JSON_pending.svg$]]>
+			<![CDATA[[$JSON_pending.svg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="staekbrq" name="RepairService" type="text">
@@ -47,7 +47,7 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="zqchsyub" name="RepairStatusImage" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[$JSON_pending.svg$]]>
+			<![CDATA[[$JSON_pending.svg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="snmdgkzh" name="InvoiceManagement" type="text">
@@ -55,7 +55,7 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="pjqdhewu" name="InvoiceStatusImage" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[$JSON_pending.svg$]]>
+			<![CDATA[[$JSON_pending.svg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="bmusecfx" name="ClaimClosing" type="text">
@@ -63,7 +63,7 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="loechjka" name="ClosingStatusImage" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[$JSON_pending.svg$]]>
+			<![CDATA[[$JSON_pending.svg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="cemedkbc" name="ClaimSummary" type="text_box">
@@ -80,13 +80,13 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="rdmkgzob" name="Image2ap7" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[$JSON_healthcare.jpg$]]>
+			<![CDATA[[$JSON_healthcare.jpg$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="wbtvfajv" name="Reports" type="text_area">
-		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="$URL_policy_document.svg$" />Damages Statement</li><li><img alt="" src="$URL_policy_document.svg$" />Damages Images</li><li><img alt="" src="$URL_policy_document.svg$" />Final Report</li></ul>]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="[$URL_policy_document.svg$]" />Damages Statement</li><li><img alt="" src="[$URL_policy_document.svg$]" />Damages Images</li><li><img alt="" src="[$URL_policy_document.svg$]" />Final Report</li></ul>]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="vuyeppaj" name="Communications" type="text_area">
-		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="$URL_download.svg$" />26/02/2020 - Order Information</li><li><img alt="" src="$URL_download.svg$" />26/02/2019 - Order Registration</li><li><img alt="" src="$URL_download.svg$" />26/02/2018 - Company Information</li><li><img alt="" src="$URL_download.svg$" />26/02/2018 - Claim Registration</li></ul><p><a href="#">View all</a></p>]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="[$URL_download.svg$]" />26/02/2020 - Order Information</li><li><img alt="" src="[$URL_download.svg$]" />26/02/2019 - Order Registration</li><li><img alt="" src="[$URL_download.svg$]" />26/02/2018 - Company Information</li><li><img alt="" src="[$URL_download.svg$]" />26/02/2018 - Claim Registration</li></ul><p><a href="#">View all</a></p>]]></dynamic-content>
 	</dynamic-element>
 </root>

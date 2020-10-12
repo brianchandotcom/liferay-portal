@@ -70,11 +70,11 @@
 							"widgetConfig": {
 								"displayDepth": "0",
 								"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
-								"displayStyleGroupId": "$SCOPE_GROUP_ID$",
+								"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
 								"expandedLevels": "auto",
 								"rootMenuItemLevel": "0",
 								"rootMenuItemType": "absolute",
-								"siteNavigationMenuId": "$CUSTOMER_PORTAL_SITE_NAVIGATION_MENU_ID$",
+								"siteNavigationMenuId": "[$CUSTOMER_PORTAL_SITE_NAVIGATION_MENU_ID$]",
 								"siteNavigationMenuType": "-1"
 							},
 							"widgetInstanceId": "nav",

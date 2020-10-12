@@ -12,13 +12,13 @@
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="rdpxzlvf" name="PolicyImage" type="image">
 		<dynamic-content language-id="en_US">
-			<![CDATA[$JSON_liferay_vector_logo.png$]]>
+			<![CDATA[[$JSON_liferay_vector_logo.png$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="sqxksuyw" name="Status" type="text">
 		<dynamic-element index-type="text" instance-id="rylfrjki" name="StatusImage" type="image">
 			<dynamic-content language-id="en_US">
-				<![CDATA[$JSON_check.svg$]]>
+				<![CDATA[[$JSON_check.svg$]]]>
 			</dynamic-content>
 		</dynamic-element>
 		<dynamic-content language-id="en_US"><![CDATA[Renewed]]></dynamic-content>
@@ -57,9 +57,9 @@
 		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Driver body injures</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Classic travel assistance</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Broken windows</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Legal defense and claim for damages</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Obligatory subscription civil liabbility</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Vehicle damage</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Fire</label></div></li></ul>]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="ppdemrsl" name="PolicyContract" type="text_area">
-		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="$URL_policy_document.svg$" />Particular Conditions</li><li><img alt="" src="$URL_policy_document.svg$" />Renewal Declaration</li></ul>]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="[$URL_policy_document.svg$]" />Particular Conditions</li><li><img alt="" src="[$URL_policy_document.svg$]" />Renewal Declaration</li></ul>]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="qrgkwifb" name="LatestReceipts" type="text_area">
-		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="$URL_download.svg$" />26/02/2020 - 480€</li><li><img alt="" src="$URL_download.svg$" />26/02/2019 - 470€</li><li><img alt="" src="$URL_download.svg$" />26/02/2018 - 460€</li></ul><p><a href="#">View all</a></p>]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="[$URL_download.svg$]" />26/02/2020 - 480€</li><li><img alt="" src="[$URL_download.svg$]" />26/02/2019 - 470€</li><li><img alt="" src="[$URL_download.svg$]" />26/02/2018 - 460€</li></ul><p><a href="#">View all</a></p>]]></dynamic-content>
 	</dynamic-element>
 </root>

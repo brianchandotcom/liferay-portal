@@ -286,7 +286,7 @@
 																							"fieldKey": "displayPageURL",
 																							"itemReference": {
 																								"className": "com.liferay.journal.model.JournalArticle",
-																								"classPK": "$WEB-CONTENT-09$"
+																								"classPK": "[$WEB-CONTENT-09$]"
 																							}
 																						}
 																					},
@@ -303,7 +303,7 @@
 																							"fieldKey": "displayPageURL",
 																							"itemReference": {
 																								"className": "com.liferay.journal.model.JournalArticle",
-																								"classPK": "$WEB-CONTENT-11$"
+																								"classPK": "[$WEB-CONTENT-11$]"
 																							}
 																						}
 																					},
@@ -320,7 +320,7 @@
 																							"fieldKey": "displayPageURL",
 																							"itemReference": {
 																								"className": "com.liferay.journal.model.JournalArticle",
-																								"classPK": "$WEB-CONTENT-13$"
+																								"classPK": "[$WEB-CONTENT-13$]"
 																							}
 																						}
 																					},
@@ -337,7 +337,7 @@
 																							"fieldKey": "displayPageURL",
 																							"itemReference": {
 																								"className": "com.liferay.journal.model.JournalArticle",
-																								"classPK": "$WEB-CONTENT-12$"
+																								"classPK": "[$WEB-CONTENT-12$]"
 																							}
 																						}
 																					},

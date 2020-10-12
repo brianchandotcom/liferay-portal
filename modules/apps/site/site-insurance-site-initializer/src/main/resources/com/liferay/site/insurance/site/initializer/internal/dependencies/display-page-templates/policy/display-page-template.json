@@ -1,6 +1,6 @@
 {
 	"contentSubtype": {
-		"subtypeId": "£POLICY£"
+		"subtypeId": "[£POLICY£]"
 	},
 	"contentType": {
 		"className": "com.liferay.journal.model.JournalArticle"

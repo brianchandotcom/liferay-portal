@@ -14,7 +14,7 @@
 							"value": {
 								"fragmentLink": {
 									"href": {
-										"value": "$LAYOUT_URL_CLAIMS$"
+										"value": "[$LAYOUT_URL_CLAIMS$]"
 									},
 									"target": "Self"
 								},

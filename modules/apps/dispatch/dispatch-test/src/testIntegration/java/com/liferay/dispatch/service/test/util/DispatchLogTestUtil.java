@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.service.test.util;
 
+import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -32,7 +33,9 @@ import java.util.Map;
  */
 public class DispatchLogTestUtil {
 
-	public static DispatchLog randomDispatchLog(User user, int status) {
+	public static DispatchLog randomDispatchLog(
+		User user, DispatchTaskStatus dispatchTaskStatus) {
+
 		final Date startDate = RandomTestUtil.nextDate();
 
 		return _randomDispatchLog(
@@ -40,8 +43,8 @@ public class DispatchLogTestUtil {
 			new Date(
 				startDate.getTime() + RandomTestUtil.randomInt(60000, 120000)),
 			RandomTestUtil.randomString(2000),
-			RandomTestUtil.randomString(3000), startDate, status,
-			user.getUserId());
+			RandomTestUtil.randomString(3000), startDate,
+			dispatchTaskStatus.getStatus(), user.getUserId());
 	}
 
 	private static DispatchLog _randomDispatchLog(
@@ -56,7 +59,7 @@ public class DispatchLogTestUtil {
 			}
 
 			@Override
-			public int compareTo(DispatchLog o) {
+			public int compareTo(DispatchLog dispatchLog) {
 				throw new UnsupportedOperationException();
 			}
 

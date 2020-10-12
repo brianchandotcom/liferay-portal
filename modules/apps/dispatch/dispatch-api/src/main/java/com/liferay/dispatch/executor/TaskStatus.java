@@ -14,25 +14,13 @@
 
 package com.liferay.dispatch.executor;
 
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-
 /**
  * @author Igor Beslic
  */
 public enum TaskStatus {
 
-	CANCELED(
-		BackgroundTaskConstants.STATUS_CANCELLED,
-		BackgroundTaskConstants.LABEL_CANCELLED),
-	FAILED(
-		BackgroundTaskConstants.STATUS_FAILED,
-		BackgroundTaskConstants.LABEL_FAILED),
-	IN_PROGRESS(
-		BackgroundTaskConstants.STATUS_IN_PROGRESS,
-		BackgroundTaskConstants.LABEL_IN_PROGRESS),
-	SUCCESSFUL(
-		BackgroundTaskConstants.STATUS_SUCCESSFUL,
-		BackgroundTaskConstants.LABEL_SUCCESSFUL);
+	CANCELED(3, "cancelled"), FAILED(4, "failed"),
+	IN_PROGRESS(1, "in-progress"), SUCCESSFUL(2, "successful");
 
 	public static TaskStatus valueOf(int status) {
 		for (TaskStatus taskStatus : values()) {

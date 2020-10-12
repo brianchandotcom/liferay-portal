@@ -27,6 +27,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
@@ -222,7 +223,11 @@ public class CommerceSubscriptionEntryTest {
 			boolean cpInstanceSubscriptionEnabled)
 		throws Exception {
 
-		long groupId = _group.getGroupId(); //catalogGroupId
+		CommerceCatalog commerceCatalog = CommerceTestUtil.addCommerceCatalog(
+			_company.getCompanyId(), _group.getGroupId(), _user.getUserId(),
+			_commerceCurrency.getCode());
+
+		long groupId = commerceCatalog.getGroupId();
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 			groupId, SimpleCPTypeConstants.NAME, false, false);

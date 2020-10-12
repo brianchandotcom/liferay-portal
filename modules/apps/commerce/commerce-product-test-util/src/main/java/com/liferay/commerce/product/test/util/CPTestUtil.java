@@ -18,7 +18,10 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
@@ -704,6 +707,27 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(cpInstance.getGroupId()));
 	}
 
+	private static void _addBasePriceList(
+			long groupId, String currencyCode, String type,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePriceList commerceCatalogBasePriceList =
+			CommercePriceListLocalServiceUtil.
+				fetchCatalogBaseCommercePriceListByType(groupId, type);
+
+		if (commerceCatalogBasePriceList == null) {
+			CommerceCurrency commerceCurrency =
+				CommerceCurrencyLocalServiceUtil.getCommerceCurrency(
+					serviceContext.getCompanyId(), currencyCode);
+
+			CommercePriceListLocalServiceUtil.addCatalogBaseCommercePriceList(
+				groupId, serviceContext.getUserId(),
+				commerceCurrency.getCommerceCurrencyId(), type,
+				RandomTestUtil.randomString(), serviceContext);
+		}
+	}
+
 	private static CPDefinition _addCPDefinition(
 			long groupId, String productTypeName, boolean ignoreSKUCombinations,
 			boolean hasDefaultInstance, ServiceContext serviceContext)
@@ -732,6 +756,16 @@ public class CPTestUtil {
 				user.getCompanyId(), true);
 
 		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+
+		_addBasePriceList(
+			commerceCatalog.getGroupId(),
+			commerceCatalog.getCommerceCurrencyCode(),
+			CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
+
+		_addBasePriceList(
+			commerceCatalog.getGroupId(),
+			commerceCatalog.getCommerceCurrencyCode(),
+			CommercePriceListConstants.TYPE_PROMOTION, serviceContext);
 
 		return _addCPDefinition(
 			commerceCatalog.getGroupId(), productTypeName,
@@ -850,6 +884,16 @@ public class CPTestUtil {
 				user.getCompanyId(), true);
 
 		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+
+		_addBasePriceList(
+			commerceCatalog.getGroupId(),
+			commerceCatalog.getCommerceCurrencyCode(),
+			CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
+
+		_addBasePriceList(
+			commerceCatalog.getGroupId(),
+			commerceCatalog.getCommerceCurrencyCode(),
+			CommercePriceListConstants.TYPE_PROMOTION, serviceContext);
 
 		long now = System.currentTimeMillis();
 

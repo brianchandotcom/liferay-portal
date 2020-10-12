@@ -141,6 +141,103 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-121979 and LPS-120005. Change the configuration of page won't break the connection with its style book."
+	@priority = "5"
+	test ChangeConfigurationOfPageBasedOnStyleBook {
+		property portal.acceptance = "true";
+
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+		}
+
+		task ("Edit the style book and Publish it") {
+			StyleBooks.selectForm(formName = "Typography");
+
+			StyleBooks.expandSection(sectionName = "Font Family");
+
+			Type(
+				key_fieldLabel = "Font Family Base",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "'Courier New'");
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.clickPublish();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Paragraph fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+		}
+
+		task ("Change to the new style book via Page Design Options panel") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Style Book");
+
+			AssertElementPresent(
+				key_card = "Inherited from Master",
+				locator1 = "Card#CARD_SELECTED");
+
+			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
+
+			var fontFamily = '''"Courier New"''';
+
+			AssertCssValue(
+				id = "element-text",
+				key_fragmentName = "Paragraph",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "font-family",
+				value1 = "${fontFamily}");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the style book applied to page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertCssValue(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				locator2 = "font-family",
+				value1 = "${fontFamily}");
+		}
+
+		task ("Modify the page name") {
+			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
+
+			Page.editName(pageNameEdit = "New Test Page Name");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the style book still applied to page in view mode") {
+			Navigator.gotoBack();
+
+			AssertCssValue(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				locator2 = "font-family",
+				value1 = "${fontFamily}");
+		}
+	}
+
 	@description = "This is for LPS-116106. Page Creator can change style book of content page via Look and Feel settings."
 	@priority = "4"
 	test ChangeStyleBookOfContentPageViaLookAndFeel {

@@ -24,6 +24,7 @@ import com.liferay.calendar.service.base.CalendarBookingServiceBaseImpl;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
 import com.liferay.petra.content.ContentUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -58,6 +60,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -338,11 +341,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			calendarBookingLocalService.getChildCalendarBookings(
 				parentCalendarBookingId);
 
-		for (CalendarBooking calendarBooking : calendarBookings) {
-			filterCalendarBooking(calendarBooking);
-		}
-
-		return calendarBookings;
+		return _filterCalendarBookingsByCalendarVisibility(calendarBookings);
 	}
 
 	@Override
@@ -387,11 +386,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			calendarBookingLocalService.getChildCalendarBookings(
 				parentCalendarBookingId, status);
 
-		for (CalendarBooking calendarBooking : calendarBookings) {
-			filterCalendarBooking(calendarBooking);
-		}
-
-		return calendarBookings;
+		return _filterCalendarBookingsByCalendarVisibility(calendarBookings);
 	}
 
 	@Override
@@ -979,6 +974,60 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 				dateFormatDateTime.format(calendarBooking.getStartTime()),
 				calendarBooking.getTitle(themeDisplay.getLocale())
 			});
+	}
+
+	private List<CalendarBooking> _filterCalendarBookingsByCalendarVisibility(
+			List<CalendarBooking> calendarBookings)
+		throws PortalException {
+
+		Stream<CalendarBooking> stream = calendarBookings.stream();
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		long userId = permissionChecker.getUserId();
+
+		stream = stream.filter(
+			calendarBooking -> {
+				try {
+					_calendarModelResourcePermission.check(
+						permissionChecker, calendarBooking.getCalendarId(),
+						ActionKeys.VIEW);
+
+					return true;
+				}
+				catch (PortalException portalException) {
+					if (_log.isInfoEnabled()) {
+						StringBundler sb = new StringBundler(4);
+
+						sb.append("No ");
+						sb.append(ActionKeys.VIEW);
+						sb.append(" permission for user ");
+						sb.append(userId);
+
+						_log.info(sb.toString(), portalException);
+					}
+
+					return false;
+				}
+			}
+		).map(
+			calendarBooking -> {
+				try {
+					return filterCalendarBooking(calendarBooking);
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(portalException, portalException);
+					}
+
+					return null;
+				}
+			}
+		).filter(
+			Objects::nonNull
+		);
+
+		return stream.collect(Collectors.toList());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

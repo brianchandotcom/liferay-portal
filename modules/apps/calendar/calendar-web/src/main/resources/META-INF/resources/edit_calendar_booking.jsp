@@ -176,18 +176,8 @@ if (guestCalendarResource != null) {
 	manageableCalendars.remove(guestCalendarResource.getDefaultCalendar());
 }
 
-long[] otherCalendarIds = StringUtil.split(SessionClicks.get(request, "com.liferay.calendar.web_otherCalendars", StringPool.BLANK), 0L);
-
-for (long otherCalendarId : otherCalendarIds) {
-	Calendar otherCalendar = CalendarServiceUtil.fetchCalendar(otherCalendarId);
-
-	if (otherCalendar == null) {
-		continue;
-	}
-
-	CalendarResource otherCalendarResource = otherCalendar.getCalendarResource();
-
-	if (otherCalendarResource.isActive() && !manageableCalendars.contains(otherCalendar) && CalendarPermission.contains(themeDisplay.getPermissionChecker(), otherCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) {
+for (Calendar otherCalendar : otherCalendars) {
+	if (!manageableCalendars.contains(otherCalendar) && CalendarPermission.contains(themeDisplay.getPermissionChecker(), otherCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) {
 		manageableCalendars.add(otherCalendar);
 	}
 }

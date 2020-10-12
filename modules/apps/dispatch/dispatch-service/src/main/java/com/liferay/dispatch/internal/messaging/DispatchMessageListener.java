@@ -15,8 +15,8 @@
 package com.liferay.dispatch.internal.messaging;
 
 import com.liferay.dispatch.constants.DispatchConstants;
-import com.liferay.dispatch.executor.ScheduledTaskExecutor;
-import com.liferay.dispatch.executor.TaskStatus;
+import com.liferay.dispatch.executor.DispatchTaskExecutor;
+import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalServiceUtil;
@@ -63,42 +63,42 @@ public class DispatchMessageListener extends BaseMessageListener {
 					dispatchTriggerId);
 
 			if ((dispatchLog != null) &&
-				(TaskStatus.valueOf(dispatchLog.getStatus()) ==
-					TaskStatus.IN_PROGRESS)) {
+				(DispatchTaskStatus.valueOf(dispatchLog.getStatus()) ==
+					DispatchTaskStatus.IN_PROGRESS)) {
 
 				DispatchLogLocalServiceUtil.addDispatchLog(
 					dispatchTrigger.getUserId(),
 					dispatchTrigger.getDispatchTriggerId(), null, null, null,
-					new Date(), TaskStatus.CANCELED);
+					new Date(), DispatchTaskStatus.CANCELED);
 
 				return;
 			}
 		}
 
-		ScheduledTaskExecutor scheduledTaskExecutor =
-			_scheduledTaskExecutorServiceTrackerMap.getService(
+		DispatchTaskExecutor dispatchTaskExecutor =
+			_dispatchTaskExecutorServiceTrackerMap.getService(
 				dispatchTrigger.getTaskType());
 
-		scheduledTaskExecutor.execute(dispatchTriggerId);
+		dispatchTaskExecutor.execute(dispatchTriggerId);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_scheduledTaskExecutorServiceTrackerMap =
+		_dispatchTaskExecutorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ScheduledTaskExecutor.class,
-				"scheduled.task.executor.type");
+				bundleContext, DispatchTaskExecutor.class,
+				"dispatch.task.executor.type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_scheduledTaskExecutorServiceTrackerMap.close();
+		_dispatchTaskExecutorServiceTrackerMap.close();
 	}
+
+	private ServiceTrackerMap<String, DispatchTaskExecutor>
+		_dispatchTaskExecutorServiceTrackerMap;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
-
-	private ServiceTrackerMap<String, ScheduledTaskExecutor>
-		_scheduledTaskExecutorServiceTrackerMap;
 
 }

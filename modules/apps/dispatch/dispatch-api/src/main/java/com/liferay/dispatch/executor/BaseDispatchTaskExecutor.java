@@ -31,12 +31,11 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Matija Petanjek
  */
-public abstract class BaseScheduledTaskExecutor
-	implements ScheduledTaskExecutor {
+public abstract class BaseDispatchTaskExecutor implements DispatchTaskExecutor {
 
 	public abstract void doExecute(
 			DispatchTrigger dispatchTrigger,
-			ScheduledTaskExecutorOutput scheduledTaskExecutorOutput)
+			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws IOException, PortalException;
 
 	@Override
@@ -54,24 +53,26 @@ public abstract class BaseScheduledTaskExecutor
 
 		DispatchLog dispatchLog = dispatchLogLocalService.addDispatchLog(
 			dispatchTrigger.getUserId(), dispatchTrigger.getDispatchTriggerId(),
-			null, null, null, new Date(), TaskStatus.IN_PROGRESS);
+			null, null, null, new Date(), DispatchTaskStatus.IN_PROGRESS);
 
-		ScheduledTaskExecutorOutput scheduledTaskExecutorOutput =
-			new ScheduledTaskExecutorOutput();
+		DispatchTaskExecutorOutput dispatchTaskExecutorOutput =
+			new DispatchTaskExecutorOutput();
 
 		try {
-			doExecute(dispatchTrigger, scheduledTaskExecutorOutput);
+			doExecute(dispatchTrigger, dispatchTaskExecutorOutput);
 
 			dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
-				scheduledTaskExecutorOutput.getError(),
-				scheduledTaskExecutorOutput.getOutput(), TaskStatus.SUCCESSFUL);
+				dispatchTaskExecutorOutput.getError(),
+				dispatchTaskExecutorOutput.getOutput(),
+				DispatchTaskStatus.SUCCESSFUL);
 		}
 		catch (Throwable throwable) {
 			dispatchLogLocalService.updateDispatchLog(
 				dispatchLog.getDispatchLogId(), new Date(),
-				scheduledTaskExecutorOutput.getError(),
-				scheduledTaskExecutorOutput.getOutput(), TaskStatus.FAILED);
+				dispatchTaskExecutorOutput.getError(),
+				dispatchTaskExecutorOutput.getOutput(),
+				DispatchTaskStatus.FAILED);
 
 			throw throwable;
 		}

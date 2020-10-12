@@ -18,7 +18,7 @@
 
 <%
 DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(DispatchWebKeys.DISPATCH_TRIGGER);
-DispatchTalendScheduledTaskExecutorHelper dispatchTalendScheduledTaskExecutorHelper = (DispatchTalendScheduledTaskExecutorHelper)request.getAttribute("dispatchTalendScheduledTaskExecutorHelper");
+TalendDispatchTaskExecutorHelper talendDispatchTaskExecutorHelper = (TalendDispatchTaskExecutorHelper)request.getAttribute("talendDispatchTaskExecutorHelper");
 %>
 
 <liferay-portlet:actionURL name="editDispatchTalendJobArchive" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editDispatchTalendJobArchiveActionURL" />
@@ -32,7 +32,7 @@ DispatchTalendScheduledTaskExecutorHelper dispatchTalendScheduledTaskExecutorHel
 			<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
 
 			<%
-			FileEntry fileEntry = dispatchTalendScheduledTaskExecutorHelper.getFileEntry(dispatchTrigger.getDispatchTriggerId());
+			FileEntry fileEntry = talendDispatchTaskExecutorHelper.getFileEntry(dispatchTrigger.getDispatchTriggerId());
 			%>
 
 			<p class="<%= (fileEntry != null) ? "text-default" : "hide text-default" %>" id="<portlet:namespace />fileEntryName">

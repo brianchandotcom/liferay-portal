@@ -16,7 +16,7 @@ package com.liferay.dispatch.service.impl;
 
 import com.liferay.dispatch.exception.DispatchLogStartDateException;
 import com.liferay.dispatch.exception.DispatchLogStatusException;
-import com.liferay.dispatch.executor.TaskStatus;
+import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.base.DispatchLogLocalServiceBaseImpl;
@@ -43,11 +43,12 @@ public class DispatchLogLocalServiceImpl
 	@Override
 	public DispatchLog addDispatchLog(
 			long userId, long dispatchTriggerId, Date endDate, String error,
-			String output, Date startDate, TaskStatus taskStatus)
+			String output, Date startDate,
+			DispatchTaskStatus dispatchTaskStatus)
 		throws PortalException {
 
 		_checkDispatchLogPeriod(startDate, endDate);
-		_checkStatus(taskStatus);
+		_checkStatus(dispatchTaskStatus);
 
 		DispatchTrigger dispatchTrigger =
 			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
@@ -66,7 +67,7 @@ public class DispatchLogLocalServiceImpl
 		dispatchLog.setError(error);
 		dispatchLog.setOutput(output);
 		dispatchLog.setStartDate(startDate);
-		dispatchLog.setStatus(taskStatus.getStatus());
+		dispatchLog.setStatus(dispatchTaskStatus.getStatus());
 
 		return dispatchLogPersistence.update(dispatchLog);
 	}
@@ -99,7 +100,7 @@ public class DispatchLogLocalServiceImpl
 	@Override
 	public DispatchLog updateDispatchLog(
 			long dispatchLogId, Date endDate, String error, String output,
-			TaskStatus taskStatus)
+			DispatchTaskStatus dispatchTaskStatus)
 		throws PortalException {
 
 		DispatchLog dispatchLog = dispatchLogPersistence.findByPrimaryKey(
@@ -107,12 +108,12 @@ public class DispatchLogLocalServiceImpl
 
 		_checkDispatchLogPeriod(dispatchLog.getStartDate(), endDate);
 
-		_checkStatus(taskStatus);
+		_checkStatus(dispatchTaskStatus);
 
 		dispatchLog.setEndDate(endDate);
 		dispatchLog.setError(error);
 		dispatchLog.setOutput(output);
-		dispatchLog.setStatus(taskStatus.getStatus());
+		dispatchLog.setStatus(dispatchTaskStatus.getStatus());
 
 		return dispatchLogPersistence.update(dispatchLog);
 	}
@@ -134,8 +135,10 @@ public class DispatchLogLocalServiceImpl
 		}
 	}
 
-	private void _checkStatus(TaskStatus taskStatus) throws PortalException {
-		if (taskStatus == null) {
+	private void _checkStatus(DispatchTaskStatus dispatchTaskStatus)
+		throws PortalException {
+
+		if (dispatchTaskStatus == null) {
 			throw new DispatchLogStatusException("Status is required");
 		}
 	}

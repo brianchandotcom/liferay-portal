@@ -149,9 +149,8 @@ public class DispatchLogLocalServiceTest {
 			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
 
 		for (int i = 0; i < dispatchLogsCount; i++) {
-			DispatchLog dispatchLog =
-				DispatchLogTestUtil.randomDispatchLog(
-					user, BackgroundTaskConstants.STATUS_IN_PROGRESS);
+			DispatchLog dispatchLog = DispatchLogTestUtil.randomDispatchLog(
+				user, BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
 			_dispatchLogLocalService.addDispatchLog(
 				user.getUserId(), dispatchTrigger.getDispatchTriggerId(),

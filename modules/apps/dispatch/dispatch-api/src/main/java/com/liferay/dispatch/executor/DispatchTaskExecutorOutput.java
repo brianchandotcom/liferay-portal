@@ -14,28 +14,38 @@
 
 package com.liferay.dispatch.executor;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Matija Petanjek
  */
-public interface ScheduledTaskExecutor {
+public class DispatchTaskExecutorOutput {
 
-	/**
-	 * This method execute the scheduled task
-	 *
-	 * @param dispatchTriggerId
-	 * @throws IOException
-	 * @throws PortalException
-	 */
-	public void execute(long dispatchTriggerId)
-		throws IOException, PortalException;
+	public String getError() {
+		return _error;
+	}
 
-	/**
-	 * This method returns the name of the scheduled task
-	 */
-	public String getName();
+	public String getOutput() {
+		return _output;
+	}
+
+	public void setError(byte[] error) {
+		_error = new String(error, StandardCharsets.UTF_8);
+	}
+
+	public void setError(String error) {
+		_error = error;
+	}
+
+	public void setOutput(byte[] output) {
+		_output = new String(output, StandardCharsets.UTF_8);
+	}
+
+	public void setOutput(String output) {
+		_output = output;
+	}
+
+	private String _error;
+	private String _output;
 
 }

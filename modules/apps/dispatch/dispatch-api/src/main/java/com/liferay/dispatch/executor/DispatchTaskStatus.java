@@ -17,15 +17,15 @@ package com.liferay.dispatch.executor;
 /**
  * @author Igor Beslic
  */
-public enum TaskStatus {
+public enum DispatchTaskStatus {
 
 	CANCELED(3, "cancelled"), FAILED(4, "failed"),
 	IN_PROGRESS(1, "in-progress"), SUCCESSFUL(2, "successful");
 
-	public static TaskStatus valueOf(int status) {
-		for (TaskStatus taskStatus : values()) {
-			if (status == taskStatus._status) {
-				return taskStatus;
+	public static DispatchTaskStatus valueOf(int status) {
+		for (DispatchTaskStatus dispatchTaskStatus : values()) {
+			if (status == dispatchTaskStatus._status) {
+				return dispatchTaskStatus;
 			}
 		}
 
@@ -41,7 +41,7 @@ public enum TaskStatus {
 		return _status;
 	}
 
-	private TaskStatus(int status, String label) {
+	private DispatchTaskStatus(int status, String label) {
 		_status = status;
 		_label = label;
 	}

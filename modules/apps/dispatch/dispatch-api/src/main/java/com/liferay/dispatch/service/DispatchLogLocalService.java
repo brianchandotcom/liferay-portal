@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.service;
 
-import com.liferay.dispatch.executor.TaskStatus;
+import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -79,7 +79,8 @@ public interface DispatchLogLocalService
 
 	public DispatchLog addDispatchLog(
 			long userId, long dispatchTriggerId, Date endDate, String error,
-			String output, Date startDate, TaskStatus taskStatus)
+			String output, Date startDate,
+			DispatchTaskStatus dispatchTaskStatus)
 		throws PortalException;
 
 	/**
@@ -285,7 +286,7 @@ public interface DispatchLogLocalService
 
 	public DispatchLog updateDispatchLog(
 			long dispatchLogId, Date endDate, String error, String output,
-			TaskStatus taskStatus)
+			DispatchTaskStatus dispatchTaskStatus)
 		throws PortalException;
 
 }

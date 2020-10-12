@@ -16,7 +16,7 @@ package com.liferay.dispatch.web.internal.portlet;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.constants.DispatchWebKeys;
-import com.liferay.dispatch.executor.ScheduledTaskExecutor;
+import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.web.internal.display.context.DispatchTriggerDisplayContext;
@@ -88,7 +88,7 @@ public class DispatchPortlet extends MVCPortlet {
 
 		DispatchTriggerDisplayContext dispatchTriggerDisplayContext =
 			new DispatchTriggerDisplayContext(
-				_scheduledTaskExecutorServiceTrackerMap.keySet(),
+				_dispatchTaskExecutorServiceTrackerMap.keySet(),
 				_dispatchTriggerLocalService, renderRequest);
 
 		renderRequest.setAttribute(
@@ -99,24 +99,24 @@ public class DispatchPortlet extends MVCPortlet {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_scheduledTaskExecutorServiceTrackerMap =
+		_dispatchTaskExecutorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ScheduledTaskExecutor.class,
-				"scheduled.task.executor.type");
+				bundleContext, DispatchTaskExecutor.class,
+				"dispatch.task.executor.type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_scheduledTaskExecutorServiceTrackerMap.close();
+		_dispatchTaskExecutorServiceTrackerMap.close();
 	}
+
+	private ServiceTrackerMap<String, DispatchTaskExecutor>
+		_dispatchTaskExecutorServiceTrackerMap;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	@Reference
 	private Portal _portal;
-
-	private ServiceTrackerMap<String, ScheduledTaskExecutor>
-		_scheduledTaskExecutorServiceTrackerMap;
 
 }

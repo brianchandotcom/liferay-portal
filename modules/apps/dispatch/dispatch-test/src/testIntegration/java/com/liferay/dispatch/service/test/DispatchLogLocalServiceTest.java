@@ -139,7 +139,7 @@ public class DispatchLogLocalServiceTest {
 
 	@Test
 	public void testGetDispatchLogs() throws Exception {
-		int logsCount = RandomTestUtil.randomInt(10, 40);
+		int dispatchLogsCount = RandomTestUtil.randomInt(10, 40);
 
 		Company company = CompanyTestUtil.addCompany();
 
@@ -148,7 +148,7 @@ public class DispatchLogLocalServiceTest {
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
 			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
 
-		for (int i = 0; i < logsCount; i++) {
+		for (int i = 0; i < dispatchLogsCount; i++) {
 			final DispatchLog dispatchLog =
 				DispatchLogTestUtil.randomDispatchLog(
 					user, BackgroundTaskConstants.STATUS_IN_PROGRESS);
@@ -165,7 +165,7 @@ public class DispatchLogLocalServiceTest {
 				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(logsCount, dispatchLogs.size());
+		Assert.assertEquals(dispatchLogsCount, dispatchLogs.size());
 	}
 
 	@Test

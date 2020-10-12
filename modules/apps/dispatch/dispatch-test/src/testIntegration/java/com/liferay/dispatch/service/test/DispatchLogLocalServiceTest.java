@@ -164,7 +164,8 @@ public class DispatchLogLocalServiceTest {
 				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(dispatchLogsCount, dispatchLogs.size());
+		Assert.assertEquals(
+			dispatchLogs.toString(), dispatchLogsCount, dispatchLogs.size());
 	}
 
 	@Test

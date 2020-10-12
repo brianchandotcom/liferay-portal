@@ -186,9 +186,7 @@ public class DispatchLogLocalServiceTest {
 			TaskStatus.IN_PROGRESS);
 
 		Assert.assertNull(dispatchLog.getEndDate());
-
 		Assert.assertNull(dispatchLog.getError());
-
 		Assert.assertNull(dispatchLog.getOutput());
 
 		Assert.assertEquals(

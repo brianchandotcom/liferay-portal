@@ -19,8 +19,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
-import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -478,15 +478,17 @@ public class StringUtil {
 	public static String randomString(String length) {
 		int lengthInt = GetterUtil.getInteger(length);
 
-		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
 
-		while (sb.length() < lengthInt) {
-			String uuidString = String.valueOf(UUID.randomUUID());
+		char[] chars = new char[lengthInt];
 
-			sb.append(replace(uuidString, "-", ""));
+		for (int i = 0; i < lengthInt; i++) {
+			int index = random.nextInt(_RANDOM_STRING_CHAR_TABLE.length);
+
+			chars[i] = _RANDOM_STRING_CHAR_TABLE[index];
 		}
 
-		return sb.substring(0, lengthInt);
+		return new String(chars);
 	}
 
 	public static String regexReplaceAll(
@@ -1091,5 +1093,13 @@ public class StringUtil {
 
 		return stringList.toArray(new String[0]);
 	}
+
+	private static final char[] _RANDOM_STRING_CHAR_TABLE = {
+		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+		'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+		'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+		'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+		'u', 'v', 'w', 'x', 'y', 'z'
+	};
 
 }

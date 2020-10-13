@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Marcellus Tavares
@@ -33,7 +34,10 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(
-							size = 12, value = {"dataType", "name", "type"}
+							size = 12,
+							value = {
+								"dataType", "name", "fieldReference", "type"
+							}
 						)
 					}
 				)
@@ -48,6 +52,11 @@ public interface DDMFormFieldTypeSettings {
 		visibilityExpression = "FALSE"
 	)
 	public String dataType();
+
+	@DDMFormField(label = "%field-reference")
+	public default String fieldReference() {
+		return StringPool.BLANK;
+	}
 
 	@DDMFormField(label = "%field-name", required = true)
 	public String name();

@@ -86,7 +86,10 @@ export function ImagePropertiesPanel({item}) {
 		return content;
 	});
 
-	const imageUrl = editableContent?.url ?? editableContent;
+	const imageUrl =
+		typeof editableContent === 'string'
+			? editableContent
+			: editableContent?.url;
 
 	const imageTitle =
 		editableConfig.imageTitle ||

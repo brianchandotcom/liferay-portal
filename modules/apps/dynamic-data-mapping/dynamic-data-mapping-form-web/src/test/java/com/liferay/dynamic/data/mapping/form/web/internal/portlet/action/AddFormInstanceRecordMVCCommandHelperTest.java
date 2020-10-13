@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
@@ -82,6 +83,26 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		setUpResourceBundleUtil();
 
 		mockGetDDMFormLayout();
+	}
+
+	@Test
+	public void testInvisibleFieldWithNullValue() throws Exception {
+		mockDDMFormEvaluator(
+			HashMapBuilder.<String, Object>put(
+				"visible", false
+			).build());
+
+		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(_FIELD_NAME, null);
+
+		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
+			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
+
+		Assert.assertNull(getFieldValue());
 	}
 
 	@Test

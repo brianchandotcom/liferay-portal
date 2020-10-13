@@ -96,13 +96,13 @@ public class AssetDisplayPageEntryServiceImpl
 
 	@Override
 	public List<AssetDisplayPageEntry> getAssetDisplayPageEntries(
-		long classNameId, boolean defaultTemplate,
+		long classNameId, long classTypeId, boolean defaultTemplate,
 		long layoutPageTemplateEntryId, int start, int end,
 		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
 
 		return assetDisplayPageEntryLocalService.getAssetDisplayPageEntries(
-			classNameId, defaultTemplate, layoutPageTemplateEntryId, start, end,
-			orderByComparator);
+			classNameId, classTypeId, defaultTemplate,
+			layoutPageTemplateEntryId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -128,12 +128,13 @@ public class AssetDisplayPageEntryServiceImpl
 
 	@Override
 	public int getAssetDisplayPageEntriesCount(
-		long classNameId, boolean defaultTemplate,
+		long classNameId, long classTypeId, boolean defaultTemplate,
 		long layoutPageTemplateEntryId) {
 
 		return assetDisplayPageEntryLocalService.
 			getAssetDisplayPageEntriesCount(
-				classNameId, defaultTemplate, layoutPageTemplateEntryId);
+				classNameId, classTypeId, defaultTemplate,
+				layoutPageTemplateEntryId);
 	}
 
 	@Override

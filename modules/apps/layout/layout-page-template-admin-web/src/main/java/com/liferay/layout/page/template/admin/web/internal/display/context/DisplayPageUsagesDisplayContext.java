@@ -158,16 +158,16 @@ public class DisplayPageUsagesDisplayContext {
 
 		List<AssetDisplayPageEntry> assetDisplayPageEntries =
 			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntries(
-				getClassNameId(), isDefaultTemplate(),
+				getClassNameId(), getClassTypeId(), isDefaultTemplate(),
 				getLayoutPageTemplateEntryId(), searchContainer.getStart(),
 				searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(assetDisplayPageEntries);
 
 		int count =
-			AssetDisplayPageEntryServiceUtil.
-				getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
-					getLayoutPageTemplateEntryId());
+			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntriesCount(
+				getClassNameId(), getClassTypeId(), isDefaultTemplate(),
+				getLayoutPageTemplateEntryId());
 
 		searchContainer.setTotal(count);
 

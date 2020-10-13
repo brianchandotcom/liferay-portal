@@ -1,5 +1,92 @@
 definition {
 
+	@summary = "Helper function to get the child KB resource primKey"
+	macro _getChildKBResourcePrimKey {
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(folderName)) {
+			var parentResourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				folderName = "${folderName}",
+				groupName = "${groupName}",
+				kbArticleTitle = "${kbArticleTitle}");
+		}
+		else {
+			var parentResourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				groupName = "${groupName}",
+				kbArticleTitle = "${kbArticleTitle}");
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbarticle/get-kb-articles \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d parentResourcePrimKey=${parentResourcePrimKey} \
+				-d status=0 \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
+		''';
+
+		var resourcePrimKey = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${kbChildArticleTitle}')]['resourcePrimKey']");
+		var resourcePrimKey = StringUtil.replace("${resourcePrimKey}", "[&quot;", "");
+		var resourcePrimKey = StringUtil.replace("${resourcePrimKey}", "&quot;]", "");
+
+		if ("${resourcePrimKey}" == "[]") {
+			fail("FAIL. Cannot find resourcePrimKey.");
+		}
+		else {
+			return "${resourcePrimKey}";
+		}
+	}
+
+	@summary = "Helper function to get the KB resource primKey"
+	macro _getKBResourcePrimKey {
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		if (isSet(folderName)) {
+			var folderId = JSONKnowledgeBase.getFolderIdByFolderName(
+				folderName = "${folderName}",
+				groupName = "${groupName}");
+		}
+		else {
+			var folderId = "0";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbarticle/get-kb-articles \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d parentResourcePrimKey=${folderId} \
+				-d status=0 \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
+		''';
+
+		var resourcePrimKey = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${kbArticleTitle}')]['resourcePrimKey']");
+		var resourcePrimKey = StringUtil.replace("${resourcePrimKey}", "[&quot;", "");
+		var resourcePrimKey = StringUtil.replace("${resourcePrimKey}", "&quot;]", "");
+
+		if ("${resourcePrimKey}" == "[]") {
+			fail("FAIL. Cannot find resourcePrimKey.");
+		}
+		else {
+			return "${resourcePrimKey}";
+		}
+	}
+
 	@summary = "This calls the JSON WS API to add a kB article"
 	macro addkBArticle {
 		var portalURL = JSONCompany.getPortalURL();
@@ -37,6 +124,48 @@ definition {
 		echo("## * Name: ${kbArticleTitle}");
 
 		echo("## * Description: ${kbArticleContent}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to add a kB child article"
+	macro addkBChildArticle {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
+
+		if (isSet(folderName)) {
+			var parentResourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				folderName = "${folderName}",
+				groupName = "${groupName}",
+				kbArticleTitle = "${kbArticleTitle}");
+		}
+		else {
+			var parentResourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				groupName = "${groupName}",
+				kbArticleTitle = "${kbArticleTitle}");
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
+				-u test@liferay.com:test \
+				-d portletId=0 \
+				-d parentResourceClassNameId=${parentResourceClassNameId} \
+				-d parentResourcePrimKey=${parentResourcePrimKey} \
+				-d title=${kbChildArticleTitle} \
+				-d urlTitle= \
+				-d content=<p>${kbChildArticleContent}</p> \
+				-d description= \
+				-d sourceURL= \
+				-d sections= \
+				-d selectedFileNames=
+		''';
+
+		echo("## Adding a 'KBChildArticle' with the following info using JSONWS:");
+
+		echo("## * Name: ${kbChildArticleTitle}");
+
+		echo("## * Description: ${kbChildArticleContent}");
 
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
@@ -83,6 +212,50 @@ definition {
 		echo("## * Name: ${folderName}");
 
 		echo("## * Description: ${description}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to add a kB grandchild article"
+	macro addkBGrandchildArticle {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
+
+		if (isSet(folderName)) {
+			var parentResourcePrimKey = JSONKnowledgeBase._getChildKBResourcePrimKey(
+				folderName = "${folderName}",
+				groupName = "${groupName}",
+				kbArticleTitle = "${kbArticleTitle}",
+				kbChildArticleTitle = "${kbChildArticleTitle}");
+		}
+		else {
+			var parentResourcePrimKey = JSONKnowledgeBase._getChildKBResourcePrimKey(
+				groupName = "${groupName}",
+				kbArticleTitle = "${kbArticleTitle}",
+				kbChildArticleTitle = "${kbChildArticleTitle}");
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
+				-u test@liferay.com:test \
+				-d portletId=0 \
+				-d parentResourceClassNameId=${parentResourceClassNameId} \
+				-d parentResourcePrimKey=${parentResourcePrimKey} \
+				-d title=${kbGrandchildArticleTitle} \
+				-d urlTitle= \
+				-d content=<p>${kbGrandchildArticleContent}</p> \
+				-d description= \
+				-d sourceURL= \
+				-d sections= \
+				-d selectedFileNames=
+		''';
+
+		echo("## Adding a 'KBGrandchildArticle' with the following info using JSONWS:");
+
+		echo("## * Name: ${kbGrandchildArticleTitle}");
+
+		echo("## * Description: ${kbGrandchildArticleContent}");
 
 		var messageId = JSONCurlUtil.post("${curl}");
 	}

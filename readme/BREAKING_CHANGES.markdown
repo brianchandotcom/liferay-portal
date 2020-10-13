@@ -69,3 +69,28 @@ The remaining content of this document consists of the breaking changes listed
 in ascending chronological order.
 
 ## Breaking Changes List
+
+### The tag liferay-ui:flash is no longer available
+- **Date:** 2020-Oct-13
+- **JIRA Ticket:** [LPS-121732](https://issues.liferay.com/browse/LPS-121732)
+
+#### What changed?
+
+The tag `liferay-ui:flash` has been deleted and is no longer available.
+
+#### Who is affected?
+
+This affects any development that uses the `liferay-ui:flash` tag to embed
+Adobe Flash movies in a page.
+
+#### How should I update my code?
+
+If you still need to embed Adobe Flash content in a page, you would need to
+write your own code using one of the standard mechanisms such as `SWFObject`.
+
+#### Why was this change made?
+
+This change was made to align with [Adobe dropping support for Flash](https://www.adobe.com/products/flashplayer/end-of-life.html)
+in December 31, 2020 and browsers removing Flash support in upcoming versions.
+
+---------------------------------------

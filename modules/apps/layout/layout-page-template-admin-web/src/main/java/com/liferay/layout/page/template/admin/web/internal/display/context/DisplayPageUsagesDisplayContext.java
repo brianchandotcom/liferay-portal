@@ -16,10 +16,12 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
+import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.layout.page.template.admin.web.internal.util.comparator.AssetDisplayPageEntryModifiedDateComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -187,10 +189,23 @@ public class DisplayPageUsagesDisplayContext {
 			className = DLFileEntry.class.getName();
 		}
 
-		AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(
-			className, assetDisplayPageEntry.getClassPK());
+		String title = StringPool.BLANK;
 
-		return assetEntry.getTitle(locale);
+		AssetEntry assetEntry = null;
+
+		try {
+			assetEntry = AssetEntryServiceUtil.getEntry(
+				className, assetDisplayPageEntry.getClassPK());
+
+			title = assetEntry.getTitle(locale);
+		}
+		catch (PortalException portalException) {
+			if (!(portalException instanceof NoSuchEntryException)) {
+				throw portalException;
+			}
+		}
+
+		return title;
 	}
 
 	public boolean isDefaultTemplate() {

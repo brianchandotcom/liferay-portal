@@ -140,8 +140,8 @@ public class UpstreamFailureUtil {
 					" at SHA ",
 					_upstreamFailuresJobJSONObject.getString("SHA")));
 		}
-		catch (IOException ioException) {
-			System.out.println(ioException);
+		catch (Exception exception) {
+			System.out.println(exception.getMessage());
 
 			System.out.println(
 				"Unable to load upstream acceptance failure data");
@@ -272,7 +272,8 @@ public class UpstreamFailureUtil {
 	}
 
 	private static JSONObject _getUpstreamJobFailuresJSONObject(
-		TopLevelBuild topLevelBuild) {
+			TopLevelBuild topLevelBuild)
+		throws IllegalStateException, IOException {
 
 		int buildNumber = _getLastCompletedUpstreamBuildNumber(topLevelBuild);
 
@@ -282,30 +283,25 @@ public class UpstreamFailureUtil {
 			topLevelBuild.getAcceptanceUpstreamJobName();
 
 		while (buildNumber > oldestBuildNumber) {
-			try {
-				JSONObject jsonObject = _getUpstreamJobFailuresJSONObject(
-					acceptanceUpstreamJobName, String.valueOf(buildNumber));
+			JSONObject jsonObject = _getUpstreamJobFailuresJSONObject(
+				acceptanceUpstreamJobName, String.valueOf(buildNumber));
 
-				String sha = jsonObject.getString("SHA");
+			String sha = jsonObject.getString("SHA");
 
-				GitWorkingDirectory gitWorkingDirectory =
-					GitWorkingDirectoryFactory.newGitWorkingDirectory(
-						topLevelBuild.getBranchName(), (File)null,
-						topLevelBuild.getBaseGitRepositoryName());
+			GitWorkingDirectory gitWorkingDirectory =
+				GitWorkingDirectoryFactory.newGitWorkingDirectory(
+					topLevelBuild.getBranchName(), (File)null,
+					topLevelBuild.getBaseGitRepositoryName());
 
-				if (gitWorkingDirectory.refContainsSHA("HEAD", sha)) {
-					return jsonObject;
-				}
-			}
-			catch (IOException ioException) {
-				System.out.println(ioException);
+			if (gitWorkingDirectory.refContainsSHA("HEAD", sha)) {
+				return jsonObject;
 			}
 
 			buildNumber--;
 		}
 
-		throw new RuntimeException(
-			"Unable to find upstream comparison with valid SHA");
+		throw new IllegalStateException(
+			"Unable to find comparable upstream test results");
 	}
 
 	private static boolean _isBuildFailingInUpstreamJob(Build build) {

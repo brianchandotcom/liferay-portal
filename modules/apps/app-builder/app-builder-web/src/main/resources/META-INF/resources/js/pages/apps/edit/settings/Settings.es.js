@@ -23,8 +23,8 @@ import EditAppContext, {
 
 export default ({
 	deploymentType,
-	tip = () => <></>,
-	settings = () => <></>,
+	tip = () => null,
+	settings = () => null,
 	subtitle,
 	title,
 }) => {
@@ -46,8 +46,10 @@ export default ({
 					<ClayLayout.ContentSection containerElement="section">
 						<h3>
 							{title}
+
 							{tip()}
 						</h3>
+
 						<p className="list-group-subtext">
 							<small>{subtitle}</small>
 						</p>

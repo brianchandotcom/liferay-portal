@@ -17,12 +17,10 @@ import ClayPopover from '@clayui/popover';
 import React, {useState} from 'react';
 
 import {sub} from '../../../../utils/lang.es';
+import {COLORS} from '../../constants.es';
 
-const translations = {
-	'app-builder': Liferay.Language.get('app-builder'),
-	'fragments-and-widgets': Liferay.Language.get('fragments-and-widgets'),
-	widget: Liferay.Language.get('widget'),
-};
+const POPOVER_MAX_WIDTH = 362;
+const POPOVER_IMAGE_WIDTH = 336;
 
 export default () => {
 	const [isVisible, setVisible] = useState(false);
@@ -33,10 +31,11 @@ export default () => {
 			disableScroll
 			header={Liferay.Language.get('add-apps-as-widgets')}
 			show={isVisible}
-			style={{maxWidth: 362}}
+			style={{maxWidth: POPOVER_MAX_WIDTH}}
 			trigger={
 				<ClayIcon
-					color="#A7A9BC"
+					className="ml-2"
+					color={COLORS.secondary}
 					onMouseOut={() => setVisible(false)}
 					onMouseOver={() => setVisible(true)}
 					symbol="question-circle-full"
@@ -49,17 +48,20 @@ export default () => {
 						'when-editing-a-site-page-in-the-right-sidebar-go-to-x-and-then-open-the-x-tab-you-will-find-your-deployed-apps-under-the-x-section'
 					),
 					[
-						<b key={0}>{translations['fragments-and-widgets']}</b>,
-						<b key={1}>{translations.widget}</b>,
-						<b key={2}>{translations['app-builder']}</b>,
+						<b key={0}>
+							{Liferay.Language.get('fragments-and-widgets')}
+						</b>,
+						<b key={1}>{Liferay.Language.get('widget')}</b>,
+						<b key={2}>{Liferay.Language.get('app-builder')}</b>,
 					],
 					false
 				)}
 			</p>
+
 			<img
-				alt={translations['fragments-and-widgets']}
+				alt={Liferay.Language.get('fragments-and-widgets')}
 				src={`${themeDisplay.getPathThemeImages()}/app_builder/fragment-and-widgets.png`}
-				width={336}
+				width={POPOVER_IMAGE_WIDTH}
 			/>
 		</ClayPopover>
 	);

@@ -197,7 +197,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 		Group group = layout.getGroup();
 
-		if (group.isLayoutPrototype() ||
+		if (group.isControlPanel() || group.isLayoutPrototype() ||
 			StringUtil.equals(companyName, group.getDescriptiveName())) {
 
 			return companyName;

@@ -151,7 +151,22 @@ public class CommerceOptionValueHelperImpl
 			JSONObject jsonObject = commerceOptionValuesJSONArray.getJSONObject(
 				i);
 
-			commerceOptionValues.add(_toCommerceOptionValue(jsonObject));
+			JSONArray valueJSONArray = _jsonHelper.getValueAsJSONArray(
+				"value", jsonObject);
+
+			if (valueJSONArray.length() > 0) {
+				for (int j = 0; j < valueJSONArray.length(); j++) {
+					String value = valueJSONArray.getString(j);
+
+					jsonObject.put("value", value);
+
+					commerceOptionValues.add(
+						_toCommerceOptionValue(jsonObject));
+				}
+			}
+			else {
+				commerceOptionValues.add(_toCommerceOptionValue(jsonObject));
+			}
 		}
 
 		return commerceOptionValues;

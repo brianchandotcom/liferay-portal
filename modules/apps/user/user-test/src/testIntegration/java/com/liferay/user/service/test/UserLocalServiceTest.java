@@ -57,6 +57,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.LongStream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -298,6 +299,18 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(
 			userGroupUsers.toString(), delta, userGroupUsers.size());
 		Assert.assertTrue(_users.containsAll(userGroupUsers));
+	}
+
+	@Test
+	public void testSearchCountsCompatibility() throws Exception {
+
+		// LPS-119805: check compatibility with DB Oracle
+
+		_userLocalService.searchCounts(
+			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
+			LongStream.rangeClosed(
+				1000, 3000
+			).toArray());
 	}
 
 	@Test

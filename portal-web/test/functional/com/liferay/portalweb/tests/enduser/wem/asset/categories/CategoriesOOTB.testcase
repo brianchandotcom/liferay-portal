@@ -45,5 +45,24 @@ definition {
             
         Category.deleteCategoriesCP(vocabularyName = "Audience 1");
 	}
-    
+
+	@description = "When the site administrator (not Global) accesses to the Categories administration application, the existing Global vocabularies appear as locked and it's not possible to edit them"
+	@priority = "5"
+	test GlobalCategoriesNotEditable {
+		property portal.acceptance = "true";
+        JSONCategory.addCategory(
+		    groupName = "Global",
+		    title = "Audience 1",
+    	    vocabularyName = "Audience");
+            
+        Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+            
+        AssertElementPresent(locator1 = "Categories#LOCKED_VOCABULARY");
+
+        Category.viewCP(
+		    categoryName = "Audience 1",
+		    vocabularyName = "Audience");
+            
+        AssertElementNotPresent(locator1 = "Categories#ADD_CATEGORY_BUTTON");
+	}
 }

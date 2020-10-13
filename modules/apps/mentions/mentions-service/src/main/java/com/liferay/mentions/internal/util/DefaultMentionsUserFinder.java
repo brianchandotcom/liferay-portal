@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.social.kernel.model.SocialRelationConstants;
@@ -59,16 +59,9 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 
 		User user = _userLocalService.getUser(userId);
 
-		int[] types = {SocialRelationConstants.TYPE_BI_FRIEND};
-
-		long[] groupIds = new long[0];
-
-		List<Group> groups = _groupLocalService.getUserSitesGroups(
-			user.getUserId());
-
-		for (Group group : groups) {
-			groupIds = ArrayUtil.append(groupIds, group.getGroupId());
-		}
+		long[] groupIds = ListUtil.toLongArray(
+			_groupLocalService.getUserSitesGroups(user.getUserId()),
+			Group.GROUP_ID_ACCESSOR);
 
 		if (socialInteractionsConfiguration.
 				isSocialInteractionsFriendsEnabled() &&
@@ -76,7 +69,7 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 				isSocialInteractionsSitesEnabled()) {
 
 			return _userLocalService.searchSocial(
-				groupIds, userId, types, query, 0, _MAX_USERS);
+				groupIds, userId, _TYPES, query, 0, _MAX_USERS);
 		}
 
 		if (socialInteractionsConfiguration.
@@ -90,25 +83,22 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 				isSocialInteractionsFriendsEnabled()) {
 
 			return _userLocalService.searchSocial(
-				userId, types, query, 0, _MAX_USERS);
+				userId, _TYPES, query, 0, _MAX_USERS);
 		}
 
 		return Collections.emptyList();
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final int _MAX_USERS = 20;
 
+	private static final int[] _TYPES = {
+		SocialRelationConstants.TYPE_BI_FRIEND
+	};
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

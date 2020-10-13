@@ -316,6 +316,8 @@ definition {
 			key_menuItem = "Edit",
 			locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
 		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");

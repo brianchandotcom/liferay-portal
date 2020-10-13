@@ -373,22 +373,18 @@ definition {
 		property test.name.skip.portal.instance = "XSSUsecase#ViewURLValidate";
 
 		var maliciousURL1 = '''
-				http://localhost:8080/c/portal/flash?title=abc</title><script%0d%0a>alert(3.1415926)</script%0d%0a><title>aaa
-			''';
-
-		var maliciousURL2 = '''
 				http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E
 			''';
 
-		var maliciousURL3 = '''
+		var maliciousURL2 = '''
 				http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E&_2_backURL=%22%3E%3Cscript%3Ealert%28%27xss%27%29;%3C/script%3E
 			''';
 
-		var maliciousURL4 = '''
+		var maliciousURL3 = '''
 				http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E&_2_backURL=alert%28%27xss%27%29
 			''';
 
-		var maliciousURL5 = '''
+		var maliciousURL4 = '''
 				http://localhost:8080/html/portal/progress_poller.jsp?ProgressId=a%3D1%3Balert(document.cookie)%3B%2F%2F
 			''';
 
@@ -396,23 +392,19 @@ definition {
 
 		AssertAlertNotPresent();
 
-		Navigator.openSpecificURL(url = "${maliciousURL2}");
-
-		AssertAlertNotPresent();
-
 		Navigator.openURL();
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		Navigator.openSpecificURL(url = "${maliciousURL2}");
+
+		AssertAlertNotPresent();
 
 		Navigator.openSpecificURL(url = "${maliciousURL3}");
 
 		AssertAlertNotPresent();
 
 		Navigator.openSpecificURL(url = "${maliciousURL4}");
-
-		AssertAlertNotPresent();
-
-		Navigator.openSpecificURL(url = "${maliciousURL5}");
 
 		AssertAlertNotPresent();
 	}

@@ -190,10 +190,6 @@ definition {
 
 		Button.clickPublish();
 
-		AssertElementPresent(
-			key_threadSubject = "${threadSubject}",
-			locator1 = "MessageBoardsThread#THREAD_REPLY_BUTTON");
-
 		Alert.viewSuccessMessage();
 	}
 

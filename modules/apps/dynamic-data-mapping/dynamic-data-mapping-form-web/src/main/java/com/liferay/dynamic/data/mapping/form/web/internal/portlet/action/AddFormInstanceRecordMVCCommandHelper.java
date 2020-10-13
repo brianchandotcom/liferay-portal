@@ -250,8 +250,9 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
 
 		stream.filter(
-			ddmFormFieldValue -> invisibleFields.contains(
-				ddmFormFieldValue.getName())
+			ddmFormFieldValue ->
+				invisibleFields.contains(ddmFormFieldValue.getName()) &&
+				(ddmFormFieldValue.getValue() != null)
 		).forEach(
 			ddmFormFieldValue -> {
 				Value value = ddmFormFieldValue.getValue();

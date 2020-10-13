@@ -190,11 +190,21 @@ definition {
 
 	@priority = "5"
 	test DeleteEntryFromApplication {
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

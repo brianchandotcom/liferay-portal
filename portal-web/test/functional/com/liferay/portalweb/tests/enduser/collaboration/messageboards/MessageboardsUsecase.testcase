@@ -73,6 +73,8 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
+		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
+
 		MessageboardsThread.replyCP(
 			threadReplyBody = "MB Body Reply",
 			threadSubject = "MB Thread Message Subject");
@@ -754,6 +756,12 @@ definition {
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = '''<script>alert(123);</script>''');
 
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = '''<script>alert(123);</script>''');
+
 		MessageboardsThread.viewNoXSSPG(
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = '''<script>alert(123);</script>''');
@@ -783,6 +791,12 @@ definition {
 
 		MessageboardsThread.addPG(
 			source = "true",
+			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
 			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
 			threadSubject = "MB Thread Message Subject");
 
@@ -1015,6 +1029,9 @@ definition {
 
 		MessageboardsThread.addPGAsQuestion(
 			breadcrumbName = "Home",
+			lastPostUserName = "Test Test",
+			pageName = "Message Boards Page",
+			replyCount = "0",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 

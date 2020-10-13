@@ -165,12 +165,12 @@ definition {
 
 		MessageboardsThread.addPGAsQuestion(
 			breadcrumbName = "MB Category Name",
+			categoryName = "MB Category Name",
+			lastPostUserName = "Test Test",
+			pageName = "Message Boards Page",
+			replyCount = "0",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
@@ -402,6 +402,12 @@ definition {
 		}
 
 		PortletEntry.publish();
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
 
 		for (var mbThreadAttachment : list "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4") {
 			AssertTextEquals.assertPartialText(

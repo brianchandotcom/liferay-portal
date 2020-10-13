@@ -66,28 +66,21 @@
 						<aui:a href="<%= !curGroup.isCompany() ? viewSubsitesURL : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 					</h5>
 
-					<ul class="list-inline">
-						<li class="h6 text-default">
-							<c:choose>
-								<c:when test="<%= curGroup.isActive() %>">
-									<liferay-ui:message key="active" />
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="not-active" />
-								</c:otherwise>
-							</c:choose>
-						</li>
-						<li class="h6">
-							<c:choose>
-								<c:when test="<%= !curGroup.isCompany() %>">
-									<liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" />
-								</c:when>
-								<c:otherwise>
-									-
-								</c:otherwise>
-							</c:choose>
-						</li>
-					</ul>
+					<span class="text-secondary">
+						<c:choose>
+							<c:when test="<%= curGroup.isActive() %>">
+								<liferay-ui:message key="active" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="not-active" />
+							</c:otherwise>
+						</c:choose>
+					</span>
+					<span class="text-secondary">
+						<c:if test="<%= !curGroup.isCompany() %>">
+							<liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" />
+						</c:if>
+					</span>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text>

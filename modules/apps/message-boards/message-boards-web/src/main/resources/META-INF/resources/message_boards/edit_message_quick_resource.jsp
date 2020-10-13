@@ -223,7 +223,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 </div>
 
 <aui:script require='<%= npmResolvedPackageName + "/message_boards/js/MBPortlet.es as MBPortlet" %>'>
-	new MBPortlet.default({
+	var mb = new MBPortlet.default({
 		constants: {
 			ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
 			CMD: '<%= Constants.CMD %>',
@@ -233,6 +233,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 		replyToMessageId: '<%= parentMessageId %>',
 		rootNode: '#<portlet:namespace />addQuickReply<%= parentMessageId %>',
 	});
+
+	mb.init();
 </aui:script>
 
 <aui:script>

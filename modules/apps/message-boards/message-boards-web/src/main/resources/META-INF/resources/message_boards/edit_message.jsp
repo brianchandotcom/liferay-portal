@@ -460,7 +460,7 @@ if (portletTitleBasedNavigation) {
 </clay:container-fluid>
 
 <aui:script require='<%= npmResolvedPackageName + "/message_boards/js/MBPortlet.es as MBPortlet" %>'>
-	new MBPortlet.default({
+	var mb = new MBPortlet.default({
 		constants: {
 			ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
 			ACTION_SAVE_DRAFT: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
@@ -490,4 +490,6 @@ if (portletTitleBasedNavigation) {
 			viewTrashAttachmentsURL: '<%= viewTrashAttachmentsURL %>',
 		</c:if>
 	});
+
+	mb.init();
 </aui:script>

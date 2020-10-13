@@ -243,8 +243,7 @@ public class DiscountAccountGroupResourceTest
 				calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-				calendar.get(Calendar.MINUTE),
-				true, _serviceContext);
+				calendar.get(Calendar.MINUTE), true, _serviceContext);
 
 		CommerceAccountGroup commerceAccountGroup =
 			CommerceAccountGroupLocalServiceUtil.addCommerceAccountGroup(
@@ -314,8 +313,7 @@ public class DiscountAccountGroupResourceTest
 					calendar.get(Calendar.DAY_OF_MONTH),
 					calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.HOUR_OF_DAY),
-					calendar.get(Calendar.MINUTE),
-					true, _serviceContext);
+					calendar.get(Calendar.MINUTE), true, _serviceContext);
 		}
 
 		return _commerceDiscount.getExternalReferenceCode();
@@ -364,8 +362,7 @@ public class DiscountAccountGroupResourceTest
 					calendar.get(Calendar.DAY_OF_MONTH),
 					calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.HOUR_OF_DAY),
-					calendar.get(Calendar.MINUTE),
-					true, _serviceContext);
+					calendar.get(Calendar.MINUTE), true, _serviceContext);
 		}
 
 		return _commerceDiscount.getCommerceDiscountId();

@@ -59,12 +59,14 @@ definition {
 	macro deleteDocument {
 		var key_documentTitle = "${dmDocumentTitle}";
 
-		if (IsElementPresent(locator1 = "OneDrive#FILES_TITLE")) {
+		while (IsElementPresent(locator1 = "OneDrive#FILES_TITLE")) {
 			Click.mouseOverClick(locator1 = "OneDrive#FILES_CHECKBOX");
 
 			Click(locator1 = "OneDrive#DELETE");
 
 			Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
+
+			Pause(locator1 = "3000");
 		}
 	}
 

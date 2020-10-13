@@ -482,6 +482,8 @@ public class DisplayPageActionDropdownItemsProvider {
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
 				"/layout_page_template/view_display_page_usages", "classNameId",
 				String.valueOf(_layoutPageTemplateEntry.getClassNameId()),
+				"classTypeId",
+				String.valueOf(_layoutPageTemplateEntry.getClassTypeId()),
 				"defaultTemplate",
 				String.valueOf(_layoutPageTemplateEntry.isDefaultTemplate()),
 				"layoutPageTemplateEntryId",

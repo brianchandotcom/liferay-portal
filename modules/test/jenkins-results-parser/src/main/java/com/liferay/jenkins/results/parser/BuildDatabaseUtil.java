@@ -30,7 +30,7 @@ public class BuildDatabaseUtil {
 	}
 
 	public static BuildDatabase getBuildDatabase(Build build) {
-		return getBuildDatabase(null, build, true);
+		return getBuildDatabase(_getDistPath(build), build, true);
 	}
 
 	public static BuildDatabase getBuildDatabase(
@@ -183,6 +183,27 @@ public class BuildDatabaseUtil {
 				JenkinsResultsParserUtil.sleep(3000);
 			}
 		}
+	}
+
+	private static String _getDistPath(Build build) {
+		StringBuilder sb = new StringBuilder();
+
+		if (JenkinsResultsParserUtil.isWindows()) {
+			sb.append("C:");
+		}
+
+		sb.append("/tmp/jenkins/");
+
+		JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
+
+		sb.append(jenkinsMaster.getName());
+
+		sb.append("/");
+		sb.append(build.getJobName());
+		sb.append("/");
+		sb.append(build.getBuildNumber());
+
+		return sb.toString();
 	}
 
 	private static BuildDatabase _buildDatabase;

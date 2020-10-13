@@ -207,6 +207,7 @@ export default function TrafficSources({
 								data={trafficSources}
 								dataKey="value"
 								innerRadius={PIE_CHART_SIZES.innerRadius}
+								isAnimationActive={false}
 								nameKey={'name'}
 								outerRadius={PIE_CHART_SIZES.radius}
 								paddingAngle={PIE_CHART_SIZES.paddingAngle}

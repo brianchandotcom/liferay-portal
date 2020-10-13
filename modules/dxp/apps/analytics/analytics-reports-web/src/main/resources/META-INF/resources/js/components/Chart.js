@@ -441,6 +441,7 @@ export default function Chart({
 										dataKey={keyName}
 										dot={<CustomDot shape={shape} />}
 										fill={color}
+										isAnimationActive={false}
 										key={keyName}
 										stroke={color}
 										strokeWidth={CHART_SIZES.lineWidth}

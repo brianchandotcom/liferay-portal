@@ -87,7 +87,7 @@ public class EditCommerceDiscountExternalReferenceCodeMVCActionCommand
 			actionRequest, "externalReferenceCode");
 
 		_commerceDiscountService.updateCommerceDiscountExternalReferenceCode(
-			commerceDiscount.getCommerceDiscountId(), externalReferenceCode);
+			externalReferenceCode, commerceDiscount.getCommerceDiscountId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

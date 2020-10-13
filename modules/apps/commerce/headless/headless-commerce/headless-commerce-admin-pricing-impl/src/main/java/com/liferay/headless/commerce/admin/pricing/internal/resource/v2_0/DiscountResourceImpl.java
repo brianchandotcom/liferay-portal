@@ -110,7 +110,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceDiscount == null) {
 			throw new NoSuchDiscountException(
@@ -134,7 +134,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceDiscount == null) {
 			throw new NoSuchDiscountException(
@@ -194,7 +194,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceDiscount == null) {
 			throw new NoSuchDiscountException(
@@ -565,8 +565,9 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountService.upsertCommerceDiscount(
-				contextUser.getUserId(), GetterUtil.getLong(discount.getId()),
-				discount.getTitle(), discount.getTarget(),
+				discount.getExternalReferenceCode(), contextUser.getUserId(),
+				GetterUtil.getLong(discount.getId()), discount.getTitle(),
+				discount.getTarget(),
 				GetterUtil.getBoolean(discount.getUseCouponCode()),
 				discount.getCouponCode(),
 				GetterUtil.getBoolean(discount.getUsePercentage()),
@@ -584,7 +585,6 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 				expirationDateConfig.getDay(), expirationDateConfig.getYear(),
 				expirationDateConfig.getHour(),
 				expirationDateConfig.getMinute(),
-				discount.getExternalReferenceCode(),
 				GetterUtil.getBoolean(discount.getNeverExpire(), true),
 				serviceContext);
 

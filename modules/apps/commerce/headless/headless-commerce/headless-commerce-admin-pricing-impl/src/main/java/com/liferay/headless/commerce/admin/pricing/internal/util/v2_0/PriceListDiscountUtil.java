@@ -55,8 +55,8 @@ public class PriceListDiscountUtil {
 		else {
 			commerceDiscount =
 				commerceDiscountService.fetchByExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					priceListDiscount.getDiscountExternalReferenceCode());
+					priceListDiscount.getDiscountExternalReferenceCode(),
+					serviceContext.getCompanyId());
 
 			if (commerceDiscount == null) {
 				throw new NoSuchDiscountException(

@@ -69,7 +69,7 @@ public class DiscountProductGroupResourceImpl
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceDiscount == null) {
 			throw new NoSuchDiscountException(
@@ -125,7 +125,7 @@ public class DiscountProductGroupResourceImpl
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceDiscount == null) {
 			throw new NoSuchDiscountException(

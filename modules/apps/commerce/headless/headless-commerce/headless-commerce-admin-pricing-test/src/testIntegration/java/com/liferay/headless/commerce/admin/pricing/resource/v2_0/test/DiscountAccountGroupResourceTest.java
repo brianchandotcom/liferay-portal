@@ -101,7 +101,7 @@ public class DiscountAccountGroupResourceTest
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountLocalService.fetchByExternalReferenceCode(
-				testCompany.getCompanyId(), "external-reference-code-test");
+				"external-reference-code-test", testCompany.getCompanyId());
 
 		if (commerceDiscount != null) {
 			_commerceDiscountLocalService.deleteCommerceDiscount(
@@ -149,7 +149,7 @@ public class DiscountAccountGroupResourceTest
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountLocalService.fetchByExternalReferenceCode(
-				testCompany.getCompanyId(), "external-reference-code-test");
+				"external-reference-code-test", testCompany.getCompanyId());
 
 		if (commerceDiscount != null) {
 			_commerceDiscountLocalService.deleteCommerceDiscount(
@@ -231,7 +231,8 @@ public class DiscountAccountGroupResourceTest
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountLocalService.upsertCommerceDiscount(
-				_user.getUserId(), 0, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), _user.getUserId(), 0,
+				RandomTestUtil.randomString(),
 				CommerceDiscountConstants.TARGET_PRODUCTS, false, null, false,
 				BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.ZERO,
 				BigDecimal.ZERO, BigDecimal.ZERO,
@@ -242,7 +243,7 @@ public class DiscountAccountGroupResourceTest
 				calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-				calendar.get(Calendar.MINUTE), RandomTestUtil.randomString(),
+				calendar.get(Calendar.MINUTE),
 				true, _serviceContext);
 
 		CommerceAccountGroup commerceAccountGroup =
@@ -272,7 +273,7 @@ public class DiscountAccountGroupResourceTest
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountLocalService.fetchByExternalReferenceCode(
-				testCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, testCompany.getCompanyId());
 
 		CommerceDiscountCommerceAccountGroupRel
 			commerceDiscountCommerceAccountGroupRel =
@@ -299,7 +300,8 @@ public class DiscountAccountGroupResourceTest
 
 			_commerceDiscount =
 				_commerceDiscountLocalService.upsertCommerceDiscount(
-					_user.getUserId(), 0, RandomTestUtil.randomString(),
+					"external-reference-code-test", _user.getUserId(), 0,
+					RandomTestUtil.randomString(),
 					CommerceDiscountConstants.TARGET_PRODUCTS, false, null,
 					false, BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.ZERO,
 					BigDecimal.ZERO, BigDecimal.ZERO,
@@ -313,7 +315,7 @@ public class DiscountAccountGroupResourceTest
 					calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.HOUR_OF_DAY),
 					calendar.get(Calendar.MINUTE),
-					"external-reference-code-test", true, _serviceContext);
+					true, _serviceContext);
 		}
 
 		return _commerceDiscount.getExternalReferenceCode();
@@ -348,7 +350,8 @@ public class DiscountAccountGroupResourceTest
 
 			_commerceDiscount =
 				_commerceDiscountLocalService.upsertCommerceDiscount(
-					_user.getUserId(), 0, RandomTestUtil.randomString(),
+					"external-reference-code-test", _user.getUserId(), 0,
+					RandomTestUtil.randomString(),
 					CommerceDiscountConstants.TARGET_PRODUCTS, false, null,
 					false, BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.ZERO,
 					BigDecimal.ZERO, BigDecimal.ZERO,
@@ -362,7 +365,7 @@ public class DiscountAccountGroupResourceTest
 					calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.HOUR_OF_DAY),
 					calendar.get(Calendar.MINUTE),
-					"external-reference-code-test", true, _serviceContext);
+					true, _serviceContext);
 		}
 
 		return _commerceDiscount.getCommerceDiscountId();

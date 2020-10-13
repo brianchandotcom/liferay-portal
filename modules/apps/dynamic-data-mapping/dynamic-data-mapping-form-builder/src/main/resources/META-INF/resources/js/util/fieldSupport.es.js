@@ -54,6 +54,7 @@ export const createField = (props, event) => {
 	const newField = {
 		...fieldType,
 		fieldName: newFieldName,
+		fieldReference: newFieldName,
 		name: newFieldName,
 		settingsContext: {
 			...fieldType.settingsContext,
@@ -68,7 +69,7 @@ export const createField = (props, event) => {
 		},
 	};
 
-	const {fieldName, name, settingsContext} = newField;
+	const {fieldName, fieldReference, name, settingsContext} = newField;
 
 	return {
 		...getFieldProperties(
@@ -77,6 +78,7 @@ export const createField = (props, event) => {
 			editingLanguageId
 		),
 		fieldName,
+		fieldReference,
 		instanceId: generateInstanceId(8),
 		name,
 		settingsContext,

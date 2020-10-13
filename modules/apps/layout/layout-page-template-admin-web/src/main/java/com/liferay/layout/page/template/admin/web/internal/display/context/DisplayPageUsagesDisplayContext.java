@@ -20,13 +20,21 @@ import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.page.template.admin.web.internal.util.comparator.AssetDisplayPageEntryModifiedDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -49,6 +57,9 @@ public class DisplayPageUsagesDisplayContext {
 		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_infoItemServiceTracker =
+			(InfoItemServiceTracker)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER);
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -189,15 +200,13 @@ public class DisplayPageUsagesDisplayContext {
 			className = DLFileEntry.class.getName();
 		}
 
-		String title = StringPool.BLANK;
-
 		AssetEntry assetEntry = null;
 
 		try {
 			assetEntry = AssetEntryServiceUtil.getEntry(
 				className, assetDisplayPageEntry.getClassPK());
 
-			title = assetEntry.getTitle(locale);
+			return assetEntry.getTitle(locale);
 		}
 		catch (PortalException portalException) {
 			if (!(portalException instanceof NoSuchEntryException)) {
@@ -205,7 +214,49 @@ public class DisplayPageUsagesDisplayContext {
 			}
 		}
 
-		return title;
+		String title = StringPool.BLANK;
+
+		InfoItemObjectProvider<?> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class,
+				PortalUtil.getClassName(getClassNameId()));
+
+		if (infoItemObjectProvider == null) {
+			return title;
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				PortalUtil.getClassName(getClassNameId()));
+
+		if (infoItemFieldValuesProvider == null) {
+			return title;
+		}
+
+		Object infoItem = infoItemObjectProvider.getInfoItem(
+			new ClassPKInfoItemIdentifier(assetDisplayPageEntry.getClassPK()));
+
+		if (infoItem == null) {
+			return title;
+		}
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoItemFieldValue(
+				infoItem, "title");
+
+		if (infoFieldValue == null) {
+			return title;
+		}
+
+		Object infoFieldValueValue = infoFieldValue.getValue(
+			LocaleUtil.getMostRelevantLocale());
+
+		if (infoFieldValueValue == null) {
+			return title;
+		}
+
+		return String.valueOf(infoFieldValueValue);
 	}
 
 	public boolean isDefaultTemplate() {
@@ -223,6 +274,7 @@ public class DisplayPageUsagesDisplayContext {
 	private Long _classTypeId;
 	private Boolean _defaultTemplate;
 	private final HttpServletRequest _httpServletRequest;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;
 	private String _orderByType;

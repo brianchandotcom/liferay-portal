@@ -72,6 +72,10 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		throws PortletException {
 
 		try {
+			if (_pingFolderRepository(renderRequest, renderResponse)) {
+				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+			}
+
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
 				_dlPortletToolbarContributorRegistry.
@@ -102,10 +106,6 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 						_portal.getHttpServletRequest(renderRequest),
 						_portal.getHttpServletResponse(renderResponse),
 						dlAdminDisplayContext));
-
-			if (_pingFolderRepository(renderRequest, renderResponse)) {
-				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
-			}
 
 			return super.render(renderRequest, renderResponse);
 		}

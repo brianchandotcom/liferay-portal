@@ -19,7 +19,7 @@ import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.dispatch.service.DispatchLogLocalServiceUtil;
+import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -59,14 +59,14 @@ public class DispatchMessageListener extends BaseMessageListener {
 
 		if (!dispatchTrigger.isOverlapAllowed()) {
 			DispatchLog dispatchLog =
-				DispatchLogLocalServiceUtil.fetchLatestDispatchLog(
+				_dispatchLogLocalService.fetchLatestDispatchLog(
 					dispatchTriggerId);
 
 			if ((dispatchLog != null) &&
 				(DispatchTaskStatus.valueOf(dispatchLog.getStatus()) ==
 					DispatchTaskStatus.IN_PROGRESS)) {
 
-				DispatchLogLocalServiceUtil.addDispatchLog(
+				_dispatchLogLocalService.addDispatchLog(
 					dispatchTrigger.getUserId(),
 					dispatchTrigger.getDispatchTriggerId(), null, null, null,
 					new Date(), DispatchTaskStatus.CANCELED);
@@ -94,6 +94,9 @@ public class DispatchMessageListener extends BaseMessageListener {
 	protected void deactivate() {
 		_dispatchTaskExecutorServiceTrackerMap.close();
 	}
+
+	@Reference
+	private DispatchLogLocalService _dispatchLogLocalService;
 
 	private ServiceTrackerMap<String, DispatchTaskExecutor>
 		_dispatchTaskExecutorServiceTrackerMap;

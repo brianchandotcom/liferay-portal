@@ -72,9 +72,9 @@ public class CKEditorBBCodeConfigContributor
 			"newThreadURL", MBThreadConstants.NEW_THREAD_URL
 		).put(
 			"removePlugins",
-			"bidi,codemirror,div,elementspath,flash,forms,indentblock," +
-				"keystrokes,link,maximize,newpage,pagebreak,preview," +
-					"print,save,showblocks,templates,video"
+			"bidi,codemirror,div,elementspath,forms,indentblock,keystrokes," +
+				"link,maximize,newpage,pagebreak,preview,print,save," +
+					"showblocks,templates,video"
 		).put(
 			"smiley_descriptions",
 			toJSONArray(BBCodeTranslatorUtil.getEmoticonDescriptions())

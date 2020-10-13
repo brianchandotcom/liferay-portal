@@ -297,6 +297,11 @@
     <td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_CHANGE_FIELD_TYPE_MODAL_BUTTON</td>
+	<td>//div[contains(@id,'ddm-change-field-type-with-rule-modal')]//button[contains(@class,'btn btn-danger')][contains(text(),'Change Field Type')]</td>
+	<td></td>
+</tr>
+<tr>
     <td>SIDEBAR_ELEMENTS_TAB</td>
     <td>//a[contains(@class,'tab') and .='Elements'] | //a[contains(@class,'nav-link active') and .='Elements']</td>
     <td></td>
@@ -332,14 +337,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VALIDATE_DELETE_FIELD_MODAL_DELETE_MESSAGE</td>
-	<td>//div[@class='liferay-modal-body'][contains(text(),'A rule is applied to this field. By deleting it, it will also break the rule that is using it.')]</td>
-	<td></td>
-</tr>
-<tr>
     <td>SIDEBAR_CLOSE</td>
     <td>//div[contains(@class,'open') and contains(@class,'sidebar-container')]//a[contains(@class,'sidebar-close')]</td>
     <td></td>
+</tr>
+<tr>
+	<td>VALIDATE_CHANGE_FIELD_TYPE_MODAL_MESSAGE</td>
+	<td>//div[@class='liferay-modal-body'][contains(text(),'A rule is applied to this field. By changing its type, it will also affect the rule that is using it.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATE_DELETE_FIELD_MODAL_DELETE_MESSAGE</td>
+	<td>//div[@class='liferay-modal-body'][contains(text(),'A rule is applied to this field. By deleting it, it will also break the rule that is using it.')]</td>
+	<td></td>
 </tr>
 <tr>
     <td></td>

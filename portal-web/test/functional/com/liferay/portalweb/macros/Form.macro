@@ -56,6 +56,14 @@ definition {
 		AssertVisible(locator1 = "Form#PUBLISH_URL_ICON");
 	}
 
+	macro changeFieldTypeModalConfirmation {
+		FormFields.changeFieldType(selectOption = "${selectOption}");
+
+		while (IsElementPresent(locator1 = "Form#VALIDATE_CHANGE_FIELD_TYPE_MODAL_MESSAGE")) {
+			Click(locator1 = "Form#SIDEBAR_CHANGE_FIELD_TYPE_MODAL_BUTTON");
+		}
+	}
+
 	macro closeSidebar {
 		Pause(locator1 = "1000");
 

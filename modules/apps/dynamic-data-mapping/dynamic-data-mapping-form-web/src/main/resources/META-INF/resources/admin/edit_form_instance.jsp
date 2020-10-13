@@ -288,6 +288,10 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	Liferay.on('destroyPortlet', clearPortletHandlers);
 
 	Liferay.Forms.App.start();
+
+	if (Liferay.Browser.isIe()) {
+		document.querySelector('.portlet-forms').classList.add('portlet-forms-ie');
+	}
 </aui:script>
 
 <aui:script use="aui-base">

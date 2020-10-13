@@ -150,7 +150,7 @@ public class AssetDisplayPageEntryServiceSoap {
 	public static
 		com.liferay.asset.display.page.model.AssetDisplayPageEntrySoap[]
 				getAssetDisplayPageEntries(
-					long classNameId, boolean defaultTemplate,
+					long classNameId, long classTypeId, boolean defaultTemplate,
 					long layoutPageTemplateEntryId, int start, int end,
 					com.liferay.portal.kernel.util.OrderByComparator
 						<com.liferay.asset.display.page.model.
@@ -163,7 +163,7 @@ public class AssetDisplayPageEntryServiceSoap {
 					returnValue =
 						AssetDisplayPageEntryServiceUtil.
 							getAssetDisplayPageEntries(
-								classNameId, defaultTemplate,
+								classNameId, classTypeId, defaultTemplate,
 								layoutPageTemplateEntryId, start, end,
 								orderByComparator);
 
@@ -230,7 +230,7 @@ public class AssetDisplayPageEntryServiceSoap {
 	}
 
 	public static int getAssetDisplayPageEntriesCount(
-			long classNameId, boolean defaultTemplate,
+			long classNameId, long classTypeId, boolean defaultTemplate,
 			long layoutPageTemplateEntryId)
 		throws RemoteException {
 
@@ -238,7 +238,7 @@ public class AssetDisplayPageEntryServiceSoap {
 			int returnValue =
 				AssetDisplayPageEntryServiceUtil.
 					getAssetDisplayPageEntriesCount(
-						classNameId, defaultTemplate,
+						classNameId, classTypeId, defaultTemplate,
 						layoutPageTemplateEntryId);
 
 			return returnValue;

@@ -77,7 +77,7 @@ public interface AssetDisplayPageEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetDisplayPageEntry> getAssetDisplayPageEntries(
-		long classNameId, boolean defaultTemplate,
+		long classNameId, long classTypeId, boolean defaultTemplate,
 		long layoutPageTemplateEntryId, int start, int end,
 		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
@@ -94,7 +94,7 @@ public interface AssetDisplayPageEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetDisplayPageEntriesCount(
-		long classNameId, boolean defaultTemplate,
+		long classNameId, long classTypeId, boolean defaultTemplate,
 		long layoutPageTemplateEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

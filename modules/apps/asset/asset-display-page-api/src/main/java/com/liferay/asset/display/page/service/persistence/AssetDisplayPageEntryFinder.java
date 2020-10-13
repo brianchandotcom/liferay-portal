@@ -24,13 +24,13 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AssetDisplayPageEntryFinder {
 
 	public int countByCNI_DT_LPTEI(
-		long classNameId, boolean defaultTemplate,
+		long classNameId, long classTypeId, boolean defaultTemplate,
 		long layoutPageTemplateEntryId);
 
 	public java.util.List
 		<com.liferay.asset.display.page.model.AssetDisplayPageEntry>
 			findByCNI_DT_LPTEI(
-				long classNameId, boolean defaultTemplate,
+				long classNameId, long classTypeId, boolean defaultTemplate,
 				long layoutPageTemplateEntryId, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.asset.display.page.model.AssetDisplayPageEntry>

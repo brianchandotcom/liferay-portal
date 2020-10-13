@@ -217,7 +217,7 @@ public class AssetDisplayPageEntryServiceHttp {
 	public static java.util.List
 		<com.liferay.asset.display.page.model.AssetDisplayPageEntry>
 			getAssetDisplayPageEntries(
-				HttpPrincipal httpPrincipal, long classNameId,
+				HttpPrincipal httpPrincipal, long classNameId, long classTypeId,
 				boolean defaultTemplate, long layoutPageTemplateEntryId,
 				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
@@ -231,7 +231,7 @@ public class AssetDisplayPageEntryServiceHttp {
 				_getAssetDisplayPageEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classNameId, defaultTemplate,
+				methodKey, classNameId, classTypeId, defaultTemplate,
 				layoutPageTemplateEntryId, start, end, orderByComparator);
 
 			Object returnObj = null;
@@ -337,8 +337,8 @@ public class AssetDisplayPageEntryServiceHttp {
 	}
 
 	public static int getAssetDisplayPageEntriesCount(
-		HttpPrincipal httpPrincipal, long classNameId, boolean defaultTemplate,
-		long layoutPageTemplateEntryId) {
+		HttpPrincipal httpPrincipal, long classNameId, long classTypeId,
+		boolean defaultTemplate, long layoutPageTemplateEntryId) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -347,7 +347,7 @@ public class AssetDisplayPageEntryServiceHttp {
 				_getAssetDisplayPageEntriesCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classNameId, defaultTemplate,
+				methodKey, classNameId, classTypeId, defaultTemplate,
 				layoutPageTemplateEntryId);
 
 			Object returnObj = null;
@@ -468,8 +468,8 @@ public class AssetDisplayPageEntryServiceHttp {
 		new Class[] {long.class, long.class, long.class};
 	private static final Class<?>[] _getAssetDisplayPageEntriesParameterTypes4 =
 		new Class[] {
-			long.class, boolean.class, long.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
+			long.class, long.class, boolean.class, long.class, int.class,
+			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
 		_getAssetDisplayPageEntriesByLayoutPageTemplateEntryIdParameterTypes5 =
@@ -482,7 +482,7 @@ public class AssetDisplayPageEntryServiceHttp {
 			};
 	private static final Class<?>[]
 		_getAssetDisplayPageEntriesCountParameterTypes7 = new Class[] {
-			long.class, boolean.class, long.class
+			long.class, long.class, boolean.class, long.class
 		};
 	private static final Class<?>[]
 		_getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryIdParameterTypes8 =

@@ -49,7 +49,7 @@ public interface DDMFormFieldTypeSettings {
 	)
 	public String dataType();
 
-	@DDMFormField(label = "%field-id", required = true)
+	@DDMFormField(label = "%field-name", required = true)
 	public String name();
 
 	@DDMFormField(required = true, visibilityExpression = "FALSE")

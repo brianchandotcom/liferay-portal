@@ -143,7 +143,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 								%>
 
 								<liferay-ui:search-container-column-text>
-									<clay:vertical-card
+									<clay:vertical-card-v2
 										verticalCard="<%= new SelectLayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse) %>"
 									/>
 								</liferay-ui:search-container-column-text>

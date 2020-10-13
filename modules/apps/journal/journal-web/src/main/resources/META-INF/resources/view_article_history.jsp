@@ -120,7 +120,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<clay:vertical-card
+								<clay:vertical-card-v2
 									verticalCard="<%= new JournalArticleHistoryVerticalCard(articleVersion, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper) %>"
 								/>
 							</liferay-ui:search-container-column-text>

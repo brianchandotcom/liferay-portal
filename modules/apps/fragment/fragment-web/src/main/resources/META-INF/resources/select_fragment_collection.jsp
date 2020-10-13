@@ -39,7 +39,7 @@ SelectFragmentCollectionDisplayContext selectFragmentCollectionDisplayContext = 
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:horizontal-card
+				<clay:horizontal-card-v2
 					horizontalCard="<%= new FragmentCollectionHorizontalCard(fragmentCollection) %>"
 				/>
 			</liferay-ui:search-container-column-text>

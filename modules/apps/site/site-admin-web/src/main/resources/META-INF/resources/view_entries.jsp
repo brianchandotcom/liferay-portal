@@ -97,7 +97,7 @@
 				%>
 
 				<liferay-ui:search-container-column-text>
-					<clay:vertical-card
+					<clay:vertical-card-v2
 						verticalCard="<%= new SiteVerticalCard(curGroup, liferayPortletRequest, liferayPortletResponse, searchContainer.getRowChecker(), siteAdminDisplayContext) %>"
 					/>
 				</liferay-ui:search-container-column-text>

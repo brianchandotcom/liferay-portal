@@ -322,7 +322,7 @@
 		id="image-card-block"
 		md="6"
 	>
-		<clay:user-card
+		<clay:user-card-v2
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			name="User Name"
 			subtitle="Latest Action"
@@ -334,7 +334,7 @@
 		id="image-card-icon-block"
 		md="6"
 	>
-		<clay:user-card
+		<clay:user-card-v2
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			disabled="<%= true %>"
 			imageAlt="thumbnail"
@@ -354,7 +354,7 @@
 		id="image-card-block"
 		md="6"
 	>
-		<clay:horizontal-card
+		<clay:horizontal-card-v2
 			title="ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual"
 		/>
 	</clay:col>
@@ -363,7 +363,7 @@
 		id="image-card-icon-block"
 		md="6"
 	>
-		<clay:horizontal-card
+		<clay:horizontal-card-v2
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"

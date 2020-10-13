@@ -84,7 +84,7 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
+						<clay:vertical-card-v2
 							verticalCard="<%= new SelectThemeVerticalCard(theme, renderRequest) %>"
 						/>
 					</liferay-ui:search-container-column-text>

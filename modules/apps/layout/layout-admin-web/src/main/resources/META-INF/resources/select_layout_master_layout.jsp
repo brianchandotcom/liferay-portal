@@ -48,7 +48,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 						%>
 
 							<li class="card-page-item col-md-4 col-sm-6">
-								<clay:vertical-card
+								<clay:vertical-card-v2
 									verticalCard="<%= new SelectLayoutMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
 								/>
 							</li>

@@ -75,7 +75,7 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:user-card
+						<clay:user-card-v2
 							userCard="<%= new SelectUserUserCard(user, renderRequest, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>

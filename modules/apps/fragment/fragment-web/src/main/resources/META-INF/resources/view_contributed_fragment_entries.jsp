@@ -39,7 +39,7 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
+				<clay:vertical-card-v2
 					verticalCard="<%= new ContributedFragmentEntryVerticalCard(fragmentEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>

@@ -70,12 +70,12 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 					<liferay-ui:search-container-column-text>
 						<c:choose>
 							<c:when test="<%= itemDescriptor.isCompact() %>">
-								<clay:horizontal-card
+								<clay:horizontal-card-v2
 									horizontalCard="<%= new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker()) %>"
 								/>
 							</c:when>
 							<c:otherwise>
-								<clay:vertical-card
+								<clay:vertical-card-v2
 									verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker()) %>"
 								/>
 							</c:otherwise>

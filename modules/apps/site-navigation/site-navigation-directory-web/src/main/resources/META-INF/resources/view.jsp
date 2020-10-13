@@ -49,7 +49,7 @@
 											%>
 
 											<liferay-ui:search-container-column-text>
-												<clay:vertical-card
+												<clay:vertical-card-v2
 													verticalCard="<%= new GroupVerticalCard(childGroup, renderRequest) %>"
 												/>
 											</liferay-ui:search-container-column-text>

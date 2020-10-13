@@ -54,11 +54,11 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"name", "visibilityExpression",
-								"predefinedValue", "validation",
-								"fieldNamespace", "indexType", "localizable",
-								"readOnly", "dataType", "type", "showLabel",
-								"repeatable"
+								"name", "fieldReference",
+								"visibilityExpression", "predefinedValue",
+								"validation", "fieldNamespace", "indexType",
+								"localizable", "readOnly", "dataType", "type",
+								"showLabel", "repeatable"
 							}
 						)
 					}

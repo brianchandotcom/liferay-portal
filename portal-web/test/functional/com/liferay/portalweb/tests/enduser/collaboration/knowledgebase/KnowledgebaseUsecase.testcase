@@ -511,13 +511,12 @@ definition {
 
 	@priority = "4"
 	test SearchChildArticleViaSearchPortletPG {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBArticle.addChildArticleViaKBAdmin(
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbChildArticleContent = "Knowledge Base Child Article Content",
 			kbChildArticleTitle = "Knowledge Base Child Article Title");
@@ -1054,57 +1053,57 @@ definition {
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.addCP(
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1 Description",
 			kbFolderName = "KB Folder 1");
 
-		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder 1",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Folder 1 Content 1",
 			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1");
 
-		KBArticle.addChildArticleViaKBAdmin(
+		JSONKnowledgeBase.addkBChildArticle(
+			folderName = "KB Folder 1",
+			groupName = "Guest",
 			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1",
 			kbChildArticleContent = "Knowledge Base Article Folder 1 Content 1 Child",
 			kbChildArticleTitle = "Knowledge Base Article Folder 1 Title 1 Child");
 
-		KBArticle.gotoViaKBAdminCP(
-			hasChildArticle = "true",
-			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1");
+		JSONKnowledgeBase.addkBGrandchildArticle(
+			folderName = "KB Folder 1",
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1",
+			kbChildArticleTitle = "Knowledge Base Article Folder 1 Title 1 Child",
+			kbGrandchildArticleContent = "Knowledge Base Article Folder 1 Content 1 Grandchild",
+			kbGrandchildArticleTitle = "Knowledge Base Article Folder 1 Title 1 Grandchild");
 
-		KBArticle.addChildArticleViaKBAdmin(
-			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1 Child",
-			kbChildArticleContent = "Knowledge Base Article Folder 1 Content 1 Grandchild",
-			kbChildArticleTitle = "Knowledge Base Article Folder 1 Title 1 Grandchild");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.addCP(
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
 			kbFolderDescription = "KB Folder 2 Description",
 			kbFolderName = "KB Folder 2");
 
-		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder 2",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Folder 2 Content 1",
 			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1");
 
-		KBArticle.addChildArticleViaKBAdmin(
+		JSONKnowledgeBase.addkBChildArticle(
+			folderName = "KB Folder 2",
+			groupName = "Guest",
 			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1",
 			kbChildArticleContent = "Knowledge Base Article Folder 2 Content 1 Child",
 			kbChildArticleTitle = "Knowledge Base Article Folder 2 Title 1 Child");
 
-		KBArticle.gotoViaKBAdminCP(
-			hasChildArticle = "true",
-			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1");
-
-		KBArticle.addChildArticleViaKBAdmin(
+		JSONKnowledgeBase.addkBGrandchildArticle(
+			folderName = "KB Folder 2",
+			groupName = "Guest",
 			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1",
-			kbChildArticleContent = "Knowledge Base Article Folder 2 Content 1 Grandchild",
-			kbChildArticleTitle = "Knowledge Base Article Folder 2 Title 1 Grandchild");
+			kbChildArticleTitle = "Knowledge Base Article Folder 2 Title 1 Child",
+			kbGrandchildArticleContent = "Knowledge Base Article Folder 2 Content 1 Grandchild",
+			kbGrandchildArticleTitle = "Knowledge Base Article Folder 2 Title 1 Grandchild");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 

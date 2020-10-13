@@ -296,8 +296,8 @@ definition {
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentKBFolderId=0 \
-				-d start=0 \
-				-d end=1
+				-d "start=-1" \
+				-d "end=-1"
 		''';
 
 		var kbFolderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['kbFolderId']");

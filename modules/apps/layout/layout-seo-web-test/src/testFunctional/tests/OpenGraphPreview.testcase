@@ -116,8 +116,8 @@ definition {
 			fieldLabel = "HTML Title",
 			text = "Page HTML Title");
 
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
+		PortletEntry.inputText(
+			fieldLabel = "Description",
 			text = "Page Description");
 
 		Button.clickSave();
@@ -434,8 +434,8 @@ definition {
 			fieldLabel = "HTML Title",
 			text = "Page HTML Title");
 
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
+		PortletEntry.inputText(
+			fieldLabel = "Description",
 			text = "Page Description");
 
 		OpenGraph.changeLocale(
@@ -446,8 +446,8 @@ definition {
 			fieldLabel = "HTML Title",
 			text = "Título de la Prueba");
 
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
+		PortletEntry.inputText(
+			fieldLabel = "Description",
 			text = "Descripción de la Prueba");
 
 		Page.viewPreview(
@@ -467,8 +467,8 @@ definition {
 			fieldLabel = "HTML Title",
 			text = "テストhtmlタイトル");
 
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
+		PortletEntry.inputText(
+			fieldLabel = "Description",
 			text = "テスト記述");
 
 		Page.viewPreview(
@@ -551,8 +551,8 @@ definition {
 			fieldLabel = "HTML Title",
 			text = "Page HTML Title");
 
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
+		PortletEntry.inputText(
+			fieldLabel = "Description",
 			text = "Page Description");
 
 		OpenGraph.changeLocale(
@@ -563,8 +563,8 @@ definition {
 			fieldLabel = "HTML Title",
 			text = "Tテストhtmlタイトル");
 
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
+		PortletEntry.inputText(
+			fieldLabel = "Description",
 			text = "テスト記述");
 
 		Button.clickSave();

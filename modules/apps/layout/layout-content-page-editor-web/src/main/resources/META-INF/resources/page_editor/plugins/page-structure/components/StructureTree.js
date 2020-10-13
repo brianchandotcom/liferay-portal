@@ -18,6 +18,7 @@ import React, {useCallback, useMemo, useState} from 'react';
 
 import {useActiveItemId} from '../../../app/components/Controls';
 import hasDropZoneChild from '../../../app/components/layout-data-items/hasDropZoneChild';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../app/config/constants/editableTypes';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
@@ -179,15 +180,21 @@ function visit(
 		icon = fragmentEntryLink.icon || icon;
 
 		const editables =
-			fragmentEntryLink.editableValues[
-				EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-			] || {};
+			{
+				...fragmentEntryLink.editableValues[
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+				],
+				...fragmentEntryLink.editableValues[
+					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+				],
+			} || {};
 
 		const editableTypes = fragmentEntryLink.editableTypes;
 
 		Object.keys(editables).forEach((editableId) => {
 			const childId = `${item.config.fragmentEntryLinkId}-${editableId}`;
-			const type = editableTypes[editableId] || EDITABLE_TYPES.text;
+			const type =
+				editableTypes[editableId] || EDITABLE_TYPES.backgroundImage;
 
 			children.push({
 				activable:

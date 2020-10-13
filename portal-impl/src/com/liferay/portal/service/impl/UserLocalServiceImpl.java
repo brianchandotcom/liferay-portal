@@ -3541,7 +3541,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		try {
 			for (long groupId : groupIds) {
-				Group group = groupLocalService.fetchGroup(groupId);
+				Group group = groupPersistence.fetchByPrimaryKey(groupId);
 
 				if (group == null) {
 					continue;

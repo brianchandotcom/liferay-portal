@@ -18,7 +18,6 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -105,8 +104,6 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commerceOrder.getGroupId());
-
-		_cpInstanceService.getCPInstance(cartItem.getSkuId());
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
 			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
@@ -201,9 +198,6 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
-
-	@Reference
-	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private CartItemDTOConverter _orderItemDTOConverter;

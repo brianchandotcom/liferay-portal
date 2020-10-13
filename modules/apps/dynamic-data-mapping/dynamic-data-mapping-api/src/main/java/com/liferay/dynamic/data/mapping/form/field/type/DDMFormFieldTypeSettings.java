@@ -33,7 +33,10 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(
-							size = 12, value = {"dataType", "name", "type"}
+							size = 12,
+							value = {
+								"dataType", "name", "fieldReference", "type"
+							}
 						)
 					}
 				)
@@ -48,6 +51,9 @@ public interface DDMFormFieldTypeSettings {
 		visibilityExpression = "FALSE"
 	)
 	public String dataType();
+
+	@DDMFormField(label = "%field-reference")
+	public String fieldReference();
 
 	@DDMFormField(label = "%field-name", required = true)
 	public String name();

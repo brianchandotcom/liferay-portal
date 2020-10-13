@@ -224,6 +224,7 @@ export default () => {
 					'button.close',
 					'.display-settings',
 					'.dropdown-menu',
+					'.modal.show',
 					'.nav-underline',
 					'#ddm-actionable-fields-container'
 				)

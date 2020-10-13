@@ -3540,16 +3540,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Map<Long, Integer> counts = new HashMap<>();
 
 		try {
-			Set<Serializable> groupIdSet = new HashSet<>();
-
 			for (long groupId : groupIds) {
-				groupIdSet.add(groupId);
-			}
+				Group group = groupLocalService.fetchGroup(groupId);
 
-			Map<Serializable, Group> groups =
-				groupPersistence.fetchByPrimaryKeys(groupIdSet);
+				if (group == null) {
+					continue;
+				}
 
-			for (Group group : groups.values()) {
 				int count = 0;
 
 				if (group.isOrganization()) {
@@ -3560,11 +3557,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					count = getUserGroupUsersCount(group.getClassPK(), status);
 				}
 				else {
-					count = getGroupUsersCount(group.getGroupId(), status);
+					count = getGroupUsersCount(groupId, status);
 				}
 
 				if (count > 0) {
-					counts.put(group.getGroupId(), count);
+					counts.put(groupId, count);
 				}
 			}
 		}

@@ -618,23 +618,6 @@
 				root: PATH_JAVASCRIPT + '/liferay/',
 			},
 
-			misc: {
-				base:
-					Liferay.ThemeDisplay.getCDNBaseURL() +
-					PATH_JAVASCRIPT +
-					'/misc/',
-				combine: COMBINE,
-				modules: {
-					swfobject: {
-						path: 'swfobject.js',
-					},
-					swfupload: {
-						path: 'swfupload/swfupload.js',
-					},
-				},
-				root: PATH_JAVASCRIPT + '/misc/',
-			},
-
 			portal: {
 				base:
 					Liferay.ThemeDisplay.getCDNBaseURL() +

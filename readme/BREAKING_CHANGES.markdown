@@ -125,3 +125,29 @@ This change was made to align with [Adobe dropping support for Flash](https://ww
 in December 31, 2020 and browsers removing Flash support in upcoming versions.
 
 ---------------------------------------
+
+### The AUI module `swfobject` is no longer available
+- **Date:** 2020-Oct-13
+- **JIRA Ticket:** [LPS-121736](https://issues.liferay.com/browse/LPS-121736)
+
+#### What changed?
+
+The AUI module `swfobject` that provided a way to load the library SWFObject
+commonly used to embed Adobe Flash content has been removed.
+
+#### Who is affected?
+
+This affects people that were requiring the AUI `swfobject` module as a way to
+make the library available globally.
+
+#### How should I update my code?
+
+If you still need to embed Adobe Flash content, you can inject the SWFObject
+library directly in your application using any of the available mechanisms.
+
+#### Why was this change made?
+
+This change was made to align with [Adobe dropping support for Flash](https://www.adobe.com/products/flashplayer/end-of-life.html)
+in December 31, 2020 and browsers removing Flash support in upcoming versions.
+
+---------------------------------------

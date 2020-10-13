@@ -176,10 +176,6 @@ AUI.add(
 
 		var UPLOADER_TYPE = A.Uploader.TYPE || 'none';
 
-		var URL_SWF_UPLOADER =
-			themeDisplay.getPathContext() +
-			'/aui/uploader/assets/flashuploader.swf';
-
 		/**
 		 * OPTIONS
 		 *
@@ -1163,10 +1159,6 @@ AUI.add(
 						},
 						selectFilesButton: instance._selectFilesButton,
 						simLimit: instance.get('simultaneousUploads'),
-						swfURL: Liferay.Util.addParams(
-							timestampParam,
-							URL_SWF_UPLOADER
-						),
 						uploadURL: Liferay.Util.addParams(
 							timestampParam,
 							instance.get('uploadFile')
@@ -1469,8 +1461,7 @@ AUI.add(
 					if (
 						useFallback ||
 						UPLOADER_TYPE == 'none' ||
-						(UPLOADER_TYPE == 'flash' &&
-							!A.SWFDetect.isFlashVersionAtLeast(10, 1))
+						UPLOADER_TYPE == 'flash'
 					) {
 						if (fallback) {
 							fallback.show();

@@ -23,7 +23,6 @@ AUI().use(
 	'liferay-poller',
 	'node-focusmanager',
 	'stylesheet',
-	'swfobject',
 	function (A) {
 		var KeyMap = A.Event.KeyMap;
 		var Lang = A.Lang;

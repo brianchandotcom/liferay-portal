@@ -123,7 +123,9 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 							getCheckoutURL(renderRequest));
 					}
 				}
-				else if (!isOrderApproved(commerceOrder)) {
+				else if (commerceOrder.isOpen() &&
+						 !isOrderApproved(commerceOrder)) {
+
 					httpServletResponse.sendRedirect(
 						getOrderDetailsURL(renderRequest));
 				}

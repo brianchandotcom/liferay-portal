@@ -238,31 +238,6 @@ describe('Sidebar', () => {
 		);
 	});
 
-	it('emits the fieldDeleted event when the delete field option is clicked on the sidebar settings', () => {
-		component = new SidebarWithContextMock({
-			...defaultSidebarConfig,
-			editingLanguageId: 'en_US',
-			focusedField: mockFieldType,
-			portletNamespace: 'portletNamespace',
-		});
-
-		const data = {
-			item: {
-				settingsItem: 'delete-field',
-			},
-		};
-		const spy = jest.spyOn(component, 'emit');
-
-		component.open();
-		component._handleElementSettingsClicked({data});
-
-		expect(spy).toHaveBeenCalled();
-		expect(component.context.dispatch).toHaveBeenCalledWith(
-			'fieldDeleted',
-			expect.anything()
-		);
-	});
-
 	describe('fieldChangesCanceled(state, event)', () => {
 		it('emits event when the cancel field chages option is clicked on the sidebar settings', () => {
 			component = new SidebarWithContextMock({

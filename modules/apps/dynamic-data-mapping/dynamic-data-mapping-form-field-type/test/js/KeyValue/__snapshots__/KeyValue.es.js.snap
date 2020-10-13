@@ -28,7 +28,7 @@ exports[`KeyValue has a helptext 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-id
+        field-name
         :
       </label>
       <input
@@ -89,7 +89,7 @@ exports[`KeyValue has a label 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-id
+        field-name
         :
       </label>
       <input
@@ -140,7 +140,7 @@ exports[`KeyValue has a predefined Value 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-id
+        field-name
         :
       </label>
       <input
@@ -183,7 +183,7 @@ exports[`KeyValue has a value 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-id
+        field-name
         :
       </label>
       <input
@@ -226,7 +226,7 @@ exports[`KeyValue has an id 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-id
+        field-name
         :
       </label>
       <input
@@ -270,7 +270,7 @@ exports[`KeyValue is not editable 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-id
+        field-name
         :
       </label>
       <input
@@ -313,7 +313,7 @@ exports[`KeyValue is not required 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-id
+        field-name
         :
       </label>
       <input
@@ -361,7 +361,7 @@ exports[`KeyValue renders Label if showLabel is true 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-id
+        field-name
         :
       </label>
       <input
@@ -411,7 +411,7 @@ exports[`KeyValue renders component with a key 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-id
+        field-name
         :
       </label>
       <input

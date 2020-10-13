@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"lang.type=" + TemplateConstants.LANG_TYPE_FTL,
-		"type=" + TemplateContextContributor.TYPE_GLOBAL
+		"type=" + TemplateContextContributor.TYPE_THEME
 	},
 	service = TemplateContextContributor.class
 )

@@ -179,13 +179,15 @@
 
 .header-toolbar-default {
 	background-color: $header-toolbar-default-bg;
-	border: $header-toolbar-default-border-width solid $header-toolbar-default-border;
+	border: $header-toolbar-default-border-width solid
+		$header-toolbar-default-border;
 
 	.toolbar-group:first-child {
 		.toolbar-group-content,
 		.toolbar-group-field {
 			&:first-child {
-				border-right: $header-toolbar-default-border-width solid $header-toolbar-default-border;
+				border-right: $header-toolbar-default-border-width solid
+					$header-toolbar-default-border;
 			}
 		}
 	}
@@ -240,7 +242,12 @@
 				line-height: $header-toolbar-desktop-height;
 			}
 
-			h1, h2, h3, h4, h5, h6 {
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
 				display: inline;
 				margin: 0;
 			}
@@ -256,7 +263,9 @@
 			.toolbar-group-content,
 			.toolbar-group-field {
 				&:nth-of-type(2) {
-					border-left: $header-toolbar-default-divider-width solid $header-toolbar-default-divider;
+					border-left: $header-toolbar-default-divider-width
+						solid
+						$header-toolbar-default-divider;
 				}
 			}
 		}

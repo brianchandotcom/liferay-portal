@@ -15,10 +15,14 @@ $sticker-gutter-width: $grid-gutter-width / 2 !default;
 $sticker-monospaced-size: $icon-monospaced-size !default; // 32px
 
 $sticker-lg-font-size: $label-lg-font-size !default;
-$sticker-lg-monospaced-size: ceil($sticker-monospaced-size * 1.375) !default; // 44px
+$sticker-lg-monospaced-size: ceil(
+	$sticker-monospaced-size * 1.375
+) !default; // 44px
 
 $sticker-sm-font-size: $label-sm-font-size !default;
-$sticker-sm-monospaced-size: ceil($sticker-monospaced-size * 0.6875) !default; // 22px
+$sticker-sm-monospaced-size: ceil(
+	$sticker-monospaced-size * 0.6875
+) !default; // 22px
 
 // Skin
 

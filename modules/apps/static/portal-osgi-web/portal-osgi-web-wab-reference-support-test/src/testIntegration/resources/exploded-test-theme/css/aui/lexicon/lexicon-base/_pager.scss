@@ -12,7 +12,8 @@
 			border: $pager-border-width solid $pager-border;
 			color: $pager-color;
 			line-height: $pager-item-height;
-			padding: $pager-padding-base-vertical $pager-padding-base-horizontal;
+			padding: $pager-padding-base-vertical
+				$pager-padding-base-horizontal;
 
 			&:focus,
 			&:hover {
@@ -26,7 +27,8 @@
 			border: $pager-border-width solid $pager-border;
 			border-radius: $pager-border-radius;
 			line-height: $pager-item-height;
-			padding: $pager-padding-base-vertical $pager-padding-base-horizontal;
+			padding: $pager-padding-base-vertical
+				$pager-padding-base-horizontal;
 		}
 
 		.disabled {
@@ -47,7 +49,8 @@
 			> span {
 				font-size: $pager-lg-font-size;
 				line-height: $pager-lg-item-height;
-				padding: $pager-lg-padding-vertical $pager-lg-padding-horizontal;
+				padding: $pager-lg-padding-vertical
+					$pager-lg-padding-horizontal;
 			}
 		}
 	}
@@ -58,7 +61,8 @@
 			> span {
 				font-size: $pager-sm-font-size;
 				line-height: $pager-sm-item-height;
-				padding: $pager-sm-padding-vertical $pager-sm-padding-horizontal;
+				padding: $pager-sm-padding-vertical
+					$pager-sm-padding-horizontal;
 			}
 		}
 	}

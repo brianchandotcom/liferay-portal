@@ -29,7 +29,8 @@ $tooltip-box-shadow-spread: $box-shadow-default-spread !default; // 1px
 
 $tooltip-box-shadow-bg: $box-shadow-default-bg !default; // rgba(0, 0, 0, 0.2)
 
-$tooltip-box-shadow: $tooltip-box-shadow-x $tooltip-box-shadow-y $tooltip-box-shadow-blur $tooltip-box-shadow-spread $tooltip-box-shadow-bg !default;
+$tooltip-box-shadow: $tooltip-box-shadow-x $tooltip-box-shadow-y
+	$tooltip-box-shadow-blur $tooltip-box-shadow-spread $tooltip-box-shadow-bg !default;
 
-$tooltip-bg: #0E191D !default;
+$tooltip-bg: #0e191d !default;
 $tooltip-opacity: 1 !default;

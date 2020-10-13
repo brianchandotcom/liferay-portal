@@ -52,14 +52,14 @@
 		}
 	}
 
-	> [class^="icon-"],
-	> [class*=" icon-"],
+	> [class^='icon-'],
+	> [class*=' icon-'],
 	> .user-icon {
 		display: none;
 	}
 
-	> [class^="icon-"],
-	> [class*=" icon-"] {
+	> [class^='icon-'],
+	> [class*=' icon-'] {
 		@media (min-width: $grid-float-breakpoint) {
 			display: inline;
 		}
@@ -79,8 +79,8 @@
 		@include monospace(48px);
 	}
 
-	[class^="icon-"],
-	[class*=" icon-"] {
+	[class^='icon-'],
+	[class*=' icon-'] {
 		font-size: 28px;
 
 		@media (min-width: $grid-float-breakpoint) {
@@ -142,8 +142,12 @@
 
 // Deprecated list-group-card as of v1.0.9 and will be removed in 2.0.0.
 
-.list-group-item .checkbox input[type="checkbox"]:checked + .card {
-	@include color-dropdown-toggle-link($list-group-item-active-dropdown-toggle-color, $list-group-item-active-dropdown-toggle-color, $list-group-item-active-dropdown-toggle-color);
+.list-group-item .checkbox input[type='checkbox']:checked + .card {
+	@include color-dropdown-toggle-link(
+		$list-group-item-active-dropdown-toggle-color,
+		$list-group-item-active-dropdown-toggle-color,
+		$list-group-item-active-dropdown-toggle-color
+	);
 
 	.card-col-content a {
 		color: $list-group-active-color;
@@ -151,7 +155,12 @@
 }
 
 .list-group-card {
-	h1, h2, h3, h4, h5, h6 {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
 		margin-bottom: 5px;
 		margin-top: 0;
 
@@ -184,7 +193,7 @@
 		}
 	}
 
-	.checkbox input[type="checkbox"] {
+	.checkbox input[type='checkbox'] {
 		&:checked {
 			+ .card {
 				background-color: $list-group-card-active-bg;
@@ -214,8 +223,8 @@
 			font-size: 3em;
 		}
 
-		> [class^="icon-"],
-		> [class*=" icon-"],
+		> [class^='icon-'],
+		> [class*=' icon-'],
 		> .user-icon {
 			display: block;
 
@@ -258,7 +267,7 @@
 // removed in v2.0.0.
 
 .list-group-card-checkbox-hidden-xs {
-	.checkbox input[type="checkbox"] {
+	.checkbox input[type='checkbox'] {
 		display: none;
 
 		@media (min-width: $grid-float-breakpoint) {
@@ -283,14 +292,14 @@
 				}
 			}
 
-			> [class^="icon-"],
-			> [class*=" icon-"],
+			> [class^='icon-'],
+			> [class*=' icon-'],
 			> .user-icon {
 				display: none;
 			}
 
-			> [class^="icon-"],
-			> [class*=" icon-"] {
+			> [class^='icon-'],
+			> [class*=' icon-'] {
 				@media (min-width: $grid-float-breakpoint) {
 					display: block;
 				}

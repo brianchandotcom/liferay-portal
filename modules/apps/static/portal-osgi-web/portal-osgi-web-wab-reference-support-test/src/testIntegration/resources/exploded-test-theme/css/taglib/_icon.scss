@@ -1,16 +1,20 @@
 a.taglib-icon {
-	&, &:focus, &:hover {
+	&,
+	&:focus,
+	&:hover {
 		text-decoration: none;
 	}
 
-	&:focus, &:hover {
+	&:focus,
+	&:hover {
 		.taglib-text {
 			text-decoration: underline;
 		}
 	}
 
 	&.btn {
-		&:focus, &:hover {
+		&:focus,
+		&:hover {
 			.taglib-text {
 				text-decoration: none;
 			}

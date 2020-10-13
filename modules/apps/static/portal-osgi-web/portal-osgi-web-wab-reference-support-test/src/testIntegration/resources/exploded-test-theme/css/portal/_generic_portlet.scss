@@ -3,13 +3,16 @@
 }
 
 .lfr-table {
-	> tbody, > thead, > tfoot {
+	> tbody,
+	> thead,
+	> tfoot {
 		> tr > th {
 			font-weight: bold;
 		}
 	}
 }
 
-.lfr-checkbox-preselected, .lfr-configurator-visibility {
+.lfr-checkbox-preselected,
+.lfr-configurator-visibility {
 	opacity: 0.5;
 }

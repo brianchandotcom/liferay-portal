@@ -1,25 +1,21 @@
-@mixin set-portlet-topper-width($size: "sm", $i: 6) {
-	@if $size == "lg" {
-		$list: ".col-lg-#{$i}";
+@mixin set-portlet-topper-width($size: 'sm', $i: 6) {
+	@if $size == 'lg' {
+		$list: '.col-lg-#{$i}';
 
 		@for $i from (7) through $grid-columns {
-			$list: "#{$list}, .col-lg-#{$i}";
+			$list: '#{$list}, .col-lg-#{$i}';
 		}
-	}
-
-	@else if $size == "md" {
-		$list: ".col-md-#{$i}";
+	} @else if $size == 'md' {
+		$list: '.col-md-#{$i}';
 
 		@for $i from (7) through $grid-columns {
-			$list: "#{$list}, .col-md-#{$i}";
+			$list: '#{$list}, .col-md-#{$i}';
 		}
-	}
-
-	@else {
-		$list: ".col-xs-#{$i}, .col-sm-#{$i}";
+	} @else {
+		$list: '.col-xs-#{$i}, .col-sm-#{$i}';
 
 		@for $i from (7) through $grid-columns {
-			$list: "#{$list}, .col-xs-#{$i}, .col-sm-#{$i}";
+			$list: '#{$list}, .col-xs-#{$i}, .col-sm-#{$i}';
 		}
 	}
 
@@ -35,11 +31,11 @@
 }
 
 @include media-query(md) {
-	@include set-portlet-topper-width("md");
+	@include set-portlet-topper-width('md');
 }
 
 @include media-query(lg) {
-	@include set-portlet-topper-width("lg");
+	@include set-portlet-topper-width('lg');
 }
 
 .portlet {
@@ -71,7 +67,8 @@
 }
 
 .portlet {
-	&:hover, &.focus {
+	&:hover,
+	&.focus {
 		> .portlet-content-editable {
 			@include media-query(sm) {
 				border-color: $portlet-topper-border;
@@ -145,12 +142,15 @@
 	margin-top: 0;
 	padding-left: 0;
 
-	> a, > span > a, .lfr-icon-menu > a {
+	> a,
+	> span > a,
+	.lfr-icon-menu > a {
 		color: $portlet-topper-link-color;
 	}
 
 	> a {
-		&:focus, &:hover {
+		&:focus,
+		&:hover {
 			text-decoration: none;
 		}
 	}

@@ -24,7 +24,7 @@
 		border-top-left-radius: $popover-border-radius - 1;
 		border-top-right-radius: $popover-border-radius - 1;
 
-		@if not ($popover-title-color == $text-color) {
+		@if not($popover-title-color == $text-color) {
 			color: $popover-title-color;
 		}
 
@@ -65,7 +65,9 @@
 					border-right-width: 0;
 					bottom: -$popover-arrow-width - $popover-box-shadow-y;
 					content: '';
-					right: -$popover-box-shadow-x - 2 - $popover-box-shadow-spread;
+					right: -$popover-box-shadow-x -
+						2 -
+						$popover-box-shadow-spread;
 				}
 			}
 
@@ -75,7 +77,9 @@
 					border-right-color: $popover-box-shadow-bg;
 					bottom: -$popover-arrow-width - $popover-box-shadow-y;
 					content: '';
-					left: $popover-box-shadow-x - 2 - $popover-box-shadow-spread;
+					left: $popover-box-shadow-x -
+						2 -
+						$popover-box-shadow-spread;
 				}
 			}
 
@@ -83,7 +87,9 @@
 				@if ($popover-box-shadow-y > 1) {
 					border-bottom-width: 0;
 					border-top-color: $popover-box-shadow-bg;
-					bottom: -$popover-box-shadow-y - 2 - $popover-box-shadow-spread;
+					bottom: -$popover-box-shadow-y -
+						2 -
+						$popover-box-shadow-spread;
 					content: '';
 					margin-left: -$popover-arrow-width + $popover-box-shadow-x;
 				}

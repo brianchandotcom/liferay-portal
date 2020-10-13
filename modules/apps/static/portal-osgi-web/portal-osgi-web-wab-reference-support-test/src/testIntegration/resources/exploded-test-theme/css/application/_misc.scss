@@ -1,14 +1,14 @@
 .app-view-drop-active {
-	background-color: #00A2EA;
+	background-color: #00a2ea;
 	font-weight: bold;
 
 	.category-portlets & {
-		background-color: #00A2EA;
-		color: #FFF;
+		background-color: #00a2ea;
+		color: #fff;
 	}
 }
 
-.basecelleditor [class~="form-validator-message"] {
+.basecelleditor [class~='form-validator-message'] {
 	clip: rect(auto auto auto auto);
 	width: auto;
 }
@@ -27,7 +27,7 @@
 }
 
 .lfr-asset-anchor:before {
-	content: "";
+	content: '';
 	display: block;
 	height: 64px;
 	margin: -64px 0 0;
@@ -41,8 +41,9 @@
 }
 
 .lfr-page-layouts {
-	input[type="radio"]:checked + .card-horizontal {
-		box-shadow: inset 0 0 0 $card-horizontal-on-border-width $card-horizontal-on-border;
+	input[type='radio']:checked + .card-horizontal {
+		box-shadow: inset 0 0 0 $card-horizontal-on-border-width
+			$card-horizontal-on-border;
 	}
 
 	.lfr-layout-template {

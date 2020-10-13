@@ -11,19 +11,29 @@ $management-bar-border-bottom-width: 1px !default;
 $management-bar-border-left-width: 1px !default;
 $management-bar-border-right-width: 1px !default;
 $management-bar-border-top-width: 1px !default;
-$management-bar-border-width: $management-bar-border-top-width $management-bar-border-right-width $management-bar-border-bottom-width $management-bar-border-left-width !default;
+$management-bar-border-width: $management-bar-border-top-width
+	$management-bar-border-right-width $management-bar-border-bottom-width
+	$management-bar-border-left-width !default;
 
 $management-bar-height: $navbar-height !default;
 
 $management-bar-margin-bottom: $navbar-margin-bottom !default;
 
 $management-bar-padding-horizontal: $navbar-padding-horizontal !default;
-$management-bar-padding-vertical: ($management-bar-height - $line-height-computed - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2 !default;
+$management-bar-padding-vertical: (
+		$management-bar-height - $line-height-computed -
+			$management-bar-border-bottom-width -
+			$management-bar-border-top-width
+	) / 2 !default;
 
 $management-bar-btn-padding-horizontal: $management-bar-padding-horizontal !default;
-$management-bar-btn-padding-vertical: ($management-bar-height - $management-bar-border-bottom-width - $management-bar-border-top-width - $icon-monospaced-size - 2) / 2 !default;
+$management-bar-btn-padding-vertical: (
+		$management-bar-height - $management-bar-border-bottom-width -
+			$management-bar-border-top-width - $icon-monospaced-size - 2
+	) / 2 !default;
 
-$management-bar-toggle-height: 40px + $management-bar-border-bottom-width + $management-bar-border-top-width !default;
+$management-bar-toggle-height: 40px + $management-bar-border-bottom-width +
+	$management-bar-border-top-width !default;
 
 // Skin
 
@@ -52,8 +62,14 @@ $management-bar-default-btn-default-bg: $management-bar-default-bg !default;
 $management-bar-default-btn-default-border: $management-bar-default-border !default;
 $management-bar-default-btn-default-color: $management-bar-default-link-color !default;
 
-$management-bar-default-btn-default-hover-bg: darken($management-bar-default-btn-default-bg, 10%) !default;
-$management-bar-default-btn-default-hover-border: darken($management-bar-default-btn-default-border, 12%) !default;
+$management-bar-default-btn-default-hover-bg: darken(
+	$management-bar-default-btn-default-bg,
+	10%
+) !default;
+$management-bar-default-btn-default-hover-border: darken(
+	$management-bar-default-btn-default-border,
+	12%
+) !default;
 $management-bar-default-btn-default-hover-color: $management-bar-default-btn-default-color !default;
 
 $management-bar-default-btn-default-active-bg: $management-bar-default-btn-default-hover-bg !default;

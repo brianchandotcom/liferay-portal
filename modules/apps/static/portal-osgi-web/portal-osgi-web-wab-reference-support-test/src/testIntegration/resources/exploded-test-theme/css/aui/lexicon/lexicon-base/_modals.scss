@@ -219,11 +219,13 @@ button.modal-primary-action-button {
 		&:focus,
 		&:hover {
 			> span {
-				opacity: $modal-header-close-icon-opacity * $modal-header-close-opacity-modifier;
+				opacity: $modal-header-close-icon-opacity *
+					$modal-header-close-opacity-modifier;
 			}
 
 			.lexicon-icon {
-				opacity: $modal-header-close-lexicon-icon-opacity * $modal-header-close-opacity-modifier;
+				opacity: $modal-header-close-lexicon-icon-opacity *
+					$modal-header-close-opacity-modifier;
 			}
 		}
 

@@ -17,13 +17,14 @@ $figcaption-padding-left: 15px !default;
 $figcaption-padding-right: 15px !default;
 $figcaption-padding-top: 10px !default;
 
-$figcaption-padding: $figcaption-padding-top $figcaption-padding-right $figcaption-padding-bottom $figcaption-padding-left !default;
+$figcaption-padding: $figcaption-padding-top $figcaption-padding-right
+	$figcaption-padding-bottom $figcaption-padding-left !default;
 
 // Skin
 
 $figcaption-bg: #000 !default;
 $figcaption-bg-alpha: 0.7 !default;
-$figcaption-color: #FFF !default;
+$figcaption-color: #fff !default;
 
 $figcaption-danger-bg: $brand-danger !default;
 $figcaption-danger-bg-alpha: $figcaption-bg-alpha !default;

@@ -27,7 +27,7 @@
 
 @keyframes removeBorder {
 	0% {
-		border-bottom-color: #D8D8D8;
+		border-bottom-color: #d8d8d8;
 	}
 
 	100% {
@@ -49,7 +49,8 @@
 	.nav-tabs-scrollbar {
 		$ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
 
-		$anim-key-frames: dropHeader 0.5s $ease-out-quint, removeBorder 0.75s $ease-out-quint;
+		$anim-key-frames: dropHeader 0.5s $ease-out-quint,
+			removeBorder 0.75s $ease-out-quint;
 
 		animation: $anim-key-frames;
 		animation-delay: 0s, 0.45s;

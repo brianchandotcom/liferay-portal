@@ -12,7 +12,11 @@
 }
 
 .figcaption {
-	@include color-figcaption($figcaption-bg, $figcaption-bg-alpha, $figcaption-color);
+	@include color-figcaption(
+		$figcaption-bg,
+		$figcaption-bg-alpha,
+		$figcaption-color
+	);
 
 	font-weight: $figcaption-font-weight;
 	padding: $figcaption-padding;
@@ -61,27 +65,51 @@
 }
 
 .figcaption-danger {
-	@include color-figcaption($figcaption-danger-bg, $figcaption-danger-bg-alpha, $figcaption-danger-color);
+	@include color-figcaption(
+		$figcaption-danger-bg,
+		$figcaption-danger-bg-alpha,
+		$figcaption-danger-color
+	);
 }
 
 @if (variable-exists(atlas-theme)) {
 	.figcaption-default {
-		@include color-figcaption($figcaption-default-bg, $figcaption-default-bg-alpha, $figcaption-default-color);
+		@include color-figcaption(
+			$figcaption-default-bg,
+			$figcaption-default-bg-alpha,
+			$figcaption-default-color
+		);
 	}
 }
 
 .figcaption-info {
-	@include color-figcaption($figcaption-info-bg, $figcaption-info-bg-alpha, $figcaption-info-color);
+	@include color-figcaption(
+		$figcaption-info-bg,
+		$figcaption-info-bg-alpha,
+		$figcaption-info-color
+	);
 }
 
 .figcaption-primary {
-	@include color-figcaption($figcaption-primary-bg, $figcaption-primary-bg-alpha, $figcaption-primary-color);
+	@include color-figcaption(
+		$figcaption-primary-bg,
+		$figcaption-primary-bg-alpha,
+		$figcaption-primary-color
+	);
 }
 
 .figcaption-success {
-	@include color-figcaption($figcaption-success-bg, $figcaption-success-bg-alpha, $figcaption-success-color);
+	@include color-figcaption(
+		$figcaption-success-bg,
+		$figcaption-success-bg-alpha,
+		$figcaption-success-color
+	);
 }
 
 .figcaption-warning {
-	@include color-figcaption($figcaption-warning-bg, $figcaption-warning-bg-alpha, $figcaption-warning-color);
+	@include color-figcaption(
+		$figcaption-warning-bg,
+		$figcaption-warning-bg-alpha,
+		$figcaption-warning-color
+	);
 }

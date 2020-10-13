@@ -16,7 +16,8 @@
 		overflow: hidden;
 		padding: $dropdown-link-padding;
 
-		@media (min-width: $grid-float-breakpoint) { // min-width: 768px
+		@media (min-width: $grid-float-breakpoint) {
+			// min-width: 768px
 			font-size: $dropdown-header-font-size-desktop;
 		}
 	}
@@ -169,7 +170,7 @@
 			&:focus,
 			&:hover {
 				background-color: $dropdown-link-active-bg;
-				color : $dropdown-link-active-color;
+				color: $dropdown-link-active-color;
 			}
 		}
 
@@ -195,7 +196,8 @@
 		padding: $dropdown-link-padding;
 
 		@if (variable-exists(dropdown-header-font-size-desktop)) {
-			@media (min-width: $grid-float-breakpoint) { // min-width: 768px
+			@media (min-width: $grid-float-breakpoint) {
+				// min-width: 768px
 				font-size: $dropdown-header-font-size-desktop;
 			}
 		}
@@ -296,10 +298,11 @@
 }
 
 .dropdown-menu {
-	[class*="col-sm"],
-	[class*="col-md"],
-	[class*="col-lg"] {
-		@media (max-width: $grid-float-breakpoint-max) { // max-width: 767px
+	[class*='col-sm'],
+	[class*='col-md'],
+	[class*='col-lg'] {
+		@media (max-width: $grid-float-breakpoint-max) {
+			// max-width: 767px
 			padding: 0;
 		}
 	}
@@ -324,7 +327,8 @@
 .dropdown-wide .dropdown-menu {
 	@extend %dropdown-full-wide-dropdown-menu;
 
-	@media (min-width: $screen-md-min) { // min-width 992px
+	@media (min-width: $screen-md-min) {
+		// min-width 992px
 		min-width: $dropdown-wide-width;
 	}
 }
@@ -334,7 +338,8 @@ li.dropdown-full {
 }
 
 li.dropdown-wide {
-	@media (max-width: $screen-sm-max) { // max-width 991px
+	@media (max-width: $screen-sm-max) {
+		// max-width 991px
 		position: static;
 	}
 }

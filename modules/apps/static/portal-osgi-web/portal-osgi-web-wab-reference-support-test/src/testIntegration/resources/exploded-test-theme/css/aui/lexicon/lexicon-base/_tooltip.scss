@@ -50,7 +50,10 @@
 			@if ($tooltip-box-shadow-x < 0) {
 				&.right .tooltip-arrow:before {
 					border-right-color: $tooltip-box-shadow-bg;
-					border-width: $tooltip-arrow-width $tooltip-arrow-width $tooltip-arrow-width 0;
+					border-width: $tooltip-arrow-width
+						$tooltip-arrow-width
+						$tooltip-arrow-width
+						0;
 					content: '';
 					left: $tooltip-box-shadow-x - $tooltip-box-shadow-spread;
 					margin-top: -$tooltip-arrow-width + $tooltip-box-shadow-y;
@@ -61,7 +64,10 @@
 			@if ($tooltip-box-shadow-x > 0) {
 				&.left .tooltip-arrow:before {
 					border-left-color: $tooltip-box-shadow-bg;
-					border-width: $tooltip-arrow-width 0 $tooltip-arrow-width $tooltip-arrow-width;
+					border-width: $tooltip-arrow-width
+						0
+						$tooltip-arrow-width
+						$tooltip-arrow-width;
 					content: '';
 					margin-top: -$tooltip-arrow-width + $tooltip-box-shadow-y;
 					right: -$tooltip-box-shadow-x - $tooltip-box-shadow-spread;

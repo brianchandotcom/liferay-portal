@@ -60,11 +60,17 @@
 	}
 
 	.alert-success {
-		@include color-alert-text($alert-success-text, $alert-success-text-bold);
+		@include color-alert-text(
+			$alert-success-text,
+			$alert-success-text-bold
+		);
 	}
 
 	.alert-warning {
-		@include color-alert-text($alert-warning-text, $alert-warning-text-bold);
+		@include color-alert-text(
+			$alert-warning-text,
+			$alert-warning-text-bold
+		);
 	}
 }
 

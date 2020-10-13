@@ -166,7 +166,7 @@
 
 // Card Border Helpers
 
-@if not ($card-border-radius == $card-circle-border-radius) {
+@if not($card-border-radius == $card-circle-border-radius) {
 	.card-circle {
 		border-radius: $card-circle-border-radius;
 
@@ -185,7 +185,7 @@
 	}
 }
 
-@if not ($card-border-radius == $card-rounded-border-radius) {
+@if not($card-border-radius == $card-rounded-border-radius) {
 	.card-rounded {
 		border-radius: $card-rounded-border-radius;
 
@@ -204,7 +204,7 @@
 	}
 }
 
-@if not ($card-border-radius == $card-square-border-radius) {
+@if not($card-border-radius == $card-square-border-radius) {
 	.card-square {
 		border-radius: $card-square-border-radius;
 
@@ -237,8 +237,8 @@
 	}
 }
 
-.checkbox-card input[type="checkbox"],
-.radio-card input[type="radio"] {
+.checkbox-card input[type='checkbox'],
+.radio-card input[type='radio'] {
 	margin-left: 0;
 	margin-top: 0;
 	z-index: 1;
@@ -278,10 +278,10 @@
 	}
 }
 
-.checkbox-bottom-left input[type="checkbox"],
-.checkbox-bottom-left label > input[type="checkbox"],
-.radio-bottom-left input[type="radio"],
-.radio-bottom-left label > input[type="radio"] {
+.checkbox-bottom-left input[type='checkbox'],
+.checkbox-bottom-left label > input[type='checkbox'],
+.radio-bottom-left input[type='radio'],
+.radio-bottom-left label > input[type='radio'] {
 	bottom: $checkbox-position;
 	left: $checkbox-position;
 
@@ -289,10 +289,10 @@
 	transform: none;
 }
 
-.checkbox-bottom-right input[type="checkbox"],
-.checkbox-bottom-right label > input[type="checkbox"],
-.radio-bottom-right input[type="radio"],
-.radio-bottom-right label > input[type="radio"] {
+.checkbox-bottom-right input[type='checkbox'],
+.checkbox-bottom-right label > input[type='checkbox'],
+.radio-bottom-right input[type='radio'],
+.radio-bottom-right label > input[type='radio'] {
 	bottom: $checkbox-position;
 	right: $checkbox-position;
 
@@ -300,10 +300,10 @@
 	transform: none;
 }
 
-.checkbox-middle-left input[type="checkbox"],
-.checkbox-middle-left label > input[type="checkbox"],
-.radio-middle-left input[type="radio"],
-.radio-middle-left label > input[type="radio"] {
+.checkbox-middle-left input[type='checkbox'],
+.checkbox-middle-left label > input[type='checkbox'],
+.radio-middle-left input[type='radio'],
+.radio-middle-left label > input[type='radio'] {
 	left: $checkbox-position;
 	margin-top: 0;
 	top: 50%;
@@ -312,10 +312,10 @@
 	transform: translateY(-50%);
 }
 
-.checkbox-middle-right input[type="checkbox"],
-.checkbox-middle-right label > input[type="checkbox"],
-.radio-middle-right input[type="radio"],
-.radio-middle-right label > input[type="radio"] {
+.checkbox-middle-right input[type='checkbox'],
+.checkbox-middle-right label > input[type='checkbox'],
+.radio-middle-right input[type='radio'],
+.radio-middle-right label > input[type='radio'] {
 	margin-top: 0;
 	right: $checkbox-position;
 	top: 50%;
@@ -324,8 +324,8 @@
 	transform: translateY(-50%);
 }
 
-.checkbox-top-left label > input[type="checkbox"],
-.radio-top-left label > input[type="radio"] {
+.checkbox-top-left label > input[type='checkbox'],
+.radio-top-left label > input[type='radio'] {
 	left: $checkbox-position;
 	top: $checkbox-position;
 
@@ -333,8 +333,8 @@
 	transform: none;
 }
 
-.checkbox-top-right label > input[type="checkbox"],
-.radio-top-right label > input[type="radio"] {
+.checkbox-top-right label > input[type='checkbox'],
+.radio-top-right label > input[type='radio'] {
 	right: $checkbox-position;
 	top: $checkbox-position;
 

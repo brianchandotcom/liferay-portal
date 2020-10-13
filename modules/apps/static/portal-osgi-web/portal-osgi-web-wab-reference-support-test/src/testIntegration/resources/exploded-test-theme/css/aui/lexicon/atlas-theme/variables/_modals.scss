@@ -10,7 +10,8 @@
 $modal-inner-padding-horizontal: 24px !default;
 $modal-inner-padding-vertical: 16px !default;
 
-$modal-inner-padding: $modal-inner-padding-vertical $modal-inner-padding-horizontal !default;
+$modal-inner-padding: $modal-inner-padding-vertical
+	$modal-inner-padding-horizontal !default;
 
 $modal-title-line-height: 36px !default;
 $modal-title-padding: 12px !default;
@@ -32,16 +33,16 @@ $modal-box-shadow: $box-shadow-default !default;
 $modal-content-border-color: transparent !default;
 $modal-content-fallback-border-color: transparent !default;
 
-$modal-header-bg: #29353D !default;
-$modal-header-border-color: #E4E6E8 !default;
-$modal-header-color: #FFF !default;
+$modal-header-bg: #29353d !default;
+$modal-header-border-color: #e4e6e8 !default;
+$modal-header-color: #fff !default;
 
-$modal-header-close-color: #FFF !default;
+$modal-header-close-color: #fff !default;
 $modal-header-close-icon-opacity: 1 !default;
 $modal-header-close-lexicon-icon-opacity: 1 !default;
 $modal-header-close-opacity-modifier: 1 !default;
 
-$modal-body-bg: #F5F8F8 !default;
+$modal-body-bg: #f5f8f8 !default;
 $modal-body-color: $text-color !default;
 
 $modal-footer-bg: $modal-header-bg !default;
@@ -49,7 +50,7 @@ $modal-footer-border-color: transparent !default;
 $modal-footer-box-shadow: 0 -1px 5px 0 rgba(0, 0, 0, 0.15) !default;
 $modal-footer-color: $modal-header-color !default;
 
-$modal-desktop-header-bg: #FCFEFF !default;
+$modal-desktop-header-bg: #fcfeff !default;
 $modal-desktop-header-close-color: $brand-default !default;
 $modal-desktop-header-color: $text-color !default;
 
@@ -59,12 +60,12 @@ $modal-desktop-footer-color: $modal-desktop-header-color !default;
 // Modal Inverse
 
 $modal-inverse-body-bg: #111314 !default;
-$modal-inverse-body-color: #A7A7A7 !default;
+$modal-inverse-body-color: #a7a7a7 !default;
 
 $modal-inverse-content-border-color: $modal-content-border-color !default;
 
 $modal-inverse-header-bg: $modal-header-bg !default;
-$modal-inverse-header-border-color: #1C252C !default;
+$modal-inverse-header-border-color: #1c252c !default;
 $modal-inverse-header-close-color: $modal-header-close-color !default;
 $modal-inverse-header-color: $modal-header-color !default;
 
@@ -75,7 +76,7 @@ $modal-inverse-footer-color: $modal-inverse-header-color !default;
 $modal-inverse-link-color: $brand-primary !default;
 $modal-inverse-link-hover-color: $modal-inverse-link-color !default;
 
-$modal-inverse-desktop-header-bg: #FCFEFF !default;
+$modal-inverse-desktop-header-bg: #fcfeff !default;
 $modal-inverse-desktop-header-border-color: $modal-header-border-color !default;
 $modal-inverse-desktop-header-close-color: $modal-desktop-header-close-color !default;
 $modal-inverse-desktop-header-color: $text-color !default;

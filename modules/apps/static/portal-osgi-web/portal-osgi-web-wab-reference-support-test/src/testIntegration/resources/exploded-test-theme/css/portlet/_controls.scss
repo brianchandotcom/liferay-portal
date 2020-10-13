@@ -39,13 +39,15 @@ body.portlet {
 	white-space: nowrap;
 }
 
-.panel-page-content, .panel-page-body {
+.panel-page-content,
+.panel-page-body {
 	.portlet-title-text {
 		cursor: auto;
 	}
 }
 
-.portlet-content, .portlet-minimized .portlet-content-container {
+.portlet-content,
+.portlet-minimized .portlet-content-container {
 	padding: 12px 10px 10px;
 }
 
@@ -65,7 +67,8 @@ body.portlet {
 	}
 
 	.portlet-title-default {
-		background: lx-icon(move, $portlet-topper-color) no-repeat 2px center transparent;
+		background: lx-icon(move, $portlet-topper-color) no-repeat 2px center
+			transparent;
 		background-size: 12px;
 		cursor: move;
 		padding-left: 25px;
@@ -79,7 +82,10 @@ body.portlet {
 		}
 	}
 
-	&:active, &:hover, &:focus, &.active {
+	&:active,
+	&:hover,
+	&:focus,
+	&.active {
 		.visible-interaction {
 			display: inherit;
 		}

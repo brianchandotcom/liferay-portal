@@ -8,10 +8,12 @@
 // Color Blockquote
 // @param $color - Colors border and text inside
 
-@mixin color-blockquote ($color) {
+@mixin color-blockquote($color) {
 	border-color: $color;
 
-	footer, small, .small {
+	footer,
+	small,
+	.small {
 		color: $color;
 	}
 }

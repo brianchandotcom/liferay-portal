@@ -31,25 +31,25 @@ $dropdown-menu-max-width: 230px !default;
 
 // Skin
 
-$dropdown-bg: #FFF !default;
+$dropdown-bg: #fff !default;
 $dropdown-box-shadow: 0 1px 1px 0 transparentize(#000, 0.7) !default;
 
-$dropdown-border: transparentize(#DCE0E3, 0.5) !default;
-$dropdown-fallback-border: #DCE0E3 !default;
+$dropdown-border: transparentize(#dce0e3, 0.5) !default;
+$dropdown-fallback-border: #dce0e3 !default;
 
 $dropdown-divider-bg: $dropdown-border !default;
 
 $dropdown-link-color: $brand-default !default;
 
-$dropdown-link-hover-bg: #F7FAFA !default;
+$dropdown-link-hover-bg: #f7fafa !default;
 $dropdown-link-hover-color: $brand-default !default;
 
 $dropdown-link-active-bg: $dropdown-link-hover-bg !default;
 $dropdown-link-active-color: $brand-primary !default;
 
-$dropdown-link-disabled-color: #CACDD2 !default;
+$dropdown-link-disabled-color: #cacdd2 !default;
 
-$dropdown-header-color: #B0B4BB !default;
+$dropdown-header-color: #b0b4bb !default;
 
 // Deprecated `$dropdown-arrow-color` as of v1.0.9 and will be removed in v2.0.0
 $dropdown-arrow-color: $dropdown-bg !default;

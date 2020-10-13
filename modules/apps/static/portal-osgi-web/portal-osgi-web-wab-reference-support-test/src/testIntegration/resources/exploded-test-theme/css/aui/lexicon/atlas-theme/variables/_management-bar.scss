@@ -13,19 +13,38 @@ $management-bar-border-right-width: 0 !default;
 $management-bar-border-top-width: 0 !default;
 
 $management-bar-height: $navbar-height !default;
-$management-bar-link-line-height: floor($font-size-base * $line-height-base) !default;
+$management-bar-link-line-height: floor(
+	$font-size-base * $line-height-base
+) !default;
 
 $management-bar-margin-bottom: 0 !default;
 
-$management-bar-btn-padding-vertical: ($management-bar-height - $icon-monospaced-size - $management-bar-border-bottom-width - $management-bar-border-top-width - ($btn-border-width * 2)) / 2 !default;
+$management-bar-btn-padding-vertical: (
+		$management-bar-height - $icon-monospaced-size -
+			$management-bar-border-bottom-width -
+			$management-bar-border-top-width - ($btn-border-width * 2)
+	) / 2 !default;
 
 $management-bar-desktop-height: $navbar-desktop-height !default;
-$management-bar-desktop-link-line-height: floor($font-size-desktop-base * $line-height-base) !default;
+$management-bar-desktop-link-line-height: floor(
+	$font-size-desktop-base * $line-height-base
+) !default;
 $management-bar-desktop-padding-horizontal: $navbar-desktop-padding-horizontal !default;
-$management-bar-desktop-padding-vertical: (($management-bar-desktop-height - $management-bar-desktop-link-line-height - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2) !default;
+$management-bar-desktop-padding-vertical: (
+	(
+			$management-bar-desktop-height -
+				$management-bar-desktop-link-line-height -
+				$management-bar-border-bottom-width -
+				$management-bar-border-top-width
+		) / 2
+) !default;
 
 $management-bar-desktop-btn-padding-horizontal: $navbar-desktop-padding-horizontal !default;
-$management-bar-desktop-btn-padding-vertical: ($management-bar-desktop-height - $icon-monospaced-size - $management-bar-border-bottom-width - $management-bar-border-top-width - ($btn-border-width * 2)) / 2 !default;
+$management-bar-desktop-btn-padding-vertical: (
+		$management-bar-desktop-height - $icon-monospaced-size -
+			$management-bar-border-bottom-width -
+			$management-bar-border-top-width - ($btn-border-width * 2)
+	) / 2 !default;
 
 // Skin
 
@@ -33,13 +52,13 @@ $management-bar-collapse-absolute-box-shadow: $navbar-collapse-absolute-box-shad
 
 $management-bar-link-active-color: $brand-primary !default;
 
-$management-bar-default-bg: #F5F8FA !default;
-$management-bar-default-border: #EDF0F2 !default;
+$management-bar-default-bg: #f5f8fa !default;
+$management-bar-default-border: #edf0f2 !default;
 $management-bar-default-color: $brand-default !default;
 $management-bar-default-link-active-color: $brand-primary !default;
 
 $management-bar-default-btn-default-bg: transparent !default;
-$management-bar-default-btn-default-border: #E4E9EC !default;
+$management-bar-default-btn-default-border: #e4e9ec !default;
 $management-bar-default-btn-default-color: $brand-default !default;
 
 $management-bar-default-btn-default-hover-bg: $management-bar-default-btn-default-bg !default;

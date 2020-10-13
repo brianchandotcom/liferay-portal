@@ -19,7 +19,7 @@
 	font-style: normal;
 	text-decoration: inherit;
 	-webkit-font-smoothing: antialiased;
-	*margin-right: .3em; // fixes ie7 issues
+	*margin-right: 0.3em; // fixes ie7 issues
 }
 
 @mixin border-radius($radius) {
@@ -28,7 +28,12 @@
 	border-radius: $radius;
 }
 
-@mixin icon-stack($width: 2em, $height: 2em, $top-font-size: 1em, $base-font-size: 2em) {
+@mixin icon-stack(
+	$width: 2em,
+	$height: 2em,
+	$top-font-size: 1em,
+	$base-font-size: 2em
+) {
 	.icon-stack {
 		position: relative;
 		display: inline-block;
@@ -36,8 +41,8 @@
 		height: $height;
 		line-height: $width;
 		vertical-align: -35%;
-		[class^="icon-"],
-		[class*=" icon-"] {
+		[class^='icon-'],
+		[class*=' icon-'] {
 			*line-height: $height;
 		}
 		.icon-stack-base {

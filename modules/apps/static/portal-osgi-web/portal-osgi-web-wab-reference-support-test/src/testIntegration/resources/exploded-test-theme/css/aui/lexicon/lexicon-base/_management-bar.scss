@@ -43,12 +43,16 @@
 .management-bar-header-right > .btn,
 .management-bar-header > .dropdown,
 .management-bar-header-right > .dropdown {
-	margin: $management-bar-btn-padding-vertical 0 $management-bar-btn-padding-vertical $management-bar-btn-padding-horizontal;
+	margin: $management-bar-btn-padding-vertical 0
+		$management-bar-btn-padding-vertical
+		$management-bar-btn-padding-horizontal;
 	padding: 0;
 
 	@if (variable-exists(atlas-theme)) {
 		@media (min-width: $grid-float-breakpoint) {
-			margin: $management-bar-desktop-btn-padding-vertical 0 $management-bar-desktop-btn-padding-vertical $management-bar-desktop-btn-padding-horizontal;
+			margin: $management-bar-desktop-btn-padding-vertical 0
+				$management-bar-desktop-btn-padding-vertical
+				$management-bar-desktop-btn-padding-horizontal;
 		}
 	}
 }
@@ -89,15 +93,39 @@
 .management-bar-nav > li > .checkbox,
 .management-bar-nav > li > .radio {
 	float: left;
-	padding-bottom: (($management-bar-height - 20 - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2);
+	padding-bottom: (
+		(
+				$management-bar-height - 20 -
+					$management-bar-border-bottom-width -
+					$management-bar-border-top-width
+			) / 2
+	);
 	padding-left: $management-bar-padding-horizontal;
 	padding-right: 0;
-	padding-top: (($management-bar-height - 20 - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2);
+	padding-top: (
+		(
+				$management-bar-height - 20 -
+					$management-bar-border-bottom-width -
+					$management-bar-border-top-width
+			) / 2
+	);
 
 	@if (variable-exists(atlas-theme)) {
 		@media (min-width: $grid-float-breakpoint) {
-			padding-bottom: (($management-bar-desktop-height - 20 - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2);
-			padding-top: (($management-bar-desktop-height - 20 - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2);
+			padding-bottom: (
+				(
+						$management-bar-desktop-height - 20 -
+							$management-bar-border-bottom-width -
+							$management-bar-border-top-width
+					) / 2
+			);
+			padding-top: (
+				(
+						$management-bar-desktop-height - 20 -
+							$management-bar-border-bottom-width -
+							$management-bar-border-top-width
+					) / 2
+			);
 		}
 	}
 }
@@ -116,7 +144,8 @@
 	> span {
 		display: block;
 		float: left;
-		padding: $management-bar-padding-vertical $management-bar-padding-horizontal;
+		padding: $management-bar-padding-vertical
+			$management-bar-padding-horizontal;
 
 		@if (variable-exists(atlas-theme)) {
 			@media (min-width: $grid-float-breakpoint) {
@@ -192,7 +221,8 @@
 
 	&.management-bar-toggle {
 		margin: 0;
-		padding: $management-bar-padding-vertical $management-bar-padding-horizontal;
+		padding: $management-bar-padding-vertical
+			$management-bar-padding-horizontal;
 	}
 
 	&:focus,
@@ -204,7 +234,8 @@
 
 .management-bar-toggle-left {
 	float: left;
-	margin: floor(($navbar-height - $input-height-base) / 2) $navbar-padding-horizontal;
+	margin: floor(($navbar-height - $input-height-base) / 2)
+		$navbar-padding-horizontal;
 	padding: $padding-base-vertical 10px;
 }
 
@@ -270,7 +301,8 @@
 }
 
 .management-bar-nav {
-	margin: ($management-bar-padding-vertical / 2) (-$management-bar-padding-horizontal);
+	margin: ($management-bar-padding-vertical / 2)
+		(-$management-bar-padding-horizontal);
 
 	@media (min-width: $grid-float-breakpoint) {
 		float: left;
@@ -285,7 +317,8 @@
 		> a,
 		> span {
 			display: block;
-			padding: $management-bar-padding-vertical $management-bar-padding-horizontal;
+			padding: $management-bar-padding-vertical
+				$management-bar-padding-horizontal;
 
 			@if (variable-exists(atlas-theme)) {
 				@media (min-width: $grid-float-breakpoint) {

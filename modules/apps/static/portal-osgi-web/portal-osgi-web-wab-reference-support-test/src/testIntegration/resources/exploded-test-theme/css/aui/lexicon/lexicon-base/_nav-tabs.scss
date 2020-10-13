@@ -45,7 +45,10 @@
 		&,
 		&:focus,
 		&:hover {
-			border-color: transparent transparent $nav-tabs-border-color transparent;
+			border-color: transparent
+				transparent
+				$nav-tabs-border-color
+				transparent;
 		}
 	}
 }
@@ -104,7 +107,8 @@
 		}
 
 		&:hover {
-			border-color: transparent transparent transparent $nav-tabs-border-color;
+			border-color: transparent transparent transparent
+				$nav-tabs-border-color;
 		}
 	}
 
@@ -116,7 +120,8 @@
 				background-color: transparent;
 			}
 
-			border-color: transparent transparent transparent $nav-tabs-border-color;
+			border-color: transparent transparent transparent
+				$nav-tabs-border-color;
 			border-width: 0 0 0 1px;
 		}
 	}
@@ -127,9 +132,11 @@
 		&:hover {
 			@if (variable-exists(atlas-theme)) {
 				border-left-color: $nav-tabs-border-color;
-			}
-			@else {
-				border-color: transparent transparent transparent $nav-tabs-border-color;
+			} @else {
+				border-color: transparent
+					transparent
+					transparent
+					$nav-tabs-border-color;
 			}
 		}
 	}

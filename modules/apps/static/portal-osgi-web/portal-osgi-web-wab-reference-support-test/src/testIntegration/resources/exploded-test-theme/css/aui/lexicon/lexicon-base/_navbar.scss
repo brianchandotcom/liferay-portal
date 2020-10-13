@@ -64,7 +64,7 @@
 		}
 
 		.basic-search.focus & {
-			@if not (variable-exists(atlas-theme)) {
+			@if not(variable-exists(atlas-theme)) {
 				border-right-color: $input-border-focus;
 			}
 		}
@@ -251,12 +251,15 @@
 			border-radius: 0;
 			border-width: 0;
 			color: $brand-default;
-			height: $navbar-height - $navbar-border-bottom-width - $navbar-border-top-width;
+			height: $navbar-height -
+				$navbar-border-bottom-width -
+				$navbar-border-top-width;
 			padding-left: 12px;
 			padding-right: 12px;
 
 			@media (min-width: $grid-float-breakpoint) {
-				height: $navbar-desktop-height - $navbar-border-bottom-width - $navbar-border-top-width;
+				height: $navbar-desktop-height - $navbar-border-bottom-width -
+					$navbar-border-top-width;
 			}
 
 			&:focus {
@@ -268,10 +271,13 @@
 		.form-control {
 			background-color: $body-bg;
 			border-width: 0;
-			height: $navbar-height - $navbar-border-bottom-width - $navbar-border-top-width;
+			height: $navbar-height -
+				$navbar-border-bottom-width -
+				$navbar-border-top-width;
 
 			@media (min-width: $grid-float-breakpoint) {
-				height: $navbar-desktop-height - $navbar-border-bottom-width - $navbar-border-top-width;
+				height: $navbar-desktop-height - $navbar-border-bottom-width -
+					$navbar-border-top-width;
 			}
 
 			@media (max-width: $grid-float-breakpoint-max) {
@@ -334,7 +340,7 @@
 					background-color: $navbar-link-active-highlight;
 					bottom: -$navbar-border-bottom-width;
 
-					@if not ($navbar-link-active-highlight == transparent) {
+					@if not($navbar-link-active-highlight == transparent) {
 						content: '';
 					}
 
@@ -355,7 +361,7 @@
 				background-color: $navbar-link-active-highlight;
 				bottom: -$navbar-border-bottom-width;
 
-				@if not ($navbar-link-active-highlight == transparent) {
+				@if not($navbar-link-active-highlight == transparent) {
 					content: '';
 				}
 
@@ -415,8 +421,7 @@
 
 	@if (variable-exists(atlas-theme)) {
 		margin: 0;
-	}
-	@else {
+	} @else {
 		margin: 0 $navbar-padding-horizontal;
 	}
 
@@ -466,8 +471,20 @@
 		margin: 0;
 
 		@if (variable-exists(atlas-theme)) {
-			padding-bottom: ($navbar-desktop-height - $input-height-base - $navbar-border-bottom-width - $navbar-border-top-width) / 2;
-			padding-top: ($navbar-desktop-height - $input-height-base - $navbar-border-bottom-width - $navbar-border-top-width) / 2;
+			padding-bottom: (
+					$navbar-desktop-height -
+						$input-height-base -
+						$navbar-border-bottom-width -
+						$navbar-border-top-width
+				) /
+				2;
+			padding-top: (
+					$navbar-desktop-height -
+						$input-height-base -
+						$navbar-border-bottom-width -
+						$navbar-border-top-width
+				) /
+				2;
 		}
 	}
 }
@@ -527,12 +544,24 @@
 
 			@media (min-width: $grid-float-breakpoint) {
 				line-height: $navbar-desktop-link-line-height;
-				padding: $navbar-desktop-padding-vertical $navbar-desktop-padding-horizontal;
+				padding: $navbar-desktop-padding-vertical
+					$navbar-desktop-padding-horizontal;
 			}
-		}
-		@else {
-			padding-bottom: ($navbar-height - $line-height-computed - $navbar-border-bottom-width - $navbar-border-top-width) / 2;
-			padding-top: ($navbar-height - $line-height-computed - $navbar-border-bottom-width - $navbar-border-top-width) / 2;
+		} @else {
+			padding-bottom: (
+					$navbar-height -
+						$line-height-computed -
+						$navbar-border-bottom-width -
+						$navbar-border-top-width
+				) /
+				2;
+			padding-top: (
+					$navbar-height -
+						$line-height-computed -
+						$navbar-border-bottom-width -
+						$navbar-border-top-width
+				) /
+				2;
 		}
 	}
 }
@@ -557,7 +586,8 @@
 				.inline-scroller,
 				.linked-list {
 					li a {
-						padding: $navbar-padding-vertical $navbar-padding-horizontal;
+						padding: $navbar-padding-vertical
+							$navbar-padding-horizontal;
 
 						&:focus,
 						&:hover {
@@ -581,12 +611,24 @@
 
 		@media (min-width: $grid-float-breakpoint) {
 			line-height: $navbar-desktop-link-line-height;
-			padding: $navbar-desktop-padding-vertical $navbar-desktop-padding-horizontal;
+			padding: $navbar-desktop-padding-vertical
+				$navbar-desktop-padding-horizontal;
 		}
-	}
-	@else {
-		padding-bottom: ($navbar-height - $line-height-computed - $navbar-border-bottom-width - $navbar-border-top-width) / 2;
-		padding-top: ($navbar-height - $line-height-computed - $navbar-border-bottom-width - $navbar-border-top-width) / 2;
+	} @else {
+		padding-bottom: (
+				$navbar-height -
+					$line-height-computed -
+					$navbar-border-bottom-width -
+					$navbar-border-top-width
+			) /
+			2;
+		padding-top: (
+				$navbar-height -
+					$line-height-computed -
+					$navbar-border-bottom-width -
+					$navbar-border-top-width
+			) /
+			2;
 	}
 
 	&:focus {
@@ -624,7 +666,9 @@
 	@if (variable-exists(atlas-theme)) {
 		border-radius: $navbar-border-radius;
 		border-width: 0;
-		height: $navbar-height - $navbar-border-bottom-width - $navbar-border-top-width;
+		height: $navbar-height -
+			$navbar-border-bottom-width -
+			$navbar-border-top-width;
 		margin: 0;
 		padding-left: $navbar-padding-horizontal;
 		padding-right: $navbar-padding-horizontal;
@@ -633,7 +677,7 @@
 			background-color: $navbar-link-active-highlight;
 			bottom: -$navbar-border-bottom-width;
 
-			@if not ($navbar-link-active-highlight == transparent) {
+			@if not($navbar-link-active-highlight == transparent) {
 				content: '';
 			}
 
@@ -679,7 +723,11 @@
 
 .navbar-default.collapse-basic-search .basic-search {
 	&.open {
-		background-color: if(variable-exists(atlas-theme), transparent, $navbar-default-bg);
+		background-color: if(
+			variable-exists(atlas-theme),
+			transparent,
+			$navbar-default-bg
+		);
 	}
 
 	@if (variable-exists(atlas-theme)) {
@@ -698,7 +746,10 @@
 					@media (min-width: $grid-float-breakpoint) {
 						background-color: $navbar-default-link-active-highlight;
 
-						@if not ($navbar-default-link-active-highlight == transparent) {
+						@if not(
+							$navbar-default-link-active-highlight == transparent
+						)
+						{
 							content: '';
 						}
 					}
@@ -710,7 +761,7 @@
 		.navbar-toggle-page-name:after {
 			background-color: $navbar-default-link-active-highlight;
 
-			@if not ($navbar-default-link-active-highlight == transparent) {
+			@if not($navbar-default-link-active-highlight == transparent) {
 				content: '';
 			}
 		}
@@ -739,7 +790,11 @@
 
 .navbar-inverse.collapse-basic-search .basic-search {
 	&.open {
-		background-color: if(variable-exists(atlas-theme), transparent, $navbar-inverse-bg);
+		background-color: if(
+			variable-exists(atlas-theme),
+			transparent,
+			$navbar-inverse-bg
+		);
 	}
 
 	@if (variable-exists(atlas-theme)) {
@@ -762,7 +817,10 @@
 					@media (min-width: $grid-float-breakpoint) {
 						background-color: $navbar-inverse-link-active-highlight;
 
-						@if not ($navbar-inverse-link-active-highlight == transparent) {
+						@if not(
+							$navbar-inverse-link-active-highlight == transparent
+						)
+						{
 							content: '';
 						}
 					}
@@ -774,7 +832,7 @@
 		.navbar-toggle-page-name:after {
 			background-color: $navbar-inverse-link-active-highlight;
 
-			@if not ($navbar-inverse-link-active-highlight == transparent) {
+			@if not($navbar-inverse-link-active-highlight == transparent) {
 				content: '';
 			}
 		}

@@ -109,7 +109,7 @@ body {
 	}
 
 	.glyphicon,
-	[class^="icon-"] {
+	[class^='icon-'] {
 		display: block;
 	}
 }
@@ -198,25 +198,25 @@ th {
 }
 
 .blockquote-danger {
-	@include color-blockquote ($blockquote-danger-color);
+	@include color-blockquote($blockquote-danger-color);
 }
 
 .blockquote-default {
-	@include color-blockquote ($blockquote-default-color);
+	@include color-blockquote($blockquote-default-color);
 }
 
 .blockquote-info {
-	@include color-blockquote ($blockquote-info-color);
+	@include color-blockquote($blockquote-info-color);
 }
 
 .blockquote-primary {
-	@include color-blockquote ($blockquote-primary-color);
+	@include color-blockquote($blockquote-primary-color);
 }
 
 .blockquote-success {
-	@include color-blockquote ($blockquote-success-color);
+	@include color-blockquote($blockquote-success-color);
 }
 
 .blockquote-warning {
-	@include color-blockquote ($blockquote-warning-color);
+	@include color-blockquote($blockquote-warning-color);
 }

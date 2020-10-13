@@ -100,7 +100,12 @@
 .panel-blank {
 	box-shadow: none;
 
-	@include panel-variant($panel-blank-border, $panel-blank-text, $panel-blank-heading-bg, $panel-blank-border);
+	@include panel-variant(
+		$panel-blank-border,
+		$panel-blank-text,
+		$panel-blank-heading-bg,
+		$panel-blank-border
+	);
 
 	> .panel-footer {
 		background-color: $panel-blank-heading-bg;

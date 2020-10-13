@@ -9,7 +9,10 @@
 // @param $toggle-switch-width - Width of switch bar
 // @param $toggle-switch-padding - Space between button and bar
 
-@function set-data-label-text-position($toggle-switch-width, $toggle-switch-padding) {
+@function set-data-label-text-position(
+	$toggle-switch-width,
+	$toggle-switch-padding
+) {
 	@if $toggle-switch-padding < 0 {
 		@return $toggle-switch-width + abs($toggle-switch-padding);
 	}
@@ -23,7 +26,12 @@
 // @param $on-bg - Switch bar on background-color
 // @param $on-border - Switch bar on border-color
 
-@mixin color-toggle-switch-bar($off-bg, $off-border: $off-bg, $on-bg: $off-bg, $on-border: $off-border) {
+@mixin color-toggle-switch-bar(
+	$off-bg,
+	$off-border: $off-bg,
+	$on-bg: $off-bg,
+	$on-border: $off-border
+) {
 	@warn "Lexicon's `color-toggle-switch-bar($off-bg, $off-border: $off-bg, $on-bg: $off-bg, $on-border: $off-border)` mixin is deprecated as of v1.0.11 and will be removed in v2.0.0.";
 
 	&:empty ~ .toggle-switch-bar {
@@ -47,7 +55,12 @@
 // @param $button-on-bg - Switch button on background-color
 // @param $button-on-border - Switch button on border-color
 
-@mixin color-toggle-switch-button($button-off-bg, $button-off-border: $button-off-bg, $button-on-bg: $button-off-bg, $button-on-border: $button-off-border) {
+@mixin color-toggle-switch-button(
+	$button-off-bg,
+	$button-off-border: $button-off-bg,
+	$button-on-bg: $button-off-bg,
+	$button-on-border: $button-off-border
+) {
 	@warn "Lexicon's `color-toggle-switch-button($button-off-bg, $button-off-border: $button-off-bg, $button-on-bg: $button-off-bg, $button-on-border: $button-off-border)` mixin is deprecated as of v1.0.11 and will be removed in v2.0.0.";
 
 	&:empty ~ .toggle-switch-bar {

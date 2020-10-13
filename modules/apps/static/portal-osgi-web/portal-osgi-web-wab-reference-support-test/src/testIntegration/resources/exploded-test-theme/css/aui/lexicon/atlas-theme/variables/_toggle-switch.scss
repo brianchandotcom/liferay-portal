@@ -11,13 +11,15 @@
 $toggle-switch-bar-padding: 4px !default; // Shared // space between button and bar, can be negative value
 $toggle-switch-button-width: 16px !default; // Shared
 
-$toggle-switch-bar-height: ($toggle-switch-bar-padding * 2) + $toggle-switch-button-width !default; // Shared
+$toggle-switch-bar-height: ($toggle-switch-bar-padding * 2) +
+	$toggle-switch-button-width !default; // Shared
 $toggle-switch-bar-width: 44px !default; // Shared // width of switch bar
 
 $toggle-switch-bar-desktop-padding: 4px !default; // Atlas // space between button and bar, can be negative value
 $toggle-switch-button-desktop-width: 24px !default; // Atlas
 
-$toggle-switch-bar-desktop-height: ($toggle-switch-bar-desktop-padding * 2) + $toggle-switch-button-desktop-width !default; // Atlas
+$toggle-switch-bar-desktop-height: ($toggle-switch-bar-desktop-padding * 2) +
+	$toggle-switch-button-desktop-width !default; // Atlas
 $toggle-switch-bar-desktop-width: 60px !default; // Atlas // width of switch bar
 // must all be same units--end
 
@@ -35,20 +37,20 @@ $toggle-switch-button-desktop-font-size: $toggle-switch-bar-desktop-font-size !d
 
 // Toggle Switch Off
 $toggle-switch-button-border-radius: 50% !default; // Shared
-$toggle-switch-bar-bg: #FFF !default; // Shared
-$toggle-switch-bar-border-color: #D1D6D9 !default; // Shared
-$toggle-switch-bar-icon-color: #869CAD !default; // Shared
+$toggle-switch-bar-bg: #fff !default; // Shared
+$toggle-switch-bar-border-color: #d1d6d9 !default; // Shared
+$toggle-switch-bar-icon-color: #869cad !default; // Shared
 
-$toggle-switch-button-bg: #869CAD !default; // Shared
-$toggle-switch-button-border-color: #869CAD !default; // Shared
-$toggle-switch-button-icon-color: #FFF !default; // Shared
+$toggle-switch-button-bg: #869cad !default; // Shared
+$toggle-switch-button-border-color: #869cad !default; // Shared
+$toggle-switch-button-icon-color: #fff !default; // Shared
 
 // Toggle Switch On
 $toggle-switch-button-on-border-radius: $toggle-switch-button-border-radius !default; // Shared
-$toggle-switch-bar-on-bg: #65B6F0 !default; // Shared
-$toggle-switch-bar-on-border-color: #60A7D8 !default; // Shared
-$toggle-switch-bar-on-icon-color: #FFF !default; // Shared
+$toggle-switch-bar-on-bg: #65b6f0 !default; // Shared
+$toggle-switch-bar-on-border-color: #60a7d8 !default; // Shared
+$toggle-switch-bar-on-icon-color: #fff !default; // Shared
 
-$toggle-switch-button-on-bg: #FFF !default; // Shared
-$toggle-switch-button-on-border-color: #FFF !default; // Shared
+$toggle-switch-button-on-bg: #fff !default; // Shared
+$toggle-switch-button-on-border-color: #fff !default; // Shared
 $toggle-switch-button-on-icon-color: $toggle-switch-bar-on-bg !default; // Shared

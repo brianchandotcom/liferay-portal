@@ -48,8 +48,8 @@ a.collapse-icon {
 
 .collapse-icon-closed,
 .collapse-icon-open {
-	[class^="icon-"],
-	[class*=" icon-"],
+	[class^='icon-'],
+	[class*=' icon-'],
 	.lexicon-icon {
 		display: block;
 	}
@@ -62,13 +62,15 @@ a.collapse-icon {
 		right: 15px;
 		top: 10px;
 
-		[class^="icon-"],
-		[class*=" icon-"] {
+		[class^='icon-'],
+		[class*=' icon-'] {
 			margin-top: calc(((1em * #{$line-height-base}) - 1em) / 2);
 		}
 
 		.lexicon-icon {
-			margin-top: calc(((1em * #{$line-height-base}) - #{$lexicon-icon-size}) / 2);
+			margin-top: calc(
+				((1em * #{$line-height-base}) - #{$lexicon-icon-size}) / 2
+			);
 		}
 	}
 

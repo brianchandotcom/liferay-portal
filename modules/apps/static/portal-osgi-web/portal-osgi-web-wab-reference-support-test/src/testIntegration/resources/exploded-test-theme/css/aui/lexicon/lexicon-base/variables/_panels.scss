@@ -13,7 +13,8 @@ $panel-border-bottom-width: 1px !default;
 $panel-border-left-width: 1px !default;
 $panel-border-right-width: 1px !default;
 $panel-border-top-width: 1px !default;
-$panel-border-width: $panel-border-top-width $panel-border-right-width $panel-border-bottom-width $panel-border-left-width !default;
+$panel-border-width: $panel-border-top-width $panel-border-right-width
+	$panel-border-bottom-width $panel-border-left-width !default;
 
 $panel-footer-border-top-width: 1px !default;
 

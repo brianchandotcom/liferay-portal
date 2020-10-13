@@ -5,15 +5,16 @@
 * All rights reserved.
 * MIT license
 */
-input[type="checkbox"],
-input[type="radio"] {
+input[type='checkbox'],
+input[type='radio'] {
 	cursor: pointer;
 }
 
 fieldset {
 	word-wrap: break-word;
 
-	@-moz-document url-prefix() { // FF Fieldset workaround
+	@-moz-document url-prefix() {
+		// FF Fieldset workaround
 		display: table-cell;
 	}
 }
@@ -136,7 +137,8 @@ label,
 	}
 
 	select[disabled].form-control > option {
-		@media (-webkit-min-device-pixel-ratio: 0) { // Webkit only
+		@media (-webkit-min-device-pixel-ratio: 0) {
+			// Webkit only
 			color: $input-border;
 		}
 	}
@@ -188,8 +190,8 @@ label,
 		}
 	}
 
-	.checkbox input[type="checkbox"],
-	.checkbox-inline input[type="checkbox"] {
+	.checkbox input[type='checkbox'],
+	.checkbox-inline input[type='checkbox'] {
 		height: 20px;
 		margin-left: -25px;
 		margin-top: 0;
@@ -206,8 +208,8 @@ label,
 		}
 	}
 
-	.radio input[type="radio"],
-	.radio-inline input[type="radio"] {
+	.radio input[type='radio'],
+	.radio-inline input[type='radio'] {
 		height: 20px;
 		margin-left: -25px;
 		margin-top: 0;
@@ -231,8 +233,8 @@ label,
 		}
 	}
 
-	.checkbox-card input[type="checkbox"],
-	.radio-card input[type="radio"] {
+	.checkbox-card input[type='checkbox'],
+	.radio-card input[type='radio'] {
 		margin-left: 0;
 	}
 

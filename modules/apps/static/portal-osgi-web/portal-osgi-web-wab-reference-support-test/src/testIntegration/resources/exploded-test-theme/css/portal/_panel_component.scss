@@ -1,9 +1,12 @@
-.lfr-panel.lfr-extended, .lfr-panel-container, .lfr-floating-container {
-	border-color: #DEDEDE #BFBFBF #BFBFBF #DEDEDE;
+.lfr-panel.lfr-extended,
+.lfr-panel-container,
+.lfr-floating-container {
+	border-color: #dedede #bfbfbf #bfbfbf #dedede;
 }
 
-.lfr-panel-container, .lfr-floating-container {
-	background: #FFF;
+.lfr-panel-container,
+.lfr-floating-container {
+	background: #fff;
 }
 
 .lfr-panel-titlebar {
@@ -13,7 +16,8 @@
 	}
 
 	.lfr-panel-button {
-		background: url(../images/application/panel_header_toggler_close.png) no-repeat 0 0;
+		background: url(../images/application/panel_header_toggler_close.png)
+			no-repeat 0 0;
 
 		&:hover {
 			background-position: 0 100%;
@@ -21,7 +25,7 @@
 	}
 }
 
-.lfr-panel{
+.lfr-panel {
 	&.lfr-collapsible .lfr-panel-titlebar {
 		background: url(../images/arrows/05_down.png) no-repeat 2px 50%;
 	}
@@ -35,13 +39,14 @@
 	}
 
 	&.lfr-extended .lfr-panel-titlebar {
-		background: #D6D6D6 url(../images/application/panel_header.png) repeat-x 0 0;
-		border-bottom-color: #CDCDCD;
+		background: #d6d6d6 url(../images/application/panel_header.png) repeat-x
+			0 0;
+		border-bottom-color: #cdcdcd;
 	}
 }
 
 .lfr-panel-container .lfr-extended.lfr-collapsible .lfr-panel-titlebar {
-	border-top-color: #CECECE;
+	border-top-color: #cecece;
 }
 
 .js {

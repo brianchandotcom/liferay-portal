@@ -57,30 +57,30 @@ $input-color-focus: $brand-primary !default;
 $input-border: $brand-default !default;
 $input-border-focus: $input-color-focus !default;
 
-$input-border-disabled: #CFD7DE !default;
+$input-border-disabled: #cfd7de !default;
 
 $input-box-shadow: none !default;
 $input-box-shadow-focus: none !default;
 
-$input-color-placeholder: darken(#E4E9EC, 12%) !default;
+$input-color-placeholder: darken(#e4e9ec, 12%) !default;
 $input-color-placeholder-focus: $input-border-focus !default;
 
 $input-label-color: $brand-default !default;
 $input-label-focus-color: $input-color-focus !default;
 
-$input-readonly-bg: #FAFAFA !default;
+$input-readonly-bg: #fafafa !default;
 $input-readonly-border: $input-border !default;
 $input-readonly-color: darken($input-color-placeholder, 12%) !default;
 
-$legend-border-color: #B0B4BB !default;
+$legend-border-color: #b0b4bb !default;
 
 $input-group-addon-bg: $brand-default !default;
 $input-group-addon-border-color: $input-group-addon-bg !default;
 $input-group-addon-border-radius: 0 !default;
-$input-group-addon-color: #FFF !default;
+$input-group-addon-color: #fff !default;
 
-$input-group-default-addon-border-color: #DDD !default;
-$input-group-default-addon-color: #BBB !default;
+$input-group-default-addon-border-color: #ddd !default;
+$input-group-default-addon-color: #bbb !default;
 
 $input-danger: $brand-danger !default;
 $input-success: $brand-success !default;

@@ -8,733 +8,732 @@
 // Variables
 // --------------------------
 
-$font-awesome-path: "../fonts/alloy-font-awesome/font" !default;
-$font-awesome-version: "3.2.1" !default;
+$font-awesome-path: '../fonts/alloy-font-awesome/font' !default;
+$font-awesome-version: '3.2.1' !default;
 $border-color: #eeeeee !default;
 $icon-muted: #eeeeee !default;
 $icon-light: white !default;
 $icon-dark: #333333 !default;
 $icons-li-width: (30em/14);
 
-$glass: "\f000";
+$glass: '\f000';
 
-$music: "\f001";
+$music: '\f001';
 
-$search: "\f002";
+$search: '\f002';
 
-$envelope-alt: "\f003";
+$envelope-alt: '\f003';
 
-$heart: "\f004";
+$heart: '\f004';
 
-$star: "\f005";
+$star: '\f005';
 
-$star-empty: "\f006";
+$star-empty: '\f006';
 
-$user: "\f007";
+$user: '\f007';
 
-$film: "\f008";
+$film: '\f008';
 
-$th-large: "\f009";
+$th-large: '\f009';
 
-$th: "\f00a";
+$th: '\f00a';
 
-$th-list: "\f00b";
+$th-list: '\f00b';
 
-$ok: "\f00c";
+$ok: '\f00c';
 
-$remove: "\f00d";
+$remove: '\f00d';
 
-$zoom-in: "\f00e";
+$zoom-in: '\f00e';
 
-$zoom-out: "\f010";
+$zoom-out: '\f010';
 
-$off: "\f011";
+$off: '\f011';
 
-$signal: "\f012";
+$signal: '\f012';
 
-$cog: "\f013";
+$cog: '\f013';
 
-$trash: "\f014";
+$trash: '\f014';
 
-$home: "\f015";
+$home: '\f015';
 
-$file-alt: "\f016";
+$file-alt: '\f016';
 
-$time: "\f017";
+$time: '\f017';
 
-$road: "\f018";
+$road: '\f018';
 
-$download-alt: "\f019";
+$download-alt: '\f019';
 
-$download: "\f01a";
+$download: '\f01a';
 
-$upload: "\f01b";
+$upload: '\f01b';
 
-$inbox: "\f01c";
+$inbox: '\f01c';
 
-$play-circle: "\f01d";
+$play-circle: '\f01d';
 
-$repeat: "\f01e";
+$repeat: '\f01e';
 
-$refresh: "\f021";
+$refresh: '\f021';
 
-$list-alt: "\f022";
+$list-alt: '\f022';
 
-$lock: "\f023";
+$lock: '\f023';
 
-$flag: "\f024";
+$flag: '\f024';
 
-$headphones: "\f025";
+$headphones: '\f025';
 
-$volume-off: "\f026";
+$volume-off: '\f026';
 
-$volume-down: "\f027";
+$volume-down: '\f027';
 
-$volume-up: "\f028";
+$volume-up: '\f028';
 
-$qrcode: "\f029";
+$qrcode: '\f029';
 
-$barcode: "\f02a";
+$barcode: '\f02a';
 
-$tag: "\f02b";
+$tag: '\f02b';
 
-$tags: "\f02c";
+$tags: '\f02c';
 
-$book: "\f02d";
+$book: '\f02d';
 
-$bookmark: "\f02e";
+$bookmark: '\f02e';
 
-$print: "\f02f";
+$print: '\f02f';
 
-$camera: "\f030";
+$camera: '\f030';
 
-$font: "\f031";
+$font: '\f031';
 
-$bold: "\f032";
+$bold: '\f032';
 
-$italic: "\f033";
+$italic: '\f033';
 
-$text-height: "\f034";
+$text-height: '\f034';
 
-$text-width: "\f035";
+$text-width: '\f035';
 
-$align-left: "\f036";
+$align-left: '\f036';
 
-$align-center: "\f037";
+$align-center: '\f037';
 
-$align-right: "\f038";
+$align-right: '\f038';
 
-$align-justify: "\f039";
+$align-justify: '\f039';
 
-$list: "\f03a";
+$list: '\f03a';
 
-$indent-left: "\f03b";
+$indent-left: '\f03b';
 
-$indent-right: "\f03c";
+$indent-right: '\f03c';
 
-$facetime-video: "\f03d";
+$facetime-video: '\f03d';
 
-$picture: "\f03e";
+$picture: '\f03e';
 
-$pencil: "\f040";
+$pencil: '\f040';
 
-$map-marker: "\f041";
+$map-marker: '\f041';
 
-$adjust: "\f042";
+$adjust: '\f042';
 
-$tint: "\f043";
+$tint: '\f043';
 
-$edit: "\f044";
+$edit: '\f044';
 
-$share: "\f045";
+$share: '\f045';
 
-$check: "\f046";
+$check: '\f046';
 
-$move: "\f047";
+$move: '\f047';
 
-$step-backward: "\f048";
+$step-backward: '\f048';
 
-$fast-backward: "\f049";
+$fast-backward: '\f049';
 
-$backward: "\f04a";
+$backward: '\f04a';
 
-$play: "\f04b";
+$play: '\f04b';
 
-$pause: "\f04c";
+$pause: '\f04c';
 
-$stop: "\f04d";
+$stop: '\f04d';
 
-$forward: "\f04e";
+$forward: '\f04e';
 
-$fast-forward: "\f050";
+$fast-forward: '\f050';
 
-$step-forward: "\f051";
+$step-forward: '\f051';
 
-$eject: "\f052";
+$eject: '\f052';
 
-$chevron-left: "\f053";
+$chevron-left: '\f053';
 
-$chevron-right: "\f054";
+$chevron-right: '\f054';
 
-$plus-sign: "\f055";
+$plus-sign: '\f055';
 
-$minus-sign: "\f056";
+$minus-sign: '\f056';
 
-$remove-sign: "\f057";
+$remove-sign: '\f057';
 
-$ok-sign: "\f058";
+$ok-sign: '\f058';
 
-$question-sign: "\f059";
+$question-sign: '\f059';
 
-$info-sign: "\f05a";
+$info-sign: '\f05a';
 
-$screenshot: "\f05b";
+$screenshot: '\f05b';
 
-$remove-circle: "\f05c";
+$remove-circle: '\f05c';
 
-$ok-circle: "\f05d";
+$ok-circle: '\f05d';
 
-$ban-circle: "\f05e";
+$ban-circle: '\f05e';
 
-$arrow-left: "\f060";
+$arrow-left: '\f060';
 
-$arrow-right: "\f061";
+$arrow-right: '\f061';
 
-$arrow-up: "\f062";
+$arrow-up: '\f062';
 
-$arrow-down: "\f063";
+$arrow-down: '\f063';
 
-$share-alt: "\f064";
+$share-alt: '\f064';
 
-$resize-full: "\f065";
+$resize-full: '\f065';
 
-$resize-small: "\f066";
+$resize-small: '\f066';
 
-$plus: "\f067";
+$plus: '\f067';
 
-$minus: "\f068";
+$minus: '\f068';
 
-$asterisk: "\f069";
+$asterisk: '\f069';
 
-$exclamation-sign: "\f06a";
+$exclamation-sign: '\f06a';
 
-$gift: "\f06b";
+$gift: '\f06b';
 
-$leaf: "\f06c";
+$leaf: '\f06c';
 
-$fire: "\f06d";
+$fire: '\f06d';
 
-$eye-open: "\f06e";
+$eye-open: '\f06e';
 
-$eye-close: "\f070";
+$eye-close: '\f070';
 
-$warning-sign: "\f071";
+$warning-sign: '\f071';
 
-$plane: "\f072";
+$plane: '\f072';
 
-$calendar: "\f073";
+$calendar: '\f073';
 
-$random: "\f074";
+$random: '\f074';
 
-$comment: "\f075";
+$comment: '\f075';
 
-$magnet: "\f076";
+$magnet: '\f076';
 
-$chevron-up: "\f077";
+$chevron-up: '\f077';
 
-$chevron-down: "\f078";
+$chevron-down: '\f078';
 
-$retweet: "\f079";
+$retweet: '\f079';
 
-$shopping-cart: "\f07a";
+$shopping-cart: '\f07a';
 
-$folder-close: "\f07b";
+$folder-close: '\f07b';
 
-$folder-open: "\f07c";
+$folder-open: '\f07c';
 
-$resize-vertical: "\f07d";
+$resize-vertical: '\f07d';
 
-$resize-horizontal: "\f07e";
+$resize-horizontal: '\f07e';
 
-$bar-chart: "\f080";
+$bar-chart: '\f080';
 
-$twitter-sign: "\f081";
+$twitter-sign: '\f081';
 
-$facebook-sign: "\f082";
+$facebook-sign: '\f082';
 
-$camera-retro: "\f083";
+$camera-retro: '\f083';
 
-$key: "\f084";
+$key: '\f084';
 
-$cogs: "\f085";
+$cogs: '\f085';
 
-$comments: "\f086";
+$comments: '\f086';
 
-$thumbs-up-alt: "\f087";
+$thumbs-up-alt: '\f087';
 
-$thumbs-down-alt: "\f088";
+$thumbs-down-alt: '\f088';
 
-$star-half: "\f089";
+$star-half: '\f089';
 
-$heart-empty: "\f08a";
+$heart-empty: '\f08a';
 
-$signout: "\f08b";
+$signout: '\f08b';
 
-$linkedin-sign: "\f08c";
+$linkedin-sign: '\f08c';
 
-$pushpin: "\f08d";
+$pushpin: '\f08d';
 
-$external-link: "\f08e";
+$external-link: '\f08e';
 
-$signin: "\f090";
+$signin: '\f090';
 
-$trophy: "\f091";
+$trophy: '\f091';
 
-$github-sign: "\f092";
+$github-sign: '\f092';
 
-$upload-alt: "\f093";
+$upload-alt: '\f093';
 
-$lemon: "\f094";
+$lemon: '\f094';
 
-$phone: "\f095";
+$phone: '\f095';
 
-$check-empty: "\f096";
+$check-empty: '\f096';
 
-$bookmark-empty: "\f097";
+$bookmark-empty: '\f097';
 
-$phone-sign: "\f098";
+$phone-sign: '\f098';
 
-$twitter: "\f099";
+$twitter: '\f099';
 
-$facebook: "\f09a";
+$facebook: '\f09a';
 
-$github: "\f09b";
+$github: '\f09b';
 
-$unlock: "\f09c";
+$unlock: '\f09c';
 
-$credit-card: "\f09d";
+$credit-card: '\f09d';
 
-$rss: "\f09e";
+$rss: '\f09e';
 
-$hdd: "\f0a0";
+$hdd: '\f0a0';
 
-$bullhorn: "\f0a1";
+$bullhorn: '\f0a1';
 
-$bell: "\f0a2";
+$bell: '\f0a2';
 
-$certificate: "\f0a3";
+$certificate: '\f0a3';
 
-$hand-right: "\f0a4";
+$hand-right: '\f0a4';
 
-$hand-left: "\f0a5";
+$hand-left: '\f0a5';
 
-$hand-up: "\f0a6";
+$hand-up: '\f0a6';
 
-$hand-down: "\f0a7";
+$hand-down: '\f0a7';
 
-$circle-arrow-left: "\f0a8";
+$circle-arrow-left: '\f0a8';
 
-$circle-arrow-right: "\f0a9";
+$circle-arrow-right: '\f0a9';
 
-$circle-arrow-up: "\f0aa";
+$circle-arrow-up: '\f0aa';
 
-$circle-arrow-down: "\f0ab";
+$circle-arrow-down: '\f0ab';
 
-$globe: "\f0ac";
+$globe: '\f0ac';
 
-$wrench: "\f0ad";
+$wrench: '\f0ad';
 
-$tasks: "\f0ae";
+$tasks: '\f0ae';
 
-$filter: "\f0b0";
+$filter: '\f0b0';
 
-$briefcase: "\f0b1";
+$briefcase: '\f0b1';
 
-$fullscreen: "\f0b2";
+$fullscreen: '\f0b2';
 
-$group: "\f0c0";
+$group: '\f0c0';
 
-$link: "\f0c1";
+$link: '\f0c1';
 
-$cloud: "\f0c2";
+$cloud: '\f0c2';
 
-$beaker: "\f0c3";
+$beaker: '\f0c3';
 
-$cut: "\f0c4";
+$cut: '\f0c4';
 
-$copy: "\f0c5";
+$copy: '\f0c5';
 
-$paper-clip: "\f0c6";
+$paper-clip: '\f0c6';
 
-$save: "\f0c7";
+$save: '\f0c7';
 
-$sign-blank: "\f0c8";
+$sign-blank: '\f0c8';
 
-$reorder: "\f0c9";
+$reorder: '\f0c9';
 
-$list-ul: "\f0ca";
+$list-ul: '\f0ca';
 
-$list-ol: "\f0cb";
+$list-ol: '\f0cb';
 
-$strikethrough: "\f0cc";
+$strikethrough: '\f0cc';
 
-$underline: "\f0cd";
+$underline: '\f0cd';
 
-$table: "\f0ce";
+$table: '\f0ce';
 
-$magic: "\f0d0";
+$magic: '\f0d0';
 
-$truck: "\f0d1";
+$truck: '\f0d1';
 
-$pinterest: "\f0d2";
+$pinterest: '\f0d2';
 
-$pinterest-sign: "\f0d3";
+$pinterest-sign: '\f0d3';
 
-$google-plus-sign: "\f0d4";
+$google-plus-sign: '\f0d4';
 
-$google-plus: "\f0d5";
+$google-plus: '\f0d5';
 
-$money: "\f0d6";
+$money: '\f0d6';
 
-$caret-down: "\f0d7";
+$caret-down: '\f0d7';
 
-$caret-up: "\f0d8";
+$caret-up: '\f0d8';
 
-$caret-left: "\f0d9";
+$caret-left: '\f0d9';
 
-$caret-right: "\f0da";
+$caret-right: '\f0da';
 
-$columns: "\f0db";
+$columns: '\f0db';
 
-$sort: "\f0dc";
+$sort: '\f0dc';
 
-$sort-down: "\f0dd";
+$sort-down: '\f0dd';
 
-$sort-up: "\f0de";
+$sort-up: '\f0de';
 
-$envelope: "\f0e0";
+$envelope: '\f0e0';
 
-$linkedin: "\f0e1";
+$linkedin: '\f0e1';
 
-$undo: "\f0e2";
+$undo: '\f0e2';
 
-$legal: "\f0e3";
+$legal: '\f0e3';
 
-$dashboard: "\f0e4";
+$dashboard: '\f0e4';
 
-$comment-alt: "\f0e5";
+$comment-alt: '\f0e5';
 
-$comments-alt: "\f0e6";
+$comments-alt: '\f0e6';
 
-$bolt: "\f0e7";
+$bolt: '\f0e7';
 
-$sitemap: "\f0e8";
+$sitemap: '\f0e8';
 
-$umbrella: "\f0e9";
+$umbrella: '\f0e9';
 
-$paste: "\f0ea";
+$paste: '\f0ea';
 
-$lightbulb: "\f0eb";
+$lightbulb: '\f0eb';
 
-$exchange: "\f0ec";
+$exchange: '\f0ec';
 
-$cloud-download: "\f0ed";
+$cloud-download: '\f0ed';
 
-$cloud-upload: "\f0ee";
+$cloud-upload: '\f0ee';
 
-$user-md: "\f0f0";
+$user-md: '\f0f0';
 
-$stethoscope: "\f0f1";
+$stethoscope: '\f0f1';
 
-$suitcase: "\f0f2";
+$suitcase: '\f0f2';
 
-$bell-alt: "\f0f3";
+$bell-alt: '\f0f3';
 
-$coffee: "\f0f4";
+$coffee: '\f0f4';
 
-$food: "\f0f5";
+$food: '\f0f5';
 
-$file-text-alt: "\f0f6";
+$file-text-alt: '\f0f6';
 
-$building: "\f0f7";
+$building: '\f0f7';
 
-$hospital: "\f0f8";
+$hospital: '\f0f8';
 
-$ambulance: "\f0f9";
+$ambulance: '\f0f9';
 
-$medkit: "\f0fa";
+$medkit: '\f0fa';
 
-$fighter-jet: "\f0fb";
+$fighter-jet: '\f0fb';
 
-$beer: "\f0fc";
+$beer: '\f0fc';
 
-$h-sign: "\f0fd";
+$h-sign: '\f0fd';
 
-$plus-sign-alt: "\f0fe";
+$plus-sign-alt: '\f0fe';
 
-$double-angle-left: "\f100";
+$double-angle-left: '\f100';
 
-$double-angle-right: "\f101";
+$double-angle-right: '\f101';
 
-$double-angle-up: "\f102";
+$double-angle-up: '\f102';
 
-$double-angle-down: "\f103";
+$double-angle-down: '\f103';
 
-$angle-left: "\f104";
+$angle-left: '\f104';
 
-$angle-right: "\f105";
+$angle-right: '\f105';
 
-$angle-up: "\f106";
+$angle-up: '\f106';
 
-$angle-down: "\f107";
+$angle-down: '\f107';
 
-$desktop: "\f108";
+$desktop: '\f108';
 
-$laptop: "\f109";
+$laptop: '\f109';
 
-$tablet: "\f10a";
+$tablet: '\f10a';
 
-$mobile-phone: "\f10b";
+$mobile-phone: '\f10b';
 
-$circle-blank: "\f10c";
+$circle-blank: '\f10c';
 
-$quote-left: "\f10d";
+$quote-left: '\f10d';
 
-$quote-right: "\f10e";
+$quote-right: '\f10e';
 
-$spinner: "\f110";
+$spinner: '\f110';
 
-$circle: "\f111";
+$circle: '\f111';
 
-$reply: "\f112";
+$reply: '\f112';
 
-$github-alt: "\f113";
+$github-alt: '\f113';
 
-$folder-close-alt: "\f114";
+$folder-close-alt: '\f114';
 
-$folder-open-alt: "\f115";
+$folder-open-alt: '\f115';
 
-$expand-alt: "\f116";
+$expand-alt: '\f116';
 
-$collapse-alt: "\f117";
+$collapse-alt: '\f117';
 
-$smile: "\f118";
+$smile: '\f118';
 
-$frown: "\f119";
+$frown: '\f119';
 
-$meh: "\f11a";
+$meh: '\f11a';
 
-$gamepad: "\f11b";
+$gamepad: '\f11b';
 
-$keyboard: "\f11c";
+$keyboard: '\f11c';
 
-$flag-alt: "\f11d";
+$flag-alt: '\f11d';
 
-$flag-checkered: "\f11e";
+$flag-checkered: '\f11e';
 
-$terminal: "\f120";
+$terminal: '\f120';
 
-$code: "\f121";
+$code: '\f121';
 
-$reply-all: "\f122";
+$reply-all: '\f122';
 
-$mail-reply-all: "\f122";
+$mail-reply-all: '\f122';
 
-$star-half-empty: "\f123";
+$star-half-empty: '\f123';
 
-$location-arrow: "\f124";
+$location-arrow: '\f124';
 
-$crop: "\f125";
+$crop: '\f125';
 
-$code-fork: "\f126";
+$code-fork: '\f126';
 
-$unlink: "\f127";
+$unlink: '\f127';
 
-$question: "\f128";
+$question: '\f128';
 
-$info: "\f129";
+$info: '\f129';
 
-$exclamation: "\f12a";
+$exclamation: '\f12a';
 
-$superscript: "\f12b";
+$superscript: '\f12b';
 
-$subscript: "\f12c";
+$subscript: '\f12c';
 
-$eraser: "\f12d";
+$eraser: '\f12d';
 
-$puzzle-piece: "\f12e";
+$puzzle-piece: '\f12e';
 
-$microphone: "\f130";
+$microphone: '\f130';
 
-$microphone-off: "\f131";
+$microphone-off: '\f131';
 
-$shield: "\f132";
+$shield: '\f132';
 
-$calendar-empty: "\f133";
+$calendar-empty: '\f133';
 
-$fire-extinguisher: "\f134";
+$fire-extinguisher: '\f134';
 
-$rocket: "\f135";
+$rocket: '\f135';
 
-$maxcdn: "\f136";
+$maxcdn: '\f136';
 
-$chevron-sign-left: "\f137";
+$chevron-sign-left: '\f137';
 
-$chevron-sign-right: "\f138";
+$chevron-sign-right: '\f138';
 
-$chevron-sign-up: "\f139";
+$chevron-sign-up: '\f139';
 
-$chevron-sign-down: "\f13a";
+$chevron-sign-down: '\f13a';
 
-$html5: "\f13b";
+$html5: '\f13b';
 
-$css3: "\f13c";
+$css3: '\f13c';
 
-$anchor: "\f13d";
+$anchor: '\f13d';
 
-$unlock-alt: "\f13e";
+$unlock-alt: '\f13e';
 
-$bullseye: "\f140";
+$bullseye: '\f140';
 
-$ellipsis-horizontal: "\f141";
+$ellipsis-horizontal: '\f141';
 
-$ellipsis-vertical: "\f142";
+$ellipsis-vertical: '\f142';
 
-$rss-sign: "\f143";
+$rss-sign: '\f143';
 
-$play-sign: "\f144";
+$play-sign: '\f144';
 
-$ticket: "\f145";
+$ticket: '\f145';
 
-$minus-sign-alt: "\f146";
+$minus-sign-alt: '\f146';
 
-$check-minus: "\f147";
+$check-minus: '\f147';
 
-$level-up: "\f148";
+$level-up: '\f148';
 
-$level-down: "\f149";
+$level-down: '\f149';
 
-$check-sign: "\f14a";
+$check-sign: '\f14a';
 
-$edit-sign: "\f14b";
+$edit-sign: '\f14b';
 
-$external-link-sign: "\f14c";
+$external-link-sign: '\f14c';
 
-$share-sign: "\f14d";
+$share-sign: '\f14d';
 
-$compass: "\f14e";
+$compass: '\f14e';
 
-$collapse: "\f150";
+$collapse: '\f150';
 
-$collapse-top: "\f151";
+$collapse-top: '\f151';
 
-$expand: "\f152";
+$expand: '\f152';
 
-$eur: "\f153";
+$eur: '\f153';
 
-$gbp: "\f154";
+$gbp: '\f154';
 
-$usd: "\f155";
+$usd: '\f155';
 
-$inr: "\f156";
+$inr: '\f156';
 
-$jpy: "\f157";
+$jpy: '\f157';
 
-$cny: "\f158";
+$cny: '\f158';
 
-$krw: "\f159";
+$krw: '\f159';
 
-$btc: "\f15a";
+$btc: '\f15a';
 
-$file: "\f15b";
+$file: '\f15b';
 
-$file-text: "\f15c";
+$file-text: '\f15c';
 
-$sort-by-alphabet: "\f15d";
+$sort-by-alphabet: '\f15d';
 
-$sort-by-alphabet-alt: "\f15e";
+$sort-by-alphabet-alt: '\f15e';
 
-$sort-by-attributes: "\f160";
+$sort-by-attributes: '\f160';
 
-$sort-by-attributes-alt: "\f161";
+$sort-by-attributes-alt: '\f161';
 
-$sort-by-order: "\f162";
+$sort-by-order: '\f162';
 
-$sort-by-order-alt: "\f163";
+$sort-by-order-alt: '\f163';
 
-$thumbs-up: "\f164";
+$thumbs-up: '\f164';
 
-$thumbs-down: "\f165";
+$thumbs-down: '\f165';
 
-$youtube-sign: "\f166";
+$youtube-sign: '\f166';
 
-$youtube: "\f167";
+$youtube: '\f167';
 
-$xing: "\f168";
+$xing: '\f168';
 
-$xing-sign: "\f169";
+$xing-sign: '\f169';
 
-$youtube-play: "\f16a";
+$youtube-play: '\f16a';
 
-$dropbox: "\f16b";
+$dropbox: '\f16b';
 
-$stackexchange: "\f16c";
+$stackexchange: '\f16c';
 
-$instagram: "\f16d";
+$instagram: '\f16d';
 
-$flickr: "\f16e";
+$flickr: '\f16e';
 
-$adn: "\f170";
+$adn: '\f170';
 
-$bitbucket: "\f171";
+$bitbucket: '\f171';
 
-$bitbucket-sign: "\f172";
+$bitbucket-sign: '\f172';
 
-$tumblr: "\f173";
+$tumblr: '\f173';
 
-$tumblr-sign: "\f174";
+$tumblr-sign: '\f174';
 
-$long-arrow-down: "\f175";
+$long-arrow-down: '\f175';
 
-$long-arrow-up: "\f176";
+$long-arrow-up: '\f176';
 
-$long-arrow-left: "\f177";
+$long-arrow-left: '\f177';
 
-$long-arrow-right: "\f178";
+$long-arrow-right: '\f178';
 
-$apple: "\f179";
+$apple: '\f179';
 
-$windows: "\f17a";
+$windows: '\f17a';
 
-$android: "\f17b";
+$android: '\f17b';
 
-$linux: "\f17c";
+$linux: '\f17c';
 
-$dribbble: "\f17d";
+$dribbble: '\f17d';
 
-$skype: "\f17e";
+$skype: '\f17e';
 
-$foursquare: "\f180";
+$foursquare: '\f180';
 
-$trello: "\f181";
+$trello: '\f181';
 
-$female: "\f182";
+$female: '\f182';
 
-$male: "\f183";
+$male: '\f183';
 
-$gittip: "\f184";
+$gittip: '\f184';
 
-$sun: "\f185";
+$sun: '\f185';
 
-$moon: "\f186";
+$moon: '\f186';
 
-$archive: "\f187";
+$archive: '\f187';
 
-$bug: "\f188";
+$bug: '\f188';
 
-$vk: "\f189";
+$vk: '\f189';
 
-$weibo: "\f18a";
+$weibo: '\f18a';
 
-$renren: "\f18b";
-
+$renren: '\f18b';

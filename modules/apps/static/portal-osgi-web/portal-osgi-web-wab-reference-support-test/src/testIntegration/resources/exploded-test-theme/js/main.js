@@ -5,8 +5,7 @@ AUI().ready(
 	loaded.
 	*/
 
-	function() {
-	}
+	function () {}
 );
 
 Liferay.Portlet.ready(
@@ -18,8 +17,7 @@ Liferay.Portlet.ready(
 	node: the Alloy Node object of the current portlet
 	*/
 
-	function(portletId, node) {
-	}
+	function (portletId, node) {}
 );
 
 Liferay.on(
@@ -30,6 +28,5 @@ Liferay.on(
 	the page.
 	*/
 
-	function() {
-	}
+	function () {}
 );

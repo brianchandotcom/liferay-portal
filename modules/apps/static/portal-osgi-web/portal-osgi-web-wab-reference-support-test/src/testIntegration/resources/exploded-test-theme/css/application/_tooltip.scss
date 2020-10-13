@@ -1,7 +1,8 @@
 .lfr-portal-tooltip {
 	display: inline-block;
 
-	&, a {
+	&,
+	a {
 		-webkit-touch-callout: none;
 
 		@include user-select(none);

@@ -38,13 +38,14 @@
 	margin: 0 auto;
 	width: $toggle-card-icon-width;
 
-	[class*="icon-"] {
+	[class*='icon-'] {
 		display: block;
 	}
 }
 
 .toggle-card-label {
-	height: $toggle-card-height - $toggle-card-icon-height - ($toggle-card-border-width * 2) - $toggle-card-padding-vertical;
+	height: $toggle-card-height - $toggle-card-icon-height -
+		($toggle-card-border-width * 2) - $toggle-card-padding-vertical;
 	line-height: 16px;
 	overflow: hidden;
 	padding-top: $toggle-card-padding-vertical;
@@ -69,10 +70,12 @@ input.toggle-card {
 
 		.toggle-card-icon {
 			background-color: $toggle-card-icon-bg;
-			border: $toggle-card-icon-border solid $toggle-card-icon-border-width;
+			border: $toggle-card-icon-border solid
+				$toggle-card-icon-border-width;
 
-			[class*="icon-"] {
-				line-height: $toggle-card-icon-height - ($toggle-card-icon-border-width * 2);
+			[class*='icon-'] {
+				line-height: $toggle-card-icon-height -
+					($toggle-card-icon-border-width * 2);
 			}
 		}
 	}
@@ -81,10 +84,14 @@ input.toggle-card {
 		background-color: $toggle-card-on-bg;
 		border: $toggle-card-on-border-width solid $toggle-card-on-border;
 		color: $toggle-card-on-text-color;
-		padding-bottom: $toggle-card-padding-vertical - abs($toggle-card-border-width - $toggle-card-on-border-width);
-		padding-left: $toggle-card-padding-horizontal - abs($toggle-card-border-width - $toggle-card-on-border-width);
-		padding-right: $toggle-card-padding-horizontal - abs($toggle-card-border-width - $toggle-card-on-border-width);
-		padding-top: $toggle-card-padding-vertical - abs($toggle-card-border-width - $toggle-card-on-border-width);
+		padding-bottom: $toggle-card-padding-vertical -
+			abs($toggle-card-border-width - $toggle-card-on-border-width);
+		padding-left: $toggle-card-padding-horizontal -
+			abs($toggle-card-border-width - $toggle-card-on-border-width);
+		padding-right: $toggle-card-padding-horizontal -
+			abs($toggle-card-border-width - $toggle-card-on-border-width);
+		padding-top: $toggle-card-padding-vertical -
+			abs($toggle-card-border-width - $toggle-card-on-border-width);
 
 		.toggle-card-off {
 			display: none;
@@ -96,16 +103,24 @@ input.toggle-card {
 
 		.toggle-card-icon {
 			background-color: $toggle-card-on-icon-bg;
-			border: $toggle-card-on-icon-border-width solid $toggle-card-on-icon-border;
+			border: $toggle-card-on-icon-border-width solid
+				$toggle-card-on-icon-border;
 
-			[class*="icon-"] {
-				line-height: $toggle-card-icon-height - ($toggle-card-on-icon-border-width * 2);
+			[class*='icon-'] {
+				line-height: $toggle-card-icon-height -
+					($toggle-card-on-icon-border-width * 2);
 			}
 		}
 	}
 
 	&:focus ~ .toggle-card-container {
-		box-shadow: 0 0 3px 2px rgba(red($input-border-focus), green($input-border-focus), blue($input-border-focus), 0.6);
+		box-shadow: 0 0 3px 2px
+			rgba(
+				red($input-border-focus),
+				green($input-border-focus),
+				blue($input-border-focus),
+				0.6
+			);
 	}
 
 	&[disabled] ~ .toggle-card-container {

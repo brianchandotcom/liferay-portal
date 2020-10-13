@@ -48,8 +48,8 @@
 		border-radius: $input-group-addon-border-radius;
 		color: $input-group-addon-color;
 
-		input[type="checkbox"],
-		input[type="radio"] {
+		input[type='checkbox'],
+		input[type='radio'] {
 			display: block;
 		}
 	}
@@ -153,7 +153,9 @@
 	display: inline-block;
 
 	@if (variable-exists(atlas-theme)) {
-		border-bottom: $btn-border-width solid $input-group-default-addon-border-color;
+		border-bottom: $btn-border-width
+			solid
+			$input-group-default-addon-border-color;
 		height: $input-mobile-height-base;
 		line-height: $input-mobile-height-base;
 		width: 30px;

@@ -45,7 +45,7 @@ public interface MFAIPAddressConfiguration {
 	 * @return allowed IPs and their network masks.
 	 */
 	@Meta.AD(
-		deflt = "127.0.0.1/255.0.0.0|::1/128|10.0.0.0/8|172.16.0.0/12|192.168.0.0/16|fc00::/7",
+		deflt = "127.0.0.1/255.0.0.0",
 		description = "allowed-ip-address-and-netmask-description",
 		name = "allowed-ip-address-and-netmask-name", required = false
 	)

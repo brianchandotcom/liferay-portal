@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.payment.method.paypal.internal;
 
+import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
@@ -35,6 +36,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -847,8 +849,21 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 		agreement.setPayer(payer);
 
-		ShippingAddress shippingAddress = _getShippingAddress(
-			commerceOrder.getShippingAddress());
+		CommerceAddress commerceAddress = commerceOrder.getShippingAddress();
+
+		if (commerceAddress == null) {
+			CommerceAccount commerceAccount =
+				commerceOrder.getCommerceAccount();
+
+			commerceAddress = _commerceAddressLocalService.fetchCommerceAddress(
+				commerceAccount.getDefaultShippingAddressId());
+		}
+
+		if (commerceAddress == null) {
+			commerceAddress = commerceOrder.getBillingAddress();
+		}
+
+		ShippingAddress shippingAddress = _getShippingAddress(commerceAddress);
 
 		shippingAddress.setRecipientName(null);
 
@@ -1210,21 +1225,25 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 		ShippingAddress shippingAddress = new ShippingAddress();
 
-		shippingAddress.setCity(commerceAddress.getCity());
+		if (commerceAddress != null) {
+			shippingAddress.setCity(commerceAddress.getCity());
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+			CommerceCountry commerceCountry =
+				commerceAddress.getCommerceCountry();
 
-		shippingAddress.setCountryCode(commerceCountry.getTwoLettersISOCode());
+			shippingAddress.setCountryCode(
+				commerceCountry.getTwoLettersISOCode());
 
-		shippingAddress.setLine1(commerceAddress.getStreet1());
-		shippingAddress.setLine2(commerceAddress.getStreet2());
-		shippingAddress.setPostalCode(commerceAddress.getZip());
-		shippingAddress.setRecipientName(commerceAddress.getName());
+			shippingAddress.setLine1(commerceAddress.getStreet1());
+			shippingAddress.setLine2(commerceAddress.getStreet2());
+			shippingAddress.setPostalCode(commerceAddress.getZip());
+			shippingAddress.setRecipientName(commerceAddress.getName());
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+			CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
 
-		if (commerceRegion != null) {
-			shippingAddress.setState(commerceRegion.getCode());
+			if (commerceRegion != null) {
+				shippingAddress.setState(commerceRegion.getCode());
+			}
 		}
 
 		return shippingAddress;
@@ -1284,6 +1303,9 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 	private static final DecimalFormat _payPalDecimalFormat = new DecimalFormat(
 		"#,###.##");
 	private static final TimeZone _utc = TimeZone.getTimeZone("UTC");
+
+	@Reference
+	private CommerceAddressLocalService _commerceAddressLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

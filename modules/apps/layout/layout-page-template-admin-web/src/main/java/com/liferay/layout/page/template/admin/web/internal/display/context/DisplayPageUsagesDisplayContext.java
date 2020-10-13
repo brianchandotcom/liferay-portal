@@ -61,6 +61,16 @@ public class DisplayPageUsagesDisplayContext {
 		return _classNameId;
 	}
 
+	public long getClassTypeId() {
+		if (Validator.isNotNull(_classTypeId)) {
+			return _classTypeId;
+		}
+
+		_classTypeId = ParamUtil.getLong(_httpServletRequest, "classTypeId");
+
+		return _classTypeId;
+	}
+
 	public long getLayoutPageTemplateEntryId() {
 		if (Validator.isNotNull(_layoutPageTemplateEntryId)) {
 			return _layoutPageTemplateEntryId;
@@ -194,6 +204,7 @@ public class DisplayPageUsagesDisplayContext {
 	}
 
 	private Long _classNameId;
+	private Long _classTypeId;
 	private Boolean _defaultTemplate;
 	private final HttpServletRequest _httpServletRequest;
 	private Long _layoutPageTemplateEntryId;

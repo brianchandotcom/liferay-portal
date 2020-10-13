@@ -1,0 +1,41 @@
+.html-editor.portlet {
+	background: #FFF;
+	color: #000;
+	line-height: 1;
+	padding: 1em;
+}
+
+.html-editor.portlet-message-boards {
+	@include hyphens;
+
+	word-wrap: break-word;
+
+	blockquote {
+		background: #EEF0F2 url(../images/message_boards/quoteleft.png) no-repeat 5px 5px;
+		border: 1px solid #777;
+		padding: 5px 45px;
+
+		&:after {
+			background: url(../images/message_boards/quoteright.png) no-repeat 50%;
+			content: '';
+			display: block;
+			float: right;
+			height: 24px;
+			margin-right: -35px;
+			margin-top: -25px;
+			width: 31px;
+			z-index: 999;
+		}
+
+		cite {
+			display: block;
+			font-weight: bold;
+		}
+	}
+
+	pre {
+		background: #F9F9F9;
+		border: 1px solid #777;
+		padding: 0.5em;
+	}
+}

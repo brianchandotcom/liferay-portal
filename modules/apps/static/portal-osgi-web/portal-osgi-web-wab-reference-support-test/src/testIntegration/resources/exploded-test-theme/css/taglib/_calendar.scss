@@ -1,0 +1,33 @@
+.taglib-calendar {
+	table {
+		border-color: #999;
+	}
+
+	tr {
+		th, td {
+			border-bottom-color: #999;
+		}
+
+		&.portlet-section-header th, td {
+			border-color: #999;
+		}
+	}
+
+	a:hover, a:focus {
+		background-color: #CCC;
+	}
+
+	.calendar-inactive {
+		color: #999;
+	}
+
+	.has-events {
+		a span {
+			background: url(../images/calendar/event_indicator.png) no-repeat 50% 95%;
+		}
+
+		&.calendar-current-day a span {
+			background-image: url(../images/calendar/event_indicator_current.png);
+		}
+	}
+}

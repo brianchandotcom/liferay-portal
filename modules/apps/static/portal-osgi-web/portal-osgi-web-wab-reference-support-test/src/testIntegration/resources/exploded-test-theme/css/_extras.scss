@@ -1,0 +1,398 @@
+@mixin keyframes($name) {
+	@-webkit-keyframes #{$name} {
+		@content;
+	}
+
+	@-moz-keyframes #{$name} {
+		@content;
+	}
+
+	@-o-keyframes #{$name} {
+		@content;
+	}
+
+	@keyframes #{$name} {
+		@content;
+	}
+}
+
+.menu-content, .underlay-content {
+	box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5);
+}
+
+.lfr-ddm-container .file-entry-upload-progress {
+	border-radius: 0 0 4px 4px;
+}
+
+.lfr-preview-file-image img {
+	box-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.8);
+}
+
+.lfr-preview-file-image-current-column {
+	box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.8);
+}
+
+.lfr-preview-file-image-current-column {
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+.portlet-document-library, .portlet-dynamic-data-mapping {
+	.lfr-ddm-small-image-preview {
+		box-shadow: 0 1px 3px #CCC;
+	}
+}
+
+.portlet-document-library-upload-mask .overlaymask-content {
+	border-radius: 5px;
+}
+
+.lfr-search-combobox-item {
+	border-radius: 1px;
+}
+
+.lfr-search-combobox {
+	.field-input-text {
+		border-radius: 4px 1px 1px 4px;
+	}
+
+	.button-input {
+		border-radius: 1px 4px 4px 1px;
+	}
+}
+
+.lfr-upload-container .progress-bar, .lfr-upload-container .progress, .lfr-editable:after {
+	border-radius: 10px;
+}
+
+.portlet-language .portlet-body {
+	.current-language, .taglib-icon, .taglib-language-list-text {
+		border-radius: 10px;
+	}
+}
+
+body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbnail, .lfr-api-results, .lfr-translation-manager, .lfr-translation-manager-translation, .lfr-upload-container .cancel-button .modify-pages .delete-tab, .portlet-image-gallery-display .image-thumbnail img, .rule-group-instance-container .rule-group-instance, .select-documents, .select-files, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote > div, .taglib-ratings.stars .rating-focused > div, .tags-search-combobox .field-input-text {
+	border-radius: 4px;
+}
+
+.entry-display-style, .lfr-search-combobox, .lfr-upload-container .upload-file, .lfr-upload-container .upload-target, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected, .portlet-image-gallery-display .image-icon, .select-documents, .select-files {
+	border-radius: 5px;
+}
+
+.portlet-dynamic-data-list-display, .portlet-dynamic-data-lists {
+	.lfr-ddm-container {
+		.lfr-ddm-repeatable-placeholder {
+			border-radius: 6px;
+		}
+	}
+}
+
+.taglib-categorization-filter .asset-entry {
+	border-radius: 14px;
+}
+
+.menu-content {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+
+.taglib-form-navigator > .form-steps > ul.form-navigator.list-group {
+	box-shadow: none;
+
+	.tab .tab-label {
+		&:hover, &:focus {
+			.number {
+				box-shadow: 0 0 5px 0 #333;
+				@include transition-duration(0.25s);
+				@include transition-property(box-shadow);
+				@include transition-timing-function(ease-out);
+			}
+		}
+
+		.number {
+			border-radius: 50%;
+		}
+	}
+}
+
+.underlay-content {
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.input-localized {
+	.lfr-input-localized-state {
+		border-radius: 3px;
+	}
+
+	.lfr-input-localized .lfr-input-localized-state {
+		box-shadow: 0 0 3px #DDD;
+
+		&.lfr-input-localized-state-error {
+			box-shadow: 0 0 3px #FF0047;
+		}
+	}
+
+	.palette-item-selected .lfr-input-localized-state {
+		box-shadow: 0 0 3px #27C1F2;
+	}
+}
+
+.lfr-content-preview-popup .lfr-content-preview-popup-content {
+	border-radius: 0;
+	box-shadow: 8px 3px 7px rgba(0, 0, 0, 0.25);
+}
+
+.lfr-message .lfr-message-control {
+	border-radius: 10px;
+}
+
+.lfr-token {
+	border-radius: 8px;
+}
+
+.staging-tabview-list {
+	border-radius: 0;
+}
+
+.site-variations-tabview-list .tab-content, .staging-tabview-list .tab-active .tab-content, .tagselector-content .textboxlistentry-holder .lfr-tag-selector-input:focus {
+	box-shadow: none;
+}
+
+.rule-group-instance-container .rule-group-instance {
+	box-shadow: 1px 1px 2px #999;
+}
+
+.lfr-action-label {
+	border-radius: 2px;
+}
+
+@include keyframes(progress-bar-stripes) {
+	from {
+		background-position: 40px 0;
+	}
+
+	to {
+		background-position: 0 0;
+	}
+}
+
+.lfr-progress-active .progress-bar-status, .lfr-upload-container .file-uploading .progress-bar .progress {
+	$transparent: rgba(255, 255, 255, 0);
+
+	background-size: 40px 40px;
+
+	@include background-image(linear-gradient(-45deg, rgba(255, 255, 255, 0.3) 25%, $transparent 25%, $transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, $transparent 75%, $transparent));
+	@include experimental(animation, progress-bar-stripes 0.5s linear infinite);
+	@include transition(width, 0.5s, ease-out);
+}
+
+@include keyframes(highlight-animation) {
+	from {
+		background-color: #FFC;
+	}
+
+	to {
+		background-color: transparent;
+	}
+}
+
+.highlight-animation {
+	@include experimental(animation, highlight-animation 0.7s);
+}
+
+.lfr-spa-loading .lfr-spa-loading-bar {
+	@include experimental(animation, shift-rightwards 1s ease-in-out infinite);
+	@include experimental(animation-delay, 0.4s);
+}
+
+.lfr-spa-loading-bar {
+	@include transform(translateX(100%));
+}
+
+@include keyframes(shift-rightwards) {
+	0% {
+		@include transform(translateX(-100%));
+	}
+
+	40% {
+		@include transform(translateX(0%));
+	}
+
+	60% {
+		@include transform(translateX(0%));
+	}
+
+	100% {
+		@include transform(translateX(100%));
+	}
+}
+
+.mobile.touch body:first-of-type .portlet-content .lfr-icon-actions {
+	.lfr-icon-menu-text, .taglib-text {
+		max-width: 200px;
+	}
+}
+
+.portlet-boundary.yui3-dd-dragging {
+	@include transform(scale(0.8));
+	@include transition(transform 0.3s ease);
+}
+
+.portlet-document-library .entry-thumbnail .label, .portlet-document-library-display .workflow-status .label, .portlet-journal .entry-thumbnail .label {
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.portlet-options.btn-group {
+	&, &.open {
+		.dropdown-toggle {
+			box-shadow: none;
+		}
+	}
+}
+
+@include keyframes(lfr-drop-active) {
+	0% {
+		background-color: #EBEBEB;
+		border-color: #DDD;
+	}
+
+	50% {
+		background-color: #DDEDDE;
+		border-color: #7D7;
+
+		@include transform(scale(1.1));
+	}
+
+	75% {
+		background-color: #DDEDDE;
+		border-color: #7D7;
+	}
+
+	100% {
+		background-color: #EBEBEB;
+		border-color: #DDD;
+	}
+}
+
+.upload-drop-active {
+	.lfr-upload-container .upload-target {
+		@include experimental(animation, none);
+	}
+
+	.portlet-document-library .document-container {
+		box-shadow: inset 0 0 5px #B8C1D1;
+	}
+}
+
+.upload-drop-intent .lfr-upload-container .upload-target {
+	@include experimental(animation, lfr-drop-active 1s ease 0.2s infinite);
+}
+
+.quick-access-nav {
+	a {
+		box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 1px;
+	}
+}
+
+.cke_toolbar {
+	&.cke_toolbar__a11yhelpbtn {
+		.cke_toolgroup, .cke_toolgroup:hover {
+			box-shadow: initial;
+		}
+
+		.cke_button {
+			&:hover {
+				box-shadow: none;
+			}
+
+			.cke_button_label {
+				&:after {
+					@include background-image(linear-gradient(#FFF, #E4E4E4));
+					border-radius: 2px;
+				}
+
+				&:hover:after {
+					@include background-image(linear-gradient(#F2F2F2, #CCC));
+				}
+			}
+		}
+	}
+}
+
+/* ---------- Switches ---------- */
+
+input.switch {
+	&:focus ~ .switch-bar:before {
+		box-shadow: 0 0 3px #00F;
+	}
+
+	&:empty ~ .switch-bar {
+		&:after, &:before, .switch-icon, .switch-toggle:after, .switch-toggle:before {
+			@include transition(all 100ms ease-in);
+		}
+	}
+}
+
+/* ---------- Image selector ---------- */
+
+.taglib-image-selector {
+	.glyphicon-ok {
+		@include transition(opacity 0.2s ease-in-out);
+
+		border-radius: 30px;
+	}
+
+	.progress-wrapper .progressbar {
+		border-radius: 0;
+	}
+}
+
+/* ---------- Drop here info ---------- */
+
+.drop-here-info {
+	@include transition(all 0.2s ease-in-out);
+
+	.drop-icons {
+		@include transition(all 0.2s ease-in-out);
+
+		span {
+			@include transition(all 0.3s ease-in-out);
+
+			border-radius: 3px;
+		}
+
+		span:nth-of-type(1) {
+			@include transform(rotate(25deg));
+
+			box-shadow: 5px 4px 0 0 rgba(0, 0, 0, 0.08);
+		}
+
+		span:nth-of-type(2) {
+			@include transform(scale(0.8));
+
+			box-shadow: 0 6px 0 -2px rgba(0, 0, 0, 0.15);
+		}
+
+		span:nth-of-type(3) {
+			@include transform(rotate(-25deg));
+
+			box-shadow: -5px 4px 0 0 rgba(0, 0, 0, 0.08);
+		}
+	}
+}
+
+.drop-active .drop-here-info {
+	span:nth-of-type(1) {
+		@include transform(rotate(-20deg));
+	}
+
+	span:nth-of-type(2) {
+		@include transform(scale(1));
+	}
+
+	span:nth-of-type(3) {
+		@include transform(rotate(15deg));
+	}
+}

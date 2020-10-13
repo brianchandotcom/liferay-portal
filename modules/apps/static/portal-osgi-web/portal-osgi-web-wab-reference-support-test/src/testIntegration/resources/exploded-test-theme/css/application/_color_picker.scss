@@ -1,0 +1,22 @@
+.hsv-palette {
+	.hsv-view-container {
+		.hsv-label-value-hex .hsv-value {
+			width: 95px;
+		}
+
+		.hsv-label {
+			display: inline;
+			margin-left: 5px;
+		}
+
+		.hsv-value {
+			width: 30px;
+		}
+	}
+}
+
+.yui3-color-picker-popover {
+	.palette-container {
+		border-collapse: separate;
+	}
+}

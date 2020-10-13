@@ -1,0 +1,107 @@
+/* ---------- Cards ---------- */
+
+$card-tab-border-left-color: #65B6F0;
+$card-tab-border-left-width: 4px;
+$card-tab-padding-left-width: 20px;
+
+/* ---------- Cards horizontal ---------- */
+
+$card-horizontal-on-border: #65B6F0 !default;
+$card-horizontal-on-border-width: 2px !default;
+
+/* ---------- Dialogs ---------- */
+
+$dialog-footer-bg: $modal-footer-bg !default;
+$dialog-footer-border-color: $modal-footer-border-color !default;
+$dialog-footer-box-shadow: if(variable-exists(modal-footer-box-shadow), $modal-footer-box-shadow, null) !default;
+$dialog-footer-height: 60px;
+$dialog-navbar-height: $navbar-height !default;
+
+$dialog-desktop-footer-bg: if(variable-exists(modal-desktop-footer-bg), $modal-desktop-footer-bg, $dialog-footer-bg) !default;
+$dialog-desktop-footer-height: 89px;
+$dialog-desktop-navbar-height: if(variable-exists(navbar-desktop-height), $navbar-desktop-height, $dialog-navbar-height) !default;
+
+$dialog-footer-padding: 20px !default;
+$dialog-iframe-padding: 0 !default;
+
+/* ---------- Labels ---------- */
+
+$label-circle-border-radius: 20px !default;
+$label-rounded-border-radius: 3px !default;
+$label-square-border-radius: 0 !default;
+
+$label-entry-bg: #FFF !default;
+$label-entry-border-color: #000 !default;
+$label-entry-border-width: 1px !default;
+$label-entry-button-height: $input-height-base !default;
+$label-entry-button-width: $input-height-base !default;
+$label-entry-color: #000 !default;
+$label-entry-font-size: 14px !default;
+$label-entry-padding: 0 0 0 12px !default;
+
+/* ---------- Splitter ---------- */
+
+$splitter-bg: $panel-default-heading-bg !default;
+$splitter-border-radius: nth($panel-border-radius, 1) nth($panel-border-radius, 1) 0 0 !default;
+$splitter-box-shadow: if(variable-exists(panel-box-shadow), $panel-box-shadow, null) !default;
+$splitter-footer-margin: 20px;
+$splitter-padding: 10px 15px !default;
+$splitter-spaced-border-radius: $panel-border-radius;
+$splitter-text-color: $panel-default-text !default;
+
+/* ---------- Toggle card ---------- */
+
+$toggle-card-border-radius: 2px !default;
+
+$toggle-card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15) !default;
+
+$toggle-card-icon-border-radius: 30px !default;
+$toggle-card-icon-height: 32px !default;
+$toggle-card-icon-width: 32px !default;
+
+$toggle-card-border: #DCE0E3 !default;
+$toggle-card-border-width: 1px !default;
+$toggle-card-icon-bg: #FFF !default;
+$toggle-card-icon-border: #869CAD !default;
+$toggle-card-icon-border-width: 0 !default;
+
+$toggle-card-on-border: #65B6F0 !default;
+$toggle-card-on-border-width: 2px !default;
+$toggle-card-on-icon-bg: #FFF !default;
+$toggle-card-on-icon-border: #65B6F0 !default;
+$toggle-card-on-icon-border-width: 0 !default;
+
+/* ---------- File icons colors ---------- */
+
+$file-icon-color-0: #869CAD !default;
+$file-icon-color-1: #ED8D65 !default;
+$file-icon-color-2: #84BA3D !default;
+$file-icon-color-3: #9B65ED !default;
+$file-icon-color-4: #D4B908 !default;
+$file-icon-color-5: #E96465 !default;
+$file-icon-color-6: #65B4ED !default;
+$file-icon-color-7: #1C0C0C !default;
+
+/* ---------- File icons text colors ---------- */
+
+$file-icon-text-color-0: #FFF !default;
+$file-icon-text-color-1: #FFF !default;
+$file-icon-text-color-2: #FFF !default;
+$file-icon-text-color-3: #FFF !default;
+$file-icon-text-color-4: #FFF !default;
+$file-icon-text-color-5: #FFF !default;
+$file-icon-text-color-6: #FFF !default;
+$file-icon-text-color-7: #FFF !default;
+
+/* ---------- User icons colors ---------- */
+
+$user-icon-color-0: #4C0079 !default;
+$user-icon-color-1: #FD8300 !default;
+$user-icon-color-2: #009E57 !default;
+$user-icon-color-3: #F9B500 !default;
+$user-icon-color-4: #DF4230 !default;
+$user-icon-color-5: #BE67E5 !default;
+$user-icon-color-6: #004B8D !default;
+$user-icon-color-7: #ACCB02 !default;
+$user-icon-color-8: #A82003 !default;
+$user-icon-color-9: #FD63A7 !default;

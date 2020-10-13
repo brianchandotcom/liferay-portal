@@ -1,0 +1,69 @@
+.lfr-preview-file-content {
+	border-bottom-color: #6D6D6E;
+}
+
+.lfr-preview-file-image-current-column, .lfr-preview-file-video-current-column {
+	background: url(../images/common/checkerboard.png);
+}
+
+.lfr-preview-file-toolbar {
+	background: #333;
+	opacity: 0.5;
+
+	.icon-arrow-1-l {
+		background: url(../images/document_library/preview_left.png) no-repeat 0 50%;
+	}
+
+	.icon-arrow-1-r {
+		background: url(../images/document_library/preview_right.png) no-repeat 0 50%;
+	}
+
+	.icon-zoomin {
+		background: url(../images/document_library/preview_zoom.png) no-repeat 0 50%;
+	}
+}
+
+.lfr-preview-file-image-current-column:hover .lfr-preview-file-toolbar {
+	opacity: 1;
+}
+
+.lfr-preview-file-info {
+	background: #333;
+	color: #FFF;
+	opacity: 0.5;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.lfr-preview-file-index {
+	font-weight: bold;
+}
+
+.lfr-preview-file-image-current {
+	background: url(../images/aui/loading_indicator.gif) no-repeat 50% 50%;
+}
+
+.lfr-preview-file-image img {
+	background: url(../images/aui/loading_indicator.gif) no-repeat 50% 50%;
+	border-color: #AEB8BC;
+}
+
+.lfr-preview-file-image-selected img, .lfr-preview-file-image:hover img {
+	border-color: #00A2EA;
+}
+
+.lfr-preview-file-loading-indicator {
+	background: #333;
+	color: #FFF;
+}
+
+.lfr-preview-file-image-overlay-content {
+	background: url(../images/common/checkerboard.png);
+	border-color: #555;
+}
+
+.firefox .lfr-preview-video-content div.video-node {
+	height: 100%;
+}

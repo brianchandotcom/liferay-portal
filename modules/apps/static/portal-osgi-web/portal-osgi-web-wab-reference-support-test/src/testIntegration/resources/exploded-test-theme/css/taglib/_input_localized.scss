@@ -1,0 +1,53 @@
+.input-localized {
+	.palette-item-inner .lfr-input-localized-flag {
+		opacity: 0.5;
+	}
+
+	&.input-localized-focused .palette-item-inner .lfr-input-localized-flag {
+		opacity: 1;
+	}
+
+	.palette-item-inner {
+		border-color: #666;
+	}
+
+	.palette-item, .palette-item-inner, .palette-item-hover, .palette-item-hover .palette-item-inner {
+		border-color: transparent;
+	}
+
+	.lfr-input-localized .lfr-input-localized-state {
+		background: #DDD;
+
+		&.lfr-input-localized-state-error {
+			background: #FF0047;
+		}
+	}
+
+	.palette-item-selected .lfr-input-localized-state {
+		background: #27C1F2;
+	}
+}
+
+.lfr-friendly-url-input-group {
+	.input-group-addon {
+		background-color: transparent;
+		border-width: 0;
+		vertical-align: top;
+	}
+
+	.input-group-constrain {
+		background-color: $input-group-addon-bg;
+		border-color: $input-border;
+		border-style: solid;
+		border-top-left-radius: $input-border-radius;
+		border-top-width: $input-border-top-width;
+		border-width: $input-border-top-width 0 0 $input-border-left-width;
+		max-width: 300px;
+
+		@include media-query(null, $screen-xs-min - 1) {
+			max-width: 100px;
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+}

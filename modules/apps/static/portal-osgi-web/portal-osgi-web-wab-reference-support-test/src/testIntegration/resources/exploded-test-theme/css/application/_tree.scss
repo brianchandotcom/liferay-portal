@@ -1,0 +1,51 @@
+.tree-node {
+	.icon-check {
+		padding-right: 2px;
+
+		&:before {
+			content: $check-empty;
+		}
+	}
+
+	.tree-node-checked {
+		.icon-check {
+			padding-right: 0;
+
+			&:before {
+				content: $check;
+			}
+		}
+	}
+
+	[class ^="icon-"] {
+		margin-right: 5px;
+	}
+
+	.tree-node-checkbox-container {
+		margin-right: 0;
+	}
+
+	.tree-node-selected .tree-label {
+		background: none;
+	}
+}
+
+.tree-node-content {
+	.tree-hitarea {
+		color: #999;
+		font-size: 10px;
+		padding-right: 6px;
+	}
+
+	.tree-label {
+		margin-left: 3px;
+	}
+
+	.tree-node-hidden-hitarea {
+		visibility: hidden;
+	}
+}
+
+.tree-node-selected .tree-label {
+	background-color: transparent;
+}

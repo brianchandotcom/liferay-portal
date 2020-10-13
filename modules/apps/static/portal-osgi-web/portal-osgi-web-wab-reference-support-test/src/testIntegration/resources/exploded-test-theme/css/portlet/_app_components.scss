@@ -1,0 +1,91 @@
+/* ---------- Dynamic data list display/Journal portlet ---------- */
+
+.portlet-dynamic-data-lists-display, .portlet-dynamic-data-lists, .portlet-journal {
+	.lfr-ddm-field-group {
+		margin-bottom: 10px;
+		margin-top: 10px;
+		padding: 28px 24px 28px;
+	}
+}
+
+/* ---------- Breadcrumb taglib ---------- */
+
+.breadcrumb.breadcrumb-vertical {
+	display: inline-block;
+	text-align: center;
+
+	li {
+		display: block;
+
+		&.last, &.only {
+			background: none;
+		}
+	}
+
+	.divider {
+		background: url(../images/arrows/07_down.png) no-repeat 50% 100%;
+		display: block;
+
+		@include hide-text();
+
+		height: 10px;
+	}
+}
+
+/* ---------- Calendar taglib ---------- */
+
+.taglib-calendar {
+	tr {
+		&.portlet-section-header th, & td {
+			border-width: 0;
+		}
+
+		td {
+			a {
+				background-color: #F0F5F7;
+				border: 1px solid #FFF;
+				border-bottom-width: 0;
+				border-left-width: 0;
+				display: block;
+				height: 15px;
+				padding: 5px 0;
+
+				&:hover {
+					background-color: #727C81;
+					color: #FFF;
+				}
+			}
+
+			&.calendar-inactive {
+				background-color: #FFF;
+				color: #B5BFC4;
+			}
+		}
+
+		th {
+			border-bottom-color: #D7D7D7;
+		}
+	}
+
+	table td {
+		border-width: 0;
+	}
+
+	.calendar-current-day {
+		&, & a {
+			background-color: #FFF;
+		}
+
+		a {
+			border: 1px solid #727C81;
+			color: #369;
+			text-decoration: underline;
+		}
+	}
+}
+
+/* ---------- Navbar form search ---------- */
+
+.navbar form {
+	margin: 0;
+}

@@ -1,0 +1,41 @@
+.cke_dialog .cke_dialog_ui_input_text {
+	height: auto;
+}
+
+.cke_editable_inline a {
+	cursor: pointer;
+}
+
+.cke_panel.cke_combopanel {
+	width: 220px;
+}
+
+.cke_panel_block {
+	.cke_panel_grouptitle {
+		font-size: 20px;
+		line-height: 20px;
+		margin-top: 0;
+	}
+
+	.cke_panel_list {
+		margin-left: 0;
+
+		.cke_panel_listItem {
+			line-height: initial;
+
+			a:hover {
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+/* ---------- CKEditor table ---------- */
+
+.cke_show_border {
+	width: 500px;
+
+	td {
+		height: 15px;
+	}
+}

@@ -1,0 +1,30 @@
+.tag-items {
+	list-style: none;
+	margin: 0 1em 0 0;
+	padding: 0 1em 0.5em 1em;
+	white-space: normal;
+
+	li {
+		display: inline-block;
+		margin: 0 1em 0 0;
+		max-width: 100%;
+	}
+}
+
+.tag-selected {
+	color: #000;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.tag-cloud {
+	line-height: 2.5em;
+
+	$tag-popularity-font-size: 0.7em;
+
+	@for $i from 1 through 6 {
+		.tag-popularity-#{$i} {
+			font-size: $tag-popularity-font-size + ($i * 0.3);
+		}
+	}
+}

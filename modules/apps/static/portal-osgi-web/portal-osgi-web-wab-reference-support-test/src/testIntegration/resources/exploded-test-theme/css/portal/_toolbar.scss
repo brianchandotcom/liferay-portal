@@ -1,0 +1,30 @@
+.lfr-toolbar {
+	background-color: #E5E4E8;
+
+	.lfr-button {
+		&:focus {
+			border-color: #000;
+		}
+
+		&:hover {
+			border-color: #CCC #777 #777;
+		}
+	}
+
+	.lfr-separator {
+		border-left-color: #FFF;
+		border-right-color: #CCC;
+		font-size: 12px;
+	}
+}
+
+.lfr-toolbar, .lfr-emoticon-container {
+	.lfr-button {
+		border-color: #E5E4E8;
+	}
+}
+
+.lfr-emoticon-container {
+	background: #E5E4E8;
+	border-color: #CCC;
+}

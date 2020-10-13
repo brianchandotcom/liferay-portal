@@ -1,0 +1,50 @@
+.lfr-asset-type-column, .lfr-author-column, .lfr-city-column, .lfr-country-column, .lfr-email-address-column, .lfr-job-title-column, .lfr-region-column, .lfr-removed-by-column, .lfr-replier-column, .lfr-scope-column, .lfr-screen-name-column, .lfr-type-column, .lfr-user-column, .lfr-users-column {
+	word-break: break-all \9;
+	word-wrap: break-word;
+
+	@include sm {
+		max-width: 125px;
+		min-width: 100px;
+	}
+}
+
+.lfr-completion-date-column, .lfr-create-date-column, .lfr-date-column, .lfr-display-date-column, .lfr-expiration-date-column, .lfr-last-post-date-column, .lfr-modified-date-column, .lfr-removed-date-column, .lfr-reply-date-column, .lfr-revision-column {
+	white-space: nowrap;
+}
+
+.lfr-description-column, .lfr-role-column {
+	max-width: 375px;
+	min-width: 375px;
+}
+
+.lfr-email-address-column, .lfr-name-column, .lfr-parent-organization-column, .lfr-screen-name-column, .lfr-title-column, .lfr-url-column, .lfr-wiki-column {
+	max-width: 200px;
+	min-width: 200px;
+}
+
+.lfr-email-column, .lfr-website-column {
+	min-width: 100px;
+
+	@include sm {
+		min-width: 115px;
+	}
+
+	.checkbox-container .form-group {
+		margin-bottom: 0;
+	}
+}
+
+.lfr-role-column {
+	word-break: break-all \9;
+	word-wrap: break-word;
+}
+
+.user-info .user-details {
+	.date-info {
+		color: #8C8C8C;
+	}
+
+	.user-name {
+		color: #009AE5;
+	}
+}

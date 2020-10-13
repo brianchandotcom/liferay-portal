@@ -40,7 +40,7 @@ const EDITABLE_TYPE_ICONS = {
 	[EDITABLE_TYPES.image]: 'picture',
 	[EDITABLE_TYPES.link]: 'link',
 	[EDITABLE_TYPES['rich-text']]: 'text-editor',
-	[EDITABLE_TYPES.text]: 'text-editor',
+	[EDITABLE_TYPES.text]: 'text',
 };
 
 const LAYOUT_DATA_ITEM_TYPE_ICONS = {

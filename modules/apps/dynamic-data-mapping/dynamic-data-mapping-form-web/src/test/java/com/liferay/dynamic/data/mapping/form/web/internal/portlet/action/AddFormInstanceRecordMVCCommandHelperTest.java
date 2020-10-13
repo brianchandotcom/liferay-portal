@@ -86,6 +86,38 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	}
 
 	@Test
+	public void testInvisibleAndLocalizableField() throws Exception {
+		mockDDMFormEvaluator(
+			HashMapBuilder.<String, Object>put(
+				"visible", false
+			).build());
+
+		_ddmFormField.setLocalizable(true);
+
+		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
+
+		LocalizedValue localizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"Test", "Teste", LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				_FIELD_NAME, localizedValue);
+
+		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
+			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
+
+		Value value = getFieldValue();
+
+		Assert.assertEquals(
+			StringPool.BLANK, value.getString(LocaleUtil.BRAZIL));
+
+		Assert.assertEquals(StringPool.BLANK, value.getString(LocaleUtil.US));
+	}
+
+	@Test
 	public void testInvisibleFieldWithNullValue() throws Exception {
 		mockDDMFormEvaluator(
 			HashMapBuilder.<String, Object>put(

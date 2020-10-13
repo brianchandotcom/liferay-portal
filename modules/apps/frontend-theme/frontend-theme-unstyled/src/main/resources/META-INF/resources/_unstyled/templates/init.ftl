@@ -136,7 +136,6 @@
 <#-- ---------- Page ---------- -->
 
 <#assign
-	the_title = ""
 	selectable = theme_display.isTilesSelectable()
 	is_maximized = layoutTypePortlet.hasStateMax()
 
@@ -148,8 +147,6 @@
 
 	is_first_child = page.isFirstChild()
 	is_first_parent = page.isFirstParent()
-
-	the_title = languageUtil.get(locale, the_title, page.getName(locale))
 
 	is_portlet_page = false
 />

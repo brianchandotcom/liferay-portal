@@ -154,8 +154,7 @@ public class GetFragmentEntryLinkMVCResourceCommand
 					"content", content
 				).put(
 					"editableTypes",
-					EditableFragmentEntryProcessorUtil.getEditableTypes(
-						fragmentEntryLink.getHtml())
+					EditableFragmentEntryProcessorUtil.getEditableTypes(content)
 				).put(
 					"editableValues",
 					JSONFactoryUtil.createJSONObject(

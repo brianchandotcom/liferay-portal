@@ -213,22 +213,22 @@ public class FragmentEntryLinkUtil {
 					PortalUtil.getLiferayPortletResponse(actionResponse),
 					configurationJSONObject);
 
+			String content = fragmentRendererController.render(
+				defaultFragmentRendererContext,
+				PortalUtil.getHttpServletRequest(actionRequest),
+				PortalUtil.getHttpServletResponse(actionResponse));
+
 			return JSONUtil.put(
 				"configuration", configurationJSONObject
 			).put(
-				"content",
-				fragmentRendererController.render(
-					defaultFragmentRendererContext,
-					PortalUtil.getHttpServletRequest(actionRequest),
-					PortalUtil.getHttpServletResponse(actionResponse))
+				"content", content
 			).put(
 				"defaultConfigurationValues",
 				fragmentEntryConfigurationParser.
 					getConfigurationDefaultValuesJSONObject(configuration)
 			).put(
 				"editableTypes",
-				EditableFragmentEntryProcessorUtil.getEditableTypes(
-					fragmentEntryLink.getHtml())
+				EditableFragmentEntryProcessorUtil.getEditableTypes(content)
 			).put(
 				"editableValues",
 				JSONFactoryUtil.createJSONObject(

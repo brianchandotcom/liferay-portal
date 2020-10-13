@@ -1441,7 +1441,7 @@ public class ContentPageEditorDisplayContext {
 					).put(
 						"editableTypes",
 						EditableFragmentEntryProcessorUtil.getEditableTypes(
-							fragmentEntryLink.getHtml())
+							content)
 					).put(
 						"editableValues",
 						JSONFactoryUtil.createJSONObject(

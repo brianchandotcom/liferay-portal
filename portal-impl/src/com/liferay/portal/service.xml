@@ -30,11 +30,15 @@
 		<column name="type" type="String" />
 		<column name="size" type="String" />
 	</entity>
-	<entity local-service="true" name="Address" persistence-class="com.liferay.portal.service.persistence.impl.AddressPersistenceImpl2" remote-service="true" uuid="true">
+	<entity external-reference-code="true" local-service="true" name="Address" persistence-class="com.liferay.portal.service.persistence.impl.AddressPersistenceImpl2" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
 		<column name="addressId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
 
 		<!-- Audit fields -->
 
@@ -48,6 +52,8 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
 		<column name="street1" type="String" />
 		<column name="street2" type="String" />
 		<column name="street3" type="String" />
@@ -55,6 +61,8 @@
 		<column name="zip" type="String" />
 		<column name="regionId" type="long" />
 		<column name="countryId" type="long" />
+		<column name="latitude" type="double" />
+		<column name="longitude" type="double" />
 		<column name="typeId" type="long" />
 		<column name="mailing" type="boolean" />
 		<column name="primary" type="boolean" />

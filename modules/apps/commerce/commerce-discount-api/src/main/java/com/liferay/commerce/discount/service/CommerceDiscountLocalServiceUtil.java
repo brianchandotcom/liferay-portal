@@ -109,6 +109,15 @@ public class CommerceDiscountLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommerceDiscount(String, long, String, String, boolean,
+	 String, boolean, BigDecimal, String, BigDecimal, BigDecimal,
+	 BigDecimal, BigDecimal, String, int, boolean, boolean, int,
+	 int, int, int, int, int, int, int, int, int, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.discount.model.CommerceDiscount
 			addCommerceDiscount(
 				long userId, String title, String target, boolean useCouponCode,
@@ -136,6 +145,15 @@ public class CommerceDiscountLocalServiceUtil {
 			externalReferenceCode, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommerceDiscount(String, long, String, String, boolean, String,
+	 boolean, BigDecimal, String, BigDecimal, BigDecimal,
+	 BigDecimal, BigDecimal, BigDecimal, String, int, int,
+	 boolean, boolean, int, int, int, int, int, int, int, int,
+	 int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.discount.model.CommerceDiscount
 			addCommerceDiscount(
 				long userId, String title, String target, boolean useCouponCode,
@@ -162,6 +180,64 @@ public class CommerceDiscountLocalServiceUtil {
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, externalReferenceCode,
+			neverExpire, serviceContext);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscount
+			addCommerceDiscount(
+				String externalReferenceCode, long userId, String title,
+				String target, boolean useCouponCode, String couponCode,
+				boolean usePercentage,
+				java.math.BigDecimal maximumDiscountAmount, String level,
+				java.math.BigDecimal level1, java.math.BigDecimal level2,
+				java.math.BigDecimal level3, java.math.BigDecimal level4,
+				String limitationType, int limitationTimes,
+				boolean rulesConjunction, boolean active, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceDiscount(
+			externalReferenceCode, userId, title, target, useCouponCode,
+			couponCode, usePercentage, maximumDiscountAmount, level, level1,
+			level2, level3, level4, limitationType, limitationTimes,
+			rulesConjunction, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscount
+			addCommerceDiscount(
+				String externalReferenceCode, long userId, String title,
+				String target, boolean useCouponCode, String couponCode,
+				boolean usePercentage,
+				java.math.BigDecimal maximumDiscountAmount, String level,
+				java.math.BigDecimal level1, java.math.BigDecimal level2,
+				java.math.BigDecimal level3, java.math.BigDecimal level4,
+				String limitationType, int limitationTimes,
+				int limitationTimesPerAccount, boolean rulesConjunction,
+				boolean active, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceDiscount(
+			externalReferenceCode, userId, title, target, useCouponCode,
+			couponCode, usePercentage, maximumDiscountAmount, level, level1,
+			level2, level3, level4, limitationType, limitationTimes,
+			limitationTimesPerAccount, rulesConjunction, active,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
 	}
 
@@ -339,12 +415,25 @@ public class CommerceDiscountLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #fetchByExternalReferenceCode(String, long)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.discount.model.CommerceDiscount
 		fetchByExternalReferenceCode(
 			long companyId, String externalReferenceCode) {
 
 		return getService().fetchByExternalReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscount
+		fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return getService().fetchByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static com.liferay.commerce.discount.model.CommerceDiscount
@@ -784,6 +873,11 @@ public class CommerceDiscountLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommerceDiscountExternalReferenceCode(String, long)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.discount.model.CommerceDiscount
 			updateCommerceDiscountExternalReferenceCode(
 				long commerceDiscountId, String externalReferenceCode)
@@ -791,6 +885,15 @@ public class CommerceDiscountLocalServiceUtil {
 
 		return getService().updateCommerceDiscountExternalReferenceCode(
 			commerceDiscountId, externalReferenceCode);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscount
+			updateCommerceDiscountExternalReferenceCode(
+				String externalReferenceCode, long commerceDiscountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceDiscountExternalReferenceCode(
+			externalReferenceCode, commerceDiscountId);
 	}
 
 	public static com.liferay.commerce.discount.model.CommerceDiscount
@@ -805,6 +908,15 @@ public class CommerceDiscountLocalServiceUtil {
 			workflowContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommerceDiscount(String, long, long, String, String,
+	 boolean, String, boolean, BigDecimal, BigDecimal,
+	 BigDecimal, BigDecimal, BigDecimal, String, int, boolean,
+	 int, int, int, int, int, int, int, int, int, int, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.discount.model.CommerceDiscount
 			upsertCommerceDiscount(
 				long userId, long commerceDiscountId, String title,
@@ -833,6 +945,15 @@ public class CommerceDiscountLocalServiceUtil {
 			externalReferenceCode, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommerceDiscount(String, long, long, String, String,
+	 boolean, String, boolean, BigDecimal, String, BigDecimal,
+	 BigDecimal, BigDecimal, BigDecimal, String, int, boolean,
+	 boolean, int, int, int, int, int, int, int, int, int, int,
+	 boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.discount.model.CommerceDiscount
 			upsertCommerceDiscount(
 				long userId, long commerceDiscountId, String title,
@@ -862,6 +983,15 @@ public class CommerceDiscountLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommerceDiscount(String, long, long, String, String,
+	 boolean, String, boolean, BigDecimal, String, BigDecimal,
+	 BigDecimal, BigDecimal, BigDecimal, String, int, int,
+	 boolean, boolean, int, int, int, int, int, int, int, int,
+	 int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.discount.model.CommerceDiscount
 			upsertCommerceDiscount(
 				long userId, long commerceDiscountId, String title,
@@ -890,6 +1020,91 @@ public class CommerceDiscountLocalServiceUtil {
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			externalReferenceCode, neverExpire, serviceContext);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscount
+			upsertCommerceDiscount(
+				String externalReferenceCode, long userId,
+				long commerceDiscountId, String title, String target,
+				boolean useCouponCode, String couponCode, boolean usePercentage,
+				java.math.BigDecimal maximumDiscountAmount,
+				java.math.BigDecimal level1, java.math.BigDecimal level2,
+				java.math.BigDecimal level3, java.math.BigDecimal level4,
+				String limitationType, int limitationTimes, boolean active,
+				int displayDateMonth, int displayDateDay, int displayDateYear,
+				int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().upsertCommerceDiscount(
+			externalReferenceCode, userId, commerceDiscountId, title, target,
+			useCouponCode, couponCode, usePercentage, maximumDiscountAmount,
+			level1, level2, level3, level4, limitationType, limitationTimes,
+			active, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscount
+			upsertCommerceDiscount(
+				String externalReferenceCode, long userId,
+				long commerceDiscountId, String title, String target,
+				boolean useCouponCode, String couponCode, boolean usePercentage,
+				java.math.BigDecimal maximumDiscountAmount, String level,
+				java.math.BigDecimal level1, java.math.BigDecimal level2,
+				java.math.BigDecimal level3, java.math.BigDecimal level4,
+				String limitationType, int limitationTimes,
+				boolean rulesConjunction, boolean active, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().upsertCommerceDiscount(
+			externalReferenceCode, userId, commerceDiscountId, title, target,
+			useCouponCode, couponCode, usePercentage, maximumDiscountAmount,
+			level, level1, level2, level3, level4, limitationType,
+			limitationTimes, rulesConjunction, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscount
+			upsertCommerceDiscount(
+				String externalReferenceCode, long userId,
+				long commerceDiscountId, String title, String target,
+				boolean useCouponCode, String couponCode, boolean usePercentage,
+				java.math.BigDecimal maximumDiscountAmount, String level,
+				java.math.BigDecimal level1, java.math.BigDecimal level2,
+				java.math.BigDecimal level3, java.math.BigDecimal level4,
+				String limitationType, int limitationTimes,
+				int limitationTimesPerAccount, boolean rulesConjunction,
+				boolean active, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().upsertCommerceDiscount(
+			externalReferenceCode, userId, commerceDiscountId, title, target,
+			useCouponCode, couponCode, usePercentage, maximumDiscountAmount,
+			level, level1, level2, level3, level4, limitationType,
+			limitationTimes, limitationTimesPerAccount, rulesConjunction,
+			active, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	public static CommerceDiscountLocalService getService() {

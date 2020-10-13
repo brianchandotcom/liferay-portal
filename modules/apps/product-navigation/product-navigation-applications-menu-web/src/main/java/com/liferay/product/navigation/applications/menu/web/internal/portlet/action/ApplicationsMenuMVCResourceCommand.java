@@ -19,6 +19,7 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
+import com.liferay.product.navigation.applications.menu.web.internal.util.ApplicationsMenuUtil;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.site.util.RecentGroupManager;
@@ -227,11 +230,14 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONArray recentSitesJSONArray = JSONFactoryUtil.createJSONArray();
 
+		boolean applicationMenu = _isApplicationMenuApp(themeDisplay);
+
 		for (Group group : groups) {
 			recentSitesJSONArray.put(
 				JSONUtil.put(
 					"current",
-					group.getGroupId() == themeDisplay.getScopeGroupId()
+					!applicationMenu &&
+					(group.getGroupId() == themeDisplay.getScopeGroupId())
 				).put(
 					"key", group.getGroupKey()
 				).put(
@@ -327,6 +333,28 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return itemSelectorURL.toString();
 	}
+
+	private boolean _isApplicationMenuApp(ThemeDisplay themeDisplay) {
+		if (!ApplicationsMenuUtil.isEnableApplicationsMenu(
+				themeDisplay.getCompanyId(), _configurationProvider)) {
+
+			return false;
+		}
+
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		if (ApplicationsMenuUtil.isApplicationsMenuApp(
+				panelCategoryHelper, themeDisplay)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private GroupURLProvider _groupURLProvider;

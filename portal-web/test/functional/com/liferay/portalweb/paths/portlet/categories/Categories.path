@@ -65,6 +65,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OOTB_CATEGORIES-->
+<tr>
+	<td>LOCKED_VOCABULARY</td>
+	<td>//*[contains(@class,'lexicon-icon-lock')]</td>
+	<td></td>
+</tr>
 <!--SUBCATEGORY_ENTRY-->
 <tr>
 	<td>SUBCATEGORY_ENTRY</td>

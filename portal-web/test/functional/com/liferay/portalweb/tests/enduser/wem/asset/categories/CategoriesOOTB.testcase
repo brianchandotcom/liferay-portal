@@ -1,0 +1,49 @@
+@component-name = "portal-categories"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Categories";
+	property testray.main.component.name = "Categories";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+        Navigator.openURL();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "When a change in Global Vocabularies is made, the Global vocabularies section in a site's Categories administration application updates accordingly"
+	@priority = "5"
+	test UpdateGlobalCategories {
+		property portal.acceptance = "true";
+        
+        JSONCategory.addCategory(
+			groupName = "Global",
+		    title = "Audience 1",
+		    vocabularyName = "Audience");
+            
+        Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+        Category.viewCP(
+	        categoryName = "Audience 1",
+		    vocabularyName = "Audience");
+            
+        Category.deleteCategoriesCP(vocabularyName = "Audience 1");
+	}
+    
+}

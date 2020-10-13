@@ -72,10 +72,11 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 				segmentsExperience, PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
-		String data = _dlReferencesExportImportContentProcessor.
-			replaceExportContentReferences(
-				portletDataContext, layoutPageTemplateStructureRel,
-				layoutPageTemplateStructureRel.getData(), false, false);
+		String data =
+			_dlReferencesExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, layoutPageTemplateStructureRel,
+					layoutPageTemplateStructureRel.getData(), false, false);
 
 		layoutPageTemplateStructureRel.setData(data);
 
@@ -120,10 +121,11 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 		importedLayoutPageTemplateStructureRel.setSegmentsExperienceId(
 			segmentsExperienceId);
 
-		String data = _dlReferencesExportImportContentProcessor.
-			replaceImportContentReferences(
-				portletDataContext, layoutPageTemplateStructureRel,
-				layoutPageTemplateStructureRel.getData());
+		String data =
+			_dlReferencesExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, layoutPageTemplateStructureRel,
+					layoutPageTemplateStructureRel.getData());
 
 		importedLayoutPageTemplateStructureRel.setData(data);
 

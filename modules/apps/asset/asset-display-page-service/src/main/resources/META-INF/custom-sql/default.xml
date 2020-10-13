@@ -7,6 +7,7 @@
 				COUNT(AssetDisplayPageEntry.assetDisplayPageEntryId) AS COUNT_VALUE
 			FROM
 				AssetDisplayPageEntry
+			[$JOIN$]
 			WHERE
 				(AssetDisplayPageEntry.classNameId = ?) AND
 				(
@@ -19,6 +20,7 @@
 						(AssetDisplayPageEntry.type_ = 2)
 					)
 				)
+				[$CLASS_TYPE_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryFinder.findByCNI_DT_LPTEI">
@@ -27,6 +29,7 @@
 				AssetDisplayPageEntry.*
 			FROM
 				AssetDisplayPageEntry
+			[$JOIN$]
 			WHERE
 				(AssetDisplayPageEntry.classNameId = ?) AND
 				(
@@ -39,6 +42,16 @@
 						(AssetDisplayPageEntry.type_ = 2)
 					)
 				)
+				[$CLASS_TYPE_ID$]
 		]]>
+	</sql>
+	<sql id="com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryFinder.joinByAssetEntry">
+		INNER JOIN
+			AssetEntry
+			on
+				(
+					(AssetDisplayPageEntry.classNameId = AssetEntry.classNameId) AND
+					(AssetDisplayPageEntry.classPK = AssetEntry.classPK)
+				)
 	</sql>
 </custom-sql>

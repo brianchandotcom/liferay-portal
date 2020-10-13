@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/icon": "3.0.5",
+		"@clayui/icon": "3.1.0",
 		"@clayui/layout": "3.2.0",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*"

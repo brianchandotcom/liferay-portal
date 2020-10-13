@@ -1,11 +1,11 @@
 {
 	"dependencies": {
-		"clay-icon": "^2.2.0",
-		"metal": "^2.13.2",
-		"metal-component": "^2.13.2",
-		"metal-debounce": "^2.0.0",
-		"metal-soy": "^2.13.2",
-		"metal-state": "^2.13.2"
+		"clay-icon": "2.21.4",
+		"metal": "2.16.8",
+		"metal-component": "2.16.8",
+		"metal-debounce": "^2.0.2",
+		"metal-soy": "2.16.8",
+		"metal-state": "2.16.8"
 	},
 	"name": "commerce-cart-taglib",
 	"scripts": {

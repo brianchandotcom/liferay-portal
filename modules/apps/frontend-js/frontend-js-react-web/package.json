@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/icon": "3.0.5",
+		"@clayui/icon": "3.1.0",
 		"classnames": "2.2.6",
 		"formik": "2.1.4",
 		"prop-types": "15.7.2",

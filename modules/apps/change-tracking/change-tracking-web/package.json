@@ -1,14 +1,14 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.4.1",
-		"@clayui/breadcrumb": "3.2.8",
-		"@clayui/button": "3.4.0",
-		"@clayui/drop-down": "3.7.0",
-		"@clayui/form": "3.11.1",
-		"@clayui/icon": "3.0.5",
+		"@clayui/alert": "3.5.0",
+		"@clayui/breadcrumb": "3.3.0",
+		"@clayui/button": "3.5.0",
+		"@clayui/drop-down": "3.8.0",
+		"@clayui/form": "3.12.0",
+		"@clayui/icon": "3.1.0",
 		"@clayui/management-toolbar": "3.2.3",
-		"@clayui/pagination-bar": "3.1.12",
-		"@clayui/table": "3.0.7",
+		"@clayui/pagination-bar": "3.2.0",
+		"@clayui/table": "3.1.0",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"

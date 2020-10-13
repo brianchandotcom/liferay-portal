@@ -138,6 +138,7 @@ public class DisplayPageActionDropdownItemsProvider {
 					AssetDisplayPageEntryServiceUtil.
 						getAssetDisplayPageEntriesCount(
 							_layoutPageTemplateEntry.getClassNameId(),
+							_layoutPageTemplateEntry.getClassTypeId(),
 							_layoutPageTemplateEntry.isDefaultTemplate(),
 							_layoutPageTemplateEntry.
 								getLayoutPageTemplateEntryId());

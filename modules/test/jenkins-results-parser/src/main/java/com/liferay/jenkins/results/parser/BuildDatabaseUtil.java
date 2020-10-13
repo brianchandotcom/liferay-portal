@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -42,10 +44,6 @@ public class BuildDatabaseUtil {
 	public static BuildDatabase getBuildDatabase(
 		String baseDirPath, Build build, boolean download) {
 
-		if (_buildDatabase != null) {
-			return _buildDatabase;
-		}
-
 		if (baseDirPath == null) {
 			baseDirPath = System.getenv("WORKSPACE");
 
@@ -54,29 +52,36 @@ public class BuildDatabaseUtil {
 			}
 		}
 
-		File baseDir = new File(baseDirPath);
+		BuildDatabase buildDatabase = _buildDatabases.get(baseDirPath);
 
-		if (!baseDir.exists()) {
-			baseDir.mkdirs();
+		if (buildDatabase == null) {
+			File baseDir = new File(baseDirPath);
+
+			if (!baseDir.exists()) {
+				baseDir.mkdirs();
+			}
+
+			File buildDatabaseFile = new File(
+				baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+
+			if (!buildDatabaseFile.exists() && download) {
+				String distNodes = System.getenv("DIST_NODES");
+				String distPath = System.getenv("DIST_PATH");
+
+				if ((distNodes != null) && (distPath != null)) {
+					_downloadBuildDatabaseFile(baseDir, distNodes, distPath);
+				}
+				else if (build instanceof TopLevelBuild) {
+					_downloadBuildDatabaseFile(baseDir, build);
+				}
+			}
+
+			buildDatabase = new DefaultBuildDatabase(baseDir);
+
+			_buildDatabases.put(baseDirPath, buildDatabase);
 		}
 
-		String distNodes = System.getenv("DIST_NODES");
-		String distPath = System.getenv("DIST_PATH");
-
-		if ((distNodes != null) && (distPath != null) && download) {
-			_downloadBuildDatabaseFile(baseDir, distNodes, distPath);
-		}
-		else if ((build instanceof TopLevelBuild) && download) {
-			_downloadBuildDatabaseFile(baseDir, build);
-		}
-
-		_buildDatabase = new DefaultBuildDatabase(baseDir);
-
-		return _buildDatabase;
-	}
-
-	public static void reset() {
-		_buildDatabase = null;
+		return buildDatabase;
 	}
 
 	private static void _downloadBuildDatabaseFile(File baseDir, Build build) {
@@ -117,10 +122,6 @@ public class BuildDatabaseUtil {
 
 		File buildDatabaseFile = new File(
 			baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
-
-		if (buildDatabaseFile.exists()) {
-			return;
-		}
 
 		if (!JenkinsResultsParserUtil.isCINode()) {
 			try {
@@ -206,6 +207,7 @@ public class BuildDatabaseUtil {
 		return sb.toString();
 	}
 
-	private static BuildDatabase _buildDatabase;
+	private static final Map<String, BuildDatabase> _buildDatabases =
+		new HashMap<>();
 
 }

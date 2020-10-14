@@ -54,6 +54,11 @@
 	<td>//a[contains(text(),'Create New Object')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WORKFLOW_APP_VERSION</td>
+	<td>//a[contains(text(),'${key_workflowAppName}')]/ancestor::tr//td[6 and contains(text(),'${key_versionNumber}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

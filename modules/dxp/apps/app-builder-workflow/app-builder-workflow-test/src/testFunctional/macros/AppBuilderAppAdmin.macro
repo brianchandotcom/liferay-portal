@@ -4,6 +4,13 @@ definition {
 		AssertElementPresent(locator1 = "AppBuilderAppAdmin#CREATE_NEW_OBJECT_SHORT_LINK");
 	}
 
+	macro assertWorkflowAppVersion {
+		AssertElementNotPresent(
+			key_workflowAppName = "${workflowAppName}",
+			key_versionNumber = "${versionNumber}",
+			locator1 = "AppBuilderAppAdmin#WORKFLOW_APP_VERSION");
+	}
+
 	macro clickOnCreateNewAppButton {
 		Button.click(button = "Create New App");
 	}

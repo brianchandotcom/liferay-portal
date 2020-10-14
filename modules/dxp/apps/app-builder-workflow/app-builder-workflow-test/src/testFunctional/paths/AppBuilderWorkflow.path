@@ -109,6 +109,16 @@
 	<td>//span[contains(@class,'dropdown-item') and (text()="${key_assignee}")]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SAVE_APP_MODAL</td>
+	<td>//div[contains(@class,'save-app-modal')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_APP_MODAL_BUTTON</td>
+	<td>//div[contains(@class,'save-app-modal')]//*[contains(@class,'btn')][normalize-space(text())='${key_buttonName}']</td>
+	<td></td>
+</tr>
 <!--APP_RUNNING-->
 <tr>
 	<td>SELECT_NEW_ASSIGNEE_BUTTON</td>
@@ -128,6 +138,11 @@
 <tr>
 	<td>TEXT_FIELD_DISABLED</td>
 	<td>//label[contains(text(),'${key_fieldName}')]/..//input[@disabled][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_APP_VERSION</td>
+	<td>//div[contains(@title,'App Version') and contains(text(),'${key_versionNumber}')]</td>
 	<td></td>
 </tr>
 </tbody>

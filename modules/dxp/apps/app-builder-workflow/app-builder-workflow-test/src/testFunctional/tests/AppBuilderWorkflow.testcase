@@ -38,6 +38,94 @@ definition {
 		}
 	}
 
+	@description = "LRQA-60598 - Automate LPS-111001: As an App Admin, I want to Liferay to handle multiple running versions of my App every time I make an update on a existing App"
+	@priority = "5"
+	test ValidateMultipleRunningVersions {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View 1",
+			tableViewName = "My Table View");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.createBasicWorkflowApp(
+			deployOption = "Product Menu",
+			formViewName = "My Form View 1",
+			isCreatingViaPlusIcon = "false",
+			objectName = "my custom object",
+			tableViewName = "My Table View 1",
+			workflowAppName = "My Workflow App");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content 1");
+
+		AppBuilderWorkflow.submit();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAdmin.openItem(itemName = "My Workflow App");
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "1");
+
+		AppBuilderWorkflow.saveNewVersionedApp();
+		AppBuilderAppAdmin.assertWorkflowAppVersion(
+			workflowAppName = "My Workflow App",
+			versionNumber = "2.0");
+
+		AppBuilderAdmin.openItem(itemName = "My Workflow App");
+		AppBuilderWorkflow.selectStepSingleFormView(
+			formViewMode = "Editable",
+			formViewName = "My Form View 2",
+			step = "1");
+
+		AppBuilderWorkflow.saveNewVersionedApp();
+		AppBuilderAppAdmin.assertWorkflowAppVersion(
+			workflowAppName = "My Workflow App",
+			versionNumber = "3.0");
+
+		AppBuilderAdmin.openItem(itemName = "My Workflow App");
+		AppBuilderWorkflow.deleteStep(step = "1");
+		AppBuilderWorkflow.saveNewVersionedApp();
+		AppBuilderAppAdmin.assertWorkflowAppVersion(
+			workflowAppName = "My Workflow App",
+			versionNumber = "4.0");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content 2");
+
+		AppBuilderWorkflow.submit();
+		AppBuilderAdmin.openItem(itemName = "Content 1");
+		AppBuilderWorkflow.assertEntryAppVersion(versionNumber = "1.0");
+		DetailsView.nextEntry();
+		AppBuilderWorkflow.assertEntryAppVersion(versionNumber = "4.0");
+	}
+
 	@description = "Assign an entry (task) through the App's table view"
 	@priority = "5"
 	test AssignEntryThroughTableView {

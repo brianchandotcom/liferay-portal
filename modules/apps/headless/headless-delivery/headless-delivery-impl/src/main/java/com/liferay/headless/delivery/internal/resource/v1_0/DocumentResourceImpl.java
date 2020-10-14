@@ -42,6 +42,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
+import com.liferay.headless.delivery.internal.util.FilterUtil;
 import com.liferay.headless.delivery.internal.util.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.journal.service.JournalArticleService;
@@ -475,7 +476,8 @@ public class DocumentResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			actions, booleanQueryUnsafeConsumer, filter, DLFileEntry.class,
+			actions, booleanQueryUnsafeConsumer,
+			FilterUtil.processFilter(_ddmIndexer, filter), DLFileEntry.class,
 			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),

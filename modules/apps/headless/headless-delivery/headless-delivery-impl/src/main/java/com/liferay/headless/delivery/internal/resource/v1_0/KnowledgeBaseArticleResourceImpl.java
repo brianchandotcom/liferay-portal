@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.KnowledgeBaseArticleEntityModel;
+import com.liferay.headless.delivery.internal.util.FilterUtil;
 import com.liferay.headless.delivery.internal.util.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -413,7 +414,8 @@ public class KnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			actions, booleanQueryUnsafeConsumer, filter, KBArticle.class,
+			actions, booleanQueryUnsafeConsumer,
+			FilterUtil.processFilter(_ddmIndexer, filter), KBArticle.class,
 			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),

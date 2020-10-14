@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredConte
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentFolderEntityModel;
+import com.liferay.headless.delivery.internal.util.FilterUtil;
 import com.liferay.headless.delivery.internal.util.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -301,7 +302,8 @@ public class StructuredContentFolderResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, JournalFolder.class, keywords, pagination,
+			FilterUtil.processFilter(_ddmIndexer, filter), JournalFolder.class,
+			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {

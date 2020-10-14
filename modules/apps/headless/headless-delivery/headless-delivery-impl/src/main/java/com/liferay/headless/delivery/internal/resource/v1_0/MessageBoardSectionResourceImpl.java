@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.converter.MessageBoardSec
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
+import com.liferay.headless.delivery.internal.util.FilterUtil;
 import com.liferay.headless.delivery.internal.util.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.message.boards.model.MBCategory;
@@ -265,7 +266,8 @@ public class MessageBoardSectionResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			actions, booleanQueryUnsafeConsumer, filter, MBCategory.class,
+			actions, booleanQueryUnsafeConsumer,
+			FilterUtil.processFilter(_ddmIndexer, filter), MBCategory.class,
 			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),

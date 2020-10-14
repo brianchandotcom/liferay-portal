@@ -25,12 +25,11 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
@@ -39,7 +38,6 @@ import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil;
 import com.liferay.roles.admin.web.internal.search.RoleChecker;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -201,27 +199,14 @@ public class ViewRolesManagementToolbarDisplayContext {
 		RoleSearchTerms roleSearchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+		BaseModelSearchResult<Role> baseModelSearchResult =
+			_currentRoleTypeContributor.search(
+				themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
+				roleSearch.getStart(), roleSearch.getEnd(),
+				roleSearch.getOrderByComparator());
 
-		if (Validator.isNotNull(_currentRoleTypeContributor.getClassName())) {
-			params.put(
-				"classNameId",
-				PortalUtil.getClassNameId(
-					_currentRoleTypeContributor.getClassName()));
-		}
-
-		List<Role> results = RoleServiceUtil.search(
-			themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-			new Integer[] {_currentRoleTypeContributor.getType()}, params,
-			roleSearch.getStart(), roleSearch.getEnd(),
-			roleSearch.getOrderByComparator());
-
-		int total = RoleServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-			new Integer[] {_currentRoleTypeContributor.getType()}, params);
-
-		roleSearch.setResults(results);
-		roleSearch.setTotal(total);
+		roleSearch.setResults(baseModelSearchResult.getBaseModels());
+		roleSearch.setTotal(baseModelSearchResult.getLength());
 
 		_roleSearch = roleSearch;
 

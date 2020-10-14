@@ -15,11 +15,10 @@
 package com.liferay.petra.url.pattern.mapper.internal;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Arthur Chan
@@ -34,6 +33,68 @@ public class DynamicSizeTrieURLPatternMapper<T>
 
 		for (Map.Entry<String, T> entry : values.entrySet()) {
 			put(entry.getKey(), entry.getValue());
+		}
+	}
+
+	@Override
+	protected void consumeWildcardValues(String urlPath, Consumer<T> consumer) {
+		boolean exact = false;
+		boolean wildcard = false;
+
+		if (urlPath.charAt(0) != '/') {
+			exact = true;
+		}
+		else if ((urlPath.length() > 1) &&
+				 (urlPath.charAt(urlPath.length() - 2) == '/') &&
+				 (urlPath.charAt(urlPath.length() - 1) == '*')) {
+
+			wildcard = true;
+		}
+
+		TrieNode currentTrieNode = null;
+		TrieNode previousTrieNode = _wildCardTrieNode;
+
+		for (int i = 0; i < urlPath.length(); ++i) {
+			currentTrieNode = previousTrieNode.getNextTrieNode(
+				urlPath.charAt(i));
+
+			if (currentTrieNode == null) {
+				break;
+			}
+
+			if (!exact && (urlPath.charAt(i) == '/')) {
+				TrieNode nextTrieNode = currentTrieNode.getNextTrieNode('*');
+
+				if ((nextTrieNode != null) && nextTrieNode.isEnd()) {
+					consumer.accept(nextTrieNode.getValue());
+				}
+			}
+
+			previousTrieNode = currentTrieNode;
+		}
+
+		if (currentTrieNode != null) {
+			if (exact) {
+				if (currentTrieNode.isEnd()) {
+					consumer.accept(currentTrieNode.getValue());
+				}
+
+				return;
+			}
+
+			if (!wildcard && currentTrieNode.isEnd()) {
+				consumer.accept(currentTrieNode.getValue());
+			}
+
+			currentTrieNode = currentTrieNode.getNextTrieNode('/');
+
+			if (currentTrieNode != null) {
+				currentTrieNode = currentTrieNode.getNextTrieNode('*');
+
+				if ((currentTrieNode != null) && currentTrieNode.isEnd()) {
+					consumer.accept(currentTrieNode.getValue());
+				}
+			}
 		}
 	}
 
@@ -134,72 +195,6 @@ public class DynamicSizeTrieURLPatternMapper<T>
 		}
 
 		return value;
-	}
-
-	@Override
-	protected Set<T> getWildcardValues(String urlPath) {
-		boolean exact = false;
-		boolean wildcard = false;
-
-		if (urlPath.charAt(0) != '/') {
-			exact = true;
-		}
-		else if ((urlPath.length() > 1) &&
-				 (urlPath.charAt(urlPath.length() - 2) == '/') &&
-				 (urlPath.charAt(urlPath.length() - 1) == '*')) {
-
-			wildcard = true;
-		}
-
-		Set<T> values = new HashSet<>(64);
-
-		TrieNode currentTrieNode = null;
-		TrieNode previousTrieNode = _wildCardTrieNode;
-
-		for (int i = 0; i < urlPath.length(); ++i) {
-			currentTrieNode = previousTrieNode.getNextTrieNode(
-				urlPath.charAt(i));
-
-			if (currentTrieNode == null) {
-				break;
-			}
-
-			if (!exact && (urlPath.charAt(i) == '/')) {
-				TrieNode nextTrieNode = currentTrieNode.getNextTrieNode('*');
-
-				if ((nextTrieNode != null) && nextTrieNode.isEnd()) {
-					values.add(nextTrieNode.getValue());
-				}
-			}
-
-			previousTrieNode = currentTrieNode;
-		}
-
-		if (currentTrieNode != null) {
-			if (exact) {
-				if (currentTrieNode.isEnd()) {
-					values.add(currentTrieNode.getValue());
-				}
-
-				return values;
-			}
-
-			if (!wildcard && currentTrieNode.isEnd()) {
-				values.add(currentTrieNode.getValue());
-			}
-
-			currentTrieNode = currentTrieNode.getNextTrieNode('/');
-
-			if (currentTrieNode != null) {
-				currentTrieNode = currentTrieNode.getNextTrieNode('*');
-
-				if ((currentTrieNode != null) && currentTrieNode.isEnd()) {
-					values.add(currentTrieNode.getValue());
-				}
-			}
-		}
-
-		return values;
 	}
 
 	@Override

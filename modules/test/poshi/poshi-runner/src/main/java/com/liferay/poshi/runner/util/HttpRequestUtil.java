@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.codec.binary.Base64;
+import jodd.util.Base64;
 
 /**
  * @author Michael Hashimoto
@@ -258,7 +258,7 @@ public class HttpRequestUtil {
 			String authorization = StringUtil.combine(userName, ":", password);
 
 			return StringUtil.combine(
-				"Basic ", Base64.encodeBase64String(authorization.getBytes()));
+				"Basic ", Base64.encodeToString(authorization.getBytes()));
 		}
 
 		protected String password;

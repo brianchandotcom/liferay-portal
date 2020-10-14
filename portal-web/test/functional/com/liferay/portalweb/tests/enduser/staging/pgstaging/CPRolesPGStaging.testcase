@@ -1,10 +1,10 @@
-@component-name = "portal-permissions"
+@component-name = "portal-staging"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Roles";
-	property testray.main.component.name = "Roles";
+	property testray.main.component.name = "Staging";
 	var siteName = "Site Name";
 
 	setUp {

@@ -197,6 +197,11 @@
 	<td>//div[contains(@data-analytics-asset-title,'${key_assetTitle}')]//*[contains(.,'${key_assetContent}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENTRY_COVER_IMAGE</td>
+	<td>//div[contains(@class,'cover-image') and contains(@style,'${key_imageFileName}')]</td>
+	<td></td>
+</tr>
 <!--DROP_TARGET-->
 <tr>
 	<td>ANY_FRAGMENT_DROP_TARGET</td>

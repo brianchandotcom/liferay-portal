@@ -280,12 +280,17 @@ public class DDMFormFieldTemplateContextFactory {
 
 		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
 
+		Map<String, String> optionsReferences =
+			ddmFormFieldOptions.getOptionsReferences();
+
 		for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
 			Map<String, String> option = new HashMap<>();
 
 			LocalizedValue localizedValue = entry.getValue();
 
 			option.put("label", localizedValue.getString(_locale));
+
+			option.put("reference", optionsReferences.get(entry.getKey()));
 
 			option.put("value", entry.getKey());
 

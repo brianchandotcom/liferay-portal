@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.discount.application.strategy.CommerceDiscountApplicationStrategy;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -35,6 +36,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Riccardo Alberti
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CommerceDiscountApplicationStrategyAdditionTest {
 

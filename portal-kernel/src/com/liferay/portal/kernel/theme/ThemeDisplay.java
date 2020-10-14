@@ -566,6 +566,10 @@ public class ThemeDisplay
 		return _pathContext;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getPathFlash() {
 		return _pathFlash;
 	}
@@ -1507,6 +1511,10 @@ public class ThemeDisplay
 		_pathContext = pathContext;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setPathFlash(String pathFlash) {
 		_pathFlash = pathFlash;
 	}

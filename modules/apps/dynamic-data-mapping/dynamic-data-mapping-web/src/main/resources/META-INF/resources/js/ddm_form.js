@@ -1049,7 +1049,9 @@ AUI.add(
 						}
 
 						var checkboxInput = container.one(
-							'input[type="checkbox"]'
+							'input[type="checkbox"][name*="' +
+								instance.getFieldDefinition().name +
+								'"]'
 						);
 
 						if (checkboxInput) {

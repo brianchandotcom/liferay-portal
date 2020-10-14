@@ -211,6 +211,12 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 		String imageTarget = configJSONObject.getString("imageTarget");
 
+		if (StringUtil.equalsIgnoreCase(imageTarget, "_parent") ||
+			StringUtil.equalsIgnoreCase(imageTarget, "_top")) {
+
+			imageTarget = "_self";
+		}
+
 		Element linkElement = new Element("a");
 
 		linkElement.attr("href", imageLink);

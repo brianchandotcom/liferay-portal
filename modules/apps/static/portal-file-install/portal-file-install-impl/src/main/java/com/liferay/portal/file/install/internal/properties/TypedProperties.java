@@ -247,7 +247,12 @@ public class TypedProperties {
 				if (_isCommentLine(line)) {
 					comments.add(line);
 
-					if ((_comment == null) && _values.isEmpty()) {
+					if (!_storage.isEmpty()) {
+						_log.error(
+							"Comment must be at beginning of config file: " +
+								line);
+					}
+					else if (_comment == null) {
 						_comment = line;
 					}
 

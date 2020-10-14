@@ -1736,22 +1736,6 @@ app.server.type=@{app.server.type}]]></echo>
 							</then>
 						</if>
 
-						<if>
-							<isset property="env.CI_TEST_SUITE" />
-							<then>
-								<get-testcase-property property.name="osgi.app.includes" />
-
-								<if>
-									<not>
-										<contains string="${osgi.app.includes}" substring="portal-search-solr7" />
-									</not>
-									<then>
-										<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
-									</then>
-								</if>
-							</then>
-						</if>
-
 						<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 					</test-set-up>
 

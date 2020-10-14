@@ -3,8 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Categories";
-	property testray.main.component.name = "Categories";
+	property testray.main.component.name = "Content Dashboard";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -27,42 +26,107 @@ definition {
 		}
 	}
 
-	@description = "When a change in Global Vocabularies is made, the Global vocabularies section in a site's Categories administration application updates accordingly"
-	@priority = "5"
-	test UpdateGlobalCategories {
-		property portal.acceptance = "true";
-        
-        JSONCategory.addCategory(
-			groupName = "Global",
-		    title = "Audience 1",
-		    vocabularyName = "Audience");
-            
-        Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-        Category.viewCP(
-	        categoryName = "Audience 1",
-		    vocabularyName = "Audience");
-            
-        Category.deleteCategoriesCP(vocabularyName = "Audience 1");
-	}
-
 	@description = "When the site administrator (not Global) accesses to the Categories administration application, the existing Global vocabularies appear as locked and it's not possible to edit them"
 	@priority = "5"
 	test GlobalCategoriesNotEditable {
 		property portal.acceptance = "true";
         JSONCategory.addCategory(
 		    groupName = "Global",
-		    title = "Audience 1",
-    	    vocabularyName = "Audience");
+		    title = "Topic 1",
+    	    vocabularyName = "Topic");
             
         Category.openCategoriesAdmin(siteURLKey = "test-site-name");
             
         AssertElementPresent(locator1 = "Categories#LOCKED_VOCABULARY");
 
         Category.viewCP(
-		    categoryName = "Audience 1",
-		    vocabularyName = "Audience");
+		    categoryName = "Topic 1",
+		    vocabularyName = "Topic");
             
         AssertElementNotPresent(locator1 = "Categories#ADD_CATEGORY_BUTTON");
+
+        Category.openCategoriesAdmin(siteURLKey = "global");
+
+        Category.deleteCategoriesCP(vocabularyName = "Topic 1");
+	}
+
+    @description = "When a change in Global Vocabularies is made, the Global vocabularies section in a site's Categories administration application updates accordingly"
+	@priority = "5"
+	test UpdateGlobalCategories {
+		property portal.acceptance = "true";
+        
+        JSONCategory.addCategory(
+			groupName = "Global",
+		    title = "Topic 1",
+		    vocabularyName = "Topic");
+            
+        Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+        Category.viewCP(
+	        categoryName = "Topic 1",
+		    vocabularyName = "Topic");
+            
+        Category.deleteCategoriesCP(vocabularyName = "Topic");
+	}
+
+    @description = "When the user clicks on Save and Add a new one, the category is saved"
+	@priority = "5"
+	test AddCategoryUsingSaveAndAddButton {
+		property portal.acceptance = "true";
+        
+        Category.openCategoriesAdmin(siteURLKey = "global");
+
+        Category.AddCategoryWithSaveAndAddButton(
+            categoryName = "Category 1",
+            vocabularyName = "Topic");
+        
+        AssertTextPresent(value1 = "Category 1");
+	}
+
+    @description = "When the user opens the "Categorization" section and there's a vocabulary marked as internal, that vocabulary is shown in the Internal categories section"
+	@priority = "5"
+	test WCInternalCategories {
+		property portal.acceptance = "true";
+        
+        Category.openCategoriesAdmin(siteURLKey = "global");
+
+        Vocabulary.addInternalVocabulary(vocabularyName = "Vocabulary Internal");
+        
+        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(webContentTitle = "WC Title");
+
+		Panel.expandPanel(panel = "Categorization");
+
+        AssertTextPresent(value1 = "Vocabulary Internal");
+
+        Category.openCategoriesAdmin(siteURLKey = "global");
+
+        Vocabulary.deleteByMenuCP(vocabularyName = "Vocabulary Internal");
+	}
+
+    @description = "When the user opens the "Categorization" section and there's a vocabulary not marked as internal, that vocabulary is shown in the Public categories section"
+	@priority = "5"
+	test WCPublicCategories {
+		property portal.acceptance = "true";
+        JSONCategory.addVocabulary(
+			groupName = "Global",
+			title = "Vocabulary Public");
+        
+        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(webContentTitle = "WC Title");
+
+		Panel.expandPanel(panel = "Categorization");
+
+        AssertTextPresent(value1 = "Vocabulary Public");
+
+        Category.openCategoriesAdmin(siteURLKey = "global");
+
+        Vocabulary.deleteByMenuCP(vocabularyName = "Vocabulary Public");
 	}
 }

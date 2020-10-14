@@ -47,7 +47,6 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
-import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -419,7 +418,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getCommerceShippingMethodId();
 
 		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodService.fetchCommerceShippingMethod(
+			_commerceShippingMethodLocalService.fetchCommerceShippingMethod(
 				commerceOrder.getGroupId(), cart.getShippingMethod());
 
 		if (commerceShippingMethod != null) {
@@ -684,9 +683,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
-
-	@Reference
-	private CommerceShippingMethodService _commerceShippingMethodService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

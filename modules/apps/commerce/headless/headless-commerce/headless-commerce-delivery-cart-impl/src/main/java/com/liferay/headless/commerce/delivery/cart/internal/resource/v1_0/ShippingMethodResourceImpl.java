@@ -25,7 +25,7 @@ import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.service.CommerceShippingMethodService;
+import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.comparator.CommerceShippingOptionLabelComparator;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingMethod;
@@ -70,9 +70,11 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 
 			return Page.of(
 				transform(
-					_commerceShippingMethodService.getCommerceShippingMethods(
-						commerceChannel.getGroupId(),
-						shippingCommerceAddress.getCommerceCountryId(), true),
+					_commerceShippingMethodLocalService.
+						getCommerceShippingMethods(
+							commerceChannel.getGroupId(),
+							shippingCommerceAddress.getCommerceCountryId(),
+							true),
 					shippingMethod -> _toShippingMethod(
 						shippingMethod, commerceChannel, commerceOrder)));
 		}
@@ -86,7 +88,7 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 		throws PortalException {
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceChannel.getSiteGroupId(),
+			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
 			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
 			commerceOrder.getCommerceAccountId());
 
@@ -163,6 +165,7 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
 
 	@Reference
-	private CommerceShippingMethodService _commerceShippingMethodService;
+	private CommerceShippingMethodLocalService
+		_commerceShippingMethodLocalService;
 
 }

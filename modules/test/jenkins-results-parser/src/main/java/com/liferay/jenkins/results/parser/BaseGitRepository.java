@@ -126,7 +126,7 @@ public abstract class BaseGitRepository implements GitRepository {
 	private static final String[] _KEYS_REQUIRED = {"name"};
 
 	private static final String _URL_PROPERTIES_REPOSITORY =
-		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+		JenkinsResultsParserUtil.URL_CACHE +
 			"/liferay-jenkins-ee/commands/repository.properties";
 
 	private static Properties _repositoryProperties;

@@ -148,7 +148,7 @@ public class WorkspaceUtil {
 	}
 
 	private static final String _URL_WORKSPACE_PROPERTIES =
-		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+		JenkinsResultsParserUtil.URL_CACHE +
 			"/liferay-jenkins-ee/commands/workspace.properties";
 
 	private static Properties _workspaceProperties;

@@ -6,8 +6,8 @@ definition {
 
 	macro assertWorkflowAppVersion {
 		AssertElementNotPresent(
-			key_workflowAppName = "${workflowAppName}",
 			key_versionNumber = "${versionNumber}",
+			key_workflowAppName = "${workflowAppName}",
 			locator1 = "AppBuilderAppAdmin#WORKFLOW_APP_VERSION");
 	}
 

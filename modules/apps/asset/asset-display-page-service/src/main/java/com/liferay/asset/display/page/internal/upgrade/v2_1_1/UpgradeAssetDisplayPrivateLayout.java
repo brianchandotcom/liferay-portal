@@ -14,6 +14,7 @@
 
 package com.liferay.asset.display.page.internal.upgrade.v2_1_1;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -24,9 +25,11 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author Pavel Savinov
+ * @author Roberto Díaz
  */
 public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 
@@ -51,18 +54,49 @@ public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 			Layout.class.getName(), layout.getPlid(), false, true, true);
 	}
 
+	private String _getFriendlyURL(
+			PreparedStatement ps, long groupId, String friendlyURL,
+			long ctCollectionId)
+		throws SQLException {
+
+		String initialFriendlyURL = friendlyURL;
+
+		ps.setLong(1, groupId);
+		ps.setBoolean(2, false);
+		ps.setString(3, friendlyURL);
+		ps.setLong(4, ctCollectionId);
+
+		for (int i = 1;; i++) {
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					friendlyURL = initialFriendlyURL + StringPool.DASH + i;
+
+					ps.setString(3, friendlyURL);
+				}
+				else {
+					break;
+				}
+			}
+		}
+
+		return friendlyURL;
+	}
+
 	private void _upgradeAssetDisplayLayouts() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select groupId, plid from Layout where privateLayout = ? " +
-					"and type_ = ?");
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(
-					"update Layout set layoutId = ?, privateLayout = ? where " +
-						"plid = ?"));
+				"select groupId, friendlyURL, plid, ctCollectionId from " +
+					"Layout where privateLayout = ? and type_ = ?");
+			PreparedStatement ps2 = connection.prepareStatement(
+				"select plid from Layout where groupId = ? and privateLayout " +
+					"= ? and friendlyURL = ? and ctCollectionId = ?");
 			PreparedStatement ps3 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
-					"update LayoutFriendlyURL set privateLayout = ? where " +
-						"plid = ?"))) {
+					"update Layout set layoutId = ?, privateLayout = ?, " +
+						"friendlyURL = ? where plid = ?"));
+			PreparedStatement ps4 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update LayoutFriendlyURL set privateLayout = ?, " +
+						"friendlyURL = ? where plid = ?"))) {
 
 			ps1.setBoolean(1, true);
 			ps1.setString(2, LayoutConstants.TYPE_ASSET_DISPLAY);
@@ -70,26 +104,33 @@ public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
 					long groupId = rs.getLong("groupId");
+					String friendlyURL = rs.getString("friendlyURL");
 					long plid = rs.getLong("plid");
+					long ctCollectionId = rs.getLong("ctCollectionId");
 
 					_addResources(groupId, plid);
 
-					ps2.setLong(
+					String newfriendlyURL = _getFriendlyURL(
+						ps2, groupId, friendlyURL, ctCollectionId);
+
+					ps3.setLong(
 						1, _layoutLocalService.getNextLayoutId(groupId, false));
-					ps2.setBoolean(2, false);
-					ps2.setLong(3, plid);
-
-					ps2.addBatch();
-
-					ps3.setBoolean(1, false);
-					ps3.setLong(2, plid);
+					ps3.setBoolean(2, false);
+					ps3.setString(3, newfriendlyURL);
+					ps3.setLong(4, plid);
 
 					ps3.addBatch();
+
+					ps4.setBoolean(1, false);
+					ps4.setString(2, newfriendlyURL);
+					ps4.setLong(3, plid);
+
+					ps4.addBatch();
 				}
 
-				ps2.executeBatch();
-
 				ps3.executeBatch();
+
+				ps4.executeBatch();
 			}
 		}
 	}

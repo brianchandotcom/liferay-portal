@@ -730,60 +730,6 @@ definition {
 			fieldFieldLabel = "Salary",
 			fieldName = "Salary");
 
-		DynamicDataMapping.addField(
-			field = "Documents and Media",
-			fieldFieldLabel = "Profile Picture",
-			fieldName = "ProfilePicture");
-
-		DynamicDataMapping.addField(
-			field = "Documents and Media",
-			fieldFieldLabel = "Resume",
-			fieldName = "Resume");
-
-		DynamicDataMapping.addField(
-			field = "Integer",
-			fieldFieldLabel = "Age",
-			fieldName = "Age");
-
-		DynamicDataMapping.addField(
-			field = "Number",
-			fieldFieldLabel = "Weekly Hours",
-			fieldName = "WeeklyHours");
-
-		DynamicDataMapping.addField(
-			field = "Radio",
-			fieldFieldLabel = "Department",
-			fieldName = "Department");
-
-		DynamicDataMapping.editFieldOptions(
-			field = "Radio",
-			fieldFieldLabel = "Department",
-			fieldName = "Department",
-			fieldOptionsNames = "Core Engineer,QA Engineer,Support Engineer",
-			fieldOptionsValues = "1,2,3");
-
-		DynamicDataMapping.addField(
-			field = "Select",
-			fieldFieldLabel = "Years Worked",
-			fieldName = "YearsWorked");
-
-		DynamicDataMapping.editFieldOptions(
-			field = "Select",
-			fieldFieldLabel = "Years Worked",
-			fieldName = "YearsWorked",
-			fieldOptionsNames = "1-2,3-5,5+",
-			fieldOptionsValues = "1,2,3");
-
-		DynamicDataMapping.addField(
-			field = "Text",
-			fieldFieldLabel = "Name",
-			fieldName = "Name");
-
-		DynamicDataMapping.addField(
-			field = "Text Box",
-			fieldFieldLabel = "Description",
-			fieldName = "Description");
-
 		DDLDataDefinition.saveViaDDLDisplayPG();
 
 		DDLDataDefinition.selectViaDDLDisplayPG(ddlDataDefinitionName = "Employee Profile Data Definition");
@@ -808,41 +754,6 @@ definition {
 			ddlRecordFieldData = "35000",
 			fieldFieldLabel = "Salary",
 			fieldName = "Salary");
-
-		DDLRecord.populateFieldDocumentsAndMediaChooseFromDocumentLibrary(
-			document = "Document_1.txt",
-			fieldFieldLabel = "Resume",
-			fieldName = "Resume");
-
-		DDLRecord.populateFieldInteger(
-			ddlRecordFieldData = "30",
-			fieldFieldLabel = "Age",
-			fieldName = "Age");
-
-		DDLRecord.populateFieldNumber(
-			ddlRecordFieldData = "40",
-			fieldFieldLabel = "Weekly Hours",
-			fieldName = "WeeklyHours");
-
-		DDLRecord.populateFieldRadio(
-			ddlRecordFieldData = "QA Engineer",
-			fieldFieldLabel = "Department",
-			fieldName = "Department");
-
-		DDLRecord.populateFieldSelect(
-			ddlRecordFieldData = "5+",
-			fieldFieldLabel = "Years Worked",
-			fieldName = "YearsWorked");
-
-		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Joe Engineer",
-			fieldFieldLabel = "Name",
-			fieldName = "Name");
-
-		DDLRecord.populateFieldTextBox(
-			ddlRecordFieldData = "Joe Engineer works in QA",
-			fieldFieldLabel = "Description",
-			fieldName = "Description");
 
 		PortletEntry.publish();
 

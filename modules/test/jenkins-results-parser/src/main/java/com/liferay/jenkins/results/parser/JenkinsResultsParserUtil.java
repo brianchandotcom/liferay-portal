@@ -2501,6 +2501,22 @@ public class JenkinsResultsParserUtil {
 			int timeout, HTTPAuthorization httpAuthorizationHeader)
 		throws IOException {
 
+		if (!isCINode() && url.startsWith("file:") &&
+			url.contains("liferay-jenkins-results-parser-samples-ee")) {
+
+			File file = new File(url.replace("file:", ""));
+
+			if (!file.exists()) {
+				if (url.contains("json?")) {
+					url = url.substring(0, url.indexOf("json?") + 4);
+				}
+
+				if (url.contains("json[qt]")) {
+					url = url.substring(0, url.indexOf("json[qt]") + 4);
+				}
+			}
+		}
+
 		if (url.contains("/userContent/") && (timeout == 0)) {
 			timeout = 5000;
 		}

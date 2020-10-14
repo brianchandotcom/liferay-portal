@@ -22,11 +22,11 @@ import java.util.Map;
  * @author Arthur Chan
  */
 public class StaticSizeTrieURLPatternMapperPerformanceTest
-	extends SimpleURLPatternMapperPerformanceTest {
+	extends BaseURLPatternMapperPerformanceTestCase {
 
 	@Override
-	protected URLPatternMapper<String> createURLPatternMapper(
-		Map<String, String> values) {
+	protected URLPatternMapper<Integer> createURLPatternMapper(
+		Map<String, Integer> values) {
 
 		return new StaticSizeTrieURLPatternMapper<>(values);
 	}

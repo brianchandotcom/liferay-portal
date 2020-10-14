@@ -28,16 +28,15 @@ import org.junit.Test;
 public class StaticSizeTrieURLPatternMapperTest
 	extends SimpleURLPatternMapperTest {
 
-	@Override
 	@Test
 	public void testConstructor() {
 		super.testConstructor();
 
 		try {
-			Map<String, String> map = new HashMap<>();
+			Map<String, Integer> map = new HashMap<>();
 
 			for (int i = 0; i < 65; i++) {
-				map.put("*.key" + i, "value" + i);
+				map.put("*.key" + i, i);
 			}
 
 			createURLPatternMapper(map);
@@ -48,10 +47,10 @@ public class StaticSizeTrieURLPatternMapperTest
 		}
 
 		try {
-			Map<String, String> map = new HashMap<>();
+			Map<String, Integer> map = new HashMap<>();
 
 			for (int i = 0; i < (Long.SIZE + 1); i++) {
-				map.put("key" + i, "value" + i);
+				map.put("key" + i, i);
 			}
 
 			createURLPatternMapper(map);
@@ -67,23 +66,23 @@ public class StaticSizeTrieURLPatternMapperTest
 	public void testGetValue() {
 		super.testGetValue();
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 
 		for (int i = 0; i < Long.SIZE; i++) {
-			map.put("*.key" + i, "value" + i);
+			map.put("*.key" + i, i);
 		}
 
-		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(map);
+		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
+			map);
 
 		for (int i = 0; i < Long.SIZE; i++) {
-			Assert.assertEquals(
-				"value" + i, urlPatternMapper.getValue("*.key" + i));
+			Assert.assertTrue(i == urlPatternMapper.getValue("*.key" + i));
 		}
 	}
 
 	@Override
-	protected URLPatternMapper<String> createURLPatternMapper(
-		Map<String, String> values) {
+	protected URLPatternMapper<Integer> createURLPatternMapper(
+		Map<String, Integer> values) {
 
 		return new StaticSizeTrieURLPatternMapper<>(values);
 	}

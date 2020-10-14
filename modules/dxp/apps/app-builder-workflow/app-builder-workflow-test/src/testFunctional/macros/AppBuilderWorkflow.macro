@@ -10,6 +10,13 @@ definition {
 			value1 = "${workflowAppName}");
 	}
 
+	macro assertAssigneeInfoPresentOnStep {
+		AssertElementPresent(
+			key_assignee = "${assignee}",
+			key_step = "${step}",
+			locator1 = "AppBuilderWorkflow#STEP_CARD_ASSIGNEE_INFO");
+	}
+
 	macro assertButtonDisabled {
 		AssertVisible(
 			key_text = "${buttonName}",
@@ -40,13 +47,6 @@ definition {
 		AssertElementPresent(
 			key_step = "${step}",
 			locator1 = "AppBuilderWorkflow#STEP_CARD");
-	}
-
-	macro assertAssigneeInfoPresentOnStep {
-		AssertElementPresent(
-			key_step = "${step}",
-			key_assignee = "${assignee}",
-			locator1 = "AppBuilderWorkflow#STEP_CARD_ASSIGNEE_INFO");
 	}
 
 	macro assignEntry {

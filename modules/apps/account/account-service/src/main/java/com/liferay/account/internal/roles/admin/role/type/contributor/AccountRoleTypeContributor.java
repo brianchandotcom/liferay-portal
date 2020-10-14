@@ -14,12 +14,17 @@
 
 package com.liferay.account.internal.roles.admin.role.type.contributor;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import java.util.Locale;
@@ -105,6 +110,26 @@ public class AccountRoleTypeContributor implements RoleTypeContributor {
 
 		return false;
 	}
+
+	@Override
+	public BaseModelSearchResult<Role> search(
+		long companyId, String keywords, int start, int end,
+		OrderByComparator<Role> orderByComparator) {
+
+		BaseModelSearchResult<AccountRole> accountRoleBaseModelSearchResult =
+			_accountRoleLocalService.searchAccountRoles(
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keywords, start, end,
+				orderByComparator);
+
+		return new BaseModelSearchResult<>(
+			TransformUtil.transform(
+				accountRoleBaseModelSearchResult.getBaseModels(),
+				AccountRole::getRole),
+			accountRoleBaseModelSearchResult.getLength());
+	}
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference
 	private Language _language;

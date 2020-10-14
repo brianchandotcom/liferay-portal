@@ -55,6 +55,9 @@ public class GridDDMFormFieldContextHelper {
 					return optionLabel.getString(_locale);
 				}
 			).put(
+				"reference",
+				_ddmFormFieldOptions.getOptionReference(optionValue)
+			).put(
 				"value", optionValue
 			).build();
 

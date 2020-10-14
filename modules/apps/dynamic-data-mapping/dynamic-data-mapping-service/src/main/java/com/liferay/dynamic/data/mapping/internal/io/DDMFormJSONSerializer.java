@@ -218,6 +218,8 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 				"label",
 				toJSONObject(ddmFormFieldOptions.getOptionLabels(optionValue))
 			).put(
+				"reference", ddmFormFieldOptions.getOptionReference(optionValue)
+			).put(
 				"value", optionValue
 			);
 

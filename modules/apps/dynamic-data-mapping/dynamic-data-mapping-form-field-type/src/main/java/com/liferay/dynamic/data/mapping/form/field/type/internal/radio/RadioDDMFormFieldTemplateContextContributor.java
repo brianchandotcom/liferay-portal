@@ -95,6 +95,9 @@ public class RadioDDMFormFieldTemplateContextContributor
 					keyValuePair.get("value"),
 					ddmFormFieldRenderingContext.getLocale(),
 					keyValuePair.get("label"));
+
+				ddmFormFieldOptions.addOptionReference(
+					keyValuePair.get("value"), keyValuePair.get("reference"));
 			}
 		}
 

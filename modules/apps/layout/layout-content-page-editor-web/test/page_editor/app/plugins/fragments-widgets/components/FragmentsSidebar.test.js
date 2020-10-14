@@ -208,6 +208,7 @@ describe('FragmentsSidebar', () => {
 			fireEvent.change(input, {
 				target: {value: 't 1'},
 			});
+
 			jest.runAllTimers();
 		});
 

@@ -668,6 +668,15 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 								<property name="skip.node.task" value="true" />
 							</then>
 						</if>
+
+						<if>
+							<not>
+								<matches pattern="\.py(${line.separator}|$)" string="${baseline.current.branch.file.names}" />
+							</not>
+							<then>
+								<property name="skip.format.python" value="true" />
+							</then>
+						</if>
 					</then>
 					<else>
 						<if>
@@ -785,7 +794,14 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					</then>
 				</if>
 
-				<antcall target="format-python" />
+				<if>
+					<not>
+						<isset property="skip.format.python" />
+					</not>
+					<then>
+						<antcall target="format-python" />
+					</then>
+				</if>
 			</then>
 		</if>
 	</target>

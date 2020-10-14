@@ -55,41 +55,55 @@ public class CTEntryDiffDisplay {
 		_locale = locale;
 	}
 
-	public String getLeftTitle() throws PortalException {
-		String title = null;
+	public String getEntryDescription() {
+		return _ctDisplayRendererRegistry.getEntryDescription(
+			_httpServletRequest, _ctEntry);
+	}
 
-		if (_ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			title = _ctDisplayRendererRegistry.getTitle(
-				_ctEntry.getCtCollectionId(), _ctEntry, _locale);
-		}
-		else {
-			title = _ctDisplayRendererRegistry.getTitle(
+	public String getEntryTitle() throws PortalException {
+		if (isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION)) {
+			if (_ctCollection.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+				return _ctDisplayRendererRegistry.getTitle(
+					_ctEntry.getCtCollectionId(), _ctEntry, _locale);
+			}
+
+			return _ctDisplayRendererRegistry.getTitle(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, _ctEntry, _locale);
 		}
 
-		if (isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION)) {
-			return StringBundler.concat(
-				_language.get(_httpServletRequest, "production"), " : ", title,
-				" (", _language.get(_httpServletRequest, "deleted"), ")");
-		}
-
-		return StringBundler.concat(
-			_language.get(_httpServletRequest, "production"), " : ", title);
-	}
-
-	public String getRightTitle() throws PortalException {
-		String title = _ctDisplayRendererRegistry.getTitle(
+		return _ctDisplayRendererRegistry.getTitle(
 			_ctDisplayRendererRegistry.getCtCollectionId(
 				_ctCollection, _ctEntry),
 			_ctEntry, _locale);
+	}
 
+	public String getLeftTitle() {
+		if (isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION)) {
+			return StringBundler.concat(
+				_language.get(_httpServletRequest, "production"), " (",
+				_language.get(_httpServletRequest, "deleted"), ")");
+		}
+
+		return _language.get(_httpServletRequest, "production");
+	}
+
+	public String getRightTitle() {
 		if (isChangeType(CTConstants.CT_CHANGE_TYPE_ADDITION)) {
 			return StringBundler.concat(
-				_ctCollection.getName(), " : ", title, " (",
+				_language.get(_httpServletRequest, "publication"), " : ",
+				_ctCollection.getName(), " (",
 				_language.get(_httpServletRequest, "new"), ")");
 		}
 
-		return StringBundler.concat(_ctCollection.getName(), " : ", title);
+		return StringBundler.concat(
+			_language.get(_httpServletRequest, "publication"), " : ",
+			_ctCollection.getName());
+	}
+
+	public long getUserId() {
+		return _ctEntry.getUserId();
 	}
 
 	public boolean isChangeType(int changeType) {

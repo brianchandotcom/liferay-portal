@@ -15,12 +15,14 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.context.ViewEntryDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -64,8 +66,8 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT,
 				new ViewEntryDisplayContext(
-					_ctDisplayRendererRegistry, ctEntry, modelClassNameId,
-					modelClassPK));
+					_ctCollectionLocalService, _ctDisplayRendererRegistry,
+					ctEntry, _language, modelClassNameId, modelClassPK));
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
@@ -75,9 +77,15 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
 	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 }

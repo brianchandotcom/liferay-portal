@@ -74,6 +74,7 @@ class ChangeTrackingConflictsView extends React.Component {
 			items.push({
 				href: action.href,
 				label: action.label,
+				symbolLeft: action.symbol,
 			});
 		}
 
@@ -106,7 +107,7 @@ class ChangeTrackingConflictsView extends React.Component {
 
 			items.push(
 				<ClayList.Item flex>
-					<ClayList.ItemField>
+					<ClayList.ItemField expand>
 						<a onClick={() => this._openWindow(conflict)}>
 							<ClayList.ItemText
 								className="conflicts-description-text"
@@ -118,17 +119,17 @@ class ChangeTrackingConflictsView extends React.Component {
 								{conflict.title}
 							</ClayList.ItemTitle>
 							<ClayList.ItemText
-								className={conflict.alertTextCssClass}
+								className={
+									'conflicts-' + conflict.alertType + '-text'
+								}
 							>
 								<strong>
-									{conflict.conflictDescription}:{' '}
+									{conflict.conflictDescription + ': '}
 								</strong>
 								{conflict.conflictResolution}
 							</ClayList.ItemText>
 						</a>
 					</ClayList.ItemField>
-
-					<ClayList.ItemField expand />
 
 					{this._getDismissAction(conflict)}
 
@@ -184,29 +185,86 @@ class ChangeTrackingConflictsView extends React.Component {
 	}
 
 	_openWindow(conflict) {
-		AUI().use('liferay-util-window', () => {
+		AUI().use('liferay-portlet-url', 'liferay-util-window', () => {
+			const portletURL = Liferay.PortletURL.createURL(conflict.viewURL);
+
+			portletURL.setParameter(
+				'alertDescription',
+				conflict.conflictDescription
+			);
+			portletURL.setParameter(
+				'alertResolution',
+				conflict.conflictResolution
+			);
+			portletURL.setParameter('alertType', conflict.alertType);
+
+			const header = [];
+
+			if (conflict.actions) {
+				for (let i = 0; i < conflict.actions.length; i++) {
+					const action = conflict.actions[i];
+
+					header.push({
+						cssClass:
+							'btn btn-outline-secondary btn-sm publications-view-header-button',
+						discardDefaultButtonCssClasses: true,
+						labelHTML:
+							'<span class="inline-item inline-item-before">' +
+							'<svg class="lexicon-icon" focusable="false">' +
+							'<use href="' +
+							this.spritemap +
+							'#' +
+							action.symbol +
+							' " />' +
+							'</svg></span>' +
+							action.label,
+						on: {
+							click() {
+								Liferay.Util.navigate(action.href);
+							},
+						},
+					});
+				}
+			}
+
+			if (conflict.dismissURL) {
+				header.push({
+					cssClass:
+						'btn btn-outline-secondary btn-sm publications-view-header-button',
+					discardDefaultButtonCssClasses: true,
+					label: Liferay.Language.get('dismiss'),
+					on: {
+						click() {
+							Liferay.Util.navigate(conflict.dismissURL);
+						},
+					},
+				});
+			}
+
+			header.push({
+				cssClass: 'close btn btn-unstyled',
+				discardDefaultButtonCssClasses: true,
+				labelHTML:
+					'<svg class="lexicon-icon" focusable="false"><use href="' +
+					this.spritemap +
+					'#times" /></svg>',
+				on: {
+					click() {
+						dialog.hide();
+					},
+				},
+			});
+
 			const dialog = Liferay.Util.Window.getWindow({
 				dialog: {
 					destroyOnHide: true,
 					resizable: false,
 					toolbars: {
-						header: [
-							{
-								cssClass: 'close btn btn-unstyled',
-								labelHTML: Liferay.Util.getLexiconIconTpl(
-									'times'
-								),
-								on: {
-									click() {
-										dialog.hide();
-									},
-								},
-							},
-						],
+						header,
 					},
 				},
-				title: conflict.description,
-				uri: conflict.viewURL,
+				title: Liferay.Language.get('conflicting-change'),
+				uri: portletURL.toString(),
 			});
 		});
 	}

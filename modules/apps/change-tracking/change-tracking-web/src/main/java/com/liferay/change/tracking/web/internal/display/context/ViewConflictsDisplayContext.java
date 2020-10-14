@@ -194,9 +194,7 @@ public class ViewConflictsDisplayContext {
 			_themeDisplay.getLocale());
 
 		JSONObject jsonObject = JSONUtil.put(
-			"alertTextCssClass",
-			conflictInfo.isResolved() ? "conflicts-success-text" :
-				"conflicts-warning-text"
+			"alertType", conflictInfo.isResolved() ? "success" : "warning"
 		).put(
 			"conflictDescription",
 			conflictInfo.getConflictDescription(resourceBundle)

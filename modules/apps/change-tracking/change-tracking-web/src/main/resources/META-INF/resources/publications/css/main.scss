@@ -1,3 +1,9 @@
+.portal-popup {
+	.publications-diff-no-border-top td {
+		border-top: none;
+	}
+}
+
 #publicationsFooter {
 	padding-right: 18px;
 }
@@ -46,6 +52,10 @@
 		display: flex;
 	}
 
+	.list-group-item {
+		word-wrap: break-word;
+	}
+
 	.list-group-title {
 		margin-top: 0;
 	}
@@ -65,6 +75,28 @@
 		border-left: solid 1px #e7e7ed;
 		border-right: solid 1px #e7e7ed;
 		vertical-align: top;
+	}
+
+	.publications-header-td {
+		.alert {
+			margin-bottom: 4px;
+			margin-top: 12px;
+		}
+
+		.autofit-row {
+			.autofit-col:first-child {
+				padding-right: 0;
+			}
+		}
+
+		.publication-description {
+			color: #6b6c7e;
+		}
+
+		.publication-name {
+			font-size: 1rem;
+			font-weight: 600;
+		}
 	}
 }
 
@@ -226,8 +258,9 @@
 	}
 }
 
-.publications-view-entry-wrapper {
-	margin-top: 16px;
+.publications-view-header-button {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 .select-publication-table {

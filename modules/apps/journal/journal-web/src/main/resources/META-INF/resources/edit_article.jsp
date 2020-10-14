@@ -148,7 +148,10 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 				<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
 				<liferay-ui:error exception="<%= ArticleFriendlyURLException.class %>" message="you-must-define-a-friendly-url-for-default-language" />
 				<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
-				<liferay-ui:error exception="<%= ArticleTitleException.class %>" message="please-enter-a-valid-title" />
+
+				<liferay-ui:error exception="<%= ArticleTitleException.class %>">
+					<liferay-ui:message arguments="<%= LocaleUtil.toW3cLanguageId(journalEditArticleDisplayContext.getDefaultArticleLanguageId()) %>" key="please-enter-a-valid-title-for-language-code-x" />
+				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= ArticleTitleException.MustNotExceedMaximumLength.class %>">
 

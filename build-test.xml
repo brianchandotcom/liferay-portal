@@ -1445,6 +1445,7 @@ war.path=${app.server.portal.dir}/</echo>
 						</then>
 					</if>
 
+					<gradle-execute dir="${test.poshi.core.src.dir}" task="deploy" />
 					<gradle-execute dir="${test.poshi.runner.src.dir}" task="deploy" />
 				</then>
 			</if>

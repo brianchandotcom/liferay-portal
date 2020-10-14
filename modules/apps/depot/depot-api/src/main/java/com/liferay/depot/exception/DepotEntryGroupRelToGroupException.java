@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.depot.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,6 +34,26 @@ public class DepotEntryGroupRelToGroupException extends PortalException {
 
 	public DepotEntryGroupRelToGroupException(Throwable throwable) {
 		super(throwable);
+	}
+
+	public static class MustBeStaged extends DepotEntryGroupException {
+
+		public MustBeStaged() {
+			super(
+				"A staged asset library cannot be connected to an unstaged " +
+					"site");
+		}
+
+	}
+
+	public static class MustNotBeStaged extends DepotEntryGroupException {
+
+		public MustNotBeStaged() {
+			super(
+				"An unstaged asset library cannot be connected to a staged " +
+					"site");
+		}
+
 	}
 
 }

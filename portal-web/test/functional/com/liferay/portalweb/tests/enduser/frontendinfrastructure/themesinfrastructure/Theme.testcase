@@ -51,7 +51,7 @@ definition {
 
 		Navigator.openStagingSiteURL(defaultSite = "true");
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		// Workaround for LPS-110206
 
@@ -64,7 +64,7 @@ definition {
 
 		Navigator.openURL();
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		AssertCssValue(
 			locator1 = "//body",
@@ -100,7 +100,7 @@ definition {
 
 		ProductMenuHelper.closeProductMenu();
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		takeScreenshot();
 	}
@@ -130,7 +130,7 @@ definition {
 			pageName = "Theme Test Page",
 			siteName = "Guest");
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -149,7 +149,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "No theme found for specified theme id testtheme73_WAR_testtheme. Returning the default theme.");
 
-		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		takeScreenshot();
 
@@ -171,7 +171,7 @@ definition {
 			pageName = "Theme Test Page",
 			siteName = "Guest");
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		takeScreenshot();
 
@@ -205,7 +205,7 @@ definition {
 
 		Button.clickPublish();
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		// Workaround for LPS-110206
 
@@ -218,7 +218,7 @@ definition {
 
 		Navigator.openURL();
 
-		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		AssertCssValue(
 			locator1 = "//body",
@@ -235,7 +235,7 @@ definition {
 
 		Navigator.openURL();
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		AssertCssValue(
 			locator1 = "//body",
@@ -297,7 +297,7 @@ definition {
 			pageName = "Theme Test Page",
 			siteName = "Guest");
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -316,7 +316,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "No theme found for specified theme id testtheme73_WAR_testtheme. Returning the default theme.");
 
-		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		takeScreenshot();
 
@@ -339,7 +339,7 @@ definition {
 			pageName = "Theme Test Page",
 			siteName = "Guest");
 
-		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		takeScreenshot();
 

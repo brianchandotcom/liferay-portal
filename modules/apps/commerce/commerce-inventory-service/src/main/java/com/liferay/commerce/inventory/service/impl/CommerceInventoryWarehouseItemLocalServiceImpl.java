@@ -55,14 +55,31 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 		return commerceInventoryWarehouseItemLocalService.
 			addCommerceInventoryWarehouseItem(
-				userId, commerceInventoryWarehouseId, StringPool.BLANK, sku,
+				StringPool.BLANK, userId, commerceInventoryWarehouseId, sku,
 				quantity);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addCommerceInventoryWarehouseItem(String, long, long,
+	 *             String, int)}
+	 */
+	@Deprecated
 	@Override
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			long userId, long commerceInventoryWarehouseId,
 			String externalReferenceCode, String sku, int quantity)
+		throws PortalException {
+
+		return addCommerceInventoryWarehouseItem(
+			externalReferenceCode, userId, commerceInventoryWarehouseId, sku,
+			quantity);
+	}
+
+	@Override
+	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
+			String externalReferenceCode, long userId,
+			long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -81,13 +98,13 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			commerceInventoryWarehouseItemPersistence.create(
 				commerceInventoryWarehouseItemId);
 
+		commerceInventoryWarehouseItem.setExternalReferenceCode(
+			externalReferenceCode);
 		commerceInventoryWarehouseItem.setCompanyId(user.getCompanyId());
 		commerceInventoryWarehouseItem.setUserId(user.getUserId());
 		commerceInventoryWarehouseItem.setUserName(user.getFullName());
 		commerceInventoryWarehouseItem.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
-		commerceInventoryWarehouseItem.setExternalReferenceCode(
-			externalReferenceCode);
 		commerceInventoryWarehouseItem.setSku(sku);
 		commerceInventoryWarehouseItem.setQuantity(quantity);
 
@@ -132,10 +149,26 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			commerceInventoryWarehouseId, sku);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getCommerceInventoryWarehouseItemByReferenceCode(String,
+	 *             long)}
+	 */
+	@Deprecated
 	@Override
 	public CommerceInventoryWarehouseItem
 			getCommerceInventoryWarehouseItemByReferenceCode(
 				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getCommerceInventoryWarehouseItemByReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public CommerceInventoryWarehouseItem
+			getCommerceInventoryWarehouseItemByReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -456,35 +489,21 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		return commerceInventoryWarehouseItem;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #upsertCommerceInventoryWarehouseItem(String,
+	 *             long, long, long, String, int)}
+	 */
+	@Deprecated
 	@Override
 	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
 			long companyId, long userId, long commerceInventoryWarehouseId,
 			String externalReferenceCode, String sku, int quantity)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-		else {
-			CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-				commerceInventoryWarehouseItemPersistence.fetchByC_ERC(
-					companyId, externalReferenceCode);
-
-			if (commerceInventoryWarehouseItem != null) {
-				return commerceInventoryWarehouseItemLocalService.
-					updateCommerceInventoryWarehouseItem(
-						userId,
-						commerceInventoryWarehouseItem.
-							getCommerceInventoryWarehouseItemId(),
-						quantity,
-						commerceInventoryWarehouseItem.getMvccVersion());
-			}
-		}
-
-		return commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
-				userId, commerceInventoryWarehouseId, externalReferenceCode,
-				sku, quantity);
+		return upsertCommerceInventoryWarehouseItem(
+			externalReferenceCode, companyId, userId,
+			commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	@Override
@@ -509,6 +528,37 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
 				quantity, commerceInventoryWarehouseItem.getMvccVersion());
+	}
+
+	@Override
+	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
+			String externalReferenceCode, long companyId, long userId,
+			long commerceInventoryWarehouseId, String sku, int quantity)
+		throws PortalException {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+		else {
+			CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+				commerceInventoryWarehouseItemPersistence.fetchByC_ERC(
+					companyId, externalReferenceCode);
+
+			if (commerceInventoryWarehouseItem != null) {
+				return commerceInventoryWarehouseItemLocalService.
+					updateCommerceInventoryWarehouseItem(
+						userId,
+						commerceInventoryWarehouseItem.
+							getCommerceInventoryWarehouseItemId(),
+						quantity,
+						commerceInventoryWarehouseItem.getMvccVersion());
+			}
+		}
+
+		return commerceInventoryWarehouseItemLocalService.
+			addCommerceInventoryWarehouseItem(
+				externalReferenceCode, userId, commerceInventoryWarehouseId,
+				sku, quantity);
 	}
 
 	protected void validate(long commerceInventoryWarehouseId, String sku)

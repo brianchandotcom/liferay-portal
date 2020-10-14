@@ -36,6 +36,13 @@ import java.util.List;
 public class CommerceInventoryWarehouseServiceImpl
 	extends CommerceInventoryWarehouseServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addCommerceInventoryWarehouse(String, String, String,
+	 *             boolean, String, String, String, String, String, String,
+	 *             String, double, double, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
 			String name, String description, boolean active, String street1,
@@ -45,14 +52,29 @@ public class CommerceInventoryWarehouseServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addCommerceInventoryWarehouse(
+			externalReferenceCode, name, description, active, street1, street2,
+			street3, city, zip, commerceRegionCode, commerceCountryCode,
+			latitude, longitude, serviceContext);
+	}
+
+	@Override
+	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
+			String externalReferenceCode, String name, String description,
+			boolean active, String street1, String street2, String street3,
+			String city, String zip, String commerceRegionCode,
+			String commerceCountryCode, double latitude, double longitude,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		PortalPermissionUtil.check(
 			getPermissionChecker(), CommerceInventoryActionKeys.ADD_WAREHOUSE);
 
 		return commerceInventoryWarehouseLocalService.
 			addCommerceInventoryWarehouse(
-				name, description, active, street1, street2, street3, city, zip,
-				commerceRegionCode, commerceCountryCode, latitude, longitude,
-				externalReferenceCode, serviceContext);
+				externalReferenceCode, name, description, active, street1,
+				street2, street3, city, zip, commerceRegionCode,
+				commerceCountryCode, latitude, longitude, serviceContext);
 	}
 
 	@Override
@@ -68,9 +90,22 @@ public class CommerceInventoryWarehouseServiceImpl
 			deleteCommerceInventoryWarehouse(commerceInventoryWarehouseId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #fetchByExternalReferenceCode(String, long)}
+	 */
+	@Deprecated
 	@Override
 	public CommerceInventoryWarehouse fetchByExternalReferenceCode(
 			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return fetchByExternalReferenceCode(externalReferenceCode, companyId);
+	}
+
+	@Override
+	public CommerceInventoryWarehouse fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =

@@ -98,12 +98,12 @@ public class CommerceInventoryTestUtil {
 
 		return CommerceInventoryWarehouseLocalServiceUtil.
 			addCommerceInventoryWarehouse(
-				name, RandomTestUtil.randomString(), active,
+				null, name, RandomTestUtil.randomString(), active,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), commerceRegion.getCode(),
 				commerceCountry.getTwoLettersISOCode(),
-				RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(), null,
+				RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(),
 				serviceContext);
 	}
 
@@ -118,12 +118,12 @@ public class CommerceInventoryTestUtil {
 
 		return CommerceInventoryWarehouseLocalServiceUtil.
 			addCommerceInventoryWarehouse(
-				name, RandomTestUtil.randomString(), active,
+				null, name, RandomTestUtil.randomString(), active,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), commerceRegion.getCode(),
 				commerceCountry.getTwoLettersISOCode(),
-				RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(), null,
+				RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(),
 				serviceContext);
 	}
 
@@ -184,13 +184,14 @@ public class CommerceInventoryTestUtil {
 
 		return CommerceInventoryWarehouseLocalServiceUtil.
 			addCommerceInventoryWarehouse(
-				name, RandomTestUtil.randomString(), true,
+				RandomTestUtil.randomString(), name,
+				RandomTestUtil.randomString(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), commerceRegion.getCode(),
 				commerceCountry.getTwoLettersISOCode(),
 				RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
-				RandomTestUtil.randomString(), serviceContext);
+				serviceContext);
 	}
 
 	public static CommerceRegion addCommerceRegion(

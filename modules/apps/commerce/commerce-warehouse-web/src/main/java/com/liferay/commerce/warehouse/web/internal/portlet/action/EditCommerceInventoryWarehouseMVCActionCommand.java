@@ -257,9 +257,10 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 			commerceInventoryWarehouse =
 				_commerceInventoryWarehouseService.
 					addCommerceInventoryWarehouse(
-						name, description, active, street1, street2, street3,
-						city, zip, commerceRegionCode, commerceCountryCode,
-						latitude, longitude, null, serviceContext);
+						null, name, description, active, street1, street2,
+						street3, city, zip, commerceRegionCode,
+						commerceCountryCode, latitude, longitude,
+						serviceContext);
 
 			actionRequest.setAttribute(
 				"commerceInventoryWarehouseId",

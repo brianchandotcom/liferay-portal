@@ -46,10 +46,27 @@ public class CommerceInventoryWarehouseItemServiceImpl
 				userId, commerceInventoryWarehouseId, sku, quantity);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addCommerceInventoryWarehouseItem(String,
+	 *             long, long, String, int)}
+	 */
+	@Deprecated
 	@Override
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			long userId, long commerceInventoryWarehouseId,
 			String externalReferenceCode, String sku, int quantity)
+		throws PortalException {
+
+		return addCommerceInventoryWarehouseItem(
+			externalReferenceCode, userId, commerceInventoryWarehouseId, sku,
+			quantity);
+	}
+
+	@Override
+	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
+			String externalReferenceCode, long userId,
+			long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
@@ -58,7 +75,7 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 		return commerceInventoryWarehouseItemLocalService.
 			addCommerceInventoryWarehouseItem(
-				userId, commerceInventoryWarehouseId, externalReferenceCode,
+				externalReferenceCode, userId, commerceInventoryWarehouseId,
 				sku, quantity);
 	}
 
@@ -132,10 +149,26 @@ public class CommerceInventoryWarehouseItemServiceImpl
 				commerceInventoryWarehouseItemId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getCommerceInventoryWarehouseItemByReferenceCode(String,
+	 *             long)}
+	 */
+	@Deprecated
 	@Override
 	public CommerceInventoryWarehouseItem
 			getCommerceInventoryWarehouseItemByReferenceCode(
 				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getCommerceInventoryWarehouseItemByReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public CommerceInventoryWarehouseItem
+			getCommerceInventoryWarehouseItemByReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
@@ -144,7 +177,7 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 		return commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItemByReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -339,20 +372,21 @@ public class CommerceInventoryWarehouseItemServiceImpl
 				mvccVersion);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #upsertCommerceInventoryWarehouseItem(String,
+	 *             long, long, long, String, int)}
+	 */
+	@Deprecated
 	@Override
 	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
 			long companyId, long userId, long commerceInventoryWarehouseId,
 			String externalReferenceCode, String sku, int quantity)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
-
-		return commerceInventoryWarehouseItemLocalService.
-			upsertCommerceInventoryWarehouseItem(
-				companyId, userId, commerceInventoryWarehouseId,
-				externalReferenceCode, sku, quantity);
+		return upsertCommerceInventoryWarehouseItem(
+			externalReferenceCode, companyId, userId,
+			commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	@Override
@@ -368,6 +402,22 @@ public class CommerceInventoryWarehouseItemServiceImpl
 		return commerceInventoryWarehouseItemLocalService.
 			upsertCommerceInventoryWarehouseItem(
 				userId, commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	@Override
+	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
+			String externalReferenceCode, long companyId, long userId,
+			long commerceInventoryWarehouseId, String sku, int quantity)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		return commerceInventoryWarehouseItemLocalService.
+			upsertCommerceInventoryWarehouseItem(
+				externalReferenceCode, companyId, userId,
+				commerceInventoryWarehouseId, sku, quantity);
 	}
 
 }

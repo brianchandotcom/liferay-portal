@@ -99,7 +99,7 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchInventoryWarehouseException(
@@ -265,7 +265,7 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchInventoryWarehouseException(
@@ -279,10 +279,10 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					upsertCommerceInventoryWarehouseItem(
+						warehouseItem.getExternalReferenceCode(),
 						contextUser.getCompanyId(), contextUser.getUserId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),
-						warehouseItem.getExternalReferenceCode(),
 						warehouseItem.getSku(), warehouseItem.getQuantity());
 		}
 		else {
@@ -318,8 +318,8 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 		else if (warehouseItem.getWarehouseExternalReferenceCode() != null) {
 			commerceInventoryWarehouse =
 				_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-					contextUser.getCompanyId(),
-					warehouseItem.getWarehouseExternalReferenceCode());
+					warehouseItem.getWarehouseExternalReferenceCode(),
+					contextUser.getCompanyId());
 		}
 
 		if (commerceInventoryWarehouse == null) {
@@ -341,11 +341,10 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 		commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					contextUser.getUserId(),
+					externalReferenceCode, contextUser.getUserId(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					externalReferenceCode, warehouseItem.getSku(),
-					warehouseItem.getQuantity());
+					warehouseItem.getSku(), warehouseItem.getQuantity());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -366,10 +365,10 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
+					warehouseItem.getExternalReferenceCode(),
 					contextUser.getUserId(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					warehouseItem.getExternalReferenceCode(),
 					warehouseItem.getSku(), warehouseItem.getQuantity());
 
 		return _warehouseItemDTOConverter.toDTO(

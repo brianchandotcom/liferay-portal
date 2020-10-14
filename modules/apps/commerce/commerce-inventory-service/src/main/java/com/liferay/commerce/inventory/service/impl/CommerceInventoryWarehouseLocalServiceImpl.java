@@ -59,6 +59,14 @@ import java.util.Map;
 public class CommerceInventoryWarehouseLocalServiceImpl
 	extends CommerceInventoryWarehouseLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addCommerceInventoryWarehouse(String,
+	 *             String, String, String, boolean, String, String, String,
+	 *             String, String, String, String, double, double,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
@@ -66,6 +74,22 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 			String street2, String street3, String city, String zip,
 			String commerceRegionCode, String commerceCountryCode,
 			double latitude, double longitude, String externalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addCommerceInventoryWarehouse(
+			externalReferenceCode, name, description, active, street1, street2,
+			street3, city, zip, commerceRegionCode, commerceCountryCode,
+			latitude, longitude, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
+			String externalReferenceCode, String name, String description,
+			boolean active, String street1, String street2, String street3,
+			String city, String zip, String commerceRegionCode,
+			String commerceCountryCode, double latitude, double longitude,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -93,6 +117,8 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 			commerceInventoryWarehousePersistence.create(
 				commerceInventoryWarehouseId);
 
+		commerceInventoryWarehouse.setExternalReferenceCode(
+			externalReferenceCode);
 		commerceInventoryWarehouse.setCompanyId(user.getCompanyId());
 		commerceInventoryWarehouse.setUserId(user.getUserId());
 		commerceInventoryWarehouse.setUserName(user.getFullName());
@@ -109,8 +135,6 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 			commerceCountryCode);
 		commerceInventoryWarehouse.setLatitude(latitude);
 		commerceInventoryWarehouse.setLongitude(longitude);
-		commerceInventoryWarehouse.setExternalReferenceCode(
-			externalReferenceCode);
 		commerceInventoryWarehouse.setExpandoBridgeAttributes(serviceContext);
 
 		commerceInventoryWarehouse =

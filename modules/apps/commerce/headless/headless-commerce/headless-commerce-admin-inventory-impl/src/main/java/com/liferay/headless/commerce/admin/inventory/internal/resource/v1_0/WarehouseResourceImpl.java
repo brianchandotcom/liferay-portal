@@ -63,7 +63,7 @@ public class WarehouseResourceImpl
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchInventoryWarehouseException(
@@ -102,7 +102,7 @@ public class WarehouseResourceImpl
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchInventoryWarehouseException(
@@ -158,7 +158,7 @@ public class WarehouseResourceImpl
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchInventoryWarehouseException(
@@ -191,13 +191,14 @@ public class WarehouseResourceImpl
 	public Warehouse postWarehous(Warehouse warehouse) throws Exception {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(),
-				warehouse.getExternalReferenceCode());
+				warehouse.getExternalReferenceCode(),
+				contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouse == null) {
 			commerceInventoryWarehouse =
 				_commerceInventoryWarehouseService.
 					addCommerceInventoryWarehouse(
+						warehouse.getExternalReferenceCode(),
 						warehouse.getName(), warehouse.getDescription(),
 						GetterUtil.get(warehouse.getActive(), true),
 						warehouse.getStreet1(), warehouse.getStreet2(),
@@ -206,7 +207,6 @@ public class WarehouseResourceImpl
 						warehouse.getCountryISOCode(),
 						GetterUtil.get(warehouse.getLatitude(), 0D),
 						GetterUtil.get(warehouse.getLongitude(), 0D),
-						warehouse.getExternalReferenceCode(),
 						_serviceContextHelper.getServiceContext());
 		}
 		else {

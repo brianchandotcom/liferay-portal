@@ -126,10 +126,11 @@ public class CommerceInventoryWarehousesImporter {
 			commerceInventoryWarehouse =
 				_commerceInventoryWarehouseLocalService.
 					addCommerceInventoryWarehouse(
-						name, description, active, street1, street2, street3,
-						city, zip, commerceRegion.getCode(),
+						externalReferenceCode, name, description, active,
+						street1, street2, street3, city, zip,
+						commerceRegion.getCode(),
 						commerceCountry.getTwoLettersISOCode(), latitude,
-						longitude, externalReferenceCode, serviceContext);
+						longitude, serviceContext);
 		}
 
 		// Commerce channel rel

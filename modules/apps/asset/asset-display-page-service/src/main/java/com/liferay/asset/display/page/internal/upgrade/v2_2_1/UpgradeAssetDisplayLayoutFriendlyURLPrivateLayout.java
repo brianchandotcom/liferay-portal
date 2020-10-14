@@ -17,6 +17,8 @@ package com.liferay.asset.display.page.internal.upgrade.v2_2_1;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -101,10 +103,21 @@ public class UpgradeAssetDisplayLayoutFriendlyURLPrivateLayout
 					String languageId = rs.getString("languageId");
 					long plid = rs.getLong("plid");
 
+					String newFriendlyURL = _getFriendlyURL(
+						ps2, groupId, friendlyURL, languageId);
+
+					if (!newFriendlyURL.equals(friendlyURL)) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"FriendlyURL for plid ", plid,
+									" in groupId ", groupId, " changed from ",
+									friendlyURL, " to ", newFriendlyURL));
+						}
+					}
+
 					ps3.setBoolean(1, false);
-					ps3.setString(
-						2,
-						_getFriendlyURL(ps2, groupId, friendlyURL, languageId));
+					ps3.setString(2, newFriendlyURL);
 					ps3.setLong(2, plid);
 
 					ps2.addBatch();
@@ -114,5 +127,8 @@ public class UpgradeAssetDisplayLayoutFriendlyURLPrivateLayout
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeAssetDisplayLayoutFriendlyURLPrivateLayout.class);
 
 }

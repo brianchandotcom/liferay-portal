@@ -61,8 +61,12 @@
 		<field name="structureVersionId" type="long" />
 		<field name="parentFieldId" type="long" />
 		<field name="storageId" type="long" />
-		<field name="fieldName" type="String" />
-		<field name="fieldType" type="String" />
+		<field name="fieldName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="fieldType" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="priority" type="int" />
 		<field name="instanceId" type="String" />
 		<field name="localizable" type="boolean" />
@@ -75,9 +79,15 @@
 		<field name="fieldId" type="long" />
 		<field name="storageId" type="long" />
 		<field name="languageId" type="String" />
-		<field name="attributeName" type="String" />
-		<field name="smallAttributeValue" type="String" />
-		<field name="largeAttributeValue" type="String" />
+		<field name="attributeName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="smallAttributeValue" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="largeAttributeValue" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstance">
 		<field name="mvccVersion" type="long" />

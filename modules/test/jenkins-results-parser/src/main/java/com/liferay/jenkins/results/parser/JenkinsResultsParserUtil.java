@@ -3274,8 +3274,6 @@ public class JenkinsResultsParserUtil {
 	protected static String initCacheURL() {
 		String cacheDirPath = System.getenv("CACHE_DIR");
 
-		System.out.println("Using : " + cacheDirPath);
-
 		if (cacheDirPath != null) {
 			File cacheDir = new File(cacheDirPath);
 
@@ -3288,6 +3286,9 @@ public class JenkinsResultsParserUtil {
 						break;
 					}
 				}
+
+				System.out.println(
+					"Using " + cacheDirPath + " for cached files");
 
 				return "file://" + cacheDirPath;
 			}

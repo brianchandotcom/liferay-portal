@@ -33,17 +33,19 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			<span class="heading-text"><liferay-ui:message key="connected-sites" /></span>
 		</clay:content-col>
 
-		<clay:content-col>
-			<span class="heading-end">
-				<clay:button
-					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "addConnectedSiteButton" %>'
-					label="add"
-					small="<%= true %>"
-					title="connect-to-a-site"
-				/>
-			</span>
-		</clay:content-col>
+		<c:if test="<%= !depotAdminSitesDisplayContext.isLiveDepotEntry() %>">
+			<clay:content-col>
+				<span class="heading-end">
+					<clay:button
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "addConnectedSiteButton" %>'
+						label="add"
+						small="<%= true %>"
+						title="connect-to-a-site"
+					/>
+				</span>
+			</clay:content-col>
+		</c:if>
 	</clay:content-row>
 
 	<liferay-ui:error exception="<%= DepotEntryGroupRelToGroupException.MustNotBeStaged.class %>">

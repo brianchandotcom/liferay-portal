@@ -31,11 +31,13 @@ definition {
 	test ActivateStagingForSiteWithTheme {
 		property test.name.skip.portal.instance = "Theme#ActivateStagingForSiteWithTheme";
 
-		Theme.deployThemeWar(themeName = "test-theme");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
+
+		WaitForConsoleTextPresent(value1 = "STARTED test-theme");
 
 		User.firstLoginPG();
 
-		Page.changeSinglePageTheme(themeName = "test-theme-7-3");
+		Page.changeSinglePageTheme(themeName = "test-theme-7-4");
 
 		Navigator.gotoBack();
 
@@ -92,7 +94,7 @@ definition {
 
 		Navigator.openURL();
 
-		Page.changeSinglePageTheme(themeName = "test-theme-7-3");
+		Page.changeSinglePageTheme(themeName = "test-theme-7-4");
 
 		Navigator.gotoBack();
 
@@ -112,7 +114,9 @@ definition {
 
 		User.firstLoginPG();
 
-		Theme.deployThemeWar(themeName = "${appName}");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "${appName}.war");
+
+		WaitForConsoleTextPresent(value1 = "STARTED ${appName}");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -124,7 +128,7 @@ definition {
 
 		Page.changeCurrentTheme(
 			pageName = "Theme Test Page",
-			themeName = "test-theme-7-3");
+			themeName = "test-theme-7-4");
 
 		Navigator.openSitePage(
 			pageName = "Theme Test Page",
@@ -178,14 +182,16 @@ definition {
 		Page.viewCurrentTheme(
 			page = "Public Pages",
 			pageName = "Theme Test Page",
-			themeName = "test-theme-7-3");
+			themeName = "test-theme-7-4");
 	}
 
 	@priority = "5"
 	test PublishThemeFromStagedToLive {
 		property test.name.skip.portal.instance = "Theme#PublishThemeFromStagedToLive";
 
-		Theme.deployThemeWar(themeName = "test-theme");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
+
+		WaitForConsoleTextPresent(value1 = "STARTED test-theme");
 
 		User.firstLoginPG();
 
@@ -199,7 +205,7 @@ definition {
 
 		Navigator.openStagingSiteURL(defaultSite = "true");
 
-		Page.changeSinglePageTheme(themeName = "test-theme-7-3");
+		Page.changeSinglePageTheme(themeName = "test-theme-7-4");
 
 		Navigator.gotoBack();
 
@@ -247,13 +253,14 @@ definition {
 
 	@priority = "5"
 	test StartPortalWithoutClassicTheme {
-		property liferay.dependency.jars = "test-theme.war";
 		property skip.start-app-server = "true";
 		property test.name.skip.portal.instance = "Theme#StartPortalWithoutClassicTheme";
 
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "delete-portal-theme -Dtheme-name=classic-theme");
+
+		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -279,7 +286,9 @@ definition {
 
 		User.firstLoginPG();
 
-		Theme.deployThemeWar(themeName = "${appName}");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "${appName}.war");
+
+		WaitForConsoleTextPresent(value1 = "STARTED ${appName}");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -291,7 +300,7 @@ definition {
 
 		Page.changeCurrentTheme(
 			pageName = "Theme Test Page",
-			themeName = "test-theme-7-3");
+			themeName = "test-theme-7-4");
 
 		Navigator.openSitePage(
 			pageName = "Theme Test Page",
@@ -314,7 +323,7 @@ definition {
 			pageName = "Theme Test Page",
 			siteName = "Guest");
 
-		AssertConsoleTextPresent(value1 = "No theme found for specified theme id testtheme73_WAR_testtheme. Returning the default theme.");
+		AssertConsoleTextPresent(value1 = "No theme found for specified theme id testtheme74_WAR_testtheme. Returning the default theme.");
 
 		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
@@ -329,11 +338,13 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		LexiconCard.viewCardNotPresent(card = "test-theme-7-3");
+		LexiconCard.viewCardNotPresent(card = "test-theme-7-4");
 
 		FileInstall.deleteWarOffline(liferayDependencyWars = "test-theme.war");
 
-		Theme.deployThemeWar(themeName = "${appName}");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "${appName}.war");
+
+		Pause(locator1 = "30000");
 
 		Navigator.openSitePage(
 			pageName = "Theme Test Page",
@@ -352,7 +363,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		LexiconCard.viewCardNotPresent(card = "test-theme-7-3");
+		LexiconCard.viewCardNotPresent(card = "test-theme-7-4");
 	}
 
 }

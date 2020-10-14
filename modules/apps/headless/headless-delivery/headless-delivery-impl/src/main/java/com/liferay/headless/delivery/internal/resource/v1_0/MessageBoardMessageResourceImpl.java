@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
+import com.liferay.headless.delivery.internal.util.FilterUtil;
 import com.liferay.headless.delivery.internal.util.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
@@ -416,7 +417,8 @@ public class MessageBoardMessageResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, MBMessage.class, keywords, pagination,
+			FilterUtil.processFilter(_ddmIndexer, filter), MBMessage.class,
+			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {

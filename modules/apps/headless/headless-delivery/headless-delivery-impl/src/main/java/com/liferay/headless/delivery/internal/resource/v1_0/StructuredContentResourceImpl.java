@@ -48,6 +48,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RenderedContentValueUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentEntityModel;
+import com.liferay.headless.delivery.internal.util.FilterUtil;
 import com.liferay.headless.delivery.internal.util.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -836,7 +837,8 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			actions, booleanQueryUnsafeConsumer, filter, JournalArticle.class,
+			actions, booleanQueryUnsafeConsumer,
+			FilterUtil.processFilter(_ddmIndexer, filter), JournalArticle.class,
 			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				com.liferay.portal.kernel.search.Field.ARTICLE_ID,

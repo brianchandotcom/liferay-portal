@@ -27,6 +27,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentFolderD
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentFolderEntityModel;
+import com.liferay.headless.delivery.internal.util.FilterUtil;
 import com.liferay.headless.delivery.internal.util.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -285,7 +286,8 @@ public class DocumentFolderResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, DLFolder.class, keywords, pagination,
+			FilterUtil.processFilter(_ddmIndexer, filter), DLFolder.class,
+			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {

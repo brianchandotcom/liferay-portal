@@ -33,6 +33,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.WikiPageEntityModel;
+import com.liferay.headless.delivery.internal.util.FilterUtil;
 import com.liferay.headless.delivery.internal.util.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -134,7 +135,8 @@ public class WikiPageResourceImpl
 					new TermFilter(Field.NODE_ID, String.valueOf(wikiNodeId)),
 					BooleanClauseOccur.MUST);
 			},
-			filter, com.liferay.wiki.model.WikiPage.class, search, pagination,
+			FilterUtil.processFilter(_ddmIndexer, filter),
+			com.liferay.wiki.model.WikiPage.class, search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {

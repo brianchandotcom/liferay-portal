@@ -114,6 +114,8 @@ public class TextDDMFormFieldTemplateContextContributor
 						ddmFormFieldRenderingContext.getLocale());
 				}
 			).put(
+				"reference", ddmFormFieldOptions.getOptionReference(optionValue)
+			).put(
 				"value", optionValue
 			).build();
 

@@ -181,6 +181,8 @@ public class DDMFormBuilderContextFactoryHelper {
 			jsonObject.put(
 				"label", label.getString(locale)
 			).put(
+				"reference", ddmFormFieldOptions.getOptionReference(optionValue)
+			).put(
 				"value", optionValue
 			);
 

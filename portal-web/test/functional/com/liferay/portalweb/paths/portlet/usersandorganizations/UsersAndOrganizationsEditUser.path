@@ -290,6 +290,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERSONAL_SITE_MY_PROFILE</td>
+	<td>//div[contains(@class,'form-group')]//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

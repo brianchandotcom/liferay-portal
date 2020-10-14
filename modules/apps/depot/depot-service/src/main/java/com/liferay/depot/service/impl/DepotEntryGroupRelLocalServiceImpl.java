@@ -19,6 +19,10 @@ import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.base.DepotEntryGroupRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 
 import java.util.List;
 
@@ -55,6 +59,13 @@ public class DepotEntryGroupRelLocalServiceImpl
 		depotEntryGroupRel.setSearchable(searchable);
 		depotEntryGroupRel.setToGroupId(toGroupId);
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			depotEntryGroupRel.setUuid(serviceContext.getUuid());
+		}
+
 		return depotEntryGroupRelPersistence.update(depotEntryGroupRel);
 	}
 
@@ -74,8 +85,24 @@ public class DepotEntryGroupRelLocalServiceImpl
 	}
 
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public DepotEntryGroupRel deleteDepotEntryGroupRel(
+		DepotEntryGroupRel depotEntryGroupRel) {
+
+		return super.deleteDepotEntryGroupRel(depotEntryGroupRel);
+	}
+
+	@Override
 	public void deleteToGroupDepotEntryGroupRels(long toGroupId) {
 		depotEntryGroupRelPersistence.removeByToGroupId(toGroupId);
+	}
+
+	@Override
+	public DepotEntryGroupRel fetchDepotEntryGroupRelByDepotEntryIdToGroupId(
+		long depotEntryId, long toGroupId) {
+
+		return depotEntryGroupRelPersistence.fetchByD_TGI(
+			depotEntryId, toGroupId);
 	}
 
 	@Override

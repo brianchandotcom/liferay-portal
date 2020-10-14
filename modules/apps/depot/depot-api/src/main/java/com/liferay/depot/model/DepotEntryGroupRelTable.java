@@ -47,6 +47,11 @@ public class DepotEntryGroupRelTable
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<DepotEntryGroupRelTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<DepotEntryGroupRelTable, Long> userId = createColumn(
+		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<DepotEntryGroupRelTable, String> userName =
+		createColumn(
+			"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DepotEntryGroupRelTable, Date> createDate =
 		createColumn(
 			"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
@@ -65,6 +70,10 @@ public class DepotEntryGroupRelTable
 			"searchable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<DepotEntryGroupRelTable, Long> toGroupId = createColumn(
 		"toGroupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<DepotEntryGroupRelTable, Date> lastPublishDate =
+		createColumn(
+			"lastPublishDate", Date.class, Types.TIMESTAMP,
+			Column.FLAG_DEFAULT);
 
 	private DepotEntryGroupRelTable() {
 		super("DepotEntryGroupRel", DepotEntryGroupRelTable::new);

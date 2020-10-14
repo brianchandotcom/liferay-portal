@@ -14,12 +14,16 @@
 
 package com.liferay.depot.internal.exportimport.data.handler;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.portal.kernel.model.Group;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,16 +78,21 @@ public class DepotEntryGroupRelStagedModelDataHandler
 		if ((existingDepotEntryGroupRel == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
+			importedDepotEntryGroupRel.setDepotEntryId(
+				_getDepotEntryId(importedDepotEntryGroupRel));
+
 			importedDepotEntryGroupRel = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedDepotEntryGroupRel);
 		}
 		else {
-			importedDepotEntryGroupRel.setMvccVersion(
-				existingDepotEntryGroupRel.getMvccVersion());
+			existingDepotEntryGroupRel.setDdmStructuresAvailable(
+				importedDepotEntryGroupRel.isDdmStructuresAvailable());
+			existingDepotEntryGroupRel.setSearchable(
+				importedDepotEntryGroupRel.isSearchable());
 
 			importedDepotEntryGroupRel =
-				_stagedModelRepository.updateStagedModel(
-					portletDataContext, importedDepotEntryGroupRel);
+				_depotEntryGroupRelLocalService.updateDepotEntryGroupRel(
+					existingDepotEntryGroupRel);
 		}
 
 		portletDataContext.importClassedModel(
@@ -96,6 +105,43 @@ public class DepotEntryGroupRelStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	private long _getDepotEntryId(DepotEntryGroupRel importedDepotEntryGroupRel)
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+			importedDepotEntryGroupRel.getDepotEntryId());
+
+		Group depotEntryGroup = depotEntry.getGroup();
+
+		if (depotEntryGroup.isStaged()) {
+			if (depotEntryGroup.getLiveGroup() != null) {
+				DepotEntry liveDepotEntry =
+					_depotEntryLocalService.getGroupDepotEntry(
+						depotEntryGroup.getLiveGroupId());
+
+				return liveDepotEntry.getDepotEntryId();
+			}
+
+			Group stagingGroup = depotEntryGroup.getStagingGroup();
+
+			if (stagingGroup != null) {
+				DepotEntry stagedDepotEntry =
+					_depotEntryLocalService.getGroupDepotEntry(
+						stagingGroup.getGroupId());
+
+				return stagedDepotEntry.getDepotEntryId();
+			}
+		}
+
+		return importedDepotEntryGroupRel.getDepotEntryId();
+	}
+
+	@Reference
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.depot.model.DepotEntryGroupRel)",

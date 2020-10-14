@@ -69,7 +69,7 @@ public class DepotEntryGroupRelServiceImpl
 			ActionKeys.UPDATE);
 
 		return depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
-			depotEntryGroupRelId);
+			depotEntryGroupRel);
 	}
 
 	@Override

@@ -48,12 +48,15 @@ public class DepotEntryGroupRelWrapper
 		attributes.put("depotEntryGroupRelId", getDepotEntryGroupRelId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("ddmStructuresAvailable", isDdmStructuresAvailable());
 		attributes.put("depotEntryId", getDepotEntryId());
 		attributes.put("searchable", isSearchable());
 		attributes.put("toGroupId", getToGroupId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -91,6 +94,18 @@ public class DepotEntryGroupRelWrapper
 			setCompanyId(companyId);
 		}
 
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
 		Date createDate = (Date)attributes.get("createDate");
 
 		if (createDate != null) {
@@ -126,6 +141,12 @@ public class DepotEntryGroupRelWrapper
 
 		if (toGroupId != null) {
 			setToGroupId(toGroupId);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -190,6 +211,16 @@ public class DepotEntryGroupRelWrapper
 	}
 
 	/**
+	 * Returns the last publish date of this depot entry group rel.
+	 *
+	 * @return the last publish date of this depot entry group rel
+	 */
+	@Override
+	public Date getLastPublishDate() {
+		return model.getLastPublishDate();
+	}
+
+	/**
 	 * Returns the modified date of this depot entry group rel.
 	 *
 	 * @return the modified date of this depot entry group rel
@@ -237,6 +268,36 @@ public class DepotEntryGroupRelWrapper
 	@Override
 	public long getToGroupId() {
 		return model.getToGroupId();
+	}
+
+	/**
+	 * Returns the user ID of this depot entry group rel.
+	 *
+	 * @return the user ID of this depot entry group rel
+	 */
+	@Override
+	public long getUserId() {
+		return model.getUserId();
+	}
+
+	/**
+	 * Returns the user name of this depot entry group rel.
+	 *
+	 * @return the user name of this depot entry group rel
+	 */
+	@Override
+	public String getUserName() {
+		return model.getUserName();
+	}
+
+	/**
+	 * Returns the user uuid of this depot entry group rel.
+	 *
+	 * @return the user uuid of this depot entry group rel
+	 */
+	@Override
+	public String getUserUuid() {
+		return model.getUserUuid();
 	}
 
 	/**
@@ -335,6 +396,16 @@ public class DepotEntryGroupRelWrapper
 	}
 
 	/**
+	 * Sets the last publish date of this depot entry group rel.
+	 *
+	 * @param lastPublishDate the last publish date of this depot entry group rel
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		model.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
 	 * Sets the modified date of this depot entry group rel.
 	 *
 	 * @param modifiedDate the modified date of this depot entry group rel
@@ -382,6 +453,36 @@ public class DepotEntryGroupRelWrapper
 	@Override
 	public void setToGroupId(long toGroupId) {
 		model.setToGroupId(toGroupId);
+	}
+
+	/**
+	 * Sets the user ID of this depot entry group rel.
+	 *
+	 * @param userId the user ID of this depot entry group rel
+	 */
+	@Override
+	public void setUserId(long userId) {
+		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user name of this depot entry group rel.
+	 *
+	 * @param userName the user name of this depot entry group rel
+	 */
+	@Override
+	public void setUserName(String userName) {
+		model.setUserName(userName);
+	}
+
+	/**
+	 * Sets the user uuid of this depot entry group rel.
+	 *
+	 * @param userUuid the user uuid of this depot entry group rel
+	 */
+	@Override
+	public void setUserUuid(String userUuid) {
+		model.setUserUuid(userUuid);
 	}
 
 	/**

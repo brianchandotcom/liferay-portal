@@ -16,10 +16,13 @@ package com.liferay.depot.web.internal.portlet.action;
 
 import com.liferay.depot.exception.DepotEntryGroupRelStagedGroupException;
 import com.liferay.depot.service.DepotEntryGroupRelService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -53,6 +56,16 @@ public class ConnectSiteMVCActionCommand extends BaseMVCActionCommand {
 		long toGroupId = ParamUtil.getLong(actionRequest, "toGroupId");
 
 		try {
+			Group toGroup = _groupService.getGroup(toGroupId);
+
+			if (toGroup.isStaged()) {
+				Group stagingToGroup = toGroup.getStagingGroup();
+
+				if (stagingToGroup != null) {
+					toGroupId = stagingToGroup.getGroupId();
+				}
+			}
+
 			_depotEntryGroupRelService.addDepotEntryGroupRel(
 				depotEntryId, toGroupId);
 		}
@@ -77,5 +90,11 @@ public class ConnectSiteMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DepotEntryGroupRelService _depotEntryGroupRelService;
+
+	@Reference
+	private DepotEntryService _depotEntryService;
+
+	@Reference
+	private GroupService _groupService;
 
 }

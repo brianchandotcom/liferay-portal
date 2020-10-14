@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.group.capability;
 
 import com.liferay.portal.kernel.model.Portlet;
 

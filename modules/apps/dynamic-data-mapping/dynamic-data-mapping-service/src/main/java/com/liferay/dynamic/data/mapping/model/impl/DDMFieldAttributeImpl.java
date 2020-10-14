@@ -15,22 +15,40 @@
 package com.liferay.dynamic.data.mapping.model.impl;
 
 /**
- * The extended model implementation for the DDMFieldAttribute service. Represents a row in the &quot;DDMFieldAttribute&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.dynamic.data.mapping.model.DDMFieldAttribute</code> interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Preson Crary
  */
 public class DDMFieldAttributeImpl extends DDMFieldAttributeBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a ddm field attribute model instance should use the {@link com.liferay.dynamic.data.mapping.model.DDMFieldAttribute} interface instead.
-	 */
-	public DDMFieldAttributeImpl() {
+	public static final int SMALL_ATTRIBUTE_VALUE_MAX_LENGTH = 255;
+
+	@Override
+	public String getAttributeValue() {
+		String value = getSmallAttributeValue();
+
+		if (value.isEmpty()) {
+			value = getLargeAttributeValue();
+		}
+
+		return value;
+	}
+
+	@Override
+	public void setAttributeValue(String value) {
+		if (value == null) {
+			setSmallAttributeValue(null);
+
+			setLargeAttributeValue(null);
+		}
+		else if (value.length() <= SMALL_ATTRIBUTE_VALUE_MAX_LENGTH) {
+			setSmallAttributeValue(value);
+
+			setLargeAttributeValue(null);
+		}
+		else {
+			setSmallAttributeValue(null);
+
+			setLargeAttributeValue(value);
+		}
 	}
 
 }

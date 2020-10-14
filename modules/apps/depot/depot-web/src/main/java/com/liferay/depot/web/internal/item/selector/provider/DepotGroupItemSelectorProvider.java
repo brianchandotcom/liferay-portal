@@ -132,10 +132,6 @@ public class DepotGroupItemSelectorProvider
 			}
 		}
 
-		if (group.isStagingGroup()) {
-			return group.getLiveGroupId();
-		}
-
 		return group.getGroupId();
 	}
 

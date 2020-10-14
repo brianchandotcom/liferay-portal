@@ -19,10 +19,13 @@ import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import Text from '../Text/Text.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 
-const KeyValue = ({disabled, onChange, value, ...otherProps}) => (
+const KeyValue = ({disabled, label, onChange, value, ...otherProps}) => (
 	<div className="active form-text key-value-editor">
 		<label className="control-label key-value-label">
-			{Liferay.Language.get('field-name')}:
+			{label === 'field-reference'
+				? Liferay.Language.get('field-reference')
+				: Liferay.Language.get('field-name')}
+			:
 		</label>
 
 		<input
@@ -50,8 +53,10 @@ const Main = ({
 	onFocus,
 	onKeywordBlur,
 	onKeywordChange,
+	onReferenceChange,
 	placeholder,
 	readOnly,
+	reference: initalReference,
 	required,
 	showLabel,
 	spritemap,
@@ -60,6 +65,7 @@ const Main = ({
 	...otherProps
 }) => {
 	const [keyword, setKeyword] = useSyncValue(initialKeyword);
+	const [reference, setReference] = useSyncValue(initalReference);
 
 	const generateKeywordRef = useRef(generateKeyword);
 
@@ -107,6 +113,14 @@ const Main = ({
 					setKeyword(value);
 				}}
 				value={keyword}
+			/>
+			<KeyValue
+				label="field-reference"
+				onChange={(event) => {
+					onReferenceChange(event);
+					setReference(event.target.value);
+				}}
+				value={reference}
 			/>
 		</FieldBase>
 	);

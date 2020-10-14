@@ -172,6 +172,9 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 
 			ddmFormFieldOptions.addOption(value);
 
+			ddmFormFieldOptions.addOptionReference(
+				value, dynamicElementElement.attributeValue("reference"));
+
 			addOptionValueLabels(
 				dynamicElementElement, ddmFormFieldOptions, value);
 		}

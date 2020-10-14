@@ -163,6 +163,10 @@ public class DDMFormContextToDDMForm
 				ddmFormFieldOptions.addOptionLabel(
 					optionJSONObject.getString("value"), availableLocale,
 					optionJSONObject.getString("label"));
+
+				ddmFormFieldOptions.addOptionReference(
+					optionJSONObject.getString("value"),
+					optionJSONObject.getString("reference"));
 			}
 		}
 

@@ -276,6 +276,9 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 
 			ddmFormFieldOptions.addOption(value);
 
+			ddmFormFieldOptions.addOptionReference(
+				value, jsonObject.getString("reference"));
+
 			addOptionValueLabels(
 				jsonObject.getJSONObject("label"), ddmFormFieldOptions, value);
 		}

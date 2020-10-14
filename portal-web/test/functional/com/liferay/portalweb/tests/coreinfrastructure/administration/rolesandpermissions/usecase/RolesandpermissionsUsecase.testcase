@@ -591,6 +591,7 @@ definition {
 
 	@priority = "4"
 	test RolesPermissionsDynamicDataLists {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -638,9 +639,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -671,9 +673,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

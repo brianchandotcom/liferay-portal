@@ -70,7 +70,7 @@ public class AccountRoleLocalServiceImpl
 
 		Role role = roleLocalService.addRole(
 			userId, AccountRole.class.getName(), accountRole.getAccountRoleId(),
-			name, titleMap, descriptionMap, RoleConstants.TYPE_PROVIDER, null,
+			name, titleMap, descriptionMap, RoleConstants.TYPE_ACCOUNT, null,
 			null);
 
 		accountRole.setRoleId(role.getRoleId());

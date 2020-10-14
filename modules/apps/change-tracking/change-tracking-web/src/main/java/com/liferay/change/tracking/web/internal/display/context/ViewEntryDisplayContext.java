@@ -14,9 +14,11 @@
 
 package com.liferay.change.tracking.web.internal.display.context;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay;
+import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,10 +30,13 @@ import javax.servlet.http.HttpServletResponse;
 public class ViewEntryDisplayContext {
 
 	public ViewEntryDisplayContext(
-		CTDisplayRendererRegistry ctDisplayRendererRegistry, CTEntry ctEntry) {
+		CTDisplayRendererRegistry ctDisplayRendererRegistry, CTEntry ctEntry,
+		long modelClassNameId, long modelClassPK) {
 
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntry = ctEntry;
+		_modelClassNameId = modelClassNameId;
+		_modelClassPK = modelClassPK;
 	}
 
 	public <T extends BaseModel<T>> void renderEntry(
@@ -39,13 +44,28 @@ public class ViewEntryDisplayContext {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		if (_ctEntry != null) {
+			_ctDisplayRendererRegistry.renderCTEntry(
+				httpServletRequest, httpServletResponse,
+				_ctEntry.getCtCollectionId(), _ctEntry,
+				CTEntryDiffDisplay.TYPE_AFTER);
+
+			return;
+		}
+
+		T model = _ctDisplayRendererRegistry.fetchCTModel(
+			_modelClassNameId, _modelClassPK);
+
 		_ctDisplayRendererRegistry.renderCTEntry(
 			httpServletRequest, httpServletResponse,
-			_ctEntry.getCtCollectionId(), _ctEntry,
-			CTEntryDiffDisplay.TYPE_AFTER);
+			CTConstants.CT_COLLECTION_ID_PRODUCTION,
+			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, 0, model, _modelClassNameId,
+			null);
 	}
 
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntry _ctEntry;
+	private final long _modelClassNameId;
+	private final long _modelClassPK;
 
 }

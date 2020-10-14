@@ -28,16 +28,13 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.change.tracking.conflict.ConflictInfo" %><%@
-page import="com.liferay.change.tracking.constants.CTActionKeys" %><%@
+<%@ page import="com.liferay.change.tracking.constants.CTActionKeys" %><%@
 page import="com.liferay.change.tracking.constants.CTConstants" %><%@
 page import="com.liferay.change.tracking.exception.CTCollectionDescriptionException" %><%@
 page import="com.liferay.change.tracking.exception.CTCollectionNameException" %><%@
 page import="com.liferay.change.tracking.model.CTCollection" %><%@
-page import="com.liferay.change.tracking.model.CTEntry" %><%@
 page import="com.liferay.change.tracking.model.CTProcess" %><%@
 page import="com.liferay.change.tracking.service.CTCollectionLocalServiceUtil" %><%@
-page import="com.liferay.change.tracking.service.CTEntryLocalServiceUtil" %><%@
 page import="com.liferay.change.tracking.web.internal.constants.CTPortletKeys" %><%@
 page import="com.liferay.change.tracking.web.internal.constants.CTWebKeys" %><%@
 page import="com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry" %><%@
@@ -48,6 +45,7 @@ page import="com.liferay.change.tracking.web.internal.display.context.Publicatio
 page import="com.liferay.change.tracking.web.internal.display.context.SchedulePublicationDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.SelectPublicationManagementToolbarDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext" %><%@
+page import="com.liferay.change.tracking.web.internal.display.context.ViewConflictsDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewDiscardDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewEntryDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewHistoryDisplayContext" %><%@
@@ -83,10 +81,7 @@ page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.Calendar" %><%@
 page import="java.util.Date" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@
-page import="java.util.ResourceBundle" %><%@
 page import="java.util.TimeZone" %>
 
 <liferay-frontend:defineObjects />

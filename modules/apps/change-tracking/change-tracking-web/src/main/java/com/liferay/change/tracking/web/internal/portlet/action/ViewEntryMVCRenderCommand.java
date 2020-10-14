@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
@@ -49,13 +50,22 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		long ctEntryId = ParamUtil.getLong(renderRequest, "ctEntryId");
+		long modelClassNameId = ParamUtil.getLong(
+			renderRequest, "modelClassNameId");
+		long modelClassPK = ParamUtil.getLong(renderRequest, "modelClassPK");
 
 		try {
+			CTEntry ctEntry = null;
+
+			if (ctEntryId > 0) {
+				ctEntry = _ctEntryLocalService.getCTEntry(ctEntryId);
+			}
+
 			renderRequest.setAttribute(
 				CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT,
 				new ViewEntryDisplayContext(
-					_ctDisplayRendererRegistry,
-					_ctEntryLocalService.getCTEntry(ctEntryId)));
+					_ctDisplayRendererRegistry, ctEntry, modelClassNameId,
+					modelClassPK));
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);

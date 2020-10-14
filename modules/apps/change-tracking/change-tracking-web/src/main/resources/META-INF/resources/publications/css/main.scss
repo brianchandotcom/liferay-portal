@@ -26,8 +26,28 @@
 		padding-left: 0;
 	}
 
+	.conflicts-description-text {
+		font-size: 87.5%;
+	}
+
+	.conflicts-success-text {
+		color: #287d3d;
+	}
+
+	.conflicts-warning-text {
+		color: #b95000;
+	}
+
 	.entry-title {
 		margin-top: 0.25rem;
+	}
+
+	.lfr-portal-tooltip.quick-action-item {
+		display: flex;
+	}
+
+	.list-group-title {
+		margin-top: 0;
 	}
 
 	.user-portrait-wrapper {

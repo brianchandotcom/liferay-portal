@@ -23,7 +23,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeClosable;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
@@ -35,14 +34,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -50,9 +45,6 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Date;
 import java.util.Locale;
-
-import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -162,6 +154,7 @@ public class CTDisplayRendererRegistry {
 		HttpServletRequest httpServletRequest, CTEntry ctEntry) {
 
 		T model = fetchCTModel(
+			ctEntry.getCtCollectionId(), CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 		if (model == null) {
@@ -316,41 +309,6 @@ public class CTDisplayRendererRegistry {
 		}
 
 		return name;
-	}
-
-	public String getViewURL(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, CTEntry ctEntry,
-		boolean viewDiff) {
-
-		String title = getEntryDescription(
-			liferayPortletRequest.getHttpServletRequest(), ctEntry);
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		if (viewDiff) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/publications/view_diff");
-		}
-		else {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/publications/view_entry");
-		}
-
-		portletURL.setParameter(
-			"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			ReflectionUtil.throwException(windowStateException);
-		}
-
-		return StringBundler.concat(
-			"javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: ",
-			"true}, title: '", HtmlUtil.escapeJS(title), "', uri: '",
-			portletURL.toString(), "'});");
 	}
 
 	public <T extends BaseModel<T>> boolean isHideable(

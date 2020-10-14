@@ -14,7 +14,9 @@
 
 package com.liferay.depot.web.internal.portlet.action;
 
-import com.liferay.depot.exception.DepotEntryGroupRelStagedGroupException;
+import com.liferay.depot.exception.DepotEntryGroupException;
+import com.liferay.depot.exception.DepotEntryGroupRelToGroupException;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
@@ -56,7 +58,19 @@ public class ConnectSiteMVCActionCommand extends BaseMVCActionCommand {
 		long toGroupId = ParamUtil.getLong(actionRequest, "toGroupId");
 
 		try {
+			DepotEntry depotEntry = _depotEntryService.getDepotEntry(
+				depotEntryId);
+
+			Group depotGroup = depotEntry.getGroup();
+
 			Group toGroup = _groupService.getGroup(toGroupId);
+
+			if (!depotGroup.isStaged() && toGroup.isStaged()) {
+				throw new DepotEntryGroupRelToGroupException.MustNotBeStaged();
+			}
+			else if (depotGroup.isStaged() && !toGroup.isStaged()) {
+				throw new DepotEntryGroupRelToGroupException.MustBeStaged();
+			}
 
 			if (toGroup.isStaged()) {
 				Group stagingToGroup = toGroup.getStagingGroup();
@@ -69,22 +83,15 @@ public class ConnectSiteMVCActionCommand extends BaseMVCActionCommand {
 			_depotEntryGroupRelService.addDepotEntryGroupRel(
 				depotEntryId, toGroupId);
 		}
-		catch (Exception exception) {
-			Throwable throwable = exception.getCause();
+		catch (DepotEntryGroupException depotEntryGroupException) {
+			SessionErrors.add(
+				actionRequest, depotEntryGroupException.getClass(),
+				depotEntryGroupException);
 
-			if (throwable instanceof DepotEntryGroupRelStagedGroupException) {
-				SessionErrors.add(
-					actionRequest, DepotEntryGroupRelStagedGroupException.class,
-					throwable);
+			hideDefaultErrorMessage(actionRequest);
 
-				hideDefaultErrorMessage(actionRequest);
-
-				actionResponse.sendRedirect(
-					ParamUtil.getString(actionRequest, "redirect"));
-			}
-			else {
-				throw exception;
-			}
+			actionResponse.sendRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
 		}
 	}
 

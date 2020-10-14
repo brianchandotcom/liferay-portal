@@ -231,20 +231,18 @@ public class CommerceShippingMethodLocalServiceImpl
 		List<CommerceShippingMethod> commerceShippingMethods =
 			commerceShippingMethodPersistence.findByG_A(groupId, active);
 
-		for (CommerceShippingMethod commercePaymentMethodGroupRel :
+		for (CommerceShippingMethod commerceShippingMethod :
 				commerceShippingMethods) {
 
 			boolean restricted =
 				commerceAddressRestrictionLocalService.
 					isCommerceAddressRestricted(
 						CommerceShippingMethod.class.getName(),
-						commercePaymentMethodGroupRel.
-							getCommerceShippingMethodId(),
+						commerceShippingMethod.getCommerceShippingMethodId(),
 						commerceCountryId);
 
 			if (!restricted) {
-				filteredCommerceShippingMethods.add(
-					commercePaymentMethodGroupRel);
+				filteredCommerceShippingMethods.add(commerceShippingMethod);
 			}
 		}
 

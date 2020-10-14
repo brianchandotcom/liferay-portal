@@ -39,13 +39,20 @@ public class DDMFormFieldOptions implements Serializable {
 
 		Map<String, LocalizedValue> options = ddmFormFieldOptions._options;
 
+		Map<String, String> optionsReferences =
+			ddmFormFieldOptions._optionsReferences;
+
 		for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
 			LocalizedValue localizedValue = entry.getValue();
 
+			String optionValue = entry.getKey();
+
 			for (Locale locale : localizedValue.getAvailableLocales()) {
 				addOptionLabel(
-					entry.getKey(), locale, localizedValue.getString(locale));
+					optionValue, locale, localizedValue.getString(locale));
 			}
+
+			addOptionReference(optionValue, optionsReferences.get(optionValue));
 		}
 	}
 
@@ -65,6 +72,10 @@ public class DDMFormFieldOptions implements Serializable {
 		}
 
 		labels.addString(locale, label);
+	}
+
+	public void addOptionReference(String optionValue, String optionReference) {
+		_optionsReferences.put(optionValue, optionReference);
 	}
 
 	@Override
@@ -97,8 +108,16 @@ public class DDMFormFieldOptions implements Serializable {
 		return _options.get(optionValue);
 	}
 
+	public String getOptionReference(String optionValue) {
+		return _optionsReferences.get(optionValue);
+	}
+
 	public Map<String, LocalizedValue> getOptions() {
 		return _options;
+	}
+
+	public Map<String, String> getOptionsReferences() {
+		return _optionsReferences;
 	}
 
 	public Set<String> getOptionsValues() {
@@ -122,5 +141,7 @@ public class DDMFormFieldOptions implements Serializable {
 
 	private Locale _defaultLocale;
 	private final Map<String, LocalizedValue> _options = new LinkedHashMap<>();
+	private final Map<String, String> _optionsReferences =
+		new LinkedHashMap<>();
 
 }

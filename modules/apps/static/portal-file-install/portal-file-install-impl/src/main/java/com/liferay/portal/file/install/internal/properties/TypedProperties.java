@@ -239,6 +239,8 @@ public class TypedProperties {
 
 			StringBundler sb = new StringBundler();
 
+			List<String> comments = new ArrayList<>();
+
 			while (true) {
 				String line = readLine();
 
@@ -247,13 +249,10 @@ public class TypedProperties {
 				}
 
 				if (_isCommentLine(line)) {
+					comments.add(line);
+
 					if ((_comment == null) && _values.isEmpty()) {
 						_comment = line;
-					}
-					else {
-						if (_log.isWarnEnabled()) {
-							_log.warn("Multiple comment lines found: " + line);
-						}
 					}
 
 					continue;
@@ -278,6 +277,10 @@ public class TypedProperties {
 				if (!combine) {
 					break;
 				}
+			}
+
+			if (comments.size() > 1) {
+				_log.error("Multiple comment lines found: " + comments);
 			}
 
 			return sb.toString();

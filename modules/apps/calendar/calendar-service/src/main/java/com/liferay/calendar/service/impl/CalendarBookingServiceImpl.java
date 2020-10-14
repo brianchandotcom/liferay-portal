@@ -935,47 +935,6 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		return false;
 	}
 
-	private String _getContent(
-		CalendarBooking calendarBooking, String displayStyle,
-		ThemeDisplay themeDisplay) {
-
-		if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
-			return StringUtil.shorten(
-				calendarBooking.getDescription(themeDisplay.getLocale()), 200);
-		}
-
-		if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
-			return calendarBooking.getTitle(themeDisplay.getLocale());
-		}
-
-		String content = ContentUtil.get(
-			CalendarServiceConfigurationValues.class.getClassLoader(),
-			CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
-
-		TimeZone timeZone = themeDisplay.getTimeZone();
-
-		if (calendarBooking.isAllDay()) {
-			timeZone = TimeZone.getTimeZone(StringPool.UTC);
-		}
-
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			themeDisplay.getLocale(), timeZone);
-
-		return StringUtil.replace(
-			content,
-			new String[] {
-				"[$EVENT_DESCRIPTION$]", "[$EVENT_END_DATE$]",
-				"[$EVENT_LOCATION$]", "[$EVENT_START_DATE$]", "[$EVENT_TITLE$]"
-			},
-			new String[] {
-				calendarBooking.getDescription(themeDisplay.getLocale()),
-				dateFormatDateTime.format(calendarBooking.getEndTime()),
-				calendarBooking.getLocation(),
-				dateFormatDateTime.format(calendarBooking.getStartTime()),
-				calendarBooking.getTitle(themeDisplay.getLocale())
-			});
-	}
-
 	private List<CalendarBooking> _filterCalendarBookingsByCalendarVisibility(
 			List<CalendarBooking> calendarBookings)
 		throws PortalException {
@@ -1028,6 +987,47 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		);
 
 		return stream.collect(Collectors.toList());
+	}
+
+	private String _getContent(
+		CalendarBooking calendarBooking, String displayStyle,
+		ThemeDisplay themeDisplay) {
+
+		if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
+			return StringUtil.shorten(
+				calendarBooking.getDescription(themeDisplay.getLocale()), 200);
+		}
+
+		if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
+			return calendarBooking.getTitle(themeDisplay.getLocale());
+		}
+
+		String content = ContentUtil.get(
+			CalendarServiceConfigurationValues.class.getClassLoader(),
+			CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
+
+		TimeZone timeZone = themeDisplay.getTimeZone();
+
+		if (calendarBooking.isAllDay()) {
+			timeZone = TimeZone.getTimeZone(StringPool.UTC);
+		}
+
+		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			themeDisplay.getLocale(), timeZone);
+
+		return StringUtil.replace(
+			content,
+			new String[] {
+				"[$EVENT_DESCRIPTION$]", "[$EVENT_END_DATE$]",
+				"[$EVENT_LOCATION$]", "[$EVENT_START_DATE$]", "[$EVENT_TITLE$]"
+			},
+			new String[] {
+				calendarBooking.getDescription(themeDisplay.getLocale()),
+				dateFormatDateTime.format(calendarBooking.getEndTime()),
+				calendarBooking.getLocation(),
+				dateFormatDateTime.format(calendarBooking.getStartTime()),
+				calendarBooking.getTitle(themeDisplay.getLocale())
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

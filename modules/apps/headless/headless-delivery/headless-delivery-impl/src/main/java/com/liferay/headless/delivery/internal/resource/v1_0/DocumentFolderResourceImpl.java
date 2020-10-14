@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
@@ -26,6 +27,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentFolderD
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentFolderEntityModel;
+import com.liferay.headless.delivery.internal.util.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -38,6 +40,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -287,6 +292,13 @@ public class DocumentFolderResourceImpl
 				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {groupId});
+
+				_searchRequestBuilderFactory.builder(
+					searchContext
+				).sorts(
+					SortUtil.getFieldSorts(
+						_ddmIndexer, searchContext.getSorts(), _queries, _sorts)
+				);
 			},
 			sorts,
 			document -> _toDocumentFolder(
@@ -363,6 +375,9 @@ public class DocumentFolderResourceImpl
 	}
 
 	@Reference
+	private DDMIndexer _ddmIndexer;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
@@ -379,5 +394,14 @@ public class DocumentFolderResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Queries _queries;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private Sorts _sorts;
 
 }

@@ -67,6 +67,7 @@ export default function PageDesignOptionsSidebar() {
 				setSelectedStyleBook((selectedStyleBook) => ({
 					defaultStyleBookEntryName:
 						selectedStyleBook.defaultStyleBookEntryName,
+					imagePreviewURL: selectedStyleBook.imagePreviewURL,
 					styleBookEntryId: styleBook.styleBookEntryId,
 					tokenValues: styleBookWithTokens.tokenValues,
 				}));

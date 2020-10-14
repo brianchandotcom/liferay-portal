@@ -1536,7 +1536,7 @@ definition {
 
 		Navigator.closeSpecificWindow(
 			closeWindowTitle = "Data Definition Page Name - ${siteName}",
-			selectWindowTitle = "Users and Organizations - Control Panel - ${siteName}");
+			selectWindowTitle = "Users and Organizations - ${siteName}");
 
 		Navigator.openURL();
 

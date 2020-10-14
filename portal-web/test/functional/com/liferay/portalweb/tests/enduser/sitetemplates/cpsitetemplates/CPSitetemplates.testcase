@@ -510,7 +510,7 @@ definition {
 			columnNumberTo = "2",
 			portletName = "Asset Publisher");
 
-		Close.closeAndSelectWindow(locator1 = "Site Templates - Control Panel - ${siteName}");
+		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",

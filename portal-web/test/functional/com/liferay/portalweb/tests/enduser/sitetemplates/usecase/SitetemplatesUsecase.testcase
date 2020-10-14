@@ -525,7 +525,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Close.closeAndSelectWindow(locator1 = "Site Templates - Control Panel - ${siteName}");
+		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",

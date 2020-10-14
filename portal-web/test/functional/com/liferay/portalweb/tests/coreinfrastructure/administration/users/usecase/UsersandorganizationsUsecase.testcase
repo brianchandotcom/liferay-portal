@@ -719,7 +719,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - Control Panel - ${siteName}");
+		SelectWindow(locator1 = "title=Users and Organizations - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -764,7 +764,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - Control Panel - ${siteName}");
+		SelectWindow(locator1 = "title=Users and Organizations - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -777,7 +777,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - Control Panel - ${siteName}");
+		SelectWindow(locator1 = "title=Users and Organizations - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -790,7 +790,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - Control Panel - ${siteName}");
+		SelectWindow(locator1 = "title=Users and Organizations - ${siteName}");
 	}
 
 	@ignore

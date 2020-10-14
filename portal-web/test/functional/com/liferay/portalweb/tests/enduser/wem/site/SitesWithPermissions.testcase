@@ -67,7 +67,7 @@ definition {
 		}
 
 		task ("Add a search page in the new site template") {
-			Close.closeAndSelectWindow(locator1 = "title=Site Templates - Control Panel - ${siteName}");
+			Close.closeAndSelectWindow(locator1 = "title=Site Templates - ${siteName}");
 
 			SiteTemplates.addSitePageViaSiteTemplateCP(
 				pageName = "search",

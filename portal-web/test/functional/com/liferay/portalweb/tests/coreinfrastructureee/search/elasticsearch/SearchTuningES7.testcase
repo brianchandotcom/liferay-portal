@@ -955,7 +955,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		SelectWindow(locator1 = "title=${assetName} - ${assetName} - Control Panel - ${siteName}");
+		SelectWindow(locator1 = "title=${assetName} - ${assetName} - ${siteName}");
 
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",

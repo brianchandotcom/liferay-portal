@@ -15,11 +15,10 @@
 package com.liferay.petra.url.pattern.mapper.internal;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Arthur Chan
@@ -52,6 +51,18 @@ public class StaticSizeTrieURLPatternMapper<T>
 
 		for (Map.Entry<String, T> entry : values.entrySet()) {
 			put(entry.getKey(), entry.getValue());
+		}
+	}
+
+	@Override
+	protected void consumeWildcardValues(String urlPath, Consumer<T> consumer) {
+		long valuesBitmask = _getWildcardValuesBitmask(urlPath);
+
+		while (valuesBitmask != 0) {
+			consumer.accept(
+				_wildcardValues.get(_getFirstSetBitIndex(valuesBitmask)));
+
+			valuesBitmask &= valuesBitmask - 1;
 		}
 	}
 
@@ -166,22 +177,6 @@ public class StaticSizeTrieURLPatternMapper<T>
 		}
 
 		return _wildcardValues.get(_getFirstSetBitIndex(bestMatchBitmask));
-	}
-
-	@Override
-	protected Set<T> getWildcardValues(String urlPath) {
-		long valuesBitmask = _getWildcardValuesBitmask(urlPath);
-
-		Set<T> values = new HashSet<>(Long.SIZE);
-
-		while (valuesBitmask != 0) {
-			values.add(
-				_wildcardValues.get(_getFirstSetBitIndex(valuesBitmask)));
-
-			valuesBitmask &= valuesBitmask - 1;
-		}
-
-		return values;
 	}
 
 	@Override

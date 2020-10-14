@@ -26,27 +26,27 @@ import org.junit.Test;
  * @author Arthur Chan
  */
 public class DynamicSizeTrieURLPatternMapperTest
-	extends SimpleURLPatternMapperTest {
+	extends BaseURLPatternMapperCorrectnessTestCase {
 
 	@Test
 	public void testConstructor() {
-		Map<String, String> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 
 		for (int i = 0; i < 1024; i++) {
-			map.put("*.key" + i, "value" + i);
+			map.put("*.key" + i, i);
 		}
 
-		URLPatternMapper<String> urlPatternMapper = createURLPatternMapper(map);
+		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
+			map);
 
 		for (int i = 0; i < 1024; i++) {
-			Assert.assertEquals(
-				"value" + i, urlPatternMapper.getValue("*.key" + i));
+			Assert.assertTrue(i == urlPatternMapper.getValue("*.key" + i));
 		}
 	}
 
 	@Override
-	protected URLPatternMapper<String> createURLPatternMapper(
-		Map<String, String> values) {
+	protected URLPatternMapper<Integer> createURLPatternMapper(
+		Map<String, Integer> values) {
 
 		return new DynamicSizeTrieURLPatternMapper<>(values);
 	}

@@ -14,9 +14,12 @@
 
 package com.liferay.asset.display.page.internal.upgrade.v2_1_1;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -110,19 +113,29 @@ public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 
 					_addResources(groupId, plid);
 
-					String newfriendlyURL = _getFriendlyURL(
+					String newFriendlyURL = _getFriendlyURL(
 						ps2, groupId, friendlyURL, ctCollectionId);
+
+					if (!newFriendlyURL.equals(friendlyURL)) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"FriendlyURL for plid ", plid,
+									" in groupId ", groupId, " changed from ",
+									friendlyURL, " to ", newFriendlyURL));
+						}
+					}
 
 					ps3.setLong(
 						1, _layoutLocalService.getNextLayoutId(groupId, false));
 					ps3.setBoolean(2, false);
-					ps3.setString(3, newfriendlyURL);
+					ps3.setString(3, newFriendlyURL);
 					ps3.setLong(4, plid);
 
 					ps3.addBatch();
 
 					ps4.setBoolean(1, false);
-					ps4.setString(2, newfriendlyURL);
+					ps4.setString(2, newFriendlyURL);
 					ps4.setLong(3, plid);
 
 					ps4.addBatch();
@@ -134,6 +147,9 @@ public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeAssetDisplayPrivateLayout.class);
 
 	private final LayoutLocalService _layoutLocalService;
 	private final ResourceLocalService _resourceLocalService;

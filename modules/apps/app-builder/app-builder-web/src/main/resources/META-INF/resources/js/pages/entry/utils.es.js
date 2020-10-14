@@ -38,7 +38,10 @@ export function buildEntries({
 	return ({dataRecordValues = {}, ...entry}, index) => {
 		const entryIndex = query.pageSize * (query.page - 1) + index + 1;
 
-		const viewURL = `/entries/${entryIndex}?${toQueryString(query)}`;
+		const viewURL = `/entries/${entryIndex}?${toQueryString({
+			...query,
+			backURL: window.location.href,
+		})}`;
 
 		const displayedDataRecordValues = {};
 

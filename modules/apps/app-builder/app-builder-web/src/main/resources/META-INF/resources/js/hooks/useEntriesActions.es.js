@@ -42,6 +42,7 @@ export default function useEntriesActions(showOptions) {
 				action: ({id}) =>
 					Promise.resolve(
 						navigateToEditPage(basePortletURL, {
+							backURL: window.location.href,
 							dataRecordId: id,
 							languageId: userLanguageId,
 						})

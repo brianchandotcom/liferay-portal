@@ -33,7 +33,7 @@ export const EditEntry = ({
 	redirect,
 	userLanguageId,
 }) => {
-	const {basePortletURL} = useContext(AppContext);
+	const {basePortletURL, portletId} = useContext(AppContext);
 	const {availableLanguageIds, defaultLanguageId} = useDataDefinition(
 		dataDefinitionId
 	);
@@ -111,10 +111,18 @@ export const EditEntry = ({
 		});
 	}, [ddmForm, userLanguageId]);
 
+	const getBackURL = () => {
+		const urlParams = new URLSearchParams(window.location.href);
+		const backURL =
+			urlParams.get(`_${portletId}_backURL`) || `${basePortletURL}/#/`;
+
+		return backURL;
+	};
+
 	return (
 		<>
 			<ControlMenuBase
-				backURL={redirect ? redirect : `${basePortletURL}/#/`}
+				backURL={redirect ? redirect : getBackURL()}
 				title={
 					dataRecordId !== '0'
 						? Liferay.Language.get('edit-entry')

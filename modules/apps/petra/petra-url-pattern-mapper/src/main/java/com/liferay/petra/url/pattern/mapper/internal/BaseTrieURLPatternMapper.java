@@ -14,9 +14,8 @@
 
 package com.liferay.petra.url.pattern.mapper.internal;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Carlos Sierra Andrés
@@ -24,6 +23,21 @@ import java.util.Set;
  */
 public abstract class BaseTrieURLPatternMapper<T>
 	extends BaseURLPatternMapper<T> {
+
+	@Override
+	public void consumeValues(String urlPath, Consumer<T> consumer) {
+		if (Objects.isNull(urlPath)) {
+			return;
+		}
+
+		consumeWildcardValues(urlPath, consumer);
+
+		T extensionValue = getExtensionValue(urlPath);
+
+		if (extensionValue != null) {
+			consumer.accept(extensionValue);
+		}
+	}
 
 	@Override
 	public T getValue(String urlPath) {
@@ -47,28 +61,12 @@ public abstract class BaseTrieURLPatternMapper<T>
 		}
 	}
 
-	@Override
-	public Set<T> getValues(String urlPath) {
-		if (Objects.isNull(urlPath)) {
-			return new HashSet<>(0);
-		}
-
-		Set<T> values = getWildcardValues(urlPath);
-
-		T extensionValue = getExtensionValue(urlPath);
-
-		if (extensionValue != null) {
-			values.add(extensionValue);
-		}
-
-		return values;
-	}
+	protected abstract void consumeWildcardValues(
+		String urlPath, Consumer<T> consumer);
 
 	protected abstract T getExtensionValue(String urlPath);
 
 	protected abstract T getWildcardValue(String urlPath);
-
-	protected abstract Set<T> getWildcardValues(String urlPath);
 
 	@Override
 	protected void put(String urlPattern, T value)

@@ -14,15 +14,25 @@
 
 package com.liferay.petra.url.pattern.mapper;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public interface URLPatternMapper<T> {
 
+	public void consumeValues(String urlPath, Consumer<T> consumer);
+
 	public T getValue(String urlPath);
 
-	public Set<T> getValues(String urlPath);
+	public default Set<T> getValues(String urlPath) {
+		Set<T> values = new HashSet<>(Long.SIZE);
+
+		consumeValues(urlPath, values::add);
+
+		return values;
+	}
 
 }

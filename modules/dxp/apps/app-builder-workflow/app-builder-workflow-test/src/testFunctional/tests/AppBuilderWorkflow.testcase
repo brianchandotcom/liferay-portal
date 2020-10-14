@@ -38,6 +38,35 @@ definition {
 		}
 	}
 
+	@description = "LRQA-60385 - Automate LPS-110981: As an App Admin, I want to deploy an App with multiple workflow steps and one same Form View"
+	@priority = "5"
+	test CreateNewStepSecondaryActionAndAssignee {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.assertStepPresent(step = "1");
+
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectActionsCard();
+		AppBuilderWorkflow.clickOnAddNewActionButton();
+		AppBuilderWorkflow.validateActionPresent(action = "Secondary Action");
+
+		AppBuilderWorkflow.clickStepConfigurationBackButton();
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "2");
+		AppBuilderWorkflow.assertAssigneeInfoPresentOnStep(
+			assignee = "Administrator",
+			step = "2");
+	}
+
 	@description = "Assign an entry (task) through the App's table view"
 	@priority = "5"
 	test AssignEntryThroughTableView {
@@ -438,6 +467,7 @@ definition {
 		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 
 		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.assertStepPresent(step = "1");
 		AppBuilderWorkflow.deleteStep(step = "1");
 		AppBuilderWorkflow.assertStepNotPresent(step = "1");
 	}
@@ -917,6 +947,7 @@ definition {
 
 		AppBuilderWorkflow.selectActionsCard();
 		AppBuilderWorkflow.clickOnAddNewActionButton();
+		AppBuilderWorkflow.validateActionPresent(action = "Secondary Action");
 		Button.click(button = "Remove");
 		AppBuilderWorkflow.validateActionNotPresent(action = "Secondary Action");
 

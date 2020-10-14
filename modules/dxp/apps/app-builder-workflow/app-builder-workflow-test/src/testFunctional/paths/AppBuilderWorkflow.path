@@ -95,6 +95,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STEP_CARD_ASSIGNEE_INFO</td>
+	<td>//span[contains(text(),'${key_step}')]/parent::span/following-sibling::div//span[contains(text(),'Assignee')]/parent::div[contains(text(),'${key_assignee}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STEP_CARD_KEBAB_MENU</td>
 	<td>//span[contains(text(),'${key_step}')]/parent::span/following-sibling::div//button</td>
 	<td></td>

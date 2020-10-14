@@ -36,6 +36,19 @@ definition {
 			locator1 = "AppBuilderWorkflow#STEP_CARD");
 	}
 
+	macro assertStepPresent {
+		AssertElementPresent(
+			key_step = "${step}",
+			locator1 = "AppBuilderWorkflow#STEP_CARD");
+	}
+
+	macro assertAssigneeInfoPresentOnStep {
+		AssertElementPresent(
+			key_step = "${step}",
+			key_assignee = "${assignee}",
+			locator1 = "AppBuilderWorkflow#STEP_CARD_ASSIGNEE_INFO");
+	}
+
 	macro assignEntry {
 		Click(
 			key_itemName = "${itemName}",
@@ -188,6 +201,12 @@ definition {
 
 	macro validateActionNotPresent {
 		AssertElementNotPresent(
+			key_action = "${action}",
+			locator1 = "AppBuilderWorkflow#ACTION_ITEM");
+	}
+
+	macro validateActionPresent {
+		AssertElementPresent(
 			key_action = "${action}",
 			locator1 = "AppBuilderWorkflow#ACTION_ITEM");
 	}

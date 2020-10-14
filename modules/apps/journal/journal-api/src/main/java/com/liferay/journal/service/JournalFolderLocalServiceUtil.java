@@ -318,6 +318,18 @@ public class JournalFolderLocalServiceUtil {
 			groupIds, folderId, restrictionType);
 	}
 
+	public static java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMStructure> getDDMStructures(
+				long[] groupIds, long folderId, int restrictionType,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.dynamic.data.mapping.model.DDMStructure>
+						orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getDDMStructures(
+			groupIds, folderId, restrictionType, orderByComparator);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

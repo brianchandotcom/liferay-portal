@@ -278,6 +278,12 @@ public interface JournalFolderLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructure> getDDMStructures(
+			long[] groupIds, long folderId, int restrictionType,
+			OrderByComparator<DDMStructure> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 

@@ -316,6 +316,15 @@ public class JournalFolderLocalServiceImpl
 			long[] groupIds, long folderId, int restrictionType)
 		throws PortalException {
 
+		return getDDMStructures(groupIds, folderId, restrictionType, null);
+	}
+
+	@Override
+	public List<DDMStructure> getDDMStructures(
+			long[] groupIds, long folderId, int restrictionType,
+			OrderByComparator<DDMStructure> orderByComparator)
+		throws PortalException {
+
 		if (restrictionType ==
 				JournalFolderConstants.
 					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
@@ -336,7 +345,8 @@ public class JournalFolderLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(
 			JournalArticle.class);
 
-		return _ddmStructureLocalService.getStructures(groupIds, classNameId);
+		return _ddmStructureLocalService.getStructures(
+			groupIds, classNameId, orderByComparator);
 	}
 
 	@Override

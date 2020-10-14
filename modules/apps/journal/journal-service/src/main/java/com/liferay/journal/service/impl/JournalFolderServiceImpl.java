@@ -109,6 +109,17 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	}
 
 	@Override
+	public List<DDMStructure> getDDMStructures(
+			long[] groupIds, long folderId, int restrictionType,
+			OrderByComparator<DDMStructure> orderByComparator)
+		throws PortalException {
+
+		return filterStructures(
+			journalFolderLocalService.getDDMStructures(
+				groupIds, folderId, restrictionType, orderByComparator));
+	}
+
+	@Override
 	public JournalFolder getFolder(long folderId) throws PortalException {
 		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
 

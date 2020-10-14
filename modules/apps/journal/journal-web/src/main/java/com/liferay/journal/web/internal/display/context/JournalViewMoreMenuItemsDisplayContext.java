@@ -73,7 +73,7 @@ public class JournalViewMoreMenuItemsDisplayContext {
 				SiteConnectedGroupUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						themeDisplay.getScopeGroupId(), true),
-				_folderId, _restrictionType);
+				_folderId, _restrictionType, _getOrderByComparator());
 		}
 		else {
 			_ddmStructures = JournalFolderServiceUtil.searchDDMStructures(

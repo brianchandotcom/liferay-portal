@@ -46,8 +46,12 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 		</clay:content-col>
 	</clay:content-row>
 
-	<liferay-ui:error exception="<%= DepotEntryGroupRelStagedGroupException.class %>">
-		<liferay-ui:message key="an-asset-library-cannot-be-connected-to-a-staged-site" />
+	<liferay-ui:error exception="<%= DepotEntryGroupRelToGroupException.MustNotBeStaged.class %>">
+		<liferay-ui:message key="an-unstaged-asset-library-cannot-be-connected-to-a-staged-site" />
+	</liferay-ui:error>
+
+	<liferay-ui:error exception="<%= DepotEntryGroupRelToGroupException.MustBeStaged.class %>">
+		<liferay-ui:message key="a-staged-asset-library-cannot-be-connected-to-an-unstaged-site" />
 	</liferay-ui:error>
 
 	<aui:input name="toGroupId" type="hidden" />

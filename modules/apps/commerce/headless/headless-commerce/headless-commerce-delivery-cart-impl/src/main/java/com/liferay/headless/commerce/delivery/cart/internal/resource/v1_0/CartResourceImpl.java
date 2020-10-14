@@ -618,6 +618,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		Cart cart = _toCart(commerceOrder);
 
+		cart.setValid(Boolean.TRUE);
+
 		if (!errorMessages.isEmpty()) {
 			cart.setValid(false);
 

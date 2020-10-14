@@ -120,8 +120,10 @@ public class LinkEditableElementParser implements EditableElementParser {
 		EditableElementParserUtil.addAttribute(
 			replaceableElement, configJSONObject, "href", "href");
 
-		if (Objects.equals(configJSONObject.getString("target"), "_parent") ||
-			Objects.equals(configJSONObject.getString("target"), "_top")) {
+		String target = configJSONObject.getString("target");
+
+		if (StringUtil.equalsIgnoreCase(target, "_parent") ||
+			StringUtil.equalsIgnoreCase(target, "_top")) {
 
 			configJSONObject.put("target", "_self");
 		}

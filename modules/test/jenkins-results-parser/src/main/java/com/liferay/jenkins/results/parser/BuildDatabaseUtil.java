@@ -28,60 +28,17 @@ import java.util.concurrent.TimeoutException;
 public class BuildDatabaseUtil {
 
 	public static BuildDatabase getBuildDatabase() {
-		return getBuildDatabase(null, null, true);
+		return _getBuildDatabase(null, null, true);
 	}
 
 	public static BuildDatabase getBuildDatabase(Build build) {
-		return getBuildDatabase(_getDistPath(build), build, true);
+		return _getBuildDatabase(_getDistPath(build), build, true);
 	}
 
 	public static BuildDatabase getBuildDatabase(
 		String baseDirPath, boolean download) {
 
-		return getBuildDatabase(baseDirPath, null, download);
-	}
-
-	public static BuildDatabase getBuildDatabase(
-		String baseDirPath, Build build, boolean download) {
-
-		if (baseDirPath == null) {
-			baseDirPath = System.getenv("WORKSPACE");
-
-			if (baseDirPath == null) {
-				throw new RuntimeException("Please set WORKSPACE");
-			}
-		}
-
-		BuildDatabase buildDatabase = _buildDatabases.get(baseDirPath);
-
-		if (buildDatabase == null) {
-			File baseDir = new File(baseDirPath);
-
-			if (!baseDir.exists()) {
-				baseDir.mkdirs();
-			}
-
-			File buildDatabaseFile = new File(
-				baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
-
-			if (!buildDatabaseFile.exists() && download) {
-				String distNodes = System.getenv("DIST_NODES");
-				String distPath = System.getenv("DIST_PATH");
-
-				if ((distNodes != null) && (distPath != null)) {
-					_downloadBuildDatabaseFile(baseDir, distNodes, distPath);
-				}
-				else if (build instanceof TopLevelBuild) {
-					_downloadBuildDatabaseFile(baseDir, build);
-				}
-			}
-
-			buildDatabase = new DefaultBuildDatabase(baseDir);
-
-			_buildDatabases.put(baseDirPath, buildDatabase);
-		}
-
-		return buildDatabase;
+		return _getBuildDatabase(baseDirPath, null, download);
 	}
 
 	private static void _downloadBuildDatabaseFile(File baseDir, Build build) {
@@ -184,6 +141,49 @@ public class BuildDatabaseUtil {
 				JenkinsResultsParserUtil.sleep(3000);
 			}
 		}
+	}
+
+	private static BuildDatabase _getBuildDatabase(
+		String baseDirPath, Build build, boolean download) {
+
+		if (baseDirPath == null) {
+			baseDirPath = System.getenv("WORKSPACE");
+
+			if (baseDirPath == null) {
+				throw new RuntimeException("Please set WORKSPACE");
+			}
+		}
+
+		BuildDatabase buildDatabase = _buildDatabases.get(baseDirPath);
+
+		if (buildDatabase == null) {
+			File baseDir = new File(baseDirPath);
+
+			if (!baseDir.exists()) {
+				baseDir.mkdirs();
+			}
+
+			File buildDatabaseFile = new File(
+				baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+
+			if (!buildDatabaseFile.exists() && download) {
+				String distNodes = System.getenv("DIST_NODES");
+				String distPath = System.getenv("DIST_PATH");
+
+				if ((distNodes != null) && (distPath != null)) {
+					_downloadBuildDatabaseFile(baseDir, distNodes, distPath);
+				}
+				else if (build instanceof TopLevelBuild) {
+					_downloadBuildDatabaseFile(baseDir, build);
+				}
+			}
+
+			buildDatabase = new DefaultBuildDatabase(baseDir);
+
+			_buildDatabases.put(baseDirPath, buildDatabase);
+		}
+
+		return buildDatabase;
 	}
 
 	private static String _getDistPath(Build build) {

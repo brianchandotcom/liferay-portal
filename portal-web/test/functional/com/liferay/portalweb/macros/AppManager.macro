@@ -61,11 +61,7 @@ definition {
 
 		Click(locator1 = "Icon#CLOSE");
 
-		Pause(locator1 = "10000");
-
-		while (!IsConsoleTextPresent(value1 = "STARTED ${appName}")) {
-			Pause(locator1 = "3000");
-		}
+		WaitForConsoleTextPresent(value1 = "STARTED ${appName}");
 
 		AssertConsoleTextNotPresent(value1 = "HotDeployException: Error initializing Spring for ${appName}");
 

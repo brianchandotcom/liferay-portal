@@ -1,0 +1,43 @@
+@if $compat-grid {
+	// Renamed .col-xs-* to .col-*
+
+	@for $i from 1 through $grid-columns {
+		.col-xs-#{$i} {
+			@extend .col-#{$i};
+		}
+	}
+
+	[class*="-offset-"] {
+		@extend .mx-auto;
+	}
+
+	.container-fluid-1280 {
+		@include clearfix;
+
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 1280px;
+		padding-left: $grid-gutter-width / 2;
+		padding-right: $grid-gutter-width / 2;
+		width: 100%;
+	}
+
+	// Image
+	// Renamed .img-responsive to .img-fluid
+
+	.img-responsive {
+		@include img-fluid;
+	}
+
+	// Renamed .img-circle to .rounded-circle
+
+	.img-circle {
+		@extend .rounded-circle;
+	}
+
+	// Renamed .img-rounded to .rounded
+
+	.img-rounded {
+		@extend .rounded;
+	}
+}

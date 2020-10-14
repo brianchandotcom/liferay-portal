@@ -1,0 +1,32 @@
+.lfr-status-alert-label, .lfr-status-error-label, .lfr-status-info-label, .lfr-status-progress-label, .lfr-status-success-label {
+	background: none no-repeat 0 50%;
+	padding: 3px 3px 3px 20px;
+}
+
+.lfr-status-alert-label {
+	background-image: url(../images/messages/alert.png);
+	color: #663;
+}
+
+.lfr-status-error-label {
+	background-image: url(../images/messages/error.png);
+	color: #900;
+}
+
+.lfr-status-help-label, .lfr-status-info-label, .lfr-status-progress-label {
+	background-image: url(../images/messages/info.png);
+	color: #34404F;
+}
+
+.lfr-status-help-label {
+	background-image: url(../images/portlet/help.png);
+}
+
+.lfr-status-progress-label {
+	background-image: url(../images/aui/loading_indicator.gif);
+}
+
+.lfr-status-success-label {
+	background-image: url(../images/messages/success.png);
+	color: #384F34;
+}

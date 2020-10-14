@@ -1,0 +1,63 @@
+.portlet-msg {
+	background: #EEE none no-repeat 6px 50%;
+	border: 1px solid #555;
+	color: #34404F;
+	font-weight: bold;
+	margin: 2px auto 14px;
+	padding: 6px 6px 6px 30px;
+	text-align: left;
+}
+
+.lfr-message {
+	position: relative;
+
+	.lfr-message-control {
+		background-color: #333;
+		display: inline-block;
+	}
+
+	.lfr-message-controls {
+		display: none;
+		left: 3px;
+		margin: -8px 8px 0 3px;
+		position: absolute;
+		top: 50%;
+		z-index: 10;
+	}
+
+	.lfr-message-close {
+		background-image: url(../images/portlet/close_borderless.png);
+		background-position: 0 0;
+		background-repeat: no-repeat;
+	}
+
+	.lfr-message-close-all {
+		color: #FFF;
+		display: none;
+		font-size: 0.8em;
+		margin-left: 10px;
+		padding: 1px 10px;
+		text-shadow: 1px 1px 0 #000;
+		vertical-align: top;
+
+		a {
+			color: #FFF;
+		}
+	}
+
+	.lfr-message-controls-hover .lfr-message-close-all {
+		display: inline-block;
+	}
+
+	&.pending {
+		background-image: url(../images/common/time.png);
+	}
+}
+
+.lfr-message-content.alert {
+	margin-bottom: 0;
+}
+
+.lfr-message-close {
+	cursor: pointer;
+}

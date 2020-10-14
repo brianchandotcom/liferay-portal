@@ -1,0 +1,29 @@
+@if $compat-stickers {
+	.sticker-default {
+		@extend .sticker-secondary;
+	}
+
+	// Sticker Positions
+
+	.sticker-bottom {
+		bottom: $sticker-inside-offset;
+		left: $sticker-inside-offset;
+		position: absolute;
+		right: auto;
+		top: auto;
+	}
+
+	.sticker-right {
+		left: auto;
+		position: absolute;
+		right: $sticker-inside-offset;
+		top: $sticker-inside-offset;
+	}
+
+	.sticker-document {
+		.lexicon-icon {
+			height: 1.25em;
+			width: auto;
+		}
+	}
+}

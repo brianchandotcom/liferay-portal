@@ -1,0 +1,21 @@
+.lfr-asset-category-container {
+	.no-matches {
+		color: #999;
+	}
+}
+
+.lfr-asset-category-search-container {
+	background-color: #D3DADD;
+	border-bottom-color: #AEB8BC;
+}
+
+.lfr-asset-category-list a.selected {
+	background-color: #EEE;
+}
+
+.lfr-categories-selector-search-results-path {
+	color: #575757;
+	font-size: 0.9em;
+	text-align: right;
+	width: 25%;
+}

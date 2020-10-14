@@ -1,0 +1,17 @@
+@if $compat-component_animations {
+	.collapse.in {
+		display: block;
+	}
+
+	tr.collapse.in {
+		display: table-row;
+	}
+
+	tbody.collapse.in {
+		display: table-row-group;
+	}
+
+	.fade.in {
+		opacity: 1;
+	}
+}

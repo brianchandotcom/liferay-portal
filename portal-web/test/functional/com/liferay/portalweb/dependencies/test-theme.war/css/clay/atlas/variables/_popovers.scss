@@ -1,0 +1,31 @@
+////
+/// @group popovers
+////
+
+$popover-border-color: transparent !default;
+$popover-border-radius: $border-radius !default; // 4px
+$popover-box-shadow: 0 1px 15px -2px rgba(0, 0, 0, 0.2) !default;
+$popover-max-width: 14.5rem !default; // 232px
+$popover-inline-scroller-max-height: 14.875rem !default; // 238px
+
+$popover-arrow-outer-color: transparent !default;
+$popover-arrow-height: 0.3rem !default;
+$popover-arrow-offset: 0.625rem !default; // 10px
+$popover-arrow-width: $popover-arrow-height * 2 !default;
+
+/// @deprecated as of v2.11.1 with no replacement. This is left over from V1.
+
+$popover-inner-padding: 0 !default;
+
+$popover-header-bg: $white !default;
+$popover-header-border-color: $gray-300 !default;
+$popover-header-color: $gray-900 !default;
+$popover-header-font-size: 0.875rem !default; // 14px
+$popover-header-margin-x: 1rem !default; // 16px
+$popover-header-margin-y: 0 !default;
+$popover-header-padding-x: 0 !default;
+$popover-header-padding-y: 0.75rem !default; // 12px
+
+$popover-body-color: $gray-600 !default;
+$popover-body-padding-x: 1rem !default; // 16px
+$popover-body-padding-y: 0.75rem !default; // 12px

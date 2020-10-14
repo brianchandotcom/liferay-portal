@@ -1,0 +1,124 @@
+////
+/// @group timelines
+////
+
+/// A mixin that places the `.timeline-item::before` element on the right side. This mixin is used in `.timeline-right`.
+/// @todo
+/// - Add @link to documentation
+
+@mixin clay-timeline-item-reverse() {
+	padding-left: 0;
+	padding-right: $timeline-inner-spacing;
+
+	&:before {
+		left: auto;
+		right: -$timeline-border-width;
+	}
+
+	.panel {
+		.timeline-increment {
+			margin-left: auto;
+			margin-right: -$card-border-width;
+		}
+	}
+
+	.timeline-increment {
+		left: auto;
+		right: -($timeline-inner-spacing + $timeline-border-modifier);
+		-ms-transform: translate(50%, -50%);
+		transform: translate(50%, -50%);
+	}
+}
+
+/// A mixin that helps with spacing in a `.timeline`. 
+/// @param {Number} $outer-spacing - Sets `padding-left` or `padding-right` on `.timeline` relative to where the increments are positioned. 
+/// @param {Number} $inner-spacing - Sets `padding-left` on `.timeline-item` if the `.panel` is positioned on the right and `padding-right` if `.panel` is positioned on the left.
+/// @param {Number} $item-padding-y[10px] - Sets `padding-top` and `padding-bottom` on `.timeline-item`.
+/// @todo
+/// - Add @link to documentation
+
+@mixin clay-timeline-spacing($outer-spacing, $inner-spacing, $item-padding-y: 10px) {
+	&.timeline {
+		padding-left: $outer-spacing;
+	}
+
+	&.timeline-center {
+		@include media-breakpoint-up(md) {
+			padding-left: 0;
+
+			.timeline-item {
+				.timeline-item-label {
+					margin-left: -($inner-spacing * 2);
+				}
+			}
+
+			.timeline-item.timeline-item-reverse {
+				padding-right: $inner-spacing;
+
+				.timeline-increment {
+					right: -($inner-spacing + $timeline-border-modifier);
+				}
+
+				.timeline-item-label {
+					margin-left: auto;
+					margin-right: -($inner-spacing * 2);
+				}
+			}
+		}
+	}
+
+	&.timeline-even .timeline-item:nth-of-type(even),
+	&.timeline-odd .timeline-item:nth-of-type(odd) {
+		@include media-breakpoint-up(md) {
+			padding-right: $inner-spacing;
+
+			.timeline-increment {
+				right: -($inner-spacing + $timeline-border-modifier);
+			}
+
+			.timeline-item-label {
+				margin-left: auto;
+				margin-right: -($inner-spacing * 2);
+			}
+		}
+	}
+
+	&.timeline-right {
+		padding-right: $outer-spacing;
+
+		.timeline-item {
+			padding-right: $inner-spacing;
+
+			.timeline-increment {
+				right: -($inner-spacing + $timeline-border-modifier);
+			}
+		}
+	}
+
+	&.timeline-right-xs-only {
+		@include media-breakpoint-down(xs) {
+			padding-left: 0;
+			padding-right: $outer-spacing;
+
+			.timeline-item {
+				padding-left: 0;
+				padding-right: $inner-spacing;
+
+				.timeline-increment {
+					left: auto;
+					right: -($inner-spacing + $timeline-border-modifier);
+				}
+			}
+		}
+	}
+
+	.timeline-item {
+		padding-bottom: $item-padding-y;
+		padding-left: $inner-spacing;
+		padding-top: $item-padding-y;
+
+		.timeline-increment {
+			left: -($inner-spacing - $timeline-border-modifier);
+		}
+	}
+}

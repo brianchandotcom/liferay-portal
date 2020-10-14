@@ -1,0 +1,69 @@
+////
+/// @group modals
+////
+
+/// A mixin to create a Modal color variant. This is used in `.modal-danger`, `.modal-info`, `.modal-success`, and `.modal-warning`.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// header-bg: {Color | String | Null},
+/// header-border-color: {Color | String | List | Null},
+/// header-color: {Color | String | Null},
+///	// header-close-color is deprecated in v2.0.0-rc.12 use header-close instead
+/// header-close-color: {Color | String},
+/// header-close: {Map | Null}, // Pass parameters to `clay-link` mixin
+/// body-bg: {Color | String | Null},
+/// body-color: {Color | String | Null},
+/// footer-bg: {Color | String | Null},
+/// footer-border-color: {Color | String | List | Null},
+
+
+@mixin clay-modal-variant($map) {
+	$header-bg: map-get($map, header-bg);
+	$header-border-color: map-get($map, header-border-color);
+	$header-color: map-get($map, header-color);
+
+	// header-close-color is deprecated in v2.0.0-rc.12 use header-close instead
+
+	$header-close-color: setter(map-get($map, header-close-color), $header-color);
+
+	$header-close: setter(map-get($map, header-close), ());
+
+	$body-bg: map-get($map, body-bg);
+	$body-color: map-get($map, body-color);
+	$footer-bg: map-get($map, footer-bg);
+	$footer-border-color: map-get($map, footer-border-color);
+
+	// Modal specific btn-monospaced is deprecated in v2.0.0-rc.12
+
+	.btn-monospaced {
+		color: $header-close-color;
+	}
+
+	.close {
+		@include clay-link($header-close);
+	}
+
+	button.close {
+		&:focus {
+			box-shadow: map-get($header-close, btn-focus-box-shadow);
+			outline: map-get($header-close, btn-focus-outline);
+		}
+	}
+
+	.modal-header {
+		background-color: $header-bg;
+		border-color: $header-border-color;
+		color: $header-color;
+	}
+
+	.modal-body {
+		background-color: $body-bg;
+		color: $body-color;
+	}
+
+	.modal-footer {
+		background-color: $footer-bg;
+		border-color: $footer-border-color;
+		color: $footer-border-color;
+	}
+}

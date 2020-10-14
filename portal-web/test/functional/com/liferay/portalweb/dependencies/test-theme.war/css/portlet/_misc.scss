@@ -1,0 +1,55 @@
+.lfr-configurator-visibility {
+	.portlet-borderless-bar {
+		opacity: 0.6;
+	}
+
+	.portlet-content {
+		.lfr-icon-actions {
+			opacity: 1;
+		}
+	}
+}
+
+.lfr-panel-page {
+	width: 100%;
+
+	.portlet-title {
+		font-size: 13px;
+	}
+
+	.lfr-add-content h2 span {
+		background-color: #D3DADD;
+	}
+}
+
+.main-content-body {
+	margin-top: 20px;
+}
+
+.restricted {
+	&, & td {
+		background: #FDD;
+		border-width: 0;
+	}
+
+	* {
+		color: #727C81;
+	}
+}
+
+.alt.restricted td {
+	background-color: #FFC0C0;
+}
+
+.hover.restricted td {
+	background-color: #D3BDC0;
+}
+
+.alt.restricted, .restricted {
+	td.first {
+		background-image: url(../images/messages/error.png);
+		background-position: 5px 50%;
+		background-repeat: no-repeat;
+		padding-left: 28px;
+	}
+}

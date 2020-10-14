@@ -1,0 +1,26 @@
+.drop-zone.drop-enabled:not(.no-border) {
+	outline-color: transparentize(#B0B4BB, 0.5);
+}
+
+.drop-here-info {
+	.drop-icons {
+		span:nth-of-type(1), span:nth-of-type(3) {
+			background: #E8E6E8;
+			color: #A5A6AC;
+		}
+
+		span:nth-of-type(2) {
+			background: #00C2FF;
+			color: #FFF;
+		}
+	}
+
+	.drop-text {
+		color: #FFF;
+	}
+}
+
+.drop-active .drop-here-info {
+	background-color: transparentize(#000, 0.4);
+	z-index: 100;
+}

@@ -1,0 +1,14 @@
+$status-approved-border: map-get($theme-colors, success) !default;
+$status-approved-text: map-get($theme-colors, success) !default;
+
+$status-denied-border: map-get($theme-colors, danger) !default;
+$status-denied-text: map-get($theme-colors, danger) !default;
+
+$status-expired-border: map-get($theme-colors, warning) !default;
+$status-expired-text: map-get($theme-colors, warning) !default;
+
+$status-pending-border: map-get($theme-colors, info) !default;
+$status-pending-text: map-get($theme-colors, info) !default;
+
+$status-scheduled-border: map-get($theme-colors, info) !default;
+$status-scheduled-text: map-get($theme-colors, info) !default;

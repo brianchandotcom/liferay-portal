@@ -1,0 +1,26 @@
+.splitter {
+	background-color: $splitter-bg;
+	border-radius: $splitter-border-radius;
+
+	@if (variable-exists(splitter-box-shadow)) {
+		box-shadow: $splitter-box-shadow;
+	}
+
+	color: $splitter-text-color;
+	padding: $splitter-padding;
+	position: relative;
+	z-index: 1;
+
+	&.splitter-spaced {
+		border-radius: $splitter-spaced-border-radius;
+		margin-bottom: $splitter-footer-margin;
+	}
+}
+
+.table > tbody > tr.splitter {
+	height: auto;
+
+	> td {
+		padding: 0;
+	}
+}

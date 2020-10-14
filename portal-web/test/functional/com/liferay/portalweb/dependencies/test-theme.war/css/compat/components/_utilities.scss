@@ -1,0 +1,30 @@
+@if $compat-utilities {
+	.hide {
+		@extend .d-none;
+	}
+
+	.pull-left {
+		@extend .float-left;
+	}
+
+	.pull-right {
+		@extend .float-right;
+	}
+
+	.truncate-text {
+		display: block;
+
+		@include text-truncate;
+
+		word-break: normal \9; // IE 8, 9
+		word-wrap: normal;
+	}
+
+	.flex-col {
+		@extend %autofit-col;
+	}
+
+	.flex-col-expand {
+		@extend %autofit-col-expand;
+	}
+}

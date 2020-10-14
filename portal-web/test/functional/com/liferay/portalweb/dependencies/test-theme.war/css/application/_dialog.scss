@@ -1,0 +1,213 @@
+.dialog-bd {
+	min-height: 30px;
+}
+
+.dialog-content {
+	border: 1px solid #C8C9CA;
+	padding: 5px;
+}
+
+.dialog-iframe-popup {
+	.sheet {
+		> .lfr-nav {
+			margin-top: -24px;
+		}
+	}
+
+	.contacts-portlet .portlet-configuration-container .form {
+		position: static;
+	}
+
+	.lfr-form-content {
+		padding: 15px;
+	}
+
+	.portlet-body,
+	.portlet-boundary,
+	.portlet-column,
+	.portlet-layout {
+		height: 100%;
+	}
+
+	.portlet-column {
+		position: static;
+	}
+
+	.dialog-body,
+	.export-dialog-tree,
+	.lfr-dynamic-uploader,
+	.lfr-form-content,
+	.portlet-configuration-body-content,
+	.process-list,
+	.roles-selector-body {
+		> .container-fluid-1280, .container-view {
+			padding-top: 20px;
+
+			> .nav-tabs-default, .nav-tabs-underline {
+				margin-left: -$grid-gutter-width / 2;
+				margin-right: -$grid-gutter-width / 2;
+				margin-top: -20px;
+			}
+		}
+
+		> .lfr-nav + .container-fluid-1280 {
+			padding-top: 0;
+		}
+	}
+
+	.login-container {
+		padding: $modal-inner-padding;
+	}
+
+	.management-bar-default,
+	.navbar-default {
+		border-left-width: 0;
+		border-radius: 0;
+		border-right-width: 0;
+		border-top-width: 0;
+		margin-bottom: 0;
+	}
+
+	.navbar ~ .portlet-configuration-setup,
+	.portlet-export-import-container {
+		height: calc(100% - #{$dialog-navbar-height});
+		position: relative;
+
+		@include sm {
+			height: calc(100% - #{$dialog-desktop-navbar-height});
+		}
+	}
+
+	.navigation-bar > .container-fluid {
+		margin-left: 24px;
+		margin-right: 24px;
+		padding: 0;
+	}
+
+	.panel-group .panel {
+		border-left-width: 0;
+		border-radius: 0;
+		border-right-width: 0;
+	}
+
+	.panel-group .panel + .panel {
+		border-top-width: 0;
+		margin-top: 0;
+	}
+
+	.panel-heading {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	.portlet-configuration-setup {
+		.lfr-nav {
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 1280px;
+			padding-left: 3px;
+			padding-right: 3px;
+
+			@include sm {
+				padding-left: 8px;
+				padding-right: 8px;
+			}
+		}
+	}
+
+	.lfr-dynamic-uploader,
+	.process-list {
+		bottom: 0;
+		display: block;
+		left: 0;
+		overflow: auto;
+		position: absolute;
+		right: 0;
+		top: $dialog-navbar-height;
+		-webkit-overflow-scrolling: touch;
+
+		@include sm {
+			top: $dialog-desktop-navbar-height;
+		}
+	}
+
+	.portlet-export-import-publish-processes {
+		top: 0;
+	}
+}
+
+.dialog-with-footer {
+	#main-content, #wrapper {
+		@include md {
+			height: calc(100% - #{$dialog-footer-height});
+		}
+	}
+
+	.button-holder, .sheet-footer {
+		&.dialog-footer {
+			background-color: $dialog-footer-bg;
+			border-top: 1px solid $dialog-footer-border-color;
+			bottom: 0;
+
+			@if (variable-exists(dialog-footer-box-shadow)) {
+				box-shadow: $dialog-footer-box-shadow;
+			}
+
+			display: flex;
+			flex-direction: row-reverse;
+			left: 0;
+			margin: 0;
+			padding: 10px 24px;
+			width: 100%;
+
+			@include md {
+				position: fixed;
+			}
+
+			.btn {
+				margin-left: 1rem;
+				margin-right: 0;
+			}
+		}
+	}
+
+	.dialog-body,
+	.lfr-dynamic-uploader,
+	.lfr-form-content,
+	.portlet-configuration-body-content,
+	.roles-selector-body {
+		@include md {
+			padding-bottom: $dialog-footer-height;
+		}
+	}
+
+	.lfr-dynamic-uploader.hide-dialog-footer {
+		bottom: 0;
+
+		+ .dialog-footer {
+			display: none;
+		}
+	}
+
+	.portlet-configuration-edit-permissions {
+		.portlet-configuration-body-content {
+			display: flex;
+			flex-direction: column;
+			overflow: visible;
+
+			> form {
+				flex-grow: 1;
+				max-width: none;
+				overflow: auto;
+			}
+
+			.table-responsive, .table-responsive-lg {
+				overflow: visible;
+			}
+		}
+	}
+
+	.portlet-configuration-edit-templates .portlet-configuration-body-content {
+		bottom: 0;
+	}
+}

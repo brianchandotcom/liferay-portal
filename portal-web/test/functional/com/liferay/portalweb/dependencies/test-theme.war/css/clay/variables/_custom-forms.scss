@@ -1,0 +1,73 @@
+////
+/// @group customForms
+////
+
+$custom-control-indicator-border-color: null !default;
+$custom-control-indicator-border-style: null !default;
+$custom-control-indicator-border-width: null !default;
+$custom-control-indicator-position-top: 0.25rem !default;
+
+$custom-control-indicator-active-border-color: null !default;
+
+$custom-control-indicator-disabled-border-color: null !default;
+$custom-control-indicator-disabled-cursor: $disabled-cursor !default;
+
+// Custom Control Indicator Checked
+
+/// @deprecated as of v2.2.1 use `$custom-control-indicator-checked-active-bg` instead
+
+$custom-control-indicator-active-checked-bg: null !default;
+$custom-control-indicator-checked-active-bg: $custom-control-indicator-active-checked-bg !default;
+
+/// @deprecated as of v2.2.1 use `$custom-control-indicator-checked-active-border-color` instead
+
+$custom-control-indicator-active-checked-border-color: null !default;
+$custom-control-indicator-checked-active-border-color: $custom-control-indicator-active-checked-border-color !default;
+
+$custom-control-indicator-checked-border-color: null !default;
+
+/// @deprecated as of v2.2.1 use `$custom-control-indicator-checked-disabled-bg` instead
+
+$custom-control-indicator-disabled-checked-bg: null !default;
+$custom-control-indicator-checked-disabled-bg: $custom-control-indicator-disabled-checked-bg !default;
+
+/// @deprecated as of v2.2.1 use `$custom-control-indicator-checked-disabled-border-color` instead
+
+$custom-control-indicator-disabled-checked-border-color: null !default;
+$custom-control-indicator-checked-disabled-border-color: $custom-control-indicator-disabled-checked-border-color !default;
+
+// Custom Control Indicator Indeterminate
+
+$custom-control-indicator-indeterminate-border-color: null !default;
+
+// Custom Control
+
+$custom-control-margin-bottom: null !default;
+$custom-control-margin-top: null !default;
+$custom-control-min-height: $custom-control-indicator-size + ($custom-control-indicator-position-top * 2) !default;
+
+// Custom Description
+
+$custom-control-description-cursor: $form-check-label-cursor !default;
+$custom-control-description-font-size: 1rem !default; // 16px
+$custom-control-description-line-height: $custom-control-min-height !default;
+$custom-control-description-padding-left: 0.5rem !default; // 8px
+$custom-control-description-disabled-cursor: $disabled-cursor !default;
+
+$custom-control-description-small-font-size: null !default;
+
+// Custom Checkbox
+
+$custom-checkbox-indicator-icon-checked-bg-size: null !default;
+$custom-checkbox-indicator-icon-indeterminate-bg-size: null !default;
+
+// Custom Radio
+
+$custom-radio-indicator-icon-checked-bg-size: null !default;
+
+$custom-radio-indicator-disabled-border-color: null !default;
+
+/// @deprecated as of v2.2.1 use `$custom-radio-indicator-checked-disabled-border-color` instead
+
+$custom-radio-indicator-disabled-checked-border-color: null !default;
+$custom-radio-indicator-checked-disabled-border-color: $custom-radio-indicator-disabled-checked-border-color !default;

@@ -1,0 +1,269 @@
+////
+/// @group tbar
+////
+
+/// A mixin to create tbar variants, must be based off `.tbar` (e.g., `<nav class="tbar my-custom-tbar-variant"></nav>`).
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// border-color: {Color | String | List | Null},
+/// border-style: {String | List | Null},
+/// border-width: {Number | String | List | Null},
+/// bg-color: {Color | String | Null},
+/// color: {Color | String | Null},
+/// font-size: {Number | String | Null},
+/// height: {Number | String | Null},
+/// padding-x: {Number | String | Null},
+/// padding-y: {Number | String | Null},
+/// strong-font-weight: {Number | String | Null},
+/// item-justify-content: {String | Null},
+/// item-padding-x: {Number | String | Null},
+/// item-padding-y: {Number | String | Null},
+/// btn-height: {Number | String | Null},
+/// btn-font-size: {Number | String | Null}, // Default: $font-size
+/// btn-font-weight: {Number | String | Null},
+/// btn-line-height: {Number | String | Null},
+/// btn-margin-x: {Number | String | Null},
+/// btn-margin-y: {Number | String | Null},
+/// btn-padding-x: {Number | String | Null},
+/// btn-padding-y: {Number | String | Null},
+/// btn-monospaced-border-radius: {Number | String | List | Null},
+/// btn-monospaced-border-width: {Number | String | List | Null},
+/// btn-monospaced-font-size: {Number | String | Null},
+/// btn-monospaced-margin-x: {Number | String | Null},
+/// btn-monospaced-margin-y: {Number | String | Null},
+/// btn-monospaced-padding: {Number | String | List | Null},
+/// btn-monospaced-size: {Number | String | Null}, // Default: $btn-height
+/// link-margin-x: {Number | String | Null},
+/// link-margin-y: {Number | String | Null},
+/// link-padding-x: {Number | String | Null},
+/// link-padding-y: {Number | String | Null},
+/// link-monospaced-border-radius: {Number | String | List | Null},
+/// link-monospaced-border-width: {Number | String | List | Null},
+/// link-monospaced-font-size: {Number | String | Null},
+/// link-monospaced-margin-x: {Number | String | Null},
+/// link-monospaced-margin-y: {Number | String | Null},
+/// link-monospaced-padding: {Number | String | List | Null},
+/// link-monospaced-size: {Number | String | Null},
+/// section-text-align: {String | Null},
+/// component-action: {Map | Null}, // Pass parameters to `clay-link` mixin
+/// component-link: {Map | Null}, // Pass parameters to `clay-link` mixin
+/// component-title: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// component-text: {Map | Null}, // Pass parameters to `clay-text-typography` mixin
+/// component-label: {Map | Null}, // Pass parameters to `clay-label-variant` mixin
+/// tbar-label-size: {Map | Null}, // Pass parameters to `clay-label-size` mixin
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-tbar-variant($map) {
+	$border-color: map-get($map, border-color);
+	$border-style: map-get($map, border-style);
+	$border-width: map-get($map, border-width);
+	$bg-color: map-get($map, bg-color);
+	$color: map-get($map, color);
+	$font-size: map-get($map, font-size);
+	$height: map-get($map, height);
+	$padding-x: map-get($map, padding-x);
+	$padding-y: map-get($map, padding-y);
+
+	$strong-font-weight: map-get($map, strong-font-weight);
+
+	$item-justify-content: map-get($map, item-justify-content);
+	$item-padding-x: map-get($map, item-padding-x);
+	$item-padding-y: map-get($map, item-padding-y);
+
+	$btn-height: map-get($map, btn-height);
+	$btn-font-size: setter(map-get($map, btn-font-size), $font-size);
+	$btn-font-weight: map-get($map, btn-font-weight);
+	$btn-line-height: map-get($map, btn-line-height);
+	$btn-margin-x: map-get($map, btn-margin-x);
+	$btn-margin-y: map-get($map, btn-margin-y);
+	$btn-padding-x: map-get($map, btn-padding-x);
+	$btn-padding-y: map-get($map, btn-padding-y);
+
+	$btn-monospaced-border-radius: map-get($map, btn-monospaced-border-radius);
+	$btn-monospaced-border-width: map-get($map, btn-monospaced-border-width);
+	$btn-monospaced-font-size: map-get($map, btn-monospaced-font-size);
+	$btn-monospaced-margin-x: map-get($map, btn-monospaced-margin-x);
+	$btn-monospaced-margin-y: map-get($map, btn-monospaced-margin-y);
+	$btn-monospaced-padding: map-get($map, btn-monospaced-padding);
+	$btn-monospaced-size: setter(map-get($map, btn-monospaced-size), $btn-height);
+
+	$link-margin-x: map-get($map, link-margin-x);
+	$link-margin-y: map-get($map, link-margin-y);
+	$link-padding-x: map-get($map, link-padding-x);
+	$link-padding-y: map-get($map, link-padding-y);
+
+	$link-monospaced-border-radius: map-get($map, link-monospaced-border-radius);
+	$link-monospaced-border-width: map-get($map, link-monospaced-border-width);
+	$link-monospaced-font-size: map-get($map, link-monospaced-font-size);
+	$link-monospaced-margin-x: map-get($map, link-monospaced-margin-x);
+	$link-monospaced-margin-y: map-get($map, link-monospaced-margin-y);
+	$link-monospaced-padding: map-get($map, link-monospaced-padding);
+	$link-monospaced-size: map-get($map, link-monospaced-size);
+
+	$section-text-align: map-get($map, section-text-align);
+
+	$component-action: setter(map-get($map, component-action), ());
+
+	$component-link: setter(map-get($map, component-link), ());
+
+	$component-title: setter(map-get($map, component-title), ());
+
+	$component-text: setter(map-get($map, component-text), ());
+
+	$component-label: setter(map-get($map, component-label), ());
+
+	$tbar-label-size: setter(map-get($map, tbar-label-size), ());
+
+	background-color: $bg-color;
+	border-color: $border-color;
+	border-style: $border-style;
+	border-width: $border-width;
+	color: $color;
+	font-size: $font-size;
+	height: $height;
+	padding-bottom: $padding-y;
+	padding-left: $padding-x;
+	padding-right: $padding-x;
+	padding-top: $padding-y;
+
+	strong {
+		font-weight: $strong-font-weight;
+	}
+
+	.component-action {
+		@include clay-link($component-action);
+	}
+
+	.component-link {
+		@include clay-link($component-link);
+	}
+
+	.tbar-item {
+		justify-content: $item-justify-content;
+		padding-bottom: $item-padding-y;
+		padding-left: $item-padding-x;
+		padding-right: $item-padding-x;
+		padding-top: $item-padding-y;
+	}
+
+	.tbar-btn {
+		font-size: $btn-font-size;
+		font-weight: $btn-font-weight;
+		height: $btn-height;
+		line-height: $btn-line-height;
+		margin-bottom: $btn-margin-y;
+		margin-left: $btn-margin-x;
+		margin-right: $btn-margin-x;
+		margin-top: $btn-margin-y;
+		padding-bottom: $btn-padding-y;
+		padding-left: $btn-padding-x;
+		padding-right: $btn-padding-x;
+		padding-top: $btn-padding-y;
+	}
+
+	.tbar-link {
+		margin-bottom: $link-margin-y;
+		margin-left: $link-margin-x;
+		margin-right: $link-margin-x;
+		margin-top: $link-margin-y;
+		padding-bottom: $link-padding-y;
+		padding-left: $link-padding-x;
+		padding-right: $link-padding-x;
+		padding-top: $link-padding-y;
+	}
+
+	.tbar-btn-monospaced {
+		border-radius: $btn-monospaced-border-radius;
+		border-width: $btn-monospaced-border-width;
+		font-size: $btn-monospaced-font-size;
+		height: $btn-monospaced-size;
+		margin-bottom: $btn-monospaced-margin-y;
+		margin-left: $btn-monospaced-margin-x;
+		margin-right: $btn-monospaced-margin-x;
+		margin-top: $btn-monospaced-margin-y;
+		padding: $btn-monospaced-padding;
+		width: $btn-monospaced-size;
+
+		.inline-item {
+			font-size: $btn-monospaced-font-size;
+		}
+	}
+
+	.tbar-link-monospaced {
+		border-radius: $link-monospaced-border-radius;
+		border-width: $link-monospaced-border-width;
+		font-size: $link-monospaced-font-size;
+		height: $link-monospaced-size;
+		margin-bottom: $link-monospaced-margin-y;
+		margin-left: $link-monospaced-margin-x;
+		margin-right: $link-monospaced-margin-x;
+		margin-top: $link-monospaced-margin-y;
+		padding: $link-monospaced-padding;
+		width: $link-monospaced-size;
+
+		.inline-item {
+			font-size: $link-monospaced-font-size;
+		}
+	}
+
+	.tbar-section {
+		text-align: $section-text-align;
+	}
+
+	.component-title {
+		@include clay-text-typography($component-title);
+	}
+
+	.component-text {
+		@include clay-text-typography($component-text);
+	}
+
+	.component-label {
+		@include clay-label-variant($component-label);
+	}
+
+	.tbar-label {
+		@include clay-label-size($tbar-label-size);
+	}
+}
+
+/// A mixin for `tbar` to force `tbar-nav`, `tbar-item`, `tbar-section`, and `component-title` inline at specific breakpoints. This mixin is used in `.tbar-inline-xs-down`, `.tbar-inline-sm-down`, `.tbar-inline-md-down`, `.tbar-inline-lg-down`, and `.tbar-inline-xl-down`.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// breakpoint-down: {String, Null}, // The Bootstrap 4 Breakpoint {xs | sm | md | lg | xl}
+/// item-padding-left: {Number | String | Null},
+/// item-padding-right: {Number | String | Null},
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-tbar-inline-down($map) {
+	$breakpoint-down: map-get($map, breakpoint-down);
+	$item-padding-left: map-get($map, item-padding-left);
+	$item-padding-right: map-get($map, item-padding-right);
+
+	@if ($breakpoint-down) {
+		@include media-breakpoint-down($breakpoint-down) {
+			display: block;
+
+			.container,
+			.container-fluid {
+				display: block;
+			}
+
+			.component-title,
+			.tbar-nav,
+			.tbar-section {
+				display: inline;
+			}
+
+			.tbar-item {
+				display: inline;
+				padding-left: $item-padding-left;
+				padding-right: $item-padding-right;
+			}
+		}
+	}
+}

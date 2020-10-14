@@ -1,0 +1,46 @@
+@if $compat-form_validation {
+	.help-block {
+		color: lighten($body-color, 25%); // lighten the text some for contrast
+		display: block; // account for any element using help-block
+		font-size: 0.875rem;
+		margin-bottom: 10px;
+		margin-top: 5px;
+	}
+
+	.has-error .help-block {
+		color: $form-feedback-invalid-color;
+	}
+
+	.has-warning .help-block {
+		color: $form-feedback-warning-color;
+	}
+
+	.has-success .help-block {
+		color: $form-feedback-valid-color;
+	}
+
+	.has-feedback {
+		position: relative;
+
+		label,
+		.form-control {
+			+ .form-control-feedback {
+				position: absolute;
+				top: ($line-height-base + 5); // Height of the `label` and its margin
+				right: 0;
+				z-index: 2; // Ensure icon is above input groups
+				display: block;
+				height: $input-height;
+				line-height: $input-height;
+				margin-top: 0;
+				pointer-events: none;
+				text-align: center;
+				width: $input-height;
+			}
+
+			&.sr-only ~ .form-control-feedback {
+				top: 0;
+			}
+		}
+	}
+}

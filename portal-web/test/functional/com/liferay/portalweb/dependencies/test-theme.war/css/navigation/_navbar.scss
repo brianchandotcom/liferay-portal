@@ -1,0 +1,9 @@
+.navbar-nav .nav-item.hover {
+	&:after {
+		bottom: -$dropdown-spacer;
+		content: '';
+		height: $dropdown-spacer;
+		position: absolute;
+		width: 100%;
+	}
+}

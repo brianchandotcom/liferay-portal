@@ -200,11 +200,11 @@ describe('FragmentsSidebar', () => {
 		expect(TabsPanel).toHaveBeenCalledWith({tabs: NORMALIZED_TABS}, {});
 	});
 
-	it('filters fragments and widgets according to a input value', async () => {
+	it('filters fragments and widgets according to a input value', () => {
 		const {getByLabelText, queryByText} = renderComponent(STATE);
 		const input = getByLabelText('search-form');
 
-		await act(async () => {
+		act(() => {
 			fireEvent.change(input, {
 				target: {value: 't 1'},
 			});
@@ -217,11 +217,11 @@ describe('FragmentsSidebar', () => {
 		expect(queryByText('Fragment 3')).not.toBeInTheDocument();
 	});
 
-	it('filters collections according to a input value', async () => {
+	it('filters collections according to a input value', () => {
 		const {getByLabelText, queryByText} = renderComponent(STATE);
 		const input = getByLabelText('search-form');
 
-		await act(async () => {
+		act(() => {
 			fireEvent.change(input, {
 				target: {value: 'Widget Collection 1'},
 			});

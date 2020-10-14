@@ -31,6 +31,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
+import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.util.PortletConfigurationImporterHelper;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.util.PortletPermissionsImporterHelper;
@@ -325,6 +326,12 @@ public class FragmentLayoutStructureItemImporter
 		String target = (String)fragmentLinkMap.get("target");
 
 		if (target != null) {
+			if (Objects.equals(target, FragmentLink.Target.PARENT.getValue()) ||
+				Objects.equals(target, FragmentLink.Target.TOP.getValue())) {
+
+				target = FragmentLink.Target.SELF.getValue();
+			}
+
 			jsonObject.put(
 				"target", "_" + StringUtil.lowerCaseFirstLetter(target));
 		}

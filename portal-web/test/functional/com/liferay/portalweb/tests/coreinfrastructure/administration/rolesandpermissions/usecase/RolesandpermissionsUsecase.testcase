@@ -609,7 +609,7 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "View",
 			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
-			roleTitle = "Data REcorder Name",
+			roleTitle = "Data Recorder Name",
 			roleType = "site");
 
 		JSONRole.addSiteRole(

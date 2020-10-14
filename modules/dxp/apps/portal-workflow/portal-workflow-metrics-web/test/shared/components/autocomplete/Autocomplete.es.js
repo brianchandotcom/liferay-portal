@@ -65,7 +65,6 @@ describe('The Autocomplete component should', () => {
 		expect(dropDown).toHaveClass('show');
 
 		fireEvent.change(autocompleteInput, {target: {value: 'test'}});
-
 		fireEvent.blur(autocompleteInput);
 
 		expect(autocompleteInput.value).toBe('');

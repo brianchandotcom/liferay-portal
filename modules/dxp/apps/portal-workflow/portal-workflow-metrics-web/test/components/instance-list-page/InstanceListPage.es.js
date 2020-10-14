@@ -135,8 +135,6 @@ describe('The instance list card should', () => {
 
 		fireEvent.click(instanceCheckbox1);
 
-		let label = getByText('x-of-x-selected');
-
 		expect(checkAllButton.checked).toEqual(false);
 		expect(instanceCheckbox1.checked).toEqual(true);
 		expect(instanceCheckbox2.checked).toEqual(false);
@@ -150,6 +148,8 @@ describe('The instance list card should', () => {
 		expect(instanceCheckbox2.checked).toEqual(false);
 
 		fireEvent.click(checkAllButton);
+
+		let label = getByText('x-of-x-selected');
 
 		expect(checkAllButton.checked).toEqual(true);
 		expect(label).toBeTruthy();

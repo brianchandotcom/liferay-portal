@@ -337,11 +337,13 @@ describe('The BulkTransitionModal component should', () => {
 		expect(items[0].children[2]).toHaveTextContent('Blogs Entry: title1');
 		expect(items[0].children[3]).toHaveTextContent('Review');
 		expect(items[0].children[4]).toHaveTextContent('Test Test');
+
 		expect(checkbox2.checked).toBe(false);
 		expect(items[1].children[1]).toHaveTextContent('2');
 		expect(items[1].children[2]).toHaveTextContent('Blogs Entry: title2');
 		expect(items[1].children[3]).toHaveTextContent('Review');
 		expect(items[1].children[4]).toHaveTextContent('Test Test');
+
 		expect(checkAllButton.checked).toBe(false);
 
 		fireEvent.click(checkAllButton);

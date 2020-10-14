@@ -164,9 +164,10 @@ describe('The SLAListPage component should', () => {
 
 		test('Display toast when failure occur while trying to confirm item delete', () => {
 			const alertToast = document.querySelector('.alert-dismissible');
-			const deleteButton = getByText('ok');
 
 			const alertClose = alertToast.children[1];
+
+			const deleteButton = getByText('ok');
 
 			expect(alertToast).toHaveTextContent('your-request-has-failed');
 

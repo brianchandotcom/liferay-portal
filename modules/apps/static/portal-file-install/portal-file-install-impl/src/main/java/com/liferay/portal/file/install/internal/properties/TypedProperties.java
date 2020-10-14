@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -163,8 +162,6 @@ public class TypedProperties {
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
 
-	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		TypedProperties.class);
 
@@ -267,13 +264,7 @@ public class TypedProperties {
 
 				_values.add(line);
 
-				while ((line.length() > 0) &&
-					   ArrayUtil.contains(_WHITE_SPACE, line.charAt(0))) {
-
-					line = line.substring(1);
-				}
-
-				sb.append(line);
+				sb.append(line.trim());
 
 				if (!combine) {
 					break;

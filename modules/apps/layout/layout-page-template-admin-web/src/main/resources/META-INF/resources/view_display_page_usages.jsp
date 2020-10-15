@@ -33,6 +33,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTempl
 
 <clay:container-fluid>
 	<liferay-ui:search-container
+		id="assetDisplayPageEntries"
 		searchContainer="<%= displayPageUsagesDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row

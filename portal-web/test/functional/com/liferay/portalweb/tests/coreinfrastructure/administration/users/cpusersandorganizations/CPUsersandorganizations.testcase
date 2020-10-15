@@ -2150,4 +2150,46 @@ definition {
 			value1 = "11/24/1984");
 	}
 
+	@description = "This is a use case for LPS-121271."
+	@priority = "3"
+	test ViewUserPreferencesSaved {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		User.editUserAlertsAndAnnouncementsDeliveryCP(
+			checkbox = "Enable",
+			deliveryOptions = "General,Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		UserNavigator.gotoAlertsAndAnnouncementsDelivery();
+
+		AssertChecked(
+			key_tableEntry = "General",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		AssertChecked(
+			key_tableEntry = "Test",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		AssertNotChecked(
+			key_tableEntry = "News",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+	}
+
 }

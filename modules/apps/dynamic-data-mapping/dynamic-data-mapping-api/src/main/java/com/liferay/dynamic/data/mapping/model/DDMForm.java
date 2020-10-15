@@ -127,6 +127,25 @@ public class DDMForm implements Serializable {
 		return ddmFormFieldsMap;
 	}
 
+	public Map<String, DDMFormField> getDDMFormFieldsReferencesMap(
+		boolean includeNestedDDMFormFields) {
+
+		Map<String, DDMFormField> ddmFormFieldsReferencesMap =
+			new LinkedHashMap<>();
+
+		for (DDMFormField ddmFormField : _ddmFormFields) {
+			ddmFormFieldsReferencesMap.put(
+				ddmFormField.getFieldReference(), ddmFormField);
+
+			if (includeNestedDDMFormFields) {
+				ddmFormFieldsReferencesMap.putAll(
+					ddmFormField.getNestedDDMFormFieldsMap());
+			}
+		}
+
+		return ddmFormFieldsReferencesMap;
+	}
+
 	public List<DDMFormRule> getDDMFormRules() {
 		return _ddmFormRules;
 	}
@@ -160,6 +179,27 @@ public class DDMForm implements Serializable {
 		}
 
 		return ddmFormFieldsMap;
+	}
+
+	public Map<String, DDMFormField> getNontransientDDMFormFieldsReferencesMap(
+		boolean includeNestedDDMFormFields) {
+
+		Map<String, DDMFormField> ddmFormFieldsReferencesMap =
+			new LinkedHashMap<>();
+
+		for (DDMFormField ddmFormField : _ddmFormFields) {
+			if (!ddmFormField.isTransient()) {
+				ddmFormFieldsReferencesMap.put(
+					ddmFormField.getFieldReference(), ddmFormField);
+			}
+
+			if (includeNestedDDMFormFields) {
+				ddmFormFieldsReferencesMap.putAll(
+					ddmFormField.getNontransientNestedDDMFormFieldsMap());
+			}
+		}
+
+		return ddmFormFieldsReferencesMap;
 	}
 
 	@Override

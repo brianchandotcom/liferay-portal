@@ -37,31 +37,38 @@ definition {
 			categoryName = "Category 1",
 			vocabularyName = "Topic");
 
-		AssertTextPresent(value1 = "Category 1");
+		Category.viewCP(
+			categoryName = "Category 1",
+			vocabularyName = "Topic");
+
+        Category.deleteCategoriesCP(vocabularyName = "Topic");
 	}
 
 	@description = "When the site administrator (not Global) accesses to the Categories administration application, the existing Global vocabularies appear as locked and it's not possible to edit them"
 	@priority = "5"
 	test GlobalCategoriesNotEditable {
 		property portal.acceptance = "true";
-		JSONCategory.addCategory(
+
+        JSONCategory.addCategory(
 			groupName = "Global",
-			title = "Topic 1",
+			title = "Category Name",
 			vocabularyName = "Topic");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		AssertElementPresent(locator1 = "Categories#LOCKED_VOCABULARY");
-
 		Category.viewCP(
-			categoryName = "Topic 1",
+			categoryName = "Category Name",
 			vocabularyName = "Topic");
-
-		AssertElementNotPresent(locator1 = "Categories#ADD_CATEGORY_BUTTON");
+        
+        AssertElementNotPresent(locator1 = "Categories#ADD_CATEGORY_BUTTON");
+        
+        Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+        
+        AssertElementPresent(locator1 = "Categories#LOCKED_VOCABULARY");
 
 		Category.openCategoriesAdmin(siteURLKey = "global");
 
-		Category.deleteCategoriesCP(vocabularyName = "Topic 1");
+		Category.deleteCategoriesCP(vocabularyName = "Topic");
 	}
 
 	@description = "When a change in Global Vocabularies is made, the Global vocabularies section in a site's Categories administration application updates accordingly"

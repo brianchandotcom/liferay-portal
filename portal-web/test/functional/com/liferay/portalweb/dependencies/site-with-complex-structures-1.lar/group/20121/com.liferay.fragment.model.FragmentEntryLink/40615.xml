@@ -1,0 +1,102 @@
+<FragmentEntryLink>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>d1f25a63-6aae-6284-7f4f-aec6b9835809</__uuid>
+  <__fragmentEntryLinkId>40615</__fragmentEntryLinkId>
+  <__groupId>20121</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2020-09-10 08:26:47.416</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-09-10 08:26:47.416</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__originalFragmentEntryLinkId>0</__originalFragmentEntryLinkId>
+  <__fragmentEntryId>0</__fragmentEntryId>
+  <__segmentsExperienceId>0</__segmentsExperienceId>
+  <__classNameId>20026</__classNameId>
+  <__classPK>25</__classPK>
+  <__plid>25</__plid>
+  <__css></__css>
+  <__html>&lt;div class=&quot;component-button text-break&quot;&gt;
+	&lt;a
+		class=&quot;btn btn-${configuration.buttonSize} btn-${configuration.buttonType}&quot;
+		data-lfr-editable-id=&quot;link&quot;
+		data-lfr-editable-type=&quot;link&quot;
+		href=&quot;&quot;
+		id=&quot;fragment-${fragmentEntryLinkNamespace}-link&quot;
+	&gt;
+		Go Somewhere
+	&lt;/a&gt;
+&lt;/div&gt;</__html>
+  <__js></__js>
+  <__configuration>{
+	&quot;fieldSets&quot;: [
+		{
+			&quot;fields&quot;: [
+				{
+					&quot;dataType&quot;: &quot;string&quot;,
+					&quot;defaultValue&quot;: &quot;primary&quot;,
+					&quot;label&quot;: &quot;type&quot;,
+					&quot;name&quot;: &quot;buttonType&quot;,
+					&quot;type&quot;: &quot;select&quot;,
+					&quot;typeOptions&quot;: {
+						&quot;validValues&quot;: [
+							{
+								&quot;value&quot;: &quot;primary&quot;
+							},
+							{
+								&quot;value&quot;: &quot;secondary&quot;
+							},
+							{
+								&quot;value&quot;: &quot;link&quot;
+							},
+							{
+								&quot;value&quot;: &quot;outline-primary&quot;
+							},
+							{
+								&quot;value&quot;: &quot;outline-secondary&quot;
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			&quot;configurationRole&quot;: &quot;style&quot;,
+			&quot;fields&quot;: [
+				{
+					&quot;dataType&quot;: &quot;string&quot;,
+					&quot;defaultValue&quot;: &quot;nm&quot;,
+					&quot;label&quot;: &quot;size&quot;,
+					&quot;name&quot;: &quot;buttonSize&quot;,
+					&quot;type&quot;: &quot;select&quot;,
+					&quot;typeOptions&quot;: {
+						&quot;validValues&quot;: [
+							{
+								&quot;label&quot;: &quot;small&quot;,
+								&quot;value&quot;: &quot;sm&quot;
+							},
+							{
+								&quot;label&quot;: &quot;normal&quot;,
+								&quot;value&quot;: &quot;nm&quot;
+							},
+							{
+								&quot;label&quot;: &quot;large&quot;,
+								&quot;value&quot;: &quot;lg&quot;
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}</__configuration>
+  <__editableValues>{&quot;com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor&quot;:{},&quot;com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor&quot;:{&quot;link&quot;:{&quot;defaultValue&quot;:&quot;\n\t\tGo Somewhere\n\t&quot;,&quot;config&quot;:{}}},&quot;com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor&quot;:{&quot;buttonType&quot;:&quot;primary&quot;,&quot;buttonSize&quot;:&quot;nm&quot;}}</__editableValues>
+  <__namespace>nfsi</__namespace>
+  <__position>0</__position>
+  <__rendererKey>BASIC_COMPONENT-button</__rendererKey>
+  <__lastPropagationDate class="sql-timestamp">2020-09-10 08:26:47.419</__lastPropagationDate>
+  <__columnBitmask>0</__columnBitmask>
+</FragmentEntryLink>

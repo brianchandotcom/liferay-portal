@@ -152,12 +152,6 @@ public abstract class BaseSegmentsEntryProvider
 		return stream.filter(
 			segmentsEntry -> isMember(
 				className, classPK, context, segmentsEntry, segmentsEntryIds)
-		).sorted(
-			(segmentsEntry1, segmentsEntry2) -> {
-				Date modifiedDate = segmentsEntry2.getModifiedDate();
-
-				return modifiedDate.compareTo(segmentsEntry1.getModifiedDate());
-			}
 		).mapToLong(
 			SegmentsEntry::getSegmentsEntryId
 		).toArray();

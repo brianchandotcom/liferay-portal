@@ -1,4 +1,4 @@
-[#if themeDisplay.isSignedIn()]
+[#if themeDisplay.isSignedIn() && !themeDisplay.getLayout().isSystem()]
 	<script>
 		window.location.replace("${themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()}");
 	</script>

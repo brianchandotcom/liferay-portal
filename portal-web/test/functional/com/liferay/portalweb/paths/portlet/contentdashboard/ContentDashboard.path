@@ -93,6 +93,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_BY_STATUS_SCHEDULED_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Scheduled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_BY_TAG_OPTION</td>
 	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Tags')]</td>
 	<td></td>

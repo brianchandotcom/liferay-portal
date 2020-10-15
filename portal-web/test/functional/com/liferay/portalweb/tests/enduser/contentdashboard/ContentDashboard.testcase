@@ -196,9 +196,13 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC Title Approved");
 		
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title Draft");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title Draft");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title Draft");
 	}
 
 	@description = "Validate if the user can filter by Status: Approved"
@@ -253,9 +257,50 @@ definition {
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 			value1 = "WC Title Draft");
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title Draft");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title Draft");
+	}
+
+	@description = "Validate if the user can filter by Status: Scheduled"
+	@priority = "5"
+	test ContentDashboardFilterByStatusScheduled {
+		property portal.acceptance = "true";
+
+		task ("Add a web content article with a future display date") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC Title Scheduled");
+
+			WebContent.editDisplayDate(displayDate = "01/01/2100");
+
+			PortletEntry.publish();
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.filterByStatusScheduled();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title Scheduled");
+
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
-			title = "WC Title Draft");
+			title = "WC Title Scheduled");
 	}
 
 	@description = "Validate if the user can filter by tag"

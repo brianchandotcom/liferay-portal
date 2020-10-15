@@ -20,17 +20,34 @@ const HEADERS = {
 	'Content-Type': 'application/json',
 };
 
-export const addItem = (endpoint, item) => {
+function fetchItem(url, options) {
 	return new Promise((resolve, reject) => {
-		fetch(getURL(endpoint), {
-			body: JSON.stringify(item),
-			headers: HEADERS,
-			method: 'POST',
-		})
-			.then((response) => resolve(response.json()))
+		let isOk;
+
+		fetch(url, options)
+			.then((response) => {
+				isOk = response.ok;
+
+				return response.json();
+			})
+			.then((data) => {
+				if (isOk) {
+					resolve(data);
+				}
+				else {
+					reject(data);
+				}
+			})
 			.catch((error) => reject(error));
 	});
-};
+}
+
+export const addItem = (endpoint, item) =>
+	fetchItem(getURL(endpoint), {
+		body: JSON.stringify(item),
+		headers: HEADERS,
+		method: 'POST',
+	});
 
 export const confirmDelete = (endpoint) => (item) =>
 	new Promise((resolve, reject) => {
@@ -82,27 +99,9 @@ export const getURL = (path, params) => {
 	return uri.toString();
 };
 
-export const updateItem = (endpoint, item, params) => {
-	return new Promise((resolve, reject) => {
-		let isOk;
-		fetch(getURL(endpoint, params), {
-			body: JSON.stringify(item),
-			headers: HEADERS,
-			method: 'PUT',
-		})
-			.then((response) => {
-				isOk = response.ok;
-
-				return response.json();
-			})
-			.then((data) => {
-				if (isOk) {
-					resolve(data);
-				}
-				else {
-					reject(data);
-				}
-			})
-			.catch((error) => reject(error));
+export const updateItem = (endpoint, item, params) =>
+	fetchItem(getURL(endpoint, params), {
+		body: JSON.stringify(item),
+		headers: HEADERS,
+		method: 'PUT',
 	});
-};

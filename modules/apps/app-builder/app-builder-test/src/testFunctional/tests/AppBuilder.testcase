@@ -3248,7 +3248,7 @@ definition {
 			locator1 = "FormViewBuilder#RULE_BUILDER_FORM_VIEW_NAME",
 			value1 = "My Form View");
 
-		FormViewBuilder.saveFormView();
+		FormViewBuilder.save();
 
 		AppBuilderAdmin.switchTab(tabName = "Table Views");
 

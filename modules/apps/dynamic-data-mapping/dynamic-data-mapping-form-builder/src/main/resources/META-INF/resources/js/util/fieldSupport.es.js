@@ -263,7 +263,7 @@ export const normalizeSettingsContextPages = (
 		(field) => {
 			const {fieldName} = field;
 
-			if (fieldName === 'name') {
+			if (fieldName === 'fieldReference' || fieldName === 'name') {
 				field = {
 					...field,
 					value: generatedFieldName,

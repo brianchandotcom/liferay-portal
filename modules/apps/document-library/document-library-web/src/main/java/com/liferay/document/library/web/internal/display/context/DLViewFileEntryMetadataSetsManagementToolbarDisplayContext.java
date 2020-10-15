@@ -82,7 +82,7 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 					String.valueOf(_dlRequestHelper.getScopeGroupId()));
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(_dlRequestHelper.getRequest(), "add"));
+					LanguageUtil.get(_dlRequestHelper.getRequest(), "new"));
 			}
 		).build();
 	}

@@ -141,14 +141,18 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		JSONDocument.addFile(
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			displayPageTemplateDisabled = "true",
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Depot Name");
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.editCP(
+			displayPageTemplateDisabled = "true",
 			dmDocumentDescription = "DM Document Description1",
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
 			dmDocumentTitle = "DM Document Title",

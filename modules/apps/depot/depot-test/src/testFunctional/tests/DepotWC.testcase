@@ -204,6 +204,14 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
+		AssertElementNotPresent(
+			key_panel = "Display Page Template",
+			locator1 = "Panel#PANEL_COLLAPSED");
+
+		AssertElementNotPresent(
+			key_panel = "Display Page Template",
+			locator1 = "Panel#PANEL_EXPANDED");
+
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
@@ -216,6 +224,7 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Edit");
 
 		WebContent.viewCP(
+			displayPageTemplateDisabled = "true",
 			webContentContent = "WC WebContent Content Edit",
 			webContentTitle = "WC WebContent Title Edit");
 	}

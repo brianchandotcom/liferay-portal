@@ -251,14 +251,14 @@ definition {
 		// FACES_1635Resources
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-1635?p_p_parallel=0",
+			pageURL = "jsf-applicant?p_p_parallel=0",
 			portletName = "jsf-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1635?p_p_parallel=0");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/jsf-applicant?p_p_parallel=0");
 
 		Portlet.addPG(portletName = "primefaces-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1635?p_p_parallel=0");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/jsf-applicant?p_p_parallel=0");
 
 		AssertElementPresent(locator1 = "BridgeIssues#LIFERAY_LOGO");
 

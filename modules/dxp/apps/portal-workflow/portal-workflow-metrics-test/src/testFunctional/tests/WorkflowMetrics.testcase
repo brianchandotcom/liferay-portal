@@ -52,60 +52,6 @@ definition {
 		}
 	}
 
-	@description = "LRQA-57666 - Automate LPS-105497: As a Operation Manager, I want to update the due date a workflow instance while analyzing my process metrics"
-	@priority = "5"
-	test UpdateDueDate {
-		property portal.acceptance = "true";
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-		var currentYear = DateUtil.getCurrentYear();
-		var futureYear = ${currentYear} + 1;
-		var futureYearShort = StringUtil.substring("${futureYear}", "2", "4");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Workflow",
-			site = "${siteName}");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
-
-		WorkflowMetrics.goToWorkflowAllItems();
-		WorkflowMetrics.goToUpdateDueDateTasks();
-
-		Type(
-			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
-			value1 = "04/11/${futureYear}");
-
-		Type(
-			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
-			value1 = "04:30 PM");
-
-		Button.clickDone();
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.viewPendingTasks(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
-
-		Workflow.gotoTaskDetails(workflowAssetTitle = "Blogs Entry Title");
-		WorkflowAsset.assertDueDate(date = "4/11/${futureYearShort} 4:30 PM");
-	}
-
 	@description = "LRQA-53648 Automate LPS-89014: [SLA] Create new SLA for total process resolution"
 	@priority = "5"
 	test AddSLAForTotalProcessResolution {
@@ -2002,6 +1948,60 @@ definition {
 		WorkflowMetrics.goToDeleteSLA(slaName = "One day Edit");
 
 		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_EMPTY_MESSAGE");
+	}
+
+	@description = "LRQA-57666 - Automate LPS-105497: As a Operation Manager, I want to update the due date a workflow instance while analyzing my process metrics"
+	@priority = "5"
+	test UpdateDueDate {
+		property portal.acceptance = "true";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var currentYear = DateUtil.getCurrentYear();
+		var futureYear = ${currentYear} + 1;
+		var futureYearShort = StringUtil.substring("${futureYear}", "2", "4");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToUpdateDueDateTasks();
+
+		Type(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
+			value1 = "04/11/${futureYear}");
+
+		Type(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
+			value1 = "04:30 PM");
+
+		Button.clickDone();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.viewPendingTasks(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.gotoTaskDetails(workflowAssetTitle = "Blogs Entry Title");
+		WorkflowAsset.assertDueDate(date = "4/11/${futureYearShort} 4:30 PM");
 	}
 
 	@description = "LRQA-53646 - Automate LPS-88573: Search and order the reports list"

@@ -1,5 +1,11 @@
 definition {
 
+	macro assertDueDate {
+		AssertElementPresent(
+			key_date = "${date}",
+			locator1 = "AssetWorkflow#DUE_DATE");
+	}
+
 	macro createNewUserAccount {
 		User.createAccount(
 			newPassword = "${newPassword}",
@@ -140,12 +146,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "WorkflowSubmissionsTask#PREVIEW_USER",
 			value1 = "${userEmailAddress}");
-	}
-
-	macro assertDueDate {
-		AssertElementPresent(
-			key_date = "${date}",
-			locator1 = "AssetWorkflow#DUE_DATE");
 	}
 
 }

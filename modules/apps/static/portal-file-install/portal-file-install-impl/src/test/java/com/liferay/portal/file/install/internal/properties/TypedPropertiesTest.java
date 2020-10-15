@@ -15,6 +15,9 @@
 package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.IOException;
@@ -22,7 +25,10 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -89,6 +95,17 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
+	public void testLoadandSaveEmptyString() throws IOException {
+		String line = "testKey = \"\"";
+
+		TypedProperties typedProperties = _createTypedProperties(line);
+
+		Assert.assertEquals("", typedProperties.get("testKey"));
+
+		_assertSave(typedProperties, line);
+	}
+
+	@Test
 	public void testLoadandSaveEscapedEquals() throws IOException {
 		String line = "testKey = \"testValue\\=test\"";
 
@@ -111,6 +128,31 @@ public class TypedPropertiesTest {
 			(String[])typedProperties.get("testKey"));
 
 		_assertSave(typedProperties, line);
+	}
+
+	@Test
+	public void testLoadandSaveMultipleComments() throws IOException {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					TypedProperties.class.getName(), Level.WARNING)) {
+
+			TypedProperties typedProperties = _createTypedProperties(
+				"#comment1\n#comment2\ntestKey = \"testValue\"");
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Multiple comment lines found: [#comment1, #comment2]",
+				logRecord.getMessage());
+
+			Assert.assertEquals("testValue", typedProperties.get("testKey"));
+
+			_assertSave(typedProperties, "#comment1\ntestKey = \"testValue\"");
+		}
 	}
 
 	@Test
@@ -144,6 +186,31 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
+	public void testLoadandSaveTrailingComment() throws IOException {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					TypedProperties.class.getName(), Level.WARNING)) {
+
+			TypedProperties typedProperties = _createTypedProperties(
+				"testKey = \"testValue\"\n#comment");
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Comment must be at beginning of config file: #comment",
+				logRecord.getMessage());
+
+			Assert.assertEquals("testValue", typedProperties.get("testKey"));
+
+			_assertSave(typedProperties, "testKey = \"testValue\"");
+		}
+	}
+
+	@Test
 	public void testLoadandStoreMultilineString() throws IOException {
 		String line = "testKey = \"testValue1,\\\n\ttestValue2\"";
 
@@ -156,11 +223,47 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
+	public void testLoadBadLine() throws IOException {
+		String line = "testKey = K\"testValue\"";
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					TypedProperties.class.getName(), Level.WARNING)) {
+
+			TypedProperties typedProperties = _createTypedProperties(line);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Unable to parse config line: " + line, logRecord.getMessage());
+
+			Assert.assertEquals(null, typedProperties.get("testKey"));
+
+			_assertSave(typedProperties, StringPool.BLANK);
+		}
+	}
+
+	@Test
 	public void testLoadNontyped() throws IOException {
 		TypedProperties typedProperties = _createTypedProperties(
 			"testKey = \"testValue\"");
 
 		Assert.assertEquals("testValue", typedProperties.get("testKey"));
+	}
+
+	@Test
+	public void testLoadPutandSaveKeepFormat() throws IOException {
+		String line = "testKey = \\\n\"testValue\"";
+
+		TypedProperties typedProperties = _createTypedProperties(line);
+
+		typedProperties.put("testKey", "testValue");
+
+		_assertSave(typedProperties, line);
 	}
 
 	@Test
@@ -182,6 +285,20 @@ public class TypedPropertiesTest {
 			"testKey = I\"1\"");
 
 		Assert.assertEquals(1, typedProperties.get("testKey"));
+	}
+
+	@Test
+	public void testOverwriteArray() throws IOException {
+		String line = "testKey = [\"testValue1\", \"testValue2\"]";
+
+		TypedProperties typedProperties = _createTypedProperties(line);
+
+		typedProperties.put(
+			"testKey", new String[] {"testValue3", "testValue4"});
+
+		_assertSave(
+			typedProperties,
+			"testKey = [\\\r\n  \"testValue3\",\\\r\n  \"testValue4\"\\\r\n]");
 	}
 
 	@Test

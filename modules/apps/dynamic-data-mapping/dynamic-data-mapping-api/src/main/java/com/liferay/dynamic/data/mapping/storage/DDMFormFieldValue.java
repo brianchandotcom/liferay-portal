@@ -123,6 +123,33 @@ public class DDMFormFieldValue implements Serializable {
 		return nestedDDMFormFieldValuesMap;
 	}
 
+	public Map<String, List<DDMFormFieldValue>>
+		getNestedDDMFormFieldValuesReferencesMap() {
+
+		Map<String, List<DDMFormFieldValue>>
+			nestedDDMFormFieldValuesReferencesMap = new HashMap<>();
+
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				_nestedDDMFormFieldValues) {
+
+			List<DDMFormFieldValue> nestedDDMFormFieldValues =
+				nestedDDMFormFieldValuesReferencesMap.get(
+					nestedDDMFormFieldValue.getFieldReference());
+
+			if (nestedDDMFormFieldValues == null) {
+				nestedDDMFormFieldValues = new ArrayList<>();
+
+				nestedDDMFormFieldValuesReferencesMap.put(
+					nestedDDMFormFieldValue.getFieldReference(),
+					nestedDDMFormFieldValues);
+			}
+
+			nestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
+		}
+
+		return nestedDDMFormFieldValuesReferencesMap;
+	}
+
 	public String getType() {
 		DDMFormField ddmFormField = getDDMFormField();
 

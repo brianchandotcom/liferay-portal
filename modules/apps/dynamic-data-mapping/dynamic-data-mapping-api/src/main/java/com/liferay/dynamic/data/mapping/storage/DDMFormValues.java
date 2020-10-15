@@ -144,7 +144,8 @@ public class DDMFormValues implements Serializable {
 
 			if (includeNestedDDMFormFieldValues) {
 				ddmFormFieldValuesReferencesMap.putAll(
-					ddmFormFieldValue.getNestedDDMFormFieldValuesMap());
+					ddmFormFieldValue.
+						getNestedDDMFormFieldValuesReferencesMap());
 			}
 		}
 

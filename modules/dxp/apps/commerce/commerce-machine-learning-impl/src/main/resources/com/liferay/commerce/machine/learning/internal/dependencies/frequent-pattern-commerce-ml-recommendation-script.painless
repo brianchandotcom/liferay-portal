@@ -1,0 +1,7 @@
+def res = _score / (double)doc.antecedentIdsLength.value;
+
+res *= _score / params.cpInstanceIds.size();
+
+res *= doc.score.value;
+
+return res * 100.0;

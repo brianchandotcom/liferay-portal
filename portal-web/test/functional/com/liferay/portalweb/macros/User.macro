@@ -1580,6 +1580,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editUserAlertsAndAnnouncementsDeliveryCP {
+		UserNavigator.gotoAlertsAndAnnouncementsDelivery();
+
+		if ("${checkbox}" == "Enable") {
+			for (var deliveryOption : list "${deliveryOptions}") {
+				Check(
+					key_tableEntry = "${deliveryOption}",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			}
+		}
+
+		PortletEntry.save();
+	}
+
 	macro editUserAssetLibraryCP {
 		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 

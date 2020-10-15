@@ -181,6 +181,10 @@ public abstract class BaseCommerceMLRecommendationServiceImpl
 	protected List<T> toModelList(Hits hits) {
 		List<Document> documents = _getDocumentList(hits);
 
+		return toModelList(documents);
+	}
+
+	protected List<T> toModelList(List<Document> documents) {
 		Stream<Document> documentsStream = documents.stream();
 
 		return documentsStream.map(

@@ -19,6 +19,10 @@ package com.liferay.commerce.machine.learning.internal.recommendation.constants;
  */
 public class CommerceMLRecommendationField {
 
+	public static final String ANTECEDENT_IDS = "antecedentIds";
+
+	public static final String ANTECEDENT_IDS_LENGTH = "antecedentIdsLength";
+
 	public static final String JOB_ID = "jobId";
 
 	public static final String RANK = "rank";

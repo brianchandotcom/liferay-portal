@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -348,6 +350,42 @@ public class AccountRoleLocalServiceTest {
 		List<AccountRole> accountRoles = baseModelSearchResult.getBaseModels();
 
 		Assert.assertEquals(accountRole, accountRoles.get(0));
+	}
+
+	@Test
+	public void testSearchAccountRolesWithDefaultAccountEntryId()
+		throws Exception {
+
+		String keyword = RandomTestUtil.randomString();
+
+		AccountRole accountRoleA = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keyword, null, null);
+
+		Company companyB = CompanyTestUtil.addCompany();
+
+		User adminUserB = UserTestUtil.getAdminUser(companyB.getCompanyId());
+
+		AccountRole accountRoleB = _accountRoleLocalService.addAccountRole(
+			adminUserB.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			keyword, null, null);
+
+		for (AccountRole accountRole :
+				new AccountRole[] {accountRoleA, accountRoleB}) {
+
+			BaseModelSearchResult<AccountRole> baseModelSearchResult =
+				_accountRoleLocalService.searchAccountRoles(
+					accountRole.getCompanyId(),
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keyword,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Assert.assertEquals(1, baseModelSearchResult.getLength());
+
+			List<AccountRole> accountRoles =
+				baseModelSearchResult.getBaseModels();
+
+			Assert.assertEquals(accountRole, accountRoles.get(0));
+		}
 	}
 
 	@Test

@@ -16,27 +16,25 @@ package com.liferay.frontend.taglib.form.navigator.internal;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryUtil;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryConfigurationHelper;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryUtil;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
-
-import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -63,7 +61,7 @@ public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
 
 		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
 
-		String[] categoryKeys = FormNavigatorCategoryUtil.getKeys(
+		String[] categoryKeys = _formNavigatorCategoryUtil.getKeys(
 			formNavigatorId);
 
 		for (String categoryKey : categoryKeys) {
@@ -141,53 +139,25 @@ public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
 		return filteredFormNavigatorEntries;
 	}
 
-	@SuppressWarnings("rawtypes")
-	private FormNavigatorEntryImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_formNavigatorEntries = ServiceTrackerCollections.openMultiValueMap(
-			FormNavigatorEntry.class, null,
-			new ServiceReferenceMapper<String, FormNavigatorEntry>() {
-
-				@Override
-				public void map(
-					ServiceReference<FormNavigatorEntry> serviceReference,
-					Emitter<String> emitter) {
-
-					FormNavigatorEntry<?> formNavigatorEntry =
-						registry.getService(serviceReference);
-
-					emitter.emit(
-						_getKey(
-							formNavigatorEntry.getFormNavigatorId(),
-							formNavigatorEntry.getCategoryKey()));
-
-					registry.ungetService(serviceReference);
-				}
-
-			},
-			new PropertyServiceReferenceComparator<FormNavigatorEntry>(
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_formNavigatorEntries = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, FormNavigatorEntry.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(formNavigatorEntry, emitter) -> emitter.emit(
+					_getKey(
+						formNavigatorEntry.getFormNavigatorId(),
+						formNavigatorEntry.getCategoryKey()))),
+			new PropertyServiceReferenceComparator<>(
 				"form.navigator.entry.order"));
-
-		_serviceTracker = registry.trackServices(
-			FormNavigatorEntryConfigurationHelper.class);
-
-		_serviceTracker.open();
 	}
 
 	private <T> Optional<List<FormNavigatorEntry<T>>>
 		_getConfigurationFormNavigatorEntries(
 			String formNavigatorId, String categoryKey, T formModelBean) {
 
-		FormNavigatorEntryConfigurationHelper
-			formNavigatorEntryConfigurationHelper =
-				_formNavigatorEntryUtil._serviceTracker.getService();
-
-		if (formNavigatorEntryConfigurationHelper == null) {
-			return Optional.empty();
-		}
-
-		return formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
+		return _formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
 			formNavigatorId, categoryKey, formModelBean);
 	}
 
@@ -202,7 +172,7 @@ public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
 			return formNavigationEntriesOptional.get();
 		}
 
-		return (List)_formNavigatorEntryUtil._formNavigatorEntries.getService(
+		return (List)_formNavigatorEntries.getService(
 			_getKey(formNavigatorId, categoryKey));
 	}
 
@@ -210,69 +180,14 @@ public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
 		return formNavigatorId + StringPool.PERIOD + categoryKey;
 	}
 
-	private static final FormNavigatorEntryImpl _formNavigatorEntryUtil =
-		new FormNavigatorEntryImpl();
+	@Reference
+	private FormNavigatorCategoryUtil _formNavigatorCategoryUtil;
 
-	@SuppressWarnings("rawtypes")
-	private final ServiceTrackerMap<String, List<FormNavigatorEntry>>
+	private ServiceTrackerMap<String, List<FormNavigatorEntry>>
 		_formNavigatorEntries;
 
-	private final ServiceTracker
-		<FormNavigatorEntryConfigurationHelper,
-		 FormNavigatorEntryConfigurationHelper> _serviceTracker;
-
-	/**
-	 * @see com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator
-	 */
-	private class PropertyServiceReferenceComparator<T>
-		implements Comparator<ServiceReference<T>>, Serializable {
-
-		public PropertyServiceReferenceComparator(String propertyKey) {
-			_propertyKey = propertyKey;
-		}
-
-		@Override
-		public int compare(
-			ServiceReference<T> serviceReference1,
-			ServiceReference<T> serviceReference2) {
-
-			if (serviceReference1 == null) {
-				if (serviceReference2 == null) {
-					return 0;
-				}
-
-				return 1;
-			}
-			else if (serviceReference2 == null) {
-				return -1;
-			}
-
-			Object propertyValue1 = serviceReference1.getProperty(_propertyKey);
-			Object propertyValue2 = serviceReference2.getProperty(_propertyKey);
-
-			if (propertyValue1 == null) {
-				if (propertyValue2 == null) {
-					return 0;
-				}
-
-				return 1;
-			}
-			else if (propertyValue2 == null) {
-				return -1;
-			}
-
-			if (!(propertyValue2 instanceof Comparable)) {
-				return serviceReference2.compareTo(serviceReference1);
-			}
-
-			Comparable<Object> propertyValueComparable2 =
-				(Comparable<Object>)propertyValue2;
-
-			return propertyValueComparable2.compareTo(propertyValue1);
-		}
-
-		private final String _propertyKey;
-
-	}
+	@Reference
+	private FormNavigatorEntryConfigurationHelper
+		_formNavigatorEntryConfigurationHelper;
 
 }

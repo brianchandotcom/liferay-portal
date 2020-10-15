@@ -1707,6 +1707,16 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 		}
+
+		if (isSet(displayPageTemplateDisabled)) {
+			Portlet.waitForForm();
+
+			var key_panel = "Display Page Template";
+
+			AssertElementNotPresent(locator1 = "Panel#PANEL_COLLAPSED");
+
+			AssertElementNotPresent(locator1 = "Panel#PANEL_EXPANDED");
+		}
 	}
 
 	macro viewCPWithoutContentField {

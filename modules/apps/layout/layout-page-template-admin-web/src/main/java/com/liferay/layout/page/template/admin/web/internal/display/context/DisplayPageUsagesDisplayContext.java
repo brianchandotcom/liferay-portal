@@ -151,9 +151,6 @@ public class DisplayPageUsagesDisplayContext {
 				_renderRequest, getPortletURL(), null,
 				"there-are-no-display-page-template-usages");
 
-		searchContainer.setId(
-			"assetDisplayPageEntries" + getLayoutPageTemplateEntryId());
-
 		boolean orderByAsc = false;
 
 		String orderByType = getOrderByType();

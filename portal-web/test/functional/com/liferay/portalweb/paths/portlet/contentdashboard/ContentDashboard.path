@@ -78,6 +78,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_BY_STATUS_APPROVED_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Approved')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_BY_TAG_OPTION</td>
 	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Tags')]</td>
 	<td></td>

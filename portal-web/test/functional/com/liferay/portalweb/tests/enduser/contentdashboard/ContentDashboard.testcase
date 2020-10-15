@@ -155,6 +155,34 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
+	@description = "Validate if the user can filter by Status: Approved"
+	@priority = "5"
+	test ContentDashboardFilterByStatusApproved {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.filterByStatusApproved();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_TAGS",
+			value1 = "WC Title");
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title");
+	}
+
 	@description = "Validate if the user can filter by tag"
 	@priority = "5"
 	test ContentDashboardFilterByTag {

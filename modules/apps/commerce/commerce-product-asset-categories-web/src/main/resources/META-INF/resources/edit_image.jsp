@@ -40,10 +40,9 @@ renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(reque
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<div class="lfr-form-content">
-		<liferay-ui:form-navigator
+		<liferay-frontend:form-navigator
 			formModelBean="<%= cpAttachmentFileEntry %>"
 			id="<%= CategoryCPAttachmentFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_CP_ATTACHMENT_FILE_ENTRY %>"
-			markupView="lexicon"
 			showButtons="<%= false %>"
 		/>
 	</div>

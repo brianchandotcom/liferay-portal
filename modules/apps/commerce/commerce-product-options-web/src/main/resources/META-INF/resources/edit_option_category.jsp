@@ -47,11 +47,10 @@ else {
 	<aui:input name="cpOptionCategoryId" type="hidden" value="<%= String.valueOf(cpOptionCategoryId) %>" />
 
 	<div class="lfr-form-content">
-		<liferay-ui:form-navigator
+		<liferay-frontend:form-navigator
 			backURL="<%= redirect %>"
 			formModelBean="<%= cpOptionCategory %>"
 			id="<%= CPOptionCategoryFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION_CATEGORY %>"
-			markupView="lexicon"
 		/>
 	</div>
 </aui:form>

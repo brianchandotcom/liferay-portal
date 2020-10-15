@@ -47,11 +47,10 @@ else {
 	<aui:input name="cpSpecificationOptionId" type="hidden" value="<%= String.valueOf(cpSpecificationOptionId) %>" />
 
 	<div class="lfr-form-content">
-		<liferay-ui:form-navigator
+		<liferay-frontend:form-navigator
 			backURL="<%= redirect %>"
 			formModelBean="<%= cpSpecificationOption %>"
 			id="<%= CPSpecificationOptionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_SPECIFICATION_OPTION %>"
-			markupView="lexicon"
 		/>
 	</div>
 </aui:form>

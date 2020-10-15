@@ -44,11 +44,10 @@ long commercePriceListId = commercePriceListDisplayContext.getCommercePriceListI
 	</c:if>
 
 	<div class="lfr-form-content">
-		<liferay-ui:form-navigator
+		<liferay-frontend:form-navigator
 			backURL="<%= priceListsURL %>"
 			formModelBean="<%= commercePriceList %>"
 			id="<%= CommercePriceListFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRICE_LIST %>"
-			markupView="lexicon"
 			showButtons="<%= false %>"
 		/>
 

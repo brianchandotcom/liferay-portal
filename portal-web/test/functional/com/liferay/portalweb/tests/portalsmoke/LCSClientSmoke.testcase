@@ -31,6 +31,7 @@ definition {
 	}
 
 	@description = "Ensure that LCS token is successfully deployed and LCS Client successfully connects to LCS server"
+	@ignore = "true"
 	@priority = "5"
 	test LCSClientSmoke {
 		Pause(locator1 = "60000");

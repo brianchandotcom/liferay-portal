@@ -184,21 +184,24 @@ public class AccountRoleLocalServiceImpl
 		OrderByComparator<?> orderByComparator) {
 
 		DynamicQuery roleDynamicQuery = _getRoleDynamicQuery(
-			accountEntryIds, keywords, orderByComparator);
+			CompanyThreadLocal.getCompanyId(), accountEntryIds, keywords,
+			orderByComparator);
 
 		if (roleDynamicQuery == null) {
 			return new BaseModelSearchResult<>(
 				Collections.<AccountRole>emptyList(), 0);
 		}
 
-		List<AccountRole> accountRoles = TransformUtil.transform(
-			roleLocalService.<Role>dynamicQuery(roleDynamicQuery, start, end),
-			userGroupRole -> getAccountRoleByRoleId(userGroupRole.getRoleId()));
-
 		return new BaseModelSearchResult<>(
-			accountRoles,
+			TransformUtil.transform(
+				roleLocalService.<Role>dynamicQuery(
+					roleDynamicQuery, start, end),
+				userGroupRole -> getAccountRoleByRoleId(
+					userGroupRole.getRoleId())),
 			(int)roleLocalService.dynamicQueryCount(
-				_getRoleDynamicQuery(accountEntryIds, keywords, null)));
+				_getRoleDynamicQuery(
+					CompanyThreadLocal.getCompanyId(), accountEntryIds,
+					keywords, null)));
 	}
 
 	@Override
@@ -217,7 +220,7 @@ public class AccountRoleLocalServiceImpl
 	}
 
 	private DynamicQuery _getRoleDynamicQuery(
-		long[] accountEntryIds, String keywords,
+		long companyId, long[] accountEntryIds, String keywords,
 		OrderByComparator<?> orderByComparator) {
 
 		DynamicQuery accountRoleDynamicQuery =
@@ -226,6 +229,8 @@ public class AccountRoleLocalServiceImpl
 		accountRoleDynamicQuery.add(
 			RestrictionsFactoryUtil.in(
 				"accountEntryId", ListUtil.fromArray(accountEntryIds)));
+		accountRoleDynamicQuery.add(
+			RestrictionsFactoryUtil.eq("companyId", companyId));
 		accountRoleDynamicQuery.setProjection(
 			ProjectionFactoryUtil.property("roleId"));
 

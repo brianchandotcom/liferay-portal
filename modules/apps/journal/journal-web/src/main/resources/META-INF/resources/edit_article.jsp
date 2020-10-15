@@ -150,7 +150,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 				<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
 
 				<liferay-ui:error exception="<%= ArticleTitleException.class %>">
-					<liferay-ui:message arguments="<%= LocaleUtil.toW3cLanguageId(journalEditArticleDisplayContext.getDefaultArticleLanguageId()) %>" key="please-enter-a-valid-title-for-language-code-x" />
+					<liferay-ui:message arguments="<%= LocaleUtil.toW3cLanguageId(journalEditArticleDisplayContext.getDefaultArticleLanguageId()) %>" key="please-enter-a-valid-title-for-default-language-x" />
 				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= ArticleTitleException.MustNotExceedMaximumLength.class %>">

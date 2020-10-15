@@ -124,6 +124,7 @@ definition {
 	macro saveNewVersionedApp {
 		AppBuilderWorkflow.clickSaveButton();
 		AppBuilderWorkflow.clickSaveButtonFromSaveAppModal();
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Save");
 	}
 
 	macro selectActionsCard {

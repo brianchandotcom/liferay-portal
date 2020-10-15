@@ -823,7 +823,7 @@ definition {
 			formViewName = "My Form View 1",
 			isCreatingViaPlusIcon = "false",
 			objectName = "my custom object",
-			tableViewName = "My Table View 1",
+			tableViewName = "My Table View",
 			workflowAppName = "My Workflow App");
 
 		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");

@@ -155,6 +155,52 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
+	@description = "Validate if the user can filter by Status: Any"
+	@priority = "5"
+	test ContentDashboardFilterByStatusAny {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title Approved");
+		
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC Title Draft",
+			workflowAction = "DRAFT");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.filterByStatusAny();
+
+		ContentDashboard.searchValue(webContentTitle = "WC Title Approved");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title Approved");
+		
+		ContentDashboard.searchValue(webContentTitle = "WC Title Draft");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title Draft");
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title Approved");
+		
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title Draft");
+	}
+
 	@description = "Validate if the user can filter by Status: Approved"
 	@priority = "5"
 	test ContentDashboardFilterByStatusApproved {

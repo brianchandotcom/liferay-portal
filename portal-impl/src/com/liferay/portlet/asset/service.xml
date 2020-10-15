@@ -31,10 +31,6 @@
 		<column name="vocabularyId" type="long" />
 		<column name="lastPublishDate" type="Date" />
 
-		<!-- Relationships -->
-
-		<column entity="AssetEntry" mapping-table="AssetEntries_AssetCategories" name="entries" type="Collection" />
-
 		<!-- Order -->
 
 		<order by="asc">
@@ -98,7 +94,6 @@
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetVocabulary" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity deprecated="true" local-service="true" name="AssetCategoryProperty" remote-service="true">
@@ -186,7 +181,6 @@
 
 		<!-- Relationships -->
 
-		<column entity="AssetCategory" mapping-table="AssetEntries_AssetCategories" name="categories" type="Collection" />
 		<column entity="AssetTag" mapping-table="AssetEntries_AssetTags" name="tags" type="Collection" />
 
 		<!-- Finder methods -->

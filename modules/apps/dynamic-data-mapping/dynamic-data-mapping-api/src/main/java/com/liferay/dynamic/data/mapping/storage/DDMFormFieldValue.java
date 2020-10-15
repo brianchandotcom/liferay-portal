@@ -80,6 +80,10 @@ public class DDMFormFieldValue implements Serializable {
 		return _ddmFormValues;
 	}
 
+	public String getFieldReference() {
+		return _fieldReference;
+	}
+
 	public String getInstanceId() {
 		return _instanceId;
 	}
@@ -149,6 +153,10 @@ public class DDMFormFieldValue implements Serializable {
 		_ddmFormValues = ddmFormValues;
 	}
 
+	public void setFieldReference(String fieldReference) {
+		_fieldReference = fieldReference;
+	}
+
 	public void setInstanceId(String instanceId) {
 		_instanceId = instanceId;
 	}
@@ -168,6 +176,7 @@ public class DDMFormFieldValue implements Serializable {
 	}
 
 	private DDMFormValues _ddmFormValues;
+	private String _fieldReference;
 	private String _instanceId = StringUtil.randomString();
 	private String _name;
 	private List<DDMFormFieldValue> _nestedDDMFormFieldValues =

@@ -34,10 +34,12 @@ const optionsValue = {
 	[themeDisplay.getLanguageId()]: [
 		{
 			label: 'Option 1',
+			reference: 'Option1',
 			value: 'Option1',
 		},
 		{
 			label: 'Option 2',
+			reference: 'Option2',
 			value: 'Option2',
 		},
 	],
@@ -551,5 +553,32 @@ describe('Options', () => {
 		options = container.querySelectorAll('.ddm-field-options');
 
 		expect(options.length).toEqual(2);
+	});
+
+	it('checks if the initial value of the option reference matches the option value', () => {
+		mockLiferayLanguage();
+
+		const {container} = render(
+			<OptionsWithProvider
+				name="options"
+				showKeyword={true}
+				spritemap={spritemap}
+				value={optionsValue}
+			/>
+		);
+
+		const referenceInputs = container.querySelectorAll(
+			'.key-value-reference-input'
+		);
+
+		expect(referenceInputs[2].value).toEqual(
+			expect.stringMatching(DEFAULT_OPTION_NAME_REGEX)
+		);
+
+		const valueInputs = container.querySelectorAll('.key-value-input');
+
+		expect(referenceInputs[2].value).toBe(valueInputs[2].value);
+
+		unmockLiferayLanguage();
 	});
 });

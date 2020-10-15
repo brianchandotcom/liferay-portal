@@ -33,7 +33,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -1109,15 +1108,6 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
-		FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
-			FlashMagicBytesUtil.check(inputStream);
-
-		if (flashMagicBytesUtilResult.isFlash()) {
-			fileName = FileUtil.stripExtension(fileName) + ".swf";
-		}
-
-		inputStream = flashMagicBytesUtilResult.getInputStream();
-
 		// Determine proper content type
 
 		String contentType = null;
@@ -1257,20 +1247,10 @@ public class WebServerServlet extends HttpServlet {
 				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 		}
 		else {
-			InputStream inputStream = fileEntry.getContentStream();
-
-			FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
-				FlashMagicBytesUtil.check(inputStream);
-
-			inputStream = flashMagicBytesUtilResult.getInputStream();
-
-			if (flashMagicBytesUtilResult.isFlash()) {
-				fileName = FileUtil.stripExtension(fileName) + ".swf";
-			}
-
 			ServletResponseUtil.sendFile(
-				httpServletRequest, httpServletResponse, fileName, inputStream,
-				fileEntry.getSize(), fileEntry.getMimeType());
+				httpServletRequest, httpServletResponse, fileName,
+				fileEntry.getContentStream(), fileEntry.getSize(),
+				fileEntry.getMimeType());
 		}
 	}
 

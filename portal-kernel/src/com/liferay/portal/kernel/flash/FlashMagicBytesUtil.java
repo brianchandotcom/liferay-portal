@@ -23,7 +23,9 @@ import java.io.PushbackInputStream;
 /**
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class FlashMagicBytesUtil {
 
 	public static Result check(InputStream inputStream) throws IOException {

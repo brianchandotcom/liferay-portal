@@ -16,14 +16,12 @@ package com.liferay.wiki.web.internal.struts;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -32,8 +30,6 @@ import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.internal.importer.MediaWikiImporter;
-
-import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -121,20 +117,10 @@ public class GetPageAttachmentStrutsAction implements StrutsAction {
 			fileName = _trashHelper.getOriginalTitle(fileEntry.getTitle());
 		}
 
-		InputStream inputStream = fileEntry.getContentStream();
-
-		FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
-			FlashMagicBytesUtil.check(inputStream);
-
-		if (flashMagicBytesUtilResult.isFlash()) {
-			fileName = FileUtil.stripExtension(fileName) + ".swf";
-		}
-
-		inputStream = flashMagicBytesUtilResult.getInputStream();
-
 		ServletResponseUtil.sendFile(
-			httpServletRequest, httpServletResponse, fileName, inputStream,
-			fileEntry.getSize(), fileEntry.getMimeType());
+			httpServletRequest, httpServletResponse, fileName,
+			fileEntry.getContentStream(), fileEntry.getSize(),
+			fileEntry.getMimeType());
 	}
 
 	@Reference(unbind = "-")

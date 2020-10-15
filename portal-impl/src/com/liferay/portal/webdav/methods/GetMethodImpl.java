@@ -14,11 +14,9 @@
 
 package com.liferay.portal.webdav.methods;
 
-import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
@@ -57,15 +55,6 @@ public class GetMethodImpl implements Method {
 
 			if (inputStream != null) {
 				String fileName = resource.getDisplayName();
-
-				FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
-					FlashMagicBytesUtil.check(inputStream);
-
-				if (flashMagicBytesUtilResult.isFlash()) {
-					fileName = FileUtil.stripExtension(fileName) + ".swf";
-				}
-
-				inputStream = flashMagicBytesUtilResult.getInputStream();
 
 				try {
 					ServletResponseUtil.sendFileWithRangeHeader(

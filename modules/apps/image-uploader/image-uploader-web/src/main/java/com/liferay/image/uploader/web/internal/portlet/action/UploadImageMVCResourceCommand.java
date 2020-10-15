@@ -17,7 +17,6 @@ package com.liferay.image.uploader.web.internal.portlet.action;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.image.uploader.web.internal.constants.ImageUploaderPortletKeys;
 import com.liferay.image.uploader.web.internal.util.UploadImageUtil;
-import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -63,16 +62,8 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 				FileEntry tempFileEntry = UploadImageUtil.getTempImageFileEntry(
 					resourceRequest);
 
-				FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
-					FlashMagicBytesUtil.check(tempFileEntry.getContentStream());
-
-				if (flashMagicBytesUtilResult.isFlash()) {
-					return;
-				}
-
 				serveTempImageFile(
-					resourceResponse,
-					flashMagicBytesUtilResult.getInputStream());
+					resourceResponse, tempFileEntry.getContentStream());
 			}
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {

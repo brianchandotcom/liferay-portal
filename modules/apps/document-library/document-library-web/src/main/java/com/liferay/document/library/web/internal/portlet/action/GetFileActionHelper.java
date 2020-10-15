@@ -24,7 +24,6 @@ import com.liferay.document.library.web.internal.security.permission.resource.DL
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -223,15 +222,6 @@ public class GetFileActionHelper {
 				contentType = MimeTypesUtil.getContentType(fileName);
 			}
 		}
-
-		FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
-			FlashMagicBytesUtil.check(inputStream);
-
-		if (flashMagicBytesUtilResult.isFlash()) {
-			fileName = FileUtil.stripExtension(fileName) + ".swf";
-		}
-
-		inputStream = flashMagicBytesUtilResult.getInputStream();
 
 		ServletResponseUtil.sendFile(
 			httpServletRequest, httpServletResponse, fileName, inputStream,

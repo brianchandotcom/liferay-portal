@@ -148,7 +148,7 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 	}
 
 	private static final String[] _PARAMS = {
-		"RelayState", "SAMLRequest", "SAMLResponse"
+		"entityId", "RelayState", "SAMLRequest", "SAMLResponse"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

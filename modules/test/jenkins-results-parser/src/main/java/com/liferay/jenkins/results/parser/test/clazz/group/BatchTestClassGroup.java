@@ -99,12 +99,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public int getSegmentCount() {
-		return (int)Math.ceil(
-			(double)getAxisCount() / _getSegmentMaxChildren());
+		return (int)Math.ceil((double)getAxisCount() / getSegmentMaxChildren());
 	}
 
 	public SegmentTestClassGroup getSegmentTestClassGroup(int segmentId) {
-		return _segmentTestClassGroups.get(segmentId);
+		return segmentTestClassGroups.get(segmentId);
 	}
 
 	public static class BatchTestClass extends BaseTestClass {
@@ -399,6 +398,19 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return _getRequiredModuleDirs(moduleDirs, new ArrayList<>(moduleDirs));
 	}
 
+	protected int getSegmentMaxChildren() {
+		String segmentMaxChildren = getFirstPropertyValue(
+			"test.batch.segment.max.children");
+
+		if ((segmentMaxChildren == null) ||
+			!segmentMaxChildren.matches("\\d+")) {
+
+			return _SEGMENT_MAX_CHILDREN_DEFAULT;
+		}
+
+		return Integer.valueOf(segmentMaxChildren);
+	}
+
 	protected boolean isIntegrationUnitTestFileModifiedOnly() {
 		List<PathMatcher> relevantIntegrationUnitIncludePathMatchers =
 			getRelevantIntegrationUnitIncludePathMatchers();
@@ -458,7 +470,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return;
 		}
 
-		if (!_segmentTestClassGroups.isEmpty()) {
+		if (!segmentTestClassGroups.isEmpty()) {
 			return;
 		}
 
@@ -479,7 +491,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				segmentTestClassGroup.addAxisTestClassGroup(axisTestClassGroup);
 			}
 
-			_segmentTestClassGroups.add(segmentTestClassGroup);
+			segmentTestClassGroups.add(segmentTestClassGroup);
 		}
 	}
 
@@ -494,6 +506,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected boolean includeStableTestSuite;
 	protected final Properties jobProperties;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
+	protected final List<SegmentTestClassGroup> segmentTestClassGroups =
+		new ArrayList<>();
 	protected List<String> stableTestSuiteBatchNames = new ArrayList<>();
 	protected boolean testPrivatePortalBranch;
 	protected boolean testReleaseBundle;
@@ -601,19 +615,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return Lists.newArrayList(requiredModuleDirs);
 	}
 
-	private int _getSegmentMaxChildren() {
-		String segmentMaxChildren = getFirstPropertyValue(
-			"test.batch.segment.max.children");
-
-		if ((segmentMaxChildren == null) ||
-			!segmentMaxChildren.matches("\\d+")) {
-
-			return _SEGMENT_MAX_CHILDREN_DEFAULT;
-		}
-
-		return Integer.valueOf(segmentMaxChildren);
-	}
-
 	private boolean _isSegmentEnabled() {
 		String segmentEnabled = getFirstPropertyValue(
 			"test.batch.segment.enabled");
@@ -670,8 +671,5 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private static final boolean _ENABLE_TEST_RELEVANT_CHANGES_DEFAULT = false;
 
 	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;
-
-	private final List<SegmentTestClassGroup> _segmentTestClassGroups =
-		new ArrayList<>();
 
 }

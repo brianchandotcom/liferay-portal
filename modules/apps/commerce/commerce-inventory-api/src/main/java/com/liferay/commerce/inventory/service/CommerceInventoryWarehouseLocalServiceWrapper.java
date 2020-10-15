@@ -55,6 +55,14 @@ public class CommerceInventoryWarehouseLocalServiceWrapper
 			addCommerceInventoryWarehouse(commerceInventoryWarehouse);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommerceInventoryWarehouse(String,
+	 String, String, String, boolean, String, String, String,
+	 String, String, String, String, double, double,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
 			addCommerceInventoryWarehouse(
@@ -70,6 +78,23 @@ public class CommerceInventoryWarehouseLocalServiceWrapper
 				name, description, active, street1, street2, street3, city, zip,
 				commerceRegionCode, commerceCountryCode, latitude, longitude,
 				externalReferenceCode, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
+			addCommerceInventoryWarehouse(
+				String externalReferenceCode, String name, String description,
+				boolean active, String street1, String street2, String street3,
+				String city, String zip, String commerceRegionCode,
+				String commerceCountryCode, double latitude, double longitude,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseLocalService.
+			addCommerceInventoryWarehouse(
+				externalReferenceCode, name, description, active, street1,
+				street2, street3, city, zip, commerceRegionCode,
+				commerceCountryCode, latitude, longitude, serviceContext);
 	}
 
 	/**

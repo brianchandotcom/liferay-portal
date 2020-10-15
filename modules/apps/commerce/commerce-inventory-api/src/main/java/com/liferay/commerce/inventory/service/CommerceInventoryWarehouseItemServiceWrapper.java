@@ -47,6 +47,12 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 				userId, commerceInventoryWarehouseId, sku, quantity);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommerceInventoryWarehouseItem(String,
+	 long, long, String, int)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 			addCommerceInventoryWarehouseItem(
@@ -57,6 +63,19 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 		return _commerceInventoryWarehouseItemService.
 			addCommerceInventoryWarehouseItem(
 				userId, commerceInventoryWarehouseId, externalReferenceCode,
+				sku, quantity);
+	}
+
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+			addCommerceInventoryWarehouseItem(
+				String externalReferenceCode, long userId,
+				long commerceInventoryWarehouseId, String sku, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseItemService.
+			addCommerceInventoryWarehouseItem(
+				externalReferenceCode, userId, commerceInventoryWarehouseId,
 				sku, quantity);
 	}
 
@@ -111,6 +130,12 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 			getCommerceInventoryWarehouseItem(commerceInventoryWarehouseItemId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getCommerceInventoryWarehouseItemByReferenceCode(String,
+	 long)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 			getCommerceInventoryWarehouseItemByReferenceCode(
@@ -120,6 +145,17 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 		return _commerceInventoryWarehouseItemService.
 			getCommerceInventoryWarehouseItemByReferenceCode(
 				companyId, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+			getCommerceInventoryWarehouseItemByReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseItemService.
+			getCommerceInventoryWarehouseItemByReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -278,6 +314,12 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 				commerceInventoryWarehouseItemId, quantity, mvccVersion);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommerceInventoryWarehouseItem(String,
+	 long, long, long, String, int)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 			upsertCommerceInventoryWarehouseItem(
@@ -301,6 +343,19 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 		return _commerceInventoryWarehouseItemService.
 			upsertCommerceInventoryWarehouseItem(
 				userId, commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+			upsertCommerceInventoryWarehouseItem(
+				String externalReferenceCode, long companyId, long userId,
+				long commerceInventoryWarehouseId, String sku, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseItemService.
+			upsertCommerceInventoryWarehouseItem(
+				externalReferenceCode, companyId, userId,
+				commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	@Override

@@ -63,6 +63,13 @@ import java.rmi.RemoteException;
 @Deprecated
 public class CommerceInventoryWarehouseServiceSoap {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommerceInventoryWarehouse(String, String, String,
+	 boolean, String, String, String, String, String, String,
+	 String, double, double, serviceContext)}
+	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseSoap
 				addCommerceInventoryWarehouse(
@@ -97,6 +104,38 @@ public class CommerceInventoryWarehouseServiceSoap {
 
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseSoap
+				addCommerceInventoryWarehouse(
+					String externalReferenceCode, String name,
+					String description, boolean active, String street1,
+					String street2, String street3, String city, String zip,
+					String commerceRegionCode, String commerceCountryCode,
+					double latitude, double longitude,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
+				returnValue =
+					CommerceInventoryWarehouseServiceUtil.
+						addCommerceInventoryWarehouse(
+							externalReferenceCode, name, description, active,
+							street1, street2, street3, city, zip,
+							commerceRegionCode, commerceCountryCode, latitude,
+							longitude, serviceContext);
+
+			return com.liferay.commerce.inventory.model.
+				CommerceInventoryWarehouseSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseSoap
 				deleteCommerceInventoryWarehouse(
 					long commerceInventoryWarehouseId)
 			throws RemoteException {
@@ -118,6 +157,11 @@ public class CommerceInventoryWarehouseServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #fetchByExternalReferenceCode(String, long)}
+	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseSoap
 				fetchByExternalReferenceCode(
@@ -130,6 +174,29 @@ public class CommerceInventoryWarehouseServiceSoap {
 					CommerceInventoryWarehouseServiceUtil.
 						fetchByExternalReferenceCode(
 							companyId, externalReferenceCode);
+
+			return com.liferay.commerce.inventory.model.
+				CommerceInventoryWarehouseSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseSoap
+				fetchByExternalReferenceCode(
+					String externalReferenceCode, long companyId)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
+				returnValue =
+					CommerceInventoryWarehouseServiceUtil.
+						fetchByExternalReferenceCode(
+							externalReferenceCode, companyId);
 
 			return com.liferay.commerce.inventory.model.
 				CommerceInventoryWarehouseSoap.toSoapModel(returnValue);

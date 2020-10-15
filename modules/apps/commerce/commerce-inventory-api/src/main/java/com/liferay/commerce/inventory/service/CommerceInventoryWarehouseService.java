@@ -63,6 +63,14 @@ public interface CommerceInventoryWarehouseService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce inventory warehouse remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceInventoryWarehouseServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommerceInventoryWarehouse(String, String, String,
+	 boolean, String, String, String, String, String, String,
+	 String, double, double, serviceContext)}
+	 */
+	@Deprecated
 	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
 			String name, String description, boolean active, String street1,
 			String street2, String street3, String city, String zip,
@@ -71,13 +79,31 @@ public interface CommerceInventoryWarehouseService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
+			String externalReferenceCode, String name, String description,
+			boolean active, String street1, String street2, String street3,
+			String city, String zip, String commerceRegionCode,
+			String commerceCountryCode, double latitude, double longitude,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public CommerceInventoryWarehouse deleteCommerceInventoryWarehouse(
 			long commerceInventoryWarehouseId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #fetchByExternalReferenceCode(String, long)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceInventoryWarehouse fetchByExternalReferenceCode(
 			long companyId, String externalReferenceCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceInventoryWarehouse fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	public CommerceInventoryWarehouse geolocateCommerceInventoryWarehouse(

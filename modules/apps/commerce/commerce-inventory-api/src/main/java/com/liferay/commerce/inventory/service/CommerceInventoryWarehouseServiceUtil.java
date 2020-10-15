@@ -37,6 +37,14 @@ public class CommerceInventoryWarehouseServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommerceInventoryWarehouse(String, String, String,
+	 boolean, String, String, String, String, String, String,
+	 String, double, double, serviceContext)}
+	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
 				addCommerceInventoryWarehouse(
@@ -57,6 +65,24 @@ public class CommerceInventoryWarehouseServiceUtil {
 
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
+				addCommerceInventoryWarehouse(
+					String externalReferenceCode, String name,
+					String description, boolean active, String street1,
+					String street2, String street3, String city, String zip,
+					String commerceRegionCode, String commerceCountryCode,
+					double latitude, double longitude,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceInventoryWarehouse(
+			externalReferenceCode, name, description, active, street1, street2,
+			street3, city, zip, commerceRegionCode, commerceCountryCode,
+			latitude, longitude, serviceContext);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
 				deleteCommerceInventoryWarehouse(
 					long commerceInventoryWarehouseId)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -65,6 +91,11 @@ public class CommerceInventoryWarehouseServiceUtil {
 			commerceInventoryWarehouseId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #fetchByExternalReferenceCode(String, long)}
+	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
 				fetchByExternalReferenceCode(
@@ -73,6 +104,16 @@ public class CommerceInventoryWarehouseServiceUtil {
 
 		return getService().fetchByExternalReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
+				fetchByExternalReferenceCode(
+					String externalReferenceCode, long companyId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static

@@ -80,12 +80,29 @@ public interface CommerceInventoryWarehouseLocalService
 	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
 		CommerceInventoryWarehouse commerceInventoryWarehouse);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommerceInventoryWarehouse(String,
+	 String, String, String, boolean, String, String, String,
+	 String, String, String, String, double, double,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
 			String name, String description, boolean active, String street1,
 			String street2, String street3, String city, String zip,
 			String commerceRegionCode, String commerceCountryCode,
 			double latitude, double longitude, String externalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
+			String externalReferenceCode, String name, String description,
+			boolean active, String street1, String street2, String street3,
+			String city, String zip, String commerceRegionCode,
+			String commerceCountryCode, double latitude, double longitude,
 			ServiceContext serviceContext)
 		throws PortalException;
 

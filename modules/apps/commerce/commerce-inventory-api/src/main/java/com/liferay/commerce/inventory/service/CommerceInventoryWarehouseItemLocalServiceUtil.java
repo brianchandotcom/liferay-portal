@@ -70,6 +70,12 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 			userId, commerceInventoryWarehouseId, sku, quantity);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommerceInventoryWarehouseItem(String, long, long,
+	 String, int)}
+	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 				addCommerceInventoryWarehouseItem(
@@ -79,6 +85,18 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 
 		return getService().addCommerceInventoryWarehouseItem(
 			userId, commerceInventoryWarehouseId, externalReferenceCode, sku,
+			quantity);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+				addCommerceInventoryWarehouseItem(
+					String externalReferenceCode, long userId,
+					long commerceInventoryWarehouseId, String sku, int quantity)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommerceInventoryWarehouseItem(
+			externalReferenceCode, userId, commerceInventoryWarehouseId, sku,
 			quantity);
 	}
 
@@ -332,6 +350,12 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 			commerceInventoryWarehouseItemId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getCommerceInventoryWarehouseItemByReferenceCode(String,
+	 long)}
+	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 				getCommerceInventoryWarehouseItemByReferenceCode(
@@ -340,6 +364,16 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 
 		return getService().getCommerceInventoryWarehouseItemByReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+				getCommerceInventoryWarehouseItemByReferenceCode(
+					String externalReferenceCode, long companyId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommerceInventoryWarehouseItemByReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -553,6 +587,12 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 			userId, commerceInventoryWarehouseItemId, quantity, mvccVersion);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommerceInventoryWarehouseItem(String,
+	 long, long, long, String, int)}
+	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 				upsertCommerceInventoryWarehouseItem(
@@ -575,6 +615,18 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 
 		return getService().upsertCommerceInventoryWarehouseItem(
 			userId, commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+				upsertCommerceInventoryWarehouseItem(
+					String externalReferenceCode, long companyId, long userId,
+					long commerceInventoryWarehouseId, String sku, int quantity)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().upsertCommerceInventoryWarehouseItem(
+			externalReferenceCode, companyId, userId,
+			commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	public static CommerceInventoryWarehouseItemLocalService getService() {

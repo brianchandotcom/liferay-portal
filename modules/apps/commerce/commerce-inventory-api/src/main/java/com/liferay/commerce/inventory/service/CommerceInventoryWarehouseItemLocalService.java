@@ -83,9 +83,20 @@ public interface CommerceInventoryWarehouseItemLocalService
 			int quantity)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommerceInventoryWarehouseItem(String, long, long,
+	 String, int)}
+	 */
+	@Deprecated
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			long userId, long commerceInventoryWarehouseId,
 			String externalReferenceCode, String sku, int quantity)
+		throws PortalException;
+
+	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
+			String externalReferenceCode, long userId,
+			long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException;
 
 	public int countItemsByCompanyId(long companyId, String sku);
@@ -256,10 +267,22 @@ public interface CommerceInventoryWarehouseItemLocalService
 			long commerceInventoryWarehouseItemId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getCommerceInventoryWarehouseItemByReferenceCode(String,
+	 long)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceInventoryWarehouseItem
 			getCommerceInventoryWarehouseItemByReferenceCode(
 				long companyId, String externalReferenceCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceInventoryWarehouseItem
+			getCommerceInventoryWarehouseItemByReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**
@@ -393,6 +416,12 @@ public interface CommerceInventoryWarehouseItemLocalService
 			long mvccVersion)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommerceInventoryWarehouseItem(String,
+	 long, long, long, String, int)}
+	 */
+	@Deprecated
 	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
 			long companyId, long userId, long commerceInventoryWarehouseId,
 			String externalReferenceCode, String sku, int quantity)
@@ -401,6 +430,11 @@ public interface CommerceInventoryWarehouseItemLocalService
 	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
 			long userId, long commerceInventoryWarehouseId, String sku,
 			int quantity)
+		throws PortalException;
+
+	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
+			String externalReferenceCode, long companyId, long userId,
+			long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException;
 
 }

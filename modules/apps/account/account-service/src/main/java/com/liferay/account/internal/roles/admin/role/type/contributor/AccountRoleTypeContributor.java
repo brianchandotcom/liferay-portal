@@ -118,8 +118,8 @@ public class AccountRoleTypeContributor implements RoleTypeContributor {
 
 		BaseModelSearchResult<AccountRole> accountRoleBaseModelSearchResult =
 			_accountRoleLocalService.searchAccountRoles(
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keywords, start, end,
-				orderByComparator);
+				companyId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keywords,
+				start, end, orderByComparator);
 
 		return new BaseModelSearchResult<>(
 			TransformUtil.transform(

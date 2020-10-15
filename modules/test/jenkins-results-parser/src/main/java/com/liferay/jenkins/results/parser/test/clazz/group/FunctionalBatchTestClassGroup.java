@@ -40,10 +40,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
 	public int getAxisCount() {
-		if (axisTestClassGroups.isEmpty()) {
-			setAxisTestClassGroups();
-		}
-
 		return axisTestClassGroups.size();
 	}
 
@@ -53,10 +49,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
 	public int getSegmentCount() {
-		if (segmentTestClassGroups.isEmpty()) {
-			setSegmentTestClassGroups();
-		}
-
 		return segmentTestClassGroups.size();
 	}
 
@@ -148,10 +140,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	protected void setSegmentTestClassGroups() {
 		if (!segmentTestClassGroups.isEmpty()) {
 			return;
-		}
-
-		if (axisTestClassGroups.isEmpty()) {
-			setAxisTestClassGroups();
 		}
 
 		if (axisTestClassGroups.isEmpty()) {

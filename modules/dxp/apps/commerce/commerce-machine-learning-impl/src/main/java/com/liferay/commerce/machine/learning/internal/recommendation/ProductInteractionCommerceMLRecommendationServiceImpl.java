@@ -21,6 +21,7 @@ import com.liferay.commerce.machine.learning.recommendation.model.ProductInterac
 import com.liferay.commerce.machine.learning.recommendation.service.ProductInteractionCommerceMLRecommendationService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -86,6 +87,13 @@ public class ProductInteractionCommerceMLRecommendationServiceImpl
 
 		Document document = getBaseDocument(model);
 
+		long hash = getHash(
+			model.getEntryClassPK(), model.getRecommendedEntryClassPK());
+
+		document.addKeyword(Field.UID, String.valueOf(hash));
+
+		document.addNumber(Field.ENTRY_CLASS_PK, model.getEntryClassPK());
+
 		document.addNumber(CommerceMLRecommendationField.RANK, model.getRank());
 
 		return document;
@@ -101,6 +109,8 @@ public class ProductInteractionCommerceMLRecommendationServiceImpl
 					new ProductInteractionCommerceMLRecommendationImpl(),
 					document);
 
+		productInteractionCommerceMLRecommendationModel.setEntryClassPK(
+			GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
 		productInteractionCommerceMLRecommendationModel.setRank(
 			GetterUtil.getInteger(
 				document.get(CommerceMLRecommendationField.RANK)));

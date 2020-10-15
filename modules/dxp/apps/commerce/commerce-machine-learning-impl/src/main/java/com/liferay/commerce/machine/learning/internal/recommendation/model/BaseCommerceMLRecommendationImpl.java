@@ -35,11 +35,6 @@ public class BaseCommerceMLRecommendationImpl
 	}
 
 	@Override
-	public long getEntryClassPK() {
-		return _entryClassPK;
-	}
-
-	@Override
 	public String getJobId() {
 		return _jobId;
 	}
@@ -65,11 +60,6 @@ public class BaseCommerceMLRecommendationImpl
 	}
 
 	@Override
-	public void setEntryClassPK(long entryClassPK) {
-		_entryClassPK = entryClassPK;
-	}
-
-	@Override
 	public void setJobId(String jobId) {
 		_jobId = jobId;
 	}
@@ -86,7 +76,6 @@ public class BaseCommerceMLRecommendationImpl
 
 	private long _companyId;
 	private Date _createDate;
-	private long _entryClassPK;
 	private String _jobId;
 	private long _recommendedEntryClassPK;
 	private float _score;

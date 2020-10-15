@@ -89,9 +89,6 @@ public abstract class BaseCommerceMLRecommendationServiceImpl
 		commerceMLRecommendation.setCreateDate(
 			_getDate(document.get(Field.CREATE_DATE)));
 
-		commerceMLRecommendation.setEntryClassPK(
-			GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
-
 		commerceMLRecommendation.setJobId(
 			document.get(CommerceMLRecommendationField.JOB_ID));
 
@@ -110,18 +107,10 @@ public abstract class BaseCommerceMLRecommendationServiceImpl
 	protected Document getBaseDocument(T commerceMLRecommend) {
 		Document document = new DocumentImpl();
 
-		long hash = getHash(
-			commerceMLRecommend.getEntryClassPK(),
-			commerceMLRecommend.getRecommendedEntryClassPK());
-
-		document.addKeyword(Field.UID, String.valueOf(hash));
-
 		document.addNumber(
 			Field.COMPANY_ID, commerceMLRecommend.getCompanyId());
 		document.addDate(
 			Field.CREATE_DATE, commerceMLRecommend.getCreateDate());
-		document.addNumber(
-			Field.ENTRY_CLASS_PK, commerceMLRecommend.getEntryClassPK());
 		document.addText(
 			CommerceMLRecommendationField.JOB_ID,
 			commerceMLRecommend.getJobId());

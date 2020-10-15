@@ -24,8 +24,18 @@ public class ProductInteractionCommerceMLRecommendationImpl
 	implements ProductInteractionCommerceMLRecommendation {
 
 	@Override
+	public long getEntryClassPK() {
+		return _entryClassPK;
+	}
+
+	@Override
 	public int getRank() {
 		return _rank;
+	}
+
+	@Override
+	public void setEntryClassPK(long entryClassPK) {
+		_entryClassPK = entryClassPK;
 	}
 
 	@Override
@@ -33,6 +43,7 @@ public class ProductInteractionCommerceMLRecommendationImpl
 		_rank = rank;
 	}
 
+	private long _entryClassPK;
 	private int _rank;
 
 }

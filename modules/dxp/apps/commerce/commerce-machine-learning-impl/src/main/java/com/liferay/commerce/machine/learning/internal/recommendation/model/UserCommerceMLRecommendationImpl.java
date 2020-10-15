@@ -29,10 +29,21 @@ public class UserCommerceMLRecommendationImpl
 	}
 
 	@Override
+	public long getEntryClassPK() {
+		return _entryClassPK;
+	}
+
+	@Override
 	public void setAssetCategoryIds(long[] assetCategoryIds) {
 		_assetCategoryIds = assetCategoryIds;
 	}
 
+	@Override
+	public void setEntryClassPK(long entryClassPK) {
+		_entryClassPK = entryClassPK;
+	}
+
 	private long[] _assetCategoryIds;
+	private long _entryClassPK;
 
 }

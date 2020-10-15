@@ -24,8 +24,18 @@ public class ProductContentCommerceMLRecommendationImpl
 	implements ProductContentCommerceMLRecommendation {
 
 	@Override
+	public long getEntryClassPK() {
+		return _entryClassPK;
+	}
+
+	@Override
 	public int getRank() {
 		return _rank;
+	}
+
+	@Override
+	public void setEntryClassPK(long entryClassPK) {
+		_entryClassPK = entryClassPK;
 	}
 
 	@Override
@@ -33,6 +43,7 @@ public class ProductContentCommerceMLRecommendationImpl
 		_rank = rank;
 	}
 
+	private long _entryClassPK;
 	private int _rank;
 
 }

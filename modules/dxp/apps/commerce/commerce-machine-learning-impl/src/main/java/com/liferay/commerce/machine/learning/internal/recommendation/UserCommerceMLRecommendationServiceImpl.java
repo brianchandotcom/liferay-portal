@@ -120,6 +120,13 @@ public class UserCommerceMLRecommendationServiceImpl
 	protected Document toDocument(UserCommerceMLRecommendation model) {
 		Document document = getBaseDocument(model);
 
+		long hash = getHash(
+			model.getEntryClassPK(), model.getRecommendedEntryClassPK());
+
+		document.addKeyword(Field.UID, String.valueOf(hash));
+
+		document.addNumber(Field.ENTRY_CLASS_PK, model.getEntryClassPK());
+
 		document.addNumber(
 			Field.ASSET_CATEGORY_IDS, model.getAssetCategoryIds());
 
@@ -134,6 +141,8 @@ public class UserCommerceMLRecommendationServiceImpl
 
 		userCommerceMLRecommendation.setAssetCategoryIds(
 			GetterUtil.getLongValues(document.get(Field.ASSET_CATEGORY_IDS)));
+		userCommerceMLRecommendation.setEntryClassPK(
+			GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
 
 		return userCommerceMLRecommendation;
 	}

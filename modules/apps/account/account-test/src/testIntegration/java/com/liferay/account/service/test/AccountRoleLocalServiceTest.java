@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -344,6 +345,29 @@ public class AccountRoleLocalServiceTest {
 		baseModelSearchResult = AccountRoleLocalServiceUtil.searchAccountRoles(
 			_accountEntry1.getCompanyId(), _accountEntry1.getAccountEntryId(),
 			keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(1, baseModelSearchResult.getLength());
+
+		List<AccountRole> accountRoles = baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(accountRole, accountRoles.get(0));
+	}
+
+	@Test
+	public void testSearchAccountRolesByTitle() throws Exception {
+		String keyword = RandomTestUtil.randomString();
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(),
+			Collections.singletonMap(LocaleUtil.getDefault(), keyword), null);
+
+		BaseModelSearchResult<AccountRole> baseModelSearchResult =
+			_accountRoleLocalService.searchAccountRoles(
+				accountRole.getCompanyId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keyword,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(1, baseModelSearchResult.getLength());
 

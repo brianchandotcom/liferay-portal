@@ -201,6 +201,12 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#OPTIONS_OPTION_NAME_FIELD");
 	}
 
+	macro editRuleName {
+		Type(
+			locator1 = "FormViewBuilder#RULE_BUILDER_NAME",
+			value1 = "${ruleName}");
+	}
+
 	macro editRules {
 		Click(locator1 = "FormViewBuilder#EDIT_RULE_COLLAPSE");
 		AssertElementPresent(locator1 = "FormViewBuilder#EDIT_RULE_EXPANDED");
@@ -210,12 +216,6 @@ definition {
 	macro editRulesDefault {
 		Click(locator1 = "FormViewBuilder#RULE_BUILDER_DEFAULT_EDIT");
 		Click(locator1 = "FormViewBuilder#RULE_BUILDER_EDIT");
-	}
-
-	macro editRuleName {
-		Type(
-			locator1 = "FormViewBuilder#RULE_BUILDER_NAME",
-			value1 = "${ruleName}");
 	}
 
 	macro editText {
@@ -298,12 +298,6 @@ definition {
 
 	macro save {
 		AppBuilderAdmin.save();
-	}
-
-	macro saveFormView {
-		AssertClick(
-			locator1 = "FormViewBuilder#SAVE_FORM_BUTTON",
-			value1 = "Save");
 	}
 
 	macro searchObjectField {

@@ -82,8 +82,6 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 					DataDefinitionTestUtil.read("data-definition.json")),
 				testGroup.getGroupId());
 
-		_dataDefinitionId = dataDefinition.getId();
-
 		DataRecordCollectionResource.Builder
 			dataRecordCollectionResourceBuilder =
 				DataRecordCollectionResource.builder();
@@ -97,7 +95,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 		DataRecordCollection dataDefinitionDataRecordCollection =
 			dataRecordCollectionResource.getDataDefinitionDataRecordCollection(
-				_dataDefinitionId);
+				dataDefinition.getId());
 
 		_dataRecordCollectionId = dataDefinitionDataRecordCollection.getId();
 

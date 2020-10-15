@@ -21,6 +21,10 @@ public interface UserCommerceMLRecommendation extends CommerceMLRecommendation {
 
 	public long[] getAssetCategoryIds();
 
+	public long getEntryClassPK();
+
 	public void setAssetCategoryIds(long[] assetCategoryIds);
+
+	public void setEntryClassPK(long entryClassPK);
 
 }

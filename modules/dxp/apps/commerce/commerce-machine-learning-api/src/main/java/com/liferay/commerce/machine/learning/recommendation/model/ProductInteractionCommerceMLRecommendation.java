@@ -20,7 +20,11 @@ package com.liferay.commerce.machine.learning.recommendation.model;
 public interface ProductInteractionCommerceMLRecommendation
 	extends CommerceMLRecommendation {
 
+	public long getEntryClassPK();
+
 	public int getRank();
+
+	public void setEntryClassPK(long entryClassPK);
 
 	public void setRank(int rank);
 

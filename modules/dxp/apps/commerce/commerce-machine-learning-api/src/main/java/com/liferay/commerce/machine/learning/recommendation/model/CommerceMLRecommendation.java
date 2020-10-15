@@ -25,8 +25,6 @@ public interface CommerceMLRecommendation {
 
 	public Date getCreateDate();
 
-	public long getEntryClassPK();
-
 	public String getJobId();
 
 	public long getRecommendedEntryClassPK();
@@ -36,8 +34,6 @@ public interface CommerceMLRecommendation {
 	public void setCompanyId(long companyId);
 
 	public void setCreateDate(Date createDate);
-
-	public void setEntryClassPK(long entryClassPK);
 
 	public void setJobId(String jobId);
 

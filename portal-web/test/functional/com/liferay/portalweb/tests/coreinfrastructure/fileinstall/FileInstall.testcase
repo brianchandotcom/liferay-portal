@@ -151,11 +151,11 @@ definition {
 	test UninstallWarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallWarOffline";
 
-		Theme.deployThemeWar(themeName = "test-theme");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
 
 		GogoShell.openGogoShellAdmin();
 
-		AssertConsoleTextPresent(value1 = "STARTED test-theme_");
+		WaitForConsoleTextPresent(value1 = "STARTED test-theme_");
 
 		GogoShell.executeCommand(commandName = "lb | grep test-theme");
 

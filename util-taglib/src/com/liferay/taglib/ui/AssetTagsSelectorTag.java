@@ -28,7 +28,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             com.liferay.asset.taglib.servlet.taglib.AssetTagsSelectorTag}
  */
+@Deprecated
 public class AssetTagsSelectorTag extends IncludeTag {
 
 	public String getAddCallback() {

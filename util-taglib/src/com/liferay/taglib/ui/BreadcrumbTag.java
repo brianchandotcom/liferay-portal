@@ -32,7 +32,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             com.liferay.site.navigation.taglib.servlet.taglib.BreadcrumbTag}
  */
+@Deprecated
 public class BreadcrumbTag extends IncludeTag {
 
 	public long getDdmTemplateGroupId() {

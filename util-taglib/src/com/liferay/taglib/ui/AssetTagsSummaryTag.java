@@ -26,7 +26,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             com.liferay.asset.taglib.servlet.taglib.AssetTagsSummaryTag}
  */
+@Deprecated
 public class AssetTagsSummaryTag<R> extends IncludeTag {
 
 	public String getAssetTagNames() {

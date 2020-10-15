@@ -27,7 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Julio Camarero
  * @author Sergio González
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             com.liferay.frontend.taglib.servlet.taglib.FormNavigatorTag}
  */
+@Deprecated
 public class FormNavigatorTag extends IncludeTag {
 
 	@Override

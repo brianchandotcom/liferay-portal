@@ -21,7 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             com.liferay.journal.taglib.servlet.taglib.JournalArticleTag}
  */
+@Deprecated
 public class JournalArticleTag extends IncludeTag {
 
 	public void setArticleId(String articleId) {

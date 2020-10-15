@@ -67,6 +67,7 @@ public class DDMFormField implements Serializable {
 				new DDMFormFieldValidation(ddmFormFieldValidation));
 		}
 
+		setFieldReference(ddmFormField.getFieldReference());
 		setLabel(new LocalizedValue(ddmFormField.getLabel()));
 		setPredefinedValue(
 			new LocalizedValue(ddmFormField.getPredefinedValue()));
@@ -213,6 +214,10 @@ public class DDMFormField implements Serializable {
 		return MapUtil.getString(_properties, "fieldNamespace");
 	}
 
+	public String getFieldReference() {
+		return MapUtil.getString(_properties, "fieldReference");
+	}
+
 	public String getIndexType() {
 		return MapUtil.getString(_properties, "indexType");
 	}
@@ -354,6 +359,10 @@ public class DDMFormField implements Serializable {
 
 	public void setFieldNamespace(String fieldNamespace) {
 		_properties.put("fieldNamespace", fieldNamespace);
+	}
+
+	public void setFieldReference(String fieldReference) {
+		_properties.put("fieldReference", fieldReference);
 	}
 
 	public void setIndexType(String indexType) {

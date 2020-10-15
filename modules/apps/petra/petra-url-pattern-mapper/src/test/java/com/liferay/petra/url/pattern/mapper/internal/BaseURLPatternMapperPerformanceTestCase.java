@@ -16,7 +16,7 @@ package com.liferay.petra.url.pattern.mapper.internal;
 
 import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
 
-import java.util.function.Consumer;
+import java.util.BitSet;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,14 +29,6 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 
 	@Test
 	public void testConsumeValues() {
-		Consumer<Integer> indexConsumer = new Consumer<Integer>() {
-
-			@Override
-			public void accept(Integer i) {
-			}
-
-		};
-
 		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
 			createValues());
 
@@ -44,7 +36,10 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 
 		for (int i = 0; i < 100000; i++) {
 			for (String urlPath : expectedURLPatternMatches.keySet()) {
-				urlPatternMapper.consumeValues(urlPath, indexConsumer);
+				urlPatternMapper.consumeValues(
+					urlPath,
+					__ -> {
+					});
 			}
 		}
 
@@ -65,23 +60,9 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 	public void testConsumeValuesOrdered() {
 
 		// Current url-patterns for Filters set in liferay-web.xml is no larger
-		// then 128, thus 2 longs are sufficient big enough.
+		// then 128.
 
-		long[] indexBuckets = new long[2];
-
-		Consumer<Integer> indexConsumer = new Consumer<Integer>() {
-
-			@Override
-			public void accept(Integer i) {
-				if (i > 63) {
-					indexBuckets[1] |= 1L << (i - 64);
-				}
-				else {
-					indexBuckets[0] |= 1L << i;
-				}
-			}
-
-		};
+		final BitSet bitSet = new BitSet(128);
 
 		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
 			createValues());
@@ -90,19 +71,10 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 
 		for (int i = 0; i < 100000; i++) {
 			for (String urlPath : expectedURLPatternMatches.keySet()) {
-				indexBuckets[0] = 0;
-				indexBuckets[1] = 0;
+				urlPatternMapper.consumeValues(urlPath, bitSet::set);
 
-				urlPatternMapper.consumeValues(urlPath, indexConsumer);
-
-				while (indexBuckets[0] > 0) {
-					indexBuckets[0] &= 1L;
-					indexBuckets[0] >>= 1L;
-				}
-
-				while (indexBuckets[1] > 0) {
-					indexBuckets[1] &= 1L;
-					indexBuckets[1] >>= 1L;
+				for (int j = bitSet.nextSetBit(0); j >= 0;
+					 j = bitSet.nextSetBit(j + 1)) {
 				}
 			}
 		}

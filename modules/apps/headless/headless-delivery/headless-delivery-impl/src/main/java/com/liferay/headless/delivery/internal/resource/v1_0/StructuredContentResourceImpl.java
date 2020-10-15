@@ -512,7 +512,8 @@ public class StructuredContentResourceImpl
 				_journalConverter.getContent(
 					ddmStructure,
 					_toFields(
-						structuredContent.getContentFields(), journalArticle)),
+						structuredContent.getContentFields(), journalArticle),
+					journalArticle.getGroupId()),
 				journalArticle.getDDMStructureKey(),
 				_getDDMTemplateKey(ddmStructure),
 				journalArticle.getLayoutUuid(),
@@ -863,9 +864,6 @@ public class StructuredContentResourceImpl
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
-		Fields fields = _journalConverter.getDDMFields(
-			ddmStructure, journalArticle.getContent());
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
@@ -876,18 +874,7 @@ public class StructuredContentResourceImpl
 
 		serviceContext.setAttribute("ddmFormValues", _toString(ddmFormValues));
 
-		Fields newFields = _ddm.getFields(
-			ddmStructure.getStructureId(), serviceContext);
-
-		for (Field field : fields) {
-			Field newField = newFields.get(field.getName());
-
-			field.setValues(
-				contextAcceptLanguage.getPreferredLocale(),
-				newField.getValues(contextAcceptLanguage.getPreferredLocale()));
-		}
-
-		return fields;
+		return _ddm.getFields(ddmStructure.getStructureId(), serviceContext);
 	}
 
 	private Fields _toPatchedFields(

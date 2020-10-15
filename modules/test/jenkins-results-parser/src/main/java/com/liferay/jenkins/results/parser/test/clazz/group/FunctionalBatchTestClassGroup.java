@@ -27,8 +27,11 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -53,7 +56,23 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		return segmentTestClassGroups.size();
 	}
 
+	@Override
+	public List<TestClass> getTestClasses() {
+		List<TestClass> testClasses = new ArrayList<>();
+
+		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+			testClasses.addAll(axisTestClassGroup.getTestClasses());
+		}
+
+		return testClasses;
+	}
+
 	public static class FunctionalTestClass extends BaseTestClass {
+
+		public Properties getPoshiProperties() {
+			return PoshiContext.getNamespacedClassCommandNameProperties(
+				getTestClassMethodName());
+		}
 
 		public String getTestClassMethodName() {
 			return _testClassMethodName;
@@ -118,15 +137,17 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
-			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-				this);
+			AxisTestClassGroup axisTestClassGroup =
+				new FunctionalAxisTestClassGroup(this);
 
 			for (String testClassMethodName : poshiTestClassGroup) {
 				Matcher matcher = _poshiTestCasePattern.matcher(
 					testClassMethodName);
 
 				if (!matcher.find()) {
-					continue;
+					throw new RuntimeException(
+						"Invalid test class method name " +
+							testClassMethodName);
 				}
 
 				axisTestClassGroup.addTestClass(
@@ -147,17 +168,43 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		for (List<AxisTestClassGroup> axisTestClassGroups :
-				Lists.partition(axisTestClassGroups, getSegmentMaxChildren())) {
+		Map<Integer, List<AxisTestClassGroup>> axisTestClassGroupsMap =
+			new HashMap<>();
 
-			SegmentTestClassGroup segmentTestClassGroup =
-				new SegmentTestClassGroup(this);
+		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+			Integer minimumSlaveRAM = axisTestClassGroup.getMinimumSlaveRAM();
 
-			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
-				segmentTestClassGroup.addAxisTestClassGroup(axisTestClassGroup);
+			List<AxisTestClassGroup> axisTestClassGroups =
+				axisTestClassGroupsMap.get(minimumSlaveRAM);
+
+			if (axisTestClassGroups == null) {
+				axisTestClassGroups = new ArrayList<>();
 			}
 
-			segmentTestClassGroups.add(segmentTestClassGroup);
+			axisTestClassGroups.add(axisTestClassGroup);
+
+			axisTestClassGroupsMap.put(minimumSlaveRAM, axisTestClassGroups);
+		}
+
+		for (List<AxisTestClassGroup> axisTestClassGroupsMapValue :
+				axisTestClassGroupsMap.values()) {
+
+			for (List<AxisTestClassGroup> axisTestClassGroups :
+					Lists.partition(
+						axisTestClassGroupsMapValue, getSegmentMaxChildren())) {
+
+				SegmentTestClassGroup segmentTestClassGroup =
+					new FunctionalSegmentTestClassGroup(this);
+
+				for (AxisTestClassGroup axisTestClassGroup :
+						axisTestClassGroups) {
+
+					segmentTestClassGroup.addAxisTestClassGroup(
+						axisTestClassGroup);
+				}
+
+				segmentTestClassGroups.add(segmentTestClassGroup);
+			}
 		}
 	}
 

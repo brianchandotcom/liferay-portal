@@ -48,7 +48,7 @@ public class DispatchLogLocalServiceImpl
 		throws PortalException {
 
 		_checkDispatchLogPeriod(startDate, endDate);
-		_checkStatus(dispatchTaskStatus);
+		_checkDispatchTaskStatus(dispatchTaskStatus);
 
 		DispatchTrigger dispatchTrigger =
 			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
@@ -108,7 +108,7 @@ public class DispatchLogLocalServiceImpl
 
 		_checkDispatchLogPeriod(dispatchLog.getStartDate(), endDate);
 
-		_checkStatus(dispatchTaskStatus);
+		_checkDispatchTaskStatus(dispatchTaskStatus);
 
 		dispatchLog.setEndDate(endDate);
 		dispatchLog.setError(error);
@@ -135,11 +135,12 @@ public class DispatchLogLocalServiceImpl
 		}
 	}
 
-	private void _checkStatus(DispatchTaskStatus dispatchTaskStatus)
+	private void _checkDispatchTaskStatus(DispatchTaskStatus dispatchTaskStatus)
 		throws PortalException {
 
 		if (dispatchTaskStatus == null) {
-			throw new DispatchLogStatusException("Status is required");
+			throw new DispatchLogStatusException(
+				"Dispatch task status is required");
 		}
 	}
 

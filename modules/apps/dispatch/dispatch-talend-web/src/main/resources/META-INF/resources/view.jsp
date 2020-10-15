@@ -18,7 +18,7 @@
 
 <%
 DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(DispatchWebKeys.DISPATCH_TRIGGER);
-TalendDispatchTaskExecutorHelper talendDispatchTaskExecutorHelper = (TalendDispatchTaskExecutorHelper)request.getAttribute("talendDispatchTaskExecutorHelper");
+TalendDispatchTaskExecutorHelper talendDispatchTaskExecutorHelper = (TalendDispatchTaskExecutorHelper)request.getAttribute(TalendDispatchTaskExecutorHelper.class.getName());
 %>
 
 <liferay-portlet:actionURL name="editDispatchTalendJobArchive" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editDispatchTalendJobArchiveActionURL" />

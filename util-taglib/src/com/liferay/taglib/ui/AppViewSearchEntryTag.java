@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  * @author Tibor Lipusz
- * @deprecated As of Athanasius (7.0.x), with no direct replacement
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated
 public class AppViewSearchEntryTag extends IncludeTag {

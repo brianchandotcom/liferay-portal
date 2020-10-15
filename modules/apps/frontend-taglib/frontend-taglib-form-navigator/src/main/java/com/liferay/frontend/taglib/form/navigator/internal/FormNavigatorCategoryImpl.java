@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal;
 
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,12 +33,16 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
-public class FormNavigatorCategoryImpl {
+@Component(immediate = true, service = FormNavigatorCategoryUtil.class)
+public class FormNavigatorCategoryImpl implements FormNavigatorCategoryUtil {
 
-	public static List<FormNavigatorCategory> getFormNavigatorCategories(
+	@Override
+	public List<FormNavigatorCategory> getFormNavigatorCategories(
 		String formNavigatorId) {
 
 		List<FormNavigatorCategory> formNavigatorCategories =
@@ -51,7 +56,8 @@ public class FormNavigatorCategoryImpl {
 		return Collections.emptyList();
 	}
 
-	public static String[] getKeys(String formNavigatorId) {
+	@Override
+	public String[] getKeys(String formNavigatorId) {
 		List<FormNavigatorCategory> formNavigatorCategories =
 			getFormNavigatorCategories(formNavigatorId);
 
@@ -74,7 +80,8 @@ public class FormNavigatorCategoryImpl {
 		return keys.toArray(new String[0]);
 	}
 
-	public static String[] getLabels(String formNavigatorId, Locale locale) {
+	@Override
+	public String[] getLabels(String formNavigatorId, Locale locale) {
 		List<FormNavigatorCategory> formNavigatorCategories =
 			getFormNavigatorCategories(formNavigatorId);
 

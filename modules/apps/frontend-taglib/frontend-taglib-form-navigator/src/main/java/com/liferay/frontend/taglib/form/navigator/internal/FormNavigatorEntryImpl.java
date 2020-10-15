@@ -14,9 +14,9 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal;
 
-import com.liferay.frontend.taglib.form.navigator.util.FormNavigatorCategoryUtil;
-import com.liferay.frontend.taglib.form.navigator.util.FormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.util.FormNavigatorEntryConfigurationHelper;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryUtil;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,12 +36,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
-public class FormNavigatorEntryImpl {
+@Component(immediate = true, service = FormNavigatorEntryUtil.class)
+public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
 
-	public static <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(
+	@Override
+	public <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, User user,
 		T formModelBean) {
 
@@ -53,7 +57,8 @@ public class FormNavigatorEntryImpl {
 			formNavigatorEntries, user, formModelBean);
 	}
 
-	public static <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(
+	@Override
+	public <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(
 		String formNavigatorId, User user, T formModelBean) {
 
 		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
@@ -75,7 +80,8 @@ public class FormNavigatorEntryImpl {
 			formNavigatorEntries, user, formModelBean);
 	}
 
-	public static <T> String[] getKeys(
+	@Override
+	public <T> String[] getKeys(
 		String formNavigatorId, String categoryKey, User user,
 		T formModelBean) {
 
@@ -96,7 +102,8 @@ public class FormNavigatorEntryImpl {
 		return keys.toArray(new String[0]);
 	}
 
-	public static <T> String[] getLabels(
+	@Override
+	public <T> String[] getLabels(
 		String formNavigatorId, String categoryKey, User user, T formModelBean,
 		Locale locale) {
 
@@ -134,41 +141,6 @@ public class FormNavigatorEntryImpl {
 		return filteredFormNavigatorEntries;
 	}
 
-	private static <T> Optional<List<FormNavigatorEntry<T>>>
-		_getConfigurationFormNavigatorEntries(
-			String formNavigatorId, String categoryKey, T formModelBean) {
-
-		FormNavigatorEntryConfigurationHelper
-			formNavigatorEntryConfigurationHelper =
-				_formNavigatorEntryUtil._serviceTracker.getService();
-
-		if (formNavigatorEntryConfigurationHelper == null) {
-			return Optional.empty();
-		}
-
-		return formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
-			formNavigatorId, categoryKey, formModelBean);
-	}
-
-	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
-		String formNavigatorId, String categoryKey, T formModelBean) {
-
-		Optional<List<FormNavigatorEntry<T>>> formNavigationEntriesOptional =
-			_getConfigurationFormNavigatorEntries(
-				formNavigatorId, categoryKey, formModelBean);
-
-		if (formNavigationEntriesOptional.isPresent()) {
-			return formNavigationEntriesOptional.get();
-		}
-
-		return (List)_formNavigatorEntryUtil._formNavigatorEntries.getService(
-			_getKey(formNavigatorId, categoryKey));
-	}
-
-	private static String _getKey(String formNavigatorId, String categoryKey) {
-		return formNavigatorId + StringPool.PERIOD + categoryKey;
-	}
-
 	@SuppressWarnings("rawtypes")
 	private FormNavigatorEntryImpl() {
 		Registry registry = RegistryUtil.getRegistry();
@@ -201,6 +173,41 @@ public class FormNavigatorEntryImpl {
 			FormNavigatorEntryConfigurationHelper.class);
 
 		_serviceTracker.open();
+	}
+
+	private <T> Optional<List<FormNavigatorEntry<T>>>
+		_getConfigurationFormNavigatorEntries(
+			String formNavigatorId, String categoryKey, T formModelBean) {
+
+		FormNavigatorEntryConfigurationHelper
+			formNavigatorEntryConfigurationHelper =
+				_formNavigatorEntryUtil._serviceTracker.getService();
+
+		if (formNavigatorEntryConfigurationHelper == null) {
+			return Optional.empty();
+		}
+
+		return formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
+			formNavigatorId, categoryKey, formModelBean);
+	}
+
+	private <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
+		String formNavigatorId, String categoryKey, T formModelBean) {
+
+		Optional<List<FormNavigatorEntry<T>>> formNavigationEntriesOptional =
+			_getConfigurationFormNavigatorEntries(
+				formNavigatorId, categoryKey, formModelBean);
+
+		if (formNavigationEntriesOptional.isPresent()) {
+			return formNavigationEntriesOptional.get();
+		}
+
+		return (List)_formNavigatorEntryUtil._formNavigatorEntries.getService(
+			_getKey(formNavigatorId, categoryKey));
+	}
+
+	private String _getKey(String formNavigatorId, String categoryKey) {
+		return formNavigatorId + StringPool.PERIOD + categoryKey;
 	}
 
 	private static final FormNavigatorEntryImpl _formNavigatorEntryUtil =

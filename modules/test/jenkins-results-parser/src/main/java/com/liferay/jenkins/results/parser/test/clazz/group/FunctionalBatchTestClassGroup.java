@@ -27,10 +27,8 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -48,11 +46,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 	public String getRelevantTestBatchRunPropertyQuery() {
 		return _relevantTestBatchRunPropertyQuery;
-	}
-
-	@Override
-	public int getSegmentCount() {
-		return segmentTestClassGroups.size();
 	}
 
 	@Override
@@ -154,56 +147,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			}
 
 			axisTestClassGroups.add(axisTestClassGroup);
-		}
-	}
-
-	@Override
-	protected void setSegmentTestClassGroups() {
-		if (!segmentTestClassGroups.isEmpty()) {
-			return;
-		}
-
-		if (axisTestClassGroups.isEmpty()) {
-			return;
-		}
-
-		Map<Integer, List<AxisTestClassGroup>> axisTestClassGroupsMap =
-			new HashMap<>();
-
-		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
-			Integer minimumSlaveRAM = axisTestClassGroup.getMinimumSlaveRAM();
-
-			List<AxisTestClassGroup> axisTestClassGroups =
-				axisTestClassGroupsMap.get(minimumSlaveRAM);
-
-			if (axisTestClassGroups == null) {
-				axisTestClassGroups = new ArrayList<>();
-			}
-
-			axisTestClassGroups.add(axisTestClassGroup);
-
-			axisTestClassGroupsMap.put(minimumSlaveRAM, axisTestClassGroups);
-		}
-
-		for (List<AxisTestClassGroup> axisTestClassGroupsMapValue :
-				axisTestClassGroupsMap.values()) {
-
-			for (List<AxisTestClassGroup> axisTestClassGroups :
-					Lists.partition(
-						axisTestClassGroupsMapValue, getSegmentMaxChildren())) {
-
-				SegmentTestClassGroup segmentTestClassGroup =
-					TestClassGroupFactory.newSegmentTestClassGroup(this);
-
-				for (AxisTestClassGroup axisTestClassGroup :
-						axisTestClassGroups) {
-
-					segmentTestClassGroup.addAxisTestClassGroup(
-						axisTestClassGroup);
-				}
-
-				segmentTestClassGroups.add(segmentTestClassGroup);
-			}
 		}
 	}
 

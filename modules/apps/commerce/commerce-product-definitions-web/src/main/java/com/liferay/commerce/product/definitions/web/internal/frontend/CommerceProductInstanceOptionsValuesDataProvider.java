@@ -318,7 +318,9 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 
 			String optionValueKey = parameterValue;
 
-			if (_jsonHelper.isArray(parameterValue)) {
+			if (_jsonHelper.isArray(parameterValue) &&
+				!_jsonHelper.isEmpty(parameterValue)) {
+
 				optionValueKey = _jsonHelper.getFirstElementStringValue(
 					parameterValue);
 			}

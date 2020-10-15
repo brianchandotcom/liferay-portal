@@ -86,6 +86,8 @@ public class ApplicationsMenuDisplayContext {
 
 				applicationsMenuPanelAppsURL.setResourceID(
 					"/applications_menu/panel_apps");
+				applicationsMenuPanelAppsURL.setParameter(
+					"selectedPortletId", themeDisplay.getPpid());
 
 				return applicationsMenuPanelAppsURL.toString();
 			}

@@ -38,7 +38,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
 import com.liferay.product.navigation.applications.menu.web.internal.util.ApplicationsMenuUtil;
@@ -230,7 +232,8 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONArray recentSitesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		boolean applicationMenuApp = _isApplicationMenuApp(themeDisplay);
+		boolean applicationMenuApp = _isApplicationMenuApp(
+			resourceRequest, themeDisplay);
 
 		for (Group group : groups) {
 			recentSitesJSONArray.put(
@@ -334,18 +337,23 @@ public class ApplicationsMenuMVCResourceCommand extends BaseMVCResourceCommand {
 		return itemSelectorURL.toString();
 	}
 
-	private boolean _isApplicationMenuApp(ThemeDisplay themeDisplay) {
+	private boolean _isApplicationMenuApp(
+		ResourceRequest resourceRequest, ThemeDisplay themeDisplay) {
+
 		if (!ApplicationsMenuUtil.isEnableApplicationsMenu(
 				themeDisplay.getCompanyId(), _configurationProvider)) {
 
 			return false;
 		}
 
+		String selectedPortletId = ParamUtil.getString(
+			resourceRequest, "selectedPortletId");
+
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			_panelAppRegistry, _panelCategoryRegistry);
 
-		if (ApplicationsMenuUtil.isApplicationsMenuApp(
-				panelCategoryHelper, themeDisplay)) {
+		if (Validator.isNull(selectedPortletId) ||
+			!panelCategoryHelper.isApplicationsMenuApp(selectedPortletId)) {
 
 			return false;
 		}

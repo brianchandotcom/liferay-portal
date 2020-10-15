@@ -1528,6 +1528,43 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	@description = "This is a use case for LPS-121270."
+	@priority = "4"
+	test LoginUserWithProfileSite {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		SiteTemplates.addCP(siteTemplateName = "New Site Template");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addPersonalSiteCP(
+			personalSite = "Public",
+			siteTemplateName = "New Site Template",
+			userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		AssertConsoleTextNotPresent(value1 = "DuplicateFriendlyURLEntryException");
+	}
+
 	@priority = "4"
 	test LogoutUserViaURL {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

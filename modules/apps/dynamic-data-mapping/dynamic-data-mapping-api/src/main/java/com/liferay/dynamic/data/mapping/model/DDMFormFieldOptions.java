@@ -37,10 +37,10 @@ public class DDMFormFieldOptions implements Serializable {
 	public DDMFormFieldOptions(DDMFormFieldOptions ddmFormFieldOptions) {
 		_defaultLocale = ddmFormFieldOptions._defaultLocale;
 
-		Map<String, LocalizedValue> options = ddmFormFieldOptions._options;
-
 		Map<String, String> optionsReferences =
 			ddmFormFieldOptions._optionsReferences;
+
+		Map<String, LocalizedValue> options = ddmFormFieldOptions._options;
 
 		for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
 			LocalizedValue localizedValue = entry.getValue();

@@ -118,15 +118,17 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1478");
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		AssertTextEquals(
 			locator1 = "BridgeIssues#URL_MESSAGE",
-			value1 = "http://localhost:8080/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
+			value1 = "${portalURL}/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
 
 		Click(
 			key_PageLink = "should be the same as the href attribute of this link",
 			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 
-		AssertLocation(value1 = "http://localhost:8080/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
+		AssertLocation(value1 = "${portalURL}/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#PARAM_URL1",

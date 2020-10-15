@@ -354,6 +354,29 @@ public class AccountRoleLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchAccountRolesByDescription() throws Exception {
+		String keyword = RandomTestUtil.randomString();
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null,
+			Collections.singletonMap(LocaleUtil.getDefault(), keyword));
+
+		BaseModelSearchResult<AccountRole> baseModelSearchResult =
+			_accountRoleLocalService.searchAccountRoles(
+				accountRole.getCompanyId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keyword,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(1, baseModelSearchResult.getLength());
+
+		List<AccountRole> accountRoles = baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(accountRole, accountRoles.get(0));
+	}
+
+	@Test
 	public void testSearchAccountRolesByTitle() throws Exception {
 		String keyword = RandomTestUtil.randomString();
 

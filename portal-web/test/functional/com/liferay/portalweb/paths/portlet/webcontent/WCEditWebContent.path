@@ -158,7 +158,7 @@
 <!--IMAGE_FIELD-->
 <tr>
 	<td>IMAGE_FIELD_SELECT</td>
-	<td>//button[contains(@id,'JournalPortlet_Image')]//span[contains(.,'Select')] | //div[@class='button-holder']//span[contains(.,'Select')]</td>
+	<td>//div[contains(@id, JournalPortlet_Image)]//div[contains(@class, 'button-holder')]//span[contains(text(), 'Select')]</td>
 	<td></td>
 </tr>
 </tbody>

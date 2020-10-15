@@ -404,6 +404,32 @@ describe('LayoutProvider', () => {
 				unmockLiferayLanguage();
 			});
 
+			it('listen the fieldAdded event and check if field reference has the same value as field name', () => {
+				component = new Parent();
+
+				const {child, provider} = component.refs;
+				const mockEvent = {
+					data: {
+						parentFieldName: undefined,
+					},
+					fieldType: mockFieldType,
+					indexes: {
+						columnIndex: 0,
+						pageIndex: 0,
+						rowIndex: 0,
+					},
+				};
+
+				const {dispatch} = child.context;
+
+				dispatch('fieldAdded', mockEvent);
+
+				const field =
+					provider.state.pages[0].rows[0].columns[0].fields[0];
+
+				expect(field.fieldName).toEqual(field.fieldReference);
+			});
+
 			it('updates the focusedField with the location of the new field when adding to the pages', () => {
 				component = new Parent();
 
@@ -557,9 +583,12 @@ describe('LayoutProvider', () => {
 								}
 							}
 
+							const name = `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`;
+
 							return {
 								...field,
-								fieldName: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`,
+								fieldName: name,
+								fieldReference: name,
 
 								// Overrides the instanceId because it is generated when a field is duplicated,
 								// toMatchSnapshot has problems with deep arrays so we override it here to

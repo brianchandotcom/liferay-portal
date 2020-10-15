@@ -42,6 +42,13 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 		newFieldName
 	);
 
+	duplicatedField = updateField(
+		props,
+		duplicatedField,
+		'fieldReference',
+		newFieldName
+	);
+
 	duplicatedField.instanceId = generateInstanceId(8);
 
 	const label = getLabel(originalField, editingLanguageId);

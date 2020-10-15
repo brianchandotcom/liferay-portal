@@ -33,11 +33,16 @@ const handleElementSetAdded = (props, state, event) => {
 		return {
 			...field,
 			fieldName: name,
+			fieldReference: name,
 			settingsContext: {
 				...field.settingsContext,
 				pages: settingsContextVisitor.mapFields(
 					(settingsContextField) => {
-						if (settingsContextField.fieldName === 'name') {
+						if (
+							settingsContextField.fieldName ===
+								'fieldReference' ||
+							settingsContextField.fieldName === 'name'
+						) {
 							settingsContextField = {
 								...settingsContextField,
 								value: name,

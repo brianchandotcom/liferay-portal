@@ -25,7 +25,7 @@ definition {
 	}
 
 	macro assertEntryAppVersion {
-		AssertElementNotPresent(
+		AssertElementPresent(
 			key_versionNumber = "${versionNumber}",
 			locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION");
 	}

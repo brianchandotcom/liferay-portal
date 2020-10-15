@@ -1723,6 +1723,34 @@ definition {
 			roleType = "Site");
 	}
 
+	@description = "This is a use case for LPS-116055."
+	@priority = "5"
+	test ViewPermissionScopeChanged {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONRole.addRegularRole(
+			roleKey = "Permission Scope",
+			roleTitle = "Permission Scope");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			roleTitle = "Permission Scope",
+			siteNameScope = "Liferay");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Documents and Media > Document",
+			siteNameScope = "${siteName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NumberFormatException");
+	}
+
 	@priority = "4"
 	test ViewPrivatePageSiteMemberRole {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

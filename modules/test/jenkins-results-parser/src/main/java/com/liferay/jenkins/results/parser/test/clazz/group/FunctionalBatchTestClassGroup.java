@@ -26,6 +26,7 @@ import com.liferay.poshi.core.PoshiContext;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -217,6 +218,12 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private List<List<String>> _getPoshiTestClassGroups() {
+		String query = getRelevantTestBatchRunPropertyQuery();
+
+		if (query == null) {
+			return new ArrayList<>();
+		}
+
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			_portalTestClassJob.getPortalGitWorkingDirectory();
 
@@ -235,23 +242,14 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			new File(
 				portalDir, "portal-web/test/test-portal-web-ext.properties"));
 
-		for (String propertyName : properties.stringPropertyNames()) {
-			String propertyValue = properties.getProperty(propertyName);
-
-			if (propertyValue == null) {
-				continue;
-			}
-
-			System.setProperty(propertyName, propertyValue);
-		}
-
-		System.setProperty("ignore.errors.util.classes", "true");
+		properties.setProperty("ignore.errors.util.classes", "true");
 
 		try {
-			PoshiContext.readFiles();
+			PoshiContext.clear();
 
-			return PoshiContext.getTestBatchGroups(
-				getRelevantTestBatchRunPropertyQuery(), getAxisMaxSize());
+			PoshiContext.readFiles(properties);
+
+			return PoshiContext.getTestBatchGroups(query, getAxisMaxSize());
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

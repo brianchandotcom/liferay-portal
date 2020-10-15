@@ -25,7 +25,8 @@
 				padding: 0;
 			}
 
-			.fields-group, .fields-group.hovered {
+			.fields-group,
+			.fields-group.hovered {
 				margin: 0 6px;
 				width: calc(100% - 12px);
 			}
@@ -50,22 +51,25 @@
 			margin: 0;
 			padding: 0 6px;
 
-			&.fields-group, &.fields-group .ddm-drag.dragging {
+			&.fields-group,
+			&.fields-group .ddm-drag.dragging {
 				padding: 0 10px !important;
 			}
-			
+
 			&.dragging {
 				background-color: transparent;
 				border-radius: 4px;
 			}
 
-			&, &.dragging.hovered, &.dragging.selected {
+			&,
+			&.dragging.hovered,
+			&.dragging.selected {
 				border-radius: 0 4px 4px;
 			}
 
 			&.hovered {
 				border-width: 2px;
-    			margin: 0;
+				margin: 0;
 			}
 		}
 
@@ -79,11 +83,11 @@
 
 			&.targetOver:after,
 			&.target-over:after {
-				background-color: #b3cdff;
-				border-radius: 4px;
+				background-color: #0b5fff;
+				border-radius: 2px;
 				bottom: 0;
 				content: '';
-				height: 4px;
+				height: 2px;
 				margin: auto;
 				position: absolute;
 				top: 0;

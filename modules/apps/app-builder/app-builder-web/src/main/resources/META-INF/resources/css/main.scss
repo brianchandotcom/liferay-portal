@@ -1,6 +1,7 @@
+@import 'configs/variables';
+
 @import 'configs/standalone';
 @import 'configs/utilities';
-@import 'configs/variables';
 
 .app-builder-root {
 	@import 'pages/edit_app';

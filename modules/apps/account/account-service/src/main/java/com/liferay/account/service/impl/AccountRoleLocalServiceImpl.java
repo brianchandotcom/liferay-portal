@@ -170,22 +170,21 @@ public class AccountRoleLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<AccountRole> searchAccountRoles(
-		long accountEntryId, String keywords, int start, int end,
-		OrderByComparator<?> orderByComparator) {
+		long companyId, long accountEntryId, String keywords, int start,
+		int end, OrderByComparator<?> orderByComparator) {
 
 		return searchAccountRoles(
-			new long[] {accountEntryId}, keywords, start, end,
+			companyId, new long[] {accountEntryId}, keywords, start, end,
 			orderByComparator);
 	}
 
 	@Override
 	public BaseModelSearchResult<AccountRole> searchAccountRoles(
-		long[] accountEntryIds, String keywords, int start, int end,
-		OrderByComparator<?> orderByComparator) {
+		long companyId, long[] accountEntryIds, String keywords, int start,
+		int end, OrderByComparator<?> orderByComparator) {
 
 		DynamicQuery roleDynamicQuery = _getRoleDynamicQuery(
-			CompanyThreadLocal.getCompanyId(), accountEntryIds, keywords,
-			orderByComparator);
+			companyId, accountEntryIds, keywords, orderByComparator);
 
 		if (roleDynamicQuery == null) {
 			return new BaseModelSearchResult<>(
@@ -200,8 +199,35 @@ public class AccountRoleLocalServiceImpl
 					userGroupRole.getRoleId())),
 			(int)roleLocalService.dynamicQueryCount(
 				_getRoleDynamicQuery(
-					CompanyThreadLocal.getCompanyId(), accountEntryIds,
-					keywords, null)));
+					companyId, accountEntryIds, keywords, null)));
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Override
+	public BaseModelSearchResult<AccountRole> searchAccountRoles(
+		long accountEntryId, String keywords, int start, int end,
+		OrderByComparator<?> orderByComparator) {
+
+		return searchAccountRoles(
+			CompanyThreadLocal.getCompanyId(), new long[] {accountEntryId},
+			keywords, start, end, orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Override
+	public BaseModelSearchResult<AccountRole> searchAccountRoles(
+		long[] accountEntryIds, String keywords, int start, int end,
+		OrderByComparator<?> orderByComparator) {
+
+		return searchAccountRoles(
+			CompanyThreadLocal.getCompanyId(), accountEntryIds, keywords, start,
+			end, orderByComparator);
 	}
 
 	@Override

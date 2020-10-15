@@ -603,6 +603,15 @@ definition {
 		Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
 	}
 
+	macro goToUpdateDueDateTasks {
+		Pause(locator1 = "2000");
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+		MenuItem.clickNoError(menuItem = "Update Tasks Due Dates");
+	}
+
 	macro goToCreatedSLAForm {
 		var key_workflowSLAName = "${workflowSLAName}";
 
@@ -656,11 +665,6 @@ definition {
 	}
 
 	macro goToWorkflowAllItems {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");

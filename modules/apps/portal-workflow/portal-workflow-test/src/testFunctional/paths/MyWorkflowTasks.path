@@ -129,12 +129,12 @@
 <!--DIALOG_BOX-->
 <tr>
 	<td>DIALOG_BOX_DUE_DATE</td>
-	<td>//input[contains(@id,'_dueDate')]</td>
+	<td>//input[contains(@id,'_dueDate')] | //label[contains(@for,'dateInput')]/following-sibling::input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DIALOG_BOX_DUE_DATE_TIME</td>
-	<td>//input[contains(@id,'_dueDateTime')]</td>
+	<td>//input[contains(@id,'_dueDateTime')] | //input[contains(@placeholder,'HH:mm')]</td>
 	<td></td>
 </tr>
 <tr>

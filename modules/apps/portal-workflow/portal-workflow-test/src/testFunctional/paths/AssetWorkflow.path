@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DUE_DATE</td>
+	<td>//span[contains(@class,'control-label') and contains(text(),'Due Date')]/parent::div//div[contains(text(),'${key_date}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

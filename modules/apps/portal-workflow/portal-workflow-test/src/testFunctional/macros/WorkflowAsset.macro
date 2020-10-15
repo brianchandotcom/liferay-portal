@@ -142,4 +142,10 @@ definition {
 			value1 = "${userEmailAddress}");
 	}
 
+	macro assertDueDate {
+		AssertElementPresent(
+			key_date = "${date}",
+			locator1 = "AssetWorkflow#DUE_DATE");
+	}
+
 }

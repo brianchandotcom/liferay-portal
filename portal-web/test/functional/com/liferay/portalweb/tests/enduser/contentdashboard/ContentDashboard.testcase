@@ -192,7 +192,7 @@ definition {
 			content = "WC Content",
 			groupName = "Test Site Name",
 			title = "WC Title Approved");
-		
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Site Name",
@@ -213,7 +213,7 @@ definition {
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 			value1 = "WC Title Approved");
-		
+
 		ContentDashboard.searchValue(webContentTitle = "WC Title Draft");
 
 		AssertTextPresent(
@@ -223,7 +223,7 @@ definition {
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
 			title = "WC Title Approved");
-		
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC Title Draft");

@@ -121,6 +121,36 @@ public class DDMFormValues implements Serializable {
 		return ddmFormFieldValuesMap;
 	}
 
+	public Map<String, List<DDMFormFieldValue>>
+		getDDMFormFieldValuesReferencesMap(
+			boolean includeNestedDDMFormFieldValues) {
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesReferencesMap =
+			new LinkedHashMap<>();
+
+		for (DDMFormFieldValue ddmFormFieldValue : _ddmFormFieldValues) {
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				ddmFormFieldValuesReferencesMap.get(
+					ddmFormFieldValue.getFieldReference());
+
+			if (ddmFormFieldValues == null) {
+				ddmFormFieldValues = new ArrayList<>();
+
+				ddmFormFieldValuesReferencesMap.put(
+					ddmFormFieldValue.getFieldReference(), ddmFormFieldValues);
+			}
+
+			ddmFormFieldValues.add(ddmFormFieldValue);
+
+			if (includeNestedDDMFormFieldValues) {
+				ddmFormFieldValuesReferencesMap.putAll(
+					ddmFormFieldValue.getNestedDDMFormFieldValuesMap());
+			}
+		}
+
+		return ddmFormFieldValuesReferencesMap;
+	}
+
 	public Locale getDefaultLocale() {
 		return _defaultLocale;
 	}

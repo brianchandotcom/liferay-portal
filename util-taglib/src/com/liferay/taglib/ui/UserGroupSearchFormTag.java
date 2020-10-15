@@ -16,7 +16,9 @@ package com.liferay.taglib.ui;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class UserGroupSearchFormTag<R> extends SearchFormTag<R> {
 
 	@Override

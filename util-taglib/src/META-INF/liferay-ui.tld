@@ -60,6 +60,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
 		<name>app-view-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewEntryTag</tag-class>
 		<body-content>empty</body-content>
@@ -4178,6 +4179,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
 		<name>user-group-search-container-results</name>
 		<tag-class>com.liferay.taglib.ui.UserGroupSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -4248,6 +4250,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
 		<name>user-search-container-results</name>
 		<tag-class>com.liferay.taglib.ui.UserSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>

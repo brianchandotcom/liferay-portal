@@ -362,6 +362,35 @@ public class AccountRoleLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.account.model.AccountRole> searchAccountRoles(
+			long companyId, long accountEntryId, String keywords, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator<?>
+				orderByComparator) {
+
+		return _accountRoleLocalService.searchAccountRoles(
+			companyId, accountEntryId, keywords, start, end, orderByComparator);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountRole> searchAccountRoles(
+			long companyId, long[] accountEntryIds, String keywords, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator<?>
+				orderByComparator) {
+
+		return _accountRoleLocalService.searchAccountRoles(
+			companyId, accountEntryIds, keywords, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountRole> searchAccountRoles(
 			long accountEntryId, String keywords, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator<?>
 				orderByComparator) {
@@ -370,6 +399,10 @@ public class AccountRoleLocalServiceWrapper
 			accountEntryId, keywords, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.account.model.AccountRole> searchAccountRoles(

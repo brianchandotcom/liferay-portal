@@ -1440,9 +1440,7 @@ public class SegmentsEntryRolePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(SegmentsEntryRoleImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(SegmentsEntryRoleImpl.class);
 	}
 
 	/**
@@ -1468,9 +1466,7 @@ public class SegmentsEntryRolePersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(SegmentsEntryRoleImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(SegmentsEntryRoleImpl.class, primaryKey);

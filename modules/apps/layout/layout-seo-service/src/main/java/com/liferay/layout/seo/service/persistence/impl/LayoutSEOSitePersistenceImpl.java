@@ -1721,9 +1721,7 @@ public class LayoutSEOSitePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(LayoutSEOSiteImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(LayoutSEOSiteImpl.class);
 	}
 
 	/**
@@ -1747,9 +1745,7 @@ public class LayoutSEOSitePersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(LayoutSEOSiteImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(LayoutSEOSiteImpl.class, primaryKey);

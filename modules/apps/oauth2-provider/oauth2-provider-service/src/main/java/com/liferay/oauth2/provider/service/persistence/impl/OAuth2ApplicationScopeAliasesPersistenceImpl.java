@@ -1192,9 +1192,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(OAuth2ApplicationScopeAliasesImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(OAuth2ApplicationScopeAliasesImpl.class);
 	}
 
 	/**
@@ -1228,9 +1226,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(OAuth2ApplicationScopeAliasesImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(

@@ -2479,9 +2479,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(WorkflowMetricsSLADefinitionVersionImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(WorkflowMetricsSLADefinitionVersionImpl.class);
 	}
 
 	/**
@@ -2518,9 +2516,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(WorkflowMetricsSLADefinitionVersionImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(

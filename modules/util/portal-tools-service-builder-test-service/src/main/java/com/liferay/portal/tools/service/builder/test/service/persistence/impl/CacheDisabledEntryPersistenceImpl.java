@@ -362,9 +362,7 @@ public class CacheDisabledEntryPersistenceImpl
 	public void clearCache() {
 		dummyEntityCache.clearCache(CacheDisabledEntryImpl.class);
 
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		dummyFinderCache.clearCache(CacheDisabledEntryImpl.class);
 	}
 
 	/**
@@ -390,9 +388,7 @@ public class CacheDisabledEntryPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		dummyFinderCache.clearCache(CacheDisabledEntryImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			dummyEntityCache.removeResult(

@@ -32698,9 +32698,7 @@ public class JournalArticlePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(JournalArticleImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(JournalArticleImpl.class);
 	}
 
 	/**
@@ -32724,9 +32722,7 @@ public class JournalArticlePersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(JournalArticleImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(JournalArticleImpl.class, primaryKey);

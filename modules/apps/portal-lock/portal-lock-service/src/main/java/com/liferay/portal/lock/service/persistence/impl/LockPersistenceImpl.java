@@ -2589,9 +2589,7 @@ public class LockPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(LockImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(LockImpl.class);
 	}
 
 	/**
@@ -2615,9 +2613,7 @@ public class LockPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(LockImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(LockImpl.class, primaryKey);

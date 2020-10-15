@@ -23,7 +23,7 @@ AUI.add(
 			WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest;
 
 		var TPL_MOVE_FORM =
-			'<form action="{actionUrl}" method="POST"><input name="{namespace}cmd" value="move"/>' +
+			'<form action="{actionUrl}" method="POST" class="hide"><input name="{namespace}cmd" value="move"/>' +
 			'<input name="{namespace}newFolderId" value="{newFolderId}"/>' +
 			'<input name="{namespace}{parameterName}" value="{parameterValue}"/>' +
 			'<input name="{namespace}redirect" value="{redirectUrl}"/>' +
@@ -139,6 +139,8 @@ AUI.add(
 							redirectUrl,
 						})
 					);
+
+					originalForm.append(formNode);
 
 					submitForm(formNode, actionUrl, false);
 				},

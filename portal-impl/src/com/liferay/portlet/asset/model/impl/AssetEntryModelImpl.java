@@ -295,26 +295,6 @@ public class AssetEntryModelImpl
 		return models;
 	}
 
-	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_NAME =
-		"AssetEntries_AssetCategories";
-
-	public static final Object[][]
-		MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_COLUMNS = {
-			{"companyId", Types.BIGINT}, {"categoryId", Types.BIGINT},
-			{"entryId", Types.BIGINT}
-		};
-
-	public static final String
-		MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_SQL_CREATE =
-			"create table AssetEntries_AssetCategories (companyId LONG not null,categoryId LONG not null,entryId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (categoryId, entryId, ctCollectionId))";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean
-		FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETCATEGORIES = true;
-
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME =
 		"AssetEntries_AssetTags";
 

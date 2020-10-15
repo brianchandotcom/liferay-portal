@@ -35,31 +35,6 @@ public class AssetEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addAssetCategoryAssetEntries(
-		long categoryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-			assetEntries) {
-
-		getService().addAssetCategoryAssetEntries(categoryId, assetEntries);
-	}
-
-	public static void addAssetCategoryAssetEntries(
-		long categoryId, long[] entryIds) {
-
-		getService().addAssetCategoryAssetEntries(categoryId, entryIds);
-	}
-
-	public static void addAssetCategoryAssetEntry(
-		long categoryId, com.liferay.asset.kernel.model.AssetEntry assetEntry) {
-
-		getService().addAssetCategoryAssetEntry(categoryId, assetEntry);
-	}
-
-	public static void addAssetCategoryAssetEntry(
-		long categoryId, long entryId) {
-
-		getService().addAssetCategoryAssetEntry(categoryId, entryId);
-	}
 
 	/**
 	 * Adds the asset entry to the database. Also notifies the appropriate model listeners.
@@ -99,10 +74,6 @@ public class AssetEntryLocalServiceUtil {
 		getService().addAssetTagAssetEntry(tagId, entryId);
 	}
 
-	public static void clearAssetCategoryAssetEntries(long categoryId) {
-		getService().clearAssetCategoryAssetEntries(categoryId);
-	}
-
 	public static void clearAssetTagAssetEntries(long tagId) {
 		getService().clearAssetTagAssetEntries(tagId);
 	}
@@ -127,32 +98,6 @@ public class AssetEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
-	}
-
-	public static void deleteAssetCategoryAssetEntries(
-		long categoryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-			assetEntries) {
-
-		getService().deleteAssetCategoryAssetEntries(categoryId, assetEntries);
-	}
-
-	public static void deleteAssetCategoryAssetEntries(
-		long categoryId, long[] entryIds) {
-
-		getService().deleteAssetCategoryAssetEntries(categoryId, entryIds);
-	}
-
-	public static void deleteAssetCategoryAssetEntry(
-		long categoryId, com.liferay.asset.kernel.model.AssetEntry assetEntry) {
-
-		getService().deleteAssetCategoryAssetEntry(categoryId, assetEntry);
-	}
-
-	public static void deleteAssetCategoryAssetEntry(
-		long categoryId, long entryId) {
-
-		getService().deleteAssetCategoryAssetEntry(categoryId, entryId);
 	}
 
 	/**
@@ -379,43 +324,6 @@ public class AssetEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getAncestorEntries(entryId);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getAssetCategoryAssetEntries(long categoryId) {
-
-		return getService().getAssetCategoryAssetEntries(categoryId);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getAssetCategoryAssetEntries(long categoryId, int start, int end) {
-
-		return getService().getAssetCategoryAssetEntries(
-			categoryId, start, end);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getAssetCategoryAssetEntries(
-			long categoryId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.asset.kernel.model.AssetEntry> orderByComparator) {
-
-		return getService().getAssetCategoryAssetEntries(
-			categoryId, start, end, orderByComparator);
-	}
-
-	public static int getAssetCategoryAssetEntriesCount(long categoryId) {
-		return getService().getAssetCategoryAssetEntriesCount(categoryId);
-	}
-
-	/**
-	 * Returns the categoryIds of the asset categories associated with the asset entry.
-	 *
-	 * @param entryId the entryId of the asset entry
-	 * @return long[] the categoryIds of asset categories associated with the asset entry
-	 */
-	public static long[] getAssetCategoryPrimaryKeys(long entryId) {
-		return getService().getAssetCategoryPrimaryKeys(entryId);
 	}
 
 	/**
@@ -669,16 +577,6 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getTopViewedEntries(className, asc, start, end);
 	}
 
-	public static boolean hasAssetCategoryAssetEntries(long categoryId) {
-		return getService().hasAssetCategoryAssetEntries(categoryId);
-	}
-
-	public static boolean hasAssetCategoryAssetEntry(
-		long categoryId, long entryId) {
-
-		return getService().hasAssetCategoryAssetEntry(categoryId, entryId);
-	}
-
 	public static boolean hasAssetTagAssetEntries(long tagId) {
 		return getService().hasAssetTagAssetEntries(tagId);
 	}
@@ -880,12 +778,6 @@ public class AssetEntryLocalServiceUtil {
 			companyId, groupIds, userId, className, classTypeId, userName,
 			title, description, assetCategoryIds, assetTagNames,
 			showNonindexable, statuses, andSearch);
-	}
-
-	public static void setAssetCategoryAssetEntries(
-		long categoryId, long[] entryIds) {
-
-		getService().setAssetCategoryAssetEntries(categoryId, entryIds);
 	}
 
 	public static void setAssetTagAssetEntries(long tagId, long[] entryIds) {

@@ -17,7 +17,6 @@ package com.liferay.portlet.asset.service.persistence.impl;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryTable;
-import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.petra.string.StringBundler;
@@ -5306,9 +5305,6 @@ public class AssetEntryPersistenceImpl
 
 	@Override
 	protected AssetEntry removeImpl(AssetEntry assetEntry) {
-		assetEntryToAssetCategoryTableMapper.deleteLeftPrimaryKeyTableMappings(
-			assetEntry.getPrimaryKey());
-
 		assetEntryToAssetTagTableMapper.deleteLeftPrimaryKeyTableMappings(
 			assetEntry.getPrimaryKey());
 
@@ -5785,337 +5781,6 @@ public class AssetEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the primaryKeys of asset categories associated with the asset entry.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @return long[] of the primaryKeys of asset categories associated with the asset entry
-	 */
-	@Override
-	public long[] getAssetCategoryPrimaryKeys(long pk) {
-		long[] pks = assetEntryToAssetCategoryTableMapper.getRightPrimaryKeys(
-			pk);
-
-		return pks.clone();
-	}
-
-	/**
-	 * Returns all the asset categories associated with the asset entry.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @return the asset categories associated with the asset entry
-	 */
-	@Override
-	public List<com.liferay.asset.kernel.model.AssetCategory>
-		getAssetCategories(long pk) {
-
-		return getAssetCategories(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	/**
-	 * Returns a range of all the asset categories associated with the asset entry.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of asset categories associated with the asset entry
-	 */
-	@Override
-	public List<com.liferay.asset.kernel.model.AssetCategory>
-		getAssetCategories(long pk, int start, int end) {
-
-		return getAssetCategories(pk, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories associated with the asset entry.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of asset categories associated with the asset entry
-	 */
-	@Override
-	public List<com.liferay.asset.kernel.model.AssetCategory>
-		getAssetCategories(
-			long pk, int start, int end,
-			OrderByComparator<com.liferay.asset.kernel.model.AssetCategory>
-				orderByComparator) {
-
-		return assetEntryToAssetCategoryTableMapper.getRightBaseModels(
-			pk, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of asset categories associated with the asset entry.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @return the number of asset categories associated with the asset entry
-	 */
-	@Override
-	public int getAssetCategoriesSize(long pk) {
-		long[] pks = assetEntryToAssetCategoryTableMapper.getRightPrimaryKeys(
-			pk);
-
-		return pks.length;
-	}
-
-	/**
-	 * Returns <code>true</code> if the asset category is associated with the asset entry.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategoryPK the primary key of the asset category
-	 * @return <code>true</code> if the asset category is associated with the asset entry; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean containsAssetCategory(long pk, long assetCategoryPK) {
-		return assetEntryToAssetCategoryTableMapper.containsTableMapping(
-			pk, assetCategoryPK);
-	}
-
-	/**
-	 * Returns <code>true</code> if the asset entry has any asset categories associated with it.
-	 *
-	 * @param pk the primary key of the asset entry to check for associations with asset categories
-	 * @return <code>true</code> if the asset entry has any asset categories associated with it; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean containsAssetCategories(long pk) {
-		if (getAssetCategoriesSize(pk) > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	/**
-	 * Adds an association between the asset entry and the asset category. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategoryPK the primary key of the asset category
-	 */
-	@Override
-	public void addAssetCategory(long pk, long assetCategoryPK) {
-		AssetEntry assetEntry = fetchByPrimaryKey(pk);
-
-		if (assetEntry == null) {
-			assetEntryToAssetCategoryTableMapper.addTableMapping(
-				CompanyThreadLocal.getCompanyId(), pk, assetCategoryPK);
-		}
-		else {
-			assetEntryToAssetCategoryTableMapper.addTableMapping(
-				assetEntry.getCompanyId(), pk, assetCategoryPK);
-		}
-	}
-
-	/**
-	 * Adds an association between the asset entry and the asset category. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategory the asset category
-	 */
-	@Override
-	public void addAssetCategory(
-		long pk, com.liferay.asset.kernel.model.AssetCategory assetCategory) {
-
-		AssetEntry assetEntry = fetchByPrimaryKey(pk);
-
-		if (assetEntry == null) {
-			assetEntryToAssetCategoryTableMapper.addTableMapping(
-				CompanyThreadLocal.getCompanyId(), pk,
-				assetCategory.getPrimaryKey());
-		}
-		else {
-			assetEntryToAssetCategoryTableMapper.addTableMapping(
-				assetEntry.getCompanyId(), pk, assetCategory.getPrimaryKey());
-		}
-	}
-
-	/**
-	 * Adds an association between the asset entry and the asset categories. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategoryPKs the primary keys of the asset categories
-	 */
-	@Override
-	public void addAssetCategories(long pk, long[] assetCategoryPKs) {
-		long companyId = 0;
-
-		AssetEntry assetEntry = fetchByPrimaryKey(pk);
-
-		if (assetEntry == null) {
-			companyId = CompanyThreadLocal.getCompanyId();
-		}
-		else {
-			companyId = assetEntry.getCompanyId();
-		}
-
-		assetEntryToAssetCategoryTableMapper.addTableMappings(
-			companyId, pk, assetCategoryPKs);
-	}
-
-	/**
-	 * Adds an association between the asset entry and the asset categories. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategories the asset categories
-	 */
-	@Override
-	public void addAssetCategories(
-		long pk,
-		List<com.liferay.asset.kernel.model.AssetCategory> assetCategories) {
-
-		addAssetCategories(
-			pk,
-			ListUtil.toLongArray(
-				assetCategories,
-				com.liferay.asset.kernel.model.AssetCategory.
-					CATEGORY_ID_ACCESSOR));
-	}
-
-	/**
-	 * Clears all associations between the asset entry and its asset categories. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry to clear the associated asset categories from
-	 */
-	@Override
-	public void clearAssetCategories(long pk) {
-		assetEntryToAssetCategoryTableMapper.deleteLeftPrimaryKeyTableMappings(
-			pk);
-	}
-
-	/**
-	 * Removes the association between the asset entry and the asset category. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategoryPK the primary key of the asset category
-	 */
-	@Override
-	public void removeAssetCategory(long pk, long assetCategoryPK) {
-		assetEntryToAssetCategoryTableMapper.deleteTableMapping(
-			pk, assetCategoryPK);
-	}
-
-	/**
-	 * Removes the association between the asset entry and the asset category. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategory the asset category
-	 */
-	@Override
-	public void removeAssetCategory(
-		long pk, com.liferay.asset.kernel.model.AssetCategory assetCategory) {
-
-		assetEntryToAssetCategoryTableMapper.deleteTableMapping(
-			pk, assetCategory.getPrimaryKey());
-	}
-
-	/**
-	 * Removes the association between the asset entry and the asset categories. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategoryPKs the primary keys of the asset categories
-	 */
-	@Override
-	public void removeAssetCategories(long pk, long[] assetCategoryPKs) {
-		assetEntryToAssetCategoryTableMapper.deleteTableMappings(
-			pk, assetCategoryPKs);
-	}
-
-	/**
-	 * Removes the association between the asset entry and the asset categories. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategories the asset categories
-	 */
-	@Override
-	public void removeAssetCategories(
-		long pk,
-		List<com.liferay.asset.kernel.model.AssetCategory> assetCategories) {
-
-		removeAssetCategories(
-			pk,
-			ListUtil.toLongArray(
-				assetCategories,
-				com.liferay.asset.kernel.model.AssetCategory.
-					CATEGORY_ID_ACCESSOR));
-	}
-
-	/**
-	 * Sets the asset categories associated with the asset entry, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategoryPKs the primary keys of the asset categories to be associated with the asset entry
-	 */
-	@Override
-	public void setAssetCategories(long pk, long[] assetCategoryPKs) {
-		Set<Long> newAssetCategoryPKsSet = SetUtil.fromArray(assetCategoryPKs);
-		Set<Long> oldAssetCategoryPKsSet = SetUtil.fromArray(
-			assetEntryToAssetCategoryTableMapper.getRightPrimaryKeys(pk));
-
-		Set<Long> removeAssetCategoryPKsSet = new HashSet<Long>(
-			oldAssetCategoryPKsSet);
-
-		removeAssetCategoryPKsSet.removeAll(newAssetCategoryPKsSet);
-
-		assetEntryToAssetCategoryTableMapper.deleteTableMappings(
-			pk, ArrayUtil.toLongArray(removeAssetCategoryPKsSet));
-
-		newAssetCategoryPKsSet.removeAll(oldAssetCategoryPKsSet);
-
-		long companyId = 0;
-
-		AssetEntry assetEntry = fetchByPrimaryKey(pk);
-
-		if (assetEntry == null) {
-			companyId = CompanyThreadLocal.getCompanyId();
-		}
-		else {
-			companyId = assetEntry.getCompanyId();
-		}
-
-		assetEntryToAssetCategoryTableMapper.addTableMappings(
-			companyId, pk, ArrayUtil.toLongArray(newAssetCategoryPKsSet));
-	}
-
-	/**
-	 * Sets the asset categories associated with the asset entry, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the asset entry
-	 * @param assetCategories the asset categories to be associated with the asset entry
-	 */
-	@Override
-	public void setAssetCategories(
-		long pk,
-		List<com.liferay.asset.kernel.model.AssetCategory> assetCategories) {
-
-		try {
-			long[] assetCategoryPKs = new long[assetCategories.size()];
-
-			for (int i = 0; i < assetCategories.size(); i++) {
-				com.liferay.asset.kernel.model.AssetCategory assetCategory =
-					assetCategories.get(i);
-
-				assetCategoryPKs[i] = assetCategory.getPrimaryKey();
-			}
-
-			setAssetCategories(pk, assetCategoryPKs);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-	}
-
-	/**
 	 * Returns the primaryKeys of asset tags associated with the asset entry.
 	 *
 	 * @param pk the primary key of the asset entry
@@ -6515,7 +6180,6 @@ public class AssetEntryPersistenceImpl
 		ctStrictColumnNames.add("height");
 		ctStrictColumnNames.add("width");
 		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("categories");
 		ctStrictColumnNames.add("tags");
 
 		_ctColumnNamesMap.put(
@@ -6528,7 +6192,6 @@ public class AssetEntryPersistenceImpl
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
-		_mappingTableNames.add("AssetEntries_AssetCategories");
 		_mappingTableNames.add("AssetEntries_AssetTags");
 
 		_uniqueIndexColumnNames.add(new String[] {"classNameId", "classPK"});
@@ -6545,11 +6208,6 @@ public class AssetEntryPersistenceImpl
 			HashMapBuilder.<String, Object>put(
 				"model.class.name", AssetEntry.class.getName()
 			).build());
-
-		assetEntryToAssetCategoryTableMapper =
-			TableMapperFactory.getTableMapper(
-				"AssetEntries_AssetCategories", "companyId", "entryId",
-				"categoryId", this, assetCategoryPersistence);
 
 		assetEntryToAssetTagTableMapper = TableMapperFactory.getTableMapper(
 			"AssetEntries_AssetTags", "companyId", "entryId", "tagId", this,
@@ -6767,16 +6425,8 @@ public class AssetEntryPersistenceImpl
 			serviceRegistration.unregister();
 		}
 
-		TableMapperFactory.removeTableMapper("AssetEntries_AssetCategories");
 		TableMapperFactory.removeTableMapper("AssetEntries_AssetTags");
 	}
-
-	@BeanReference(type = AssetCategoryPersistence.class)
-	protected AssetCategoryPersistence assetCategoryPersistence;
-
-	protected TableMapper
-		<AssetEntry, com.liferay.asset.kernel.model.AssetCategory>
-			assetEntryToAssetCategoryTableMapper;
 
 	@BeanReference(type = AssetTagPersistence.class)
 	protected AssetTagPersistence assetTagPersistence;

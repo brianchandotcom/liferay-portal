@@ -71,15 +71,6 @@ public interface AssetEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the asset entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AssetEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public void addAssetCategoryAssetEntries(
-		long categoryId, List<AssetEntry> assetEntries);
-
-	public void addAssetCategoryAssetEntries(long categoryId, long[] entryIds);
-
-	public void addAssetCategoryAssetEntry(
-		long categoryId, AssetEntry assetEntry);
-
-	public void addAssetCategoryAssetEntry(long categoryId, long entryId);
 
 	/**
 	 * Adds the asset entry to the database. Also notifies the appropriate model listeners.
@@ -103,8 +94,6 @@ public interface AssetEntryLocalService
 
 	public void addAssetTagAssetEntry(long tagId, long entryId);
 
-	public void clearAssetCategoryAssetEntries(long categoryId);
-
 	public void clearAssetTagAssetEntries(long tagId);
 
 	/**
@@ -121,17 +110,6 @@ public interface AssetEntryLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
-
-	public void deleteAssetCategoryAssetEntries(
-		long categoryId, List<AssetEntry> assetEntries);
-
-	public void deleteAssetCategoryAssetEntries(
-		long categoryId, long[] entryIds);
-
-	public void deleteAssetCategoryAssetEntry(
-		long categoryId, AssetEntry assetEntry);
-
-	public void deleteAssetCategoryAssetEntry(long categoryId, long entryId);
 
 	/**
 	 * Deletes the asset entry from the database. Also notifies the appropriate model listeners.
@@ -275,30 +253,6 @@ public interface AssetEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetEntry> getAncestorEntries(long entryId)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getAssetCategoryAssetEntries(long categoryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getAssetCategoryAssetEntries(
-		long categoryId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getAssetCategoryAssetEntries(
-		long categoryId, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetCategoryAssetEntriesCount(long categoryId);
-
-	/**
-	 * Returns the categoryIds of the asset categories associated with the asset entry.
-	 *
-	 * @param entryId the entryId of the asset entry
-	 * @return long[] the categoryIds of asset categories associated with the asset entry
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getAssetCategoryPrimaryKeys(long entryId);
 
 	/**
 	 * Returns a range of all the asset entries.
@@ -457,12 +411,6 @@ public interface AssetEntryLocalService
 		String[] className, boolean asc, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasAssetCategoryAssetEntries(long categoryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasAssetCategoryAssetEntry(long categoryId, long entryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasAssetTagAssetEntries(long tagId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -578,8 +526,6 @@ public interface AssetEntryLocalService
 		long classTypeId, String userName, String title, String description,
 		String assetCategoryIds, String assetTagNames, boolean showNonindexable,
 		int[] statuses, boolean andSearch);
-
-	public void setAssetCategoryAssetEntries(long categoryId, long[] entryIds);
 
 	public void setAssetTagAssetEntries(long tagId, long[] entryIds);
 

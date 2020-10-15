@@ -93,16 +93,6 @@ public interface AssetCategoryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetCategory addAssetCategory(AssetCategory assetCategory);
 
-	public void addAssetEntryAssetCategories(
-		long entryId, List<AssetCategory> assetCategories);
-
-	public void addAssetEntryAssetCategories(long entryId, long[] categoryIds);
-
-	public void addAssetEntryAssetCategory(
-		long entryId, AssetCategory assetCategory);
-
-	public void addAssetEntryAssetCategory(long entryId, long categoryId);
-
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetCategory addCategory(
 			long userId, long groupId, long parentCategoryId,
@@ -124,8 +114,6 @@ public interface AssetCategoryLocalService
 	public void addCategoryResources(
 			AssetCategory category, ModelPermissions modelPermissions)
 		throws PortalException;
-
-	public void clearAssetEntryAssetCategories(long entryId);
 
 	/**
 	 * Creates a new asset category with the primary key. Does not add the asset category to the database.
@@ -169,17 +157,6 @@ public interface AssetCategoryLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public AssetCategory deleteAssetCategory(long categoryId)
 		throws PortalException;
-
-	public void deleteAssetEntryAssetCategories(
-		long entryId, List<AssetCategory> assetCategories);
-
-	public void deleteAssetEntryAssetCategories(
-		long entryId, long[] categoryIds);
-
-	public void deleteAssetEntryAssetCategory(
-		long entryId, AssetCategory assetCategory);
-
-	public void deleteAssetEntryAssetCategory(long entryId, long categoryId);
 
 	public void deleteCategories(List<AssetCategory> categories)
 		throws PortalException;
@@ -384,30 +361,6 @@ public interface AssetCategoryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetCategory> getAssetEntryAssetCategories(long entryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetCategory> getAssetEntryAssetCategories(
-		long entryId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetCategory> getAssetEntryAssetCategories(
-		long entryId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetEntryAssetCategoriesCount(long entryId);
-
-	/**
-	 * Returns the entryIds of the asset entries associated with the asset category.
-	 *
-	 * @param categoryId the categoryId of the asset category
-	 * @return long[] the entryIds of asset entries associated with the asset category
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getAssetEntryPrimaryKeys(long categoryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetCategory> getCategories();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -507,12 +460,6 @@ public interface AssetCategoryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVocabularyRootCategoriesCount(long vocabularyId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasAssetEntryAssetCategories(long entryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasAssetEntryAssetCategory(long entryId, long categoryId);
-
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetCategory mergeCategories(long fromCategoryId, long toCategoryId)
 		throws PortalException;
@@ -551,8 +498,6 @@ public interface AssetCategoryLocalService
 			long companyId, long[] groupIds, String title, long[] vocabularyIds,
 			long[] parentCategoryIds, int start, int end, Sort sort)
 		throws PortalException;
-
-	public void setAssetEntryAssetCategories(long entryId, long[] categoryIds);
 
 	/**
 	 * Updates the asset category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

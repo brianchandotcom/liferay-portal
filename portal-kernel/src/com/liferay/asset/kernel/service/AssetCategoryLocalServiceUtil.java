@@ -52,33 +52,6 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().addAssetCategory(assetCategory);
 	}
 
-	public static void addAssetEntryAssetCategories(
-		long entryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetCategory>
-			assetCategories) {
-
-		getService().addAssetEntryAssetCategories(entryId, assetCategories);
-	}
-
-	public static void addAssetEntryAssetCategories(
-		long entryId, long[] categoryIds) {
-
-		getService().addAssetEntryAssetCategories(entryId, categoryIds);
-	}
-
-	public static void addAssetEntryAssetCategory(
-		long entryId,
-		com.liferay.asset.kernel.model.AssetCategory assetCategory) {
-
-		getService().addAssetEntryAssetCategory(entryId, assetCategory);
-	}
-
-	public static void addAssetEntryAssetCategory(
-		long entryId, long categoryId) {
-
-		getService().addAssetEntryAssetCategory(entryId, categoryId);
-	}
-
 	public static com.liferay.asset.kernel.model.AssetCategory addCategory(
 			long userId, long groupId, long parentCategoryId,
 			java.util.Map<java.util.Locale, String> titleMap,
@@ -117,10 +90,6 @@ public class AssetCategoryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().addCategoryResources(category, modelPermissions);
-	}
-
-	public static void clearAssetEntryAssetCategories(long entryId) {
-		getService().clearAssetEntryAssetCategories(entryId);
 	}
 
 	/**
@@ -178,33 +147,6 @@ public class AssetCategoryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteAssetCategory(categoryId);
-	}
-
-	public static void deleteAssetEntryAssetCategories(
-		long entryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetCategory>
-			assetCategories) {
-
-		getService().deleteAssetEntryAssetCategories(entryId, assetCategories);
-	}
-
-	public static void deleteAssetEntryAssetCategories(
-		long entryId, long[] categoryIds) {
-
-		getService().deleteAssetEntryAssetCategories(entryId, categoryIds);
-	}
-
-	public static void deleteAssetEntryAssetCategory(
-		long entryId,
-		com.liferay.asset.kernel.model.AssetCategory assetCategory) {
-
-		getService().deleteAssetEntryAssetCategory(entryId, assetCategory);
-	}
-
-	public static void deleteAssetEntryAssetCategory(
-		long entryId, long categoryId) {
-
-		getService().deleteAssetEntryAssetCategory(entryId, categoryId);
 	}
 
 	public static void deleteCategories(
@@ -495,43 +437,6 @@ public class AssetCategoryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory>
-		getAssetEntryAssetCategories(long entryId) {
-
-		return getService().getAssetEntryAssetCategories(entryId);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory>
-		getAssetEntryAssetCategories(long entryId, int start, int end) {
-
-		return getService().getAssetEntryAssetCategories(entryId, start, end);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory>
-		getAssetEntryAssetCategories(
-			long entryId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.asset.kernel.model.AssetCategory>
-					orderByComparator) {
-
-		return getService().getAssetEntryAssetCategories(
-			entryId, start, end, orderByComparator);
-	}
-
-	public static int getAssetEntryAssetCategoriesCount(long entryId) {
-		return getService().getAssetEntryAssetCategoriesCount(entryId);
-	}
-
-	/**
-	 * Returns the entryIds of the asset entries associated with the asset category.
-	 *
-	 * @param categoryId the categoryId of the asset category
-	 * @return long[] the entryIds of asset entries associated with the asset category
-	 */
-	public static long[] getAssetEntryPrimaryKeys(long categoryId) {
-		return getService().getAssetEntryPrimaryKeys(categoryId);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory>
 		getCategories() {
 
 		return getService().getCategories();
@@ -709,16 +614,6 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().getVocabularyRootCategoriesCount(vocabularyId);
 	}
 
-	public static boolean hasAssetEntryAssetCategories(long entryId) {
-		return getService().hasAssetEntryAssetCategories(entryId);
-	}
-
-	public static boolean hasAssetEntryAssetCategory(
-		long entryId, long categoryId) {
-
-		return getService().hasAssetEntryAssetCategory(entryId, categoryId);
-	}
-
 	public static com.liferay.asset.kernel.model.AssetCategory mergeCategories(
 			long fromCategoryId, long toCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -786,12 +681,6 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().searchCategories(
 			companyId, groupIds, title, vocabularyIds, parentCategoryIds, start,
 			end, sort);
-	}
-
-	public static void setAssetEntryAssetCategories(
-		long entryId, long[] categoryIds) {
-
-		getService().setAssetEntryAssetCategories(entryId, categoryIds);
 	}
 
 	/**

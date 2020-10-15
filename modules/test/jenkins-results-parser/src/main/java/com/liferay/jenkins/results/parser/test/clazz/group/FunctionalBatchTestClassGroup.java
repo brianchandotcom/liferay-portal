@@ -40,24 +40,24 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
 	public int getAxisCount() {
-		if (!isStableTestSuiteBatch() && testRelevantIntegrationUnitOnly) {
-			return 0;
+		if (axisTestClassGroups.isEmpty()) {
+			setAxisTestClassGroups();
 		}
 
-		return super.getAxisCount();
-	}
-
-	@Override
-	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
-		if (axisId != 0) {
-			throw new IllegalArgumentException("axisId is not 0");
-		}
-
-		return super.getAxisTestClassGroup(axisId);
+		return axisTestClassGroups.size();
 	}
 
 	public String getRelevantTestBatchRunPropertyQuery() {
 		return _relevantTestBatchRunPropertyQuery;
+	}
+
+	@Override
+	public int getSegmentCount() {
+		if (segmentTestClassGroups.isEmpty()) {
+			setSegmentTestClassGroups();
+		}
+
+		return segmentTestClassGroups.size();
 	}
 
 	public static class FunctionalTestClass extends BaseTestClass {

@@ -10,6 +10,12 @@ definition {
 		Navigator.gotoNavNested(navNested = "Display Settings");
 	}
 
+	macro gotoAlertsAndAnnouncementsDelivery {
+		UserNavigator.gotoPreferences();
+
+		Navigator.gotoNavNested(navNested = "Alerts and Announcements Delivery");
+	}
+
 	macro gotoEdit {
 		Click.waitForMenuToggleJSClick(
 			key_rowEntry = "${rowEntry}",

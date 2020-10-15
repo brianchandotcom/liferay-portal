@@ -139,7 +139,7 @@ public class DDMForm implements Serializable {
 
 			if (includeNestedDDMFormFields) {
 				ddmFormFieldsReferencesMap.putAll(
-					ddmFormField.getNestedDDMFormFieldsMap());
+					ddmFormField.getNestedDDMFormFieldsReferencesMap());
 			}
 		}
 
@@ -195,7 +195,8 @@ public class DDMForm implements Serializable {
 
 			if (includeNestedDDMFormFields) {
 				ddmFormFieldsReferencesMap.putAll(
-					ddmFormField.getNontransientNestedDDMFormFieldsMap());
+					ddmFormField.
+						getNontransientNestedDDMFormFieldsReferencesMap());
 			}
 		}
 

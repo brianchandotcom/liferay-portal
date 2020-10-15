@@ -18,6 +18,7 @@ import com.google.common.collect.Lists;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.poshi.core.PoshiContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +27,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Yi-Chen Tsai
@@ -52,6 +55,45 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 	public String getRelevantTestBatchRunPropertyQuery() {
 		return _relevantTestBatchRunPropertyQuery;
+	}
+
+	public static class FunctionalTestClass extends BaseTestClass {
+
+		public String getTestClassMethodName() {
+			return _testClassMethodName;
+		}
+
+		protected static FunctionalTestClass getInstance(
+			String testClassMethodName) {
+
+			return new FunctionalTestClass(testClassMethodName);
+		}
+
+		protected FunctionalTestClass(String testClassMethodName) {
+			super(_getTestClassFile(testClassMethodName));
+
+			addTestClassMethod(testClassMethodName);
+
+			_testClassMethodName = testClassMethodName;
+		}
+
+		private static File _getTestClassFile(String testClassMethodName) {
+			Matcher matcher = _poshiTestCasePattern.matcher(
+				testClassMethodName);
+
+			if (!matcher.find()) {
+				throw new RuntimeException(
+					"Invalid test class method name " + testClassMethodName);
+			}
+
+			return new File(
+				PoshiContext.getFilePathFromFileName(
+					matcher.group("className") + ".testcase",
+					matcher.group("namespace")));
+		}
+
+		private final String _testClassMethodName;
+
 	}
 
 	protected FunctionalBatchTestClassGroup(
@@ -239,6 +281,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 					_relevantTestBatchRunPropertyQuery, ")");
 		}
 	}
+
+	private static final Pattern _poshiTestCasePattern = Pattern.compile(
+		"(?<namespace>[^\\.]+)\\.(?<className>[^\\#]+)\\#(?<methodName>.*)");
 
 	private String _relevantTestBatchRunPropertyQuery;
 

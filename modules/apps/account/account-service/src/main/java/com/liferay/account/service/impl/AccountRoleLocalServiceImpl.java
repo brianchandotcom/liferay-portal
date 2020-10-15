@@ -191,12 +191,12 @@ public class AccountRoleLocalServiceImpl
 				Collections.<AccountRole>emptyList(), 0);
 		}
 
+		List<AccountRole> accountRoles = TransformUtil.transform(
+			roleLocalService.<Role>dynamicQuery(roleDynamicQuery, start, end),
+			userGroupRole -> getAccountRoleByRoleId(userGroupRole.getRoleId()));
+
 		return new BaseModelSearchResult<>(
-			TransformUtil.transform(
-				roleLocalService.<Role>dynamicQuery(
-					roleDynamicQuery, start, end),
-				userGroupRole -> getAccountRoleByRoleId(
-					userGroupRole.getRoleId())),
+			accountRoles,
 			(int)roleLocalService.dynamicQueryCount(
 				_getRoleDynamicQuery(
 					companyId, accountEntryIds, keywords, null)));

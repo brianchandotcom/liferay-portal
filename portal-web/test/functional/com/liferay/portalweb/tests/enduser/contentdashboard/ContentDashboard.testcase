@@ -163,7 +163,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Test Site Name",
-			title = "WC Title");
+			title = "WC Title Approved");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
@@ -175,12 +175,41 @@ definition {
 		ContentDashboard.filterByStatusApproved();
 
 		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_TAGS",
-			value1 = "WC Title");
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title Approved");
 
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
-			title = "WC Title");
+			title = "WC Title Approved");
+	}
+
+	@description = "Validate if the user can filter by Status: Draft"
+	@priority = "5"
+	test ContentDashboardFilterByStatusDraft {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC Title Draft",
+			workflowAction = "DRAFT");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.filterByStatusDraft();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title Draft");
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title Draft");
 	}
 
 	@description = "Validate if the user can filter by tag"

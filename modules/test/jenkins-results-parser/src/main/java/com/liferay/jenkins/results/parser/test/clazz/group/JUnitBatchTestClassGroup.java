@@ -495,7 +495,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				return;
 			}
 
-			axisTestClassGroups.add(0, new AxisTestClassGroup(this));
+			axisTestClassGroups.add(
+				0, TestClassGroupFactory.newAxisTestClassGroup(this));
 		}
 		else {
 			int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
@@ -503,8 +504,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			for (List<TestClassGroup.TestClass> axisTestClasses :
 					Lists.partition(testClasses, axisSize)) {
 
-				AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-					this);
+				AxisTestClassGroup axisTestClassGroup =
+					TestClassGroupFactory.newAxisTestClassGroup(this);
 
 				for (TestClassGroup.TestClass axisTestClass : axisTestClasses) {
 					axisTestClassGroup.addTestClass(axisTestClass);

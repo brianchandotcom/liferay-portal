@@ -22,6 +22,17 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
  */
 public class TestClassGroupFactory {
 
+	public static AxisTestClassGroup newAxisTestClassGroup(
+		BatchTestClassGroup batchTestClassGroup) {
+
+		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
+			return new FunctionalAxisTestClassGroup(
+				(FunctionalBatchTestClassGroup)batchTestClassGroup);
+		}
+
+		return new AxisTestClassGroup(batchTestClassGroup);
+	}
+
 	public static BatchTestClassGroup newBatchTestClassGroup(
 		String batchName, BatchTestClassGroup.BuildProfile buildProfile,
 		Job job) {
@@ -95,6 +106,17 @@ public class TestClassGroupFactory {
 		}
 
 		throw new IllegalArgumentException("Unknown test class group");
+	}
+
+	public static SegmentTestClassGroup newSegmentTestClassGroup(
+		BatchTestClassGroup batchTestClassGroup) {
+
+		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
+			return new FunctionalSegmentTestClassGroup(
+				(FunctionalBatchTestClassGroup)batchTestClassGroup);
+		}
+
+		return new SegmentTestClassGroup(batchTestClassGroup);
 	}
 
 }

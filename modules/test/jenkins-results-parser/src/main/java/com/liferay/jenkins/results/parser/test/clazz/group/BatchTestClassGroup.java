@@ -454,8 +454,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		for (List<TestClass> axisTestClasses :
 				Lists.partition(testClasses, axisSize)) {
 
-			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-				this);
+			AxisTestClassGroup axisTestClassGroup =
+				TestClassGroupFactory.newAxisTestClassGroup(this);
 
 			for (TestClass axisTestClass : axisTestClasses) {
 				axisTestClassGroup.addTestClass(axisTestClass);
@@ -485,7 +485,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				Lists.partition(axisTestClassGroups, segmentSize)) {
 
 			SegmentTestClassGroup segmentTestClassGroup =
-				new SegmentTestClassGroup(this);
+				TestClassGroupFactory.newSegmentTestClassGroup(this);
 
 			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
 				segmentTestClassGroup.addAxisTestClassGroup(axisTestClassGroup);

@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -138,7 +137,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			}
 
 			AxisTestClassGroup axisTestClassGroup =
-				new FunctionalAxisTestClassGroup(this);
+				TestClassGroupFactory.newAxisTestClassGroup(this);
 
 			for (String testClassMethodName : poshiTestClassGroup) {
 				Matcher matcher = _poshiTestCasePattern.matcher(
@@ -194,7 +193,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 						axisTestClassGroupsMapValue, getSegmentMaxChildren())) {
 
 				SegmentTestClassGroup segmentTestClassGroup =
-					new FunctionalSegmentTestClassGroup(this);
+					TestClassGroupFactory.newSegmentTestClassGroup(this);
 
 				for (AxisTestClassGroup axisTestClassGroup :
 						axisTestClassGroups) {

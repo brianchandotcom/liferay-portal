@@ -318,6 +318,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0000",
+                "fieldReference": "name0000",
                 "instanceId": "Any<String>",
                 "label": "Radio Field",
                 "localizedValue": Object {},
@@ -401,6 +402,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0010",
+                "fieldReference": "name0010",
                 "instanceId": "Any<String>",
                 "label": "copy-of-x",
                 "localizedValue": Object {},
@@ -488,6 +490,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0020",
+                "fieldReference": "name0020",
                 "instanceId": "Any<String>",
                 "label": "Text Field 1",
                 "localizedValue": Object {},
@@ -504,6 +507,7 @@ Array [
               },
               Object {
                 "fieldName": "name1020",
+                "fieldReference": "name1020",
                 "instanceId": "Any<String>",
                 "label": "Text Field 2",
                 "localizedValue": Object {},
@@ -525,6 +529,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0120",
+                "fieldReference": "name0120",
                 "instanceId": "Any<String>",
                 "label": "Select Field",
                 "localizedValue": Object {},
@@ -563,6 +568,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0030",
+                "fieldReference": "name0030",
                 "instanceId": "Any<String>",
                 "label": "Date Field",
                 "localizedValue": Object {},
@@ -588,6 +594,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0040",
+                "fieldReference": "name0040",
                 "instanceId": "Any<String>",
                 "label": "Numeric Field",
                 "localizedValue": Object {},

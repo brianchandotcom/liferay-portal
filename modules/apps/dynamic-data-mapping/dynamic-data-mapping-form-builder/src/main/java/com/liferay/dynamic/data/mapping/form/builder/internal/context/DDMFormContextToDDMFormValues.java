@@ -123,10 +123,14 @@ public class DDMFormContextToDDMFormValues
 					DDMFormFieldValue ddmFormFieldValue =
 						new DDMFormFieldValue();
 
+					String fieldReference = fieldJSONObject.getString(
+						"fieldReference");
+
 					String name = fieldJSONObject.getString("fieldName");
 
 					String instanceId = fieldJSONObject.getString("instanceId");
 
+					ddmFormFieldValue.setFieldReference(fieldReference);
 					ddmFormFieldValue.setName(name);
 					ddmFormFieldValue.setInstanceId(instanceId);
 

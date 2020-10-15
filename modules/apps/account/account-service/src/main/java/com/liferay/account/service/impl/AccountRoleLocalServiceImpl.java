@@ -255,6 +255,9 @@ public class AccountRoleLocalServiceImpl
 				RestrictionsFactoryUtil.ilike(
 					"description",
 					StringUtil.quote(keywords, StringPool.PERCENT)));
+			disjunction.add(
+				RestrictionsFactoryUtil.ilike(
+					"title", StringUtil.quote(keywords, StringPool.PERCENT)));
 
 			roleDynamicQuery.add(disjunction);
 		}

@@ -27,6 +27,10 @@ public class FinderCacheUtil {
 		_finderCache.clearCache();
 	}
 
+	public static void clearCache(Class<?> clazz) {
+		_finderCache.clearCache(clazz);
+	}
+
 	public static void clearCache(String className) {
 		_finderCache.clearCache(className);
 	}

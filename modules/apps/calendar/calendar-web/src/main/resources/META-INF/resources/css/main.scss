@@ -137,24 +137,6 @@
 		text-align: center;
 	}
 
-	.lfr-discussion-editor {
-		.button-holder.dialog-footer {
-			bottom: 0;
-			display: block;
-			left: unset;
-			padding: 10px 0;
-			position: relative;
-
-			.btn {
-				margin-left: 0;
-			}
-		}
-	}
-
-	.portlet-body .panel {
-		padding: 1rem;
-	}
-
 	@include media-breakpoint-between(md, lg) {
 		.calendar-portlet-column-parent {
 			.calendar-portlet-column-grid,
@@ -195,8 +177,26 @@
 		}
 	}
 
+	.lfr-discussion-editor {
+		.button-holder.dialog-footer {
+			bottom: 0;
+			display: block;
+			left: unset;
+			padding: 10px 0;
+			position: relative;
+
+			.btn {
+				margin-left: 0;
+			}
+		}
+	}
+
 	.modal-title {
 		text-transform: capitalize;
+	}
+
+	.portlet-body .panel {
+		padding: 1rem;
 	}
 
 	.scheduler-event-content,

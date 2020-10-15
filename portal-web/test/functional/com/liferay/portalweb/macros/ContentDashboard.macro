@@ -158,6 +158,24 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro filterBySiteGlobal {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_SITE_OPTION");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Click(locator1 = "ContentDashboard#MY_SITES_TAB");
+
+		Click(locator1 = "ContentDashboard#GLOBAL_SITE_CARD");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro filterByStatusAny {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(

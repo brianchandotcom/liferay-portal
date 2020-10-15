@@ -78,6 +78,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_BY_SITE_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Site or Asset Library')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_BY_STATUS_ANY_OPTION</td>
 	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Any')]</td>
 	<td></td>
@@ -123,6 +128,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GLOBAL_SITE_CARD</td>
+	<td>//*[contains(@class, 'card')]//*[contains(@data-groupdescriptivename, 'Global')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_OPTION</td>
 	<td>//*[contains(@data-action, 'showInfo')]</td>
 	<td></td>
@@ -130,6 +140,11 @@
 <tr>
 	<td>INFO_PANEL_TITLE</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(text(),'Content Info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_SITES_TAB</td>
+	<td>//*[contains(@class, 'nav-link') and contains(text(),'My Sites')]</td>
 	<td></td>
 </tr>
 <tr>

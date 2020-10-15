@@ -155,6 +155,34 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
+	@description = "Validate if the user can filter by Site"
+	@priority = "5"
+	test ContentDashboardFilterBySite {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Global",
+			title = "WC Title Global");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.filterBySiteGlobal();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title Global");
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title Global");
+	}
+
 	@description = "Validate if the user can filter by Status: Any"
 	@priority = "5"
 	test ContentDashboardFilterByStatusAny {
@@ -298,9 +326,13 @@ definition {
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 			value1 = "WC Title Scheduled");
 
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title Scheduled");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title Scheduled");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title Scheduled");
 	}
 
 	@description = "Validate if the user can filter by tag"

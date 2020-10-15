@@ -97,14 +97,6 @@ public class FinderCacheImpl
 		portalCache.removeAll();
 	}
 
-	public void clearCacheByEntityCache(Class<?> clazz) {
-		String cacheName = clazz.getName();
-
-		clearCache(cacheName);
-		clearCache(_getCacheNameWithPagination(cacheName));
-		clearCache(_getCacheNameWithoutPagination(cacheName));
-	}
-
 	@Override
 	public void clearLocalCache() {
 		if (_isLocalCacheEnabled()) {
@@ -291,10 +283,12 @@ public class FinderCacheImpl
 	}
 
 	public void removeByEntityCache(Class<?> clazz, BaseModel<?> baseModel) {
+		clearLocalCache();
+
 		String cacheName = clazz.getName();
 
-		clearCache(_getCacheNameWithPagination(cacheName));
-		clearCache(_getCacheNameWithoutPagination(cacheName));
+		_clearCache(_getCacheNameWithPagination(cacheName));
+		_clearCache(_getCacheNameWithoutPagination(cacheName));
 
 		for (FinderPath finderPath : _getFinderPaths(cacheName)) {
 			removeResult(
@@ -333,9 +327,11 @@ public class FinderCacheImpl
 			return;
 		}
 
+		clearLocalCache();
+
 		String cacheName = clazz.getName();
 
-		clearCache(_getCacheNameWithPagination(cacheName));
+		_clearCache(_getCacheNameWithPagination(cacheName));
 
 		for (FinderPath finderPath :
 				_getFinderPaths(_getCacheNameWithoutPagination(cacheName))) {

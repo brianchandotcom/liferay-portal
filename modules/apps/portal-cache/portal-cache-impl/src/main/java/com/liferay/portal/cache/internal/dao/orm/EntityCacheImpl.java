@@ -72,7 +72,7 @@ public class EntityCacheImpl
 
 	@Override
 	public void clearCache(Class<?> clazz) {
-		_finderCacheImpl.clearCacheByEntityCache(clazz);
+		_finderCacheImpl.clearCache(clazz);
 
 		clearLocalCache();
 

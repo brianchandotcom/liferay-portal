@@ -100,7 +100,7 @@ public class DispatchTalendScreenNavigationCategory
 		throws IOException {
 
 		httpServletRequest.setAttribute(
-			"talendDispatchTaskExecutorHelper",
+			TalendDispatchTaskExecutorHelper.class.getName(),
 			_talendDispatchTaskExecutorHelper);
 
 		_jspRenderer.renderJSP(

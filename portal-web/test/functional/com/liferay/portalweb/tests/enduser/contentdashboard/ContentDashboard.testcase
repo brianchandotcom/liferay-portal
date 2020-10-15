@@ -72,7 +72,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		ContentDashboard.filterByAuthorTable();
+		ContentDashboard.filterByAuthorTable(filterOption = "Author");
 
 		Pause(locator1 = "3000");
 
@@ -82,7 +82,7 @@ definition {
 
 		ContentDashboard.clearFilters();
 
-		ContentDashboard.filterByAuthorList();
+		ContentDashboard.filterByAuthorList(filterOption = "Author");
 
 		Pause(locator1 = "3000");
 
@@ -92,7 +92,7 @@ definition {
 
 		ContentDashboard.clearFilters();
 
-		ContentDashboard.filterByAuthorCard();
+		ContentDashboard.filterByAuthorCard(filterOption = "Author");
 
 		Pause(locator1 = "3000");
 
@@ -136,7 +136,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		ContentDashboard.filterByCategory();
+		ContentDashboard.filterByCategory(filterOption = "Categories");
 
 		Pause(locator1 = "3000");
 
@@ -172,7 +172,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.filterBySiteGlobal();
+		ContentDashboard.filterBySiteGlobal(filterOption = "Site or Asset Library");
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -206,7 +206,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.filterByStatusAny();
+		ContentDashboard.filterByStatusAny(filterOption = "Any");
 
 		ContentDashboard.searchValue(webContentTitle = "WC Title Approved");
 
@@ -250,7 +250,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.filterByStatusApproved();
+		ContentDashboard.filterByStatusApproved(filterOption = "Approved");
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -279,7 +279,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.filterByStatusDraft();
+		ContentDashboard.filterByStatusDraft(filterOption = "Draft");
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -320,7 +320,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.filterByStatusScheduled();
+		ContentDashboard.filterByStatusScheduled(filterOption = "Scheduled");
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -356,7 +356,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.filterByTag();
+		ContentDashboard.filterByTag(filterOption = "Tags");
 
 		ContentDashboard.searchValue(webContentTitle = "Web Content Title");
 
@@ -412,7 +412,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.orderByModificationDate();
+		ContentDashboard.orderByModificationDate(filterOption = "Modified Date");
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -456,7 +456,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.orderByTitle();
+		ContentDashboard.orderByTitle(filterOption = "Title");
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",

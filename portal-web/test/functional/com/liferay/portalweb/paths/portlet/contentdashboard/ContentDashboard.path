@@ -63,53 +63,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_BY_AUTHOR_OPTION</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Author')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_CATEGORY_OPTION</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Categories')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_MODIFICATION_DATE_OPTION</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Modified Date')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_SITE_OPTION</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Site or Asset Library')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_STATUS_ANY_OPTION</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Any')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_STATUS_APPROVED_OPTION</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Approved')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_STATUS_DRAFT_OPTION</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Draft')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_STATUS_SCHEDULED_OPTION</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Scheduled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_TAG_OPTION</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Tags')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_TITLE_OPTION</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Title')]</td>
+	<td>FILTER_BY_OPTION</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'${filterOption}')]</td>
 	<td></td>
 </tr>
 <tr>

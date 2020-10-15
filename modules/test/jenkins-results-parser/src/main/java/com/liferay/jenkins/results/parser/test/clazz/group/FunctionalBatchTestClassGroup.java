@@ -16,7 +16,10 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.google.common.collect.Lists;
 
+import com.liferay.jenkins.results.parser.AntException;
+import com.liferay.jenkins.results.parser.AntUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.poshi.core.PoshiContext;
 
@@ -102,9 +105,71 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, buildProfile, portalTestClassJob);
 
-		axisTestClassGroups.add(0, new AxisTestClassGroup(this));
+		_portalTestClassJob = portalTestClassJob;
 
 		_setRelevantTestBatchRunPropertyQuery();
+
+		setAxisTestClassGroups();
+
+		setSegmentTestClassGroups();
+	}
+
+	@Override
+	protected void setAxisTestClassGroups() {
+		if (!axisTestClassGroups.isEmpty()) {
+			return;
+		}
+
+		for (List<String> poshiTestClassGroup : _getPoshiTestClassGroups()) {
+			if (poshiTestClassGroup.isEmpty()) {
+				continue;
+			}
+
+			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
+				this);
+
+			for (String testClassMethodName : poshiTestClassGroup) {
+				Matcher matcher = _poshiTestCasePattern.matcher(
+					testClassMethodName);
+
+				if (!matcher.find()) {
+					continue;
+				}
+
+				axisTestClassGroup.addTestClass(
+					FunctionalTestClass.getInstance(testClassMethodName));
+			}
+
+			axisTestClassGroups.add(axisTestClassGroup);
+		}
+	}
+
+	@Override
+	protected void setSegmentTestClassGroups() {
+		if (!segmentTestClassGroups.isEmpty()) {
+			return;
+		}
+
+		if (axisTestClassGroups.isEmpty()) {
+			setAxisTestClassGroups();
+		}
+
+		if (axisTestClassGroups.isEmpty()) {
+			return;
+		}
+
+		for (List<AxisTestClassGroup> axisTestClassGroups :
+				Lists.partition(axisTestClassGroups, getSegmentMaxChildren())) {
+
+			SegmentTestClassGroup segmentTestClassGroup =
+				new SegmentTestClassGroup(this);
+
+			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+				segmentTestClassGroup.addAxisTestClassGroup(axisTestClassGroup);
+			}
+
+			segmentTestClassGroups.add(segmentTestClassGroup);
+		}
 	}
 
 	private String _getDefaultTestBatchRunPropertyGlobalQuery(
@@ -161,6 +226,48 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return Lists.newArrayList(functionalRequiredModuleDirs);
+	}
+
+	private List<List<String>> _getPoshiTestClassGroups() {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_portalTestClassJob.getPortalGitWorkingDirectory();
+
+		File portalDir = portalGitWorkingDirectory.getWorkingDirectory();
+
+		try {
+			AntUtil.callTarget(
+				portalDir, "build-test.xml", "prepare-poshi-runner-properties");
+		}
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
+		}
+
+		Properties properties = JenkinsResultsParserUtil.getProperties(
+			new File(portalDir, "portal-web/test/test-portal-web.properties"),
+			new File(
+				portalDir, "portal-web/test/test-portal-web-ext.properties"));
+
+		for (String propertyName : properties.stringPropertyNames()) {
+			String propertyValue = properties.getProperty(propertyName);
+
+			if (propertyValue == null) {
+				continue;
+			}
+
+			System.setProperty(propertyName, propertyValue);
+		}
+
+		System.setProperty("ignore.errors.util.classes", "true");
+
+		try {
+			PoshiContext.readFiles();
+
+			return PoshiContext.getTestBatchGroups(
+				getRelevantTestBatchRunPropertyQuery(), getAxisMaxSize());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private void _setRelevantTestBatchRunPropertyQuery() {
@@ -285,6 +392,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	private static final Pattern _poshiTestCasePattern = Pattern.compile(
 		"(?<namespace>[^\\.]+)\\.(?<className>[^\\#]+)\\#(?<methodName>.*)");
 
+	private final PortalTestClassJob _portalTestClassJob;
 	private String _relevantTestBatchRunPropertyQuery;
 
 }

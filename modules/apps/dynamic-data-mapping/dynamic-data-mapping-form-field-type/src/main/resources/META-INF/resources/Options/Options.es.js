@@ -67,20 +67,23 @@ const Option = React.forwardRef(
 );
 
 const getInitialOption = (generateOptionValueUsingOptionLabel) => {
-	return generateOptionValueUsingOptionLabel
-		? {
-				id: random(),
-				label: '',
-				value: '',
-		  }
-		: {
-				id: random(),
-				label: '',
-				value: getDefaultOptionValue(
-					generateOptionValueUsingOptionLabel,
-					''
-				),
-		  };
+	const optionValue = getDefaultOptionValue(
+		generateOptionValueUsingOptionLabel,
+		''
+	);
+
+	const initalOption = {
+		id: random(),
+		label: '',
+		reference: optionValue,
+		value: '',
+	};
+
+	if (!generateOptionValueUsingOptionLabel) {
+		initalOption.value = optionValue;
+	}
+
+	return initalOption;
 };
 
 const refreshFields = (
@@ -147,19 +150,29 @@ const Options = ({
 
 			formattedValue[languageId] = formattedValue[languageId].map(
 				(option) => {
-					return {
+					let newOption = {
 						id: random(),
 						...option,
-						value:
-							!option.value &&
-							option.label.toLowerCase() ===
-								Liferay.Language.get('option').toLowerCase()
-								? getDefaultOptionValue(
-										generateOptionValueUsingOptionLabel,
-										option.label
-								  )
-								: option.value,
 					};
+
+					if (
+						!option.value &&
+						option.label.toLowerCase() ===
+							Liferay.Language.get('option').toLowerCase()
+					) {
+						const optionValue = getDefaultOptionValue(
+							generateOptionValueUsingOptionLabel,
+							option.label
+						);
+
+						newOption = {
+							...newOption,
+							reference: optionValue,
+							value: optionValue,
+						};
+					}
+
+					return newOption;
 				}
 			);
 		});

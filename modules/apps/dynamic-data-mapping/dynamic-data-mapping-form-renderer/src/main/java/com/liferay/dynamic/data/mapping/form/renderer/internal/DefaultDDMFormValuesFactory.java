@@ -56,6 +56,7 @@ public class DefaultDDMFormValuesFactory {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
+		ddmFormFieldValue.setFieldReference(ddmFormField.getFieldReference());
 		ddmFormFieldValue.setName(ddmFormField.getName());
 
 		ddmFormFieldValue.setValue(createDefaultValue(ddmFormField));

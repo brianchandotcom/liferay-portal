@@ -237,6 +237,9 @@ public class DDMFormBuilderContextFactoryHelper {
 
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
+			ddmFormFieldValue.setFieldReference(
+				ddmFormFieldTypeSetting.getFieldReference());
+
 			String propertyName = ddmFormFieldTypeSetting.getName();
 
 			ddmFormFieldValue.setName(propertyName);

@@ -581,4 +581,43 @@ describe('Options', () => {
 
 		unmockLiferayLanguage();
 	});
+
+	it('adds the default option value to the reference property when it is empty', () => {
+		mockLiferayLanguage();
+
+		const {container} = render(
+			<OptionsWithProvider
+				name="options"
+				onChange={jest.fn()}
+				spritemap={spritemap}
+				value={{
+					[themeDisplay.getLanguageId()]: [
+						{
+							label: 'Bar',
+							reference: 'Bar',
+							value: 'Bar',
+						},
+					],
+				}}
+			/>
+		);
+
+		const referenceInput = container.querySelector(
+			'.key-value-reference-input'
+		);
+
+		expect(referenceInput.value).toBe('Bar');
+
+		fireEvent.input(referenceInput, {target: {value: ''}});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(referenceInput.value).toEqual(
+			expect.stringMatching(DEFAULT_OPTION_NAME_REGEX)
+		);
+
+		unmockLiferayLanguage();
+	});
 });

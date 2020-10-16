@@ -582,21 +582,23 @@ public class StagingBarPortlet extends MVCPortlet {
 						layoutRevision.getLayoutSetBranchId(),
 						parentLayout.getPlid());
 
-				_layoutRevisionLocalService.updateLayoutRevision(
-					serviceContext.getUserId(),
-					parentLayoutsRevision.getLayoutRevisionId(),
-					parentLayoutsRevision.getLayoutBranchId(),
-					parentLayoutsRevision.getName(),
-					parentLayoutsRevision.getTitle(),
-					parentLayoutsRevision.getDescription(),
-					parentLayoutsRevision.getKeywords(),
-					parentLayoutsRevision.getRobots(),
-					parentLayoutsRevision.getTypeSettings(),
-					parentLayoutsRevision.getIconImage(),
-					parentLayoutsRevision.getIconImageId(),
-					parentLayoutsRevision.getThemeId(),
-					parentLayoutsRevision.getColorSchemeId(),
-					parentLayoutsRevision.getCss(), serviceContext);
+				if (parentLayoutsRevision != null) {
+					_layoutRevisionLocalService.updateLayoutRevision(
+						serviceContext.getUserId(),
+						parentLayoutsRevision.getLayoutRevisionId(),
+						parentLayoutsRevision.getLayoutBranchId(),
+						parentLayoutsRevision.getName(),
+						parentLayoutsRevision.getTitle(),
+						parentLayoutsRevision.getDescription(),
+						parentLayoutsRevision.getKeywords(),
+						parentLayoutsRevision.getRobots(),
+						parentLayoutsRevision.getTypeSettings(),
+						parentLayoutsRevision.getIconImage(),
+						parentLayoutsRevision.getIconImageId(),
+						parentLayoutsRevision.getThemeId(),
+						parentLayoutsRevision.getColorSchemeId(),
+						parentLayoutsRevision.getCss(), serviceContext);
+				}
 			}
 
 			parentPlid = parentLayout.getParentPlid();

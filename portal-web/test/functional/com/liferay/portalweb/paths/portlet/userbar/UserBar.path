@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>USER_AVATAR_DROPDOWN_SIGNOUT</td>
-	<td>//div[contains(@class,'dropdown-menu-personal-menu') and contains(@class,'show')]//a[contains(.,'Sign Out') or contains(.,'Salir')]</td>
+	<td>//a[contains(@class,'dropdown-item')][contains(.,'Sign Out') or contains(.,'Salir')]</td>
 	<td></td>
 </tr>
 <tr>

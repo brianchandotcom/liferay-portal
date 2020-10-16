@@ -129,13 +129,11 @@ components:
                     readOnly: true
                     type: integer
                 errorDescription:
-                    example: Unable to find currency. Currency code should be expressed with
-                        3-letter ISO 4217 format.
+                    example: Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format.
                     readOnly: true
                     type: string
                 message:
-                    example: No CommerceCurrency exists with the key {groupId=41811, code=US
-                        Dollar}
+                    example: No CommerceCurrency exists with the key {groupId=41811, code=US Dollar}
                     readOnly: true
                     type: string
                 status:
@@ -150,6 +148,32 @@ components:
                 - message
                 - status
             type: object
+        FrequentPatternRecommendation:
+            properties:
+                antecedentIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                antecedentIdsLength:
+                    format: int64
+                    type: integer
+                createDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                jobId:
+                    type: string
+                recommendedProductId:
+                    description:
+                        The recommended product identifier.
+                    format: int64
+                    type: integer
+                score:
+                    description:
+                        The recommendation score.
+                    format: float
+                    type: number
         ProductContentRecommendation:
             properties:
                 createDate:

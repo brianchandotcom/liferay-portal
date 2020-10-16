@@ -46,7 +46,7 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 		String minimumSlaveRAM = poshiProperties.getProperty(
 			"minimum.slave.ram");
 
-		if ((minimumSlaveRAM != null) && minimumSlaveRAM.matches("\\d")) {
+		if ((minimumSlaveRAM != null) && minimumSlaveRAM.matches("\\d+")) {
 			return Integer.valueOf(minimumSlaveRAM);
 		}
 

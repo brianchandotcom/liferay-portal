@@ -52,14 +52,14 @@ public class DispatchTriggerLocalServiceWrapper
 
 	@Override
 	public com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
-			long userId, String name, boolean system,
+			long userId, String name, boolean system, String taskExecutorType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				taskSettingsUnicodeProperties,
-			String taskType)
+				taskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchTriggerLocalService.addDispatchTrigger(
-			userId, name, system, taskSettingsUnicodeProperties, taskType);
+			userId, name, system, taskExecutorType,
+			taskSettingsUnicodeProperties);
 	}
 
 	/**

@@ -108,10 +108,10 @@ public class DispatchTriggerCacheModel
 		sb.append(startDate);
 		sb.append(", system=");
 		sb.append(system);
+		sb.append(", taskExecutorType=");
+		sb.append(taskExecutorType);
 		sb.append(", taskSettings=");
 		sb.append(taskSettings);
-		sb.append(", taskType=");
-		sb.append(taskType);
 		sb.append("}");
 
 		return sb.toString();
@@ -181,18 +181,18 @@ public class DispatchTriggerCacheModel
 
 		dispatchTriggerImpl.setSystem(system);
 
+		if (taskExecutorType == null) {
+			dispatchTriggerImpl.setTaskExecutorType("");
+		}
+		else {
+			dispatchTriggerImpl.setTaskExecutorType(taskExecutorType);
+		}
+
 		if (taskSettings == null) {
 			dispatchTriggerImpl.setTaskSettings("");
 		}
 		else {
 			dispatchTriggerImpl.setTaskSettings(taskSettings);
-		}
-
-		if (taskType == null) {
-			dispatchTriggerImpl.setTaskType("");
-		}
-		else {
-			dispatchTriggerImpl.setTaskType(taskType);
 		}
 
 		dispatchTriggerImpl.resetOriginalValues();
@@ -224,8 +224,8 @@ public class DispatchTriggerCacheModel
 		startDate = objectInput.readLong();
 
 		system = objectInput.readBoolean();
+		taskExecutorType = objectInput.readUTF();
 		taskSettings = (String)objectInput.readObject();
-		taskType = objectInput.readUTF();
 	}
 
 	@Override
@@ -271,18 +271,18 @@ public class DispatchTriggerCacheModel
 
 		objectOutput.writeBoolean(system);
 
+		if (taskExecutorType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(taskExecutorType);
+		}
+
 		if (taskSettings == null) {
 			objectOutput.writeObject("");
 		}
 		else {
 			objectOutput.writeObject(taskSettings);
-		}
-
-		if (taskType == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(taskType);
 		}
 	}
 
@@ -300,7 +300,7 @@ public class DispatchTriggerCacheModel
 	public boolean overlapAllowed;
 	public long startDate;
 	public boolean system;
+	public String taskExecutorType;
 	public String taskSettings;
-	public String taskType;
 
 }

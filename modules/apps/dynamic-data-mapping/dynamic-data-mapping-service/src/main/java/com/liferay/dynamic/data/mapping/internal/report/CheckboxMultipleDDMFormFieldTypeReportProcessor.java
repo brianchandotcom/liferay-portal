@@ -75,6 +75,24 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessor
 			valuesJSONObject.put(key, count);
 		}
 
+		int totalEntries = fieldJSONObject.getInt("totalEntries");
+
+		if (valueJSONArray.length() != 0) {
+			if (ddmFormInstanceReportEvent.equals(
+					DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION)) {
+
+				totalEntries++;
+			}
+			else if (ddmFormInstanceReportEvent.equals(
+						DDMFormInstanceReportConstants.
+							EVENT_DELETE_RECORD_VERSION)) {
+
+				totalEntries--;
+			}
+		}
+
+		fieldJSONObject.put("totalEntries", totalEntries);
+
 		return fieldJSONObject;
 	}
 

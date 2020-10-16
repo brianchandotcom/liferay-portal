@@ -410,8 +410,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	private void _upgradeImageField(JSONObject jsonObject) {
 		jsonObject.put(
-			"dataType", "string"
-		).put(
 			"type", "image"
 		).put(
 			"visibilityExpression", StringPool.BLANK

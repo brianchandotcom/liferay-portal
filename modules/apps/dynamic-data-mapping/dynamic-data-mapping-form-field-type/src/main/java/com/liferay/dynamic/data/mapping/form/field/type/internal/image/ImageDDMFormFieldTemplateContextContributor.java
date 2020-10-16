@@ -126,10 +126,13 @@ public class ImageDDMFormFieldTemplateContextContributor
 						GetterUtil.getLong(jsonObject.getString("groupId")));
 
 				jsonObject.put(
+					"description", jsonObject.getString("alt")
+				).put(
 					"url",
 					_dlURLHelper.getDownloadURL(
 						fileEntry, fileEntry.getFileVersion(), null,
-						StringPool.BLANK));
+						StringPool.BLANK)
+				);
 
 				return jsonObject.toString();
 			}

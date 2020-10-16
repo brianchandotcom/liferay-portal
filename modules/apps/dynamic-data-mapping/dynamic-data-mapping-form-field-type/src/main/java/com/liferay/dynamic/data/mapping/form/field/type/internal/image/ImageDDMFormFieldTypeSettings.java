@@ -20,13 +20,14 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
  * @author Carlos Lancha
  */
-@DDMForm
+@DDMForm(rules = @DDMFormRule(actions = "setVisible('dataType', FALSE)"))
 @DDMFormLayout(
 	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
 	value = {
@@ -64,6 +65,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 )
 public interface ImageDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
+
+	@DDMFormField(predefinedValue = "image", required = true)
+	@Override
+	public String dataType();
 
 	@DDMFormField(
 		dataType = "string", label = "%predefined-value", type = "image"

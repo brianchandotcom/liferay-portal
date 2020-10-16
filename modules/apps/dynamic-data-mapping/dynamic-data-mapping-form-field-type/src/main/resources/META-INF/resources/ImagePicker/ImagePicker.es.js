@@ -44,8 +44,8 @@ const ImagePicker = ({
 	const dispatchValue = ({clear, value}, callback = () => {}) =>
 		setImageValues((oldValues) => {
 			let mergedValues = {...oldValues, ...value};
-
 			mergedValues = clear ? {} : mergedValues;
+			mergedValues.alt = mergedValues.description || '';
 
 			callback(mergedValues);
 

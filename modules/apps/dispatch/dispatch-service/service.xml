@@ -66,8 +66,8 @@
 		<column name="overlapAllowed" type="boolean" />
 		<column name="startDate" type="Date" />
 		<column name="system" type="boolean" />
+		<column name="taskExecutorType" type="String" />
 		<column name="taskSettings" type="String" />
-		<column name="taskType" type="String" />
 
 		<!-- Order -->
 
@@ -88,9 +88,9 @@
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="C_T" return-type="Collection">
+		<finder name="C_TET" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="taskType" />
+			<finder-column name="taskExecutorType" />
 		</finder>
 	</entity>
 	<exceptions>

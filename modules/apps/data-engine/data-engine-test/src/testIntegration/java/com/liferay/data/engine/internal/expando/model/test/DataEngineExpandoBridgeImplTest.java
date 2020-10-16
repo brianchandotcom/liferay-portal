@@ -264,9 +264,11 @@ public class DataEngineExpandoBridgeImplTest {
 
 		String attributeName2 = _addAttribute();
 
-		Assert.assertNull(_expandoBridge.getAttribute(attributeName1));
+		Assert.assertEquals(
+			StringPool.BLANK, _expandoBridge.getAttribute(attributeName1));
 
-		Assert.assertNull(_expandoBridge.getAttribute(attributeName2));
+		Assert.assertEquals(
+			StringPool.BLANK, _expandoBridge.getAttribute(attributeName2));
 
 		String defaultValue1 = RandomTestUtil.randomString();
 

@@ -86,4 +86,77 @@ definition {
 			priceListName = "Test Price List");
 	}
 
+	test PriceListExistsOnlyInOneCatalog {
+		property portal.acceptance = "true";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCatalogsEntry(
+			catalogCurrency = "US Dollar",
+			catalogLanguage = "English (United States)",
+			catalogName = "Test Catalog");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCatalogsEntry(
+			catalogCurrency = "US Dollar",
+			catalogLanguage = "English (United States)",
+			catalogName = "Test Catalog 2");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewPriceListsEntry(
+			priceListCatalog = "Test Catalog",
+			priceListCurrency = "USD",
+			priceListName = "Test Price List");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Catalog");
+
+		Type(
+			locator1 = "CommerceEntry#CATALOG_ENTRY_BASE_PRICE_LIST_FIELD",
+			value1 = "");
+
+		AssertElementPresent(
+			key_menuItem = "Test Price List",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Catalog 2");
+
+		Type(
+			locator1 = "CommerceEntry#CATALOG_ENTRY_BASE_PRICE_LIST_FIELD",
+			value1 = "");
+
+		AssertElementNotPresent(
+			key_menuItem = "Test Price List",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+	}
+
 }

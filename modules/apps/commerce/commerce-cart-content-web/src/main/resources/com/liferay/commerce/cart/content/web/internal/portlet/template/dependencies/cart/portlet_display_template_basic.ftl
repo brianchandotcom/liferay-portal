@@ -31,12 +31,12 @@
 				<tr>
 					<td>
 						<#if image?has_content>
-							<img class="aspect-ratio-bg-cover sticker sticker-lg sticker-static" src="${image}">
+							<img class="aspect-ratio-bg-cover sticker sticker-lg sticker-static" src="${htmlUtil.escapeAttribute(image)}">
 						</#if>
 					</td>
 					<td>
-						<a href="${productURL}">
-							<strong>${name}</strong>
+						<a href="${htmlUtil.escapeAttribute(productURL)}">
+							<strong>${htmlUtil.escape(name)}</strong>
 						</a>
 					</td>
 					<td>
@@ -48,7 +48,7 @@
 					</td>
 					<td>${curCommerceOrderItem.getQuantity()}</td>
 					<td>
-						<a href="${deleteURL}">
+						<a href="${htmlUtil.escapeAttribute(deleteURL)}">
 							${languageUtil.get(request, "delete")}
 						</a>
 					</td>

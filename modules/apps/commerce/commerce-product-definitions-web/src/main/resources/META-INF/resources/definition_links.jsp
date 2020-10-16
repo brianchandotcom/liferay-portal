@@ -104,7 +104,7 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 							}
 						},
 						title:
-							'<liferay-ui:message arguments="<%= cpDefinition.getName(languageId) %>" key="add-new-product-to-x" />',
+							'<liferay-ui:message arguments="<%= HtmlUtil.escapeJS(cpDefinition.getName(languageId)) %>" key="add-new-product-to-x" />',
 						url:
 							'<%= cpDefinitionLinkDisplayContext.getItemSelectorUrl(type) %>',
 					});

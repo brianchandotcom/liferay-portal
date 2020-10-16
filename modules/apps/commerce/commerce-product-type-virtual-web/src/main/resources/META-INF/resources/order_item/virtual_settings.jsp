@@ -78,8 +78,8 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 						<span id="<portlet:namespace />fileEntryNameInput">
 							<c:choose>
 								<c:when test="<%= fileEntry != null %>">
-									<a href="<%= commerceVirtualOrderItemEditDisplayContext.getDownloadFileEntryURL() %>">
-										<%= fileEntry.getFileName() %>
+									<a href="<%= HtmlUtil.escapeHREF(commerceVirtualOrderItemEditDisplayContext.getDownloadFileEntryURL()) %>">
+										<%= HtmlUtil.escape(fileEntry.getFileName()) %>
 									</a>
 								</c:when>
 								<c:otherwise>

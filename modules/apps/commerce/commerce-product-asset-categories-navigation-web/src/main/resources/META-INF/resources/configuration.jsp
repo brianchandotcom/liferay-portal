@@ -69,7 +69,7 @@ if (assetVocabulary != null) {
 							for (AssetVocabulary curAssetVocabulary : cpAssetCategoriesNavigationDisplayContext.getAssetVocabularies()) {
 							%>
 
-								<aui:option label="<%= curAssetVocabulary.getTitle(locale) %>" selected="<%= curAssetVocabulary.getVocabularyId() == assetVocabularyId %>" value="<%= curAssetVocabulary.getVocabularyId() %>" />
+								<aui:option label="<%= HtmlUtil.escape(curAssetVocabulary.getTitle(locale)) %>" selected="<%= curAssetVocabulary.getVocabularyId() == assetVocabularyId %>" value="<%= curAssetVocabulary.getVocabularyId() %>" />
 
 							<%
 							}

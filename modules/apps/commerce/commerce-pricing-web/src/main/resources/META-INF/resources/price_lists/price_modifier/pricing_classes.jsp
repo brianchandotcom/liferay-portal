@@ -35,7 +35,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 
 				var id = <%= commercePriceModifierId %>;
 				var priceModifierExternalReferenceCode =
-					'<%= commercePriceModifier.getExternalReferenceCode() %>';
+					'<%= HtmlUtil.escapeJS(commercePriceModifier.getExternalReferenceCode()) %>';
 
 				function selectItem(productGroup) {
 					var productGroupData = {

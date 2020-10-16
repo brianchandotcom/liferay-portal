@@ -14,12 +14,12 @@
 
 			<div class="col-md-4">
 				<div>
-					<img src="${image}">
+					<img src="${htmlUtil.escapeAttribute(image)}">
 				</div>
 
 				<div>
-					<a href="${friendlyURL}">
-						<strong>${name}</strong>
+					<a href="${htmlUtil.escapeHREF(friendlyURL)}">
+						<strong>${htmlUtil.escape(name)}</strong>
 					</a>
 				</div>
 			</div>

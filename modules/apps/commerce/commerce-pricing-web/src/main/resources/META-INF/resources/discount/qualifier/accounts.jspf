@@ -25,7 +25,7 @@
 				);
 
 				var discountExternalReferenceCode =
-					'<%= commerceDiscount.getExternalReferenceCode() %>';
+					'<%= HtmlUtil.escapeJS(commerceDiscount.getExternalReferenceCode()) %>';
 				var id = <%= commerceDiscountId %>;
 
 				function selectItem(account) {

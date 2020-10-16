@@ -129,7 +129,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 									%>
 
 										<div class="alert-danger commerce-alert-danger">
-											<liferay-ui:message key="<%= commerceOrderValidatorResult.getLocalizedMessage() %>" />
+											<liferay-ui:message key="<%= HtmlUtil.escape(commerceOrderValidatorResult.getLocalizedMessage()) %>" />
 										</div>
 
 									<%

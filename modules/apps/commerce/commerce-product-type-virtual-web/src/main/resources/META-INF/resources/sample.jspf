@@ -43,7 +43,7 @@
 				<c:choose>
 					<c:when test="<%= sampleFileEntry != null %>">
 						<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadSampleFileEntryURL() %>">
-							<%= sampleFileEntry.getFileName() %>
+							<%= HtmlUtil.escape(sampleFileEntry.getFileName()) %>
 						</a>
 					</c:when>
 					<c:otherwise>

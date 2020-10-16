@@ -26,7 +26,7 @@
 
 			<c:if test="<%= showSubmitButton || Validator.isNotNull(submitButtonLabel) %>">
 				<button class="btn btn-primary form-submitter ml-3" type="submit">
-					<%= Validator.isNotNull(submitButtonLabel) ? submitButtonLabel : LanguageUtil.get(request, "submit") %>
+					<%= Validator.isNotNull(submitButtonLabel) ? HtmlUtil.escape(submitButtonLabel) : LanguageUtil.get(request, "submit") %>
 				</button>
 			</c:if>
 		</div>

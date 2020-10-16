@@ -43,8 +43,8 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 								String thumbnailUrl = imageCPMedia.getThumbnailUrl();
 							%>
 
-								<div class="card thumb" data-url="<%= thumbnailUrl %>">
-									<img class="center-block img-fluid" src="<%= thumbnailUrl %>" />
+								<div class="card thumb" data-url="<%= HtmlUtil.escapeAttribute(thumbnailUrl) %>">
+									<img class="center-block img-fluid" src="<%= HtmlUtil.escapeAttribute(thumbnailUrl) %>" />
 								</div>
 
 							<%
@@ -56,7 +56,7 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 
 					<div class="col-10 col-lg-10 col-md-9 full-image">
 						<c:if test="<%= Validator.isNotNull(cpCatalogEntry.getDefaultImageFileUrl()) %>">
-							<img class="center-block img-fluid" id="<portlet:namespace />full-image" src="<%= cpCatalogEntry.getDefaultImageFileUrl() %>" />
+							<img class="center-block img-fluid" id="<portlet:namespace />full-image" src="<%= HtmlUtil.escapeAttribute(cpCatalogEntry.getDefaultImageFileUrl()) %>" />
 						</c:if>
 					</div>
 				</div>
@@ -73,11 +73,11 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 
 						<div class="subscription-info"><commerce-ui:product-subscription-info CPInstanceId="<%= cpSku.getCPInstanceId() %>" /></div>
 
-						<div class="availability"><%= cpContentHelper.getAvailabilityLabel(request) %></div>
+						<div class="availability"><%= HtmlUtil.escape(cpContentHelper.getAvailabilityLabel(request)) %></div>
 
-						<div class="availabilityEstimate"><%= cpContentHelper.getAvailabilityEstimateLabel(request) %></div>
+						<div class="availabilityEstimate"><%= HtmlUtil.escape(cpContentHelper.getAvailabilityEstimateLabel(request)) %></div>
 
-						<div class="stockQuantity"><%= cpContentHelper.getStockQuantityLabel(request) %></div>
+						<div class="stockQuantity"><%= HtmlUtil.escape(cpContentHelper.getStockQuantityLabel(request)) %></div>
 					</c:when>
 					<c:otherwise>
 						<h4 class="sku" data-text-cp-instance-sku=""></h4>
@@ -138,7 +138,7 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 
 					<div class="col-md-8">
 						<h5>
-							<%= cProductCPDefinition.getName(LocaleUtil.toLanguageId(locale)) %>
+							<%= HtmlUtil.escape(cProductCPDefinition.getName(LocaleUtil.toLanguageId(locale))) %>
 						</h5>
 
 						<h6>
@@ -223,7 +223,7 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 									<div class="table-responsive">
 										<table class="table table-bordered table-striped">
 											<tr>
-												<th><%= cpOptionCategory.getTitle(locale) %></th>
+												<th><%= HtmlUtil.escape(cpOptionCategory.getTitle(locale)) %></th>
 												<th></th>
 											</tr>
 
@@ -263,7 +263,7 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 
 										<tr>
 											<td>
-												<span><%= attachmentCPMedia.getTitle() %></span>
+												<span><%= HtmlUtil.escape(attachmentCPMedia.getTitle()) %></span>
 
 												<span>
 													<aui:icon cssClass="icon-monospaced" image="download" markupView="lexicon" url="<%= attachmentCPMedia.getDownloadUrl() %>" />
@@ -309,7 +309,7 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 
 <aui:script use="liferay-commerce-product-content">
 	var productContent = new Liferay.Portlet.ProductContent({
-		checkCPInstanceActionURL: '<%= checkCPInstanceURL %>',
+		checkCPInstanceActionURL: '<%= HtmlUtil.escapeJS(checkCPInstanceURL) %>',
 		cpDefinitionId: <%= cpDefinitionId %>,
 		fullImageSelector: '#<portlet:namespace />full-image',
 		namespace: '<portlet:namespace />',
@@ -318,7 +318,7 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 			'#<portlet:namespace /><%= cpDefinitionId %>ProductContent',
 		thumbsContainerSelector: '#<portlet:namespace />thumbs-container',
 		viewAttachmentURL:
-			'<%= String.valueOf(cpContentHelper.getViewAttachmentURL(liferayPortletRequest, liferayPortletResponse)) %>',
+			'<%= HtmlUtil.escapeJS(String.valueOf(cpContentHelper.getViewAttachmentURL(liferayPortletRequest, liferayPortletResponse))) %>',
 	});
 
 	Liferay.component(

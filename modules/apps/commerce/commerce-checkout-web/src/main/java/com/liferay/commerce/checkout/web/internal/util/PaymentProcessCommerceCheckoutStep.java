@@ -23,6 +23,7 @@ import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
@@ -101,10 +102,8 @@ public class PaymentProcessCommerceCheckoutStep
 				(HttpServletResponse)httpServletResponseWrapper.getResponse();
 		}
 
-		String paymentServletURL =
-			originalHttpServletResponse.encodeRedirectURL(
-				paymentProcessCheckoutStepDisplayContext.
-					getPaymentServletUrl());
+		String paymentServletURL = URLCodec.encodeURL(
+			paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl());
 
 		String redirect = _portal.escapeRedirect(paymentServletURL);
 

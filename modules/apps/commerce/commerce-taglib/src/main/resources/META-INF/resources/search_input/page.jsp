@@ -27,7 +27,7 @@ Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-co
 	for (Map.Entry<String, Object> entry : data.entrySet()) {
 	%>
 
-		<aui:input name="<%= entry.getKey() %>" type="hidden" useNamespace="<%= false %>" value="<%= entry.getValue() %>" />
+		<aui:input name="<%= HtmlUtil.escape(entry.getKey()) %>" type="hidden" useNamespace="<%= false %>" value="<%= entry.getValue() %>" />
 
 	<%
 	}

@@ -53,7 +53,7 @@ Date requestedDeliveryDate = commerceOrderItem.getRequestedDeliveryDate();
 				for (CommerceOrderValidatorResult commerceOrderValidatorResult : commerceOrderValidatorException.getCommerceOrderValidatorResults()) {
 				%>
 
-					<liferay-ui:message key="<%= commerceOrderValidatorResult.getLocalizedMessage() %>" />
+					<liferay-ui:message key="<%= HtmlUtil.escape(commerceOrderValidatorResult.getLocalizedMessage()) %>" />
 
 				<%
 				}

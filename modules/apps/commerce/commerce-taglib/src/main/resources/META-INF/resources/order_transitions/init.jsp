@@ -22,6 +22,7 @@
 
 <%@ page import="com.liferay.commerce.model.CommerceOrder" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ObjectValuePair" %>
 
 <%@ page import="java.util.List" %>

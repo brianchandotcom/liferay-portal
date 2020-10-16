@@ -91,9 +91,9 @@ if (deliveryMaxSubscriptionCycles > 0) {
 			elementClasses="py-3"
 			title='<%= LanguageUtil.get(request, "payment-method") %>'
 		>
-			<img url="<%= commerceSubscriptionEntryDisplayContext.getOrderPaymentMethodImage() %>" />
+			<img url="<%= HtmlUtil.escapeAttribute(commerceSubscriptionEntryDisplayContext.getOrderPaymentMethodImage()) %>" />
 
-			<span><%= commerceSubscriptionEntryDisplayContext.getOrderPaymentMethodName() %></span>
+			<span><%= HtmlUtil.escape(commerceSubscriptionEntryDisplayContext.getOrderPaymentMethodName()) %></span>
 		</commerce-ui:info-box>
 	</div>
 

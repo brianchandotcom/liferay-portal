@@ -52,7 +52,7 @@ if (commerceOrderPayment != null) {
 				<liferay-ui:message key="<%= taglibMessageKey %>" />
 
 				<c:if test="<%= !commerceOrderPaymentContent.isEmpty() %>">
-					<div><%= commerceOrderPaymentContent %></div>
+					<div><%= SanitizerUtil.sanitize(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), CommerceOrderPayment.class.getName(), commerceOrderPayment.getCommerceOrderPaymentId(), "plain/text", commerceOrderPaymentContent) %></div>
 				</c:if>
 
 				<aui:button-row>

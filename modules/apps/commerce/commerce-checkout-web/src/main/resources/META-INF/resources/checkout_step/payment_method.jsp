@@ -65,7 +65,7 @@ String commercePaymentMethodKey = BeanParamUtil.getString(commerceOrder, request
 
 						<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
 							<div class="autofit-col">
-								<img alt="<%= commercePaymentMethod.getName(locale) %>" class="payment-icon" src="<%= thumbnailSrc %>" style="height: 45px; width: auto;" />
+								<img alt="<%= HtmlUtil.escapeAttribute(commercePaymentMethod.getName(locale)) %>" class="payment-icon" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="height: 45px; width: auto;" />
 							</div>
 						</c:if>
 					</li>

@@ -24,7 +24,7 @@ boolean showNotifications = (boolean)request.getAttribute("liferay-commerce:user
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<span class="user-avatar-link">
-			<a class="text-default" href="<%= (String)request.getAttribute("liferay-commerce:user-management-bar:href") %>">
+			<a class="text-default" href="<%= HtmlUtil.escapeHREF((String)request.getAttribute("liferay-commerce:user-management-bar:href")) %>">
 				<c:if test="<%= themeDisplay.isImpersonated() %>">
 					<aui:icon image="asterisk" markupView="lexicon" />
 				</c:if>

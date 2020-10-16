@@ -60,7 +60,7 @@ CommerceSubscriptionContentDisplayContext commerceSubscriptionContentDisplayCont
 						<liferay-ui:search-container-column-text
 							name="description"
 						>
-							<a class="font-weight-bold" href="<%= commerceSubscriptionContentDisplayContext.getCPDefinitionURL(commerceSubscriptionEntry, themeDisplay) %>">
+							<a class="font-weight-bold" href="<%= HtmlUtil.escapeHREF(commerceSubscriptionContentDisplayContext.getCPDefinitionURL(commerceSubscriptionEntry, themeDisplay)) %>">
 								<%= (commerceOrderItem == null) ? StringPool.BLANK : HtmlUtil.escape(commerceOrderItem.getName(languageId)) %>
 							</a>
 

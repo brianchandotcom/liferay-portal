@@ -66,7 +66,7 @@ if (commerceShippingMethod != null) {
 		<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
 			<div class="row">
 				<div class="col-md-4">
-					<img class="w-100" src="<%= thumbnailSrc %>" />
+					<img class="w-100" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" />
 				</div>
 			</div>
 		</c:if>

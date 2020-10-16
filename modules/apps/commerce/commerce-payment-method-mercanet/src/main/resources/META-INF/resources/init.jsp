@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.commerce.payment.method.mercanet.internal.configuration.MercanetGroupServiceConfiguration" %><%@
 page import="com.liferay.commerce.payment.method.mercanet.internal.constants.MercanetCommercePaymentMethodConstants" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.URLCodec" %>
 

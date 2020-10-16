@@ -64,7 +64,7 @@ if (commerceOrder != null) {
 		for (CommerceOrderValidatorResult commerceOrderValidatorResult : commerceOrderValidatorException.getCommerceOrderValidatorResults()) {
 		%>
 
-			<liferay-ui:message key="<%= commerceOrderValidatorResult.getLocalizedMessage() %>" />
+			<liferay-ui:message key="<%= HtmlUtil.escape(commerceOrderValidatorResult.getLocalizedMessage()) %>" />
 
 		<%
 		}
@@ -144,7 +144,7 @@ if (commerceOrder != null) {
 					<div class="row">
 						<div class="col-md-6">
 							<dl class="commerce-list">
-								<%= commerceOrder.getPurchaseOrderNumber() %>
+								<%= HtmlUtil.escape(commerceOrder.getPurchaseOrderNumber()) %>
 							</dl>
 						</div>
 					</div>

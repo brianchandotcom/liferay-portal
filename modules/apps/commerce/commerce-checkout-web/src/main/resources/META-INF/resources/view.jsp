@@ -77,7 +77,7 @@ CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.
 									<div class="multi-step-divider"></div>
 									<div class="multi-step-indicator">
 										<div class="multi-step-indicator-label">
-											<liferay-ui:message key="<%= commerceCheckoutStep.getLabel(locale) %>" />
+											<liferay-ui:message key="<%= HtmlUtil.escape(commerceCheckoutStep.getLabel(locale)) %>" />
 										</div>
 
 										<span class="multi-step-icon" data-multi-step-icon="<%= step %>"></span>

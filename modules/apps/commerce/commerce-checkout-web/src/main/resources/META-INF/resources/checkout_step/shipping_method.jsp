@@ -62,7 +62,7 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 						<li class="commerce-shipping-types list-group-item list-group-item-flex">
 							<div class="autofit-col autofit-col-expand">
 								<div class="alert alert-info">
-									<liferay-ui:message arguments="<%= commerceShippingMethod.getName(locale) %>" key="x-is-not-available" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceShippingMethod.getName(locale)) %>" key="x-is-not-available" translateArguments="<%= false %>" />
 								</div>
 							</div>
 						</li>
@@ -85,7 +85,7 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 
 							<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
 								<div class="autofit-col">
-									<img alt="<%= label %>" src="<%= thumbnailSrc %>" />
+									<img alt="<%= HtmlUtil.escapeAttribute(label) %>" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" />
 								</div>
 							</c:if>
 						</li>

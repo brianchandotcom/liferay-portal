@@ -28,9 +28,9 @@ String redirectUrl = URLCodec.decodeURL(redirectUrlAttribute);
 String sealAttribute = (String)request.getAttribute("seal");
 %>
 
-<form action="<%= redirectUrl %>" class="hide" id="formMercanet" method="post" name="formMercanet">
-	<input name="redirectionData" type="hidden" value="<%= redirectionData %>" />
-	<input name="seal" type="hidden" value="<%= URLDecoder.decode(sealAttribute, "UTF-8") %>" />
+<form action="<%= HtmlUtil.escapeHREF(redirectUrl) %>" class="hide" id="formMercanet" method="post" name="formMercanet">
+	<input name="redirectionData" type="hidden" value="<%= HtmlUtil.escapeAttribute(redirectionData) %>" />
+	<input name="seal" type="hidden" value="<%= HtmlUtil.escapeAttribute(URLDecoder.decode(sealAttribute, "UTF-8")) %>" />
 	<input type="submit" value="Proceed to checkout" />
 </form>
 

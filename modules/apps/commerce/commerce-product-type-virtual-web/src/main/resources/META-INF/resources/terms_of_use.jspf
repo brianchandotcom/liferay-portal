@@ -43,7 +43,7 @@
 				<span id="<portlet:namespace />journalArticleNameInput">
 					<c:choose>
 						<c:when test="<%= journalArticle != null %>">
-							<%= journalArticle.getTitle() %>
+							<%= HtmlUtil.escape(journalArticle.getTitle()) %>
 						</c:when>
 						<c:otherwise>
 							<span class="text-muted"><liferay-ui:message key="none" /></span>

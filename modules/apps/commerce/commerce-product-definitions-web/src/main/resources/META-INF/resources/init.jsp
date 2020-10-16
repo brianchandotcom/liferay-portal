@@ -137,7 +137,8 @@ page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.StringJoiner" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
 
 <liferay-frontend:defineObjects />
 

@@ -24,11 +24,11 @@
 
 		<div>
 			<c:if test="<%= Validator.isNotNull(subscriptionPeriod) %>">
-				<span class="product-subscription-period">(<%= subscriptionPeriod %>)</span>
+				<span class="product-subscription-period">(<%= HtmlUtil.escape(subscriptionPeriod) %>)</span>
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(durationPeriod) %>">
-				<span class="product-subscription-period"> <%= durationPeriod %></span>
+				<span class="product-subscription-period"> <%= HtmlUtil.escape(durationPeriod) %></span>
 			</c:if>
 		</div>
 	</div>
@@ -42,11 +42,11 @@
 
 		<div>
 			<c:if test="<%= Validator.isNotNull(deliverySubscriptionPeriod) %>">
-				<span class="product-subscription-period">(<%= deliverySubscriptionPeriod %>)</span>
+				<span class="product-subscription-period">(<%= HtmlUtil.escape(deliverySubscriptionPeriod) %>)</span>
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(deliveryDurationPeriod) %>">
-				<span class="product-subscription-period"> <%= deliveryDurationPeriod %></span>
+				<span class="product-subscription-period"> <%= HtmlUtil.escape(deliveryDurationPeriod) %></span>
 			</c:if>
 		</div>
 	</div>

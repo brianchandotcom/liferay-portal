@@ -41,7 +41,7 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 
 				var id = <%= commercePriceListId %>;
 				var priceListExternalReferenceCode =
-					'<%= commercePriceList.getExternalReferenceCode() %>';
+					'<%= HtmlUtil.escapeJS(commercePriceList.getExternalReferenceCode()) %>';
 
 				function selectItem(sku) {
 					var priceEntryData = {

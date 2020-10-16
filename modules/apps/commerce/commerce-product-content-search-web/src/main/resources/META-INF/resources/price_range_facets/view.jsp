@@ -89,7 +89,7 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 											<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= facet.getFieldName() + i %>">
 												<input
 													class="custom-control-input facet-term"
-													data-term-id="<%= termCollector.getTerm() %>"
+													data-term-id="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>"
 													id="<portlet:namespace />term_<%= facet.getFieldName() + i %>"
 													name="<portlet:namespace />term_<%= facet.getFieldName() + i %>"
 													onChange="Liferay.Search.FacetUtil.changeSelection(event);"
@@ -125,11 +125,11 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 
 				<c:if test="<%= cpPriceRangeFacetsDisplayContext.showInputRange() %>">
 					<div class="mt-3 row">
-						<aui:input cssClass="price-range-input" label="<%= StringPool.BLANK %>" min="0" name="minimum" prefix="<%= cpPriceRangeFacetsDisplayContext.getCurrentCommerceCurrencySymbol() %>" type="number" value="<%= min %>" wrapperCssClass="col-md-5 price-range-input-wrapper" />
+						<aui:input cssClass="price-range-input" label="<%= StringPool.BLANK %>" min="0" name="minimum" prefix="<%= HtmlUtil.escape(cpPriceRangeFacetsDisplayContext.getCurrentCommerceCurrencySymbol()) %>" type="number" value="<%= min %>" wrapperCssClass="col-md-5 price-range-input-wrapper" />
 
 						<span class="mt-auto price-range-seperator text-center">-</span>
 
-						<aui:input cssClass="price-range-input" label="<%= StringPool.BLANK %>" name="maximum" prefix="<%= cpPriceRangeFacetsDisplayContext.getCurrentCommerceCurrencySymbol() %>" type="number" value="<%= max %>" wrapperCssClass="col-md-5 price-range-input-wrapper" />
+						<aui:input cssClass="price-range-input" label="<%= StringPool.BLANK %>" name="maximum" prefix="<%= HtmlUtil.escape(cpPriceRangeFacetsDisplayContext.getCurrentCommerceCurrencySymbol()) %>" type="number" value="<%= max %>" wrapperCssClass="col-md-5 price-range-input-wrapper" />
 
 						<div class="col-md-3 ml-2 p-0">
 							<button class="btn btn-secondary price-range-btn" onclick="<%= liferayPortletResponse.getNamespace() + "submitPriceRange();" %>"><liferay-ui:message key="go" /></button>

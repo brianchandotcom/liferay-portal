@@ -46,7 +46,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 		<div id="<portlet:namespace />fileEntryContainer">
 			<h5 id="<portlet:namespace />fileEntryTitle">
 				<c:if test="<%= fileEntryId > 0 %>">
-					<%= cpAttachmentFileEntriesDisplayContext.getFileEntryName() %>
+					<%= HtmlUtil.escape(cpAttachmentFileEntriesDisplayContext.getFileEntryName()) %>
 				</c:if>
 			</h5>
 		</div>

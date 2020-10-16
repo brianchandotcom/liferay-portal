@@ -26,6 +26,6 @@ CommerceNotificationQueueEntry commerceNotificationQueueEntry = commerceOrderEdi
 	title="<%= commerceNotificationQueueEntry.getSubject() %>"
 >
 	<div class="commerce-notification-queue-entry-body">
-		<%= commerceNotificationQueueEntry.getBody() %>
+		<%= HtmlUtil.escape(commerceNotificationQueueEntry.getBody()) %>
 	</div>
 </commerce-ui:side-panel-content>

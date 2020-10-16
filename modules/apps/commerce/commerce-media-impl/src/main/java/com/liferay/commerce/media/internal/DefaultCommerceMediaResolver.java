@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -87,7 +86,7 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 		sb.append("/default/?groupId=");
 		sb.append(groupId);
 
-		return _html.escape(sb.toString());
+		return sb.toString();
 	}
 
 	@Override
@@ -153,7 +152,7 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 			HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
 
 			if (httpSession == null) {
-				return _html.escape(sb.toString());
+				return sb.toString();
 			}
 
 			long companyId = GetterUtil.getLong(
@@ -184,7 +183,7 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 		sb.append("?download=");
 		sb.append(download);
 
-		return _html.escape(sb.toString());
+		return sb.toString();
 	}
 
 	@Override
@@ -438,9 +437,6 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Http _http;

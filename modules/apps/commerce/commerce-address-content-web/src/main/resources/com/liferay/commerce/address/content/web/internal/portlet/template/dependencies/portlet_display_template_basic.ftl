@@ -17,14 +17,14 @@
 						commerceCountry = curCommerceAddress.getCommerceCountry()
 					/>
 
-					<h2 style="color:#000"><strong>${curCommerceAddress.getName()}</strong></h2>
+					<h2 style="color:#000"><strong>${htmlUtil.escape(curCommerceAddress.getName())}</strong></h2>
 
-					<h3 style="color:#000">${curCommerceAddress.getStreet1()}</h3>
+					<h3 style="color:#000">${htmlUtil.escape(curCommerceAddress.getStreet1())}</h3>
 
-					<h3 style="color:#000">${curCommerceAddress.getZip()}, ${curCommerceAddress.getCity()}</h3>
+					<h3 style="color:#000">${htmlUtil.escape(curCommerceAddress.getZip())}, ${htmlUtil.escape(curCommerceAddress.getCity())}</h3>
 
 					<#if commerceCountry??>
-						<h3 style="color:#000">${commerceCountry.getName(themeDisplay.getLanguageId())}</h3>
+						<h3 style="color:#000">${htmlUtil.escape(commerceCountry.getName(themeDisplay.getLanguageId()))}</h3>
 					</#if>
 
 					<div class="row" style="padding-top:30px">

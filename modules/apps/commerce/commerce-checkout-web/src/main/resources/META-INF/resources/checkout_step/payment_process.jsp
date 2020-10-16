@@ -22,7 +22,7 @@ PaymentProcessCheckoutStepDisplayContext paymentProcessCheckoutStepDisplayContex
 
 <div>
 	<c:set var="redirectLink">
-		<a href="<%= paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl() %>"><%= paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl() %></a>
+		<a href="<%= HtmlUtil.escapeAttribute(paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl()) %>"><%= HtmlUtil.escape(paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl()) %></a>
 	</c:set>
 
 	<liferay-ui:message arguments="${redirectLink}" key="the-payment-process-has-been-initiated.-you-should-be-redirected-automatically.-if-the-page-does-not-reload-within-a-few-seconds-please-click-this-link-x" />
@@ -30,5 +30,5 @@ PaymentProcessCheckoutStepDisplayContext paymentProcessCheckoutStepDisplayContex
 
 <script>
 	window.location.href =
-		'<%= paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl() %>';
+		'<%= HtmlUtil.escapeJS(paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl()) %>';
 </script>

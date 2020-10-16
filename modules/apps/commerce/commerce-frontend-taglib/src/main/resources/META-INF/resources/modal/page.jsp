@@ -23,17 +23,17 @@ String containerId = randomNamespace + "modal-root";
 <div class="modal-root" id="<%= containerId %>"></div>
 
 <aui:script require="commerce-frontend-js/components/modal/entry as Modal">
-	Modal.default('<%= id %>', '<%= containerId %>', {
-		id: '<%= id %>',
+	Modal.default('<%= HtmlUtil.escapeJS(id) %>', '<%= containerId %>', {
+		id: '<%= HtmlUtil.escapeJS(id) %>',
 		onClose: <%= refreshPageOnClose %>
 			? function () {
 					window.location.reload();
 			  }
 			: null,
 		portletId: '<%= portletDisplay.getRootPortletId() %>',
-		size: '<%= size %>',
-		spritemap: '<%= spritemap %>',
-		title: '<%= title %>',
-		url: '<%= url %>',
+		size: '<%= HtmlUtil.escapeJS(size) %>',
+		spritemap: '<%= HtmlUtil.escapeJS(spritemap) %>',
+		title: '<%= HtmlUtil.escapeJS(title) %>',
+		url: '<%= HtmlUtil.escapeJS(url) %>',
 	});
 </aui:script>

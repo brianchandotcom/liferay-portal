@@ -62,7 +62,7 @@ CPOptionFacetsDisplayContext cpOptionFacetsDisplayContext = (CPOptionFacetsDispl
 						cssClass="search-facet"
 						markupView="lexicon"
 						persistState="<%= true %>"
-						title="<%= cpOptionFacetsDisplayContext.getCPOptionName(companyId, facet.getFieldName()) %>"
+						title="<%= HtmlUtil.escape(cpOptionFacetsDisplayContext.getCPOptionName(companyId, facet.getFieldId())) %>"
 					>
 						<aui:form method="post" name='<%= "assetEntriesFacetForm_" + facet.getFieldName() %>'>
 							<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= cpOptionFacetsDisplayContext.getCPOptionKey(companyId, facet.getFieldName()) %>" />
@@ -83,7 +83,7 @@ CPOptionFacetsDisplayContext cpOptionFacetsDisplayContext = (CPOptionFacetsDispl
 										<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= facet.getFieldName() + i %>">
 											<input
 												class="custom-control-input facet-term"
-												data-term-id="<%= termCollector.getTerm() %>"
+												data-term-id="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>"
 												id="<portlet:namespace />term_<%= facet.getFieldName() + i %>"
 												name="<portlet:namespace />term_<%= facet.getFieldName() + i %>"
 												onChange="Liferay.Search.FacetUtil.changeSelection(event);"

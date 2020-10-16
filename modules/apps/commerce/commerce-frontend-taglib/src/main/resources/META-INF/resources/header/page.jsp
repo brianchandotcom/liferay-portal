@@ -31,13 +31,13 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 %>
 
 <div class="bg-white border-bottom commerce-header<%= fullWidth ? " container-fluid" : StringPool.BLANK %><%= Validator.isNotNull(wrapperCssClasses) ? StringPool.SPACE + wrapperCssClasses : StringPool.BLANK %> side-panel-top-anchor">
-	<div class="container<%= Validator.isNotNull(cssClasses) ? StringPool.SPACE + cssClasses : StringPool.BLANK %>">
+	<div class="container<%= Validator.isNotNull(cssClasses) ? StringPool.SPACE + HtmlUtil.escapeAttribute(cssClasses) : StringPool.BLANK %>">
 		<div class="align-items-center c-py-3 c-py-lg-2 d-lg-flex">
 			<div class="align-items-center d-flex">
 				<c:if test="<%= Validator.isNotNull(thumbnailUrl) %>">
 					<span class="d-none d-sm-block sticker sticker-xl">
 						<span class="sticker-overlay">
-							<img alt="thumbnail" class="sticker-img" src="<%= thumbnailUrl %>" />
+							<img alt="thumbnail" class="sticker-img" src="<%= HtmlUtil.escapeAttribute(thumbnailUrl) %>" />
 						</span>
 					</span>
 				</c:if>
@@ -63,7 +63,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 					<c:if test="<%= Validator.isNotNull(beanIdLabel) %>">
 						<div class="align-items-center d-flex">
 							<span class="header-info-title">
-								<liferay-ui:message key="<%= beanIdLabel %>" />:
+								<liferay-ui:message key="<%= HtmlUtil.escape(beanIdLabel) %>" />:
 							</span>
 
 							<strong class="c-ml-1 header-info-value">
@@ -85,7 +85,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 							</span>
 
 							<strong class="c-ml-1 header-info-value">
-								<%= externalReferenceCode %>
+								<%= HtmlUtil.escape(externalReferenceCode) %>
 							</strong>
 
 							<span class="c-ml-1 lfr-portal-tooltip text-secondary" title="<%= LanguageUtil.get(request, "external-reference-code") %>">
@@ -149,7 +149,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 						</div>
 
 						<button aria-expanded="false" aria-haspopup="true" class="align-items-center btn btn-secondary d-flex dropdown-toggle header-assign-button justify-content-between" data-toggle="dropdown" onclick="<portlet:namespace />toggleDropdown();" type="button">
-							<liferay-ui:message key="<%= assignee %>" />
+							<liferay-ui:message key="<%= HtmlUtil.escape(assignee) %>" />
 
 							<clay:icon
 								symbol="caret-bottom"
@@ -189,7 +189,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 												},
 												id: '<%= myWorkflowTasksPortletNamespace %>assignToDialog',
 												title: '<liferay-ui:message key="assign-to-me" />',
-												uri: '<%= assignToMeURL %>',
+												uri: '<%= HtmlUtil.escapeJS(assignToMeURL) %>',
 											});
 										});
 								</aui:script>
@@ -225,7 +225,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 											},
 											id: '<%= myWorkflowTasksPortletNamespace %>assignToDialog',
 											title: '<liferay-ui:message key="assign-to-..." />',
-											uri: '<%= assignToURL %>',
+											uri: '<%= HtmlUtil.escapeJS(assignToURL) %>',
 										});
 									});
 
@@ -260,7 +260,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 							String buttonCssClasses = "btn c-mb-1 c-mb-sm-0 ";
 
 							if (Validator.isNotNull(action.getAdditionalClasses())) {
-								buttonCssClasses += action.getAdditionalClasses();
+								buttonCssClasses += HtmlUtil.escapeAttribute(action.getAdditionalClasses());
 							}
 							else {
 								buttonCssClasses += "btn-secondary";
@@ -272,20 +272,20 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 						%>
 
 							<clay:link
-								cssClass="<%= buttonCssClasses %>"
+								cssClass="<%= HtmlUtil.escape(buttonClasses) %>"
 								href="<%= Validator.isNotNull(action.getHref()) ? action.getHref() : StringPool.POUND %>"
-								id="<%= actionId %>"
-								label="<%= LanguageUtil.get(request, action.getLabel()) %>"
+								id="<%= HtmlUtil.escape(actionId) %>"
+								label="<%= LanguageUtil.get(request, HtmlUtil.escape(action.getLabel())) %>"
 							/>
 
 							<c:if test="<%= submitCheck && Validator.isNotNull(action.getFormId()) %>">
 								<aui:script>
-									document.getElementById('<%= actionId %>').addEventListener('click', (e) => {
+									document.getElementById('<%= HtmlUtil.escapeJS(actionId) %>').addEventListener('click', (e) => {
 										e.preventDefault();
-										var form = document.getElementById('<%= action.getFormId() %>');
+										var form = document.getElementById('<%= HtmlUtil.escapeJS(action.getFormId()) %>');
 										if (!form) {
 											throw new Error(
-												'Form with id: ' + <%= action.getFormId() %> + ' not found!'
+												'Form with id: ' + <%= HtmlUtil.escapeJS(action.getFormId()) %> + ' not found!'
 											);
 										}
 										submitForm(form);

@@ -18,6 +18,8 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.GroupImpl;
 
 /**
@@ -26,6 +28,18 @@ import com.liferay.portal.model.impl.GroupImpl;
 public class CommerceCatalogImpl extends CommerceCatalogBaseImpl {
 
 	public CommerceCatalogImpl() {
+	}
+
+	@Override
+	public String getCatalogDefaultLanguageId() {
+		String catalogDefaultLanguageId = super.getCatalogDefaultLanguageId();
+
+		if (Validator.isBlank(catalogDefaultLanguageId)) {
+			return catalogDefaultLanguageId;
+		}
+
+		return LocaleUtil.toLanguageId(
+			LocaleUtil.fromLanguageId(catalogDefaultLanguageId));
 	}
 
 	@Override

@@ -18,22 +18,20 @@
 
 <%
 CommerceAddress commerceAddress = (CommerceAddress)request.getAttribute("address.jsp-commerceAddress");
-
-commerceAddress = commerceAddress.toEscapedModel();
 %>
 
-<h4><%= commerceAddress.getName() %></h4>
-<p><%= commerceAddress.getStreet1() %></p>
+<h4><%= HtmlUtil.escape(commerceAddress.getName()) %></h4>
+<p><%= HtmlUtil.escape(commerceAddress.getStreet1()) %></p>
 
 <c:if test="<%= Validator.isNotNull(commerceAddress.getStreet2()) %>">
-	<p><%= commerceAddress.getStreet2() %></p>
+	<p><%= HtmlUtil.escape(commerceAddress.getStreet2()) %></p>
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(commerceAddress.getStreet3()) %>">
-	<p><%= commerceAddress.getStreet3() %></p>
+	<p><%= HtmlUtil.escape(commerceAddress.getStreet3()) %></p>
 </c:if>
 
-<p><%= commerceAddress.getCity() %></p>
+<p><%= HtmlUtil.escape(commerceAddress.getCity()) %></p>
 
 <%
 Country country = commerceAddress.getCountry();

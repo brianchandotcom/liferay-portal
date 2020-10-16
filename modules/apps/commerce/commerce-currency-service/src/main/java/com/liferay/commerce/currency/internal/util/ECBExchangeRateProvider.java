@@ -20,6 +20,7 @@ import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -157,9 +158,19 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 
 		if (url == null) {
 			url = new URL(_url);
+
+			if (_isLocalNetworkURL(url)) {
+				throw new PortalException(
+					"Invalid European Central Bank URL: " + url);
+			}
 		}
 
 		return url;
+	}
+
+	private boolean _isLocalNetworkURL(URL url) throws Exception {
+		return InetAddressUtil.isLocalInetAddress(
+			InetAddressUtil.getInetAddressByName(url.getHost()));
 	}
 
 	@Reference

@@ -62,12 +62,12 @@ List<CommerceShipmentItem> commerceShipmentItems = commerceOrderContentDisplayCo
 
 			<liferay-ui:search-container-column-text
 				name="carrier"
-				value="<%= commerceShipment.getCarrier() %>"
+				value="<%= HtmlUtil.escape(commerceShipment.getCarrier()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="tracking-number"
-				value="<%= commerceShipment.getTrackingNumber() %>"
+				value="<%= HtmlUtil.escape(commerceShipment.getTrackingNumber()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

@@ -35,14 +35,14 @@ if (Validator.isNull(name)) {
 <div class="commerce-quantity-container">
 	<c:choose>
 		<c:when test="<%= ArrayUtil.isEmpty(allowedOrderQuantities) && !useSelect %>">
-			<aui:input cssClass="commerce-input mb-0 u-wauto" ignoreRequestValue="<%= true %>" label='<%= showLabel ? "quantity" : StringPool.BLANK %>' name="<%= name %>" type="number" value="<%= value %>" wrapperCssClass="mb-0">
+			<aui:input cssClass="commerce-input mb-0 u-wauto" ignoreRequestValue="<%= true %>" label='<%= showLabel ? "quantity" : StringPool.BLANK %>' name="<%= HtmlUtil.escape(name) %>" type="number" value="<%= value %>" wrapperCssClass="mb-0">
 				<aui:validator name="number" />
 				<aui:validator name="min"><%= minOrderQuantity %></aui:validator>
 				<aui:validator name="max"><%= maxOrderQuantity %></aui:validator>
 			</aui:input>
 		</c:when>
 		<c:when test="<%= ArrayUtil.isNotEmpty(allowedOrderQuantities) %>">
-			<aui:select cssClass="commerce-input mb-0" ignoreRequestValue="<%= true %>" label='<%= showLabel ? "quantity" : StringPool.BLANK %>' name="<%= name %>" wrapperCssClass="mb-0">
+			<aui:select cssClass="commerce-input mb-0" ignoreRequestValue="<%= true %>" label='<%= showLabel ? "quantity" : StringPool.BLANK %>' name="<%= HtmlUtil.escape(name) %>" wrapperCssClass="mb-0">
 
 				<%
 				for (int curQuantity : allowedOrderQuantities) {
@@ -57,7 +57,7 @@ if (Validator.isNull(name)) {
 			</aui:select>
 		</c:when>
 		<c:otherwise>
-			<aui:select cssClass="commerce-input commerce-input--select u-wauto" ignoreRequestValue="<%= true %>" label='<%= showLabel ? "quantity" : StringPool.BLANK %>' name="<%= name %>">
+			<aui:select cssClass="commerce-input commerce-input--select u-wauto" ignoreRequestValue="<%= true %>" label='<%= showLabel ? "quantity" : StringPool.BLANK %>' name="<%= HtmlUtil.escape(name) %>">
 
 				<%
 				int quantity = 1;

@@ -90,7 +90,7 @@ long commerceAccountId = commerceAccountAdminDisplayContext.getCommerceAccountId
 								for (CommerceAddress billingCommerceAddress : commerceAccountAdminDisplayContext.getBillingCommerceAddresses()) {
 								%>
 
-									<aui:option label="<%= billingCommerceAddress.getName() %>" selected="<%= billingCommerceAddress.getCommerceAddressId() == commerceAccount.getDefaultBillingAddressId() %>" value="<%= billingCommerceAddress.getCommerceAddressId() %>" />
+									<aui:option label="<%= HtmlUtil.escape(billingCommerceAddress.getName()) %>" selected="<%= billingCommerceAddress.getCommerceAddressId() == commerceAccount.getDefaultBillingAddressId() %>" value="<%= billingCommerceAddress.getCommerceAddressId() %>" />
 
 								<%
 								}
@@ -104,7 +104,7 @@ long commerceAccountId = commerceAccountAdminDisplayContext.getCommerceAccountId
 								for (CommerceAddress shippingCommerceAddress : commerceAccountAdminDisplayContext.getShippingCommerceAddresses()) {
 								%>
 
-									<aui:option label="<%= shippingCommerceAddress.getName() %>" selected="<%= shippingCommerceAddress.getCommerceAddressId() == commerceAccount.getDefaultShippingAddressId() %>" value="<%= shippingCommerceAddress.getCommerceAddressId() %>" />
+									<aui:option label="<%= HtmlUtil.escape(shippingCommerceAddress.getName()) %>" selected="<%= shippingCommerceAddress.getCommerceAddressId() == commerceAccount.getDefaultShippingAddressId() %>" value="<%= shippingCommerceAddress.getCommerceAddressId() %>" />
 
 								<%
 								}

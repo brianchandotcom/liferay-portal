@@ -29,11 +29,12 @@ String cssClass = (String)request.getAttribute("liferay-commerce:order-transitio
 		for (int i = 0; i < commerceOrderTransitionOVPs.size(); i++) {
 			ObjectValuePair<Long, String> transitionOVP = commerceOrderTransitionOVPs.get(i);
 
+			Long workflowTaskId = transitionOVP.getKey();
 			String transitionName = transitionOVP.getValue();
 		%>
 
-			<button class="<%= cssClass %> transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionOVP.getValue() %>" data-workflowTaskId="<%= transitionOVP.getKey() %>" type="button">
-				<%= LanguageUtil.get(request, transitionName) %>
+			<button class="<%= HtmlUtil.escapeAttribute(cssClass) %> transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= HtmlUtil.escapeAttribute(transitionName) %>" data-workflowTaskId="<%= workflowTaskId %>" type="button">
+				<%= LanguageUtil.get(request, HtmlUtil.escape(transitionName)) %>
 			</button>
 
 		<%

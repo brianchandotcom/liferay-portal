@@ -242,6 +242,8 @@ describe('EditFormView', () => {
 					<div className="control-menu-level-1-heading" />
 				</div>
 
+				<div className="change-tracking-indicator" />
+
 				<DndProvider backend={HTML5Backend}>
 					<div
 						id={EDIT_FORM_VIEW_PROPS.customObjectSidebarElementId}
@@ -259,6 +261,8 @@ describe('EditFormView', () => {
 		await act(async () => {
 			jest.runAllTimers();
 		});
+
+		expect(container.querySelector('.publications-enabled')).toBeTruthy();
 
 		expect(queryByText('new-form-view')).toBeTruthy();
 
@@ -315,6 +319,8 @@ describe('EditFormView', () => {
 
 		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(1);
 		expect(dataLayoutVisitorSpy.mock.calls.length).toBe(1);
+
+		expect(container.querySelector('.publications-enabled')).toBeFalsy();
 
 		const [, deleteButton] = container.querySelectorAll(
 			'.field-type-remove-icon button'

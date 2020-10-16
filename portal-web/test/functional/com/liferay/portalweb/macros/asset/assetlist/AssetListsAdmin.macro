@@ -455,6 +455,31 @@ definition {
 		}
 	}
 
+	macro viewCollectionItems {
+		AssetListsAdmin.gotoEntry(assetListName = "${assetListTitle}");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
+
+		Click(
+			key_menuItem = "View Items",
+			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		for (var assetTitle : list "${assetTitleList}") {
+			AssertTextEquals(
+				key_assetTitle = "${assetTitle}",
+				locator1 = "AssetLists#ASSET_TITLE_ROW",
+				value1 = "${assetTitle}");
+		}
+
+		SelectFrameTop();
+
+		Click(locator1 = "Icon#CLOSE");
+	}
+
 	macro viewContent {
 		Click(
 			key_title = "${assetListTitle}",

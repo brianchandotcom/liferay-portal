@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 
 import java.io.File;
 
+import java.nio.file.Path;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -382,25 +383,23 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 					String customConfigFile = "liferay-config/liferay.txt";
 
-					File derivedSummariesTxtFile = project.file(
-						"derived-config.txt");
+					File directoryFile = project.file(".");
 
-					if (derivedSummariesTxtFile.exists()) {
-						String absolutePath = FileUtil.getAbsolutePath(
-							derivedSummariesTxtFile);
+					Path directoryPath = directoryFile.toPath();
 
-						customConfigFile =
-							customConfigFile + File.pathSeparator +
-								absolutePath;
-					}
-
-					File falsePositivesTxtFile = project.file(
+					while (directoryPath != null) {
+						File falsePositivesTxtFile =
+							new File(
+								directoryPath.toFile(),
 						"find-security-bugs-false-positives.txt");
 
 					if (falsePositivesTxtFile.exists()) {
 						customConfigFile =
 							customConfigFile + File.pathSeparator +
 								FileUtil.getAbsolutePath(falsePositivesTxtFile);
+						}
+
+						directoryPath = directoryPath.getParent();
 					}
 
 					findSecurityBugsJavaExec.systemProperty(

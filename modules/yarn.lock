@@ -1975,10 +1975,10 @@
     liferay-npm-bundler-plugin-replace-browser-modules "2.19.4"
     liferay-npm-bundler-plugin-resolve-linked-dependencies "2.19.4"
 
-"@liferay/npm-bundler@3.0.1-pre.0":
-  version "3.0.1-pre.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-bundler/-/npm-bundler-3.0.1-pre.0.tgz#b27606804718250f983748f98ab7362e05f57169"
-  integrity sha512-u1P4wiq5jm02QEs1OBfBlLDT9JJ8bpw6IeaMlwjys9A1T1X8IsUu78tv6uqLLfuq5ByC8xQvMkhX8wqc/U6vsw==
+"@liferay/npm-bundler@3.0.1-pre.1":
+  version "3.0.1-pre.1"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-bundler/-/npm-bundler-3.0.1-pre.1.tgz#466bd2c0395cdb2af032e9c807fbba15033d088d"
+  integrity sha512-Qy1piHRxg/sDr7d2gvhf6rNNh+qRfunbN2VGllwyxu4ny0TujFHXkOcNqzgol0bjlJjSWB9SeUsRH3dc/ebA8Q==
   dependencies:
     "@liferay/js-toolkit-core" "3.0.1-pre.0"
     acorn "^6.2.1"

@@ -185,6 +185,7 @@ class Sidebar extends Component {
 							: false,
 					readOnly:
 						field.fieldName == 'name' ? readOnlyFieldName : false,
+					visible: field.fieldName !== 'name' ? field.visible : false,
 				};
 
 				return {

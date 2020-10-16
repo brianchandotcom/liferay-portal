@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARD_STYLE</td>
+	<td>//div[contains(@data-analytics-asset-title,'${key_card}')]/parent::div[contains(@class,'${key_cardStyle}') or contains(@style,'${key_cardStyle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARD_THUMBNAIL</td>
 	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//img</td>
 	<td></td>

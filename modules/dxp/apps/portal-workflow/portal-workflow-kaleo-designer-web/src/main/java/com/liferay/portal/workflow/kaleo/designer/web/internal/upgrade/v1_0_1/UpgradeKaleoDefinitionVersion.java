@@ -173,7 +173,7 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 
 	protected void initKaleoDesignerModelsResourceActions() throws Exception {
 		_resourceActions.read(
-			null, UpgradeKaleoDefinitionVersion.class.getClassLoader(),
+			UpgradeKaleoDefinitionVersion.class.getClassLoader(),
 			"/resource-actions/default.xml");
 
 		List<String> modelNames = _resourceActions.getPortletModelResources(

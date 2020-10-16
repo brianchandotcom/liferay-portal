@@ -89,7 +89,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			ClassLoader classLoader = clazz.getClassLoader();
 
 			for (String config : PropsValues.RESOURCE_ACTIONS_CONFIGS) {
-				read(null, classLoader, config);
+				read(classLoader, config);
 			}
 		}
 		catch (Exception exception) {

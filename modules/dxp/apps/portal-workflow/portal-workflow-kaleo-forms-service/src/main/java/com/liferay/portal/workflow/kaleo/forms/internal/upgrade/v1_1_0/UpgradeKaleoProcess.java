@@ -211,7 +211,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		throws Exception {
 
 		_resourceActions.read(
-			null, UpgradeKaleoProcess.class.getClassLoader(),
+			UpgradeKaleoProcess.class.getClassLoader(),
 			"/resource-actions/default.xml");
 
 		List<String> modelNames = _resourceActions.getPortletModelResources(

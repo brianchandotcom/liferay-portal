@@ -451,7 +451,7 @@ public class UpgradeJournal extends UpgradeProcess {
 		throws Exception {
 
 		_resourceActions.read(
-			null, UpgradeJournal.class.getClassLoader(),
+			UpgradeJournal.class.getClassLoader(),
 			"/resource-actions/journal_ddm_composite_models.xml");
 
 		List<String> modelNames = _resourceActions.getPortletModelResources(

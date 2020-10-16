@@ -131,14 +131,14 @@ public class ServiceConfigurationInitializer {
 
 			if (Validator.isNull(portlets)) {
 				_resourceActions.readAndCheck(
-					null, _classLoader,
+					_classLoader,
 					StringUtil.split(
 						_portletConfiguration.get(
 							PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
 			}
 			else {
 				_resourceActions.read(
-					null, _classLoader,
+					_classLoader,
 					StringUtil.split(
 						_portletConfiguration.get(
 							PropsKeys.RESOURCE_ACTIONS_CONFIGS)));

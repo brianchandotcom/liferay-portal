@@ -473,7 +473,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		}
 
 		ResourceActionsUtil.read(
-			null, classLoader,
+			classLoader,
 			StringUtil.split(
 				portletProperties.getProperty(
 					PropsKeys.RESOURCE_ACTIONS_CONFIGS)));

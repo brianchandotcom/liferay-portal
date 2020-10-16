@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Objects;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -71,7 +73,7 @@ public class EditDispatchLogMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (Constants.DELETE.equals(cmd)) {
+			if (Objects.equals(cmd, Constants.DELETE)) {
 				deleteDispatchLog(actionRequest);
 			}
 		}

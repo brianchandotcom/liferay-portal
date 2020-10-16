@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import java.io.IOException;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -92,13 +93,15 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+			if (Objects.equals(cmd, Constants.ADD) ||
+				Objects.equals(cmd, Constants.UPDATE)) {
+
 				updateDispatchTrigger(actionRequest, actionResponse);
 			}
-			else if (cmd.equals(Constants.DELETE)) {
+			else if (Objects.equals(cmd, Constants.DELETE)) {
 				deleteDispatchTrigger(actionRequest);
 			}
-			else if (cmd.equals("runProcess")) {
+			else if (Objects.equals(cmd, "runProcess")) {
 				HttpServletResponse httpServletResponse =
 					_portal.getHttpServletResponse(actionResponse);
 
@@ -109,7 +112,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 
 				hideDefaultSuccessMessage(actionRequest);
 			}
-			else if (cmd.equals("schedule")) {
+			else if (Objects.equals(cmd, "schedule")) {
 				scheduleDispatchTrigger(actionRequest);
 			}
 		}

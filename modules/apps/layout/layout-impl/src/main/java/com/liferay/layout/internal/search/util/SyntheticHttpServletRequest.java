@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.servlet.http;
+package com.liferay.layout.internal.search.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
@@ -52,7 +52,7 @@ import javax.servlet.http.Part;
 /**
  * @author Pavel Savinov
  */
-public class DummyHttpServletRequest implements HttpServletRequest {
+public class SyntheticHttpServletRequest implements HttpServletRequest {
 
 	@Override
 	public boolean authenticate(HttpServletResponse httpServletResponse)
@@ -117,7 +117,7 @@ public class DummyHttpServletRequest implements HttpServletRequest {
 	}
 
 	@Override
-	public long getDateHeader(String name) {
+	public long getDateHeader(String s) {
 		return 0;
 	}
 
@@ -147,7 +147,7 @@ public class DummyHttpServletRequest implements HttpServletRequest {
 	}
 
 	@Override
-	public int getIntHeader(String name) {
+	public int getIntHeader(String s) {
 		return 0;
 	}
 
@@ -202,7 +202,7 @@ public class DummyHttpServletRequest implements HttpServletRequest {
 	}
 
 	@Override
-	public Part getPart(String name) throws IOException, ServletException {
+	public Part getPart(String s) throws IOException, ServletException {
 		return null;
 	}
 
@@ -237,13 +237,13 @@ public class DummyHttpServletRequest implements HttpServletRequest {
 	}
 
 	@Override
-	public String getRealPath(String path) {
+	public String getRealPath(String s) {
 		return null;
 	}
 
 	@Override
 	public String getRemoteAddr() {
-		return "127.0.0.1";
+		return null;
 	}
 
 	@Override

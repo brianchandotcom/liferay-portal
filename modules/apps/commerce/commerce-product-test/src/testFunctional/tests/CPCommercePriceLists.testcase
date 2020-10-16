@@ -47,6 +47,14 @@ definition {
 			}
 
 			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				CommerceEntry.deleteCommerceEntry();
+			}
+
+			CommerceNavigator.gotoPortlet(
 				category = "Pricing",
 				panel = "Commerce",
 				portlet = "Price Lists");

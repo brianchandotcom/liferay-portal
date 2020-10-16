@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -80,9 +81,8 @@ public class DispatchTalendScreenNavigationCategory
 			return false;
 		}
 
-		String taskExecutorType = dispatchTrigger.getTaskExecutorType();
-
-		if (taskExecutorType.equals(
+		if (Objects.equals(
+				dispatchTrigger.getTaskExecutorType(),
 				TalendDispatchTaskExecutor.
 					DISPATCH_TASK_EXECUTOR_TYPE_TALEND) &&
 			!dispatchTrigger.isSystem()) {

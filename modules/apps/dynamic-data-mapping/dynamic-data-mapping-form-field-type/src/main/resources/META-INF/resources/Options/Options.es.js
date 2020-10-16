@@ -439,6 +439,7 @@ const Main = ({
 	placeholder = Liferay.Language.get('enter-an-option'),
 	readOnly,
 	required,
+	showKeyword,
 	value = {},
 	visible,
 	...otherProps
@@ -484,6 +485,7 @@ const Main = ({
 							readOnly={option.disabled}
 							reference={option.reference}
 							required={required}
+							showKeyword={showKeyword}
 							showLabel={false}
 							value={option.label}
 							visible={visible}

@@ -58,6 +58,7 @@ const Main = ({
 	readOnly,
 	reference: initalReference,
 	required,
+	showKeyword = false,
 	showLabel,
 	spritemap,
 	value,
@@ -102,19 +103,21 @@ const Main = ({
 				value={value}
 				visible={visible}
 			/>
-			<KeyValue
-				className="key-value-input"
-				disabled={keywordReadOnly}
-				onBlur={onKeywordBlur}
-				onChange={(event) => {
-					const {value} = event.target;
+			{showKeyword && (
+				<KeyValue
+					className="key-value-input"
+					disabled={keywordReadOnly}
+					onBlur={onKeywordBlur}
+					onChange={(event) => {
+						const {value} = event.target;
 
-					generateKeywordRef.current = false;
-					onKeywordChange(event, value, false);
-					setKeyword(value);
-				}}
-				value={keyword}
-			/>
+						generateKeywordRef.current = false;
+						onKeywordChange(event, value, false);
+						setKeyword(value);
+					}}
+					value={keyword}
+				/>
+			)}
 			<KeyValue
 				className="key-value-reference-input"
 				onChange={(event) => {

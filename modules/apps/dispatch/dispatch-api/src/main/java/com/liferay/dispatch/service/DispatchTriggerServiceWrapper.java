@@ -34,14 +34,13 @@ public class DispatchTriggerServiceWrapper
 
 	@Override
 	public com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
-			long userId, String name,
+			long userId, String name, String taskExecutorType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				taskSettingsUnicodeProperties,
-			String taskType)
+				taskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchTriggerService.addDispatchTrigger(
-			userId, name, taskSettingsUnicodeProperties, taskType);
+			userId, name, taskExecutorType, taskSettingsUnicodeProperties);
 	}
 
 	@Override

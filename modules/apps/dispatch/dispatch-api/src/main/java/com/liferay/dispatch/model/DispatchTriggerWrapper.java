@@ -56,8 +56,8 @@ public class DispatchTriggerWrapper
 		attributes.put("overlapAllowed", isOverlapAllowed());
 		attributes.put("startDate", getStartDate());
 		attributes.put("system", isSystem());
+		attributes.put("taskExecutorType", getTaskExecutorType());
 		attributes.put("taskSettings", getTaskSettings());
-		attributes.put("taskType", getTaskType());
 
 		return attributes;
 	}
@@ -148,16 +148,16 @@ public class DispatchTriggerWrapper
 			setSystem(system);
 		}
 
+		String taskExecutorType = (String)attributes.get("taskExecutorType");
+
+		if (taskExecutorType != null) {
+			setTaskExecutorType(taskExecutorType);
+		}
+
 		String taskSettings = (String)attributes.get("taskSettings");
 
 		if (taskSettings != null) {
 			setTaskSettings(taskSettings);
-		}
-
-		String taskType = (String)attributes.get("taskType");
-
-		if (taskType != null) {
-			setTaskType(taskType);
 		}
 	}
 
@@ -292,6 +292,16 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
+	 * Returns the task executor type of this dispatch trigger.
+	 *
+	 * @return the task executor type of this dispatch trigger
+	 */
+	@Override
+	public String getTaskExecutorType() {
+		return model.getTaskExecutorType();
+	}
+
+	/**
 	 * Returns the task settings of this dispatch trigger.
 	 *
 	 * @return the task settings of this dispatch trigger
@@ -306,16 +316,6 @@ public class DispatchTriggerWrapper
 		getTaskSettingsUnicodeProperties() {
 
 		return model.getTaskSettingsUnicodeProperties();
-	}
-
-	/**
-	 * Returns the task type of this dispatch trigger.
-	 *
-	 * @return the task type of this dispatch trigger
-	 */
-	@Override
-	public String getTaskType() {
-		return model.getTaskType();
 	}
 
 	/**
@@ -514,6 +514,16 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
+	 * Sets the task executor type of this dispatch trigger.
+	 *
+	 * @param taskExecutorType the task executor type of this dispatch trigger
+	 */
+	@Override
+	public void setTaskExecutorType(String taskExecutorType) {
+		model.setTaskExecutorType(taskExecutorType);
+	}
+
+	/**
 	 * Sets the task settings of this dispatch trigger.
 	 *
 	 * @param taskSettings the task settings of this dispatch trigger
@@ -529,16 +539,6 @@ public class DispatchTriggerWrapper
 			taskSettingsUnicodeProperties) {
 
 		model.setTaskSettingsUnicodeProperties(taskSettingsUnicodeProperties);
-	}
-
-	/**
-	 * Sets the task type of this dispatch trigger.
-	 *
-	 * @param taskType the task type of this dispatch trigger
-	 */
-	@Override
-	public void setTaskType(String taskType) {
-		model.setTaskType(taskType);
 	}
 
 	/**

@@ -22,6 +22,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.util.PropsUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -233,10 +234,20 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		properties.setProperty("ignore.errors.util.classes", "true");
 
+		for (String propertyName : properties.stringPropertyNames()) {
+			String propertyValue = properties.getProperty(propertyName);
+
+			if (propertyValue == null) {
+				continue;
+			}
+
+			PropsUtil.set(propertyName, propertyValue);
+		}
+
 		try {
 			PoshiContext.clear();
 
-			PoshiContext.readFiles(properties);
+			PoshiContext.readFiles();
 
 			return PoshiContext.getTestBatchGroups(query, getAxisMaxSize());
 		}

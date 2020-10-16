@@ -259,9 +259,8 @@ public class DispatchLogLocalServiceTest {
 
 		return _dispatchTriggerLocalService.addDispatchTrigger(
 			dispatchTrigger.getUserId(), dispatchTrigger.getName(),
-			dispatchTrigger.isSystem(),
-			dispatchTrigger.getTaskSettingsUnicodeProperties(),
-			dispatchTrigger.getTaskType());
+			dispatchTrigger.isSystem(), dispatchTrigger.getTaskExecutorType(),
+			dispatchTrigger.getTaskSettingsUnicodeProperties());
 	}
 
 	private void _assertEquals(

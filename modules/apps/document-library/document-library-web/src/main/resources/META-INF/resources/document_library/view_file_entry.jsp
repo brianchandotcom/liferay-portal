@@ -125,7 +125,7 @@ if (portletTitleBasedNavigation) {
 
 	<c:choose>
 		<c:when test="<%= portletTitleBasedNavigation %>">
-			<div class="contextual-sidebar sidebar-light sidebar-preview">
+			<div class="contextual-sidebar sidebar-light sidebar-preview" id="<%= liferayPortletResponse.getNamespace() + "ContextualSidebar" %>">
 
 				<%
 				request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
@@ -304,9 +304,7 @@ if (addPortletBreadcrumbEntries) {
 				event.currentTarget.classList.toggle('active');
 
 				document
-					.querySelector(
-						'#<portlet:namespace />FileEntry .contextual-sidebar'
-					)
+					.getElementById('<portlet:namespace />ContextualSidebar')
 					.classList.toggle('contextual-sidebar-visible');
 			});
 		}

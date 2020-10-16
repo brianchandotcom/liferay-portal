@@ -34,6 +34,11 @@ public class DispatchUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			"2.0.0", "2.1.0",
 			new com.liferay.dispatch.internal.upgrade.v2_1_0.
 				DispatchTriggerUpgradeProcess());
+
+		registry.register(
+			"2.1.0", "3.0.0",
+			new com.liferay.dispatch.internal.upgrade.v3_0_0.
+				DispatchTriggerUpgradeProcess());
 	}
 
 }

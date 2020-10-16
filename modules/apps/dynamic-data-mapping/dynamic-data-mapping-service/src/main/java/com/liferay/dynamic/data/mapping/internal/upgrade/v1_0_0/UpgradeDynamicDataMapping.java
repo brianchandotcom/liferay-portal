@@ -34,8 +34,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
@@ -56,6 +54,7 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
+import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustNotDuplicateFieldName;
@@ -654,16 +653,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected String toJSON(DDMForm ddmForm) {
-		DDMFormSerializerSerializeRequest.Builder builder =
-			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
-
-		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			_ddmFormSerializer.serialize(builder.build());
-
-		return ddmFormSerializerSerializeResponse.getContent();
-	}
-
 	protected String toJSON(DDMFormValues ddmFormValues) {
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
@@ -1244,7 +1233,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				populateStructureInvalidDDMFormFieldNamesMap(
 					structureId, ddmForm);
 
-				String definition = toJSON(ddmForm);
+				String definition = DDMFormSerializeUtil.serialize(
+					ddmForm, _ddmFormSerializer);
 
 				ps2.setString(1, definition);
 
@@ -1429,7 +1419,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 					ddmForm = updateDDMFormFields(ddmForm);
 
-					updatedScript = toJSON(ddmForm);
+					updatedScript = DDMFormSerializeUtil.serialize(
+						ddmForm, _ddmFormSerializer);
 
 					language = "json";
 				}

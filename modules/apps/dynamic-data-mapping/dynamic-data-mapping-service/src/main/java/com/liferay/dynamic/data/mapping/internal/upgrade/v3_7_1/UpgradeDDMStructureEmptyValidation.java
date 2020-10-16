@@ -16,13 +16,12 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v3_7_1;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -143,13 +142,7 @@ public class UpgradeDDMStructureEmptyValidation extends UpgradeProcess {
 			}
 		}
 
-		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			_ddmFormSerializer.serialize(
-				DDMFormSerializerSerializeRequest.Builder.newBuilder(
-					ddmForm
-				).build());
-
-		return ddmFormSerializerSerializeResponse.getContent();
+		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 	}
 
 	private final DDMFormDeserializer _ddmFormDeserializer;

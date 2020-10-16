@@ -17,12 +17,11 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0;
 import com.liferay.dynamic.data.mapping.internal.util.ExpressionParameterValueExtractor;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -87,13 +86,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 		ddmForm.setDDMFormRules(ddmFormRules);
 
-		DDMFormSerializerSerializeRequest.Builder serializerBuilder =
-			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
-
-		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			_ddmFormSerializer.serialize(serializerBuilder.build());
-
-		return ddmFormSerializerSerializeResponse.getContent();
+		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 	}
 
 	protected void upgradeDDMStructureDefinition() throws Exception {

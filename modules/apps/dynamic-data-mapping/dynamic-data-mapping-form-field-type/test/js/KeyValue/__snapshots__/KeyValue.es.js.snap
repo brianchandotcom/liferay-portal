@@ -28,22 +28,6 @@ exports[`KeyValue has a helptext 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-name
-        :
-      </label>
-      <input
-        class="key-value-input"
-        tabindex="0"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      class="active form-text key-value-editor"
-    >
-      <label
-        class="control-label key-value-label"
-      >
         field-reference
         :
       </label>
@@ -105,22 +89,6 @@ exports[`KeyValue has a label 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-name
-        :
-      </label>
-      <input
-        class="key-value-input"
-        tabindex="0"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      class="active form-text key-value-editor"
-    >
-      <label
-        class="control-label key-value-label"
-      >
         field-reference
         :
       </label>
@@ -172,22 +140,6 @@ exports[`KeyValue has a predefined Value 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-name
-        :
-      </label>
-      <input
-        class="key-value-input"
-        tabindex="0"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      class="active form-text key-value-editor"
-    >
-      <label
-        class="control-label key-value-label"
-      >
         field-reference
         :
       </label>
@@ -231,22 +183,6 @@ exports[`KeyValue has a value 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-name
-        :
-      </label>
-      <input
-        class="key-value-input"
-        tabindex="0"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      class="active form-text key-value-editor"
-    >
-      <label
-        class="control-label key-value-label"
-      >
         field-reference
         :
       </label>
@@ -283,22 +219,6 @@ exports[`KeyValue has an id 1`] = `
         value=""
       />
       
-    </div>
-    <div
-      class="active form-text key-value-editor"
-    >
-      <label
-        class="control-label key-value-label"
-      >
-        field-name
-        :
-      </label>
-      <input
-        class="key-value-input"
-        tabindex="0"
-        type="text"
-        value=""
-      />
     </div>
     <div
       class="active form-text key-value-editor"
@@ -350,22 +270,6 @@ exports[`KeyValue is not editable 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-name
-        :
-      </label>
-      <input
-        class="key-value-input"
-        tabindex="0"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      class="active form-text key-value-editor"
-    >
-      <label
-        class="control-label key-value-label"
-      >
         field-reference
         :
       </label>
@@ -402,22 +306,6 @@ exports[`KeyValue is not required 1`] = `
         value=""
       />
       
-    </div>
-    <div
-      class="active form-text key-value-editor"
-    >
-      <label
-        class="control-label key-value-label"
-      >
-        field-name
-        :
-      </label>
-      <input
-        class="key-value-input"
-        tabindex="0"
-        type="text"
-        value=""
-      />
     </div>
     <div
       class="active form-text key-value-editor"
@@ -473,22 +361,6 @@ exports[`KeyValue renders Label if showLabel is true 1`] = `
       <label
         class="control-label key-value-label"
       >
-        field-name
-        :
-      </label>
-      <input
-        class="key-value-input"
-        tabindex="0"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      class="active form-text key-value-editor"
-    >
-      <label
-        class="control-label key-value-label"
-      >
         field-reference
         :
       </label>
@@ -532,22 +404,6 @@ exports[`KeyValue renders component with a key 1`] = `
         value=""
       />
       
-    </div>
-    <div
-      class="active form-text key-value-editor"
-    >
-      <label
-        class="control-label key-value-label"
-      >
-        field-name
-        :
-      </label>
-      <input
-        class="key-value-input"
-        tabindex="0"
-        type="text"
-        value="key"
-      />
     </div>
     <div
       class="active form-text key-value-editor"

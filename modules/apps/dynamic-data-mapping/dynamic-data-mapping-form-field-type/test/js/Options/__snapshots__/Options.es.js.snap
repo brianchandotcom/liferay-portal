@@ -83,7 +83,7 @@ exports[`Options shows the options 1`] = `
                 class="key-value-reference-input"
                 tabindex="0"
                 type="text"
-                value=""
+                value="Option1"
               />
             </div>
             
@@ -175,7 +175,7 @@ exports[`Options shows the options 1`] = `
                 class="key-value-reference-input"
                 tabindex="0"
                 type="text"
-                value=""
+                value="Option2"
               />
             </div>
             

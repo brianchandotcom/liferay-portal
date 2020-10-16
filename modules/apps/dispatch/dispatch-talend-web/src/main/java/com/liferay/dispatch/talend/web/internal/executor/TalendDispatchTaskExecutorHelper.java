@@ -139,14 +139,13 @@ public class TalendDispatchTaskExecutorHelper {
 			throw new FileSizeException("File size exceeds configured limit");
 		}
 
-		String extension = FileUtil.getExtension(fileName);
+		String extension = StringPool.PERIOD + FileUtil.getExtension(fileName);
 
-		String[] imageExtensions =
-			_dispatchTalendConfiguration.imageExtensions();
+		for (String imageExtension :
+				_dispatchTalendConfiguration.imageExtensions()) {
 
-		for (String imageExtension : imageExtensions) {
 			if (Objects.equals(StringPool.STAR, imageExtension) ||
-				imageExtension.equals(StringPool.PERIOD + extension)) {
+				Objects.equals(imageExtension, extension)) {
 
 				return;
 			}

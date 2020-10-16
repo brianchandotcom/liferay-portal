@@ -412,7 +412,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2958");
 		}
 
-		for (var resourceActionIndex : list "resource.xhtml,resource.xhtml") {
+		for (var resourceActionIndex : list "resource.xhtml,resourceViaAjax.xhtml") {
 			BridgeIssues.verifyValue(
 				detailValue = "All special URL characters were correctly encoded.",
 				link = "${resourceActionIndex}",

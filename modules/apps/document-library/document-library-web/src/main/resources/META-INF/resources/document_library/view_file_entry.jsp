@@ -85,20 +85,20 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 </liferay-util:buffer>
 
-<c:if test="<%= portletTitleBasedNavigation %>">
-
-	<%
-	request.setAttribute("file_entry_upper_tbar.jsp-dlViewFileVersionDisplayContext", dlViewFileVersionDisplayContext);
-	request.setAttribute("file_entry_upper_tbar.jsp-documentTitle", documentTitle);
-	request.setAttribute("file_entry_upper_tbar.jsp-fileEntry", fileEntry);
-	request.setAttribute("file_entry_upper_tbar.jsp-fileVersion", fileVersion);
-	request.setAttribute("file_entry_upper_tbar.jsp-versionSpecific", versionSpecific);
-	%>
-
-	<liferay-util:include page="/document_library/file_entry_upper_tbar.jsp" servletContext="<%= application %>" />
-</c:if>
-
 <div class="<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>" id="<%= liferayPortletResponse.getNamespace() + (portletTitleBasedNavigation ? "FileEntry" : "infoPanelId") %>">
+	<c:if test="<%= portletTitleBasedNavigation %>">
+
+		<%
+		request.setAttribute("file_entry_upper_tbar.jsp-dlViewFileVersionDisplayContext", dlViewFileVersionDisplayContext);
+		request.setAttribute("file_entry_upper_tbar.jsp-documentTitle", documentTitle);
+		request.setAttribute("file_entry_upper_tbar.jsp-fileEntry", fileEntry);
+		request.setAttribute("file_entry_upper_tbar.jsp-fileVersion", fileVersion);
+		request.setAttribute("file_entry_upper_tbar.jsp-versionSpecific", versionSpecific);
+		%>
+
+		<liferay-util:include page="/document_library/file_entry_upper_tbar.jsp" servletContext="<%= application %>" />
+	</c:if>
+
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
 	<aui:form action="<%= editFileEntry %>" method="post" name="fm">

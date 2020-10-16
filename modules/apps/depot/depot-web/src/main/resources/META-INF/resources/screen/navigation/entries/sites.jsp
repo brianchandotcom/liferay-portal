@@ -94,7 +94,7 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				helpMessage="makes-the-asset-library-web-content-structures-and-document-types-available-in-the-site"
-				name="web-content-structures"
+				name="structures-and-types"
 			>
 				<liferay-ui:message key='<%= depotEntryGroupRel.isDdmStructuresAvailable() ? "yes" : "no" %>' />
 			</liferay-ui:search-container-column-text>

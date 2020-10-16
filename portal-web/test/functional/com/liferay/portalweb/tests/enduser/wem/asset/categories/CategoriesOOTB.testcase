@@ -87,6 +87,8 @@ definition {
 			categoryName = "Topic 1",
 			vocabularyName = "Topic");
 
+		Category.openCategoriesAdmin(siteURLKey = "global");
+
 		Category.deleteCategoriesCP(vocabularyName = "Topic");
 	}
 

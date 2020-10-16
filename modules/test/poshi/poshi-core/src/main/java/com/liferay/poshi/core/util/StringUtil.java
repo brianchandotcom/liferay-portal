@@ -475,14 +475,14 @@ public class StringUtil {
 		return combine(quote, s, quote);
 	}
 
-	public static String randomString(String length) {
-		int lengthInt = GetterUtil.getInteger(length);
+	public static String randomString(String lengthString) {
+		int length = GetterUtil.getInteger(lengthString);
 
 		Random random = new Random();
 
-		char[] chars = new char[lengthInt];
+		char[] chars = new char[length];
 
-		for (int i = 0; i < lengthInt; i++) {
+		for (int i = 0; i < length; i++) {
 			int index = random.nextInt(_RANDOM_STRING_CHAR_TABLE.length);
 
 			chars[i] = _RANDOM_STRING_CHAR_TABLE[index];

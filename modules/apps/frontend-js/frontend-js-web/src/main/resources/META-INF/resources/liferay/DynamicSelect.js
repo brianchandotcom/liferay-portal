@@ -76,8 +76,8 @@ function updateSelect(array, index, list) {
 	}
 
 	list.forEach((item) => {
-		const key = item[options.selectId];
-		const value = item[options.selectDesc];
+		const key = Liferay.Util.escapeHTML(item[options.selectId]);
+		const value = Liferay.Util.escapeHTML(item[options.selectDesc]);
 
 		let selected = '';
 

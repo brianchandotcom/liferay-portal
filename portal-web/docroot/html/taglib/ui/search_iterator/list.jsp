@@ -176,7 +176,7 @@ if (iteratorURL != null) {
 								headerNameValue = LanguageUtil.get(resourceBundle, HtmlUtil.escape(headerName));
 							}
 							else {
-								headerNameValue = headerName;
+								headerNameValue = HtmlUtil.escape(headerName);
 							}
 							%>
 

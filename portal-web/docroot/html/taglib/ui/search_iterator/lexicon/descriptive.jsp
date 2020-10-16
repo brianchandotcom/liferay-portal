@@ -50,7 +50,7 @@
 			<c:if test="<%= (headerNames != null) && Validator.isNotNull(headerNames.get(0)) %>">
 				<li class="list-group-header">
 					<div class="list-group-header-title">
-						<liferay-ui:message key="<%= headerNames.get(0) %>" />
+						<liferay-ui:message key="<%= HtmlUtil.escape(headerNames.get(0)) %>" />
 					</div>
 				</li>
 			</c:if>

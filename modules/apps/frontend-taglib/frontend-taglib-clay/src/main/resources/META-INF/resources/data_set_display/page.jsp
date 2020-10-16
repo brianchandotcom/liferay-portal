@@ -27,29 +27,31 @@
 
 	dataSetDisplay.default(
 		{
-			actionParameterName: '<%= GetterUtil.getString(actionParameterName) %>',
+			actionParameterName:
+				'<%= HtmlUtil.escapeJS(GetterUtil.getString(actionParameterName)) %>',
 			activeViewSettings: <%= activeViewSettingsJSON %>,
-			apiURL: '<%= apiURL %>',
-			appURL: '<%= appURL %>',
+			apiURL: '<%= HtmlUtil.escapeJS(apiURL) %>',
+			appURL: '<%= HtmlUtil.escapeJS(appURL) %>',
 			bulkActions: <%= jsonSerializer.serializeDeep(bulkActionDropdownItems) %>,
-			componentId: '<%= containerId %>',
+			componentId: '<%= HtmlUtil.escapeJS(containerId) %>',
 			creationMenu: <%= jsonSerializer.serializeDeep(creationMenu) %>,
 			currentURL: '<%= PortalUtil.getCurrentURL(request) %>',
 			dataProviderKey: '<%= dataProviderKey %>',
 
 			<c:if test="<%= Validator.isNotNull(formId) %>">
-				formId: '<%= formId %>',
+				formId: '<%= HtmlUtil.escapeJS(formId) %>',
 			</c:if>
 
 			id: '<%= id %>',
 			namespace: '<%= namespace %>',
 
 			<c:if test="<%= Validator.isNotNull(nestedItemsKey) %>">
-				nestedItemsKey: '<%= nestedItemsKey %>',
+				nestedItemsKey: '<%= HtmlUtil.escapeJS(nestedItemsKey) %>',
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(nestedItemsReferenceKey) %>">
-				nestedItemsReferenceKey: '<%= nestedItemsReferenceKey %>',
+				nestedItemsReferenceKey:
+					'<%= HtmlUtil.escapeJS(nestedItemsReferenceKey) %>',
 			</c:if>
 
 			pagination: {
@@ -58,7 +60,7 @@
 				initialPageNumber: <%= pageNumber %>,
 			},
 			portletId: '<%= portletDisplay.getRootPortletId() %>',
-			portletURL: '<%= portletURL %>',
+			portletURL: '<%= HtmlUtil.escapeJS(portletURL.toString()) %>',
 			selectedItems: <%= jsonSerializer.serializeDeep(selectedItems) %>,
 
 			<c:if test="<%= Validator.isNotNull(selectedItemsKey) %>">

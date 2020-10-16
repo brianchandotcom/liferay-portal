@@ -39,7 +39,7 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 		}
 	%>
 
-		<!-- Begin fragment <%= sectionId %> -->
+		<!-- Begin fragment <%= HtmlUtil.escape(sectionId) %> -->
 
 		<liferay-frontend:fieldset
 			collapsed="<%= i != 0 %>"
@@ -55,7 +55,7 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 
 		</liferay-frontend:fieldset>
 
-		<!-- End fragment <%= sectionId %> -->
+		<!-- End fragment <%= HtmlUtil.escape(sectionId) %> -->
 
 	<%
 		String curErrorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
@@ -92,7 +92,7 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(focusField) %>">
 					focusField = sectionContent.querySelector(
-						'#<portlet:namespace /><%= focusField %>'
+						'#<portlet:namespace /><%= HtmlUtil.escapeJS(focusField) %>'
 					);
 				</c:when>
 				<c:otherwise>

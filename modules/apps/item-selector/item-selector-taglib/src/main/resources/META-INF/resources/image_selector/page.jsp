@@ -110,7 +110,7 @@ if (isDraggable) {
 
 				<div class="file-validation-info">
 					<c:if test="<%= Validator.isNotNull(validExtensions) %>">
-						<strong><%= validExtensions %></strong>
+						<strong><%= HtmlUtil.escape(validExtensions) %></strong>
 					</c:if>
 
 					<c:if test="<%= maxFileSize != 0 %>">

@@ -188,3 +188,35 @@ This change was made to better support container environment and unify the api
 to do OSGi integration.
 
 ---------------------------------------
+
+### The AssetEntries_AssetCategories table and its corresponding code have been removed from the portal
+- **Date:** 2020-Oct-16
+- **JIRA Ticket:** [LPS-89065](https://issues.liferay.com/browse/LPS-89065)
+
+#### What changed?
+
+AssetEntries_AssetCategories and its corresponding code have been removed from
+the portal. In 7.2, this mapping table and the corresponding interface were
+replaced by the table AssetEntryAssetCategoryRel and the service
+AssetEntryAssetCategoryRelLocalService.
+
+#### Who is affected?
+
+This affects any content or code that relies on calling the old interfaces for
+the AssetEntries_AssetCategories relationship, through the
+AssetEntryLocalService and AssetCategoryLocalService.
+
+#### How should I update my code?
+
+Use the new methods in AssetEntryAssetCategoryRelLocalService to retrieve the
+same data as before. The method signatures haven't changed; they have just been
+relocated to a different service.
+
+#### Why was this change made?
+
+This change was made due to changes resulting from [LPS-76488](https://issues.liferay.com/browse/LPS-76488),
+which let developers control the order of a list of assets for a given category.
+The breaking changes regarding the service replacement were notified on
+2019-Sep-11, this would be the final step to removing the table.
+
+---------------------------------------

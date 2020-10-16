@@ -77,7 +77,7 @@ public class DispatchMessageListener extends BaseMessageListener {
 
 		DispatchTaskExecutor dispatchTaskExecutor =
 			_dispatchTaskExecutorServiceTrackerMap.getService(
-				dispatchTrigger.getTaskType());
+				dispatchTrigger.getTaskExecutorType());
 
 		dispatchTaskExecutor.execute(dispatchTriggerId);
 	}

@@ -59,8 +59,8 @@ public class DispatchTriggerLocalServiceImpl
 
 	@Override
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, boolean system,
-			UnicodeProperties taskSettingsUnicodeProperties, String taskType)
+			long userId, String name, boolean system, String taskExecutorType,
+			UnicodeProperties taskSettingsUnicodeProperties)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -75,9 +75,9 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger.setUserName(user.getFullName());
 		dispatchTrigger.setName(name);
 		dispatchTrigger.setSystem(system);
+		dispatchTrigger.setTaskExecutorType(taskExecutorType);
 		dispatchTrigger.setTaskSettingsUnicodeProperties(
 			taskSettingsUnicodeProperties);
-		dispatchTrigger.setTaskType(taskType);
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 

@@ -205,13 +205,14 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
+		String taskExecutorType = ParamUtil.getString(
+			actionRequest, "taskExecutorType");
+
 		UnicodeProperties taskSettingsUnicodeProperties = new UnicodeProperties(
 			true);
 
 		taskSettingsUnicodeProperties.fastLoad(
 			ParamUtil.getString(actionRequest, "taskSettings"));
-
-		String taskType = ParamUtil.getString(actionRequest, "taskType");
 
 		DispatchTrigger dispatchTrigger = null;
 
@@ -221,8 +222,8 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			dispatchTrigger = _dispatchTriggerService.addDispatchTrigger(
-				_portal.getUserId(actionRequest), name,
-				taskSettingsUnicodeProperties, taskType);
+				_portal.getUserId(actionRequest), name, taskExecutorType,
+				taskSettingsUnicodeProperties);
 		}
 
 		return dispatchTrigger;

@@ -423,21 +423,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2958");
 		}
 
-		// FACES_3175
-
-		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3175",
-			portletName = "FACES-3175");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3175");
-
-		BridgeIssues.verifyValue(
-			detailValue = "Successfully avoided reloading FACES-3175:reproducer.js resource.",
-			link = "result.xhtml",
-			restoreState = "true",
-			statusValue = "SUCCESS",
-			textValue = "FACES-3175");
-
 		// FACES_3231
 
 		BridgeIssues.addPageAndPortlet(

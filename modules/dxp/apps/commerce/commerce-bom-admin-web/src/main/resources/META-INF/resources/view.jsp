@@ -137,7 +137,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "shop-by-diagram"));
 							).build()
 						%>'
 						name="name"
-						value="<%= commerceBOMDefinition.getName() %>"
+						value="<%= HtmlUtil.escape(commerceBOMDefinition.getName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp
@@ -156,7 +156,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "shop-by-diagram"));
 							).build()
 						%>'
 						name="name"
-						value="<%= commerceBOMFolder.getName() %>"
+						value="<%= HtmlUtil.escape(commerceBOMFolder.getName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp

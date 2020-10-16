@@ -51,7 +51,7 @@ CommerceMLForecastAlertEntryListDisplayContext commerceMLForecastAlertEntryListD
 					<liferay-ui:search-container-column-text
 						cssClass="important table-cell-expand"
 						name="name"
-						value="<%= commerceAccount.getName() %>"
+						value="<%= HtmlUtil.escape(commerceAccount.getName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

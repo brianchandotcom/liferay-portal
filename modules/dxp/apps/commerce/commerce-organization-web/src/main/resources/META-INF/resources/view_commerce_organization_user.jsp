@@ -27,15 +27,15 @@ User selectedUser = commerceOrganizationDisplayContext.getSelectedUser();
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-auto">
-					<img alt="avatar" class="account-management__thumbnail img-fluid rounded-circle" src="<%= selectedUser.getPortraitURL(themeDisplay) %>" />
+					<img alt="avatar" class="account-management__thumbnail img-fluid rounded-circle" src="<%= HtmlUtil.escapeAttribute(selectedUser.getPortraitURL(themeDisplay)) %>" />
 				</div>
 
 				<div class="col d-flex flex-col justify-content-center">
 					<span class="account-management__name">
-						<%= selectedUser.getFullName() %>
+						<%= HtmlUtil.escape(selectedUser.getFullName()) %>
 					</span>
 					<span class="account-management__email">
-						<%= selectedUser.getEmailAddress() %>
+						<%= HtmlUtil.escape(selectedUser.getEmailAddress()) %>
 					</span>
 				</div>
 			</div>

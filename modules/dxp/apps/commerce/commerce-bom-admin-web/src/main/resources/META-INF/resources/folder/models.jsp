@@ -182,7 +182,7 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 						},
 					},
 					title:
-						'<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceBOMFolder.getName()) %>" key="add-new-entry-to-x" />',
+						'<liferay-ui:message arguments="<%= commerceBOMFolder.getName() %>" key="add-new-entry-to-x" />',
 					url:
 						'<%= commerceBOMAdminDisplayContext.getCommerceApplicationModelItemSelectorUrl() %>',
 				});

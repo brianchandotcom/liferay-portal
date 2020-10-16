@@ -65,6 +65,91 @@ definition {
 		}
 	}
 
+	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {
+		property portal.acceptance = "true";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCatalogsEntry(
+			catalogCurrency = "US Dollar",
+			catalogLanguage = "English (United States)",
+			catalogName = "Test Catalog");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCatalogsEntry(
+			catalogCurrency = "US Dollar",
+			catalogLanguage = "English (United States)",
+			catalogName = "Test Catalog 2");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewPriceListsEntry(
+			priceListCatalog = "Test Catalog",
+			priceListCurrency = "USD",
+			priceListName = "Test Price List");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Test Catalog",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Test Catalog 2",
+			productName = "Simple Jeans",
+			productType = "Simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "default",
+			title = "Add SKUs");
+
+		AssertElementPresent(
+			key_entryName = "Simple T-Shirt",
+			locator1 = "CommerceEntry#ITEM_FINDER_ENTRY_NAME");
+
+		AssertElementNotPresent(
+			key_entryName = "Simple Jeans",
+			locator1 = "CommerceEntry#ITEM_FINDER_ENTRY_NAME");
+	}
+
 	test AssertPriceListCanBeAssociatedWithAccountAndAccountGroup {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#AssertPriceListCanBeAssociatedWithAccountAndAccountGroup";

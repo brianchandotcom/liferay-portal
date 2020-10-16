@@ -429,6 +429,11 @@
 	<td>//label[contains(.,'${key_title}')]/../select[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CATALOG_ENTRY_BASE_PRICE_LIST_FIELD</td>
+	<td>//input[@id='baseCommercePriceListId']/../input[@placeholder='Type Here']</td>
+	<td></td>
+</tr>
 <!--OPTION-->
 <tr>
 	<td>ADD_RELATION_FIELD</td>

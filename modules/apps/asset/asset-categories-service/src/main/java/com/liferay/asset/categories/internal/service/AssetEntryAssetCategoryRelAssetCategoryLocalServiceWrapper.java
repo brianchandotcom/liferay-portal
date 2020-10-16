@@ -17,7 +17,6 @@ package com.liferay.asset.categories.internal.service;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceWrapper;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -57,74 +55,6 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public void addAssetEntryAssetCategories(
-		long entryId, List<AssetCategory> assetCategories) {
-
-		addAssetEntryAssetCategories(
-			entryId,
-			ListUtil.toLongArray(
-				assetCategories, AssetCategoryModel::getCategoryId));
-	}
-
-	@Override
-	public void addAssetEntryAssetCategories(long entryId, long[] categoryIds) {
-		for (long categoryId : categoryIds) {
-			addAssetEntryAssetCategory(entryId, categoryId);
-		}
-	}
-
-	@Override
-	public void addAssetEntryAssetCategory(
-		long entryId, AssetCategory assetCategory) {
-
-		addAssetEntryAssetCategory(entryId, assetCategory.getCategoryId());
-	}
-
-	@Override
-	public void addAssetEntryAssetCategory(long entryId, long categoryId) {
-		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
-			entryId, categoryId);
-	}
-
-	@Override
-	public void clearAssetEntryAssetCategories(long entryId) {
-		_assetEntryAssetCategoryRelLocalService.
-			deleteAssetEntryAssetCategoryRelByAssetEntryId(entryId);
-	}
-
-	@Override
-	public void deleteAssetEntryAssetCategories(
-		long entryId, List<AssetCategory> assetCategories) {
-
-		deleteAssetEntryAssetCategories(
-			entryId,
-			ListUtil.toLongArray(
-				assetCategories, AssetCategoryModel::getCategoryId));
-	}
-
-	@Override
-	public void deleteAssetEntryAssetCategories(
-		long entryId, long[] categoryIds) {
-
-		for (long categoryId : categoryIds) {
-			deleteAssetEntryAssetCategory(entryId, categoryId);
-		}
-	}
-
-	@Override
-	public void deleteAssetEntryAssetCategory(
-		long entryId, AssetCategory assetCategory) {
-
-		deleteAssetEntryAssetCategory(entryId, assetCategory.getCategoryId());
-	}
-
-	@Override
-	public void deleteAssetEntryAssetCategory(long entryId, long categoryId) {
-		_assetEntryAssetCategoryRelLocalService.
-			deleteAssetEntryAssetCategoryRel(entryId, categoryId);
-	}
-
-	@Override
 	public AssetCategory deleteCategory(
 			AssetCategory category, boolean skipRebuildTree)
 		throws PortalException {
@@ -142,17 +72,6 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public List<AssetCategory> getAssetEntryAssetCategories(long entryId) {
-		return _getAssetCategoriesByEntryId(entryId);
-	}
-
-	@Override
-	public int getAssetEntryAssetCategoriesCount(long entryId) {
-		return _assetEntryAssetCategoryRelLocalService.
-			getAssetEntryAssetCategoryRelsCount(entryId);
-	}
-
-	@Override
 	public List<AssetCategory> getCategories(long classNameId, long classPK) {
 		AssetEntry entry = _assetEntryLocalService.fetchEntry(
 			classNameId, classPK);
@@ -167,32 +86,6 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 	@Override
 	public List<AssetCategory> getEntryCategories(long entryId) {
 		return _getAssetCategoriesByEntryId(entryId);
-	}
-
-	@Override
-	public boolean hasAssetEntryAssetCategories(long entryId) {
-		int assetEntryAssetCategoryRelsCount =
-			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsCount(entryId);
-
-		if (assetEntryAssetCategoryRelsCount > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean hasAssetEntryAssetCategory(long entryId, long categoryId) {
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			_assetEntryAssetCategoryRelLocalService.
-				fetchAssetEntryAssetCategoryRel(entryId, categoryId);
-
-		if (assetEntryAssetCategoryRel != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

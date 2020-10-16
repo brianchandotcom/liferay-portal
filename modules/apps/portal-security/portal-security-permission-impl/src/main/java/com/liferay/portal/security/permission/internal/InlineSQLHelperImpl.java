@@ -691,7 +691,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		StringBundler sb = new StringBundler(11);
 
-		int pos = sql.indexOf(_WHERE_CLAUSE);
+		int pos = sql.lastIndexOf(_WHERE_CLAUSE);
 
 		if (pos == -1) {
 			pos = sql.indexOf(_GROUP_BY_CLAUSE);

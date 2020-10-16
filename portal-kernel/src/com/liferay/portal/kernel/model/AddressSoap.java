@@ -35,7 +35,9 @@ public class AddressSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
+		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setAddressId(model.getAddressId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
@@ -43,6 +45,8 @@ public class AddressSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
+		soapModel.setName(model.getName());
+		soapModel.setDescription(model.getDescription());
 		soapModel.setStreet1(model.getStreet1());
 		soapModel.setStreet2(model.getStreet2());
 		soapModel.setStreet3(model.getStreet3());
@@ -50,6 +54,8 @@ public class AddressSoap implements Serializable {
 		soapModel.setZip(model.getZip());
 		soapModel.setRegionId(model.getRegionId());
 		soapModel.setCountryId(model.getCountryId());
+		soapModel.setLatitude(model.getLatitude());
+		soapModel.setLongitude(model.getLongitude());
 		soapModel.setTypeId(model.getTypeId());
 		soapModel.setMailing(model.isMailing());
 		soapModel.setPrimary(model.isPrimary());
@@ -122,12 +128,28 @@ public class AddressSoap implements Serializable {
 		_uuid = uuid;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public long getAddressId() {
 		return _addressId;
 	}
 
 	public void setAddressId(long addressId) {
 		_addressId = addressId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	public long getCompanyId() {
@@ -186,6 +208,22 @@ public class AddressSoap implements Serializable {
 		_classPK = classPK;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
 	public String getStreet1() {
 		return _street1;
 	}
@@ -242,6 +280,22 @@ public class AddressSoap implements Serializable {
 		_countryId = countryId;
 	}
 
+	public double getLatitude() {
+		return _latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		_latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return _longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		_longitude = longitude;
+	}
+
 	public long getTypeId() {
 		return _typeId;
 	}
@@ -276,7 +330,9 @@ public class AddressSoap implements Serializable {
 
 	private long _mvccVersion;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _addressId;
+	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
@@ -284,6 +340,8 @@ public class AddressSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
+	private String _name;
+	private String _description;
 	private String _street1;
 	private String _street2;
 	private String _street3;
@@ -291,6 +349,8 @@ public class AddressSoap implements Serializable {
 	private String _zip;
 	private long _regionId;
 	private long _countryId;
+	private double _latitude;
+	private double _longitude;
 	private long _typeId;
 	private boolean _mailing;
 	private boolean _primary;

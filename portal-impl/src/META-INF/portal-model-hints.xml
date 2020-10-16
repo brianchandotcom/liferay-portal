@@ -499,7 +499,9 @@
 		</default-hints>
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="addressId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
@@ -528,6 +530,8 @@
 		<field name="zip" type="String" />
 		<field name="regionId" type="long" />
 		<field name="countryId" type="long" />
+		<field name="latitude" type="double" />
+		<field name="longitude" type="double" />
 		<field name="typeId" type="long" />
 		<field name="mailing" type="boolean" />
 		<field name="primary" type="boolean" />

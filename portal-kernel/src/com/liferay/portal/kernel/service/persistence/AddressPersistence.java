@@ -182,6 +182,56 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public int countByUuid(String uuid);
 
 	/**
+	 * Returns the address where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchAddressException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	public Address findByUUID_G(String uuid, long groupId)
+		throws NoSuchAddressException;
+
+	/**
+	 * Returns the address where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public Address fetchByUUID_G(String uuid, long groupId);
+
+	/**
+	 * Returns the address where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public Address fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the address where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the address that was removed
+	 */
+	public Address removeByUUID_G(String uuid, long groupId)
+		throws NoSuchAddressException;
+
+	/**
+	 * Returns the number of addresses where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching addresses
+	 */
+	public int countByUUID_G(String uuid, long groupId);
+
+	/**
 	 * Returns all the addresses where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -1306,6 +1356,56 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public int countByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary);
+
+	/**
+	 * Returns the address where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchAddressException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	public Address findByC_ERC(long companyId, String externalReferenceCode)
+		throws NoSuchAddressException;
+
+	/**
+	 * Returns the address where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public Address fetchByC_ERC(long companyId, String externalReferenceCode);
+
+	/**
+	 * Returns the address where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public Address fetchByC_ERC(
+		long companyId, String externalReferenceCode, boolean useFinderCache);
+
+	/**
+	 * Removes the address where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the address that was removed
+	 */
+	public Address removeByC_ERC(long companyId, String externalReferenceCode)
+		throws NoSuchAddressException;
+
+	/**
+	 * Returns the number of addresses where companyId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching addresses
+	 */
+	public int countByC_ERC(long companyId, String externalReferenceCode);
 
 	/**
 	 * Caches the address in the entity cache if it is enabled.

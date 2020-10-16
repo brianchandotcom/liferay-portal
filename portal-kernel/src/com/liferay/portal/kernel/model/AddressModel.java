@@ -33,8 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AddressModel
-	extends AttachedModel, BaseModel<Address>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends AttachedModel, BaseModel<Address>, GroupedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -90,6 +90,21 @@ public interface AddressModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this address.
+	 *
+	 * @return the external reference code of this address
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this address.
+	 *
+	 * @param externalReferenceCode the external reference code of this address
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the address ID of this address.
 	 *
 	 * @return the address ID of this address
@@ -102,6 +117,22 @@ public interface AddressModel
 	 * @param addressId the address ID of this address
 	 */
 	public void setAddressId(long addressId);
+
+	/**
+	 * Returns the group ID of this address.
+	 *
+	 * @return the group ID of this address
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this address.
+	 *
+	 * @param groupId the group ID of this address
+	 */
+	@Override
+	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this address.
@@ -243,6 +274,36 @@ public interface AddressModel
 	public void setClassPK(long classPK);
 
 	/**
+	 * Returns the name of this address.
+	 *
+	 * @return the name of this address
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this address.
+	 *
+	 * @param name the name of this address
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the description of this address.
+	 *
+	 * @return the description of this address
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this address.
+	 *
+	 * @param description the description of this address
+	 */
+	public void setDescription(String description);
+
+	/**
 	 * Returns the street1 of this address.
 	 *
 	 * @return the street1 of this address
@@ -344,6 +405,34 @@ public interface AddressModel
 	 * @param countryId the country ID of this address
 	 */
 	public void setCountryId(long countryId);
+
+	/**
+	 * Returns the latitude of this address.
+	 *
+	 * @return the latitude of this address
+	 */
+	public double getLatitude();
+
+	/**
+	 * Sets the latitude of this address.
+	 *
+	 * @param latitude the latitude of this address
+	 */
+	public void setLatitude(double latitude);
+
+	/**
+	 * Returns the longitude of this address.
+	 *
+	 * @return the longitude of this address
+	 */
+	public double getLongitude();
+
+	/**
+	 * Sets the longitude of this address.
+	 *
+	 * @param longitude the longitude of this address
+	 */
+	public void setLongitude(double longitude);
 
 	/**
 	 * Returns the type ID of this address.

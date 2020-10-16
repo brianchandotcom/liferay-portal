@@ -50,6 +50,7 @@ definition {
 
 	macro newProductsEntry {
 		CommerceProducts.addEntry(
+			productCatalog = "${productCatalog}",
 			productFullDescription = "${productName} Full Description",
 			productName = "${productName}",
 			productShortDescription = "${productName} Short Description",

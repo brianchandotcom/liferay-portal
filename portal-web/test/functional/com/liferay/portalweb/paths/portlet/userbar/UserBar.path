@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_AVATAR_TOGGLE</td>
+	<td>//button[contains(@data-toggle,'dropdown')]//span[contains(@class,'user-icon')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_DASHBOARD</td>
 	<td>//a[contains(.,'Dashboard')]</td>
 	<td></td>

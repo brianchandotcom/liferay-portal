@@ -25,6 +25,10 @@ definition {
 	}
 
 	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
 		AppBuilderAdmin.teardownAppBuilder();
 
 		Page.tearDownCP();
@@ -1087,6 +1091,116 @@ definition {
 		AppBuilderWorkflow.waitForButtonPresent(buttonName = "Go Next");
 		AppBuilderWorkflow.assertButtonPresent(buttonName = "Go Next");
 		AppBuilderWorkflow.assertButtonPresent(buttonName = "Go Back");
+	}
+
+	@description = "LRQA-61050 - Automate smoke tests from LPS-111006"
+	@priority = "5"
+	test ViewWorkflowAppThroughNotifications {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		for (var delpoyOption : list "Widget,Standalone,Product Menu") {
+			AppBuilderAppAdmin.createBasicWorkflowAppWith1ExtraStep(
+				assignee = "Administrator",
+				deployOption = "${delpoyOption}",
+				formViewName = "My Form View",
+				isCreatingViaPlusIcon = "true",
+				objectName = "my custom object",
+				tableViewName = "My Table View",
+				workflowAppName = "My Workflow App ${delpoyOption}");
+		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Workflow Site Name",
+			layoutName = "App Builder Workflow Test Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Workflow Site Name",
+			layoutName = "App Builder Workflow Test Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Workflow Test Page",
+			siteName = "App Builder Workflow Site Name");
+
+		Portlet.addPG(
+			pageName = "App Builder Workflow Test Page",
+			portletName = "My Workflow App Widget");
+
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content From Widget");
+
+		AppBuilderWorkflow.submit();
+		Navigator.gotoNotifications();
+
+		AppBuilderWorkflow.gotoViaNotification(
+			assetType = "My Workflow App Widget",
+			user = "Test Test");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Text",
+			fieldValue = "Content From Widget");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App Product Menu");
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content From Product Menu");
+
+		AppBuilderWorkflow.submit();
+		Navigator.gotoNotifications();
+
+		AppBuilderWorkflow.gotoViaNotification(
+			assetType = "My Workflow App Product Menu",
+			user = "Test Test");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Text",
+			fieldValue = "Content From Product Menu");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAdmin.openStandAloneApp(itemName = "My Workflow App Standalone");
+		SelectWindow.selectPopUp(locator1 = "null");
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content From Standalone");
+
+		AppBuilderWorkflow.submit();
+		Navigator.closeWindow();
+		Navigator.gotoNotifications();
+
+		AppBuilderWorkflow.gotoViaNotification(
+			assetType = "My Workflow App Standalone",
+			user = "Test Test");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Text",
+			fieldValue = "Content From Standalone");
 	}
 
 }

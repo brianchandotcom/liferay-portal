@@ -140,6 +140,21 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete Step");
 	}
 
+	macro gotoViaNotification {
+		Notifications.gotoNotifications();
+
+		if (isSet(user)) {
+			AssertClick(
+				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+				value1 = "${user} sent you a ${assetType} entry in the workflow.");
+		}
+		else {
+			AssertClick(
+				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+				value1 = "sent you a ${assetType} entry in the workflow.");
+		}
+	}
+
 	macro saveNewVersionedApp {
 		AppBuilderWorkflow.clickSaveButton();
 		AppBuilderWorkflow.clickSaveButtonFromSaveAppModal();

@@ -12,7 +12,6 @@
  * details.
  */
 
-import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -59,16 +58,18 @@ const EditFormView = (props) => {
 		backURL = basePortletURL;
 	}
 
+	let WrapperComponent = ({children}) => children;
+
+	if (document.querySelector('.change-tracking-indicator')) {
+		WrapperComponent = ({children}) => (
+			<div className="publications-enabled">{children}</div>
+		);
+	}
+
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<FormViewContextProvider dataLayoutBuilder={dataLayoutBuilder}>
-				<div
-					className={classNames({
-						'publications-enabled': document.querySelector(
-							'.change-tracking-indicator'
-						),
-					})}
-				>
+				<WrapperComponent>
 					<FormViewControlMenu
 						backURL={backURL}
 						dataLayoutId={dataLayoutId}
@@ -85,7 +86,7 @@ const EditFormView = (props) => {
 							`#${customObjectSidebarElementId}`
 						)
 					)}
-				</div>
+				</WrapperComponent>
 			</FormViewContextProvider>
 		</DndProvider>
 	);

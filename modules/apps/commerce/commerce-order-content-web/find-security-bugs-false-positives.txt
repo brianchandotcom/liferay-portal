@@ -1,0 +1,4 @@
+com/liferay/portal/kernel/util/HashMapBuilder.put("commerceOrderContentDisplayContext",UNKNOWN):SAFE@org/apache/jsp/pending_005forders/b2b/view_jsp
+com/liferay/portal/kernel/util/HashMapBuilder.put("commerceOrderContentDisplayContext",UNKNOWN):SAFE@org/apache/jsp/pending_005forders/b2c/view_jsp
+com/liferay/portal/kernel/util/HashMapBuilder.put("commerceOrderContentDisplayContext",UNKNOWN):SAFE@org/apache/jsp/placed_005forders/b2b/view_jsp
+com/liferay/portal/kernel/util/HashMapBuilder.put("commerceOrderContentDisplayContext",UNKNOWN):SAFE@org/apache/jsp/placed_005forders/b2c/view_jsp

@@ -1,0 +1,1 @@
+com/liferay/commerce/product/service/persistence/impl/CommerceChannelRelFinderImpl._isValidClassName(Ljava/lang/String;)Z:SAFE#0

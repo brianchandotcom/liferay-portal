@@ -1,0 +1,1 @@
+com/liferay/portal/kernel/dao/search/ResultRow.getRowId()Ljava/lang/String;:SAFE

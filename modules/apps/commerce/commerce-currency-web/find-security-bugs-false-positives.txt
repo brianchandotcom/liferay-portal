@@ -1,0 +1,2 @@
+com/liferay/commerce/currency/util/ExchangeRateProviderRegistry.getExchangeRateProviderKeys()Ljava/lang/Iterable;:SAFE
+com/liferay/commerce/currency/web/internal/display/context/CommerceCurrenciesDisplayContext.format(Ljava/math/BigDecimal;)Ljava/lang/String;:SAFE

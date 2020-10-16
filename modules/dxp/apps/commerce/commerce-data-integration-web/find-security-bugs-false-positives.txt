@@ -1,0 +1,4 @@
+com/liferay/portal/kernel/backgroundtask/BackgroundTaskConstants.getStatusLabel(I)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/backgroundtask/BackgroundTaskConstants.getStatusCssClass(I)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/backgroundtask/BackgroundTaskConstants.getStatusLabel(I)Ljava/lang/String;:SAFE
+com/liferay/commerce/data/integration/web/internal/display/context/CommerceDataIntegrationProcessLogDisplayContext.getFormattedDate(Ljava/util/Date;)Ljava/lang/String;:SAFE

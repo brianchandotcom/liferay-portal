@@ -1,0 +1,1 @@
+com/liferay/commerce/shipping/engine/fedex/internal/constants/FedExCommerceShippingEngineConstants.SERVICE_TYPES:SAFE

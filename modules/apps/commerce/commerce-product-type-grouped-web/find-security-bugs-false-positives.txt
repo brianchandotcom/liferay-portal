@@ -1,0 +1,1 @@
+com/liferay/commerce/product/content/util/CPContentHelper.renderOptions(Ljavax/portlet/RenderRequest;Ljavax/portlet/RenderResponse;)Ljava/lang/String;:SAFE

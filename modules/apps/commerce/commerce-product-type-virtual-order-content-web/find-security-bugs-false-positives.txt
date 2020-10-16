@@ -1,0 +1,3 @@
+com/liferay/commerce/product/type/virtual/order/content/web/internal/display/context/CommerceVirtualOrderItemContentDisplayContext.getDownloadURL(Lcom/liferay/commerce/product/type/virtual/order/model/CommerceVirtualOrderItem;)Ljava/lang/String;:SAFE
+com/liferay/journal/model/JournalArticleDisplay.getContent()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/HashMapBuilder.put("commerceVirtualOrderItemContentDisplayContext",UNKNOWN):SAFE@org/apache/jsp/view_jsp

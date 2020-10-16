@@ -1,0 +1,7 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.AttachmentUtil" />
+		<Method name="_addFileEntry" />
+		<Bug pattern="PATH_TRAVERSAL_OUT" />
+	</Match>
+</FindBugsFilter>

@@ -1,0 +1,15 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.commerce.product.internal.portlet.action.ActionHelperImpl" />
+		<Method name="writeJSON" />
+		<Bug pattern="XSS_SERVLET" />
+	</Match>
+	<Match>
+		<Class name="com.liferay.commerce.product.internal.upgrade.v1_3_0.CPFriendlyURLEntryUpgradeProcess" />
+		<Method name="doUpgrade" />
+		<Or>
+			<Bug pattern="SQL_INJECTION_HIBERNATE" />
+			<Bug pattern="SQL_INJECTION_JDBC" />
+		</Or>
+	</Match>
+</FindBugsFilter>

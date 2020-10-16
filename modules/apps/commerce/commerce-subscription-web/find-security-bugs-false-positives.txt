@@ -1,0 +1,6 @@
+com/liferay/frontend/taglib/clay/servlet/taglib/util/DropdownItem.get("label"):SAFE@org/apache/jsp/my_005fsubscriptions/view_jsp
+
+
+com/liferay/commerce/product/util/CPSubscriptionType.getLabel(Ljava/util/Locale;)Ljava/lang/String;:SAFE
+com/liferay/commerce/product/util/CPSubscriptionType.getName()Ljava/lang/String;:SAFE
+

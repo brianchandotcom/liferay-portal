@@ -1,0 +1,1 @@
+com/liferay/commerce/starter/CommerceRegionsStarter.getKey()Ljava/lang/String;:SAFE

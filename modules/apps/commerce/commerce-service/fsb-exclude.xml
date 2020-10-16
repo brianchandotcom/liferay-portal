@@ -1,0 +1,19 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.commerce.internal.events.LoginPostAction" />
+		<Method name="run" />
+		<Bug pattern="TRUST_BOUNDARY_VIOLATION" />
+	</Match>
+	<Match>
+		<Class name="com.liferay.commerce.internal.order.CommerceOrderHttpHelperImpl" />
+		<Or>
+			<Method name="_setGuestCommerceOrder" />
+			<Method name="getCommerceCheckoutPortletURL" />
+		</Or>
+		<Or>
+			<Bug pattern="COOKIE_PERSISTENT" />
+			<Bug pattern="HTTPONLY_COOKIE" />
+			<Bug pattern="INSECURE_COOKIE" />
+		</Or>
+	</Match>
+</FindBugsFilter>

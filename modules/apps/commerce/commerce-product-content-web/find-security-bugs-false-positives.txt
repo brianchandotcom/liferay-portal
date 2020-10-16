@@ -1,0 +1,9 @@
+com/liferay/portal/kernel/util/HashMapBuilder.put("cpPublisherDisplayContext",UNKNOWN):SAFE@org/apache/jsp/product_005fpublisher/view_jsp
+com/liferay/portal/kernel/util/HashMapBuilder.put("cpContentHelper",UNKNOWN):SAFE@org/apache/jsp/product_005fdetail/view_jsp
+com/liferay/portal/kernel/util/HashMapBuilder.put("cpCompareContentDisplayContext",UNKNOWN):SAFE@org/apache/jsp/compare_005fproducts/view_jsp
+com/liferay/portal/kernel/util/HashMapBuilder.put("cpCompareContentMiniDisplayContext",UNKNOWN):SAFE@org/apache/jsp/compare_005fproducts_005fmini/view_jsp
+
+com/liferay/commerce/product/data/source/CPDataSource.getName()Ljava/lang/String;:SAFE
+com/liferay/commerce/product/content/render/CPContentRenderer.getKey()Ljava/lang/String;:SAFE
+
+com/liferay/dynamic/data/mapping/taglib/servlet/taglib/TemplateRendererTag.setContextObjects(Ljava/util/Map;)V:0#0

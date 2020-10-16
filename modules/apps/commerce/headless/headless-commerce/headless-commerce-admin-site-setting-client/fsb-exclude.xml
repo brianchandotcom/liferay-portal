@@ -1,0 +1,7 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.headless.commerce.admin.site.setting.client.http.HttpInvoker" />
+		<Method name="_openHttpURLConnection" />
+		<Bug pattern="URLCONNECTION_SSRF_FD" />
+	</Match>
+</FindBugsFilter>

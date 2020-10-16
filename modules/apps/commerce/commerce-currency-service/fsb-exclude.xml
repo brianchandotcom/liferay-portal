@@ -1,0 +1,7 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.commerce.currency.internal.util.ECBExchangeRateProvider" />
+		<Method name="getExchangeRate" />
+		<Bug pattern="URLCONNECTION_SSRF_FD" />
+	</Match>
+</FindBugsFilter>

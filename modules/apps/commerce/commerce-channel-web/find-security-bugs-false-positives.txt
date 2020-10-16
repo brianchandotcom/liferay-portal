@@ -1,0 +1,2 @@
+com/liferay/commerce/product/channel/CommerceChannelType.getKey()Ljava/lang/String;:SAFE
+com/liferay/commerce/product/channel/CommerceChannelType.getLabel(Ljava/util/Locale;)Ljava/lang/String;:SAFE

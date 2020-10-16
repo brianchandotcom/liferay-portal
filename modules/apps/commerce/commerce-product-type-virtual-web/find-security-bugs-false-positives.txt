@@ -1,0 +1,3 @@
+com/liferay/commerce/product/content/util/CPContentHelper.getViewAttachmentURL(Lcom/liferay/portal/kernel/portlet/LiferayPortletRequest;Lcom/liferay/portal/kernel/portlet/LiferayPortletResponse;)Ljavax/portlet/ResourceURL;:SAFE
+com/liferay/document/library/kernel/util/DLUtil.getDownloadURL(Lcom/liferay/portal/kernel/repository/model/FileEntry;Lcom/liferay/portal/kernel/repository/model/FileVersion;Lcom/liferay/portal/kernel/theme/ThemeDisplay;Ljava/lang/String;ZZ)Ljava/lang/String;:SAFE
+com/liferay/commerce/product/catalog/CPCatalogEntry.getDescription()Ljava/lang/String;:SAFE

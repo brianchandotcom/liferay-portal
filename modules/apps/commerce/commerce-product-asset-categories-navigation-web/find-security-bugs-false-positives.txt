@@ -1,0 +1,2 @@
+com/liferay/commerce/product/asset/categories/navigation/web/internal/display/context/CPAssetCategoriesNavigationDisplayContext.buildCategoriesNavigation(Ljava/util/List;JLcom/liferay/portal/kernel/theme/ThemeDisplay;Lcom/liferay/petra/string/StringBundler;)V:0#0
+com/liferay/portal/kernel/util/HashMapBuilder.put("cpAssetCategoriesNavigationDisplayContext",UNKNOWN):SAFE@org/apache/jsp/view_jsp

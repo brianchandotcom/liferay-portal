@@ -1,0 +1,1 @@
+com/liferay/commerce/talend/job/deployer/salesforce/configuration/SalesforceTalendJobConfiguration.salesforceTalendJobFilePath()Ljava/lang/String;:SAFE

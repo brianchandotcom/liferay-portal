@@ -1,0 +1,6 @@
+com/liferay/portal/kernel/util/HashMapBuilder.put("commerceCartContentDisplayContext",UNKNOWN):SAFE@org/apache/jsp/cart/view_jsp
+com/liferay/portal/kernel/util/HashMapBuilder.put("commerceCartContentTotalDisplayContext",UNKNOWN):SAFE@org/apache/jsp/cart_005ftotal/view_jsp
+com/liferay/portal/kernel/util/HashMapBuilder.put("commerceCartContentMiniDisplayContext",UNKNOWN):SAFE@org/apache/jsp/cart_005fmini/view_jsp
+
+com/liferay/commerce/product/util/CPDefinitionHelper.getFriendlyURL(JLcom/liferay/portal/kernel/theme/ThemeDisplay;)Ljava/lang/String;:SAFE
+

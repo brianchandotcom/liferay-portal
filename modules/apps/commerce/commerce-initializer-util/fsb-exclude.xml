@@ -1,0 +1,10 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.commerce.initializer.util.CommerceOrderGenerator" />
+		<Bug pattern="PREDICTABLE_RANDOM" />
+	</Match>
+	<Match>
+		<Class name="com.liferay.commerce.initializer.util.CommerceShipmentGenerator" />
+		<Bug pattern="PREDICTABLE_RANDOM" />
+	</Match>
+</FindBugsFilter>

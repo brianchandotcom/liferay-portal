@@ -98,10 +98,7 @@ if (portletTitleBasedNavigation) {
 	<liferay-util:include page="/document_library/file_entry_upper_tbar.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<clay:container-fluid
-	cssClass='<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>'
-	id='<%= liferayPortletResponse.getNamespace() + (portletTitleBasedNavigation ? "FileEntry" : "infoPanelId") %>'
->
+<div class="<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>" id="<%= liferayPortletResponse.getNamespace() + (portletTitleBasedNavigation ? "FileEntry" : "infoPanelId") %>">
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
 	<aui:form action="<%= editFileEntry %>" method="post" name="fm">
@@ -153,89 +150,91 @@ if (portletTitleBasedNavigation) {
 	</c:choose>
 
 	<div class="<%= portletTitleBasedNavigation ? "contextual-sidebar-content" : "sidenav-content" %>">
-		<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
+		<clay:container-fluid>
+			<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
 
-		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<div class="file-entry-actions">
-				<liferay-frontend:management-bar-sidenav-toggler-button
-					label="info"
-				/>
+			<c:if test="<%= !portletTitleBasedNavigation %>">
+				<div class="file-entry-actions">
+					<liferay-frontend:management-bar-sidenav-toggler-button
+						label="info"
+					/>
 
-				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+					<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+
+						<%
+						for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
+						%>
+
+							<liferay-ui:toolbar-item
+								toolbarItem="<%= toolbarItem %>"
+							/>
+
+						<%
+						}
+						%>
+
+					</c:if>
+				</div>
+			</c:if>
+
+			<c:if test="<%= (lock != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
+				<c:choose>
+					<c:when test="<%= fileEntry.hasLock() %>">
+						<div class="alert alert-info">
+							<c:choose>
+								<c:when test="<%= lock.isNeverExpires() %>">
+									<liferay-ui:message key="you-now-have-an-indefinite-lock-on-this-document" />
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message arguments="<%= StringUtil.toLowerCase(LanguageUtil.getTimeDescription(request, DLFileEntryConstants.LOCK_EXPIRATION_TIME)) %>" key="you-now-have-a-lock-on-this-document" translateArguments="<%= false %>" />
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="alert alert-danger">
+							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())} %>" key="you-cannot-modify-this-document-because-it-was-locked-by-x-on-x" translateArguments="<%= false %>" />
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+
+			<div class="body-row">
+				<c:if test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED %>">
 
 					<%
-					for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
-					%>
+					PortalIncludeUtil.include(
+						pageContext,
+						new PortalIncludeUtil.HTMLRenderer() {
 
-						<liferay-ui:toolbar-item
-							toolbarItem="<%= toolbarItem %>"
-						/>
+							@Override
+							public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+								dlViewFileVersionDisplayContext.renderPreview(request, response);
+							}
 
-					<%
-					}
+						});
 					%>
 
 				</c:if>
-			</div>
-		</c:if>
-
-		<c:if test="<%= (lock != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
-			<c:choose>
-				<c:when test="<%= fileEntry.hasLock() %>">
-					<div class="alert alert-info">
-						<c:choose>
-							<c:when test="<%= lock.isNeverExpires() %>">
-								<liferay-ui:message key="you-now-have-an-indefinite-lock-on-this-document" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message arguments="<%= StringUtil.toLowerCase(LanguageUtil.getTimeDescription(request, DLFileEntryConstants.LOCK_EXPIRATION_TIME)) %>" key="you-now-have-a-lock-on-this-document" translateArguments="<%= false %>" />
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="alert alert-danger">
-						<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())} %>" key="you-cannot-modify-this-document-because-it-was-locked-by-x-on-x" translateArguments="<%= false %>" />
-					</div>
-				</c:otherwise>
-			</c:choose>
-		</c:if>
-
-		<div class="body-row">
-			<c:if test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED %>">
 
 				<%
-				PortalIncludeUtil.include(
-					pageContext,
-					new PortalIncludeUtil.HTMLRenderer() {
-
-						@Override
-						public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-							dlViewFileVersionDisplayContext.renderPreview(request, response);
-						}
-
-					});
+				boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
 				%>
 
-			</c:if>
-
-			<%
-			boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
-			%>
-
-			<c:if test="<%= showComments && fileEntry.isRepositoryCapabilityProvided(CommentCapability.class) %>">
-				<liferay-comment:discussion
-					className="<%= dlViewFileVersionDisplayContext.getDiscussionClassName() %>"
-					classPK="<%= dlViewFileVersionDisplayContext.getDiscussionClassPK() %>"
-					formName="fm2"
-					ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
-					redirect="<%= currentURL %>"
-					userId="<%= PortalUtil.getValidUserId(fileEntry.getCompanyId(), fileEntry.getUserId()) %>"
-				/>
-			</c:if>
-		</div>
+				<c:if test="<%= showComments && fileEntry.isRepositoryCapabilityProvided(CommentCapability.class) %>">
+					<liferay-comment:discussion
+						className="<%= dlViewFileVersionDisplayContext.getDiscussionClassName() %>"
+						classPK="<%= dlViewFileVersionDisplayContext.getDiscussionClassPK() %>"
+						formName="fm2"
+						ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
+						redirect="<%= currentURL %>"
+						userId="<%= PortalUtil.getValidUserId(fileEntry.getCompanyId(), fileEntry.getUserId()) %>"
+					/>
+				</c:if>
+			</div>
+		</clay:container-fluid>
 	</div>
-</clay:container-fluid>
+</div>
 
 <c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 

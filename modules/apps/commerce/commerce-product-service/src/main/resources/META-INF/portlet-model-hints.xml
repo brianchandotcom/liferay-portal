@@ -168,6 +168,7 @@
 		</field>
 		<field name="description" type="String">
 			<hint-collection name="CLOB" />
+			<sanitize content-type="text/html" modes="ALL" />
 		</field>
 		<field name="metaTitle" type="String">
 			<hint name="max-length">255</hint>

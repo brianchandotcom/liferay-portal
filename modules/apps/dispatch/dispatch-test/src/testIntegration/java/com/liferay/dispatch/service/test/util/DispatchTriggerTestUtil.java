@@ -41,7 +41,7 @@ public class DispatchTriggerTestUtil {
 
 		return _randomDispatchTrigger(
 			RandomTestUtil.randomBoolean(), dispatchTrigger.getCompanyId(),
-			_randomCronExpression(), dispatchTrigger.getTaskType(),
+			_randomCronExpression(), dispatchTrigger.getTaskExecutorType(),
 			dispatchTrigger.getTaskSettingsUnicodeProperties(),
 			_randomName(dispatchTrigger.getUserId(), nameSalt),
 			dispatchTrigger.isSystem(), dispatchTrigger.getUserId());
@@ -67,9 +67,9 @@ public class DispatchTriggerTestUtil {
 	}
 
 	private static DispatchTrigger _randomDispatchTrigger(
-		boolean active, long companyId, String cronExpression, String taskType,
-		UnicodeProperties unicodeProperties, String name, boolean system,
-		long userId) {
+		boolean active, long companyId, String cronExpression,
+		String taskExecutorType, UnicodeProperties unicodeProperties,
+		String name, boolean system, long userId) {
 
 		return new DispatchTrigger() {
 
@@ -174,6 +174,11 @@ public class DispatchTriggerTestUtil {
 			}
 
 			@Override
+			public String getTaskExecutorType() {
+				return _taskExecutorType;
+			}
+
+			@Override
 			public String getTaskSettings() {
 				throw new UnsupportedOperationException();
 			}
@@ -181,11 +186,6 @@ public class DispatchTriggerTestUtil {
 			@Override
 			public UnicodeProperties getTaskSettingsUnicodeProperties() {
 				return _taskSettingsUnicodeProperties;
-			}
-
-			@Override
-			public String getTaskType() {
-				return _taskType;
 			}
 
 			@Override
@@ -358,6 +358,11 @@ public class DispatchTriggerTestUtil {
 			}
 
 			@Override
+			public void setTaskExecutorType(String taskExecutorType) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
 			public void setTaskSettings(String taskSettings) {
 				throw new UnsupportedOperationException();
 			}
@@ -366,11 +371,6 @@ public class DispatchTriggerTestUtil {
 			public void setTaskSettingsUnicodeProperties(
 				UnicodeProperties taskSettingsUnicodeProperties) {
 
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public void setTaskType(String taskType) {
 				throw new UnsupportedOperationException();
 			}
 
@@ -414,9 +414,9 @@ public class DispatchTriggerTestUtil {
 			private final String _cronExpression = cronExpression;
 			private final String _name = name;
 			private final boolean _system = system;
+			private final String _taskExecutorType = taskExecutorType;
 			private final UnicodeProperties _taskSettingsUnicodeProperties =
 				unicodeProperties;
-			private final String _taskType = taskType;
 			private final long _userId = userId;
 
 		};

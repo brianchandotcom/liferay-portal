@@ -311,7 +311,7 @@ definition {
 
 		Click(
 			key_PageLink = "Run Test",
-			locator1 = "BridgeIssues#PAGE_LINK");
+			locator1 = "BridgeIssues#RUN_TEST_BUTTON");
 
 		for (var key_field : list "1,2,3,4,5,6,7,8,9,10,11") {
 			AssertElementPresent(locator1 = "BridgeIssues#REQUESTED_MESSAGE");

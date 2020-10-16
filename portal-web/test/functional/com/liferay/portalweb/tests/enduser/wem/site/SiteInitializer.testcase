@@ -1,0 +1,494 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Site Administration";
+	property testray.main.component.name = "Site Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test case for LPS-120773. Check the initial stuffs included in the site initializer."
+	@priority = "5"
+	test ViewInitialStuffs {
+		task ("Add a new site based on Raylife") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			Site.addCustomCP(
+				siteName = "Test Site Name",
+				siteTemplateName = "Raylife");
+		}
+
+		task ("View the Raylife style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Raylife");
+
+			LexiconCard.viewCardThumbnail(card = "Raylife");
+
+			LexiconCard.viewMarkAsDefault(card = "Raylife");
+		}
+
+		task ("View the Raylife fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Raylife");
+
+			for (var fragmentName : list "Gift,Home Cover,Sign In,Claim Steps,Dashboard Card,Payment Message,Dashboard Page Header,Product Actions,Products List,Private Footer,Dashboard Resources,Private Navbar,Claim Content,Product Resources,Page Header,Section Subscription,Section Video,Public Footer,Table Claims,Public Navbar") {
+				FragmentsAdmin.viewEntryPresent(entry = "${fragmentName}");
+
+				LexiconCard.viewCardThumbnail(card = "${fragmentName}");
+			}
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			for (var fragmentName : list "Product Detail Page Header,Policy Content,Table Policies") {
+				FragmentsAdmin.viewEntryPresent(entry = "${fragmentName}");
+
+				LexiconCard.viewCardThumbnail(card = "${fragmentName}");
+			}
+		}
+
+		task ("View the Raylife master pages") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			for (var masterLayoutName : list "Customer Portal,Public") {
+				MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "${masterLayoutName}");
+
+				LexiconCard.viewCardThumbnail(card = "${masterLayoutName}");
+
+				MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "${masterLayoutName}");
+
+				PageEditor.gotoTab(tabName = "Page Design Options");
+
+				Click(locator1 = "PageEditor#MORE_LINK");
+
+				AssertChecked(
+					key_toggleSwitchLabel = "Use the same look and feel of the Private Pages",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+			}
+
+			LexiconCard.viewMarkAsDefault(card = "Blank");
+		}
+
+		task ("View the Raylife display page templates") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			for (var displayPageName : list "Claim,Policy") {
+				DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "${displayPageName}");
+
+				LexiconCard.viewCardThumbnail(card = "${displayPageName}");
+
+				LexiconCard.viewMarkAsDefault(card = "${displayPageName}");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "${displayPageName}");
+
+				PageEditor.gotoTab(tabName = "Page Design Options");
+
+				Click(locator1 = "PageEditor#MORE_LINK");
+
+				AssertChecked(
+					key_toggleSwitchLabel = "Use the same look and feel of the Public Pages",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			}
+		}
+
+		task ("View the public and private pages") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			for (var pageName : list "Home,Product,News,Contact,Sign In,Search") {
+				SitePages.viewPageItems(pageName = "${pageName}");
+			}
+
+			SitePages.togglePrivacy(privacy = "Private Pages");
+
+			for (var pageName : list "Dashboard,Policies,Claims,Documents") {
+				SitePages.viewPageItems(pageName = "${pageName}");
+			}
+
+			for (var pageName : list "Public Pages,Private Pages") {
+				SitePages.togglePrivacy(privacy = "${pageName}");
+
+				Click(
+					key_pageName = "${pageName}",
+					locator1 = "Icon#COG_PAGE");
+
+				var cssCode = '''/*GENERAL*/  a {  color: var(--primary); }''';
+
+				AssertTextEquals.assertPartialText(
+					key_text = "regularCss",
+					locator1 = "TextArea#ANY",
+					value1 = "${cssCode}");
+
+				Navigator.gotoBack();
+			}
+		}
+
+		task ("Assert the Sign In page is based on Blank") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Edit",
+				pageName = "Sign In");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Master");
+
+			AssertElementPresent(
+				key_card = "Blank",
+				locator1 = "Card#CARD_SELECTED");
+
+			Navigator.gotoBack();
+		}
+
+		task ("View the Home page") {
+			ProductMenuHelper.openProductMenu();
+
+			Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Home");
+
+			for (var pageName : list "Product,News,Contact") {
+				Click(
+					key_pageName = "${pageName}",
+					locator1 = "Home#PAGE");
+
+				Pause(locator1 = "3000");
+
+				ControlMenu.viewHeaderTitle(headerTitle = "${pageName}");
+			}
+
+			Click(locator1 = "NavBar#LOGO_LINK");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Home");
+		}
+
+		task ("View the Dashboard page") {
+			UserBar.gotoDropdown();
+
+			Click(locator1 = "UserBar#USER_AVATAR_DROPDOWN_MYRAYLIFE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Dashboard");
+		}
+
+		task ("View the Policies collection page") {
+			Click(
+				key_pageName = "Policies",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Policies");
+
+			var screenWidth	= selenium.getElementWidth("//body");
+
+			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pr-3 pl-3')]/div[contains(@class,'mb-lg-0')]");
+
+			TestUtils.assertNotEquals(
+				actual = "${containerWidth}",
+				expected = "${screenWidth}");
+
+			for (var assetTitle : list "WK1774476306 - Liferay Employee,LF1774476306 - David Aragonés,HL1774476306 - David Aragonés,AU1774476306 - Volkswagen Golf 1.6,HM1774476306 - Sepulveda Blvd") {
+				AssertElementPresent(
+					key_card = "${assetTitle}",
+					key_cardStyle = "mb-5",
+					locator1 = "Card#CARD_STYLE");
+			}
+
+			Click(
+				key_card = "WK1774476306 - Liferay Employee",
+				locator1 = "Card#CARD_LINK");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Policy");
+
+			AssertVisible(
+				key_content = "Liferay Employee",
+				key_element = "div",
+				key_id = "Name",
+				key_type = "text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT");
+
+			Click(
+				key_content = "Policies",
+				key_element = "a",
+				key_id = "nav",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Policies");
+		}
+
+		task ("View the Claims collection page") {
+			Click(
+				key_pageName = "Claims",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Claims");
+
+			var screenWidth	= selenium.getElementWidth("//body");
+
+			for (var collectionTitle : list "Open Claims,Closed Claims") {
+				var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')]/div[contains(.,'${collectionTitle}')]/following-sibling::div[contains(@class,'mb-lg-0')]");
+
+				TestUtils.assertNotEquals(
+					actual = "${containerWidth}",
+					expected = "${screenWidth}");
+			}
+
+			for (var assetTitle : list "Sepulveda Blvd - CHM2546333,Volkswagen Golf - CAU5846990,David Aragonés - CHE3326955,Volkswagen Golf - CAU4536398,Volkswagen Golf - CAU6821256,Sepulveda Blvd - CHM2371402,David Aragonés - CHL22214389,Sepulveda Blvd - CHM6821402") {
+				AssertElementPresent(
+					key_card = "${assetTitle}",
+					key_cardStyle = "mb-5",
+					locator1 = "Card#CARD_STYLE");
+			}
+
+			Click(
+				key_card = "Sepulveda Blvd - CHM2546333",
+				locator1 = "Card#CARD_LINK");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Claim");
+
+			AssertVisible(
+				key_content = "11425 Sepulveda Blvd",
+				key_element = "h1",
+				key_id = "PolicyName",
+				key_type = "text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT");
+
+			Click(
+				key_content = "Claims",
+				key_element = "a",
+				key_id = "nav",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Claims");
+
+			Click(
+				key_card = "Volkswagen Golf - CAU4536398",
+				locator1 = "Card#CARD_LINK");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Claim");
+
+			AssertVisible(
+				key_content = "Volkswagen Golf 1.6",
+				key_element = "h1",
+				key_id = "PolicyName",
+				key_type = "text",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT");
+
+			Click(
+				key_content = "Claims",
+				key_element = "a",
+				key_id = "nav",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Claims");
+		}
+
+		task ("View the Documents page") {
+			Click(
+				key_pageName = "Documents",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Documents");
+
+			Click(
+				key_pageName = "Dashboard",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Dashboard");
+		}
+
+		task ("View the Navigation Menus") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			for (var navigationMenu : list "Customer Portal Menu,Public Menu") {
+				NavigationMenusAdmin.viewMenuTitle(navigationMenu = "${navigationMenu}");
+			}
+		}
+
+		task ("View the collections") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			for (var collectionTitle : list "Policies,Closed Claims,Open Claims") {
+				AssertTextEquals.assertPartialText(
+					key_title = "${collectionTitle}",
+					locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
+					value1 = "${collectionTitle}");
+
+				LexiconList.viewListEntrySubtitle(
+					listEntry = "${collectionTitle}",
+					listEntrySubtitle = "Dynamic");
+
+				if ("${collectionTitle}" == "Policies") {
+					LexiconList.viewListEntrySubtitle(
+						listEntry = "${collectionTitle}",
+						listEntrySubtitle = "Web Content Article - Policy");
+				}
+				else {
+					LexiconList.viewListEntrySubtitle(
+						listEntry = "${collectionTitle}",
+						listEntrySubtitle = "Web Content Article - Claim");
+				}
+			}
+
+			var assetTitleList = "WK1774476306 - Liferay Employee,LF1774476306 - David Aragonés,HL1774476306 - David Aragonés,AU1774476306 - Volkswagen Golf 1.6,HM1774476306 - Sepulveda Blvd";
+
+			AssetListsAdmin.viewCollectionItems(
+				assetListTitle = "Policies",
+				assetTitleList = "${assetTitleList}");
+
+			Navigator.gotoBack();
+
+			var assetTitleList = "Volkswagen Golf - CAU4536398,Volkswagen Golf - CAU6821256,Sepulveda Blvd - CHM2371402,David Aragonés - CHL22214389,Sepulveda Blvd - CHM6821402";
+
+			AssetListsAdmin.viewCollectionItems(
+				assetListTitle = "Closed Claims",
+				assetTitleList = "${assetTitleList}");
+
+			Panel.expandPanel(panel = "Filter");
+
+			AssertTextEquals(
+				key_tagName = "closed",
+				locator1 = "AssetCategorization#TAG",
+				value1 = "closed");
+
+			Navigator.gotoBack();
+
+			var assetTitleList = "Sepulveda Blvd - CHM2546333,Volkswagen Golf - CAU5846990,David Aragonés - CHE3326955";
+
+			AssetListsAdmin.viewCollectionItems(
+				assetListTitle = "Open Claims",
+				assetTitleList = "${assetTitleList}");
+
+			Panel.expandPanel(panel = "Filter");
+
+			AssertTextEquals(
+				key_tagName = "open",
+				locator1 = "AssetCategorization#TAG",
+				value1 = "open");
+		}
+
+		task ("View the web content articles") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Click(
+				key_webContentTitle = "Policies",
+				locator1 = "WC#ENTRY_LIST_TITLE");
+
+			for (var entryTitle : list "WK1774476306 - Liferay Employee,LF1774476306 - David Aragonés,HL1774476306 - David Aragonés,AU1774476306 - Volkswagen Golf 1.6,HM1774476306 - Sepulveda Blvd") {
+				WebContentAdmin.viewEntryTitle(entry = "${entryTitle}");
+			}
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Click(
+				key_webContentTitle = "Claims",
+				locator1 = "WC#ENTRY_LIST_TITLE");
+
+			for (var entryTitle : list "Sepulveda Blvd - CHM2546333,Volkswagen Golf - CAU5846990,David Aragonés - CHE3326955,Volkswagen Golf - CAU4536398,Volkswagen Golf - CAU6821256,Sepulveda Blvd - CHM2371402,David Aragonés - CHL22214389,Sepulveda Blvd - CHM6821402") {
+				WebContentAdmin.viewEntryTitle(entry = "${entryTitle}");
+			}
+
+			Search.searchCP(searchTerm = "closed");
+
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "5 Results for closed");
+
+			for (var entryTitle : list "Volkswagen Golf - CAU4536398,Volkswagen Golf - CAU6821256,Sepulveda Blvd - CHM2371402,David Aragonés - CHL22214389,Sepulveda Blvd - CHM6821402") {
+				WebContentAdmin.viewEntryTitle(entry = "${entryTitle}");
+			}
+
+			Search.searchCP(searchTerm = "open");
+
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "3 Results for open");
+
+			for (var entryTitle : list "Sepulveda Blvd - CHM2546333,Volkswagen Golf - CAU5846990,David Aragonés - CHE3326955") {
+				WebContentAdmin.viewEntryTitle(entry = "${entryTitle}");
+			}
+		}
+
+		task ("View the tags") {
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
+
+			LexiconTable.viewTableEntryText(
+				tableEntry = "closed",
+				tableEntryText = "5");
+
+			LexiconTable.viewTableEntryText(
+				tableEntry = "open",
+				tableEntryText = "3");
+		}
+
+		task ("View Sign In and Sign Out") {
+			ProductMenuHelper.openProductMenu();
+
+			Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Home");
+
+			UserBar.signOut();
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			AssertLocation(value1 = "${portalURL}/web/test-site-name");
+
+			Button.click(button = "Sign In");
+
+			Type.typePause(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "test@liferay.com");
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test");
+
+			Click(locator1 = "Button#SIGN_IN");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Dashboard");
+
+			UserBar.signOut();
+
+			AssertLocation(value1 = "${portalURL}/web/test-site-name");
+
+			Open(locator1 = "${portalURL}/group/test-site-name");
+
+			SignIn._signIn(
+				userEmailAddress = "test@liferay.com",
+				userPassword = "test");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Dashboard");
+		}
+	}
+
+}

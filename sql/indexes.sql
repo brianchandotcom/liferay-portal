@@ -34,9 +34,6 @@ create index IX_A9CC915E on AssetCategory (uuid_[$COLUMN_LENGTH:75$], ctCollecti
 create unique index IX_5B65C08 on AssetCategory (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 create index IX_24AFC3E7 on AssetCategory (vocabularyId, ctCollectionId);
 
-create index IX_38A65B55 on AssetEntries_AssetCategories (companyId);
-create index IX_E119938A on AssetEntries_AssetCategories (entryId);
-
 create index IX_112337B8 on AssetEntries_AssetTags (companyId);
 create index IX_B2A61B55 on AssetEntries_AssetTags (tagId);
 

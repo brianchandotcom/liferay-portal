@@ -110,15 +110,6 @@ create table AssetCategory (
 	primary key (categoryId, ctCollectionId)
 );
 
-create table AssetEntries_AssetCategories (
-	companyId LONG not null,
-	categoryId LONG not null,
-	entryId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (categoryId, entryId, ctCollectionId)
-);
-
 create table AssetEntries_AssetTags (
 	companyId LONG not null,
 	entryId LONG not null,

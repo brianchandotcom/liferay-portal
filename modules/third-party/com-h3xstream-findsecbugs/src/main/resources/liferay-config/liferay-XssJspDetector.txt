@@ -3,15 +3,16 @@
 -- find -name liferay-XssJspDetector.txt -print0 | xargs -0 grep -- '-- [a-z-]\+:[a-z-]' | sed 's/.*:-- /^/' | sort -u | tr '\n' '|' | sed 's/|/$\\|/g' | sed 's/\\|$//'
 --
 ---- Grep JSPs for taglibs that have some attrs (with whitelist)
--- find -name '*.jsp*' -print0 | xargs -0 grep '<[a-zA-Z-]\+:' | sed 's/<[a-zA-Z-]\+:[a-zA-Z-]\+[ \/]*>//g' | grep '<[a-zA-Z-]\+:' | sed 's/.*<\([a-zA-Z-]*:[^ ]\+\) .*/\1/' | grep -v 'jsp\|^portlet:\|^c:' | sort -u | grep -v '^aui:a$\|^aui:alert$\|^aui:button$\|^aui:button-row$\|^aui:col$\|^aui:fieldset$\|^aui:fieldset-group$\|^aui:field-wrapper$\|^aui:form$\|^aui:input$\|^aui:model-context$\|^aui:nav$\|^aui:nav-bar$\|^aui:nav-bar-search$\|^aui:nav-item$\|^aui:option$\|^aui:script$\|^aui:select$\|^aui:validator$\|^aui:workflow-status$\|^liferay-asset:asset-categories-selector$\|^liferay-asset:asset-tags-selector$\|^liferay-captcha:captcha$\|^liferay-expando:custom-attributes-available$\|^liferay-frontend:add-menu$\|^liferay-frontend:add-menu-item$\|^liferay-frontend:management-bar-button$\|^liferay-portlet:actionURL$\|^liferay-portlet:renderURL$\|^liferay-portlet:resourceURL$\|^liferay-ui:alert$\|^liferay-ui:asset-categories-error$\|^liferay-ui:asset-tags-error$\|^liferay-ui:asset-tags-selector$\|^liferay-ui:custom-attributes-available$\|^liferay-ui:error$\|^liferay-ui:error-header$\|^liferay-ui:header$\|^liferay-ui:icon$\|^liferay-ui:icon-menu$\|^liferay-ui:input-editor$\|^liferay-ui:input-field$\|^liferay-ui:input-localized$\|^liferay-ui:input-permissions-params$\|^liferay-ui:input-resource$\|^liferay-ui:input-search$\|^liferay-ui:input-time-zone$\|^liferay-ui:message$\|^liferay-ui:panel$\|^liferay-ui:panel-container$\|^liferay-ui:search-container-column-date$\|^liferay-ui:search-container-column-text$\|^liferay-ui:search-iterator$\|^liferay-ui:search-paginator$\|^liferay-ui:tabs$\|^liferay-ui:user-portrait$\|^liferay-util:buffer$\|^liferay-util:dynamic-include$\|^liferay-util:include$' || printf '\n--- No unknown taglibs ---\n'
+-- find -name '*.jsp*' -print0 | xargs -0 grep '<[a-zA-Z-]\+:' | sed 's/<[a-zA-Z-]\+:[a-zA-Z-]\+[ \/]*>//g' | grep '<[a-zA-Z-]\+:' | sed 's/.*<\([a-zA-Z-]*:[^ ]\+\)\( .*\)\?$/\1/' | grep -v 'jsp\|^portlet:\|^c:' | sort -u | grep -v '^aui:a$\|^aui:alert$\|^aui:button$\|^aui:button-row$\|^aui:col$\|^aui:fieldset$\|^aui:fieldset-group$\|^aui:field-wrapper$\|^aui:form$\|^aui:icon$\|^aui:input$\|^aui:model-context$\|^aui:nav$\|^aui:nav-bar$\|^aui:nav-bar-search$\|^aui:nav-item$\|^aui:option$\|^aui:row$\|^aui:script$\|^aui:select$\|^aui:validator$\|^aui:workflow-status$\|^clay:button$\|^clay:data-set-display$\|^clay:dropdown-menu$\|^clay:headless-data-set-display$\|^clay:icon$\|^clay:label$\|^clay:link$\|^clay:navigation-bar$\|^commerce-ui:account-selector$\|^commerce-ui:add-account-modal$\|^commerce-ui:add-address-modal$\|^commerce-ui:add-organizations-modal$\|^commerce-ui:add-to-cart$\|^commerce-ui:commerce-product-details-modal$\|^commerce-ui:commerce-quantity-selector$\|^commerce-ui:compare-checkbox$\|^commerce-ui:coupon-code$\|^commerce-ui:gallery$\|^commerce-ui:header$\|^commerce-ui:info-box$\|^commerce-ui:mini-cart$\|^commerce-ui:modal$\|^commerce-ui:modal-content$\|^commerce-ui:order-subscription-info$\|^commerce-ui:panel$\|^commerce-ui:price$\|^commerce-ui:product-subscription-info$\|^commerce-ui:search-bar$\|^commerce-ui:search-results$\|^commerce-ui:side-panel-content$\|^commerce-ui:step-tracker$\|^commerce-ui:user-invitation-modal$\|^commerce-ui:user-roles-modal$\|^liferay-asset:asset-categories-selector$\|^liferay-asset:asset-categories-summary$\|^liferay-asset:asset-tags-selector$\|^liferay-asset:asset-tags-summary$\|^liferay-captcha:captcha$\|^liferay-commerce-cart:add-to-cart$\|^liferay-commerce-cart:quantity-control$\|^liferay-commerce:compare-product$\|^liferay-commerce:format-price$\|^liferay-commerce:order-transitions$\|^liferay-commerce:price$\|^liferay-commerce-product:product-list-entry-renderer$\|^liferay-commerce-product:product-list-renderer$\|^liferay-commerce:quantity-input$\|^liferay-commerce:search-input$\|^liferay-commerce:tier-price$\|^liferay-commerce-ui:subscription-info$\|^liferay-commerce:user-management-bar$\|^liferay-ddm:template-renderer$\|^liferay-ddm:template-selector$\|^liferay-expando:custom-attribute-list$\|^liferay-expando:custom-attributes-available$\|^liferay-frontend:add-menu$\|^liferay-frontend:add-menu-item$\|^liferay-frontend:edit-form$\|^liferay-frontend:form-navigator$\|^liferay-frontend:management-bar$\|^liferay-frontend:management-bar-button$\|^liferay-frontend:management-bar-display-buttons$\|^liferay-frontend:management-bar-filter$\|^liferay-frontend:management-bar-navigation$\|^liferay-frontend:management-bar-sidenav-toggler-button$\|^liferay-frontend:management-bar-sort$\|^liferay-frontend:screen-navigation$\|^liferay-frontend:sidebar-panel$\|^liferay-item-selector:image-selector$\|^liferay-portlet:actionURL$\|^liferay-portlet:renderURL$\|^liferay-portlet:resourceURL$\|^liferay-security:permissionsURL$\|^liferay-ui:alert$\|^liferay-ui:asset-categories-error$\|^liferay-ui:asset-tags-error$\|^liferay-ui:asset-tags-selector$\|^liferay-ui:breadcrumb$\|^liferay-ui:custom-attributes-available$\|^liferay-ui:empty-result-message$\|^liferay-ui:error$\|^liferay-ui:error-header$\|^liferay-ui:error-marker$\|^liferay-ui:form-navigator$\|^liferay-ui:header$\|^liferay-ui:icon$\|^liferay-ui:icon-delete$\|^liferay-ui:icon-help$\|^liferay-ui:icon-menu$\|^liferay-ui:input-date$\|^liferay-ui:input-editor$\|^liferay-ui:input-field$\|^liferay-ui:input-localized$\|^liferay-ui:input-permissions-params$\|^liferay-ui:input-resource$\|^liferay-ui:input-search$\|^liferay-ui:input-time-zone$\|^liferay-ui:logo-selector$\|^liferay-ui:message$\|^liferay-ui:page-iterator$\|^liferay-ui:panel$\|^liferay-ui:panel-container$\|^liferay-ui:search-container$\|^liferay-ui:search-container-column-date$\|^liferay-ui:search-container-column-icon$\|^liferay-ui:search-container-column-image$\|^liferay-ui:search-container-column-status$\|^liferay-ui:search-container-column-text$\|^liferay-ui:search-container-results$\|^liferay-ui:search-container-row$\|^liferay-ui:search-iterator$\|^liferay-ui:search-paginator$\|^liferay-ui:tabs$\|^liferay-ui:user-portrait$\|^liferay-util:buffer$\|^liferay-util:dynamic-include$\|^liferay-util:html-top$\|^liferay-util:include$\|^liferay-util:param$\|^soy:template-renderer$' || printf '\n--- No unknown taglibs ---\n'
 ----
 ---- Grep class methods signatures excl. primitives
 -- find -name PanelTag.class | { while read class; do printf "$class\n\n"; javap -s $class | sed $'s/.*public .* \([a-zA-Z0-9_]\+\)(.*/\\1/' | sed 's/.*descriptor: //' | tr '\n' '-' | sed 's/-(/(/g' | tr '-' '\n'  | grep '^set' | grep '[A-Za-z][A-Za-z0-9_]\+;'; done; }
 --
 
-
 -- liferay-asset:asset-categories-selector
 com/liferay/asset/taglib/servlet/taglib/AssetCategoriesSelectorTag.setHiddenInput(Ljava/lang/String;)V:0
+
+-- liferay-asset:asset-categories-summary
 
 -- liferay-asset:asset-tags-selector
 com/liferay/asset/taglib/servlet/taglib/AssetTagsSelectorTag.setAddCallback(Ljava/lang/String;)V:0
@@ -20,12 +21,17 @@ com/liferay/asset/taglib/servlet/taglib/AssetTagsSelectorTag.setId(Ljava/lang/St
 com/liferay/asset/taglib/servlet/taglib/AssetTagsSelectorTag.setRemoveCallback(Ljava/lang/String;)V:0
 com/liferay/asset/taglib/servlet/taglib/AssetTagsSelectorTag.setTagNames(Ljava/lang/String;)V:0
 
+-- liferay-asset:asset-tags-summary
+
 -- liferay-captcha:captcha
 com/liferay/captcha/taglib/servlet/taglib/CaptchaTag.setUrl(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/CaptchaTag.setUrl(Ljava/lang/String;)V:0
 
 -- liferay-expando:custom-attributes-available
 -- com/liferay/expando/taglib/servlet/taglib/CustomAttributesAvailableTag.class SAFE
+
+-- liferay-expando:custom-attribute-list
+com/liferay/expando/taglib/servlet/taglib/CustomAttributeListTag.setClassName(Ljava/lang/String;)V:0
 
 -- liferay-frontend:add-menu-item
 com/liferay/frontend/taglib/servlet/taglib/AddMenuItemTag.setId(Ljava/lang/String;)V:0
@@ -34,14 +40,63 @@ com/liferay/frontend/taglib/servlet/taglib/AddMenuItemTag.setUrl(Ljava/lang/Stri
 -- liferay-frontend:add-menu
 com/liferay/frontend/taglib/servlet/taglib/AddMenuTag.setViewMoreURL(Ljava/lang/String;)V:0
 
+-- liferay-frontend:edit-form
+com/liferay/frontend/taglib/servlet/taglib/EditFormTag.setCssClass(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/EditFormTag.setMethod(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/EditFormTag.setOnSubmit(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/EditFormTag.setPortletNamespace(Ljava/lang/String;)V:0
+
+-- liferay-frontend:form-navigator
+com/liferay/frontend/taglib/servlet/taglib/FormNavigatorTag.setFieldSetCssClass(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/FormNavigatorTag.setId(Ljava/lang/String;)V:0
+
+-- liferay-frontend:management-bar
+com/liferay/frontend/taglib/servlet/taglib/base/BaseBarTag.setButtons(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarTag.setActionButtons(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarTag.setFilters(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarTag.setSearchContainerId(Ljava/lang/String;)V:0
+
 -- liferay-frontend:management-bar-button
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setCssClass(Ljava/lang/String;)V:0
-com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setData(Ljava/util/Map;)V:0
-com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setHref(Ljava/lang/String;)V:0
-com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setIconCssClass(Ljava/lang/String;)V:0
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setIcon(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setIconCssClass(Ljava/lang/String;)V:0
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setId(Ljava/lang/String;)V:0
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setLabel(Ljava/lang/String;)V:0
+
+-- liferay-frontend:management-bar-display-buttons
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarDisplayButtonsTag.setDisplayViews([Ljava/lang/String;)V:0
+
+-- liferay-frontend:management-bar-filter
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarFilterTag.setLabel(Ljava/lang/String;)V:0
+-- com/liferay/frontend/taglib/servlet/taglib/ManagementBarFilterTag.setManagementBarFilterItems(Ljava/util/List;)V:0
+
+-- liferay-frontend:management-bar-navigation
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarNavigationTag.setNavigationKeys(Ljava/util/Map;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarNavigationTag.setNavigationKeys([Ljava/lang/String;)V:0
+
+
+-- liferay-frontend:management-bar-sidenav-toggler-button
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarSidenavTogglerButtonTag.setPosition(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarSidenavTogglerButtonTag.setType(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarSidenavTogglerButtonTag.setTypeMobile(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarSidenavTogglerButtonTag.setWidth(Ljava/lang/String;)V:0
+
+-- liferay-frontend:management-bar-sort
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarSortTag.setOrderColumns(Ljava/util/Map;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ManagementBarSortTag.setOrderColumns([Ljava/lang/String;)V:0
+
+-- liferay-frontend:screen-navigation
+com/liferay/frontend/taglib/servlet/taglib/ScreenNavigationTag.setContainerCssClass(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ScreenNavigationTag.setContainerWrapperCssClass(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ScreenNavigationTag.setFullContainerCssClass(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ScreenNavigationTag.setHeaderContainerCssClass(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ScreenNavigationTag.setId(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ScreenNavigationTag.setMenubarCssClass(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/ScreenNavigationTag.setNavCssClass(Ljava/lang/String;)V:0
+
+-- liferay-frontend:sidebar-panel
+com/liferay/frontend/taglib/servlet/taglib/SidebarPanelTag.setResourceURL(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/servlet/taglib/SidebarPanelTag.setSearchContainerId(Ljava/lang/String;)V:0
 
 -- aui:alert
 com/liferay/taglib/aui/base/BaseAlertTag.setCssClass(Ljava/lang/String;)V:0
@@ -102,7 +157,7 @@ com/liferay/taglib/aui/base/BaseFormTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseFormTag.setMethod(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseFormTag.setOnSubmit(Ljava/lang/String;)V:0
 
--- liferay-ui:icon
+-- aui:icon
 com/liferay/taglib/aui/base/BaseIconTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseIconTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseIconTag.setImage(Ljava/lang/String;)V:0
@@ -110,7 +165,7 @@ com/liferay/taglib/aui/base/BaseIconTag.setLabel(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseIconTag.setMarkupView(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseIconTag.setSrc(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseIconTag.setTarget(Ljava/lang/String;)V:0
-com/liferay/taglib/aui/base/BaseIconTag.setUrl(Ljava/lang/String;)V:0
+-- safe com/liferay/taglib/aui/base/BaseIconTag.setUrl(Ljava/lang/String;)V:0
 
 -- aui:input
 com/liferay/taglib/aui/base/BaseInputTag.setCssClass(Ljava/lang/String;)V:0
@@ -169,6 +224,8 @@ com/liferay/taglib/aui/base/BaseNavTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavTag.setIcon(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavTag.setId(Ljava/lang/String;)V:0
 
+-- aui:row
+
 -- aui:script
 com/liferay/taglib/aui/base/BaseScriptTag.setRequire(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseScriptTag.setUse(Ljava/lang/String;)V:0
@@ -194,6 +251,10 @@ com/liferay/taglib/aui/base/BaseWorkflowStatusTag.setStatusMessage(Ljava/lang/St
 com/liferay/taglib/aui/base/BaseWorkflowStatusTag.setVersion(Ljava/lang/String;)V:0
 
 -- aui:option
+com/liferay/taglib/aui/base/BaseOptionTag.setCssClass(Ljava/lang/String;)V:0
+com/liferay/taglib/aui/base/BaseOptionTag.setLabel(Ljava/lang/Object;)V:0
+com/liferay/taglib/aui/base/BaseOptionTag.setStyle(Ljava/lang/String;)V:0
+com/liferay/taglib/aui/base/BaseOptionTag.setValue(Ljava/lang/Object;)V:0
 com/liferay/taglib/aui/OptionTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/OptionTag.setLabel(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/OptionTag.setStyle(Ljava/lang/String;)V:0
@@ -259,6 +320,7 @@ com/liferay/taglib/ui/IconMenuTag.setStartPage(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconMenuTag.setTriggerCssClass(Ljava/lang/String;)V:0
 
 -- liferay-ui:icon
+-- liferay-ui:icon-help
 com/liferay/taglib/ui/IconTag.setAlt(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconTag.setAriaRole(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconTag.setCssClass(Ljava/lang/String;)V:0
@@ -277,6 +339,47 @@ com/liferay/taglib/ui/IconTag.setSrcHover(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconTag.setSrc(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconTag.setTarget(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconTag.setUrl(Ljava/lang/String;)V:0
+
+-- liferay-ui:breadcrumb
+com/liferay/site/navigation/taglib/servlet/taglib/BreadcrumbTag.setBreadcrumbEntries(Ljava/util/List;)V:0
+com/liferay/taglib/ui/BreadcrumbTag.setDdmTemplateKey(Ljava/lang/String;)V:0
+
+-- liferay-ui:error-marker
+-- SAFE
+
+-- liferay-ui:form-navigator
+liferay/taglib/ui/FormNavigatorTag.setFormName(Ljava/lang/String;)V:0
+liferay/taglib/ui/FormNavigatorTag.setHtmlBottom(Ljava/lang/String;)V:0
+liferay/taglib/ui/FormNavigatorTag.setHtmlTop(Ljava/lang/String;)V:0
+liferay/taglib/ui/FormNavigatorTag.setMarkupView(Ljava/lang/String;)V:0
+
+-- liferay-ui:icon-delete
+com/liferay/taglib/ui/IconDeleteTag.setConfirmation(Ljava/lang/String;)V:0
+
+-- liferay-ui:input-date
+com/liferay/taglib/ui/InputDateTag.setCssClass(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/InputDateTag.setDateTogglerCheckboxLabel(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/InputDateTag.setFormName(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/InputDateTag.setName(Ljava/lang/String;)V:0
+
+-- liferay-ui:logo-selector
+com/liferay/taglib/ui/LogoSelectorTag.setDefaultLogoURL(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/LogoSelectorTag.setEditLogoFn(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/LogoSelectorTag.setLogoDisplaySelector(Ljava/lang/String;)V:0
+
+-- liferay-ui:page-iterator
+com/liferay/taglib/ui/PageIteratorTag.setCurParam(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/PageIteratorTag.setDeltaParam(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/PageIteratorTag.setFormName(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/PageIteratorTag.setId(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/PageIteratorTag.setJsCall(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/PageIteratorTag.setMarkupView(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/PageIteratorTag.setTarget(Ljava/lang/String;)V:0
+
+-- liferay-ui:empty-result-message
+com/liferay/taglib/ui/EmptyResultMessageTag.setCssClass(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/EmptyResultMessageTag.setMessage(Ljava/lang/String;)V:0
+
 
 -- liferay-ui:input-editor
 com/liferay/taglib/ui/InputEditorTag.setConfigKey(Ljava/lang/String;)V:0
@@ -359,6 +462,49 @@ com/liferay/taglib/ui/PanelTag.setParentId(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelTag.setStartPage(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelTag.setTitle(Ljava/lang/String;)V:0
 
+
+-- liferay-ui:search-container
+com/liferay/taglib/ui/SearchContainerTag.setCssClass(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/SearchContainerTag.setCurParam(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/SearchContainerTag.setDeltaParam(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/SearchContainerTag.setEmptyResultsMessage(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/SearchContainerTag.setEmptyResultsMessageCssClass(Ljava/lang/String;)V:0
+--setHeaderNames(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/SearchContainerTag.setId(Ljava/lang/String;)V:0
+--setOrderByCol(Ljava/lang/String;)V:0
+--setOrderByColParam(Ljava/lang/String;)V:0
+--setOrderByComparator(Lcom/liferay/portal/kernel/util/OrderByComparator;)V:0
+--setOrderByType(Ljava/lang/String;)V:0
+--setOrderByTypeParam(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/SearchContainerTag.setSummary(Ljava/lang/String;)V:0
+
+
+-- liferay-ui:search-container-results
+-- SAFE(not a direct sink) com/liferay/taglib/ui/SearchContainerResultsTag.setResults(Ljava/util/List;)V:0
+
+-- liferay-ui:search-container-row
+com/liferay/taglib/ui/SearchContainerRowTag.setClassName(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/SearchContainerRowTag.setCssClass(Ljava/lang/String;)V:0
+--setHeaderNames(Ljava/util/List;)V:0
+com/liferay/taglib/ui/SearchContainerRowTag.setHelpMessages(Ljava/util/Map;)V:0
+--setIndexVar(Ljava/lang/String;)V:0
+--setKeyProperty(Ljava/lang/String;)V:0
+--setModelVar(Ljava/lang/String;)V:0
+--setOrderableHeaders(Ljava/util/Map;)V:0
+--setRow(Lcom/liferay/portal/kernel/dao/search/ResultRow;)V:0
+--setRowIdProperty(Ljava/lang/String;)V:0
+--setRowVar(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/SearchContainerRowTag.setState(Ljava/lang/String;)V:0
+
+-- liferay-ui:search-container-column-icon
+com/liferay/taglib/ui/SearchContainerColumnIconTag.setIcon(Ljava/lang/String;)V:0
+
+-- liferay-ui:search-container-column-image
+-- com/liferay/taglib/ui/SearchContainerColumnImageTag.setSrc(Ljava/lang/String;)V:0
+
+-- liferay-ui:search-container-column-status
+-- SAFE com/liferay/taglib/ui/SearchContainerColumnStatusTag
+
 -- liferay-ui:search-container-column-text
 com/liferay/taglib/ui/SearchContainerColumnTextTag.setHref(Ljava/lang/Object;)V:0
 com/liferay/taglib/ui/SearchContainerColumnTextTag.setTarget(Ljava/lang/String;)V:0
@@ -369,7 +515,6 @@ com/liferay/taglib/search/TextSearchEntry.setHref(Ljava/lang/String;)V:0
 com/liferay/taglib/search/TextSearchEntry.setName(Ljava/lang/String;)V:0
 com/liferay/taglib/search/TextSearchEntry.setTarget(Ljava/lang/String;)V:0
 com/liferay/taglib/search/TextSearchEntry.setTitle(Ljava/lang/String;)V:0
-
 
 -- liferay-ui:search-container-column-date
 com/liferay/taglib/ui/SearchContainerColumnDateTag.setHref(Ljava/lang/Object;)V:0
@@ -384,6 +529,7 @@ com/liferay/taglib/ui/SearchContainerColumnTag.setValign(Ljava/lang/String;)V:0
 
 -- liferay-ui:search-iterator
 com/liferay/taglib/ui/SearchIteratorTag.setMarkupView(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/SearchIteratorTag.setSearchResultCssClass(Ljava/lang/String;)V:0
 
 -- liferay-ui:search-paginator
 com/liferay/taglib/ui/SearchPaginatorTag.setId(Ljava/lang/String;)V:0
@@ -427,6 +573,171 @@ com/liferay/taglib/util/AttributesTagSupport.setDynamicAttribute(Ljava/lang/Stri
 -- liferay-util:dynamic-include
 -- com/liferay/taglib/util/DynamicIncludeTag SAFE
 
+-- liferay-util:html-top
+com/liferay/taglib/util/OutputTag.setOutputKey(Ljava/lang/String;)V:0
+
 -- liferay-util:include
 -- safe for XSS: com/liferay/taglib/util/IncludeTag.setPage(Ljava/lang/String;)V:0
 
+-- liferay-util:param
+-- safe
+
+
+-- liferay-commerce:compare-product
+-- liferay-commerce:format-price
+-- liferay-commerce:order-transitions
+-- liferay-commerce:price
+-- liferay-commerce:quantity-input
+-- liferay-commerce:search-input
+-- liferay-commerce:tier-price
+-- liferay-commerce:user-management-bar
+-- safe
+
+-- liferay-commerce-ui:subscription-info
+-- safe
+
+
+-- clay:button
+-- We don't see into clay implementation, let's mark all as sensitive
+--setAriaLabel(Ljava/lang/String;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/ButtonTag.setDisplayType(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/ButtonTag.setIcon(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/ButtonTag.setLabel(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/ButtonTag.setSize(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/ButtonTag.setStyle(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/ButtonTag.setTitle(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/ButtonTag.setType(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setAdditionalProps(Ljava/util/Map;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setClassName(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setComponentId(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setContainerElement(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setContributorKey(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setCssClass(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setData(Ljava/util/Map;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setDefaultEventHandler(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setElementClasses(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setHydratedContainerElement(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setId(Ljava/lang/String;)V:0
+--com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setPageContext(Ljavax/servlet/jsp/PageContext;)V:0
+com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setPropsTransformer(Ljava/lang/String;)V:0
+--com/liferay/frontend/taglib/clay/internal/servlet/taglib/BaseContainerTag.setPropsTransformerServletContext(Ljavax/servlet/ServletContext;)V:0
+
+
+
+-- clay:data-set-display
+com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setActionParameterName(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setBulkActionDropdownItems(Ljava/util/List;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setContextParams(Ljava/util/Map;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setCreationMenu(Lcom/liferay/frontend/taglib/clay/servlet/taglib/util/CreationMenu;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setDataProviderKey(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setDeltaParam(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setFormId(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setId(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setNamespace(Ljava/lang/String;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setNestedItemsKey(Ljava/lang/String;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setNestedItemsReferenceKey(Ljava/lang/String;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setPortletURL(Ljavax/portlet/PortletURL;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setSelectedItems(Ljava/util/List;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setSelectedItemsKey(Ljava/lang/String;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setSelectionType(Ljava/lang/String;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setSortItemList(Lcom/liferay/frontend/taglib/clay/servlet/taglib/util/SortItemList;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DataSetDisplayTag.setStyle(Ljava/lang/String;)V:0
+
+-- clay:dropdown-menu
+com/liferay/frontend/taglib/clay/servlet/taglib/DropdownMenuTag.setButtonLabel(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DropdownMenuTag.setButtonStyle(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DropdownMenuTag.setButtonType(Ljava/lang/String;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/DropdownMenuTag.setDropdownItems(Ljava/util/List;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DropdownMenuTag.setItemsIconAlignment(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DropdownMenuTag.setTriggerCssClasses(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/DropdownMenuTag.setTriggerTitle(Ljava/lang/String;)V:0
+
+-- clay:headless-data-set-display
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setActionParameterName(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setApiURL(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setBulkActionDropdownItems(Ljava/util/List;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setClayDataSetActionDropdownItems(Ljava/util/List;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setCreationMenu(Lcom/liferay/frontend/taglib/clay/servlet/taglib/util/CreationMenu;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setFormId(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setId(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setNamespace(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setNestedItemsKey(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setNestedItemsReferenceKey(Ljava/lang/String;)V:0
+--com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setPortletURL(Ljavax/portlet/PortletURL;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setSelectedItems(Ljava/util/List;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setSelectedItemsKey(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setSelectionType(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setSortItemList(Lcom/liferay/frontend/taglib/clay/servlet/taglib/util/SortItemList;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/HeadlessDataSetDisplayTag.setStyle(Ljava/lang/String;)V:0
+
+-- clay:icon
+com/liferay/frontend/taglib/clay/servlet/taglib/IconTag.setSpritemap(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/IconTag.setSymbol(Ljava/lang/String;)V:0
+
+-- clay:label
+--com/liferay/frontend/taglib/clay/servlet/taglib/LabelTag.setDisplayType(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/LabelTag.setLabel(Ljava/lang/String;)V:0
+
+-- clay:link
+--com/liferay/frontend/taglib/clay/servlet/taglib/LinkTag.setDisplayType(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/LinkTag.setIcon(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/clay/servlet/taglib/LinkTag.setLabel(Ljava/lang/String;)V:0
+
+-- clay:navigation-bar
+com/liferay/frontend/taglib/clay/servlet/taglib/NavigationBarTag.setNavigationItems(Ljava/util/List;)V:0
+
+-- commerce-ui:account-selector
+-- commerce-ui:add-account-modal
+-- commerce-ui:add-address-modal
+-- commerce-ui:add-organizations-modal
+-- commerce-ui:add-to-cart
+-- commerce-ui:commerce-product-details-modal
+-- commerce-ui:commerce-quantity-selector
+-- commerce-ui:compare-checkbox
+-- commerce-ui:coupon-code
+-- commerce-ui:gallery
+-- commerce-ui:header
+-- commerce-ui:info-box
+-- commerce-ui:mini-cart
+-- commerce-ui:modal
+-- commerce-ui:modal-content
+-- commerce-ui:order-subscription-info
+-- commerce-ui:panel
+-- commerce-ui:price
+-- commerce-ui:product-subscription-info
+-- commerce-ui:search-bar
+-- commerce-ui:search-results
+-- commerce-ui:side-panel-content
+-- commerce-ui:step-tracker
+-- commerce-ui:user-invitation-modal
+-- commerce-ui:user-roles-modal
+-- liferay-commerce-cart:add-to-cart
+-- liferay-commerce-cart:quantity-control
+-- liferay-commerce-product:product-list-entry-renderer
+-- liferay-commerce-product:product-list-renderer
+-- SAFE
+
+-- liferay-ddm:template-renderer
+-- liferay-ddm:template-selector
+-- Need to evaluate FTL/VM templates
+com/liferay/dynamic/data/mapping/taglib/servlet/taglib/base/BaseTemplateRendererTag.setContextObjects(Ljava/util/Map;)V:0
+--com/liferay/dynamic/data/mapping/taglib/servlet/taglib/base/BaseTemplateRendererTag.setDisplayStyle(Ljava/lang/String;)V:0
+--com/liferay/dynamic/data/mapping/taglib/servlet/taglib/base/BaseTemplateRendererTag.setEntries(Ljava/util/List;)V:0
+
+
+-- liferay-item-selector:image-selector
+com/liferay/item/selector/taglib/servlet/taglib/ImageSelectorTag.setDraggableImage(Ljava/lang/String;)V:0
+com/liferay/item/selector/taglib/servlet/taglib/ImageSelectorTag.setItemSelectorEventName(Ljava/lang/String;)V:0
+com/liferay/item/selector/taglib/servlet/taglib/ImageSelectorTag.setItemSelectorURL(Ljava/lang/String;)V:0
+com/liferay/item/selector/taglib/servlet/taglib/ImageSelectorTag.setParamName(Ljava/lang/String;)V:0
+com/liferay/item/selector/taglib/servlet/taglib/ImageSelectorTag.setUploadURL(Ljava/lang/String;)V:0
+-- com/liferay/item/selector/taglib/servlet/taglib/ImageSelectorTag.setValidExtensions(Ljava/lang/String;)V:0
+
+-- liferay-security:permissionsURL
+-- SAFE
+
+-- soy:template-renderer
+-- need to evaluate SOY templates
+--com/liferay/frontend/taglib/soy/servlet/taglib/TemplateRendererTag.setContext(Ljava/util/Map;)V:0
+--com/liferay/frontend/taglib/soy/servlet/taglib/TemplateRendererTag.setModule(Ljava/lang/String;)V:0
+com/liferay/frontend/taglib/soy/servlet/taglib/TemplateRendererTag.putHTMLValue(Ljava/lang/String;Ljava/lang/String;)V:0

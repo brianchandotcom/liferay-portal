@@ -354,9 +354,19 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 					findSecurityBugsJavaExec.systemProperty(
 						"findsecbugs.injection.customconfigfile." +
+							"PathTraversalDetector",
+						"liferay-config/liferay-PathTraversalDetector-PATH_TRAVERSAL_IN.txt|PATH_TRAVERSAL_IN:" +
+							"liferay-config/liferay-PathTraversalDetector-PATH_TRAVERSAL_OUT.txt|PATH_TRAVERSAL_OUT");
+					findSecurityBugsJavaExec.systemProperty(
+						"findsecbugs.injection.customconfigfile." +
 							"SqlInjectionDetector",
 						"liferay-config/liferay-SqlInjectionDetector.txt|" +
 							"SQL_INJECTION_HIBERNATE");
+					findSecurityBugsJavaExec.systemProperty(
+						"findsecbugs.injection.customconfigfile." +
+							"SSRFDetector",
+						"liferay-config/liferay-SSRFDetector.txt|" +
+							"URLCONNECTION_SSRF_FD");
 					findSecurityBugsJavaExec.systemProperty(
 						"findsecbugs.injection.customconfigfile.XssJspDetector",
 						"liferay-config/liferay-XssJspDetector.txt|" +

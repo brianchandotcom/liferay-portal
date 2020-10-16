@@ -2,6 +2,14 @@
 --
 -- javap -s ./portal-kernel/classes/com/liferay/portal/kernel/util/ParamUtil.class | sed $'s/.*public .* \([a-zA-Z0-9_]\+\)(.*/\\1/' | sed 's/.*descriptor: //' | tr '\n' '-' | sed 's/-(/(/g' | tr '-' '\n'
 --
+-- Process results
+--
+-- find . -type f -name reports.html | while read f; do (grep '<b>0</b>' $f) || echo $f; done | grep html | while read f; do grep '<b>[0-9]\+</b>' $f | head -n 1 | sed 's/[</b>]//g' | tr -d '\n'; echo " $f"; done | sort -n
+--
+-- Condense derived-config.txt and find-security-bugs-false-positives.txt from modules into parent config
+--
+-- rm find-security-bugs-false-positives.txt; (find . -type f -name derived-config.txt | xargs cat | sort -u | grep -v '\^' | grep ':' | grep -v 'UNKNOWN' | grep -v '\+\|\-'; echo $'\n'; find . -type f -name find-security-bugs-false-positives.txt | while read f; do cat $f;  echo $'\n'; done) | grep -v 'org/apache/jsp' | sort -u > find-security-bugs-false-positives.txt
+--
 
 ------ SAFE ENCODERS ------
 
@@ -16,6 +24,11 @@ com/liferay/portal/kernel/util/HtmlUtil.escapeXPathAttribute(Ljava/lang/String;)
 com/liferay/portal/kernel/util/HtmlUtil.extractText(Ljava/lang/String;)Ljava/lang/String;:0|+XSS_SAFE
 com/liferay/portal/kernel/util/HtmlUtil.stripHtml(Ljava/lang/String;)Ljava/lang/String;:0|+XSS_SAFE
 com/liferay/portal/kernel/util/HtmlUtil.replaceNewLine(Ljava/lang/String;)Ljava/lang/String;:0
+com/liferay/portal/kernel/util/HtmlUtil.getAUICompatibleId(Ljava/lang/String;)Ljava/lang/String;:SAFE
+
+com/liferay/portal/kernel/sanitizer/SanitizerUtil.sanitize(JJJLjava/lang/String;JLjava/lang/String;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/sanitizer/SanitizerUtil.sanitize(JJJLjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/sanitizer/SanitizerUtil.sanitize(JJJLjava/lang/String;JLjava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Ljava/lang/String;:SAFE
 
 com/liferay/portal/kernel/language/UnicodeLanguageUtil.format(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;Lcom/liferay/portal/kernel/language/LanguageWrapper;)Ljava/lang/String;:SAFE|+XSS_SAFE
 com/liferay/portal/kernel/language/UnicodeLanguageUtil.format(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;Lcom/liferay/portal/kernel/language/LanguageWrapper;Z)Ljava/lang/String;:SAFE|+XSS_SAFE
@@ -95,6 +108,119 @@ com/liferay/portal/kernel/util/URLCodec.encodeURL(Ljava/lang/String;Ljava/lang/S
 
 com/liferay/asset/kernel/model/Renderer.getIconCssClass()Ljava/lang/String;:SAFE
 
+
+com/liferay/portal/kernel/util/ArrayUtil.append([C)[C:0
+com/liferay/portal/kernel/util/ArrayUtil.append([CC)[C:0,1
+com/liferay/portal/kernel/util/ArrayUtil.append([Ljava/lang/Object;)[Ljava/lang/Object;:0
+com/liferay/portal/kernel/util/ArrayUtil.append([Ljava/lang/Object;Ljava/lang/Object;)[Ljava/lang/Object;:0,1
+com/liferay/portal/kernel/util/ArrayUtil.append([Ljava/lang/Object;[Ljava/lang/Object;)[Ljava/lang/Object;:0,1
+com/liferay/portal/kernel/util/ArrayUtil.append([[Ljava/lang/Object;[Ljava/lang/Object;)[[Ljava/lang/Object;:0,1
+com/liferay/portal/kernel/util/ArrayUtil.append([[Ljava/lang/Object;[[Ljava/lang/Object;)[[Ljava/lang/Object;:0,1
+com/liferay/portal/kernel/util/ArrayUtil.clone([C)[C:0
+com/liferay/portal/kernel/util/ArrayUtil.clone([CII)[C:2
+com/liferay/portal/kernel/util/ArrayUtil.clone([Ljava/lang/Object;)[Ljava/lang/Object;:0
+com/liferay/portal/kernel/util/ArrayUtil.clone([Ljava/lang/Object;II)[Ljava/lang/Object;:2
+com/liferay/portal/kernel/util/ArrayUtil.clone([[Ljava/lang/Object;)[[Ljava/lang/Object;:0
+com/liferay/portal/kernel/util/ArrayUtil.clone([[Ljava/lang/Object;II)[[Ljava/lang/Object;:2
+com/liferay/portal/kernel/util/ArrayUtil.combine([Ljava/lang/Object;[Ljava/lang/Object;[Ljava/lang/Object;)V:0,1,2#2
+com/liferay/portal/kernel/util/ArrayUtil.contains([CC)Z:0#0
+com/liferay/portal/kernel/util/ArrayUtil.contains([Ljava/lang/Object;Ljava/lang/Object;)Z:0#0
+com/liferay/portal/kernel/util/ArrayUtil.contains([Ljava/lang/String;Ljava/lang/String;Z)Z:1#1
+com/liferay/portal/kernel/util/ArrayUtil.containsAll([Ljava/lang/Object;[Ljava/lang/Object;)Z:0#0
+com/liferay/portal/kernel/util/ArrayUtil.containsAll([S[S)Z:0#0
+com/liferay/portal/kernel/util/ArrayUtil.distinct([Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/portal/kernel/util/ArrayUtil.distinct([Ljava/lang/String;Ljava/util/Comparator;)[Ljava/lang/String;:1
+com/liferay/portal/kernel/util/ArrayUtil.filter([Ljava/lang/Object;Ljava/util/function/Predicate;)[Ljava/lang/Object;:1
+com/liferay/portal/kernel/util/ArrayUtil.getLength([Ljava/lang/Object;)I:0#0
+com/liferay/portal/kernel/util/ArrayUtil.getValue([Ljava/lang/Object;I)Ljava/lang/Object;:1
+com/liferay/portal/kernel/util/ArrayUtil.isEmpty([C)Z:0#0
+com/liferay/portal/kernel/util/ArrayUtil.isEmpty([Ljava/lang/Object;)Z:0#0
+com/liferay/portal/kernel/util/ArrayUtil.isNotEmpty([C)Z:0#0
+com/liferay/portal/kernel/util/ArrayUtil.isNotEmpty([Ljava/lang/Object;)Z:0#0
+com/liferay/portal/kernel/util/ArrayUtil.remove([CC)[C:1
+com/liferay/portal/kernel/util/ArrayUtil.remove([Ljava/lang/String;Ljava/lang/String;)[Ljava/lang/String;:1
+com/liferay/portal/kernel/util/ArrayUtil.remove([Ljava/lang/Object;Ljava/lang/Object;)[Ljava/lang/Object;:1
+com/liferay/portal/kernel/util/ArrayUtil.removeByPrefix([Ljava/lang/String;Ljava/lang/String;)[Ljava/lang/String;:1
+com/liferay/portal/kernel/util/ArrayUtil.replace([Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V:0,2#2
+com/liferay/portal/kernel/util/ArrayUtil.reverse([C)V:0#0
+com/liferay/portal/kernel/util/ArrayUtil.reverse([Ljava/lang/Object;)V:0#0
+com/liferay/portal/kernel/util/ArrayUtil.sortedUnique([Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/portal/kernel/util/ArrayUtil.split(Ljava/lang/Object;I)Ljava/lang/Object;:1
+com/liferay/portal/kernel/util/ArrayUtil.subset([CII)[C:2
+com/liferay/portal/kernel/util/ArrayUtil.subset([Ljava/lang/Object;II)[Ljava/lang/Object;:2
+com/liferay/portal/kernel/util/ArrayUtil.toArray([C)[Ljava/lang/Character;:0
+com/liferay/portal/kernel/util/ArrayUtil.toArray([Ljava/lang/Character;)[C:0
+com/liferay/portal/kernel/util/ArrayUtil.toArray([Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/portal/kernel/util/ArrayUtil.toArray([Ljava/lang/Object;Lcom/liferay/portal/kernel/util/Accessor;)[Ljava/lang/Object;:1
+com/liferay/portal/kernel/util/ArrayUtil.toString([Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/String;:1
+com/liferay/portal/kernel/util/ArrayUtil.toString([Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,2
+com/liferay/portal/kernel/util/ArrayUtil.toString([Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;Ljava/util/Locale;)Ljava/lang/String;:1,3
+com/liferay/portal/kernel/util/ArrayUtil.toString([Ljava/lang/Object;Lcom/liferay/portal/kernel/util/Accessor;)Ljava/lang/String;:1
+com/liferay/portal/kernel/util/ArrayUtil.toString([Ljava/lang/Object;Lcom/liferay/portal/kernel/util/Accessor;Ljava/lang/String;)Ljava/lang/String;:0,2
+com/liferay/portal/kernel/util/ArrayUtil.toString([Ljava/lang/Object;Lcom/liferay/portal/kernel/util/Accessor;Ljava/lang/String;Ljava/util/Locale;)Ljava/lang/String;:1,3
+com/liferay/portal/kernel/util/ArrayUtil.toStringArray([C)[Ljava/lang/String;:0
+com/liferay/portal/kernel/util/ArrayUtil.toStringArray(Ljava/util/Collection;)[Ljava/lang/String;:0
+com/liferay/portal/kernel/util/ArrayUtil.toStringArray([Ljava/util/Date;Ljava/text/DateFormat;)[Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/ArrayUtil.toStringArray(Lcom/liferay/portal/kernel/json/JSONArray;)[Ljava/lang/String;:0
+com/liferay/portal/kernel/util/ArrayUtil.toStringArray([Ljava/lang/Object;)[Ljava/lang/String;:0
+com/liferay/portal/kernel/util/ArrayUtil.toStringArray([S)[Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/ArrayUtil.unique([Ljava/lang/String;)[Ljava/lang/String;:0
+
+com/liferay/portal/kernel/util/ListUtil.concat(Ljava/util/List;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.copy(Ljava/util/List;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.copy(Ljava/util/List;Ljava/util/List;)V:0,1#0
+com/liferay/portal/kernel/util/ListUtil.distinct(Ljava/util/List;Ljava/util/Comparator;)V:1#1
+com/liferay/portal/kernel/util/ListUtil.distinct(Ljava/util/List;)V:0#0
+com/liferay/portal/kernel/util/ListUtil.exists(Ljava/util/List;Ljava/util/function/Predicate;)Z:1#1
+com/liferay/portal/kernel/util/ListUtil.filter(Ljava/util/List;Ljava/util/List;Ljava/util/function/Predicate;)Ljava/util/List;:1,2#1
+com/liferay/portal/kernel/util/ListUtil.filter(Ljava/util/List;Ljava/util/function/Predicate;)Ljava/util/List;:1
+com/liferay/portal/kernel/util/ListUtil.fromArray([Z)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.fromArray([C)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.fromArray([D)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.fromArray(Ljava/lang/Object;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.fromArray([F)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.fromArray([I)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.fromArray([J)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.fromArray([S)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.fromCollection(Ljava/util/Collection;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.fromEnumeration(Ljava/util/Enumeration;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.fromFile(Ljava/io/File;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.fromFile(Ljava/lang/String;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.fromMapKeys(Ljava/util/Map;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.fromMapValues(Ljava/util/Map;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.fromString(Ljava/lang/String;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.fromString(Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;:0,1
+com/liferay/portal/kernel/util/ListUtil.isEmpty(Ljava/util/List;)Z:0#0
+com/liferay/portal/kernel/util/ListUtil.isNotEmpty(Ljava/util/List;)Z:0#0
+com/liferay/portal/kernel/util/ListUtil.isNotNull(Ljava/util/List;)Z:0#0
+com/liferay/portal/kernel/util/ListUtil.isNull(Ljava/util/List;)Z:0#0
+com/liferay/portal/kernel/util/ListUtil.isUnmodifiableList(Ljava/util/List;)Z:0#0
+com/liferay/portal/kernel/util/ListUtil.remove(Ljava/util/List;Ljava/util/List;)Ljava/util/List;:1
+com/liferay/portal/kernel/util/ListUtil.reverseIterator(Ljava/util/List;)Ljava/util/Iterator;:0
+com/liferay/portal/kernel/util/ListUtil.sort(Ljava/util/List;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.sort(Ljava/util/List;Ljava/util/Comparator;)Ljava/util/List;:1
+com/liferay/portal/kernel/util/ListUtil.subList(Ljava/util/List;II)Ljava/util/List;:2
+com/liferay/portal/kernel/util/ListUtil.toArray(Ljava/util/List;Lcom/liferay/portal/kernel/util/Accessor;)[Ljava/lang/Object;:1
+com/liferay/portal/kernel/util/ListUtil.toList([Z)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.toList([C)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.toList([D)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.toList(Ljava/lang/Object;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.toList([Ljava/lang/Object;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.toList([F)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.toList([I)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.toList(Ljava/util/List;Lcom/liferay/portal/kernel/util/Accessor;)Ljava/util/List;:1
+com/liferay/portal/kernel/util/ListUtil.toList(Ljava/util/List;Ljava/util/function/Function;)Ljava/util/List;:1
+com/liferay/portal/kernel/util/ListUtil.toList(Ljava/util/List;)Ljava/util/List;:0
+com/liferay/portal/kernel/util/ListUtil.toList([J)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.toList([S)Ljava/util/List;:SAFE
+com/liferay/portal/kernel/util/ListUtil.toLongArray(Ljava/util/List;Lcom/liferay/portal/kernel/util/Accessor;)[J:SAFE
+com/liferay/portal/kernel/util/ListUtil.toLongArray(Ljava/util/List;Ljava/util/function/ToLongFunction;)[J:SAFE
+com/liferay/portal/kernel/util/ListUtil.toString(Ljava/util/List;Lcom/liferay/portal/kernel/util/Accessor;)Ljava/lang/String;:1
+com/liferay/portal/kernel/util/ListUtil.toString(Ljava/util/List;Lcom/liferay/portal/kernel/util/Accessor;Ljava/lang/String;)Ljava/lang/String;:0,2
+com/liferay/portal/kernel/util/ListUtil.toString(Ljava/util/List;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/portal/kernel/util/ListUtil.toString(Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,2
+com/liferay/portal/kernel/util/ListUtil.unique(Ljava/util/List;)Ljava/util/List;:0
+
 com/liferay/portal/kernel/util/ParamUtil.get(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
 com/liferay/portal/kernel/util/ParamUtil.get(Ljavax/portlet/PortletRequest;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
 com/liferay/portal/kernel/util/ParamUtil.get(Lcom/liferay/portal/kernel/service/ServiceContext;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
@@ -120,6 +246,7 @@ com/liferay/portal/kernel/util/ParamUtil.getStringValues(Lcom/liferay/portal/ker
 
 com/liferay/portal/kernel/portlet/PortletProviderUtil.getPortletId(Ljava/lang/String;Lcom/liferay/portal/kernel/portlet/PortletProvider$Action;)Ljava/lang/String;:SAFE
 
+com/liferay/portal/kernel/util/Validator.isNull(Ljava/lang/Object;)Z:0#0
 
 com/liferay/portal/kernel/portlet/PortletURLFactoryUtil.create(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;Lcom/liferay/portal/kernel/model/Layout;Ljava/lang/String;)Lcom/liferay/portal/kernel/portlet/LiferayPortletURL;:SAFE
 com/liferay/portal/kernel/portlet/PortletURLFactoryUtil.create(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;)Lcom/liferay/portal/kernel/portlet/LiferayPortletURL;:SAFE
@@ -172,6 +299,38 @@ com/liferay/portal/kernel/util/StringBundler.toString()Ljava/lang/String;:0
 com/liferay/portal/kernel/util/StringBundler.writeTo(Ljava/io/Writer;)V:1#0
 com/liferay/portal/kernel/util/StringBundler.expandCapacity(I)V:1#1
 
+com/liferay/petra/string/StringBundler.<init>()V:SAFE
+com/liferay/petra/string/StringBundler.<init>(I)V:SAFE
+com/liferay/petra/string/StringBundler.<init>(Ljava/lang/String;)V:0#1,2
+com/liferay/petra/string/StringBundler.<init>([Ljava/lang/String;)V:0#1,2
+com/liferay/petra/string/StringBundler.<init>([Ljava/lang/String;I)V:1#2,3
+com/liferay/petra/string/StringBundler.append(Z)Lcom/liferay/petra/string/StringBundler;:1
+com/liferay/petra/string/StringBundler.append(C)Lcom/liferay/petra/string/StringBundler;:0,1#1
+com/liferay/petra/string/StringBundler.append([C)Lcom/liferay/petra/string/StringBundler;:0,1#1
+com/liferay/petra/string/StringBundler.append(D)Lcom/liferay/petra/string/StringBundler;:2
+com/liferay/petra/string/StringBundler.append(F)Lcom/liferay/petra/string/StringBundler;:1
+com/liferay/petra/string/StringBundler.append(I)Lcom/liferay/petra/string/StringBundler;:1
+com/liferay/petra/string/StringBundler.append(J)Lcom/liferay/petra/string/StringBundler;:2
+com/liferay/petra/string/StringBundler.append(Ljava/lang/Object;)Lcom/liferay/petra/string/StringBundler;:0,1#1
+com/liferay/petra/string/StringBundler.append(Ljava/lang/String;)Lcom/liferay/petra/string/StringBundler;:0,1#1
+com/liferay/petra/string/StringBundler.append([Ljava/lang/String;)Lcom/liferay/petra/string/StringBundler;:0,1#1
+com/liferay/petra/string/StringBundler.append(Lcom/liferay/petra/string/StringBundler;)Lcom/liferay/petra/string/StringBundler;:0,1#1
+com/liferay/petra/string/StringBundler.capacity()I:0#0
+com/liferay/petra/string/StringBundler.concat([Ljava/lang/String;)Ljava/lang/String;:0
+com/liferay/petra/string/StringBundler.getStrings()[Ljava/lang/String;:1
+com/liferay/petra/string/StringBundler.index()I:0#0
+com/liferay/petra/string/StringBundler.length()I:0#0
+com/liferay/petra/string/StringBundler.setIndex(I)V:1#1
+com/liferay/petra/string/StringBundler.setStringAt(Ljava/lang/String;I)V:1,2#2
+com/liferay/petra/string/StringBundler.stringAt(I)Ljava/lang/String;:1
+com/liferay/petra/string/StringBundler.toString()Ljava/lang/String;:0
+com/liferay/petra/string/StringBundler.writeTo(Ljava/io/Writer;)V:1#0
+com/liferay/petra/string/StringBundler.expandCapacity(I)V:1#1
+
+com/liferay/portal/kernel/util/StringUtil.add(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/portal/kernel/util/StringUtil.add(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1,2
+com/liferay/portal/kernel/util/StringUtil.add(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String;:1,2,3
+
 com/liferay/portal/kernel/util/StringUtil.merge([Z)Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/util/StringUtil.merge([ZLjava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/util/StringUtil.merge([C)Ljava/lang/String;:0
@@ -193,6 +352,9 @@ com/liferay/portal/kernel/util/StringUtil.merge([SLjava/lang/String;)Ljava/lang/
 com/liferay/portal/kernel/util/StringUtil.merge([Ljava/lang/Object;)Ljava/lang/String;:0
 com/liferay/portal/kernel/util/StringUtil.merge([Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/String;:0,1
 
+com/liferay/portal/kernel/util/StringUtil.removeSubstring(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:1
+com/liferay/portal/kernel/util/StringUtil.removeSubstrings(Ljava/lang/String;[Ljava/lang/String;)Ljava/lang/String;:1
+
 com/liferay/portal/kernel/util/StringUtil.replaceFirst(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1,2
 com/liferay/portal/kernel/util/StringUtil.replace(Ljava/lang/String;CC)Ljava/lang/String;:0,1,2
 com/liferay/portal/kernel/util/StringUtil.replace(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)Ljava/lang/String;:0,1,2
@@ -213,8 +375,35 @@ com/liferay/portal/kernel/util/StringUtil.trimTrailing(Ljava/lang/String;)Ljava/
 com/liferay/portal/kernel/util/StringUtil.trimTrailing(Ljava/lang/String;C)Ljava/lang/String;:1
 com/liferay/portal/kernel/util/StringUtil.trimTrailing(Ljava/lang/String;[C)Ljava/lang/String;:1
 
+com/liferay/portal/kernel/util/StringUtil.randomId()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/StringUtil.split(Ljava/lang/String;C)[Ljava/lang/String;:1
+com/liferay/portal/kernel/util/StringUtil.toLowerCase(Ljava/lang/String;)Ljava/lang/String;:0
+com/liferay/portal/kernel/util/StringUtil.upperCaseFirstLetter(Ljava/lang/String;)Ljava/lang/String;:0
+
+
+com/liferay/petra/string/StringUtil.merge([ZLjava/lang/String;)Ljava/lang/String;:0
+com/liferay/petra/string/StringUtil.merge([BLjava/lang/String;)Ljava/lang/String;:0
+com/liferay/petra/string/StringUtil.merge([CLjava/lang/String;)Ljava/lang/String;:0
+com/liferay/petra/string/StringUtil.merge(Ljava/util/Collection;Ljava/util/function/Function;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/petra/string/StringUtil.merge(Ljava/util/Collection;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/petra/string/StringUtil.merge([DLjava/lang/String;)Ljava/lang/String;:0
+com/liferay/petra/string/StringUtil.merge([FLjava/lang/String;)Ljava/lang/String;:0
+com/liferay/petra/string/StringUtil.merge([ILjava/lang/String;)Ljava/lang/String;:0
+com/liferay/petra/string/StringUtil.merge(Ljava/lang/Object;Ljava/util/function/Function;Ljava/lang/String;)Ljava/lang/String;:0,1,2
+com/liferay/petra/string/StringUtil.merge(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/petra/string/StringUtil.merge([JLjava/lang/String;)Ljava/lang/String;:0
+com/liferay/petra/string/StringUtil.merge([SLjava/lang/String;)Ljava/lang/String;:0
+com/liferay/petra/string/StringUtil.merge([Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/petra/string/StringUtil.merge([Ljava/lang/Object;Ljava/util/function/Function;Ljava/lang/String;)Ljava/lang/String;:0,1,2
+com/liferay/petra/string/StringUtil.merge([Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/petra/string/StringUtil.split(Ljava/lang/String;)Ljava/util/List;:0
+com/liferay/petra/string/StringUtil.split(Ljava/lang/String;C)Ljava/util/List;:1
+
+
 com/liferay/portal/kernel/service/persistence/impl/BasePersistenceImpl.appendOrderByComparator(Lcom/liferay/portal/kernel/util/StringBundler;Ljava/lang/String;Lcom/liferay/portal/kernel/util/OrderByComparator;)V:1,2#2
 com/liferay/portal/kernel/service/persistence/impl/BasePersistenceImpl.appendOrderByComparator(Lcom/liferay/portal/kernel/util/StringBundler;Ljava/lang/String;Lcom/liferay/portal/kernel/util/OrderByComparator;Z)V:2,3#3
+com/liferay/portal/kernel/service/persistence/impl/BasePersistenceImpl.appendOrderByComparator(Lcom/liferay/petra/string/StringBundler;Ljava/lang/String;Lcom/liferay/portal/kernel/util/OrderByComparator;)V:1,2#2
+com/liferay/portal/kernel/service/persistence/impl/BasePersistenceImpl.appendOrderByComparator(Lcom/liferay/petra/string/StringBundler;Ljava/lang/String;Lcom/liferay/portal/kernel/util/OrderByComparator;Z)V:2,3#3
 com/liferay/portal/kernel/service/persistence/impl/BasePersistenceImpl.getColumnName(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/service/persistence/impl/BasePersistenceImpl.removeConjunction(Ljava/lang/String;)Ljava/lang/String;:0
 
@@ -263,6 +452,9 @@ com/liferay/portal/kernel/language/LanguageUtil.get(Ljava/util/Locale;Ljava/lang
 com/liferay/portal/kernel/language/LanguageUtil.get(Ljava/util/ResourceBundle;Ljava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/language/LanguageUtil.get(Ljava/util/ResourceBundle;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
 
+com/liferay/portal/kernel/language/LanguageUtil.getAvailableLocales()Ljava/util/Set;:SAFE
+com/liferay/portal/kernel/language/LanguageUtil.getAvailableLocales(J)Ljava/util/Set;:SAFE
+
 com/liferay/portal/kernel/language/LanguageUtil.getTimeDescription(Ljavax/servlet/http/HttpServletRequest;J)Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/language/LanguageUtil.getTimeDescription(Ljavax/servlet/http/HttpServletRequest;JZ)Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/language/LanguageUtil.getTimeDescription(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/Long;)Ljava/lang/String;:SAFE
@@ -297,6 +489,24 @@ com/liferay/portal/kernel/util/FastDateFormatFactoryUtil.getTime(Ljava/util/Loca
 com/liferay/portal/kernel/util/FastDateFormatFactoryUtil.getTime(Ljava/util/Locale;Ljava/util/TimeZone;)Ljava/text/Format;:SAFE
 com/liferay/portal/kernel/util/FastDateFormatFactoryUtil.getTime(Ljava/util/TimeZone;)Ljava/text/Format;:SAFE
 
+com/liferay/portal/kernel/util/FileUtil.createTempFile(Ljava/io/InputStream;)Ljava/io/File;:SAFE
+com/liferay/portal/kernel/util/File.createTempFile(Ljava/io/InputStream;)Ljava/io/File;:SAFE
+
+com/liferay/portal/kernel/util/HashMapBuilder.put(Ljava/util/Collection;Lcom/liferay/portal/kernel/util/UnsafeFunction;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0,1
+com/liferay/portal/kernel/util/HashMapBuilder.put(Ljava/lang/Object;Lcom/liferay/portal/kernel/util/UnsafeSupplier;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0,1
+com/liferay/portal/kernel/util/HashMapBuilder.put(Ljava/lang/Object;Ljava/lang/Object;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0,1
+com/liferay/portal/kernel/util/HashMapBuilder.put(Lcom/liferay/portal/kernel/util/UnsafeSupplier;Lcom/liferay/portal/kernel/util/UnsafeSupplier;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0,1
+com/liferay/portal/kernel/util/HashMapBuilder.put(Lcom/liferay/portal/kernel/util/UnsafeSupplier;Ljava/lang/Object;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0,1
+com/liferay/portal/kernel/util/HashMapBuilder.putAll(Ljava/util/Map;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0
+com/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper.build()Ljava/util/HashMap;:0
+com/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper.put(Ljava/util/Collection;Lcom/liferay/portal/kernel/util/UnsafeFunction;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0,1
+com/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper.put(Ljava/lang/Object;Lcom/liferay/portal/kernel/util/UnsafeSupplier;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0,1
+com/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper.put(Ljava/lang/Object;Ljava/lang/Object;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0,1
+com/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper.put(Lcom/liferay/portal/kernel/util/UnsafeSupplier;Lcom/liferay/portal/kernel/util/UnsafeSupplier;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0,1
+com/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper.put(Lcom/liferay/portal/kernel/util/UnsafeSupplier;Ljava/lang/Object;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0,1
+com/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper.putAll(Ljava/util/Map;)Lcom/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper;:0
+com/liferay/portal/kernel/util/HashMapBuilder$HashMapWrapper.getMap()Ljava/util/HashMap;:0
+
 com/liferay/portal/kernel/util/TextFormatter.format(Ljava/lang/String;I)Ljava/lang/String;:1
 com/liferay/portal/kernel/util/TextFormatter.formatName(Ljava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/util/TextFormatter.formatPlural(Ljava/lang/String;)Ljava/lang/String;:0
@@ -311,7 +521,9 @@ java/text/Format.parseObject(Ljava/lang/String;Ljava/text/ParsePosition;)Ljava/l
 java/text/NumberFormat.format(D)Ljava/lang/String;:SAFE
 java/text/NumberFormat.format(J)Ljava/lang/String;:SAFE
 
-com/liferay/portal/kernel/util/Portal.escapeRedirect(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/Portal.escapeRedirect(Ljava/lang/String;)Ljava/lang/String;:0|+REDIRECT_SAFE
+com/liferay/portal/kernel/util/Portal.generateRandomKey(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;)Ljava/lang/String;:TAINTED
+
 com/liferay/portal/kernel/util/Portal.getCurrentURL(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:TAINTED
 com/liferay/portal/kernel/util/Portal.getCurrentURL(Ljavax/portlet/PortletRequest;)Ljava/lang/String;:TAINTED
 com/liferay/portal/kernel/util/Portal.getHomeURL(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:SAFE
@@ -346,7 +558,9 @@ com/liferay/portal/kernel/util/Portal.getStaticResourceURL(Ljavax/servlet/http/H
 com/liferay/portal/kernel/util/Portal.getStaticResourceURL(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
 com/liferay/portal/kernel/util/Portal.getStaticResourceURL(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;Ljava/lang/String;J)Ljava/lang/String;:2,3
 
-com/liferay/portal/kernel/util/PortalUtil.escapeRedirect(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/PortalUtil.escapeRedirect(Ljava/lang/String;)Ljava/lang/String;:0|+REDIRECT_SAFE
+com/liferay/portal/kernel/util/PortalUtil.generateRandomKey(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;)Ljava/lang/String;:SAFE
+
 com/liferay/portal/kernel/util/PortalUtil.getCurrentURL(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:TAINTED
 com/liferay/portal/kernel/util/PortalUtil.getCurrentURL(Ljavax/portlet/PortletRequest;)Ljava/lang/String;:TAINTED
 com/liferay/portal/kernel/util/PortalUtil.getHomeURL(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:SAFE
@@ -381,10 +595,14 @@ com/liferay/portal/kernel/util/PortalUtil.getStaticResourceURL(Ljavax/servlet/ht
 com/liferay/portal/kernel/util/PortalUtil.getStaticResourceURL(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
 com/liferay/portal/kernel/util/PortalUtil.getStaticResourceURL(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;Ljava/lang/String;J)Ljava/lang/String;:2,3
 
+
+com/liferay/portal/kernel/theme/ThemeDisplay.getPathImage()Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/theme/ThemeDisplay.getPathMain()Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/theme/ThemeDisplay.getPathThemeImages()Ljava/lang/String;:SAFE
-com/liferay/portal/kernel/theme/ThemeDisplay.getURLCurrent()Ljava/lang/String;:TAINTED
 com/liferay/portal/kernel/theme/ThemeDisplay.getSiteDefaultLocale()Ljava/util/Locale;:SAFE
+com/liferay/portal/kernel/theme/ThemeDisplay.getURLCurrent()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/theme/ThemeDisplay.getURLSignIn()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/theme/ThemeDisplay.getURLSignOut()Ljava/lang/String;:SAFE
 
 com/liferay/portal/util/PrefsPropsUtil.getContent(JLjava/lang/String;)Ljava/lang/String;:SAFE
 com/liferay/portal/util/PrefsPropsUtil.getContent(Ljavax/portlet/PortletPreferences;JLjava/lang/String;)Ljava/lang/String;:SAFE
@@ -482,6 +700,14 @@ com/liferay/portal/kernel/util/PropsUtil.getProperties(Ljava/lang/String;Z)Ljava
 com/liferay/portal/kernel/portletfilerepository/PortletFileRepositoryUtil.getPortletFileEntryURL(Lcom/liferay/portal/kernel/theme/ThemeDisplay;Lcom/liferay/portal/kernel/repository/model/FileEntry;Ljava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/portletfilerepository/PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(Lcom/liferay/portal/kernel/theme/ThemeDisplay;Lcom/liferay/portal/kernel/repository/model/FileEntry;Ljava/lang/String;)Ljava/lang/String;:0
 
+com/liferay/portal/kernel/portlet/LiferayWindowState.EXCLUSIVE:SAFE
+com/liferay/portal/kernel/portlet/LiferayWindowState.POP_UP:SAFE
+javax/portlet/WindowState.UNDEFINED:SAFE
+javax/portlet/WindowState.NORMAL:SAFE
+javax/portlet/WindowState.MAXIMIZED:SAFE
+javax/portlet/WindowState.MINIMIZED:SAFE
+javax/portlet/WindowState.toString()Ljava/lang/String;:0
+
 com/liferay/portal/kernel/security/permission/ResourceActionsUtil.getModelResource(Ljava/util/Locale;Ljava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/security/permission/ResourceActionsUtil.getModelResource(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;)Ljava/lang/String;:0
 
@@ -501,6 +727,8 @@ com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageId(Ljava/util/Locale;)Lja
 com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageId(Ljava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageIds([Ljava/util/Locale;)[Ljava/lang/String;:0
 com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageIds([Ljava/lang/String;)[Ljava/lang/String;:0
+
+com/liferay/portal/kernel/webserver/WebServerServletTokenUtil.getToken(J)Ljava/lang/String;:SAFE
 
 - Let's trust OrderByComparator in general, manually find insecure impls
 com/liferay/portal/kernel/util/OrderByComparator.getOrderByConditionFields()[Ljava/lang/String;:SAFE
@@ -544,6 +772,30 @@ com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceOrderBy(Ljava/lang/St
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceGroupBy(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceIsNull(Ljava/lang/String;)Ljava/lang/String;:0
 
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.appendCriteria(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.get(Ljava/lang/Class;Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/QueryDefinition;)Ljava/lang/String;:SAFE
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.get(Ljava/lang/Class;Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/QueryDefinition;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.get(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.keywords(Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.keywords(Ljava/lang/String;Z)[Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.keywords(Ljava/lang/String;ZLcom/liferay/portal/kernel/dao/orm/WildcardMode;)[Ljava/lang/String;:2
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.keywords(Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/WildcardMode;)[Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.keywords([Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.keywords([Ljava/lang/String;Z)[Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.removeGroupBy(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.removeOrderBy(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.replaceAndOperator(Ljava/lang/String;Z)Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Z[I)Ljava/lang/String;:2,3
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Z[J)Ljava/lang/String;:2,3
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z[Ljava/lang/String;)Ljava/lang/String;:2,3,4
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.replaceOrderBy(Ljava/lang/String;Lcom/liferay/portal/kernel/util/OrderByComparator;)Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.replaceGroupBy(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.replaceIsNull(Ljava/lang/String;)Ljava/lang/String;:0
+
+com/liferay/portal/dao/orm/common/SQLTransformer.transform(Ljava/lang/String;)Ljava/lang/String;:0
+com/liferay/portal/dao/orm/common/SQLTransformer.transformFromHQLToJQPL(Ljava/lang/String;)Ljava/lang/String;:0
+com/liferay/portal/dao/orm/common/SQLTransformer.transformFromJPQLToHQL(Ljava/lang/String;)Ljava/lang/String;:0
+
 com/liferay/taglib/aui/AUIUtil.buildData(Ljava/util/Map;)Ljava/lang/String;:SAFE
 com/liferay/taglib/aui/AUIUtil.getNamespace(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:SAFE
 com/liferay/taglib/aui/AUIUtil.getNamespace(Ljavax/portlet/PortletRequest;Ljavax/portlet/PortletResponse;)Ljava/lang/String;:SAFE
@@ -551,12 +803,39 @@ com/liferay/taglib/aui/AUIUtil.getNamespace(Ljavax/portlet/PortletRequest;Ljavax
 
 -- Taglibs usually don't modify input, we need to keep the taint state as is
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setData(Ljava/util/Map;)V:0#0
+com/liferay/taglib/aui/base/BaseInputTag.setValue(Ljava/lang/Object;)V:0#0
 com/liferay/taglib/aui/base/BaseNavItemTag.setHref(Ljava/lang/Object;)V:0#0
+com/liferay/taglib/aui/base/BaseOptionTag.setLabel(Ljava/lang/Object;)V:0#0
 com/liferay/taglib/aui/OptionTag.setValue(Ljava/lang/Object;)V:0#0
 com/liferay/taglib/search/TextSearchEntry.setData(Ljava/util/Map;)V:0#0
 com/liferay/taglib/ui/MessageTag.setArguments(Ljava/lang/Object;)V:0#0
 com/liferay/taglib/ui/SearchContainerColumnTextTag.setHref(Ljava/lang/Object;)V:0#0
 com/liferay/taglib/ui/SearchContainerColumnDateTag.setHref(Ljava/lang/Object;)V:0#0
+com/liferay/taglib/aui/InputTag.setValue(Ljava/lang/Object;)V:0
+com/liferay/taglib/util/AttributesTagSupport.setDynamicAttribute(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;)V:0#0
+com/liferay/taglib/util/AttributesTagSupport.setNamespacedAttribute(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;Ljava/lang/Object;)V:0#0
+
+-- Also writing to the output doesn't change taint state
+javax/servlet/jsp/JspWriter.print(Ljava/lang/Object;)V:0#0
+
 
 com/liferay/portal/kernel/security/auth/ScreenNameValidator.getAUIValidatorJS()Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/security/auth/ScreenNameValidator.getDescription(Ljava/util/Locale;)Ljava/lang/String;:SAFE
+
+Lcom/liferay/portal/kernel/json/JSONArray;:SAFE
+Lcom/liferay/portal/kernel/json/JSONObject;:SAFE
+com/liferay/portal/kernel/json/JSONArray.toString()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/json/JSONObject.toString()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/json/JSONSerializer.serializeDeep(Ljava/lang/Object;)Ljava/lang/String;:SAFE
+
+com/liferay/portal/kernel/model/Portlet.getPortletName()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/patcher/PatcherUtil.getInstalledPatches()[Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/scripting/ScriptingUtil.getSupportedLanguages()Ljava/util/Set;:SAFE
+com/liferay/portal/kernel/theme/ThemeDisplay.getLanguageId()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/LocaleUtil.fromLanguageId(Ljava/lang/String;)Ljava/util/Locale;:0
+com/liferay/portal/kernel/util/LocaleUtil.getSiteDefault()Ljava/util/Locale;:SAFE
+com/liferay/portal/kernel/util/ReleaseInfo.getReleaseInfo()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/workflow/WorkflowConstants.getStatusLabel(I)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/workflow/WorkflowHandler.getIconCssClass()Ljava/lang/String;:SAFE
+
+java/util/Locale.getDisplayName(Ljava/util/Locale;)Ljava/lang/String;:1

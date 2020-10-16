@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -310,9 +311,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		Portlet portlet = ActionUtil.getPortlet(actionRequest);
+
 		PortletPreferences portletPreferences =
-			ActionUtil.getLayoutPortletSetup(
-				actionRequest, ActionUtil.getPortlet(actionRequest));
+			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
 
 		actionRequest = ActionUtil.getWrappedActionRequest(
 			actionRequest, portletPreferences);
@@ -571,9 +573,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 			// Force update of layout modified date. See LPS-59246.
 
+			Portlet portlet = ActionUtil.getPortlet(actionRequest);
+
 			PortletPreferences portletPreferences =
-				ActionUtil.getLayoutPortletSetup(
-					actionRequest, ActionUtil.getPortlet(actionRequest));
+				ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
 
 			portletPreferences.store();
 		}
@@ -603,10 +606,14 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		String portletResource = ParamUtil.getString(
 			request, "portletResource");
 
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		Layout layout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
+
 		_portletPermission.check(
-			themeDisplay.getPermissionChecker(), resourceGroupId,
-			PortletConfigurationLayoutUtil.getLayout(themeDisplay),
-			portletResource, ActionKeys.PERMISSIONS);
+			permissionChecker, resourceGroupId, layout, portletResource,
+			ActionKeys.PERMISSIONS);
 	}
 
 	@Override

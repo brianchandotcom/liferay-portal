@@ -117,9 +117,7 @@ public class AssetRSSHelper {
 		for (AssetEntry assetEntry : assetEntries) {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			String author = _portal.getUserName(assetEntry);
-
-			syndEntry.setAuthor(author);
+			syndEntry.setAuthor(_portal.getUserName(assetEntry));
 
 			SyndContent syndContent = _syndModelFactory.createSyndContent();
 

@@ -138,8 +138,9 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 									SITE_MEMBERSHIP_NOT_ALLOWED);
 					}
 
-					membershipPolicyException.addUser(
-						UserLocalServiceUtil.getUser(userId));
+					User user = UserLocalServiceUtil.getUser(userId);
+
+					membershipPolicyException.addUser(user);
 				}
 			}
 
@@ -189,8 +190,9 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 			long[] userIds, long groupId)
 		throws PortalException {
 
-		List<Group> childrenGroups = getLimitedChildrenGroups(
-			GroupLocalServiceUtil.getGroup(groupId));
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		List<Group> childrenGroups = getLimitedChildrenGroups(group);
 
 		for (Group childrenGroup : childrenGroups) {
 			if (!childrenGroup.isLimitedToParentSiteMembers()) {

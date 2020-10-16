@@ -166,7 +166,9 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	public void disableFileRanksByFolderId(long folderId)
 		throws PortalException {
 
-		updateFileRanks(dlFolderLocalService.getDLFolder(folderId), false);
+		DLFolder dlFolder = dlFolderLocalService.getDLFolder(folderId);
+
+		updateFileRanks(dlFolder, false);
 	}
 
 	@Override
@@ -185,7 +187,9 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	public void enableFileRanksByFolderId(long folderId)
 		throws PortalException {
 
-		updateFileRanks(dlFolderLocalService.getDLFolder(folderId), true);
+		DLFolder dlFolder = dlFolderLocalService.getDLFolder(folderId);
+
+		updateFileRanks(dlFolder, true);
 	}
 
 	@Override

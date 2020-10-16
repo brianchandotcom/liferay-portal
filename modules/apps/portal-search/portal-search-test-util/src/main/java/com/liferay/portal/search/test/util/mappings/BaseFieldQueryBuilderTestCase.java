@@ -162,9 +162,7 @@ public abstract class BaseFieldQueryBuilderTestCase
 	protected void prepareSearch(
 		IndexingTestHelper indexingTestHelper, String keywords) {
 
-		Query query = buildQuery(keywords);
-
-		indexingTestHelper.setQuery(query);
+		indexingTestHelper.setQuery(buildQuery(keywords));
 	}
 
 	protected String[] transformFieldValues(String... values) {

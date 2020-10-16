@@ -725,7 +725,9 @@ public class HttpImpl implements Http {
 
 	@Override
 	public boolean isSecure(String url) {
-		return StringUtil.equalsIgnoreCase(getProtocol(url), Http.HTTPS);
+		String protocol = getProtocol(url);
+
+		return StringUtil.equalsIgnoreCase(protocol, Http.HTTPS);
 	}
 
 	@Override
@@ -1408,7 +1410,9 @@ public class HttpImpl implements Http {
 	protected boolean hasRequestHeader(
 		RequestBuilder requestBuilder, String name) {
 
-		if (ArrayUtil.isEmpty(requestBuilder.getHeaders(name))) {
+		Header[] headers = requestBuilder.getHeaders(name);
+
+		if (ArrayUtil.isEmpty(headers)) {
 			return false;
 		}
 

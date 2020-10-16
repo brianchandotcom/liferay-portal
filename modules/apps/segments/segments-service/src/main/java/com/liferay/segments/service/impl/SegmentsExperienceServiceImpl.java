@@ -71,11 +71,12 @@ public class SegmentsExperienceServiceImpl
 			long segmentsExperienceId)
 		throws PortalException {
 
-		_segmentsExperienceResourcePermission.check(
-			getPermissionChecker(),
+		SegmentsExperience segmentsExperience =
 			segmentsExperienceLocalService.getSegmentsExperience(
-				segmentsExperienceId),
-			ActionKeys.DELETE);
+				segmentsExperienceId);
+
+		_segmentsExperienceResourcePermission.check(
+			getPermissionChecker(), segmentsExperience, ActionKeys.DELETE);
 
 		return segmentsExperienceLocalService.deleteSegmentsExperience(
 			segmentsExperienceId);
@@ -168,11 +169,12 @@ public class SegmentsExperienceServiceImpl
 			Map<Locale, String> nameMap, boolean active)
 		throws PortalException {
 
-		_segmentsExperienceResourcePermission.check(
-			getPermissionChecker(),
+		SegmentsExperience segmentsExperience =
 			segmentsExperienceLocalService.getSegmentsExperience(
-				segmentsExperienceId),
-			ActionKeys.UPDATE);
+				segmentsExperienceId);
+
+		_segmentsExperienceResourcePermission.check(
+			getPermissionChecker(), segmentsExperience, ActionKeys.UPDATE);
 
 		return segmentsExperienceLocalService.updateSegmentsExperience(
 			segmentsExperienceId, segmentsEntryId, nameMap, active);

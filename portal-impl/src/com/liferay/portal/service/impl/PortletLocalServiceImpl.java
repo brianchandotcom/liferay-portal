@@ -617,8 +617,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public List<Portlet> getPortlets(
 		long companyId, boolean showSystem, boolean showPortal) {
 
-		List<Portlet> portlets = ListUtil.fromMapValues(
-			getPortletsMap(companyId));
+		Map<String, Portlet> portletsMap = getPortletsMap(companyId);
+
+		List<Portlet> portlets = ListUtil.fromMapValues(portletsMap);
 
 		if (showSystem && showPortal) {
 			return portlets;

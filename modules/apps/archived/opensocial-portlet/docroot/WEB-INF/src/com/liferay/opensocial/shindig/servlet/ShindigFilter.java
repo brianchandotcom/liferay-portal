@@ -160,10 +160,8 @@ public class ShindigFilter extends InjectedFilter {
 
 			PrincipalThreadLocal.setName(userIdString);
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

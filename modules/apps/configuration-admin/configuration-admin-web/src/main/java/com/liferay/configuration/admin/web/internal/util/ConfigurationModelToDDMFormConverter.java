@@ -285,9 +285,7 @@ public class ConfigurationModelToDDMFormConverter {
 	protected void setDDMFormFieldDataType(
 		AttributeDefinition attributeDefinition, DDMFormField ddmFormField) {
 
-		String dataType = getDDMFormFieldDataType(attributeDefinition);
-
-		ddmFormField.setDataType(dataType);
+		ddmFormField.setDataType(getDDMFormFieldDataType(attributeDefinition));
 	}
 
 	protected void setDDMFormFieldDisplayStyle(DDMFormField ddmFormField) {

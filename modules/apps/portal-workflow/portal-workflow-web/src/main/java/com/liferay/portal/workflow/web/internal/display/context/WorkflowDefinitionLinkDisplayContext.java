@@ -358,9 +358,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 				searchTerms.getKeywords(), false);
 		}
 
-		int total = workflowDefinitionLinkSearchEntries.size();
-
-		searchContainer.setTotal(total);
+		searchContainer.setTotal(workflowDefinitionLinkSearchEntries.size());
 
 		Collections.sort(
 			workflowDefinitionLinkSearchEntries,
@@ -542,9 +540,11 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		String resource = workflowHandler.getType(locale);
 
+		String workflowDefinitionLabel = getWorkflowDefinitionLabel(
+			workflowHandler);
+
 		return new WorkflowDefinitionLinkSearchEntry(
-			workflowHandler.getClassName(), resource,
-			getWorkflowDefinitionLabel(workflowHandler));
+			workflowHandler.getClassName(), resource, workflowDefinitionLabel);
 	}
 
 	protected List<WorkflowDefinitionLinkSearchEntry>

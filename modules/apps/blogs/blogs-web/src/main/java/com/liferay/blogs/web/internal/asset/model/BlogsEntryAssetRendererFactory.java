@@ -69,9 +69,11 @@ public class BlogsEntryAssetRendererFactory
 	public AssetRenderer<BlogsEntry> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
+
 		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
 			new BlogsEntryAssetRenderer(
-				_blogsEntryLocalService.getEntry(classPK),
+				entry,
 				ResourceBundleLoaderUtil.
 					getResourceBundleLoaderByBundleSymbolicName(
 						"com.liferay.blogs.web"));

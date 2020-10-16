@@ -334,9 +334,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 
 		if (Validator.isNotNull(appTitle) && Validator.isNotNull(appVersion)) {
-			String title = String.format("%s %s API", appTitle, appVersion);
-
-			javadoc.setTitle(title);
+			javadoc.setTitle(String.format("%s %s API", appTitle, appVersion));
 		}
 	}
 

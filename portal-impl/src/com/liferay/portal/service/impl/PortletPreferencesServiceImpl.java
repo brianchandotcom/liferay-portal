@@ -69,10 +69,11 @@ public class PortletPreferencesServiceImpl
 			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws PortalException {
 
+		PortletItem portletItem = portletItemLocalService.getPortletItem(
+			portletItemId);
+
 		restoreArchivedPreferences(
-			groupId, layout, portletId,
-			portletItemLocalService.getPortletItem(portletItemId),
-			jxPortletPreferences);
+			groupId, layout, portletId, portletItem, jxPortletPreferences);
 	}
 
 	@Override

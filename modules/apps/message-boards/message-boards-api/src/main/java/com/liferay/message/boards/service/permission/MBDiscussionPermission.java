@@ -106,9 +106,9 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker, _mbMessageLocalService.getMessage(messageId),
-			actionId);
+		MBMessage message = _mbMessageLocalService.getMessage(messageId);
+
+		return contains(permissionChecker, message, actionId);
 	}
 
 	public static boolean contains(

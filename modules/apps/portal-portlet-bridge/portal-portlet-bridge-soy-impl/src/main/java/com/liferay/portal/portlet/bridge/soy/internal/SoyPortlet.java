@@ -80,6 +80,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.Bundle;
@@ -177,10 +178,11 @@ public class SoyPortlet extends MVCPortlet {
 				httpServletResponse.setContentType(
 					ContentTypes.APPLICATION_JSON);
 
+				Template template = getTemplate(resourceRequest);
+
 				ServletResponseUtil.write(
 					httpServletResponse,
-					_soyPortletHelper.serializeTemplate(
-						getTemplate(resourceRequest)));
+					_soyPortletHelper.serializeTemplate(template));
 			}
 			else {
 				callResourceMethod(resourceRequest, resourceResponse);
@@ -572,7 +574,10 @@ public class SoyPortlet extends MVCPortlet {
 
 		template.put(TemplateConstants.NAMESPACE, templateNamespace);
 
-		template.prepare(PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		template.prepare(httpServletRequest);
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
@@ -606,10 +611,11 @@ public class SoyPortlet extends MVCPortlet {
 
 		String portletId = PortalUtil.getPortletId(portletRequest);
 		String portletWrapperId = _getPortletWrapperId(portletNamespace);
+		Template template = getTemplate(portletRequest);
 
 		String portletJavaScript = _soyPortletHelper.getRouterJavaScript(
 			portletComponentId, portletId, portletNamespace, portletWrapperId,
-			getTemplate(portletRequest));
+			template);
 
 		Set<String> requiredModules = new HashSet<>();
 

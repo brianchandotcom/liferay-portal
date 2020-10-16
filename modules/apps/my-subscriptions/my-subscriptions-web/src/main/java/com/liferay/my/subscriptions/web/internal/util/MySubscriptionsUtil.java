@@ -111,8 +111,10 @@ public class MySubscriptionsUtil {
 
 			StringBundler sb = new StringBundler(5);
 
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				LayoutLocalServiceUtil.getLayout(plid), themeDisplay);
+				layout, themeDisplay);
 
 			sb.append(layoutFullURL);
 

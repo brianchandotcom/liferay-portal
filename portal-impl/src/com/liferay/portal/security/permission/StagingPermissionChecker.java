@@ -63,8 +63,9 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 	@Override
 	public long[] getRoleIds(long userId, long groupId) {
-		return _permissionChecker.getRoleIds(
-			userId, StagingUtil.getLiveGroupId(groupId));
+		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
+
+		return _permissionChecker.getRoleIds(userId, liveGroupId);
 	}
 
 	@Override
@@ -176,26 +177,30 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 	@Override
 	public boolean isContentReviewer(long companyId, long groupId) {
-		return _permissionChecker.isContentReviewer(
-			companyId, StagingUtil.getLiveGroupId(groupId));
+		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
+
+		return _permissionChecker.isContentReviewer(companyId, liveGroupId);
 	}
 
 	@Override
 	public boolean isGroupAdmin(long groupId) {
-		return _permissionChecker.isGroupAdmin(
-			StagingUtil.getLiveGroupId(groupId));
+		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
+
+		return _permissionChecker.isGroupAdmin(liveGroupId);
 	}
 
 	@Override
 	public boolean isGroupMember(long groupId) {
-		return _permissionChecker.isGroupMember(
-			StagingUtil.getLiveGroupId(groupId));
+		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
+
+		return _permissionChecker.isGroupMember(liveGroupId);
 	}
 
 	@Override
 	public boolean isGroupOwner(long groupId) {
-		return _permissionChecker.isGroupOwner(
-			StagingUtil.getLiveGroupId(groupId));
+		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
+
+		return _permissionChecker.isGroupOwner(liveGroupId);
 	}
 
 	@Override

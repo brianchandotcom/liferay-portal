@@ -90,9 +90,10 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			super.getTemplateVariableGroups(classPK, language, locale);
 
+		String[] restrictedVariables = getRestrictedVariables(language);
+
 		TemplateVariableGroup breadcrumbUtilTemplateVariableGroup =
-			new TemplateVariableGroup(
-				"breadcrumb-util", getRestrictedVariables(language));
+			new TemplateVariableGroup("breadcrumb-util", restrictedVariables);
 
 		breadcrumbUtilTemplateVariableGroup.addVariable(
 			"breadcrumb-util", BreadcrumbUtil.class, "breadcrumbUtil");

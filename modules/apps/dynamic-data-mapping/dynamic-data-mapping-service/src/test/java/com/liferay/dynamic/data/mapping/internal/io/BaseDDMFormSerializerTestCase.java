@@ -188,9 +188,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 
 		createNotEmptyValidation(ddmFormField);
 
-		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions();
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setDDMFormFieldOptions(createDDMFormFieldOptions());
 
 		return ddmFormField;
 	}

@@ -27,6 +27,8 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,9 +55,12 @@ public class PortalSettingsTestOpenSSOMVCRenderCommand
 			_servletContext.getRequestDispatcher(_JSP_PATH);
 
 		try {
-			requestDispatcher.include(
-				_portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse));
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(renderResponse);
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

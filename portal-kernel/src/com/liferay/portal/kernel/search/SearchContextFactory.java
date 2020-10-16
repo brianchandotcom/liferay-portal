@@ -104,9 +104,8 @@ public class SearchContextFactory {
 
 		// Keywords
 
-		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
-
-		searchContext.setKeywords(keywords);
+		searchContext.setKeywords(
+			ParamUtil.getString(httpServletRequest, "keywords"));
 
 		// Query config
 

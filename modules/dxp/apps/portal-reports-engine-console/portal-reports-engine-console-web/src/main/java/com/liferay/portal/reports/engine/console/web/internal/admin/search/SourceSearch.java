@@ -90,10 +90,8 @@ public class SourceSearch extends SearchContainer<Source> {
 
 		setOrderByCol(orderByCol);
 
-		OrderByComparator<Source> orderByComparator =
-			getSourceOrderByComparator(orderByCol, orderByType);
-
-		setOrderByComparator(orderByComparator);
+		setOrderByComparator(
+			getSourceOrderByComparator(orderByCol, orderByType));
 
 		setOrderByType(orderByType);
 	}

@@ -333,9 +333,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 			Hits hits = indexer.search(searchContext);
 
-			int total = hits.getLength();
-
-			articleAndFolderSearchContainer.setTotal(total);
+			articleAndFolderSearchContainer.setTotal(hits.getLength());
 
 			List<Object> results = new ArrayList<>();
 

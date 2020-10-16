@@ -66,9 +66,9 @@ public class AccountPermissionImpl implements AccountPermission {
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker, AccountLocalServiceUtil.getAccount(accountId),
-			actionId);
+		Account account = AccountLocalServiceUtil.getAccount(accountId);
+
+		return contains(permissionChecker, account, actionId);
 	}
 
 }

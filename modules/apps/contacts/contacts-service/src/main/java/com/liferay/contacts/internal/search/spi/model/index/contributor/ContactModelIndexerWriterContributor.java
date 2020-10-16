@@ -15,6 +15,7 @@
 package com.liferay.contacts.internal.search.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
@@ -48,8 +49,10 @@ public class ContactModelIndexerWriterContributor
 
 				@Override
 				public void accept(Contact contact) {
-					batchIndexingActionable.addDocuments(
-						modelIndexerWriterDocumentHelper.getDocument(contact));
+					Document document =
+						modelIndexerWriterDocumentHelper.getDocument(contact);
+
+					batchIndexingActionable.addDocuments(document);
 				}
 
 			});

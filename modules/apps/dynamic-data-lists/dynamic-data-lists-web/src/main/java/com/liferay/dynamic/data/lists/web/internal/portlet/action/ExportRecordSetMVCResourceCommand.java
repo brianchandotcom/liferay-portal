@@ -94,9 +94,10 @@ public class ExportRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 			recordSetId, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new DDLRecordModifiedDateComparator(true));
 
+		String contentType = MimeTypesUtil.getContentType(fileName);
+
 		PortletResponseUtil.sendFile(
-			resourceRequest, resourceResponse, fileName, bytes,
-			MimeTypesUtil.getContentType(fileName));
+			resourceRequest, resourceResponse, fileName, bytes, contentType);
 	}
 
 	@Reference(unbind = "-")

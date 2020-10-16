@@ -69,9 +69,9 @@ public class SAPEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker, _sapEntryLocalService.getSAPEntry(sapEntryId),
-			actionId);
+		SAPEntry sapEntry = _sapEntryLocalService.getSAPEntry(sapEntryId);
+
+		return contains(permissionChecker, sapEntry, actionId);
 	}
 
 	@Override

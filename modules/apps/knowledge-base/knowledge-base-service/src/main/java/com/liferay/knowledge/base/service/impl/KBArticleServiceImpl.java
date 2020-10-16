@@ -839,9 +839,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		for (KBArticle kbArticle : kbArticles) {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			String author = _portal.getUserName(kbArticle);
-
-			syndEntry.setAuthor(author);
+			syndEntry.setAuthor(_portal.getUserName(kbArticle));
 
 			SyndContent syndContent = _syndModelFactory.createSyndContent();
 

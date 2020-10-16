@@ -1333,9 +1333,7 @@ public class JournalDisplayContext {
 
 			Hits hits = indexer.search(searchContext);
 
-			int total = hits.getLength();
-
-			articleAndFolderSearchContainer.setTotal(total);
+			articleAndFolderSearchContainer.setTotal(hits.getLength());
 
 			List<Object> results = new ArrayList<>();
 
@@ -1598,9 +1596,7 @@ public class JournalDisplayContext {
 
 		Hits hits = indexer.search(searchContext);
 
-		int total = hits.getLength();
-
-		articleVersionsSearchContainer.setTotal(total);
+		articleVersionsSearchContainer.setTotal(hits.getLength());
 
 		List<JournalArticle> results = new ArrayList<>();
 

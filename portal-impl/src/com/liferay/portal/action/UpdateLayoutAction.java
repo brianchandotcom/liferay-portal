@@ -266,8 +266,10 @@ public class UpdateLayoutAction extends JSONAction {
 		// Pass in the portlet id because the portlet id may be the instance id.
 		// Namespace the request if necessary. See LEP-4644.
 
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortalUtil.getCompanyId(httpServletRequest), portletId);
+			companyId, portletId);
 
 		DynamicServletRequest dynamicRequest = null;
 

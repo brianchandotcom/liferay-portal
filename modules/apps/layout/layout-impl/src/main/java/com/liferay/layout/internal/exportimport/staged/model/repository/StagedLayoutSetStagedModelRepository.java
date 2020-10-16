@@ -199,9 +199,10 @@ public class StagedLayoutSetStagedModelRepository
 	public StagedLayoutSet getStagedModel(long layoutSetId)
 		throws PortalException {
 
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(layoutSetId);
+
 		return ModelAdapterUtil.adapt(
-			_layoutSetLocalService.getLayoutSet(layoutSetId), LayoutSet.class,
-			StagedLayoutSet.class);
+			layoutSet, LayoutSet.class, StagedLayoutSet.class);
 	}
 
 	public StagedLayoutSet saveStagedModel(StagedLayoutSet stagedLayoutSet)

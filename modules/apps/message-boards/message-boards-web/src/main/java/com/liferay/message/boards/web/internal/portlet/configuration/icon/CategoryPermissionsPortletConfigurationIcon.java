@@ -104,9 +104,10 @@ public class CategoryPermissionsPortletConfigurationIcon
 			themeDisplay.getPermissionChecker();
 
 		try {
+			MBCategory category = ActionUtil.getCategory(portletRequest);
+
 			if (!_categoryModelResourcePermission.contains(
-					permissionChecker, ActionUtil.getCategory(portletRequest),
-					ActionKeys.PERMISSIONS)) {
+					permissionChecker, category, ActionKeys.PERMISSIONS)) {
 
 				return false;
 			}

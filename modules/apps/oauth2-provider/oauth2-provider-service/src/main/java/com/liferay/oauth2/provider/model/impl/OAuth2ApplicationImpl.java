@@ -67,9 +67,7 @@ public class OAuth2ApplicationImpl extends OAuth2ApplicationBaseImpl {
 
 	@Override
 	public void setFeaturesList(List<String> featuresList) {
-		String features = StringUtil.merge(featuresList);
-
-		setFeatures(features);
+		setFeatures(StringUtil.merge(featuresList));
 	}
 
 	@Override

@@ -2917,9 +2917,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		pmdExtension.setRuleSetConfig(textResourceFactory.fromString(ruleSet));
 
-		List<String> ruleSets = Collections.emptyList();
-
-		pmdExtension.setRuleSets(ruleSets);
+		pmdExtension.setRuleSets(Collections.emptyList());
 	}
 
 	private void _configureProject(Project project) {

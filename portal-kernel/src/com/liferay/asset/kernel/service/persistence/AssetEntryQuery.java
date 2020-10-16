@@ -413,7 +413,9 @@ public class AssetEntryQuery {
 	}
 
 	public void setClassName(String className) {
-		_classNameIds = new long[] {PortalUtil.getClassNameId(className)};
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		_classNameIds = new long[] {classNameId};
 
 		_toString = null;
 	}

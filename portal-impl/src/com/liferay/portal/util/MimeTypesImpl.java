@@ -124,7 +124,9 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		try (TikaInputStream tikaInputStream = TikaInputStream.get(
 				new CloseShieldInputStream(inputStream))) {
 
-			contentType = getCustomContentType(FileUtil.getExtension(fileName));
+			String extension = FileUtil.getExtension(fileName);
+
+			contentType = getCustomContentType(extension);
 
 			if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
 				Metadata metadata = new Metadata();
@@ -170,7 +172,9 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		String contentType = null;
 
 		try {
-			contentType = getCustomContentType(FileUtil.getExtension(fileName));
+			String extension = FileUtil.getExtension(fileName);
+
+			contentType = getCustomContentType(extension);
 
 			if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
 				Metadata metadata = new Metadata();

@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -237,9 +236,7 @@ public class SyncDLObjectLocalServiceImpl
 	public long getLatestModifiedTime() {
 		DynamicQuery dynamicQuery = dynamicQuery();
 
-		Projection projection = ProjectionFactoryUtil.max("modifiedTime");
-
-		dynamicQuery.setProjection(projection);
+		dynamicQuery.setProjection(ProjectionFactoryUtil.max("modifiedTime"));
 
 		List<Long> modifiedTimes = syncDLObjectPersistence.findWithDynamicQuery(
 			dynamicQuery);

@@ -121,9 +121,9 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 	protected void addSuccessMessage(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		SessionMessages.add(
-			actionRequest, "requestProcessed",
-			getSuccessMessage(actionRequest));
+		String successMessage = getSuccessMessage(actionRequest);
+
+		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
 	}
 
 	protected ResourceBundle getResourceBundle(ActionRequest actionRequest) {
@@ -151,8 +151,10 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 	}
 
 	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
 		return LanguageUtil.get(
-			getResourceBundle(actionRequest), "workflow-updated-successfully");
+			resourceBundle, "workflow-updated-successfully");
 	}
 
 	protected String getTitle(

@@ -68,8 +68,10 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 		_checkMissingReference(fileName, content);
 
+		String className = JavaSourceUtil.getClassName(fileName);
+
 		String moduleSuperClassContent = _getModuleSuperClassContent(
-			content, JavaSourceUtil.getClassName(fileName), packageName);
+			content, className, packageName);
 
 		content = _formatDuplicateReferenceMethods(
 			fileName, content, moduleSuperClassContent);

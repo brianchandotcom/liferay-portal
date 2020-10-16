@@ -165,8 +165,10 @@ public class DDLRecordSetLocalServiceImpl
 
 		// Record set version
 
+		long ddmStructureVersionId = getDDMStructureVersionId(ddmStructureId);
+
 		addRecordSetVersion(
-			getDDMStructureVersionId(ddmStructureId), user, recordSet,
+			ddmStructureVersionId, user, recordSet,
 			DDLRecordSetConstants.VERSION_DEFAULT, serviceContext);
 
 		// Dynamic data mapping structure link

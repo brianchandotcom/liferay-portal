@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.management.jmx;
 import com.liferay.portal.kernel.jmx.model.MBean;
 import com.liferay.portal.kernel.management.ManageActionException;
 
+import javax.management.MBeanInfo;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
@@ -36,7 +37,9 @@ public class LoadMBeanInfoAction extends BaseJMXManageAction<MBean> {
 
 			MBeanServer mBeanServer = getMBeanServer();
 
-			return new MBean(objectName, mBeanServer.getMBeanInfo(objectName));
+			MBeanInfo mBeanInfo = mBeanServer.getMBeanInfo(objectName);
+
+			return new MBean(objectName, mBeanInfo);
 		}
 		catch (Exception exception) {
 			throw new ManageActionException(exception);

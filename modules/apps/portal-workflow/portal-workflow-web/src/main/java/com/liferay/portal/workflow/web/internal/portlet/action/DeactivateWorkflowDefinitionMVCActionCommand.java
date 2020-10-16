@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
+import java.util.ResourceBundle;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -67,9 +69,10 @@ public class DeactivateWorkflowDefinitionMVCActionCommand
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
 		return LanguageUtil.get(
-			getResourceBundle(actionRequest),
-			"workflow-unpublished-successfully");
+			resourceBundle, "workflow-unpublished-successfully");
 	}
 
 }

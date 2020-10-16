@@ -85,10 +85,9 @@ public class PageAttachmentWikiUploadFileEntryHandler
 			_PARAMETER_NAME);
 		String[] mimeTypes = ParamUtil.getParameterValues(
 			uploadPortletRequest, "mimeTypes");
+		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
 
-		_validateFile(
-			fileName, contentType, mimeTypes,
-			uploadPortletRequest.getSize(_PARAMETER_NAME));
+		_validateFile(fileName, contentType, mimeTypes, size);
 
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				_PARAMETER_NAME)) {

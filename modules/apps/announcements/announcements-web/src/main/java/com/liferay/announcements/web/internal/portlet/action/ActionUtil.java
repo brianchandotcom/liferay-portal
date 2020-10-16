@@ -45,7 +45,10 @@ public class ActionUtil {
 	public static AnnouncementsEntry getEntry(PortletRequest portletRequest)
 		throws PortalException {
 
-		return getEntry(PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		return getEntry(httpServletRequest);
 	}
 
 }

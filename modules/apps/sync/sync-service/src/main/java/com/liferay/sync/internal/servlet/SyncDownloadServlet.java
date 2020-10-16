@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -119,10 +118,8 @@ public class SyncDownloadServlet extends HttpServlet {
 				}
 			}
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
 			String path = _http.fixPath(httpServletRequest.getPathInfo());
 
@@ -435,9 +432,8 @@ public class SyncDownloadServlet extends HttpServlet {
 		String type = image.getType();
 
 		if (!type.equals(ImageConstants.TYPE_NOT_AVAILABLE)) {
-			String contentType = MimeTypesUtil.getExtensionContentType(type);
-
-			httpServletResponse.setContentType(contentType);
+			httpServletResponse.setContentType(
+				MimeTypesUtil.getExtensionContentType(type));
 		}
 
 		ServletResponseUtil.write(httpServletResponse, image.getTextObj());

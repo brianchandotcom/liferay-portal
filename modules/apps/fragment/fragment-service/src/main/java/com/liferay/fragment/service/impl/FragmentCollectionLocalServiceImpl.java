@@ -168,8 +168,11 @@ public class FragmentCollectionLocalServiceImpl
 			long fragmentCollectionId)
 		throws PortalException {
 
+		FragmentCollection fragmentCollection = getFragmentCollection(
+			fragmentCollectionId);
+
 		return fragmentCollectionLocalService.deleteFragmentCollection(
-			getFragmentCollection(fragmentCollectionId));
+			fragmentCollection);
 	}
 
 	@Override

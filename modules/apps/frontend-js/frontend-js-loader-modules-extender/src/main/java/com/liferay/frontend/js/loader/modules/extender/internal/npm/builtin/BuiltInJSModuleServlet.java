@@ -67,8 +67,9 @@ public class BuiltInJSModuleServlet extends BaseBuiltInJSModuleServlet {
 			return null;
 		}
 
-		return new ResourceDescriptor(
-			jsPackage, ModuleNameUtil.getPackagePath(identifier));
+		String packagePath = ModuleNameUtil.getPackagePath(identifier);
+
+		return new ResourceDescriptor(jsPackage, packagePath);
 	}
 
 	private static final long serialVersionUID = -8753225208295935344L;

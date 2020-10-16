@@ -169,10 +169,10 @@ public class UpgradeLayoutType extends UpgradeProcess {
 					String typeSettings = rs.getString("typeSettings");
 
 					String portletId = getPortletId();
+					String journalArticleId = getJournalArticleId(typeSettings);
 
 					addPortletPreferences(
-						companyId, groupId, plid, portletId,
-						getJournalArticleId(typeSettings));
+						companyId, groupId, plid, portletId, journalArticleId);
 
 					updateLayout(plid, portletId);
 				}

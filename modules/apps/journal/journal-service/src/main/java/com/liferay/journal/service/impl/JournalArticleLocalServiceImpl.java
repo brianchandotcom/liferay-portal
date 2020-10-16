@@ -432,8 +432,6 @@ public class JournalArticleLocalServiceImpl
 		Map<String, String> urlTitleMap = _getURLTitleMap(
 			groupId, resourcePrimKey, friendlyURLMap, titleMap);
 
-		String urlTitle = urlTitleMap.get(LocaleUtil.toLanguageId(locale));
-
 		article.setUuid(serviceContext.getUuid());
 		article.setResourcePrimKey(resourcePrimKey);
 		article.setGroupId(groupId);
@@ -446,7 +444,7 @@ public class JournalArticleLocalServiceImpl
 		article.setTreePath(article.buildTreePath());
 		article.setArticleId(articleId);
 		article.setVersion(version);
-		article.setUrlTitle(urlTitle);
+		article.setUrlTitle(urlTitleMap.get(LocaleUtil.toLanguageId(locale)));
 
 		content = format(user, groupId, article, content);
 		content = _replaceTempImages(article, content);
@@ -1620,8 +1618,10 @@ public class JournalArticleLocalServiceImpl
 	public void deleteArticles(long groupId, String className, long classPK)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		List<JournalArticle> articles = journalArticlePersistence.findByG_C_C(
-			groupId, classNameLocalService.getClassNameId(className), classPK);
+			groupId, classNameId, classPK);
 
 		for (JournalArticle article : articles) {
 			journalArticleLocalService.deleteArticle(article, null, null);
@@ -2118,8 +2118,10 @@ public class JournalArticleLocalServiceImpl
 			long groupId, String className, long classPK)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		List<JournalArticle> articles = journalArticlePersistence.findByG_C_C(
-			groupId, classNameLocalService.getClassNameId(className), classPK);
+			groupId, classNameId, classPK);
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
@@ -3390,9 +3392,11 @@ public class JournalArticleLocalServiceImpl
 			long groupId, String className, long classPK)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		List<JournalArticle> articles = journalArticlePersistence.findByG_C_C(
-			groupId, classNameLocalService.getClassNameId(className), classPK,
-			0, 1, new ArticleVersionComparator());
+			groupId, classNameId, classPK, 0, 1,
+			new ArticleVersionComparator());
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
@@ -5326,8 +5330,10 @@ public class JournalArticleLocalServiceImpl
 				indexableActionableDynamicQuery.setCompanyId(
 					article.getCompanyId());
 
-				indexableActionableDynamicQuery.addDocuments(
-					indexer.getDocument(article));
+				com.liferay.portal.kernel.search.Document document =
+					indexer.getDocument(article);
+
+				indexableActionableDynamicQuery.addDocuments(document);
 			});
 
 		indexableActionableDynamicQuery.performActions();
@@ -6719,9 +6725,10 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		JournalArticle article = getArticle(classPK);
+
 		return journalArticleLocalService.updateStatus(
-			userId, getArticle(classPK), status, null, serviceContext,
-			workflowContext);
+			userId, article, status, null, serviceContext, workflowContext);
 	}
 
 	/**

@@ -55,10 +55,12 @@ public class MicroblogsEntryAssetRendererFactory
 			long classPK, int type)
 		throws PortalException {
 
+		MicroblogsEntry microblogsEntry =
+			_microblogsEntryLocalService.getMicroblogsEntry(classPK);
+
 		MicroblogsEntryAssetRenderer microblogsEntryAssetRenderer =
 			new MicroblogsEntryAssetRenderer(
-				_microblogsEntryLocalService.getMicroblogsEntry(classPK),
-				_microblogsEntryModelResourcePermission);
+				microblogsEntry, _microblogsEntryModelResourcePermission);
 
 		microblogsEntryAssetRenderer.setServletContext(_servletContext);
 

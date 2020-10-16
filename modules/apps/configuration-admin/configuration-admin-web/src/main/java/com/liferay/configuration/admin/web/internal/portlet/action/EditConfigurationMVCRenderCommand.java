@@ -15,6 +15,7 @@
 package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.configuration.admin.menu.ConfigurationMenuItem;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
@@ -136,10 +137,13 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY,
 				configurationEntry);
 
+			ConfigurationFormRenderer configurationFormRenderer =
+				_configurationFormRendererRetriever.
+					getConfigurationFormRenderer(pid);
+
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_FORM_RENDERER,
-				_configurationFormRendererRetriever.
-					getConfigurationFormRenderer(pid));
+				configurationFormRenderer);
 
 			List<ConfigurationMenuItem> configurationMenuItems =
 				_configurationMenuItemsServiceTrackerMap.getService(pid);

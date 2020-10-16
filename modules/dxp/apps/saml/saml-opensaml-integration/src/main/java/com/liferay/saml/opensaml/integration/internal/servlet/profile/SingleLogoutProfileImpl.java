@@ -909,9 +909,7 @@ public class SingleLogoutProfileImpl
 
 		StatusCode statusCode = OpenSamlUtil.buildStatusCode(statusCodeURI);
 
-		Status status = OpenSamlUtil.buildStatus(statusCode);
-
-		logoutResponse.setStatus(status);
+		logoutResponse.setStatus(OpenSamlUtil.buildStatus(statusCode));
 
 		logoutResponse.setVersion(SAMLVersion.VERSION_20);
 
@@ -1169,9 +1167,7 @@ public class SingleLogoutProfileImpl
 
 		StatusCode statusCode = OpenSamlUtil.buildStatusCode(statusCodeURI);
 
-		Status status = OpenSamlUtil.buildStatus(statusCode);
-
-		logoutResponse.setStatus(status);
+		logoutResponse.setStatus(OpenSamlUtil.buildStatus(statusCode));
 
 		logoutResponse.setVersion(SAMLVersion.VERSION_20);
 

@@ -440,8 +440,10 @@ public class SessionErrors {
 	private static HttpSession _getPortalSession(
 		PortletRequest portletRequest) {
 
-		return _getPortalSession(
-			PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		return _getPortalSession(httpServletRequest);
 	}
 
 	private static final String _CLASS_NAME = SessionErrors.class.getName();

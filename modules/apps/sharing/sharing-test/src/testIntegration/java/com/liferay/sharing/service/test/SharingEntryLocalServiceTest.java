@@ -1196,9 +1196,8 @@ public class SharingEntryLocalServiceTest {
 	private void _expireSharingEntry(SharingEntry sharingEntry) {
 		Instant instant = Instant.now();
 
-		Date expirationDate = Date.from(instant.minus(1, ChronoUnit.DAYS));
-
-		sharingEntry.setExpirationDate(expirationDate);
+		sharingEntry.setExpirationDate(
+			Date.from(instant.minus(1, ChronoUnit.DAYS)));
 
 		_sharingEntryLocalService.updateSharingEntry(sharingEntry);
 	}

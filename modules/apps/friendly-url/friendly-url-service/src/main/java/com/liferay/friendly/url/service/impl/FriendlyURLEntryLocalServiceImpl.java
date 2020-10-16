@@ -62,9 +62,10 @@ public class FriendlyURLEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
 		return addFriendlyURLEntry(
-			groupId, classNameLocalService.getClassNameId(clazz), classPK,
-			urlTitle, serviceContext);
+			groupId, classNameId, classPK, urlTitle, serviceContext);
 	}
 
 	@Override
@@ -294,8 +295,9 @@ public class FriendlyURLEntryLocalServiceImpl
 	public FriendlyURLEntry fetchFriendlyURLEntry(
 		long groupId, Class<?> clazz, String urlTitle) {
 
-		return fetchFriendlyURLEntry(
-			groupId, classNameLocalService.getClassNameId(clazz), urlTitle);
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		return fetchFriendlyURLEntry(groupId, classNameId, urlTitle);
 	}
 
 	@Override
@@ -348,8 +350,9 @@ public class FriendlyURLEntryLocalServiceImpl
 			Class<?> clazz, long classPK)
 		throws PortalException {
 
-		return getMainFriendlyURLEntry(
-			classNameLocalService.getClassNameId(clazz), classPK);
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		return getMainFriendlyURLEntry(classNameId, classPK);
 	}
 
 	@Override

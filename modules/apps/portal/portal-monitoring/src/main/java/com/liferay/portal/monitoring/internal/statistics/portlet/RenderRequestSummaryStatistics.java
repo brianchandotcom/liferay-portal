@@ -62,16 +62,20 @@ public class RenderRequestSummaryStatistics
 	public long getAverageTimeByCompany(long companyId)
 		throws MonitoringException {
 
-		return getAverageTimeByCompany(
-			_serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getAverageTimeByCompany(companyStatistics);
 	}
 
 	@Override
 	public long getAverageTimeByCompany(String webId)
 		throws MonitoringException {
 
-		return getAverageTimeByCompany(
-			_serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getAverageTimeByCompany(companyStatistics);
 	}
 
 	@Override
@@ -140,16 +144,20 @@ public class RenderRequestSummaryStatistics
 	public long getErrorCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getErrorCountByCompany(
-			_serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getErrorCountByCompany(companyStatistics);
 	}
 
 	@Override
 	public long getErrorCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getErrorCountByCompany(
-			_serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getErrorCountByCompany(companyStatistics);
 	}
 
 	@Override
@@ -171,16 +179,20 @@ public class RenderRequestSummaryStatistics
 	public long getErrorCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return getErrorCountByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getErrorCountByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
 	public long getErrorCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return getErrorCountByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getErrorCountByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
@@ -241,16 +253,20 @@ public class RenderRequestSummaryStatistics
 	public long getMaxTimeByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return getMaxTimeByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getMaxTimeByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
 	public long getMaxTimeByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return getMaxTimeByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getMaxTimeByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
@@ -311,16 +327,20 @@ public class RenderRequestSummaryStatistics
 	public long getMinTimeByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return getMinTimeByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getMinTimeByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
 	public long getMinTimeByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return getMinTimeByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getMinTimeByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
@@ -340,16 +360,20 @@ public class RenderRequestSummaryStatistics
 	public long getRequestCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestCountByCompany(
-			_serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getRequestCountByCompany(companyStatistics);
 	}
 
 	@Override
 	public long getRequestCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestCountByCompany(
-			_serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getRequestCountByCompany(companyStatistics);
 	}
 
 	@Override
@@ -372,16 +396,20 @@ public class RenderRequestSummaryStatistics
 	public long getRequestCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return getRequestCountByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getRequestCountByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
 	public long getRequestCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return getRequestCountByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getRequestCountByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
@@ -401,16 +429,20 @@ public class RenderRequestSummaryStatistics
 	public long getSuccessCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getSuccessCountByCompany(
-			_serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getSuccessCountByCompany(companyStatistics);
 	}
 
 	@Override
 	public long getSuccessCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getSuccessCountByCompany(
-			_serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getSuccessCountByCompany(companyStatistics);
 	}
 
 	@Override
@@ -433,16 +465,20 @@ public class RenderRequestSummaryStatistics
 	public long getSuccessCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return getSuccessCountByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getSuccessCountByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
 	public long getSuccessCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return getSuccessCountByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getSuccessCountByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
@@ -462,16 +498,20 @@ public class RenderRequestSummaryStatistics
 	public long getTimeoutCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getTimeoutCountByCompany(
-			_serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getTimeoutCountByCompany(companyStatistics);
 	}
 
 	@Override
 	public long getTimeoutCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getTimeoutCountByCompany(
-			_serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getTimeoutCountByCompany(companyStatistics);
 	}
 
 	@Override
@@ -494,16 +534,20 @@ public class RenderRequestSummaryStatistics
 	public long getTimeoutCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return getTimeoutCountByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(companyId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return getTimeoutCountByPortlet(portletId, companyStatistics);
 	}
 
 	@Override
 	public long getTimeoutCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return getTimeoutCountByPortlet(
-			portletId, _serverStatistics.getCompanyStatistics(webId));
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return getTimeoutCountByPortlet(portletId, companyStatistics);
 	}
 
 	protected long getAverageTimeByCompany(

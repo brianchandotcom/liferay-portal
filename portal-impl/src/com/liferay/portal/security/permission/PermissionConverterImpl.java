@@ -49,8 +49,9 @@ public class PermissionConverterImpl implements PermissionConverter {
 			long roleId, PermissionConversionFilter permissionConversionFilter)
 		throws PortalException {
 
-		return convertPermissions(
-			RoleLocalServiceUtil.getRole(roleId), permissionConversionFilter);
+		Role role = RoleLocalServiceUtil.getRole(roleId);
+
+		return convertPermissions(role, permissionConversionFilter);
 	}
 
 	@Override

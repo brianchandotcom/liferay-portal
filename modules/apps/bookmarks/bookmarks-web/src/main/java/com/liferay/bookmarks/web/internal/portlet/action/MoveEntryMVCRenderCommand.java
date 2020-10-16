@@ -55,9 +55,9 @@ public class MoveEntryMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				BookmarksWebKeys.BOOKMARKS_ENTRIES, entries);
 
-			renderRequest.setAttribute(
-				BookmarksWebKeys.BOOKMARKS_ENTRY,
-				ActionUtil.getEntry(renderRequest));
+			BookmarksEntry entry = ActionUtil.getEntry(renderRequest);
+
+			renderRequest.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, entry);
 
 			List<BookmarksFolder> folders = ActionUtil.getFolders(
 				renderRequest);

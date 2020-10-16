@@ -29,9 +29,8 @@ public class DefaultFilterFactoryImpl implements FilterFactory {
 	public Filter create(HttpServletRequest httpServletRequest) {
 		DefaultFilterImpl defaultFilterImpl = new DefaultFilterImpl();
 
-		String keywords = ParamUtil.getString(httpServletRequest, "search");
-
-		defaultFilterImpl.setKeywords(keywords);
+		defaultFilterImpl.setKeywords(
+			ParamUtil.getString(httpServletRequest, "search"));
 
 		return defaultFilterImpl;
 	}

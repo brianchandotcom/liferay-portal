@@ -45,8 +45,10 @@ public class RepositoryUtil {
 			long repositoryId)
 		throws PortalException {
 
-		return getRepositoryEventTrigger(
-			RepositoryProviderUtil.getLocalRepository(repositoryId));
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(repositoryId);
+
+		return getRepositoryEventTrigger(localRepository);
 	}
 
 	public static boolean isExternalRepository(long repositoryId) {

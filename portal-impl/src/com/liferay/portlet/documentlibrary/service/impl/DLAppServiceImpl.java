@@ -681,8 +681,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = repositoryProvider.getFileEntryRepository(
 			fileEntryId);
 
-		dlAppHelperLocalService.deleteFileEntry(
-			repository.getFileEntry(fileEntryId));
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
 		repository.deleteFileEntry(fileEntryId);
 	}
@@ -3144,8 +3145,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			dlAppHelperLocalService.deleteFileEntry(
-				fromRepository.getFileEntry(oldFileEntryId));
+			FileEntry fileEntry = fromRepository.getFileEntry(oldFileEntryId);
+
+			dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
 			fromRepository.deleteFileEntry(oldFileEntryId);
 		}

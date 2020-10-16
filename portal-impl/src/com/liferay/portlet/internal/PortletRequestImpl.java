@@ -1191,21 +1191,22 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 				PortletQNameUtil.getPublicRenderParameterName(
 					publicRenderParameter.getQName());
 
+			String ignoreKey = PublicRenderParameterConfiguration.getIgnoreKey(
+				publicRenderParameterName);
+
 			boolean ignoreValue = GetterUtil.getBoolean(
-				preferences.getValue(
-					PublicRenderParameterConfiguration.getIgnoreKey(
-						publicRenderParameterName),
-					null));
+				preferences.getValue(ignoreKey, null));
 
 			if (ignoreValue) {
 				continue;
 			}
 
+			String mappingKey =
+				PublicRenderParameterConfiguration.getMappingKey(
+					publicRenderParameterName);
+
 			String mappingValue = GetterUtil.getString(
-				preferences.getValue(
-					PublicRenderParameterConfiguration.getMappingKey(
-						publicRenderParameterName),
-					null));
+				preferences.getValue(mappingKey, null));
 
 			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)dynamicRequest.getRequest();

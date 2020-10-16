@@ -58,10 +58,11 @@ public class UpgradeWikiPageResource extends UpgradeProcess {
 			while (rs.next()) {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
 
+				long groupId = getGroupId(resourcePrimKey);
+
 				runSQL(
 					StringBundler.concat(
-						"update WikiPageResource set groupId = ",
-						getGroupId(resourcePrimKey),
+						"update WikiPageResource set groupId = ", groupId,
 						" where resourcePrimKey = ", resourcePrimKey));
 			}
 		}

@@ -72,10 +72,10 @@ public class AssetVocabularyPermission {
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker,
-			AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId),
-			actionId);
+		AssetVocabulary vocabulary =
+			AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId);
+
+		return contains(permissionChecker, vocabulary, actionId);
 	}
 
 }

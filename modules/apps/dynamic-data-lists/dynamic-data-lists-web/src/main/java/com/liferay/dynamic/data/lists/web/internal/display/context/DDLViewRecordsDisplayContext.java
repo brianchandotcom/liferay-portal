@@ -350,11 +350,9 @@ public class DDLViewRecordsDisplayContext {
 				new EmptyOnClickRowChecker(_liferayPortletResponse));
 		}
 
-		OrderByComparator<DDLRecord> orderByComparator =
-			getDDLRecordOrderByComparator(getOrderByCol(), getOrderByType());
-
 		recordSearch.setOrderByCol(getOrderByCol());
-		recordSearch.setOrderByComparator(orderByComparator);
+		recordSearch.setOrderByComparator(
+			getDDLRecordOrderByComparator(getOrderByCol(), getOrderByType()));
 		recordSearch.setOrderByType(getOrderByType());
 
 		if (recordSearch.isSearch()) {

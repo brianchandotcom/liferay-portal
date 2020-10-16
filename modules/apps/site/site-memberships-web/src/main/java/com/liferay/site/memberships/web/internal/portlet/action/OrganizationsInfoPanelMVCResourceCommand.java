@@ -14,10 +14,13 @@
 
 package com.liferay.site.memberships.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 import com.liferay.site.memberships.web.internal.constants.SiteMembershipWebKeys;
+
+import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -43,9 +46,11 @@ public class OrganizationsInfoPanelMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		List<Organization> organizations = ActionUtil.getOrganizations(
+			resourceRequest);
+
 		resourceRequest.setAttribute(
-			SiteMembershipWebKeys.ORGANIZATIONS,
-			ActionUtil.getOrganizations(resourceRequest));
+			SiteMembershipWebKeys.ORGANIZATIONS, organizations);
 
 		include(
 			resourceRequest, resourceResponse, "/organization_info_panel.jsp");

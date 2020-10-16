@@ -421,9 +421,7 @@ public class JournalRSSHelper {
 		for (JournalArticle article : articles) {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			String author = _portal.getUserName(article);
-
-			syndEntry.setAuthor(author);
+			syndEntry.setAuthor(_portal.getUserName(article));
 
 			SyndContent syndContent = _syndModelFactory.createSyndContent();
 

@@ -45,9 +45,9 @@ public class AssetEntryPermission {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		check(
-			permissionChecker, AssetEntryLocalServiceUtil.getEntry(entryId),
-			actionId);
+		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(entryId);
+
+		check(permissionChecker, entry, actionId);
 	}
 
 	public static void check(
@@ -87,9 +87,9 @@ public class AssetEntryPermission {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker, AssetEntryLocalServiceUtil.getEntry(entryId),
-			actionId);
+		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(entryId);
+
+		return contains(permissionChecker, entry, actionId);
 	}
 
 	public static boolean contains(

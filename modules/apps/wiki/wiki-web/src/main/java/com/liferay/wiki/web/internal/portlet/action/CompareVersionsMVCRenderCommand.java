@@ -20,6 +20,8 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.exception.NoSuchPageException;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -50,11 +52,13 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				WikiWebKeys.WIKI_NODE, ActionUtil.getNode(renderRequest));
+			WikiNode node = ActionUtil.getNode(renderRequest);
 
-			renderRequest.setAttribute(
-				WikiWebKeys.WIKI_PAGE, ActionUtil.getPage(renderRequest));
+			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
+
+			WikiPage page = ActionUtil.getPage(renderRequest);
+
+			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 
 			ActionUtil.compareVersions(
 				renderRequest, renderResponse, _wikiEngineRenderer);

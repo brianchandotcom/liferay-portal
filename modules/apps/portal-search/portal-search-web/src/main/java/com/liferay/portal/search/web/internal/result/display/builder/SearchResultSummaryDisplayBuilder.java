@@ -680,9 +680,8 @@ public class SearchResultSummaryDisplayBuilder {
 		String className, long classPK,
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		String viewURL = getSearchResultViewURL(className, classPK);
-
-		searchResultSummaryDisplayContext.setViewURL(viewURL);
+		searchResultSummaryDisplayContext.setViewURL(
+			getSearchResultViewURL(className, classPK));
 	}
 
 	protected String formatCreationDate(Date date) {

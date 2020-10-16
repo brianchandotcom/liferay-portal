@@ -82,8 +82,9 @@ public class WSDDBuilder {
 
 		SAXReader saxReader = _getSAXReader();
 
-		Document document = saxReader.read(
-			new XMLSafeReader(ToolsUtil.getContent(_fileName)));
+		String content = ToolsUtil.getContent(_fileName);
+
+		Document document = saxReader.read(new XMLSafeReader(content));
 
 		Element rootElement = document.getRootElement();
 

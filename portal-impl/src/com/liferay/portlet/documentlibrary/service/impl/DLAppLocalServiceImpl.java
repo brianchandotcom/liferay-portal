@@ -361,7 +361,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 */
 	@Override
 	public void deleteAll(long repositoryId) throws PortalException {
-		deleteRepository(getLocalRepository(repositoryId));
+		LocalRepository localRepository = getLocalRepository(repositoryId);
+
+		deleteRepository(localRepository);
 	}
 
 	@Override
@@ -394,8 +396,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository =
 			repositoryProvider.getFileEntryLocalRepository(fileEntryId);
 
-		dlAppHelperLocalService.deleteFileEntry(
-			localRepository.getFileEntry(fileEntryId));
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
 		localRepository.deleteFileEntry(fileEntryId);
 	}

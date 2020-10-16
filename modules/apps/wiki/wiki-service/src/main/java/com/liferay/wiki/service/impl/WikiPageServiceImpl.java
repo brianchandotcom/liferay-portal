@@ -802,9 +802,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		for (WikiPage page : pages) {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			String author = _portal.getUserName(page);
-
-			syndEntry.setAuthor(author);
+			syndEntry.setAuthor(_portal.getUserName(page));
 
 			SyndContent syndContent = _syndModelFactory.createSyndContent();
 

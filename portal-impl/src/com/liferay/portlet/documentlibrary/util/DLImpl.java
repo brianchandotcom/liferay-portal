@@ -455,7 +455,10 @@ public class DLImpl implements DL {
 				document.get(Field.ENTRY_CLASS_PK));
 
 			try {
-				entries.add(DLAppLocalServiceUtil.getFileEntry(fileEntryId));
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					fileEntryId);
+
+				entries.add(fileEntry);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

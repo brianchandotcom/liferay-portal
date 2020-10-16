@@ -104,9 +104,10 @@ public class FolderPermissionsPortletConfigurationIcon
 			themeDisplay.getPermissionChecker();
 
 		try {
+			BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+
 			if (!_bookmarksFolderModelResourcePermission.contains(
-					permissionChecker, ActionUtil.getFolder(portletRequest),
-					ActionKeys.PERMISSIONS)) {
+					permissionChecker, folder, ActionKeys.PERMISSIONS)) {
 
 				return false;
 			}

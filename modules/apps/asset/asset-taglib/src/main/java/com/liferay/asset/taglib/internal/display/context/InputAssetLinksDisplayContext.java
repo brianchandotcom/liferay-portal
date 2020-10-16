@@ -421,11 +421,13 @@ public class InputAssetLinksDisplayContext {
 			selectorEntryData.put("href", portletURL.toString());
 		}
 
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			_pageContext);
+
 		selectorEntryData.put(
 			"title",
 			LanguageUtil.format(
-				TagResourceBundleUtil.getResourceBundle(_pageContext),
-				"select-x", classType.getName(), false));
+				resourceBundle, "select-x", classType.getName(), false));
 
 		selectorEntryData.put("type", classType.getName());
 

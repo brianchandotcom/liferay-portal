@@ -128,9 +128,11 @@ public class DDMFormInstanceLocalServiceImpl
 			}
 		}
 
+		long structureVersionId = getStructureVersionId(ddmStructureId);
+
 		addFormInstanceVersion(
-			getStructureVersionId(ddmStructureId), user, ddmFormInstance,
-			_VERSION_DEFAULT, serviceContext);
+			structureVersionId, user, ddmFormInstance, _VERSION_DEFAULT,
+			serviceContext);
 
 		return updatedDDMFormInstance;
 	}

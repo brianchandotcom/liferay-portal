@@ -381,10 +381,8 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		User siteMemberUser = UserTestUtil.addGroupUser(
 			group, RoleConstants.SITE_MEMBER);
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(siteMemberUser);
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(siteMemberUser));
 
 		List<DDMStructure> structures = DDMStructureServiceUtil.search(
 			TestPropsValues.getCompanyId(), groupIds, _classNameId,

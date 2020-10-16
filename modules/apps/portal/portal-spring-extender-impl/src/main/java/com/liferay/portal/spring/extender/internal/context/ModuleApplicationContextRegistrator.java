@@ -29,6 +29,8 @@ import java.beans.Introspector;
 import java.util.Dictionary;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
@@ -73,9 +75,11 @@ public class ModuleApplicationContextRegistrator {
 			_configurableApplicationContext.addBeanFactoryPostProcessor(
 				beanFactory -> {
 					if (!beanFactory.containsBean("liferayDataSource")) {
+						DataSource dataSource = DataSourceUtil.getDataSource(
+							extendeeClassLoader);
+
 						beanFactory.registerSingleton(
-							"liferayDataSource",
-							DataSourceUtil.getDataSource(extendeeClassLoader));
+							"liferayDataSource", dataSource);
 					}
 				});
 

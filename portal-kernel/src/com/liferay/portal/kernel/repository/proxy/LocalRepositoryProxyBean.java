@@ -217,8 +217,9 @@ public class LocalRepositoryProxyBean
 
 	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
-		return newFileEntryProxyBean(
-			_localRepository.getFileEntry(fileEntryId));
+		FileEntry fileEntry = _localRepository.getFileEntry(fileEntryId);
+
+		return newFileEntryProxyBean(fileEntry);
 	}
 
 	@Override
@@ -240,21 +241,27 @@ public class LocalRepositoryProxyBean
 	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
-		return newFileShortcutProxyBean(
-			_localRepository.getFileShortcut(fileShortcutId));
+		FileShortcut fileShortcut = _localRepository.getFileShortcut(
+			fileShortcutId);
+
+		return newFileShortcutProxyBean(fileShortcut);
 	}
 
 	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 
-		return newFileVersionProxyBean(
-			_localRepository.getFileVersion(fileVersionId));
+		FileVersion fileVersion = _localRepository.getFileVersion(
+			fileVersionId);
+
+		return newFileVersionProxyBean(fileVersion);
 	}
 
 	@Override
 	public Folder getFolder(long folderId) throws PortalException {
-		return newFolderProxyBean(_localRepository.getFolder(folderId));
+		Folder folder = _localRepository.getFolder(folderId);
+
+		return newFolderProxyBean(folder);
 	}
 
 	@Override

@@ -90,9 +90,9 @@ public class ResourceBundleUtil {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		return _getBundle(
-			baseName, locale, classLoader,
-			registry.getSymbolicName(classLoader));
+		String symbolicName = registry.getSymbolicName(classLoader);
+
+		return _getBundle(baseName, locale, classLoader, symbolicName);
 	}
 
 	/**

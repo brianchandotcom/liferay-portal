@@ -377,9 +377,7 @@ public class InvokerPortletImpl
 				sessionResponses.put(sessionResponseId, response);
 			}
 			else if ((response.getTime() < now) && (_expCache.intValue() > 0)) {
-				String title = invokeRender(renderRequest, renderResponse);
-
-				response.setTitle(title);
+				response.setTitle(invokeRender(renderRequest, renderResponse));
 
 				response.setContent(bufferCacheServletResponse.getString());
 				response.setTime(now + (Time.SECOND * _expCache.intValue()));

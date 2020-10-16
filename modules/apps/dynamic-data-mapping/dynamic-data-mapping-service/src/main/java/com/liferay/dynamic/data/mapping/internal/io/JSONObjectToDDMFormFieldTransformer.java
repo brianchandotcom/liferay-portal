@@ -277,9 +277,7 @@ public class JSONObjectToDDMFormFieldTransformer {
 			return;
 		}
 
-		List<DDMFormField> nestedDDMFormFields = getDDMFormFields(jsonArray);
-
-		ddmFormField.setNestedDDMFormFields(nestedDDMFormFields);
+		ddmFormField.setNestedDDMFormFields(getDDMFormFields(jsonArray));
 	}
 
 	private final DDMFormFieldTypeServicesTracker

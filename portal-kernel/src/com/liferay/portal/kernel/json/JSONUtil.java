@@ -363,7 +363,9 @@ public class JSONUtil {
 		List<T> values = new ArrayList<>(jsonArray.length());
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			values.add(unsafeFunction.apply(jsonArray.getJSONObject(i)));
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			values.add(unsafeFunction.apply(jsonObject));
 		}
 
 		return values;

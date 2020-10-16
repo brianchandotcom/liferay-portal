@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -68,8 +69,9 @@ public class MySitesItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return ResourceBundleUtil.getString(
-			_portal.getResourceBundle(locale), "my-sites");
+		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
+
+		return ResourceBundleUtil.getString(resourceBundle, "my-sites");
 	}
 
 	@Override

@@ -105,9 +105,11 @@ public class UpdateOrganizationAddressesMVCActionCommand
 		long organizationId = ParamUtil.getLong(
 			actionRequest, "organizationId");
 
+		Organization organization = _organizationService.getOrganization(
+			organizationId);
+
 		OrganizationPermissionUtil.check(
-			themeDisplay.getPermissionChecker(),
-			_organizationService.getOrganization(organizationId),
+			themeDisplay.getPermissionChecker(), organization,
 			ActionKeys.UPDATE);
 
 		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);

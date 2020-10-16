@@ -55,9 +55,7 @@ public class ProxyMessageListener implements MessageListener {
 						message);
 				}
 
-				Object result = proxyRequest.execute(_manager);
-
-				proxyResponse.setResult(result);
+				proxyResponse.setResult(proxyRequest.execute(_manager));
 			}
 		}
 		catch (Exception exception) {

@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.util.Portal;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -47,9 +50,13 @@ public class GetFileMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
+
 		_getFileActionHelper.processRequest(
-			_portal.getHttpServletRequest(actionRequest),
-			_portal.getHttpServletResponse(actionResponse));
+			httpServletRequest, httpServletResponse);
 
 		actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 	}

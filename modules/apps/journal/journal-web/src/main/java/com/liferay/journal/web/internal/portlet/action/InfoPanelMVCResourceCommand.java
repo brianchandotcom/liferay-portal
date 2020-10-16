@@ -16,8 +16,12 @@ package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+
+import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -42,13 +46,13 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		resourceRequest.setAttribute(
-			JournalWebKeys.JOURNAL_ARTICLES,
-			ActionUtil.getArticles(resourceRequest));
+		List<JournalArticle> articles = ActionUtil.getArticles(resourceRequest);
 
-		resourceRequest.setAttribute(
-			JournalWebKeys.JOURNAL_FOLDERS,
-			ActionUtil.getFolders(resourceRequest));
+		resourceRequest.setAttribute(JournalWebKeys.JOURNAL_ARTICLES, articles);
+
+		List<JournalFolder> folders = ActionUtil.getFolders(resourceRequest);
+
+		resourceRequest.setAttribute(JournalWebKeys.JOURNAL_FOLDERS, folders);
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}

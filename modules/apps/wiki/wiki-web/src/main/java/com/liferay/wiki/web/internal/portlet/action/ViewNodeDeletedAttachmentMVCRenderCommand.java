@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
+import com.liferay.wiki.model.WikiNode;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -47,8 +48,9 @@ public class ViewNodeDeletedAttachmentMVCRenderCommand
 		throws PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				WikiWebKeys.WIKI_NODE, ActionUtil.getNode(renderRequest));
+			WikiNode node = ActionUtil.getNode(renderRequest);
+
+			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchNodeException ||

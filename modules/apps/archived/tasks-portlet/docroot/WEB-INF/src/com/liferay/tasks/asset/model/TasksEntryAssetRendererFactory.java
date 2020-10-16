@@ -39,8 +39,10 @@ public class TasksEntryAssetRendererFactory
 	public AssetRenderer<TasksEntry> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		return new TasksEntryAssetRenderer(
-			TasksEntryLocalServiceUtil.getTasksEntry(classPK));
+		TasksEntry tasksEntry = TasksEntryLocalServiceUtil.getTasksEntry(
+			classPK);
+
+		return new TasksEntryAssetRenderer(tasksEntry);
 	}
 
 	@Override

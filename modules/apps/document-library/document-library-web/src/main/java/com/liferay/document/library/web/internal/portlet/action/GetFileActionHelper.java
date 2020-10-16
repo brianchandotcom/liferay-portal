@@ -262,8 +262,9 @@ public class GetFileActionHelper {
 
 		String redirect = PortalUtil.getPathMain() + "/portal/login";
 
-		redirect = HttpUtil.addParameter(
-			redirect, "redirect", PortalUtil.getCurrentURL(httpServletRequest));
+		String currentURL = PortalUtil.getCurrentURL(httpServletRequest);
+
+		redirect = HttpUtil.addParameter(redirect, "redirect", currentURL);
 
 		httpServletResponse.sendRedirect(redirect);
 	}

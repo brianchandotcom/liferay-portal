@@ -52,9 +52,11 @@ public class AssetRendererSharingEntryViewRenderer
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(_JSP_PATH);
 
+			AssetRenderer assetRenderer =
+				AssetRendererSharingUtil.getAssetRenderer(sharingEntry);
+
 			httpServletRequest.setAttribute(
-				AssetRenderer.class.getName(),
-				AssetRendererSharingUtil.getAssetRenderer(sharingEntry));
+				AssetRenderer.class.getName(), assetRenderer);
 
 			httpServletRequest.setAttribute(
 				SharingEntry.class.getName(), sharingEntry);

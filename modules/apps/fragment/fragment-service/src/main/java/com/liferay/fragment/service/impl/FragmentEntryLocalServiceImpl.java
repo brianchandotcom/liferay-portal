@@ -355,8 +355,9 @@ public class FragmentEntryLocalServiceImpl
 	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)
 		throws PortalException {
 
-		return fragmentEntryLocalService.deleteFragmentEntry(
-			getFragmentEntry(fragmentEntryId));
+		FragmentEntry fragmentEntry = getFragmentEntry(fragmentEntryId);
+
+		return fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
 	}
 
 	@Override

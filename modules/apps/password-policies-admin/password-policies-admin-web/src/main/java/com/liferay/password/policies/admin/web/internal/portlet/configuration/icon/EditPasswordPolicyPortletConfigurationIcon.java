@@ -30,6 +30,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -92,8 +94,10 @@ public class EditPasswordPolicyPortletConfigurationIcon
 	}
 
 	private long _getPasswordPolicyId(PortletRequest portletRequest) {
-		return ParamUtil.getLong(
-			_portal.getHttpServletRequest(portletRequest), "passwordPolicyId");
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			portletRequest);
+
+		return ParamUtil.getLong(httpServletRequest, "passwordPolicyId");
 	}
 
 	@Reference

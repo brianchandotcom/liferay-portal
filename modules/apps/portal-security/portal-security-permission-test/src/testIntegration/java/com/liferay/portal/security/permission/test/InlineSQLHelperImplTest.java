@@ -493,10 +493,8 @@ public class InlineSQLHelperImplTest {
 	}
 
 	private void _setPermissionChecker() throws Exception {
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_user);
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
 	}
 
 	private static final String _CLASS_NAME =

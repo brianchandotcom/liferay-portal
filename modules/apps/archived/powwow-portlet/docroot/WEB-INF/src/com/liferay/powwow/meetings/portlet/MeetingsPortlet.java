@@ -352,9 +352,10 @@ public class MeetingsPortlet extends MVCPortlet {
 						providerType, options);
 			}
 
+			String portletId = PortalUtil.getPortletId(actionRequest);
+
 			PowwowMeetingServiceUtil.addPowwowMeeting(
-				themeDisplay.getScopeGroupId(),
-				PortalUtil.getPortletId(actionRequest), powwowServerId, name,
+				themeDisplay.getScopeGroupId(), portletId, powwowServerId, name,
 				description, providerType, providerTypeMetadataMap, languageId,
 				calendarBooking.getCalendarBookingId(),
 				PowwowMeetingConstants.STATUS_SCHEDULED, powwowParticipants,

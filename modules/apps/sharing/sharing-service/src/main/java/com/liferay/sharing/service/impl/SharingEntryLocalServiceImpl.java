@@ -254,7 +254,9 @@ public class SharingEntryLocalServiceImpl
 	public SharingEntry deleteSharingEntry(long sharingEntryId)
 		throws PortalException {
 
-		return deleteSharingEntry(getSharingEntry(sharingEntryId));
+		SharingEntry sharingEntry = getSharingEntry(sharingEntryId);
+
+		return deleteSharingEntry(sharingEntry);
 	}
 
 	/**

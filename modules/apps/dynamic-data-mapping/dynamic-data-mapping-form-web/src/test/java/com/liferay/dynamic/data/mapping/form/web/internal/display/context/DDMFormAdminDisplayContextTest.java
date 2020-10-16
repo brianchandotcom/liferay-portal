@@ -349,9 +349,7 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	protected void setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		Language language = mock(Language.class);
-
-		languageUtil.setLanguage(language);
+		languageUtil.setLanguage(mock(Language.class));
 	}
 
 	protected void setUpPortalUtil() {

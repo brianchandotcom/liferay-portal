@@ -88,8 +88,11 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		setLayoutIdMap(actionRequest);
 
 		try {
+			ExportImportConfiguration exportImportConfiguration =
+				getExportImportConfiguration(actionRequest);
+
 			_exportImportService.exportLayoutsAsFileInBackground(
-				getExportImportConfiguration(actionRequest));
+				exportImportConfiguration);
 
 			sendRedirect(actionRequest, actionResponse);
 		}
@@ -130,13 +133,13 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 		if (exportLayoutSettingsMap == null) {
 			long groupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+			long[] layoutIds = getLayoutIds(actionRequest);
 
 			exportLayoutSettingsMap =
 				_exportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
 						themeDisplay.getUserId(), groupId, privateLayout,
-						getLayoutIds(actionRequest),
-						actionRequest.getParameterMap(),
+						layoutIds, actionRequest.getParameterMap(),
 						themeDisplay.getLocale(), themeDisplay.getTimeZone());
 		}
 

@@ -122,9 +122,10 @@ public class AssetCategoryPermission {
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker,
-			AssetCategoryLocalServiceUtil.getCategory(categoryId), actionId);
+		AssetCategory category = AssetCategoryLocalServiceUtil.getCategory(
+			categoryId);
+
+		return contains(permissionChecker, category, actionId);
 	}
 
 	private static boolean _hasPermission(

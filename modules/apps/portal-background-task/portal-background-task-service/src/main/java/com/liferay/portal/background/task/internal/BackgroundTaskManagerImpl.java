@@ -259,8 +259,10 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	public BackgroundTask getBackgroundTask(long backgroundTaskId)
 		throws PortalException {
 
-		return new BackgroundTaskImpl(
-			_backgroundTaskLocalService.getBackgroundTask(backgroundTaskId));
+		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.getBackgroundTask(backgroundTaskId);
+
+		return new BackgroundTaskImpl(backgroundTask);
 	}
 
 	@Override

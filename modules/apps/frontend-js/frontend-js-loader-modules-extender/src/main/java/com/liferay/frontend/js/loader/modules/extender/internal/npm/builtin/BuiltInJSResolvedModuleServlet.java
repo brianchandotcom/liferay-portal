@@ -51,15 +51,17 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 	protected ResourceDescriptor getResourceDescriptor(String pathInfo) {
 		String identifier = pathInfo.substring(1);
 
-		JSPackage jsPackage = _getJSPackage(
-			ModuleNameUtil.getPackageName(identifier));
+		String packageName = ModuleNameUtil.getPackageName(identifier);
+
+		JSPackage jsPackage = _getJSPackage(packageName);
 
 		if (jsPackage == null) {
 			return null;
 		}
 
-		return new ResourceDescriptor(
-			jsPackage, ModuleNameUtil.getPackagePath(identifier));
+		String packagePath = ModuleNameUtil.getPackagePath(identifier);
+
+		return new ResourceDescriptor(jsPackage, packagePath);
 	}
 
 	private JSPackage _getJSPackage(String packageName) {

@@ -121,9 +121,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 			(cacheDataFile.lastModified() == lastModified)) {
 
 			if (cacheContentTypeFile.exists()) {
-				String contentType = FileUtil.read(cacheContentTypeFile);
-
-				httpServletResponse.setContentType(contentType);
+				httpServletResponse.setContentType(
+					FileUtil.read(cacheContentTypeFile));
 			}
 
 			return cacheDataFile;

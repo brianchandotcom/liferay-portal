@@ -248,8 +248,9 @@ public class DDMFormInstanceRecordExporterImpl
 	}
 
 	protected String getStatusMessage(int status, Locale locale) {
-		return LanguageUtil.get(
-			locale, WorkflowConstants.getStatusLabel(status));
+		String statusLabel = WorkflowConstants.getStatusLabel(status);
+
+		return LanguageUtil.get(locale, statusLabel);
 	}
 
 	protected List<DDMStructureVersion> getStructureVersions(

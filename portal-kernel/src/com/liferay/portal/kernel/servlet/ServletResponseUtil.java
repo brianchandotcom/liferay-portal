@@ -340,9 +340,8 @@ public class ServletResponseUtil {
 			BufferCacheServletResponse bufferCacheServletResponse =
 				(BufferCacheServletResponse)httpServletResponse;
 
-			ByteBuffer byteBuffer = ByteBuffer.wrap(FileUtil.getBytes(file));
-
-			bufferCacheServletResponse.setByteBuffer(byteBuffer);
+			bufferCacheServletResponse.setByteBuffer(
+				ByteBuffer.wrap(FileUtil.getBytes(file)));
 		}
 		else {
 			FileInputStream fileInputStream = new FileInputStream(file);

@@ -106,8 +106,9 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 			long userId = PortalUtil.getUserId(httpServletRequest);
 
 			if (userId == 0) {
-				userId = UserLocalServiceUtil.getDefaultUserId(
-					PortalUtil.getCompanyId(httpServletRequest));
+				long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
+				userId = UserLocalServiceUtil.getDefaultUserId(companyId);
 			}
 
 			String keywords = GetterUtil.getString(

@@ -447,9 +447,7 @@ public class CommerceBOMAdminDisplayContext {
 
 		Hits hits = indexer.search(searchContext);
 
-		int total = hits.getLength();
-
-		_searchContainer.setTotal(total);
+		_searchContainer.setTotal(hits.getLength());
 
 		List<Object> results = new ArrayList<>();
 

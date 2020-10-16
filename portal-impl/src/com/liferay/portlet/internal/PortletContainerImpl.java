@@ -505,10 +505,11 @@ public class PortletContainerImpl implements PortletContainer {
 					windowState, portletMode, portletPreferences,
 					layout.getPlid());
 
+			User user = PortalUtil.getUser(httpServletRequest);
+
 			LiferayActionResponse liferayActionResponse =
 				ActionResponseFactory.create(
-					liferayActionRequest, httpServletResponse,
-					PortalUtil.getUser(httpServletRequest), layout);
+					liferayActionRequest, httpServletResponse, user, layout);
 
 			liferayActionRequest.defineObjects(
 				portletConfig, liferayActionResponse);
@@ -676,12 +677,12 @@ public class PortletContainerImpl implements PortletContainer {
 		liferayEventRequest.setEvent(
 			serializeEvent(event, invokerPortlet.getPortletClassLoader()));
 
+		User user = PortalUtil.getUser(httpServletRequest);
 		Layout requestLayout = (Layout)httpServletRequest.getAttribute(
 			WebKeys.LAYOUT);
 
 		LiferayEventResponse liferayEventResponse = EventResponseFactory.create(
-			liferayEventRequest, httpServletResponse,
-			PortalUtil.getUser(httpServletRequest), requestLayout);
+			liferayEventRequest, httpServletResponse, user, requestLayout);
 
 		liferayEventRequest.defineObjects(portletConfig, liferayEventResponse);
 
@@ -1137,9 +1138,11 @@ public class PortletContainerImpl implements PortletContainer {
 			QName qName = supportedPublicRenderParameterMap.get(key);
 
 			if (qName != null) {
+				String publicRenderParameterName =
+					PortletQNameUtil.getPublicRenderParameterName(qName);
+
 				publicRenderParameterMap.put(
-					PortletQNameUtil.getPublicRenderParameterName(qName),
-					entry.getValue());
+					publicRenderParameterName, entry.getValue());
 
 				continue;
 			}

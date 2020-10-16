@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -119,9 +120,10 @@ public class ServerManagerServlet extends HttpServlet {
 
 	protected boolean isValidUser(HttpServletRequest httpServletRequest) {
 		try {
+			User user = _portal.getUser(httpServletRequest);
+
 			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(
-					_portal.getUser(httpServletRequest));
+				PermissionCheckerFactoryUtil.create(user);
 
 			if (permissionChecker.isOmniadmin()) {
 				return true;

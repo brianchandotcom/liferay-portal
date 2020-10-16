@@ -338,9 +338,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		Condition condition = new Condition(
 			name, description, script, scriptLanguage, scriptRequiredContexts);
 
-		String metadata = conditionElement.elementTextTrim("metadata");
-
-		condition.setMetadata(metadata);
+		condition.setMetadata(conditionElement.elementTextTrim("metadata"));
 
 		Element actionsElement = conditionElement.element("actions");
 
@@ -376,9 +374,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Fork fork = new Fork(name, description);
 
-		String metadata = forkElement.elementTextTrim("metadata");
-
-		fork.setMetadata(metadata);
+		fork.setMetadata(forkElement.elementTextTrim("metadata"));
 
 		Element actionsElement = forkElement.element("actions");
 
@@ -399,9 +395,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Join join = new Join(name, description);
 
-		String metadata = joinElement.elementTextTrim("metadata");
-
-		join.setMetadata(metadata);
+		join.setMetadata(joinElement.elementTextTrim("metadata"));
 
 		Element actionsElement = joinElement.element("actions");
 
@@ -422,9 +416,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		JoinXor joinXor = new JoinXor(name, description);
 
-		String metadata = joinXorElement.elementTextTrim("metadata");
-
-		joinXor.setMetadata(metadata);
+		joinXor.setMetadata(joinXorElement.elementTextTrim("metadata"));
 
 		Element actionsElement = joinXorElement.element("actions");
 
@@ -607,9 +599,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		State state = new State(name, description, initial);
 
-		String metadata = stateElement.elementTextTrim("metadata");
-
-		state.setMetadata(metadata);
+		state.setMetadata(stateElement.elementTextTrim("metadata"));
 
 		Element actionsElement = stateElement.element("actions");
 
@@ -630,9 +620,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Task task = new Task(name, description);
 
-		String metadata = taskElement.elementTextTrim("metadata");
-
-		task.setMetadata(metadata);
+		task.setMetadata(taskElement.elementTextTrim("metadata"));
 
 		Element actionsElement = taskElement.element("actions");
 
@@ -641,9 +629,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		Element assignmentsElement = taskElement.element("assignments");
 
 		if (assignmentsElement != null) {
-			Set<Assignment> assignments = parseAssignments(assignmentsElement);
-
-			task.setAssignments(assignments);
+			task.setAssignments(parseAssignments(assignmentsElement));
 		}
 
 		Element formsElement = taskElement.element("task-forms");
@@ -791,16 +777,12 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Element delayElement = timerElement.element("delay");
 
-		DelayDuration delayDuration = parseDelay(delayElement);
-
-		timer.setDelayDuration(delayDuration);
+		timer.setDelayDuration(parseDelay(delayElement));
 
 		if (!blocking) {
 			Element recurrenceElement = timerElement.element("recurrence");
 
-			DelayDuration recurrence = parseDelay(recurrenceElement);
-
-			timer.setRecurrence(recurrence);
+			timer.setRecurrence(parseDelay(recurrenceElement));
 		}
 
 		Element timerActions = timerElement.element("timer-actions");

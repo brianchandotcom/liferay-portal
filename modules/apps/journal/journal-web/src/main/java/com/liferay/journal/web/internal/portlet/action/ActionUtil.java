@@ -350,8 +350,10 @@ public class ActionUtil {
 	public static JournalArticle getArticle(PortletRequest portletRequest)
 		throws Exception {
 
-		JournalArticle article = getArticle(
-			PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		JournalArticle article = getArticle(httpServletRequest);
 
 		JournalUtil.addRecentArticle(portletRequest, article);
 
@@ -397,7 +399,10 @@ public class ActionUtil {
 	public static JournalFeed getFeed(PortletRequest portletRequest)
 		throws Exception {
 
-		return getFeed(PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		return getFeed(httpServletRequest);
 	}
 
 	public static JournalFolder getFolder(HttpServletRequest httpServletRequest)
@@ -428,7 +433,10 @@ public class ActionUtil {
 	public static JournalFolder getFolder(PortletRequest portletRequest)
 		throws PortalException {
 
-		return getFolder(PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		return getFolder(httpServletRequest);
 	}
 
 	public static List<JournalFolder> getFolders(ResourceRequest request)
@@ -440,7 +448,9 @@ public class ActionUtil {
 		List<JournalFolder> folders = new ArrayList<>();
 
 		for (long folderId : folderIds) {
-			folders.add(JournalFolderServiceUtil.getFolder(folderId));
+			JournalFolder folder = JournalFolderServiceUtil.getFolder(folderId);
+
+			folders.add(folder);
 		}
 
 		return folders;

@@ -486,12 +486,13 @@ public class PDFProcessorImpl
 			_generateImagesGS(fileVersion, file, false);
 
 			if (_log.isInfoEnabled()) {
+				int previewFileCount = getPreviewFileCount(fileVersion);
+
 				_log.info(
 					StringBundler.concat(
-						"Ghostscript generated ",
-						getPreviewFileCount(fileVersion), " preview pages for ",
-						fileVersion.getTitle(), " in ", stopWatch.getTime(),
-						" ms"));
+						"Ghostscript generated ", previewFileCount,
+						" preview pages for ", fileVersion.getTitle(), " in ",
+						stopWatch.getTime(), " ms"));
 			}
 		}
 

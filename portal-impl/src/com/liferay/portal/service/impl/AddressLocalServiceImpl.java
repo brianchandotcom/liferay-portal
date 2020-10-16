@@ -100,9 +100,10 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	public void deleteAddresses(
 		long companyId, String className, long classPK) {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		List<Address> addresses = addressPersistence.findByC_C_C(
-			companyId, classNameLocalService.getClassNameId(className),
-			classPK);
+			companyId, classNameId, classPK);
 
 		for (Address address : addresses) {
 			addressLocalService.deleteAddress(address);
@@ -118,9 +119,9 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	public List<Address> getAddresses(
 		long companyId, String className, long classPK) {
 
-		return addressPersistence.findByC_C_C(
-			companyId, classNameLocalService.getClassNameId(className),
-			classPK);
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return addressPersistence.findByC_C_C(companyId, classNameId, classPK);
 	}
 
 	@Override

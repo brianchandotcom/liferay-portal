@@ -1156,9 +1156,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		AuthnStatement authnStatement = OpenSamlUtil.buildAuthnStatement();
 
-		AuthnContext authnContext = getSuccessAuthnContext();
-
-		authnStatement.setAuthnContext(authnContext);
+		authnStatement.setAuthnContext(getSuccessAuthnContext());
 
 		authnStatement.setAuthnInstant(assertion.getIssueInstant());
 		authnStatement.setSessionIndex(
@@ -1281,9 +1279,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		StatusCode statusCode = OpenSamlUtil.buildStatusCode(
 			StatusCode.SUCCESS);
 
-		Status status = OpenSamlUtil.buildStatus(statusCode);
-
-		response.setStatus(status);
+		response.setStatus(OpenSamlUtil.buildStatus(statusCode));
 
 		response.setVersion(SAMLVersion.VERSION_20);
 
@@ -1508,9 +1504,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		StatusCode statusCode = OpenSamlUtil.buildStatusCode(statusURI);
 
-		Status status = OpenSamlUtil.buildStatus(statusCode);
-
-		response.setStatus(status);
+		response.setStatus(OpenSamlUtil.buildStatus(statusCode));
 
 		outboundMessageContext.setMessage(response);
 

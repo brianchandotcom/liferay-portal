@@ -169,8 +169,10 @@ public class BrowserModulesResolver {
 		for (String moduleName :
 				browserModulesResolution.getResolvedModuleNames()) {
 
+			String packageName = ModuleNameUtil.getPackageName(moduleName);
+
 			JSPackage jsPackage = _npmRegistry.getResolvedJSPackage(
-				ModuleNameUtil.getPackageName(moduleName));
+				packageName);
 
 			if (jsPackage == null) {
 				continue;

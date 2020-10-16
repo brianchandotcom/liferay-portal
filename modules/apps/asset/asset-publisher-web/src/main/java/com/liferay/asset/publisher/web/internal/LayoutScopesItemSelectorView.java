@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -68,8 +69,9 @@ public class LayoutScopesItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return ResourceBundleUtil.getString(
-			_portal.getResourceBundle(locale), "pages");
+		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
+
+		return ResourceBundleUtil.getString(resourceBundle, "pages");
 	}
 
 	@Override

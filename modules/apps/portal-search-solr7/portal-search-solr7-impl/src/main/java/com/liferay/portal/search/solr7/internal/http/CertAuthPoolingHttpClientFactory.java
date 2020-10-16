@@ -54,15 +54,12 @@ public class CertAuthPoolingHttpClientFactory
 			ConfigurableUtil.createConfigurable(
 				SolrHttpClientFactoryConfiguration.class, properties);
 
-		int defaultMaxConnectionsPerRoute =
-			_solrHttpClientFactoryConfiguration.defaultMaxConnectionsPerRoute();
+		setDefaultMaxConnectionsPerRoute(
+			_solrHttpClientFactoryConfiguration.
+				defaultMaxConnectionsPerRoute());
 
-		setDefaultMaxConnectionsPerRoute(defaultMaxConnectionsPerRoute);
-
-		int maxTotalConnections =
-			_solrHttpClientFactoryConfiguration.maxTotalConnections();
-
-		setMaxTotalConnections(maxTotalConnections);
+		setMaxTotalConnections(
+			_solrHttpClientFactoryConfiguration.maxTotalConnections());
 	}
 
 	@Override

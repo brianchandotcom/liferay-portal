@@ -64,8 +64,10 @@ public class UpgradeSharding extends UpgradeProcess {
 			sourceConnection, targetConnection, CompanyTable.TABLE_NAME,
 			CompanyTable.TABLE_COLUMNS, CompanyTable.TABLE_SQL_CREATE);
 
+		List<Long> companyIds = getCompanyIds(shardName);
+
 		String companyIdsString = ListUtil.toString(
-			getCompanyIds(shardName), StringPool.NULL, StringPool.COMMA);
+			companyIds, StringPool.NULL, StringPool.COMMA);
 
 		runSQL(
 			sourceConnection,

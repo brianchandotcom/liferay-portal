@@ -74,11 +74,14 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				classPK);
+
 		ExportImportConfigurationTrashRenderer
 			exportImportConfigurationTrashRenderer =
 				new ExportImportConfigurationTrashRenderer(
-					_exportImportConfigurationLocalService.
-						getExportImportConfiguration(classPK));
+					exportImportConfiguration);
 
 		exportImportConfigurationTrashRenderer.setServletContext(
 			servletContext);

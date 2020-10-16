@@ -244,8 +244,10 @@ public class NtlmFilter extends BaseFilter {
 			httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION));
 
 		if (authorization.startsWith("NTLM")) {
-			NtlmManager ntlmManager = getNtlmManager(
-				_portalInstancesLocalService.getCompanyId(httpServletRequest));
+			long companyId = _portalInstancesLocalService.getCompanyId(
+				httpServletRequest);
+
+			NtlmManager ntlmManager = getNtlmManager(companyId);
 
 			String portalCacheKey = getPortalCacheKey(httpServletRequest);
 

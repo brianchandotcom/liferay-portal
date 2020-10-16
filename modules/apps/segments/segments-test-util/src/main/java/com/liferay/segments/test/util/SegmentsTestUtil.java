@@ -129,9 +129,11 @@ public class SegmentsTestUtil {
 			long groupId, long segmentsEntryId, long classNameId, long classPK)
 		throws PortalException {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
 		return addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK,
-			ServiceContextTestUtil.getServiceContext(groupId));
+			segmentsEntryId, classNameId, classPK, serviceContext);
 	}
 
 	public static SegmentsExperience addSegmentsExperience(

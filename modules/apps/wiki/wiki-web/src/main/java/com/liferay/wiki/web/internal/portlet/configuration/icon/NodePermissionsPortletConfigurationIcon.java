@@ -89,9 +89,11 @@ public class NodePermissionsPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			WikiNode node = ActionUtil.getNode(portletRequest);
+
 			return _wikiNodeModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				ActionUtil.getNode(portletRequest), ActionKeys.PERMISSIONS);
+				themeDisplay.getPermissionChecker(), node,
+				ActionKeys.PERMISSIONS);
 		}
 		catch (Exception exception) {
 		}

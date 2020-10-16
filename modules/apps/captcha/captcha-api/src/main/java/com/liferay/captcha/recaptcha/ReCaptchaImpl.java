@@ -202,8 +202,10 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 	protected boolean validateChallenge(PortletRequest portletRequest)
 		throws CaptchaException {
 
-		return validateChallenge(
-			PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		return validateChallenge(httpServletRequest);
 	}
 
 	private static final String _TAGLIB_PATH = "/captcha/recaptcha.jsp";

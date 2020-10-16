@@ -181,13 +181,13 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		int salesRank = GetterUtil.getInteger(
 			itemElement.elementText("SalesRank"));
 		String media = StringPool.BLANK;
+		String availability = getAvailability(offerListingElement);
 
 		return new AmazonRankings(
 			_isbn, productName, catalog, authors, releaseDate,
 			releaseDateAsString, manufacturer, smallImageURL, mediumImageURL,
 			largeImageURL, listPrice, ourPrice, usedPrice, collectiblePrice,
-			thirdPartyNewPrice, salesRank, media,
-			getAvailability(offerListingElement));
+			thirdPartyNewPrice, salesRank, media, availability);
 	}
 
 	protected String[] getAuthors(Element itemAttributesElement) {

@@ -87,8 +87,9 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 			User user = _portal.getUser(_httpServletRequest);
 
 			if (user == null) {
-				user = _userLocalService.getDefaultUser(
-					_portal.getCompanyId(_httpServletRequest));
+				long companyId = _portal.getCompanyId(_httpServletRequest);
+
+				user = _userLocalService.getDefaultUser(companyId);
 			}
 
 			boolean guestAuthorized = false;
@@ -201,12 +202,13 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 	}
 
 	protected String getLoginURL() throws ConfigurationException {
+		long companyId = _portal.getCompanyId(_httpServletRequest);
+
 		AuthorizeScreenConfiguration authorizeScreenConfiguration =
 			_configurationProvider.getConfiguration(
 				AuthorizeScreenConfiguration.class,
 				new CompanyServiceSettingsLocator(
-					_portal.getCompanyId(_httpServletRequest),
-					AuthorizeScreenConfiguration.class.getName()));
+					companyId, AuthorizeScreenConfiguration.class.getName()));
 
 		String loginURL = authorizeScreenConfiguration.loginURL();
 

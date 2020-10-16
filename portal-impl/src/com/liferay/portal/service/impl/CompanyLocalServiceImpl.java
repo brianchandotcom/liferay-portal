@@ -1185,8 +1185,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				groupLocalService.getGroup(companyId, groupName));
 		}
 
-		deleteGroupActionableDynamicQuery.deleteGroup(
-			groupLocalService.getCompanyGroup(companyId));
+		Group companyGroup = groupLocalService.getCompanyGroup(companyId);
+
+		deleteGroupActionableDynamicQuery.deleteGroup(companyGroup);
 
 		// Layout prototype
 
@@ -1279,7 +1280,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		userActionableDynamicQuery.performActions();
 
-		userLocalService.deleteUser(userLocalService.getDefaultUser(companyId));
+		User defaultUser = userLocalService.getDefaultUser(companyId);
+
+		userLocalService.deleteUser(defaultUser);
 
 		// Role
 

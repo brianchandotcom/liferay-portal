@@ -87,7 +87,9 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		Set<AssetTag> groupsTags = new TreeSet<>(new AssetTagNameComparator());
 
 		for (long groupId : groupIds) {
-			groupsTags.addAll(getGroupTags(groupId));
+			List<AssetTag> groupTags = getGroupTags(groupId);
+
+			groupsTags.addAll(groupTags);
 		}
 
 		return new ArrayList<>(groupsTags);

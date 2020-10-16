@@ -52,8 +52,10 @@ public class DLTestUtil {
 	}
 
 	public static DLFolder addDLFolder(long groupId) throws Exception {
-		return addDLFolder(
-			groupId, ServiceContextTestUtil.getServiceContext(groupId));
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return addDLFolder(groupId, serviceContext);
 	}
 
 	public static DLFolder addDLFolder(

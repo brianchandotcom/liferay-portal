@@ -94,7 +94,9 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		TrashCapability trashCapability = documentRepository.getCapability(
 			TrashCapability.class);
 
-		trashCapability.deleteFolder(documentRepository.getFolder(classPK));
+		Folder folder = documentRepository.getFolder(classPK);
+
+		trashCapability.deleteFolder(folder);
 	}
 
 	@Override
@@ -288,8 +290,9 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		TrashCapability trashCapability = documentRepository.getCapability(
 			TrashCapability.class);
 
-		trashCapability.restoreFolderFromTrash(
-			userId, documentRepository.getFolder(classPK));
+		Folder folder = documentRepository.getFolder(classPK);
+
+		trashCapability.restoreFolderFromTrash(userId, folder);
 	}
 
 	@Override

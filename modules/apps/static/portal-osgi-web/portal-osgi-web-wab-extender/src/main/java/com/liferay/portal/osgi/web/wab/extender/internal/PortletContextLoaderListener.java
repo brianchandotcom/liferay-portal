@@ -222,10 +222,11 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		iterator.forEachRemaining(
 			beanName -> {
 				try {
+					Object bean = configurableApplicationContext.getBean(
+						beanName);
+
 					ServiceRegistration<?> serviceRegistration =
-						_registerService(
-							_bundleContext, beanName,
-							configurableApplicationContext.getBean(beanName));
+						_registerService(_bundleContext, beanName, bean);
 
 					if (serviceRegistration != null) {
 						_serviceRegistrations.add(serviceRegistration);

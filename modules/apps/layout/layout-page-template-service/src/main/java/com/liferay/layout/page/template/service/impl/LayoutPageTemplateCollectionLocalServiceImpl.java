@@ -133,8 +133,10 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			long layoutPageTemplateCollectionId)
 		throws PortalException {
 
-		return deleteLayoutPageTemplateCollection(
-			getLayoutPageTemplateCollection(layoutPageTemplateCollectionId));
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
+
+		return deleteLayoutPageTemplateCollection(layoutPageTemplateCollection);
 	}
 
 	@Override

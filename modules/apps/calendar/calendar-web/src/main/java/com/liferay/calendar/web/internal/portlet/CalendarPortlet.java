@@ -770,8 +770,9 @@ public class CalendarPortlet extends MVCPortlet {
 			return;
 		}
 
-		portletRequest.setAttribute(
-			CalendarWebKeys.CALENDAR, _calendarService.getCalendar(calendarId));
+		Calendar calendar = _calendarService.getCalendar(calendarId);
+
+		portletRequest.setAttribute(CalendarWebKeys.CALENDAR, calendar);
 	}
 
 	protected void getCalendarBooking(PortletRequest portletRequest)
@@ -790,9 +791,11 @@ public class CalendarPortlet extends MVCPortlet {
 			return;
 		}
 
+		CalendarBooking calendarBooking =
+			_calendarBookingService.getCalendarBooking(calendarBookingId);
+
 		portletRequest.setAttribute(
-			CalendarWebKeys.CALENDAR_BOOKING,
-			_calendarBookingService.getCalendarBooking(calendarBookingId));
+			CalendarWebKeys.CALENDAR_BOOKING, calendarBooking);
 	}
 
 	protected void getCalendarResource(PortletRequest portletRequest)
@@ -1051,9 +1054,7 @@ public class CalendarPortlet extends MVCPortlet {
 
 		recurrence.setFrequency(frequency);
 
-		int interval = ParamUtil.getInteger(actionRequest, "interval");
-
-		recurrence.setInterval(interval);
+		recurrence.setInterval(ParamUtil.getInteger(actionRequest, "interval"));
 
 		TimeZone timeZone = getTimeZone(actionRequest);
 
@@ -1279,8 +1280,10 @@ public class CalendarPortlet extends MVCPortlet {
 
 		long calendarId = ParamUtil.getLong(resourceRequest, "calendarId");
 
+		Calendar calendar = _calendarService.getCalendar(calendarId);
+
 		JSONObject jsonObject = CalendarUtil.toCalendarJSONObject(
-			themeDisplay, _calendarService.getCalendar(calendarId));
+			themeDisplay, calendar);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
@@ -1573,8 +1576,10 @@ public class CalendarPortlet extends MVCPortlet {
 			timeZoneId = user.getTimeZoneId();
 		}
 
+		TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+
 		java.util.Calendar nowCalendar = CalendarFactoryUtil.getCalendar(
-			TimeZone.getTimeZone(timeZoneId));
+			timeZone);
 
 		writeJSON(
 			resourceRequest, resourceResponse,

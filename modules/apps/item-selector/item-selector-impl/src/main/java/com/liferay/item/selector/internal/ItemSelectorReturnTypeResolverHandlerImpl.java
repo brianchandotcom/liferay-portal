@@ -58,11 +58,17 @@ public class ItemSelectorReturnTypeResolverHandlerImpl
 			ItemSelectorCriterion itemSelectorCriterion,
 			ItemSelectorView<?> itemSelectorView, Class<?> modelClass) {
 
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+
+		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
+			_itemSelectorViewReturnTypeProviderHandler.
+				getSupportedItemSelectorReturnTypes(itemSelectorView);
+
 		ItemSelectorReturnType itemSelectorReturnType =
 			getFirstAvailableItemSelectorReturnType(
-				itemSelectorCriterion.getDesiredItemSelectorReturnTypes(),
-				_itemSelectorViewReturnTypeProviderHandler.
-					getSupportedItemSelectorReturnTypes(itemSelectorView));
+				desiredItemSelectorReturnTypes,
+				supportedItemSelectorReturnTypes);
 
 		return getItemSelectorReturnTypeResolver(
 			itemSelectorReturnType.getClass(), modelClass);
@@ -107,9 +113,9 @@ public class ItemSelectorReturnTypeResolverHandlerImpl
 		for (ItemSelectorReturnType itemSelectorReturnType :
 				desiredItemSelectorReturnTypes) {
 
-			if (supportedItemSelectorReturnTypeNames.contains(
-					ClassUtil.getClassName(itemSelectorReturnType))) {
+			String className = ClassUtil.getClassName(itemSelectorReturnType);
 
+			if (supportedItemSelectorReturnTypeNames.contains(className)) {
 				return itemSelectorReturnType;
 			}
 		}

@@ -121,9 +121,11 @@ public class DeleteNodePortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			WikiNode node = ActionUtil.getNode(portletRequest);
+
 			if (_wikiNodeModelResourcePermission.contains(
-					themeDisplay.getPermissionChecker(),
-					ActionUtil.getNode(portletRequest), ActionKeys.DELETE)) {
+					themeDisplay.getPermissionChecker(), node,
+					ActionKeys.DELETE)) {
 
 				int count = _wikiNodeService.getNodesCount(
 					themeDisplay.getScopeGroupId());

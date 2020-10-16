@@ -67,8 +67,10 @@ public class SocialAnalyzerPlugin implements AnalyzerPlugin {
 				continue;
 			}
 
+			String packageName = getPackageName(className);
+
 			Descriptors.PackageRef packageRef = analyzer.getPackageRef(
-				getPackageName(className));
+				packageName);
 
 			packages.put(packageRef);
 		}

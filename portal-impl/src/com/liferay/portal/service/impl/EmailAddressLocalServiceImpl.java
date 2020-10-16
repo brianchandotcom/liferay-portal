@@ -90,9 +90,10 @@ public class EmailAddressLocalServiceImpl
 	public void deleteEmailAddresses(
 		long companyId, String className, long classPK) {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		List<EmailAddress> emailAddresses = emailAddressPersistence.findByC_C_C(
-			companyId, classNameLocalService.getClassNameId(className),
-			classPK);
+			companyId, classNameId, classPK);
 
 		for (EmailAddress emailAddress : emailAddresses) {
 			emailAddressLocalService.deleteEmailAddress(emailAddress);
@@ -108,9 +109,10 @@ public class EmailAddressLocalServiceImpl
 	public List<EmailAddress> getEmailAddresses(
 		long companyId, String className, long classPK) {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return emailAddressPersistence.findByC_C_C(
-			companyId, classNameLocalService.getClassNameId(className),
-			classPK);
+			companyId, classNameId, classPK);
 	}
 
 	@Override

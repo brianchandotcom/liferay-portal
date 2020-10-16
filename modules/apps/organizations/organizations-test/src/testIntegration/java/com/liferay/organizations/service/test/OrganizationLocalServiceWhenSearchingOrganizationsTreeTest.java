@@ -101,10 +101,8 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 
 		_user = UserTestUtil.addUser();
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_user);
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
 
 		userLocalService.addOrganizationUsers(
 			_organization.getOrganizationId(), new long[] {_user.getUserId()});

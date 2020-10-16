@@ -213,9 +213,8 @@ public class EditPublishConfigurationMVCActionCommand
 
 		parameterMap.put("name", new String[] {name});
 
-		String settings = JSONFactoryUtil.serialize(settingsMap);
-
-		exportImportConfiguration.setSettings(settings);
+		exportImportConfiguration.setSettings(
+			JSONFactoryUtil.serialize(settingsMap));
 
 		exportImportConfigurationLocalService.updateExportImportConfiguration(
 			exportImportConfiguration);

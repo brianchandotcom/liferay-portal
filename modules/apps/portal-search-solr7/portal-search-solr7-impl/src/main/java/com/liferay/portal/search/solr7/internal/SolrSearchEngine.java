@@ -74,9 +74,7 @@ public class SolrSearchEngine extends BaseSearchEngine {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		String vendor = MapUtil.getString(properties, "search.engine.impl");
-
-		setVendor(vendor);
+		setVendor(MapUtil.getString(properties, "search.engine.impl"));
 	}
 
 }

@@ -78,11 +78,13 @@ public class RestoreTrashPortletConfigurationIcon
 				String.valueOf(trashDisplayContext.getClassNameId()));
 			moveURL.setParameter("classPK", String.valueOf(classPK));
 
+			String containerModelClassName =
+				trashHandler.getContainerModelClassName(classPK);
+
 			moveURL.setParameter(
 				"containerModelClassNameId",
 				String.valueOf(
-					_portal.getClassNameId(
-						trashHandler.getContainerModelClassName(classPK))));
+					_portal.getClassNameId(containerModelClassName)));
 
 			moveURL.setWindowState(LiferayWindowState.POP_UP);
 

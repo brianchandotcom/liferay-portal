@@ -87,8 +87,10 @@ public class MessageListenerImpl implements MessageListener {
 
 			Company company = _getCompany(messageIdString);
 
+			long categoryId = MBMailUtil.getCategoryId(messageIdString);
+
 			MBCategory category = _mbCategoryLocalService.getCategory(
-				MBMailUtil.getCategoryId(messageIdString));
+				categoryId);
 
 			if ((category.getCompanyId() != company.getCompanyId()) &&
 				!category.isRoot()) {

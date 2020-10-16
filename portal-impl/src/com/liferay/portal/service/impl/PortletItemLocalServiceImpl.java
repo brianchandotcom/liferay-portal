@@ -64,24 +64,27 @@ public class PortletItemLocalServiceImpl
 			long groupId, String name, String portletId, String className)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return portletItemPersistence.findByG_N_P_C(
-			groupId, name, portletId,
-			classNameLocalService.getClassNameId(className));
+			groupId, name, portletId, classNameId);
 	}
 
 	@Override
 	public List<PortletItem> getPortletItems(long groupId, String className) {
-		return portletItemPersistence.findByG_C(
-			groupId, classNameLocalService.getClassNameId(className));
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return portletItemPersistence.findByG_C(groupId, classNameId);
 	}
 
 	@Override
 	public List<PortletItem> getPortletItems(
 		long groupId, String portletId, String className) {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return portletItemPersistence.findByG_P_C(
-			groupId, portletId,
-			classNameLocalService.getClassNameId(className));
+			groupId, portletId, classNameId);
 	}
 
 	@Override

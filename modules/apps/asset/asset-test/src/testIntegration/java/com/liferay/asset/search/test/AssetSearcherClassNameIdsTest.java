@@ -75,9 +75,7 @@ public class AssetSearcherClassNameIdsTest {
 
 	@Test
 	public void testAll() throws Exception {
-		User user = addUser();
-
-		UserTestUtil.setUser(user);
+		UserTestUtil.setUser(addUser());
 
 		addBlogsEntry();
 		addBookmarksEntry();
@@ -90,9 +88,7 @@ public class AssetSearcherClassNameIdsTest {
 
 	@Test
 	public void testMultiple() throws Exception {
-		User user = addUser();
-
-		UserTestUtil.setUser(user);
+		UserTestUtil.setUser(addUser());
 
 		addBlogsEntry();
 		addBookmarksEntry();
@@ -109,9 +105,7 @@ public class AssetSearcherClassNameIdsTest {
 
 	@Test
 	public void testSingle() throws Exception {
-		User user = addUser();
-
-		UserTestUtil.setUser(user);
+		UserTestUtil.setUser(addUser());
 
 		addBlogsEntry();
 		addBookmarksEntry();

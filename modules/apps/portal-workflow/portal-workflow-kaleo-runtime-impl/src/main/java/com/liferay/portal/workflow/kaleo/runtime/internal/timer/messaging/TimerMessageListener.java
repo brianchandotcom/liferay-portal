@@ -69,9 +69,10 @@ public class TimerMessageListener extends BaseMessageListener {
 					exception);
 			}
 
-			SchedulerEngineHelperUtil.delete(
-				SchedulerUtil.getGroupName(kaleoTimerInstanceTokenId),
-				StorageType.PERSISTED);
+			String groupName = SchedulerUtil.getGroupName(
+				kaleoTimerInstanceTokenId);
+
+			SchedulerEngineHelperUtil.delete(groupName, StorageType.PERSISTED);
 		}
 	}
 

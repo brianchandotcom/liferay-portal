@@ -46,6 +46,7 @@ import java.lang.reflect.Method;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -360,9 +361,11 @@ public class EditorTag extends BaseValidatorTagSupport {
 			httpServletRequest, "onInitMethod", _onInitMethod);
 
 		if (Validator.isNull(_placeholder)) {
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			_placeholder = LanguageUtil.get(
-				TagResourceBundleUtil.getResourceBundle(pageContext),
-				"write-your-content-here");
+				resourceBundle, "write-your-content-here");
 		}
 
 		setNamespacedAttribute(httpServletRequest, "placeholder", _placeholder);

@@ -480,9 +480,8 @@ public class SocialConfigurationImpl implements SocialConfiguration {
 
 		activityCounterDefinition.setEnabled(enabled);
 
-		String name = GetterUtil.getString(counterElement.elementText("name"));
-
-		activityCounterDefinition.setName(name);
+		activityCounterDefinition.setName(
+			GetterUtil.getString(counterElement.elementText("name")));
 
 		String ownerType = GetterUtil.getString(
 			counterElement.elementText("owner-type"));

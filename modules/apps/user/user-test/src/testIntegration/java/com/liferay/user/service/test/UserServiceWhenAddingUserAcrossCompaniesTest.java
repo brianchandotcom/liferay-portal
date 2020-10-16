@@ -64,10 +64,8 @@ public class UserServiceWhenAddingUserAcrossCompaniesTest {
 		String originalName = PrincipalThreadLocal.getName();
 
 		try {
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
 
 			PrincipalThreadLocal.setName(user.getUserId());
 
@@ -93,10 +91,8 @@ public class UserServiceWhenAddingUserAcrossCompaniesTest {
 		String originalName = PrincipalThreadLocal.getName();
 
 		try {
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
 
 			PrincipalThreadLocal.setName(user.getUserId());
 

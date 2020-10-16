@@ -252,8 +252,10 @@ public class DDMFormDisplayContext {
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 		if (!availableLocales.contains(locale)) {
-			locale = getLocale(
-				PortalUtil.getHttpServletRequest(_renderRequest), ddmForm);
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(_renderRequest);
+
+			locale = getLocale(httpServletRequest, ddmForm);
 		}
 
 		return LanguageUtil.getLanguageId(locale);
@@ -768,8 +770,9 @@ public class DDMFormDisplayContext {
 
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
-		Locale locale = LocaleUtil.fromLanguageId(
-			LanguageUtil.getLanguageId(httpServletRequest));
+		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		if (availableLocales.contains(locale)) {
 			return locale;

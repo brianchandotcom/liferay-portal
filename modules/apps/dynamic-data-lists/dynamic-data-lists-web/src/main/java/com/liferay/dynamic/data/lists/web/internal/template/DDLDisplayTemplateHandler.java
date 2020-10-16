@@ -129,9 +129,11 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 		addTemplateVariableGroup(
 			templateVariableGroups, getUtilTemplateVariableGroup());
 
+		String[] restrictedVariables = getRestrictedVariables(language);
+
 		TemplateVariableGroup ddlServicesTemplateVariableGroup =
 			new TemplateVariableGroup(
-				"data-list-services", getRestrictedVariables(language));
+				"data-list-services", restrictedVariables);
 
 		ddlServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 

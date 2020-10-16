@@ -68,6 +68,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -375,9 +377,11 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		ConfigurationFormRenderer configurationFormRenderer =
 			_configurationFormRendererRetriever.getConfigurationFormRenderer(
 				pid);
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
 
 		return configurationFormRenderer.getRequestParameters(
-			_portal.getHttpServletRequest(actionRequest));
+			httpServletRequest);
 	}
 
 	protected Dictionary<String, Object> toDictionary(

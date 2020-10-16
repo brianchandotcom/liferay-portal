@@ -43,8 +43,9 @@ public class ServiceRegistrar<T> {
 				ServiceReference<T> serviceReference =
 					serviceRegistration.getServiceReference();
 
-				serviceFinalizer.finalize(
-					serviceReference, _registry.getService(serviceReference));
+				T service = _registry.getService(serviceReference);
+
+				serviceFinalizer.finalize(serviceReference, service);
 			}
 
 			serviceRegistration.unregister();

@@ -56,8 +56,9 @@ public class DeleteDefinitionPortletConfigurationIcon
 	public String getOnClick(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String portletNamespace = _portal.getPortletNamespace(
-			_portal.getPortletId(portletRequest));
+		String portletId = _portal.getPortletId(portletRequest);
+
+		String portletNamespace = _portal.getPortletNamespace(portletId);
 
 		String deleteURL = getURL(portletRequest, portletResponse);
 

@@ -25,6 +25,8 @@ import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleAction
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.TrashHelper;
@@ -61,12 +63,16 @@ public class JournalArticleVersionVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
+		LiferayPortletRequest liferayPortletRequest =
+			PortalUtil.getLiferayPortletRequest(renderRequest);
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_renderResponse);
+
 		JournalArticleActionDropdownItemsProvider
 			articleActionDropdownItemsProvider =
 				new JournalArticleActionDropdownItemsProvider(
-					_article,
-					PortalUtil.getLiferayPortletRequest(renderRequest),
-					PortalUtil.getLiferayPortletResponse(_renderResponse),
+					_article, liferayPortletRequest, liferayPortletResponse,
 					_assetDisplayPageFriendlyURLProvider, _trashHelper);
 
 		try {

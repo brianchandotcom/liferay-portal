@@ -100,8 +100,9 @@ public class RenderURLParamsTag extends TagSupport {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		String[] parameters = StringUtil.split(
-			HttpUtil.getQueryString(url), CharPool.AMPERSAND);
+		String queryString = HttpUtil.getQueryString(url);
+
+		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
 
 		for (String parameter : parameters) {
 			if (parameter.length() > 0) {

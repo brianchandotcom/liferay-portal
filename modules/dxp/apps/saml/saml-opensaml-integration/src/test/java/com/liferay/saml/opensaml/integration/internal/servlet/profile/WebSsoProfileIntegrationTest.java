@@ -1089,9 +1089,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		assertion.setConditions(conditions);
 
-		Issuer issuer = OpenSamlUtil.buildIssuer(IDP_ENTITY_ID);
-
-		assertion.setIssuer(issuer);
+		assertion.setIssuer(OpenSamlUtil.buildIssuer(IDP_ENTITY_ID));
 
 		String messageId = samlIdentifierGenerator.generateIdentifier();
 

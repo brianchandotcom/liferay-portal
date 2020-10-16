@@ -128,12 +128,16 @@ public class FileEntryProxyBean
 
 	@Override
 	public FileVersion getFileVersion(String version) throws PortalException {
-		return newFileVersionProxyBean(_fileEntry.getFileVersion(version));
+		FileVersion fileVersion = _fileEntry.getFileVersion(version);
+
+		return newFileVersionProxyBean(fileVersion);
 	}
 
 	@Override
 	public List<FileVersion> getFileVersions(int status) {
-		return toFileVersionProxyBeans(_fileEntry.getFileVersions(status));
+		List<FileVersion> fileVersions = _fileEntry.getFileVersions(status);
+
+		return toFileVersionProxyBeans(fileVersions);
 	}
 
 	@Override

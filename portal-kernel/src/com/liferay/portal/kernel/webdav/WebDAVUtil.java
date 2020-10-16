@@ -133,7 +133,9 @@ public class WebDAVUtil {
 	public static long getGroupId(long companyId, String path)
 		throws WebDAVException {
 
-		return getGroupId(companyId, getPathArray(path));
+		String[] pathArray = getPathArray(path);
+
+		return getGroupId(companyId, pathArray);
 	}
 
 	public static long getGroupId(long companyId, String[] pathArray)
@@ -170,7 +172,9 @@ public class WebDAVUtil {
 	}
 
 	public static List<Group> getGroups(long userId) throws Exception {
-		return getGroups(UserLocalServiceUtil.getUser(userId));
+		User user = UserLocalServiceUtil.getUser(userId);
+
+		return getGroups(user);
 	}
 
 	public static List<Group> getGroups(User user) throws Exception {

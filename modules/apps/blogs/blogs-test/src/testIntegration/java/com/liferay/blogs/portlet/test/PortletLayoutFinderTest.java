@@ -206,10 +206,8 @@ public class PortletLayoutFinderTest {
 
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
-
-		themeDisplay.setPermissionChecker(permissionChecker);
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
 		themeDisplay.setPlid(_assetLayout.getPlid());
 

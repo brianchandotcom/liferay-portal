@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
@@ -63,6 +64,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -437,10 +440,15 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 	private Group _getGroup(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			portletRequest);
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(portletResponse);
+
 		SiteMembershipsDisplayContext siteMembershipsDisplayContext =
 			new SiteMembershipsDisplayContext(
-				_portal.getHttpServletRequest(portletRequest),
-				_portal.getLiferayPortletResponse(portletResponse));
+				httpServletRequest, liferayPortletResponse);
 
 		return siteMembershipsDisplayContext.getGroup();
 	}

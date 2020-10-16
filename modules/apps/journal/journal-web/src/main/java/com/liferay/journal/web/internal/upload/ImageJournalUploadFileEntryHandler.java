@@ -90,8 +90,9 @@ public class ImageJournalUploadFileEntryHandler
 		}
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
+		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
 
-		_validateFile(fileName, uploadPortletRequest.getSize(_PARAMETER_NAME));
+		_validateFile(fileName, size);
 
 		String contentType = uploadPortletRequest.getContentType(
 			_PARAMETER_NAME);

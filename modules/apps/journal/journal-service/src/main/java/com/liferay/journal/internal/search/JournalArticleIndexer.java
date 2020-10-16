@@ -714,7 +714,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		for (JournalArticle curArticle : articles) {
-			documents.add(getDocument(curArticle));
+			Document document = getDocument(curArticle);
+
+			documents.add(document);
 		}
 
 		return documents;
@@ -825,8 +827,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			indexableActionableDynamicQuery.setPerformActionMethod(
 				(JournalArticle article) -> {
 					try {
-						indexableActionableDynamicQuery.addDocuments(
-							getDocument(article));
+						Document document = getDocument(article);
+
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {
@@ -858,8 +861,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 					}
 
 					try {
-						indexableActionableDynamicQuery.addDocuments(
-							getDocument(latestIndexableArticle));
+						Document document = getDocument(latestIndexableArticle);
+
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {

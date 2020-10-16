@@ -329,9 +329,7 @@ public class OrganizationStagedModelDataHandler
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					Address.class);
 
-			long addressId = addressIds.get(address.getPrimaryKey());
-
-			address.setAddressId(addressId);
+			address.setAddressId(addressIds.get(address.getPrimaryKey()));
 
 			addresses.add(address);
 		}
@@ -465,9 +463,7 @@ public class OrganizationStagedModelDataHandler
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					Phone.class);
 
-			long phoneId = phoneIds.get(phone.getPrimaryKey());
-
-			phone.setPhoneId(phoneId);
+			phone.setPhoneId(phoneIds.get(phone.getPrimaryKey()));
 
 			phones.add(phone);
 		}
@@ -517,9 +513,7 @@ public class OrganizationStagedModelDataHandler
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					Website.class);
 
-			long websiteId = websiteIds.get(website.getPrimaryKey());
-
-			website.setWebsiteId(websiteId);
+			website.setWebsiteId(websiteIds.get(website.getPrimaryKey()));
 
 			websites.add(website);
 		}

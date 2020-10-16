@@ -372,15 +372,15 @@ public class DDMFormContextToDDMForm
 	protected void setDDMFormAvailableLocales(
 		JSONArray jsonArray, DDMForm ddmForm) {
 
-		ddmForm.setAvailableLocales(getAvailableLocales(jsonArray));
+		Set<Locale> availableLocales = getAvailableLocales(jsonArray);
+
+		ddmForm.setAvailableLocales(availableLocales);
 	}
 
 	protected void setDDMFormDefaultLocale(
 		String defaultLanguageId, DDMForm ddmForm) {
 
-		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
-
-		ddmForm.setDefaultLocale(defaultLocale);
+		ddmForm.setDefaultLocale(LocaleUtil.fromLanguageId(defaultLanguageId));
 	}
 
 	protected void setDDMFormFields(JSONArray jsonArray, DDMForm ddmForm) {
@@ -449,8 +449,9 @@ public class DDMFormContextToDDMForm
 
 					String propertyName = jsonObject.getString("fieldName");
 
-					String value = jsonObject.getString(
-						getValueProperty(localizable));
+					String valueProperty = getValueProperty(localizable);
+
+					String value = jsonObject.getString(valueProperty);
 
 					String dataType = jsonObject.getString("dataType");
 					String type = jsonObject.getString("type");

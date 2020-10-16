@@ -1002,9 +1002,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		String themeName = settingsJSONObject.getString("themeName");
 
 		if (Validator.isNotNull(themeName)) {
-			String themeId = _getThemeId(layout.getCompanyId(), themeName);
-
-			layout.setThemeId(themeId);
+			layout.setThemeId(_getThemeId(layout.getCompanyId(), themeName));
 		}
 
 		String colorSchemeName = settingsJSONObject.getString(

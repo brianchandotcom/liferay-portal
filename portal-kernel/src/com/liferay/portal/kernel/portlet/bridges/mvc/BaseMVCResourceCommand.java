@@ -55,8 +55,9 @@ public abstract class BaseMVCResourceCommand implements MVCResourceCommand {
 		throws Exception;
 
 	protected PortletConfig getPortletConfig(ResourceRequest resourceRequest) {
-		return PortletConfigFactoryUtil.get(
-			PortalUtil.getPortletId(resourceRequest));
+		String portletId = PortalUtil.getPortletId(resourceRequest);
+
+		return PortletConfigFactoryUtil.get(portletId);
 	}
 
 	protected PortletRequestDispatcher getPortletRequestDispatcher(

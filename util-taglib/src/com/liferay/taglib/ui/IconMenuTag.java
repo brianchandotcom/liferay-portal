@@ -33,6 +33,7 @@ import com.liferay.taglib.util.PortalIncludeUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -352,10 +353,11 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					String message = _message;
 
 					if (_localizeMessage) {
-						message = LanguageUtil.get(
+						ResourceBundle resourceBundle =
 							TagResourceBundleUtil.getResourceBundle(
-								pageContext),
-							_message);
+								pageContext);
+
+						message = LanguageUtil.get(resourceBundle, _message);
 					}
 
 					jspWriter.write("\" href=\"javascript:;\" id=\"");
@@ -481,8 +483,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		String message = _message;
 
 		if (_localizeMessage) {
-			message = LanguageUtil.get(
-				TagResourceBundleUtil.getResourceBundle(pageContext), _message);
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
+			message = LanguageUtil.get(resourceBundle, _message);
 		}
 
 		httpServletRequest.setAttribute(

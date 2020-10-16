@@ -357,8 +357,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		SitesUtil.resetPrototype(layoutSet);
 
-		SitesUtil.mergeLayoutSetPrototypeLayouts(
-			groupLocalService.getGroup(groupId), layoutSet);
+		Group group = groupLocalService.getGroup(groupId);
+
+		SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 
 		layoutSetPrototype = layoutSetPrototypeService.getLayoutSetPrototype(
 			layoutSetPrototypeId);

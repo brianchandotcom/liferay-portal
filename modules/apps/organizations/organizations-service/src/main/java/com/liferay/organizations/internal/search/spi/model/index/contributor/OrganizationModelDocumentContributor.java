@@ -136,9 +136,9 @@ public class OrganizationModelDocumentContributor
 
 		if (countryId > 0) {
 			try {
-				countries.addAll(
-					_getLocalizedCountryNames(
-						_countryService.getCountry(countryId)));
+				Country country = _countryService.getCountry(countryId);
+
+				countries.addAll(_getLocalizedCountryNames(country));
 			}
 			catch (NoSuchCountryException noSuchCountryException) {
 				if (_log.isWarnEnabled()) {

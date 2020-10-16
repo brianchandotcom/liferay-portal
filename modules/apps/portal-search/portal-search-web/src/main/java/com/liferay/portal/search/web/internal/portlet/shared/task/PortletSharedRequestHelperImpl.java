@@ -55,7 +55,9 @@ public class PortletSharedRequestHelperImpl
 		HttpServletRequest httpServletRequest = getSharedHttpServletRequest(
 			renderRequest);
 
-		return SearchStringUtil.maybe(httpServletRequest.getParameter(name));
+		String parameter = httpServletRequest.getParameter(name);
+
+		return SearchStringUtil.maybe(parameter);
 	}
 
 	@Override
@@ -65,8 +67,9 @@ public class PortletSharedRequestHelperImpl
 		HttpServletRequest httpServletRequest = getSharedHttpServletRequest(
 			renderRequest);
 
-		return SearchArrayUtil.maybe(
-			httpServletRequest.getParameterValues(name));
+		String[] parameterValues = httpServletRequest.getParameterValues(name);
+
+		return SearchArrayUtil.maybe(parameterValues);
 	}
 
 	@Override

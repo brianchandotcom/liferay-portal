@@ -7101,10 +7101,8 @@ public class ServiceBuilder {
 			}
 		}
 
-		Entity localizedEntity = _parseEntity(newLocalizedEntityElement);
-
 		entity.setLocalizedEntityColumns(localizedEntityColumns);
-		entity.setLocalizedEntity(localizedEntity);
+		entity.setLocalizedEntity(_parseEntity(newLocalizedEntityElement));
 	}
 
 	private void _parseVersionEntity(

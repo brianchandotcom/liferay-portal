@@ -1541,9 +1541,7 @@ public class LayoutStagedModelDataHandler
 
 		if (ArrayUtil.isNotEmpty(iconBytes)) {
 			if (importedLayout.getIconImageId() == 0) {
-				long iconImageId = _counterLocalService.increment();
-
-				importedLayout.setIconImageId(iconImageId);
+				importedLayout.setIconImageId(_counterLocalService.increment());
 			}
 
 			_imageLocalService.updateImage(

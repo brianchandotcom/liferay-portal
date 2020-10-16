@@ -22,6 +22,7 @@ import aQute.bnd.make.component.ServiceComponent;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
+import aQute.bnd.osgi.Descriptors;
 import aQute.bnd.osgi.FileResource;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Packages;
@@ -521,7 +522,9 @@ public class WabProcessor {
 
 		String packageName = value.substring(0, index);
 
-		packages.put(analyzer.getPackageRef(packageName), new Attrs());
+		Descriptors.PackageRef packageRef = analyzer.getPackageRef(packageName);
+
+		packages.put(packageRef, new Attrs());
 	}
 
 	protected void processDeclarativeReferences(Analyzer analyzer)

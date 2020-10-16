@@ -69,11 +69,11 @@ public class LayoutSetBranchPermissionImpl
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker,
+		LayoutSetBranch layoutSetBranch =
 			LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
-				layoutSetBranchId),
-			actionId);
+				layoutSetBranchId);
+
+		return contains(permissionChecker, layoutSetBranch, actionId);
 	}
 
 }

@@ -653,8 +653,10 @@ public class CalendarBookingLocalServiceImpl
 			long calendarBookingId, int instanceIndex)
 		throws PortalException {
 
+		CalendarBooking calendarBooking = getCalendarBooking(calendarBookingId);
+
 		return RecurrenceUtil.getCalendarBookingInstance(
-			getCalendarBooking(calendarBookingId), instanceIndex);
+			calendarBooking, instanceIndex);
 	}
 
 	@Override

@@ -265,9 +265,11 @@ public class DDMFormInstanceRecordIndexer
 	protected void doReindex(DDMFormInstanceRecord ddmFormInstanceRecord)
 		throws Exception {
 
+		Document document = getDocument(ddmFormInstanceRecord);
+
 		indexWriterHelper.updateDocument(
-			getSearchEngineId(), ddmFormInstanceRecord.getCompanyId(),
-			getDocument(ddmFormInstanceRecord), isCommitImmediately());
+			getSearchEngineId(), ddmFormInstanceRecord.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override

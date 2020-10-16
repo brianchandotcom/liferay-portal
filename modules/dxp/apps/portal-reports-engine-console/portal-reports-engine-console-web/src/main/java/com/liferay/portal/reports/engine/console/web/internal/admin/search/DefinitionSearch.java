@@ -101,10 +101,8 @@ public class DefinitionSearch extends SearchContainer<Definition> {
 
 		setOrderByCol(orderByCol);
 
-		OrderByComparator<Definition> orderByComparator =
-			getDefinitionOrderByComparator(orderByCol, orderByType);
-
-		setOrderByComparator(orderByComparator);
+		setOrderByComparator(
+			getDefinitionOrderByComparator(orderByCol, orderByType));
 
 		setOrderByType(orderByType);
 	}

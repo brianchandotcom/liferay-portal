@@ -140,10 +140,11 @@ public class TemplateContextHelper {
 			templateHandler.getTemplateVariableGroups(
 				classPK, language, locale);
 
+		String[] restrictedVariables = templateHandler.getRestrictedVariables(
+			language);
+
 		TemplateVariableGroup portalServicesTemplateVariableGroup =
-			new TemplateVariableGroup(
-				"portal-services",
-				templateHandler.getRestrictedVariables(language));
+			new TemplateVariableGroup("portal-services", restrictedVariables);
 
 		portalServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 

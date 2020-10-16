@@ -71,9 +71,10 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
+		WikiNode node = _wikiNodeLocalService.getNode(entryClassPK);
+
 		return _wikiNodeModelResourcePermission.contains(
-			permissionChecker, _wikiNodeLocalService.getNode(entryClassPK),
-			ActionKeys.VIEW);
+			permissionChecker, node, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -112,7 +113,9 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_wikiNodeLocalService.getNode(classPK));
+		WikiNode node = _wikiNodeLocalService.getNode(classPK);
+
+		doReindex(node);
 	}
 
 	@Override
@@ -152,8 +155,9 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(WikiNode node) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
-						getDocument(node));
+					Document document = getDocument(node);
+
+					indexableActionableDynamicQuery.addDocuments(document);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {

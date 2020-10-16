@@ -52,9 +52,10 @@ public class DefaultLogoutPageAction extends Action {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
 		String path = PrefsPropsUtil.getString(
-			PortalUtil.getCompanyId(httpServletRequest),
-			PropsKeys.DEFAULT_LOGOUT_PAGE_PATH);
+			companyId, PropsKeys.DEFAULT_LOGOUT_PAGE_PATH);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

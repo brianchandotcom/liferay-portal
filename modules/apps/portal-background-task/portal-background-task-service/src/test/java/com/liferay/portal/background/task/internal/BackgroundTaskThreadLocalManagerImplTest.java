@@ -66,11 +66,8 @@ public class BackgroundTaskThreadLocalManagerImplTest
 
 	@Test
 	public void testSetThreadLocalValues() {
-		Map<String, Serializable> threadLocalValues =
-			initializeThreadLocalValues();
-
 		backgroundTaskThreadLocalManagerImpl.setThreadLocalValues(
-			threadLocalValues);
+			initializeThreadLocalValues());
 
 		assertThreadLocalValues();
 	}

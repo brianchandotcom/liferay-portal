@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.portlet.PortletDependency;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -375,8 +376,11 @@ public class PortletImpl extends PortletBaseImpl {
 		_publicRenderParametersByQName.put(
 			PortletQNameUtil.getKey(qName), publicRenderParameter);
 
+		String publicRenderParameterName =
+			PortletQNameUtil.getPublicRenderParameterName(qName);
+
 		PortletQNameUtil.setPublicRenderParameterIdentifier(
-			PortletQNameUtil.getPublicRenderParameterName(qName), identifier);
+			publicRenderParameterName, identifier);
 	}
 
 	/**
@@ -2334,8 +2338,9 @@ public class PortletImpl extends PortletBaseImpl {
 			if ((permissionChecker == null) ||
 				(permissionChecker.getUserId() != userId)) {
 
-				permissionChecker = PermissionCheckerFactoryUtil.create(
-					UserLocalServiceUtil.getUser(userId));
+				User user = UserLocalServiceUtil.getUser(userId);
+
+				permissionChecker = PermissionCheckerFactoryUtil.create(user);
 			}
 
 			if (PortletPermissionUtil.contains(

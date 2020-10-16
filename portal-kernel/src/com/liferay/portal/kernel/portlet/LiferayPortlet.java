@@ -63,6 +63,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -371,9 +372,10 @@ public class LiferayPortlet extends GenericPortlet {
 	}
 
 	protected String getJSONContentType(PortletRequest portletRequest) {
-		if (BrowserSnifferUtil.isIe(
-				PortalUtil.getHttpServletRequest(portletRequest))) {
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
+		if (BrowserSnifferUtil.isIe(httpServletRequest)) {
 			return ContentTypes.TEXT_HTML;
 		}
 

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -239,10 +238,8 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLocale(LocaleUtil.US);
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		themeDisplay.setPermissionChecker(permissionChecker);
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());

@@ -94,9 +94,10 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 			userId, fileEntryId, dlVersionNumberIncrease, changeLog,
 			serviceContext);
 
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
 		_workflowSupport.checkInFileEntry(
-			userId, super.getFileEntry(fileEntryId), dlVersionNumberIncrease,
-			serviceContext);
+			userId, fileEntry, dlVersionNumberIncrease, serviceContext);
 	}
 
 	@Override
@@ -107,9 +108,10 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 		super.checkInFileEntry(userId, fileEntryId, lockUuid, serviceContext);
 
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
 		_workflowSupport.checkInFileEntry(
-			userId, super.getFileEntry(fileEntryId),
-			DLVersionNumberIncrease.MINOR, serviceContext);
+			userId, fileEntry, DLVersionNumberIncrease.MINOR, serviceContext);
 	}
 
 	@Override
@@ -140,8 +142,9 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 		super.revertFileEntry(userId, fileEntryId, version, serviceContext);
 
-		_workflowSupport.revertFileEntry(
-			userId, super.getFileEntry(fileEntryId), serviceContext);
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
+		_workflowSupport.revertFileEntry(userId, fileEntry, serviceContext);
 	}
 
 	@Override

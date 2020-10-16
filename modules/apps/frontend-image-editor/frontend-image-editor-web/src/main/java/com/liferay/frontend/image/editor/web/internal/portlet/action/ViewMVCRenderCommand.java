@@ -40,6 +40,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -199,9 +200,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 									"capability.controls"))
 					).build();
 
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(renderRequest);
+
 				imageEditorCapability.prepareContext(
-					controlContext,
-					_portal.getHttpServletRequest(renderRequest));
+					controlContext, httpServletRequest);
 
 				controlContexts.add(controlContext);
 

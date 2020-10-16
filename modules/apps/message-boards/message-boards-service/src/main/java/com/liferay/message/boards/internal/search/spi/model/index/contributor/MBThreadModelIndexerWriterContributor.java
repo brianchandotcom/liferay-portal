@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
@@ -63,8 +64,10 @@ public class MBThreadModelIndexerWriterContributor
 							" and group ID ", mbThread.getGroupId()));
 				}
 
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(mbThread));
+				Document document =
+					modelIndexerWriterDocumentHelper.getDocument(mbThread);
+
+				batchIndexingActionable.addDocuments(document);
 			});
 	}
 

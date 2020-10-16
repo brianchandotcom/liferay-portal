@@ -349,8 +349,9 @@ public class LayoutTestUtil {
 			long plid, String portletId)
 		throws Exception {
 
-		return getPortletPreferences(
-			LayoutLocalServiceUtil.getLayout(plid), portletId);
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		return getPortletPreferences(layout, portletId);
 	}
 
 	public static List<Portlet> getPortlets(Layout layout) throws Exception {

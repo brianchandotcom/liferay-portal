@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -69,8 +70,10 @@ public class SitesThatIAdministerItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
+		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
+
 		return ResourceBundleUtil.getString(
-			_portal.getResourceBundle(locale), "sites-that-i-administer");
+			resourceBundle, "sites-that-i-administer");
 	}
 
 	@Override

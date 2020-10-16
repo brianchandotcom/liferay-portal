@@ -102,6 +102,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -385,8 +386,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
 
-		return LanguageUtil.format(
-			portletConfig.getResourceBundle(locale), pattern, arguments);
+		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
+
+		return LanguageUtil.format(resourceBundle, pattern, arguments);
 	}
 
 	@Override
@@ -1350,9 +1352,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 		searchContext.setStart(start);
 
-		Hits hits = indexer.search(searchContext);
-
-		alloySearchResult.setHits(hits);
+		alloySearchResult.setHits(indexer.search(searchContext));
 
 		if (portletURL != null) {
 			alloySearchResult.setPortletURL(

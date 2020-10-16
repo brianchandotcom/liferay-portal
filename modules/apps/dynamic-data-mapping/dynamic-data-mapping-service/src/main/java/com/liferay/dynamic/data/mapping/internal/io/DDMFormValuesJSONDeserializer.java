@@ -304,7 +304,9 @@ public class DDMFormValuesJSONDeserializer
 	protected void setDDMFormValuesAvailableLocales(
 		JSONArray jsonArray, DDMFormValues ddmFormValues) {
 
-		ddmFormValues.setAvailableLocales(getAvailableLocales(jsonArray));
+		Set<Locale> availableLocales = getAvailableLocales(jsonArray);
+
+		ddmFormValues.setAvailableLocales(availableLocales);
 	}
 
 	protected void setDDMFormValuesDefaultLocale(

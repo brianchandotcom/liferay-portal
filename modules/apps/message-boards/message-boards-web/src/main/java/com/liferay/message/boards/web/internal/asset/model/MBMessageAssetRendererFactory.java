@@ -62,10 +62,11 @@ public class MBMessageAssetRendererFactory
 	public AssetRenderer<MBMessage> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
+		MBMessage message = _mbMessageLocalService.getMessage(classPK);
+
 		MBMessageAssetRenderer mbMessageAssetRenderer =
 			new MBMessageAssetRenderer(
-				_mbMessageLocalService.getMessage(classPK),
-				_messageModelResourcePermission);
+				message, _messageModelResourcePermission);
 
 		mbMessageAssetRenderer.setAssetDisplayPageFriendlyURLProvider(
 			_assetDisplayPageFriendlyURLProvider);

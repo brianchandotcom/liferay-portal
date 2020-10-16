@@ -107,11 +107,12 @@ public class OAuth2ApplicationServiceImpl
 	public OAuth2Application deleteOAuth2Application(long oAuth2ApplicationId)
 		throws PortalException {
 
-		_oAuth2ApplicationModelResourcePermission.check(
-			getPermissionChecker(),
+		OAuth2Application oAuth2Application =
 			oAuth2ApplicationLocalService.getOAuth2Application(
-				oAuth2ApplicationId),
-			ActionKeys.DELETE);
+				oAuth2ApplicationId);
+
+		_oAuth2ApplicationModelResourcePermission.check(
+			getPermissionChecker(), oAuth2Application, ActionKeys.DELETE);
 
 		return oAuth2ApplicationLocalService.deleteOAuth2Application(
 			oAuth2ApplicationId);
@@ -182,11 +183,12 @@ public class OAuth2ApplicationServiceImpl
 			long oAuth2ApplicationId, InputStream inputStream)
 		throws PortalException {
 
-		_oAuth2ApplicationModelResourcePermission.check(
-			getPermissionChecker(),
+		OAuth2Application oAuth2Application =
 			oAuth2ApplicationLocalService.getOAuth2Application(
-				oAuth2ApplicationId),
-			ActionKeys.UPDATE);
+				oAuth2ApplicationId);
+
+		_oAuth2ApplicationModelResourcePermission.check(
+			getPermissionChecker(), oAuth2Application, ActionKeys.UPDATE);
 
 		return oAuth2ApplicationLocalService.updateIcon(
 			oAuth2ApplicationId, inputStream);
@@ -202,11 +204,12 @@ public class OAuth2ApplicationServiceImpl
 			long auth2ApplicationScopeAliasesId, ServiceContext serviceContext)
 		throws PortalException {
 
-		_oAuth2ApplicationModelResourcePermission.check(
-			getPermissionChecker(),
+		OAuth2Application oAuth2Application =
 			oAuth2ApplicationLocalService.getOAuth2Application(
-				oAuth2ApplicationId),
-			ActionKeys.UPDATE);
+				oAuth2ApplicationId);
+
+		_oAuth2ApplicationModelResourcePermission.check(
+			getPermissionChecker(), oAuth2Application, ActionKeys.UPDATE);
 
 		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS)) {
 			_checkCanImpersonateClientCredentialUser(clientCredentialUserId);

@@ -97,9 +97,7 @@ public class DefaultSynchronousMessageSender
 				DestinationNames.MESSAGE_BUS_DEFAULT_RESPONSE);
 		}
 
-		String responseId = generateUUID();
-
-		message.setResponseId(responseId);
+		message.setResponseId(generateUUID());
 
 		SynchronousMessageListener synchronousMessageListener =
 			new SynchronousMessageListener(

@@ -118,9 +118,11 @@ public class AMBlogsEditorConfigContributor
 
 		jsonObject.put("extraPlugins", extraPlugins);
 
+		String itemSelectedEventName = _itemSelector.getItemSelectedEventName(
+			itemSelectorURL);
+
 		PortletURL itemSelectorPortletURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory,
-			_itemSelector.getItemSelectedEventName(itemSelectorURL),
+			requestBackedPortletURLFactory, itemSelectedEventName,
 			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
 
 		jsonObject.put(

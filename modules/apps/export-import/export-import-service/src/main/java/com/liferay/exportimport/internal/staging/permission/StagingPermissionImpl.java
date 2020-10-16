@@ -56,9 +56,11 @@ public class StagingPermissionImpl implements StagingPermission {
 		long classPK, String portletId, String actionId) {
 
 		try {
+			Group group = _groupLocalService.getGroup(groupId);
+
 			return doHasPermission(
-				permissionChecker, _groupLocalService.getGroup(groupId),
-				className, classPK, portletId, actionId);
+				permissionChecker, group, className, classPK, portletId,
+				actionId);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -324,10 +323,8 @@ public class UpdateMembershipsMVCActionCommandTest {
 
 			themeDisplay.setScopeGroupId(_group.getGroupId());
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
-
-			themeDisplay.setPermissionChecker(permissionChecker);
+			themeDisplay.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
 			return themeDisplay;
 		}

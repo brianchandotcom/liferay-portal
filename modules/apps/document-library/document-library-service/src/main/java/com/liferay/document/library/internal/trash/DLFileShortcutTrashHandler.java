@@ -237,9 +237,10 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			newFolder = documentRepository.getFolder(containerModelId);
 		}
 
+		FileShortcut fileShortcut = documentRepository.getFileShortcut(classPK);
+
 		trashCapability.moveFileShortcutFromTrash(
-			userId, documentRepository.getFileShortcut(classPK), newFolder,
-			serviceContext);
+			userId, fileShortcut, newFolder, serviceContext);
 	}
 
 	@Override
@@ -251,8 +252,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		TrashCapability trashCapability = documentRepository.getCapability(
 			TrashCapability.class);
 
-		trashCapability.restoreFileShortcutFromTrash(
-			userId, documentRepository.getFileShortcut(classPK));
+		FileShortcut fileShortcut = documentRepository.getFileShortcut(classPK);
+
+		trashCapability.restoreFileShortcutFromTrash(userId, fileShortcut);
 	}
 
 	protected DLFileShortcut getDLFileShortcut(long classPK)

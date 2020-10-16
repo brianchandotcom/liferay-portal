@@ -86,6 +86,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
@@ -380,10 +381,12 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "redirect"));
 
 		if (Validator.isNotNull(redirect)) {
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(actionResponse);
+
 			_authenticatedSessionManager.login(
-				httpServletRequest,
-				_portal.getHttpServletResponse(actionResponse), login, password,
-				false, null);
+				httpServletRequest, httpServletResponse, login, password, false,
+				null);
 		}
 		else {
 			PortletURL loginURL = LoginUtil.getLoginURL(

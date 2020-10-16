@@ -107,9 +107,10 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 		throws Exception;
 
 	protected PortletConfig getPortletConfig(PortletRequest portletRequest) {
+		String portletId = PortalUtil.getPortletId(portletRequest);
+
 		return PortletConfigFactoryUtil.get(
-			PortletIdCodec.decodePortletName(
-				PortalUtil.getPortletId(portletRequest)));
+			PortletIdCodec.decodePortletName(portletId));
 	}
 
 	protected void hideDefaultErrorMessage(PortletRequest portletRequest) {

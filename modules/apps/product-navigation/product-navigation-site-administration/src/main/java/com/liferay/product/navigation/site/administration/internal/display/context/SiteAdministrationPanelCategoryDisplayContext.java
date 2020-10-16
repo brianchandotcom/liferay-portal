@@ -59,6 +59,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Julio Camarero
  */
@@ -393,9 +395,12 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	}
 
 	public boolean isShowSiteSelector() throws PortalException {
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_portletRequest);
+
 		List<Group> mySites = getMySites();
 		List<Group> recentSites = _recentGroupManager.getRecentGroups(
-			PortalUtil.getHttpServletRequest(_portletRequest));
+			httpServletRequest);
 
 		if (mySites.isEmpty() && recentSites.isEmpty()) {
 			return false;
@@ -480,8 +485,10 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return;
 		}
 
-		_groupProvider.setGroup(
-			PortalUtil.getHttpServletRequest(_portletRequest), _group);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_portletRequest);
+
+		_groupProvider.setGroup(httpServletRequest, _group);
 	}
 
 	private Layout _getFirstLayout(Group group) {

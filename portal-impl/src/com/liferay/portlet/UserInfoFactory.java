@@ -47,8 +47,9 @@ public class UserInfoFactory {
 		LinkedHashMap<String, String> userInfo = new LinkedHashMap<>();
 
 		try {
-			userInfo = getUserInfo(
-				PortalUtil.getUser(httpServletRequest), userInfo, portlet);
+			User user = PortalUtil.getUser(httpServletRequest);
+
+			userInfo = getUserInfo(user, userInfo, portlet);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

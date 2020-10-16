@@ -181,8 +181,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Element rootElement = document.addElement("root");
 
-		rootElement.addAttribute(
-			"available-locales", getAvailableLocales(ddmFields));
+		String availableLocales = getAvailableLocales(ddmFields);
+
+		rootElement.addAttribute("available-locales", availableLocales);
 
 		Locale defaultLocale = ddmFields.getDefaultLocale();
 

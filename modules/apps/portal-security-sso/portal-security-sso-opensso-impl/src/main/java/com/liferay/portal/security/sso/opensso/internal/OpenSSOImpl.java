@@ -82,9 +82,10 @@ public class OpenSSOImpl implements OpenSSO {
 			httpURLConnection.setRequestProperty(
 				"Content-type", "application/x-www-form-urlencoded");
 
+			String[] cookieNames = getCookieNames(serviceURL);
+
 			setCookieProperty(
-				httpServletRequest, httpURLConnection,
-				getCookieNames(serviceURL));
+				httpServletRequest, httpURLConnection, cookieNames);
 
 			OutputStreamWriter osw = new OutputStreamWriter(
 				httpURLConnection.getOutputStream());

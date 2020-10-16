@@ -546,9 +546,11 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 				ddmFormInstanceRecordSearch.getOrderByComparator());
 		}
 		else {
+			SearchContext searchContext = getSearchContext(status);
+
 			BaseModelSearchResult<DDMFormInstanceRecord> baseModelSearchResult =
 				_ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
-					getSearchContext(status));
+					searchContext);
 
 			results = baseModelSearchResult.getBaseModels();
 		}
@@ -572,9 +574,11 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 					_ddmFormInstance.getFormInstanceId(), status);
 		}
 		else {
+			SearchContext searchContext = getSearchContext(status);
+
 			BaseModelSearchResult<DDMFormInstanceRecord> baseModelSearchResult =
 				_ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
-					getSearchContext(status));
+					searchContext);
 
 			total = baseModelSearchResult.getLength();
 		}

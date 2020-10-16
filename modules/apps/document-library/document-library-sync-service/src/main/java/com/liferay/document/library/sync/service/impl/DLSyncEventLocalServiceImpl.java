@@ -19,7 +19,6 @@ import com.liferay.document.library.sync.service.base.DLSyncEventLocalServiceBas
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -78,9 +77,8 @@ public class DLSyncEventLocalServiceImpl
 			DynamicQueryFactoryUtil.forClass(
 				DLSyncEvent.class, getClassLoader());
 
-		Projection projection = ProjectionFactoryUtil.max("modifiedTime");
-
-		modifiedTimeDynamicQuery.setProjection(projection);
+		modifiedTimeDynamicQuery.setProjection(
+			ProjectionFactoryUtil.max("modifiedTime"));
 
 		dynamicQuery.add(property.eq(modifiedTimeDynamicQuery));
 

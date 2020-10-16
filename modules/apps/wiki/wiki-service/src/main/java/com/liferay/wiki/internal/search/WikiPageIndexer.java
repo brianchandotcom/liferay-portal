@@ -151,9 +151,10 @@ public class WikiPageIndexer
 			long entryClassPK, String actionId)
 		throws Exception {
 
+		WikiPage page = _wikiPageLocalService.getPage(entryClassPK);
+
 		return _wikiPageModelResourcePermission.contains(
-			permissionChecker, _wikiPageLocalService.getPage(entryClassPK),
-			ActionKeys.VIEW);
+			permissionChecker, page, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -338,8 +339,10 @@ public class WikiPageIndexer
 			return;
 		}
 
+		Document document = getDocument(wikiPage);
+
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), wikiPage.getCompanyId(), getDocument(wikiPage),
+			getSearchEngineId(), wikiPage.getCompanyId(), document,
 			isCommitImmediately());
 
 		reindexAttachments(wikiPage);
@@ -391,8 +394,9 @@ public class WikiPageIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(WikiPage page) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
-						getDocument(page));
+					Document document = getDocument(page);
+
+					indexableActionableDynamicQuery.addDocuments(document);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {

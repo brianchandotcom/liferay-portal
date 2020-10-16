@@ -58,10 +58,12 @@ public class WorkspaceUtil {
 					upstreamBranchName);
 		}
 		else if (GitUtil.isValidGitHubRefURL(gitHubURL)) {
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(gitHubURL);
+
 			dependencyWorkspaceGitRepository =
 				GitRepositoryFactory.getDependencyWorkspaceGitRepository(
-					repositoryType, workspaceGitRepository,
-					GitUtil.getRemoteGitRef(gitHubURL), upstreamBranchName);
+					repositoryType, workspaceGitRepository, remoteGitRef,
+					upstreamBranchName);
 		}
 
 		if (dependencyWorkspaceGitRepository == null) {
@@ -104,10 +106,11 @@ public class WorkspaceUtil {
 					gitHubURL, pullRequest, upstreamBranchName);
 		}
 		else if (GitUtil.isValidGitHubRefURL(gitHubURL)) {
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(gitHubURL);
+
 			workspaceGitRepository =
 				GitRepositoryFactory.getWorkspaceGitRepository(
-					gitHubURL, GitUtil.getRemoteGitRef(gitHubURL),
-					upstreamBranchName);
+					gitHubURL, remoteGitRef, upstreamBranchName);
 		}
 
 		if (workspaceGitRepository == null) {

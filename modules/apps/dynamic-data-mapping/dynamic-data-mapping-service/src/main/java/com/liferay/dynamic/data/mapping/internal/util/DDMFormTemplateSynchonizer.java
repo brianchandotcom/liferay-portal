@@ -206,9 +206,7 @@ public class DDMFormTemplateSynchonizer {
 	protected void updateDDMTemplate(
 		DDMTemplate ddmTemplate, DDMForm templateDDMForm) {
 
-		String script = serialize(templateDDMForm);
-
-		ddmTemplate.setScript(script);
+		ddmTemplate.setScript(serialize(templateDDMForm));
 
 		_ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
 	}

@@ -250,9 +250,10 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			portletRequest);
 
 		if (type == ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
+			long[] layoutIds = _exportImportHelper.getLayoutIds(layoutIdMap);
+
 			return buildExportLayoutSettingsMap(
-				themeDisplay.getUserId(), groupId, privateLayout,
-				_exportImportHelper.getLayoutIds(layoutIdMap),
+				themeDisplay.getUserId(), groupId, privateLayout, layoutIds,
 				portletRequest.getParameterMap(), themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
 		}

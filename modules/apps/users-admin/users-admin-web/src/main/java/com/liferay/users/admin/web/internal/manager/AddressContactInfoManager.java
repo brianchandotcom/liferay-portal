@@ -60,21 +60,19 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 
 		Address address = _addressLocalService.createAddress(addressId);
 
-		long regionId = ParamUtil.getLong(actionRequest, "addressRegionId");
-		long typeId = ParamUtil.getLong(actionRequest, "addressTypeId");
-		boolean mailing = ParamUtil.getBoolean(actionRequest, "addressMailing");
-		boolean primary = ParamUtil.getBoolean(actionRequest, "addressPrimary");
-
 		address.setStreet1(street1);
 		address.setStreet2(street2);
 		address.setStreet3(street3);
 		address.setCity(city);
 		address.setZip(zip);
-		address.setRegionId(regionId);
+		address.setRegionId(
+			ParamUtil.getLong(actionRequest, "addressRegionId"));
 		address.setCountryId(countryId);
-		address.setTypeId(typeId);
-		address.setMailing(mailing);
-		address.setPrimary(primary);
+		address.setTypeId(ParamUtil.getLong(actionRequest, "addressTypeId"));
+		address.setMailing(
+			ParamUtil.getBoolean(actionRequest, "addressMailing"));
+		address.setPrimary(
+			ParamUtil.getBoolean(actionRequest, "addressPrimary"));
 
 		return address;
 	}

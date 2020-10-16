@@ -100,9 +100,10 @@ public class DeleteEntryPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			AnnouncementsEntry entry = ActionUtil.getEntry(portletRequest);
+
 			return AnnouncementsEntryPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				ActionUtil.getEntry(portletRequest), ActionKeys.DELETE);
+				themeDisplay.getPermissionChecker(), entry, ActionKeys.DELETE);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

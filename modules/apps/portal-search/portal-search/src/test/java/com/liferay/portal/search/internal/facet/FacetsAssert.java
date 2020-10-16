@@ -55,8 +55,9 @@ public class FacetsAssert {
 
 		String message = (String)searchContext.getAttribute("queryString");
 
-		assertFrequencies(
-			message, searchContext.getFacet(facetName), expected.toString());
+		Facet facet = searchContext.getFacet(facetName);
+
+		assertFrequencies(message, facet, expected.toString());
 	}
 
 	protected static String toString(TermCollector termCollector) {

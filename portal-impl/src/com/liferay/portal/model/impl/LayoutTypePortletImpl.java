@@ -301,7 +301,9 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public List<Portlet> getAllPortlets(String columnId) {
-		String[] portletIds = StringUtil.split(getColumnValue(columnId));
+		String columnValue = getColumnValue(columnId);
+
+		String[] portletIds = StringUtil.split(columnValue);
 
 		List<Portlet> portlets = new ArrayList<>(portletIds.length);
 
@@ -1598,7 +1600,9 @@ public class LayoutTypePortletImpl
 		List<String> columnIds = getColumns();
 
 		for (String columnId : columnIds) {
-			String[] portletIds = StringUtil.split(getColumnValue(columnId));
+			String columnValue = getColumnValue(columnId);
+
+			String[] portletIds = StringUtil.split(columnValue);
 
 			for (String columnPortletId : portletIds) {
 				if (columnPortletId.equals(portletId)) {
@@ -1973,7 +1977,9 @@ public class LayoutTypePortletImpl
 	}
 
 	protected boolean hasNonstaticPortletId(String columnId, String portletId) {
-		String[] columnValues = StringUtil.split(getColumnValue(columnId));
+		String columnValue = getColumnValue(columnId);
+
+		String[] columnValues = StringUtil.split(columnValue);
 
 		for (String nonstaticPortletId : columnValues) {
 			if (nonstaticPortletId.equals(portletId)) {
@@ -2039,8 +2045,10 @@ public class LayoutTypePortletImpl
 			String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 			if (rootPortletId.equals(PortletKeys.NESTED_PORTLETS)) {
-				_removeNestedColumns(
-					PortalUtil.getPortletNamespace(portletId), portletIdList);
+				String portletNamespace = PortalUtil.getPortletNamespace(
+					portletId);
+
+				_removeNestedColumns(portletNamespace, portletIdList);
 			}
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);

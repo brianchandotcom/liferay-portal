@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
+import java.util.ResourceBundle;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -39,10 +41,10 @@ public class IconHelpTag extends IconTag {
 		setLocalizeMessage(false);
 		setMarkupView("lexicon");
 
-		setMessage(
-			LanguageUtil.get(
-				TagResourceBundleUtil.getResourceBundle(pageContext),
-				getMessage()));
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			pageContext);
+
+		setMessage(LanguageUtil.get(resourceBundle, getMessage()));
 
 		setToolTip(true);
 

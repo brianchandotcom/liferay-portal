@@ -360,9 +360,11 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 	protected void doReindex(ConfigurationModel configurationModel)
 		throws Exception {
 
+		Document document = getDocument(configurationModel);
+
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), CompanyConstants.SYSTEM,
-			getDocument(configurationModel), isCommitImmediately());
+			getSearchEngineId(), CompanyConstants.SYSTEM, document,
+			isCommitImmediately());
 	}
 
 	@Override

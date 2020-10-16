@@ -121,9 +121,12 @@ public class PollsUtil {
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		long questionId) {
 
-		saveVote(
-			PortalUtil.getHttpServletRequest(portletRequest),
-			PortalUtil.getHttpServletResponse(portletResponse), questionId);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+		HttpServletResponse httpServletResponse =
+			PortalUtil.getHttpServletResponse(portletResponse);
+
+		saveVote(httpServletRequest, httpServletResponse, questionId);
 	}
 
 	private static String _getCookieName(long questionId) {

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -141,10 +140,8 @@ public class BackgroundTaskThreadLocalManagerImpl
 			User user = _userLocalService.fetchUser(
 				PrincipalThreadLocal.getUserId());
 
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
 		}
 
 		Locale siteDefaultLocale = (Locale)threadLocalValues.get(

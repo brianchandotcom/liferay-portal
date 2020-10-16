@@ -16,6 +16,7 @@ package com.liferay.mobile.device.rules.web.internal.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRule;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupService;
 import com.liferay.mobile.device.rules.service.MDRRuleService;
 import com.liferay.mobile.device.rules.web.internal.constants.MDRWebKeys;
@@ -70,9 +71,11 @@ public class EditRuleMVCRenderCommand implements MVCRenderCommand {
 			long ruleGroupId = BeanParamUtil.getLong(
 				rule, renderRequest, "ruleGroupId");
 
+			MDRRuleGroup ruleGroup = _mdrRuleGroupService.getRuleGroup(
+				ruleGroupId);
+
 			renderRequest.setAttribute(
-				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP,
-				_mdrRuleGroupService.getRuleGroup(ruleGroupId));
+				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP, ruleGroup);
 
 			return "/edit_rule.jsp";
 		}

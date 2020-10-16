@@ -189,8 +189,10 @@ public class BlogsEntryAssetRenderer
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		return getURLEdit(
-			PortalUtil.getHttpServletRequest(liferayPortletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(liferayPortletRequest);
+
+		return getURLEdit(httpServletRequest);
 	}
 
 	@Override

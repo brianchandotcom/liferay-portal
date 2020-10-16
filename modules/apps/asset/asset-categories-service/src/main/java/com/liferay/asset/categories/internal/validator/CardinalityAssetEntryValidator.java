@@ -76,9 +76,11 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 	protected boolean isCategorizable(
 		long groupId, long classNameId, long classPK) {
 
+		String className = _portal.getClassName(classNameId);
+
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_portal.getClassName(classNameId));
+				className);
 
 		if ((assetRendererFactory == null) ||
 			!assetRendererFactory.isCategorizable()) {

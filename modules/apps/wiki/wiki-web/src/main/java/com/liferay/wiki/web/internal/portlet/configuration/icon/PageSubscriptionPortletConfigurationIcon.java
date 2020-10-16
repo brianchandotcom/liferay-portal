@@ -37,6 +37,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -58,9 +60,9 @@ public class PageSubscriptionPortletConfigurationIcon
 		String key = "subscribe";
 
 		try {
-			if (isSubscribed(
-					portletRequest, ActionUtil.getPage(portletRequest))) {
+			WikiPage page = ActionUtil.getPage(portletRequest);
 
+			if (isSubscribed(portletRequest, page)) {
 				key = "unsubscribe";
 			}
 		}
@@ -114,17 +116,22 @@ public class PageSubscriptionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			portletRequest);
+
 		WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(
-			_portal.getHttpServletRequest(portletRequest));
+			httpServletRequest);
 
 		WikiGroupServiceOverriddenConfiguration
 			wikiGroupServiceOverriddenConfiguration =
 				wikiRequestHelper.getWikiGroupServiceOverriddenConfiguration();
 
 		try {
+			WikiPage page = ActionUtil.getPage(portletRequest);
+
 			if (_wikiPageModelResourcePermission.contains(
-					wikiRequestHelper.getPermissionChecker(),
-					ActionUtil.getPage(portletRequest), ActionKeys.SUBSCRIBE) &&
+					wikiRequestHelper.getPermissionChecker(), page,
+					ActionKeys.SUBSCRIBE) &&
 				(wikiGroupServiceOverriddenConfiguration.
 					emailPageAddedEnabled() ||
 				 wikiGroupServiceOverriddenConfiguration.

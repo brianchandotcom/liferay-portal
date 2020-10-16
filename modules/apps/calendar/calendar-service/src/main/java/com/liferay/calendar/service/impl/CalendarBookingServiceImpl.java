@@ -823,9 +823,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		for (CalendarBooking calendarBooking : calendarBookings) {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			String author = _portal.getUserName(calendarBooking);
-
-			syndEntry.setAuthor(author);
+			syndEntry.setAuthor(_portal.getUserName(calendarBooking));
 
 			SyndContent syndContent = _syndModelFactory.createSyndContent();
 

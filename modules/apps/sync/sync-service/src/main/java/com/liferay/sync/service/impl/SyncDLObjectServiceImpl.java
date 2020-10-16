@@ -1274,7 +1274,9 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			return;
 		}
 
-		checkFolder(dlAppService.getFolder(folderId));
+		Folder folder = dlAppService.getFolder(folderId);
+
+		checkFolder(folder);
 	}
 
 	protected SyncDLObject checkModifiedTime(

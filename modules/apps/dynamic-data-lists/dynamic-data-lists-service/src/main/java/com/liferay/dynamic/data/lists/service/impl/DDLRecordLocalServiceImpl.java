@@ -613,8 +613,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 			Hits hits = indexer.search(searchContext, DDL.SELECTED_FIELD_NAMES);
 
-			return new BaseModelSearchResult<>(
-				getRecords(hits), hits.getLength());
+			List<DDLRecord> records = getRecords(hits);
+
+			return new BaseModelSearchResult<>(records, hits.getLength());
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -1013,7 +1014,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 					com.liferay.portal.kernel.search.Field.ENTRY_CLASS_PK));
 
 			try {
-				records.add(getRecord(recordId));
+				DDLRecord record = getRecord(recordId);
+
+				records.add(record);
 			}
 			catch (NoSuchRecordException noSuchRecordException) {
 				if (_log.isWarnEnabled()) {

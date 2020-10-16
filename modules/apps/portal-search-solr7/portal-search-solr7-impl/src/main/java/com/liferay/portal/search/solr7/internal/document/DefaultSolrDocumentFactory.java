@@ -130,10 +130,11 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 		solrInputDocument.addField(localizedName, value);
 
 		if (field.isSortable()) {
-			solrInputDocument.addField(
+			String sortableFieldName =
 				com.liferay.portal.kernel.search.Field.getSortableFieldName(
-					localizedName),
-				value);
+					localizedName);
+
+			solrInputDocument.addField(sortableFieldName, value);
 		}
 	}
 

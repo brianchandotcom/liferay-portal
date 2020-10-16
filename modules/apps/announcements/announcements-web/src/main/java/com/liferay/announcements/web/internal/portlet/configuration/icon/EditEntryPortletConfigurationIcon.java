@@ -95,9 +95,10 @@ public class EditEntryPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			AnnouncementsEntry entry = ActionUtil.getEntry(portletRequest);
+
 			return AnnouncementsEntryPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				ActionUtil.getEntry(portletRequest), ActionKeys.UPDATE);
+				themeDisplay.getPermissionChecker(), entry, ActionKeys.UPDATE);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

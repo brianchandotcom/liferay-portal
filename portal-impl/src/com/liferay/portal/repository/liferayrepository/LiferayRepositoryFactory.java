@@ -39,13 +39,16 @@ public class LiferayRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public LocalRepository createLocalRepository(long repositoryId) {
-		return createLocalRepositoryInstance(
-			getRepositoryLocation(repositoryId));
+		long[] repositoryLocation = getRepositoryLocation(repositoryId);
+
+		return createLocalRepositoryInstance(repositoryLocation);
 	}
 
 	@Override
 	public Repository createRepository(long repositoryId) {
-		return createRepositoryInstance(getRepositoryLocation(repositoryId));
+		long[] repositoryLocation = getRepositoryLocation(repositoryId);
+
+		return createRepositoryInstance(repositoryLocation);
 	}
 
 	protected LocalRepository createLocalRepositoryInstance(

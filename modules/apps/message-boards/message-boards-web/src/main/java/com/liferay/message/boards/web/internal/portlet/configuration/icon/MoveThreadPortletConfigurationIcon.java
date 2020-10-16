@@ -70,10 +70,10 @@ public class MoveThreadPortletConfigurationIcon
 			"redirect", _portal.getCurrentURL(portletRequest));
 
 		try {
+			MBCategory category = ActionUtil.getCategory(portletRequest);
+
 			portletURL.setParameter(
-				"mbCategoryId",
-				String.valueOf(
-					getCategoryId(ActionUtil.getCategory(portletRequest))));
+				"mbCategoryId", String.valueOf(getCategoryId(category)));
 
 			MBMessage message = ActionUtil.getMessage(portletRequest);
 

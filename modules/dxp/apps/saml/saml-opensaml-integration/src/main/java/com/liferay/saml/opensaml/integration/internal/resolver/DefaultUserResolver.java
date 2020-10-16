@@ -208,9 +208,7 @@ public class DefaultUserResolver implements UserResolver {
 		long[] userGroupIds = null;
 		boolean sendEmail = false;
 
-		String uuid = getValueAsString("uuid", attributesMap);
-
-		serviceContext.setUuid(uuid);
+		serviceContext.setUuid(getValueAsString("uuid", attributesMap));
 
 		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,

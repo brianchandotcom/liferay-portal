@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.time.StopWatch;
-import org.apache.directory.api.ldap.model.entry.Entry;
 import org.apache.directory.api.ldap.model.entry.Value;
 import org.apache.directory.api.ldap.model.exception.LdapException;
 import org.apache.directory.api.ldap.model.filter.AndNode;
@@ -148,9 +147,8 @@ public class SearchLdapHandler extends BaseLdapHandler {
 		SearchResultEntry searchResponseEntry = new SearchResultEntryImpl(
 			searchRequest.getMessageId());
 
-		Entry entry = directory.toEntry(searchRequest.getAttributes());
-
-		searchResponseEntry.setEntry(entry);
+		searchResponseEntry.setEntry(
+			directory.toEntry(searchRequest.getAttributes()));
 
 		if (responses.size() >= getSizeLimit(searchRequest)) {
 			throw new SearchSizeLimitException();

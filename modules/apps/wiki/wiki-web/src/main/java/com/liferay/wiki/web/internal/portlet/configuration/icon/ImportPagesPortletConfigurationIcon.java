@@ -92,9 +92,10 @@ public class ImportPagesPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			WikiNode node = ActionUtil.getNode(portletRequest);
+
 			return _wikiNodeModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				ActionUtil.getNode(portletRequest), ActionKeys.IMPORT);
+				themeDisplay.getPermissionChecker(), node, ActionKeys.IMPORT);
 		}
 		catch (Exception exception) {
 		}

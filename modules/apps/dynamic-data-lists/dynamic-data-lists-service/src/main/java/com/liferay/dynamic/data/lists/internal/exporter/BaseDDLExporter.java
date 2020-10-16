@@ -222,8 +222,9 @@ public abstract class BaseDDLExporter implements DDLExporter {
 	}
 
 	protected String getStatusMessage(int status) {
-		return LanguageUtil.get(
-			_locale, WorkflowConstants.getStatusLabel(status));
+		String statusLabel = WorkflowConstants.getStatusLabel(status);
+
+		return LanguageUtil.get(_locale, statusLabel);
 	}
 
 	protected List<DDMStructureVersion> getStructureVersions(long recordSetId)

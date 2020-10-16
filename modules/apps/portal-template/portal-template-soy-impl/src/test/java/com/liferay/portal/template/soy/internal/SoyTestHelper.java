@@ -52,8 +52,9 @@ public class SoyTestHelper {
 	}
 
 	public SoyTemplate getSoyTemplate(String fileName) {
-		return (SoyTemplate)_soyManager.getTemplate(
-			getTemplateResource(fileName), false);
+		TemplateResource templateResource = getTemplateResource(fileName);
+
+		return (SoyTemplate)_soyManager.getTemplate(templateResource, false);
 	}
 
 	public SoyTemplate getSoyTemplate(String... fileNames) {

@@ -74,9 +74,11 @@ public class AddFormInstanceRecordMVCResourceCommand
 			return null;
 		}
 
+		DDMForm ddmForm = getDDMForm(ddmFormInstance);
+
 		DDMFormContextDeserializerRequest ddmFormContextDeserializerRequest =
 			DDMFormContextDeserializerRequest.with(
-				getDDMForm(ddmFormInstance), serializedDDMFormValues);
+				ddmForm, serializedDDMFormValues);
 
 		Locale currentLocale = LocaleUtil.fromLanguageId(
 			LanguageUtil.getLanguageId(resourceRequest));

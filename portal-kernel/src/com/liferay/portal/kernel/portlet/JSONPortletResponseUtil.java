@@ -25,6 +25,7 @@ import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -62,9 +63,10 @@ public class JSONPortletResponseUtil {
 	private static String _getContentType(PortletRequest portletRequest) {
 		String contentType = ContentTypes.APPLICATION_JSON;
 
-		if (BrowserSnifferUtil.isIe(
-				PortalUtil.getHttpServletRequest(portletRequest))) {
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
+		if (BrowserSnifferUtil.isIe(httpServletRequest)) {
 			contentType = ContentTypes.TEXT_PLAIN;
 		}
 

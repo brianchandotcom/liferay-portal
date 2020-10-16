@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseNavItemTag;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
+import java.util.ResourceBundle;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTag;
@@ -64,10 +66,11 @@ public class NavItemTag extends BaseNavItemTag implements BodyTag {
 				title = StringPool.BLANK;
 			}
 
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			title = title.concat(
-				LanguageUtil.get(
-					TagResourceBundleUtil.getResourceBundle(pageContext),
-					"opens-new-window"));
+				LanguageUtil.get(resourceBundle, "opens-new-window"));
 
 			setNamespacedAttribute(
 				httpServletRequest, "title", String.valueOf(title));

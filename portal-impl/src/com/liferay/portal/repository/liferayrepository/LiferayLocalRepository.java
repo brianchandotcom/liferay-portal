@@ -389,8 +389,10 @@ public class LiferayLocalRepository
 	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
-		return new LiferayFileShortcut(
-			dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId));
+		DLFileShortcut dlFileShortcut =
+			dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
+
+		return new LiferayFileShortcut(dlFileShortcut);
 	}
 
 	@Override

@@ -116,8 +116,9 @@ public class ResourceImporterExtender {
 			String bundleSymbolicName = bundle.getSymbolicName();
 
 			try {
-				PluginPackageUtil.registerInstalledPluginPackage(
-					getPluginPackage(bundle));
+				PluginPackage pluginPackage = getPluginPackage(bundle);
+
+				PluginPackageUtil.registerInstalledPluginPackage(pluginPackage);
 
 				ServletContext servletContext = new BundleServletContextAdapter(
 					bundle);
@@ -171,8 +172,10 @@ public class ResourceImporterExtender {
 			}
 
 			try {
+				PluginPackage pluginPackage = getPluginPackage(bundle);
+
 				PluginPackageUtil.unregisterInstalledPluginPackage(
-					getPluginPackage(bundle));
+					pluginPackage);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

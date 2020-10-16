@@ -75,8 +75,9 @@ public class ExpandoTableLocalServiceImpl
 	public ExpandoTable addTable(long companyId, String className, String name)
 		throws PortalException {
 
-		return addTable(
-			companyId, classNameLocalService.getClassNameId(className), name);
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return addTable(companyId, classNameId, name);
 	}
 
 	@Override
@@ -127,8 +128,9 @@ public class ExpandoTableLocalServiceImpl
 	public void deleteTable(long companyId, String className, String name)
 		throws PortalException {
 
-		deleteTable(
-			companyId, classNameLocalService.getClassNameId(className), name);
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		deleteTable(companyId, classNameId, name);
 	}
 
 	@Override
@@ -143,8 +145,9 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public void deleteTables(long companyId, String className) {
-		deleteTables(
-			companyId, classNameLocalService.getClassNameId(className));
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		deleteTables(companyId, classNameId);
 	}
 
 	@Override
@@ -155,9 +158,10 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable fetchDefaultTable(long companyId, String className) {
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return fetchTable(
-			companyId, classNameLocalService.getClassNameId(className),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
 	@Override
@@ -180,9 +184,10 @@ public class ExpandoTableLocalServiceImpl
 	public ExpandoTable getDefaultTable(long companyId, String className)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return getTable(
-			companyId, classNameLocalService.getClassNameId(className),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
 	@Override
@@ -202,8 +207,9 @@ public class ExpandoTableLocalServiceImpl
 	public ExpandoTable getTable(long companyId, String className, String name)
 		throws PortalException {
 
-		return getTable(
-			companyId, classNameLocalService.getClassNameId(className), name);
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return getTable(companyId, classNameId, name);
 	}
 
 	@Override
@@ -213,8 +219,9 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public List<ExpandoTable> getTables(long companyId, String className) {
-		return getTables(
-			companyId, classNameLocalService.getClassNameId(className));
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return getTables(companyId, classNameId);
 	}
 
 	@Override

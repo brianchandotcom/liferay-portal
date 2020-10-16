@@ -339,9 +339,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		sb.append(StringPool.SLASH);
 		sb.append(action);
 
-		String location = sb.toString();
-
-		options.setLocation(location);
+		options.setLocation(sb.toString());
 
 		Map<String, String> parts = new HashMap<>();
 

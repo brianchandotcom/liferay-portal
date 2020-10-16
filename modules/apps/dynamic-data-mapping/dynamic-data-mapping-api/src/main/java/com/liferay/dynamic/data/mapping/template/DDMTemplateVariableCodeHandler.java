@@ -56,8 +56,10 @@ public class DDMTemplateVariableCodeHandler
 		String templateId = getTemplateId(
 			templateVariableDefinition.getDataType());
 
+		Template template = getTemplate(templateId);
+
 		String content = getTemplateContent(
-			getTemplate(templateId), templateVariableDefinition, language);
+			template, templateVariableDefinition, language);
 
 		if (templateVariableDefinition.isRepeatable()) {
 			content = handleRepeatableField(

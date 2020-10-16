@@ -126,9 +126,12 @@ public class StagingBarPortlet extends MVCPortlet {
 			actionRequest, "updateRecentLayoutRevisionId");
 
 		if (updateRecentLayoutRevisionId) {
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(actionRequest);
+
 			_staging.setRecentLayoutRevisionId(
-				_portal.getHttpServletRequest(actionRequest),
-				layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(),
+				httpServletRequest, layoutRevision.getLayoutSetBranchId(),
+				layoutRevision.getPlid(),
 				layoutRevision.getParentLayoutRevisionId());
 		}
 

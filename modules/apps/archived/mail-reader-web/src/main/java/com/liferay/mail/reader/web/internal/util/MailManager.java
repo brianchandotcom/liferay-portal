@@ -500,8 +500,10 @@ public class MailManager {
 			message = MessageLocalServiceUtil.getMessage(messageId);
 		}
 
-		return new MessageDisplay(
-			message, AttachmentLocalServiceUtil.getAttachments(messageId), 0);
+		List<Attachment> attachments =
+			AttachmentLocalServiceUtil.getAttachments(messageId);
+
+		return new MessageDisplay(message, attachments, 0);
 	}
 
 	public MessageDisplay getMessageDisplay(

@@ -35,8 +35,9 @@ public class SelectedUserHelper {
 		throws PortalException {
 
 		User selectedUser = portal.getSelectedUser(portletRequest);
+		User user = portal.getUser(portletRequest);
 
-		if (Objects.equals(portal.getUser(portletRequest), selectedUser)) {
+		if (Objects.equals(user, selectedUser)) {
 			throw new PortalException(
 				"The selected user cannot be the logged in user");
 		}

@@ -103,8 +103,9 @@ public class SharepointServlet extends HttpServlet {
 
 				sharepointRequest.setRootPath(rootPath);
 
-				sharepointRequest.setSharepointStorage(
-					SharepointUtil.getStorage(rootPath));
+				SharepointStorage storage = SharepointUtil.getStorage(rootPath);
+
+				sharepointRequest.setSharepointStorage(storage);
 
 				if (_log.isInfoEnabled()) {
 					_log.info(

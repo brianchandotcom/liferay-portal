@@ -168,8 +168,9 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void setRedirectAttribute(ActionRequest actionRequest) {
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT, getRedirect(actionRequest));
+		String redirect = getRedirect(actionRequest);
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	protected void setRedirectAttribute(

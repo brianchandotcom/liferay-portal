@@ -14,6 +14,7 @@
 
 package com.liferay.util.slf4j;
 
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.HashMap;
@@ -54,8 +55,9 @@ public class LiferayLoggerFactory implements ILoggerFactory {
 			_writeLock.lock();
 
 			try {
-				logger = new LiferayLoggerAdapter(
-					LogFactoryUtil.getLog(name), name);
+				Log log = LogFactoryUtil.getLog(name);
+
+				logger = new LiferayLoggerAdapter(log, name);
 
 				_loggers.put(name, logger);
 			}

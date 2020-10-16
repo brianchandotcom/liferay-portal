@@ -58,8 +58,9 @@ public class AppDisplayFactoryUtil {
 
 			bundlesMap.load(bundles);
 
-			return createMarketplaceAppDisplay(
-				bundlesMap, _appLocalService.getApp(appId));
+			App app = _appLocalService.getApp(appId);
+
+			return createMarketplaceAppDisplay(bundlesMap, app);
 		}
 		catch (PortalException portalException) {
 

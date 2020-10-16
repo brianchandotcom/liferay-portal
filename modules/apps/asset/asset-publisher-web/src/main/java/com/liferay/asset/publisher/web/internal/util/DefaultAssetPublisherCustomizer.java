@@ -158,9 +158,12 @@ public class DefaultAssetPublisherCustomizer
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		PortletPreferences portletPreferences = getPortletPreferences(
+			httpServletRequest);
+
 		long[] groupIds = assetPublisherHelper.getGroupIds(
-			getPortletPreferences(httpServletRequest),
-			themeDisplay.getScopeGroupId(), themeDisplay.getLayout());
+			portletPreferences, themeDisplay.getScopeGroupId(),
+			themeDisplay.getLayout());
 
 		assetEntryQuery.setGroupIds(groupIds);
 	}

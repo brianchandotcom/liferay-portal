@@ -56,8 +56,9 @@ public class DeactivateSimulationMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
 			SegmentsActionKeys.SIMULATE_SEGMENTS_ENTRIES);
 
-		_segmentsEntrySimulator.deactivateSimulation(
-			_portal.getUserId(actionRequest));
+		long userId = _portal.getUserId(actionRequest);
+
+		_segmentsEntrySimulator.deactivateSimulation(userId);
 	}
 
 	@Reference

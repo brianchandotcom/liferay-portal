@@ -45,9 +45,7 @@ public class DnCorrectingStoreName<E extends LiferayLdapMessageContainer>
 
 		String dnString = Strings.utf8ToString(dnBytes);
 
-		Dn dn = _getDn(dnString);
-
-		bindRequest.setDn(dn);
+		bindRequest.setDn(_getDn(dnString));
 	}
 
 	private Dn _getDn(String dnString) {

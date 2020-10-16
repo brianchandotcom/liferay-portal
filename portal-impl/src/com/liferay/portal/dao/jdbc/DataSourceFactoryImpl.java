@@ -239,9 +239,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		ComboPooledDataSource comboPooledDataSource =
 			new ComboPooledDataSource();
 
-		String identityToken = StringUtil.randomString();
-
-		comboPooledDataSource.setIdentityToken(identityToken);
+		comboPooledDataSource.setIdentityToken(StringUtil.randomString());
 
 		String connectionPropertiesString = (String)properties.remove(
 			"connectionProperties");

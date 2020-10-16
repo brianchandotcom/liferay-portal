@@ -1050,7 +1050,9 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String getBCP47LanguageId(HttpServletRequest httpServletRequest) {
-		return getBCP47LanguageId(PortalUtil.getLocale(httpServletRequest));
+		Locale locale = PortalUtil.getLocale(httpServletRequest);
+
+		return getBCP47LanguageId(locale);
 	}
 
 	@Override
@@ -1060,7 +1062,9 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String getBCP47LanguageId(PortletRequest portletRequest) {
-		return getBCP47LanguageId(PortalUtil.getLocale(portletRequest));
+		Locale locale = PortalUtil.getLocale(portletRequest);
+
+		return getBCP47LanguageId(locale);
 	}
 
 	@Override
@@ -1121,7 +1125,10 @@ public class LanguageImpl implements Language, Serializable {
 	 */
 	@Override
 	public String getLanguageId(PortletRequest portletRequest) {
-		return getLanguageId(PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		return getLanguageId(httpServletRequest);
 	}
 
 	/**

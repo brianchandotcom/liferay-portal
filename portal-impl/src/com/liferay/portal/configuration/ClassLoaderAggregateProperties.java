@@ -82,7 +82,9 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 		while (keyIterator.hasNext()) {
 			String key = keyIterator.next();
 
-			properties.setProperty(key, StringUtil.merge(getList(key)));
+			List<Object> list = getList(key);
+
+			properties.setProperty(key, StringUtil.merge(list));
 		}
 
 		return properties;

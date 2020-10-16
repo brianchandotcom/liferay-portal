@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 
@@ -45,8 +46,9 @@ public class PrivateLayoutsItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return ResourceBundleUtil.getString(
-			_portal.getResourceBundle(locale), "private-pages");
+		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
+
+		return ResourceBundleUtil.getString(resourceBundle, "private-pages");
 	}
 
 	@Override

@@ -117,9 +117,8 @@ public class ExportImportConfigurationLocalServiceImpl
 		exportImportConfiguration.setType(type);
 
 		if (settingsMap != null) {
-			String settings = JSONFactoryUtil.serialize(settingsMap);
-
-			exportImportConfiguration.setSettings(settings);
+			exportImportConfiguration.setSettings(
+				JSONFactoryUtil.serialize(settingsMap));
 		}
 
 		exportImportConfiguration.setStatus(status);
@@ -427,9 +426,8 @@ public class ExportImportConfigurationLocalServiceImpl
 		exportImportConfiguration.setDescription(description);
 
 		if (settingsMap != null) {
-			String settings = JSONFactoryUtil.serialize(settingsMap);
-
-			exportImportConfiguration.setSettings(settings);
+			exportImportConfiguration.setSettings(
+				JSONFactoryUtil.serialize(settingsMap));
 		}
 
 		return exportImportConfigurationPersistence.update(

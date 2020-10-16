@@ -69,11 +69,11 @@ public class OAuth2ApplicationModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker,
+		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.getOAuth2Application(
-				oAuth2ApplicationId),
-			actionId);
+				oAuth2ApplicationId);
+
+		return contains(permissionChecker, oAuth2Application, actionId);
 	}
 
 	@Override

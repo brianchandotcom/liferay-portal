@@ -112,10 +112,8 @@ public class LayoutServiceTest {
 			_roleLocalService.deleteUserRoles(
 				user.getUserId(), user.getRoleIds());
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
 			_layoutService.fetchLayout(
 				_group.getGroupId(), newLayout.isPrivateLayout(),

@@ -277,9 +277,7 @@ public class DDMImpl implements DDM {
 
 		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
 
-		LocalizedValue title = getDefaultDDMFormPageTitle(defaultLocale);
-
-		ddmFormLayoutPage.setTitle(title);
+		ddmFormLayoutPage.setTitle(getDefaultDDMFormPageTitle(defaultLocale));
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			ddmFormLayoutPage.addDDMFormLayoutRow(

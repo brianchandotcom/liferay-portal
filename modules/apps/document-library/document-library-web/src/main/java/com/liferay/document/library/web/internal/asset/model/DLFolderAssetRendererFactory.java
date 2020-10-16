@@ -59,8 +59,10 @@ public class DLFolderAssetRendererFactory
 	public AssetRenderer<Folder> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
+		Folder folder = _dlAppLocalService.getFolder(classPK);
+
 		DLFolderAssetRenderer dlFolderAssetRenderer = new DLFolderAssetRenderer(
-			_dlAppLocalService.getFolder(classPK), _trashHelper);
+			folder, _trashHelper);
 
 		dlFolderAssetRenderer.setAssetRendererType(type);
 

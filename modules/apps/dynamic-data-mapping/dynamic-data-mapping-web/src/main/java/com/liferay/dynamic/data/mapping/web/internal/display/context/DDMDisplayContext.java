@@ -108,8 +108,10 @@ public class DDMDisplayContext {
 		_ddmWebConfiguration = ddmWebConfiguration;
 		_storageAdapterRegistry = storageAdapterRegistry;
 
-		_ddmWebRequestHelper = new DDMWebRequestHelper(
-			PortalUtil.getHttpServletRequest(renderRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(renderRequest);
+
+		_ddmWebRequestHelper = new DDMWebRequestHelper(httpServletRequest);
 	}
 
 	public boolean autogenerateStructureKey() {

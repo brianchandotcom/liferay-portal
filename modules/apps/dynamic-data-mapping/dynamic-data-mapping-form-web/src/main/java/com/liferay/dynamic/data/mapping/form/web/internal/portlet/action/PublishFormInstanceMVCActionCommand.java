@@ -146,8 +146,9 @@ public class PublishFormInstanceMVCActionCommand
 			ActionRequest actionRequest, long formInstanceId, boolean published)
 		throws PortalException {
 
-		Role role = _roleLocalService.getRole(
-			_portal.getCompanyId(actionRequest), RoleConstants.GUEST);
+		long companyId = _portal.getCompanyId(actionRequest);
+
+		Role role = _roleLocalService.getRole(companyId, RoleConstants.GUEST);
 
 		ResourcePermission resourcePermission =
 			_resourcePermissionLocalService.fetchResourcePermission(

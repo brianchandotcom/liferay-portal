@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.trash;
 
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -34,8 +35,9 @@ public class MBCategoryTrashRendererFactory implements TrashRendererFactory {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		return new MBCategoryTrashRenderer(
-			_mbCategoryLocalService.getCategory(classPK));
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
+
+		return new MBCategoryTrashRenderer(category);
 	}
 
 	@Reference

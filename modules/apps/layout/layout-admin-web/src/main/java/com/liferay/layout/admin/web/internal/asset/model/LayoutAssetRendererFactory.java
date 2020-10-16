@@ -85,8 +85,10 @@ public class LayoutAssetRendererFactory
 	public AssetRenderer<Layout> getAssetRenderer(long plid, int type)
 		throws PortalException {
 
+		Layout layout = _layoutLocalService.getLayout(plid);
+
 		LayoutAssetRenderer layoutAssetRenderer = new LayoutAssetRenderer(
-			_layoutLocalService.getLayout(plid));
+			layout);
 
 		layoutAssetRenderer.setAssetRendererType(type);
 		layoutAssetRenderer.setServletContext(_servletContext);

@@ -126,9 +126,11 @@ public class ThreadSubscriptionPortletConfigurationIcon
 				return false;
 			}
 
+			MBMessage message = ActionUtil.getMessage(portletRequest);
+
 			return _messageModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				ActionUtil.getMessage(portletRequest), ActionKeys.SUBSCRIBE);
+				themeDisplay.getPermissionChecker(), message,
+				ActionKeys.SUBSCRIBE);
 		}
 		catch (Exception exception) {
 		}

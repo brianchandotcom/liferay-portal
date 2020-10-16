@@ -39,8 +39,9 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 
 	@Override
 	public URL getURL(String templateId) {
-		Bundle bundle = _bundleContext.getBundle(
-			SoyTemplateUtil.getBundleId(templateId));
+		long bundleId = SoyTemplateUtil.getBundleId(templateId);
+
+		Bundle bundle = _bundleContext.getBundle(bundleId);
 
 		int index = templateId.indexOf(TemplateConstants.BUNDLE_SEPARATOR);
 

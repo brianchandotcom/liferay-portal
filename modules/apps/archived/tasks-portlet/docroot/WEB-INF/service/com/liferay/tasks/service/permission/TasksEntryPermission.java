@@ -53,9 +53,10 @@ public class TasksEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker,
-			TasksEntryLocalServiceUtil.getTasksEntry(tasksEntryId), actionId);
+		TasksEntry tasksEntry = TasksEntryLocalServiceUtil.getTasksEntry(
+			tasksEntryId);
+
+		return contains(permissionChecker, tasksEntry, actionId);
 	}
 
 	public static boolean contains(

@@ -259,7 +259,10 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 			_wikiNodeService.updateNode(
 				nodeId, name, description, serviceContext);
 
-			updateSettings(getModifiableSettings(actionRequest), oldName, name);
+			ModifiableSettings modifiableSettings = getModifiableSettings(
+				actionRequest);
+
+			updateSettings(modifiableSettings, oldName, name);
 		}
 	}
 

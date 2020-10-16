@@ -159,9 +159,7 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 
 		oAuthAccessor.setRequestToken(null);
 
-		String tokenSecret = randomizeToken(consumerKey.concat(token));
-
-		oAuthAccessor.setTokenSecret(tokenSecret);
+		oAuthAccessor.setTokenSecret(randomizeToken(consumerKey.concat(token)));
 
 		OAuthUser oAuthUser = _oAuthUserLocalService.fetchOAuthUser(
 			userId, oAuthApplication.getOAuthApplicationId());
@@ -202,9 +200,7 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 
 		oAuthAccessor.setRequestToken(token);
 
-		String tokenSecret = randomizeToken(consumerKey.concat(token));
-
-		oAuthAccessor.setTokenSecret(tokenSecret);
+		oAuthAccessor.setTokenSecret(randomizeToken(consumerKey.concat(token)));
 
 		_put(token, oAuthAccessor);
 	}

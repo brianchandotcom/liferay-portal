@@ -63,9 +63,7 @@ public class SnapshotInfoConverter {
 			snapshotDetails.setIndexNames(indices.toArray(new String[0]));
 		}
 
-		SnapshotState snapshotState = convert(snapshotInfo.state());
-
-		snapshotDetails.setSnapshotState(snapshotState);
+		snapshotDetails.setSnapshotState(convert(snapshotInfo.state()));
 
 		snapshotDetails.setSuccessfulShards(snapshotInfo.successfulShards());
 		snapshotDetails.setTotalShards(snapshotInfo.totalShards());

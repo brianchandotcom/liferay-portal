@@ -325,7 +325,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			LocalRepository localRepository =
 				_repositoryProvider.getFileEntryLocalRepository(fileEntryId);
 
-			if (_isAttachment(localRepository.getFileEntry(fileEntryId))) {
+			FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+			if (_isAttachment(fileEntry)) {
 				_run(
 					FileEntry.class,
 					() -> {

@@ -27,7 +27,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -125,9 +124,7 @@ public class MBStatsUserLocalServiceImpl
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			MBThread.class, MBStatsUserLocalServiceImpl.class.getClassLoader());
 
-		Projection projection = ProjectionFactoryUtil.max("lastPostDate");
-
-		dynamicQuery.setProjection(projection);
+		dynamicQuery.setProjection(ProjectionFactoryUtil.max("lastPostDate"));
 
 		Property userIdProperty = PropertyFactoryUtil.forName("userId");
 
@@ -159,9 +156,7 @@ public class MBStatsUserLocalServiceImpl
 	public long getMessageCountByGroupId(long groupId) {
 		DynamicQuery dynamicQuery = mbStatsUserLocalService.dynamicQuery();
 
-		Projection projection = ProjectionFactoryUtil.sum("messageCount");
-
-		dynamicQuery.setProjection(projection);
+		dynamicQuery.setProjection(ProjectionFactoryUtil.sum("messageCount"));
 
 		Property property = PropertyFactoryUtil.forName("groupId");
 
@@ -180,9 +175,7 @@ public class MBStatsUserLocalServiceImpl
 	public long getMessageCountByUserId(long userId) {
 		DynamicQuery dynamicQuery = mbStatsUserLocalService.dynamicQuery();
 
-		Projection projection = ProjectionFactoryUtil.sum("messageCount");
-
-		dynamicQuery.setProjection(projection);
+		dynamicQuery.setProjection(ProjectionFactoryUtil.sum("messageCount"));
 
 		Property property = PropertyFactoryUtil.forName("userId");
 

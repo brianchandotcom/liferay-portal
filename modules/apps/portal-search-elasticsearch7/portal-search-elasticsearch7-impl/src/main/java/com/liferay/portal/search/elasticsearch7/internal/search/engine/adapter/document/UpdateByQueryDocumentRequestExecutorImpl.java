@@ -124,9 +124,8 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 					(ScriptType)scriptJSONObject.get("scriptType"));
 			}
 
-			Script script = _scriptTranslator.translate(builder.build());
-
-			updateByQueryRequest.setScript(script);
+			updateByQueryRequest.setScript(
+				_scriptTranslator.translate(builder.build()));
 		}
 
 		return updateByQueryRequest;

@@ -2476,10 +2476,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long layoutSetPrototypeId, String layoutUuid)
 		throws PortalException {
 
-		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
+		LayoutSetPrototype layoutSetPrototype =
 			layoutSetPrototypeLocalService.getLayoutSetPrototype(
-				layoutSetPrototypeId),
-			layoutUuid);
+				layoutSetPrototypeId);
+
+		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
+			layoutSetPrototype, layoutUuid);
 	}
 
 	@Override

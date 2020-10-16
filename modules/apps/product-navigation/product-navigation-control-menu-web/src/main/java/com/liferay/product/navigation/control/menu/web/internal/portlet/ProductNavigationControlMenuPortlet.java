@@ -73,9 +73,11 @@ public class ProductNavigationControlMenuPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
 		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(renderRequest));
+			_portal.getOriginalServletRequest(httpServletRequest);
 
 		String layoutMode = ParamUtil.getString(
 			originalHttpServletRequest, "p_l_mode", Constants.VIEW);

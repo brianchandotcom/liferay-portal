@@ -77,7 +77,9 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (!isEnabled(_portal.getCompanyId(httpServletRequest))) {
+		long companyId = _portal.getCompanyId(httpServletRequest);
+
+		if (!isEnabled(companyId)) {
 			return null;
 		}
 

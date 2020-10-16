@@ -114,9 +114,9 @@ public class LayoutPermissionImpl
 			PermissionChecker permissionChecker, long plid, String actionId)
 		throws PortalException {
 
-		check(
-			permissionChecker, LayoutLocalServiceUtil.getLayout(plid),
-			actionId);
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		check(permissionChecker, layout, actionId);
 	}
 
 	@Override
@@ -178,9 +178,9 @@ public class LayoutPermissionImpl
 			PermissionChecker permissionChecker, long plid, String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker, LayoutLocalServiceUtil.getLayout(plid),
-			actionId);
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		return contains(permissionChecker, layout, actionId);
 	}
 
 	@Override

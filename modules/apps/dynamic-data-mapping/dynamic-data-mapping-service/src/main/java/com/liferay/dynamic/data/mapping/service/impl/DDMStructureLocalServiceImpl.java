@@ -1948,7 +1948,9 @@ public class DDMStructureLocalServiceImpl
 			throw structureDuplicateStructureKeyException;
 		}
 
-		validate(nameMap, getParentDDMForm(parentStructureId), ddmForm);
+		DDMForm parentDDMForm = getParentDDMForm(parentStructureId);
+
+		validate(nameMap, parentDDMForm, ddmForm);
 	}
 
 	protected void validate(

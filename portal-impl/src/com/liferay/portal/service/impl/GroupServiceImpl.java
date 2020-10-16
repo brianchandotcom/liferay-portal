@@ -191,18 +191,20 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 	@Override
 	public void disableStaging(long groupId) throws PortalException {
+		Group group = groupLocalService.getGroup(groupId);
+
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupLocalService.getGroup(groupId),
-			ActionKeys.UPDATE);
+			getPermissionChecker(), group, ActionKeys.UPDATE);
 
 		groupLocalService.disableStaging(groupId);
 	}
 
 	@Override
 	public void enableStaging(long groupId) throws PortalException {
+		Group group = groupLocalService.getGroup(groupId);
+
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupLocalService.getGroup(groupId),
-			ActionKeys.UPDATE);
+			getPermissionChecker(), group, ActionKeys.UPDATE);
 
 		groupLocalService.enableStaging(groupId);
 	}

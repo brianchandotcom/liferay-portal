@@ -82,9 +82,10 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
 	@Override
 	public void deleteWebsites(long companyId, String className, long classPK) {
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		List<Website> websites = websitePersistence.findByC_C_C(
-			companyId, classNameLocalService.getClassNameId(className),
-			classPK);
+			companyId, classNameId, classPK);
 
 		for (Website website : websites) {
 			websiteLocalService.deleteWebsite(website);
@@ -100,9 +101,9 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 	public List<Website> getWebsites(
 		long companyId, String className, long classPK) {
 
-		return websitePersistence.findByC_C_C(
-			companyId, classNameLocalService.getClassNameId(className),
-			classPK);
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return websitePersistence.findByC_C_C(companyId, classNameId, classPK);
 	}
 
 	@Override

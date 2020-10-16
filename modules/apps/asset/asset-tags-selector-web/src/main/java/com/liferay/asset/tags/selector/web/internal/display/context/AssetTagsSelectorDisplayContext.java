@@ -110,9 +110,7 @@ public class AssetTagsSelectorDisplayContext {
 		SearchContainer<AssetTag> tagsSearchContainer = new SearchContainer(
 			_renderRequest, getPortletURL(), null, "there-are-no-tags");
 
-		String orderByCol = _getOrderByCol();
-
-		tagsSearchContainer.setOrderByCol(orderByCol);
+		tagsSearchContainer.setOrderByCol(_getOrderByCol());
 
 		boolean orderByAsc = false;
 

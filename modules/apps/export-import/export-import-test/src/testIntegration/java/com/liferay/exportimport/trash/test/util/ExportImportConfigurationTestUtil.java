@@ -17,6 +17,7 @@ package com.liferay.exportimport.trash.test.util;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -60,10 +61,11 @@ public class ExportImportConfigurationTestUtil {
 			long userId, long groupId)
 		throws Exception {
 
+		User user = UserLocalServiceUtil.getUser(userId);
+
 		return ExportImportConfigurationSettingsMapFactoryUtil.
 			buildPublishLayoutLocalSettingsMap(
-				UserLocalServiceUtil.getUser(userId), groupId, groupId, false,
-				null, null);
+				user, groupId, groupId, false, null, null);
 	}
 
 }

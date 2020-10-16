@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
@@ -35,8 +36,10 @@ public class HtmlPreviewEntryImpl extends HtmlPreviewEntryBaseImpl {
 		}
 
 		try {
-			return DLUtil.getImagePreviewURL(
-				DLAppLocalServiceUtil.getFileEntry(fileEntryId), themeDisplay);
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get HTML preview entry image URL", exception);

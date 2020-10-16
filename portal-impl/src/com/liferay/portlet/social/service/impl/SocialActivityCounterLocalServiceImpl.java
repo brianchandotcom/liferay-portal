@@ -394,8 +394,9 @@ public class SocialActivityCounterLocalServiceImpl
 			deleteActivityCounters(assetEntry);
 		}
 		else {
-			socialActivityCounterPersistence.removeByC_C(
-				classNameLocalService.getClassNameId(className), classPK);
+			long classNameId = classNameLocalService.getClassNameId(className);
+
+			socialActivityCounterPersistence.removeByC_C(classNameId, classPK);
 
 			socialActivityLimitPersistence.removeByUserId(classPK);
 		}
@@ -419,7 +420,9 @@ public class SocialActivityCounterLocalServiceImpl
 	public void disableActivityCounters(long classNameId, long classPK)
 		throws PortalException {
 
-		disableActivityCounters(PortalUtil.getClassName(classNameId), classPK);
+		String className = PortalUtil.getClassName(classNameId);
+
+		disableActivityCounters(className, classPK);
 	}
 
 	/**
@@ -478,7 +481,9 @@ public class SocialActivityCounterLocalServiceImpl
 	public void enableActivityCounters(long classNameId, long classPK)
 		throws PortalException {
 
-		enableActivityCounters(PortalUtil.getClassName(classNameId), classPK);
+		String className = PortalUtil.getClassName(classNameId);
+
+		enableActivityCounters(className, classPK);
 	}
 
 	/**
@@ -602,9 +607,10 @@ public class SocialActivityCounterLocalServiceImpl
 	public List<SocialActivityCounter> getOffsetActivityCounters(
 		long groupId, String name, int startOffset, int endOffset) {
 
-		return getPeriodActivityCounters(
-			groupId, name, SocialCounterPeriodUtil.getStartPeriod(startOffset),
-			SocialCounterPeriodUtil.getEndPeriod(endOffset));
+		int startPeriod = SocialCounterPeriodUtil.getStartPeriod(startOffset);
+		int endPeriod = SocialCounterPeriodUtil.getEndPeriod(endOffset);
+
+		return getPeriodActivityCounters(groupId, name, startPeriod, endPeriod);
 	}
 
 	/**
@@ -628,9 +634,11 @@ public class SocialActivityCounterLocalServiceImpl
 	public List<SocialActivityCounter> getOffsetDistributionActivityCounters(
 		long groupId, String name, int startOffset, int endOffset) {
 
+		int startPeriod = SocialCounterPeriodUtil.getStartPeriod(startOffset);
+		int endPeriod = SocialCounterPeriodUtil.getEndPeriod(endOffset);
+
 		return getPeriodDistributionActivityCounters(
-			groupId, name, SocialCounterPeriodUtil.getStartPeriod(startOffset),
-			SocialCounterPeriodUtil.getEndPeriod(endOffset));
+			groupId, name, startPeriod, endPeriod);
 	}
 
 	/**
@@ -656,8 +664,9 @@ public class SocialActivityCounterLocalServiceImpl
 			endPeriod = SocialCounterPeriodUtil.getEndPeriod();
 		}
 
-		int periodLength = SocialCounterPeriodUtil.getPeriodLength(
-			SocialCounterPeriodUtil.getOffset(endPeriod));
+		int offset = SocialCounterPeriodUtil.getOffset(endPeriod);
+
+		int periodLength = SocialCounterPeriodUtil.getPeriodLength(offset);
 
 		return socialActivityCounterFinder.findAC_ByG_N_S_E_1(
 			groupId, name, startPeriod, endPeriod, periodLength);
@@ -684,8 +693,9 @@ public class SocialActivityCounterLocalServiceImpl
 	public List<SocialActivityCounter> getPeriodDistributionActivityCounters(
 		long groupId, String name, int startPeriod, int endPeriod) {
 
-		int periodLength = SocialCounterPeriodUtil.getPeriodLength(
-			SocialCounterPeriodUtil.getOffset(endPeriod));
+		int offset = SocialCounterPeriodUtil.getOffset(endPeriod);
+
+		int periodLength = SocialCounterPeriodUtil.getPeriodLength(offset);
 
 		return socialActivityCounterFinder.findAC_ByG_N_S_E_2(
 			groupId, name, startPeriod, endPeriod, periodLength);

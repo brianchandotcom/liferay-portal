@@ -69,10 +69,12 @@ public class CalendarBookingAssetRendererFactory
 			long classPK, int type)
 		throws PortalException {
 
+		CalendarBooking calendarBooking =
+			_calendarBookingLocalService.getCalendarBooking(classPK);
+
 		CalendarBookingAssetRenderer calendarBookingAssetRenderer =
 			new CalendarBookingAssetRenderer(
-				_calendarBookingLocalService.getCalendarBooking(classPK),
-				_calendarModelResourcePermission);
+				calendarBooking, _calendarModelResourcePermission);
 
 		calendarBookingAssetRenderer.setAssetRendererType(type);
 		calendarBookingAssetRenderer.setServletContext(_servletContext);

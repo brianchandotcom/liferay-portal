@@ -254,13 +254,15 @@ public class AdminPortlet extends BaseKBPortlet {
 				_portal.getHttpServletRequest(resourceRequest);
 
 			try {
-				resourceRequest.setAttribute(
-					KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLES,
-					getKBArticles(httpServletRequest));
+				List<KBArticle> kbArticles = getKBArticles(httpServletRequest);
 
 				resourceRequest.setAttribute(
-					KBWebKeys.KNOWLEDGE_BASE_KB_FOLDERS,
-					getKBFolders(httpServletRequest));
+					KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLES, kbArticles);
+
+				List<KBFolder> kbFolders = getKBFolders(httpServletRequest);
+
+				resourceRequest.setAttribute(
+					KBWebKeys.KNOWLEDGE_BASE_KB_FOLDERS, kbFolders);
 
 				PortletSession portletSession =
 					resourceRequest.getPortletSession();
@@ -291,9 +293,10 @@ public class AdminPortlet extends BaseKBPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			KBWebKeys.THEME_DISPLAY);
 
+		String portletId = _portal.getPortletId(actionRequest);
+
 		kbArticleService.subscribeGroupKBArticles(
-			themeDisplay.getScopeGroupId(),
-			_portal.getPortletId(actionRequest));
+			themeDisplay.getScopeGroupId(), portletId);
 	}
 
 	public void unsubscribeGroupKBArticles(
@@ -303,9 +306,10 @@ public class AdminPortlet extends BaseKBPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			KBWebKeys.THEME_DISPLAY);
 
+		String portletId = _portal.getPortletId(actionRequest);
+
 		kbArticleService.unsubscribeGroupKBArticles(
-			themeDisplay.getScopeGroupId(),
-			_portal.getPortletId(actionRequest));
+			themeDisplay.getScopeGroupId(), portletId);
 	}
 
 	public void updateKBArticlesPriorities(
@@ -384,9 +388,10 @@ public class AdminPortlet extends BaseKBPortlet {
 			KBTemplate.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
+			String portletId = _portal.getPortletId(actionRequest);
+
 			kbTemplateService.addKBTemplate(
-				_portal.getPortletId(actionRequest), title, content,
-				serviceContext);
+				portletId, title, content, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			long kbTemplateId = ParamUtil.getLong(
@@ -569,7 +574,9 @@ public class AdminPortlet extends BaseKBPortlet {
 		List<KBFolder> kbFolders = new ArrayList<>();
 
 		for (long kbFolderId : kbFolderIds) {
-			kbFolders.add(kbFolderService.getKBFolder(kbFolderId));
+			KBFolder kbFolder = kbFolderService.getKBFolder(kbFolderId);
+
+			kbFolders.add(kbFolder);
 		}
 
 		return kbFolders;

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -41,6 +42,7 @@ import java.io.Serializable;
 import java.io.StringWriter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -161,10 +163,11 @@ public class TemplateNotificationMessageGenerator
 			template.put("userId", user.getUserId());
 			template.put("userName", user.getFullName());
 
-			template.put(
-				"workflowTaskAssignees",
+			List<WorkflowTaskAssignee> workflowTaskAssignees =
 				_kaleoWorkflowModelConverter.getWorkflowTaskAssignees(
-					kaleoTaskInstanceToken));
+					kaleoTaskInstanceToken);
+
+			template.put("workflowTaskAssignees", workflowTaskAssignees);
 		}
 		else {
 			KaleoInstanceToken kaleoInstanceToken =

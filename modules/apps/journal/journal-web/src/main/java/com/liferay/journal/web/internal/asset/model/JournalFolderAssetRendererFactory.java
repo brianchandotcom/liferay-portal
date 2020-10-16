@@ -61,9 +61,10 @@ public class JournalFolderAssetRendererFactory
 	public AssetRenderer<JournalFolder> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
+		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
+
 		JournalFolderAssetRenderer journalFolderAssetRenderer =
-			new JournalFolderAssetRenderer(
-				_journalFolderLocalService.getFolder(classPK), _trashHelper);
+			new JournalFolderAssetRenderer(folder, _trashHelper);
 
 		journalFolderAssetRenderer.setAssetRendererType(type);
 		journalFolderAssetRenderer.setServletContext(_servletContext);

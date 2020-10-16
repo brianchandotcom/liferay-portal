@@ -149,8 +149,11 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 
 		String documentPath = sharepointRequest.getRootPath();
 
-		return getFileEntryTree(
-			getFileEntry(sharepointRequest), getParentFolderPath(documentPath));
+		String parentFolderPath = getParentFolderPath(documentPath);
+
+		FileEntry fileEntry = getFileEntry(sharepointRequest);
+
+		return getFileEntryTree(fileEntry, parentFolderPath);
 	}
 
 	@Override
@@ -187,12 +190,14 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 
 		String parentFolderPath = getParentFolderPath(folderPath);
 
-		long folderId = getLastFolderId(
-			SharepointUtil.getGroupId(folderPath), folderPath,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		long groupId = SharepointUtil.getGroupId(folderPath);
 
-		return getFolderTree(
-			DLAppServiceUtil.getFolder(folderId), parentFolderPath);
+		long folderId = getLastFolderId(
+			groupId, folderPath, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+		return getFolderTree(folder, parentFolderPath);
 	}
 
 	@Override

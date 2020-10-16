@@ -55,8 +55,10 @@ public class UserNotificationDefinition {
 	}
 
 	public String getDescription(Locale locale) {
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
 		String description = ResourceBundleUtil.getString(
-			getResourceBundle(locale), _description);
+			resourceBundle, _description);
 
 		if (description != null) {
 			return description;

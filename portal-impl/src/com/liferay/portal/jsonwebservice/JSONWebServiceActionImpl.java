@@ -296,9 +296,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 			valueString = valueString.trim();
 
-			long timeInMillis = GetterUtil.getLong(valueString);
-
-			calendar.setTimeInMillis(timeInMillis);
+			calendar.setTimeInMillis(GetterUtil.getLong(valueString));
 
 			return calendar;
 		}

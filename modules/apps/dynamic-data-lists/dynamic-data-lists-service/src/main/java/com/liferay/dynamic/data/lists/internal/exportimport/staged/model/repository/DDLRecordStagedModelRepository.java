@@ -165,8 +165,10 @@ public class DDLRecordStagedModelRepository
 				Property recordSetIdProperty = PropertyFactoryUtil.forName(
 					"recordSetId");
 
-				dynamicQuery.add(
-					recordSetIdProperty.in(getRecordSetDynamicQuery(scope)));
+				DynamicQuery recordSetDynamicQuery = getRecordSetDynamicQuery(
+					scope);
+
+				dynamicQuery.add(recordSetIdProperty.in(recordSetDynamicQuery));
 			});
 
 		return exportActionableDynamicQuery;

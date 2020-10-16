@@ -50,7 +50,9 @@ public class ActionUtil {
 		List<BookmarksEntry> entries = new ArrayList<>();
 
 		for (long entryId : entryIds) {
-			entries.add(BookmarksEntryServiceUtil.getEntry(entryId));
+			BookmarksEntry entry = BookmarksEntryServiceUtil.getEntry(entryId);
+
+			entries.add(entry);
 		}
 
 		return entries;
@@ -59,7 +61,10 @@ public class ActionUtil {
 	public static List<BookmarksEntry> getEntries(PortletRequest portletRequest)
 		throws Exception {
 
-		return getEntries(PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		return getEntries(httpServletRequest);
 	}
 
 	public static BookmarksEntry getEntry(HttpServletRequest httpServletRequest)
@@ -83,7 +88,10 @@ public class ActionUtil {
 	public static BookmarksEntry getEntry(PortletRequest portletRequest)
 		throws Exception {
 
-		return getEntry(PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		return getEntry(httpServletRequest);
 	}
 
 	public static BookmarksFolder getFolder(
@@ -119,7 +127,10 @@ public class ActionUtil {
 	public static BookmarksFolder getFolder(PortletRequest portletRequest)
 		throws Exception {
 
-		return getFolder(PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		return getFolder(httpServletRequest);
 	}
 
 	public static List<BookmarksFolder> getFolders(
@@ -136,7 +147,10 @@ public class ActionUtil {
 				(folderId !=
 					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-				folders.add(BookmarksFolderServiceUtil.getFolder(folderId));
+				BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(
+					folderId);
+
+				folders.add(folder);
 			}
 		}
 
@@ -147,7 +161,10 @@ public class ActionUtil {
 			PortletRequest portletRequest)
 		throws Exception {
 
-		return getFolders(PortalUtil.getHttpServletRequest(portletRequest));
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		return getFolders(httpServletRequest);
 	}
 
 }

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
@@ -316,9 +317,10 @@ public abstract class BaseRepositoryImpl
 	public Hits search(SearchContext searchContext) throws SearchException {
 		searchContext.setSearchEngineId(SearchEngineHelper.GENERIC_ENGINE_ID);
 
-		return search(
-			searchContext,
-			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext));
+		BooleanQuery fullQuery = RepositorySearchQueryBuilderUtil.getFullQuery(
+			searchContext);
+
+		return search(searchContext, fullQuery);
 	}
 
 	@Override

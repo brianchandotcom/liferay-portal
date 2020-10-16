@@ -200,9 +200,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest
 	protected void setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		Language language = PowerMockito.mock(Language.class);
-
-		languageUtil.setLanguage(language);
+		languageUtil.setLanguage(PowerMockito.mock(Language.class));
 	}
 
 	protected void setUpPortalClassLoaderUtil() {

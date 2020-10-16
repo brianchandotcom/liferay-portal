@@ -114,9 +114,10 @@ public class AnnouncementsEntryPermission {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker,
-			AnnouncementsEntryLocalServiceUtil.getEntry(entryId), actionId);
+		AnnouncementsEntry entry = AnnouncementsEntryLocalServiceUtil.getEntry(
+			entryId);
+
+		return contains(permissionChecker, entry, actionId);
 	}
 
 	public static boolean contains(

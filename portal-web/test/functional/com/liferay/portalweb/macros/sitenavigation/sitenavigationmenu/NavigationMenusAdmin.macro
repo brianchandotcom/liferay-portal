@@ -264,6 +264,10 @@ definition {
 			value1 = "${itemName}");
 	}
 
+	macro viewMenuTitle {
+		LexiconTable.viewTableEntryTitle(tableEntry = "${navigationMenu}");
+	}
+
 	macro viewMenuType {
 		AssertTextEquals(
 			key_markedAs = "${menuType}",

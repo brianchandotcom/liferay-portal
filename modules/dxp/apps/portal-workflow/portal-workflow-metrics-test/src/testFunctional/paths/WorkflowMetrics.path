@@ -394,6 +394,16 @@
 	<td>//button[contains(@class,'dropdown-toggle component-action') and @disabled]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEARCH_FIELD_MAPPINGS_HEADER</td>
+	<td>//a[contains(text(),'Field Mappings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD_MAPPINGS_METRICS_INDEXES</td>
+	<td>//a[contains(text(),'${key_index}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

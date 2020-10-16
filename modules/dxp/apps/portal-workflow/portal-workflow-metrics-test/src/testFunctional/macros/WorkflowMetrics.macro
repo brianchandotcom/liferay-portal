@@ -168,6 +168,36 @@ definition {
 			value1 = "inst / day");
 	}
 
+	macro assertMetricsIndexes {
+		AssertElementPresent(
+			key_index = "liferay-${companyId}-workflow-metrics-instances",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		AssertElementPresent(
+			key_index = "liferay-${companyId}-workflow-metrics-nodes",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		AssertElementPresent(
+			key_index = "liferay-${companyId}-workflow-metrics-processes",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		AssertElementPresent(
+			key_index = "liferay-${companyId}-workflow-metrics-sla-instance-results",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		AssertElementPresent(
+			key_index = "liferay-${companyId}-workflow-metrics-sla-task-results",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		AssertElementPresent(
+			key_index = "liferay-${companyId}-workflow-metrics-tasks",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		AssertElementPresent(
+			key_index = "liferay-${companyId}-workflow-metrics-transitions",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+	}
+
 	macro assertNewAssigneeModalTable {
 		AssertTextEquals(
 			key_columnName = "ID",
@@ -645,6 +675,10 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#SLA_RECORD_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
+	}
+
+	macro goToFieldMappingsTab {
+		Click(locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_HEADER");
 	}
 
 	macro goToReassignSelectTask {

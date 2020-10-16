@@ -52,9 +52,11 @@ definition {
 		}
 	}
 
-	@description = "LRQA-53648 Automate LPS-89014: [SLA] Create new SLA for total process resolution"
+	@description = "LRQA-53648 - Automate LPS-89014: [SLA] Create new SLA for total process resolution"
 	@priority = "5"
 	test AddSLAForTotalProcessResolution {
+		property portal.acceptance = "true";
+
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");
@@ -2294,6 +2296,24 @@ definition {
 			avgCompletionTime = "0min",
 			rowName = "Review",
 			slaBreachedValue = "0 (0%)");
+	}
+
+	@description = "LRQA-59962 - Automate LPS-108828: As a Portal Admin, I want Workflow Metrics to create an index per company"
+	@priority = "5"
+	test VerifyMetricsIndexesInControlPanel {
+		property portal.acceptance = "true";
+
+		property test.name.skip.portal.instance = "WorkflowMetrics#VerifyMetricsIndexesInControlPanel";
+
+		var companyId = JSONCompany.getCompanyId();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		WorkflowMetrics.goToFieldMappingsTab();
+		WorkflowMetrics.assertMetricsIndexes(companyId = "${companyId}");
 	}
 
 	@description = "LRQA-53661 Automate LPS-89119: [SLA] Define the SLA timer calendar"

@@ -199,10 +199,9 @@ public class LayoutModelDocumentContributor
 			}
 		}
 		finally {
+			ServiceContextThreadLocal.popServiceContext();
 			PermissionThreadLocal.setPermissionChecker(
 				currentPermissionChecker);
-
-			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 

@@ -487,4 +487,10 @@ definition {
 			locator1 = "SitePages#LIST_GROUP_ITEM_CHECKBOX");
 	}
 
+	macro viewPageItems {
+		AssertVisible(
+			key_pageName = "${pageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
+	}
+
 }

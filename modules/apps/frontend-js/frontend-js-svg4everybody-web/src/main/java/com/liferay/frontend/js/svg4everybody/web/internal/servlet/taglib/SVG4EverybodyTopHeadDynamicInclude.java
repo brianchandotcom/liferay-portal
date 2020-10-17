@@ -14,9 +14,12 @@
 
 package com.liferay.frontend.js.svg4everybody.web.internal.servlet.taglib;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.portal.util.PropsValues;
@@ -48,7 +51,24 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (!PropsValues.CDN_DYNAMIC_RESOURCES_ENABLED ||
+		boolean cdnDynamicResourcesEnabled;
+
+		try {
+			cdnDynamicResourcesEnabled = _portal.isCDNDynamicResourcesEnabled(
+				httpServletRequest);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to gather property from configuration.  " +
+						"Defaulting to portal.properties value");
+			}
+
+			cdnDynamicResourcesEnabled =
+				PropsValues.CDN_DYNAMIC_RESOURCES_ENABLED;
+		}
+
+		if (!cdnDynamicResourcesEnabled ||
 			_browserSniffer.isIe(httpServletRequest)) {
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
@@ -86,6 +106,9 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 		"/svg4everybody/svg4everybody.js"
 	};
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		SVG4EverybodyTopHeadDynamicInclude.class);
+
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
@@ -93,5 +116,8 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 	private BrowserSniffer _browserSniffer;
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private Portal _portal;
 
 }

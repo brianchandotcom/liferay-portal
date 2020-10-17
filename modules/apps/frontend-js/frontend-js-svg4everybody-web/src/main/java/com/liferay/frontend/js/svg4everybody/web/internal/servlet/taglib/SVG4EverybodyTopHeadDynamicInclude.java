@@ -77,6 +77,10 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest);
 
+			if (!cdnDynamicResourcesEnabled) {
+				absolutePortalURLBuilder.ignoreCDNHost();
+			}
+
 			for (String jsFileName : _JS_FILE_NAMES) {
 				printWriter.print(
 					"<script data-senna-track=\"permanent\" src=\"");

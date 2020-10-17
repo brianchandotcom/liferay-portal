@@ -25,16 +25,11 @@ boolean resolved = !viewConflictsDisplayContext.hasUnresolvedConflicts();
 boolean schedule = ParamUtil.getBoolean(request, "schedule");
 
 renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, schedule ? "schedule-to-publish-later" : "publish"), ": ", ctCollection.getName()));
-%>
 
-<liferay-portlet:renderURL var="backURL">
-	<portlet:param name="mvcRenderCommandName" value="/change_tracking/view_changes" />
-	<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-</liferay-portlet:renderURL>
+String redirect = viewConflictsDisplayContext.getRedirect();
 
-<%
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(redirect);
 %>
 
 <clay:container-fluid
@@ -122,7 +117,7 @@ portletDisplay.setURLBack(backURL);
 				<div class="autofit-row">
 					<div class="autofit-col autofit-col-expand">
 						<span>
-							<aui:button href="<%= backURL %>" type="cancel" />
+							<aui:button href="<%= redirect %>" type="cancel" />
 						</span>
 					</div>
 
@@ -132,7 +127,7 @@ portletDisplay.setURLBack(backURL);
 								<c:when test="<%= schedule %>">
 									<liferay-portlet:renderURL var="scheduleURL">
 										<portlet:param name="mvcRenderCommandName" value="/change_tracking/schedule_publication" />
-										<portlet:param name="redirect" value="<%= backURL %>" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
 										<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 									</liferay-portlet:renderURL>
 

@@ -58,6 +58,12 @@ portletDisplay.setShowBackIcon(true);
 								</liferay-portlet:renderURL>
 
 								<a class="btn btn-secondary btn-sm <%= viewChangesDisplayContext.hasChanges() ? StringPool.BLANK : "disabled" %>" href="<%= scheduleURL %>" type="button">
+									<span class="inline-item inline-item-before">
+										<clay:icon
+											symbol="calendar"
+										/>
+									</span>
+
 									<liferay-ui:message key="schedule" />
 								</a>
 							</li>
@@ -70,54 +76,31 @@ portletDisplay.setShowBackIcon(true);
 								<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 							</liferay-portlet:renderURL>
 
-							<a class="btn btn-primary btn-sm <%= viewChangesDisplayContext.hasChanges() ? StringPool.BLANK : "disabled" %>" href="<%= publishURL %>" type="button">
+							<a class="btn btn-secondary btn-sm <%= viewChangesDisplayContext.hasChanges() ? StringPool.BLANK : "disabled" %>" href="<%= publishURL %>" type="button">
+								<span class="inline-item inline-item-before">
+									<clay:icon
+										symbol="change"
+									/>
+								</span>
+
 								<liferay-ui:message key="publish" />
 							</a>
 						</li>
 					</c:if>
 
 					<li class="tbar-item">
-						<liferay-ui:icon-menu
-							direction="left-side"
-							icon="ellipsis-v"
-							markupView="lexicon"
-						>
-							<c:if test="<%= ctCollection.getCtCollectionId() != publicationsDisplayContext.getCtCollectionId() %>">
-								<liferay-portlet:actionURL name="/change_tracking/checkout_ct_collection" var="checkoutURL">
-									<portlet:param name="redirect" value="<%= currentURL %>" />
-									<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-								</liferay-portlet:actionURL>
+						<div class="dropdown">
+							<button class="btn btn-monospaced btn-sm btn-unstyled dropdown-toggle hidden" type="button">
+								<svg class="lexicon-icon lexicon-icon-ellipsis-v publications-hidden" role="presentation">
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#ellipsis-v" />
+								</svg>
+							</button>
+						</div>
 
-								<liferay-ui:icon
-									message="work-on-publication"
-									url="<%= checkoutURL %>"
-								/>
-							</c:if>
-
-							<liferay-portlet:renderURL var="editURL">
-								<portlet:param name="mvcRenderCommandName" value="/change_tracking/edit_ct_collection" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-							</liferay-portlet:renderURL>
-
-							<liferay-ui:icon
-								message="edit"
-								url="<%= editURL %>"
-							/>
-
-							<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
-
-							<liferay-portlet:actionURL name="/change_tracking/delete_ct_collection" var="deleteURL">
-								<portlet:param name="redirect" value="<%= viewChangesDisplayContext.getBackURL() %>" />
-								<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-							</liferay-portlet:actionURL>
-
-							<liferay-ui:icon-delete
-								confirmation="are-you-sure-you-want-to-delete-this-publication"
-								message="delete"
-								url="<%= deleteURL %>"
-							/>
-						</liferay-ui:icon-menu>
+						<react:component
+							module="publications/js/DropdownMenu"
+							props="<%= viewChangesDisplayContext.getDropdownReactData() %>"
+						/>
 					</li>
 				</c:when>
 				<c:when test="<%= ctCollection.getStatus() == WorkflowConstants.STATUS_SCHEDULED %>">

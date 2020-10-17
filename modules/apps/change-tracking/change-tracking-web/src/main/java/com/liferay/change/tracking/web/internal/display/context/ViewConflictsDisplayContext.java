@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -42,6 +43,7 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
@@ -116,6 +118,24 @@ public class ViewConflictsDisplayContext {
 
 	public CTCollection getCtCollection() {
 		return _ctCollection;
+	}
+
+	public String getRedirect() {
+		String redirect = ParamUtil.getString(_renderRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			return redirect;
+		}
+
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/publications/view_conflicts");
+		portletURL.setParameter(
+			"ctCollectionId",
+			String.valueOf(_ctCollection.getCtCollectionId()));
+
+		return portletURL.toString();
 	}
 
 	public Map<String, Object> getResolvedConflictsReactData() {

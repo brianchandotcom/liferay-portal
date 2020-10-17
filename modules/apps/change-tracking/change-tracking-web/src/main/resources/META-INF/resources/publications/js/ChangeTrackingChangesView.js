@@ -719,6 +719,7 @@ class ChangeTrackingChangesView extends React.Component {
 			dropdownItems.push({
 				href: this._getDiscardURL(node),
 				label: Liferay.Language.get('discard'),
+				symbolLeft: 'times-circle',
 			});
 		}
 

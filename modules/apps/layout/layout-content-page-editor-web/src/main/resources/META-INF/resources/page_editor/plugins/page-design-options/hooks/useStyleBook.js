@@ -18,16 +18,12 @@ import {config} from '../../../app/config/index';
 
 const StyleBookDispatchContext = React.createContext(() => {});
 const StyleBookStateContext = React.createContext({
-	defaultStyleBookEntryName: '',
-	imagePreviewURL: '',
 	styleBookEntryId: '',
 	tokenValues: {},
 });
 
 export const StyleBookContextProvider = ({children}) => {
 	const [styleBook, setStyleBook] = useState({
-		defaultStyleBookEntryName: config.defaultStyleBookEntryName,
-		imagePreviewURL: config.defaultStyleBookEntryImagePreviewURL,
 		styleBookEntryId: config.styleBookEntryId,
 		tokenValues: config.frontendTokens,
 	});

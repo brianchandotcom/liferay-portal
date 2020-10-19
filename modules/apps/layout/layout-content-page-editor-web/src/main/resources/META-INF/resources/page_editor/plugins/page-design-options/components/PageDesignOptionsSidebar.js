@@ -59,18 +59,12 @@ export default function PageDesignOptionsSidebar() {
 	);
 
 	const onSelectStyleBook = useCallback(
-		(styleBook) => {
+		(styleBookEntryId) => {
 			LayoutService.changeStyleBookEntry({
 				onNetworkStatus: () => {},
-				styleBookEntryId: styleBook.styleBookEntryId,
-			}).then((styleBookWithTokens) => {
-				setSelectedStyleBook((selectedStyleBook) => ({
-					defaultStyleBookEntryName:
-						selectedStyleBook.defaultStyleBookEntryName,
-					imagePreviewURL: selectedStyleBook.imagePreviewURL,
-					styleBookEntryId: styleBook.styleBookEntryId,
-					tokenValues: styleBookWithTokens.tokenValues,
-				}));
+				styleBookEntryId,
+			}).then(({tokenValues}) => {
+				setSelectedStyleBook({styleBookEntryId, tokenValues});
 			});
 		},
 		[setSelectedStyleBook]
@@ -251,7 +245,7 @@ function getTabs(
 				isActive:
 					selectedStyleBook.styleBookEntryId ===
 					styleBook.styleBookEntryId,
-				onClick: () => onSelectStyleBook(styleBook),
+				onClick: () => onSelectStyleBook(styleBook.styleBookEntryId),
 			})),
 			type: OPTIONS_TYPES.styleBook,
 		},

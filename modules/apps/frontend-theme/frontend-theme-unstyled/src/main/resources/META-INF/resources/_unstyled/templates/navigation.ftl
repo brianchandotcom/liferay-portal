@@ -1,5 +1,5 @@
-<nav aria-label="<@liferay.language key="navigation" />" class="${nav_css_class}" id="navigation" role="navigation">
-	<ul aria-label="<@liferay.language key="site-pages" />" role="menubar">
+<nav aria-label="<@liferay.language key="site-pages" />" class="${nav_css_class}" id="navigation" role="navigation">
+	<ul role="menubar">
 		<#list nav_items as nav_item>
 			<#assign
 				nav_item_attr_has_popup = ""

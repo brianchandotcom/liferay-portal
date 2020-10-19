@@ -17,10 +17,12 @@ package com.liferay.site.navigation.item.selector.web.internal.display.context;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -31,7 +33,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,6 +92,24 @@ public class SelectSiteNavigationMenuDisplayContext {
 		searchContainer.setTotal(siteNavigationMenusCount);
 
 		return searchContainer;
+	}
+
+	public String getSelectSiteNavigationMenuLevelURL(long siteNavigationMenuId)
+		throws PortletException {
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
+
+		portletURL.setParameter(
+			"backURL", PortalUtil.getCurrentURL(_httpServletRequest));
+		portletURL.setParameter(
+			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
+
+		return portletURL.toString();
 	}
 
 	private PortletRequest _getPortletRequest() {

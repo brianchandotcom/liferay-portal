@@ -14,60 +14,70 @@
  */
 --%>
 
--
 <%@ include file="/init.jsp" %>
 
 <%
 SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = (SelectSiteNavigationMenuDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SELECT_SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT);
+
+long siteNavigationMenuId = ParamUtil.getLong(request, "siteNavigationMenuId", -1);
 %>
 
-<div class="container-fluid-1280 mt-3">
-	<p class="text-secondary"><liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" /></p>
+<c:choose>
+	<c:when test="<%= siteNavigationMenuId != -1 %>">
+		<liferay-util:include page="/select_site_navigation_menu_level.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:otherwise>
+		<div class="container-fluid-1280 m-4">
+			<p class="text-secondary"><liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" /></p>
 
-	<liferay-ui:search-container
-		cssClass="table-hover"
-		searchContainer="<%= selectSiteNavigationMenuDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.site.navigation.model.SiteNavigationMenu"
-			keyProperty="siteNavigationMenuId"
-			modelVar="siteNavigationMenu"
-		>
-
-			<%
-			String name = siteNavigationMenu.getName();
-
-			if (siteNavigationMenu.getGroupId() != scopeGroupId) {
-				Group group = GroupLocalServiceUtil.getGroup(siteNavigationMenu.getGroupId());
-
-				name = StringUtil.appendParentheticalSuffix(name, group.getDescriptiveName(locale));
-			}
-			%>
-
-			<liferay-ui:search-container-column-text
-				colspan="<%= 2 %>"
-				name="name"
+			<liferay-ui:search-container
+				cssClass="table-hover"
+				searchContainer="<%= selectSiteNavigationMenuDisplayContext.getSearchContainer() %>"
 			>
-				<clay:icon
-					cssClass="mr-2"
-					symbol="sites"
+				<liferay-ui:search-container-row
+					className="com.liferay.site.navigation.model.SiteNavigationMenu"
+					keyProperty="siteNavigationMenuId"
+					modelVar="siteNavigationMenu"
+				>
+
+					<%
+					String name = siteNavigationMenu.getName();
+
+					if (siteNavigationMenu.getGroupId() != scopeGroupId) {
+						Group group = GroupLocalServiceUtil.getGroup(siteNavigationMenu.getGroupId());
+
+						name = StringUtil.appendParentheticalSuffix(name, group.getDescriptiveName(locale));
+					}
+					%>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+						name="name"
+					>
+						<clay:icon
+							cssClass="mr-2"
+							symbol="sites"
+						/>
+
+						<a href="<%= selectSiteNavigationMenuDisplayContext.getSelectSiteNavigationMenuLevelURL(siteNavigationMenu.getSiteNavigationMenuId()) %>">
+							<b><%= HtmlUtil.escape(name) %></b>
+						</a>
+
+						<c:if test="<%= siteNavigationMenu.getSiteNavigationMenuId() == 0 %>">
+							<clay:label
+								cssClass="ml-1"
+								displayType="primary"
+								label="default"
+							/>
+						</c:if>
+					</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+					searchResultCssClass="table table-autofit"
 				/>
-
-				<b><%= HtmlUtil.escape(name) %></b>
-
-				<c:if test="<%= siteNavigationMenu.getSiteNavigationMenuId() == 0 %>">
-					<clay:label
-						cssClass="ml-1"
-						displayType="primary"
-						label="default"
-					/>
-				</c:if>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-			searchResultCssClass="table table-autofit"
-		/>
-	</liferay-ui:search-container>
-</div>
+			</liferay-ui:search-container>
+		</div>
+	</c:otherwise>
+</c:choose>

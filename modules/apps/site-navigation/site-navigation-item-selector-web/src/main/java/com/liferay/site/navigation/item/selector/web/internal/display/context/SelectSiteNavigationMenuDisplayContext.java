@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -35,8 +38,10 @@ import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
@@ -68,50 +73,14 @@ public class SelectSiteNavigationMenuDisplayContext {
 	public String getSelectSiteNavigationMenuLevelURL(long siteNavigationMenuId)
 		throws PortletException {
 
-		return getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId, -1);
+		return _getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId, -1);
 	}
 
-	public String getSelectSiteNavigationMenuLevelURL(
-			long siteNavigationMenuId, long parentSiteNavigationMenuId)
-		throws PortletException {
-
-		PortletResponse portletResponse =
-			(PortletResponse)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
-
-		portletURL.setParameter(
-			"backURL", PortalUtil.getCurrentURL(_httpServletRequest));
-		portletURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
-
-		if (parentSiteNavigationMenuId >= 0) {
-			portletURL.setParameter(
-				"parentSiteNavigationMenuId",
-				String.valueOf(parentSiteNavigationMenuId));
-		}
-
-		return portletURL.toString();
-	}
-
-	public String getSiteNavigationMenuItemName(
-		SiteNavigationMenuItem siteNavigationMenuItem) {
-
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				siteNavigationMenuItem);
-
-		return siteNavigationMenuItemType.getTitle(
-			siteNavigationMenuItem, _themeDisplay.getLocale());
-	}
-
-	public SearchContainer<SiteNavigationMenuItem>
+	public SearchContainer<Map<String, String>>
 			getSiteNavigationMenuItemSearchContainer()
-		throws PortalException {
+		throws PortalException, PortletException {
 
-		SearchContainer<SiteNavigationMenuItem> searchContainer =
+		SearchContainer<Map<String, String>> searchContainer =
 			new SearchContainer<>(
 				_getPortletRequest(), _portletURL, null,
 				"there-are-no-navigation-menus");
@@ -121,8 +90,8 @@ public class SelectSiteNavigationMenuDisplayContext {
 		long parentSiteNavigationMenuId = ParamUtil.getLong(
 			_httpServletRequest, "parentSiteNavigationMenuId");
 
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			SiteNavigationMenuItemServiceUtil.getSiteNavigationMenuItems(
+		List<Map<String, String>> siteNavigationMenuItems =
+			_getSiteNavigationMenuItems(
 				siteNavigationMenuId, parentSiteNavigationMenuId);
 
 		searchContainer.setResults(siteNavigationMenuItems);
@@ -188,6 +157,93 @@ public class SelectSiteNavigationMenuDisplayContext {
 			LanguageUtil.get(resourceBundle, "public-pages-hierarchy"));
 
 		return siteNavigationMenu;
+	}
+
+	private String _getSelectSiteNavigationMenuLevelURL(
+			long siteNavigationMenuId, long parentSiteNavigationMenuId)
+		throws PortletException {
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
+
+		portletURL.setParameter(
+			"backURL",
+			ParamUtil.getString(
+				_httpServletRequest, "backURL",
+				PortalUtil.getCurrentURL(_httpServletRequest)));
+
+		portletURL.setParameter(
+			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
+
+		if (parentSiteNavigationMenuId >= 0) {
+			portletURL.setParameter(
+				"parentSiteNavigationMenuId",
+				String.valueOf(parentSiteNavigationMenuId));
+		}
+
+		return portletURL.toString();
+	}
+
+	private String _getSiteNavigationMenuItemName(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem);
+
+		return siteNavigationMenuItemType.getTitle(
+			siteNavigationMenuItem, _themeDisplay.getLocale());
+	}
+
+	private List<Map<String, String>> _getSiteNavigationMenuItems(
+			long siteNavigationMenuId, long parentSiteNavigationMenuId)
+		throws PortalException, PortletException {
+
+		List<Map<String, String>> siteNavigationItems = new ArrayList<>();
+
+		if (siteNavigationMenuId > 0) {
+			List<SiteNavigationMenuItem> siteNavigationMenuItems =
+				SiteNavigationMenuItemServiceUtil.getSiteNavigationMenuItems(
+					siteNavigationMenuId, parentSiteNavigationMenuId);
+
+			for (SiteNavigationMenuItem siteNavigationMenuItem :
+					siteNavigationMenuItems) {
+
+				siteNavigationItems.add(
+					HashMapBuilder.put(
+						"name",
+						_getSiteNavigationMenuItemName(siteNavigationMenuItem)
+					).put(
+						"selectSiteNavigationMenuLevelURL",
+						_getSelectSiteNavigationMenuLevelURL(
+							siteNavigationMenuId,
+							siteNavigationMenuItem.
+								getSiteNavigationMenuItemId())
+					).build());
+			}
+		}
+		else {
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				_themeDisplay.getScopeGroupId(), false,
+				parentSiteNavigationMenuId);
+
+			for (Layout layout : layouts) {
+				siteNavigationItems.add(
+					HashMapBuilder.put(
+						"name", layout.getName(_themeDisplay.getLocale())
+					).put(
+						"selectSiteNavigationMenuLevelURL",
+						_getSelectSiteNavigationMenuLevelURL(
+							siteNavigationMenuId, layout.getLayoutId())
+					).build());
+			}
+		}
+
+		return siteNavigationItems;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

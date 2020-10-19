@@ -60,7 +60,7 @@ export default () => {
 
 			<img
 				alt={Liferay.Language.get('fragments-and-widgets')}
-				src={`${themeDisplay.getPathThemeImages()}/app_builder/fragment-and-widgets.png`}
+				src={`${themeDisplay.getPathThemeImages()}/app_builder/fragment_and_widgets.png`}
 				width={POPOVER_IMAGE_WIDTH}
 			/>
 		</ClayPopover>

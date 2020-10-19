@@ -65,6 +65,13 @@ public class SelectSiteNavigationMenuDisplayContext {
 	public String getSelectSiteNavigationMenuLevelURL(long siteNavigationMenuId)
 		throws PortletException {
 
+		return getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId, -1);
+	}
+
+	public String getSelectSiteNavigationMenuLevelURL(
+			long siteNavigationMenuId, long parentSiteNavigationMenuId)
+		throws PortletException {
+
 		PortletResponse portletResponse =
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
@@ -76,6 +83,12 @@ public class SelectSiteNavigationMenuDisplayContext {
 			"backURL", PortalUtil.getCurrentURL(_httpServletRequest));
 		portletURL.setParameter(
 			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
+
+		if (parentSiteNavigationMenuId >= 0) {
+			portletURL.setParameter(
+				"parentSiteNavigationMenuId",
+				String.valueOf(parentSiteNavigationMenuId));
+		}
 
 		return portletURL.toString();
 	}
@@ -96,7 +109,8 @@ public class SelectSiteNavigationMenuDisplayContext {
 	}
 
 	public SearchContainer<SiteNavigationMenuItem>
-		getSiteNavigationMenuItemSearchContainer() throws PortalException {
+			getSiteNavigationMenuItemSearchContainer()
+		throws PortalException {
 
 		SearchContainer<SiteNavigationMenuItem> searchContainer =
 			new SearchContainer<>(

@@ -40,7 +40,9 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 					symbol="page"
 				/>
 
-				<b><%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuItemName(siteNavigationMenuItem) %></b>
+				<a href="<%= selectSiteNavigationMenuDisplayContext.getSelectSiteNavigationMenuLevelURL(siteNavigationMenuItem.getSiteNavigationMenuId(), siteNavigationMenuItem.getSiteNavigationMenuItemId()) %>">
+					<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuItemName(siteNavigationMenuItem) %>
+				</a>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

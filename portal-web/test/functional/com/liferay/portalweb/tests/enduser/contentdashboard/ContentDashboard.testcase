@@ -45,9 +45,9 @@ definition {
 			portlet = "Content Dashboard");
 
 		AssertTextPresent(
-			xAxisCtegoryName = "Stage 1",
 			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-			value1 = "WC Title");
+			value1 = "WC Title",
+			xAxisCtegoryName = "Stage 1");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -56,9 +56,9 @@ definition {
 		WebContent.deleteCP(
 			siteURLKey = "test-site-name",
 			webContentTitle = "WC Title");
-		
+
 		Category.openCategoriesAdmin(siteURLKey = "global");
-		
+
 		Category.deleteCategoriesCP(vocabularyName = "Stage");
 	}
 
@@ -84,9 +84,9 @@ definition {
 			portlet = "Content Dashboard");
 
 		AssertTextPresent(
-			xAxisCtegoryName = "Audience 1",
 			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-			value1 = "WC Title");
+			value1 = "WC Title",
+			xAxisCtegoryName = "Audience 1");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -95,9 +95,9 @@ definition {
 		WebContent.deleteCP(
 			siteURLKey = "test-site-name",
 			webContentTitle = "WC Title");
-		
+
 		Category.openCategoriesAdmin(siteURLKey = "global");
-		
+
 		Category.deleteCategoriesCP(vocabularyName = "Audience");
 	}
 
@@ -157,13 +157,13 @@ definition {
 		WebContent.deleteCP(
 			siteURLKey = "test-site-name",
 			webContentTitle = "WC Title");
-		
+
 		Category.openCategoriesAdmin(siteURLKey = "global");
-		
+
 		Category.deleteCategoriesCP(vocabularyName = "Audience");
 
 		Category.openCategoriesAdmin(siteURLKey = "global");
-		
+
 		Category.deleteCategoriesCP(vocabularyName = "Stage");
 	}
 

@@ -459,37 +459,45 @@ if (portletTitleBasedNavigation) {
 	</aui:form>
 </clay:container-fluid>
 
-<aui:script require='<%= npmResolvedPackageName + "/message_boards/js/MBPortlet.es as MBPortlet" %>'>
-	var mb = new MBPortlet.default({
-		constants: {
-			ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
-			ACTION_SAVE_DRAFT: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
-			CMD: '<%= Constants.CMD %>',
-		},
-		currentAction:
-			'<%= (message == null) ? Constants.ADD : Constants.UPDATE %>',
+<%
+Map<String, Object> taglibContext = HashMapBuilder.<String, Object>put(
+	"constants",
+	HashMapBuilder.<String, Object>put(
+		"ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH
+	).put(
+		"ACTION_SAVE_DRAFT", WorkflowConstants.ACTION_SAVE_DRAFT
+	).put(
+		"CMD", Constants.CMD
+	).build()
+).put(
+	"currentAction", (message == null) ? Constants.ADD : Constants.UPDATE
+).put(
+	"messageId", (message != null) ? messageId : null
+).put(
+	"rootNode", liferayPortletResponse.getNamespace() + "mbEditPageContainer"
+).build();
+%>
 
-		<c:if test="<%= message != null %>">
-			<portlet:resourceURL id="/message_boards/get_attachments" var="getAttachmentsURL">
-				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-			</portlet:resourceURL>
+<c:if test="<%= message != null %>">
+	<portlet:resourceURL id="/message_boards/get_attachments" var="getAttachmentsURL">
+		<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+	</portlet:resourceURL>
 
-			getAttachmentsURL: '<%= getAttachmentsURL %>',
-		</c:if>
+	<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+	</portlet:renderURL>
 
-		namespace: '<portlet:namespace />',
-		rootNode: '#<portlet:namespace />mbEditPageContainer',
+	<%
+	taglibContext.put("messageId", messageId);
+	taglibContext.put("viewTrashAttachmentsURL", viewTrashAttachmentsURL);
+	%>
 
-		<c:if test="<%= message != null %>">
-			<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-			</portlet:renderURL>
+</c:if>
 
-			viewTrashAttachmentsURL: '<%= viewTrashAttachmentsURL %>',
-		</c:if>
-	});
-
-	mb.init();
-</aui:script>
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "MBPorlet" %>'
+	context="<%= taglibContext %>"
+	module="js/MBPortlet.es"
+/>

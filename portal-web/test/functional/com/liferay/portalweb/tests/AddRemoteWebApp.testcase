@@ -1,54 +1,53 @@
 definition {
 
-
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "User Interface";
 	property testray.main.component.name = "User Interface";
 
 	setUp {
-	User.firstLoginPG();
+		User.firstLoginPG();
 	}
 
 	tearDown {
-			Page.tearDownCP();
-
+		Page.tearDownCP();
 	}
 
-test addRemoteWebApp{
+	test addRemoteWebApp {
 
-	ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Custom Apps",
 			panel = "Applications",
 			portlet = "Remote Apps");
 
-	AddRemoteApp.new();
+		AddRemoteApp.new();
 
-	AddRemoteApp.name(
-		EnterName = "Test Remote App");
-	AddRemoteApp.url(
-		EnterUrl = "http://remote-app-test.wincent.com/");
+		AddRemoteApp.name(enterName = "Test Remote App");
+		AddRemoteApp.url(enterUrl = "http://remote-app-test.wincent.com/");
 
-	PortletEntry.save();
+		PortletEntry.save();
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	ProductMenu.gotoPortlet(
-		category = "Site Builder",
-		portlet = "Pages");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
 
-	SitePages.addPublicPage(pageName = "Test Remote App Page");
+		SitePages.addPublicPage(pageName = "Test Remote App Page");
+
 		Navigator.gotoPage(pageName = "Test Remote App Page");
+
 		Portlet.addPG(portletName = "Test Remote App");
 
-	Pause(locator1 = "1000")
-	AssertTextEquals.assertPartialText(
+		Pause(locator1 = "1000")
+
+		AssertTextEquals.assertPartialText(
 			locator1 = "RemoteApps#LINK",
 			value1 = "Company ID");
-	AssertTextEquals.assertPartialText(
+
+		AssertTextEquals.assertPartialText(
 			locator1 = "Button#ANY",
 			value1 = "Say hello");
-
-
 	}
+
 }

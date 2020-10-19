@@ -100,7 +100,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -131,11 +130,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -186,7 +183,7 @@ public class DLFileEntryLocalServiceImpl
 		String name = String.valueOf(
 			counterLocalService.increment(DLFileEntry.class.getName()));
 
-		String extension = _getFileExtension(mimeType, sourceFileName, title);
+		String extension = DLAppUtil.getExtension(title, sourceFileName);
 
 		String fileName = DLUtil.getSanitizedFileName(title, extension);
 
@@ -1642,7 +1639,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		String extension = _getFileExtension(mimeType, sourceFileName, title);
+		String extension = DLAppUtil.getExtension(title, sourceFileName);
 
 		if ((file == null) && (inputStream == null)) {
 			extension = dlFileEntry.getExtension();
@@ -2735,27 +2732,6 @@ public class DLFileEntryLocalServiceImpl
 
 		return versioningStrategy.computeDLVersionNumberIncrease(
 			previousDLFileVersion, nextDLFileVersion);
-	}
-
-	private String _getFileExtension(
-		String mimeType, String sourceFileName, String title) {
-
-		Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
-
-		String extension = null;
-
-		if (!extensions.isEmpty() && (extensions.size() == 1)) {
-			Iterator<String> iterator = extensions.iterator();
-
-			extension = iterator.next();
-
-			extension = extension.substring(1);
-		}
-		else {
-			extension = DLAppUtil.getExtension(title, sourceFileName);
-		}
-
-		return extension;
 	}
 
 	private boolean _isValidFileVersionNumber(String version) {

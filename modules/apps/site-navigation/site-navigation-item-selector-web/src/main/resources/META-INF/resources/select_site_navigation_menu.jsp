@@ -27,12 +27,12 @@ long siteNavigationMenuId = ParamUtil.getLong(request, "siteNavigationMenuId", -
 		<liferay-util:include page="/select_site_navigation_menu_level.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
-		<div class="container-fluid-1280 m-4">
+		<div class="container-fluid-1280 p-4">
 			<p class="text-secondary"><liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" /></p>
 
 			<liferay-ui:search-container
 				cssClass="table-hover"
-				searchContainer="<%= selectSiteNavigationMenuDisplayContext.getSearchContainer() %>"
+				searchContainer="<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.site.navigation.model.SiteNavigationMenu"

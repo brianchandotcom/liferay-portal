@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.item.selector.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -22,12 +23,17 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,13 +52,75 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectSiteNavigationMenuDisplayContext {
 
 	public SelectSiteNavigationMenuDisplayContext(
-		HttpServletRequest httpServletRequest, PortletURL portletURL) {
+		HttpServletRequest httpServletRequest,
+		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
+		PortletURL portletURL) {
 
 		_httpServletRequest = httpServletRequest;
+		_siteNavigationMenuItemTypeRegistry =
+			siteNavigationMenuItemTypeRegistry;
 		_portletURL = portletURL;
 	}
 
-	public SearchContainer<SiteNavigationMenu> getSearchContainer() {
+	public String getSelectSiteNavigationMenuLevelURL(long siteNavigationMenuId)
+		throws PortletException {
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
+
+		portletURL.setParameter(
+			"backURL", PortalUtil.getCurrentURL(_httpServletRequest));
+		portletURL.setParameter(
+			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
+
+		return portletURL.toString();
+	}
+
+	public String getSiteNavigationMenuItemName(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem);
+
+		return siteNavigationMenuItemType.getTitle(
+			siteNavigationMenuItem, themeDisplay.getLocale());
+	}
+
+	public SearchContainer<SiteNavigationMenuItem>
+		getSiteNavigationMenuItemSearchContainer() throws PortalException {
+
+		SearchContainer<SiteNavigationMenuItem> searchContainer =
+			new SearchContainer<>(
+				_getPortletRequest(), _portletURL, null,
+				"there-are-no-navigation-menus");
+
+		long siteNavigationMenuId = ParamUtil.getLong(
+			_httpServletRequest, "siteNavigationMenuId");
+		long parentSiteNavigationMenuId = ParamUtil.getLong(
+			_httpServletRequest, "parentSiteNavigationMenuId");
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			SiteNavigationMenuItemServiceUtil.getSiteNavigationMenuItems(
+				siteNavigationMenuId, parentSiteNavigationMenuId);
+
+		searchContainer.setResults(siteNavigationMenuItems);
+		searchContainer.setTotal(siteNavigationMenuItems.size());
+
+		return searchContainer;
+	}
+
+	public SearchContainer<SiteNavigationMenu>
+		getSiteNavigationMenuSearchContainer() {
+
 		SearchContainer<SiteNavigationMenu> searchContainer =
 			new SearchContainer<>(
 				_getPortletRequest(), _portletURL, null, null);
@@ -94,24 +162,6 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return searchContainer;
 	}
 
-	public String getSelectSiteNavigationMenuLevelURL(long siteNavigationMenuId)
-		throws PortletException {
-
-		PortletResponse portletResponse =
-			(PortletResponse)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
-
-		portletURL.setParameter(
-			"backURL", PortalUtil.getCurrentURL(_httpServletRequest));
-		portletURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
-
-		return portletURL.toString();
-	}
-
 	private PortletRequest _getPortletRequest() {
 		return (PortletRequest)_httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -137,5 +187,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
+	private final SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

@@ -22,6 +22,7 @@ import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorR
 import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
 import com.liferay.site.navigation.item.selector.web.internal.constants.SiteNavigationItemSelectorWebKeys;
 import com.liferay.site.navigation.item.selector.web.internal.display.context.SelectSiteNavigationMenuDisplayContext;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.IOException;
 
@@ -86,7 +87,8 @@ public class SelectSiteNavigationMenuItemSelectorView
 		SelectSiteNavigationMenuDisplayContext
 			selectSiteNavigationMenuDisplayContext =
 				new SelectSiteNavigationMenuDisplayContext(
-					(HttpServletRequest)servletRequest, portletURL);
+					(HttpServletRequest)servletRequest,
+					_siteNavigationMenuItemTypeRegistry, portletURL);
 
 		servletRequest.setAttribute(
 			SiteNavigationItemSelectorWebKeys.
@@ -110,5 +112,9 @@ public class SelectSiteNavigationMenuItemSelectorView
 		target = "(osgi.web.symbolicname=com.liferay.site.navigation.item.selector.web)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

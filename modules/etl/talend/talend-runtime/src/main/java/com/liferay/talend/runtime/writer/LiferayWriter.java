@@ -55,7 +55,8 @@ public class LiferayWriter
 		_liferayOutputProperties = liferayOutputProperties;
 
 		_dieOnError = _liferayOutputProperties.getDieOnError();
-		_endpointUrl = _liferayOutputProperties.getEndpointUrl();
+
+		_finalEndpointUrl = _getFinalEndpointUrl(_liferayOutputProperties);
 
 		_liferaySink = _liferayWriteOperation.getSink();
 		_result = new Result();
@@ -88,7 +89,7 @@ public class LiferayWriter
 
 	public void doDelete(IndexedRecord indexedRecord) {
 		Optional<JsonObject> jsonObjectOptional = _liferaySink.doDeleteRequest(
-			_endpointUrl);
+			_getEndpointUrl());
 
 		if (!jsonObjectOptional.isPresent()) {
 			_handleSuccessRecord(indexedRecord);
@@ -103,7 +104,7 @@ public class LiferayWriter
 
 	public void doInsert(IndexedRecord indexedRecord) throws IOException {
 		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPostRequest(
-			_endpointUrl,
+			_getEndpointUrl(),
 			_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
 
 		if (!jsonObjectOptional.isPresent()) {
@@ -119,7 +120,7 @@ public class LiferayWriter
 
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
 		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPatchRequest(
-			_endpointUrl,
+			_getEndpointUrl(),
 			_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
 
 		if (!jsonObjectOptional.isPresent()) {
@@ -189,6 +190,29 @@ public class LiferayWriter
 		}
 	}
 
+	private String _getEndpointUrl() {
+		if (_finalEndpointUrl != null) {
+			return _finalEndpointUrl;
+		}
+
+		return _liferayOutputProperties.getEndpointUrl();
+	}
+
+	private String _getFinalEndpointUrl(
+		LiferayOutputProperties liferayOutputProperties) {
+
+		try {
+			return liferayOutputProperties.getEndpointUrl();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn("Endpoint URL will be resolved dynamically");
+			}
+		}
+
+		return null;
+	}
+
 	private void _handleSuccessRecord(IndexedRecord indexedRecord) {
 		_result.successCount++;
 
@@ -226,7 +250,7 @@ public class LiferayWriter
 		LiferayWriter.class);
 
 	private final boolean _dieOnError;
-	private final String _endpointUrl;
+	private final String _finalEndpointUrl;
 	private final IndexedRecordJsonObjectConverter
 		_indexedRecordJsonObjectConverter;
 	private final JsonObjectIndexedRecordConverter

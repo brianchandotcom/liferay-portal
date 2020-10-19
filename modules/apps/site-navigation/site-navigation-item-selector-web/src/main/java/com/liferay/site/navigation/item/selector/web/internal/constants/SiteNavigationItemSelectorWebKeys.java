@@ -20,6 +20,10 @@ package com.liferay.site.navigation.item.selector.web.internal.constants;
 public class SiteNavigationItemSelectorWebKeys {
 
 	public static final String
+		SELECT_SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT =
+			"SELECT_SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT";
+
+	public static final String
 		SITE_NAVIGATION_MENU_CONTEXTUAL_MENUS_ITEM_SELECTOR_DISPLAY_CONTEXT =
 			"SITE_NAVIGATION_MENU_CONTEXTUAL_MENUS_DISPLAY_CONTEXT";
 

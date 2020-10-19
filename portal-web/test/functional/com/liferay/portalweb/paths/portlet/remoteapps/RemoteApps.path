@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>RemoteApps</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RemoteApps</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TABLE_ENTRY_NAME</td>
+	<td>//table//tbody//td//*[contains(@class,'table-list-title')]//*[contains(text(),'${key_tableEntryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_URL</td>
+	<td>//table//tbody//td[contains(text(),'${key_tableEntryURL}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

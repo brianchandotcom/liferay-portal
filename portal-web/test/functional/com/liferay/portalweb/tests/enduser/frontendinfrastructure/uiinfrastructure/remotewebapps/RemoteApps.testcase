@@ -1,0 +1,46 @@
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Remote Apps";
+	property testray.main.component.name = "Remote Apps";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Navigator.openURL();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			RemoteApps.tearDown();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test AddRemoteApp {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Custom Apps",
+			panel = "Applications",
+			portlet = "Remote Apps");
+
+		RemoteApps.addApp(
+			entryName = "Test Remote App",
+			entryURL = "http://www.liferay.com");
+
+		RemoteApps.viewTableEntryName(entryName = "Test Remote App");
+		RemoteApps.viewTableEntryURL(entryURL = "http://www.liferay.com");
+	}
+
+}

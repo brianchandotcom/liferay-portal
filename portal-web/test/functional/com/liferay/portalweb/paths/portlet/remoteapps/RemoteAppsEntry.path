@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>RemoteAppsEntry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RemoteAppsEntry</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>NAME</td>
+	<td>//input[@id='_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_name']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

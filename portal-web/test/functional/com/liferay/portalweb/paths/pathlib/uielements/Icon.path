@@ -425,6 +425,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SVG_ELLIPSIS</td>
+	<td>//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_ELLIPSIS</td>
 	<td>//ul[@class='navbar-nav']/li[contains(@class,'nav-item')]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>

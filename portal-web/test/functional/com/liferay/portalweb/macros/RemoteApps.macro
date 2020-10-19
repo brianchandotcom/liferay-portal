@@ -1,0 +1,42 @@
+definition {
+
+	macro addApp {
+		LexiconEntry.gotoAdd();
+
+		RemoteAppsEntry.addEntry(
+			entryName = "${entryName}",
+			entryURL = "${entryURL}");
+
+		PortletEntry.save();
+	}
+
+	macro tearDown {
+		ApplicationsMenu.gotoPortlet(
+			category = "Custom Apps",
+			panel = "Applications",
+			portlet = "Remote Apps");
+
+		Search.searchCP(searchTerm = "App");
+
+		while (IsElementPresent.pauseIsElementPresent(locator1 = "Icon#SVG_ELLIPSIS")) {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+		}
+	}
+
+	macro viewTableEntryName {
+		AssertTextEquals(
+			key_tableEntryName = "${entryName}",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME",
+			value1 = "${entryName}");
+	}
+
+	macro viewTableEntryURL {
+		AssertTextEquals(
+			key_tableEntryURL = "${entryURL}",
+			locator1 = "RemoteApps#TABLE_ENTRY_URL",
+			value1 = "${entryURL}");
+	}
+
+}

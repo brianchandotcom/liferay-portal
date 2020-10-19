@@ -62,6 +62,45 @@ definition {
 		Category.deleteCategoriesCP(vocabularyName = "Stage");
 	}
 
+	@description = "When there are not contents with Stage's categories, the X axis will show just one bar per each one of Audience's categories representing the total number of contents labeled with those categories"
+	@priority = "5"
+	test AuditGraphNoContentsForStage {
+		property portal.acceptance = "true";
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Audience 1",
+			vocabularyName = "Audience");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId}",
+			content = "WC content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		AssertTextPresent(
+			xAxisCtegoryName = "Audience 1",
+			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+			value1 = "WC Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title");
+		
+		Category.openCategoriesAdmin(siteURLKey = "global");
+		
+		Category.deleteCategoriesCP(vocabularyName = "Audience");
+	}
+
 	@description = "Validate if the user can edit a web content through the Edit option"
 	@priority = "5"
 	test ContentDashboardEditWebContent {

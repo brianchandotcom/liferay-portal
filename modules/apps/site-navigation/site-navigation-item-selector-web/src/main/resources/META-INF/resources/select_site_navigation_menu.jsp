@@ -14,6 +14,7 @@
  */
 --%>
 
+-
 <%@ include file="/init.jsp" %>
 
 <%
@@ -21,6 +22,8 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 %>
 
 <div class="container-fluid-1280 mt-3">
+	<p class="text-secondary"><liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" /></p>
+
 	<liferay-ui:search-container
 		cssClass="table-hover"
 		searchContainer="<%= selectSiteNavigationMenuDisplayContext.getSearchContainer() %>"
@@ -30,14 +33,39 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 			keyProperty="siteNavigationMenuId"
 			modelVar="siteNavigationMenu"
 		>
+
+			<%
+			String name = siteNavigationMenu.getName();
+
+			if (siteNavigationMenu.getGroupId() != scopeGroupId) {
+				Group group = GroupLocalServiceUtil.getGroup(siteNavigationMenu.getGroupId());
+
+				name = StringUtil.appendParentheticalSuffix(name, group.getDescriptiveName(locale));
+			}
+			%>
+
 			<liferay-ui:search-container-column-text
+				colspan="<%= 2 %>"
 				name="name"
-				property="name"
-			/>
+			>
+				<clay:icon
+					cssClass="mr-2"
+					symbol="sites"
+				/>
+
+				<b><%= HtmlUtil.escape(name) %></b>
+
+				<c:if test="<%= siteNavigationMenu.getSiteNavigationMenuId() == 0 %>">
+					<clay:label
+						cssClass="ml-1"
+						displayType="primary"
+						label="default"
+					/>
+				</c:if>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="list"
 			markupView="lexicon"
 			searchResultCssClass="table table-autofit"
 		/>

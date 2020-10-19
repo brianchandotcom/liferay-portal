@@ -15,13 +15,21 @@
 package com.liferay.site.navigation.item.selector.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -40,14 +48,10 @@ public class SelectSiteNavigationMenuDisplayContext {
 		_portletURL = portletURL;
 	}
 
-	public PortletURL gePortletURL() {
-		return _portletURL;
-	}
-
 	public SearchContainer<SiteNavigationMenu> getSearchContainer() {
 		SearchContainer<SiteNavigationMenu> searchContainer =
 			new SearchContainer<>(
-				_getPortletRequest(), _portletURL, null, "holi");
+				_getPortletRequest(), _portletURL, null, null);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -62,13 +66,26 @@ public class SelectSiteNavigationMenuDisplayContext {
 				groupIds, themeDisplay.getCompanyGroupId());
 		}
 
-		searchContainer.setResults(
+		List<SiteNavigationMenu> siteNavigationMenus =
 			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
 				groupIds, searchContainer.getStart(), searchContainer.getEnd(),
-				null));
-		searchContainer.setTotal(
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
-				groupIds));
+				null);
+
+		int siteNavigationMenusCount =
+			SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(groupIds);
+
+		if (searchContainer.getStart() == 0) {
+			siteNavigationMenus = ListUtil.concat(
+				Collections.singletonList(
+					_getPublicPagesHierarchySiteNavigationMenu()),
+				siteNavigationMenus);
+
+			siteNavigationMenusCount++;
+		}
+
+		searchContainer.setResults(siteNavigationMenus);
+
+		searchContainer.setTotal(siteNavigationMenusCount);
 
 		return searchContainer;
 	}
@@ -76,6 +93,24 @@ public class SelectSiteNavigationMenuDisplayContext {
 	private PortletRequest _getPortletRequest() {
 		return (PortletRequest)_httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
+	}
+
+	private SiteNavigationMenu _getPublicPagesHierarchySiteNavigationMenu() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			themeDisplay.getLocale(), getClass());
+
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuLocalServiceUtil.createSiteNavigationMenu(0);
+
+		siteNavigationMenu.setGroupId(themeDisplay.getScopeGroupId());
+		siteNavigationMenu.setName(
+			LanguageUtil.get(resourceBundle, "public-pages-hierarchy"));
+
+		return siteNavigationMenu;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

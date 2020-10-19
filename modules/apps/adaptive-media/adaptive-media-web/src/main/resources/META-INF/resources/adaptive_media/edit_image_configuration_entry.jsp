@@ -36,7 +36,7 @@ if (amImageConfigurationEntry != null) {
 }
 %>
 
-<div class="sheet sheet-lg">
+<div class="container-view">
 
 	<%
 	String maxWidth = StringPool.BLANK;

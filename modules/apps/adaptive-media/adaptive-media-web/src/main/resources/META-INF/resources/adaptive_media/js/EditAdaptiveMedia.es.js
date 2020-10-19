@@ -76,123 +76,125 @@ const EditAdaptiveMedia = ({
 
 	return (
 		<ClayForm onSubmit={formik.handleSubmit}>
-			<Input
-				error={errors[nameId]}
-				label={Liferay.Language.get('name')}
-				name={nameId}
-				onChange={handleChange}
-				required
-				value={values[nameId]}
-			/>
-
-			<Input
-				label={Liferay.Language.get('description')}
-				name={descriptionId}
-				onChange={handleChange}
-				type="textarea"
-				value={values[descriptionId]}
-			/>
-
-			<div className="sheet-section">
-				<h3 className="sheet-subtitle">
-					{Liferay.Language.get('size')}
-					<RequiredMark />
-				</h3>
-
-				<label className="control-label form-group">
-					{Liferay.Language.get(
-						'please-enter-at-least-one-of-the-following-fields'
-					)}
-
-					<HelpMessage
-						message={Liferay.Language.get(
-							'leave-a-size-field-empty-to-get-images-scaled-proportionally'
-						)}
-					/>
-				</label>
-
-				<ClayLayout.Row>
-					<ClayLayout.Col md="3">
-						<Input
-							label={Liferay.Language.get('max-width-px')}
-							name={maxWidthId}
-							onChange={handleChange}
-							type="number"
-							value={values[maxWidthId]}
-						/>
-					</ClayLayout.Col>
-					<ClayLayout.Col md="3">
-						<Input
-							label={Liferay.Language.get('max-height-px')}
-							name={maxHeightId}
-							onChange={handleChange}
-							type="number"
-							value={values[maxHeightId]}
-						/>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-
-				<ClayCheckbox
-					checked={addHighResolution}
-					label={Liferay.Language.get(
-						'add-a-resolution-for-high-density-displays'
-					)}
-					name={highResolutionId}
-					onChange={() => setAddHighResolution(!addHighResolution)}
+			<div class="sheet sheet-lg">
+				<Input
+					error={errors[nameId]}
+					label={Liferay.Language.get('name')}
+					name={nameId}
+					onChange={handleChange}
+					required
+					value={values[nameId]}
 				/>
-			</div>
-
-			<div className="sheet-section">
-				<h3 className="sheet-subtitle">
-					{Liferay.Language.get('identifier')}
-				</h3>
-
-				<ClayRadioGroup
-					name={automaticRadioId}
-					onSelectedValueChange={setAutomaticId}
-					selectedValue={automaticId}
-				>
-					<ClayRadio
-						label={Liferay.Language.get('automatic')}
-						value={true}
-					>
-						<HelpMessage
-							message={Liferay.Language.get(
-								'the-id-is-based-on-the-name-field'
-							)}
-						/>
-					</ClayRadio>
-
-					<ClayRadio
-						label={Liferay.Language.get('custom')}
-						value={false}
-					/>
-				</ClayRadioGroup>
 
 				<Input
-					disabled={automaticId}
-					error={!automaticId && errors[newUuidId]}
-					label={Liferay.Language.get('id')}
-					name={newUuidId}
+					label={Liferay.Language.get('description')}
+					name={descriptionId}
 					onChange={handleChange}
-					value={values[newUuidId]}
+					type="textarea"
+					value={values[descriptionId]}
 				/>
-			</div>
 
-			<div className="sheet-footer">
-				<ClayButton.Group spaced>
-					<ClayButton type="submit">
-						{Liferay.Language.get('save')}
-					</ClayButton>
+				<div className="sheet-section">
+					<h3 className="sheet-subtitle">
+						{Liferay.Language.get('size')}
+						<RequiredMark />
+					</h3>
 
-					<ClayButton
-						displayType="secondary"
-						onClick={onCancel}
-						type="cancel"
+					<label className="control-label form-group">
+						{Liferay.Language.get(
+							'please-enter-at-least-one-of-the-following-fields'
+						)}
+
+						<HelpMessage
+							message={Liferay.Language.get(
+								'leave-a-size-field-empty-to-get-images-scaled-proportionally'
+							)}
+						/>
+					</label>
+
+					<ClayLayout.Row>
+						<ClayLayout.Col md="3">
+							<Input
+								label={Liferay.Language.get('max-width-px')}
+								name={maxWidthId}
+								onChange={handleChange}
+								type="number"
+								value={values[maxWidthId]}
+							/>
+						</ClayLayout.Col>
+						<ClayLayout.Col md="3">
+							<Input
+								label={Liferay.Language.get('max-height-px')}
+								name={maxHeightId}
+								onChange={handleChange}
+								type="number"
+								value={values[maxHeightId]}
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+
+					<ClayCheckbox
+						checked={addHighResolution}
+						label={Liferay.Language.get(
+							'add-a-resolution-for-high-density-displays'
+						)}
+						name={highResolutionId}
+						onChange={() => setAddHighResolution(!addHighResolution)}
+					/>
+				</div>
+
+				<div className="sheet-section">
+					<h3 className="sheet-subtitle">
+						{Liferay.Language.get('identifier')}
+					</h3>
+
+					<ClayRadioGroup
+						name={automaticRadioId}
+						onSelectedValueChange={setAutomaticId}
+						selectedValue={automaticId}
 					>
-						{Liferay.Language.get('cancel')}
-					</ClayButton>
-				</ClayButton.Group>
+						<ClayRadio
+							label={Liferay.Language.get('automatic')}
+							value={true}
+						>
+							<HelpMessage
+								message={Liferay.Language.get(
+									'the-id-is-based-on-the-name-field'
+								)}
+							/>
+						</ClayRadio>
+
+						<ClayRadio
+							label={Liferay.Language.get('custom')}
+							value={false}
+						/>
+					</ClayRadioGroup>
+
+					<Input
+						disabled={automaticId}
+						error={!automaticId && errors[newUuidId]}
+						label={Liferay.Language.get('id')}
+						name={newUuidId}
+						onChange={handleChange}
+						value={values[newUuidId]}
+					/>
+				</div>
+
+				<div className="sheet-footer">
+					<ClayButton.Group spaced>
+						<ClayButton type="submit">
+							{Liferay.Language.get('save')}
+						</ClayButton>
+
+						<ClayButton
+							displayType="secondary"
+							onClick={onCancel}
+							type="cancel"
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
+				</div>
 			</div>
 		</ClayForm>
 	);

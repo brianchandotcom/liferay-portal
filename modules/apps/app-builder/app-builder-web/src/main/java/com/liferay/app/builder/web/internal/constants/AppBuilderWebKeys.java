@@ -23,11 +23,11 @@ public class AppBuilderWebKeys {
 
 	public static final String APP_DEPLOYMENT_TYPE = "APP_DEPLOYMENT_TYPE";
 
+	public static final String APP_PORTRAIT_URL = "APP_PORTRAIT_URL";
+
 	public static final String APP_TAB = "APP_TAB";
 
 	public static final String APP_TAB_CONTEXT = "APP_TAB_CONTEXT";
-
-	public static final String APP_USER_PORTRAIT_URL = "APP_USER_PORTRAIT_URL";
 
 	public static final String APPS_TABS = "APPS_TABS";
 

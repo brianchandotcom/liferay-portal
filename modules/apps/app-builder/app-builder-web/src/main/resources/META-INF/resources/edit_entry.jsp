@@ -76,8 +76,6 @@ List<Long> dataLayoutIds = appBuilderAppPortletTabContext.getDataLayoutIds();
 									).put(
 										"appTab", request.getAttribute(AppBuilderWebKeys.APP_TAB)
 									).put(
-										"appUserPortraitURL", request.getAttribute(AppBuilderWebKeys.APP_USER_PORTRAIT_URL)
-									).put(
 										"basePortletURL", String.valueOf(renderResponse.createRenderURL())
 									).put(
 										"baseResourceURL", String.valueOf(baseResourceURL)
@@ -95,6 +93,8 @@ List<Long> dataLayoutIds = appBuilderAppPortletTabContext.getDataLayoutIds();
 										"dataListViewId", appBuilderApp.getDeDataListViewId()
 									).put(
 										"dataRecordId", ParamUtil.getLong(request, "dataRecordId")
+									).put(
+										"portraitURL", request.getAttribute(AppBuilderWebKeys.APP_PORTRAIT_URL)
 									).put(
 										"redirect", ParamUtil.getString(request, "redirect")
 									).put(

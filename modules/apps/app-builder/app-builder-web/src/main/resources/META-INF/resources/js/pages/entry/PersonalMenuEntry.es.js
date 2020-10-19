@@ -20,7 +20,7 @@ import React from 'react';
 
 export default function PersonalMenuEntry({
 	size = 'lg',
-	appUserPortraitURL,
+	portraitURL,
 	items = [],
 }) {
 	return (
@@ -38,10 +38,10 @@ export default function PersonalMenuEntry({
 							shape="circle"
 							size={size}
 						>
-							{appUserPortraitURL ? (
+							{portraitURL ? (
 								<img
 									className="sticker-img"
-									src={appUserPortraitURL}
+									src={portraitURL}
 								/>
 							) : (
 								<ClayIcon symbol="user" />

@@ -139,7 +139,7 @@ const TranslationManagerPortal = ({
 };
 
 export default (props) => {
-	const {appId, appUserPortraitURL} = useContext(AppContext);
+	const {appId, portraitURL} = useContext(AppContext);
 	const appPersonalMenu = document.querySelector('#app-personal-menu');
 
 	return (
@@ -148,7 +148,6 @@ export default (props) => {
 				themeDisplay.isSignedIn() &&
 				createPortal(
 					<PersonalMenu
-						appUserPortraitURL={appUserPortraitURL}
 						items={[
 							{
 								label: themeDisplay.getUserName(),
@@ -164,6 +163,7 @@ export default (props) => {
 								},
 							},
 						]}
+						portraitURL={portraitURL}
 					/>,
 					appPersonalMenu
 				)}

@@ -143,7 +143,7 @@ public class AppPortlet extends MVCPortlet {
 
 		try {
 			renderRequest.setAttribute(
-				AppBuilderWebKeys.APP_USER_PORTRAIT_URL,
+				AppBuilderWebKeys.APP_PORTRAIT_URL,
 				user.getPortraitURL(themeDisplay));
 		}
 		catch (PortalException portalException) {

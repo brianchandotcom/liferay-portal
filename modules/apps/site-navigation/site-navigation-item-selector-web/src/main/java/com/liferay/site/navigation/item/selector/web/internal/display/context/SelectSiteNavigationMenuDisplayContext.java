@@ -60,6 +60,9 @@ public class SelectSiteNavigationMenuDisplayContext {
 		_siteNavigationMenuItemTypeRegistry =
 			siteNavigationMenuItemTypeRegistry;
 		_portletURL = portletURL;
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getSelectSiteNavigationMenuLevelURL(long siteNavigationMenuId)
@@ -96,16 +99,12 @@ public class SelectSiteNavigationMenuDisplayContext {
 	public String getSiteNavigationMenuItemName(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
 				siteNavigationMenuItem);
 
 		return siteNavigationMenuItemType.getTitle(
-			siteNavigationMenuItem, themeDisplay.getLocale());
+			siteNavigationMenuItem, _themeDisplay.getLocale());
 	}
 
 	public SearchContainer<SiteNavigationMenuItem>
@@ -139,17 +138,13 @@ public class SelectSiteNavigationMenuDisplayContext {
 			new SearchContainer<>(
 				_getPortletRequest(), _portletURL, null, null);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		long[] groupIds = {_themeDisplay.getScopeGroupId()};
 
-		long[] groupIds = {themeDisplay.getScopeGroupId()};
-
-		Group scopeGroup = themeDisplay.getScopeGroup();
+		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (!scopeGroup.isCompany()) {
 			groupIds = ArrayUtil.append(
-				groupIds, themeDisplay.getCompanyGroupId());
+				groupIds, _themeDisplay.getCompanyGroupId());
 		}
 
 		List<SiteNavigationMenu> siteNavigationMenus =
@@ -182,17 +177,13 @@ public class SelectSiteNavigationMenuDisplayContext {
 	}
 
 	private SiteNavigationMenu _getPublicPagesHierarchySiteNavigationMenu() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			themeDisplay.getLocale(), getClass());
+			_themeDisplay.getLocale(), getClass());
 
 		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuLocalServiceUtil.createSiteNavigationMenu(0);
 
-		siteNavigationMenu.setGroupId(themeDisplay.getScopeGroupId());
+		siteNavigationMenu.setGroupId(_themeDisplay.getScopeGroupId());
 		siteNavigationMenu.setName(
 			LanguageUtil.get(resourceBundle, "public-pages-hierarchy"));
 
@@ -203,5 +194,6 @@ public class SelectSiteNavigationMenuDisplayContext {
 	private final PortletURL _portletURL;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
+	private final ThemeDisplay _themeDisplay;
 
 }

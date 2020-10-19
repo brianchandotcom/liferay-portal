@@ -122,29 +122,31 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			'#<portlet:namespace />addConnectedSiteButton'
 		);
 
-		addConnectedSiteButton.addEventListener('click', function (event) {
-			Liferay.Util.openSelectionModal({
-				onSelect: function (event) {
-					var toGroupIdInput = document.querySelector(
-						'#<portlet:namespace />toGroupId'
-					);
+		if (addConnectedSiteButton) {
+			addConnectedSiteButton.addEventListener('click', function (event) {
+				Liferay.Util.openSelectionModal({
+					onSelect: function (event) {
+						var toGroupIdInput = document.querySelector(
+							'#<portlet:namespace />toGroupId'
+						);
 
-					toGroupIdInput.value = event.groupid;
+						toGroupIdInput.value = event.groupid;
 
-					var redirectInput = document.querySelector(
-						'#<portlet:namespace />redirect'
-					);
+						var redirectInput = document.querySelector(
+							'#<portlet:namespace />redirect'
+						);
 
-					redirectInput.value = '<%= currentURL %>';
+						redirectInput.value = '<%= currentURL %>';
 
-					submitForm(toGroupIdInput.form);
-				},
-				selectEventName:
-					'<%= liferayPortletResponse.getNamespace() + "selectSite" %>',
-				title: '<liferay-ui:message key="select-site" />',
-				url:
-					'<%= String.valueOf(depotAdminSitesDisplayContext.getItemSelectorURL()) %>',
+						submitForm(toGroupIdInput.form);
+					},
+					selectEventName:
+						'<%= liferayPortletResponse.getNamespace() + "selectSite" %>',
+					title: '<liferay-ui:message key="select-site" />',
+					url:
+						'<%= String.valueOf(depotAdminSitesDisplayContext.getItemSelectorURL()) %>',
+				});
 			});
-		});
+		}
 	</aui:script>
 </clay:sheet-section>

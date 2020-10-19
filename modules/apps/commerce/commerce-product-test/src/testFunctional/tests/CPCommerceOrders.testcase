@@ -106,11 +106,11 @@ definition {
 			addressCity = "Test City",
 			addressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
+			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productPrice = "100.00",
 			productQuantity = "4",
-			productSKU = "MIN93015",
-			productUnitPrice = "50.00");
+			productSKU = "SPEED93015",
+			productTotalPrice = "100.00");
 	}
 
 }

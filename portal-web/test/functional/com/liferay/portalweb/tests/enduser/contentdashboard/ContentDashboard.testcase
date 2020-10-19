@@ -101,6 +101,72 @@ definition {
 		Category.deleteCategoriesCP(vocabularyName = "Audience");
 	}
 
+	@description = "When the user unchecks all of the checkboxes of the content audit graph, all bars in the graph disappear and a message is shown: No Stage Categories selected. Select any stage category from the checkboxes in the legend above."
+	@priority = "5"
+	test AuditGraphUncheckCheckbox {
+		property portal.acceptance = "true";
+
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Audience 1",
+			vocabularyName = "Audience");
+
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Stage 1",
+			vocabularyName = "Stage");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Audience 1",
+			vocabularyName = "Audience",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+
+		WebContent.selectCategory(
+			categoryName = "Stage 1",
+			userSegmentDetailTitle = "${userSegmentDetailTitle}",
+			vocabularyName = "Stage");
+
+		PortletEntry.publish();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.uncheckCheckbox(checkboxName = "Stage 1");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#NO_CATEGORIES_SELECTED_TEXT",
+			value1 = "There are no categories selected");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title");
+		
+		Category.openCategoriesAdmin(siteURLKey = "global");
+		
+		Category.deleteCategoriesCP(vocabularyName = "Audience");
+
+		Category.openCategoriesAdmin(siteURLKey = "global");
+		
+		Category.deleteCategoriesCP(vocabularyName = "Stage");
+	}
+
 	@description = "Validate if the user can edit a web content through the Edit option"
 	@priority = "5"
 	test ContentDashboardEditWebContent {

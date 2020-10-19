@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>AUDIT_GRAPH_CATEGORY_CHECKBOX</td>
+	<td>//*[contains(@class, 'inline-item-after') and contains(text(),'Stage 1')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUTHOR_SELECT_DISPLAY_MODE_BUTTON</td>
 	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'nav-link-monospaced') and contains(@class, 'btn nav-link')]</td>
 	<td></td>
@@ -100,6 +105,11 @@
 <tr>
 	<td>MY_SITES_TAB</td>
 	<td>//*[contains(@class, 'nav-link') and contains(text(),'My Sites')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NO_CATEGORIES_SELECTED_TEXT</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(),'There are no categories selected')]</td>
 	<td></td>
 </tr>
 <tr>

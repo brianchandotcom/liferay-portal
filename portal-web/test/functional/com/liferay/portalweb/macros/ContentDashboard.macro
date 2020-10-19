@@ -290,6 +290,10 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
+	macro uncheckCheckbox {
+		ClickNoError(locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX");
+	}
+
 	macro searchValue {
 		Click(locator1 = "ContentDashboard#SEARCH_FIELD");
 

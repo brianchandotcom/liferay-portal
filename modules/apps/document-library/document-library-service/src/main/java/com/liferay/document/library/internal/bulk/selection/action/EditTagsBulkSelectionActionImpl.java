@@ -17,6 +17,7 @@ package com.liferay.document.library.internal.bulk.selection.action;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.io.Serializable;
 
@@ -87,7 +87,7 @@ public class EditTagsBulkSelectionActionImpl
 						currentTagNamesSet.addAll(toAddTagNamesSet);
 
 						currentTagNamesSet.removeIf(
-							tagName -> !AssetUtil.isValidWord(tagName));
+							tagName -> !_assetHelper.isValidWord(tagName));
 
 						newTagNames = currentTagNamesSet.toArray(new String[0]);
 					}
@@ -126,5 +126,8 @@ public class EditTagsBulkSelectionActionImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 }

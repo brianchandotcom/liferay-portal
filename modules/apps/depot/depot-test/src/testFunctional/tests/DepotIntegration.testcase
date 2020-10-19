@@ -115,7 +115,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "An asset library cannot be connected to a staged site.");
+			value1 = "An unstaged asset library cannot be connected to a staged site.");
 	}
 
 	@description = "This asserts that a deactivated site is still shown in connected sites and a deleted site is removed from connected sites."

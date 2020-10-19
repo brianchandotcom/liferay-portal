@@ -32,13 +32,11 @@ if (layoutSet != null) {
 	long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 
 	if (defaultPlid != LayoutConstants.DEFAULT_PLID) {
-		Layout layout = LayoutLocalServiceUtil.getLayout(defaultPlid);
-
 		ServicePreAction servicePreAction = (ServicePreAction)InstancePool.get(ServicePreAction.class.getName());
 
 		servicePreAction.run(request, response);
 
-		redirect = PortalUtil.getLayoutURL(layout, (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY));
+		redirect = PortalUtil.getLayoutURL(LayoutLocalServiceUtil.getLayout(defaultPlid), (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY));
 	}
 	else {
 		redirect = PortalUtil.getPathMain();

@@ -4,6 +4,9 @@ definition {
 		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_PORTRAIT")) {
 			Click.waitForPersonalMenuJSClick(locator1 = "UserBar#USER_AVATAR_PORTRAIT");
 		}
+		else if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_TOGGLE")) {
+			Click.waitForMenuToggleJSClick(locator1 = "UserBar#USER_AVATAR_TOGGLE");
+		}
 		else {
 			var browserType = PropsUtil.get("browser.type");
 

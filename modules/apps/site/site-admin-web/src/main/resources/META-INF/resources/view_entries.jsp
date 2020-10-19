@@ -32,11 +32,10 @@
 
 		String siteImageURL = curGroup.getLogoURL(themeDisplay, false);
 
-		Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-			"actions", siteAdminManagementToolbarDisplayContext.getAvailableActions(curGroup)
-		).build();
-
-		row.setData(rowData);
+		row.setData(
+			HashMapBuilder.<String, Object>put(
+				"actions", siteAdminManagementToolbarDisplayContext.getAvailableActions(curGroup)
+			).build());
 		%>
 
 		<portlet:renderURL var="viewSubsitesURL">
@@ -97,7 +96,7 @@
 				%>
 
 				<liferay-ui:search-container-column-text>
-					<clay:vertical-card
+					<clay:vertical-card-v2
 						verticalCard="<%= new SiteVerticalCard(curGroup, liferayPortletRequest, liferayPortletResponse, searchContainer.getRowChecker(), siteAdminDisplayContext) %>"
 					/>
 				</liferay-ui:search-container-column-text>

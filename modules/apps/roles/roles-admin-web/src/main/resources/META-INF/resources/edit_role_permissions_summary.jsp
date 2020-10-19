@@ -100,9 +100,7 @@ for (int i = 0; i < permissions.size(); i++) {
 
 permissionDisplays = ListUtil.sort(permissionDisplays);
 
-int total = permissionDisplays.size();
-
-searchContainer.setTotal(total);
+searchContainer.setTotal(permissionDisplays.size());
 
 List<PermissionDisplay> results = ListUtil.subList(permissionDisplays, searchContainer.getStart(), searchContainer.getEnd());
 
@@ -134,11 +132,12 @@ for (int i = 0; i < results.size(); i++) {
 	if (role.getType() == RoleConstants.TYPE_REGULAR) {
 		RolePermissions rolePermissions = new RolePermissions(curResource, ResourceConstants.SCOPE_GROUP, actionId, role.getRoleId());
 
-		LinkedHashMap<String, Object> groupParams = LinkedHashMapBuilder.<String, Object>put(
-			"rolePermissions", rolePermissions
-		).build();
-
-		groups = GroupLocalServiceUtil.search(company.getCompanyId(), GroupTypeContributorUtil.getClassNameIds(), null, null, groupParams, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		groups = GroupLocalServiceUtil.search(
+			company.getCompanyId(), GroupTypeContributorUtil.getClassNameIds(), null, null,
+			LinkedHashMapBuilder.<String, Object>put(
+				"rolePermissions", rolePermissions
+			).build(),
+			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		if (groups.isEmpty()) {
 			scope = ResourceConstants.SCOPE_COMPANY;

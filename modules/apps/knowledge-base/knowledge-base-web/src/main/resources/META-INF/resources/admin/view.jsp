@@ -147,11 +147,10 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							<%
 							KBFolder kbFolder = (KBFolder)kbObject;
 
-							Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-								"actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbFolder))
-							).build();
-
-							row.setData(rowData);
+							row.setData(
+								HashMapBuilder.<String, Object>put(
+									"actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbFolder))
+								).build());
 
 							row.setPrimaryKey(String.valueOf(kbFolder.getKbFolderId()));
 							%>
@@ -231,11 +230,10 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							<%
 							KBArticle kbArticle = (KBArticle)kbObject;
 
-							Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-								"actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbArticle))
-							).build();
-
-							row.setData(rowData);
+							row.setData(
+								HashMapBuilder.<String, Object>put(
+									"actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbArticle))
+								).build());
 
 							row.setPrimaryKey(String.valueOf(kbArticle.getResourcePrimKey()));
 							%>

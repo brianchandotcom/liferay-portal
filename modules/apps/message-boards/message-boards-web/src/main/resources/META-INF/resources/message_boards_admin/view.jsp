@@ -43,11 +43,9 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 <%
 MBAdminListDisplayContext mbAdminListDisplayContext = mbDisplayContextProvider.getMbAdminListDisplayContext(request, response, categoryId);
 
-int entriesDelta = mbAdminListDisplayContext.getEntriesDelta();
-
 PortletURL portletURL = mbEntriesManagementToolbarDisplayContext.getPortletURL();
 
-SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, entriesDelta, portletURL, null, "there-are-no-threads-or-categories");
+SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, mbAdminListDisplayContext.getEntriesDelta(), portletURL, null, "there-are-no-threads-or-categories");
 
 mbAdminListDisplayContext.setEntriesDelta(entriesSearchContainer);
 

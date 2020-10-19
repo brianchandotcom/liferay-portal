@@ -23,13 +23,9 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 
 Tree.Node<String> scopeAliasTreeNode = assignScopesTreeDisplayContext.getScopeAliasTreeNode();
 
-Set<String> assignedDeletedScopeAliases = assignScopesTreeDisplayContext.getAssignedDeletedScopeAliases();
-Set<String> assignedScopeAliases = assignScopesTreeDisplayContext.getAssignedScopeAliases();
-Map<String, String> scopeAliasesDescriptionsMap = assignScopesTreeDisplayContext.getScopeAliasesDescriptionsMap();
-
-pageContext.setAttribute("assignedDeletedScopeAliases", assignedDeletedScopeAliases);
-pageContext.setAttribute("assignedScopeAliases", assignedScopeAliases);
-pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptionsMap);
+pageContext.setAttribute("assignedDeletedScopeAliases", assignScopesTreeDisplayContext.getAssignedDeletedScopeAliases());
+pageContext.setAttribute("assignedScopeAliases", assignScopesTreeDisplayContext.getAssignedScopeAliases());
+pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayContext.getScopeAliasesDescriptionsMap());
 %>
 
 <clay:container-fluid

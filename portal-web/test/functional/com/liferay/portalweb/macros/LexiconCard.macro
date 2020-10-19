@@ -100,6 +100,12 @@ definition {
 			value1 = "${card}");
 	}
 
+	macro viewMarkAsDefault {
+		AssertVisible(
+			key_card = "${card}",
+			locator1 = "Card#CARD_STICKER");
+	}
+
 	macro viewMenuItemNotPresent {
 		Click(
 			key_card = "${card}",

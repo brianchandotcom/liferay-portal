@@ -172,11 +172,12 @@ if (Validator.isNotNull(portletResource)) {
 						if (role.getType() == RoleConstants.TYPE_REGULAR) {
 							RolePermissions rolePermissions = new RolePermissions(resource, ResourceConstants.SCOPE_GROUP, actionId, role.getRoleId());
 
-							LinkedHashMap<String, Object> groupParams = LinkedHashMapBuilder.<String, Object>put(
-								"rolePermissions", rolePermissions
-							).build();
-
-							groups = GroupLocalServiceUtil.search(company.getCompanyId(), GroupTypeContributorUtil.getClassNameIds(), null, null, groupParams, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+							groups = GroupLocalServiceUtil.search(
+								company.getCompanyId(), GroupTypeContributorUtil.getClassNameIds(), null, null,
+								LinkedHashMapBuilder.<String, Object>put(
+									"rolePermissions", rolePermissions
+								).build(),
+								true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 							groupIdsArray = new long[groups.size()];
 

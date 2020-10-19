@@ -31,8 +31,6 @@ page import="com.liferay.users.admin.item.selector.web.internal.display.context.
 page import="com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.item.selector.web.internal.servlet.taglib.clay.SelectUserUserCard" %>
 
-<%@ page import="java.util.Map" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

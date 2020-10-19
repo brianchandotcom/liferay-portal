@@ -89,10 +89,17 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 
 				String variableName = variableTypeAndName.substring(y + 1);
 
+				if (!nextTags.contains("=\"<%= " + variableName + " %>\"")) {
+					continue;
+				}
+
+				s = content.substring(x);
+
 				String taglibValue = array[1];
 
-				if (_hasVariableReference(
-						content.substring(x), variableName, taglibValue)) {
+				if (hasVariableReference(
+						s, taglibValue,
+						s.lastIndexOf("=\"<%= " + variableName + " %>\""))) {
 
 					continue;
 				}
@@ -113,10 +120,6 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 							getLineNumber(content, matcher.start(1)));
 					}
 
-					continue;
-				}
-
-				if (!nextTags.contains("=\"<%= " + variableName + " %>\"")) {
 					continue;
 				}
 
@@ -199,46 +202,6 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 		return count;
 	}
 
-	private boolean _hasVariableReference(
-		String content, String variableName, String taglibValue) {
-
-		int endPosition = content.lastIndexOf(
-			"=\"<%= " + variableName + " %>\"");
-
-		if (endPosition == -1) {
-			return false;
-		}
-
-		endPosition = content.indexOf("\n", endPosition);
-
-		Matcher matcher1 = _methodCallPattern.matcher(taglibValue);
-
-		while (matcher1.find()) {
-			Pattern pattern = Pattern.compile(
-				"\\b(?<!['\"])" + matcher1.group(1) + "\\.(\\w+)?\\(");
-
-			Matcher matcher2 = pattern.matcher(content);
-
-			while (matcher2.find()) {
-				if (matcher2.start() > endPosition) {
-					break;
-				}
-
-				String methodName = matcher2.group(1);
-
-				if (!methodName.startsWith("get") &&
-					!methodName.startsWith("is")) {
-
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	private static final Pattern _methodCallPattern = Pattern.compile(
-		"\\b(?<!['\"])([a-z]\\w+)\\.(\\w+)?\\(");
 	private static final Pattern _taglibVariablePattern = Pattern.compile(
 		"\n(((\t*)([\\w<>\\[\\],\\? ]+) (\\w+) = (((?!;\n).)*);\n)+)\\s*%>\n",
 		Pattern.DOTALL);

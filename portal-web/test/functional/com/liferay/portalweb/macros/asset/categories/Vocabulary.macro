@@ -56,6 +56,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addInternalVocabulary {
+		Vocabulary.gotoAddVocabulary();
+
+		PortletEntry.inputName(name = "${vocabularyName}");
+
+		Click(locator1 = "Categories#INTERNAL_VISIBILITY");
+
+		Button.clickNoError(button = "Save");
+
+		AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary only with internal visibility?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addViewableByCP {
 		Vocabulary.gotoAddVocabulary();
 

@@ -46,33 +46,9 @@
 	}
 
 	&.contextual-sidebar {
-		$control-menu-height-sm: 56px;
-		$control-menu-height: 49px;
-		$sidebar-width: 320px;
-		$upper-tbar-height: 64px;
-
-		$top: $control-menu-height + $upper-tbar-height;
-
-		height: calc(100vh - #{$top});
 		overflow-y: scroll;
-		top: $top;
+		top: auto;
 		z-index: 1;
-
-		@include media-breakpoint-up(sm) {
-			$top-sm: $control-menu-height-sm + $upper-tbar-height;
-
-			height: calc(100vh - #{$top-sm});
-			top: $top-sm;
-
-			& + .contextual-sidebar-content {
-				padding-right: 0;
-				transition: padding-right ease 0.5s;
-			}
-
-			&.contextual-sidebar-visible + .contextual-sidebar-content {
-				padding-right: $sidebar-width;
-			}
-		}
 	}
 }
 

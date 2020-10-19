@@ -137,11 +137,10 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 						viewContentURLString = viewContentURL.toString();
 					}
 
-					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-						"actions", trashManagementToolbarDisplayContext.getAvailableActions(trashEntry)
-					).build();
-
-					row.setData(rowData);
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"actions", trashManagementToolbarDisplayContext.getAvailableActions(trashEntry)
+						).build());
 					%>
 
 					<c:choose>
@@ -193,7 +192,7 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<clay:vertical-card
+								<clay:vertical-card-v2
 									verticalCard="<%= new TrashEntryVerticalCard(trashEntry, trashRenderer, liferayPortletResponse, renderRequest, searchContainer.getRowChecker(), viewContentURLString) %>"
 								/>
 							</liferay-ui:search-container-column-text>

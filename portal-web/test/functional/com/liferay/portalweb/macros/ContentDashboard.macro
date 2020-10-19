@@ -27,7 +27,9 @@ definition {
 				value1 = "Filter and Order");
 		}
 
-		Click(locator1 = "ContentDashboard#FILTER_BY_AUTHOR_OPTION");
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -63,7 +65,9 @@ definition {
 				value1 = "Filter and Order");
 		}
 
-		Click(locator1 = "ContentDashboard#FILTER_BY_AUTHOR_OPTION");
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -99,7 +103,9 @@ definition {
 				value1 = "Filter and Order");
 		}
 
-		Click(locator1 = "ContentDashboard#FILTER_BY_AUTHOR_OPTION");
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -135,7 +141,9 @@ definition {
 				value1 = "Filter and Order");
 		}
 
-		Click(locator1 = "ContentDashboard#FILTER_BY_CATEGORY_OPTION");
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -158,6 +166,74 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro filterBySiteGlobal {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Click(locator1 = "ContentDashboard#MY_SITES_TAB");
+
+		Click(locator1 = "ContentDashboard#GLOBAL_SITE_CARD");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro filterByStatusAny {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+	}
+
+	macro filterByStatusApproved {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+	}
+
+	macro filterByStatusDraft {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+	}
+
+	macro filterByStatusScheduled {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+	}
+
 	macro filterByTag {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
@@ -165,7 +241,9 @@ definition {
 				value1 = "Filter and Order");
 		}
 
-		Click(locator1 = "ContentDashboard#FILTER_BY_TAG_OPTION");
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -195,7 +273,9 @@ definition {
 				value1 = "Filter and Order");
 		}
 
-		Click(locator1 = "ContentDashboard#FILTER_BY_MODIFICATION_DATE_OPTION");
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
 	macro orderByTitle {
@@ -205,7 +285,9 @@ definition {
 				value1 = "Filter and Order");
 		}
 
-		Click(locator1 = "ContentDashboard#FILTER_BY_TITLE_OPTION");
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
 	macro searchValue {

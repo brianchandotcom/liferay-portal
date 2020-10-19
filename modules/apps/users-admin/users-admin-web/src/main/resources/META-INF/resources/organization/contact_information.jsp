@@ -19,10 +19,8 @@
 <%
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 
-long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
-
 request.setAttribute("contact_information.jsp-className", Organization.class.getName());
-request.setAttribute("contact_information.jsp-classPK", organizationId);
+request.setAttribute("contact_information.jsp-classPK", organizationScreenNavigationDisplayContext.getOrganizationId());
 %>
 
 <clay:sheet-section>

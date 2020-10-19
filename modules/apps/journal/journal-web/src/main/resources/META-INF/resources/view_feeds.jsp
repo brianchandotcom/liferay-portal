@@ -66,11 +66,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 				editURL = editFeedURL.toString();
 			}
 
-			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-				"actions", journalFeedsManagementToolbarDisplayContext.getAvailableActions(feed)
-			).build();
-
-			row.setData(rowData);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"actions", journalFeedsManagementToolbarDisplayContext.getAvailableActions(feed)
+				).build());
 			%>
 
 			<c:choose>

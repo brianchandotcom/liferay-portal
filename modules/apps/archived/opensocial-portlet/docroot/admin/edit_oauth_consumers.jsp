@@ -37,9 +37,7 @@ else {
 
 	String namespace = ShindigUtil.getPortletResourceNamespace(renderRequest, themeDisplay);
 
-	long moduleId = ShindigUtil.getModuleId(namespace);
-
-	gadgetKey = GadgetConstants.toAdhocGadgetKey(moduleId);
+	gadgetKey = GadgetConstants.toAdhocGadgetKey(ShindigUtil.getModuleId(namespace));
 }
 
 Map<String, OAuthService> oAuthServices = null;

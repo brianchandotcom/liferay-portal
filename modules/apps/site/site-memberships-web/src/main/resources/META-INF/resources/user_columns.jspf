@@ -17,13 +17,9 @@
 <%
 Set<String> names = new TreeSet<String>();
 
-List<Role> userGroupGroupRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId());
+names.addAll(ListUtil.toList(RoleLocalServiceUtil.getUserGroupGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()), Role.TITLE_ACCESSOR));
 
-names.addAll(ListUtil.toList(userGroupGroupRoles, Role.TITLE_ACCESSOR));
-
-List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId());
-
-names.addAll(ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR));
+names.addAll(ListUtil.toList(UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()), UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR));
 
 List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(siteMembershipsDisplayContext.getGroupId(), user2.getUserId());
 
@@ -38,7 +34,7 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<clay:user-card
+			<clay:user-card-v2
 				userCard="<%= new UsersUserCard(user2, !selectUsers, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				userColorClass='<%= "user-icon " + LexiconUtil.getUserColorCssClass(user2) %>'
 			/>

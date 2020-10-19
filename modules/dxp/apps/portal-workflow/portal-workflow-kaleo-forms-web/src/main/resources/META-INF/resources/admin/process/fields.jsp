@@ -120,15 +120,14 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 			<%
 			JSONArray definitionFieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structure, structure.getDefinition());
 
-			JSONObject definitionJSONObject = JSONUtil.put(
-				"definitionFields", definitionFieldsJSONArray
-			).put(
-				"definitionId", structure.getStructureId()
-			).put(
-				"definitionName", structure.getName(locale)
-			);
-
-			availableDefinitionsJSONArray.put(definitionJSONObject);
+			availableDefinitionsJSONArray.put(
+				JSONUtil.put(
+					"definitionFields", definitionFieldsJSONArray
+				).put(
+					"definitionId", structure.getStructureId()
+				).put(
+					"definitionName", structure.getName(locale)
+				));
 			%>
 
 			(<aui:a cssClass="kaleo-process-preview-definition" data-definition-id="<%= structure.getStructureId() %>" href="javascript:;" label="view-fields" />)

@@ -171,6 +171,24 @@ class RuleEditor extends Component {
 		return promise;
 	}
 
+	getFieldColumnsAndRows(fieldName) {
+		let columns = [];
+		let rows = [];
+
+		const visitor = new PagesVisitor(this.pages);
+
+		const field = visitor.findField((field) => {
+			return field.fieldName === fieldName;
+		});
+
+		if (field) {
+			columns = field.columns ?? [];
+			rows = field.rows ?? [];
+		}
+
+		return {columns, rows};
+	}
+
 	getFieldsByTypes(fields, types) {
 		return fields.filter((field) =>
 			types.some((fieldType) => field.type == fieldType)
@@ -288,13 +306,20 @@ class RuleEditor extends Component {
 
 		const conditions = state.conditions.map((condition) => {
 			const fieldName = condition.operands[0].value;
+			let firstOperandColumns = [];
 			let firstOperandOptions = [];
+			let firstOperandRows = [];
 			let operators = [];
 
 			if (fieldName) {
 				const {dataType} = this._getFieldTypeByFieldName(fieldName);
 
 				operators = this._getOperatorsByFieldType(dataType);
+
+				const {columns, rows} = this.getFieldColumnsAndRows(fieldName);
+
+				firstOperandColumns = columns;
+				firstOperandRows = rows;
 
 				firstOperandOptions = RulesSupport.getFieldOptions(
 					fieldName,
@@ -305,9 +330,25 @@ class RuleEditor extends Component {
 			return {
 				...condition,
 				binaryOperator: this._isBinary(condition.operator),
+				firstOperandColumns,
 				firstOperandOptions,
+				firstOperandRows,
 				operands: condition.operands.map((operand, index) => {
 					if (index === 1 && this.isValueOperand(operand)) {
+						const firstOperandType = getFieldProperty(
+							pages,
+							condition.operands[0].value,
+							'type'
+						);
+
+						if (
+							firstOperandType === 'grid' &&
+							!!operand.value &&
+							typeof operand.value === 'string'
+						) {
+							operand.value = JSON.parse(operand.value);
+						}
+
 						operand = {
 							...operand,
 							dataType: getFieldProperty(
@@ -315,11 +356,7 @@ class RuleEditor extends Component {
 								condition.operands[0].value,
 								'dataType'
 							),
-							type: getFieldProperty(
-								pages,
-								condition.operands[0].value,
-								'type'
-							),
+							type: firstOperandType,
 						};
 					}
 
@@ -1070,6 +1107,10 @@ class RuleEditor extends Component {
 				valueType = 'option';
 				secondOperandType = 'option';
 			}
+			else if (fieldType.type === 'grid') {
+				valueType = 'json';
+				secondOperandType = 'json';
+			}
 			else {
 				valueType = 'string';
 				secondOperandType = fieldType.dataType;
@@ -1306,6 +1347,16 @@ class RuleEditor extends Component {
 
 			if (condition.operands[1]) {
 				condition.operands[1].label = condition.operands[1].value;
+
+				const secondOperandValue = condition.operands[1].value;
+				const secondOperandValueString = JSON.stringify(
+					secondOperandValue
+				);
+
+				if (typeof secondOperandValue === 'object') {
+					condition.operands[1].label = secondOperandValueString;
+					condition.operands[1].value = secondOperandValueString;
+				}
 			}
 		});
 
@@ -1704,7 +1755,7 @@ RuleEditor.STATE = {
 					label: Config.string(),
 					repeatable: Config.bool(),
 					type: Config.string(),
-					value: Config.string(),
+					value: Config.any(),
 				})
 			),
 			operator: Config.string(),

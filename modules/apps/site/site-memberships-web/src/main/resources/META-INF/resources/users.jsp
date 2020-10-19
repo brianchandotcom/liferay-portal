@@ -84,11 +84,10 @@ Role role = usersDisplayContext.getRole();
 
 					boolean selectUsers = false;
 
-					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-						"actions", usersManagementToolbarDisplayContext.getAvailableActions(user2)
-					).build();
-
-					row.setData(rowData);
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"actions", usersManagementToolbarDisplayContext.getAvailableActions(user2)
+						).build());
 					%>
 
 					<%@ include file="/user_columns.jspf" %>

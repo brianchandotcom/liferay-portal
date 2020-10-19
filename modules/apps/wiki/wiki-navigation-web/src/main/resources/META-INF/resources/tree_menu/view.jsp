@@ -19,9 +19,7 @@
 <%
 String title = ParamUtil.getString(request, "title", wikiGroupServiceConfiguration.frontPageName());
 
-String portletId = PortletProviderUtil.getPortletId(WikiPage.class.getName(), PortletProvider.Action.VIEW);
-
-PortletURL viewURL = liferayPortletResponse.createRenderURL(portletId);
+PortletURL viewURL = liferayPortletResponse.createRenderURL(PortletProviderUtil.getPortletId(WikiPage.class.getName(), PortletProvider.Action.VIEW));
 
 viewURL.setParameter("mvcRenderCommandName", "/wiki/view_page");
 

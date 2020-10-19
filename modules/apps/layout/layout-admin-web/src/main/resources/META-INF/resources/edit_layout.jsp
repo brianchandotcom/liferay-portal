@@ -31,12 +31,8 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 
-if (layoutRevision != null) {
-	long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
-
-	if (StagingUtil.isIncomplete(selLayout, layoutSetBranchId)) {
-		portletDisplay.setShowStagingIcon(false);
-	}
+if ((layoutRevision != null) && StagingUtil.isIncomplete(selLayout, layoutRevision.getLayoutSetBranchId())) {
+	portletDisplay.setShowStagingIcon(false);
 }
 
 if (Validator.isNotNull(backURL)) {

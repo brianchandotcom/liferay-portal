@@ -33,10 +33,9 @@
 <c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.DUPLICATE %>">
 
 	<%
-	long duplicateClassPK = lfurle.getDuplicateClassPK();
 	String duplicateClassName = lfurle.getDuplicateClassName();
 
-	Layout duplicateLayout = LayoutLocalServiceUtil.getLayout(duplicateClassPK);
+	Layout duplicateLayout = LayoutLocalServiceUtil.getLayout(lfurle.getDuplicateClassPK());
 	%>
 
 	<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), duplicateLayout.getName(locale)} %>" key="please-enter-a-unique-friendly-url" translateArguments="<%= false %>" />

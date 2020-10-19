@@ -52,9 +52,7 @@ SearchContainer<String> searchContainer = new SearchContainer(liferayPortletRequ
 
 searchContainer.setRowChecker(new ResourceActionRowChecker(liferayPortletResponse));
 
-int total = resourceActions.size();
-
-searchContainer.setTotal(total);
+searchContainer.setTotal(resourceActions.size());
 
 List<String> results = resourceActions;
 
@@ -117,11 +115,12 @@ for (int i = 0; i < results.size(); i++) {
 
 		RolePermissions rolePermissions = new RolePermissions(curResource, ResourceConstants.SCOPE_GROUP, actionId, role.getRoleId());
 
-		LinkedHashMap<String, Object> groupParams = LinkedHashMapBuilder.<String, Object>put(
-			"rolePermissions", rolePermissions
-		).build();
-
-		groups = GroupLocalServiceUtil.search(company.getCompanyId(), GroupTypeContributorUtil.getClassNameIds(), null, null, groupParams, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		groups = GroupLocalServiceUtil.search(
+			company.getCompanyId(), GroupTypeContributorUtil.getClassNameIds(), null, null,
+			LinkedHashMapBuilder.<String, Object>put(
+				"rolePermissions", rolePermissions
+			).build(),
+			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		groupIdsArray = new long[groups.size()];
 

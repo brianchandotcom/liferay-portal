@@ -38,8 +38,6 @@ page import="com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLo
 page import="com.liferay.portal.security.wedeploy.auth.web.internal.display.context.WeDeployAuthAppsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.portal.security.wedeploy.auth.web.internal.security.permission.resource.WeDeployAuthAppPermission" %>
 
-<%@ page import="java.util.List" %>
-
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />

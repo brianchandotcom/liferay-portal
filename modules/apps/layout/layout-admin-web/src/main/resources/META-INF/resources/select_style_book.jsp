@@ -36,7 +36,7 @@ List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayCont
 <aui:form cssClass="container-fluid-1280 mt-3" name="fm">
 	<ul class="card-page card-page-equal-height">
 		<li class="card-page-item col-md-3 col-sm-6 form-check-card">
-			<clay:vertical-card
+			<clay:vertical-card-v2
 				verticalCard="<%= new DefaultStylebookLayoutVerticalCard(defaultStyleBookLabel, layoutStyleBookEntry, renderRequest) %>"
 			/>
 		</li>
@@ -46,7 +46,7 @@ List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayCont
 		%>
 
 			<li class="card-page-item col-md-3 col-sm-6 form-check-card">
-				<clay:vertical-card
+				<clay:vertical-card-v2
 					verticalCard="<%= new SelectStylebookLayoutVerticalCard(styleBookEntry, renderRequest) %>"
 				/>
 			</li>

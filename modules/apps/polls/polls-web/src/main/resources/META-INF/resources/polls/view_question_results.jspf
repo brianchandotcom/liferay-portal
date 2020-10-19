@@ -140,9 +140,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 
 		SearchContainer<PollsVote> searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
 
-		int total = PollsVoteLocalServiceUtil.getQuestionVotesCount(question.getQuestionId());
-
-		searchContainer.setTotal(total);
+		searchContainer.setTotal(PollsVoteLocalServiceUtil.getQuestionVotesCount(question.getQuestionId()));
 
 		List<PollsVote> results = PollsVoteLocalServiceUtil.getQuestionVotes(question.getQuestionId(), searchContainer.getStart(), searchContainer.getEnd());
 

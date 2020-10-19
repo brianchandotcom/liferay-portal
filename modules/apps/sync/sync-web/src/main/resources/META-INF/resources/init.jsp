@@ -62,7 +62,6 @@ page import="com.liferay.sync.service.configuration.SyncServiceConfigurationKeys
 page import="com.liferay.sync.web.internal.configuration.SyncServiceConfigurationValues" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

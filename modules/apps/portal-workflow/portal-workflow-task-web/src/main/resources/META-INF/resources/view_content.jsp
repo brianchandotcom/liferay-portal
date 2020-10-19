@@ -33,14 +33,12 @@ if (ArrayUtil.isNotEmpty(availableLanguageIds) && !ArrayUtil.contains(availableL
 	languageId = assetRenderer.getDefaultLanguageId();
 }
 
-String title = assetRenderer.getTitle(workflowTaskDisplayContext.getTaskContentLocale());
-
 request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(title);
+renderResponse.setTitle(assetRenderer.getTitle(workflowTaskDisplayContext.getTaskContentLocale()));
 %>
 
 <clay:container-fluid

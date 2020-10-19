@@ -41,13 +41,12 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 		>
 
 			<%
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"id", user.getUserId()
-			).put(
-				"name", user.getFullName()
-			).build();
-
-			row.setData(data);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"id", user.getUserId()
+				).put(
+					"name", user.getFullName()
+				).build());
 			%>
 
 			<c:choose>
@@ -75,7 +74,7 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:user-card
+						<clay:user-card-v2
 							userCard="<%= new SelectUserUserCard(user, renderRequest, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>

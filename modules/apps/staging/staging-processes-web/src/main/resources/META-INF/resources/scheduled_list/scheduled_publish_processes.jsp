@@ -55,9 +55,7 @@ else {
 		<liferay-ui:search-container-results>
 
 			<%
-			List<SchedulerResponse> scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs(StagingUtil.getSchedulerGroupName(destinationName, liveGroupId), StorageType.PERSISTED);
-
-			results.addAll(scheduledJobs);
+			results.addAll(SchedulerEngineHelperUtil.getScheduledJobs(StagingUtil.getSchedulerGroupName(destinationName, liveGroupId), StorageType.PERSISTED));
 
 			searchContainer.setTotal(results.size());
 

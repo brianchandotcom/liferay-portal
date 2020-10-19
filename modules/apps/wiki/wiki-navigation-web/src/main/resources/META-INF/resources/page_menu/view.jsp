@@ -89,11 +89,10 @@ private String _buildPageMenuLinksHTML(List<MenuItem> menuItems) {
 
 	for (MenuItem menuItem : menuItems) {
 		String name = menuItem.getName();
-		String url = menuItem.getURL();
 
 		sb.append("<li>");
 		sb.append("<a href=\"");
-		sb.append(url);
+		sb.append(menuItem.getURL());
 		sb.append("\"");
 
 		if (menuItem.getExternalURL()) {

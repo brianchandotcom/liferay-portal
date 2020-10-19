@@ -45,12 +45,10 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 	<c:if test="<%= showBackURL && ddmDisplay.isShowBackURLInTitleBar() %>">
 
 		<%
-		String title = LanguageUtil.get(request, "copy-template");
-
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource));
 
-		renderResponse.setTitle(title);
+		renderResponse.setTitle(LanguageUtil.get(request, "copy-template"));
 		%>
 
 	</c:if>

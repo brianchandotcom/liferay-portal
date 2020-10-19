@@ -61,11 +61,10 @@ request.setAttribute("view.jsp-eventName", eventName);
 		>
 
 			<%
-			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-				"actions", segmentsDisplayContext.getAvailableActions(segmentsEntry)
-			).build();
-
-			row.setData(rowData);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"actions", segmentsDisplayContext.getAvailableActions(segmentsEntry)
+				).build());
 			%>
 
 			<liferay-ui:search-container-column-text

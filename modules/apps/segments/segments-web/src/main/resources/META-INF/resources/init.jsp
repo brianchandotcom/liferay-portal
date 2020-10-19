@@ -64,8 +64,7 @@ page import="com.liferay.segments.web.internal.display.context.SelectOrganizatio
 page import="com.liferay.segments.web.internal.display.context.SelectSegmentsEntryDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission" %>
 
-<%@ page import="java.util.Map" %><%@
-page import="java.util.Objects" %>
+<%@ page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

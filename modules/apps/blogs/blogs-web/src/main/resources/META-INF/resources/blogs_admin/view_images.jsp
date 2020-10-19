@@ -92,11 +92,10 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 				</liferay-portlet:renderURL>
 
 				<%
-				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-					"actions", StringUtil.merge(blogImagesManagementToolbarDisplayContext.getAvailableActions(fileEntry))
-				).build();
-
-				row.setData(rowData);
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"actions", StringUtil.merge(blogImagesManagementToolbarDisplayContext.getAvailableActions(fileEntry))
+					).build());
 				%>
 
 				<%@ include file="/blogs_admin/image_search_columns.jspf" %>

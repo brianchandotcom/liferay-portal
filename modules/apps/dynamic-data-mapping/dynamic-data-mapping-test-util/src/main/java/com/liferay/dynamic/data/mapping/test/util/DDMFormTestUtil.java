@@ -123,6 +123,7 @@ public class DDMFormTestUtil {
 		DDMFormField ddmFormField = new DDMFormField(name, type);
 
 		ddmFormField.setDataType(dataType);
+		ddmFormField.setFieldReference(name);
 		ddmFormField.setLocalizable(localizable);
 		ddmFormField.setRepeatable(repeatable);
 		ddmFormField.setRequired(required);

@@ -41,7 +41,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 
 			<liferay-ui:search-container-column-text>
 				<button class="add-site-action-button btn btn-unstyled mb-4 w-100" type="button">
-					<clay:vertical-card
+					<clay:vertical-card-v2
 						elementClasses="add-site-action-card mb-0"
 						verticalCard="<%= new SelectSiteInitializerVerticalCard(siteInitializerItem, renderRequest, renderResponse) %>"
 					/>

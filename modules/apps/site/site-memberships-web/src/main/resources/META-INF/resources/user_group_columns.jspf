@@ -15,15 +15,13 @@
 --%>
 
 <%
-LinkedHashMap<String, Object> userParams = LinkedHashMapBuilder.<String, Object>put(
-	"usersUserGroups", Long.valueOf(userGroup.getUserGroupId())
-).build();
+int usersCount = UserLocalServiceUtil.searchCount(
+	company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_ANY,
+	LinkedHashMapBuilder.<String, Object>put(
+		"usersUserGroups", Long.valueOf(userGroup.getUserGroupId())
+	).build());
 
-int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_ANY, userParams);
-
-List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), siteMembershipsDisplayContext.getGroupId());
-
-String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersAdmin.USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE);
+String userGroupGroupRolesString = ListUtil.toString(UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), siteMembershipsDisplayContext.getGroupId()), UsersAdmin.USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE);
 %>
 
 <c:choose>

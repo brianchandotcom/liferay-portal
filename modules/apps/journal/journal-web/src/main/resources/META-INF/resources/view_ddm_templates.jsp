@@ -75,11 +75,10 @@ if (ddmStructure != null) {
 				rowHREF = rowURL.toString();
 			}
 
-			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-				"actions", journalDDMTemplateManagementToolbarDisplayContext.getAvailableActions(ddmTemplate)
-			).build();
-
-			row.setData(rowData);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"actions", journalDDMTemplateManagementToolbarDisplayContext.getAvailableActions(ddmTemplate)
+				).build());
 			%>
 
 			<c:choose>
@@ -90,7 +89,7 @@ if (ddmStructure != null) {
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
+						<clay:vertical-card-v2
 							verticalCard="<%= new JournalDDMTemplateVerticalCard(ddmTemplate, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>

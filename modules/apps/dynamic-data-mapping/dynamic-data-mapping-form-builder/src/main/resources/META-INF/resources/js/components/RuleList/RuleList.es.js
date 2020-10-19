@@ -194,6 +194,33 @@ class RuleList extends Component {
 			) {
 				label = this._getOptionLabel(operands[0].value, operand.value);
 			}
+			else if (operand.type === 'json') {
+				label = '';
+
+				const operandValueJSON = JSON.parse(operand.value);
+
+				for (const key in operandValueJSON) {
+					const keyLabel = this._getPropertyLabel(
+						operands[0].value,
+						'rows',
+						key
+					);
+
+					const valueLabel = this._getPropertyLabel(
+						operands[0].value,
+						'columns',
+						operandValueJSON[key]
+					);
+
+					label += keyLabel + ':' + valueLabel + ', ';
+				}
+
+				const lastCommaPosition = label.lastIndexOf(', ');
+
+				if (lastCommaPosition != -1) {
+					label = label.substr(0, lastCommaPosition);
+				}
+			}
 			else {
 				label = operand.value;
 			}
@@ -206,20 +233,24 @@ class RuleList extends Component {
 	}
 
 	_getOptionLabel(fieldName, optionValue) {
+		return this._getPropertyLabel(fieldName, 'options', optionValue);
+	}
+
+	_getPropertyLabel(fieldName, propertyName, propertyValue) {
 		const pages = this.pages;
 
 		let fieldLabel = null;
 
-		if (pages && optionValue) {
+		if (pages && propertyValue) {
 			const visitor = new PagesVisitor(pages);
 
 			visitor.findField((field) => {
 				let found = false;
 
 				if (field.fieldName === fieldName && field.options) {
-					field.options.some((option) => {
-						if (option.value == optionValue) {
-							fieldLabel = option.label;
+					field[propertyName].some((property) => {
+						if (property.value == propertyValue) {
+							fieldLabel = property.label;
 
 							found = true;
 						}
@@ -232,7 +263,7 @@ class RuleList extends Component {
 			});
 		}
 
-		return fieldLabel ? fieldLabel : optionValue;
+		return fieldLabel ? fieldLabel : propertyValue;
 	}
 
 	_getRulesCardOptions(rule) {

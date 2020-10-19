@@ -69,6 +69,41 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 			includeFileNames, contentsMap);
 	}
 
+	protected boolean hasVariableReference(
+		String content, String value, int pos) {
+
+		if (pos == -1) {
+			return false;
+		}
+
+		pos = content.indexOf("\n", pos);
+
+		Matcher methodCallMatcher = _methodCallPattern.matcher(value);
+
+		while (methodCallMatcher.find()) {
+			Pattern pattern = Pattern.compile(
+				"\\b(?<!['\"])" + methodCallMatcher.group(1) + "\\.(\\w+)?\\(");
+
+			Matcher matcher = pattern.matcher(content);
+
+			while (matcher.find()) {
+				if (matcher.start() > pos) {
+					break;
+				}
+
+				String methodName = matcher.group(1);
+
+				if (!methodName.startsWith("get") &&
+					!methodName.startsWith("is")) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	protected synchronized void populateContentsMap(
 			String fileName, String content)
 		throws IOException {
@@ -274,6 +309,9 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 
 		return false;
 	}
+
+	private static final Pattern _methodCallPattern = Pattern.compile(
+		"\\b(?<!['\"])([a-z]\\w+)\\.(\\w+)?\\(");
 
 	private List<String> _allFileNames;
 	private Map<String, String> _contentsMap;

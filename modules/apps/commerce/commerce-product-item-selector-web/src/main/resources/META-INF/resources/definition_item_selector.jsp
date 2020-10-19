@@ -75,13 +75,12 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 		>
 
 			<%
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"cp-definition-id", cpDefinition.getCPDefinitionId()
-			).put(
-				"name", cpDefinition.getName(themeDisplay.getLanguageId())
-			).build();
-
-			row.setData(data);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"cp-definition-id", cpDefinition.getCPDefinitionId()
+				).put(
+					"name", cpDefinition.getName(themeDisplay.getLanguageId())
+				).build());
 
 			CPType cpType = cpDefinitionItemSelectorViewDisplayContext.getCPType(cpDefinition.getProductTypeName());
 

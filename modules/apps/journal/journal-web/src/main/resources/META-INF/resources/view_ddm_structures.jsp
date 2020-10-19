@@ -77,11 +77,10 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 				rowHREF = rowURL.toString();
 			}
 
-			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-				"actions", journalDDMStructuresManagementToolbarDisplayContext.getAvailableActions(ddmStructure)
-			).build();
-
-			row.setData(rowData);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"actions", journalDDMStructuresManagementToolbarDisplayContext.getAvailableActions(ddmStructure)
+				).build());
 			%>
 
 			<liferay-ui:search-container-column-text

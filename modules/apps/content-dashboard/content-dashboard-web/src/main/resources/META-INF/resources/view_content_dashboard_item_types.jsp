@@ -39,15 +39,14 @@ ContentDashboardItemTypeItemSelectorViewDisplayContext contentDashboardItemTypeI
 			<%
 			InfoItemReference infoItemReference = contentDashboardItemType.getInfoItemReference();
 
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"className", infoItemReference.getClassName()
-			).put(
-				"classPK", infoItemReference.getClassPK()
-			).put(
-				"title", contentDashboardItemType.getFullLabel(locale)
-			).build();
-
-			row.setData(data);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"className", infoItemReference.getClassName()
+				).put(
+					"classPK", infoItemReference.getClassPK()
+				).put(
+					"title", contentDashboardItemType.getFullLabel(locale)
+				).build());
 			%>
 
 			<liferay-ui:search-container-column-text

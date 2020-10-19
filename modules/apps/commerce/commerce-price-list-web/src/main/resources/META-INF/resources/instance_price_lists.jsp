@@ -20,14 +20,13 @@
 CPInstanceCommercePriceEntryDisplayContext cpInstanceCommercePriceEntryDisplayContext = (CPInstanceCommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPInstance cpInstance = cpInstanceCommercePriceEntryDisplayContext.getCPInstance();
-long cpDefinitionId = cpInstanceCommercePriceEntryDisplayContext.getCPDefinitionId();
 long cpInstanceId = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId();
 PortletURL portletURL = cpInstanceCommercePriceEntryDisplayContext.getPortletURL();
 
 PortletURL productSkusURL = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_DEFINITIONS, lifecycle);
 
 productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
-productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
+productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpInstanceCommercePriceEntryDisplayContext.getCPDefinitionId()));
 productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 %>
 

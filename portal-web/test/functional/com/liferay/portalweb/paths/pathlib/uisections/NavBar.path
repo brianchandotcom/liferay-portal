@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOGO_LINK</td>
+	<td>//a[contains(@class,'navbar-brand')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MY_SITES</td>
 	<td>//*[contains(@class,'navbar')]//a[normalize-space()='My Sites']</td>
 	<td></td>

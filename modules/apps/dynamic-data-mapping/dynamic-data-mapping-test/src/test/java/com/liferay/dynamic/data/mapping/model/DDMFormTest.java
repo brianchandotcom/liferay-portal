@@ -61,6 +61,42 @@ public class DDMFormTest {
 		Assert.assertNotNull(ddmFormFieldsMap.get("Text2"));
 	}
 
+	@Test
+	public void testGetNontransientDDMFormFieldsReferences() {
+		DDMForm ddmForm = createDDMForm();
+
+		Map<String, DDMFormField> ddmFormFieldsReferencesMap =
+			ddmForm.getNontransientDDMFormFieldsReferencesMap(false);
+
+		Assert.assertEquals(
+			ddmFormFieldsReferencesMap.toString(), 1,
+			ddmFormFieldsReferencesMap.size());
+
+		DDMFormField ddmFormField = ddmFormFieldsReferencesMap.get("Paragraph");
+
+		Assert.assertNull(ddmFormField);
+
+		Assert.assertNotNull(ddmFormFieldsReferencesMap.get("Text1"));
+	}
+
+	@Test
+	public void testGetNontransientDDMFormFieldsReferencesIncludingNestedFields() {
+		DDMForm ddmForm = createDDMForm();
+
+		Map<String, DDMFormField> ddmFormFieldsReferencesMap =
+			ddmForm.getNontransientDDMFormFieldsReferencesMap(true);
+
+		Assert.assertEquals(
+			ddmFormFieldsReferencesMap.toString(), 2,
+			ddmFormFieldsReferencesMap.size());
+
+		DDMFormField ddmFormField = ddmFormFieldsReferencesMap.get("Paragraph");
+
+		Assert.assertNull(ddmFormField);
+
+		Assert.assertNotNull(ddmFormFieldsReferencesMap.get("Text2"));
+	}
+
 	protected DDMForm createDDMForm() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Text1");
 

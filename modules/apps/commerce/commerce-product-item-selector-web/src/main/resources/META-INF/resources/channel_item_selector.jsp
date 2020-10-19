@@ -71,13 +71,12 @@ PortletURL portletURL = commerceChannelItemSelectorViewDisplayContext.getPortlet
 		>
 
 			<%
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"commerce-channel-id", commerceChannel.getCommerceChannelId()
-			).put(
-				"name", commerceChannel.getName()
-			).build();
-
-			row.setData(data);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"commerce-channel-id", commerceChannel.getCommerceChannelId()
+				).put(
+					"name", commerceChannel.getName()
+				).build());
 			%>
 
 			<liferay-ui:search-container-column-text

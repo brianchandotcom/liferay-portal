@@ -94,13 +94,14 @@ portletURL.setParameter("delta", String.valueOf(delta));
 		<aui:input name="permissions" type="hidden" />
 
 		<%
-		LinkedHashMap<String, Object> groupParams = LinkedHashMapBuilder.<String, Object>put(
-			"active", true
-		).put(
-			"site", true
-		).build();
-
-		List<Group> groups = GroupLocalServiceUtil.search(themeDisplay.getCompanyId(), keywords, groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<Group> groups = GroupLocalServiceUtil.search(
+			themeDisplay.getCompanyId(), keywords,
+			LinkedHashMapBuilder.<String, Object>put(
+				"active", true
+			).put(
+				"site", true
+			).build(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		List<String> resourceActions = ListUtil.toList(SyncPermissionsConstants.getFileResourceActions(SyncPermissionsConstants.PERMISSIONS_FULL_ACCESS));
 

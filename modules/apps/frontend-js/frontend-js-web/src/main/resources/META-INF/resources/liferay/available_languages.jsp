@@ -17,9 +17,7 @@
 <%@ include file="/liferay/init.jsp" %>
 
 <%
-String languageId = LanguageUtil.getLanguageId(request);
-
-Locale locale = LocaleUtil.fromLanguageId(languageId);
+Locale locale = LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request));
 %>
 
 AUI.add(

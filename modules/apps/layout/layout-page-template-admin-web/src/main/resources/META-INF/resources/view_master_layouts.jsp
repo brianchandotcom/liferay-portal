@@ -58,15 +58,14 @@ MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplay
 			<%
 			row.setCssClass("entry-card lfr-asset-item");
 
-			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-				"actions", masterLayoutManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry)
-			).build();
-
-			row.setData(rowData);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"actions", masterLayoutManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry)
+				).build());
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
+				<clay:vertical-card-v2
 					verticalCard="<%= new MasterLayoutVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>

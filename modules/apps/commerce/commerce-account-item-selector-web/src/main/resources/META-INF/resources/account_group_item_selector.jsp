@@ -71,13 +71,12 @@ PortletURL portletURL = commerceAccountGroupItemSelectorViewDisplayContext.getPo
 		>
 
 			<%
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"commerce-account-group-id", commerceAccountGroup.getCommerceAccountGroupId()
-			).put(
-				"name", commerceAccountGroup.getName()
-			).build();
-
-			row.setData(data);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"commerce-account-group-id", commerceAccountGroup.getCommerceAccountGroupId()
+				).put(
+					"name", commerceAccountGroup.getName()
+				).build());
 			%>
 
 			<liferay-ui:search-container-column-text

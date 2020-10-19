@@ -876,6 +876,7 @@
 			<category name="Styling" />
 			<description name="Finds incorrect indentation in `.jsp` files." />
 		</check>
+		<check name="JSPInlineVariableCheck" />
 		<check name="JSPJavaParserCheck">
 			<category name="Styling" />
 			<description name="Performs JavaParser on `.java` files." />

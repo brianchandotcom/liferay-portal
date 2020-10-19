@@ -77,11 +77,10 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 				</liferay-portlet:renderURL>
 
 				<%
-				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-					"actions", StringUtil.merge(blogEntriesDisplayContext.getAvailableActions(entry))
-				).build();
-
-				row.setData(rowData);
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"actions", StringUtil.merge(blogEntriesDisplayContext.getAvailableActions(entry))
+					).build());
 				%>
 
 				<%@ include file="/blogs_admin/entry_search_columns.jspf" %>

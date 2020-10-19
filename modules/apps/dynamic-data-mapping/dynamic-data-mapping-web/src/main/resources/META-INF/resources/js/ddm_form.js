@@ -1049,7 +1049,9 @@ AUI.add(
 						}
 
 						var checkboxInput = container.one(
-							'input[type="checkbox"]'
+							'input[type="checkbox"][name*="' +
+								instance.getFieldDefinition().name +
+								'"]'
 						);
 
 						if (checkboxInput) {
@@ -1077,9 +1079,17 @@ AUI.add(
 
 					var siblings = instance.getRepeatedSiblings();
 
+					var parentField = siblings[0];
+
 					container
 						.one('.lfr-ddm-repeatable-delete-button')
-						.toggle(siblings.length > 1);
+						.toggle(
+							siblings.length > 1 &&
+								siblings.includes(instance) &&
+								!parentField
+									.get('container')
+									.compareTo(container)
+						);
 				},
 
 				syncValueUI() {

@@ -3,7 +3,7 @@
 		"recharts": "1.8.5"
 	},
 	"devDependencies": {
-		"@liferay/npm-bundler": "3.0.1-pre.0"
+		"@liferay/npm-bundler": "3.0.1-pre.1"
 	},
 	"name": "frontend-js-recharts",
 	"scripts": {

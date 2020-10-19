@@ -183,10 +183,10 @@ public class DepotAdminSitesDisplayContext {
 		DepotEntryGroupRel depotEntryGroupRel) {
 
 		if (!depotEntryGroupRel.isDdmStructuresAvailable()) {
-			return "make-web-content-structures-available";
+			return "make-structures-available";
 		}
 
-		return "make-web-content-structures-unavailable";
+		return "make-structures-unavailable";
 	}
 
 	private String _getUpdateSearchableKey(

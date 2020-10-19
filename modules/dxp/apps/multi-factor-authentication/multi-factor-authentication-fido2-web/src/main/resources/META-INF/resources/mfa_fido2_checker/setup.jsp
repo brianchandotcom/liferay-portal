@@ -25,11 +25,9 @@
 				"pkccOptions", request.getAttribute(MFAFIDO2WebKeys.MFA_FIDO2_PKCC_OPTIONS)
 			).build()
 		%>'
-		label="register"
+		label="button-register-a-fido2-authenticator"
 		propsTransformer="js/RegistrationTransformer"
 	/>
-
-	<liferay-ui:message key="button-register-a-fido2-authenticator" />
 </aui:button-row>
 
 <aui:input name="responseJSON" showRequiredLabel="yes" type="hidden" />

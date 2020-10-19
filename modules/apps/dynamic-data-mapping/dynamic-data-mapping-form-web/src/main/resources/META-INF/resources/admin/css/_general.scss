@@ -421,6 +421,15 @@ td.lfr-name-column {
 	}
 }
 
+.portlet-forms-ie {
+	.forms-navigation-bar,
+	.navigation-bar-secondary,
+	.management-bar {
+		position: inherit !important;
+		top: 0 !important;
+	}
+}
+
 .portal-popup {
 	.portlet-column {
 		padding: 0;

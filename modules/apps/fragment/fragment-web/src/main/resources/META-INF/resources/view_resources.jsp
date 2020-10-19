@@ -54,7 +54,7 @@ FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionRes
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
+				<clay:vertical-card-v2
 					verticalCard="<%= new FragmentCollectionResourceVerticalCard(fileEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>

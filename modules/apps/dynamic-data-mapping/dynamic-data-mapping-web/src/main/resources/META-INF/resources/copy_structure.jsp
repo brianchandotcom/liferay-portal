@@ -41,12 +41,10 @@ long classPK = BeanParamUtil.getLong(structure, request, "structureId");
 	<c:if test='<%= ParamUtil.getBoolean(request, "showBackURL", true) %>'>
 
 		<%
-		String title = LanguageUtil.format(request, "copy-x", ddmDisplay.getStructureName(locale), false);
-
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK));
 
-		renderResponse.setTitle(title);
+		renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmDisplay.getStructureName(locale), false));
 		%>
 
 	</c:if>

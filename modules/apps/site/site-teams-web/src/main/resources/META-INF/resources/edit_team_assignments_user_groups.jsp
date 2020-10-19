@@ -51,11 +51,11 @@ EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext editSiteTeamAss
 		>
 
 			<%
-			LinkedHashMap<String, Object> userParams = LinkedHashMapBuilder.<String, Object>put(
-				"usersUserGroups", Long.valueOf(userGroup.getUserGroupId())
-			).build();
-
-			int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_ANY, userParams);
+			int usersCount = UserLocalServiceUtil.searchCount(
+				company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_ANY,
+				LinkedHashMapBuilder.<String, Object>put(
+					"usersUserGroups", Long.valueOf(userGroup.getUserGroupId())
+				).build());
 			%>
 
 			<c:choose>

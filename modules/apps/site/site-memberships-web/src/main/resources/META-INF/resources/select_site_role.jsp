@@ -50,7 +50,7 @@ SelectRolesDisplayContext selectRolesDisplayContext = new SelectRolesDisplayCont
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
+						<clay:vertical-card-v2
 							verticalCard="<%= new SelectRoleVerticalCard(role, renderRequest) %>"
 						/>
 					</liferay-ui:search-container-column-text>

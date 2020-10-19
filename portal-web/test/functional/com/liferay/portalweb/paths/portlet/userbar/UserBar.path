@@ -20,12 +20,17 @@
 </tr>
 <tr>
 	<td>USER_AVATAR_DROPDOWN_PORTAL_OPEN</td>
-	<td>//div[contains(@class,'dropdown-menu-personal-menu') and contains(@class,'show')]</td>
+	<td>//*[contains(@class,'dropdown-menu') and contains(@class,'show')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_AVATAR_DROPDOWN_MYRAYLIFE</td>
+	<td>//a[contains(@class,'dropdown-item')][normalize-space(text())='My Raylife']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_AVATAR_DROPDOWN_SIGNOUT</td>
-	<td>//div[contains(@class,'dropdown-menu-personal-menu') and contains(@class,'show')]//a[contains(.,'Sign Out') or contains(.,'Salir')]</td>
+	<td>//a[contains(@class,'dropdown-item')][contains(.,'Sign Out') or contains(.,'Salir')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,6 +66,11 @@
 <tr>
 	<td>USER_AVATAR_PORTRAIT</td>
 	<td>//button//img[contains(@src,'user_portrait')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_AVATAR_TOGGLE</td>
+	<td>//button[contains(@data-toggle,'dropdown')]//span[contains(@class,'user-icon')]</td>
 	<td></td>
 </tr>
 <tr>

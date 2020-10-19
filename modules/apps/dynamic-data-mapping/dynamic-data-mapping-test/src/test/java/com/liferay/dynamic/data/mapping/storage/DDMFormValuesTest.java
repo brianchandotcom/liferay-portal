@@ -54,6 +54,52 @@ public class DDMFormValuesTest extends BaseDDMTestCase {
 	}
 
 	@Test
+	public void testDDMFormFieldValuesReferencesMap() {
+		DDMFormValues ddmFormValues = createDDMFormValues(null);
+
+		String fieldName = StringUtil.randomString();
+
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(fieldName, null));
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(fieldName, null));
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(fieldName, null));
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesReferencesMap =
+			ddmFormValues.getDDMFormFieldValuesReferencesMap(false);
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormFieldValuesReferencesMap.get(fieldName);
+
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
+	}
+
+	@Test
+	public void testDDMFormFieldValuesReferencesMapIncludingNestedFields() {
+		DDMFormValues ddmFormValues = createDDMFormValues(null);
+
+		String fieldName = StringUtil.randomString();
+
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(fieldName, null));
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(fieldName, null));
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(fieldName, null));
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesReferencesMap =
+			ddmFormValues.getDDMFormFieldValuesReferencesMap(true);
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormFieldValuesReferencesMap.get(fieldName);
+
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
+	}
+
+	@Test
 	public void testEqualsWithDifferentAvailableLocales() {
 		DDMFormValues ddmFormValues1 = createDDMFormValues(
 			null, createAvailableLocales(LocaleUtil.US), LocaleUtil.US);

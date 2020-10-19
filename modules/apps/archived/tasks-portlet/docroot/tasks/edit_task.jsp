@@ -90,13 +90,14 @@ String dueDateControlGroupCssClass = liferayPortletResponse.getNamespace() + "du
 							users = UserLocalServiceUtil.getSocialUsers(group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new UserFirstNameComparator(true));
 						}
 						else {
-							LinkedHashMap<String, Object> userParams = LinkedHashMapBuilder.<String, Object>put(
-								"inherit", Boolean.TRUE
-							).put(
-								"usersGroups", Long.valueOf(themeDisplay.getScopeGroupId())
-							).build();
-
-							users = UserLocalServiceUtil.search(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_APPROVED, userParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new UserFirstNameComparator(true));
+							users = UserLocalServiceUtil.search(
+								company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
+								LinkedHashMapBuilder.<String, Object>put(
+									"inherit", Boolean.TRUE
+								).put(
+									"usersGroups", Long.valueOf(themeDisplay.getScopeGroupId())
+								).build(),
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS, new UserFirstNameComparator(true));
 						}
 
 						for (User curUser : users) {

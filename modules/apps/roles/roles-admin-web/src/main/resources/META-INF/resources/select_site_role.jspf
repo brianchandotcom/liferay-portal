@@ -33,15 +33,16 @@ if (step == 1) {
 		groups = selUser.getSiteGroups();
 	}
 	else {
-		LinkedHashMap<String, Object> groupParams = LinkedHashMapBuilder.<String, Object>put(
-			"inherit", Boolean.FALSE
-		).put(
-			"site", Boolean.TRUE
-		).put(
-			"usersGroups", selUser.getUserId()
-		).build();
-
-		groups = GroupLocalServiceUtil.search(user.getCompanyId(), keywords, groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		groups = GroupLocalServiceUtil.search(
+			user.getCompanyId(), keywords,
+			LinkedHashMapBuilder.<String, Object>put(
+				"inherit", Boolean.FALSE
+			).put(
+				"site", Boolean.TRUE
+			).put(
+				"usersGroups", selUser.getUserId()
+			).build(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	if (filterManageableGroups) {

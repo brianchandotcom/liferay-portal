@@ -20,7 +20,7 @@
 	<clay:col
 		md="4"
 	>
-		<clay:vertical-card
+		<clay:vertical-card-v2
 			verticalCard="<%= new JournalDDMTemplateVerticalCard(journalContentDisplayContext.getDDMTemplate(), request) %>"
 		/>
 	</clay:col>

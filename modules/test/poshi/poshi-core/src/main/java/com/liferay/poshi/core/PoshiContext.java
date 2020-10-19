@@ -88,10 +88,19 @@ public class PoshiContext {
 		_commandElements.clear();
 		_commandSummaries.clear();
 		_filePaths.clear();
+		_functionFileNames.clear();
 		_functionLocatorCounts.clear();
+		_namespacedClassCommandNamePropertiesMap.clear();
+		_namespaces.clear();
+		_overrideClassNames.clear();
+		_pathExtensions.clear();
 		_pathLocators.clear();
 		_rootElements.clear();
+		_rootVarElements.clear();
 		_seleniumParameterCounts.clear();
+		_testCaseDescriptions.clear();
+		_testCaseNamespacedClassCommandNames.clear();
+		_testCaseNamespacedClassNames.clear();
 	}
 
 	public static List<String> executePQLQuery() throws Exception {

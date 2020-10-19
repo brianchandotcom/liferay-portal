@@ -63,11 +63,10 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 						editURL = editAssetListEntryURL.toString();
 					}
 
-					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-						"actions", assetListManagementToolbarDisplayContext.getAvailableActions(assetListEntry)
-					).build();
-
-					row.setData(rowData);
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"actions", assetListManagementToolbarDisplayContext.getAvailableActions(assetListEntry)
+						).build());
 					%>
 
 					<liferay-ui:search-container-column-icon

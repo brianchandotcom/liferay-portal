@@ -75,15 +75,14 @@ if (portletTitleBasedNavigation && (folderId != BookmarksFolderConstants.DEFAULT
 			<c:when test="<%= curFolder != null %>">
 
 				<%
-				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-					"folder", true
-				).put(
-					"folder-id", curFolder.getFolderId()
-				).put(
-					"title", curFolder.getName()
-				).build();
-
-				row.setData(rowData);
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"folder", true
+					).put(
+						"folder-id", curFolder.getFolderId()
+					).put(
+						"title", curFolder.getName()
+					).build());
 
 				row.setPrimaryKey(String.valueOf(curFolder.getFolderId()));
 				%>
@@ -118,11 +117,10 @@ if (portletTitleBasedNavigation && (folderId != BookmarksFolderConstants.DEFAULT
 			<c:otherwise>
 
 				<%
-				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-					"title", entry.getName()
-				).build();
-
-				row.setData(rowData);
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"title", entry.getName()
+					).build());
 
 				row.setPrimaryKey(String.valueOf(entry.getEntryId()));
 

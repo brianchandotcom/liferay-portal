@@ -48,9 +48,7 @@
 
 	String oAuthCallback = ParamUtil.getString(request, net.oauth.OAuth.OAUTH_CALLBACK);
 
-	OAuthMessage oAuthMessage = OAuthUtil.getOAuthMessage(request, currentURL);
-
-	OAuthAccessor oAuthAccessor = OAuthUtil.getOAuthAccessor(oAuthMessage);
+	OAuthAccessor oAuthAccessor = OAuthUtil.getOAuthAccessor(OAuthUtil.getOAuthMessage(request, currentURL));
 
 	OAuthApplication oAuthApplication = null;
 

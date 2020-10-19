@@ -117,12 +117,13 @@ function assertOptionParameters({multiple, option, valueArray}) {
 	};
 }
 
-function normalizeOptions({fixedOptions, multiple, options, valueArray}) {
-	const emptyOption = {
-		label: Liferay.Language.get('choose-an-option'),
-		value: null,
-	};
-
+function normalizeOptions({
+	fixedOptions,
+	multiple,
+	options,
+	showEmptyOption,
+	valueArray,
+}) {
 	const newOptions = [
 		...options.map((option, index) => ({
 			...assertOptionParameters({multiple, option, valueArray}),
@@ -136,7 +137,12 @@ function normalizeOptions({fixedOptions, multiple, options, valueArray}) {
 		),
 	].filter(({value}) => value !== '');
 
-	if (!multiple) {
+	if (!multiple && showEmptyOption) {
+		const emptyOption = {
+			label: Liferay.Language.get('choose-an-option'),
+			value: null,
+		};
+
 		return [emptyOption, ...newOptions];
 	}
 
@@ -252,6 +258,7 @@ const DropdownListWithSearch = ({
 	handleSelect,
 	multiple,
 	options,
+	showEmptyOption,
 }) => {
 	const [query, setQuery] = useState('');
 	const [filteredOptions, setFilteredOptions] = useState([]);
@@ -262,13 +269,17 @@ const DropdownListWithSearch = ({
 	};
 
 	useEffect(() => {
-		const result = options.filter(
+		let result = options.filter(
 			(option) =>
 				option.value &&
 				option.label.toLowerCase().includes(query.toLowerCase())
 		);
 
-		setFilteredOptions([emptyOption, ...result]);
+		if (showEmptyOption) {
+			result = [emptyOption, ...result];
+		}
+
+		setFilteredOptions(result);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [options, query]);
 
@@ -334,6 +345,7 @@ const Select = ({
 	options,
 	predefinedValue,
 	readOnly,
+	showEmptyOption,
 	value,
 	...otherProps
 }) => {
@@ -488,6 +500,7 @@ const Select = ({
 						handleSelect={handleSelect}
 						multiple={multiple}
 						options={options}
+						showEmptyOption={showEmptyOption}
 					/>
 				) : (
 					<DropdownList
@@ -515,6 +528,7 @@ const Main = ({
 	options = [],
 	predefinedValue = [],
 	readOnly = false,
+	showEmptyOption = true,
 	value = [],
 	...otherProps
 }) => {
@@ -527,9 +541,10 @@ const Main = ({
 				fixedOptions,
 				multiple,
 				options,
+				showEmptyOption,
 				valueArray,
 			}),
-		[fixedOptions, multiple, options, valueArray]
+		[fixedOptions, multiple, options, showEmptyOption, valueArray]
 	);
 
 	value = useMemo(
@@ -571,6 +586,7 @@ const Main = ({
 				options={normalizedOptions}
 				predefinedValue={predefinedValueArray}
 				readOnly={readOnly}
+				showEmptyOption={showEmptyOption}
 				value={value}
 				{...otherProps}
 			/>

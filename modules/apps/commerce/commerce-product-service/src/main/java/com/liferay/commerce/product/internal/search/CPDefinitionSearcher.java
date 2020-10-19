@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,7 +79,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			return;
 		}
 
-		long[] filteredAllCategoryIds = AssetUtil.filterCategoryIds(
+		long[] filteredAllCategoryIds = _filterCategoryIds(
 			PermissionThreadLocal.getPermissionChecker(), allCategoryIds);
 
 		if (allCategoryIds.length != filteredAllCategoryIds.length) {
@@ -160,7 +162,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			return;
 		}
 
-		long[] filteredAnyCategoryIds = AssetUtil.filterCategoryIds(
+		long[] filteredAnyCategoryIds = _filterCategoryIds(
 			PermissionThreadLocal.getPermissionChecker(), anyCategoryIds);
 
 		if (filteredAnyCategoryIds.length == 0) {
@@ -404,6 +406,31 @@ public class CPDefinitionSearcher extends BaseSearcher {
 		tagIgsTermsFilter.addValues(ArrayUtil.toStringArray(notAnyTagIds));
 
 		queryBooleanFilter.add(tagIgsTermsFilter, BooleanClauseOccur.MUST_NOT);
+	}
+
+	private long[] _filterCategoryIds(
+			PermissionChecker permissionChecker, long[] categoryIds)
+		throws Exception {
+
+		if (permissionChecker == null) {
+			return categoryIds;
+		}
+
+		List<Long> viewableCategoryIds = new ArrayList<>();
+
+		for (long categoryId : categoryIds) {
+			AssetCategory category =
+				AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
+
+			if ((category != null) &&
+				AssetCategoryPermission.contains(
+					permissionChecker, category, ActionKeys.VIEW)) {
+
+				viewableCategoryIds.add(categoryId);
+			}
+		}
+
+		return ArrayUtil.toArray(viewableCategoryIds.toArray(new Long[0]));
 	}
 
 	private final CPQuery _cpQuery;

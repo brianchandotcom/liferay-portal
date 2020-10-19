@@ -45,9 +45,9 @@ vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupIds));
 vocabularies.sort(new AssetVocabularyGroupLocalizedTitleComparator(scopeGroupId, locale, true));
 
 if (Validator.isNotNull(className)) {
-	vocabularies = AssetUtil.filterVocabularies(vocabularies, className, classTypePK);
-
 	long classNameId = PortalUtil.getClassNameId(className);
+
+	vocabularies = ListUtil.filter(vocabularies, assetVocabulary -> assetVocabulary.isAssociatedToClassNameIdAndClassTypePK(classNameId, classTypePK));
 
 	for (AssetVocabulary vocabulary : vocabularies) {
 		vocabulary = vocabulary.toEscapedModel();

@@ -3553,17 +3553,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 				if (group.isOrganization()) {
 					params = LinkedHashMapBuilder.<String, Object>put(
-						"usersOrgs", Long.valueOf(group.getOrganizationId())
+						"usersOrgs", group.getOrganizationId()
 					).build();
 				}
 				else if (group.isUserGroup()) {
 					params = LinkedHashMapBuilder.<String, Object>put(
-						"usersUserGroups", Long.valueOf(group.getClassPK())
+						"usersUserGroups", group.getClassPK()
 					).build();
 				}
 				else {
 					params = LinkedHashMapBuilder.<String, Object>put(
-						"usersGroups", Long.valueOf(groupId)
+						"usersGroups", groupId
 					).build();
 				}
 

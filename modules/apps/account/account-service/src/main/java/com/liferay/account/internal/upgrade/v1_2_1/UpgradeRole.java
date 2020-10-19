@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.account.internal.upgrade.v1_2_0;
+package com.liferay.account.internal.upgrade.v1_2_1;
 
 import com.liferay.account.role.AccountRole;
 import com.liferay.petra.string.StringBundler;

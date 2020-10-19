@@ -15,6 +15,7 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
@@ -33,8 +34,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.service.base.AssetEntryServiceBaseImpl;
+import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
-import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -204,11 +205,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		AssetEntryQuery filteredEntryQuery = new AssetEntryQuery(entryQuery);
 
 		filteredEntryQuery.setAllCategoryIds(
-			AssetUtil.filterCategoryIds(
+			_filterCategoryIds(
 				getPermissionChecker(), entryQuery.getAllCategoryIds()));
 		filteredEntryQuery.setAllTagIdsArray(entryQuery.getAllTagIdsArray());
 		filteredEntryQuery.setAnyCategoryIds(
-			AssetUtil.filterCategoryIds(
+			_filterCategoryIds(
 				getPermissionChecker(), entryQuery.getAnyCategoryIds()));
 		filteredEntryQuery.setAnyTagIds(entryQuery.getAnyTagIds());
 
@@ -361,6 +362,31 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		}
 
 		return false;
+	}
+
+	private long[] _filterCategoryIds(
+			PermissionChecker permissionChecker, long[] categoryIds)
+		throws PortalException {
+
+		if (permissionChecker == null) {
+			return categoryIds;
+		}
+
+		List<Long> viewableCategoryIds = new ArrayList<>();
+
+		for (long categoryId : categoryIds) {
+			AssetCategory category = assetCategoryLocalService.fetchCategory(
+				categoryId);
+
+			if ((category != null) &&
+				AssetCategoryPermission.contains(
+					permissionChecker, category, ActionKeys.VIEW)) {
+
+				viewableCategoryIds.add(categoryId);
+			}
+		}
+
+		return ArrayUtil.toArray(viewableCategoryIds.toArray(new Long[0]));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

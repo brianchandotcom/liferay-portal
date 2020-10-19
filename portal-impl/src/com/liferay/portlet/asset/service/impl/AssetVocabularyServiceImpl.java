@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetVocabularyServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
-import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -190,8 +190,13 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			return vocabularies;
 		}
 
-		return AssetUtil.filterVocabularies(
-			vocabularies, className, classTypePK);
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return ListUtil.filter(
+			vocabularies,
+			assetVocabulary ->
+				assetVocabulary.isAssociatedToClassNameIdAndClassTypePK(
+					classNameId, classTypePK));
 	}
 
 	@Override

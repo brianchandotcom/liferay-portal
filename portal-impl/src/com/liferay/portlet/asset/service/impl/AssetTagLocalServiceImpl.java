@@ -19,12 +19,16 @@ import com.liferay.asset.kernel.exception.AssetTagNameException;
 import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -51,7 +55,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetTagLocalServiceBaseImpl;
-import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 import com.liferay.social.kernel.util.SocialCounterPeriodUtil;
 
@@ -813,10 +816,9 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 				"Tag name cannot be an empty string");
 		}
 
-		if (!AssetUtil.isValidWord(name)) {
+		if (!_isValidWord(name)) {
 			throw new AssetTagException(
-				StringUtil.merge(
-					AssetUtil.INVALID_CHARACTERS, StringPool.SPACE),
+				StringUtil.merge(_INVALID_CHARACTERS, StringPool.SPACE),
 				AssetTagException.INVALID_CHARACTER);
 		}
 
@@ -829,5 +831,44 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 				AssetTagException.MAX_LENGTH);
 		}
 	}
+
+	private boolean _isValidWord(String word) {
+		if (Validator.isBlank(word)) {
+			return false;
+		}
+
+		char[] wordCharArray = word.toCharArray();
+
+		for (char c : wordCharArray) {
+			for (char invalidChar : _INVALID_CHARACTERS) {
+				if (c == invalidChar) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Word ", word, " is not valid because ", c,
+								" is not allowed"));
+					}
+
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private static final char[] _INVALID_CHARACTERS = {
+		CharPool.AMPERSAND, CharPool.APOSTROPHE, CharPool.AT,
+		CharPool.BACK_SLASH, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
+		CharPool.COLON, CharPool.COMMA, CharPool.EQUAL, CharPool.GREATER_THAN,
+		CharPool.FORWARD_SLASH, CharPool.LESS_THAN, CharPool.NEW_LINE,
+		CharPool.OPEN_BRACKET, CharPool.OPEN_CURLY_BRACE, CharPool.PERCENT,
+		CharPool.PIPE, CharPool.PLUS, CharPool.POUND, CharPool.PRIME,
+		CharPool.QUESTION, CharPool.QUOTE, CharPool.RETURN, CharPool.SEMICOLON,
+		CharPool.SLASH, CharPool.STAR, CharPool.TILDE
+	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetTagLocalServiceImpl.class);
 
 }

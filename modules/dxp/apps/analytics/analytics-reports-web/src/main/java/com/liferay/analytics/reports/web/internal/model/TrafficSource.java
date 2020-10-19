@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -121,12 +122,20 @@ public class TrafficSource {
 		).put(
 			"name", getName()
 		).put(
-			"share", getTrafficShare()
+			"share", String.format("%.2f", getTrafficShare())
 		).put(
 			"title", title
 		).put(
 			"value", Math.toIntExact(getTrafficAmount())
 		);
+	}
+
+	@Override
+	public String toString() {
+		JSONObject jsonObject = toJSONObject(
+			null, LocaleUtil.getDefault(), _name);
+
+		return jsonObject.toJSONString();
 	}
 
 	private JSONArray _getCountryKeywordsJSONArray(Locale locale) {

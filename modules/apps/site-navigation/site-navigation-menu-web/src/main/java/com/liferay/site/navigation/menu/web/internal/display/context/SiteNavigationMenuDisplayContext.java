@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
@@ -155,13 +154,7 @@ public class SiteNavigationMenuDisplayContext {
 		}
 
 		String defaultRootMenuItemId =
-			_siteNavigationMenuPortletInstanceConfiguration.rootLayoutUuid();
-
-		if (Validator.isNull(defaultRootMenuItemId)) {
-			defaultRootMenuItemId =
-				_siteNavigationMenuPortletInstanceConfiguration.
-					rootMenuItemId();
-		}
+			_siteNavigationMenuPortletInstanceConfiguration.rootMenuItemId();
 
 		_rootMenuItemId = ParamUtil.getString(
 			_httpServletRequest, "rootMenuItemId", defaultRootMenuItemId);

@@ -263,11 +263,6 @@ const DropdownListWithSearch = ({
 	const [query, setQuery] = useState('');
 	const [filteredOptions, setFilteredOptions] = useState([]);
 
-	const emptyOption = {
-		label: Liferay.Language.get('choose-an-option'),
-		value: null,
-	};
-
 	useEffect(() => {
 		let result = options.filter(
 			(option) =>
@@ -276,6 +271,11 @@ const DropdownListWithSearch = ({
 		);
 
 		if (showEmptyOption) {
+			const emptyOption = {
+				label: Liferay.Language.get('choose-an-option'),
+				value: null,
+			};
+
 			result = [emptyOption, ...result];
 		}
 

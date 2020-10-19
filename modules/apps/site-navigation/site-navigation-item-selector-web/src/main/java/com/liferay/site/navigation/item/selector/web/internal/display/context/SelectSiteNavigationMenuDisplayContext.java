@@ -59,11 +59,12 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectSiteNavigationMenuDisplayContext {
 
 	public SelectSiteNavigationMenuDisplayContext(
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		PortletURL portletURL) {
 
 		_httpServletRequest = httpServletRequest;
+		_itemSelectedEventName = itemSelectedEventName;
 		_siteNavigationMenuItemTypeRegistry =
 			siteNavigationMenuItemTypeRegistry;
 		_portletURL = portletURL;
@@ -95,6 +96,10 @@ public class SelectSiteNavigationMenuDisplayContext {
 		}
 
 		return breadcrumbEntries;
+	}
+
+	public String getItemSelectedEventName() {
+		return _itemSelectedEventName;
 	}
 
 	public String getSelectSiteNavigationMenuLevelURL(long siteNavigationMenuId)
@@ -397,6 +402,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final String _itemSelectedEventName;
 	private final PortletURL _portletURL;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;

@@ -20,10 +20,20 @@
 SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = (SelectSiteNavigationMenuDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SELECT_SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT);
 %>
 
-<div class="container-fluid-1280 p-4">
-	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= selectSiteNavigationMenuDisplayContext.getBreadcrumbEntries() %>"
-	/>
+<div class="container-fluid-1280 p-4" id="<portlet:namespace />siteNavigationMenuLevelSelector">
+	<div class="align-items-center d-flex justify-content-between">
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= selectSiteNavigationMenuDisplayContext.getBreadcrumbEntries() %>"
+		/>
+
+		<clay:button
+			cssClass="selector-button"
+			data-parentSiteNavigationMenuId='<%= ParamUtil.getLong(request, "parentSiteNavigationMenuId") %>'
+			data-siteNavigationMenuId='<%= ParamUtil.getLong(request, "siteNavigationMenuId") %>'
+			displayType="primary"
+			label='<%= LanguageUtil.get(resourceBundle, "select-level") %>'
+		/>
+	</div>
 
 	<liferay-ui:search-container
 		cssClass="table-hover"
@@ -56,3 +66,10 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 		/>
 	</liferay-ui:search-container>
 </div>
+
+<aui:script>
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />siteNavigationMenuLevelSelector',
+		'<%= HtmlUtil.escapeJS(selectSiteNavigationMenuDisplayContext.getItemSelectedEventName()) %>'
+	);
+</aui:script>

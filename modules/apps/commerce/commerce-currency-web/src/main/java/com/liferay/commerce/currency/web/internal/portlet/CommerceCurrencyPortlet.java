@@ -15,12 +15,14 @@
 package com.liferay.commerce.currency.web.internal.portlet;
 
 import com.liferay.commerce.currency.constants.CommerceCurrencyPortletKeys;
+import com.liferay.commerce.currency.model.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -70,7 +72,7 @@ public class CommerceCurrencyPortlet extends MVCPortlet {
 			new CommerceCurrenciesDisplayContext(
 				_commerceCurrencyService, _commercePriceFormatter,
 				_configurationProvider, _exchangeRateProviderRegistry,
-				renderRequest, renderResponse);
+				_portletResourcePermission, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCurrenciesDisplayContext);
@@ -89,5 +91,10 @@ public class CommerceCurrencyPortlet extends MVCPortlet {
 
 	@Reference
 	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
+
+	@Reference(
+		target = "(resource.name=" + CommerceCurrencyConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

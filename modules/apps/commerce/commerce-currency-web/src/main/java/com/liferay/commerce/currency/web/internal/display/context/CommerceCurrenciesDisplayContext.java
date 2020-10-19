@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -63,12 +63,14 @@ public class CommerceCurrenciesDisplayContext {
 		CommercePriceFormatter commercePriceFormatter,
 		ConfigurationProvider configurationProvider,
 		ExchangeRateProviderRegistry exchangeRateProviderRegistry,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commerceCurrencyService = commerceCurrencyService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_configurationProvider = configurationProvider;
 		_exchangeRateProviderRegistry = exchangeRateProviderRegistry;
+		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -249,8 +251,8 @@ public class CommerceCurrenciesDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return PortalPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(),
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 	}
 
@@ -279,6 +281,7 @@ public class CommerceCurrenciesDisplayContext {
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final ConfigurationProvider _configurationProvider;
 	private final ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
+	private final PortletResourcePermission _portletResourcePermission;
 	private CommerceCurrency _primaryCommerceCurrency;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

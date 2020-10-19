@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.internal.security.permission.resource;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceChannelPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -82,10 +83,13 @@ public class CommerceChannelModelResourcePermission
 
 	@Override
 	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+		return _portletResourcePermission;
 	}
 
 	@Reference
 	protected CommerceChannelPermission commerceChannelPermission;
+
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

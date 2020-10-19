@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.base.CommerceChannelServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,8 +23,9 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
@@ -42,8 +44,8 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), CPActionKeys.ADD_COMMERCE_CHANNEL);
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, CPActionKeys.ADD_COMMERCE_CHANNEL);
 
 		return commerceChannelLocalService.addCommerceChannel(
 			siteGroupId, name, type, typeSettingsUnicodeProperties,
@@ -123,8 +125,8 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	public List<CommerceChannel> getCommerceChannels(int start, int end)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), CPActionKeys.VIEW_COMMERCE_CHANNELS);
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, CPActionKeys.VIEW_COMMERCE_CHANNELS);
 
 		return commerceChannelLocalService.getCommerceChannels(start, end);
 	}
@@ -133,8 +135,8 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	public List<CommerceChannel> getCommerceChannels(long companyId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), CPActionKeys.VIEW_COMMERCE_CHANNELS);
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, CPActionKeys.VIEW_COMMERCE_CHANNELS);
 
 		return commerceChannelLocalService.getCommerceChannels(companyId);
 	}
@@ -151,8 +153,8 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), CPActionKeys.VIEW_COMMERCE_CHANNELS);
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, CPActionKeys.VIEW_COMMERCE_CHANNELS);
 
 		return commerceChannelLocalService.searchCommerceChannels(
 			companyId, keywords, start, end, sort);
@@ -162,8 +164,8 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	public int searchCommerceChannelsCount(long companyId, String keywords)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), CPActionKeys.VIEW_COMMERCE_CHANNELS);
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, CPActionKeys.VIEW_COMMERCE_CHANNELS);
 
 		return commerceChannelLocalService.searchCommerceChannelsCount(
 			companyId, keywords);
@@ -220,5 +222,10 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 				CommerceChannelServiceImpl.class,
 				"_commerceChannelModelResourcePermission",
 				CommerceChannel.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceChannelServiceImpl.class, "_portletResourcePermission",
+				CPConstants.RESOURCE_NAME);
 
 }

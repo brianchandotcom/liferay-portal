@@ -14,6 +14,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly group: "org.springframework", name: "spring-aop", version: "4.3.22.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-tx", version: "4.3.22.RELEASE"
+	compileOnly project(":apps:asset:asset-api")
 	compileOnly project(":apps:commerce:commerce-account-api")
 	compileOnly project(":apps:commerce:commerce-api")
 	compileOnly project(":apps:commerce:commerce-currency-api")

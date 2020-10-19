@@ -39,6 +39,11 @@ export default function PageDesignOptionsSidebar() {
 	const selectedStyleBook = useStyleBook();
 	const setSelectedStyleBook = useSetStyleBook();
 
+	const [defaultStyleBook, setDefaultStyleBook] = useState({
+		imagePreviewURL: config.defaultStyleBookEntryImagePreviewURL,
+		name: config.defaultStyleBookEntryName,
+	});
+
 	const masterLayoutPlid = useSelector(
 		(state) => state.masterLayout?.masterLayoutPlid
 	);
@@ -50,8 +55,18 @@ export default function PageDesignOptionsSidebar() {
 					masterLayoutPlid: masterLayout.masterLayoutPlid,
 				})
 			).then(({styleBook}) => {
-				if (styleBook) {
-					setSelectedStyleBook(styleBook);
+				const {
+					defaultStyleBookEntryImagePreviewURL,
+					defaultStyleBookEntryName,
+					styleBookEntryId,
+					tokenValues,
+				} = styleBook;
+
+				setDefaultStyleBook({
+					imagePreviewURL: defaultStyleBookEntryImagePreviewURL,
+					name: defaultStyleBookEntryName,
+				});
+
 				}
 			});
 		},
@@ -88,10 +103,12 @@ export default function PageDesignOptionsSidebar() {
 			getTabs(
 				masterLayoutPlid,
 				selectedStyleBook,
+				defaultStyleBook,
 				onSelectMasterLayout,
 				onSelectStyleBook
 			),
 		[
+			defaultStyleBook,
 			masterLayoutPlid,
 			onSelectMasterLayout,
 			onSelectStyleBook,
@@ -218,19 +235,20 @@ const OptionList = ({options = [], icon}) => (
 function getTabs(
 	masterLayoutPlid,
 	selectedStyleBook,
+	defaultStyleBook,
 	onSelectMasterLayout,
 	onSelectStyleBook
 ) {
 	const styleBooks = [
 		{
-			imagePreviewURL: selectedStyleBook.imagePreviewURL,
+			imagePreviewURL: defaultStyleBook.imagePreviewURL,
 			name:
 				config.layoutType === LAYOUT_TYPES.master
 					? Liferay.Language.get('default-style-book')
 					: Liferay.Language.get('inherited-from-master'),
 			styleBookEntryId: '0',
 			subtitle:
-				selectedStyleBook.defaultStyleBookEntryName ||
+				defaultStyleBook.name ||
 				Liferay.Language.get('provided-by-theme'),
 		},
 		...config.styleBooks,

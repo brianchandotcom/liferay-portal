@@ -77,6 +77,14 @@ const EditAdaptiveMedia = ({
 	return (
 		<ClayForm onSubmit={formik.handleSubmit}>
 			<div class="sheet sheet-lg">
+				{!configurationEntryEditable && (
+					<div class="alert alert-info">
+						{Liferay.Language.get(
+							'the-images-for-this-resolution-are-already-adapted'
+						)}
+					</div>
+				)}
+
 				<Input
 					error={errors[nameId]}
 					label={Liferay.Language.get('name')}
@@ -115,6 +123,7 @@ const EditAdaptiveMedia = ({
 					<ClayLayout.Row>
 						<ClayLayout.Col md="3">
 							<Input
+								disabled={!configurationEntryEditable}
 								label={Liferay.Language.get('max-width-px')}
 								name={maxWidthId}
 								onChange={handleChange}
@@ -124,6 +133,7 @@ const EditAdaptiveMedia = ({
 						</ClayLayout.Col>
 						<ClayLayout.Col md="3">
 							<Input
+								disabled={!configurationEntryEditable}
 								label={Liferay.Language.get('max-height-px')}
 								name={maxHeightId}
 								onChange={handleChange}
@@ -139,7 +149,9 @@ const EditAdaptiveMedia = ({
 							'add-a-resolution-for-high-density-displays'
 						)}
 						name={highResolutionId}
-						onChange={() => setAddHighResolution(!addHighResolution)}
+						onChange={() =>
+							setAddHighResolution(!addHighResolution)
+						}
 					/>
 				</div>
 
@@ -154,6 +166,7 @@ const EditAdaptiveMedia = ({
 						selectedValue={automaticId}
 					>
 						<ClayRadio
+							disabled={!configurationEntryEditable}
 							label={Liferay.Language.get('automatic')}
 							value={true}
 						>
@@ -165,13 +178,14 @@ const EditAdaptiveMedia = ({
 						</ClayRadio>
 
 						<ClayRadio
+							disabled={!configurationEntryEditable}
 							label={Liferay.Language.get('custom')}
 							value={false}
 						/>
 					</ClayRadioGroup>
 
 					<Input
-						disabled={automaticId}
+						disabled={automaticId || !configurationEntryEditable}
 						error={!automaticId && errors[newUuidId]}
 						label={Liferay.Language.get('id')}
 						name={newUuidId}

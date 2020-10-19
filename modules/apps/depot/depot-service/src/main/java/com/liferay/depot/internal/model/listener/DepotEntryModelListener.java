@@ -20,6 +20,7 @@ import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
@@ -33,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotEntryModelListener extends BaseModelListener<DepotEntry> {
 
 	@Override
-	public void onBeforeRemove(DepotEntry depotEntry)
+	public void onAfterRemove(DepotEntry depotEntry)
 		throws ModelListenerException {
 
 		try {
@@ -45,7 +46,12 @@ public class DepotEntryModelListener extends BaseModelListener<DepotEntry> {
 					depotEntryGroupRel);
 			}
 
-			_groupLocalService.deleteGroup(depotEntry.getGroupId());
+			Group group = _groupLocalService.fetchGroup(
+				depotEntry.getGroupId());
+
+			if (group != null) {
+				_groupLocalService.deleteGroup(group);
+			}
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

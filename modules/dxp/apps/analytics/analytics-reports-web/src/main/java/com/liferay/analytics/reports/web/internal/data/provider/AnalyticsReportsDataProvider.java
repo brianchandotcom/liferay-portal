@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import com.liferay.analytics.reports.web.internal.client.AsahFaroBackendClient;
+import com.liferay.analytics.reports.web.internal.model.AcquisitionChannel;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
@@ -32,7 +33,13 @@ import com.liferay.portal.kernel.util.Http;
 
 import java.time.format.DateTimeFormatter;
 
+import java.util.AbstractMap;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author David Arques
@@ -45,6 +52,51 @@ public class AnalyticsReportsDataProvider {
 		}
 
 		_asahFaroBackendClient = new AsahFaroBackendClient(http);
+	}
+
+	public Map<String, AcquisitionChannel> getAcquisitionChannels(
+			long companyId, String url)
+		throws PortalException {
+
+		try {
+			String response = _asahFaroBackendClient.doGet(
+				companyId,
+				"api/1.0/pages/acquisition-channels?canonicalURL=" + url +
+					"&interval=D&rangeKey=30");
+
+			TypeFactory typeFactory = _objectMapper.getTypeFactory();
+
+			Map<String, Long> acquisitionChannels = _objectMapper.readValue(
+				response,
+				typeFactory.constructMapType(
+					Map.class, typeFactory.constructType(String.class),
+					typeFactory.constructType(Long.class)));
+
+			Collection<Long> values = acquisitionChannels.values();
+
+			Stream<Long> valuesStream = values.stream();
+
+			Double total = Double.valueOf(valuesStream.reduce(0L, Long::sum));
+
+			Set<Map.Entry<String, Long>> entries =
+				acquisitionChannels.entrySet();
+
+			Stream<Map.Entry<String, Long>> entriesStream = entries.stream();
+
+			return entriesStream.map(
+				entry -> new AbstractMap.SimpleEntry<>(
+					entry.getKey(),
+					new AcquisitionChannel(
+						entry.getKey(), entry.getValue(),
+						(entry.getValue() / total) * 100))
+			).collect(
+				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+			);
+		}
+		catch (Exception exception) {
+			throw new PortalException(
+				"Unable to get acquisition channels", exception);
+		}
 	}
 
 	public HistoricalMetric getHistoricalReadsHistoricalMetric(

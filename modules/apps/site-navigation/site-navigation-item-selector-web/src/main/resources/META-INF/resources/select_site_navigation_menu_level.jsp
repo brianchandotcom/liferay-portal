@@ -21,6 +21,10 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 %>
 
 <div class="container-fluid-1280 p-4">
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= selectSiteNavigationMenuDisplayContext.getBreadcrumbEntries() %>"
+	/>
+
 	<liferay-ui:search-container
 		cssClass="table-hover"
 		searchContainer="<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuItemSearchContainer() %>"

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
@@ -68,6 +70,31 @@ public class SelectSiteNavigationMenuDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public List<BreadcrumbEntry> getBreadcrumbEntries() throws Exception {
+		long siteNavigationMenuId = ParamUtil.getLong(
+			_httpServletRequest, "siteNavigationMenuId");
+
+		long parentSiteNavigationMenuId = ParamUtil.getLong(
+			_httpServletRequest, "parentSiteNavigationMenuId");
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		breadcrumbEntries.add(_getAllBreadcrumbEntry());
+
+		if (siteNavigationMenuId == 0) {
+			breadcrumbEntries.addAll(
+				_getLayoutBreadcrumbEntries(
+					siteNavigationMenuId, parentSiteNavigationMenuId));
+		}
+		else {
+			breadcrumbEntries.addAll(
+				_getSiteNavigationMenuBreadcrumbEntries(
+					siteNavigationMenuId, parentSiteNavigationMenuId));
+		}
+
+		return breadcrumbEntries;
 	}
 
 	public String getSelectSiteNavigationMenuLevelURL(long siteNavigationMenuId)
@@ -140,6 +167,105 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return searchContainer;
 	}
 
+	private BreadcrumbEntry _createBreadcrumbEntry(String title, String url) {
+		return new BreadcrumbEntry() {
+			{
+				setBrowsable(url != null);
+				setTitle(title);
+				setURL(url);
+			}
+		};
+	}
+
+	private BreadcrumbEntry _getAllBreadcrumbEntry() {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		String backURL = ParamUtil.getString(
+			_httpServletRequest, "backURL",
+			PortalUtil.getCurrentURL(_httpServletRequest));
+
+		return _createBreadcrumbEntry(
+			LanguageUtil.get(resourceBundle, "all"), backURL);
+	}
+
+	private List<BreadcrumbEntry> _getAncestorsBreadcrumbEntries(
+			long siteNavigationMenuId, long siteNavigationMenuItemId)
+		throws Exception {
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
+				siteNavigationMenuItemId);
+
+		breadcrumbEntries.add(
+			_createBreadcrumbEntry(
+				_getSiteNavigationMenuItemName(siteNavigationMenuItem),
+				getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId)));
+
+		while (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() !=
+					0) {
+
+			siteNavigationMenuItem =
+				SiteNavigationMenuItemLocalServiceUtil.
+					fetchSiteNavigationMenuItem(
+						siteNavigationMenuItem.
+							getParentSiteNavigationMenuItemId());
+
+			breadcrumbEntries.add(
+				0,
+				_createBreadcrumbEntry(
+					_getSiteNavigationMenuItemName(siteNavigationMenuItem),
+					_getSelectSiteNavigationMenuLevelURL(
+						siteNavigationMenuId,
+						siteNavigationMenuItem.getSiteNavigationMenuItemId())));
+		}
+
+		return breadcrumbEntries;
+	}
+
+	private List<BreadcrumbEntry> _getLayoutBreadcrumbEntries(
+			long siteNavigationMenuId, long parentSiteNavigationMenuId)
+		throws Exception {
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		breadcrumbEntries.add(
+			_createBreadcrumbEntry(
+				LanguageUtil.get(resourceBundle, "public-pages-hierarchy"),
+				getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId)));
+
+		if (parentSiteNavigationMenuId != 0) {
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				_themeDisplay.getScopeGroupId(), false,
+				parentSiteNavigationMenuId);
+
+			List<Layout> ancestors = layout.getAncestors();
+
+			Collections.reverse(ancestors);
+
+			for (Layout ancestor : ancestors) {
+				breadcrumbEntries.add(
+					_createBreadcrumbEntry(
+						ancestor.getName(_themeDisplay.getLocale()),
+						_getSelectSiteNavigationMenuLevelURL(
+							siteNavigationMenuId, ancestor.getLayoutId())));
+			}
+
+			breadcrumbEntries.add(
+				_createBreadcrumbEntry(
+					layout.getName(_themeDisplay.getLocale()),
+					_getSelectSiteNavigationMenuLevelURL(
+						siteNavigationMenuId, layout.getLayoutId())));
+		}
+
+		return breadcrumbEntries;
+	}
+
 	private PortletRequest _getPortletRequest() {
 		return (PortletRequest)_httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -186,6 +312,30 @@ public class SelectSiteNavigationMenuDisplayContext {
 		}
 
 		return portletURL.toString();
+	}
+
+	private List<BreadcrumbEntry> _getSiteNavigationMenuBreadcrumbEntries(
+			long siteNavigationMenuId, long parentSiteNavigationMenuId)
+		throws Exception {
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuServiceUtil.fetchSiteNavigationMenu(
+				siteNavigationMenuId);
+
+		breadcrumbEntries.add(
+			_createBreadcrumbEntry(
+				siteNavigationMenu.getName(),
+				getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId)));
+
+		if (parentSiteNavigationMenuId != 0) {
+			breadcrumbEntries.addAll(
+				_getAncestorsBreadcrumbEntries(
+					siteNavigationMenuId, parentSiteNavigationMenuId));
+		}
+
+		return breadcrumbEntries;
 	}
 
 	private String _getSiteNavigationMenuItemName(

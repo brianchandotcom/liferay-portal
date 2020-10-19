@@ -204,7 +204,6 @@ definition {
 			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY");
 
 		if (IsElementPresent(key_inputType = "checkbox", locator1 = "CommerceEntry#FILTER_INPUT_TYPE")) {
-
 			for (var item : list "${filterItem}") {
 				Click.clickAtNotVisible(
 					key_filterItem = "${item}",
@@ -236,7 +235,6 @@ definition {
 	}
 
 	macro addNewNotificationTemplate {
-
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Type(

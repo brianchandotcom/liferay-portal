@@ -142,6 +142,11 @@
 	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'btn-monospaced') and contains(@class, 'component-action')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>X_AXIS_VOCABULARY_NAME</td>
+	<td>//button[contains(@class, 'recharts-layer recharts-cartesian-axis-tick') and contains(text(),'${xAxisCtegoryName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

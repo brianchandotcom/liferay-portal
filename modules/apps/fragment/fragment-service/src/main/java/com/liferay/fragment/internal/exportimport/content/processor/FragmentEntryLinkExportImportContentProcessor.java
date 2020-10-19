@@ -211,8 +211,12 @@ public class FragmentEntryLinkExportImportContentProcessor
 			className = DLFileEntry.class.getName();
 		}
 
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
+
+		if (assetEntry == null) {
+			return;
+		}
 
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 

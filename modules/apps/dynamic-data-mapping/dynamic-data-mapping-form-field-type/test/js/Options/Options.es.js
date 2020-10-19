@@ -100,6 +100,16 @@ describe('Options', () => {
 			jest.runAllTimers();
 		});
 
+		const referenceInputs = container.querySelectorAll(
+			'.key-value-reference-input'
+		);
+
+		expect(referenceInputs[2].value).toEqual(
+			expect.stringMatching(DEFAULT_OPTION_NAME_REGEX)
+		);
+
+		referenceInputs[2].setAttribute('value', 'Any<String>');
+
 		const valueInputs = container.querySelectorAll('.key-value-input');
 
 		expect(valueInputs[2].value).toEqual(

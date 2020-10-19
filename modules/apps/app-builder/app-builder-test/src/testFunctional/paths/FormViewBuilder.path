@@ -454,7 +454,7 @@
 
 <tr>
 	<td>RULE_BUILDER_CANCEL_BUTTON</td>
-	<td>xpath=(//div[contains(@class, 'modal-item-last')]//button[contains(@class,'btn-secondary')][contains(text(),'Cancel')])[2]</td>
+	<td>xpath=(//div[contains(@class, 'modal-item-last')]//button[contains(@class,'btn-secondary')][contains(text(),'Cancel')])</td>
 	<td></td>
 </tr>
 

@@ -249,8 +249,8 @@ definition {
 			fieldLabel = "HTML Title",
 			text = "Título de la Prueba");
 
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
+		PortletEntry.inputText(
+			fieldLabel = "Description",
 			text = "Descripción de la Prueba");
 
 		Page.viewPreview(

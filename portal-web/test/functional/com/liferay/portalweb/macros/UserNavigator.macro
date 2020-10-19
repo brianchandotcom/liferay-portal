@@ -1,5 +1,11 @@
 definition {
 
+	macro gotoAlertsAndAnnouncementsDelivery {
+		UserNavigator.gotoPreferences();
+
+		Navigator.gotoNavNested(navNested = "Alerts and Announcements Delivery");
+	}
+
 	macro gotoContact {
 		Navigator.gotoNavUnderline(navUnderline = "Contact");
 	}
@@ -8,12 +14,6 @@ definition {
 		UserNavigator.gotoPreferences();
 
 		Navigator.gotoNavNested(navNested = "Display Settings");
-	}
-
-	macro gotoAlertsAndAnnouncementsDelivery {
-		UserNavigator.gotoPreferences();
-
-		Navigator.gotoNavNested(navNested = "Alerts and Announcements Delivery");
 	}
 
 	macro gotoEdit {

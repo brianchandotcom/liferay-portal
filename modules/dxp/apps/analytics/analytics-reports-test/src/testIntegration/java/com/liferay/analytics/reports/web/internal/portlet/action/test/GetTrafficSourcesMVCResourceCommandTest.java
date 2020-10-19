@@ -111,6 +111,11 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 					"/api/1.0/data-sources/" + dataSourceId,
 					() -> StringPool.BLANK
 				).put(
+					"/api/1.0/pages/acquisition-channels",
+					() -> JSONUtil.put(
+						"organic", 3192L
+					).toString()
+				).put(
 					"/api/seo/1.0/traffic-sources",
 					() -> JSONUtil.put(
 						JSONUtil.put(
@@ -136,7 +141,7 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 						).put(
 							"name", "organic"
 						).put(
-							"trafficAmount", 3192L
+							"trafficAmount", 3L
 						).put(
 							"trafficShare", 93.93D
 						)
@@ -188,7 +193,9 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 
 					Assert.assertEquals("organic", jsonObject1.get("name"));
 
-					Assert.assertEquals(93.93D, jsonObject1.get("share"));
+					Assert.assertEquals(
+						100.00D, Double.valueOf(jsonObject1.getString("share")),
+						0.0);
 
 					Assert.assertEquals(3192, jsonObject1.get("value"));
 

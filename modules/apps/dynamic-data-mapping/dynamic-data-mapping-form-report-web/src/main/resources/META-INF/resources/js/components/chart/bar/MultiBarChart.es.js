@@ -81,7 +81,8 @@ export default ({data, field, height, structure, width}) => {
 			};
 
 			columns.map((column) => {
-				newData[column] = data[row][column] ? data[row][column] : 0;
+				newData[column] =
+					data[row] && data[row][column] ? data[row][column] : 0;
 			});
 			processedData.push(newData);
 		});

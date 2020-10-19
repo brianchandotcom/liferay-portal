@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -48,9 +48,11 @@ public class CPMeasurementUnitsDisplayContext {
 
 	public CPMeasurementUnitsDisplayContext(
 		CPMeasurementUnitService cpMeasurementUnitService,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_cpMeasurementUnitService = cpMeasurementUnitService;
+		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -208,8 +210,8 @@ public class CPMeasurementUnitsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return PortalPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(),
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 	}
 
@@ -245,6 +247,7 @@ public class CPMeasurementUnitsDisplayContext {
 
 	private CPMeasurementUnit _cpMeasurementUnit;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
+	private final PortletResourcePermission _portletResourcePermission;
 	private CPMeasurementUnit _primaryCPMeasurementUnit;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

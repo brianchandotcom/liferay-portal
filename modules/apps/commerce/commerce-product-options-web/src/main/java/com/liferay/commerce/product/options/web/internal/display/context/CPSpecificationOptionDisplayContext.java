@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -46,12 +47,14 @@ public class CPSpecificationOptionDisplayContext
 	public CPSpecificationOptionDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CPOptionCategoryService cpOptionCategoryService,
-			CPSpecificationOptionService cpSpecificationOptionService)
+			CPSpecificationOptionService cpSpecificationOptionService,
+			PortletResourcePermission portletResourcePermission)
 		throws PortalException {
 
 		super(
 			actionHelper, httpServletRequest,
-			CPSpecificationOption.class.getSimpleName());
+			CPSpecificationOption.class.getSimpleName(),
+			portletResourcePermission);
 
 		setDefaultOrderByCol("label");
 

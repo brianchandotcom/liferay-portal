@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -341,8 +341,12 @@ public class CommerceCatalogDisplayContext {
 	}
 
 	public boolean hasAddCatalogPermission() {
-		return PortalPermissionUtil.contains(
-			cpRequestHelper.getPermissionChecker(),
+		PortletResourcePermission portletResourcePermission =
+			_commerceCatalogModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			cpRequestHelper.getPermissionChecker(), null,
 			CPActionKeys.ADD_COMMERCE_CATALOG);
 	}
 

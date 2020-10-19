@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.reports.web.internal.data.provider;
 
+import com.liferay.analytics.reports.web.internal.model.AcquisitionChannel;
 import com.liferay.analytics.reports.web.internal.model.CountrySearchKeywords;
 import com.liferay.analytics.reports.web.internal.model.HistogramMetric;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
@@ -72,6 +73,48 @@ public class AnalyticsReportsDataProviderTest {
 		ReflectionTestUtil.setFieldValue(
 			PrefsPropsUtil.class, "_prefsProps",
 			Mockito.mock(PrefsProps.class));
+	}
+
+	@Test
+	public void testGetAcquisitionChannels() throws Exception {
+		AnalyticsReportsDataProvider analyticsReportsDataProvider =
+			new AnalyticsReportsDataProvider(
+				_getHttp(
+					Collections.singletonMap(
+						"/acquisition-channels",
+						JSONUtil.put(
+							"direct", 5847L
+						).put(
+							"organic", 1732L
+						).put(
+							"paid", 1235L
+						).put(
+							"referrer", 3849L
+						).put(
+							"social", 735L
+						).toString())));
+
+		Map<String, AcquisitionChannel> acquisitionChannels =
+			analyticsReportsDataProvider.getAcquisitionChannels(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			acquisitionChannels.toString(), 5, acquisitionChannels.size());
+		Assert.assertEquals(
+			String.valueOf(new AcquisitionChannel("direct", 5847L, 43.64D)),
+			String.valueOf(acquisitionChannels.get("direct")));
+		Assert.assertEquals(
+			String.valueOf(new AcquisitionChannel("organic", 1732L, 12.93D)),
+			String.valueOf(acquisitionChannels.get("organic")));
+		Assert.assertEquals(
+			String.valueOf(new AcquisitionChannel("paid", 1235L, 9.22)),
+			String.valueOf(acquisitionChannels.get("paid")));
+		Assert.assertEquals(
+			String.valueOf(new AcquisitionChannel("referrer", 3849L, 28.73D)),
+			String.valueOf(acquisitionChannels.get("referrer")));
+		Assert.assertEquals(
+			String.valueOf(new AcquisitionChannel("social", 735L, 5.49D)),
+			String.valueOf(acquisitionChannels.get("social")));
 	}
 
 	@Test

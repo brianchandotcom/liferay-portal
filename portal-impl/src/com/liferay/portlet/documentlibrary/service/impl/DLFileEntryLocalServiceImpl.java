@@ -186,7 +186,7 @@ public class DLFileEntryLocalServiceImpl
 		String name = String.valueOf(
 			counterLocalService.increment(DLFileEntry.class.getName()));
 
-		String extension = _getExtension(sourceFileName, title, mimeType);
+		String extension = _getFileExtension(mimeType, sourceFileName, title);
 
 		String fileName = DLUtil.getSanitizedFileName(title, extension);
 
@@ -1642,7 +1642,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		String extension = _getExtension(sourceFileName, title, mimeType);
+		String extension = _getFileExtension(mimeType, sourceFileName, title);
 
 		if ((file == null) && (inputStream == null)) {
 			extension = dlFileEntry.getExtension();
@@ -2737,20 +2737,25 @@ public class DLFileEntryLocalServiceImpl
 			previousDLFileVersion, nextDLFileVersion);
 	}
 
-	private String _getExtension(
-		String sourceFileName, String title, String mimeType) {
+	private String _getFileExtension(
+		String mimeType, String sourceFileName, String title) {
 
 		Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
 
-		if (extensions.size() == 1) {
+		String extension = null;
+
+		if (!extensions.isEmpty() && (extensions.size() == 1)) {
 			Iterator<String> iterator = extensions.iterator();
 
-			String extension = iterator.next();
+			extension = iterator.next();
 
-			return extension.substring(1);
+			extension = extension.substring(1);
+		}
+		else {
+			extension = DLAppUtil.getExtension(title, sourceFileName);
 		}
 
-		return DLAppUtil.getExtension(title, sourceFileName);
+		return extension;
 	}
 
 	private boolean _isValidFileVersionNumber(String version) {

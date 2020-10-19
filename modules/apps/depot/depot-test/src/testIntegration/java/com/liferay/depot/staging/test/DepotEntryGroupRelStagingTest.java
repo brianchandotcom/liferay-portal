@@ -152,6 +152,43 @@ public class DepotEntryGroupRelStagingTest {
 	}
 
 	@Test
+	public void testDepotEntryGroupRelAfterPublishingDeletedConnection()
+		throws Exception {
+
+		_stagingDepotEntry = DepotStagingTestUtil.enableLocalStaging(
+			_liveDepotEntry);
+		_stagingGroup = DepotStagingTestUtil.enableLocalStaging(_liveGroup);
+
+		DepotEntryGroupRel stagingDepotEntryGroupRel =
+			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+				_stagingDepotEntry.getDepotEntryId(),
+				_stagingGroup.getGroupId());
+
+		DepotStagingTestUtil.publishLayouts(_stagingGroup, _liveGroup);
+
+		_depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
+			stagingDepotEntryGroupRel);
+
+		DepotEntryGroupRel liveDepotEntryGroupRel =
+			_depotEntryGroupRelLocalService.
+				getDepotEntryGroupRelByUuidAndGroupId(
+					stagingDepotEntryGroupRel.getUuid(),
+					_liveGroup.getGroupId());
+
+		Assert.assertNotNull(liveDepotEntryGroupRel);
+
+		DepotStagingTestUtil.publishLayouts(_stagingGroup, _liveGroup);
+
+		liveDepotEntryGroupRel =
+			_depotEntryGroupRelLocalService.
+				fetchDepotEntryGroupRelByUuidAndGroupId(
+					stagingDepotEntryGroupRel.getUuid(),
+					_liveGroup.getGroupId());
+
+		Assert.assertNull(liveDepotEntryGroupRel);
+	}
+
+	@Test
 	public void testDepotEntryGroupRelAfterPublishingModifiedConnection()
 		throws Exception {
 

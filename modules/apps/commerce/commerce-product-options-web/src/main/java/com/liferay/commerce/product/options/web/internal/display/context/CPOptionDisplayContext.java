@@ -33,10 +33,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,7 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
 import javax.portlet.WindowStateException;
@@ -59,12 +63,14 @@ public class CPOptionDisplayContext {
 	public CPOptionDisplayContext(
 			ConfigurationProvider configurationProvider, CPOption cpOption,
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+			PortletResourcePermission portletResourcePermission,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		_configurationProvider = configurationProvider;
 		_cpOption = cpOption;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		_portletResourcePermission = portletResourcePermission;
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
@@ -144,6 +150,16 @@ public class CPOptionDisplayContext {
 
 		return DDMFormFieldTypeUtil.getDDMFormFieldTypesAllowed(
 			ddmFormFieldTypes, ddmFormFieldTypesAllowed);
+	}
+
+	public boolean hasPermission(String actionId) throws PortalException {
+		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null, actionId);
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels() {
@@ -314,5 +330,6 @@ public class CPOptionDisplayContext {
 	private CPOption _cpOption;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

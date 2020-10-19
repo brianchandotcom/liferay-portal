@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
@@ -161,6 +162,71 @@ public abstract class AssetVocabularyServiceBaseImpl
 			counterLocalService) {
 
 		this.counterLocalService = counterLocalService;
+	}
+
+	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.kernel.service.ClassNameLocalService
+		getClassNameLocalService() {
+
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.kernel.service.ClassNameLocalService
+			classNameLocalService) {
+
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name remote service.
+	 *
+	 * @return the class name remote service
+	 */
+	public com.liferay.portal.kernel.service.ClassNameService
+		getClassNameService() {
+
+		return classNameService;
+	}
+
+	/**
+	 * Sets the class name remote service.
+	 *
+	 * @param classNameService the class name remote service
+	 */
+	public void setClassNameService(
+		com.liferay.portal.kernel.service.ClassNameService classNameService) {
+
+		this.classNameService = classNameService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+
+		this.classNamePersistence = classNamePersistence;
 	}
 
 	/**
@@ -496,6 +562,21 @@ public abstract class AssetVocabularyServiceBaseImpl
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService
+		classNameLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ClassNameService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameService
+		classNameService;
+
+	@BeanReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.GroupLocalService.class

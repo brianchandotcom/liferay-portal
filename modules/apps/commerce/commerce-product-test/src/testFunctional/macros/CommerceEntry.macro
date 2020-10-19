@@ -482,7 +482,9 @@ definition {
 
 		var numberOfEntriesAfterDeletion = MathUtil.difference("${numberOfEntries}", "1");
 
-		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		ClickNoError(
+			key_value = "",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		CommerceEntry.clickNoError(menuItem = "Delete");
 

@@ -56,7 +56,7 @@ public class TrafficSourceTest {
 			).put(
 				"name", trafficSource.getName()
 			).put(
-				"share", trafficSource.getTrafficShare()
+				"share", String.format("%.2f", trafficSource.getTrafficShare())
 			).put(
 				"title", title
 			).put(
@@ -169,7 +169,7 @@ public class TrafficSourceTest {
 			).put(
 				"name", trafficSource.getName()
 			).put(
-				"share", trafficSource.getTrafficShare()
+				"share", String.format("%.2f", trafficSource.getTrafficShare())
 			).put(
 				"title", title
 			).put(

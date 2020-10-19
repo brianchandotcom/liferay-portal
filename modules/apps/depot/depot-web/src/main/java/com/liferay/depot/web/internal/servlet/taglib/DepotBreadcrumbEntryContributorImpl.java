@@ -83,19 +83,14 @@ public class DepotBreadcrumbEntryContributorImpl
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		try {
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				httpServletRequest, themeDisplay.getScopeGroup(),
-				DepotPortletKeys.DEPOT_ADMIN, 0, 0,
-				PortletRequest.RENDER_PHASE);
-
 			breadcrumbEntries.add(
 				_getAssetLibrariesBreadcrumbEntry(
-					portletURL, httpServletRequest));
+					themeDisplay.getControlPanelGroup(), httpServletRequest));
 
 			breadcrumbEntries.add(
 				_getAssetLibraryBreadcrumbEntry(
 					_getDepotEntry(scopeGroup.getGroupId(), depotEntryId),
-					portletURL, httpServletRequest));
+					httpServletRequest));
 
 			if (originalBreadcrumbEntries.isEmpty() &&
 				!Objects.equals(
@@ -131,21 +126,31 @@ public class DepotBreadcrumbEntryContributorImpl
 	}
 
 	private BreadcrumbEntry _getAssetLibrariesBreadcrumbEntry(
-		PortletURL portletURL, HttpServletRequest httpServletRequest) {
+		Group group, HttpServletRequest httpServletRequest) {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(
 			_language.get(httpServletRequest, "category.asset-libraries"));
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			httpServletRequest, group, DepotPortletKeys.DEPOT_ADMIN, 0, 0,
+			PortletRequest.RENDER_PHASE);
+
 		breadcrumbEntry.setURL(portletURL.toString());
 
 		return breadcrumbEntry;
 	}
 
 	private BreadcrumbEntry _getAssetLibraryBreadcrumbEntry(
-			DepotEntry depotEntry, PortletURL portletURL,
-			HttpServletRequest httpServletRequest)
+			DepotEntry depotEntry, HttpServletRequest httpServletRequest)
 		throws PortalException {
+
+		Group group = depotEntry.getGroup();
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			httpServletRequest, group, DepotPortletKeys.DEPOT_ADMIN, 0, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/depot/view_depot_dashboard");
@@ -153,8 +158,6 @@ public class DepotBreadcrumbEntryContributorImpl
 			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId()));
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		Group group = depotEntry.getGroup();
 
 		breadcrumbEntry.setTitle(
 			group.getDescriptiveName(_portal.getLocale(httpServletRequest)));

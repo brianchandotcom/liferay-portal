@@ -19,7 +19,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
-import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemItemSelectorCriterion;
+import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
 import com.liferay.site.navigation.item.selector.web.internal.constants.SiteNavigationItemSelectorWebKeys;
 import com.liferay.site.navigation.item.selector.web.internal.display.context.SelectSiteNavigationMenuDisplayContext;
 
@@ -37,6 +37,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,13 +50,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = ItemSelectorView.class
 )
 public class SelectSiteNavigationMenuItemSelectorView
-	implements ItemSelectorView<SiteNavigationMenuItemItemSelectorCriterion> {
+	implements ItemSelectorView<SiteNavigationMenuItemSelectorCriterion> {
 
 	@Override
-	public Class<? extends SiteNavigationMenuItemItemSelectorCriterion>
+	public Class<? extends SiteNavigationMenuItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return SiteNavigationMenuItemItemSelectorCriterion.class;
+		return SiteNavigationMenuItemSelectorCriterion.class;
 	}
 
 	public ServletContext getServletContext() {
@@ -78,13 +79,14 @@ public class SelectSiteNavigationMenuItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			SiteNavigationMenuItemItemSelectorCriterion itemSelectorCriterion,
+			SiteNavigationMenuItemSelectorCriterion itemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		SelectSiteNavigationMenuDisplayContext
 			selectSiteNavigationMenuDisplayContext =
-				new SelectSiteNavigationMenuDisplayContext();
+				new SelectSiteNavigationMenuDisplayContext(
+					(HttpServletRequest)servletRequest, portletURL);
 
 		servletRequest.setAttribute(
 			SiteNavigationItemSelectorWebKeys.
@@ -94,7 +96,8 @@ public class SelectSiteNavigationMenuItemSelectorView
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("select_site_navigation_menu");
+			servletContext.getRequestDispatcher(
+				"/select_site_navigation_menu.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

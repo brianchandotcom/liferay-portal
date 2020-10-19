@@ -15,3 +15,31 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = (SelectSiteNavigationMenuDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SELECT_SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT);
+%>
+
+<div class="container-fluid-1280 mt-3">
+	<liferay-ui:search-container
+		cssClass="table-hover"
+		searchContainer="<%= selectSiteNavigationMenuDisplayContext.getSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.site.navigation.model.SiteNavigationMenu"
+			keyProperty="siteNavigationMenuId"
+			modelVar="siteNavigationMenu"
+		>
+			<liferay-ui:search-container-column-text
+				name="name"
+				property="name"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			displayStyle="list"
+			markupView="lexicon"
+			searchResultCssClass="table table-autofit"
+		/>
+	</liferay-ui:search-container>
+</div>

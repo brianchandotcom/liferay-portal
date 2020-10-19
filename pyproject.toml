@@ -1,7 +1,10 @@
 [tool.black]
 exclude = '''
 (
-	modules/node_modules/node-gyp |
+	.*/.git/.* |
+	.*/.gradle/.* |
+	.*/node_modules/.* |
+	.*/node_modules_cache/.* |
 	portal-impl/src/com/liferay/portal/deploy/dependencies/wsadmin.py
 )
 '''

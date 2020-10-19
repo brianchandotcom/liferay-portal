@@ -67,6 +67,12 @@ export default function PageDesignOptionsSidebar() {
 					name: defaultStyleBookEntryName,
 				});
 
+				// Changing the master layout should only affect the selected stylebook
+				// only if styleBookEntryId is equal to 0 which means that the stylebook is
+				// inherited
+
+				if (styleBookEntryId === '0') {
+					setSelectedStyleBook({styleBookEntryId, tokenValues});
 				}
 			});
 		},

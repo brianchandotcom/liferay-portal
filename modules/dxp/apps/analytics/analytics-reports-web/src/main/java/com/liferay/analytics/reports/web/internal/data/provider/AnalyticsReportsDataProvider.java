@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import com.liferay.analytics.reports.web.internal.client.AsahFaroBackendClient;
 import com.liferay.analytics.reports.web.internal.model.AcquisitionChannel;
+import com.liferay.analytics.reports.web.internal.model.CountrySearchKeywords;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
@@ -35,8 +36,10 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.AbstractMap;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -190,10 +193,44 @@ public class AnalyticsReportsDataProvider {
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
-			return _objectMapper.readValue(
+			List<TrafficSource> trafficSources = _objectMapper.readValue(
 				response,
 				typeFactory.constructCollectionType(
 					List.class, TrafficSource.class));
+
+			Map<String, AcquisitionChannel> acquisitionChannels =
+				getAcquisitionChannels(companyId, url);
+
+			Collection<AcquisitionChannel> values =
+				acquisitionChannels.values();
+
+			Stream<AcquisitionChannel> stream = values.stream();
+
+			return stream.map(
+				acquisitionChannel -> {
+					Stream<TrafficSource> trafficSourcesStream =
+						trafficSources.stream();
+
+					List<CountrySearchKeywords> countrySearchKeywords =
+						trafficSourcesStream.filter(
+							trafficSource -> Objects.equals(
+								acquisitionChannel.getName(),
+								trafficSource.getName())
+						).findFirst(
+						).map(
+							TrafficSource::getCountrySearchKeywordsList
+						).orElseGet(
+							Collections::emptyList
+						);
+
+					return new TrafficSource(
+						countrySearchKeywords, acquisitionChannel.getName(),
+						acquisitionChannel.getTrafficAmount(),
+						acquisitionChannel.getTrafficShare());
+				}
+			).collect(
+				Collectors.toList()
+			);
 		}
 		catch (Exception exception) {
 			throw new PortalException(

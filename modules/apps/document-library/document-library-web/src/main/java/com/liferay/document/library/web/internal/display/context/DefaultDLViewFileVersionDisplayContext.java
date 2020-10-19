@@ -203,8 +203,6 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		_uiItemsBuilder.addDownloadToolbarItem(toolbarItems);
 
-		_uiItemsBuilder.addOpenInMsOfficeToolbarItem(toolbarItems);
-
 		_uiItemsBuilder.addEditToolbarItem(toolbarItems);
 
 		_uiItemsBuilder.addCheckoutToolbarItem(toolbarItems);
@@ -385,8 +383,6 @@ public class DefaultDLViewFileVersionDisplayContext
 			_uiItemsBuilder.addDownloadMenuItem(menuItems);
 
 			_uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
-
-			_uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);
 
 			_uiItemsBuilder.addEditMenuItem(menuItems);
 

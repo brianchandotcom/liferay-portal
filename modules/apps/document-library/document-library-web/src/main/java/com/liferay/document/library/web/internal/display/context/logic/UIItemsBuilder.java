@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
@@ -68,7 +67,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -629,80 +627,6 @@ public class UIItemsBuilder {
 				Constants.MOVE_TO_TRASH, portletURL.toString()));
 	}
 
-	public void addOpenInMsOfficeMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
-
-		if (!isOpenInMsOfficeActionAvailable()) {
-			return;
-		}
-
-		String webDavURL = _dlURLHelper.getWebDavURL(
-			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
-			PropsValues.
-				DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED,
-			true);
-
-		String onClick = StringBundler.concat(
-			getNamespace(), "openDocument('", HtmlUtil.escapeJS(webDavURL),
-			"');");
-
-		JavaScriptMenuItem javaScriptMenuItem = _addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.OPEN_IN_MS_OFFICE,
-			"open-in-ms-office", onClick);
-
-		String javaScript =
-			"/com/liferay/document/library/web/display/context/dependencies" +
-				"/open_in_ms_office_js.ftl";
-
-		Class<?> clazz = getClass();
-
-		URLTemplateResource urlTemplateResource = new URLTemplateResource(
-			javaScript, clazz.getResource(javaScript));
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
-
-		template.put(
-			"errorMessage",
-			UnicodeLanguageUtil.get(
-				_resourceBundle,
-				"cannot-open-the-requested-document-due-to-the-following-" +
-					"reason"));
-		template.put("namespace", getNamespace());
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.processTemplate(unsyncStringWriter);
-
-		javaScriptMenuItem.setJavaScript(unsyncStringWriter.toString());
-	}
-
-	public void addOpenInMsOfficeToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		if (!isOpenInMsOfficeActionAvailable()) {
-			return;
-		}
-
-		String webDavURL = _dlURLHelper.getWebDavURL(
-			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
-			PropsValues.
-				DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED);
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(getNamespace());
-		sb.append("openDocument('");
-		sb.append(HtmlUtil.escapeJS(webDavURL));
-		sb.append("');");
-
-		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
-			DLUIItemKeys.OPEN_IN_MS_OFFICE,
-			LanguageUtil.get(_resourceBundle, "open-in-ms-office"),
-			sb.toString());
-	}
-
 	public void addPermissionsMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -967,17 +891,6 @@ public class UIItemsBuilder {
 		javaScriptMenuItem.setJavaScript(unsyncStringWriter.toString());
 
 		return javaScriptMenuItem;
-	}
-
-	public boolean isOpenInMsOfficeActionAvailable() throws PortalException {
-		if (_fileEntryDisplayContextHelper.hasViewPermission() &&
-			_fileVersionDisplayContextHelper.isMsOffice() &&
-			_isWebDAVEnabled() && _isIEOnWin32()) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected String getNamespace() {
@@ -1356,14 +1269,6 @@ public class UIItemsBuilder {
 		}
 	}
 
-	private boolean _isIEOnWin32() {
-		if (_ieOnWin32 == null) {
-			_ieOnWin32 = BrowserSnifferUtil.isIeOnWin32(_httpServletRequest);
-		}
-
-		return _ieOnWin32;
-	}
-
 	private boolean _isTrashEnabled() throws PortalException {
 		if (_trashEnabled != null) {
 			return _trashEnabled;
@@ -1381,12 +1286,6 @@ public class UIItemsBuilder {
 		return _trashEnabled;
 	}
 
-	private boolean _isWebDAVEnabled() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		return portletDisplay.isWebDAVEnabled();
-	}
-
 	private String _currentURL;
 	private final DLTrashHelper _dlTrashHelper;
 	private final DLURLHelper _dlURLHelper;
@@ -1399,7 +1298,6 @@ public class UIItemsBuilder {
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
-	private Boolean _ieOnWin32;
 	private String _redirect;
 	private final ResourceBundle _resourceBundle;
 	private final ThemeDisplay _themeDisplay;

@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -420,10 +421,24 @@ public abstract class TestOrderHelper {
 	}
 
 	protected void testOrderByDDMTextField(String indexType) throws Exception {
+		String dummyText = "";
+
+		if (Objects.equals(indexType, "text")) {
+			while (dummyText.length() < 40000) {
+				dummyText += " word";
+			}
+		}
+
 		testOrderByDDMField(
-			new String[] {"a", "D", "c", "B"},
-			new String[] {"a", "B", "c", "D"}, FieldConstants.STRING, indexType,
-			DDMFormFieldType.TEXT);
+			new String[] {
+				"a" + dummyText, "D" + dummyText, "c" + dummyText,
+				"B" + dummyText
+			},
+			new String[] {
+				"a" + dummyText, "B" + dummyText, "c" + dummyText,
+				"D" + dummyText
+			},
+			FieldConstants.STRING, indexType, DDMFormFieldType.TEXT);
 	}
 
 	private String _dataType;

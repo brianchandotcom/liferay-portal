@@ -1,0 +1,11 @@
+.contextual-menu-option {
+	box-shadow: 0 0 0 1px #e7e7ed;
+
+	height: 150px;
+	width: 250px;
+
+	&:hover {
+		border-color: rgba(0, 0, 0, 0);
+		box-shadow: 0 0 0 2px #719aff;
+	}
+}

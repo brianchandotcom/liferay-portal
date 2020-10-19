@@ -20,12 +20,20 @@
 SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMenuContextualMenusItemSelectorViewDisplayContext = (SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SITE_NAVIGATION_MENU_CONTEXTUAL_MENUS_ITEM_SELECTOR_DISPLAY_CONTEXT);
 %>
 
-<div id="<portlet:namespace />contextualMenuSelector">
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/site-navigation-item-selector-web/css/ContextualMenus.css") %>" rel="stylesheet" />
+</liferay-util:html-top>
+
+<clay:container-fluid
+	id="<portlet:namespace />contextualMenuSelector"
+>
 	<p class="m-4 text-secondary">
 		<liferay-ui:message key="this-will-make-the-menu-show-only-related-pages.-select-here-the-type-of-relationship-of-the-pages-to-display" />
 	</p>
 
-	<div class="d-flex justify-content-around mt-5 text-center">
+	<clay:row
+		cssClass="mt-5 text-center"
+	>
 
 		<%
 		JSONArray levelsJSONArray = siteNavigationMenuContextualMenusItemSelectorViewDisplayContext.getLevelsJSONArray();
@@ -34,12 +42,16 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 			JSONObject jsonObject = (JSONObject)o;
 		%>
 
-			<div>
+			<clay:col
+				cssClass="align-items-center d-flex flex-column"
+				md="4"
+			>
 				<clay:button
-					cssClass="btn-unstyled selector-button"
-					data-contextual-menu='<%= jsonObject.getString("value") %>'
+					cssClass="align-items-center contextual-menu-option d-flex justify-content-center selector-button"
+					data-contextualMenu='<%= jsonObject.getString("value") %>'
+					displayType="unstyled"
 				>
-					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=" style="height: 150px; width: 250px;" />
+					<img class="contextual-menu-image p-5" src="<%= jsonObject.getString("imageURL") %>" />
 				</clay:button>
 
 				<p class="font-weight-bold mt-3">
@@ -49,14 +61,14 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 				<p class="text-secondary">
 					<%= jsonObject.getString("description") %>
 				</p>
-			</div>
+			</clay:col>
 
 		<%
 		}
 		%>
 
-	</div>
-</div>
+	</clay:row>
+</clay:container-fluid>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler(

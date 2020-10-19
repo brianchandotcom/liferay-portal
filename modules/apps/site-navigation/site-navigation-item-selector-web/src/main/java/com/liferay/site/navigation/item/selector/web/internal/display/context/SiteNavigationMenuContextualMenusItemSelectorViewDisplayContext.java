@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -54,7 +55,7 @@ public class SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext {
 				"description",
 				LanguageUtil.get(resourceBundle, "second-level-description")
 			).put(
-				"imageURL", ""
+				"imageURL", _getImageURL("second_level.svg")
 			).put(
 				"title", LanguageUtil.get(resourceBundle, "second-level")
 			).put(
@@ -64,7 +65,7 @@ public class SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext {
 				"description",
 				LanguageUtil.get(resourceBundle, "same-level-description")
 			).put(
-				"imageURL", ""
+				"imageURL", _getImageURL("same_level.svg")
 			).put(
 				"title", LanguageUtil.get(resourceBundle, "same-level")
 			).put(
@@ -74,12 +75,19 @@ public class SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext {
 				"description",
 				LanguageUtil.get(resourceBundle, "upper-level-description")
 			).put(
-				"imageURL", ""
+				"imageURL", _getImageURL("upper_level.svg")
 			).put(
 				"title", LanguageUtil.get(resourceBundle, "upper-level")
 			).put(
 				"value", "upper-level"
 			));
+	}
+
+	private String _getImageURL(String imageName) {
+		return PortalUtil.getStaticResourceURL(
+			_httpServletRequest,
+			PortalUtil.getPathModule() +
+				"/site-navigation-item-selector-web/images/" + imageName);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

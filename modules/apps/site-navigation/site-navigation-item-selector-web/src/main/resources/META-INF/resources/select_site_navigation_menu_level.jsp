@@ -28,7 +28,7 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 
 		<clay:button
 			cssClass="selector-button"
-			data-parentSiteNavigationMenuId='<%= ParamUtil.getLong(request, "parentSiteNavigationMenuId") %>'
+			data-parentSiteNavigationMenuItemId='<%= ParamUtil.getLong(request, "parentSiteNavigationMenuItemId") %>'
 			data-siteNavigationMenuId='<%= ParamUtil.getLong(request, "siteNavigationMenuId") %>'
 			displayType="primary"
 			label='<%= LanguageUtil.get(resourceBundle, "select-level") %>'

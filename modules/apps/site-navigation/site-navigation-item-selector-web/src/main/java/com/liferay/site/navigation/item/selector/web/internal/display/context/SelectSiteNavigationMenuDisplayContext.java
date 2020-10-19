@@ -77,8 +77,8 @@ public class SelectSiteNavigationMenuDisplayContext {
 		long siteNavigationMenuId = ParamUtil.getLong(
 			_httpServletRequest, "siteNavigationMenuId");
 
-		long parentSiteNavigationMenuId = ParamUtil.getLong(
-			_httpServletRequest, "parentSiteNavigationMenuId");
+		long parentSiteNavigationMenuItemId = ParamUtil.getLong(
+			_httpServletRequest, "parentSiteNavigationMenuItemId");
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
@@ -87,12 +87,12 @@ public class SelectSiteNavigationMenuDisplayContext {
 		if (siteNavigationMenuId == 0) {
 			breadcrumbEntries.addAll(
 				_getLayoutBreadcrumbEntries(
-					siteNavigationMenuId, parentSiteNavigationMenuId));
+					siteNavigationMenuId, parentSiteNavigationMenuItemId));
 		}
 		else {
 			breadcrumbEntries.addAll(
 				_getSiteNavigationMenuBreadcrumbEntries(
-					siteNavigationMenuId, parentSiteNavigationMenuId));
+					siteNavigationMenuId, parentSiteNavigationMenuItemId));
 		}
 
 		return breadcrumbEntries;
@@ -119,12 +119,12 @@ public class SelectSiteNavigationMenuDisplayContext {
 
 		long siteNavigationMenuId = ParamUtil.getLong(
 			_httpServletRequest, "siteNavigationMenuId");
-		long parentSiteNavigationMenuId = ParamUtil.getLong(
-			_httpServletRequest, "parentSiteNavigationMenuId");
+		long parentSiteNavigationMenuItemId = ParamUtil.getLong(
+			_httpServletRequest, "parentSiteNavigationMenuItemId");
 
 		List<Map<String, String>> siteNavigationMenuItems =
 			_getSiteNavigationMenuItems(
-				siteNavigationMenuId, parentSiteNavigationMenuId);
+				siteNavigationMenuId, parentSiteNavigationMenuItemId);
 
 		searchContainer.setResults(siteNavigationMenuItems);
 		searchContainer.setTotal(siteNavigationMenuItems.size());
@@ -231,7 +231,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 	}
 
 	private List<BreadcrumbEntry> _getLayoutBreadcrumbEntries(
-			long siteNavigationMenuId, long parentSiteNavigationMenuId)
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
 		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
@@ -244,10 +244,10 @@ public class SelectSiteNavigationMenuDisplayContext {
 				LanguageUtil.get(resourceBundle, "public-pages-hierarchy"),
 				getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId)));
 
-		if (parentSiteNavigationMenuId != 0) {
+		if (parentSiteNavigationMenuItemId != 0) {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
 				_themeDisplay.getScopeGroupId(), false,
-				parentSiteNavigationMenuId);
+				parentSiteNavigationMenuItemId);
 
 			List<Layout> ancestors = layout.getAncestors();
 
@@ -291,7 +291,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 	}
 
 	private String _getSelectSiteNavigationMenuLevelURL(
-			long siteNavigationMenuId, long parentSiteNavigationMenuId)
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
 		throws PortletException {
 
 		PortletResponse portletResponse =
@@ -310,17 +310,17 @@ public class SelectSiteNavigationMenuDisplayContext {
 		portletURL.setParameter(
 			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
 
-		if (parentSiteNavigationMenuId >= 0) {
+		if (parentSiteNavigationMenuItemId >= 0) {
 			portletURL.setParameter(
-				"parentSiteNavigationMenuId",
-				String.valueOf(parentSiteNavigationMenuId));
+				"parentSiteNavigationMenuItemId",
+				String.valueOf(parentSiteNavigationMenuItemId));
 		}
 
 		return portletURL.toString();
 	}
 
 	private List<BreadcrumbEntry> _getSiteNavigationMenuBreadcrumbEntries(
-			long siteNavigationMenuId, long parentSiteNavigationMenuId)
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
 		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
@@ -334,10 +334,10 @@ public class SelectSiteNavigationMenuDisplayContext {
 				siteNavigationMenu.getName(),
 				getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId)));
 
-		if (parentSiteNavigationMenuId != 0) {
+		if (parentSiteNavigationMenuItemId != 0) {
 			breadcrumbEntries.addAll(
 				_getAncestorsBreadcrumbEntries(
-					siteNavigationMenuId, parentSiteNavigationMenuId));
+					siteNavigationMenuId, parentSiteNavigationMenuItemId));
 		}
 
 		return breadcrumbEntries;
@@ -355,7 +355,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 	}
 
 	private List<Map<String, String>> _getSiteNavigationMenuItems(
-			long siteNavigationMenuId, long parentSiteNavigationMenuId)
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
 		throws PortalException, PortletException {
 
 		List<Map<String, String>> siteNavigationItems = new ArrayList<>();
@@ -363,7 +363,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 		if (siteNavigationMenuId > 0) {
 			List<SiteNavigationMenuItem> siteNavigationMenuItems =
 				SiteNavigationMenuItemServiceUtil.getSiteNavigationMenuItems(
-					siteNavigationMenuId, parentSiteNavigationMenuId);
+					siteNavigationMenuId, parentSiteNavigationMenuItemId);
 
 			for (SiteNavigationMenuItem siteNavigationMenuItem :
 					siteNavigationMenuItems) {
@@ -384,7 +384,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 		else {
 			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 				_themeDisplay.getScopeGroupId(), false,
-				parentSiteNavigationMenuId);
+				parentSiteNavigationMenuItemId);
 
 			for (Layout layout : layouts) {
 				siteNavigationItems.add(

@@ -2999,9 +2999,7 @@ public class ChangesetEntryPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(ChangesetEntryImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(ChangesetEntryImpl.class);
 	}
 
 	/**
@@ -3025,9 +3023,7 @@ public class ChangesetEntryPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(ChangesetEntryImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(ChangesetEntryImpl.class, primaryKey);

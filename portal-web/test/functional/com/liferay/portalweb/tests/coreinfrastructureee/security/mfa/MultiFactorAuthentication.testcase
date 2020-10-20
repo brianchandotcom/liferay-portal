@@ -265,6 +265,7 @@ definition {
 	@description = "This is a use case for LPS-112805"
 	@priority = "5"
 	test DisabledBasicAuthenticationOnInstanceLevel {
+		property custom.properties = "json.service.serialize.throwable=true";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#DisabledBasicAuthenticationOnInstanceLevel";
 
 		ApplicationsMenu.gotoPortlet(
@@ -315,7 +316,7 @@ definition {
 
 		var reponse = JSONCurlUtil.get("${curl}");
 
-		if (contains("${reponse}", "{}")) {
+		if (contains("${reponse}", "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
 			echo("Instance admin is able to disable Basic Authentication.");
 		}
 		else {
@@ -1185,7 +1186,7 @@ definition {
 			userName = "Test Test");
 
 		Audit.searchViaKeywords(
-			resourceName = "EmailOTPBrowserMFACheckerr",
+			resourceName = "EmailOTPBrowserMFAChecker",
 			searchTerm = "MFA_EMAIL_OTP_NOT_VERIFIED",
 			userName = "Test Test");
 	}

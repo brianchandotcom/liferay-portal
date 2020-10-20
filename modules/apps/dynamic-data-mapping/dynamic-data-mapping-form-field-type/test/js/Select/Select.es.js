@@ -77,6 +77,58 @@ describe('Select', () => {
 		fetch.mockResponse(JSON.stringify({}));
 	});
 
+	it('does not render and empty option', () => {
+		const option = {
+			checked: false,
+			disabled: false,
+			id: 'id',
+			inline: false,
+			label: 'label',
+			name: 'name',
+			showLabel: true,
+			value: 'item',
+		};
+
+		const {container} = render(
+			<SelectWithProvider
+				options={[option]}
+				showEmptyOption={false}
+				spritemap={spritemap}
+			/>
+		);
+
+		const dropDownItem = container.querySelector(
+			'.dropdown-menu .dropdown-item'
+		);
+
+		expect(dropDownItem.innerHTML).toBe(option.label);
+	});
+
+	it('does not show an empty option when the search input is available', async () => {
+		const handleFieldEdited = jest.fn();
+
+		const {container} = render(
+			<SelectWithProvider
+				dataSourceType="manual"
+				multiple={false}
+				onChange={handleFieldEdited}
+				options={createOptions(12)}
+				showEmptyOption={false}
+				spritemap={spritemap}
+			/>
+		);
+
+		const dropdownTrigger = container.querySelector(
+			'.form-builder-select-field.input-group-container'
+		);
+
+		fireEvent.click(dropdownTrigger);
+
+		const emptyOption = container.querySelector('[label=choose-an-option]');
+
+		expect(emptyOption).toBeNull();
+	});
+
 	it('is not editable', () => {
 		render(<SelectWithProvider readOnly spritemap={spritemap} />);
 
@@ -113,6 +165,33 @@ describe('Select', () => {
 		});
 
 		expect(container).toMatchSnapshot();
+	});
+
+	it('renders an empty option', () => {
+		const {container} = render(
+			<SelectWithProvider
+				options={[
+					{
+						checked: false,
+						disabled: false,
+						id: 'id',
+						inline: false,
+						label: 'label',
+						name: 'name',
+						showLabel: true,
+						value: 'item',
+					},
+				]}
+				showEmptyOption={true}
+				spritemap={spritemap}
+			/>
+		);
+
+		const dropDownItem = container.querySelector(
+			'.dropdown-menu .dropdown-item'
+		);
+
+		expect(dropDownItem.innerHTML).toBe('choose-an-option');
 	});
 
 	it('renders options', () => {
@@ -359,6 +438,31 @@ describe('Select', () => {
 			'item7',
 		]);
 		expect(container).toMatchSnapshot();
+	});
+
+	it('shows an empty option when the search input is available', async () => {
+		const handleFieldEdited = jest.fn();
+
+		const {container} = render(
+			<SelectWithProvider
+				dataSourceType="manual"
+				multiple={false}
+				onChange={handleFieldEdited}
+				options={createOptions(12)}
+				showEmptyOption={true}
+				spritemap={spritemap}
+			/>
+		);
+
+		const dropdownTrigger = container.querySelector(
+			'.form-builder-select-field.input-group-container'
+		);
+
+		fireEvent.click(dropdownTrigger);
+
+		const emptyOption = container.querySelector('[label=choose-an-option]');
+
+		expect(emptyOption).not.toBeNull();
 	});
 
 	it('shows a search input when the number of options is more than the maximum allowed', async () => {

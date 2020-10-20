@@ -83,7 +83,7 @@ and additional:
 `talend-common/target/com.liferay.talend.common-x.y.z-SNAPSHOT.jar`
 `talend-runtime/target/com.liferay.talend.runtime-x.y.z-SNAPSHOT.jar`
 
-Current unpublished version is `0.3.0-SNAPSHOT`.
+Current unpublished version is `0.4.0-SNAPSHOT`.
 
 Maven install task will succeed only if all tests pass. JAR files will be
 published to current user's local maven repository `USER_HOME/.m2`:
@@ -184,7 +184,7 @@ registration:
 	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-x.y.z-SNAPSHOT.jar \
 		 $STUDIO_ROOT/plugins
 	```
-    TIP: Please make sure you remove old jar version.
+    TIP: **Please make sure you remove old jar version.**
 
 5. Copy the `com.liferay.talend`, `com.liferay.talend.common` and
 `com.liferay.talend.runtime` folders from your local

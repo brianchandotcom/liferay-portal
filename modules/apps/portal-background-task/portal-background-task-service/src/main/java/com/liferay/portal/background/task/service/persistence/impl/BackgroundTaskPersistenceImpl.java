@@ -8720,9 +8720,7 @@ public class BackgroundTaskPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(BackgroundTaskImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(BackgroundTaskImpl.class);
 	}
 
 	/**
@@ -8746,9 +8744,7 @@ public class BackgroundTaskPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(BackgroundTaskImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(BackgroundTaskImpl.class, primaryKey);

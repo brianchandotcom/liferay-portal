@@ -17,6 +17,7 @@ package com.liferay.depot.web.internal.servlet.taglib.clay;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelServiceUtil;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
+import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
@@ -32,12 +33,14 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.RenderURL;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * @author Alejandro Tardín
@@ -79,14 +82,22 @@ public class DepotEntryVerticalCard
 
 	@Override
 	public String getHref() {
-		RenderURL renderURL = _liferayPortletResponse.createRenderURL();
+		try {
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+				_liferayPortletRequest, _depotEntry.getGroup(),
+				DepotPortletKeys.DEPOT_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE);
 
-		renderURL.setParameter(
-			"mvcRenderCommandName", "/depot/view_depot_dashboard");
-		renderURL.setParameter(
-			"depotEntryId", String.valueOf(_depotEntry.getDepotEntryId()));
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/depot/view_depot_dashboard");
+			portletURL.setParameter(
+				"depotEntryId", String.valueOf(_depotEntry.getDepotEntryId()));
 
-		return renderURL.toString();
+			return portletURL.toString();
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	@Override

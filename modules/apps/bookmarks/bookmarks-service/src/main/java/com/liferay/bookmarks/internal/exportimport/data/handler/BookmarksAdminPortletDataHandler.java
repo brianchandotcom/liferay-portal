@@ -63,7 +63,7 @@ public class BookmarksAdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "bookmarks";
 
-	public static final String SCHEMA_VERSION = "1.0.0";
+	public static final String SCHEMA_VERSION = "4.0.0";
 
 	@Override
 	public String[] getClassNames() {

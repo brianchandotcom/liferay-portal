@@ -282,6 +282,7 @@ export default ({keywords}) => {
 			<FieldTypeList
 				{...fieldTypeListProps}
 				fieldTypes={customFieldTypes}
+				showEmptyState={false}
 			/>
 
 			{showCategories && (
@@ -293,6 +294,7 @@ export default ({keywords}) => {
 			<FieldTypeList
 				{...fieldTypeListProps}
 				fieldTypes={nativeFieldTypes}
+				showEmptyState={false}
 			/>
 		</>
 	);

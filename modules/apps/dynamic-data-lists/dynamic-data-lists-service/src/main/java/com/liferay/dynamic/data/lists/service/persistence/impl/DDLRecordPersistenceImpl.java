@@ -4206,9 +4206,7 @@ public class DDLRecordPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(DDLRecordImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(DDLRecordImpl.class);
 	}
 
 	/**
@@ -4232,9 +4230,7 @@ public class DDLRecordPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(DDLRecordImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(DDLRecordImpl.class, primaryKey);

@@ -46,10 +46,9 @@ public class OSGiTLiferayInputTestIT extends LiferayAbstractComponentTestCase {
 
 	@Configuration
 	public Option[] config() {
-		Option[] options = ComponentsPaxExamOptions.getOptions();
-
 		Option[] updatedOptions = OptionUtils.remove(
-			MavenArtifactProvisionOption.class, options);
+			MavenArtifactProvisionOption.class,
+			ComponentsPaxExamOptions.getOptions());
 
 		Option bundleOption1 = linkBundle(
 			"org.talend.components-components-common-bundle");

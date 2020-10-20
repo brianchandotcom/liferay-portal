@@ -130,7 +130,9 @@ public class RenderLayoutStructureDisplayContext {
 		JSONObject collectionJSONObject =
 			collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
-		if (collectionJSONObject.length() <= 0) {
+		if ((collectionJSONObject == null) ||
+			(collectionJSONObject.length() <= 0)) {
+
 			return Collections.emptyList();
 		}
 
@@ -167,8 +169,17 @@ public class RenderLayoutStructureDisplayContext {
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
 
+		JSONObject collectionJSONObject =
+			collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+		if ((collectionJSONObject == null) ||
+			(collectionJSONObject.length() <= 0)) {
+
+			return null;
+		}
+
 		ListObjectReference listObjectReference = _getListObjectReference(
-			collectionStyledLayoutStructureItem.getCollectionJSONObject());
+			collectionJSONObject);
 
 		if (listObjectReference == null) {
 			return null;

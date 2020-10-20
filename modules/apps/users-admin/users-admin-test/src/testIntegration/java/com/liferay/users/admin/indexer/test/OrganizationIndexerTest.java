@@ -170,12 +170,10 @@ public class OrganizationIndexerTest {
 	}
 
 	protected SearchResponse search(String keywords) throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-
 		return searcher.search(
 			searchRequestBuilderFactory.builder(
 			).companyId(
-				companyId
+				TestPropsValues.getCompanyId()
 			).fields(
 				Field.NAME
 			).modelIndexerClasses(

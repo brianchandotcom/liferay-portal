@@ -229,6 +229,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RUN_TEST_BUTTON</td>
+	<td>//input[@value='Run Test']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_MENU_OPTION</td>
 	<td>//div[@class='ui-selectonemenu-items-wrapper']//li[contains(text(),'${key_opt}')]</td>
 	<td></td>

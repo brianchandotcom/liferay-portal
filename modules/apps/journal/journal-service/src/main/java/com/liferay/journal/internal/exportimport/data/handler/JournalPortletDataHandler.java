@@ -124,7 +124,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "journal";
 
-	public static final String SCHEMA_VERSION = "1.1.0";
+	public static final String SCHEMA_VERSION = "4.0.0";
 
 	@Override
 	public String[] getClassNames() {

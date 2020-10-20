@@ -47,7 +47,7 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "site_teams";
 
-	public static final String SCHEMA_VERSION = "1.0.0";
+	public static final String SCHEMA_VERSION = "4.0.0";
 
 	@Override
 	public String getSchemaVersion() {

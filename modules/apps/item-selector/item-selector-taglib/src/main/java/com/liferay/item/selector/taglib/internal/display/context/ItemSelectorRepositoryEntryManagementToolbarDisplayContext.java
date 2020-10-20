@@ -81,6 +81,20 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 		return clearResultsURL.toString();
 	}
 
+	public PortletURL getCurrentSortingURL() throws PortletException {
+		PortletURL currentSortingURL = PortletURLUtil.clone(
+			_getPortletURL(), _liferayPortletResponse);
+
+		currentSortingURL.setParameter("orderByType", getOrderByType());
+		currentSortingURL.setParameter("orderByCol", _getOrderByCol());
+
+		if (_repositoryEntryBrowserDisplayContext.isSearchEverywhere()) {
+			currentSortingURL.setParameter("scope", "everywhere");
+		}
+
+		return currentSortingURL;
+	}
+
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
 			this::_isShowScopeFilter,
@@ -129,7 +143,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 		return LabelItemListBuilder.add(
 			labelItem -> {
-				PortletURL removeLabelURL = _getCurrentSortingURL();
+				PortletURL removeLabelURL = getCurrentSortingURL();
 
 				removeLabelURL.setParameter("scope", (String)null);
 
@@ -168,7 +182,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = _getCurrentSortingURL();
+		PortletURL sortingURL = getCurrentSortingURL();
 
 		sortingURL.setParameter(
 			"orderByType",
@@ -179,7 +193,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 	public ViewTypeItemList getViewTypes() throws PortletException {
 		PortletURL displayStyleURL = PortletURLUtil.clone(
-			_getCurrentSortingURL(), _liferayPortletResponse);
+			getCurrentSortingURL(), _liferayPortletResponse);
 
 		return new ViewTypeItemList(displayStyleURL, _getDisplayStyle()) {
 			{
@@ -226,20 +240,6 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 		return LanguageUtil.get(_httpServletRequest, "current-scope");
 	}
 
-	private PortletURL _getCurrentSortingURL() throws PortletException {
-		PortletURL currentSortingURL = PortletURLUtil.clone(
-			_getPortletURL(), _liferayPortletResponse);
-
-		currentSortingURL.setParameter("orderByType", getOrderByType());
-		currentSortingURL.setParameter("orderByCol", _getOrderByCol());
-
-		if (_repositoryEntryBrowserDisplayContext.isSearchEverywhere()) {
-			currentSortingURL.setParameter("scope", "everywhere");
-		}
-
-		return currentSortingURL;
-	}
-
 	private String _getDisplayStyle() {
 		return GetterUtil.getString(
 			_httpServletRequest.getAttribute(
@@ -282,7 +282,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 							dropdownItem.setActive(
 								orderByCol.equals(_getOrderByCol()));
 							dropdownItem.setHref(
-								_getCurrentSortingURL(), "orderByCol",
+								getCurrentSortingURL(), "orderByCol",
 								orderByCol);
 
 							dropdownItem.setLabel(

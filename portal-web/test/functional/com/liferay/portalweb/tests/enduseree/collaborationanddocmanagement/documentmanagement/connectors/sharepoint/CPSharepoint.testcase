@@ -561,6 +561,12 @@ definition {
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
 		property test.name.skip.portal.instance = "CPSharepoint#ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval";
 
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
 		DMDocument.addCP(

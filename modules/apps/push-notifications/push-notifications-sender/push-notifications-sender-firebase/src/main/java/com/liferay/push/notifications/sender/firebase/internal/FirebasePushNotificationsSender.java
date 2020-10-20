@@ -118,12 +118,11 @@ public class FirebasePushNotificationsSender
 		}
 
 		if (newPayloadJSONObject.length() > 0) {
-			Map<String, String> data = HashMapBuilder.put(
-				PushNotificationsConstants.KEY_PAYLOAD,
-				newPayloadJSONObject.toString()
-			).build();
-
-			builder.data(data);
+			builder.data(
+				HashMapBuilder.put(
+					PushNotificationsConstants.KEY_PAYLOAD,
+					newPayloadJSONObject.toString()
+				).build());
 		}
 
 		return builder.build();

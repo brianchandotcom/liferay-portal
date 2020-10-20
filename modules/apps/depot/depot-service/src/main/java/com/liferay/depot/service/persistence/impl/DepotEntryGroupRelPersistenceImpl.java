@@ -3872,9 +3872,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(DepotEntryGroupRelImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(DepotEntryGroupRelImpl.class);
 	}
 
 	/**
@@ -3900,9 +3898,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(DepotEntryGroupRelImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(DepotEntryGroupRelImpl.class, primaryKey);

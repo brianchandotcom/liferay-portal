@@ -29,7 +29,7 @@
 	</dependencies>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.4.0-SNAPSHOT</version>
 	<name>Liferay Talend</name>
 	<packaging>pom</packaging>
 	<repositories>
@@ -118,7 +118,7 @@
 				<plugin>
 					<groupId>com.liferay</groupId>
 					<artifactId>com.liferay.source.formatter</artifactId>
-					<version>1.0.1061</version>
+					<version>1.0.1062</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

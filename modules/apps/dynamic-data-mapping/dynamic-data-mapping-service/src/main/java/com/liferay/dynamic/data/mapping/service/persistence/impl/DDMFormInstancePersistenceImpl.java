@@ -2948,9 +2948,7 @@ public class DDMFormInstancePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(DDMFormInstanceImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(DDMFormInstanceImpl.class);
 	}
 
 	/**
@@ -2975,9 +2973,7 @@ public class DDMFormInstancePersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(DDMFormInstanceImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(DDMFormInstanceImpl.class, primaryKey);

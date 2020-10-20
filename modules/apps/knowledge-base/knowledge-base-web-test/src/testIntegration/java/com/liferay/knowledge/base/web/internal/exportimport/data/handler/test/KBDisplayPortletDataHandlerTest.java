@@ -59,7 +59,7 @@ public class KBDisplayPortletDataHandlerTest
 
 	@Override
 	protected String getSchemaVersion() {
-		return "2.0.0";
+		return "4.0.0";
 	}
 
 	@Override

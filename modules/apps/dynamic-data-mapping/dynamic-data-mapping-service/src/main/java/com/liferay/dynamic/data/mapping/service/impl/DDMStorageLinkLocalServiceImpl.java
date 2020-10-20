@@ -98,6 +98,11 @@ public class DDMStorageLinkLocalServiceImpl
 	}
 
 	@Override
+	public DDMStorageLink fetchClassStorageLink(long classPK) {
+		return ddmStorageLinkPersistence.fetchByClassPK(classPK);
+	}
+
+	@Override
 	public DDMStorageLink getClassStorageLink(long classPK)
 		throws PortalException {
 

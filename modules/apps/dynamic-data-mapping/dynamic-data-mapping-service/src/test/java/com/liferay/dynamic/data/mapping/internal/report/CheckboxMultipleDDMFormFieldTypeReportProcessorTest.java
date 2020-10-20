@@ -83,11 +83,15 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest
 			_checkboxMultipleDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
+					"totalEntries", 1
+				).put(
 					"type", DDMFormFieldType.CHECKBOX_MULTIPLE
 				).put(
 					"values", JSONUtil.put("option1", 1)
 				),
 				0, DDMFormInstanceReportConstants.EVENT_DELETE_RECORD_VERSION);
+
+		Assert.assertEquals(0, processedFieldJSONObject.getInt("totalEntries"));
 
 		JSONObject valuesJSONObject = processedFieldJSONObject.getJSONObject(
 			"values");
@@ -132,11 +136,15 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest
 			_checkboxMultipleDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
+					"totalEntries", 0
+				).put(
 					"type", DDMFormFieldType.CHECKBOX_MULTIPLE
 				).put(
 					"values", JSONFactoryUtil.createJSONObject()
 				),
 				0, DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
+
+		Assert.assertEquals(1, processedFieldJSONObject.getInt("totalEntries"));
 
 		Assert.assertEquals(
 			DDMFormFieldType.CHECKBOX_MULTIPLE,
@@ -185,11 +193,15 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest
 			_checkboxMultipleDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
+					"totalEntries", 1
+				).put(
 					"type", DDMFormFieldType.CHECKBOX_MULTIPLE
 				).put(
 					"values", JSONUtil.put("option1", 1)
 				),
 				0, DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
+
+		Assert.assertEquals(2, processedFieldJSONObject.getInt("totalEntries"));
 
 		JSONObject valuesJSONObject = processedFieldJSONObject.getJSONObject(
 			"values");

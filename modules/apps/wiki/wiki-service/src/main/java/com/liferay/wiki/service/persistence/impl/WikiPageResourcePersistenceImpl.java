@@ -1777,9 +1777,7 @@ public class WikiPageResourcePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(WikiPageResourceImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(WikiPageResourceImpl.class);
 	}
 
 	/**
@@ -1804,9 +1802,7 @@ public class WikiPageResourcePersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(WikiPageResourceImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(WikiPageResourceImpl.class, primaryKey);

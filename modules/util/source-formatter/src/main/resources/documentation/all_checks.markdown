@@ -115,6 +115,7 @@ JSPFileNameCheck | [Naming Conventions](naming_conventions_checks.markdown#namin
 [JSPImportsCheck](checks/jsp_imports_check.markdown#jspimportscheck) | [Styling](styling_checks.markdown#styling-checks) | .jsp, .jspf, .tag, .tpl or .vm | Sorts and groups imports in `.jsp` files. |
 [JSPIncludeCheck](checks/jsp_include_check.markdown#jspincludecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .tag, .tpl or .vm | Validates values of `include` in `.jsp` files. |
 JSPIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | .jsp, .jspf, .tag, .tpl or .vm | Finds incorrect indentation in `.jsp` files. |
+JSPInlineVariableCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPJavaParserCheck | [Styling](styling_checks.markdown#styling-checks) | .jsp, .jspf, .tag, .tpl or .vm | Performs JavaParser on `.java` files. |
 JSPLanguageKeysCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .tag, .tpl or .vm | Finds missing language keys in `Language.properties`. |
 JSPLanguageUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .tag, .tpl or .vm | Finds cases where Locale is passed to `LanguageUtil.get` instead of `HttpServletRequest`. |
@@ -220,6 +221,7 @@ JavaSourceFormatterDocumentationCheck | [Documentation](documentation_checks.mar
 JavaStagedModelDataHandlerCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 JavaStaticBlockCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Performs several checks on `static` blocks. |
 [JavaStaticImportsCheck](checks/java_static_imports_check.markdown#javastaticimportscheck) | [Styling](styling_checks.markdown#styling-checks) | .java | Checks that there are no static imports. |
+JavaStaticMethodCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 JavaStaticVariableDependencyCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 [JavaStopWatchCheck](checks/java_stop_watch_check.markdown#javastopwatchcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks for potential NullPointerException when using `StopWatch`. |
 [JavaStringBundlerConcatCheck](checks/java_string_bundler_concat_check.markdown#javastringbundlerconcatcheck) | [Performance](performance_checks.markdown#performance-checks) | .java | Finds calls to `StringBundler.concat` with less than 3 parameters. |
@@ -250,9 +252,6 @@ LFRBuildReadmeCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneou
 LPS42924Check | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 [LambdaCheck](checks/lambda_check.markdown#lambdacheck) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that `lambda` statements are as simple as possible. |
 LanguageKeysCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java, .js or .jsx | Finds missing language keys in `Language.properties`. |
-LineBreakAfterCommaCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-LineBreakBeforeGenericStartCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-LineEndCharacterCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [ListUtilCheck](checks/list_util_check.markdown#listutilcheck) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks for utilization of class `ListUtil`. |
 LiteralStringEqualsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalFinalVariableName) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that local final variable names conform to a specified pattern. |

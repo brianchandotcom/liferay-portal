@@ -499,6 +499,7 @@
 								{msg desc=""}choose-an-option{/msg}
 							{/param}
 							{param ref: 'action' + $index /}
+							{param showEmptyOption: false /}
 							{param spritemap: $spritemap /}
 							{param value: [$actionSelected] /}
 						{/call}
@@ -610,6 +611,7 @@
 			{param options: $options /}
 			{param placeholder: $placeholder /}
 			{param ref: $ref /}
+			{param showEmptyOption: false /}
 			{param spritemap: $spritemap /}
 			{param value: [$value] /}
 		{/call}
@@ -690,6 +692,7 @@
 								{msg desc=""}choose-an-option{/msg}
 							{/param}
 							{param ref: 'firstOperand' + $index /}
+							{param showEmptyOption: false /}
 							{param spritemap: $spritemap /}
 							{param value: [$firstOperandValueSelected] /}
 						{/call}
@@ -735,6 +738,7 @@
 											{/param}
 											{param readOnly: $readOnly /}
 											{param ref: 'secondOperandField' + $index /}
+											{param showEmptyOption: false /}
 											{param spritemap: $spritemap /}
 											{param value: [$secondOperandOptionValue] /}
 										{/call}
@@ -750,6 +754,7 @@
 												{msg desc=""}choose-an-option{/msg}
 											{/param}
 											{param ref: 'secondOperandField' + $index /}
+											{param showEmptyOption: false /}
 											{param spritemap: $spritemap /}
 											{param value: [$secondOperandValue] /}
 										{/call}
@@ -778,6 +783,7 @@
 											{param name: $secondOperandFieldName /}
 											{param readOnly: $readOnly /}
 											{param ref: 'secondOperandValue' + $index /}
+											{param showEmptyOption: false /}
 											{param spritemap: $spritemap /}
 											{param value: $secondOperandValue /}
 										{/call}
@@ -855,6 +861,7 @@
 			{/param}
 			{param readOnly: $readOnly /}
 			{param ref: 'conditionOperator' + $index /}
+			{param showEmptyOption: false /}
 			{param spritemap: $spritemap /}
 			{param value: [$selectedOperator] /}
 		{/call}
@@ -903,6 +910,7 @@
 					{msg desc=""}choose-an-option{/msg}
 				{/param}
 				{param ref: 'secondOperandTypeSelector' + $index /}
+				{param showEmptyOption: false /}
 				{param spritemap: $spritemap /}
 				{param value: [$value] /}
 				{param visible: $visible /}
@@ -936,6 +944,7 @@
 			{param placeholder kind="text"}
 				{msg desc=""}choose-an-option{/msg}
 			{/param}
+			{param showEmptyOption: false /}
 			{param spritemap: $spritemap /}
 			{param value: [$secondOperandValue] /}
 		{/call}
@@ -1129,6 +1138,7 @@
 									{msg desc=""}choose-an-option{/msg}
 								{/param}
 								{param ref: 'action' + $actionIndex + 'dataProviderInput' + $index /}
+								{param showEmptyOption: false /}
 								{param spritemap: $spritemap /}
 								{param value: [$input.value] /}
 							{/call}

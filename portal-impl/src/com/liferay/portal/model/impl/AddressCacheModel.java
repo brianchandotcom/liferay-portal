@@ -76,14 +76,18 @@ public class AddressCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", addressId=");
 		sb.append(addressId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -98,6 +102,10 @@ public class AddressCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", description=");
+		sb.append(description);
 		sb.append(", street1=");
 		sb.append(street1);
 		sb.append(", street2=");
@@ -112,6 +120,10 @@ public class AddressCacheModel
 		sb.append(regionId);
 		sb.append(", countryId=");
 		sb.append(countryId);
+		sb.append(", latitude=");
+		sb.append(latitude);
+		sb.append(", longitude=");
+		sb.append(longitude);
 		sb.append(", typeId=");
 		sb.append(typeId);
 		sb.append(", mailing=");
@@ -136,7 +148,15 @@ public class AddressCacheModel
 			addressImpl.setUuid(uuid);
 		}
 
+		if (externalReferenceCode == null) {
+			addressImpl.setExternalReferenceCode("");
+		}
+		else {
+			addressImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		addressImpl.setAddressId(addressId);
+		addressImpl.setGroupId(groupId);
 		addressImpl.setCompanyId(companyId);
 		addressImpl.setUserId(userId);
 
@@ -163,6 +183,20 @@ public class AddressCacheModel
 
 		addressImpl.setClassNameId(classNameId);
 		addressImpl.setClassPK(classPK);
+
+		if (name == null) {
+			addressImpl.setName("");
+		}
+		else {
+			addressImpl.setName(name);
+		}
+
+		if (description == null) {
+			addressImpl.setDescription("");
+		}
+		else {
+			addressImpl.setDescription(description);
+		}
 
 		if (street1 == null) {
 			addressImpl.setStreet1("");
@@ -201,6 +235,8 @@ public class AddressCacheModel
 
 		addressImpl.setRegionId(regionId);
 		addressImpl.setCountryId(countryId);
+		addressImpl.setLatitude(latitude);
+		addressImpl.setLongitude(longitude);
 		addressImpl.setTypeId(typeId);
 		addressImpl.setMailing(mailing);
 		addressImpl.setPrimary(primary);
@@ -214,8 +250,11 @@ public class AddressCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		addressId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -227,6 +266,8 @@ public class AddressCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
 		street1 = objectInput.readUTF();
 		street2 = objectInput.readUTF();
 		street3 = objectInput.readUTF();
@@ -236,6 +277,10 @@ public class AddressCacheModel
 		regionId = objectInput.readLong();
 
 		countryId = objectInput.readLong();
+
+		latitude = objectInput.readDouble();
+
+		longitude = objectInput.readDouble();
 
 		typeId = objectInput.readLong();
 
@@ -255,7 +300,16 @@ public class AddressCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(addressId);
+
+		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
 
@@ -274,6 +328,20 @@ public class AddressCacheModel
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
 
 		if (street1 == null) {
 			objectOutput.writeUTF("");
@@ -314,6 +382,10 @@ public class AddressCacheModel
 
 		objectOutput.writeLong(countryId);
 
+		objectOutput.writeDouble(latitude);
+
+		objectOutput.writeDouble(longitude);
+
 		objectOutput.writeLong(typeId);
 
 		objectOutput.writeBoolean(mailing);
@@ -323,7 +395,9 @@ public class AddressCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long addressId;
+	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
@@ -331,6 +405,8 @@ public class AddressCacheModel
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
+	public String name;
+	public String description;
 	public String street1;
 	public String street2;
 	public String street3;
@@ -338,6 +414,8 @@ public class AddressCacheModel
 	public String zip;
 	public long regionId;
 	public long countryId;
+	public double latitude;
+	public double longitude;
 	public long typeId;
 	public boolean mailing;
 	public boolean primary;

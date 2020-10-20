@@ -2331,9 +2331,7 @@ public class MBMailingListPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(MBMailingListImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(MBMailingListImpl.class);
 	}
 
 	/**
@@ -2357,9 +2355,7 @@ public class MBMailingListPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(MBMailingListImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(MBMailingListImpl.class, primaryKey);

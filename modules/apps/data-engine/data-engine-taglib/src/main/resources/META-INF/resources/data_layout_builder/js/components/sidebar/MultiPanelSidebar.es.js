@@ -193,7 +193,12 @@ export default function MultiPanelSidebar({
 			<div
 				className={classNames(
 					'multi-panel-sidebar',
-					`multi-panel-sidebar-${variant}`
+					`multi-panel-sidebar-${variant}`,
+					{
+						'publications-enabled': document.querySelector(
+							'.change-tracking-indicator'
+						),
+					}
 				)}
 			>
 				<nav

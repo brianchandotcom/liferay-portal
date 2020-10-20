@@ -3539,6 +3539,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Map<Long, Integer> counts = new HashMap<>();
 
+		LinkedHashMap<String, Object> params = null;
+
 		try {
 			for (long groupId : groupIds) {
 				Group group = groupPersistence.fetchByPrimaryKey(groupId);
@@ -3547,18 +3549,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					continue;
 				}
 
-				int count = 0;
-
 				if (group.isOrganization()) {
-					count = getOrganizationUsersCount(
-						group.getOrganizationId(), status);
+					params = LinkedHashMapBuilder.<String, Object>put(
+						"usersOrgs", group.getOrganizationId()
+					).build();
 				}
 				else if (group.isUserGroup()) {
-					count = getUserGroupUsersCount(group.getClassPK(), status);
+					params = LinkedHashMapBuilder.<String, Object>put(
+						"usersUserGroups", group.getClassPK()
+					).build();
 				}
 				else {
-					count = getGroupUsersCount(groupId, status);
+					params = LinkedHashMapBuilder.<String, Object>put(
+						"usersGroups", groupId
+					).build();
 				}
+
+				int count = userFinder.countByKeywords(
+					companyId, null, status, params);
 
 				if (count > 0) {
 					counts.put(groupId, count);

@@ -32,6 +32,7 @@ JSPFileNameCheck | [Naming Conventions](naming_conventions_checks.markdown#namin
 [JSPImportsCheck](checks/jsp_imports_check.markdown#jspimportscheck) | [Styling](styling_checks.markdown#styling-checks) | Sorts and groups imports in `.jsp` files. |
 [JSPIncludeCheck](checks/jsp_include_check.markdown#jspincludecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates values of `include` in `.jsp` files. |
 JSPIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | Finds incorrect indentation in `.jsp` files. |
+JSPInlineVariableCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSPJavaParserCheck | [Styling](styling_checks.markdown#styling-checks) | Performs JavaParser on `.java` files. |
 JSPLanguageKeysCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds missing language keys in `Language.properties`. |
 JSPLanguageUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where Locale is passed to `LanguageUtil.get` instead of `HttpServletRequest`. |
@@ -55,9 +56,6 @@ JSPUnusedTermsCheck | [Performance](performance_checks.markdown#performance-chec
 JSPWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary whitespace in `.jsp` files. |
 JSPXSSVulnerabilitiesCheck | [Security](security_checks.markdown#security-checks) | Finds xss vulnerabilities. |
 [LambdaCheck](checks/lambda_check.markdown#lambdacheck) | [Styling](styling_checks.markdown#styling-checks) | Checks that `lambda` statements are as simple as possible. |
-LineBreakAfterCommaCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-LineBreakBeforeGenericStartCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-LineEndCharacterCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [ListUtilCheck](checks/list_util_check.markdown#listutilcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks for utilization of class `ListUtil`. |
 LiteralStringEqualsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalFinalVariableName) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that local final variable names conform to a specified pattern. |

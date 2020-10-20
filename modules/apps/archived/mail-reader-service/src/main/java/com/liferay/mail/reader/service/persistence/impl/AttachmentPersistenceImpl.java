@@ -642,9 +642,7 @@ public class AttachmentPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(AttachmentImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(AttachmentImpl.class);
 	}
 
 	/**
@@ -668,9 +666,7 @@ public class AttachmentPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(AttachmentImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(AttachmentImpl.class, primaryKey);

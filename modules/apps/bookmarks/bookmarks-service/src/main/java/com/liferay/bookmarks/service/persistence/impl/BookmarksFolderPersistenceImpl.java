@@ -6824,9 +6824,7 @@ public class BookmarksFolderPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(BookmarksFolderImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(BookmarksFolderImpl.class);
 	}
 
 	/**
@@ -6851,9 +6849,7 @@ public class BookmarksFolderPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(BookmarksFolderImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(BookmarksFolderImpl.class, primaryKey);

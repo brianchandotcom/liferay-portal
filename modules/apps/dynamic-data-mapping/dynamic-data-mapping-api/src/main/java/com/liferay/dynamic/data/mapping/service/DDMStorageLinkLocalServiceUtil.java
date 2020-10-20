@@ -245,6 +245,12 @@ public class DDMStorageLinkLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink
+		fetchClassStorageLink(long classPK) {
+
+		return getService().fetchClassStorageLink(classPK);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink
 		fetchDDMStorageLink(long storageLinkId) {
 
 		return getService().fetchDDMStorageLink(storageLinkId);

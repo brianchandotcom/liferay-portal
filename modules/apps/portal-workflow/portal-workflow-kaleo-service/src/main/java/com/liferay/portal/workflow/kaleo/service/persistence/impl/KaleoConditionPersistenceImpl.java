@@ -1381,9 +1381,7 @@ public class KaleoConditionPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(KaleoConditionImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(KaleoConditionImpl.class);
 	}
 
 	/**
@@ -1407,9 +1405,7 @@ public class KaleoConditionPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(KaleoConditionImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(KaleoConditionImpl.class, primaryKey);

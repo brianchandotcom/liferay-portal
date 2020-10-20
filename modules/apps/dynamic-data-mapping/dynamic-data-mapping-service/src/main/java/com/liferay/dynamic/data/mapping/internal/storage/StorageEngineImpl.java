@@ -52,7 +52,9 @@ public class StorageEngineImpl implements StorageEngine {
 	public void deleteByClass(long classPK) throws StorageException {
 		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
 
-		storageAdapter.deleteByClass(classPK);
+		if (storageAdapter != null) {
+			storageAdapter.deleteByClass(classPK);
+		}
 	}
 
 	@Override
@@ -71,6 +73,10 @@ public class StorageEngineImpl implements StorageEngine {
 
 		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
 
+		if (storageAdapter == null) {
+			return null;
+		}
+
 		return storageAdapter.getDDMFormValues(classPK);
 	}
 
@@ -87,7 +93,9 @@ public class StorageEngineImpl implements StorageEngine {
 
 		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
 
-		storageAdapter.update(classPK, ddmFormValues, serviceContext);
+		if (storageAdapter != null) {
+			storageAdapter.update(classPK, ddmFormValues, serviceContext);
+		}
 	}
 
 	protected StorageAdapter getClassStorageAdapter(long classPK)
@@ -95,7 +103,11 @@ public class StorageEngineImpl implements StorageEngine {
 
 		try {
 			DDMStorageLink ddmStorageLink =
-				_ddmStorageLinkLocalService.getClassStorageLink(classPK);
+				_ddmStorageLinkLocalService.fetchClassStorageLink(classPK);
+
+			if (ddmStorageLink == null) {
+				return null;
+			}
 
 			return getStorageAdapter(ddmStorageLink.getStorageType());
 		}

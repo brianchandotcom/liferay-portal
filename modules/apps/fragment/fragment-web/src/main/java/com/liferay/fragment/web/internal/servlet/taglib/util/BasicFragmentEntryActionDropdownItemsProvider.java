@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.servlet.taglib.util;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
@@ -76,7 +77,9 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return DropdownItemListBuilder.add(
-			() -> hasManageFragmentEntriesPermission,
+			() ->
+				hasManageFragmentEntriesPermission &&
+				(_fragmentEntry.getType() != FragmentConstants.TYPE_REACT),
 			_getEditFragmentEntryActionUnsafeConsumer()
 		).add(
 			() ->
@@ -113,7 +116,8 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 		).add(
 			() ->
 				hasManageFragmentEntriesPermission &&
-				!_fragmentEntry.isReadOnly(),
+				!_fragmentEntry.isReadOnly() &&
+				(_fragmentEntry.getType() != FragmentConstants.TYPE_REACT),
 			_getExportFragmentEntryActionUnsafeConsumer()
 		).add(
 			() ->
@@ -133,7 +137,8 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 				hasManageFragmentEntriesPermission &&
 				!_fragmentEntry.isReadOnly() &&
 				(_fragmentEntry.isDraft() ||
-				 (_fragmentEntry.fetchDraftFragmentEntry() != null)),
+				 (_fragmentEntry.fetchDraftFragmentEntry() != null)) &&
+				(_fragmentEntry.getType() != FragmentConstants.TYPE_REACT),
 			_getDeleteDraftFragmentEntryActionUnsafeConsumer()
 		).build();
 	}

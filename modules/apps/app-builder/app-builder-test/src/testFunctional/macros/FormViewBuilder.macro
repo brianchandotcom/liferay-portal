@@ -101,6 +101,12 @@ definition {
 			locator1 = "FormViewBuilder#SWITCHER_OPTION");
 	}
 
+	macro clickFieldLabel {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+	}
+
 	macro closeSidebar() {
 		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
 	}
@@ -195,6 +201,12 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#OPTIONS_OPTION_NAME_FIELD");
 	}
 
+	macro editRuleName {
+		Type(
+			locator1 = "FormViewBuilder#RULE_BUILDER_NAME",
+			value1 = "${ruleName}");
+	}
+
 	macro editRules {
 		Click(locator1 = "FormViewBuilder#EDIT_RULE_COLLAPSE");
 		AssertElementPresent(locator1 = "FormViewBuilder#EDIT_RULE_EXPANDED");
@@ -262,6 +274,14 @@ definition {
 		Click(
 			key_selectAction = "Delete from Object",
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+	}
+
+	macro gotoFields {
+		Click(locator1 = "FormViewBuilder#FIELDS_TAB");
+	}
+
+	macro gotoRules {
+		Click(locator1 = "FormViewBuilder#RULES_TAB");
 	}
 
 	macro openFormView {

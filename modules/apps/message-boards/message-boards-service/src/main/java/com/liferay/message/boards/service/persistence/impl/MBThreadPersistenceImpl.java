@@ -13307,9 +13307,7 @@ public class MBThreadPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(MBThreadImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(MBThreadImpl.class);
 	}
 
 	/**
@@ -13333,9 +13331,7 @@ public class MBThreadPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(MBThreadImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(MBThreadImpl.class, primaryKey);

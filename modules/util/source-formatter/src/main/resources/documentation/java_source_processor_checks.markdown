@@ -120,6 +120,7 @@ JavaSourceFormatterDocumentationCheck | [Documentation](documentation_checks.mar
 JavaStagedModelDataHandlerCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaStaticBlockCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `static` blocks. |
 [JavaStaticImportsCheck](checks/java_static_imports_check.markdown#javastaticimportscheck) | [Styling](styling_checks.markdown#styling-checks) | Checks that there are no static imports. |
+JavaStaticMethodCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaStaticVariableDependencyCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavaStopWatchCheck](checks/java_stop_watch_check.markdown#javastopwatchcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for potential NullPointerException when using `StopWatch`. |
 [JavaStringBundlerConcatCheck](checks/java_string_bundler_concat_check.markdown#javastringbundlerconcatcheck) | [Performance](performance_checks.markdown#performance-checks) | Finds calls to `StringBundler.concat` with less than 3 parameters. |
@@ -148,9 +149,6 @@ JavadocCheck | [Javadoc](javadoc_checks.markdown#javadoc-checks) | Performs seve
 LPS42924Check | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [LambdaCheck](checks/lambda_check.markdown#lambdacheck) | [Styling](styling_checks.markdown#styling-checks) | Checks that `lambda` statements are as simple as possible. |
 LanguageKeysCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds missing language keys in `Language.properties`. |
-LineBreakAfterCommaCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-LineBreakBeforeGenericStartCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-LineEndCharacterCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [ListUtilCheck](checks/list_util_check.markdown#listutilcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks for utilization of class `ListUtil`. |
 LiteralStringEqualsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalFinalVariableName) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that local final variable names conform to a specified pattern. |

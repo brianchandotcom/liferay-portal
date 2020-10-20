@@ -9660,9 +9660,7 @@ public class SegmentsExperiencePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(SegmentsExperienceImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(SegmentsExperienceImpl.class);
 	}
 
 	/**
@@ -9688,9 +9686,7 @@ public class SegmentsExperiencePersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(SegmentsExperienceImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(SegmentsExperienceImpl.class, primaryKey);

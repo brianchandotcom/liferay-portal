@@ -170,16 +170,14 @@ definition {
 			Polls.viewPollPG(
 				pollsQuestion = "What is the most important issue for this election?",
 				pollsQuestionChoiceList = "The Economy,The National Debt");
+
+			PageEditor.clickPublish();
 		}
 
 		task ("Add thread in Message Boards") {
 			MessageboardsThread.addPG(
 				threadBody = "This is the message boards thread.",
 				threadSubject = "Thread");
-
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Home",
-				siteName = "Site Name");
 
 			MessageboardsThread.gotoPG(
 				lastPostUserName = "Test Test",

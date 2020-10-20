@@ -1109,6 +1109,16 @@
 </tr>
 <!--SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS-->
 <tr>
+	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHANGE_LINK</td>
+	<td>//span[contains(@id,'DLFileEntryVIEW')]/button[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_SITE_SCOPE</td>
+	<td>//span[contains(@id,'DLFileEntryVIEW')]/span[contains(.,'${key_siteNameScope}')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ACTION_CHECKBOX</td>
 	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
 	<td></td>

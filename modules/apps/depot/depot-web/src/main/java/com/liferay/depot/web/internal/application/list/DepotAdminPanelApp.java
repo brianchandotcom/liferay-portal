@@ -21,7 +21,11 @@ import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,6 +51,13 @@ public class DepotAdminPanelApp extends BasePanelApp {
 	}
 
 	@Override
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest) {
+		return _portal.getControlPanelPortletURL(
+			httpServletRequest, getGroup(httpServletRequest), getPortletId(), 0,
+			0, PortletRequest.RENDER_PHASE);
+	}
+
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + DepotPortletKeys.DEPOT_ADMIN + ")",
 		unbind = "-"
@@ -63,5 +74,8 @@ public class DepotAdminPanelApp extends BasePanelApp {
 
 		return themeDisplay.getControlPanelGroup();
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

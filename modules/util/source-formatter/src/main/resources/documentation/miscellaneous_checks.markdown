@@ -7,6 +7,7 @@ Check | File Extensions | Description
 [CreationMenuBuilderCheck](checks/builder_check.markdown#buildercheck) | .java | Checks that `CreationMenuBuilder` is used when possible. |
 FullyQualifiedNameCheck | .java | Finds cases where a Fully Qualified Name is used instead of importing a class. |
 [ItemListBuilderCheck](checks/builder_check.markdown#buildercheck) | .java | Checks that `DropdownItemListBuilder`, `LabelItemListBuilder` or `NavigationItemListBuilder` is used when possible. |
+JSPInlineVariableCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 [JSPModuleIllegalImportsCheck](checks/jsp_module_illegal_imports_check.markdown#jspmoduleillegalimportscheck) | .jsp, .jspf, .tag, .tpl or .vm | Finds incorrect use of `com.liferay.registry.Registry` or `com.liferay.util.ContentUtil`. |
 [JSPParenthesesCheck](checks/if_statement_check.markdown#ifstatementcheck) | .jsp, .jspf, .tag, .tpl or .vm | Finds incorrect use of parentheses in statement. |
 JSPRedirectBackURLCheck | .jsp, .jspf, .tag, .tpl or .vm | Validates values of variable `redirect`. |
@@ -18,6 +19,7 @@ JavaDuplicateVariableCheck | .java | Finds variables where a variable with the s
 JavaEmptyLineAfterSuperCallCheck | .java | Finds missing emptly line after a `super` call. |
 JavaRedundantConstructorCheck | .java | |
 JavaStagedModelDataHandlerCheck | .java | |
+JavaStaticMethodCheck | .java | |
 JavaStaticVariableDependencyCheck | .java | |
 JavaSystemEventAnnotationCheck | .java | |
 JavaSystemExceptionCheck | .java | |
@@ -31,9 +33,6 @@ JavaVerifyUpgradeConnectionCheck | .java | |
 LFRBuildContentCheck | .lfrbuild-* | |
 LFRBuildReadmeCheck | .lfrbuild-* | |
 LPS42924Check | .java | |
-LineBreakAfterCommaCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-LineBreakBeforeGenericStartCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-LineEndCharacterCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LiteralStringEqualsCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LocalPatternCheck | .java | |
 LocaleUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |

@@ -2,7 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="LineBreakAfterCommaCheck" files="unit-converter-web/src/main/java/com/liferay/unit/converter/web/internal/util/UnitConverterUtil\.java" />
 		<suppress checks="MapBuilderCheck" files="powwow-portlet/docroot/WEB-INF/src/com/liferay/powwow/provider/PowwowServiceProviderFactory\.java" />
 	</checkstyle>
 	<source-check>

@@ -996,9 +996,7 @@ public class SamlSpAuthRequestPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(SamlSpAuthRequestImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(SamlSpAuthRequestImpl.class);
 	}
 
 	/**
@@ -1024,9 +1022,7 @@ public class SamlSpAuthRequestPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(SamlSpAuthRequestImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(SamlSpAuthRequestImpl.class, primaryKey);

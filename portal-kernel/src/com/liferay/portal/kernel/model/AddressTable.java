@@ -36,8 +36,14 @@ public class AddressTable extends BaseTable<AddressTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<AddressTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AddressTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Long> addressId = createColumn(
 		"addressId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<AddressTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Long> userId = createColumn(
@@ -52,6 +58,10 @@ public class AddressTable extends BaseTable<AddressTable> {
 		"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Long> classPK = createColumn(
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<AddressTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AddressTable, String> description = createColumn(
+		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, String> street1 = createColumn(
 		"street1", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, String> street2 = createColumn(
@@ -66,6 +76,10 @@ public class AddressTable extends BaseTable<AddressTable> {
 		"regionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Long> countryId = createColumn(
 		"countryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<AddressTable, Double> latitude = createColumn(
+		"latitude", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<AddressTable, Double> longitude = createColumn(
+		"longitude", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Long> typeId = createColumn(
 		"typeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Boolean> mailing = createColumn(

@@ -242,3 +242,12 @@ $appBuilderTableViewTransitionTime: 0.5s;
 		margin: 1.5rem -1.5rem;
 	}
 }
+
+.publications-enabled .app-builder-table-view {
+	&__sidebar {
+		.default,
+		.secondary {
+			top: 144px;
+		}
+	}
+}

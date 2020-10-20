@@ -52,7 +52,7 @@ public class DummyFolderWithMissingDummyPortletDataHandler
 
 	public static final String NAMESPACE = "missing-dummy-folder";
 
-	public static final String SCHEMA_VERSION = "1.0.0";
+	public static final String SCHEMA_VERSION = "4.0.0";
 
 	@Override
 	public String getSchemaVersion() {

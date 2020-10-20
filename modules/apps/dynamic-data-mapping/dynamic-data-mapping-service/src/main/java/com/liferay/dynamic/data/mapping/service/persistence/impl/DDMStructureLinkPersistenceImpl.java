@@ -1500,9 +1500,7 @@ public class DDMStructureLinkPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(DDMStructureLinkImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(DDMStructureLinkImpl.class);
 	}
 
 	/**
@@ -1527,9 +1525,7 @@ public class DDMStructureLinkPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(DDMStructureLinkImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(DDMStructureLinkImpl.class, primaryKey);

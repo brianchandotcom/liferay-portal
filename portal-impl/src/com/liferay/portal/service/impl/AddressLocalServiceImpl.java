@@ -109,6 +109,33 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Returns the address with the matching UUID and company.
+	 *
+	 * @param uuid the address's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching address, or <code>null</code> if a matching address could not be found
+	 */
+	@Override
+	public Address fetchAddressByUuidAndCompanyId(String uuid, long companyId) {
+		return addressPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the address with the matching UUID and company.
+	 *
+	 * @param uuid the address's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching address
+	 * @throws PortalException if a matching address could not be found
+	 */
+	@Override
+	public Address getAddressByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException {
+
+		return addressPersistence.findByUuid_C_First(uuid, companyId, null);
+	}
+
 	@Override
 	public List<Address> getAddresses() {
 		return addressPersistence.findAll();

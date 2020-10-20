@@ -247,16 +247,8 @@
 					(JournalArticle.articleId = tempJournalArticle.articleId) AND
 					(JournalArticle.version < tempJournalArticle.version)
 			LEFT JOIN
-				(
-					SELECT
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
-					FROM
-						JournalArticleLocalization
-					WHERE
-						1 = ?
-					GROUP BY
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
-				) JournalArticleLocalization ON
+				JournalArticleLocalization ON
+					(1 = ?) AND
 					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
 					(JournalArticle.id_ = JournalArticleLocalization.articlePK) AND
 					(JournalArticleLocalization.languageId = ?)
@@ -281,16 +273,8 @@
 					(JournalArticle.articleId = tempJournalArticle.articleId) AND
 					(JournalArticle.version < tempJournalArticle.version)
 			LEFT JOIN
-				(
-					SELECT
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
-					FROM
-						JournalArticleLocalization
-					WHERE
-						1 = ?
-					GROUP BY
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
-				) JournalArticleLocalization ON
+				JournalArticleLocalization ON
+					(1 = ?) AND
 					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
 					(JournalArticle.id_ = JournalArticleLocalization.articlePK) AND
 					(JournalArticleLocalization.languageId = ?)
@@ -351,16 +335,8 @@
 					(JournalArticle.articleId = tempJournalArticle.articleId) AND
 					(JournalArticle.version < tempJournalArticle.version)
 			LEFT JOIN
-				(
-					SELECT
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
-					FROM
-						JournalArticleLocalization
-					WHERE
-						1 = ?
-					GROUP BY
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
-				) JournalArticleLocalization ON
+				JournalArticleLocalization ON
+					(1 = ?) AND
 					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
 					(JournalArticle.id_ = JournalArticleLocalization.articlePK) AND
 					(JournalArticleLocalization.languageId = ?)
@@ -422,16 +398,8 @@
 					(JournalArticle.articleId = tempJournalArticle.articleId) AND
 					(JournalArticle.version < tempJournalArticle.version)
 			LEFT JOIN
-				(
-					SELECT
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
-					FROM
-						JournalArticleLocalization
-					WHERE
-						1 = ?
-					GROUP BY
-						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.languageId
-				) JournalArticleLocalization ON
+				JournalArticleLocalization ON
+					(1 = ?) AND
 					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
 					(JournalArticle.id_ = JournalArticleLocalization.articlePK) AND
 					(JournalArticleLocalization.languageId = ?)

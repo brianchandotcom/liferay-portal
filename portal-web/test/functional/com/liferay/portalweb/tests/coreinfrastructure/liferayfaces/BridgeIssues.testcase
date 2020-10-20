@@ -118,15 +118,17 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1478");
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		AssertTextEquals(
 			locator1 = "BridgeIssues#URL_MESSAGE",
-			value1 = "http://localhost:8080/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
+			value1 = "${portalURL}/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
 
 		Click(
 			key_PageLink = "should be the same as the href attribute of this link",
 			locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 
-		AssertLocation(value1 = "http://localhost:8080/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
+		AssertLocation(value1 = "${portalURL}/web/bridge-issues/faces-1478?p_p_id=FACES1478_WAR_comliferayfacesissuejsfportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=foo&_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#PARAM_URL1",
@@ -249,14 +251,14 @@ definition {
 		// FACES_1635Resources
 
 		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-1635?p_p_parallel=0",
+			pageURL = "jsf-applicant?p_p_parallel=0",
 			portletName = "jsf-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1635?p_p_parallel=0");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/jsf-applicant?p_p_parallel=0");
 
 		Portlet.addPG(portletName = "primefaces-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-1635?p_p_parallel=0");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/jsf-applicant?p_p_parallel=0");
 
 		AssertElementPresent(locator1 = "BridgeIssues#LIFERAY_LOGO");
 
@@ -309,7 +311,7 @@ definition {
 
 		Click(
 			key_PageLink = "Run Test",
-			locator1 = "BridgeIssues#PAGE_LINK");
+			locator1 = "BridgeIssues#RUN_TEST_BUTTON");
 
 		for (var key_field : list "1,2,3,4,5,6,7,8,9,10,11") {
 			AssertElementPresent(locator1 = "BridgeIssues#REQUESTED_MESSAGE");
@@ -410,7 +412,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2958");
 		}
 
-		for (var resourceActionIndex : list "resource.xhtml,resource.xhtml") {
+		for (var resourceActionIndex : list "resource.xhtml,resourceViaAjax.xhtml") {
 			BridgeIssues.verifyValue(
 				detailValue = "All special URL characters were correctly encoded.",
 				link = "${resourceActionIndex}",
@@ -420,21 +422,6 @@ definition {
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-2958");
 		}
-
-		// FACES_3175
-
-		BridgeIssues.addPageAndPortlet(
-			pageURL = "faces-3175",
-			portletName = "FACES-3175");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3175");
-
-		BridgeIssues.verifyValue(
-			detailValue = "Successfully avoided reloading FACES-3175:reproducer.js resource.",
-			link = "result.xhtml",
-			restoreState = "true",
-			statusValue = "SUCCESS",
-			textValue = "FACES-3175");
 
 		// FACES_3231
 

@@ -63,7 +63,7 @@ public class PortletDisplayTemplatePortletDataHandler
 
 	public static final String NAMESPACE = "portlet_display_template";
 
-	public static final String SCHEMA_VERSION = "1.0.0";
+	public static final String SCHEMA_VERSION = "4.0.0";
 
 	@Override
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes() {

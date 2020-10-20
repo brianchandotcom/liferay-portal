@@ -1746,9 +1746,7 @@ public class CommerceDiscountRelPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(CommerceDiscountRelImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(CommerceDiscountRelImpl.class);
 	}
 
 	/**
@@ -1774,9 +1772,7 @@ public class CommerceDiscountRelPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(CommerceDiscountRelImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(CommerceDiscountRelImpl.class, primaryKey);

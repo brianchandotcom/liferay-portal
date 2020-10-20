@@ -69,6 +69,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -1256,6 +1257,20 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 				(WorkflowedModel)workflowedBaseModel;
 
 			document.addKeyword(Field.STATUS, workflowedModel.getStatus());
+		}
+
+		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+
+		Date displayDate = (Date)modelAttributes.get(Field.DISPLAY_DATE);
+
+		if (displayDate != null) {
+			document.addDate(Field.DISPLAY_DATE, displayDate);
+		}
+
+		String uuid = GetterUtil.getString(modelAttributes.get(Field.UUID));
+
+		if (Validator.isNotNull(uuid)) {
+			document.addKeyword(Field.UUID, uuid);
 		}
 
 		for (DocumentContributor<?> documentContributor :

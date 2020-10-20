@@ -17,6 +17,7 @@ package com.liferay.depot.web.internal.display.context;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelServiceUtil;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.search.DepotEntrySearch;
 import com.liferay.depot.web.internal.servlet.taglib.clay.DepotEntryVerticalCard;
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 
@@ -36,8 +38,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -113,15 +115,19 @@ public class DepotAdminDisplayContext {
 		return "depotEntries";
 	}
 
-	public String getViewDepotURL(DepotEntry depotEntry) {
-		RenderURL renderURL = _liferayPortletResponse.createRenderURL();
+	public String getViewDepotURL(DepotEntry depotEntry)
+		throws PortalException {
 
-		renderURL.setParameter(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			_liferayPortletRequest, depotEntry.getGroup(),
+			DepotPortletKeys.DEPOT_ADMIN, 0, 0, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
 			"mvcRenderCommandName", "/depot/view_depot_dashboard");
-		renderURL.setParameter(
+		portletURL.setParameter(
 			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId()));
 
-		return renderURL.toString();
+		return portletURL.toString();
 	}
 
 	public boolean isDisplayStyleDescriptive() {

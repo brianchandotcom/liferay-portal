@@ -2441,9 +2441,7 @@ public class KaleoNotificationPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(KaleoNotificationImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(KaleoNotificationImpl.class);
 	}
 
 	/**
@@ -2469,9 +2467,7 @@ public class KaleoNotificationPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(KaleoNotificationImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(KaleoNotificationImpl.class, primaryKey);

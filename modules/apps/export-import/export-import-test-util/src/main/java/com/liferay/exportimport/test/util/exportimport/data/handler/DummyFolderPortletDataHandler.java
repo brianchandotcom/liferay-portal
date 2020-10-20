@@ -46,7 +46,7 @@ public class DummyFolderPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "dummy-folder";
 
-	public static final String SCHEMA_VERSION = "1.0.0";
+	public static final String SCHEMA_VERSION = "4.0.0";
 
 	@Override
 	public String getSchemaVersion() {

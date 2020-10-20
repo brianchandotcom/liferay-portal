@@ -189,6 +189,8 @@ public class Field implements Serializable {
 
 	public static final String USER_NAME = "userName";
 
+	public static final String UUID = "uuid";
+
 	public static final String VERSION = "version";
 
 	public static final String VIEW_ACTION_ID = "viewActionId";

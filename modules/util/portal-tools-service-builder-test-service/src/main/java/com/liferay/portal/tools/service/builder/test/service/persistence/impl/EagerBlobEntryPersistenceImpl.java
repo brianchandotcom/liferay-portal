@@ -933,9 +933,7 @@ public class EagerBlobEntryPersistenceImpl
 	public void clearCache() {
 		dummyEntityCache.clearCache(EagerBlobEntryImpl.class);
 
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		dummyFinderCache.clearCache(EagerBlobEntryImpl.class);
 	}
 
 	/**
@@ -960,9 +958,7 @@ public class EagerBlobEntryPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		dummyFinderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		dummyFinderCache.clearCache(EagerBlobEntryImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			dummyEntityCache.removeResult(EagerBlobEntryImpl.class, primaryKey);

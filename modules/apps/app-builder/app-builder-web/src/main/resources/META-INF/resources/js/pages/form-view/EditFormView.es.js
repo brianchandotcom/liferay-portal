@@ -58,23 +58,35 @@ const EditFormView = (props) => {
 		backURL = basePortletURL;
 	}
 
+	let WrapperComponent = ({children}) => children;
+
+	if (document.querySelector('.change-tracking-indicator')) {
+		WrapperComponent = ({children}) => (
+			<div className="publications-enabled">{children}</div>
+		);
+	}
+
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<FormViewContextProvider dataLayoutBuilder={dataLayoutBuilder}>
-				<FormViewControlMenu
-					backURL={backURL}
-					dataLayoutId={dataLayoutId}
-				/>
+				<WrapperComponent>
+					<FormViewControlMenu
+						backURL={backURL}
+						dataLayoutId={dataLayoutId}
+					/>
 
-				<FormViewUpperToolbar
-					newCustomObject={newCustomObject}
-					showTranslationManager={showTranslationManager}
-				/>
+					<FormViewUpperToolbar
+						newCustomObject={newCustomObject}
+						showTranslationManager={showTranslationManager}
+					/>
 
-				{createPortal(
-					<CustomObjectSidebar />,
-					document.querySelector(`#${customObjectSidebarElementId}`)
-				)}
+					{createPortal(
+						<CustomObjectSidebar />,
+						document.querySelector(
+							`#${customObjectSidebarElementId}`
+						)
+					)}
+				</WrapperComponent>
 			</FormViewContextProvider>
 		</DndProvider>
 	);

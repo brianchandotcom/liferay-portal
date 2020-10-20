@@ -53,6 +53,12 @@ definition {
 			value1 = "${userName}");
 	}
 
+	macro viewNoDropdownItem {
+		AssertElementNotPresent(
+			key_dropdownItem = "${dropdownItem}",
+			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
+	}
+
 	macro viewUserDefaultIcon {
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_ICON");
 	}

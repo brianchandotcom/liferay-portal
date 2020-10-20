@@ -97,19 +97,23 @@ export default ({data, fields}) => {
 	let hasCards = false;
 
 	const cards = fields.map((field, index) => {
-		const {
-			values = {},
-			structure = {},
-			summary = {},
-			totalEntries = sumTotalEntries(values),
-		} = data[field.name] || {};
+		const {values = {}, structure = {}, summary = {}, totalEntries} =
+			data[field.name] || {};
+
+		const sumTotalValues = sumTotalEntries(values);
 
 		field = {
 			...field,
 			...fieldTypes[field.type],
 		};
 
-		const chartContent = {field, structure, summary, totalEntries, values};
+		const chartContent = {
+			field,
+			structure,
+			summary,
+			totalEntries: sumTotalValues,
+			values,
+		};
 
 		const chart = chartFactory(chartContent);
 
@@ -126,7 +130,7 @@ export default ({data, fields}) => {
 				index={index}
 				key={index}
 				summary={summary}
-				totalEntries={totalEntries}
+				totalEntries={totalEntries ? totalEntries : sumTotalValues}
 			>
 				{chart}
 			</Card>

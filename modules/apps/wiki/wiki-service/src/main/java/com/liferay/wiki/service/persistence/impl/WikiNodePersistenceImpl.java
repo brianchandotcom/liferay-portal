@@ -4571,9 +4571,7 @@ public class WikiNodePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(WikiNodeImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(WikiNodeImpl.class);
 	}
 
 	/**
@@ -4597,9 +4595,7 @@ public class WikiNodePersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(WikiNodeImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(WikiNodeImpl.class, primaryKey);

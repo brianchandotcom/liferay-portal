@@ -109,6 +109,7 @@ definition {
 	}
 
 	test AddAndEditOAuthSAPEntries {
+		property custom.properties = "json.service.serialize.throwable=true";
 		property test.name.skip.portal.instance = "OAuth2#AddAndEditOAuthSAPEntries";
 
 		ApplicationsMenu.gotoPortlet(
@@ -155,7 +156,7 @@ definition {
 
 		var portalVersionOutput = JSONCurlUtil.post("${portalVersionCurl}");
 
-		if (!(contains("${portalVersionOutput}", "7.3"))) {
+		if (!(contains("${portalVersionOutput}", "7.4"))) {
 			fail("JSON-WS call failed to return Portal version");
 		}
 
@@ -170,7 +171,7 @@ definition {
 
 		var portalVersionOutput = JSONCurlUtil.post("${portalVersionCurl}");
 
-		if (!(contains("${portalVersionOutput}", "{}"))) {
+		if (!(contains("${portalVersionOutput}", "Access denied to com.liferay.portal.kernel.service.PortalService#getVersion"))) {
 			fail("Access denied message was not returned");
 		}
 
@@ -195,7 +196,7 @@ definition {
 
 		var portalVersionOutput = JSONCurlUtil.post("${portalVersionCurl}");
 
-		if (!(contains("${portalVersionOutput}", "7.3"))) {
+		if (!(contains("${portalVersionOutput}", "7.4"))) {
 			fail("JSON-WS call failed to return Portal version");
 		}
 
@@ -231,7 +232,7 @@ definition {
 
 		var buildNumberOutput = JSONCurlUtil.post("${buildNumberCurl}");
 
-		if (!(contains("${buildNumberOutput}", "73"))) {
+		if (!(contains("${buildNumberOutput}", "74"))) {
 			fail("JSON-WS call failed to return build number");
 		}
 	}

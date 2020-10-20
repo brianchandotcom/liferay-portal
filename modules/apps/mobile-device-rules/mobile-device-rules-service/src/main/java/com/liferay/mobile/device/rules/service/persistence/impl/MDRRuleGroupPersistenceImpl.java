@@ -2843,9 +2843,7 @@ public class MDRRuleGroupPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(MDRRuleGroupImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(MDRRuleGroupImpl.class);
 	}
 
 	/**
@@ -2869,9 +2867,7 @@ public class MDRRuleGroupPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(MDRRuleGroupImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(MDRRuleGroupImpl.class, primaryKey);

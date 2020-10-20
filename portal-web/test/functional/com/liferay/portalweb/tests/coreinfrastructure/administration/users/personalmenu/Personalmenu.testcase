@@ -355,4 +355,43 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Organization2 Name");
 	}
 
+	@priority = "4"
+	test ViewNoMyDashboardMyProfileLink {
+		property custom.properties = "layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.power.user.required=true";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONUser.addUser(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "user1",
+			userLastName = "user1",
+			userScreenName = "user1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user1@liferay.com");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "Guest",
+			userEmailAddress = "user1@liferay.com");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Site Content Reviewer",
+			userEmailAddress = "user1@liferay.com");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "user1@liferay.com");
+
+		UserBar.gotoDropdown();
+
+		UserBar.viewNoDropdownItem(dropdownItem = "My Dashboard");
+
+		UserBar.viewNoDropdownItem(dropdownItem = "My Profile");
+	}
+
 }

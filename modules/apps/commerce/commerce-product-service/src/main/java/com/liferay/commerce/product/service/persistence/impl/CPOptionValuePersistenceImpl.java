@@ -2795,9 +2795,7 @@ public class CPOptionValuePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(CPOptionValueImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(CPOptionValueImpl.class);
 	}
 
 	/**
@@ -2821,9 +2819,7 @@ public class CPOptionValuePersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(CPOptionValueImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(CPOptionValueImpl.class, primaryKey);

@@ -15,6 +15,6 @@ Export-Package:\
 	com.liferay.portal.search.spi.searcher,\
 	com.liferay.portal.search.spi.settings
 Import-Package:\
-	com.liferay.portal.kernel.search;version="[8.1.0,9.3.0)",\
+	com.liferay.portal.kernel.search;version="[8.1.0,9.4.0)",\
 	\
 	*

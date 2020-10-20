@@ -5439,9 +5439,7 @@ public class CalendarBookingPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(CalendarBookingImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(CalendarBookingImpl.class);
 	}
 
 	/**
@@ -5466,9 +5464,7 @@ public class CalendarBookingPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(CalendarBookingImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(CalendarBookingImpl.class, primaryKey);

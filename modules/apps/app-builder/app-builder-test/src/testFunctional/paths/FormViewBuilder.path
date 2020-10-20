@@ -470,6 +470,18 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>RULE_BUILDER_FORM_VIEW_NAME</td>
+	<td>//input[contains(@placeholder,'Untitled Form View')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>ASSERT_FORM</td>
+	<td>//td[contains(@class,'table-cell-expand') and contains(.,'${key_formViewName}')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

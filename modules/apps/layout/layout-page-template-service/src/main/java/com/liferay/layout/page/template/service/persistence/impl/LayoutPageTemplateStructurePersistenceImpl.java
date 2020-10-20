@@ -2414,9 +2414,7 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(LayoutPageTemplateStructureImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(LayoutPageTemplateStructureImpl.class);
 	}
 
 	/**
@@ -2449,9 +2447,7 @@ public class LayoutPageTemplateStructurePersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(LayoutPageTemplateStructureImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(

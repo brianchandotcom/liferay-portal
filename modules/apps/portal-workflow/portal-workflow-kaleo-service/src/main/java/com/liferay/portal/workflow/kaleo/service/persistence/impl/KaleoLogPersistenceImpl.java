@@ -3475,9 +3475,7 @@ public class KaleoLogPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(KaleoLogImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(KaleoLogImpl.class);
 	}
 
 	/**
@@ -3501,9 +3499,7 @@ public class KaleoLogPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(KaleoLogImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(KaleoLogImpl.class, primaryKey);

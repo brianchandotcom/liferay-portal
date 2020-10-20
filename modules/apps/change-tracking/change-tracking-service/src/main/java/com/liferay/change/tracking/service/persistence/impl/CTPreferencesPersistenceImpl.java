@@ -1387,9 +1387,7 @@ public class CTPreferencesPersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(CTPreferencesImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(CTPreferencesImpl.class);
 	}
 
 	/**
@@ -1413,9 +1411,7 @@ public class CTPreferencesPersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(CTPreferencesImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(CTPreferencesImpl.class, primaryKey);

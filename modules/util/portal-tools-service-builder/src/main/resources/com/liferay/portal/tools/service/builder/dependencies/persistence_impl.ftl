@@ -387,9 +387,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public void clearCache() {
 		${entityCache}.clearCache(${entity.name}Impl.class);
 
-		${finderCache}.clearCache(FINDER_CLASS_NAME_ENTITY);
-		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		<#if serviceBuilder.isVersionGTE_7_4_0()>
+			${finderCache}.clearCache(${entity.name}Impl.class);
+		<#else>
+			${finderCache}.clearCache(FINDER_CLASS_NAME_ENTITY);
+			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		</#if>
 	}
 
 	/**
@@ -439,9 +443,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		@Override
 	</#if>
 	public void clearCache(Set<Serializable> primaryKeys) {
-		${finderCache}.clearCache(FINDER_CLASS_NAME_ENTITY);
-		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		<#if serviceBuilder.isVersionGTE_7_4_0()>
+			${finderCache}.clearCache(${entity.name}Impl.class);
+		<#else>
+			${finderCache}.clearCache(FINDER_CLASS_NAME_ENTITY);
+			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+			${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		</#if>
 
 		for (Serializable primaryKey : primaryKeys) {
 			${entityCache}.removeResult(

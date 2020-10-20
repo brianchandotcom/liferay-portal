@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
@@ -134,6 +135,15 @@ public class BasicFragmentEntryVerticalCard extends FragmentEntryVerticalCard {
 
 		return LanguageUtil.format(
 			_httpServletRequest, "x-ago", statusDateDescription);
+	}
+
+	@Override
+	public boolean isSelectable() {
+		if (fragmentEntry.getType() == FragmentConstants.TYPE_REACT) {
+			return false;
+		}
+
+		return super.isSelectable();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

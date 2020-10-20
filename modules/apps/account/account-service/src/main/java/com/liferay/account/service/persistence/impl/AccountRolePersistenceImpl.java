@@ -1602,9 +1602,7 @@ public class AccountRolePersistenceImpl
 	public void clearCache() {
 		entityCache.clearCache(AccountRoleImpl.class);
 
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(AccountRoleImpl.class);
 	}
 
 	/**
@@ -1628,9 +1626,7 @@ public class AccountRolePersistenceImpl
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(AccountRoleImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(AccountRoleImpl.class, primaryKey);

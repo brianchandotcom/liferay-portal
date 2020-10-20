@@ -215,6 +215,9 @@ public interface DDMStorageLinkLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMStorageLink fetchClassStorageLink(long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStorageLink fetchDDMStorageLink(long storageLinkId);
 
 	/**

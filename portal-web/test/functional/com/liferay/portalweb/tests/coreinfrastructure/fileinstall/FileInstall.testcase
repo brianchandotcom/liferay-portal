@@ -112,12 +112,20 @@ definition {
 		GogoShell.viewNoOutput(outputContent = "Active");
 	}
 
-	@priority = "3"
+	@priority = "4"
 	test InstallOSGiConfigWithHiddenFile {
 		property create.osgi.hidden.file = "true";
-		property test.name.skip.portal.instance = "FileInstall#InstallOSGiConfigWithHiddenFile";
+		property test.assert.warning.exceptions = "true";
 
-		AssertConsoleTextNotPresent(value1 = "java.lang.RuntimeException: java.lang.reflect.InvocationTargetException");
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "File Uploads",
+			configurationScope = "System Scope");
 	}
 
 	@priority = "4"

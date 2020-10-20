@@ -60,7 +60,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -114,6 +116,16 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
+	}
+
+	public int getAvailableLocalesCount() throws Exception {
+		DDMFormInstance ddmFormInstance = getDDMFormInstance();
+
+		DDMForm ddmForm = ddmFormInstance.getDDMForm();
+
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+
+		return availableLocales.size();
 	}
 
 	public String getClearResultsURL() throws PortletException {

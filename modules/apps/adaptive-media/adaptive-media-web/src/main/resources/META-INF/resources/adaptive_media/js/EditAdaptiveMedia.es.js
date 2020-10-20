@@ -143,16 +143,18 @@ const EditAdaptiveMedia = ({
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 
-					<ClayCheckbox
-						checked={addHighResolution}
-						label={Liferay.Language.get(
-							'add-a-resolution-for-high-density-displays'
-						)}
-						name={highResolutionId}
-						onChange={() =>
-							setAddHighResolution(!addHighResolution)
-						}
-					/>
+					{!configurationEntryUuid &&
+						<ClayCheckbox
+							checked={addHighResolution}
+							label={Liferay.Language.get(
+								'add-a-resolution-for-high-density-displays'
+							)}
+							name={highResolutionId}
+							onChange={() =>
+								setAddHighResolution(!addHighResolution)
+							}
+						/>
+					}
 				</div>
 
 				<div className="sheet-section">

@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -71,7 +71,8 @@ public class CommerceSubscriptionEntryDisplayContext {
 		CPSubscriptionTypeJSPContributorRegistry
 			cpSubscriptionTypeJSPContributorRegistry,
 		CPSubscriptionTypeRegistry cpSubscriptionTypeRegistry,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		PortletResourcePermission portletResourcePermission) {
 
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;
@@ -82,6 +83,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 			cpSubscriptionTypeJSPContributorRegistry;
 		_cpSubscriptionTypeRegistry = cpSubscriptionTypeRegistry;
 		_httpServletRequest = httpServletRequest;
+		_portletResourcePermission = portletResourcePermission;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
@@ -359,8 +361,8 @@ public class CommerceSubscriptionEntryDisplayContext {
 	}
 
 	public boolean hasManageCommerceSubscriptionEntryPermission() {
-		return PortalPermissionUtil.contains(
-			_cpRequestHelper.getPermissionChecker(),
+		return _portletResourcePermission.contains(
+			_cpRequestHelper.getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
 	}
 
@@ -392,5 +394,6 @@ public class CommerceSubscriptionEntryDisplayContext {
 		_cpSubscriptionTypeJSPContributorRegistry;
 	private final CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
 	private final HttpServletRequest _httpServletRequest;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

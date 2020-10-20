@@ -18,7 +18,7 @@ import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
 import com.liferay.commerce.health.status.CommerceHealthHttpStatusRegistry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -34,9 +34,11 @@ public class CommerceHealthStatusDisplayContext {
 
 	public CommerceHealthStatusDisplayContext(
 		CommerceHealthHttpStatusRegistry commerceHealthHttpStatusRegistry,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse, int type) {
 
 		_commerceHealthHttpStatusRegistry = commerceHealthHttpStatusRegistry;
+		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_type = type;
@@ -68,13 +70,14 @@ public class CommerceHealthStatusDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return PortalPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(),
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_HEALTH_STATUS);
 	}
 
 	private final CommerceHealthHttpStatusRegistry
 		_commerceHealthHttpStatusRegistry;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CommerceHealthHttpStatus> _searchContainer;

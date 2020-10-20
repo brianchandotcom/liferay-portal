@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,12 +37,15 @@ import javax.portlet.RenderResponse;
 public abstract class BaseCommerceCountriesDisplayContext<T> {
 
 	public BaseCommerceCountriesDisplayContext(
-		ActionHelper actionHelper, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		ActionHelper actionHelper,
+		PortletResourcePermission portletResourcePermission,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		this.actionHelper = actionHelper;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
+
+		_portletResourcePermission = portletResourcePermission;
 
 		_defaultOrderByCol = "priority";
 		_defaultOrderByType = "asc";
@@ -127,8 +130,8 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return PortalPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), actionId);
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null, actionId);
 	}
 
 	public void setDefaultOrderByCol(String defaultOrderByCol) {
@@ -151,6 +154,7 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 	private CommerceCountry _commerceCountry;
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;
+	private final PortletResourcePermission _portletResourcePermission;
 	private RowChecker _rowChecker;
 
 }

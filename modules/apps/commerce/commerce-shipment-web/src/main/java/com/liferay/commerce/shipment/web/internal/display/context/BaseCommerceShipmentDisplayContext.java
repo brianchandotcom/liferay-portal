@@ -21,7 +21,7 @@ import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -35,10 +35,13 @@ import javax.servlet.http.HttpServletRequest;
 public class BaseCommerceShipmentDisplayContext<T> {
 
 	public BaseCommerceShipmentDisplayContext(
-		ActionHelper actionHelper, HttpServletRequest httpServletRequest) {
+		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+		PortletResourcePermission portletResourcePermission) {
 
 		this.actionHelper = actionHelper;
 		this.httpServletRequest = httpServletRequest;
+
+		_portletResourcePermission = portletResourcePermission;
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
@@ -110,8 +113,8 @@ public class BaseCommerceShipmentDisplayContext<T> {
 	}
 
 	public boolean hasManageCommerceShipmentsPermission() {
-		return PortalPermissionUtil.contains(
-			cpRequestHelper.getPermissionChecker(),
+		return _portletResourcePermission.contains(
+			cpRequestHelper.getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 	}
 
@@ -122,5 +125,6 @@ public class BaseCommerceShipmentDisplayContext<T> {
 	protected final LiferayPortletResponse liferayPortletResponse;
 
 	private CommerceShipment _commerceShipment;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

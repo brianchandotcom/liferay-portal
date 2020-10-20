@@ -21,6 +21,7 @@ import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -38,9 +39,12 @@ public class CommerceRegionsDisplayContext
 
 	public CommerceRegionsDisplayContext(
 		ActionHelper actionHelper, CommerceRegionService commerceRegionService,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		super(actionHelper, renderRequest, renderResponse);
+		super(
+			actionHelper, portletResourcePermission, renderRequest,
+			renderResponse);
 
 		_commerceRegionService = commerceRegionService;
 	}

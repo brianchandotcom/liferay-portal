@@ -54,17 +54,17 @@ class MBPortlet {
 			`#${this.namespace}workflowAction`
 		);
 
-		this.init();
+		this._init();
 	}
 
-	init() {
+	_init() {
 		const publishButton = this.rootNode.querySelector(
 			'.button-holder button[type="submit"]'
 		);
 
 		if (publishButton) {
 			publishButton.addEventListener('click', (e) => {
-				this.publish_(e);
+				this._publish(e);
 			});
 		}
 
@@ -74,7 +74,7 @@ class MBPortlet {
 
 		if (saveButton) {
 			saveButton.addEventListener('click', (e) => {
-				this.saveDraft_(e);
+				this._saveDraft(e);
 			});
 		}
 
@@ -84,7 +84,7 @@ class MBPortlet {
 
 		if (advancedReplyLink) {
 			advancedReplyLink.addEventListener('click', (e) => {
-				this.openAdvancedReply_(e);
+				this._openAdvancedReply(e);
 			});
 		}
 
@@ -95,7 +95,7 @@ class MBPortlet {
 				.get('contentBox')
 				.delegate(
 					'click',
-					this.removeAttachment_.bind(this),
+					this._removeAttachment.bind(this),
 					'.delete-attachment'
 				);
 
@@ -113,7 +113,7 @@ class MBPortlet {
 						on: {
 							visibleChange: (event) => {
 								if (!event.newVal) {
-									this.updateRemovedAttachments_();
+									this._updateRemovedAttachments();
 								}
 							},
 						},
@@ -133,7 +133,7 @@ class MBPortlet {
 	 * @protected
 	 */
 
-	openAdvancedReply_() {
+	_openAdvancedReply() {
 		const bodyInput = this.rootNode.querySelector(`#${this.namespace}body`);
 		bodyInput.value = window[
 			`${this.namespace}replyMessageBody${this.replyToMessageId}`
@@ -171,7 +171,7 @@ class MBPortlet {
 	 * @protected
 	 */
 
-	save_() {
+	_save() {
 		const tempImages = this.rootNode.querySelectorAll(
 			'img[data-random-id]'
 		);
@@ -182,11 +182,11 @@ class MBPortlet {
 					node.parentElement.remove();
 				});
 
-				this.submitForm_();
+				this._submitForm();
 			}
 		}
 		else {
-			this.submitForm_();
+			this._submitForm();
 		}
 	}
 
@@ -197,7 +197,7 @@ class MBPortlet {
 	 * @param {Event} event The click event that triggered the remove action
 	 */
 
-	removeAttachment_(event) {
+	_removeAttachment(event) {
 		const link = event.currentTarget;
 
 		const deleteURL = link.getAttribute('data-url');
@@ -211,7 +211,7 @@ class MBPortlet {
 			);
 			searchContainer.updateDataStore();
 
-			this.updateRemovedAttachments_();
+			this._updateRemovedAttachments();
 		});
 	}
 
@@ -221,7 +221,7 @@ class MBPortlet {
 	 * @protected
 	 */
 
-	updateRemovedAttachments_() {
+	_updateRemovedAttachments() {
 		fetch(this.getAttachmentsURL)
 			.then((res) => res.json())
 			.then((attachments) => {
@@ -281,7 +281,7 @@ class MBPortlet {
 	 * @protected
 	 */
 
-	updateMultipleMBMessageAttachments_() {
+	_updateMultipleMBMessageAttachments() {
 		const selectedFileNameContainer = this.rootNode.querySelector(
 			`#${this.namespace}selectedFileNameContainer`
 		);
@@ -315,12 +315,12 @@ class MBPortlet {
 	 * @protected
 	 */
 
-	submitForm_() {
+	_submitForm() {
 		this.rootNode.querySelector(
 			`#${this.namespace}${this.constants.CMD}`
 		).value = this.currentAction;
 
-		this.updateMultipleMBMessageAttachments_();
+		this._updateMultipleMBMessageAttachments();
 
 		const bodyInput = this.rootNode.querySelector(`#${this.namespace}body`);
 
@@ -348,9 +348,9 @@ class MBPortlet {
 	 * @protected
 	 */
 
-	saveDraft_() {
+	_saveDraft() {
 		this._workflowActionInput.value = this.constants.ACTION_SAVE_DRAFT;
-		this.save_();
+		this._save();
 	}
 }
 

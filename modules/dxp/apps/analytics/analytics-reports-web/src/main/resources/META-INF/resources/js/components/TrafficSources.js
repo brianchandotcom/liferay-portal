@@ -95,20 +95,18 @@ export default function TrafficSources({
 	return (
 		<>
 			<h5 className="mt-3 sheet-subtitle">
-				{Liferay.Language.get('search-engines-traffic')}
+				{Liferay.Language.get('traffic-channels')}
 				<Hint
-					message={Liferay.Language.get(
-						'search-engines-traffic-help'
-					)}
+					message={Liferay.Language.get('traffic-channels-help')}
 					secondary={true}
-					title={Liferay.Language.get('search-engines-traffic')}
+					title={Liferay.Language.get('traffic-channels')}
 				/>
 			</h5>
 
 			{!fullPieChart && !missingTrafficSourceValue && (
 				<div className="mb-3 text-secondary">
 					{Liferay.Language.get(
-						'your-page-has-no-incoming-traffic-from-search-engines-yet'
+						'your-page-has-no-incoming-traffic-from-traffic-channels-yet'
 					)}
 				</div>
 			)}
@@ -138,7 +136,7 @@ export default function TrafficSources({
 											></span>
 										</td>
 										<td
-											className="pie-chart-wrapper--legend--title text-secondary"
+											className="c-py-1 pie-chart-wrapper--legend--title text-secondary"
 											onMouseOut={handleLegendMouseLeave}
 											onMouseOver={() =>
 												handleLegendMouseEnter(

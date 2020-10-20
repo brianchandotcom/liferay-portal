@@ -55,7 +55,7 @@ export default function Detail({
 					popoverAlign={Align.Bottom}
 					popoverHeader={Liferay.Language.get('traffic-volume')}
 					popoverMessage={Liferay.Language.get(
-						'traffic-volume-is-the-estimated-number-of-visitors-coming-to-your-page'
+						'traffic-volume-is-the-number-of-page-views-coming-from-one-channel'
 					)}
 					popoverPosition="bottom"
 				/>
@@ -69,7 +69,7 @@ export default function Detail({
 					percentage={true}
 					popoverHeader={Liferay.Language.get('traffic-share')}
 					popoverMessage={Liferay.Language.get(
-						'traffic-share-is-the-percentage-of-traffic-sent-to-your-page-by-one-source'
+						'traffic-share-is-the-percentage-of-traffic-sent-to-your-page-by-one-channel'
 					)}
 				/>
 

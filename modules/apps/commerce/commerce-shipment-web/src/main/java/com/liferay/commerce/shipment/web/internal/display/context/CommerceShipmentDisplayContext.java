@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -81,9 +82,10 @@ public class CommerceShipmentDisplayContext
 		CommerceCountryService commerceCountryService,
 		CommerceOrderItemService commerceOrderItemService,
 		CommerceOrderLocalService commerceOrderLocalService,
-		CommerceRegionService commerceRegionService) {
+		CommerceRegionService commerceRegionService,
+		PortletResourcePermission portletResourcePermission) {
 
-		super(actionHelper, httpServletRequest);
+		super(actionHelper, httpServletRequest, portletResourcePermission);
 
 		_commerceAddressFormatter = commerceAddressFormatter;
 		_commerceAddressService = commerceAddressService;

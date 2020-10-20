@@ -12,7 +12,6 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 const SelectedMenuItemIdContext = React.createContext(null);
@@ -34,8 +33,4 @@ export const SelectedMenuItemIdProvider = ({children}) => {
 			</SelectedMenuItemIdContext.Provider>
 		</SetSelectedMenuItemIdContext.Provider>
 	);
-};
-
-SelectedMenuItemIdContext.propTypes = {
-	setSidebarPanelId: PropTypes.func,
 };

@@ -15,6 +15,7 @@
 package com.liferay.commerce.subscription.web.internal.frontend;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.subscription.web.internal.frontend.constants.CommerceSubscriptionDataSetConstants;
@@ -27,7 +28,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -62,8 +63,8 @@ public class CommerceSubscriptionEntryClayDataSetActionProvider
 		SubscriptionEntry subscriptionEntry = (SubscriptionEntry)model;
 
 		return DropdownItemListBuilder.add(
-			() -> PortalPermissionUtil.contains(
-				PermissionThreadLocal.getPermissionChecker(),
+			() -> _portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), null,
 				CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS),
 			dropdownItem -> {
 				dropdownItem.setHref(
@@ -74,8 +75,8 @@ public class CommerceSubscriptionEntryClayDataSetActionProvider
 					LanguageUtil.get(httpServletRequest, "edit"));
 			}
 		).add(
-			() -> PortalPermissionUtil.contains(
-				PermissionThreadLocal.getPermissionChecker(),
+			() -> _portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), null,
 				CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS),
 			dropdownItem -> {
 				dropdownItem.setHref(
@@ -132,5 +133,10 @@ public class CommerceSubscriptionEntryClayDataSetActionProvider
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.SUBSCRIPTION_RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

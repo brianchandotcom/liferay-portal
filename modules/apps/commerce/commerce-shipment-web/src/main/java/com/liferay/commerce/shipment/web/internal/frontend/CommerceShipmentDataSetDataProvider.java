@@ -19,6 +19,7 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountModel;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
 import com.liferay.commerce.frontend.model.LabelField;
@@ -43,7 +44,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -179,8 +180,8 @@ public class CommerceShipmentDataSetDataProvider
 	}
 
 	private long[] _getCommerceAccountIds(long userId) throws PortalException {
-		if (!PortalPermissionUtil.contains(
-				PermissionThreadLocal.getPermissionChecker(),
+		if (!_portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), null,
 				CommerceAccountActionKeys.MANAGE_ALL_ACCOUNTS)) {
 
 			List<CommerceAccount> commerceAccounts =
@@ -255,5 +256,10 @@ public class CommerceShipmentDataSetDataProvider
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.SHIPMENT_RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

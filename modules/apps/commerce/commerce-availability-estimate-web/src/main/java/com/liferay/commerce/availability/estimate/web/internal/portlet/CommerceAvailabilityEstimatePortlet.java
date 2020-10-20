@@ -15,9 +15,11 @@
 package com.liferay.commerce.availability.estimate.web.internal.portlet;
 
 import com.liferay.commerce.availability.estimate.web.internal.display.context.CommerceAvailabilityEstimateDisplayContext;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -65,8 +67,8 @@ public class CommerceAvailabilityEstimatePortlet extends MVCPortlet {
 		CommerceAvailabilityEstimateDisplayContext
 			commerceAvailabilityEstimateDisplayContext =
 				new CommerceAvailabilityEstimateDisplayContext(
-					_commerceAvailabilityEstimateService, renderRequest,
-					renderResponse);
+					_commerceAvailabilityEstimateService,
+					_portletResourcePermission, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -78,5 +80,10 @@ public class CommerceAvailabilityEstimatePortlet extends MVCPortlet {
 	@Reference
 	private CommerceAvailabilityEstimateService
 		_commerceAvailabilityEstimateService;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.AVAILABILITY_RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

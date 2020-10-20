@@ -108,11 +108,21 @@
 		"actions": [
 			{
 				"actionIds": [
-					"MANAGE_COMMERCE_SHIPMENTS",
-					"MANAGE_COMMERCE_SUBSCRIPTIONS",
 					"VIEW_CONTROL_PANEL"
 				],
 				"resource": "90"
+			},
+			{
+				"actionIds": [
+					"MANAGE_COMMERCE_SHIPMENTS"
+				],
+				"resource": "com.liferay.commerce.shipment"
+			},
+			{
+				"actionIds": [
+					"MANAGE_COMMERCE_SUBSCRIPTIONS"
+				],
+				"resource": "com.liferay.commerce.subscription"
 			},
 			{
 				"actionIds": [

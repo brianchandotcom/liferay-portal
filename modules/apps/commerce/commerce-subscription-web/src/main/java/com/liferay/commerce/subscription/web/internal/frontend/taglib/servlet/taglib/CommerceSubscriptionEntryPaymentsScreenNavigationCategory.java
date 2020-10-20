@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.subscription.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;
@@ -26,6 +27,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -89,7 +91,8 @@ public class CommerceSubscriptionEntryPaymentsScreenNavigationCategory
 					_commerceSubscriptionEntryLocalService,
 					_commerceOrderItemLocalService,
 					_cpSubscriptionTypeJSPContributorRegistry,
-					_cpSubscriptionTypeRegistry, httpServletRequest);
+					_cpSubscriptionTypeRegistry, httpServletRequest,
+					_portletResourcePermission);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -120,6 +123,11 @@ public class CommerceSubscriptionEntryPaymentsScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.SUBSCRIPTION_RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.subscription.web)"

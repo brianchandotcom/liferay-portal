@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.subscription.web.internal.portlet;
 
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;
@@ -22,6 +23,7 @@ import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.subscription.web.internal.display.context.CommerceSubscriptionEntryDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -76,7 +78,8 @@ public class CommerceSubscriptionEntryPortlet extends MVCPortlet {
 					_commerceOrderItemLocalService,
 					_cpSubscriptionTypeJSPContributorRegistry,
 					_cpSubscriptionTypeRegistry,
-					_portal.getHttpServletRequest(renderRequest));
+					_portal.getHttpServletRequest(renderRequest),
+					_portletResourcePermission);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -105,5 +108,10 @@ public class CommerceSubscriptionEntryPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.SUBSCRIPTION_RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

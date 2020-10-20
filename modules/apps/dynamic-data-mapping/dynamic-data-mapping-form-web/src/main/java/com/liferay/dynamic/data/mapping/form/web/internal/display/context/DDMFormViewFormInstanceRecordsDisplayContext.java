@@ -150,8 +150,10 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 				@Override
 				public String apply(DDMFormFieldValue ddmFormFieldValue) {
+					Value value = ddmFormFieldValue.getValue();
+
 					return ddmFormFieldValueRenderer.render(
-						ddmFormFieldValue, _renderRequest.getLocale());
+						ddmFormFieldValue, value.getDefaultLocale());
 				}
 
 			});

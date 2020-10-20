@@ -5448,17 +5448,7 @@ war.path=${app.server.portal.dir}/</echo>
 					</or>
 				</and>
 				<then>
-					<get-commerce-license-product-name />
-
-					<wait-for-app-server-log-message log.message="${commerce.license.product.name} license validation passed" />
-
-					<wait-for-app-server-log-message log.message="License registered for ${commerce.license.product.name}" />
-
-					<get-portal-license-product-name />
-
-					<wait-for-app-server-log-message log.message="${portal.license.product.name} license validation passed" />
-
-					<wait-for-app-server-log-message log.message="License registered for ${portal.license.product.name}" />
+					<wait-for-license-activation />
 				</then>
 			</if>
 		</sequential>
@@ -5645,6 +5635,22 @@ war.path=${app.server.portal.dir}/</echo>
 					<fail message="${timed.out.message}${line.separator}${jstack.output}" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="wait-for-license-activation">
+		<sequential>
+			<get-commerce-license-product-name />
+
+			<wait-for-app-server-log-message log.message="${commerce.license.product.name} license validation passed" />
+
+			<wait-for-app-server-log-message log.message="License registered for ${commerce.license.product.name}" />
+
+			<get-portal-license-product-name />
+
+			<wait-for-app-server-log-message log.message="${portal.license.product.name} license validation passed" />
+
+			<wait-for-app-server-log-message log.message="License registered for ${portal.license.product.name}" />
 		</sequential>
 	</macrodef>
 

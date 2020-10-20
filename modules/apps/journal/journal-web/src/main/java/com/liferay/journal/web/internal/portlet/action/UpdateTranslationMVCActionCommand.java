@@ -22,9 +22,9 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.translation.service.TranslationEntryService;
@@ -66,25 +67,36 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			JournalArticle article = ActionUtil.getArticle(actionRequest);
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+			long classPK = ParamUtil.getLong(actionRequest, "classPK");
+
+			String className = _portal.getClassName(classNameId);
 
 			InfoItemReference infoItemReference = new InfoItemReference(
-				JournalArticle.class.getName(), article.getResourcePrimKey());
+				className, classPK);
+
+			InfoItemObjectProvider<Object> infoItemObjectProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class,
+					infoItemReference.getClassName());
 
 			InfoItemFieldValues infoItemFieldValues =
 				InfoItemFieldValues.builder(
 				).infoItemReference(
 					infoItemReference
 				).infoFieldValues(
-					_getInfoFieldValues(actionRequest, article)
+					_getInfoFieldValues(
+						actionRequest, className,
+						infoItemObjectProvider.getInfoItem(classPK))
 				).build();
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
 			_translationEntryService.addOrUpdateTranslationEntry(
-				article.getGroupId(), _getTargetLanguageId(actionRequest),
-				infoItemReference, infoItemFieldValues, serviceContext);
+				groupId, _getTargetLanguageId(actionRequest), infoItemReference,
+				infoItemFieldValues, serviceContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -96,27 +108,27 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private List<InfoField> _getInfoFields(JournalArticle article) {
-		InfoItemFormProvider<JournalArticle> infoItemFormProvider =
+	private <T> List<InfoField> _getInfoFields(String className, T object) {
+		InfoItemFormProvider<T> infoItemFormProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFormProvider.class, JournalArticle.class.getName());
+				InfoItemFormProvider.class, className);
 
-		InfoForm infoForm = infoItemFormProvider.getInfoForm(article);
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(object);
 
 		return infoForm.getAllInfoFields();
 	}
 
-	private List<InfoFieldValue<Object>> _getInfoFieldValues(
-		ActionRequest actionRequest, JournalArticle article) {
+	private <T> List<InfoFieldValue<Object>> _getInfoFieldValues(
+		ActionRequest actionRequest, String className, T object) {
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
 		UnicodeProperties infoFieldUnicodeProperties =
 			PropertiesParamUtil.getProperties(actionRequest, "infoField--");
 		InfoItemFieldValues infoItemFieldValues = _getInfoItemFieldValues(
-			article);
+			className, object);
 
-		for (InfoField infoField : _getInfoFields(article)) {
+		for (InfoField infoField : _getInfoFields(className, object)) {
 			String value = infoFieldUnicodeProperties.get(infoField.getName());
 
 			if (value != null) {
@@ -145,15 +157,14 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		return infoFieldValues;
 	}
 
-	private InfoItemFieldValues _getInfoItemFieldValues(
-		JournalArticle article) {
+	private <T> InfoItemFieldValues _getInfoItemFieldValues(
+		String className, T object) {
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class,
-				JournalArticle.class.getName());
+				InfoItemFieldValuesProvider.class, className);
 
-		return infoItemFieldValuesProvider.getInfoItemFieldValues(article);
+		return infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 	}
 
 	private String _getSourceLanguageId(ActionRequest actionRequest) {
@@ -177,6 +188,9 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private TranslationEntryService _translationEntryService;

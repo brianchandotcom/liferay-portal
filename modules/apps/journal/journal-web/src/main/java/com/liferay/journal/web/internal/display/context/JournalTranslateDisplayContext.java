@@ -255,9 +255,12 @@ public class JournalTranslateDisplayContext {
 			ActionRequest.ACTION_NAME, "/journal/update_translation");
 		portletURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
-		portletURL.setParameter("articleId", _article.getArticleId());
 		portletURL.setParameter(
-			"version", String.valueOf(_article.getVersion()));
+			"classNameId",
+			String.valueOf(
+				PortalUtil.getClassNameId(JournalArticle.class.getName())));
+		portletURL.setParameter(
+			"classPK", String.valueOf(_article.getResourcePrimKey()));
 
 		return portletURL;
 	}

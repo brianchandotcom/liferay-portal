@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,7 +55,12 @@ public class GridDDMFormFieldValueRequestParameterRetrieverTest {
 				mockHttpServletRequest, _PARAMETER_NAME, StringPool.BLANK);
 
 		Assert.assertEquals(
-			"{\"row1\":\"column2\",\"row2\":\"column1\"}", parameterValue);
+			JSONUtil.put(
+				"row1", "column2"
+			).put(
+				"row2", "column1"
+			).toString(),
+			parameterValue);
 	}
 
 	@Test
@@ -62,8 +68,11 @@ public class GridDDMFormFieldValueRequestParameterRetrieverTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		String expectedParameterValue =
-			"{\"row1\":\"column2\",\"row2\":\"column1\"}";
+		String expectedParameterValue = JSONUtil.put(
+			"row1", "column2"
+		).put(
+			"row2", "column1"
+		).toString();
 
 		mockHttpServletRequest.addParameter(
 			_PARAMETER_NAME, expectedParameterValue);
@@ -87,7 +96,11 @@ public class GridDDMFormFieldValueRequestParameterRetrieverTest {
 			_gridDDMFormFieldValueRequestParameterRetriever.get(
 				mockHttpServletRequest, _PARAMETER_NAME, StringPool.BLANK);
 
-		Assert.assertEquals("{\"row2\":\"column1\"}", parameterValue);
+		Assert.assertEquals(
+			JSONUtil.put(
+				"row2", "column1"
+			).toString(),
+			parameterValue);
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)

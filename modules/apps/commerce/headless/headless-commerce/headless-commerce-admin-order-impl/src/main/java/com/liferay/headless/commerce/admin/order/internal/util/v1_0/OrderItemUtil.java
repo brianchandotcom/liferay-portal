@@ -25,8 +25,9 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.math.BigDecimal;
@@ -41,6 +42,8 @@ public class OrderItemUtil {
 	public static CommerceOrderItem upsertCommerceOrderItem(
 			CPInstanceService cpInstanceService,
 			CommerceOrderItemService commerceOrderItemService,
+			ModelResourcePermission<CommerceOrder>
+				commerceOrderModelResourcePermission,
 			OrderItem orderItem, CommerceOrder commerceOrder,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws Exception {
@@ -85,8 +88,12 @@ public class OrderItemUtil {
 
 		// Pricing
 
-		if (PortalPermissionUtil.contains(
+		PortletResourcePermission portletResourcePermission =
+			commerceOrderModelResourcePermission.getPortletResourcePermission();
+
+		if (portletResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(),
+				commerceOrder.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES)) {
 
 			commerceOrderItem =

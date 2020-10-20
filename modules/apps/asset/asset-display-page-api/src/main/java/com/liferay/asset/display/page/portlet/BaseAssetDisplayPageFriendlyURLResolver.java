@@ -22,11 +22,8 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryService;
-import com.liferay.asset.util.AssetHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -193,15 +190,6 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	protected AssetEntryService assetEntryLocalService;
-
-	@Reference
-	protected AssetHelper assetHelper;
-
-	@Reference
-	protected InfoDisplayContributorTracker infoDisplayContributorTracker;
-
-	@Reference
-	protected InfoEditURLProviderTracker infoEditURLProviderTracker;
 
 	@Reference
 	protected InfoItemServiceTracker infoItemServiceTracker;

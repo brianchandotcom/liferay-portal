@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.svg4everybody.web.internal.servlet.taglib;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -51,21 +51,18 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		boolean cdnDynamicResourcesEnabled;
+		boolean cdnDynamicResourcesEnabled = true;
 
 		try {
 			cdnDynamicResourcesEnabled = _portal.isCDNDynamicResourcesEnabled(
 				httpServletRequest);
 		}
-		catch (Exception exception) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to gather property from configuration.  " +
-						"Defaulting to portal.properties value");
+					"Unable to gather property from configuration",
+					portalException);
 			}
-
-			cdnDynamicResourcesEnabled =
-				PropsValues.CDN_DYNAMIC_RESOURCES_ENABLED;
 		}
 
 		if (!cdnDynamicResourcesEnabled ||

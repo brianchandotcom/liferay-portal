@@ -39,14 +39,18 @@ export const EditEntry = ({
 	);
 	const [submitting, setSubmitting] = useState(false);
 
+	const urlParams = new URLSearchParams(window.location.href);
+	const backURL =
+		urlParams.get(`_${portletId}_backURL`) || `${basePortletURL}/#/`;
+
 	const onCancel = useCallback(() => {
 		if (redirect) {
 			Liferay.Util.navigate(redirect);
 		}
 		else {
-			Liferay.Util.navigate(basePortletURL);
+			Liferay.Util.navigate(backURL);
 		}
-	}, [basePortletURL, redirect]);
+	}, [redirect, backURL]);
 
 	const onError = () => {
 		errorToast();
@@ -111,18 +115,10 @@ export const EditEntry = ({
 		});
 	}, [ddmForm, userLanguageId]);
 
-	const getBackURL = () => {
-		const urlParams = new URLSearchParams(window.location.href);
-		const backURL =
-			urlParams.get(`_${portletId}_backURL`) || `${basePortletURL}/#/`;
-
-		return backURL;
-	};
-
 	return (
 		<>
 			<ControlMenuBase
-				backURL={redirect ? redirect : getBackURL()}
+				backURL={redirect || backURL}
 				title={
 					dataRecordId !== '0'
 						? Liferay.Language.get('edit-entry')

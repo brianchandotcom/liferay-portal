@@ -318,6 +318,18 @@ public class AssetDisplayPageEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<AssetDisplayPageEntry> getAssetDisplayPageEntries(
+		long classNameId, long classTypeId, long layoutPageTemplateEntryId,
+		boolean defaultTemplate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
+			orderByComparator) {
+
+		return _assetDisplayPageEntryLocalService.getAssetDisplayPageEntries(
+			classNameId, classTypeId, layoutPageTemplateEntryId,
+			defaultTemplate, start, end, orderByComparator);
+	}
+
+	@Override
 	public java.util.List<AssetDisplayPageEntry>
 		getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
 			long layoutPageTemplateEntryId) {
@@ -386,6 +398,17 @@ public class AssetDisplayPageEntryLocalServiceWrapper
 	public int getAssetDisplayPageEntriesCount() {
 		return _assetDisplayPageEntryLocalService.
 			getAssetDisplayPageEntriesCount();
+	}
+
+	@Override
+	public int getAssetDisplayPageEntriesCount(
+		long classNameId, long classTypeId, long layoutPageTemplateEntryId,
+		boolean defaultTemplate) {
+
+		return _assetDisplayPageEntryLocalService.
+			getAssetDisplayPageEntriesCount(
+				classNameId, classTypeId, layoutPageTemplateEntryId,
+				defaultTemplate);
 	}
 
 	@Override

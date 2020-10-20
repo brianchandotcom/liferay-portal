@@ -103,7 +103,7 @@
 		name="dist-module-artifact"
 	/>
 
-	<target depends="move-artifact,move-artifact-dependencies,move-artifact-wsdd" name="dist-module-artifact-lpkg" />
+	<target depends="move-artifact,move-artifact-dependencies,move-artifact-wsdd,move-hotfix-artifact" name="dist-module-artifact-lpkg" />
 
 	<target depends="get-artifact-properties-releng" name="download-artifact" unless="artifact.exclude">
 		<if>
@@ -459,6 +459,13 @@
 	</target>
 
 	<target depends="get-artifact-properties" name="move-artifact" unless="artifact.exclude">
+		<move
+			file="${artifact.location.src}"
+			tofile="${artifact.location.dest}"
+		/>
+	</target>
+
+	<target depends="get-artifact-properties" if="artifact.hotfix" name="move-hotfix-artifact">
 		<move
 			file="${artifact.location.src}"
 			tofile="${artifact.location.dest}"

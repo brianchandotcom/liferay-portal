@@ -46,16 +46,22 @@ class MBPortlet {
 		this.currentAction = currentAction;
 		this.getAttachmentsURL = getAttachmentsURL;
 		this.replyToMessageId = replyToMessageId;
-		this.rootNode = document.getElementById(rootNode);
 		this.strings = strings;
 		this.viewTrashAttachmentsURL = viewTrashAttachmentsURL;
 
+		this.rootNode = document.getElementById(rootNode);
 		this.workflowActionInputNode = this.rootNode.querySelector(
 			`#${this.namespace}workflowAction`
 		);
 
 		this._init();
 	}
+
+	/**
+	 * Add events if needed.
+	 *
+	 * @protected
+	 */
 
 	_init() {
 		const publishButton = this.rootNode.querySelector(
@@ -107,22 +113,10 @@ class MBPortlet {
 		);
 
 		if (viewRemovedAttachmentsLink) {
-			viewRemovedAttachmentsLink.addEventListener('click', () => {
-				Liferay.Util.openWindow({
-					dialog: {
-						on: {
-							visibleChange: (event) => {
-								if (!event.newVal) {
-									this._updateRemovedAttachments();
-								}
-							},
-						},
-					},
-					id: this.namespace + 'openRemovedPageAttachments',
-					title: Liferay.Language.get('removed-attachments'),
-					uri: this.viewTrashAttachmentsURL,
-				});
-			});
+			viewRemovedAttachmentsLink.addEventListener(
+				'click',
+				this._openRemovedAttachments.bind(this)
+			);
 		}
 	}
 
@@ -150,6 +144,30 @@ class MBPortlet {
 		advancedReplyInputNode.value = bodyInput.value;
 
 		submitForm(form);
+	}
+
+	/**
+	 * Redirects to the advanced reply page
+	 * keeping the current message.
+	 *
+	 * @protected
+	 */
+
+	_openRemovedAttachments() {
+		Liferay.Util.openWindow({
+			dialog: {
+				on: {
+					visibleChange: (event) => {
+						if (!event.newVal) {
+							this._updateRemovedAttachments();
+						}
+					},
+				},
+			},
+			id: this.namespace + 'openRemovedPageAttachments',
+			title: Liferay.Language.get('removed-attachments'),
+			uri: this.viewTrashAttachmentsURL,
+		});
 	}
 
 	/**

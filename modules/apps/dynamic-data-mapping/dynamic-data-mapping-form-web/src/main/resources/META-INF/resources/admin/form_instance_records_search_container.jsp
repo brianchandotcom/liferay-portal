@@ -20,6 +20,8 @@
 DDMFormViewFormInstanceRecordsDisplayContext ddmFormViewFormInstanceRecordsDisplayContext = ddmFormAdminDisplayContext.getFormViewRecordsDisplayContext();
 
 PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletURL();
+
+int availableLocalesCount = ddmFormViewFormInstanceRecordsDisplayContext.getAvailableLocalesCount();
 %>
 
 <clay:management-toolbar
@@ -54,6 +56,29 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 				keyProperty="formInstanceRecordId"
 				modelVar="formInstanceRecord"
 			>
+
+				<%
+				if (availableLocalesCount > 1) {
+				%>
+
+					<liferay-ui:search-container-column-text
+						name="language"
+					>
+
+						<%
+						String w3cLanguageId = StringUtil.toLowerCase(LocaleUtil.toW3cLanguageId(ddmFormViewFormInstanceRecordsDisplayContext.getDefaultLocale(formInstanceRecord)));
+						%>
+
+						<div class="search-container-column-language">
+							<svg class="lexicon-icon lexicon-icon-<%= w3cLanguageId %> reference-mark user-icon-xl">
+								<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#<%= w3cLanguageId %>" />
+							</svg>
+						</div>
+					</liferay-ui:search-container-column-text>
+
+				<%
+				}
+				%>
 
 				<%
 				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap = ddmFormViewFormInstanceRecordsDisplayContext.getDDMFormFieldValues(formInstanceRecord);

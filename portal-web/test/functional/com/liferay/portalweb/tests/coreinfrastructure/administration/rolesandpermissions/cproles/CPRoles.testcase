@@ -206,6 +206,15 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
+		Role.viewCP(
+			roleTitle = "Roles Regrole Name",
+			roleType = "Regular");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
 		Role.deleteCP(roleTitle = "Roles Regrole Name");
 
 		ApplicationsMenu.gotoPortlet(

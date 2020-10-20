@@ -2,29 +2,60 @@
 <!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
 
 <resource-action-mapping>
-	<portlet-resource>
-		<portlet-name>90</portlet-name>
+	<model-resource>
+		<model-name>com.liferay.commerce.address</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_address_web_internal_portlet_CommerceCountryPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>MANAGE_COMMERCE_AVAILABILITY_ESTIMATES</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
-				<action-key>MANAGE_COMMERCE_HEALTH_STATUS</action-key>
-				<action-key>MANAGE_COMMERCE_ORDER_PRICES</action-key>
-				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
-				<action-key>MANAGE_COMMERCE_SUBSCRIPTIONS</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>MANAGE_COMMERCE_AVAILABILITY_ESTIMATES</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
-				<action-key>MANAGE_COMMERCE_HEALTH_STATUS</action-key>
-				<action-key>MANAGE_COMMERCE_ORDER_PRICES</action-key>
-				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
-				<action-key>MANAGE_COMMERCE_SUBSCRIPTIONS</action-key>
 			</guest-unsupported>
 		</permissions>
-	</portlet-resource>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.availability</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_availability_estimate_web_internal_portlet_CommerceAvailabilityEstimatePortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>MANAGE_COMMERCE_AVAILABILITY_ESTIMATES</action-key>
+			</supports>
+			<site-member-defaults/>
+			<guest-defaults/>
+			<guest-unsupported>
+				<action-key>MANAGE_COMMERCE_AVAILABILITY_ESTIMATES</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.health</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_health_status_web_internal_portlet_CommerceHealthCheckPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>MANAGE_COMMERCE_HEALTH_STATUS</action-key>
+			</supports>
+			<site-member-defaults/>
+			<guest-defaults/>
+			<guest-unsupported>
+				<action-key>MANAGE_COMMERCE_HEALTH_STATUS</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.commerce.order</model-name>
 		<portlet-ref>
@@ -41,6 +72,7 @@
 				<action-key>CHECKOUT_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>DELETE_COMMERCE_ORDERS</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_NOTES</action-key>
+				<action-key>MANAGE_COMMERCE_ORDER_PRICES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDERS</action-key>
 				<action-key>VIEW_COMMERCE_ORDERS</action-key>
@@ -57,10 +89,50 @@
 				<action-key>CHECKOUT_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>DELETE_COMMERCE_ORDERS</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_NOTES</action-key>
+				<action-key>MANAGE_COMMERCE_ORDER_PRICES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDERS</action-key>
 				<action-key>VIEW_COMMERCE_ORDERS</action-key>
 				<action-key>VIEW_OPEN_COMMERCE_ORDERS</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.shipment</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>MANAGE_ALL_ACCOUNTS</action-key>
+				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
+			</supports>
+			<site-member-defaults/>
+			<guest-defaults/>
+			<guest-unsupported>
+				<action-key>MANAGE_ALL_ACCOUNTS</action-key>
+				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.subscription</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionContentPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionEntryPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>MANAGE_COMMERCE_SUBSCRIPTIONS</action-key>
+			</supports>
+			<site-member-defaults/>
+			<guest-defaults/>
+			<guest-unsupported>
+				<action-key>MANAGE_COMMERCE_SUBSCRIPTIONS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

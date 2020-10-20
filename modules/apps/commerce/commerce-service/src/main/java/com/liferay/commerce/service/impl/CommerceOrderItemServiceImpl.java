@@ -17,6 +17,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.permission.CommerceAccountPermission;
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -30,8 +31,9 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.math.BigDecimal;
@@ -458,8 +460,12 @@ public class CommerceOrderItemServiceImpl
 			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
 			ActionKeys.UPDATE);
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(
+				commerceOrderItem.getCommerceOrderId());
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), commerceOrder.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItemPrices(
@@ -494,8 +500,12 @@ public class CommerceOrderItemServiceImpl
 			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
 			ActionKeys.UPDATE);
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(
+				commerceOrderItem.getCommerceOrderId());
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), commerceOrder.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItemPrices(
@@ -527,8 +537,12 @@ public class CommerceOrderItemServiceImpl
 			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
 			ActionKeys.UPDATE);
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(
+				commerceOrderItem.getCommerceOrderId());
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), commerceOrder.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItemUnitPrice(
@@ -548,8 +562,12 @@ public class CommerceOrderItemServiceImpl
 			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
 			ActionKeys.UPDATE);
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(
+				commerceOrderItem.getCommerceOrderId());
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), commerceOrder.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItemUnitPrice(
@@ -615,5 +633,11 @@ public class CommerceOrderItemServiceImpl
 			ModelResourcePermissionFactory.getInstance(
 				CommerceOrderItemServiceImpl.class,
 				"_commerceOrderModelResourcePermission", CommerceOrder.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceOrderItemServiceImpl.class,
+				"_portletResourcePermission",
+				CommerceOrderConstants.RESOURCE_NAME);
 
 }

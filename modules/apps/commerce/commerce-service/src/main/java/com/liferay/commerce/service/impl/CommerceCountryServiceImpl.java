@@ -15,6 +15,7 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.base.CommerceCountryServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,8 +23,9 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -45,8 +47,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.addCommerceCountry(
@@ -59,8 +61,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	public void deleteCommerceCountry(long commerceCountryId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		commerceCountryLocalService.deleteCommerceCountry(commerceCountryId);
@@ -71,8 +73,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			long companyId, String twoLettersISOCode)
 		throws PrincipalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.fetchCommerceCountry(
@@ -110,8 +112,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			OrderByComparator<CommerceCountry> orderByComparator)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.getCommerceCountries(
@@ -124,8 +126,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			OrderByComparator<CommerceCountry> orderByComparator)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.getCommerceCountries(
@@ -136,8 +138,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	public int getCommerceCountriesCount(long companyId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.getCommerceCountriesCount(companyId);
@@ -147,8 +149,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	public int getCommerceCountriesCount(long companyId, boolean active)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.getCommerceCountriesCount(
@@ -159,8 +161,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	public CommerceCountry getCommerceCountry(long commerceCountryId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.getCommerceCountry(
@@ -172,8 +174,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			long companyId, String twoLettersISOCode)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.getCommerceCountry(
@@ -202,8 +204,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			long companyId, boolean all)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.getWarehouseCommerceCountries(
@@ -216,8 +218,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			Sort sort)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.searchCommerceCountries(
@@ -233,8 +235,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			SearchContext searchContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.searchCommerceCountries(
@@ -245,8 +247,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	public CommerceCountry setActive(long commerceCountryId, boolean active)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.setActive(commerceCountryId, active);
@@ -261,8 +263,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.updateCommerceCountry(
@@ -276,12 +278,18 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			long commerceCountryId, boolean enable)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceCountryLocalService.updateCommerceCountryChannelFilter(
 			commerceCountryId, enable);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceCountryServiceImpl.class, "_portletResourcePermission",
+				CommerceConstants.ADDRESS_RESOURCE_NAME);
 
 }

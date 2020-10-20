@@ -15,6 +15,7 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipmentItem;
@@ -23,8 +24,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -42,8 +44,8 @@ public class CommerceShipmentItemServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.addCommerceShipmentItem(
@@ -71,8 +73,8 @@ public class CommerceShipmentItemServiceImpl
 			commerceShipmentItemPersistence.findByPrimaryKey(
 				commerceShipmentItemId);
 
-		PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		commerceShipmentItemLocalService.deleteCommerceShipmentItem(
@@ -85,8 +87,8 @@ public class CommerceShipmentItemServiceImpl
 			long commerceInventoryWarehouseId)
 		throws PortalException {
 
-		PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.fetchCommerceShipmentItem(
@@ -99,8 +101,8 @@ public class CommerceShipmentItemServiceImpl
 			long commerceShipmentItemId)
 		throws PortalException {
 
-		PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.getCommerceShipmentItem(
@@ -126,8 +128,8 @@ public class CommerceShipmentItemServiceImpl
 			OrderByComparator<CommerceShipmentItem> orderByComparator)
 		throws PortalException {
 
-		PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.getCommerceShipmentItems(
@@ -156,8 +158,8 @@ public class CommerceShipmentItemServiceImpl
 	public int getCommerceShipmentItemsCount(long commerceShipmentId)
 		throws PortalException {
 
-		PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.getCommerceShipmentItemsCount(
@@ -169,8 +171,8 @@ public class CommerceShipmentItemServiceImpl
 			long commerceOrderItemId)
 		throws PortalException {
 
-		PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.
@@ -183,8 +185,8 @@ public class CommerceShipmentItemServiceImpl
 			long commerceShipmentId, long commerceOrderItemId)
 		throws PortalException {
 
-		PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.
@@ -197,8 +199,8 @@ public class CommerceShipmentItemServiceImpl
 			long commerceShipmentItemId, int quantity)
 		throws PortalException {
 
-		PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.updateCommerceShipmentItem(
@@ -211,8 +213,8 @@ public class CommerceShipmentItemServiceImpl
 			int quantity)
 		throws PortalException {
 
-		PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.updateCommerceShipmentItem(
@@ -224,5 +226,11 @@ public class CommerceShipmentItemServiceImpl
 			ModelResourcePermissionFactory.getInstance(
 				CommerceShipmentItemServiceImpl.class,
 				"_commerceOrderModelResourcePermission", CommerceOrder.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceShipmentItemServiceImpl.class,
+				"_portletResourcePermission",
+				CommerceConstants.SHIPMENT_RESOURCE_NAME);
 
 }

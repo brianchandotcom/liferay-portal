@@ -261,7 +261,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 		}
 
-		processPortletProperties(servletContextName, classLoader);
+		processPortletProperties(classLoader);
 
 		for (Portlet portlet : portlets) {
 			ResourceActionsUtil.check(portlet.getPortletId());
@@ -447,8 +447,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	protected void processPortletProperties(
-			String servletContextName, ClassLoader classLoader)
+	protected void processPortletProperties(ClassLoader classLoader)
 		throws Exception {
 
 		Configuration portletPropertiesConfiguration = null;
@@ -474,10 +473,21 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		}
 
 		ResourceActionsUtil.read(
-			servletContextName, classLoader,
+			null, classLoader,
 			StringUtil.split(
 				portletProperties.getProperty(
 					PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	protected void processPortletProperties(
+			String servletContextName, ClassLoader classLoader)
+		throws Exception {
+
+		processPortletProperties(classLoader);
 	}
 
 	protected void unbindDataSource(String servletContextName) {

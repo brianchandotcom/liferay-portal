@@ -490,7 +490,7 @@ Map<String, Object> taglibContext = HashMapBuilder.<String, Object>put(
 	</portlet:renderURL>
 
 	<%
-	taglibContext.put("messageId", messageId);
+	taglibContext.put("getAttachmentsURL", getAttachmentsURL);
 	taglibContext.put("viewTrashAttachmentsURL", viewTrashAttachmentsURL);
 	%>
 

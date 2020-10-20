@@ -142,7 +142,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 									cssClass="display-icon entry-display-style"
 									imageUrl="<%= thumbnailSrc %>"
 									title="{title}"
-									url="<%= dlViewDisplayContext.getUploadURL() %>"
+									url="<%= (dlViewDisplayContext.isUploadable())?dlViewDisplayContext.getUploadURL():StringPool.BLANK %>"
 								>
 									<liferay-frontend:vertical-card-header>
 										<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
@@ -164,7 +164,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 										</h5>
 
 										<h4>
-											<aui:a href="<%= dlViewDisplayContext.getUploadURL() %>">
+											<aui:a href="<%= (dlViewDisplayContext.isUploadable())?dlViewDisplayContext.getUploadURL():StringPool.BLANK %>">
 												{title}
 											</aui:a>
 										</h4>
@@ -220,7 +220,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 					displayStyle:
 						'<%= HtmlUtil.escapeJS(dlAdminDisplayContext.getDisplayStyle()) %>',
-					editEntryUrl: '<%= dlViewDisplayContext.getEditEntryURL() %>',
+					editEntryUrl:
+						'<%= (themeDisplay.isSignedIn())?dlViewDisplayContext.getEditEntryURL():StringPool.BLANK %>',
 					downloadEntryUrl: '<%= dlViewDisplayContext.getDownloadEntryURL() %>',
 					folders: {
 						defaultParentFolderId: '<%= dlViewDisplayContext.getFolderId() %>',
@@ -248,7 +249,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					searchContainerId: 'entries',
 					trashEnabled: <%= dlTrashHelper.isTrashEnabled(scopeGroupId, dlViewDisplayContext.getRepositoryId()) %>,
 					uploadable: <%= dlViewDisplayContext.isUploadable() %>,
-					uploadURL: '<%= dlViewDisplayContext.getUploadURL() %>',
+					uploadURL:
+						'<%= (dlViewDisplayContext.isUploadable())?dlViewDisplayContext.getUploadURL():StringPool.BLANK	 %>',
 					viewFileEntryTypeURL:
 						'<%= dlViewDisplayContext.getViewFileEntryURL() %>',
 					viewFileEntryURL: '<%= dlViewDisplayContext.getViewFileEntryURL() %>',

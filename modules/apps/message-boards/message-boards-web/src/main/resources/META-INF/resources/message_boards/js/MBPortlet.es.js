@@ -26,9 +26,6 @@ const CONFIRM_DISCARD_IMAGES = Liferay.Language.get(
 /**
  * MBPortlet handles the actions of replying or editing a
  * message board.
- *
- * @abstract
- * @extends {PortletBase}
  */
 
 class MBPortlet {
@@ -127,16 +124,6 @@ class MBPortlet {
 				});
 			});
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-
-	detached() {
-
-		// TODO : implement a destroy
-
 	}
 
 	/**
@@ -366,88 +353,5 @@ class MBPortlet {
 		this.save_();
 	}
 }
-
-/**
- * MBPortlet State definition.
- * @ignore
- * @static
- * @type {!Object}
- */
-
-// MBPortlet.STATE = {
-
-// 	/**
-// 	 * Portlet's constants
-// 	 * @instance
-// 	 * @memberof MBPortlet
-// 	 * @type {!Object}
-// 	 */
-
-// 	constants: {
-// 		validator: core.isObject,
-// 	},
-
-// 	/**
-// 	 * The current action (CMD.ADD, CMD.UPDATE, ...)
-// 	 * for the message
-// 	 * @instance
-// 	 * @memberof MBPortlet
-// 	 * @type {String}
-// 	 */
-
-// 	currentAction: {
-// 		validator: core.isString,
-// 	},
-
-// 	/**
-// 	 * The URL to get deleted attachments from
-// 	 * @instance
-// 	 * @memberof MBPortlet
-// 	 * @type {String}
-// 	 */
-
-// 	getAttachmentsURL: {
-// 		validator: core.isString,
-// 	},
-
-// 	/**
-// 	 * The id of the message that
-// 	 * you are replying to
-// 	 * @instance
-// 	 * @memberof MBPortlet
-// 	 * @type {String}
-// 	 */
-
-// 	replyToMessageId: {
-// 		validator: core.isString,
-// 	},
-
-// 	/**
-// 	 * Portlet's messages
-// 	 * @instance
-// 	 * @memberof WikiPortlet
-// 	 * @type {Object}
-// 	 */
-
-// 	strings: {
-// 		validator: core.isObject,
-// 		value: {
-// 			confirmDiscardImages: Liferay.Language.get(
-// 				'uploads-are-in-progress-confirmation'
-// 			),
-// 		},
-// 	},
-
-// 	/**
-// 	 * The URL to edit deleted attachments
-// 	 * @instance
-// 	 * @memberof MBPortlet
-// 	 * @type {String}
-// 	 */
-
-// 	viewTrashAttachmentsURL: {
-// 		validator: core.isString,
-// 	},
-// };
 
 export default MBPortlet;

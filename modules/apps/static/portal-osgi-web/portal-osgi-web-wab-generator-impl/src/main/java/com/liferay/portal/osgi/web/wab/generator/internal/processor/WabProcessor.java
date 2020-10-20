@@ -35,12 +35,15 @@ import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.GlobalStartupAction;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.PortalClassLoaderFilter;
 import com.liferay.portal.kernel.servlet.PortalClassLoaderServlet;
@@ -66,6 +69,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.JS;
 import com.liferay.whip.util.ReflectionUtil;
 
 import java.io.File;
@@ -73,6 +77,10 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -921,6 +929,97 @@ public class WabProcessor {
 		analyzer.setProperty(Constants.REQUIRE_BUNDLE, sb.toString());
 	}
 
+	protected void processResourceActionXML() throws IOException {
+		File dir = new File(_pluginDir, "WEB-INF/classes");
+
+		URI uri = dir.toURI();
+
+		ClassLoader classLoader = new URLClassLoader(new URL[] {uri.toURL()});
+
+		Configuration configuration = null;
+
+		try {
+			configuration = ConfigurationFactoryUtil.getConfiguration(
+				classLoader, "portlet");
+		}
+		catch (Exception exception) {
+			return;
+		}
+
+		Properties properties = configuration.getProperties();
+
+		for (String xmlFile :
+				StringUtil.split(
+					properties.getProperty(
+						PropsKeys.RESOURCE_ACTIONS_CONFIGS))) {
+
+			processResourceActionXML(dir, xmlFile);
+		}
+	}
+
+	protected void processResourceActionXML(File dir, String xmlFile)
+		throws IOException {
+
+		File file = new File(dir, xmlFile);
+
+		if (!file.exists()) {
+			return;
+		}
+
+		Document document = readDocument(file);
+
+		Element rootElement = document.getRootElement();
+
+		String servletContextName = _context.substring(1);
+
+		for (Element portletResourceElement :
+				rootElement.elements("portlet-resource")) {
+
+			Element portletNameElement = portletResourceElement.element(
+				"portlet-name");
+
+			portletNameElement.setText(
+				JS.getSafeName(
+					StringBundler.concat(
+						portletNameElement.getTextTrim(),
+						PortletConstants.WAR_SEPARATOR, servletContextName)));
+		}
+
+		for (Element modelResourceElement :
+				rootElement.elements("model-resource")) {
+
+			Element portletRefElement = modelResourceElement.element(
+				"portlet-ref");
+
+			for (Element portletNameElement :
+					portletRefElement.elements("portlet-name")) {
+
+				portletNameElement.setText(
+					JS.getSafeName(
+						StringBundler.concat(
+							portletNameElement.getTextTrim(),
+							PortletConstants.WAR_SEPARATOR,
+							servletContextName)));
+			}
+		}
+
+		formatDocument(file, document);
+
+		if (!xmlFile.endsWith("-ext.xml")) {
+			processResourceActionXML(
+				dir, StringUtil.replace(xmlFile, ".xml", "-ext.xml"));
+		}
+
+		for (Element resourceFileElement : rootElement.elements("resource")) {
+			String resourceFileName = StringUtil.trim(
+				resourceFileElement.attributeValue("file"));
+
+			processResourceActionXML(dir, resourceFileName);
+			processResourceActionXML(
+				dir, StringUtil.replace(resourceFileName, ".xml", "-ext.xml"));
+		}
+	}
+
 	protected void processServicePackageName(Resource resource) {
 		try (InputStream inputStream = resource.openInputStream()) {
 			Document document = UnsecureSAXReaderUtil.read(inputStream);
@@ -1189,6 +1288,8 @@ public class WabProcessor {
 			processLiferayPortletXML();
 			processWebXML("WEB-INF/web.xml");
 			processWebXML("WEB-INF/liferay-web.xml");
+
+			processResourceActionXML();
 
 			processDeclarativeReferences(analyzer);
 

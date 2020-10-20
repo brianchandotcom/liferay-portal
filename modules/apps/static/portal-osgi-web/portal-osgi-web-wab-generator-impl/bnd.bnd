@@ -18,3 +18,4 @@ Import-Package:\
 	com.liferay.whip.util,\
 	\
 	org.osgi.service.repository
+-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/JS.class

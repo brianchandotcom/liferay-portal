@@ -155,7 +155,7 @@
 
 							Locale curLocale = LocaleUtil.fromLanguageId(curLanguageId);
 
-							if (errorLocales.contains(curLocale) || ((index == 0) && errorLocales.isEmpty())) {
+							if (errorLocales.contains(curLocale) || (curLanguageId.equals(selectedLanguageId) && errorLocales.isEmpty())) {
 								linkCssClass += " active";
 							}
 

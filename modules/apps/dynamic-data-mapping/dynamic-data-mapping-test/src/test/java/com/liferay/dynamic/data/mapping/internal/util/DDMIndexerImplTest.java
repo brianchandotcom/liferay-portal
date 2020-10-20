@@ -34,11 +34,13 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -85,6 +87,7 @@ public class DDMIndexerImplTest {
 		ddmFixture.setUp();
 		documentFixture.setUp();
 		setUpPortalUtil();
+		setUpPropsUtil();
 	}
 
 	@After
@@ -328,6 +331,11 @@ public class DDMIndexerImplTest {
 		);
 
 		portalUtil.setPortal(portal);
+	}
+
+	protected void setUpPropsUtil() {
+		PropsTestUtil.setProps(
+			PropsKeys.INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH, "255");
 	}
 
 	protected final DDMFixture ddmFixture = new DDMFixture();

@@ -14,11 +14,13 @@
 
 package com.liferay.commerce.product.tax.category.web.internal.portlet;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.tax.category.web.internal.display.context.CPTaxCategoryDisplayContext;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -65,8 +67,8 @@ public class CPTaxCategoryPortlet extends MVCPortlet {
 
 		CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext =
 			new CPTaxCategoryDisplayContext(
-				_commerceTaxMethodService, _cpTaxCategoryService, renderRequest,
-				renderResponse);
+				_commerceTaxMethodService, _cpTaxCategoryService,
+				_portletResourcePermission, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpTaxCategoryDisplayContext);
@@ -79,5 +81,8 @@ public class CPTaxCategoryPortlet extends MVCPortlet {
 
 	@Reference
 	private CPTaxCategoryService _cpTaxCategoryService;
+
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

@@ -267,6 +267,47 @@ definition {
 		Role.viewDefaultCP(roleTitle = "Roles Regrole Name");
 	}
 
+	@priority = "5"
+	test DeleteSiteRole {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.add(roleTitle = "Roles Siterole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewCP(
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.deleteCP(roleTitle = "Roles Siterole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.viewDefaultCP(roleTitle = "Roles Siterole Name");
+	}
+
 	@priority = "4"
 	test RemoveSegmentFromRegularRole {
 		ProductMenu.gotoSite(site = "Global");

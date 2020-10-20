@@ -52,7 +52,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 
-		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_CATEGORY) %>">
+		<c:if test="<%= cpSpecificationOptionDisplayContext.hasPermission(CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_CATEGORY) %>">
 			<liferay-portlet:renderURL var="addProductSpecificationOptionURL">
 				<portlet:param name="mvcRenderCommandName" value="/cp_specification_options/edit_cp_specification_option" />
 			</liferay-portlet:renderURL>

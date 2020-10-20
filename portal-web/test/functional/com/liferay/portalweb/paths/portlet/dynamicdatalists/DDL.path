@@ -8,8 +8,10 @@
 <tr><td rowspan="1" colspan="3">DDL</td></tr>
 </thead>
 <tbody>
+
 <!--TOOLBAR-->
 <tr>
+
 	<td>TOOLBAR_ADD</td>
 	<td>//a[@*='Add ${key_ddlDataDefinitionName}']</td>
 	<td></td>
@@ -19,7 +21,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--RECORD_TABLE-->
+
 <tr>
 	<td>RECORD_TABLE_ENTRY</td>
 	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr/td/a[.='${key_ddlRecordFieldData}']</td>
@@ -77,7 +81,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_PREVIEW_INVALID_IMG</td>
-	<td>//img[@src='x']</td>
+	<td>//p[contains(text(), 'img src=x')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,7 +99,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--LIST_TABLE-->
+
 <tr>
 	<td>LIST_TABLE_NAME</td>
 	<td>//div[contains(@id,'ddlRecordSetSearchContainer')]//tr[contains(.,'${key_ddlListName}')]/td[3]//a</td>
@@ -111,7 +117,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PORTLET_ACTIONS-->
+
 <tr>
 	<td>PORTLET_ACTIONS_ADD_FORM_TEMPLATE</td>
 	<td>//a[contains(.,'Add Form Template')]</td>

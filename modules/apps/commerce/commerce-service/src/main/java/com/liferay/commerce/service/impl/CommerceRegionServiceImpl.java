@@ -15,11 +15,13 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.base.CommerceRegionServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -36,8 +38,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.addCommerceRegion(
@@ -48,8 +50,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	public void deleteCommerceRegion(long commerceRegionId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		commerceRegionLocalService.deleteCommerceRegion(commerceRegionId);
@@ -59,8 +61,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	public CommerceRegion getCommerceRegion(long commerceRegionId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.getCommerceRegion(commerceRegionId);
@@ -80,8 +82,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 			OrderByComparator<CommerceRegion> orderByComparator)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.getCommerceRegions(
@@ -94,8 +96,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 			OrderByComparator<CommerceRegion> orderByComparator)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.getCommerceRegions(
@@ -115,8 +117,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	public int getCommerceRegionsCount(long commerceCountryId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.getCommerceRegionsCount(
@@ -127,8 +129,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	public int getCommerceRegionsCount(long commerceCountryId, boolean active)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.getCommerceRegionsCount(
@@ -139,8 +141,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	public CommerceRegion setActive(long commerceRegionId, boolean active)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.setActive(commerceRegionId, active);
@@ -155,13 +157,19 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 		CommerceRegion commerceRegion =
 			commerceRegionPersistence.findByPrimaryKey(commerceRegionId);
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.updateCommerceRegion(
 			commerceRegion.getCommerceRegionId(), name, code, priority, active,
 			serviceContext);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceRegionServiceImpl.class, "_portletResourcePermission",
+				CommerceConstants.ADDRESS_RESOURCE_NAME);
 
 }

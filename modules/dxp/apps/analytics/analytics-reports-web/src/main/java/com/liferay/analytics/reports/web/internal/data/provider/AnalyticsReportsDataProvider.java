@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import com.liferay.analytics.reports.web.internal.client.AsahFaroBackendClient;
 import com.liferay.analytics.reports.web.internal.model.AcquisitionChannel;
-import com.liferay.analytics.reports.web.internal.model.CountrySearchKeywords;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
@@ -39,7 +38,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -184,7 +183,8 @@ public class AnalyticsReportsDataProvider {
 		}
 	}
 
-	public List<TrafficSource> getTrafficSources(long companyId, String url)
+	public Map<String, TrafficSource> getTrafficSources(
+			long companyId, String url)
 		throws PortalException {
 
 		try {
@@ -198,6 +198,17 @@ public class AnalyticsReportsDataProvider {
 				typeFactory.constructCollectionType(
 					List.class, TrafficSource.class));
 
+			Stream<TrafficSource> trafficSourcesStream =
+				trafficSources.stream();
+
+			Map<String, TrafficSource> trafficSourceMap =
+				trafficSourcesStream.map(
+					trafficSource -> new AbstractMap.SimpleEntry<>(
+						trafficSource.getName(), trafficSource)
+				).collect(
+					Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+				);
+
 			Map<String, AcquisitionChannel> acquisitionChannels =
 				getAcquisitionChannels(companyId, url);
 
@@ -207,29 +218,25 @@ public class AnalyticsReportsDataProvider {
 			Stream<AcquisitionChannel> stream = values.stream();
 
 			return stream.map(
-				acquisitionChannel -> {
-					Stream<TrafficSource> trafficSourcesStream =
-						trafficSources.stream();
-
-					List<CountrySearchKeywords> countrySearchKeywords =
-						trafficSourcesStream.filter(
-							trafficSource -> Objects.equals(
-								acquisitionChannel.getName(),
-								trafficSource.getName())
-						).findFirst(
-						).map(
-							TrafficSource::getCountrySearchKeywordsList
-						).orElseGet(
-							Collections::emptyList
-						);
-
-					return new TrafficSource(
-						countrySearchKeywords, acquisitionChannel.getName(),
+				acquisitionChannel -> Optional.ofNullable(
+					trafficSourceMap.get(acquisitionChannel.getName())
+				).map(
+					trafficSource -> new TrafficSource(
+						trafficSource.getCountrySearchKeywordsList(),
+						acquisitionChannel.getName(),
 						acquisitionChannel.getTrafficAmount(),
-						acquisitionChannel.getTrafficShare());
-				}
+						acquisitionChannel.getTrafficShare())
+				).orElseGet(
+					() -> new TrafficSource(
+						Collections.emptyList(), acquisitionChannel.getName(),
+						acquisitionChannel.getTrafficAmount(),
+						acquisitionChannel.getTrafficShare())
+				)
+			).map(
+				trafficSource -> new AbstractMap.SimpleEntry<>(
+					trafficSource.getName(), trafficSource)
 			).collect(
-				Collectors.toList()
+				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
 			);
 		}
 		catch (Exception exception) {

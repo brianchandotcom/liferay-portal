@@ -39,11 +39,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
@@ -137,20 +138,42 @@ public class GetTrafficSourcesMVCResourceCommand
 		AnalyticsReportsDataProvider analyticsReportsDataProvider,
 		String canonicalURL, long companyId) {
 
+		Map<String, TrafficSource> emptyMap = HashMapBuilder.put(
+			"direct", new TrafficSource(Collections.emptyList(), "direct", 0, 0)
+		).put(
+			"organic",
+			new TrafficSource(Collections.emptyList(), "organic", 0, 0)
+		).put(
+			"paid", new TrafficSource(Collections.emptyList(), "paid", 0, 0)
+		).put(
+			"referral",
+			new TrafficSource(Collections.emptyList(), "referral", 0, 0)
+		).put(
+			"social", new TrafficSource(Collections.emptyList(), "social", 0, 0)
+		).build();
+
 		if (!analyticsReportsDataProvider.isValidAnalyticsConnection(
 				companyId)) {
 
-			return Collections.emptyList();
+			return new ArrayList<>(emptyMap.values());
 		}
 
 		try {
-			return analyticsReportsDataProvider.getTrafficSources(
-				companyId, canonicalURL);
+			Map<String, TrafficSource> trafficSources =
+				analyticsReportsDataProvider.getTrafficSources(
+					companyId, canonicalURL);
+
+			emptyMap.forEach(
+				(name, trafficSource) -> trafficSources.merge(
+					name, trafficSource,
+					(trafficSource1, trafficSource2) -> trafficSource1));
+
+			return new ArrayList<>(trafficSources.values());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
 
-			return Collections.emptyList();
+			return new ArrayList<>(emptyMap.values());
 		}
 	}
 
@@ -160,53 +183,54 @@ public class GetTrafficSourcesMVCResourceCommand
 		ResourceBundle resourceBundle) {
 
 		Map<String, String> helpMessageMap = HashMapBuilder.put(
+			"direct",
+			ResourceBundleUtil.getString(
+				resourceBundle,
+				"this-is-the-number-of-page-views-generated-by-people-" +
+					"arriving-directly-to-your-page")
+		).put(
 			"organic",
 			ResourceBundleUtil.getString(
 				resourceBundle,
-				"this-number-refers-to-the-volume-of-people-that-find-your-" +
-					"page-through-a-search-engine")
+				"this-is-the-number-of-page-views-generated-by-people-coming-" +
+					"from-a-search-engine")
 		).put(
 			"paid",
 			ResourceBundleUtil.getString(
 				resourceBundle,
-				"this-number-refers-to-the-volume-of-people-that-find-your-" +
-					"page-through-paid-keywords")
-		).build();
-
-		Map<String, String> titleMap = HashMapBuilder.put(
-			"organic", ResourceBundleUtil.getString(resourceBundle, "organic")
+				"this-is-the-number-of-page-views-generated-by-people-that-" +
+					"find-your-page-through-google-adwords")
 		).put(
-			"paid", ResourceBundleUtil.getString(resourceBundle, "paid")
+			"referral",
+			ResourceBundleUtil.getString(
+				resourceBundle,
+				"this-is-the-number-of-page-views-generated-by-people-coming-" +
+					"to-your-page-from-other-sites-which-are-not-search-" +
+						"engine-pages-or-social-sites")
+		).put(
+			"social",
+			ResourceBundleUtil.getString(
+				resourceBundle,
+				"this-is-the-number-of-page-views-generated-by-people-coming-" +
+					"to-your-page-from-social-sites")
 		).build();
 
 		List<TrafficSource> trafficSources = _getTrafficSources(
 			analyticsReportsDataProvider, canonicalURL, companyId);
 
-		return JSONUtil.putAll(
-			Stream.of(
-				"organic", "paid"
-			).map(
-				name -> {
-					Stream<TrafficSource> stream = trafficSources.stream();
+		Stream<TrafficSource> stream = trafficSources.stream();
 
-					return stream.filter(
-						trafficSource -> Objects.equals(
-							name, trafficSource.getName())
-					).findFirst(
-					).map(
-						trafficSource -> trafficSource.toJSONObject(
-							helpMessageMap.get(name), locale,
-							titleMap.get(name))
-					).orElse(
-						JSONUtil.put(
-							"helpMessage", helpMessageMap.get(name)
-						).put(
-							"name", name
-						).put(
-							"title", titleMap.get(name)
-						)
-					);
-				}
+		Comparator<TrafficSource> comparator = Comparator.comparing(
+			TrafficSource::getTrafficShare);
+
+		return JSONUtil.putAll(
+			stream.sorted(
+				comparator.reversed()
+			).map(
+				trafficSource -> trafficSource.toJSONObject(
+					helpMessageMap.get(trafficSource.getName()), locale,
+					ResourceBundleUtil.getString(
+						resourceBundle, trafficSource.getName()))
 			).toArray());
 	}
 

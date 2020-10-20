@@ -115,19 +115,30 @@ public class TrafficSource {
 	public JSONObject toJSONObject(
 		String helpMessage, Locale locale, String title) {
 
-		return JSONUtil.put(
-			"countryKeywords", _getCountryKeywordsJSONArray(locale)
-		).put(
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (!ListUtil.isEmpty(_countrySearchKeywordsList)) {
+			jsonObject.put(
+				"countryKeywords", _getCountryKeywordsJSONArray(locale));
+		}
+
+		jsonObject.put(
 			"helpMessage", helpMessage
 		).put(
 			"name", getName()
-		).put(
-			"share", String.format("%.2f", getTrafficShare())
-		).put(
-			"title", title
-		).put(
-			"value", Math.toIntExact(getTrafficAmount())
 		);
+
+		if (_trafficShare > 0) {
+			jsonObject.put("share", String.format("%.2f", _trafficShare));
+		}
+
+		jsonObject.put("title", title);
+
+		if (_trafficAmount > 0) {
+			jsonObject.put("value", Math.toIntExact(_trafficAmount));
+		}
+
+		return jsonObject;
 	}
 
 	@Override

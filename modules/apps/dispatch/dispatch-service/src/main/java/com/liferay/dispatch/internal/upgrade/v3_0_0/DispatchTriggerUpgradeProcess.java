@@ -41,7 +41,8 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 
 		alter(
 			DispatchTriggerTable.class,
-			new AlterColumnName(oldColumnName, newColumnName + " varchar(75)"));
+			new AlterColumnName(
+				oldColumnName, newColumnName + " VARCHAR(75) null"));
 	}
 
 }

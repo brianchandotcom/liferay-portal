@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext;
@@ -21,6 +22,7 @@ import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,6 +61,7 @@ public class EditCPOptionMVCRenderCommand implements MVCRenderCommand {
 				new CPOptionDisplayContext(
 					_configurationProvider, cpOption,
 					_ddmFormFieldTypeServicesTracker,
+					_portletResourcePermission,
 					_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
@@ -79,6 +82,9 @@ public class EditCPOptionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private Portal _portal;

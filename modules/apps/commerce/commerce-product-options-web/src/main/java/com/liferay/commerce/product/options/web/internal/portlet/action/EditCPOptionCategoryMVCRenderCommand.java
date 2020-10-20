@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException;
@@ -23,6 +24,7 @@ import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -57,7 +59,7 @@ public class EditCPOptionCategoryMVCRenderCommand implements MVCRenderCommand {
 			CPOptionCategoryDisplayContext cpOptionCategoryDisplayContext =
 				new CPOptionCategoryDisplayContext(
 					_actionHelper, _portal.getHttpServletRequest(renderRequest),
-					_cpOptionCategoryService);
+					_cpOptionCategoryService, _portletResourcePermission);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -106,5 +108,8 @@ public class EditCPOptionCategoryMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

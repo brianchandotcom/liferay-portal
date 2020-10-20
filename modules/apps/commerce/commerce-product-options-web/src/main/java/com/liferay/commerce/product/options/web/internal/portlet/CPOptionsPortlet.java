@@ -14,12 +14,14 @@
 
 package com.liferay.commerce.product.options.web.internal.portlet;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -71,6 +73,7 @@ public class CPOptionsPortlet extends MVCPortlet {
 				new CPOptionDisplayContext(
 					_configurationProvider, null,
 					_ddmFormFieldTypeServicesTracker,
+					_portletResourcePermission,
 					_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
@@ -96,5 +99,8 @@ public class CPOptionsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

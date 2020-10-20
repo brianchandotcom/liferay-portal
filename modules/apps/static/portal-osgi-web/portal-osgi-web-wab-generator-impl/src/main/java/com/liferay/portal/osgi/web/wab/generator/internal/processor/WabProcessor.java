@@ -1008,12 +1008,9 @@ public class WabProcessor {
 		}
 
 		for (Element resourceFileElement : rootElement.elements("resource")) {
-			String resourceFileName = StringUtil.trim(
-				resourceFileElement.attributeValue("file"));
-
-			processResourceActionXML(dir, resourceFileName);
 			processResourceActionXML(
-				dir, StringUtil.replace(resourceFileName, ".xml", "-ext.xml"));
+				dir,
+				StringUtil.trim(resourceFileElement.attributeValue("file")));
 		}
 	}
 

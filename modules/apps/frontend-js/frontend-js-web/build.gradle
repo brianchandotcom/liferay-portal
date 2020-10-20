@@ -25,11 +25,11 @@ buildClay {
 
 buildLiferayAMDLoader {
 	dependsOn npmInstall
-	eachFile new StripPathSegmentsAction(3)
+	eachFile new StripPathSegmentsAction(4)
 	from npmInstall.nodeModulesDir
 
-	include "liferay-amd-loader/build/loader/loader.js.map"
-	include "liferay-amd-loader/build/loader/loader.js"
+	include "@liferay/amd-loader/build/loader/loader.js.map"
+	include "@liferay/amd-loader/build/loader/loader.js"
 
 	includeEmptyDirs = false
 	into new File(jsDestinationDir, "loader")

@@ -76,14 +76,7 @@ public class MessageDigestCacheKeyGenerator extends BaseCacheKeyGenerator {
 
 	@Override
 	public Serializable getCacheKey(String key) {
-		try {
-			_messageDigest.update(_charsetEncoder.encode(CharBuffer.wrap(key)));
-
-			return StringUtil.bytesToHexString(_messageDigest.digest());
-		}
-		catch (CharacterCodingException characterCodingException) {
-			throw new SystemException(characterCodingException);
-		}
+		return getCacheKey(new String[] {key}, 1);
 	}
 
 	@Override

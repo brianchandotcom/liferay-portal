@@ -22,7 +22,9 @@ import java.util.Map;
 
 /**
  * @author Jürgen Kappler
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class ExpandoInfoDisplayFieldProviderUtil {
 
 	public static List<InfoDisplayField> getExpandoInfoDisplayFields(

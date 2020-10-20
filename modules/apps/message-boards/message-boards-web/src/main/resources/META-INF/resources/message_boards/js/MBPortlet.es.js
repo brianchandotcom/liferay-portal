@@ -33,6 +33,7 @@ class MBPortlet {
 		currentAction,
 		getAttachmentsURL,
 		namespace,
+		replyToMessageId,
 		rootNode,
 		viewTrashAttachmentsURL,
 	}) {
@@ -40,6 +41,7 @@ class MBPortlet {
 		this.constants = constants;
 		this.currentAction = currentAction;
 		this.getAttachmentsURL = getAttachmentsURL;
+		this.replyToMessageId = replyToMessageId;
 		this.rootNode = document.getElementById(rootNode);
 		this.viewTrashAttachmentsURL = viewTrashAttachmentsURL;
 

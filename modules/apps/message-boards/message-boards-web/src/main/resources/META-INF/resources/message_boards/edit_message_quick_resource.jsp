@@ -231,7 +231,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		currentAction: '<%= Constants.ADD %>',
 		namespace: '<portlet:namespace />',
 		replyToMessageId: '<%= parentMessageId %>',
-		rootNode: '#<portlet:namespace />addQuickReply<%= parentMessageId %>',
+		rootNode: '<portlet:namespace />addQuickReply<%= parentMessageId %>',
 	});
 
 	mb.init();

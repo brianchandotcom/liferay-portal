@@ -340,9 +340,16 @@ public class InputAssetLinksDisplayContext {
 
 		ItemSelector itemSelector = ItemSelectorUtil.getItemSelector();
 
-		return itemSelector.getItemSelectorURL(
+		PortletURL portletURL = itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
 			getEventName(), assetEntryItemSelectorCriterion);
+
+		if (_assetEntryId > 0) {
+			portletURL.setParameter(
+				"refererAssetEntryId", String.valueOf(_assetEntryId));
+		}
+
+		return portletURL;
 	}
 
 	private List<Map<String, Object>> _getSelectorEntries(

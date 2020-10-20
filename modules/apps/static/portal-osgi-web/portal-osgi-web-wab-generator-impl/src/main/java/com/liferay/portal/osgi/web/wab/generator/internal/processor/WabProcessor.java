@@ -936,15 +936,12 @@ public class WabProcessor {
 
 		ClassLoader classLoader = new URLClassLoader(new URL[] {uri.toURL()});
 
-		Configuration configuration = null;
-
-		try {
-			configuration = ConfigurationFactoryUtil.getConfiguration(
-				classLoader, "portlet");
-		}
-		catch (Exception exception) {
+		if (classLoader.getResource("portlet.properties") == null) {
 			return;
 		}
+
+		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
+			classLoader, "portlet");
 
 		Properties properties = configuration.getProperties();
 

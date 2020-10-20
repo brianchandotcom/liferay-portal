@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 NPMResolver npmResolver = (NPMResolver)request.getAttribute("NPMResolver");
 %>
 
@@ -54,7 +55,7 @@ navigationItem.setLabel(LanguageUtil.get(request, "option-templates"));
 <aui:script require='<%= npmResolver.resolveModuleName("commerce-product-options-web/CPOptionsEditor.es") + " as CPOptionsEditor" %>'>
 	var cpOptionsEditor = new CPOptionsEditor.default(
 		{
-			hasEditPermission: <%= PortalPermissionUtil.contains(permissionChecker, CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION) %>,
+			hasEditPermission: <%= cpOptionDisplayContext.hasPermission(CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION) %>,
 			namespace: '<portlet:namespace />',
 			optionURL: '<%= cpOptionURL %>',
 			optionValueURL: '<%= cpOptionValueURL %>',

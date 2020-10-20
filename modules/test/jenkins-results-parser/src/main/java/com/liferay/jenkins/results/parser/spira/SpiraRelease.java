@@ -155,7 +155,7 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		}
 	}
 
-	public static int getID(String jobName, String suiteName) {
+	public static int getID(String jobName, String testSuiteName) {
 		Properties buildProperties = null;
 
 		try {
@@ -163,7 +163,8 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 			return Integer.parseInt(
 				buildProperties.getProperty(
-					"spira.release.id[" + jobName + "][" + suiteName + "]"));
+					"spira.release.id[" + jobName + "][" + testSuiteName +
+						"]"));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(

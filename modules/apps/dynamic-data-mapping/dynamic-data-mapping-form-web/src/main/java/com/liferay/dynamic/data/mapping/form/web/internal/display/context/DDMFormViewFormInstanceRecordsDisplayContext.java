@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.DDMFormInstanceRecordSearch;
+import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -46,6 +47,8 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -117,6 +120,20 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
+	}
+
+	public List<String> getAvailableActions(PermissionChecker permissionChecker)
+		throws PortalException {
+
+		List<String> availableActions = new ArrayList<>();
+
+		if (DDMFormInstancePermission.contains(
+				permissionChecker, getDDMFormInstance(), ActionKeys.DELETE)) {
+
+			availableActions.add("deleteRecords");
+		}
+
+		return availableActions;
 	}
 
 	public int getAvailableLocalesCount() throws Exception {

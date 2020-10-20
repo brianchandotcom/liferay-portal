@@ -62,7 +62,14 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 
 		try {
 			if (location.startsWith("file")) {
-				Files.copy(Paths.get(_getSourceJarLocation(location)), path);
+				String jarLocation = _getSourceJarLocation(location);
+
+				if (jarLocation.startsWith(
+						PropsValues.MODULE_FRAMEWORK_BASE_DIR)) {
+
+					Files.copy(
+						Paths.get(_getSourceJarLocation(location)), path);
+				}
 			}
 			else {
 				Matcher matcher = _pattern.matcher(location);

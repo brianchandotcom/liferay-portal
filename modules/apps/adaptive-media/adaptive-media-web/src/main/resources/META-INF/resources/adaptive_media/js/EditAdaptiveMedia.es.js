@@ -23,13 +23,10 @@ import Input from './utils/input.es';
 import { alphanumeric, required, validate } from "./utils/formValidations.es";
 
 const EditAdaptiveMedia = ({
+	amImageConfigurationEntry,
 	automaticUuid,
 	configurationEntryEditable,
 	configurationEntryUuid,
-	description,
-	maxHeight,
-	maxWidth,
-	name,
 	namespace,
 	redirect,
 }) => {
@@ -44,10 +41,27 @@ const EditAdaptiveMedia = ({
 	const newUuidId = `${namespace}newUuid`;
 	const automaticRadioId = `${namespace}automaticUuid`;
 
+	let maxWidth = '';
+	let maxHeight = '';
+
+	if (amImageConfigurationEntry) {
+		const properties = amImageConfigurationEntry.properties;
+
+		const curMaxWidth = properties['max-width'];
+		const curMaxHeight = properties['max-height'];
+
+		if (curMaxWidth != 0) {
+			maxWidth = curMaxWidth;
+		}
+		if (curMaxHeight != 0) {
+			maxHeight = curMaxHeight;
+		}
+	}
+
 	const formik = useFormik({
 		initialValues: {
-			[nameId]: name,
-			[descriptionId]: description,
+			[nameId]: amImageConfigurationEntry ? amImageConfigurationEntry.name : '',
+			[descriptionId]: amImageConfigurationEntry ? amImageConfigurationEntry.description : '',
 			[maxWidthId]: maxWidth,
 			[maxHeightId]: maxHeight,
 			[highResolutionId]: addHighResolution,
@@ -143,7 +157,7 @@ const EditAdaptiveMedia = ({
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 
-					{!configurationEntryUuid &&
+					{!amImageConfigurationEntry &&
 						<ClayCheckbox
 							checked={addHighResolution}
 							label={Liferay.Language.get(

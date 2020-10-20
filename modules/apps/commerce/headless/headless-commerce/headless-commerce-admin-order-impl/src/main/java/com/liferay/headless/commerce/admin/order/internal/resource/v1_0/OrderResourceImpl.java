@@ -336,7 +336,8 @@ public class OrderResourceImpl
 
 			for (OrderItem orderItem : orderItems) {
 				OrderItemUtil.upsertCommerceOrderItem(
-					_cpInstanceService, _commerceOrderItemService, orderItem,
+					_cpInstanceService, _commerceOrderItemService,
+					_commerceOrderModelResourcePermission, orderItem,
 					commerceOrder,
 					_commerceContextFactory.create(
 						contextCompany.getCompanyId(),

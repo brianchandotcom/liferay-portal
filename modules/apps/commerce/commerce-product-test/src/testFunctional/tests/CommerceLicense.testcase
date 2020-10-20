@@ -1,0 +1,61 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "false";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test ViewCommerceDisabled {
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		var key_panel = "Applications";
+
+		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
+
+		var key_panel = "Commerce";
+
+		AssertElementNotPresent(locator1 = "ApplicationsMenu#PANEL");
+
+		AssertConsoleTextNotPresent(value1 = "STARTED Liferay Commerce");
+	}
+
+	@priority = "5"
+	test ViewCommerceEnabled {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
+
+		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/speedwell");
+
+		CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "Catalog");
+	}
+
+}

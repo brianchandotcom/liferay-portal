@@ -14,9 +14,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import {useDrop} from 'react-dnd';
 
-import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
 import {useItems} from '../contexts/ItemsContext';
 import {MenuItem} from './MenuItem';
 
@@ -31,25 +29,11 @@ export const Menu = () => {
 };
 
 const MenuContent = ({items}) => {
-	const [, drop] = useDrop({
-		accept: ACCEPTING_ITEM_TYPE,
-		canDrop(source, monitor) {
-			return monitor.isOver({shallow: true});
-		},
-		drop(source, monitor) {
-			if (monitor.canDrop()) {
-
-				// to-do: drop logic
-
-			}
-		},
-	});
-
 	return items.map((item) => (
 		<div key={item.siteNavigationMenuItemId}>
 			<MenuItem item={item} />
 
-			<div className="pl-5" ref={drop}>
+			<div className="pl-5">
 				{!!item.children.length && (
 					<MenuContent items={item.children} />
 				)}

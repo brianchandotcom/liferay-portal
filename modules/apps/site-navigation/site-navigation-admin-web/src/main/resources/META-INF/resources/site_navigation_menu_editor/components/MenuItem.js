@@ -21,9 +21,7 @@ import classNames from 'classnames';
 import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {useDrag} from 'react-dnd';
 
-import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
 import {useConstants} from '../contexts/ConstantsContext';
 import {useItems, useSetItems} from '../contexts/ItemsContext';
@@ -33,6 +31,7 @@ import {
 } from '../contexts/SelectedMenuItemIdContext';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 import deleteItem from '../utils/deleteItem';
+import {useDragItem, useDropTarget} from '../utils/useDragAndDrop';
 
 export const MenuItem = ({item}) => {
 	const {deleteSiteNavigationMenuItemURL, portletNamespace} = useConstants();
@@ -43,6 +42,9 @@ export const MenuItem = ({item}) => {
 	const setSidebarPanelId = useSetSidebarPanelId();
 
 	const selected = useSelectedMenuItemId() === siteNavigationMenuItemId;
+
+	const {handlerRef} = useDragItem(item);
+	const {targetRef} = useDropTarget(item);
 
 	const deleteMenuItem = () => {
 		fetch(deleteSiteNavigationMenuItemURL, {
@@ -66,56 +68,51 @@ export const MenuItem = ({item}) => {
 			});
 	};
 
-	const [, handlerRef] = useDrag({
-		item: {
-			id: siteNavigationMenuItemId,
-			type: ACCEPTING_ITEM_TYPE,
-		},
-	});
-
 	return (
-		<ClayCard
-			className={classNames('site_navigation_menu_editor_MenuItem', {
-				'site_navigation_menu_editor_MenuItem--selected': selected,
-			})}
-			horizontal
-			selectable
-		>
-			<ClayCheckbox
-				checked={selected}
-				onChange={() => {
-					setSelectedMenuItemId(siteNavigationMenuItemId);
-					setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
-				}}
+		<div ref={targetRef}>
+			<ClayCard
+				className={classNames('site_navigation_menu_editor_MenuItem', {
+					'site_navigation_menu_editor_MenuItem--selected': selected,
+				})}
+				horizontal
+				selectable
 			>
-				<ClayCard.Body className="px-0">
-					<ClayCard.Row>
-						<ClayLayout.ContentCol gutters ref={handlerRef}>
-							<ClayIcon symbol="drag" />
-						</ClayLayout.ContentCol>
+				<ClayCheckbox
+					checked={selected}
+					onChange={() => {
+						setSelectedMenuItemId(siteNavigationMenuItemId);
+						setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
+					}}
+				>
+					<ClayCard.Body className="px-0">
+						<ClayCard.Row>
+							<ClayLayout.ContentCol gutters ref={handlerRef}>
+								<ClayIcon symbol="drag" />
+							</ClayLayout.ContentCol>
 
-						<ClayLayout.ContentCol expand>
-							<ClayCard.Description displayType="title">
-								{title}
-							</ClayCard.Description>
+							<ClayLayout.ContentCol expand>
+								<ClayCard.Description displayType="title">
+									{title}
+								</ClayCard.Description>
 
-							<ClayCard.Description displayType="subtitle">
-								{type}
-							</ClayCard.Description>
-						</ClayLayout.ContentCol>
+								<ClayCard.Description displayType="subtitle">
+									{type}
+								</ClayCard.Description>
+							</ClayLayout.ContentCol>
 
-						<ClayLayout.ContentCol gutters>
-							<ClayButtonWithIcon
-								displayType="unstyled"
-								onClick={deleteMenuItem}
-								small
-								symbol="times-circle"
-							/>
-						</ClayLayout.ContentCol>
-					</ClayCard.Row>
-				</ClayCard.Body>
-			</ClayCheckbox>
-		</ClayCard>
+							<ClayLayout.ContentCol gutters>
+								<ClayButtonWithIcon
+									displayType="unstyled"
+									onClick={deleteMenuItem}
+									small
+									symbol="times-circle"
+								/>
+							</ClayLayout.ContentCol>
+						</ClayCard.Row>
+					</ClayCard.Body>
+				</ClayCheckbox>
+			</ClayCard>
+		</div>
 	);
 };
 

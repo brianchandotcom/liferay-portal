@@ -22,7 +22,12 @@
 		"actions": [
 			{
 				"actionIds": [
-					"ADD_COMMERCE_PRICE_LIST",
+					"ADD_COMMERCE_PRICE_LIST"
+				],
+				"resource": "com.liferay.commerce.price.list"
+			},
+			{
+				"actionIds": [
 					"VIEW_CONTROL_PANEL"
 				],
 				"resource": "90"
@@ -39,7 +44,13 @@
 				"actionIds": [
 					"ACCESS_IN_CONTROL_PANEL"
 				],
-				"resource": "com_liferay_commerce_price_list_web_internal_portlet_CommercePriceListPortlet"
+				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommercePromotionPortlet"
 			}
 		],
 		"name": "Discount Manager",

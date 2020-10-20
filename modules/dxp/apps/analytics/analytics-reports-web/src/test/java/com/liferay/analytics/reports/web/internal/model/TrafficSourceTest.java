@@ -50,8 +50,6 @@ public class TrafficSourceTest {
 
 		Assert.assertEquals(
 			JSONUtil.put(
-				"countryKeywords", JSONFactoryUtil.createJSONArray()
-			).put(
 				"helpMessage", helpMessage
 			).put(
 				"name", trafficSource.getName()

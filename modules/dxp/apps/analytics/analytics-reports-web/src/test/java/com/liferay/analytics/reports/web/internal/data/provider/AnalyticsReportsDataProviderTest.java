@@ -281,7 +281,7 @@ public class AnalyticsReportsDataProviderTest {
 						).toString()
 					).build()));
 
-		List<TrafficSource> trafficSources =
+		Map<String, TrafficSource> trafficSources =
 			analyticsReportsDataProvider.getTrafficSources(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomString());
 
@@ -289,10 +289,10 @@ public class AnalyticsReportsDataProviderTest {
 			trafficSources.toString(), 2, trafficSources.size());
 		Assert.assertEquals(
 			String.valueOf(new TrafficSource(null, "organic", 3849L, 94.25D)),
-			String.valueOf(trafficSources.get(0)));
+			String.valueOf(trafficSources.get("organic")));
 		Assert.assertEquals(
 			String.valueOf(new TrafficSource(null, "paid", 235L, 5.75D)),
-			String.valueOf(trafficSources.get(1)));
+			String.valueOf(trafficSources.get("paid")));
 	}
 
 	@Test(expected = PortalException.class)
@@ -389,7 +389,7 @@ public class AnalyticsReportsDataProviderTest {
 						).toString()
 					).build()));
 
-		List<TrafficSource> trafficSources =
+		Map<String, TrafficSource> trafficSources =
 			analyticsReportsDataProvider.getTrafficSources(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomString());
 
@@ -406,7 +406,7 @@ public class AnalyticsReportsDataProviderTest {
 								new SearchKeyword(
 									"liferay portal", 1, 390, 312L)))),
 					"organic", 3192L, 93.94D)),
-			String.valueOf(trafficSources.get(0)));
+			String.valueOf(trafficSources.get("organic")));
 		Assert.assertEquals(
 			String.valueOf(
 				new TrafficSource(
@@ -417,7 +417,7 @@ public class AnalyticsReportsDataProviderTest {
 								new SearchKeyword(
 									"dxp enterprises", 1, 4400, 206L)))),
 					"paid", 206L, 6.06D)),
-			String.valueOf(trafficSources.get(1)));
+			String.valueOf(trafficSources.get("paid")));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

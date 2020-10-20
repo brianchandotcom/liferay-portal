@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -53,9 +54,12 @@ public class CommerceCountriesDisplayContext
 		CommerceChannelService commerceChannelService,
 		CommerceCountryService commerceCountryService,
 		CommerceRegionsStarterRegistry commerceRegionsStarterRegistry,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		super(actionHelper, renderRequest, renderResponse);
+		super(
+			actionHelper, portletResourcePermission, renderRequest,
+			renderResponse);
 
 		_commerceChannelRelService = commerceChannelRelService;
 		_commerceChannelService = commerceChannelService;

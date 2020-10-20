@@ -53,30 +53,17 @@ class MBPortlet {
 		this.strings = strings;
 		this.viewTrashAttachmentsURL = viewTrashAttachmentsURL;
 
+		this.workflowActionInputNode = this.rootNode.querySelector(
+			`#${this.namespace}workflowAction`
+		);
+
 		this.init();
 	}
 
-	namespaceSelectors_(selectors) {
-		return selectors.replace(
-			new RegExp('(#|\\[id=(\\"|\\\'))(?!' + this.namespace + ')', 'g'),
-			'$1' + this.namespace
-		);
-	}
-
-	one(selector) {
-		return this.rootNode.querySelector(this.namespaceSelectors_(selector));
-	}
-
-	all(selector) {
-		return this.rootNode.querySelectorAll(selector);
-	}
-
-	ns(name) {
-		return `${this.namespace}${name}`;
-	}
-
 	init() {
-		const publishButton = this.one('.button-holder button[type="submit"]');
+		const publishButton = this.rootNode.querySelector(
+			'.button-holder button[type="submit"]'
+		);
 
 		if (publishButton) {
 			publishButton.addEventListener('click', (e) => {
@@ -84,7 +71,9 @@ class MBPortlet {
 			});
 		}
 
-		const saveButton = this.one('#saveButton');
+		const saveButton = this.rootNode.querySelector(
+			`#${this.namespace}saveButton`
+		);
 
 		if (saveButton) {
 			saveButton.addEventListener('click', (e) => {
@@ -92,7 +81,9 @@ class MBPortlet {
 			});
 		}
 
-		const advancedReplyLink = this.one('.advanced-reply');
+		const advancedReplyLink = this.rootNode.querySelector(
+			'.advanced-reply'
+		);
 
 		if (advancedReplyLink) {
 			advancedReplyLink.addEventListener('click', (e) => {
@@ -100,7 +91,7 @@ class MBPortlet {
 			});
 		}
 
-		const searchContainerId = this.ns('messageAttachments');
+		const searchContainerId = `${this.namespace}messageAttachments`;
 
 		Liferay.componentReady(searchContainerId).then((searchContainer) => {
 			searchContainer
@@ -156,20 +147,20 @@ class MBPortlet {
 	 */
 
 	openAdvancedReply_() {
-		const inputNode = this.one('#body');
-		inputNode.value = window[
-			this.ns('replyMessageBody' + this.replyToMessageId)
+		const bodyInput = this.rootNode.querySelector(`#${this.namespace}body`);
+		bodyInput.value = window[
+			`${this.namespace}replyMessageBody${this.replyToMessageId}`
 		].getHTML();
 
-		const form = this.one(
-			`[name="${this.ns('advancedReplyFm' + this.replyToMessageId)}"]`
+		const form = this.rootNode.querySelector(
+			`[name="${this.namespace}advancedReplyFm${this.replyToMessageId}"]`
 		);
 
 		const advancedReplyInputNode = form.querySelector(
-			`[name="${this.ns('body')}"]`
+			`[name="${this.namespace}body"]`
 		);
 
-		advancedReplyInputNode.value = inputNode.value;
+		advancedReplyInputNode.value = bodyInput.value;
 
 		submitForm(form);
 	}
@@ -180,9 +171,9 @@ class MBPortlet {
 	 * @protected
 	 */
 
-	publish_() {
-		this.one('#workflowAction').value = this.constants.ACTION_PUBLISH;
-		this.save_();
+	_publish() {
+		this.workflowActionInputNode.value = this.constants.ACTION_PUBLISH;
+		this._save();
 	}
 
 	/**
@@ -194,7 +185,9 @@ class MBPortlet {
 	 */
 
 	save_() {
-		const tempImages = this.all('img[data-random-id]');
+		const tempImages = this.rootNode.querySelectorAll(
+			'img[data-random-id]'
+		);
 
 		if (tempImages.length > 0) {
 			if (confirm(this.strings.confirmDiscardImages)) {
@@ -302,15 +295,17 @@ class MBPortlet {
 	 */
 
 	updateMultipleMBMessageAttachments_() {
-		const selectedFileNameContainer = this.one(
-			'#selectedFileNameContainer'
+		const selectedFileNameContainer = this.rootNode.querySelector(
+			`#${this.namespace}selectedFileNameContainer`
 		);
 
 		if (selectedFileNameContainer) {
-			const inputName = this.ns('selectUploadedFile');
+			const inputName = `${this.namespace}selectUploadedFile`;
 
 			const input = [].slice.call(
-				this.all(`input[name=${inputName}]:checked`)
+				this.rootNode.querySelectorAll(
+					`input[name=${inputName}]:checked`
+				)
 			);
 
 			const data = input
@@ -334,23 +329,29 @@ class MBPortlet {
 	 */
 
 	submitForm_() {
-		this.one('#' + this.constants.CMD).value = this.currentAction;
+		this.rootNode.querySelector(
+			`#${this.namespace}${this.constants.CMD}`
+		).value = this.currentAction;
 
 		this.updateMultipleMBMessageAttachments_();
 
+		const bodyInput = this.rootNode.querySelector(`#${this.namespace}body`);
+
 		if (this.replyToMessageId) {
-			this.one('#body').value = window[
-				this.ns('replyMessageBody' + this.replyToMessageId)
+			bodyInput.value = window[
+				`${this.namespace}replyMessageBody${this.replyToMessageId}`
 			].getHTML();
 
 			submitForm(
-				document[this.ns('addQuickReplyFm' + this.replyToMessageId)]
+				document[
+					`${this.namespace}addQuickReplyFm${this.replyToMessageId}`
+				]
 			);
 		}
 		else {
-			this.one('#body').value = window[this.ns('bodyEditor')].getHTML();
+			bodyInput.value = window[`${this.namespace}bodyEditor`].getHTML();
 
-			submitForm(document[this.ns('fm')]);
+			submitForm(document[`${this.namespace}fm`]);
 		}
 	}
 
@@ -361,7 +362,7 @@ class MBPortlet {
 	 */
 
 	saveDraft_() {
-		this.one('#workflowAction').value = this.constants.ACTION_SAVE_DRAFT;
+		this._workflowActionInput.value = this.constants.ACTION_SAVE_DRAFT;
 		this.save_();
 	}
 }

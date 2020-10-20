@@ -15,11 +15,13 @@
 package com.liferay.commerce.address.web.internal.portlet.action;
 
 import com.liferay.commerce.address.web.internal.display.context.CommerceRegionsDisplayContext;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchRegionException;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -51,8 +53,8 @@ public class EditCommerceRegionMVCRenderCommand implements MVCRenderCommand {
 		try {
 			CommerceRegionsDisplayContext commerceRegionsDisplayContext =
 				new CommerceRegionsDisplayContext(
-					_actionHelper, _commerceRegionService, renderRequest,
-					renderResponse);
+					_actionHelper, _commerceRegionService,
+					_portletResourcePermission, renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceRegionsDisplayContext);
@@ -75,5 +77,10 @@ public class EditCommerceRegionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommerceRegionService _commerceRegionService;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.ADDRESS_RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

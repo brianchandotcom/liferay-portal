@@ -19,6 +19,10 @@ const RECENTLY_REMOVED_ATTACHMENTS = {
 	single: Liferay.Language.get('x-recently-removed-attachment'),
 };
 
+const CONFIRM_DISCARD_IMAGES = Liferay.Language.get(
+	'uploads-are-in-progress-confirmation'
+);
+
 /**
  * MBPortlet handles the actions of replying or editing a
  * message board.
@@ -35,6 +39,9 @@ class MBPortlet {
 		namespace,
 		replyToMessageId,
 		rootNode,
+		strings = {
+			confirmDiscardImages: CONFIRM_DISCARD_IMAGES,
+		},
 		viewTrashAttachmentsURL,
 	}) {
 		this.namespace = namespace;
@@ -43,6 +50,7 @@ class MBPortlet {
 		this.getAttachmentsURL = getAttachmentsURL;
 		this.replyToMessageId = replyToMessageId;
 		this.rootNode = document.getElementById(rootNode);
+		this.strings = strings;
 		this.viewTrashAttachmentsURL = viewTrashAttachmentsURL;
 
 		this.init();

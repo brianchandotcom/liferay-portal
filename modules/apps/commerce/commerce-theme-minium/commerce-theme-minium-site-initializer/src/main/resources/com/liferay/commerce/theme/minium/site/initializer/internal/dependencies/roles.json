@@ -61,6 +61,12 @@
 		"actions": [
 			{
 				"actionIds": [
+					"ADD_COMMERCE_CATALOG"
+				],
+				"resource": "com.liferay.commerce.catalog"
+			},
+			{
+				"actionIds": [
 					"ACCESS_IN_CONTROL_PANEL"
 				],
 				"resource": "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet"
@@ -87,7 +93,6 @@
 			},
 			{
 				"actionIds": [
-					"ADD_COMMERCE_CATALOG",
 					"VIEW_CONTROL_PANEL"
 				],
 				"resource": "90"

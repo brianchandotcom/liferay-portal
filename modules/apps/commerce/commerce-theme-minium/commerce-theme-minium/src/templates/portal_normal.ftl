@@ -10,7 +10,7 @@
 	<@liferay_util["include"] page=top_head_include />
 </head>
 
-<#if redirect_to_private_layouts && themeDisplay.isSignedIn() && themeDisplay.getLayout().isPublicLayout()>
+<#if is_login_page && redirect_to_private_layouts && themeDisplay.isSignedIn() && themeDisplay.getLayout().isPublicLayout()>
 
 	<#-- Instant redirect, when the page is hit directly or refreshed -->
 

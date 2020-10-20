@@ -15,9 +15,9 @@
 package com.liferay.commerce.elasticsearch7.internal.index.settings.contributor;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsContributor;
-import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper;
-import com.liferay.portal.search.elasticsearch7.settings.TypeMappingsHelper;
+import com.liferay.portal.search.spi.settings.IndexSettingsContributor;
+import com.liferay.portal.search.spi.settings.IndexSettingsHelper;
+import com.liferay.portal.search.spi.settings.TypeMappingsHelper;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,18 +31,6 @@ public class CommerceIndexSettingsContributor
 	implements IndexSettingsContributor {
 
 	@Override
-	public int compareTo(IndexSettingsContributor indexSettingsContributor) {
-		if (getPriority() > indexSettingsContributor.getPriority()) {
-			return 1;
-		}
-		else if (getPriority() == indexSettingsContributor.getPriority()) {
-			return 0;
-		}
-
-		return -1;
-	}
-
-	@Override
 	public void contribute(
 		String indexName, TypeMappingsHelper typeMappingsHelper) {
 
@@ -50,11 +38,6 @@ public class CommerceIndexSettingsContributor
 			getClass(), "dependencies/AdditionalTypeMappings.json");
 
 		typeMappingsHelper.addTypeMappings(indexName, typeMappings);
-	}
-
-	@Override
-	public int getPriority() {
-		return 1;
 	}
 
 	@Override

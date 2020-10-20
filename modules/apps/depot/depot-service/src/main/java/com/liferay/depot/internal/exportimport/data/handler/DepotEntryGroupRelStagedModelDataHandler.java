@@ -24,6 +24,9 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.xml.Element;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,8 +53,15 @@ public class DepotEntryGroupRelStagedModelDataHandler
 			DepotEntryGroupRel depotEntryGroupRel)
 		throws Exception {
 
+		Element exportDataElement = portletDataContext.getExportDataElement(
+			depotEntryGroupRel);
+
+		exportDataElement.addAttribute(
+			"depot-entry-live-group-id",
+			String.valueOf(_getDepotEntryLiveGroupId(depotEntryGroupRel)));
+
 		portletDataContext.addClassedModel(
-			portletDataContext.getExportDataElement(depotEntryGroupRel),
+			exportDataElement,
 			ExportImportPathUtil.getModelPath(depotEntryGroupRel),
 			depotEntryGroupRel);
 	}
@@ -79,7 +89,8 @@ public class DepotEntryGroupRelStagedModelDataHandler
 			!portletDataContext.isDataStrategyMirror()) {
 
 			importedDepotEntryGroupRel.setDepotEntryId(
-				_getDepotEntryId(importedDepotEntryGroupRel));
+				_getDepotEntryId(
+					importedDepotEntryGroupRel, portletDataContext));
 
 			importedDepotEntryGroupRel = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedDepotEntryGroupRel);
@@ -106,11 +117,26 @@ public class DepotEntryGroupRelStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	private long _getDepotEntryId(DepotEntryGroupRel importedDepotEntryGroupRel)
+	private long _getDepotEntryId(
+			DepotEntryGroupRel importedDepotEntryGroupRel,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
 			importedDepotEntryGroupRel.getDepotEntryId());
+
+		if (depotEntry == null) {
+			Element importDataElement = portletDataContext.getImportDataElement(
+				importedDepotEntryGroupRel);
+
+			long depotEntryLiveGroupId = GetterUtil.getLong(
+				importDataElement.attributeValue("depot-entry-live-group-id"));
+
+			depotEntry = _depotEntryLocalService.getGroupDepotEntry(
+				depotEntryLiveGroupId);
+
+			return depotEntry.getDepotEntryId();
+		}
 
 		Group depotEntryGroup = depotEntry.getGroup();
 
@@ -135,6 +161,28 @@ public class DepotEntryGroupRelStagedModelDataHandler
 		}
 
 		return importedDepotEntryGroupRel.getDepotEntryId();
+	}
+
+	private long _getDepotEntryLiveGroupId(
+			DepotEntryGroupRel depotEntryGroupRel)
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
+			depotEntryGroupRel.getDepotEntryId());
+
+		Group group = depotEntry.getGroup();
+
+		long liveGroupId = group.getLiveGroupId();
+
+		if (group.isStagedRemotely()) {
+			liveGroupId = group.getRemoteLiveGroupId();
+		}
+
+		if (liveGroupId == GroupConstants.DEFAULT_LIVE_GROUP_ID) {
+			liveGroupId = group.getGroupId();
+		}
+
+		return liveGroupId;
 	}
 
 	@Reference

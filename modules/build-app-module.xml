@@ -465,13 +465,6 @@
 		/>
 	</target>
 
-	<target depends="get-artifact-properties" if="artifact.hotfix" name="move-hotfix-artifact">
-		<move
-			file="${artifact.location.src}"
-			tofile="${artifact.location.dest}"
-		/>
-	</target>
-
 	<target depends="get-artifact-properties" if="artifact.deploy.dependencies" name="move-artifact-dependencies">
 		<tempfile destdir="tmp" prefix="deployDependencies" property="artifact.dependencies.tmp.dir" />
 
@@ -541,6 +534,13 @@
 		<move
 			file="${artifact.location.wsdd.src}"
 			tofile="${artifact.location.wsdd.dest}"
+		/>
+	</target>
+
+	<target depends="get-artifact-properties" if="artifact.hotfix" name="move-hotfix-artifact">
+		<move
+			file="${artifact.location.src}"
+			tofile="${artifact.location.dest}"
 		/>
 	</target>
 

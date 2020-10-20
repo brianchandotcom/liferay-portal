@@ -23,8 +23,11 @@ import EmptyPieChart from './EmptyPieChart';
 import Hint from './Hint';
 
 const COLORS_MAP = {
-	organic: '#7785FF',
+	direct: '#FF73C3',
+	organic: '#4B9FFF',
 	paid: '#FFB46E',
+	referral: '#FF5F5F',
+	social: '#50D2A0',
 };
 
 const PIE_CHART_SIZES = {

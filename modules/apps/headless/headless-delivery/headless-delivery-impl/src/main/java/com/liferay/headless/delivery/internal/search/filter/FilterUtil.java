@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.util;
+package com.liferay.headless.delivery.internal.search.filter;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.headless.delivery.internal.dynamic.data.mapping.DDMStructureField;

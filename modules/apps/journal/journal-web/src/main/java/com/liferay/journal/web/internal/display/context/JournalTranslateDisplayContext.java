@@ -23,11 +23,9 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.web.internal.constants.JournalWebConstants;
-import com.liferay.journal.web.internal.portlet.action.ActionUtil;
+import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -62,47 +60,36 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalTranslateDisplayContext {
 
 	public JournalTranslateDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
+		List<String> availableSourceLanguageIds,
+		List<String> availableTargetLanguageIds, String className, long classPK,
+		InfoForm infoForm, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, Object object,
+		InfoItemFieldValues sourceInfoItemFieldValues, String sourceLanguageId,
+		InfoItemFieldValues targetInfoItemFieldValues, String targetLanguageId,
+		TranslationInfoFieldChecker translationInfoFieldChecker) {
 
+		_availableSourceLanguageIds = availableSourceLanguageIds;
+		_availableTargetLanguageIds = availableTargetLanguageIds;
+		_className = className;
+		_classPK = classPK;
+		_infoForm = infoForm;
 		_liferayPortletResponse = liferayPortletResponse;
-
-		_article = ActionUtil.getArticle(liferayPortletRequest);
+		_object = object;
+		_sourceInfoItemFieldValues = sourceInfoItemFieldValues;
+		_sourceLanguageId = sourceLanguageId;
+		_targetInfoItemFieldValues = targetInfoItemFieldValues;
+		_targetLanguageId = targetLanguageId;
+		_translationInfoFieldChecker = translationInfoFieldChecker;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
 
-		_infoForm = (InfoForm)_httpServletRequest.getAttribute(
-			InfoForm.class.getName());
-
-		_journalEditArticleDisplayContext =
-			new JournalEditArticleDisplayContext(
-				_httpServletRequest, liferayPortletResponse, _article);
-
-		_sourceInfoItemFieldValues =
-			(InfoItemFieldValues)_httpServletRequest.getAttribute(
-				JournalWebConstants.SOURCE_INFO_ITEM_FIELD_VALUES);
-
-		_sourceLanguageId = (String)_httpServletRequest.getAttribute(
-			JournalWebConstants.SOURCE_LANGUAGE_ID);
-
 		_sourceLocale = LocaleUtil.fromLanguageId(_sourceLanguageId);
-
-		_targetInfoItemFieldValues =
-			(InfoItemFieldValues)_httpServletRequest.getAttribute(
-				JournalWebConstants.TARGET_INFO_ITEM_FIELD_VALUES);
-
-		_targetLanguageId = (String)_httpServletRequest.getAttribute(
-			JournalWebConstants.TARGET_LANGUAGE_ID);
 
 		_targetLocale = LocaleUtil.fromLanguageId(_targetLanguageId);
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		_translationInfoFieldChecker =
-			(TranslationInfoFieldChecker)_httpServletRequest.getAttribute(
-				TranslationInfoFieldChecker.class.getName());
 	}
 
 	public boolean getBooleanValue(
@@ -165,8 +152,7 @@ public class JournalTranslateDisplayContext {
 
 	public String getPublishButtonLabel() {
 		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
-				_themeDisplay.getCompanyId(),
-				_journalEditArticleDisplayContext.getGroupId(),
+				_themeDisplay.getCompanyId(), _getGroupId(),
 				TranslationEntry.class.getName())) {
 
 			return "submit-for-publication";
@@ -227,22 +213,22 @@ public class JournalTranslateDisplayContext {
 	}
 
 	public String getTitle() {
-		return _article.getTitle(PortalUtil.getLocale(_httpServletRequest));
+		InfoFieldValue<Object> infoFieldValue =
+			_sourceInfoItemFieldValues.getInfoFieldValue(
+				JournalArticleInfoItemFields.titleInfoField.getName());
+
+		return (String)infoFieldValue.getValue(_themeDisplay.getLocale());
 	}
 
 	public Map<String, Object> getTranslateLanguagesSelectorData() {
 		return HashMapBuilder.<String, Object>put(
 			"currentUrl", PortalUtil.getCurrentCompleteURL(_httpServletRequest)
 		).put(
-			"sourceAvailableLanguages",
-			_httpServletRequest.getAttribute(
-				JournalWebConstants.AVAILABLE_SOURCE_LANGUAGE_IDS)
+			"sourceAvailableLanguages", _availableSourceLanguageIds
 		).put(
 			"sourceLanguageId", _sourceLanguageId
 		).put(
-			"targetAvailableLanguages",
-			_httpServletRequest.getAttribute(
-				JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS)
+			"targetAvailableLanguages", _availableTargetLanguageIds
 		).put(
 			"targetLanguageId", _targetLanguageId
 		).build();
@@ -253,14 +239,11 @@ public class JournalTranslateDisplayContext {
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/journal/update_translation");
-		portletURL.setParameter(
-			"groupId", String.valueOf(_article.getGroupId()));
+		portletURL.setParameter("groupId", String.valueOf(_getGroupId()));
 		portletURL.setParameter(
 			"classNameId",
-			String.valueOf(
-				PortalUtil.getClassNameId(JournalArticle.class.getName())));
-		portletURL.setParameter(
-			"classPK", String.valueOf(_article.getResourcePrimKey()));
+			String.valueOf(PortalUtil.getClassNameId(_className)));
+		portletURL.setParameter("classPK", String.valueOf(_classPK));
 
 		return portletURL;
 	}
@@ -273,7 +256,7 @@ public class JournalTranslateDisplayContext {
 		return true;
 	}
 
-	public boolean isPublishButtonDisabled() throws PortalException {
+	public boolean isPublishButtonDisabled() {
 		if (_isAvailableTargetLanguageIdsEmpty()) {
 			return true;
 		}
@@ -291,8 +274,20 @@ public class JournalTranslateDisplayContext {
 		return false;
 	}
 
-	public boolean isSaveButtonDisabled() throws PortalException {
+	public boolean isSaveButtonDisabled() {
 		return _isAvailableTargetLanguageIdsEmpty();
+	}
+
+	private long _getGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		_groupId = BeanParamUtil.getLong(
+			_object, _httpServletRequest, "groupId",
+			_themeDisplay.getScopeGroupId());
+
+		return _groupId;
 	}
 
 	private TranslationEntry _getTranslationEntry() {
@@ -302,30 +297,28 @@ public class JournalTranslateDisplayContext {
 
 		_translationEntry =
 			TranslationEntryLocalServiceUtil.fetchTranslationEntry(
-				JournalArticle.class.getName(), _article.getResourcePrimKey(),
-				_targetLanguageId);
+				_className, _classPK, _targetLanguageId);
 
 		return _translationEntry;
 	}
 
 	private boolean _isAvailableTargetLanguageIdsEmpty() {
-		List<String> availableTargetLanguageIds =
-			(List<String>)_httpServletRequest.getAttribute(
-				JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS);
-
-		if (availableTargetLanguageIds.isEmpty()) {
+		if (_availableTargetLanguageIds.isEmpty()) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private final JournalArticle _article;
+	private final List<String> _availableSourceLanguageIds;
+	private final List<String> _availableTargetLanguageIds;
+	private final String _className;
+	private final long _classPK;
+	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoForm _infoForm;
-	private final JournalEditArticleDisplayContext
-		_journalEditArticleDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final Object _object;
 	private final InfoItemFieldValues _sourceInfoItemFieldValues;
 	private final String _sourceLanguageId;
 	private final Locale _sourceLocale;

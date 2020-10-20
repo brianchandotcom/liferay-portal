@@ -25,7 +25,6 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.journal.web.internal.display.context.JournalTranslateDisplayContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -88,33 +87,21 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			String className = _portal.getClassName(classNameId);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemLanguagesProvider.class, className);
+
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemObjectProvider.class, className);
 
 			Object object = infoItemObjectProvider.getInfoItem(classPK);
 
-			InfoItemFormProvider<Object> infoItemFormProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFormProvider.class, className);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			renderRequest.setAttribute(
-				InfoForm.class.getName(),
-				infoItemFormProvider.getInfoForm(object));
-
-			InfoItemFieldValues sourceInfoItemFieldValues =
-				_getSourceInfoItemFieldValues(className, object);
-
-			renderRequest.setAttribute(
-				JournalWebConstants.SOURCE_INFO_ITEM_FIELD_VALUES,
-				sourceInfoItemFieldValues);
-
-			InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemLanguagesProvider.class, className);
+			List<String> availableSourceLanguageIds = Arrays.asList(
+				infoItemLanguagesProvider.getAvailableLanguageIds(object));
 
 			String sourceLanguageId = ParamUtil.getString(
 				renderRequest, "sourceLanguageId",
@@ -124,37 +111,34 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				_getAvailableTargetLanguageIds(
 					className, object, sourceLanguageId, themeDisplay);
 
+			InfoItemFormProvider<Object> infoItemFormProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFormProvider.class, className);
+
+			InfoForm infoForm = infoItemFormProvider.getInfoForm(object);
+
+			InfoItemFieldValues sourceInfoItemFieldValues =
+				_getSourceInfoItemFieldValues(className, object);
+
 			String targetLanguageId = ParamUtil.getString(
 				renderRequest, "targetLanguageId",
 				_getDefaultTargetLanguageId(availableTargetLanguageIds));
 
-			renderRequest.setAttribute(
-				JournalWebConstants.TARGET_INFO_ITEM_FIELD_VALUES,
+			InfoItemFieldValues targetInfoItemFieldValues =
 				_getTargetInfoItemFieldValues(
 					className, classPK, sourceInfoItemFieldValues,
-					targetLanguageId));
-
-			renderRequest.setAttribute(
-				JournalWebConstants.AVAILABLE_SOURCE_LANGUAGE_IDS,
-				Arrays.asList(
-					infoItemLanguagesProvider.getAvailableLanguageIds(object)));
-
-			renderRequest.setAttribute(
-				JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS,
-				availableTargetLanguageIds);
-			renderRequest.setAttribute(
-				JournalWebConstants.SOURCE_LANGUAGE_ID, sourceLanguageId);
-			renderRequest.setAttribute(
-				JournalWebConstants.TARGET_LANGUAGE_ID, targetLanguageId);
-			renderRequest.setAttribute(
-				TranslationInfoFieldChecker.class.getName(),
-				_translationInfoFieldChecker);
+					targetLanguageId);
 
 			renderRequest.setAttribute(
 				JournalTranslateDisplayContext.class.getName(),
 				new JournalTranslateDisplayContext(
+					availableSourceLanguageIds, availableTargetLanguageIds,
+					className, classPK, infoForm,
 					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
+					_portal.getLiferayPortletResponse(renderResponse), object,
+					sourceInfoItemFieldValues, sourceLanguageId,
+					targetInfoItemFieldValues, targetLanguageId,
+					_translationInfoFieldChecker));
 
 			return "/translate.jsp";
 		}

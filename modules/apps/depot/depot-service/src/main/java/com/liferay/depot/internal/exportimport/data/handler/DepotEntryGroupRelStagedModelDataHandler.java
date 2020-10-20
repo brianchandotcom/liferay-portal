@@ -88,9 +88,16 @@ public class DepotEntryGroupRelStagedModelDataHandler
 		if ((existingDepotEntryGroupRel == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
+			Element importDataElement = portletDataContext.getImportDataElement(
+				importedDepotEntryGroupRel);
+
+			DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
+				GetterUtil.getLong(
+					importDataElement.attributeValue(
+						"depot-entry-live-group-id")));
+
 			importedDepotEntryGroupRel.setDepotEntryId(
-				_getDepotEntryId(
-					importedDepotEntryGroupRel, portletDataContext));
+				depotEntry.getDepotEntryId());
 
 			importedDepotEntryGroupRel = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedDepotEntryGroupRel);
@@ -117,52 +124,6 @@ public class DepotEntryGroupRelStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	private long _getDepotEntryId(
-			DepotEntryGroupRel importedDepotEntryGroupRel,
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
-			importedDepotEntryGroupRel.getDepotEntryId());
-
-		if (depotEntry == null) {
-			Element importDataElement = portletDataContext.getImportDataElement(
-				importedDepotEntryGroupRel);
-
-			long depotEntryLiveGroupId = GetterUtil.getLong(
-				importDataElement.attributeValue("depot-entry-live-group-id"));
-
-			depotEntry = _depotEntryLocalService.getGroupDepotEntry(
-				depotEntryLiveGroupId);
-
-			return depotEntry.getDepotEntryId();
-		}
-
-		Group depotEntryGroup = depotEntry.getGroup();
-
-		if (depotEntryGroup.isStaged()) {
-			if (depotEntryGroup.getLiveGroup() != null) {
-				DepotEntry liveDepotEntry =
-					_depotEntryLocalService.getGroupDepotEntry(
-						depotEntryGroup.getLiveGroupId());
-
-				return liveDepotEntry.getDepotEntryId();
-			}
-
-			Group stagingGroup = depotEntryGroup.getStagingGroup();
-
-			if (stagingGroup != null) {
-				DepotEntry stagedDepotEntry =
-					_depotEntryLocalService.getGroupDepotEntry(
-						stagingGroup.getGroupId());
-
-				return stagedDepotEntry.getDepotEntryId();
-			}
-		}
-
-		return importedDepotEntryGroupRel.getDepotEntryId();
-	}
-
 	private long _getDepotEntryLiveGroupId(
 			DepotEntryGroupRel depotEntryGroupRel)
 		throws Exception {
@@ -171,6 +132,12 @@ public class DepotEntryGroupRelStagedModelDataHandler
 			depotEntryGroupRel.getDepotEntryId());
 
 		Group group = depotEntry.getGroup();
+
+		Group stagingGroup = group.getStagingGroup();
+
+		if (stagingGroup != null) {
+			return stagingGroup.getGroupId();
+		}
 
 		long liveGroupId = group.getLiveGroupId();
 

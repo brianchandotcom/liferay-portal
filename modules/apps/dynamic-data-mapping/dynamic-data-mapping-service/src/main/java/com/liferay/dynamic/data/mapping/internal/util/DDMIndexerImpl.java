@@ -500,16 +500,16 @@ public class DDMIndexerImpl implements DDMIndexer {
 			else {
 				if (type.equals(DDMImpl.TYPE_DDM_TEXT_HTML)) {
 					valueString = HtmlUtil.extractText(valueString);
+					sortableValueString = HtmlUtil.extractText(
+						sortableValueString);
 				}
 
+				_createSortableTextField(document, name, sortableValueString);
+
 				if (indexType.equals("keyword")) {
-					document.addKeyword(
-						_getSortableFieldName(name), sortableValueString);
 					document.addKeyword(name, valueString);
 				}
 				else {
-					document.addText(
-						_getSortableFieldName(name), sortableValueString);
 					document.addText(name, valueString);
 				}
 			}
@@ -608,6 +608,19 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return new Fields();
 	}
 
+	private void _createSortableTextField(
+		Document document, String name, String sortableValueString) {
+
+		if (sortableValueString.length() >
+				_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH) {
+
+			sortableValueString = sortableValueString.substring(
+				0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
+		}
+
+		document.addKeyword(_getSortableFieldName(name), sortableValueString);
+	}
+
 	private String _getSortableFieldName(String name) {
 		return com.liferay.portal.kernel.search.Field.getSortableFieldName(
 			StringBundler.concat(name, StringPool.UNDERLINE, "String"));
@@ -633,6 +646,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		return sortableValue;
 	}
+
+	private static final int _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH =
+		GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH));
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
 

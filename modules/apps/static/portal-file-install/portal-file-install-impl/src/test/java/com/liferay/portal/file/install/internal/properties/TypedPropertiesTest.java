@@ -95,6 +95,19 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
+	public void testLoadandSaveEmptyLines() throws IOException {
+		TypedProperties typedProperties = _createTypedProperties(
+			"\ntestKey1 = \"testValue1\"\n\ntestKey2 = \"testValue2\"\n");
+
+		Assert.assertEquals("testValue1", typedProperties.get("testKey1"));
+		Assert.assertEquals("testValue2", typedProperties.get("testKey2"));
+
+		_assertSave(
+			typedProperties,
+			"\\\ntestKey1 = \"testValue1\"\n\\\ntestKey2 = \"testValue2\"");
+	}
+
+	@Test
 	public void testLoadandSaveEmptyString() throws IOException {
 		String line = "testKey = \"\"";
 

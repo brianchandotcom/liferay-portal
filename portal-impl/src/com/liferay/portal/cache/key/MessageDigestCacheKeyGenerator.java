@@ -18,6 +18,9 @@ import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
+import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -78,7 +81,19 @@ public class MessageDigestCacheKeyGenerator extends BaseCacheKeyGenerator {
 
 	protected Serializable getCacheKey(String[] keys, int length) {
 		try {
-			MessageDigest messageDigest = MessageDigest.getInstance(_algorithm);
+			ThreadLocalCache<MessageDigest> threadLocalCache =
+				ThreadLocalCacheManager.getThreadLocalCache(
+					Lifecycle.ETERNAL,
+					MessageDigestCacheKeyGenerator.class.getName());
+
+			MessageDigest messageDigest = threadLocalCache.get(_algorithm);
+
+			if (messageDigest == null) {
+				messageDigest = MessageDigest.getInstance(_algorithm);
+
+				threadLocalCache.put(_algorithm, messageDigest);
+			}
+
 			CharsetEncoder charsetEncoder =
 				CharsetEncoderUtil.getCharsetEncoder(_charsetName);
 

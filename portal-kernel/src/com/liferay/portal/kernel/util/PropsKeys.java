@@ -1054,6 +1054,13 @@ public interface PropsKeys {
 	public static final String DL_STORE_ANTIVIRUS_ENABLED =
 		"dl.store.antivirus.enabled";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DL_STORE_ANTIVIRUS_IMPL =
+		"dl.store.antivirus.impl";
+
 	public static final String DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_AMPERSAND =
 		"dl.store.file.impl.safe.file.name.2.ampersand";
 

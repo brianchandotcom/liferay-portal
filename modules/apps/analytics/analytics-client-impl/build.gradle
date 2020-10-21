@@ -13,5 +13,5 @@ dependencies {
 	compileOnly project(":apps:analytics:analytics-api")
 	compileOnly project(":apps:analytics:analytics-data-binding-impl")
 
-	testCompile group: "junit", name: "junit", version: "4.12"
+	testCompile group: "junit", name: "junit", version: "4.13.1"
 }

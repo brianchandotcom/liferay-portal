@@ -163,6 +163,14 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		return null;
 	}
 
+	private String _getLiveKey(Group group) {
+		if (group.isStagedRemotely()) {
+			return "remote-live";
+		}
+
+		return "live";
+	}
+
 	private String _getPublishToLiveURL(
 		Group group, HttpServletRequest httpServletRequest) {
 
@@ -206,7 +214,9 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 					JSONUtil.put(
 						"href", liveGroupURL
 					).put(
-						"label", _language.get(httpServletRequest, "live")
+						"label",
+						_language.get(
+							httpServletRequest, _getLiveKey(scopeGroup))
 					).put(
 						"symbolLeft", "radio-button"
 					),

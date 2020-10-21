@@ -17,6 +17,7 @@ package com.liferay.depot.web.internal.servlet.taglib;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,10 +37,13 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
+import com.liferay.site.util.GroupURLProvider;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 import com.liferay.taglib.util.HtmlTopTag;
 
@@ -138,6 +142,27 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		return portletURL.toString();
 	}
 
+	private String _getLiveGroupURL(
+			Group group, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		if (group.isStagedRemotely()) {
+			return _staging.getRemoteSiteURL(group, false);
+		}
+		else if (group.isStagingGroup()) {
+			Group liveGroup = _staging.getLiveGroup(group.getGroupId());
+
+			if (liveGroup != null) {
+				return _groupURLProvider.getLiveGroupURL(
+					liveGroup,
+					(PortletRequest)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST));
+			}
+		}
+
+		return null;
+	}
+
 	private String _getPublishToLiveURL(
 		Group group, HttpServletRequest httpServletRequest) {
 
@@ -168,7 +193,9 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (scopeGroup.isStagingGroup()) {
+		String liveGroupURL = _getLiveGroupURL(scopeGroup, httpServletRequest);
+
+		if (Validator.isNotNull(liveGroupURL)) {
 			return HashMapBuilder.<String, Object>put(
 				"iconClass", "staging-indicator-icon-staging"
 			).put(
@@ -177,9 +204,7 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 				"items",
 				_createJSONArray(
 					JSONUtil.put(
-						"href",
-						_getDepotDashboardGroupURL(
-							scopeGroup.getLiveGroup(), httpServletRequest)
+						"href", liveGroupURL
 					).put(
 						"label", _language.get(httpServletRequest, "live")
 					).put(
@@ -287,6 +312,9 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
+	private GroupURLProvider _groupURLProvider;
+
+	@Reference
 	private Language _language;
 
 	@Reference
@@ -303,5 +331,8 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.depot.web)")
 	private ServletContext _servletContext;
+
+	@Reference
+	private Staging _staging;
 
 }

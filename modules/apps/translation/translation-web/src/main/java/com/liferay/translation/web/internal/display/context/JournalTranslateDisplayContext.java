@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.display.context;
+package com.liferay.translation.web.internal.display.context;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;

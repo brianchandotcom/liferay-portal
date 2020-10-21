@@ -111,11 +111,49 @@ definition {
 		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
 	}
 
+	macro confirmDeleteFromObject {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${key_fieldLabel}");
+
+		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
+
+		Click(
+			key_selectAction = "${selectAction}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+	}
+
 	macro createFirstRule {
 		Click(locator1 = "FormViewBuilder#CREATE_NEW_RULE_BUTTON");
 	}
 
 	macro deleteButtonInDeleteFromObject {
+		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+	}
+
+	macro deleteDisabledFieldSetEntry{
+		var key_RowNumber = "${rowNumber}";
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
+
+		Click(
+			key_selectAction = "${selectAction}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+	}
+
+	macro deleteFieldSetEntry{
+		var key_RowNumber = "${rowNumber}";
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
+
+		Click(
+			key_selectAction = "${selectAction}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
 	}
 
@@ -286,6 +324,11 @@ definition {
 
 	macro gotoRules {
 		Click(locator1 = "FormViewBuilder#RULES_TAB");
+	}
+
+	macro goToFieldsetsTab {
+
+		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
 	}
 
 	macro openFormView {

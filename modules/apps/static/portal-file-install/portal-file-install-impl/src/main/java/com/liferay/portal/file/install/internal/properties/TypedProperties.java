@@ -241,6 +241,12 @@ public class TypedProperties {
 					return null;
 				}
 
+				if (line.isEmpty()) {
+					_values.add(line);
+
+					continue;
+				}
+
 				if (_isCommentLine(line)) {
 					comments.add(line);
 

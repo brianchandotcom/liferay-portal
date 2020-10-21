@@ -232,16 +232,6 @@ public interface AddressLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Address fetchAddressByUuidAndCompanyId(String uuid, long companyId);
 
-	/**
-	 * Returns the address matching the UUID and group.
-	 *
-	 * @param uuid the address's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching address, or <code>null</code> if a matching address could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Address fetchAddressByUuidAndGroupId(String uuid, long groupId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -267,18 +257,6 @@ public interface AddressLocalService
 	public Address getAddressByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException;
 
-	/**
-	 * Returns the address matching the UUID and group.
-	 *
-	 * @param uuid the address's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching address
-	 * @throws PortalException if a matching address could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Address getAddressByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Address> getAddresses();
 
@@ -299,32 +277,6 @@ public interface AddressLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Address> getAddresses(
 		long companyId, String className, long classPK);
-
-	/**
-	 * Returns all the addresses matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the addresses
-	 * @param companyId the primary key of the company
-	 * @return the matching addresses, or an empty list if no matches were found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Address> getAddressesByUuidAndCompanyId(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of addresses matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the addresses
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching addresses, or an empty list if no matches were found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Address> getAddressesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the number of addresses.

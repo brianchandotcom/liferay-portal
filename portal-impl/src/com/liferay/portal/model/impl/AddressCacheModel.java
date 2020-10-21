@@ -76,7 +76,7 @@ public class AddressCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -86,8 +86,6 @@ public class AddressCacheModel
 		sb.append(externalReferenceCode);
 		sb.append(", addressId=");
 		sb.append(addressId);
-		sb.append(", groupId=");
-		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -156,7 +154,6 @@ public class AddressCacheModel
 		}
 
 		addressImpl.setAddressId(addressId);
-		addressImpl.setGroupId(groupId);
 		addressImpl.setCompanyId(companyId);
 		addressImpl.setUserId(userId);
 
@@ -254,8 +251,6 @@ public class AddressCacheModel
 
 		addressId = objectInput.readLong();
 
-		groupId = objectInput.readLong();
-
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
@@ -308,8 +303,6 @@ public class AddressCacheModel
 		}
 
 		objectOutput.writeLong(addressId);
-
-		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
 
@@ -397,7 +390,6 @@ public class AddressCacheModel
 	public String uuid;
 	public String externalReferenceCode;
 	public long addressId;
-	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;

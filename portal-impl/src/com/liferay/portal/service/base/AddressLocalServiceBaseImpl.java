@@ -243,15 +243,15 @@ public abstract class AddressLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the address matching the UUID and group.
+	 * Returns the address with the matching UUID and company.
 	 *
 	 * @param uuid the address's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching address, or <code>null</code> if a matching address could not be found
 	 */
 	@Override
-	public Address fetchAddressByUuidAndGroupId(String uuid, long groupId) {
-		return addressPersistence.fetchByUUID_G(uuid, groupId);
+	public Address fetchAddressByUuidAndCompanyId(String uuid, long companyId) {
+		return addressPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**
@@ -449,51 +449,18 @@ public abstract class AddressLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns all the addresses matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the addresses
-	 * @param companyId the primary key of the company
-	 * @return the matching addresses, or an empty list if no matches were found
-	 */
-	@Override
-	public List<Address> getAddressesByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return addressPersistence.findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of addresses matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the addresses
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching addresses, or an empty list if no matches were found
-	 */
-	@Override
-	public List<Address> getAddressesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<Address> orderByComparator) {
-
-		return addressPersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the address matching the UUID and group.
+	 * Returns the address with the matching UUID and company.
 	 *
 	 * @param uuid the address's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching address
 	 * @throws PortalException if a matching address could not be found
 	 */
 	@Override
-	public Address getAddressByUuidAndGroupId(String uuid, long groupId)
+	public Address getAddressByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException {
 
-		return addressPersistence.findByUUID_G(uuid, groupId);
+		return addressPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**

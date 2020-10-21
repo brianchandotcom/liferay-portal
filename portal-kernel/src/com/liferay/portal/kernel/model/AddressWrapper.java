@@ -46,7 +46,6 @@ public class AddressWrapper
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("addressId", getAddressId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -97,12 +96,6 @@ public class AddressWrapper
 
 		if (addressId != null) {
 			setAddressId(addressId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -335,16 +328,6 @@ public class AddressWrapper
 	@Override
 	public String getExternalReferenceCode() {
 		return model.getExternalReferenceCode();
-	}
-
-	/**
-	 * Returns the group ID of this address.
-	 *
-	 * @return the group ID of this address
-	 */
-	@Override
-	public long getGroupId() {
-		return model.getGroupId();
 	}
 
 	/**
@@ -655,16 +638,6 @@ public class AddressWrapper
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		model.setExternalReferenceCode(externalReferenceCode);
-	}
-
-	/**
-	 * Sets the group ID of this address.
-	 *
-	 * @param groupId the group ID of this address
-	 */
-	@Override
-	public void setGroupId(long groupId) {
-		model.setGroupId(groupId);
 	}
 
 	/**

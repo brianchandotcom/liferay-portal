@@ -350,45 +350,4 @@ $productMenuWidth: 320px;
 			}
 		}
 	}
-
-	.translate-article {
-		.languages-selector .autofit-col {
-			margin-right: 1em;
-		}
-
-		.translate-body-form {
-			background-color: #fff;
-			padding: 1.5rem;
-
-			.translate-editor-preview {
-				border: 1px solid $gray-300;
-				border-radius: 4px;
-				box-sizing: border-box;
-				height: 22.375rem;
-				overflow: auto;
-				padding: 0.75rem 1rem 0.5rem;
-
-				img {
-					max-width: 100%;
-				}
-			}
-
-			.fieldset-title {
-				font-size: 0.875rem;
-				font-weight: 700;
-				margin: 1.5em 0;
-				text-transform: uppercase;
-			}
-
-			.form-control[readonly] {
-				background-color: #fff;
-			}
-
-			.separator {
-				border-color: $secondary;
-				margin-bottom: 2rem;
-				margin-top: 0.25rem;
-			}
-		}
-	}
 }

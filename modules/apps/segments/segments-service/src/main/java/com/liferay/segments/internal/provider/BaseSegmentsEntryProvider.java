@@ -37,7 +37,6 @@ import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 

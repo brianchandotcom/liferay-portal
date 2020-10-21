@@ -79,6 +79,7 @@ public class DepotAdminPortletDataHandler extends BasePortletDataHandler {
 
 	@Activate
 	protected void activate() {
+		setDataAlwaysStaged(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(DepotEntryGroupRel.class));
 		setExportControls(

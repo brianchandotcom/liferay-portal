@@ -118,9 +118,14 @@ public class SegmentsServicePreAction extends Action {
 			return;
 		}
 
-		long[] segmentsEntryIds = _getSegmentsEntryIds(
-			httpServletRequest, themeDisplay.getScopeGroupId(),
-			themeDisplay.getUserId());
+		long[] segmentsEntryIds = (long[])httpServletRequest.getAttribute(
+			SegmentsWebKeys.SEGMENTS_ENTRY_IDS);
+
+		if (segmentsEntryIds == null) {
+			segmentsEntryIds = _getSegmentsEntryIds(
+				httpServletRequest, themeDisplay.getScopeGroupId(),
+				themeDisplay.getUserId());
+		}
 
 		httpServletRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);

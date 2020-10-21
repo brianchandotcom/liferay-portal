@@ -27,7 +27,7 @@ import {getLocalizedUserPreferenceValue} from '../../utils/lang.es';
 import NoPermissionEntry from './NoPermissionEntry.es';
 import {buildEntries, navigateToEditPage} from './utils.es';
 
-export default ({history}) => {
+export default function ListEntries({history}) {
 	const actions = useEntriesActions();
 	const permissions = usePermissions();
 	const {
@@ -140,7 +140,7 @@ export default ({history}) => {
 							dataDefinition,
 							fieldNames,
 							permissions,
-							query
+							query,
 						})(entry, index),
 						status: (
 							<ClayLabel displayType={displayType}>
@@ -152,4 +152,4 @@ export default ({history}) => {
 			</ListView>
 		</Loading>
 	);
-};
+}

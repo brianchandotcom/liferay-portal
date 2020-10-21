@@ -186,7 +186,7 @@ export default function ListEntries({history}) {
 					dataDefinition,
 					fieldNames,
 					permissions,
-					scope: appId,
+					query,
 				})
 			)
 			.map((entry) => {

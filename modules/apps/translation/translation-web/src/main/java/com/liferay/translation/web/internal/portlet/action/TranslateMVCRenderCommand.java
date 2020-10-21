@@ -23,17 +23,12 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
-import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.web.internal.display.context.JournalTranslateDisplayContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -46,6 +41,8 @@ import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
+import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
+import com.liferay.translation.web.internal.display.context.JournalTranslateDisplayContext;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -69,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"javax.portlet.name=" + TranslationPortletKeys.TRANSLATION,
 		"mvc.command.name=/journal/translate"
 	},
 	service = MVCRenderCommand.class
@@ -269,15 +266,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
-	)
-	private ModelResourcePermission<JournalArticle>
-		_journalArticleModelResourcePermission;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -23,7 +23,6 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -214,8 +213,7 @@ public class JournalTranslateDisplayContext {
 
 	public String getTitle() {
 		InfoFieldValue<Object> infoFieldValue =
-			_sourceInfoItemFieldValues.getInfoFieldValue(
-				JournalArticleInfoItemFields.titleInfoField.getName());
+			_sourceInfoItemFieldValues.getInfoFieldValue("title");
 
 		return (String)infoFieldValue.getValue(_themeDisplay.getLocale());
 	}

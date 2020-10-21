@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
+import {normalizeFriendlyURL} from 'frontend-js-web';
 import React, {useCallback, useState} from 'react';
 
 import {HelpMessage, RequiredMark} from './utils/formComponents.es';
@@ -86,7 +87,17 @@ const EditAdaptiveMedia = ({
 		}
 	}, [redirect]);
 
-	const {errors, handleChange, values} = formik;
+	const {errors, handleChange, setFieldValue, values} = formik;
+
+	const updateUuid = (event)  => {
+		const nameValue = event.target.value;
+
+		if (automaticId && !amImageConfigurationEntry) {
+			values[newUuidId] = normalizeFriendlyURL(nameValue);
+		}
+
+		setFieldValue(nameId, nameValue);
+	};
 
 	return (
 		<ClayForm onSubmit={formik.handleSubmit}>
@@ -103,7 +114,7 @@ const EditAdaptiveMedia = ({
 					error={errors[nameId]}
 					label={Liferay.Language.get('name')}
 					name={nameId}
-					onChange={handleChange}
+					onChange={updateUuid}
 					required
 					value={values[nameId]}
 				/>

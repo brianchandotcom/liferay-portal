@@ -3,10 +3,51 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.commerce.product</model-name>
+		<model-name>com.liferay.commerce.catalog</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_COMMERCE_CATALOG</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>VIEW_COMMERCE_CATALOGS</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_COMMERCE_CATALOG</action-key>
+				<action-key>PERMISSIONS</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.channel</model-name>
+		<portlet-ref>
 			<portlet-name>com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_COMMERCE_CHANNEL</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>VIEW_COMMERCE_CHANNELS</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_COMMERCE_CHANNEL</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>VIEW_COMMERCE_CHANNELS</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.product</model-name>
+		<portlet-ref>
 			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionCategoriesPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>
@@ -16,18 +57,13 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>ADD_COMMERCE_CATALOG</action-key>
-				<action-key>ADD_COMMERCE_CHANNEL</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
-				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>VIEW_COMMERCE_CATALOGS</action-key>
-				<action-key>VIEW_COMMERCE_CHANNELS</action-key>
 				<action-key>VIEW_COMMERCE_PRODUCT_RULES</action-key>
 				<action-key>VIEW_PRICE</action-key>
 			</supports>
@@ -38,8 +74,6 @@
 				<action-key>VIEW_PRICE</action-key>
 			</guest-defaults>
 			<guest-unsupported>
-				<action-key>ADD_COMMERCE_CATALOG</action-key>
-				<action-key>ADD_COMMERCE_CHANNEL</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_RULE</action-key>
@@ -47,9 +81,7 @@
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
-				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>VIEW_COMMERCE_CHANNELS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
@@ -195,6 +227,24 @@
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</owner-defaults>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.tax</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
+			</supports>
+			<site-member-defaults/>
+			<guest-defaults/>
+			<guest-unsupported>
+				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
+			</guest-unsupported>
 		</permissions>
 	</model-resource>
 </resource-action-mapping>

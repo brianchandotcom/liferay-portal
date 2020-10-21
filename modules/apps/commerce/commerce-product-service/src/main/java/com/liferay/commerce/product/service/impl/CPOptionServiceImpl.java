@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.base.CPOptionServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -45,7 +43,10 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
+		PortletResourcePermission portletResourcePermission =
+			_cpOptionModelResourcePermission.getPortletResourcePermission();
+
+		portletResourcePermission.check(
 			getPermissionChecker(), null,
 			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION);
 
@@ -171,7 +172,10 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			serviceContext.getCompanyId(), externalReferenceCode);
 
 		if (cpOption == null) {
-			_portletResourcePermission.check(
+			PortletResourcePermission portletResourcePermission =
+				_cpOptionModelResourcePermission.getPortletResourcePermission();
+
+			portletResourcePermission.check(
 				getPermissionChecker(), null,
 				CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION);
 		}
@@ -187,10 +191,5 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			ModelResourcePermissionFactory.getInstance(
 				CPOptionServiceImpl.class, "_cpOptionModelResourcePermission",
 				CPOption.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				CPOptionServiceImpl.class, "_portletResourcePermission",
-				CPConstants.RESOURCE_NAME);
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.service.base.CPOptionCategoryServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Locale;
@@ -45,7 +43,11 @@ public class CPOptionCategoryServiceImpl
 			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
+		PortletResourcePermission portletResourcePermission =
+			_cpOptionCategoryModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
 			getPermissionChecker(), null,
 			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_CATEGORY);
 
@@ -119,10 +121,5 @@ public class CPOptionCategoryServiceImpl
 				CPOptionCategoryServiceImpl.class,
 				"_cpOptionCategoryModelResourcePermission",
 				CPOptionCategory.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				CPOptionCategoryServiceImpl.class, "_portletResourcePermission",
-				CPConstants.RESOURCE_NAME);
 
 }

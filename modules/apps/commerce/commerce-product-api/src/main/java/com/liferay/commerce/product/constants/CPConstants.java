@@ -23,6 +23,12 @@ public class CPConstants {
 	public static final String C_PRODUCT_VERSIONING_SERVICE_NAME =
 		"com.liferay.commerce.product.versioning";
 
+	public static final String CATALOG_RESOURCE_NAME =
+		"com.liferay.commerce.catalog";
+
+	public static final String CHANNEL_RESOURCE_NAME =
+		"com.liferay.commerce.channel";
+
 	public static final String CP_OPTION_SERVICE_NAME =
 		"com.liferay.commerce.product.option";
 
@@ -52,6 +58,8 @@ public class CPConstants {
 	public static final String SEPARATOR_PRODUCT_URL = "/p/";
 
 	public static final String SERVICE_NAME = "com.liferay.commerce.product";
+
+	public static final String TAX_RESOURCE_NAME = "com.liferay.commerce.tax";
 
 	public static final String WEEKLY_SUBSCRIPTION_TYPE = "weekly";
 

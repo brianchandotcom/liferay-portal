@@ -88,6 +88,8 @@ public class DDMIndexerImplTest {
 		documentFixture.setUp();
 		setUpPortalUtil();
 		setUpPropsUtil();
+
+		ddmIndexer = createDDMIndexer();
 	}
 
 	@After
@@ -341,7 +343,7 @@ public class DDMIndexerImplTest {
 	protected final DDMFixture ddmFixture = new DDMFixture();
 	protected final DDMFormJSONSerializer ddmFormJSONSerializer =
 		createDDMFormJSONSerializer();
-	protected final DDMIndexer ddmIndexer = createDDMIndexer();
+	protected DDMIndexer ddmIndexer;
 	protected final DocumentFixture documentFixture = new DocumentFixture();
 
 	private Map<String, String> _withSortableValues(Map<String, String> map) {

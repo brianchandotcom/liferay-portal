@@ -36,7 +36,8 @@ public class TranslationURLProviderImpl implements TranslationURLProvider {
 		PortletURL portletURL = requestBackedPortletURLFactory.createRenderURL(
 			TranslationPortletKeys.TRANSLATION);
 
-		portletURL.setParameter("mvcRenderCommandName", "/journal/translate");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/translation/translate");
 		portletURL.setParameter("classNameId", String.valueOf(classNameId));
 		portletURL.setParameter("classPK", String.valueOf(classPK));
 

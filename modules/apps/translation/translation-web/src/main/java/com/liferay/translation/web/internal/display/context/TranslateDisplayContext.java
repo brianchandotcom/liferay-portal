@@ -236,7 +236,7 @@ public class TranslateDisplayContext {
 		PortletURL portletURL = _liferayPortletResponse.createActionURL();
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/journal/update_translation");
+			ActionRequest.ACTION_NAME, "/translation/update_translation");
 		portletURL.setParameter("groupId", String.valueOf(_getGroupId()));
 		portletURL.setParameter(
 			"classNameId",

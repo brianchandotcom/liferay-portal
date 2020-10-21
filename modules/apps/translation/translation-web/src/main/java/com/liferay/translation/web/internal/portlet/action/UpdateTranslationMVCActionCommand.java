@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + TranslationPortletKeys.TRANSLATION,
-		"mvc.command.name=/journal/update_translation"
+		"mvc.command.name=/translation/update_translation"
 	},
 	service = MVCActionCommand.class
 )
@@ -106,7 +106,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
 
 			actionResponse.setRenderParameter(
-				"mvcRenderCommandName", "/journal/translate");
+				"mvcRenderCommandName", "/translation/translate");
 		}
 	}
 

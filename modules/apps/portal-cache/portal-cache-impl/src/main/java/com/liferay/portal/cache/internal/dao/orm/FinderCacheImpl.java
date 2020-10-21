@@ -298,11 +298,19 @@ public class FinderCacheImpl
 		_clearCache(_getCacheNameWithPagination(cacheName));
 		_clearCache(_getCacheNameWithoutPagination(cacheName));
 
+		ArgumentsResolver argumentsResolver =
+			_argumentsResolverServiceTrackerMap.getService(
+				baseModel.getModelClassName());
+
 		for (FinderPath finderPath : _getFinderPaths(cacheName)) {
 			removeResult(
-				finderPath, _getArguments(finderPath, baseModel, false, false));
+				finderPath,
+				argumentsResolver.getArguments(
+					finderPath, baseModel, false, false));
 			removeResult(
-				finderPath, _getArguments(finderPath, baseModel, true, true));
+				finderPath,
+				argumentsResolver.getArguments(
+					finderPath, baseModel, true, true));
 		}
 	}
 
@@ -341,27 +349,36 @@ public class FinderCacheImpl
 
 		_clearCache(_getCacheNameWithPagination(cacheName));
 
+		ArgumentsResolver argumentsResolver =
+			_argumentsResolverServiceTrackerMap.getService(
+				baseModel.getModelClassName());
+
 		for (FinderPath finderPath :
 				_getFinderPaths(_getCacheNameWithoutPagination(cacheName))) {
 
 			if (baseModel.isNew()) {
 				_removeResult(
 					finderPath,
-					_getArguments(finderPath, baseModel, false, false));
+					argumentsResolver.getArguments(
+						finderPath, baseModel, false, false));
 			}
 			else {
 				_removeResult(
 					finderPath,
-					_getArguments(finderPath, baseModel, true, false));
+					argumentsResolver.getArguments(
+						finderPath, baseModel, true, false));
 				_removeResult(
 					finderPath,
-					_getArguments(finderPath, baseModel, true, true));
+					argumentsResolver.getArguments(
+						finderPath, baseModel, true, true));
 			}
 		}
 
 		for (FinderPath finderPath : _getFinderPaths(cacheName)) {
 			_removeResult(
-				finderPath, _getArguments(finderPath, baseModel, true, true));
+				finderPath,
+				argumentsResolver.getArguments(
+					finderPath, baseModel, true, true));
 		}
 	}
 
@@ -435,18 +452,6 @@ public class FinderCacheImpl
 				finderPath.getCacheKeyPrefix(),
 				StringUtil.toHexString(cacheKeyGenerator.getCacheKey(keys))
 			});
-	}
-
-	private Object[] _getArguments(
-		FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
-		boolean original) {
-
-		ArgumentsResolver argumentsResolver =
-			_argumentsResolverServiceTrackerMap.getService(
-				baseModel.getModelClassName());
-
-		return argumentsResolver.getArguments(
-			finderPath, baseModel, checkColumn, original);
 	}
 
 	private CacheKeyGenerator _getCacheKeyGenerator(boolean baseModel) {

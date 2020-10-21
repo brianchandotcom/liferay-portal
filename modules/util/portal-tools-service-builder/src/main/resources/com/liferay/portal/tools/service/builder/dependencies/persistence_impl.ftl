@@ -2930,6 +2930,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				public String getClassName() {
 					return ${entity.name}Impl.class.getName();
 				}
+
+				@Override
+				public String getTableName() {
+					return ${entity.name}Table.INSTANCE.getTableName();
+				}
 			</#if>
 
 			private Object[] _getValue(${entity.name}ModelImpl ${entity.variableName}ModelImpl, String[] columnNames, boolean original) {

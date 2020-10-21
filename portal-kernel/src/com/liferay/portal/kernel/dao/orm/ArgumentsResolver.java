@@ -30,4 +30,6 @@ public interface ArgumentsResolver {
 
 	public String getClassName();
 
+	public String getTableName();
+
 }

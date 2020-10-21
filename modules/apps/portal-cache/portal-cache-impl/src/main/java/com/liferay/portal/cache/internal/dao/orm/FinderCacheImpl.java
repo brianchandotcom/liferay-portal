@@ -16,6 +16,7 @@ package com.liferay.portal.cache.internal.dao.orm;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
@@ -53,10 +54,13 @@ import java.util.concurrent.ConcurrentMap;
 import org.apache.commons.collections.map.LRUMap;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -298,8 +302,8 @@ public class FinderCacheImpl
 		_clearCache(_getCacheNameWithPagination(cacheName));
 		_clearCache(_getCacheNameWithoutPagination(cacheName));
 
-		ArgumentsResolver argumentsResolver =
-			_argumentsResolverServiceTrackerMap.getService(cacheName);
+		ArgumentsResolver argumentsResolver = _argumentsResolverMap.get(
+			cacheName);
 
 		for (FinderPath finderPath : _getFinderPaths(cacheName)) {
 			removeResult(
@@ -348,8 +352,8 @@ public class FinderCacheImpl
 
 		_clearCache(_getCacheNameWithPagination(cacheName));
 
-		ArgumentsResolver argumentsResolver =
-			_argumentsResolverServiceTrackerMap.getService(cacheName);
+		ArgumentsResolver argumentsResolver = _argumentsResolverMap.get(
+			cacheName);
 
 		for (FinderPath finderPath :
 				_getFinderPaths(_getCacheNameWithoutPagination(cacheName))) {
@@ -382,6 +386,8 @@ public class FinderCacheImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
 		_valueObjectFinderCacheEnabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED));
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
@@ -412,24 +418,16 @@ public class FinderCacheImpl
 		_finderPathServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, FinderPath.class, "cache.name");
-		_argumentsResolverServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ArgumentsResolver.class, null,
-				(serviceReference, emitter) -> {
-					ArgumentsResolver argumentsResolver =
-						bundleContext.getService(serviceReference);
-
-					emitter.emit(argumentsResolver.getClassName());
-
-					bundleContext.ungetService(serviceReference);
-				});
+		_argumentsResolverServiceTracker = ServiceTrackerFactory.open(
+			bundleContext, ArgumentsResolver.class,
+			new ArgumentsResolverServiceTrackerCustomizer());
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_finderPathServiceTrackerMap.close();
 
-		_argumentsResolverServiceTrackerMap.close();
+		_argumentsResolverServiceTracker.close();
 	}
 
 	private void _clearCache(String cacheName) {
@@ -562,13 +560,18 @@ public class FinderCacheImpl
 	private static final String _GROUP_KEY_PREFIX =
 		FinderCache.class.getName() + StringPool.PERIOD;
 
-	private ServiceTrackerMap<String, ArgumentsResolver>
-		_argumentsResolverServiceTrackerMap;
+	private final Map<String, ArgumentsResolver> _argumentsResolverMap =
+		new ConcurrentHashMap<>();
+	private ServiceTracker<ArgumentsResolver, ArgumentsResolver>
+		_argumentsResolverServiceTracker;
 	private volatile CacheKeyGenerator _baseModelCacheKeyGenerator;
+	private BundleContext _bundleContext;
 	private volatile CacheKeyGenerator _cacheKeyGenerator;
 	private ServiceTrackerMap<String, List<FinderPath>>
 		_finderPathServiceTrackerMap;
 	private ThreadLocal<LRUMap> _localCache;
+	private final Map<String, String> _modelImplClassNameMap =
+		new ConcurrentHashMap<>();
 
 	@Reference
 	private MultiVMPool _multiVMPool;
@@ -609,6 +612,46 @@ public class FinderCacheImpl
 
 		private final Serializable _cacheKey;
 		private final String _className;
+
+	}
+
+	private class ArgumentsResolverServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<ArgumentsResolver, ArgumentsResolver> {
+
+		@Override
+		public ArgumentsResolver addingService(
+			ServiceReference<ArgumentsResolver> serviceReference) {
+
+			ArgumentsResolver argumentsResolver = _bundleContext.getService(
+				serviceReference);
+
+			_argumentsResolverMap.put(
+				argumentsResolver.getClassName(), argumentsResolver);
+
+			_modelImplClassNameMap.put(
+				argumentsResolver.getTableName(),
+				argumentsResolver.getClassName());
+
+			return argumentsResolver;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ArgumentsResolver> serviceReference,
+			ArgumentsResolver argumentsResolver) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ArgumentsResolver> serviceReference,
+			ArgumentsResolver argumentsResolver) {
+
+			_argumentsResolverMap.remove(argumentsResolver.getClassName());
+			_modelImplClassNameMap.remove(argumentsResolver.getTableName());
+
+			_bundleContext.ungetService(serviceReference);
+		}
 
 	}
 

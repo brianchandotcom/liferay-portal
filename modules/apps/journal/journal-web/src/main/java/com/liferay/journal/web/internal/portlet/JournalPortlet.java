@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
+import com.liferay.translation.url.provider.TranslationURLProvider;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.util.TrashWebKeys;
 
@@ -175,6 +176,8 @@ public class JournalPortlet extends MVCPortlet {
 			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 		renderRequest.setAttribute(
 			JournalWebKeys.JOURNAL_CONVERTER, _journalConverter);
+		renderRequest.setAttribute(
+			TranslationURLProvider.class.getName(), _translationURLProvider);
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -339,6 +342,9 @@ public class JournalPortlet extends MVCPortlet {
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
 	private volatile JournalWebConfiguration _journalWebConfiguration;
+
+	@Reference
+	private TranslationURLProvider _translationURLProvider;
 
 	@Reference
 	private TrashHelper _trashHelper;

@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -123,6 +124,14 @@ public class DLViewDisplayContext {
 	}
 
 	public String getEditEntryURL() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isSignedIn()) {
+			return StringPool.BLANK;
+		}
+
 		ActionURL actionURL = _renderResponse.createActionURL();
 
 		actionURL.setParameter(
@@ -216,7 +225,11 @@ public class DLViewDisplayContext {
 		return resourceURL.toString();
 	}
 
-	public String getUploadURL() {
+	public String getUploadURL() throws PortalException {
+		if (!isUploadable()) {
+			return StringPool.BLANK;
+		}
+
 		ActionURL actionURL = _renderResponse.createActionURL();
 
 		actionURL.setParameter(

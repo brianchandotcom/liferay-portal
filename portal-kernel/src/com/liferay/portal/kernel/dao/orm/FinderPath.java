@@ -98,15 +98,6 @@ public class FinderPath {
 		_columnNames = columnNames;
 		_baseModelResult = baseModelResult;
 
-		if (baseModelResult) {
-			_cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				_BASE_MODEL_CACHE_KEY_GENERATOR_NAME);
-		}
-		else {
-			_cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				FinderCache.class.getName());
-		}
-
 		_initCacheKeyPrefix(methodName, params);
 	}
 
@@ -125,7 +116,9 @@ public class FinderPath {
 			keys[index + 1] = StringUtil.toHexString(arguments[i]);
 		}
 
-		return StringUtil.toHexString(_getCacheKey(keys));
+		CacheKeyGenerator cacheKeyGenerator = _getCacheKeyGenerator();
+
+		return StringUtil.toHexString(cacheKeyGenerator.getCacheKey(keys));
 	}
 
 	/**
@@ -142,10 +135,12 @@ public class FinderPath {
 			keys[index + 1] = StringUtil.toHexString(arguments[i]);
 		}
 
-		return _cacheKeyGenerator.getCacheKey(
+		CacheKeyGenerator cacheKeyGenerator = _getCacheKeyGenerator();
+
+		return cacheKeyGenerator.getCacheKey(
 			new String[] {
 				_cacheKeyPrefix,
-				StringUtil.toHexString(_cacheKeyGenerator.getCacheKey(keys))
+				StringUtil.toHexString(cacheKeyGenerator.getCacheKey(keys))
 			});
 	}
 
@@ -155,7 +150,10 @@ public class FinderPath {
 	 */
 	@Deprecated
 	public Serializable encodeCacheKey(String encodedArguments) {
-		return _getCacheKey(new String[] {_cacheKeyPrefix, encodedArguments});
+		CacheKeyGenerator cacheKeyGenerator = _getCacheKeyGenerator();
+
+		return cacheKeyGenerator.getCacheKey(
+			new String[] {_cacheKeyPrefix, encodedArguments});
 	}
 
 	/**
@@ -163,7 +161,9 @@ public class FinderPath {
 	 */
 	@Deprecated
 	public Serializable encodeLocalCacheKey(String encodedArguments) {
-		return _getCacheKey(
+		CacheKeyGenerator cacheKeyGenerator = _getCacheKeyGenerator();
+
+		return cacheKeyGenerator.getCacheKey(
 			new String[] {
 				StringBundler.concat(
 					_cacheName, StringPool.PERIOD, _cacheKeyPrefix),
@@ -241,8 +241,14 @@ public class FinderPath {
 		).build();
 	}
 
-	private Serializable _getCacheKey(String[] keys) {
-		return _cacheKeyGenerator.getCacheKey(keys);
+	private CacheKeyGenerator _getCacheKeyGenerator() {
+		if (_baseModelResult) {
+			return CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				_BASE_MODEL_CACHE_KEY_GENERATOR_NAME);
+		}
+
+		return CacheKeyGeneratorUtil.getCacheKeyGenerator(
+			FinderCache.class.getName());
 	}
 
 	private void _initCacheKeyPrefix(String methodName, String[] params) {
@@ -271,7 +277,6 @@ public class FinderPath {
 	private static final Map<String, String> _encodedTypes = _getEncodedTypes();
 
 	private final boolean _baseModelResult;
-	private final CacheKeyGenerator _cacheKeyGenerator;
 	private String _cacheKeyPrefix;
 	private final String _cacheName;
 	private final String[] _columnNames;

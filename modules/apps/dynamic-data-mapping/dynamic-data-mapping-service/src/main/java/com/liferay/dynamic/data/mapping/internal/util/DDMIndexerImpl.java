@@ -407,7 +407,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 			Serializable sortableValue, Serializable value)
 		throws PortalException {
 
-		if (value instanceof BigDecimal) {
+		if (value == null) {
+		}
+		else if (value instanceof BigDecimal) {
 			document.addNumberSortable(name, (BigDecimal)value);
 		}
 		else if (value instanceof BigDecimal[]) {
@@ -611,6 +613,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 	private void _createSortableTextField(
 		Document document, String name, String sortableValueString) {
 
+		if (Validator.isNull(sortableValueString)) {
+			return;
+		}
+
 		if (sortableValueString.length() >
 				_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH) {
 
@@ -628,6 +634,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	private String _getSortableValue(
 		DDMFormField ddmFormField, Locale locale, Serializable value) {
+
+		if (value == null) {
+			return null;
+		}
 
 		String sortableValue = String.valueOf(value);
 

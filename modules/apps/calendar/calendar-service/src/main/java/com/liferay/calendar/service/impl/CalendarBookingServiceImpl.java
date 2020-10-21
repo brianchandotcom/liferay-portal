@@ -24,7 +24,6 @@ import com.liferay.calendar.service.base.CalendarBookingServiceBaseImpl;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
 import com.liferay.petra.content.ContentUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -936,40 +934,11 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 	}
 
 	private List<CalendarBooking> _filterCalendarBookingsByCalendarVisibility(
-			List<CalendarBooking> calendarBookings)
-		throws PortalException {
+		List<CalendarBooking> calendarBookings) {
 
 		Stream<CalendarBooking> stream = calendarBookings.stream();
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		long userId = permissionChecker.getUserId();
-
-		stream = stream.filter(
-			calendarBooking -> {
-				try {
-					_calendarModelResourcePermission.check(
-						permissionChecker, calendarBooking.getCalendarId(),
-						ActionKeys.VIEW);
-
-					return true;
-				}
-				catch (PortalException portalException) {
-					if (_log.isInfoEnabled()) {
-						StringBundler sb = new StringBundler(4);
-
-						sb.append("No ");
-						sb.append(ActionKeys.VIEW);
-						sb.append(" permission for user ");
-						sb.append(userId);
-
-						_log.info(sb.toString(), portalException);
-					}
-
-					return false;
-				}
-			}
-		).map(
+		return stream.map(
 			calendarBooking -> {
 				try {
 					return filterCalendarBooking(calendarBooking);
@@ -984,9 +953,9 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			}
 		).filter(
 			Objects::nonNull
+		).collect(
+			Collectors.toList()
 		);
-
-		return stream.collect(Collectors.toList());
 	}
 
 	private String _getContent(

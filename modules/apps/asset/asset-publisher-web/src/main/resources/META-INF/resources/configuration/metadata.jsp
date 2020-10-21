@@ -36,6 +36,8 @@ List<KeyValuePair> rightList = new ArrayList<>();
 
 String[] allMetadataFields = {"author", "categories", "create-date", "expiration-date", "modified-date", "priority", "publish-date", "tags", "view-count"};
 
+Arrays.sort(metadataFields);
+
 for (String metadataField : allMetadataFields) {
 	if (Arrays.binarySearch(metadataFields, metadataField) < 0) {
 		rightList.add(new KeyValuePair(metadataField, LanguageUtil.get(request, metadataField)));

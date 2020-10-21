@@ -327,6 +327,16 @@
     <td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_DELETE_FIELD_MODAL_DELETE_BUTTON</td>
+	<td>//div[contains(@id,'ddm-delete-field-with-rule-modal')]//button[contains(@class,'btn btn-danger')][contains(text(),'Confirm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATE_DELETE_FIELD_MODAL_DELETE_MESSAGE</td>
+	<td>//div[@class='liferay-modal-body'][contains(text(),'A rule is applied to this field. By deleting it, it will also break the rule that is using it.')]</td>
+	<td></td>
+</tr>
+<tr>
     <td>SIDEBAR_CLOSE</td>
     <td>//div[contains(@class,'open') and contains(@class,'sidebar-container')]//a[contains(@class,'sidebar-close')]</td>
     <td></td>

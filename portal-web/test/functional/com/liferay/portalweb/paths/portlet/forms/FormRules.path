@@ -30,6 +30,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>RULE_BUILDER_BROKEN</td>
+    <td>//li[@class='list-group-item'][${key_ruleNumber}]//div[contains(@class,'invalid-rule')]//span[contains(text(), 'Broken Rule')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>RULE_BUILDER_RULE_CONDITION_DROPDOWN</td>
     <td>//button[contains(@class,'dropdown-toggle-operator')]</td>
     <td></td>

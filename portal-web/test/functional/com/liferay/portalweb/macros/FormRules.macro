@@ -221,6 +221,12 @@ definition {
 			value1 = "${actionTarget}");
 	}
 
+	macro viewBrokenRule {
+		AssertElementPresent(
+			key_ruleNumber = "${ruleNumber}",
+			locator1 = "FormRules#RULE_BUILDER_BROKEN");
+	}
+
 	macro viewConditionFieldConstantSummary {
 		AssertTextEquals(
 			key_conditionFieldConstant = "${conditionFieldConstant}",

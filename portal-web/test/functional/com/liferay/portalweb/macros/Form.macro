@@ -125,6 +125,18 @@ definition {
 		AssertElementNotPresent(locator1 = "FormPortlet#FORM_PAGE");
 	}
 
+	macro deleteFieldModalConfirmation {
+		FormsAdminNavigator.gotoDeleteField(
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}");
+
+		while (IsElementPresent(locator1 = "Form#VALIDATE_DELETE_FIELD_MODAL_DELETE_MESSAGE")) {
+			Click(locator1 = "Form#SIDEBAR_DELETE_FIELD_MODAL_DELETE_BUTTON");
+		}
+
+		Form.validateNoFieldLabel(fieldLabel = "${fieldLabel}");
+	}
+
 	macro deleteSuccessPage {
 		var key_formPageNumber = "${formPageNumber}";
 
@@ -577,6 +589,12 @@ definition {
 		var key_uniqueSuccess = "The form was unpublished successfully.";
 
 		AssertElementPresent(locator1 = "Message#UNIQUE_SUCCESS");
+	}
+
+	macro validateNoFieldLabel {
+		AssertElementNotPresent(
+			locator1 = "Form#FIELD_LABEL",
+			value1 = "${fieldLabel}");
 	}
 
 	macro viewAltPagePagination {

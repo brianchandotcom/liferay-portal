@@ -357,7 +357,7 @@ definition {
 
 	@priority = "4"
 	test ViewNoMyDashboardMyProfileLink {
-		property custom.properties = "layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.power.user.required=true";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.power.user.required=true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

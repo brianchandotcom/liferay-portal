@@ -107,8 +107,8 @@ public class UpgradeDDMStructureTest {
 
 		ddmFormFields.forEach(
 			ddmFormField -> {
-				if (ddmFormField.getProperty("fieldReference") != null) {
-					ddmFormField.setProperty("fieldReference", null);
+				if (ddmFormField.getFieldReference() != null) {
+					ddmFormField.setFieldReference(null);
 				}
 			});
 
@@ -124,8 +124,7 @@ public class UpgradeDDMStructureTest {
 
 		ddmFormFields.forEach(
 			ddmFormField -> Assert.assertEquals(
-				ddmFormField.getName(),
-				ddmFormField.getProperty("fieldReference")));
+				ddmFormField.getName(), ddmFormField.getFieldReference()));
 	}
 
 	@Test
@@ -209,7 +208,7 @@ public class UpgradeDDMStructureTest {
 				nestedDDMFormFields.forEach(
 					nestedDDMFormField -> Assert.assertEquals(
 						nestedDDMFormField.getName(),
-						nestedDDMFormField.getProperty("fieldReference")));
+						nestedDDMFormField.getFieldReference()));
 			});
 	}
 

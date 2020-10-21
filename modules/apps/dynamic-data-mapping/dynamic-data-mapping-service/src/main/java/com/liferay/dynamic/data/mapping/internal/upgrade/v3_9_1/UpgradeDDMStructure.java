@@ -69,7 +69,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private void _updateDDMFormFieldReference(DDMFormField ddmFormField) {
-		ddmFormField.setProperty("fieldReference", ddmFormField.getName());
+		ddmFormField.setFieldReference(ddmFormField.getName());
 
 		_updateDDMFormFieldOptionsReferences(
 			ddmFormField.getDDMFormFieldOptions());

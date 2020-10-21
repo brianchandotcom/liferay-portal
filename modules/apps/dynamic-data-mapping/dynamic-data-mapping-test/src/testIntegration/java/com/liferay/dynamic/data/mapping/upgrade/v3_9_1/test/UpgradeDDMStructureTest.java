@@ -66,7 +66,7 @@ public class UpgradeDDMStructureTest {
 	}
 
 	@Test
-	public void testUpgradeDDMFormFieldOptionReferences() throws Exception {
+	public void testUpgradeDDMFormFieldOptionsReferences() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField checkboxMultipleDDMFormField =
@@ -90,7 +90,7 @@ public class UpgradeDDMStructureTest {
 
 		_upgradeDDMStructure.upgrade();
 
-		ddmForm = _getDDMFormPostUpgrade(ddmFormInstance);
+		ddmForm = _getDDMFormAfterUpgrade(ddmFormInstance);
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
@@ -118,7 +118,7 @@ public class UpgradeDDMStructureTest {
 
 		_upgradeDDMStructure.upgrade();
 
-		ddmForm = _getDDMFormPostUpgrade(ddmFormInstance);
+		ddmForm = _getDDMFormAfterUpgrade(ddmFormInstance);
 
 		ddmFormFields = ddmForm.getDDMFormFields();
 
@@ -129,7 +129,9 @@ public class UpgradeDDMStructureTest {
 	}
 
 	@Test
-	public void testUpgradeGridDDMFormFieldOptionReferences() throws Exception {
+	public void testUpgradeGridDDMFormFieldOptionsReferences()
+		throws Exception {
+
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField gridDDMFormField = DDMFormTestUtil.createDDMFormField(
@@ -163,7 +165,7 @@ public class UpgradeDDMStructureTest {
 
 		_upgradeDDMStructure.upgrade();
 
-		ddmForm = _getDDMFormPostUpgrade(ddmFormInstance);
+		ddmForm = _getDDMFormAfterUpgrade(ddmFormInstance);
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
@@ -195,7 +197,7 @@ public class UpgradeDDMStructureTest {
 
 		_upgradeDDMStructure.upgrade();
 
-		ddmForm = _getDDMFormPostUpgrade(ddmFormInstance);
+		ddmForm = _getDDMFormAfterUpgrade(ddmFormInstance);
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
@@ -245,7 +247,7 @@ public class UpgradeDDMStructureTest {
 				ddmFormFieldOptions.getOptionReference(optionValue)));
 	}
 
-	private DDMForm _getDDMFormPostUpgrade(DDMFormInstance ddmFormInstance)
+	private DDMForm _getDDMFormAfterUpgrade(DDMFormInstance ddmFormInstance)
 		throws Exception {
 
 		EntityCacheUtil.clearCache();

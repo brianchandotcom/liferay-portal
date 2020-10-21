@@ -53,7 +53,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		_upgradeDDMStructure();
 	}
 
-	private void _updateDDMFormFieldOptionReferences(
+	private void _updateDDMFormFieldOptionsReferences(
 		DDMFormFieldOptions ddmFormFieldOptions) {
 
 		if (ddmFormFieldOptions == null) {
@@ -71,11 +71,11 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	private void _updateDDMFormFieldReference(DDMFormField ddmFormField) {
 		ddmFormField.setProperty("fieldReference", ddmFormField.getName());
 
-		_updateDDMFormFieldOptionReferences(
+		_updateDDMFormFieldOptionsReferences(
 			ddmFormField.getDDMFormFieldOptions());
-		_updateDDMFormFieldOptionReferences(
+		_updateDDMFormFieldOptionsReferences(
 			(DDMFormFieldOptions)ddmFormField.getProperty("columns"));
-		_updateDDMFormFieldOptionReferences(
+		_updateDDMFormFieldOptionsReferences(
 			(DDMFormFieldOptions)ddmFormField.getProperty("rows"));
 
 		List<DDMFormField> nestedDDMFormFields =

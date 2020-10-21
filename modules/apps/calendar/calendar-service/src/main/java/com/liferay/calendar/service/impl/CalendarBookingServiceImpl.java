@@ -339,7 +339,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			calendarBookingLocalService.getChildCalendarBookings(
 				parentCalendarBookingId);
 
-		return _filterCalendarBookingsByCalendarVisibility(calendarBookings);
+		return _filterCalendarBookings(calendarBookings);
 	}
 
 	@Override
@@ -384,7 +384,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			calendarBookingLocalService.getChildCalendarBookings(
 				parentCalendarBookingId, status);
 
-		return _filterCalendarBookingsByCalendarVisibility(calendarBookings);
+		return _filterCalendarBookings(calendarBookings);
 	}
 
 	@Override
@@ -933,7 +933,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		return false;
 	}
 
-	private List<CalendarBooking> _filterCalendarBookingsByCalendarVisibility(
+	private List<CalendarBooking> _filterCalendarBookings(
 		List<CalendarBooking> calendarBookings) {
 
 		Stream<CalendarBooking> stream = calendarBookings.stream();

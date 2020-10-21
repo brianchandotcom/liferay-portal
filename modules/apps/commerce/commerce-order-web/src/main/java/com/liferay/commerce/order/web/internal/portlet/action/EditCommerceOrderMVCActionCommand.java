@@ -334,6 +334,10 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		shipmentPortletURL.setParameter(
 			"commerceShipmentId", String.valueOf(commerceShipmentId));
 
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		shipmentPortletURL.setParameter("redirect", redirect);
+
 		sendRedirect(
 			actionRequest, actionResponse, shipmentPortletURL.toString());
 	}

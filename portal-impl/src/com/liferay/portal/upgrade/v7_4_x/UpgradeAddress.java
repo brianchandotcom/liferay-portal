@@ -31,11 +31,6 @@ public class UpgradeAddress extends UpgradeProcess {
 					"externalReferenceCode", "VARCHAR(75) null"));
 		}
 
-		if (!hasColumn("Address", "groupId")) {
-			alter(
-				AddressTable.class, new AlterTableAddColumn("groupId", "LONG"));
-		}
-
 		if (!hasColumn("Address", "name")) {
 			alter(
 				AddressTable.class,

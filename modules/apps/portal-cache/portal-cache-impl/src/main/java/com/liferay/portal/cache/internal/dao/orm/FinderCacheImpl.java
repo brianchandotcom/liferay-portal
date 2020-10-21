@@ -14,8 +14,6 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.HashUtil;
@@ -43,6 +41,7 @@ import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLoc
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -272,6 +271,26 @@ public class FinderCacheImpl
 			}
 		}
 
+		String cacheName = finderPath.getCacheName();
+		String cacheKeyPrefix = finderPath.getCacheKeyPrefix();
+
+		Map<String, FinderPath> finderPaths = _finderPathsMap.get(cacheName);
+
+		if (finderPaths == null) {
+			finderPaths = new ConcurrentHashMap<>();
+
+			Map<String, FinderPath> originalFinderPaths =
+				_finderPathsMap.putIfAbsent(cacheName, finderPaths);
+
+			if (originalFinderPaths != null) {
+				finderPaths = originalFinderPaths;
+			}
+		}
+
+		if (!finderPaths.containsKey(cacheKeyPrefix)) {
+			finderPaths.putIfAbsent(cacheKeyPrefix, finderPath);
+		}
+
 		Serializable cacheKey = _encodeCacheKey(finderPath, args);
 
 		if (_isLocalCacheEnabled()) {
@@ -324,6 +343,8 @@ public class FinderCacheImpl
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
 		_multiVMPool.removePortalCache(groupKey);
+
+		_finderPathsMap.remove(className);
 	}
 
 	public void removeCacheByEntityCache(String cacheName) {
@@ -415,9 +436,6 @@ public class FinderCacheImpl
 
 		portalCacheManager.registerPortalCacheManagerListener(this);
 
-		_finderPathServiceTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, FinderPath.class, "cache.name");
 		_argumentsResolverServiceTracker = ServiceTrackerFactory.open(
 			bundleContext, ArgumentsResolver.class,
 			new ArgumentsResolverServiceTrackerCustomizer());
@@ -425,8 +443,6 @@ public class FinderCacheImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_finderPathServiceTrackerMap.close();
-
 		_argumentsResolverServiceTracker.close();
 	}
 
@@ -492,15 +508,14 @@ public class FinderCacheImpl
 		return cacheName.concat(".List1");
 	}
 
-	private List<FinderPath> _getFinderPaths(String cacheName) {
-		List<FinderPath> finderPaths = _finderPathServiceTrackerMap.getService(
-			cacheName);
+	private Collection<FinderPath> _getFinderPaths(String cacheName) {
+		Map<String, FinderPath> finderPaths = _finderPathsMap.get(cacheName);
 
 		if (finderPaths == null) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
-		return finderPaths;
+		return finderPaths.values();
 	}
 
 	private PortalCache<Serializable, Serializable> _getPortalCache(
@@ -567,8 +582,8 @@ public class FinderCacheImpl
 	private volatile CacheKeyGenerator _baseModelCacheKeyGenerator;
 	private BundleContext _bundleContext;
 	private volatile CacheKeyGenerator _cacheKeyGenerator;
-	private ServiceTrackerMap<String, List<FinderPath>>
-		_finderPathServiceTrackerMap;
+	private final Map<String, Map<String, FinderPath>> _finderPathsMap =
+		new ConcurrentHashMap<>();
 	private ThreadLocal<LRUMap> _localCache;
 	private final Map<String, String> _modelImplClassNameMap =
 		new ConcurrentHashMap<>();

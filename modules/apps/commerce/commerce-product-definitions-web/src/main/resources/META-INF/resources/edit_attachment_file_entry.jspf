@@ -96,8 +96,21 @@
 	</aui:form>
 </commerce-ui:side-panel-content>
 
-<aui:script>
+<%
+String fieldValues = "[]";
+
+if (cpAttachmentFileEntry != null) {
+	fieldValues = cpAttachmentFileEntry.getJson();
+}
+%>
+
+<aui:script require="commerce-frontend-js/utilities/forms/formsHelper as FormsHelper">
 	var fieldValues = [];
+
+	try {
+		fieldValues = JSON.parse('<%= fieldValues %>');
+	}
+	catch (_ignore) {}
 
 	Liferay.componentReady('ProductOptions<%= cpDefinitionId %>').then(function (
 		ddmForm
@@ -105,25 +118,9 @@
 		if (!ddmForm.on) {
 			return;
 		}
-		ddmForm.on('fieldEdited', function (e) {
-			var key = e.fieldInstance.fieldName;
-			var updatedItem = {
-				key: e.fieldInstance.fieldName,
-				value: e.value,
-			};
 
-			var itemFound = fieldValues.find(function (item) {
-				return item.key === key;
-			});
-
-			if (itemFound) {
-				fieldValues = fieldValues.reduce(function (acc, item) {
-					return acc.concat(item.key === key ? updatedItem : item);
-				}, []);
-			}
-			else {
-				fieldValues.push(updatedItem);
-			}
+		ddmForm.on('fieldEdited', function (field) {
+			fieldValues = FormsHelper.updateFields(fieldValues, field);
 
 			var form = document['<portlet:namespace />fm'];
 			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
@@ -140,30 +137,7 @@
 		);
 
 		if (ddmForm) {
-			var fields = ddmForm.getImmediateFields();
-
-			var fieldValues = [];
-
-			fields.forEach(function (field) {
-				var fieldValue = {};
-
-				fieldValue.key = field.get('fieldName');
-
-				var value = field.getValue();
-
-				var arrValue = [];
-
-				if (Array.isArray(value)) {
-					arrValue = value;
-				}
-				else {
-					arrValue.push(value);
-				}
-
-				fieldValue.value = arrValue;
-
-				fieldValues.push(fieldValue);
-			});
+			var fieldValues = FormsHelper.getDefaultFieldsShape(ddmForm);
 
 			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
 				fieldValues

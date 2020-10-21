@@ -89,7 +89,9 @@ public class CommerceChannelModelResourcePermission
 	@Reference
 	protected CommerceChannelPermission commerceChannelPermission;
 
-	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	@Reference(
+		target = "(resource.name=" + CPConstants.CHANNEL_RESOURCE_NAME + ")"
+	)
 	private PortletResourcePermission _portletResourcePermission;
 
 }

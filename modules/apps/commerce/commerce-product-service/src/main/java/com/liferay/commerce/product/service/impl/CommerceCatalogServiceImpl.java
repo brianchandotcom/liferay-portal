@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.base.CommerceCatalogServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -42,7 +40,11 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
+		PortletResourcePermission portletResourcePermission =
+			_commerceCatalogModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
 			getPermissionChecker(), null, CPActionKeys.ADD_COMMERCE_CATALOG);
 
 		return commerceCatalogLocalService.addCommerceCatalog(
@@ -177,10 +179,5 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 				CommerceCatalogServiceImpl.class,
 				"_commerceCatalogModelResourcePermission",
 				CommerceCatalog.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				CommerceCatalogServiceImpl.class, "_portletResourcePermission",
-				CPConstants.RESOURCE_NAME);
 
 }

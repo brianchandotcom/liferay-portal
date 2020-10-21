@@ -41,17 +41,17 @@ class MBPortlet {
 		},
 		viewTrashAttachmentsURL,
 	}) {
-		this.namespace = namespace;
-		this.constants = constants;
-		this.currentAction = currentAction;
-		this.getAttachmentsURL = getAttachmentsURL;
-		this.replyToMessageId = replyToMessageId;
-		this.strings = strings;
-		this.viewTrashAttachmentsURL = viewTrashAttachmentsURL;
+		this._namespace = namespace;
+		this._constants = constants;
+		this._currentAction = currentAction;
+		this._getAttachmentsURL = getAttachmentsURL;
+		this._replyToMessageId = replyToMessageId;
+		this._strings = strings;
+		this._viewTrashAttachmentsURL = viewTrashAttachmentsURL;
 
 		this.rootNode = document.getElementById(rootNode);
 		this.workflowActionInputNode = this.rootNode.querySelector(
-			`#${this.namespace}workflowAction`
+			`#${this._namespace}workflowAction`
 		);
 
 		this._init();
@@ -75,7 +75,7 @@ class MBPortlet {
 		}
 
 		const saveButton = this.rootNode.querySelector(
-			`#${this.namespace}saveButton`
+			`#${this._namespace}saveButton`
 		);
 
 		if (saveButton) {
@@ -94,7 +94,7 @@ class MBPortlet {
 			});
 		}
 
-		const searchContainerId = `${this.namespace}messageAttachments`;
+		const searchContainerId = `${this._namespace}messageAttachments`;
 
 		Liferay.componentReady(searchContainerId).then((searchContainer) => {
 			searchContainer
@@ -128,17 +128,19 @@ class MBPortlet {
 	 */
 
 	_openAdvancedReply() {
-		const bodyInput = this.rootNode.querySelector(`#${this.namespace}body`);
+		const bodyInput = this.rootNode.querySelector(
+			`#${this._namespace}body`
+		);
 		bodyInput.value = window[
-			`${this.namespace}replyMessageBody${this.replyToMessageId}`
+			`${this._namespace}replyMessageBody${this._replyToMessageId}`
 		].getHTML();
 
 		const form = this.rootNode.querySelector(
-			`[name="${this.namespace}advancedReplyFm${this.replyToMessageId}"]`
+			`[name="${this._namespace}advancedReplyFm${this._replyToMessageId}"]`
 		);
 
 		const advancedReplyInputNode = form.querySelector(
-			`[name="${this.namespace}body"]`
+			`[name="${this._namespace}body"]`
 		);
 
 		advancedReplyInputNode.value = bodyInput.value;
@@ -164,9 +166,9 @@ class MBPortlet {
 					},
 				},
 			},
-			id: this.namespace + 'openRemovedPageAttachments',
+			id: this._namespace + 'openRemovedPageAttachments',
 			title: Liferay.Language.get('removed-attachments'),
-			uri: this.viewTrashAttachmentsURL,
+			uri: this._viewTrashAttachmentsURL,
 		});
 	}
 
@@ -177,7 +179,7 @@ class MBPortlet {
 	 */
 
 	_publish() {
-		this.workflowActionInputNode.value = this.constants.ACTION_PUBLISH;
+		this.workflowActionInputNode.value = this._constants.ACTION_PUBLISH;
 		this._save();
 	}
 
@@ -195,7 +197,7 @@ class MBPortlet {
 		);
 
 		if (tempImages.length > 0) {
-			if (confirm(this.strings.confirmDiscardImages)) {
+			if (confirm(this._strings.confirmDiscardImages)) {
 				tempImages.forEach((node) => {
 					node.parentElement.remove();
 				});
@@ -240,7 +242,7 @@ class MBPortlet {
 	 */
 
 	_updateRemovedAttachments() {
-		fetch(this.getAttachmentsURL)
+		fetch(this._getAttachmentsURL)
 			.then((res) => res.json())
 			.then((attachments) => {
 				if (attachments.active.length > 0) {
@@ -248,7 +250,7 @@ class MBPortlet {
 					const searchContainerData = searchContainer.getData();
 
 					document
-						.getElementById(this.namespace + 'fileAttachments')
+						.getElementById(this._namespace + 'fileAttachments')
 						.classList.remove('hide');
 
 					attachments.active.forEach((attachment) => {
@@ -301,11 +303,11 @@ class MBPortlet {
 
 	_updateMultipleMBMessageAttachments() {
 		const selectedFileNameContainer = this.rootNode.querySelector(
-			`#${this.namespace}selectedFileNameContainer`
+			`#${this._namespace}selectedFileNameContainer`
 		);
 
 		if (selectedFileNameContainer) {
-			const inputName = `${this.namespace}selectUploadedFile`;
+			const inputName = `${this._namespace}selectUploadedFile`;
 
 			const input = [].slice.call(
 				this.rootNode.querySelectorAll(
@@ -316,7 +318,7 @@ class MBPortlet {
 			const data = input
 				.map((item, index) => {
 					const id = index;
-					const namespace = this.namespace;
+					const namespace = this._namespace;
 					const value = item.value;
 
 					return `<input id="${namespace}selectedFileName${id}" name="${namespace}selectedFileName" type="hidden" value="${value}" />`;
@@ -335,28 +337,30 @@ class MBPortlet {
 
 	_submitForm() {
 		this.rootNode.querySelector(
-			`#${this.namespace}${this.constants.CMD}`
-		).value = this.currentAction;
+			`#${this._namespace}${this._constants.CMD}`
+		).value = this._currentAction;
 
 		this._updateMultipleMBMessageAttachments();
 
-		const bodyInput = this.rootNode.querySelector(`#${this.namespace}body`);
+		const bodyInput = this.rootNode.querySelector(
+			`#${this._namespace}body`
+		);
 
-		if (this.replyToMessageId) {
+		if (this._replyToMessageId) {
 			bodyInput.value = window[
-				`${this.namespace}replyMessageBody${this.replyToMessageId}`
+				`${this._namespace}replyMessageBody${this._replyToMessageId}`
 			].getHTML();
 
 			submitForm(
 				document[
-					`${this.namespace}addQuickReplyFm${this.replyToMessageId}`
+					`${this._namespace}addQuickReplyFm${this._replyToMessageId}`
 				]
 			);
 		}
 		else {
-			bodyInput.value = window[`${this.namespace}bodyEditor`].getHTML();
+			bodyInput.value = window[`${this._namespace}bodyEditor`].getHTML();
 
-			submitForm(document[`${this.namespace}fm`]);
+			submitForm(document[`${this._namespace}fm`]);
 		}
 	}
 
@@ -367,7 +371,7 @@ class MBPortlet {
 	 */
 
 	_saveDraft() {
-		this._workflowActionInput.value = this.constants.ACTION_SAVE_DRAFT;
+		this._workflowActionInput.value = this._constants.ACTION_SAVE_DRAFT;
 		this._save();
 	}
 }

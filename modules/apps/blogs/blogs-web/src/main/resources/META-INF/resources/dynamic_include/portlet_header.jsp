@@ -18,10 +18,14 @@
 
 <%
 BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME));
+
+long groupId = themeDisplay.getScopeGroupId();
+
+boolean hasViewPermission = (groupId == 0) || GroupPermissionUtil.contains(themeDisplay.getPermissionChecker(), groupId, ActionKeys.VIEW);
 %>
 
 <div class="btn-group">
-	<c:if test="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>">
+	<c:if test="<%= blogsGroupServiceOverriddenConfiguration.enableRss() && hasViewPermission %>">
 
 		<%
 		String rssURL = RSSUtil.getURL(StringBundler.concat(themeDisplay.getPathMain(), "/blogs/rss?plid=", String.valueOf(themeDisplay.getPlid()), "&groupId=", String.valueOf(themeDisplay.getScopeGroupId())), GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()), blogsGroupServiceOverriddenConfiguration.rssDisplayStyle(), blogsGroupServiceOverriddenConfiguration.rssFeedType(), null);

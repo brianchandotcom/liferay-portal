@@ -123,31 +123,27 @@ if (organizationId > 0) {
 					);
 				</aui:script>
 
-				<aui:script require="metal-dom/src/dom">
-					var dom = metalDomSrcDom.default;
-
-					var <portlet:namespace />selectionMethod = document.getElementById(
+				<aui:script sandbox="<%= true %>">
+					var selectionMethodElement = document.getElementById(
 						'<portlet:namespace />selectionMethod'
 					);
 
-					if (<portlet:namespace />selectionMethod) {
-						<portlet:namespace />selectionMethod.addEventListener('change', function (
-							event
-						) {
+					if (selectionMethodElement) {
+						selectionMethodElement.addEventListener('change', function (event) {
 							var usersSelectionOptions = document.getElementById(
 								'<portlet:namespace />usersSelectionOptions'
 							);
 
 							if (usersSelectionOptions) {
 								var showUsersSelectionOptions = !(
-									<portlet:namespace />selectionMethod.val() === 'users'
+									selectionMethodElement.value === 'users'
 								);
 
 								if (showUsersSelectionOptions) {
-									dom.addClasses(usersSelectionOptions, 'hide');
+									usersSelectionOptions.classList.add('hide');
 								}
 								else {
-									dom.removeClasses(usersSelectionOptions, 'hide');
+									usersSelectionOptions.classList.remove('hide');
 								}
 							}
 						});

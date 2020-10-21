@@ -461,7 +461,7 @@ public class FragmentEntryLocalServiceImpl
 	public List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return fragmentEntryPersistence.findByUUID_G(uuid, companyId);
+		return fragmentEntryPersistence.findByUuid_C(uuid, companyId);
 	}
 
 	@Override
@@ -469,7 +469,7 @@ public class FragmentEntryLocalServiceImpl
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator) {
 
-		return fragmentEntryPersistence.findByUUID_G(
+		return fragmentEntryPersistence.findByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
 	}
 

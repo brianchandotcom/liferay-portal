@@ -20,6 +20,9 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -109,6 +112,8 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 					bundleContext.ungetService(serviceReference);
 				});
 
+		_ddmTemplateMapsThreadLocal.set(new HashMap<>());
+
 		_classNameTemplateHandlersServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, TemplateHandler.class, null,
@@ -121,6 +126,8 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 					bundleContext.ungetService(serviceReference);
 				},
 				new TemplateHandlerServiceTrackerCustomizer());
+
+		_ddmTemplateMapsThreadLocal.remove();
 	}
 
 	@Deactivate
@@ -157,6 +164,11 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 	@Reference
 	protected ResourceBundleLoaderProvider resourceBundleLoaderProvider;
+
+	private static final ThreadLocal<Map<Long, Map<String, DDMTemplate>>>
+		_ddmTemplateMapsThreadLocal = new CentralizedThreadLocal<>(
+			TemplateHandlerRegistryImpl.class.getName() +
+				"._ddmTemplateMapsThreadLocal");
 
 	private BundleContext _bundleContext;
 	private ServiceTrackerMap<Long, TemplateHandler>
@@ -198,13 +210,51 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 			List<Element> templateElements =
 				_templateHandler.getDefaultTemplateElements();
 
+			Map<Long, Map<String, DDMTemplate>> ddmTemplateMaps =
+				_ddmTemplateMapsThreadLocal.get();
+
+			Map<String, DDMTemplate> ddmTemplateMap = null;
+
+			if (ddmTemplateMaps != null) {
+				ddmTemplateMap = ddmTemplateMaps.computeIfAbsent(
+					group.getGroupId(),
+					groupId -> {
+						Map<String, DDMTemplate> ddmTemplates = new HashMap<>();
+
+						for (DDMTemplate ddmTemplate :
+								_ddmTemplateLocalService.getTemplatesByGroupId(
+									groupId)) {
+
+							ddmTemplates.put(
+								StringBundler.concat(
+									ddmTemplate.getClassNameId(),
+									StringPool.POUND,
+									StringUtil.toUpperCase(
+										ddmTemplate.getTemplateKey())),
+								ddmTemplate);
+						}
+
+						return ddmTemplates;
+					});
+			}
+
 			for (Element templateElement : templateElements) {
 				String templateKey = templateElement.elementText(
 					"template-key");
 
-				DDMTemplate ddmTemplate =
-					_ddmTemplateLocalService.fetchTemplate(
+				DDMTemplate ddmTemplate = null;
+
+				if (ddmTemplateMap != null) {
+					ddmTemplate = ddmTemplateMap.get(
+						StringBundler.concat(
+							classNameId, StringPool.POUND,
+							StringUtil.toUpperCase(templateKey)));
+				}
+
+				if (ddmTemplate == null) {
+					ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 						group.getGroupId(), classNameId, templateKey);
+				}
 
 				if ((ddmTemplate != null) &&
 					((ddmTemplate.getUserId() != userId) ||

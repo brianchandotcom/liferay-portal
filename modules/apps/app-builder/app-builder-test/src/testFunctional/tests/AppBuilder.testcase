@@ -646,6 +646,144 @@ definition {
 		AppBuilderAdmin.deleteEntry(itemName = "my custom object");
 	}
 
+	@description = "Delete fieldsets used in a form view and when it is not used"
+	@priority = "5"
+	test DeleteFieldSet {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object one",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.setUpTwoFieldSets(
+			fieldSetName = "Field Sets",
+			fieldType = "Text",
+			fieldType2 = "Numeric");
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.deleteFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Delete");
+
+		FormViewBuilder.setUpTwoFieldSets(
+			fieldSetName = "Field Sets",
+			fieldType = "Text",
+			fieldType2 = "Numeric");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Sets");
+
+		FormViewBuilder.setName(formViewName = "Form One");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Field Sets");
+
+		FormViewBuilder.confirmDeleteFromObject(
+			fieldLabel = "Field Sets",
+			selectAction = "Delete from Object");
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.deleteFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Delete");
+
+		FormViewBuilder.setUpTwoFieldSets(
+			fieldSetName = "Field Sets",
+			fieldType = "Text",
+			fieldType2 = "Numeric");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Sets");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.deleteDisabledFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Delete");
+
+		FormViewBuilder.setUpTwoFieldSets(
+			fieldSetName = "Field Sets",
+			fieldType = "Text",
+			fieldType2 = "Numeric");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Sets");
+
+		FormViewBuilder.setName(formViewName = "Form Two");
+
+		FormViewBuilder.save();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object two",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.deleteFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Delete");
+
+		FormViewBuilder.setUpTwoFieldSets(
+			fieldSetName = "Field Sets",
+			fieldType = "Text",
+			fieldType2 = "Numeric");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Sets");
+
+		FormViewBuilder.setName(formViewName = "Form One");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Text");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Numeric");
+
+		TableViewBuilder.setName(tableViewName = "Table One");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Table One");
+
+		App.add(
+			appTitle = "App One",
+			deployOption = "Product Menu",
+			formViewName = "Form One",
+			tableViewName = "Table One");
+
+		AppBuilderAdmin.switchTab(tabName = "Form Views");
+
+		AppBuilderAdmin.openItem(itemName = "Form One");
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.deleteDisabledFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Delete");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "App One");
+
+	}
+
 	@description = "Delete an existing Form View with no active publishing through the kebab/action menu"
 	@priority = "5"
 	test DeleteFormViewThroughActionMenu {

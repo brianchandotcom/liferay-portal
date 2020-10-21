@@ -133,7 +133,7 @@ definition {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
 	}
 
-	macro deleteDisabledFieldSetEntry{
+	macro deleteDisabledFieldSetEntry {
 		var key_RowNumber = "${rowNumber}";
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
@@ -145,7 +145,7 @@ definition {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
 	}
 
-	macro deleteFieldSetEntry{
+	macro deleteFieldSetEntry {
 		var key_RowNumber = "${rowNumber}";
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");

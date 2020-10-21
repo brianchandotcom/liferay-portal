@@ -47,7 +47,7 @@ definition {
 				value1 = "Info:You do not have access to any applications in this asset library.");
 		}
 		else {
-			for (var portletName : list "Web Content,Documents and Media,Collections,Categories,Tags,Recycle Bin,Memberships,Settings,Workflow") {
+			for (var portletName : list "Web Content,Documents and Media,Collections,Categories,Tags,Recycle Bin,Memberships,Asset Library Settings,Workflow") {
 				AssertTextEquals(
 					key_card = "${portletName}",
 					locator1 = "Card#CARD",

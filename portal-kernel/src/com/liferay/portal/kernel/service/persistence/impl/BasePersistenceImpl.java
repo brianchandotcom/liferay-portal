@@ -162,23 +162,46 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	@Override
 	@SuppressWarnings("unchecked")
 	public <R> R dslQuery(DSLQuery dslQuery) {
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
+
+		String sql = dslQuery.toSQL(defaultASTNodeListener);
+
+		String[] tableNames = defaultASTNodeListener.getTableNames();
+
+		Select select = null;
+
+		ASTNode astNode = dslQuery;
+
+		while (astNode instanceof BaseASTNode) {
+			if (astNode instanceof Select) {
+				select = (Select)astNode;
+
+				break;
+			}
+
+			BaseASTNode baseASTNode = (BaseASTNode)astNode;
+
+			astNode = baseASTNode.getChild();
+		}
+
+		if (select == null) {
+			throw new IllegalArgumentException(
+				"No Select found for " + dslQuery);
+		}
+
+		ProjectionType projectionType = _getProjectionType(
+			tableNames, select.getExpressions());
+
+		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			DefaultASTNodeListener defaultASTNodeListener =
-				new DefaultASTNodeListener();
-
-			String sql = dslQuery.toSQL(defaultASTNodeListener);
-
-			String[] tableNames = defaultASTNodeListener.getTableNames();
-
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
 				sql, true, tableNames);
-
-			List<Object> scalarValues =
-				defaultASTNodeListener.getScalarValues();
 
 			if (!scalarValues.isEmpty()) {
 				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
@@ -187,30 +210,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 					queryPos.add(value);
 				}
 			}
-
-			Select select = null;
-
-			ASTNode astNode = dslQuery;
-
-			while (astNode instanceof BaseASTNode) {
-				if (astNode instanceof Select) {
-					select = (Select)astNode;
-
-					break;
-				}
-
-				BaseASTNode baseASTNode = (BaseASTNode)astNode;
-
-				astNode = baseASTNode.getChild();
-			}
-
-			if (select == null) {
-				throw new IllegalArgumentException(
-					"No Select found for " + dslQuery);
-			}
-
-			ProjectionType projectionType = _getProjectionType(
-				tableNames, select.getExpressions());
 
 			if (projectionType == ProjectionType.COUNT) {
 				sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);

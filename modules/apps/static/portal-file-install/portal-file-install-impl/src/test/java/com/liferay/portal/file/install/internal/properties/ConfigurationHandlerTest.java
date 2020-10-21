@@ -34,7 +34,7 @@ public class ConfigurationHandlerTest {
 		Assert.assertArrayEquals(
 			new String[] {"test1", "test2"},
 			(String[])ConfigurationHandler.read(
-				"[ \\\r\n  \"test1\", \\\r\n  \"test2\", \\\r\n  ]"));
+				"[\\\r\n  \"test1\",\\\r\n  \"test2\",\\\r\n  ]"));
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class ConfigurationHandlerTest {
 				}
 			},
 			ConfigurationHandler.read(
-				"( \\\r\n  \"test1\", \\\r\n  \"test2\", \\\r\n)"));
+				"(\\\r\n  \"test1\",\\\r\n  \"test2\",\\\r\n)"));
 	}
 
 	@Test
@@ -98,7 +98,7 @@ public class ConfigurationHandlerTest {
 	@Test
 	public void testReadEmptyCollection() throws IOException {
 		Assert.assertEquals(
-			new ArrayList<String>(), ConfigurationHandler.read("( \\\r\n)"));
+			new ArrayList<String>(), ConfigurationHandler.read("(\\\r\n)"));
 	}
 
 	@Test
@@ -165,7 +165,7 @@ public class ConfigurationHandlerTest {
 		Assert.assertArrayEquals(
 			new Integer[] {1, 2},
 			(Integer[])ConfigurationHandler.read(
-				"I[ \\\r\n  \"1\", \\\r\n  \"2\", \\\r\n  ]"));
+				"I[\\\r\n  \"1\",\\\r\n  \"2\",\\\r\n  ]"));
 	}
 
 	@Test
@@ -177,14 +177,13 @@ public class ConfigurationHandlerTest {
 					add(2);
 				}
 			},
-			ConfigurationHandler.read(
-				"I( \\\r\n  \"1\", \\\r\n  \"2\", \\\r\n)"));
+			ConfigurationHandler.read("I(\\\r\n  \"1\",\\\r\n  \"2\",\\\r\n)"));
 	}
 
 	@Test
 	public void testWriteArray() throws IOException {
 		Assert.assertEquals(
-			"[ \\\r\n  \"test1\", \\\r\n  \"test2\", \\\r\n  ]",
+			"[\\\r\n  \"test1\",\\\r\n  \"test2\"\\\r\n]",
 			ConfigurationHandler.write(new String[] {"test1", "test2"}));
 	}
 
@@ -213,7 +212,7 @@ public class ConfigurationHandlerTest {
 	@Test
 	public void testWriteCollection() throws IOException {
 		Assert.assertEquals(
-			"( \\\r\n  \"test1\", \\\r\n  \"test2\", \\\r\n)",
+			"(\\\r\n  \"test1\",\\\r\n  \"test2\"\\\r\n)",
 			ConfigurationHandler.write(
 				new ArrayList<String>() {
 					{
@@ -231,13 +230,13 @@ public class ConfigurationHandlerTest {
 	@Test
 	public void testWriteEmptyArray() throws IOException {
 		Assert.assertEquals(
-			"[ \\\r\n  ]", ConfigurationHandler.write(new String[0]));
+			"[\\\r\n]", ConfigurationHandler.write(new String[0]));
 	}
 
 	@Test
 	public void testWriteEmptyCollection() throws IOException {
 		Assert.assertEquals(
-			"( \\\r\n)", ConfigurationHandler.write(new ArrayList()));
+			"(\\\r\n)", ConfigurationHandler.write(new ArrayList()));
 	}
 
 	@Test
@@ -312,14 +311,14 @@ public class ConfigurationHandlerTest {
 	@Test
 	public void testWriteTypedArray() throws IOException {
 		Assert.assertEquals(
-			"B[ \\\r\n  \"true\", \\\r\n  ]",
+			"B[\\\r\n  \"true\"\\\r\n]",
 			ConfigurationHandler.write(new Boolean[] {true}));
 	}
 
 	@Test
 	public void testWriteTypedCollection() throws IOException {
 		Assert.assertEquals(
-			"I( \\\r\n  \"1\", \\\r\n  \"2\", \\\r\n)",
+			"I(\\\r\n  \"1\",\\\r\n  \"2\"\\\r\n)",
 			ConfigurationHandler.write(
 				new ArrayList<Integer>() {
 					{

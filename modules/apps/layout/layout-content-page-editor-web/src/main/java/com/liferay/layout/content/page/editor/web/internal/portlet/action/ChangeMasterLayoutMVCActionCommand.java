@@ -139,6 +139,25 @@ public class ChangeMasterLayoutMVCActionCommand
 			Layout layout, ThemeDisplay themeDisplay)
 		throws Exception {
 
+		StyleBookEntry defaultMasterStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(layout);
+
+		String defaultStyleBookEntryName = StringPool.BLANK;
+		String defaultStyleBookEntryImagePreviewURL = StringPool.BLANK;
+
+		if (defaultMasterStyleBookEntry != null) {
+			defaultStyleBookEntryName = defaultMasterStyleBookEntry.getName();
+			defaultStyleBookEntryImagePreviewURL =
+				defaultMasterStyleBookEntry.getImagePreviewURL(themeDisplay);
+		}
+
+		JSONObject jsonObject = JSONUtil.put(
+			"defaultStyleBookEntryImagePreviewURL",
+			defaultStyleBookEntryImagePreviewURL
+		).put(
+			"defaultStyleBookEntryName", defaultStyleBookEntryName
+		);
+
 		StyleBookEntry styleBookEntry =
 			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(layout);
 
@@ -148,21 +167,7 @@ public class ChangeMasterLayoutMVCActionCommand
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				layoutSet.getThemeId());
 
-		String defaultStyleBookEntryName = StringPool.BLANK;
-		String defaultStyleBookEntryImagePreviewURL = StringPool.BLANK;
-
-		if (styleBookEntry != null) {
-			defaultStyleBookEntryName = styleBookEntry.getName();
-			defaultStyleBookEntryImagePreviewURL =
-				styleBookEntry.getImagePreviewURL(themeDisplay);
-		}
-
-		return JSONUtil.put(
-			"defaultStyleBookEntryImagePreviewURL",
-			defaultStyleBookEntryImagePreviewURL
-		).put(
-			"defaultStyleBookEntryName", defaultStyleBookEntryName
-		).put(
+		return jsonObject.put(
 			"styleBookEntryId", layout.getStyleBookEntryId()
 		).put(
 			"tokenValues",

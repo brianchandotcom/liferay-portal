@@ -35,9 +35,9 @@
 		<field name="overlapAllowed" type="boolean" />
 		<field name="startDate" type="Date" />
 		<field name="system" type="boolean" />
+		<field name="taskExecutorType" type="String" />
 		<field name="taskSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="taskType" type="String" />
 	</model>
 </model-hints>

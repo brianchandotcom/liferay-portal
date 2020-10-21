@@ -36,20 +36,6 @@ public @interface SPAConfiguration {
 	public long cacheExpirationTime();
 
 	@Meta.AD(
-		deflt = "true",
-		description = "disable-in-internet-explorer-description",
-		name = "disable-in-internet-explorer", required = false
-	)
-	public boolean disableInInternetExplorer();
-
-	@Meta.AD(
-		deflt = "true",
-		description = "disable-in-internet-explorer-11-description",
-		name = "disable-in-internet-explorer-11", required = false
-	)
-	public boolean disableInInternetExplorer11();
-
-	@Meta.AD(
 		deflt = ":not([target=\"_blank\"])|:not([data-senna-off])|:not([data-resource-href])",
 		description = "navigation-exception-selectors-description",
 		name = "navigation-exception-selectors-name", required = false

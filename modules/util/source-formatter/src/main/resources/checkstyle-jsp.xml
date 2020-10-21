@@ -266,6 +266,8 @@
 			<message key="list.util.use" value="Use ''ListUtil.fromArray'' to simplify code" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LiteralStringEqualsCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Finds cases where `Objects.equals` should be used." />
 			<message key="objects.equals.use.1" value="Use ''Objects.equals'' instead of calling ''equals'' on a literal String" />
 			<message key="objects.equals.use.2" value="Either use ''{0}'' or use ''Objects.equals'' if ''{1}'' can have a ''null'' value, instead of calling ''equals'' on a literal String" />
 		</module>
@@ -289,40 +291,60 @@
 			<message key="method.rename" value="Rename method ''{0}'' to ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingDiamondOperatorCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks for missing diamond operator for types that require diamond operator." />
 			<property name="enforceDiamondOperatorClassNames" value="" />
 			<message key="diamond.operator.missing" value="Missing diamond operator ''&lt;&gt;'' for type ''{0}''" />
 			<message key="generic.types.missing" value="Missing generic types ''{0}'' for type ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingParenthesesCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Finds missing parentheses in conditional statement." />
 			<message key="parentheses.missing.1" value="Missing parentheses between the ''{0}'' operator and the ''{1}'' operator" />
 			<message key="parentheses.missing.2" value="Missing parentheses around the {0} hand side argument of the ''{1}'' operator" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.NestedIfStatementCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Finds nested if statements that can be combined." />
 			<message key="if.statements.combine" value="Combine nested if-statements" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.NumberSuffixCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Verifies that uppercase `D`, `F`, or `L` is used when denoting Double/Float/Long." />
 			<message key="suffix.incorrect" value="Use uppercase ''{0}'' as suffix for the type ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOperandCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Verifies that operand do not go over too many lines and make the operator hard to read." />
 			<property name="enabled" value="false" />
 			<message key="readability.improve" value="Create a new variable for the {0} hand side operand of the ''{1}'' operator for better readability" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ParsePrimitiveTypeCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Verifies that `GetterUtil.parse*` is used to parse primitive types, when possible." />
 			<message key="getter.util.method.use" value="Use ''GetterUtil.{0}'' or properly catch ''NumberFormatException'' when calling ''{1}.{2}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PersistenceCallCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Finds illegal persistence calls across component boundaries." />
 			<message key="persistence.call.illegal" value="Illegal call to class ''{0}'', see LPS-68923" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PlusStatementCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Performs several checks to statements where `+` is used for concatenation." />
 			<message key="end.character.invalid" value="When concatenating multiple literal strings using '+', only the last literal string can end with ''{0}''" />
 			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />
 			<message key="literal.string.move" value="Add the string ''{0}'' to the previous literal string" />
 			<message key="start.character.invalid" value="When concatenating multiple literal strings using '+', only the first literal string can start with ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.SemiColonCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Finds cases of unnecessary semicolon." />
 			<message key="semi.colon.unnecessary" value="Unnecessary semi colon" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.SizeIsZeroCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Finds cases of calls like `list.size() == 0` (use `list.isEmpty()` instead)." />
 			<message key="method.use" value="Use method ''{0}'' instead" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.StringBundlerNamingCheck">
@@ -331,15 +353,23 @@
 			<message key="variable.name.incorrect" value="StringBundler {0} ''{1}'' should end with either ''sb'' or ''SB''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.StringCastCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Finds cases where a redundant `toString()` is called on variable type `String`." />
 			<message key="string.cast.unneeded" value="No need to call ''.toString()'' on type String" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.TernaryOperatorCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Finds use of ternary operator in `java` files (use if statement instead)." />
 			<message key="ternary.operator.avoid" value="Use if-else-statement instead of ternary conditional operator for better readability" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnnecessaryTypeCastCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Finds unnecessary Type Casting." />
 			<message key="type.cast.unnecessary" value="No need to apply Type Cast to method ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ValidatorIsNullCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Ensures that only variable of type `Long`, `Serializable` or `String` is passed to method `com.liferay.portal.kernel.util.Validator.isNull`." />
 			<message key="method.invalidName" value="Avoid using method ''{0}''" />
 			<message key="method.reserved" value="Method ''{0}'' should only be used for type ''Long'', ''Serializable'' or ''String''" />
 		</module>

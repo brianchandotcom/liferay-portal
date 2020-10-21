@@ -341,6 +341,33 @@ public class AccountRoleLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.account.model.AccountRole> searchAccountRoles(
+			long companyId, long accountEntryId, String keywords, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator<?>
+				orderByComparator) {
+
+		return getService().searchAccountRoles(
+			companyId, accountEntryId, keywords, start, end, orderByComparator);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountRole> searchAccountRoles(
+			long companyId, long[] accountEntryIds, String keywords, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator<?>
+				orderByComparator) {
+
+		return getService().searchAccountRoles(
+			companyId, accountEntryIds, keywords, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountRole> searchAccountRoles(
 			long accountEntryId, String keywords, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator<?>
 				orderByComparator) {
@@ -349,6 +376,10 @@ public class AccountRoleLocalServiceUtil {
 			accountEntryId, keywords, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.account.model.AccountRole> searchAccountRoles(
 			long[] accountEntryIds, String keywords, int start, int end,

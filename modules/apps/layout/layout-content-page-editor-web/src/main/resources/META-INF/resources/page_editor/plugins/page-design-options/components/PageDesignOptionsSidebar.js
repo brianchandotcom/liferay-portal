@@ -39,6 +39,11 @@ export default function PageDesignOptionsSidebar() {
 	const selectedStyleBook = useStyleBook();
 	const setSelectedStyleBook = useSetStyleBook();
 
+	const [defaultStyleBook, setDefaultStyleBook] = useState({
+		imagePreviewURL: config.defaultStyleBookEntryImagePreviewURL,
+		name: config.defaultStyleBookEntryName,
+	});
+
 	const masterLayoutPlid = useSelector(
 		(state) => state.masterLayout?.masterLayoutPlid
 	);
@@ -50,8 +55,24 @@ export default function PageDesignOptionsSidebar() {
 					masterLayoutPlid: masterLayout.masterLayoutPlid,
 				})
 			).then(({styleBook}) => {
-				if (styleBook) {
-					setSelectedStyleBook(styleBook);
+				const {
+					defaultStyleBookEntryImagePreviewURL,
+					defaultStyleBookEntryName,
+					styleBookEntryId,
+					tokenValues,
+				} = styleBook;
+
+				setDefaultStyleBook({
+					imagePreviewURL: defaultStyleBookEntryImagePreviewURL,
+					name: defaultStyleBookEntryName,
+				});
+
+				// Changing the master layout should only affect the selected stylebook
+				// only if styleBookEntryId is equal to 0 which means that the stylebook is
+				// inherited
+
+				if (styleBookEntryId === '0') {
+					setSelectedStyleBook({styleBookEntryId, tokenValues});
 				}
 			});
 		},
@@ -59,17 +80,12 @@ export default function PageDesignOptionsSidebar() {
 	);
 
 	const onSelectStyleBook = useCallback(
-		(styleBook) => {
+		(styleBookEntryId) => {
 			LayoutService.changeStyleBookEntry({
 				onNetworkStatus: () => {},
-				styleBookEntryId: styleBook.styleBookEntryId,
-			}).then((styleBookWithTokens) => {
-				setSelectedStyleBook((selectedStyleBook) => ({
-					defaultStyleBookEntryName:
-						selectedStyleBook.defaultStyleBookEntryName,
-					styleBookEntryId: styleBook.styleBookEntryId,
-					tokenValues: styleBookWithTokens.tokenValues,
-				}));
+				styleBookEntryId,
+			}).then(({tokenValues}) => {
+				setSelectedStyleBook({styleBookEntryId, tokenValues});
 			});
 		},
 		[setSelectedStyleBook]
@@ -93,10 +109,12 @@ export default function PageDesignOptionsSidebar() {
 			getTabs(
 				masterLayoutPlid,
 				selectedStyleBook,
+				defaultStyleBook,
 				onSelectMasterLayout,
 				onSelectStyleBook
 			),
 		[
+			defaultStyleBook,
 			masterLayoutPlid,
 			onSelectMasterLayout,
 			onSelectStyleBook,
@@ -223,19 +241,20 @@ const OptionList = ({options = [], icon}) => (
 function getTabs(
 	masterLayoutPlid,
 	selectedStyleBook,
+	defaultStyleBook,
 	onSelectMasterLayout,
 	onSelectStyleBook
 ) {
 	const styleBooks = [
 		{
-			imagePreviewURL: selectedStyleBook.imagePreviewURL,
+			imagePreviewURL: defaultStyleBook.imagePreviewURL,
 			name:
 				config.layoutType === LAYOUT_TYPES.master
 					? Liferay.Language.get('default-style-book')
 					: Liferay.Language.get('inherited-from-master'),
 			styleBookEntryId: '0',
 			subtitle:
-				selectedStyleBook.defaultStyleBookEntryName ||
+				defaultStyleBook.name ||
 				Liferay.Language.get('provided-by-theme'),
 		},
 		...config.styleBooks,
@@ -250,7 +269,7 @@ function getTabs(
 				isActive:
 					selectedStyleBook.styleBookEntryId ===
 					styleBook.styleBookEntryId,
-				onClick: () => onSelectStyleBook(styleBook),
+				onClick: () => onSelectStyleBook(styleBook.styleBookEntryId),
 			})),
 			type: OPTIONS_TYPES.styleBook,
 		},

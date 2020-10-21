@@ -302,4 +302,8 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro uncheckCheckbox {
+		ClickNoError(locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX");
+	}
+
 }

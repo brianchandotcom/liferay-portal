@@ -62,6 +62,9 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 					return optionLabel.getString(_locale);
 				}
 			).put(
+				"reference",
+				_ddmFormFieldOptions.getOptionReference(optionValue)
+			).put(
 				"value", optionValue
 			).build();
 

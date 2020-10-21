@@ -256,6 +256,7 @@ public class ContentDashboardAdminPortletTest {
 	public void testGetContextWithRtlLanguageDirection() throws Exception {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest(
+				new String[] {"audience", "stage"},
 				LocaleUtil.fromLanguageId("ar_SA"));
 
 		Map<String, Object> data = _getData(mockLiferayPortletRenderRequest);
@@ -1205,8 +1206,8 @@ public class ContentDashboardAdminPortletTest {
 			Assert.assertEquals(assetCategory, assetCategories.get(0));
 		}
 		finally {
-			_assetVocabularyLocalService.deleteAssetVocabulary(
-				assetVocabulary.getVocabularyId());
+			_assetCategoryLocalService.deleteAssetCategory(
+				assetCategory.getCategoryId());
 		}
 	}
 
@@ -1303,6 +1304,105 @@ public class ContentDashboardAdminPortletTest {
 				LocaleUtil.US));
 	}
 
+	@Test
+	public void testIsSwapConfigurationEnabled() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_company.getCompanyId(), _company.getGroupId(),
+				_user.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), "audience");
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _company.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		AssetVocabulary childAssetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), "stage");
+
+		AssetCategory childAssetCategory =
+			_assetCategoryLocalService.addCategory(
+				_user.getUserId(), _company.getGroupId(),
+				RandomTestUtil.randomString(),
+				childAssetVocabulary.getVocabularyId(), serviceContext);
+
+		try {
+			Assert.assertTrue(_isSwapConfigurationEnabled("audience", "stage"));
+		}
+		finally {
+			_assetCategoryLocalService.deleteAssetCategory(assetCategory);
+			_assetCategoryLocalService.deleteAssetCategory(childAssetCategory);
+		}
+	}
+
+	@Test
+	public void testIsSwapConfigurationEnabledWithMissingChildAssetVocabulary()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_company.getCompanyId(), _company.getGroupId(),
+				_user.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), "audience");
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _company.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		try {
+			Assert.assertFalse(
+				_isSwapConfigurationEnabled("audience", "stage"));
+		}
+		finally {
+			_assetCategoryLocalService.deleteAssetCategory(assetCategory);
+		}
+	}
+
+	@Test
+	public void testIsSwapConfigurationEnabledWithOneAssetVocabularyName()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_company.getCompanyId(), _company.getGroupId(),
+				_user.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), "audience");
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _company.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		AssetVocabulary childAssetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), "stage");
+
+		AssetCategory childAssetCategory =
+			_assetCategoryLocalService.addCategory(
+				_user.getUserId(), _company.getGroupId(),
+				RandomTestUtil.randomString(),
+				childAssetVocabulary.getVocabularyId(), serviceContext);
+
+		try {
+			Assert.assertFalse(_isSwapConfigurationEnabled("audience"));
+		}
+		finally {
+			_assetCategoryLocalService.deleteAssetCategory(assetCategory);
+			_assetCategoryLocalService.deleteAssetCategory(childAssetCategory);
+		}
+	}
+
 	private String _getAuditGraphTitle(
 			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest)
 		throws Exception {
@@ -1339,11 +1439,12 @@ public class ContentDashboardAdminPortletTest {
 			_getMockLiferayPortletRenderRequest()
 		throws Exception {
 
-		return _getMockLiferayPortletRenderRequest(LocaleUtil.US);
+		return _getMockLiferayPortletRenderRequest(
+			new String[] {"audience", "stage"}, LocaleUtil.US);
 	}
 
 	private MockLiferayPortletRenderRequest _getMockLiferayPortletRenderRequest(
-			Locale locale)
+			String[] assetVocabularyNames, Locale locale)
 		throws Exception {
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
@@ -1394,7 +1495,7 @@ public class ContentDashboardAdminPortletTest {
 			mockLiferayPortletRenderRequest.getPreferences();
 
 		portletPreferences.setValues(
-			"assetVocabularyNames", "audience", "stage");
+			"assetVocabularyNames", assetVocabularyNames);
 
 		return mockLiferayPortletRenderRequest;
 	}
@@ -1425,6 +1526,25 @@ public class ContentDashboardAdminPortletTest {
 		themeDisplay.setUser(_company.getDefaultUser());
 
 		return themeDisplay;
+	}
+
+	private Boolean _isSwapConfigurationEnabled(String... assetVocabularyNames)
+		throws Exception {
+
+		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_getMockLiferayPortletRenderRequest(
+				assetVocabularyNames, LocaleUtil.US);
+
+		mvcPortlet.render(
+			mockLiferayPortletRenderRequest,
+			new MockLiferayPortletRenderResponse());
+
+		return ReflectionTestUtil.invoke(
+			mockLiferayPortletRenderRequest.getAttribute(
+				"CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT"),
+			"isSwapConfigurationEnabled", new Class<?>[0]);
 	}
 
 	private static Company _company;

@@ -102,7 +102,7 @@ describe('EditableLinkPanel', () => {
 
 		expect(getByText('link')).toBeInTheDocument();
 		expect(getByText('url')).toBeInTheDocument();
-		expect(getByText('target')).toBeInTheDocument();
+		expect(getByText('open-in-a-new-tab')).toBeInTheDocument();
 
 		expect(queryByText('content')).not.toBeInTheDocument();
 	});
@@ -132,7 +132,17 @@ describe('EditableLinkPanel', () => {
 		});
 
 		expect(getByLabelText('url')).toHaveValue('http://liferay.com');
-		expect(getByLabelText('target')).toHaveValue('_blank');
+		expect(getByLabelText('open-in-a-new-tab')).toBeChecked();
+	});
+
+	it('does not check the target value when is different from _blank', () => {
+		const {getByLabelText} = renderLinkPanel({
+			state: getStateWithConfig({
+				target: '_self',
+			}),
+		});
+
+		expect(getByLabelText('open-in-a-new-tab')).not.toBeChecked();
 	});
 
 	it('shows mapping panel when editable link is mapped', async () => {
@@ -148,7 +158,9 @@ describe('EditableLinkPanel', () => {
 		});
 
 		expect(getByLabelText(document.body, 'content')).toBeInTheDocument();
-		expect(getByLabelText(document.body, 'target')).toHaveValue('_blank');
+		expect(
+			getByLabelText(document.body, 'open-in-a-new-tab')
+		).toBeChecked();
 	});
 
 	it('shows mapping panel when editable link is mapped', async () => {
@@ -164,7 +176,9 @@ describe('EditableLinkPanel', () => {
 		});
 
 		expect(getByLabelText(document.body, 'content')).toBeInTheDocument();
-		expect(getByLabelText(document.body, 'target')).toHaveValue('_blank');
+		expect(
+			getByLabelText(document.body, 'open-in-a-new-tab')
+		).toBeChecked();
 	});
 
 	it('shows mapped url when is available', async () => {
@@ -186,7 +200,9 @@ describe('EditableLinkPanel', () => {
 		expect(getByLabelText(document.body, 'content')).toBeInTheDocument();
 		expect(getByLabelText(document.body, 'url')).toBeInTheDocument();
 		expect(getByLabelText(document.body, 'url')).toHaveValue('value');
-		expect(getByLabelText(document.body, 'target')).toHaveValue('_blank');
+		expect(
+			getByLabelText(document.body, 'open-in-a-new-tab')
+		).toBeChecked();
 	});
 
 	it('clear the config when changing source type', async () => {
@@ -215,7 +231,9 @@ describe('EditableLinkPanel', () => {
 		expect(editableConfig).toEqual({});
 
 		expect(getByLabelText(document.body, 'url')).toHaveValue('');
-		expect(getByLabelText(document.body, 'target')).toHaveValue('_blank');
+		expect(
+			getByLabelText(document.body, 'open-in-a-new-tab')
+		).toBeChecked();
 	});
 
 	it('calls dispatch with the href value typed in manual mode', async () => {

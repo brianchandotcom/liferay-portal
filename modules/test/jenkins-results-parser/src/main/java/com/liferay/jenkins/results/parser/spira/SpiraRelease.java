@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -153,7 +155,7 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		}
 	}
 
-	public static int getID(String jobName, String suiteName) {
+	public static int getID(String jobName, String testSuiteName) {
 		Properties buildProperties = null;
 
 		try {
@@ -161,12 +163,44 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 			return Integer.parseInt(
 				buildProperties.getProperty(
-					"spira.release.id[" + jobName + "][" + suiteName + "]"));
+					"spira.release.id[" + jobName + "][" + testSuiteName +
+						"]"));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to get build.properties", ioException);
 		}
+	}
+
+	public static String getJobNameByID(int id) {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build.properties", ioException);
+		}
+
+		for (Object propertyNameObject : buildProperties.keySet()) {
+			String propertyName = propertyNameObject.toString();
+
+			if (propertyName.startsWith("spira.release.id")) {
+				String propertyValue = buildProperties.getProperty(
+					propertyName);
+
+				if (id == Integer.parseInt(propertyValue)) {
+					Matcher matcher = _propertyPattern.matcher(propertyName);
+
+					matcher.find();
+
+					return matcher.group("jobName");
+				}
+			}
+		}
+
+		throw new IllegalArgumentException("Invalid Spira release ID");
 	}
 
 	public SpiraRelease getParentSpiraRelease() {
@@ -344,6 +378,9 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 		return spiraReleases.get(0);
 	}
+
+	private static Pattern _propertyPattern = Pattern.compile(
+		".*\\[(?<jobName>.*?)\\]\\[(?<testSuiteName>.*?)\\]");
 
 	private SpiraRelease _parentSpiraRelease;
 

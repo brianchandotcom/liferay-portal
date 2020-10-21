@@ -36,11 +36,35 @@ definition {
 
 		NavItem.click(navItem = "${navItem}");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		if (isSet(uploadFileName)) {
+			AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
 
-		Click(
-			key_card = "${entryTitle}",
-			locator1 = "Card#CARD_TITLE");
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "${uploadFileName}");
+
+			Pause(locator1 = "5000");
+
+			AssertElementPresent.pauseAssertVisible(
+				locator1 = "ItemSelector#ADD_BUTTON",
+				value1 = "Add");
+
+			AssertClick(
+				locator1 = "ItemSelector#ADD_BUTTON",
+				value1 = "Add");
+		}
+		else if ("${navItem}" == "Web Content") {
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			Click(
+				key_card = "${entryTitle}",
+				locator1 = "Card#CARD_TITLE");
+		}
+		else {
+			Click(
+				key_card = "${entryTitle}",
+				locator1 = "Card#CARD_TITLE");
+		}
 
 		AssertElementPresent(
 			key_contentName = "${entryTitle}",

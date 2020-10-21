@@ -354,7 +354,7 @@ class ImageEditor extends PortletBase {
 	 */
 	setterSaveMimeTypeFn_(saveMimeType) {
 		if (!saveMimeType) {
-			const imageExtensionRegex = /\.(\w+)\/[^?/]+/;
+			const imageExtensionRegex = /https?:\/\/(?:www\.)?(?:.+)\.(\w+)\/[^?/]+/;
 			const imageExtension = this.image.match(imageExtensionRegex)[1];
 
 			saveMimeType = `image/${imageExtension}`;

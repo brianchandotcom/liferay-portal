@@ -70,6 +70,22 @@ exports[`Options shows the options 1`] = `
                 value="Option1"
               />
             </div>
+            <div
+              class="active form-text key-value-editor"
+            >
+              <label
+                class="control-label key-value-label"
+              >
+                field-reference
+                :
+              </label>
+              <input
+                class="key-value-reference-input"
+                tabindex="0"
+                type="text"
+                value=""
+              />
+            </div>
             
           </div>
           <button
@@ -146,6 +162,22 @@ exports[`Options shows the options 1`] = `
                 value="Option2"
               />
             </div>
+            <div
+              class="active form-text key-value-editor"
+            >
+              <label
+                class="control-label key-value-label"
+              >
+                field-reference
+                :
+              </label>
+              <input
+                class="key-value-reference-input"
+                tabindex="0"
+                type="text"
+                value=""
+              />
+            </div>
             
           </div>
           <button
@@ -217,6 +249,22 @@ exports[`Options shows the options 1`] = `
               </label>
               <input
                 class="key-value-input"
+                tabindex="0"
+                type="text"
+                value="Any<String>"
+              />
+            </div>
+            <div
+              class="active form-text key-value-editor"
+            >
+              <label
+                class="control-label key-value-label"
+              >
+                field-reference
+                :
+              </label>
+              <input
+                class="key-value-reference-input"
                 tabindex="0"
                 type="text"
                 value="Any<String>"

@@ -12,7 +12,11 @@
  * details.
  */
 
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {
+	ClayCheckbox,
+	ClayInput,
+	ClaySelectWithOption,
+} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -36,28 +40,17 @@ const SOURCE_OPTIONS = {
 	},
 };
 
-export const TARGET_OPTIONS = [
-	{
-		label: `${Liferay.Language.get('self')}`,
-		value: '_self',
-	},
-	{
-		label: `${Liferay.Language.get('blank')}`,
-		value: '_blank',
-	},
-	{
-		label: `${Liferay.Language.get('parent')}`,
-		value: '_parent',
-	},
-	{
-		label: `${Liferay.Language.get('top')}`,
-		value: '_top',
-	},
-];
+export const TARGET_OPTIONS = {
+	blank: '_blank',
+	parent: '_parent',
+	self: '_self',
+	top: '_top',
+};
 
 export default function LinkField({field, onValueSelect, value}) {
 	const [nextValue, setNextValue] = useState(value || {});
 	const [nextHref, setNextHref] = useState(nextValue.href);
+	const [openNewTab, setOpenNewTab] = useState(value.target === '_blank');
 
 	const [mappedHrefPreview, setMappedHrefPreview] = useState(null);
 	const languageId = useSelector((state) => state.languageId);
@@ -164,20 +157,20 @@ export default function LinkField({field, onValueSelect, value}) {
 				</>
 			)}
 
-			<ClayForm.Group small>
-				<label htmlFor={targetInputId}>
-					{Liferay.Language.get('target')}
-				</label>
-
-				<ClaySelectWithOption
-					id={targetInputId}
-					onChange={(event) =>
-						handleChange({target: event.target.value})
-					}
-					options={TARGET_OPTIONS}
-					value={nextValue.target}
-				/>
-			</ClayForm.Group>
+			<ClayCheckbox
+				aria-label={Liferay.Language.get('open-in-a-new-tab')}
+				checked={openNewTab}
+				id={targetInputId}
+				label={Liferay.Language.get('open-in-a-new-tab')}
+				onChange={(event) => {
+					setOpenNewTab(event.target.checked);
+					handleChange({
+						target: event.target.checked
+							? TARGET_OPTIONS.blank
+							: TARGET_OPTIONS.self,
+					});
+				}}
+			/>
 		</>
 	);
 }
@@ -190,23 +183,17 @@ LinkField.propTypes = {
 			classNameId: PropTypes.string,
 			classPK: PropTypes.string,
 			fieldId: PropTypes.string,
-			target: PropTypes.oneOf(
-				TARGET_OPTIONS.map((option) => option.value)
-			),
+			target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
 		}),
 
 		PropTypes.shape({
 			href: PropTypes.string,
-			target: PropTypes.oneOf(
-				TARGET_OPTIONS.map((option) => option.value)
-			),
+			target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
 		}),
 
 		PropTypes.shape({
 			mappedField: PropTypes.string,
-			target: PropTypes.oneOf(
-				TARGET_OPTIONS.map((option) => option.value)
-			),
+			target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
 		}),
 	]),
 };

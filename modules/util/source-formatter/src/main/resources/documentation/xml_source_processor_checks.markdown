@@ -2,40 +2,40 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-XMLBuildFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLCDATACheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLCheckstyleFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLCustomSQLOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+XMLBuildFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `build.xml`. |
+XMLCDATACheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `CDATA` inside `xml`. |
+XMLCheckstyleFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `checkstyle.xml` file. |
+XMLCustomSQLOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `custom-sql` file. |
 XMLCustomSQLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consisteny in code style for `.xml` files in directory `custom-sql`. |
-XMLDDLStructuresFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+XMLDDLStructuresFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `-structures.xml` file. |
 XMLEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary empty lines. |
-XMLFSBExcludeFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLFriendlyURLRoutesFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLHBMFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+XMLFSBExcludeFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `fsb-exclude.xml` file. |
+XMLFriendlyURLRoutesFileCheck | [Styling](styling_checks.markdown#styling-checks) | Performs several checks on `*-routes.xml` file. |
+XMLHBMFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of imports in `*-hbm.xml` file. |
 XMLIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | Finds incorrect indentation in `.xml` files. |
-XMLIvyFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLLog4jFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLLookAndFeelCompatibilityVersionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLLookAndFeelFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLModelHintsFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLPomFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLPortletFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLPortletPreferencesFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLPoshiFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLProjectElementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLResourceActionsFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+XMLIvyFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of dependcies in `ivy.xml` file. |
+XMLLog4jFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of categories in `*-log4j.xml` file. |
+XMLLookAndFeelCompatibilityVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds missing attribute `version` in `compatibility` element in `*--look-and-feel.xml` file. |
+XMLLookAndFeelFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `*--look-and-feel.xml` file. |
+XMLModelHintsFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `*-model-hints.xml` file. |
+XMLPomFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of dependencies in `pom.xml` file. |
+XMLPortletFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `portlet.xml` file. |
+XMLPortletPreferencesFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in files in directory `resource-actions`. |
+XMLPoshiFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on poshi files. |
+XMLProjectElementCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks the project name in `.pom` file. |
+XMLResourceActionsFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in files in directory `resource-actions`. |
 [XMLServiceEntityNameCheck](checks/xml_service_entity_name_check.markdown#xmlserviceentitynamecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that the `entity name` in `service.xml` does not equal the `package name`. |
-XMLServiceFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLServiceReferenceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLSolrSchemaFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLSourcechecksFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLSpringFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLStrutsConfigFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+XMLServiceFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `service.xml` file. |
+XMLServiceReferenceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for unused references in `service.xml` file. |
+XMLSolrSchemaFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `portlet-preferences.xml` file. |
+XMLSourcechecksFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `sourcechecks.xml` file. |
+XMLSpringFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `*-spring.xml` file. |
+XMLStrutsConfigFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `struts-config.xml` file. |
 XMLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consisteny in code style. |
-XMLSuppressionsFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLTagAttributesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLTestIgnorableErrorLinesFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLTilesDefsFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLToggleFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-XMLWebFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+XMLSuppressionsFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `source-formatter-suppressions.xml` file. |
+XMLTagAttributesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on tag attributes. |
+XMLTestIgnorableErrorLinesFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `test-ignorable-error-lines.xml` file. |
+XMLTilesDefsFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `tiles-defs.xml` file. |
+XMLToggleFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `.toggle` file. |
+XMLWebFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `web.xml` file. |
 XMLWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary whitespace in `.xml` files. |

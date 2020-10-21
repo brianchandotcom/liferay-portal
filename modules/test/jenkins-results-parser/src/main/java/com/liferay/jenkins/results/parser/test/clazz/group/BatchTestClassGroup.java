@@ -28,7 +28,9 @@ import java.nio.file.PathMatcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -99,8 +101,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public int getSegmentCount() {
-		return (int)Math.ceil(
-			(double)getAxisCount() / _getSegmentMaxChildren());
+		return _segmentTestClassGroups.size();
 	}
 
 	public SegmentTestClassGroup getSegmentTestClassGroup(int segmentId) {
@@ -399,6 +400,19 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return _getRequiredModuleDirs(moduleDirs, new ArrayList<>(moduleDirs));
 	}
 
+	protected int getSegmentMaxChildren() {
+		String segmentMaxChildren = getFirstPropertyValue(
+			"test.batch.segment.max.children");
+
+		if ((segmentMaxChildren == null) ||
+			!segmentMaxChildren.matches("\\d+")) {
+
+			return _SEGMENT_MAX_CHILDREN_DEFAULT;
+		}
+
+		return Integer.valueOf(segmentMaxChildren);
+	}
+
 	protected boolean isIntegrationUnitTestFileModifiedOnly() {
 		List<PathMatcher> relevantIntegrationUnitIncludePathMatchers =
 			getRelevantIntegrationUnitIncludePathMatchers();
@@ -442,8 +456,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		for (List<TestClass> axisTestClasses :
 				Lists.partition(testClasses, axisSize)) {
 
-			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-				this);
+			AxisTestClassGroup axisTestClassGroup =
+				TestClassGroupFactory.newAxisTestClassGroup(this);
 
 			for (TestClass axisTestClass : axisTestClasses) {
 				axisTestClassGroup.addTestClass(axisTestClass);
@@ -466,20 +480,43 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return;
 		}
 
-		int segmentSize = (int)Math.ceil(
-			(double)getAxisCount() / getSegmentCount());
+		Map<Integer, List<AxisTestClassGroup>> axisTestClassGroupsMap =
+			new HashMap<>();
 
-		for (List<AxisTestClassGroup> axisTestClassGroups :
-				Lists.partition(axisTestClassGroups, segmentSize)) {
+		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+			Integer minimumSlaveRAM = axisTestClassGroup.getMinimumSlaveRAM();
 
-			SegmentTestClassGroup segmentTestClassGroup =
-				new SegmentTestClassGroup(this);
+			List<AxisTestClassGroup> axisTestClassGroups =
+				axisTestClassGroupsMap.get(minimumSlaveRAM);
 
-			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
-				segmentTestClassGroup.addAxisTestClassGroup(axisTestClassGroup);
+			if (axisTestClassGroups == null) {
+				axisTestClassGroups = new ArrayList<>();
 			}
 
-			_segmentTestClassGroups.add(segmentTestClassGroup);
+			axisTestClassGroups.add(axisTestClassGroup);
+
+			axisTestClassGroupsMap.put(minimumSlaveRAM, axisTestClassGroups);
+		}
+
+		for (List<AxisTestClassGroup> axisTestClassGroupsMapValue :
+				axisTestClassGroupsMap.values()) {
+
+			for (List<AxisTestClassGroup> axisTestClassGroups :
+					Lists.partition(
+						axisTestClassGroupsMapValue, getSegmentMaxChildren())) {
+
+				SegmentTestClassGroup segmentTestClassGroup =
+					TestClassGroupFactory.newSegmentTestClassGroup(this);
+
+				for (AxisTestClassGroup axisTestClassGroup :
+						axisTestClassGroups) {
+
+					segmentTestClassGroup.addAxisTestClassGroup(
+						axisTestClassGroup);
+				}
+
+				_segmentTestClassGroups.add(segmentTestClassGroup);
+			}
 		}
 	}
 
@@ -599,19 +636,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return Lists.newArrayList(requiredModuleDirs);
-	}
-
-	private int _getSegmentMaxChildren() {
-		String segmentMaxChildren = getFirstPropertyValue(
-			"test.batch.segment.max.children");
-
-		if ((segmentMaxChildren == null) ||
-			!segmentMaxChildren.matches("\\d+")) {
-
-			return _SEGMENT_MAX_CHILDREN_DEFAULT;
-		}
-
-		return Integer.valueOf(segmentMaxChildren);
 	}
 
 	private boolean _isSegmentEnabled() {

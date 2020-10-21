@@ -70,7 +70,7 @@ public class AccountRoleLocalServiceImpl
 
 		Role role = roleLocalService.addRole(
 			userId, AccountRole.class.getName(), accountRole.getAccountRoleId(),
-			name, titleMap, descriptionMap, RoleConstants.TYPE_PROVIDER, null,
+			name, titleMap, descriptionMap, RoleConstants.TYPE_ACCOUNT, null,
 			null);
 
 		accountRole.setRoleId(role.getRoleId());
@@ -170,21 +170,21 @@ public class AccountRoleLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<AccountRole> searchAccountRoles(
-		long accountEntryId, String keywords, int start, int end,
-		OrderByComparator<?> orderByComparator) {
+		long companyId, long accountEntryId, String keywords, int start,
+		int end, OrderByComparator<?> orderByComparator) {
 
 		return searchAccountRoles(
-			new long[] {accountEntryId}, keywords, start, end,
+			companyId, new long[] {accountEntryId}, keywords, start, end,
 			orderByComparator);
 	}
 
 	@Override
 	public BaseModelSearchResult<AccountRole> searchAccountRoles(
-		long[] accountEntryIds, String keywords, int start, int end,
-		OrderByComparator<?> orderByComparator) {
+		long companyId, long[] accountEntryIds, String keywords, int start,
+		int end, OrderByComparator<?> orderByComparator) {
 
 		DynamicQuery roleDynamicQuery = _getRoleDynamicQuery(
-			accountEntryIds, keywords, orderByComparator);
+			companyId, accountEntryIds, keywords, orderByComparator);
 
 		if (roleDynamicQuery == null) {
 			return new BaseModelSearchResult<>(
@@ -198,7 +198,36 @@ public class AccountRoleLocalServiceImpl
 		return new BaseModelSearchResult<>(
 			accountRoles,
 			(int)roleLocalService.dynamicQueryCount(
-				_getRoleDynamicQuery(accountEntryIds, keywords, null)));
+				_getRoleDynamicQuery(
+					companyId, accountEntryIds, keywords, null)));
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Override
+	public BaseModelSearchResult<AccountRole> searchAccountRoles(
+		long accountEntryId, String keywords, int start, int end,
+		OrderByComparator<?> orderByComparator) {
+
+		return searchAccountRoles(
+			CompanyThreadLocal.getCompanyId(), new long[] {accountEntryId},
+			keywords, start, end, orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Override
+	public BaseModelSearchResult<AccountRole> searchAccountRoles(
+		long[] accountEntryIds, String keywords, int start, int end,
+		OrderByComparator<?> orderByComparator) {
+
+		return searchAccountRoles(
+			CompanyThreadLocal.getCompanyId(), accountEntryIds, keywords, start,
+			end, orderByComparator);
 	}
 
 	@Override
@@ -217,7 +246,7 @@ public class AccountRoleLocalServiceImpl
 	}
 
 	private DynamicQuery _getRoleDynamicQuery(
-		long[] accountEntryIds, String keywords,
+		long companyId, long[] accountEntryIds, String keywords,
 		OrderByComparator<?> orderByComparator) {
 
 		DynamicQuery accountRoleDynamicQuery =
@@ -226,6 +255,8 @@ public class AccountRoleLocalServiceImpl
 		accountRoleDynamicQuery.add(
 			RestrictionsFactoryUtil.in(
 				"accountEntryId", ListUtil.fromArray(accountEntryIds)));
+		accountRoleDynamicQuery.add(
+			RestrictionsFactoryUtil.eq("companyId", companyId));
 		accountRoleDynamicQuery.setProjection(
 			ProjectionFactoryUtil.property("roleId"));
 
@@ -250,6 +281,9 @@ public class AccountRoleLocalServiceImpl
 				RestrictionsFactoryUtil.ilike(
 					"description",
 					StringUtil.quote(keywords, StringPool.PERCENT)));
+			disjunction.add(
+				RestrictionsFactoryUtil.ilike(
+					"title", StringUtil.quote(keywords, StringPool.PERCENT)));
 
 			roleDynamicQuery.add(disjunction);
 		}

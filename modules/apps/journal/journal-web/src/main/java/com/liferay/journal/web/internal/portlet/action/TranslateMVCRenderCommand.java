@@ -21,11 +21,14 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.web.internal.constants.JournalWebConstants;
+import com.liferay.journal.web.internal.display.context.JournalTranslateDisplayContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -35,10 +38,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.constants.TranslationConstants;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
+import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 
@@ -77,60 +82,64 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			InfoItemFormProvider<JournalArticle> infoItemFormProvider =
+			long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
+
+			String className = _portal.getClassName(classNameId);
+
+			long classPK = ParamUtil.getLong(renderRequest, "classPK");
+
+			InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFormProvider.class, JournalArticle.class.getName());
+					InfoItemLanguagesProvider.class, className);
+
+			InfoItemObjectProvider<Object> infoItemObjectProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class, className);
+
+			Object object = infoItemObjectProvider.getInfoItem(classPK);
+
+			List<String> availableSourceLanguageIds = Arrays.asList(
+				infoItemLanguagesProvider.getAvailableLanguageIds(object));
+
+			String sourceLanguageId = ParamUtil.getString(
+				renderRequest, "sourceLanguageId",
+				infoItemLanguagesProvider.getDefaultLanguageId(object));
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			JournalArticle article = ActionUtil.getArticle(renderRequest);
-
-			renderRequest.setAttribute(
-				InfoForm.class.getName(),
-				infoItemFormProvider.getInfoForm(article));
-
-			InfoItemFieldValues sourceInfoItemFieldValues =
-				_getSourceInfoItemFieldValues(article);
-
-			renderRequest.setAttribute(
-				JournalWebConstants.SOURCE_INFO_ITEM_FIELD_VALUES,
-				sourceInfoItemFieldValues);
-
-			String sourceLanguageId = ParamUtil.getString(
-				renderRequest, "sourceLanguageId",
-				article.getDefaultLanguageId());
-
 			List<String> availableTargetLanguageIds =
 				_getAvailableTargetLanguageIds(
-					article, sourceLanguageId, themeDisplay);
+					className, object, sourceLanguageId, themeDisplay);
+
+			InfoItemFormProvider<Object> infoItemFormProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFormProvider.class, className);
+
+			InfoForm infoForm = infoItemFormProvider.getInfoForm(object);
+
+			InfoItemFieldValues sourceInfoItemFieldValues =
+				_getSourceInfoItemFieldValues(className, object);
 
 			String targetLanguageId = ParamUtil.getString(
 				renderRequest, "targetLanguageId",
 				_getDefaultTargetLanguageId(availableTargetLanguageIds));
 
-			renderRequest.setAttribute(
-				JournalWebConstants.TARGET_INFO_ITEM_FIELD_VALUES,
+			InfoItemFieldValues targetInfoItemFieldValues =
 				_getTargetInfoItemFieldValues(
-					article, sourceInfoItemFieldValues, targetLanguageId));
-
-			List<String> availableSourceLanguageIds = Arrays.asList(
-				article.getAvailableLanguageIds());
+					className, classPK, sourceInfoItemFieldValues,
+					targetLanguageId);
 
 			renderRequest.setAttribute(
-				JournalWebConstants.AVAILABLE_SOURCE_LANGUAGE_IDS,
-				availableSourceLanguageIds);
-
-			renderRequest.setAttribute(
-				JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS,
-				availableTargetLanguageIds);
-			renderRequest.setAttribute(
-				JournalWebConstants.SOURCE_LANGUAGE_ID, sourceLanguageId);
-			renderRequest.setAttribute(
-				JournalWebConstants.TARGET_LANGUAGE_ID, targetLanguageId);
-			renderRequest.setAttribute(
-				TranslationInfoFieldChecker.class.getName(),
-				_translationInfoFieldChecker);
+				JournalTranslateDisplayContext.class.getName(),
+				new JournalTranslateDisplayContext(
+					availableSourceLanguageIds, availableTargetLanguageIds,
+					className, classPK, infoForm,
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse), object,
+					sourceInfoItemFieldValues, sourceLanguageId,
+					targetInfoItemFieldValues, targetLanguageId,
+					_translationInfoFieldChecker));
 
 			return "/translate.jsp";
 		}
@@ -139,15 +148,17 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	private List<String> _getAvailableTargetLanguageIds(
-			JournalArticle article, String sourceLanguageId,
+	private <T> List<String> _getAvailableTargetLanguageIds(
+			String className, T object, String sourceLanguageId,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		boolean hasUpdatePermission =
-			_journalArticleModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), article,
-				ActionKeys.UPDATE);
+		InfoItemPermissionProvider infoItemPermissionProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemPermissionProvider.class, className);
+
+		boolean hasUpdatePermission = infoItemPermissionProvider.hasPermission(
+			themeDisplay.getPermissionChecker(), object, ActionKeys.UPDATE);
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 			themeDisplay.getSiteGroupId());
@@ -176,28 +187,25 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		return availableTargetLanguageIds.get(0);
 	}
 
-	private InfoItemFieldValues _getSourceInfoItemFieldValues(
-		JournalArticle article) {
+	private <T> InfoItemFieldValues _getSourceInfoItemFieldValues(
+		String className, T object) {
 
-		InfoItemFieldValuesProvider<JournalArticle>
-			infoItemFieldValuesProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class,
-					JournalArticle.class.getName());
+		InfoItemFieldValuesProvider<T> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
 
-		return infoItemFieldValuesProvider.getInfoItemFieldValues(article);
+		return infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 	}
 
-	private InfoItemFieldValues _getTargetInfoItemFieldValues(
-			JournalArticle article,
+	private <T> InfoItemFieldValues _getTargetInfoItemFieldValues(
+			String className, long classPK,
 			InfoItemFieldValues journalArticleInfoItemFieldValues,
 			String targetLanguageId)
 		throws PortalException {
 
 		TranslationEntry translationEntry =
 			_translationEntryLocalService.fetchTranslationEntry(
-				JournalArticle.class.getName(), article.getResourcePrimKey(),
-				targetLanguageId);
+				className, classPK, targetLanguageId);
 
 		if (translationEntry == null) {
 			return journalArticleInfoItemFieldValues;
@@ -267,6 +275,12 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	)
 	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private TranslationEntryLocalService _translationEntryLocalService;

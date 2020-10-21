@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
 
+import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.util.BorderRadiusConverter;
 import com.liferay.layout.page.template.util.MarginConverter;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -233,6 +235,14 @@ public class ContainerLayoutStructureItemImporter
 				String target = (String)fragmentLinkMap.get("target");
 
 				if (target != null) {
+					if (Objects.equals(
+							target, FragmentLink.Target.PARENT.getValue()) ||
+						Objects.equals(
+							target, FragmentLink.Target.TOP.getValue())) {
+
+						target = FragmentLink.Target.SELF.getValue();
+					}
+
 					jsonObject.put(
 						"target",
 						StringPool.UNDERLINE + StringUtil.toLowerCase(target));

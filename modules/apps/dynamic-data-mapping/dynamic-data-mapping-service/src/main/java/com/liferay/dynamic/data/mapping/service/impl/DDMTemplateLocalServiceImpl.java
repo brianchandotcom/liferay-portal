@@ -1467,6 +1467,9 @@ public class DDMTemplateLocalServiceImpl
 
 		byte[] smallImageBytes = null;
 
+		DDMTemplate template = ddmTemplateLocalService.getDDMTemplate(
+			templateId);
+
 		if (smallImage) {
 			try {
 				smallImageBytes = FileUtil.getBytes(smallImageFile);
@@ -1477,13 +1480,12 @@ public class DDMTemplateLocalServiceImpl
 				}
 			}
 
-			if ((smallImageBytes == null) && !Validator.isUrl(smallImageURL)) {
+			if (!template.isSmallImage() && (smallImageBytes == null) &&
+				!Validator.isUrl(smallImageURL)) {
+
 				smallImage = false;
 			}
 		}
-
-		DDMTemplate template = ddmTemplateLocalService.getDDMTemplate(
-			templateId);
 
 		validate(
 			template.getGroupId(),

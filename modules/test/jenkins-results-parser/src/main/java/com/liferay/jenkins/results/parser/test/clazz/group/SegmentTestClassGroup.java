@@ -40,6 +40,10 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		return new ArrayList<>(_axisTestClassGroups);
 	}
 
+	public Integer getMinimumSlaveRAM() {
+		return _parentBatchTestClassGroup.getMinimumSlaveRAM();
+	}
+
 	public BatchTestClassGroup getParentBatchTestClassGroup() {
 		return _parentBatchTestClassGroup;
 	}

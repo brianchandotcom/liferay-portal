@@ -63,6 +63,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -372,6 +374,15 @@ public class ContentDashboardAdminDisplayContext {
 		return _status;
 	}
 
+	public ActionURL getSwapConfigurationURL() {
+		ActionURL actionURL = _liferayPortletResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME, "/swap_content_dashboard_configuration");
+
+		return actionURL;
+	}
+
 	public long getUserId() {
 		if (_userId > 0) {
 			return _userId;
@@ -380,6 +391,14 @@ public class ContentDashboardAdminDisplayContext {
 		_userId = _portal.getUserId(_liferayPortletRequest);
 
 		return _userId;
+	}
+
+	public boolean isSwapConfigurationEnabled() {
+		if (_assetVocabularies.size() == 2) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private Map<String, Object> _getContext() {

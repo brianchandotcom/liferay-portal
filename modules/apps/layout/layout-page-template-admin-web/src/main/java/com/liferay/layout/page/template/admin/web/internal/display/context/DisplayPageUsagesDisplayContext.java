@@ -16,15 +16,25 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
+import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.page.template.admin.web.internal.util.comparator.AssetDisplayPageEntryModifiedDateComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -47,8 +57,31 @@ public class DisplayPageUsagesDisplayContext {
 		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_infoItemServiceTracker =
+			(InfoItemServiceTracker)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER);
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+	}
+
+	public long getClassNameId() {
+		if (Validator.isNotNull(_classNameId)) {
+			return _classNameId;
+		}
+
+		_classNameId = ParamUtil.getLong(_httpServletRequest, "classNameId");
+
+		return _classNameId;
+	}
+
+	public long getClassTypeId() {
+		if (Validator.isNotNull(_classTypeId)) {
+			return _classTypeId;
+		}
+
+		_classTypeId = ParamUtil.getLong(_httpServletRequest, "classTypeId");
+
+		return _classTypeId;
 	}
 
 	public long getLayoutPageTemplateEntryId() {
@@ -118,9 +151,6 @@ public class DisplayPageUsagesDisplayContext {
 				_renderRequest, getPortletURL(), null,
 				"there-are-no-display-page-template-usages");
 
-		searchContainer.setId(
-			"assetDisplayPageEntries" + getLayoutPageTemplateEntryId());
-
 		boolean orderByAsc = false;
 
 		String orderByType = getOrderByType();
@@ -137,17 +167,18 @@ public class DisplayPageUsagesDisplayContext {
 		searchContainer.setOrderByType(getOrderByType());
 
 		List<AssetDisplayPageEntry> assetDisplayPageEntries =
-			AssetDisplayPageEntryServiceUtil.
-				getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
-					getLayoutPageTemplateEntryId(), searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator);
+			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntries(
+				getClassNameId(), getClassTypeId(),
+				getLayoutPageTemplateEntryId(), isDefaultTemplate(),
+				searchContainer.getStart(), searchContainer.getEnd(),
+				orderByComparator);
 
 		searchContainer.setResults(assetDisplayPageEntries);
 
 		int count =
-			AssetDisplayPageEntryServiceUtil.
-				getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
-					getLayoutPageTemplateEntryId());
+			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntriesCount(
+				getClassNameId(), getClassTypeId(),
+				getLayoutPageTemplateEntryId(), isDefaultTemplate());
 
 		searchContainer.setTotal(count);
 
@@ -166,13 +197,81 @@ public class DisplayPageUsagesDisplayContext {
 			className = DLFileEntry.class.getName();
 		}
 
-		AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(
-			className, assetDisplayPageEntry.getClassPK());
+		AssetEntry assetEntry = null;
 
-		return assetEntry.getTitle(locale);
+		try {
+			assetEntry = AssetEntryServiceUtil.getEntry(
+				className, assetDisplayPageEntry.getClassPK());
+
+			return assetEntry.getTitle(locale);
+		}
+		catch (PortalException portalException) {
+			if (!(portalException instanceof NoSuchEntryException)) {
+				throw portalException;
+			}
+		}
+
+		String title = StringPool.BLANK;
+
+		InfoItemObjectProvider<?> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class,
+				PortalUtil.getClassName(getClassNameId()));
+
+		if (infoItemObjectProvider == null) {
+			return title;
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				PortalUtil.getClassName(getClassNameId()));
+
+		if (infoItemFieldValuesProvider == null) {
+			return title;
+		}
+
+		Object infoItem = infoItemObjectProvider.getInfoItem(
+			new ClassPKInfoItemIdentifier(assetDisplayPageEntry.getClassPK()));
+
+		if (infoItem == null) {
+			return title;
+		}
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoItemFieldValue(
+				infoItem, "title");
+
+		if (infoFieldValue == null) {
+			return title;
+		}
+
+		Object infoFieldValueValue = infoFieldValue.getValue(
+			LocaleUtil.getMostRelevantLocale());
+
+		if (infoFieldValueValue == null) {
+			return title;
+		}
+
+		return String.valueOf(infoFieldValueValue);
 	}
 
+	public boolean isDefaultTemplate() {
+		if (_defaultTemplate != null) {
+			return _defaultTemplate;
+		}
+
+		_defaultTemplate = ParamUtil.getBoolean(
+			_httpServletRequest, "defaultTemplate");
+
+		return _defaultTemplate;
+	}
+
+	private Long _classNameId;
+	private Long _classTypeId;
+	private Boolean _defaultTemplate;
 	private final HttpServletRequest _httpServletRequest;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;
 	private String _orderByType;

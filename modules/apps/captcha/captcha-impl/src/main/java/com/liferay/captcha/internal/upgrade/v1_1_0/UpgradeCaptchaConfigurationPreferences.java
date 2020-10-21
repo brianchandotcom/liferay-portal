@@ -54,6 +54,10 @@ public class UpgradeCaptchaConfigurationPreferences extends UpgradeProcess {
 				LegacyCaptchaPropsKeys.
 					CAPTCHA_CONFIGURATION_SIMPLECAPTCHA_GIMPY_RENDERERS_PROPERTY));
 
+		if (simpleCaptchaGimpyRenderers.length == 0) {
+			return;
+		}
+
 		String[] upgradedSimpleCaptchaGimpyRenderers = _replaceArrayValue(
 			simpleCaptchaGimpyRenderers,
 			LegacyCaptchaPropsKeys.

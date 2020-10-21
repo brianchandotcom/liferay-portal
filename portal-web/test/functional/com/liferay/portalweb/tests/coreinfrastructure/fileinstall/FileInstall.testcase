@@ -113,6 +113,22 @@ definition {
 	}
 
 	@priority = "4"
+	test InstallOSGiConfigWithHiddenFile {
+		property create.osgi.hidden.file = "true";
+		property test.assert.warning.exceptions = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "File Uploads",
+			configurationScope = "System Scope");
+	}
+
+	@priority = "4"
 	test UninstallJarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";
 

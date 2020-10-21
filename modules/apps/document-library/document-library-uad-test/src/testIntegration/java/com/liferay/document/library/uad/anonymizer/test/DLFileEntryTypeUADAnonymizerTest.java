@@ -75,7 +75,7 @@ public class DLFileEntryTypeUADAnonymizerTest
 		throws Exception {
 
 		DLFileEntryTypeUADTestUtil.cleanUpDependencies(
-			_dlFileEntryTypeLocalService, _portal, baseModels);
+			_dlFileEntryTypeLocalService, baseModels);
 	}
 
 	@Override

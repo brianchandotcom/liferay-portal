@@ -26,7 +26,13 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 %>
 
 <div class="control-menu-label staging-variation-label">
-	<liferay-ui:message key="page-variations" />
+	<liferay-util:buffer
+		var="pageVariationsHelpIcon"
+	>
+		<liferay-ui:icon-help message="page-variations-help" />
+	</liferay-util:buffer>
+
+	<liferay-ui:message arguments="<%= pageVariationsHelpIcon %>" key="page-variations-x" />
 </div>
 
 <div class="dropdown">

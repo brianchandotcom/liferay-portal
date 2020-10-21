@@ -37,6 +37,21 @@ import org.osgi.service.component.annotations.Reference;
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
+	public void onAfterRemove(Group group) throws ModelListenerException {
+		super.onAfterRemove(group);
+
+		if (group.isDepot()) {
+			DepotEntry depotEntry =
+				_depotEntryLocalService.fetchGroupDepotEntry(
+					group.getGroupId());
+
+			if (depotEntry != null) {
+				_depotEntryLocalService.deleteDepotEntry(depotEntry);
+			}
+		}
+	}
+
+	@Override
 	public void onBeforeCreate(Group group) throws ModelListenerException {
 		try {
 			super.onBeforeCreate(group);

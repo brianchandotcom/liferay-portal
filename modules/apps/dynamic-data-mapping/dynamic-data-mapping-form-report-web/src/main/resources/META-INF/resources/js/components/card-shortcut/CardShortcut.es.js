@@ -17,6 +17,8 @@ import React, {useContext, useState} from 'react';
 import fieldTypes from '../../utils/fieldTypes.es';
 import {SidebarContext} from '../sidebar/SidebarContext.es';
 
+const MAX_FIELD_LABEL_LENGTH = 91;
+
 export default ({fields}) => {
 	const [itemSelectedIndex, setItemSelectedIndex] = useState();
 
@@ -30,6 +32,14 @@ export default ({fields}) => {
 		if (card !== null) {
 			card.scrollIntoView();
 		}
+	};
+
+	const showFieldLabel = (label) => {
+		if (label.length > MAX_FIELD_LABEL_LENGTH) {
+			return label.substr(0, MAX_FIELD_LABEL_LENGTH) + '...';
+		}
+
+		return label;
 	};
 
 	const shortcuts = fields.map((field, index) => {
@@ -47,7 +57,9 @@ export default ({fields}) => {
 						}}
 					>
 						<div className="indicator"></div>
-						<div className="field-label">{field.label}</div>
+						<div className="field-label">
+							{showFieldLabel(field.label)}
+						</div>
 					</a>
 				</li>
 			);

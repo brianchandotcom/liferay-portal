@@ -12,12 +12,9 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React from 'react';
 
-import LinkField, {
-	TARGET_OPTIONS,
-} from '../../../../app/components/fragment-configuration-fields/LinkField';
+import LinkField from '../../../../app/components/fragment-configuration-fields/LinkField';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
 import selectEditableValue from '../../../../app/selectors/selectEditableValue';
@@ -97,22 +94,5 @@ export default function EditableLinkPanel({item}) {
 }
 
 EditableLinkPanel.propTypes = {
-	item: getEditableItemPropTypes({
-		config: PropTypes.oneOfType([
-			PropTypes.shape({
-				href: PropTypes.string,
-				target: PropTypes.oneOf(TARGET_OPTIONS),
-			}),
-			PropTypes.shape({
-				classNameId: PropTypes.string,
-				classPK: PropTypes.string,
-				fieldId: PropTypes.string,
-				target: PropTypes.oneOf(TARGET_OPTIONS),
-			}),
-			PropTypes.shape({
-				mappedField: PropTypes.string,
-				target: PropTypes.oneOf(TARGET_OPTIONS),
-			}),
-		]),
-	}),
+	item: getEditableItemPropTypes(),
 };

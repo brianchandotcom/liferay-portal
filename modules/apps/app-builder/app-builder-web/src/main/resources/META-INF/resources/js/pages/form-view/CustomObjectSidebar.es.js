@@ -91,6 +91,20 @@ const DropDown = () => {
 	);
 };
 
+const EmptyState = () => (
+	<div className="custom-object-sidebar-empty">
+		<ClayIcon symbol="custom-field" />
+
+		<h3>{Liferay.Language.get('there-are-no-fields-yet')}</h3>
+
+		<p>
+			{Liferay.Language.get(
+				'any-field-added-to-the-object-or-to-a-form-view-appears-here'
+			)}
+		</p>
+	</div>
+);
+
 const Header = ({onCloseSearch, onSearch, searchText}) => {
 	const [searchMode, setSearchMode] = useState(false);
 
@@ -182,7 +196,7 @@ const Header = ({onCloseSearch, onSearch, searchText}) => {
 export default () => {
 	const [
 		{
-			dataDefinition: {dataDefinitionFields},
+			dataDefinition: {dataDefinitionFields, id},
 			focusedCustomObjectField,
 		},
 		dispatch,
@@ -241,22 +255,8 @@ export default () => {
 				/>
 
 				<Sidebar.Body className={classNames({empty})}>
-					{empty ? (
-						<div className="custom-object-sidebar-empty">
-							<ClayIcon symbol="custom-field" />
-
-							<h3>
-								{Liferay.Language.get(
-									'there-are-no-fields-yet'
-								)}
-							</h3>
-
-							<p>
-								{Liferay.Language.get(
-									'any-field-added-to-the-object-or-to-a-form-view-appears-here'
-								)}
-							</p>
-						</div>
+					{!!id && empty ? (
+						<EmptyState />
 					) : (
 						<CustomObjectFieldsList keywords={searchText} />
 					)}

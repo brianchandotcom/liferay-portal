@@ -237,9 +237,8 @@ public class DispatchTriggerLocalServiceTest {
 
 		return _dispatchTriggerLocalService.addDispatchTrigger(
 			dispatchTrigger.getUserId(), dispatchTrigger.getName(),
-			dispatchTrigger.isSystem(),
-			dispatchTrigger.getTaskSettingsUnicodeProperties(),
-			dispatchTrigger.getTaskType());
+			dispatchTrigger.isSystem(), dispatchTrigger.getTaskExecutorType(),
+			dispatchTrigger.getTaskSettingsUnicodeProperties());
 	}
 
 	private void _advancedAssertEquals(
@@ -269,8 +268,8 @@ public class DispatchTriggerLocalServiceTest {
 			expectedDispatchTrigger.isSystem(),
 			actualDispatchTrigger.isSystem());
 		Assert.assertEquals(
-			expectedDispatchTrigger.getTaskType(),
-			actualDispatchTrigger.getTaskType());
+			expectedDispatchTrigger.getTaskExecutorType(),
+			actualDispatchTrigger.getTaskExecutorType());
 
 		UnicodeProperties actualTaskSettingsUnicodeProperties =
 			actualDispatchTrigger.getTaskSettingsUnicodeProperties();

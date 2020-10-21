@@ -136,9 +136,12 @@ public class DisplayPageActionDropdownItemsProvider {
 			() -> {
 				int count =
 					AssetDisplayPageEntryServiceUtil.
-						getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+						getAssetDisplayPageEntriesCount(
+							_layoutPageTemplateEntry.getClassNameId(),
+							_layoutPageTemplateEntry.getClassTypeId(),
 							_layoutPageTemplateEntry.
-								getLayoutPageTemplateEntryId());
+								getLayoutPageTemplateEntryId(),
+							_layoutPageTemplateEntry.isDefaultTemplate());
 
 				return FFDisplayPageAdminWebConfigurationUtil.
 					viewUsagesEnabled() &&
@@ -477,11 +480,16 @@ public class DisplayPageActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
-				"/layout_page_template/view_display_page_usages",
+				"/layout_page_template/view_display_page_usages", "redirect",
+				_themeDisplay.getURLCurrent(), "classNameId",
+				String.valueOf(_layoutPageTemplateEntry.getClassNameId()),
+				"classTypeId",
+				String.valueOf(_layoutPageTemplateEntry.getClassTypeId()),
 				"layoutPageTemplateEntryId",
 				String.valueOf(
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
-				"redirect", _themeDisplay.getURLCurrent());
+				"defaultTemplate",
+				String.valueOf(_layoutPageTemplateEntry.isDefaultTemplate()));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-usages"));
 		};

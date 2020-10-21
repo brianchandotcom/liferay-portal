@@ -98,12 +98,17 @@ public class OptionsDDMFormFieldContextHelper {
 
 	protected List<Object> createDefaultOptions() {
 		return ListUtil.fromArray(
-			createOption(getDefaultOptionLabel(), StringPool.BLANK));
+			createOption(
+				getDefaultOptionLabel(), StringPool.BLANK, StringPool.BLANK));
 	}
 
-	protected Map<String, String> createOption(String label, String value) {
+	protected Map<String, String> createOption(
+		String label, String reference, String value) {
+
 		return HashMapBuilder.put(
 			"label", label
+		).put(
+			"reference", reference
 		).put(
 			"value", value
 		).build();
@@ -116,7 +121,9 @@ public class OptionsDDMFormFieldContextHelper {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			Map<String, String> option = createOption(
-				jsonObject.getString("label"), jsonObject.getString("value"));
+				jsonObject.getString("label"),
+				jsonObject.getString("reference"),
+				jsonObject.getString("value"));
 
 			options.add(option);
 		}

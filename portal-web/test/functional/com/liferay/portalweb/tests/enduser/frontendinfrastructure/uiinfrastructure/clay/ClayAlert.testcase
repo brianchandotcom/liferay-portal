@@ -22,6 +22,8 @@ definition {
 
 	@priority = "4"
 	test ToastMessageAutoClose {
+		property test.name.skip.portal.instance = "ClayAlert#ToastMessageAutoClose";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration");
@@ -46,6 +48,8 @@ definition {
 
 	@priority = "3"
 	test ToastMessageManualClose {
+		property test.name.skip.portal.instance = "ClayAlert#ToastMessageManualClose";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration");

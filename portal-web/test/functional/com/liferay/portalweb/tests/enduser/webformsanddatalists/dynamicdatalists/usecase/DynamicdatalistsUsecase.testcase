@@ -980,10 +980,7 @@ definition {
 
 		DDLRecord.addCP();
 
-		DDLRecord.populateFieldHTML(
-			ddlRecordFieldData = "${ddlRecordFieldData1}",
-			fieldFieldLabel = "HTML",
-			fieldName = "HTML");
+		FormFields.editParagraphBody(content = "${ddlRecordFieldData1}");
 
 		PortletEntry.publish();
 

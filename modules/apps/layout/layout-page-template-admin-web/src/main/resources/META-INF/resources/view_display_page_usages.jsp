@@ -33,6 +33,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTempl
 
 <clay:container-fluid>
 	<liferay-ui:search-container
+		id="assetDisplayPageEntries"
 		searchContainer="<%= displayPageUsagesDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
@@ -44,6 +45,12 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTempl
 				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				name="title"
 				value="<%= HtmlUtil.escape(displayPageUsagesDisplayContext.getTitle(assetDisplayPageEntry, themeDisplay.getLocale())) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
+				name="author"
+				value="<%= HtmlUtil.escape(assetDisplayPageEntry.getUserName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-date

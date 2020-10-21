@@ -1079,10 +1079,7 @@ definition {
 			ddlDataDefinitionName = "Data Definition",
 			ddlListName = "List Name");
 
-		DDLRecord.populateFieldHTML(
-			ddlRecordFieldData = "Record HTML",
-			fieldFieldLabel = "HTML",
-			fieldName = "HTML");
+		FormFields.editParagraphBody(content = "Record HTML");
 
 		PortletEntry.publish();
 

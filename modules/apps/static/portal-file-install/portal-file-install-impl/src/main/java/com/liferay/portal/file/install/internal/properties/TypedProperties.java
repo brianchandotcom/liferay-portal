@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,7 +39,7 @@ import java.util.regex.Pattern;
  */
 public class TypedProperties {
 
-	public Object get(String key) {
+	public Object get(String key) throws IOException {
 		Map.Entry<String, List<String>> entry = _storage.get(key);
 
 		if (entry == null) {
@@ -49,11 +48,7 @@ public class TypedProperties {
 
 		String string = entry.getKey();
 
-		if (string != null) {
-			return _convertFromString(string);
-		}
-
-		return string;
+		return ConfigurationHandler.read(string);
 	}
 
 	public Set<String> keySet() {
@@ -74,13 +69,13 @@ public class TypedProperties {
 		_header = propertiesReader.getComment();
 	}
 
-	public void put(String key, Object value) {
+	public void put(String key, Object value) throws IOException {
 		Map.Entry<String, List<String>> oldEntry = _storage.get(key);
 
 		List<String> values = null;
 
 		if (oldEntry != null) {
-			Object oldObject = _convertFromString(oldEntry.getKey());
+			Object oldObject = ConfigurationHandler.read(oldEntry.getKey());
 
 			if (Objects.equals(oldObject, value)) {
 				values = oldEntry.getValue();
@@ -97,7 +92,7 @@ public class TypedProperties {
 		_storage.put(
 			key,
 			new AbstractMap.SimpleImmutableEntry<>(
-				_convertToString(value), values));
+				ConfigurationHandler.write(value), values));
 	}
 
 	public void remove(String key) {
@@ -105,6 +100,10 @@ public class TypedProperties {
 	}
 
 	public void save(Writer writer) throws IOException {
+		if ((_header == null) && _storage.isEmpty()) {
+			return;
+		}
+
 		StringBundler sb = new StringBundler();
 
 		if (_header != null) {
@@ -119,7 +118,7 @@ public class TypedProperties {
 
 			List<String> layout = valuesEntry.getValue();
 
-			if ((layout == null) || layout.isEmpty()) {
+			if (layout == null) {
 				sb.append(entry.getKey());
 				sb.append(_EQUALS_WITH_SPACES);
 				sb.append(valuesEntry.getKey());
@@ -148,28 +147,10 @@ public class TypedProperties {
 		writer.write(sb.toString());
 	}
 
-	private Object _convertFromString(String value) {
-		try {
-			return ConfigurationHandler.read(value);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	private String _convertToString(Object value) {
-		try {
-			return ConfigurationHandler.write(value);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	private boolean _isCommentLine(String line) {
 		String string = line.trim();
 
-		if ((string.length() < 1) || (CharPool.POUND == string.charAt(0))) {
+		if (CharPool.POUND == string.charAt(0)) {
 			return true;
 		}
 
@@ -180,8 +161,6 @@ public class TypedProperties {
 
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
-
-	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TypedProperties.class);
@@ -241,15 +220,7 @@ public class TypedProperties {
 		}
 
 		private boolean _checkCombineLines(String line) {
-			int bsCount = 0;
-
-			for (int i = line.length() - 1;
-				 (i >= 0) && (line.charAt(i) == '\\'); i--) {
-
-				bsCount++;
-			}
-
-			if ((bsCount % 2) != 0) {
+			if (line.charAt(line.length() - 1) == '\\') {
 				return true;
 			}
 
@@ -261,6 +232,8 @@ public class TypedProperties {
 
 			StringBundler sb = new StringBundler();
 
+			List<String> comments = new ArrayList<>();
+
 			while (true) {
 				String line = readLine();
 
@@ -269,13 +242,15 @@ public class TypedProperties {
 				}
 
 				if (_isCommentLine(line)) {
-					if ((_comment == null) && _values.isEmpty()) {
-						_comment = line;
+					comments.add(line);
+
+					if (!_storage.isEmpty()) {
+						_log.error(
+							"Comment must be at beginning of config file: " +
+								line);
 					}
-					else {
-						if (_log.isWarnEnabled()) {
-							_log.warn("Multiple comment lines found: " + line);
-						}
+					else if (_comment == null) {
+						_comment = line;
 					}
 
 					continue;
@@ -289,17 +264,15 @@ public class TypedProperties {
 
 				_values.add(line);
 
-				while ((line.length() > 0) &&
-					   ArrayUtil.contains(_WHITE_SPACE, line.charAt(0))) {
-
-					line = line.substring(1);
-				}
-
-				sb.append(line);
+				sb.append(line.trim());
 
 				if (!combine) {
 					break;
 				}
+			}
+
+			if (comments.size() > 1) {
+				_log.error("Multiple comment lines found: " + comments);
 			}
 
 			return sb.toString();

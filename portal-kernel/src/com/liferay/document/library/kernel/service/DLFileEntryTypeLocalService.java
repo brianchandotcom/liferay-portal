@@ -286,6 +286,10 @@ public interface DLFileEntryTypeLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType fetchDataDefinitionFileEntryType(
+		long groupId, long dataDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType fetchDLFileEntryType(long fileEntryTypeId);
 
 	/**

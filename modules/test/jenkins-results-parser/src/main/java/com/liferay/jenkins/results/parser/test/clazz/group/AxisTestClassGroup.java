@@ -27,6 +27,14 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return _batchTestClassGroup;
 	}
 
+	public Integer getMinimumSlaveRAM() {
+		if (_segmentTestClassGroup != null) {
+			return _segmentTestClassGroup.getMinimumSlaveRAM();
+		}
+
+		return _batchTestClassGroup.getMinimumSlaveRAM();
+	}
+
 	public SegmentTestClassGroup getSegmentTestClassGroup() {
 		return _segmentTestClassGroup;
 	}

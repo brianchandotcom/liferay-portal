@@ -29,6 +29,6 @@ create table DispatchTrigger (
 	overlapAllowed BOOLEAN,
 	startDate DATE null,
 	system_ BOOLEAN,
-	taskSettings TEXT null,
-	taskType VARCHAR(75) null
+	taskExecutorType VARCHAR(75) null,
+	taskSettings TEXT null
 );

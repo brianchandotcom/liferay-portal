@@ -18,13 +18,12 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import {AppContextProvider} from '../../AppContext.es';
 import useLazy from '../../hooks/useLazy.es';
 import {PermissionsContextProvider} from './PermissionsContext.es';
-import TranslationManagerEntry, {
-	getStorageLanguageId,
-} from './TranslationManagerEntry.es';
+import PortalEntry, {getStorageLanguageId} from './PortalEntry.es';
 
 export default function ({appTab, ...props}) {
 	const PageComponent = useLazy();
-	const defaultLanguageId = getStorageLanguageId(props.appId);
+	const {appId, dataDefinitionId} = props;
+	const defaultLanguageId = getStorageLanguageId(appId);
 	const [userLanguageId, setUserLanguageId] = useState(defaultLanguageId);
 	const [showAppName, setShowAppName] = useState(false);
 
@@ -49,16 +48,13 @@ export default function ({appTab, ...props}) {
 	return (
 		<div className="app-builder-root">
 			<AppContextProvider {...props}>
-				<TranslationManagerEntry
-					dataDefinitionId={props.dataDefinitionId}
-					setUserLanguageId={setUserLanguageId}
-					showAppName={showAppName}
-					userLanguageId={userLanguageId}
-				/>
-
-				<PermissionsContextProvider
-					dataDefinitionId={props.dataDefinitionId}
-				>
+				<PermissionsContextProvider dataDefinitionId={dataDefinitionId}>
+					<PortalEntry
+						dataDefinitionId={dataDefinitionId}
+						setUserLanguageId={setUserLanguageId}
+						showAppName={showAppName}
+						userLanguageId={userLanguageId}
+					/>
 					<Router>
 						<Switch>
 							<Route component={ListPage} exact path="/" />

@@ -41,6 +41,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -218,9 +219,10 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			InfoItemCapabilitiesProvider.class, InfoItemDetailsProvider.class,
 			InfoItemFieldValuesProvider.class, InfoItemFieldValuesUpdater.class,
 			InfoItemFormProvider.class, InfoItemFormVariationsProvider.class,
-			InfoItemObjectProvider.class, InfoItemPermissionProvider.class,
-			InfoItemRenderer.class, InfoItemSelector.class,
-			InfoListRenderer.class, InfoListProvider.class
+			InfoItemLanguagesProvider.class, InfoItemObjectProvider.class,
+			InfoItemPermissionProvider.class, InfoItemRenderer.class,
+			InfoItemSelector.class, InfoListRenderer.class,
+			InfoListProvider.class
 		};
 
 		for (Class<?> serviceClass : serviceClasses) {

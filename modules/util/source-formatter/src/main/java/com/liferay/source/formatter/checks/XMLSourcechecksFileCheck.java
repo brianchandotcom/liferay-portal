@@ -52,10 +52,6 @@ public class XMLSourcechecksFileCheck extends BaseFileCheck {
 		String fileName, Element checkElement, String checkName,
 		String tagName) {
 
-		if (true) {
-			return;
-		}
-
 		Element tagElement = checkElement.element(tagName);
 
 		if (tagElement == null) {
@@ -89,6 +85,14 @@ public class XMLSourcechecksFileCheck extends BaseFileCheck {
 					(List<Element>)sourceProcessorElement.elements("check")) {
 
 				String checkName = checkElement.attributeValue("name");
+
+				if (!checkName.endsWith("Check")) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Name of class '", checkName,
+							"' should end with 'Check'"));
+				}
 
 				_checkMissingTag(fileName, checkElement, checkName, "category");
 				_checkMissingTag(

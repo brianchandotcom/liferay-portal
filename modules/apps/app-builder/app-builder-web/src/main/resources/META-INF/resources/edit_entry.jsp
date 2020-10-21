@@ -94,6 +94,8 @@ List<Long> dataLayoutIds = appBuilderAppPortletTabContext.getDataLayoutIds();
 									).put(
 										"dataRecordId", ParamUtil.getLong(request, "dataRecordId")
 									).put(
+										"portraitURL", request.getAttribute(AppBuilderWebKeys.APP_PORTRAIT_URL)
+									).put(
 										"redirect", ParamUtil.getString(request, "redirect")
 									).put(
 										"showFormView", request.getAttribute(AppBuilderWebKeys.SHOW_FORM_VIEW)

@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>AUDIT_GRAPH_CATEGORY_CHECKBOX</td>
+	<td>//*[contains(@class, 'inline-item-after') and contains(text(),'Stage 1')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUTHOR_SELECT_DISPLAY_MODE_BUTTON</td>
 	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'nav-link-monospaced') and contains(@class, 'btn nav-link')]</td>
 	<td></td>
@@ -103,6 +108,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NO_CATEGORIES_SELECTED_TEXT</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(),'There are no categories selected')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVERSE_SORT_DIRECTION_BUTTON</td>
 	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow')]</td>
 	<td></td>
@@ -140,6 +150,11 @@
 <tr>
 	<td>WEB_CONTENT_MENU_DROPDOWN_BUTTON</td>
 	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'btn-monospaced') and contains(@class, 'component-action')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>X_AXIS_VOCABULARY_NAME</td>
+	<td>//button[contains(@class, 'recharts-layer recharts-cartesian-axis-tick') and contains(text(),'${xAxisCtegoryName}')]</td>
 	<td></td>
 </tr>
 </tbody>

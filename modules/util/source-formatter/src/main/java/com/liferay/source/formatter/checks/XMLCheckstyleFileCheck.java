@@ -55,33 +55,10 @@ public class XMLCheckstyleFileCheck extends BaseFileCheck {
 
 		Document document = SourceUtil.readXML(content);
 
-		_checkOrder(fileName, document.getRootElement());
+		_checkElement(fileName, document.getRootElement());
 	}
 
-	private void _checkMissingProperty(
-		String fileName, Element moduleElement, String moduleName,
-		String propertyName) {
-
-		if (true) {
-			return;
-		}
-
-		for (Element propertyElement :
-				(List<Element>)moduleElement.elements("property")) {
-
-			if (propertyName.equals(propertyElement.attributeValue("name"))) {
-				return;
-			}
-		}
-
-		addMessage(
-			fileName,
-			StringBundler.concat(
-				"Missing property '", propertyName, "' for check '", moduleName,
-				"'"));
-	}
-
-	private void _checkOrder(String fileName, Element element) {
+	private void _checkElement(String fileName, Element element) {
 		checkElementOrder(
 			fileName, element, "module", null, new ElementComparator());
 
@@ -97,13 +74,40 @@ public class XMLCheckstyleFileCheck extends BaseFileCheck {
 			"module");
 
 		if (childModuleElements.isEmpty()) {
+			if (!moduleName.endsWith("Check")) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Name of class '", moduleName,
+						"' should end with 'Check'"));
+			}
+
 			_checkMissingProperty(fileName, element, moduleName, "category");
 			_checkMissingProperty(fileName, element, moduleName, "description");
 		}
 
 		for (Element moduleElement : childModuleElements) {
-			_checkOrder(fileName, moduleElement);
+			_checkElement(fileName, moduleElement);
 		}
+	}
+
+	private void _checkMissingProperty(
+		String fileName, Element moduleElement, String moduleName,
+		String propertyName) {
+
+		for (Element propertyElement :
+				(List<Element>)moduleElement.elements("property")) {
+
+			if (propertyName.equals(propertyElement.attributeValue("name"))) {
+				return;
+			}
+		}
+
+		addMessage(
+			fileName,
+			StringBundler.concat(
+				"Missing property '", propertyName, "' for check '", moduleName,
+				"'"));
 	}
 
 }

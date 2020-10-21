@@ -93,6 +93,7 @@ public class DDMFormField implements Serializable {
 		setType(type);
 
 		setDDMFormFieldOptions(new DDMFormFieldOptions());
+		setFieldReference(name);
 		setLabel(new LocalizedValue());
 		setPredefinedValue(new LocalizedValue());
 		setStyle(new LocalizedValue());

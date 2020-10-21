@@ -12,6 +12,10 @@
  * details.
  */
 
+const COLORS = {
+	secondary: '#A7A9BC',
+};
+
 const COLUMNS = [
 	{
 		key: 'name',
@@ -92,6 +96,7 @@ const FILTERS = [
 ];
 
 export {
+	COLORS,
 	COLUMNS,
 	DEPLOYMENT_ACTION,
 	DEPLOYMENT_TYPES,

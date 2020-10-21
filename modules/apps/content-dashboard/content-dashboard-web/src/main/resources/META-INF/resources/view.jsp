@@ -38,6 +38,24 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 							<%= contentDashboardAdminDisplayContext.getAuditGraphTitle() %>
 						</clay:content-col>
 
+						<clay:content-col
+							cssClass="c-mr-4"
+						>
+							<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "flip-axes") %>">
+								<form action="<%= contentDashboardAdminDisplayContext.getSwapConfigurationURL() %>" method="post">
+									<clay:button
+										borderless="<%= true %>"
+										cssClass="component-action"
+										disabled="<%= !contentDashboardAdminDisplayContext.isSwapConfigurationEnabled() %>"
+										displayType="secondary"
+										icon="change"
+										small="<%= true %>"
+										type="submit"
+									/>
+								</form>
+							</span>
+						</clay:content-col>
+
 						<clay:content-col>
 							<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "configure-chart") %>">
 								<clay:button

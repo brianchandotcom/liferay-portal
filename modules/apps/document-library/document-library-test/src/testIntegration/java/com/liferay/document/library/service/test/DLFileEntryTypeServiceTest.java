@@ -98,19 +98,22 @@ public class DLFileEntryTypeServiceTest {
 			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		_dlFileEntryType1 = DLFileEntryTypeServiceUtil.addFileEntryType(
 			_group.getGroupId(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			new long[] {ddmStructure.getStructureId()},
+			new long[] {ddmStructure1.getStructureId()},
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		DDMStructure ddmStructure2 = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		_dlFileEntryType2 = DLFileEntryTypeServiceUtil.addFileEntryType(
 			_group.getGroupId(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			new long[] {ddmStructure.getStructureId()},
+			new long[] {ddmStructure2.getStructureId()},
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
@@ -349,9 +352,12 @@ public class DLFileEntryTypeServiceTest {
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeServiceUtil.addFileEntryType(
-				_group.getGroupId(), StringUtil.randomString(),
-				StringUtil.randomString(),
-				new long[] {ddmStructure.getStructureId()}, serviceContext);
+				_group.getGroupId(), ddmStructure.getStructureId(), null,
+				Collections.singletonMap(
+					LocaleUtil.US, StringUtil.randomString()),
+				Collections.singletonMap(
+					LocaleUtil.US, StringUtil.randomString()),
+				serviceContext);
 
 		serviceContext.setAttribute(
 			"ddmForm", DDMBeanTranslatorUtil.translate(new DDMForm()));

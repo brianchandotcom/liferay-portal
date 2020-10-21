@@ -53,9 +53,9 @@ public class DispatchTriggerServiceHttp {
 
 	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
 			HttpPrincipal httpPrincipal, long userId, String name,
+			String taskExecutorType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				taskSettingsUnicodeProperties,
-			String taskType)
+				taskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -64,8 +64,8 @@ public class DispatchTriggerServiceHttp {
 				_addDispatchTriggerParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, name, taskSettingsUnicodeProperties,
-				taskType);
+				methodKey, userId, name, taskExecutorType,
+				taskSettingsUnicodeProperties);
 
 			Object returnObj = null;
 
@@ -309,8 +309,8 @@ public class DispatchTriggerServiceHttp {
 
 	private static final Class<?>[] _addDispatchTriggerParameterTypes0 =
 		new Class[] {
-			long.class, String.class,
-			com.liferay.portal.kernel.util.UnicodeProperties.class, String.class
+			long.class, String.class, String.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class
 		};
 	private static final Class<?>[] _deleteDispatchTriggerParameterTypes1 =
 		new Class[] {long.class};

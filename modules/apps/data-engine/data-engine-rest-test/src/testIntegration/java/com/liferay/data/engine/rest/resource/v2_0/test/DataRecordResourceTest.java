@@ -210,7 +210,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 		Long dataRecordCollectionId =
 			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
 
-		DataRecord dataRecord =
+		DataRecord dataRecord1 =
 			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
 				dataRecordCollectionId,
 				new DataRecord() {
@@ -225,19 +225,20 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 					}
 				});
 
-		testGetDataRecordCollectionDataRecordsPage_addDataRecord(
-			dataRecordCollectionId,
-			new DataRecord() {
-				{
-					dataRecordCollectionId = _dataRecordCollectionId;
-					dataRecordValues = HashMapBuilder.<String, Object>put(
-						"SingleSelection",
-						HashMapBuilder.put(
-							"en_US", new String[] {"Boat"}
-						).build()
-					).build();
-				}
-			});
+		DataRecord dataRecord2 =
+			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
+				dataRecordCollectionId,
+				new DataRecord() {
+					{
+						dataRecordCollectionId = _dataRecordCollectionId;
+						dataRecordValues = HashMapBuilder.<String, Object>put(
+							"SingleSelection",
+							HashMapBuilder.put(
+								"en_US", new String[] {"Boat"}
+							).build()
+						).build();
+					}
+				});
 
 		DataListView dataListView =
 			dataListViewResource.postDataDefinitionDataListView(
@@ -253,13 +254,36 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 					}
 				});
 
-		Page<DataRecord> page =
+		Page<DataRecord> singleSelectionFixedFilterPage =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
 				testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
 				dataListView.getId(), null, Pagination.of(1, 2), null);
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(dataRecord), (List<DataRecord>)page.getItems());
+			Arrays.asList(dataRecord1),
+			(List<DataRecord>)singleSelectionFixedFilterPage.getItems());
+
+		// Retrieve data records according to full term
+
+		Page<DataRecord> searchFullTermPage =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
+				null, "Boat", Pagination.of(1, 2), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(dataRecord2),
+			(List<DataRecord>)searchFullTermPage.getItems());
+
+		// Retrieve data records according to partial term
+
+		Page<DataRecord> searchPartialTermPage =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
+				null, "Bo", Pagination.of(1, 2), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(dataRecord2),
+			(List<DataRecord>)searchPartialTermPage.getItems());
 	}
 
 	@Override

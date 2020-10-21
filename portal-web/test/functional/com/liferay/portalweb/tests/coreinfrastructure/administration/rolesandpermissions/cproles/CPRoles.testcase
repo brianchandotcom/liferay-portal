@@ -24,72 +24,6 @@ definition {
 		}
 	}
 
-	@priority = "5"
-	test AddOrganizationRole {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		RoleNavigator.gotoRoleType(roleType = "Organization");
-
-		Role.add(roleTitle = "Roles Orgrole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.viewCP(
-			roleTitle = "Roles Orgrole Name",
-			roleType = "Organization");
-	}
-
-	@priority = "4"
-	test AddRegularRole {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.add(roleTitle = "Roles Regrole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.viewCP(
-			roleTitle = "Roles Regrole Name",
-			roleType = "Regular");
-	}
-
-	@priority = "5"
-	test AddSiteRole {
-		property portal.acceptance = "true";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		RoleNavigator.gotoRoleType(roleType = "Site");
-
-		Role.add(roleTitle = "Roles Siterole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.viewCP(
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site");
-	}
-
 	@description = "This is a use case for LPS-105001 and LPS-104999."
 	@priority = "3"
 	test AssertRoleTitleNotRequired {
@@ -254,6 +188,48 @@ definition {
 	}
 
 	@priority = "5"
+	test DeleteOrganizationRole {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Organization");
+
+		Role.add(roleTitle = "Roles Orgrole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewCP(
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Organization");
+
+		Role.deleteCP(roleTitle = "Roles Orgrole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Organization");
+
+		Role.viewDefaultCP(roleTitle = "Roles Orgrole Name");
+	}
+
+	@priority = "5"
 	test DeleteRegularRole {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -272,6 +248,15 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
+		Role.viewCP(
+			roleTitle = "Roles Regrole Name",
+			roleType = "Regular");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
 		Role.deleteCP(roleTitle = "Roles Regrole Name");
 
 		ApplicationsMenu.gotoPortlet(
@@ -280,6 +265,47 @@ definition {
 			portlet = "Roles");
 
 		Role.viewDefaultCP(roleTitle = "Roles Regrole Name");
+	}
+
+	@priority = "5"
+	test DeleteSiteRole {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.add(roleTitle = "Roles Siterole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewCP(
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.deleteCP(roleTitle = "Roles Siterole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.viewDefaultCP(roleTitle = "Roles Siterole Name");
 	}
 
 	@priority = "4"

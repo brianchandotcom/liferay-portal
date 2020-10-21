@@ -48,11 +48,15 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -194,9 +198,32 @@ public class DataRecordResourceImpl
 		return SearchUtil.search(
 			Collections.emptyMap(),
 			booleanQuery -> {
+				if (Validator.isNull(keywords)) {
+					return;
+				}
+
+				BooleanQuery ddmContentBooleanQuery = new BooleanQueryImpl();
+
+				for (Locale locale :
+						_language.getCompanyAvailableLocales(
+							contextCompany.getCompanyId())) {
+
+					ddmContentBooleanQuery.addTerm(
+						Field.getLocalizedName(locale, "ddmContent"),
+						StringBundler.concat(
+							StringPool.QUOTE, "*", keywords, "*",
+							StringPool.QUOTE));
+				}
+
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new QueryFilter(ddmContentBooleanQuery),
+					BooleanClauseOccur.MUST);
 			},
 			_getBooleanFilter(dataListViewId, ddlRecordSet), DDLRecord.class,
-			keywords, pagination,
+			null, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
@@ -584,6 +611,9 @@ public class DataRecordResourceImpl
 
 	@Reference
 	private DEDataListViewLocalService _deDataListViewLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

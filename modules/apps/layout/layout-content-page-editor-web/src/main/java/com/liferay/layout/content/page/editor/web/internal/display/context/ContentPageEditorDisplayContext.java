@@ -295,7 +295,7 @@ public class ContentPageEditorDisplayContext {
 				"defaultStyleBookEntryImagePreviewURL",
 				() -> {
 					StyleBookEntry defaultStyleBookEntry =
-						_getDefaultStyleBookEntry();
+						_getDefaultMasterStyleBookEntry();
 
 					if (defaultStyleBookEntry != null) {
 						return defaultStyleBookEntry.getImagePreviewURL(
@@ -308,7 +308,7 @@ public class ContentPageEditorDisplayContext {
 				"defaultStyleBookEntryName",
 				() -> {
 					StyleBookEntry defaultStyleBookEntry =
-						_getDefaultStyleBookEntry();
+						_getDefaultMasterStyleBookEntry();
 
 					if (defaultStyleBookEntry != null) {
 						return defaultStyleBookEntry.getName();
@@ -908,6 +908,18 @@ public class ContentPageEditorDisplayContext {
 		).build();
 
 		return _defaultConfigurations;
+	}
+
+	private StyleBookEntry _getDefaultMasterStyleBookEntry() {
+		if (_defaultMasterStyleBookEntry != null) {
+			return _defaultMasterStyleBookEntry;
+		}
+
+		_defaultMasterStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(
+				themeDisplay.getLayout());
+
+		return _defaultMasterStyleBookEntry;
 	}
 
 	private StyleBookEntry _getDefaultStyleBookEntry() {
@@ -2199,6 +2211,7 @@ public class ContentPageEditorDisplayContext {
 	private final List<ContentPageEditorSidebarPanel>
 		_contentPageEditorSidebarPanels;
 	private Map<String, Object> _defaultConfigurations;
+	private StyleBookEntry _defaultMasterStyleBookEntry;
 	private StyleBookEntry _defaultStyleBookEntry;
 	private final FFLayoutContentPageEditorConfiguration
 		_ffLayoutContentPageEditorConfiguration;

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.servlet.URLEncoder;
+import com.liferay.portlet.test.MockActionURL;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -81,12 +82,12 @@ public class MockLiferayResourceResponse
 
 	@Override
 	public <T extends PortletURL & ActionURL> T createActionURL() {
-		return null;
+		return (T)new MockActionURL();
 	}
 
 	@Override
 	public ActionURL createActionURL(Copy copy) {
-		return null;
+		return new MockActionURL();
 	}
 
 	@Override

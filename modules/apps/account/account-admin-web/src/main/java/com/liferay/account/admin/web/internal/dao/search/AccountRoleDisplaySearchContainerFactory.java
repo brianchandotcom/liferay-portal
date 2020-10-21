@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -38,6 +40,10 @@ public class AccountRoleDisplaySearchContainerFactory {
 	public static SearchContainer<AccountRoleDisplay> create(
 		long accountEntryId, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer<AccountRoleDisplay> searchContainer =
 			new SearchContainer(
@@ -62,6 +68,7 @@ public class AccountRoleDisplaySearchContainerFactory {
 
 		BaseModelSearchResult<AccountRole> baseModelSearchResult =
 			AccountRoleLocalServiceUtil.searchAccountRoles(
+				themeDisplay.getCompanyId(),
 				new long[] {
 					accountEntryId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
 				},

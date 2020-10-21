@@ -73,7 +73,7 @@
 										}
 									}
 								},
-								"target": "Top"
+								"target": "Self"
 							},
 							"text": {
 								"defaultFragmentInlineValue": {

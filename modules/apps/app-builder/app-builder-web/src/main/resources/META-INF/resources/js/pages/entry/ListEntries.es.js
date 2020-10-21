@@ -22,9 +22,12 @@ import useDataListView from '../../hooks/useDataListView.es';
 import useEntriesActions from '../../hooks/useEntriesActions.es';
 import usePermissions from '../../hooks/usePermissions.es';
 import {getLocalizedUserPreferenceValue} from '../../utils/lang.es';
+import NoPermissionEntry from './NoPermissionEntry.es';
 import {buildEntries, navigateToEditPage} from './utils.es';
 
 export default function ListEntries() {
+	const actions = useEntriesActions();
+	const permissions = usePermissions();
 	const {
 		appId,
 		basePortletURL,
@@ -39,9 +42,7 @@ export default function ListEntries() {
 		dataDefinition,
 		dataListView: {fieldNames},
 		isLoading,
-	} = useDataListView(dataListViewId, dataDefinitionId);
-
-	const permissions = usePermissions();
+	} = useDataListView(dataListViewId, dataDefinitionId, permissions.view);
 
 	const formColumns = columns.map(({value, ...column}) => ({
 		...column,
@@ -56,10 +57,14 @@ export default function ListEntries() {
 		languageId: userLanguageId,
 	};
 
+	if (!permissions.view) {
+		return <NoPermissionEntry />;
+	}
+
 	return (
 		<Loading isLoading={isLoading}>
 			<ListView
-				actions={useEntriesActions()}
+				actions={actions}
 				addButton={() =>
 					showFormView &&
 					permissions.add && (

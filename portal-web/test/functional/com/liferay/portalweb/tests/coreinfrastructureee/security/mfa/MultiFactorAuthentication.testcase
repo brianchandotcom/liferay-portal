@@ -834,6 +834,87 @@ definition {
 			userPassword = "test");
 	}
 
+	@description = "This is a use case for LPS-98267"
+	@priority = "5"
+	test LoginWithTOTPEnabledForEndUser {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithTOTPEnabledForEndUser";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.openUsersAdmin();
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureOTP(enableOTP = "true");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "Time-Based One-Time Password Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureTOTP(enableTOTP = "true");
+
+		SignOut.signOut();
+
+		SignIn.signIn(userEmailAddress = "userea@liferay.com");
+
+		MultiFactorAuthentication.sendOTPEmailPG();
+
+		MultiFactorAuthentication.verifyOTP(
+			portalURL = "${portalURL}",
+			recipient = "userfn userln",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		Navigator.gotoNavUnderline(navUnderline = "Multi-Factor Authentication");
+
+		var secretKey = selenium.getAttribute("//input[contains(@id,'sharedSecret')]@value");
+
+		MultiFactorAuthentication.getTOTP();
+
+		SignOut.signOut();
+
+		SignIn.signIn(userEmailAddress = "userea@liferay.com");
+
+		AssertElementPresent(locator1 = "MultiFactorAuthentication#TOTP_FIELD");
+
+		MultiFactorAuthentication.getTOTP(secretKeyUnchanged = "${secretKey}");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		Navigator.gotoNavUnderline(navUnderline = "Multi-Factor Authentication");
+
+		AssertClick(
+			key_text = "Remove Configured Time-Based One-Time Password",
+			locator1 = "Button#ANY",
+			value1 = "Remove Configured Time-Based One-Time Password");
+
+		AssertElementPresent(locator1 = "MultiFactorAuthentication#TOTP_SHARED_SECRET_FIELD");
+
+		SignOut.signOut();
+
+		SignIn.signIn(userEmailAddress = "userea@liferay.com");
+
+		AssertElementPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_SEND_EMAIL_BUTTON");
+
+		AssertElementNotPresent(locator1 = "MultiFactorAuthentication#TOTP_FIELD");
+	}
+
 	@description = "This is a use case for LPS-115566"
 	@priority = "5"
 	test RemoveAndAutoGenerateTOTP {

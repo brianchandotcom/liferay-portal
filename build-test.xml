@@ -6585,6 +6585,17 @@ go</echo>
 		</if>
 	</target>
 
+	<target name="create-hidden-osgi-file">
+		<get-testcase-property property.name="create.osgi.hidden.file" />
+
+		<if>
+			<isset property="create.osgi.hidden.file" />
+			<then>
+				<touch file="${liferay.home}/osgi/configs/.keep" />
+			</then>
+		</if>
+	</target>
+
 	<target name="curl-execute">
 		<fail message="Please set the property ${curl.args}." unless="curl.args" />
 
@@ -12675,6 +12686,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<antcall target="prepare-ip-address-update" />
 
 		<antcall target="check-inet-address" />
+
+		<antcall target="create-hidden-osgi-file" />
 
 		<get-testcase-property property.name="database.jndi.enabled" />
 

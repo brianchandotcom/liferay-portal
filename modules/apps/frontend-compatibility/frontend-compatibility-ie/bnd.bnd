@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend Compatibility IE
-Bundle-SymbolicName: com.liferay.frontend.compatibility.ie
-Bundle-Version: 5.0.0
-Web-ContextPath: /frontend-compatibility-ie

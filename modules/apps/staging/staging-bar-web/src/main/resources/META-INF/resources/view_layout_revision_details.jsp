@@ -244,18 +244,6 @@ else {
 	});
 </aui:script>
 
-<liferay-util:buffer
-	var="pageVariationsHelpIcon"
->
-	<liferay-ui:icon-help message="page-variations-help" />
-</liferay-util:buffer>
-
-<liferay-util:buffer
-	var="sitePagesVariationsHelpIcon"
->
-	<liferay-ui:icon-help message="pages-variations-help" />
-</liferay-util:buffer>
-
 <aui:script>
 	function <portlet:namespace />openPageVariationsDialog() {
 		Liferay.Util.openWindow({
@@ -268,8 +256,7 @@ else {
 				destroyOnHide: true,
 			},
 			id: 'pagesVariationsDialog',
-			title:
-				'<liferay-ui:message arguments="<%= pageVariationsHelpIcon %>" key="page-variations-x" />',
+			title: '<liferay-ui:message key="page-variations" />',
 
 			<liferay-portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcRenderCommandName" value="viewLayoutBranches" />
@@ -291,8 +278,7 @@ else {
 				destroyOnHide: true,
 			},
 			id: 'sitePagesVariationDialog',
-			title:
-				'<liferay-ui:message arguments="<%= sitePagesVariationsHelpIcon %>" key="site-pages-variation-x" />',
+			title: '<liferay-ui:message key="site-pages-variation" />',
 
 			<liferay-portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcRenderCommandName" value="viewLayoutSetBranches" />

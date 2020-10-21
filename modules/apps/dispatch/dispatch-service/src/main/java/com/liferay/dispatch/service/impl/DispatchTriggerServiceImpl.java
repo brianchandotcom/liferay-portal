@@ -44,15 +44,16 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 
 	@Override
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String name,
-			UnicodeProperties taskSettingsUnicodeProperties, String taskType)
+			long userId, String name, String taskExecutorType,
+			UnicodeProperties taskSettingsUnicodeProperties)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
 			getPermissionChecker(), DispatchActionKeys.ADD_DISPATCH_TRIGGER);
 
 		return dispatchTriggerLocalService.addDispatchTrigger(
-			userId, name, false, taskSettingsUnicodeProperties, taskType);
+			userId, name, false, taskExecutorType,
+			taskSettingsUnicodeProperties);
 	}
 
 	@Override

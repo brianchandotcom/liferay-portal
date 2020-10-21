@@ -90,8 +90,9 @@ public class AccountRoleResourceImpl
 
 		BaseModelSearchResult<com.liferay.account.model.AccountRole>
 			baseModelSearchResult = _accountRoleLocalService.searchAccountRoles(
-				accountId, keywords, pagination.getStartPosition(),
-				pagination.getEndPosition(), _getOrderByComparator(sorts));
+				contextCompany.getCompanyId(), accountId, keywords,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				_getOrderByComparator(sorts));
 
 		return Page.of(
 			transform(

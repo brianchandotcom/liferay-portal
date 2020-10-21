@@ -158,9 +158,11 @@ public class DDMFormTemplateContextProcessor {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			String value = jsonObject.getString("value");
-			String label = jsonObject.getString("label");
 
-			ddmFormFieldOptions.addOptionLabel(value, _locale, label);
+			ddmFormFieldOptions.addOptionLabel(
+				value, _locale, jsonObject.getString("label"));
+			ddmFormFieldOptions.addOptionReference(
+				value, jsonObject.getString("reference"));
 		}
 
 		return ddmFormFieldOptions;

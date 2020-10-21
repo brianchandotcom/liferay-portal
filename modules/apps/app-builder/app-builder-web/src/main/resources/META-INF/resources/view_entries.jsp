@@ -44,6 +44,8 @@
 			).put(
 				"deltaValues", PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES
 			).put(
+				"portraitURL", request.getAttribute(AppBuilderWebKeys.APP_PORTRAIT_URL)
+			).put(
 				"showFormView", request.getAttribute(AppBuilderWebKeys.SHOW_FORM_VIEW)
 			).put(
 				"showTableView", request.getAttribute(AppBuilderWebKeys.SHOW_TABLE_VIEW)

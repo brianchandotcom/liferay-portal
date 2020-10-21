@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>PORTLET</td>
-	<td>//div[contains(@class,'applications-menu-nav-columns')]//li[contains(.,'${key_category}')]/following-sibling::li//span[normalize-space(text())='${key_portlet}']</td>
+	<td>//div[contains(@role,'tabpanel') and contains(@class,'active')]//div[contains(@class,'applications-menu-nav-columns')]//li[contains(.,'${key_category}')]/following-sibling::li//span[normalize-space(text())='${key_portlet}']</td>
 	<td></td>
 </tr>
 <tr>

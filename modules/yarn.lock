@@ -1919,6 +1919,11 @@
   dependencies:
     stream "^0.0.2"
 
+"@liferay/amd-loader@4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-4.3.1.tgz#35cde6128f6e2795b7e45378e8f115f596b6cdda"
+  integrity sha512-95i+LRK3gPTiBc75lJsr9OwRNFdzaamSe3B5x+kHLHYr78qS/4WD5mkDJ+WYv3CY0jFFnROTNLl3x6zCRuDMxw==
+
 "@liferay/eslint-config@21.2.1":
   version "21.2.1"
   resolved "https://registry.yarnpkg.com/@liferay/eslint-config/-/eslint-config-21.2.1.tgz#cd29c21140098a49d566c37082467d5787aeb90b"
@@ -1961,10 +1966,10 @@
     source-map "^0.7.3"
     webpack "^4.41.6"
 
-"@liferay/npm-bundler-preset-liferay-dev@4.6.4":
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-bundler-preset-liferay-dev/-/npm-bundler-preset-liferay-dev-4.6.4.tgz#142f092f6bd8354bba6252df1c56b05ff9856026"
-  integrity sha512-PIIfnnFfLIjanKa5glB2s0w7rxEzQklm+u5sbxq9/UoBIMAaWgn7F0o4/Pm+jhnQPWn/IM2OetPEQ+EnIoeMgA==
+"@liferay/npm-bundler-preset-liferay-dev@4.6.5":
+  version "4.6.5"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-bundler-preset-liferay-dev/-/npm-bundler-preset-liferay-dev-4.6.5.tgz#8c6fe6de14269e7eed5525f3ab5cf3252f6bd7f3"
+  integrity sha512-6R3oUzpP/+ufXWSGXwOTZMmANiCgVKRfmNXv+QXvMEH221TbYmlQkfekx1PVOAk4fDiiL4OpGFhCQ/tpLC7+WA==
   dependencies:
     babel-preset-liferay-standard "2.19.4"
     liferay-npm-bundler-loader-css-loader "2.19.4"
@@ -1975,10 +1980,10 @@
     liferay-npm-bundler-plugin-replace-browser-modules "2.19.4"
     liferay-npm-bundler-plugin-resolve-linked-dependencies "2.19.4"
 
-"@liferay/npm-bundler@3.0.1-pre.1":
-  version "3.0.1-pre.1"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-bundler/-/npm-bundler-3.0.1-pre.1.tgz#466bd2c0395cdb2af032e9c807fbba15033d088d"
-  integrity sha512-Qy1piHRxg/sDr7d2gvhf6rNNh+qRfunbN2VGllwyxu4ny0TujFHXkOcNqzgol0bjlJjSWB9SeUsRH3dc/ebA8Q==
+"@liferay/npm-bundler@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-bundler/-/npm-bundler-3.0.1.tgz#c58760956338a71588d200a08870c34cc7746155"
+  integrity sha512-JRVJzgACiMzgbJZeq5mRnW4H70+PJ4cAeMvppvhZlydztzegNApmgZOvalHKEsZELdV6FI9NnBVAkcctS7ue2Q==
   dependencies:
     "@liferay/js-toolkit-core" "3.0.1-pre.0"
     acorn "^6.2.1"
@@ -1996,10 +2001,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@33.1.3":
-  version "33.1.3"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-33.1.3.tgz#df33318d84b12d15a76eef0ce786f59f48389686"
-  integrity sha512-oQE1hEx/4HZ5H+74dBrH1IFPLOLEdxON5vLkJl2cYZa8IBhYsohunTmQUHM5n8pMOJHyYG9fnMO4UKrvj+YGNQ==
+"@liferay/npm-scripts@33.1.4":
+  version "33.1.4"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-33.1.4.tgz#7650aae17532c5bd144acec1b017facaedc2e85c"
+  integrity sha512-dhAk7qdS6XlqycZb8RKChUDv+dmO4Y6Sayc3pHRLuf65g6bXWN8YtebA4MpG1Es1qsKSLOwxKr+WW117qRpKJg==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -2013,7 +2018,7 @@
     "@babel/preset-typescript" "^7.10.4"
     "@liferay/eslint-config" "21.2.1"
     "@liferay/jest-junit-reporter" "1.2.0"
-    "@liferay/npm-bundler-preset-liferay-dev" "4.6.4"
+    "@liferay/npm-bundler-preset-liferay-dev" "4.6.5"
     "@storybook/addon-a11y" "^5.1.9"
     "@storybook/addon-actions" "^5.1.9"
     "@storybook/addon-knobs" "^5.1.9"
@@ -12071,11 +12076,6 @@ lie@~3.3.0:
   integrity sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ==
   dependencies:
     immediate "~3.0.5"
-
-liferay-amd-loader@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/liferay-amd-loader/-/liferay-amd-loader-4.3.0.tgz#5a6e6b94374f3d5298f637aca57220ec0b3c66ce"
-  integrity sha512-8y7jgugf3RzcmA7t4eKJaNFMKI/e2K9+UaAAuT2maDd2X047E961nELmomRfEaXA5aWIS7SvKlP/dnvfGEvxPw==
 
 liferay-ckeditor@4.14.1-liferay.12:
   version "4.14.1-liferay.12"

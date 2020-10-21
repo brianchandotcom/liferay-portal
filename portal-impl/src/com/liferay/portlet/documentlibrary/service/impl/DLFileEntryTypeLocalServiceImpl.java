@@ -207,6 +207,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		dlFileEntryType.setCompanyId(user.getCompanyId());
 		dlFileEntryType.setUserId(user.getUserId());
 		dlFileEntryType.setUserName(user.getFullName());
+		dlFileEntryType.setDataDefinitionId(ddmStructureIds[0]);
 		dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
 		dlFileEntryType.setNameMap(nameMap);
 		dlFileEntryType.setDescriptionMap(descriptionMap);
@@ -360,6 +361,14 @@ public class DLFileEntryTypeLocalServiceImpl
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
 		}
+	}
+
+	@Override
+	public DLFileEntryType fetchDataDefinitionFileEntryType(
+		long groupId, long dataDefinitionId) {
+
+		return dlFileEntryTypePersistence.fetchByG_DDI(
+			groupId, dataDefinitionId);
 	}
 
 	@Override

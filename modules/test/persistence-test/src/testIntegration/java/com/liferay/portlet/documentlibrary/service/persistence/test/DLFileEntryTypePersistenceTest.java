@@ -242,6 +242,14 @@ public class DLFileEntryTypePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_DDI() throws Exception {
+		_persistence.countByG_DDI(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_DDI(0L, 0L);
+	}
+
+	@Test
 	public void testCountByG_F() throws Exception {
 		_persistence.countByG_F(RandomTestUtil.nextLong(), "");
 
@@ -563,6 +571,17 @@ public class DLFileEntryTypePersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				dlFileEntryType, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
+			Long.valueOf(dlFileEntryType.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				dlFileEntryType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			Long.valueOf(dlFileEntryType.getDataDefinitionId()),
+			ReflectionTestUtil.<Long>invoke(
+				dlFileEntryType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "dataDefinitionId"));
 
 		Assert.assertEquals(
 			Long.valueOf(dlFileEntryType.getGroupId()),

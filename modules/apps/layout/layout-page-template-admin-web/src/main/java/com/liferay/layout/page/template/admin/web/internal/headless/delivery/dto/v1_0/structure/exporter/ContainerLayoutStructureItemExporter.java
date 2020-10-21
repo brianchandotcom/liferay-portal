@@ -139,6 +139,12 @@ public class ContainerLayoutStructureItemExporter
 							return null;
 						}
 
+						if (StringUtil.equalsIgnoreCase(target, "_parent") ||
+							StringUtil.equalsIgnoreCase(target, "_top")) {
+
+							target = "_self";
+						}
+
 						return Target.create(
 							StringUtil.upperCaseFirstLetter(
 								target.substring(1)));

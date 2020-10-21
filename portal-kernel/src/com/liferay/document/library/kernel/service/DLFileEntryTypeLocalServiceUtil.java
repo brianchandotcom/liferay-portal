@@ -368,6 +368,13 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFileEntryType
+		fetchDataDefinitionFileEntryType(long groupId, long dataDefinitionId) {
+
+		return getService().fetchDataDefinitionFileEntryType(
+			groupId, dataDefinitionId);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntryType
 		fetchDLFileEntryType(long fileEntryTypeId) {
 
 		return getService().fetchDLFileEntryType(fileEntryTypeId);

@@ -99,17 +99,19 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 				<liferay-ui:message key='<%= depotEntryGroupRel.isDdmStructuresAvailable() ? "yes" : "no" %>' />
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text>
-				<clay:dropdown-menu
-					borderless="<%= true %>"
-					displayType="secondary"
-					dropdownItems="<%= depotAdminSitesDisplayContext.getConnectedSiteDropdownItems(depotEntryGroupRel) %>"
-					icon="ellipsis-v"
-					monospaced="<%= true %>"
-					propsTransformer="js/ConnectedSiteDropdownPropsTransformer"
-					small="<%= true %>"
-				/>
-			</liferay-ui:search-container-column-text>
+			<c:if test="<%= !depotAdminSitesDisplayContext.isLiveDepotEntry() %>">
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-menu
+						borderless="<%= true %>"
+						displayType="secondary"
+						dropdownItems="<%= depotAdminSitesDisplayContext.getConnectedSiteDropdownItems(depotEntryGroupRel) %>"
+						icon="ellipsis-v"
+						monospaced="<%= true %>"
+						propsTransformer="js/ConnectedSiteDropdownPropsTransformer"
+						small="<%= true %>"
+					/>
+				</liferay-ui:search-container-column-text>
+			</c:if>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

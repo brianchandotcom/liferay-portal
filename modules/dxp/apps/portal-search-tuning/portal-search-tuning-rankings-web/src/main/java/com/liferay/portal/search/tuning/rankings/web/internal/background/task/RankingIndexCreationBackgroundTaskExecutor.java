@@ -18,12 +18,8 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
-import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.importer.SingleIndexToMultipleIndexImporter;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,13 +47,6 @@ public class RankingIndexCreationBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		if (Objects.equals(
-				_searchEngineInformation.getVendorString(), "Solr")) {
-
-			return new BackgroundTaskResult(
-				BackgroundTaskConstants.STATUS_CANCELLED);
-		}
-
 		_singleIndexToMultipleIndexImporter.importRankings();
 
 		return BackgroundTaskResult.SUCCESS;
@@ -69,9 +58,6 @@ public class RankingIndexCreationBackgroundTaskExecutor
 
 		return null;
 	}
-
-	@Reference
-	private SearchEngineInformation _searchEngineInformation;
 
 	@Reference
 	private SingleIndexToMultipleIndexImporter

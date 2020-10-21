@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.engine.SearchEngineInformation;
 
 import java.io.Serializable;
 
@@ -63,7 +62,6 @@ import java.text.Format;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
@@ -358,10 +356,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	@Override
 	public boolean isLegacyDDMIndexFieldsEnabled() {
-		if (Objects.equals(searchEngineInformation.getVendorString(), "Solr")) {
-			return true;
-		}
-
 		return _ddmIndexerConfiguration.enableLegacyDDMIndexFields();
 	}
 
@@ -613,9 +607,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		return new Fields();
 	}
-
-	@Reference
-	protected SearchEngineInformation searchEngineInformation;
 
 	private String _getSortableFieldName(String name) {
 		return com.liferay.portal.kernel.search.Field.getSortableFieldName(

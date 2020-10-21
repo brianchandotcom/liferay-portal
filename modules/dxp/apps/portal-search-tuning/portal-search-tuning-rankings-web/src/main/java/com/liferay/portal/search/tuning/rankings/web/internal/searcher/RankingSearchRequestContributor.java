@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.searcher;
 
-import com.liferay.portal.kernel.search.SearchEngine;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -43,10 +41,6 @@ public class RankingSearchRequestContributor
 
 	@Override
 	public SearchRequest contribute(SearchRequest searchRequest) {
-		if (isSearchEngine("Solr")) {
-			return searchRequest;
-		}
-
 		RankingIndexName rankingIndexName = getRankingIndexName(searchRequest);
 
 		if (!rankingIndexReader.isExists(rankingIndexName)) {
@@ -89,15 +83,6 @@ public class RankingSearchRequestContributor
 		return rankingIndexNameBuilder.getRankingIndexName(companyIds[0]);
 	}
 
-	protected boolean isSearchEngine(String engine) {
-		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			searchEngineHelper.getDefaultSearchEngineId());
-
-		String vendor = searchEngine.getVendor();
-
-		return vendor.equals(engine);
-	}
-
 	@Reference
 	protected RankingIndexNameBuilder rankingIndexNameBuilder;
 
@@ -106,9 +91,6 @@ public class RankingSearchRequestContributor
 
 	@Reference
 	protected RankingSearchRequestHelper rankingSearchRequestHelper;
-
-	@Reference
-	protected SearchEngineHelper searchEngineHelper;
 
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;

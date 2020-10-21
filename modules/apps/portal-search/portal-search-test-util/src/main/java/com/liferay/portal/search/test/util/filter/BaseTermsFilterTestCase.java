@@ -38,7 +38,15 @@ public abstract class BaseTermsFilterTestCase extends BaseIndexingTestCase {
 	}
 
 	@Test
-	public void testLuceneSpecialCharacters() throws Exception {
+	public void testSpaces() throws Exception {
+		index("One Two");
+		index("Three");
+
+		assertTermsFilter(new String[] {"One Two", "Three"});
+	}
+
+	@Test
+	public void testSpecialCharacters1() throws Exception {
 		index("One\\+-!():^[]\"{}~*?|&/Two");
 		index("Three");
 
@@ -47,20 +55,12 @@ public abstract class BaseTermsFilterTestCase extends BaseIndexingTestCase {
 	}
 
 	@Test
-	public void testSolrSpecialCharacters() throws Exception {
+	public void testSpecialCharacters2() throws Exception {
 		index("One\\+-!():^[]\"{}~*?|&/; Two");
 		index("Three");
 
 		assertTermsFilter(
 			new String[] {"One\\+-!():^[]\"{}~*?|&/; Two", "Three"});
-	}
-
-	@Test
-	public void testSpaces() throws Exception {
-		index("One Two");
-		index("Three");
-
-		assertTermsFilter(new String[] {"One Two", "Three"});
 	}
 
 	protected void assertTermsFilter(String[] values) throws Exception {

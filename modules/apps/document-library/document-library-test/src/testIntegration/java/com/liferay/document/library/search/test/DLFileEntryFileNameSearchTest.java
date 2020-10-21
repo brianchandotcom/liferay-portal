@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngine;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -104,13 +102,7 @@ public class DLFileEntryFileNameSearchTest {
 
 		addFileEntriesWithTitleSameAsFileName("One.jpg", "Two.JPG");
 
-		if (isSearchEngine("Elasticsearch")) {
-			assertSearch("jp", Arrays.asList("One.jpg"));
-		}
-
-		if (isSearchEngine("Solr")) {
-			assertSearch("jp", Arrays.asList("One.jpg", "Two.JPG"));
-		}
+		assertSearch("jp", Arrays.asList("One.jpg"));
 	}
 
 	@Test
@@ -264,23 +256,11 @@ public class DLFileEntryFileNameSearchTest {
 		return searchContext;
 	}
 
-	protected boolean isSearchEngine(String engine) {
-		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			searchEngineHelper.getDefaultSearchEngineId());
-
-		String vendor = searchEngine.getVendor();
-
-		return vendor.equals(engine);
-	}
-
 	@Inject
 	protected static DLAppLocalService dlAppLocalService;
 
 	@Inject
 	protected static IndexerRegistry indexerRegistry;
-
-	@Inject
-	protected static SearchEngineHelper searchEngineHelper;
 
 	@DeleteAfterTestRun
 	private List<AssetTag> _assetTags;

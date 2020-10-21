@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
@@ -100,8 +99,7 @@ public class SynonymsDisplayContextTest {
 			new SynonymsDisplayBuilder(
 				_documentToSynonymSetTranslator, _httpServletRequest, _language,
 				_portal, _queries, _renderRequest, _renderResponse,
-				_searchEngineAdapter, _searchEngineInformation, _sorts,
-				_synonymSetIndexNameBuilder);
+				_searchEngineAdapter, _sorts, _synonymSetIndexNameBuilder);
 
 		SynonymsDisplayContext synonymsDisplayContext =
 			synonymsDisplayBuilder.build();
@@ -117,8 +115,7 @@ public class SynonymsDisplayContextTest {
 			new SynonymsDisplayBuilder(
 				_documentToSynonymSetTranslator, _httpServletRequest, _language,
 				_portal, _queries, _renderRequest, _renderResponse,
-				_searchEngineAdapter, _searchEngineInformation, _sorts,
-				_synonymSetIndexNameBuilder);
+				_searchEngineAdapter, _sorts, _synonymSetIndexNameBuilder);
 
 		SynonymsDisplayContext synonymsDisplayContext =
 			synonymsDisplayBuilder.build();
@@ -161,9 +158,6 @@ public class SynonymsDisplayContextTest {
 
 	@Mock
 	private SearchEngineAdapter _searchEngineAdapter;
-
-	@Mock
-	private SearchEngineInformation _searchEngineInformation;
 
 	@Mock
 	private Sorts _sorts;

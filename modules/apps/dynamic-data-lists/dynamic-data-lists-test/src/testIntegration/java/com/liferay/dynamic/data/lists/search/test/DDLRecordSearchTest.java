@@ -487,7 +487,7 @@ public class DDLRecordSearchTest {
 
 		String vendor = searchEngine.getVendor();
 
-		if (vendor.equals("Elasticsearch") || vendor.equals("Solr")) {
+		if (vendor.equals("Elasticsearch")) {
 			return false;
 		}
 

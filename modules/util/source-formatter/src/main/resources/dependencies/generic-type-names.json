@@ -1094,14 +1094,6 @@
 		},
 		{
 			"genericTypeCount": 1,
-			"name": "com.liferay.portal.search.solr7.internal.facet.FacetProcessor"
-		},
-		{
-			"genericTypeCount": 1,
-			"name": "com.liferay.portal.search.solr7.internal.filter.FilterTranslator"
-		},
-		{
-			"genericTypeCount": 1,
 			"name": "com.liferay.portal.search.sort.SortFieldTranslator"
 		},
 		{
@@ -1823,10 +1815,6 @@
 		{
 			"genericTypeCount": 1,
 			"name": "org.apache.shindig.protocol.RestfulCollection"
-		},
-		{
-			"genericTypeCount": 1,
-			"name": "org.apache.solr.common.util.NamedList"
 		},
 		{
 			"genericTypeCount": 1,

@@ -27,7 +27,6 @@ XMLResourceActionsFileCheck | [Styling](styling_checks.markdown#styling-checks) 
 [XMLServiceEntityNameCheck](checks/xml_service_entity_name_check.markdown#xmlserviceentitynamecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that the `entity name` in `service.xml` does not equal the `package name`. |
 XMLServiceFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `service.xml` file. |
 XMLServiceReferenceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for unused references in `service.xml` file. |
-XMLSolrSchemaFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `portlet-preferences.xml` file. |
 XMLSourcechecksFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `sourcechecks.xml` file. |
 XMLSpringFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `*-spring.xml` file. |
 XMLStrutsConfigFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `struts-config.xml` file. |

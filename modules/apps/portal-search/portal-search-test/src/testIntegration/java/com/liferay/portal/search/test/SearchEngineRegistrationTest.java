@@ -44,7 +44,7 @@ public class SearchEngineRegistrationTest {
 
 		Assert.assertTrue(
 			"The registered search engine vendor is " + vendor,
-			vendor.equals("Elasticsearch") || vendor.equals("Solr"));
+			vendor.equals("Elasticsearch"));
 	}
 
 	@Rule

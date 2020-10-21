@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchEngine;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -44,7 +42,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -79,9 +76,6 @@ public class PollsQuestionIndexerIndexedFieldsTest {
 
 	@Test
 	public void testIndexedFields() throws Exception {
-		Assume.assumeFalse(
-			isNumberSortableImplementedAsDoubleForSearchEngine());
-
 		PollsQuestion pollsQuestion =
 			pollsQuestionFixture.createPollsQuestion();
 
@@ -99,22 +93,9 @@ public class PollsQuestionIndexerIndexedFieldsTest {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected boolean isNumberSortableImplementedAsDoubleForSearchEngine() {
-		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			searchEngineHelper.getDefaultSearchEngineId());
-
-		String vendor = searchEngine.getVendor();
-
-		if (vendor.equals("Solr")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected void setUpIndexedFieldsFixture() {
 		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
+			resourcePermissionLocalService);
 	}
 
 	protected void setUpPollsQuestionFixture() {
@@ -145,9 +126,6 @@ public class PollsQuestionIndexerIndexedFieldsTest {
 
 	@Inject
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
-
-	@Inject
-	protected SearchEngineHelper searchEngineHelper;
 
 	protected UserSearchFixture userSearchFixture;
 

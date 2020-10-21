@@ -1431,10 +1431,6 @@
 			<property name="allowedIncorrectLastPublishDateEntities" value="CommerceCountry,CPDefinition,CPInstance,PollsQuestion,PollsVote" />
 			<property name="checkMVCCEnabled" value="false" />
 		</check>
-		<check name="XMLSolrSchemaFileCheck">
-			<category name="Styling" />
-			<description name="Checks the order of elements in `portlet-preferences.xml` file." />
-		</check>
 		<check name="XMLStylingCheck">
 			<category name="Styling" />
 			<description name="Applies rules to enforce consisteny in code style." />

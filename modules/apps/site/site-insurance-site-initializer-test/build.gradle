@@ -1,0 +1,6 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationCompile project(":apps:site:site-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

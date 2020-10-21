@@ -59,6 +59,28 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
+	<entity cache-enabled="true" local-service="true" name="DSLQueryEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="dslQueryEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+	</entity>
+	<entity cache-enabled="true" local-service="true" name="DSLQueryStatusEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="dslQueryStatusEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="dslQueryEntryId" type="long" />
+		<column name="status" type="String" />
+		<column name="statusDate" type="Date" />
+	</entity>
 	<entity local-service="true" name="EagerBlobEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

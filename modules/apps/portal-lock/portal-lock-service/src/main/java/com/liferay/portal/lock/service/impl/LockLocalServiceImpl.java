@@ -112,27 +112,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Lock getLockByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-
-		List<Lock> locks = lockPersistence.findByUuid_C(uuid, companyId);
-
-		if (locks.isEmpty()) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("{uuid=");
-			sb.append(uuid);
-			sb.append(", companyId=");
-			sb.append(companyId);
-			sb.append("}");
-
-			throw new NoSuchLockException(sb.toString());
-		}
-
-		return locks.get(0);
-	}
-
-	@Override
 	public boolean hasLock(long userId, String className, long key) {
 		return hasLock(userId, className, String.valueOf(key));
 	}

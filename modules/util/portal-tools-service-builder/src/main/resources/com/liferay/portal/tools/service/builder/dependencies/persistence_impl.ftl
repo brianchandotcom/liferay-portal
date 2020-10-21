@@ -485,8 +485,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					</#list>
 				};
 
-				${finderCache}.putResult(_finderPathCountBy${uniqueEntityFinder.name}, args, Long.valueOf(1), false);
-				${finderCache}.putResult(_finderPathFetchBy${uniqueEntityFinder.name}, args, ${entity.variableName}ModelImpl, false);
+				${finderCache}.putResult(_finderPathCountBy${uniqueEntityFinder.name}, args, Long.valueOf(1)
+					<#if serviceBuilder.isVersionLTE_7_3_0()>
+						, false
+					</#if>
+					);
+				${finderCache}.putResult(_finderPathFetchBy${uniqueEntityFinder.name}, args, ${entity.variableName}ModelImpl
+					<#if serviceBuilder.isVersionLTE_7_3_0()>
+						, false
+					</#if>
+					);
 			</#list>
 		}
 

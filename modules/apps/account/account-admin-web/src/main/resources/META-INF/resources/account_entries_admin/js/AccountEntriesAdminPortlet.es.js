@@ -51,12 +51,10 @@ class AccountEntriesAdminPortlet extends PortletBase {
 	 * @private
 	 */
 	updateVisibility_(typeSelect) {
-		if (typeSelect.value === 'business') {
-			dom.removeClasses(this.businessAccountOnlySection, 'hide');
-		}
-		else {
-			dom.addClasses(this.businessAccountOnlySection, 'hide');
-		}
+		this.businessAccountOnlySection?.classList.toggle(
+			'hide',
+			typeSelect.value === 'person'
+		);
 	}
 
 	/**

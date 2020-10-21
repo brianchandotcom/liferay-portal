@@ -1726,6 +1726,8 @@ definition {
 	@description = "This is a use case for LPS-116055."
 	@priority = "5"
 	test ViewPermissionScopeChanged {
+		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#ViewPermissionScopeChanged";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONRole.addRegularRole(

@@ -4,6 +4,8 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.model.DSLQueryStatusEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LocalizedEntry" />
@@ -29,6 +31,20 @@
 			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.tools.service.builder.test.model.impl.DSLQueryEntryImpl" table="DSLQueryEntry">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="dslQueryEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.tools.service.builder.test.model.impl.DSLQueryStatusEntryImpl" table="DSLQueryStatusEntry">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="dslQueryStatusEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="dslQueryEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.EagerBlobEntryImpl" table="EagerBlobEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="eagerBlobEntryId" type="long">

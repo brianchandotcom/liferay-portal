@@ -10,6 +10,16 @@
 		<field name="cacheDisabledEntryId" type="long" />
 		<field name="name" type="String" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry">
+		<field name="dslQueryEntryId" type="long" />
+		<field name="name" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.DSLQueryStatusEntry">
+		<field name="dslQueryStatusEntryId" type="long" />
+		<field name="dslQueryEntryId" type="long" />
+		<field name="status" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry">
 		<field name="uuid" type="String" />
 		<field name="eagerBlobEntryId" type="long" />

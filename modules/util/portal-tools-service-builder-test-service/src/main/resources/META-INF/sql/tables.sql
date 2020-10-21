@@ -16,6 +16,18 @@ create table CacheDisabledEntry (
 	name VARCHAR(75) null
 );
 
+create table DSLQueryEntry (
+	dslQueryEntryId LONG not null primary key,
+	name VARCHAR(75) null
+);
+
+create table DSLQueryStatusEntry (
+	dslQueryStatusEntryId LONG not null primary key,
+	dslQueryEntryId LONG,
+	status VARCHAR(75) null,
+	statusDate DATE null
+);
+
 create table EagerBlobEntry (
 	uuid_ VARCHAR(75) null,
 	eagerBlobEntryId LONG not null primary key,

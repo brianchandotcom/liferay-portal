@@ -56,6 +56,13 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 		<liferay-ui:message key="an-unstaged-asset-library-cannot-be-connected-to-a-staged-site" />
 	</liferay-ui:error>
 
+	<c:if test="<%= depotAdminSitesDisplayContext.isLiveDepotEntry() %>">
+		<clay:alert
+			displayType="info"
+			message='<%= LanguageUtil.get(request, "these-is-a-live-asset-library.-site-connections-must-be-managed-from-the-staging-one") %>'
+		/>
+	</c:if>
+
 	<aui:input name="toGroupId" type="hidden" />
 
 	<liferay-ui:search-container

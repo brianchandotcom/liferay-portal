@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author Víctor Galán
@@ -674,7 +674,7 @@ public class LayoutStructure {
 		List<LayoutStructureItem> duplicatedLayoutStructureItems =
 			new ArrayList<>();
 
-		newLayoutStructureItem.setItemId(String.valueOf(UUID.randomUUID()));
+		newLayoutStructureItem.setItemId(PortalUUIDUtil.generate());
 
 		newLayoutStructureItem.updateItemConfig(
 			layoutStructureItem.getItemConfigJSONObject());

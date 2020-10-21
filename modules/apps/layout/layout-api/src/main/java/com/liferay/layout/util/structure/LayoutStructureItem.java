@@ -18,11 +18,11 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * @author Víctor Galán
@@ -63,7 +63,7 @@ public abstract class LayoutStructureItem {
 	public LayoutStructureItem(String parentItemId) {
 		_parentItemId = parentItemId;
 
-		_itemId = String.valueOf(UUID.randomUUID());
+		_itemId = PortalUUIDUtil.generate();
 		_childrenItemIds = new ArrayList<>();
 	}
 

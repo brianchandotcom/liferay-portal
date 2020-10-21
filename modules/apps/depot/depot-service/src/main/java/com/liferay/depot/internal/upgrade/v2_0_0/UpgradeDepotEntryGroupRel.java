@@ -27,7 +27,7 @@ public class UpgradeDepotEntryGroupRel extends UpgradeProcess {
 		alter(
 			DepotEntryGroupRelTable.class,
 			new AlterTableAddColumn("userId", "LONG"),
-			new AlterTableAddColumn("userName", "LONG"),
+			new AlterTableAddColumn("userName", "VARCHAR(75) null"),
 			new AlterTableAddColumn("lastPublishDate", "DATE null"));
 	}
 

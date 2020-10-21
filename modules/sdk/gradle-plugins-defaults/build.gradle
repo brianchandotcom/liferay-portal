@@ -34,7 +34,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.go", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jsdoc", version: "2.0.57"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.18"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.6"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.8"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.1.0"
 	compile group: "gradle.plugin.com.github.spotbugs.snom", name: "spotbugs-gradle-plugin", version: "4.0.0"

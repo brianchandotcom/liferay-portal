@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
@@ -2931,34 +2930,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		screenName = getLogin(screenName);
 
 		return userPersistence.findByC_SN(companyId, screenName);
-	}
-
-	/**
-	 * Returns the user with the UUID.
-	 *
-	 * @param  uuid the user's UUID
-	 * @param  companyId the primary key of the user's company
-	 * @return the user with the UUID
-	 */
-	@Override
-	public User getUserByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-
-		List<User> users = userPersistence.findByUuid_C(uuid, companyId);
-
-		if (users.isEmpty()) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("{uuid=");
-			sb.append(uuid);
-			sb.append(", companyId=");
-			sb.append(companyId);
-			sb.append("}");
-
-			throw new NoSuchUserException(sb.toString());
-		}
-
-		return users.get(0);
 	}
 
 	/**

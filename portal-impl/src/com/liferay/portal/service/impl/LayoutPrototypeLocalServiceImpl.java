@@ -235,15 +235,6 @@ public class LayoutPrototypeLocalServiceImpl
 	}
 
 	@Override
-	public LayoutPrototype getLayoutPrototypeByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws PortalException {
-
-		return layoutPrototypePersistence.findByUuid_C_First(
-			uuid, companyId, null);
-	}
-
-	@Override
 	public List<LayoutPrototype> search(
 		long companyId, Boolean active, int start, int end,
 		OrderByComparator<LayoutPrototype> orderByComparator) {

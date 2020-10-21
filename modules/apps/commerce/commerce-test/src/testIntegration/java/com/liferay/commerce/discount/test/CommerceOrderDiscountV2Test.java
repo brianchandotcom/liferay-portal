@@ -156,9 +156,9 @@ public class CommerceOrderDiscountV2Test {
 		CPDefinition cpDefinition = cpInstanceDiscount.getCPDefinition();
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(),
+			"", cpDefinition.getCProductId(),
 			cpInstanceDiscount.getCPInstanceUuid(),
-			commercePriceList.getCommercePriceListId(), "",
+			commercePriceList.getCommercePriceListId(),
 			BigDecimal.valueOf(0.9));
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -254,16 +254,16 @@ public class CommerceOrderDiscountV2Test {
 
 		CommercePriceEntry commercePriceEntryDiscount =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(),
+				"", cpDefinition.getCProductId(),
 				cpInstanceDiscount.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), "",
+				commercePriceList.getCommercePriceListId(),
 				BigDecimal.valueOf(25));
 
 		CommercePriceEntry commercePriceEntryPlain =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinitionPlan.getCProductId(),
+				"", cpDefinitionPlan.getCProductId(),
 				cpInstancePlain.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), "",
+				commercePriceList.getCommercePriceListId(),
 				BigDecimal.valueOf(10));
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -392,16 +392,16 @@ public class CommerceOrderDiscountV2Test {
 
 		CommercePriceEntry commercePriceEntryDiscount =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(),
+				"", cpDefinition.getCProductId(),
 				cpInstanceDiscount.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), "",
+				commercePriceList.getCommercePriceListId(),
 				BigDecimal.valueOf(25));
 
 		CommercePriceEntry commercePriceEntryPlain =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinitionPlan.getCProductId(),
+				"", cpDefinitionPlan.getCProductId(),
 				cpInstancePlain.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), "",
+				commercePriceList.getCommercePriceListId(),
 				BigDecimal.valueOf(10));
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =

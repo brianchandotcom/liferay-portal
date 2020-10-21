@@ -200,9 +200,10 @@ public class CommerceGrossPricingTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), "", price1, false,
-				null, null, null, null, true, true);
+				"", cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), price1, false, null,
+				null, null, null, true, true);
 
 		double netPrice5 = 15;
 
@@ -353,9 +354,9 @@ public class CommerceGrossPricingTest {
 		BigDecimal price1 = BigDecimal.valueOf(grossPrice1);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePriceList1.getCommercePriceListId(), "", price1, false,
-			null, null, null, null, true, true);
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePriceList1.getCommercePriceListId(), price1, false, null,
+			null, null, null, true, true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_commerceCurrency, _commerceChannel, _user, _group,
@@ -448,8 +449,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price = BigDecimal.valueOf(grossPrice);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePriceList.getCommercePriceListId(), "", price, false, null,
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), price, false, null,
 			null, null, null, true, true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
@@ -538,14 +539,14 @@ public class CommerceGrossPricingTest {
 		BigDecimal promoPrice = BigDecimal.valueOf(grossPrice);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePriceList.getCommercePriceListId(), "", price, false, null,
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), price, false, null,
 			null, null, null, true, true);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePromotion.getCommercePriceListId(), "", promoPrice, false,
-			null, null, null, null, true, true);
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePromotion.getCommercePriceListId(), promoPrice, false, null,
+			null, null, null, true, true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_commerceCurrency, _commerceChannel, _user, _group,
@@ -635,8 +636,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price1 = new BigDecimal("20");
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			basePriceList.getCommercePriceListId(), "", price1);
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			basePriceList.getCommercePriceListId(), price1);
 
 		double modifierAmount = -10;
 
@@ -757,8 +758,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price1 = new BigDecimal("20");
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			basePriceList.getCommercePriceListId(), "", price1);
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			basePriceList.getCommercePriceListId(), price1);
 
 		CommercePriceModifier commercePriceModifier1 =
 			_addCommercePriceModifier(
@@ -873,8 +874,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price1 = new BigDecimal("20");
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			basePriceList.getCommercePriceListId(), "", price1);
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			basePriceList.getCommercePriceListId(), price1);
 
 		double modifierAmount = -10;
 
@@ -963,9 +964,10 @@ public class CommerceGrossPricingTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), "", price1, false,
-				null, null, null, null, true, true);
+				"", cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), price1, false, null,
+				null, null, null, true, true);
 
 		double netPrice5 = 40;
 
@@ -1082,15 +1084,16 @@ public class CommerceGrossPricingTest {
 		BigDecimal promoPrice = BigDecimal.valueOf(grossPrice1);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePriceList.getCommercePriceListId(), "", price1, false, null,
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), price1, false, null,
 			null, null, null, true, true);
 
 		CommercePriceEntry commercePromoEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePromotion.getCommercePriceListId(), "", promoPrice,
-				false, null, null, null, null, true, true);
+				"", cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePromotion.getCommercePriceListId(), promoPrice, false,
+				null, null, null, null, true, true);
 
 		double netPrice5 = 8;
 
@@ -1192,8 +1195,9 @@ public class CommerceGrossPricingTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList1.getCommercePriceListId(), "", price1);
+				"", cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList1.getCommercePriceListId(), price1);
 
 		double netPrice5 = 18;
 
@@ -1381,8 +1385,9 @@ public class CommerceGrossPricingTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList1.getCommercePriceListId(), "", price1);
+				"", cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList1.getCommercePriceListId(), price1);
 
 		double netPrice5 = 18;
 
@@ -1463,8 +1468,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal promoPrice = BigDecimal.valueOf(grossPromoPrice);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePromotion.getCommercePriceListId(), "", promoPrice);
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePromotion.getCommercePriceListId(), promoPrice);
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
@@ -1544,8 +1549,9 @@ public class CommerceGrossPricingTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList1.getCommercePriceListId(), "", price1);
+				"", cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList1.getCommercePriceListId(), price1);
 
 		double netPrice5 = 18;
 
@@ -1627,8 +1633,9 @@ public class CommerceGrossPricingTest {
 
 		CommercePriceEntry commercePromotionEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePromotion.getCommercePriceListId(), "", promoPrice);
+				"", cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePromotion.getCommercePriceListId(), promoPrice);
 
 		double netPromoPrice3 = 8;
 

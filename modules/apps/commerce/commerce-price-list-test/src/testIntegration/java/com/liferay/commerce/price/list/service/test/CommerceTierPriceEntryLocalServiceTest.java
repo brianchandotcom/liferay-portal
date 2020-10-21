@@ -378,7 +378,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 		String priceEntryExternalReferenceCode = RandomTestUtil.randomString();
 
 		_commercePriceEntryLocalService.updateExternalReferenceCode(
-			commercePriceEntry, priceEntryExternalReferenceCode);
+			priceEntryExternalReferenceCode, commercePriceEntry);
 
 		int minQuantity = RandomTestUtil.randomInt();
 		double price = RandomTestUtil.randomDouble();

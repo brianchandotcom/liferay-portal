@@ -158,8 +158,8 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		BigDecimal price = new BigDecimal("111");
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePriceList.getCommercePriceListId(), "", price);
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), price);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_commerceCurrency, _commerceChannel, _user, _group,
@@ -245,8 +245,8 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		BigDecimal price = new BigDecimal("111");
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePriceList.getCommercePriceListId(), "", price);
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), price);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_commerceCurrency, commerceTaxIncludedChannel, _user, _group,

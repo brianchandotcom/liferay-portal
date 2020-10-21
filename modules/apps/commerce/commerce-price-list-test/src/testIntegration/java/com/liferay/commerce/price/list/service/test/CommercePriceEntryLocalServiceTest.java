@@ -130,9 +130,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
-				commercePriceList.getCommercePriceListId(), null, price,
-				promoPrice);
+				null, cpInstance.getCPInstanceId(),
+				commercePriceList.getCommercePriceListId(), price, promoPrice);
 
 		_assertPriceEntryAttributes(
 			cpInstance, price, promoPrice, commercePriceEntry);
@@ -181,9 +180,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
-				commercePriceList.getCommercePriceListId(),
-				externalReferenceCode, price, promoPrice);
+				externalReferenceCode, cpInstance.getCPInstanceId(),
+				commercePriceList.getCommercePriceListId(), price, promoPrice);
 
 		_assertPriceEntryAttributes(
 			cpInstance, price, promoPrice, commercePriceEntry);
@@ -220,10 +218,9 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
+				RandomTestUtil.randomString(), cpInstance.getCPInstanceId(),
 				commercePriceList.getCommercePriceListId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				RandomTestUtil.randomDouble());
+				RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble());
 
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
@@ -305,10 +302,9 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
+				RandomTestUtil.randomString(), cpInstance.getCPInstanceId(),
 				parentCommercePriceList.getCommercePriceListId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				RandomTestUtil.randomDouble());
+				RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble());
 
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
@@ -358,17 +354,15 @@ public class CommercePriceEntryLocalServiceTest {
 				true, null, null, null);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpInstance.getCPInstanceId(),
+			RandomTestUtil.randomString(), cpInstance.getCPInstanceId(),
 			parentCommercePriceList.getCommercePriceListId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomDouble());
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble());
 
 		CommercePriceEntry childCommercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
+				RandomTestUtil.randomString(), cpInstance.getCPInstanceId(),
 				childCommercePriceList.getCommercePriceListId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				RandomTestUtil.randomDouble());
+				RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble());
 
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
@@ -416,10 +410,9 @@ public class CommercePriceEntryLocalServiceTest {
 				true, null, null, null);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpInstance.getCPInstanceId(),
+			RandomTestUtil.randomString(), cpInstance.getCPInstanceId(),
 			parentCommercePriceList.getCommercePriceListId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomDouble());
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble());
 
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
@@ -472,8 +465,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.upsertCommercePriceEntry(
-				0L, cpInstance.getCPInstanceId(),
-				commercePriceList.getCommercePriceListId(), null, null, price,
+				null, 0L, cpInstance.getCPInstanceId(),
+				commercePriceList.getCommercePriceListId(), null, price,
 				promoPrice);
 
 		_assertPriceEntryAttributes(
@@ -524,9 +517,9 @@ public class CommercePriceEntryLocalServiceTest {
 		double promoPrice = RandomTestUtil.randomDouble();
 
 		CommercePriceEntryTestUtil.upsertCommercePriceEntry(
-			0L, cpInstance.getCPInstanceId(),
-			commercePriceList.getCommercePriceListId(), externalReferenceCode,
-			null, price, promoPrice);
+			externalReferenceCode, 0L, cpInstance.getCPInstanceId(),
+			commercePriceList.getCommercePriceListId(), null, price,
+			promoPrice);
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchByExternalReferenceCode(
@@ -580,9 +573,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
-				commercePriceList.getCommercePriceListId(), null, price,
-				promoPrice);
+				null, cpInstance.getCPInstanceId(),
+				commercePriceList.getCommercePriceListId(), price, promoPrice);
 
 		long commercePriceEntryId =
 			commercePriceEntry.getCommercePriceEntryId();
@@ -591,9 +583,9 @@ public class CommercePriceEntryLocalServiceTest {
 		double updatedPromoPrice = RandomTestUtil.randomDouble();
 
 		CommercePriceEntryTestUtil.upsertCommercePriceEntry(
-			commercePriceEntryId, cpInstance.getCPInstanceId(),
-			commercePriceList.getCommercePriceListId(), null, null,
-			updatedPrice, updatedPromoPrice);
+			null, commercePriceEntryId, cpInstance.getCPInstanceId(),
+			commercePriceList.getCommercePriceListId(), null, updatedPrice,
+			updatedPromoPrice);
 
 		CommercePriceEntry updatedCommercePriceEntry =
 			_commercePriceEntryLocalService.getCommercePriceEntry(
@@ -644,13 +636,12 @@ public class CommercePriceEntryLocalServiceTest {
 		double promoPrice = RandomTestUtil.randomDouble();
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpInstance.getCPInstanceId(),
-			commercePriceList.getCommercePriceListId(), null, price,
-			promoPrice);
+			null, cpInstance.getCPInstanceId(),
+			commercePriceList.getCommercePriceListId(), price, promoPrice);
 
 		CommercePriceEntryTestUtil.upsertCommercePriceEntry(
-			0L, cpInstance.getCPInstanceId(),
-			commercePriceList.getCommercePriceListId(), null, null, price,
+			null, 0L, cpInstance.getCPInstanceId(),
+			commercePriceList.getCommercePriceListId(), null, price,
 			promoPrice);
 	}
 
@@ -694,7 +685,7 @@ public class CommercePriceEntryLocalServiceTest {
 		double promoPrice = RandomTestUtil.randomDouble();
 
 		CommercePriceEntryTestUtil.upsertCommercePriceEntry(
-			0L, cpInstanceId, commercePriceList.getCommercePriceListId(), null,
+			null, 0L, cpInstanceId, commercePriceList.getCommercePriceListId(),
 			null, price, promoPrice);
 	}
 

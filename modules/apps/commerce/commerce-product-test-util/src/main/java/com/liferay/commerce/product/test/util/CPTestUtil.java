@@ -698,9 +698,10 @@ public class CPTestUtil {
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePriceList.getCommercePriceListId(), StringPool.BLANK,
-			cpInstance.getPrice(), null,
+			StringPool.BLANK, cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), cpInstance.getPrice(),
+			null,
 			ServiceContextTestUtil.getServiceContext(cpInstance.getGroupId()));
 	}
 

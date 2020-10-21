@@ -465,10 +465,10 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 				CommercePriceEntry commercePriceEntry =
 					_commercePriceEntryService.upsertCommercePriceEntry(
+						priceEntry.getExternalReferenceCode(),
 						GetterUtil.getLong(priceEntry.getPriceEntryId()),
 						GetterUtil.getLong(priceEntry.getSkuId()), null,
 						commercePriceList.getCommercePriceListId(),
-						priceEntry.getExternalReferenceCode(),
 						BigDecimal.valueOf(priceEntry.getPrice()),
 						priceEntry.getDiscountDiscovery(),
 						priceEntry.getDiscountLevel1(),

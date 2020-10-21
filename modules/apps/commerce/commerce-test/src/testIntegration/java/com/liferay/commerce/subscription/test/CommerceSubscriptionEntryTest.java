@@ -281,9 +281,9 @@ public class CommerceSubscriptionEntryTest {
 
 		for (CPInstance cpInstance : cpInstances) {
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), StringPool.BLANK,
-				BigDecimal.ZERO);
+				StringPool.BLANK, cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), BigDecimal.ZERO);
 
 			if (cpInstances.indexOf(cpInstance) == 0) {
 				cpInstance.setOverrideSubscriptionInfo(true);

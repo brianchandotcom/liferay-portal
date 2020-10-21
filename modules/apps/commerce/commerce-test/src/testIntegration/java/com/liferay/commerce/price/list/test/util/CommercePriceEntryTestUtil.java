@@ -38,8 +38,8 @@ import java.util.Calendar;
 public class CommercePriceEntryTestUtil {
 
 	public static CommercePriceEntry addCommercePriceEntry(
-			long cpProductId, String cpInstanceUuid, long commercePriceListId,
-			String externalReferenceCode, BigDecimal price)
+			String externalReferenceCode, long cpProductId,
+			String cpInstanceUuid, long commercePriceListId, BigDecimal price)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
@@ -51,13 +51,13 @@ public class CommercePriceEntryTestUtil {
 				commercePriceList.getGroupId());
 
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
-			cpProductId, cpInstanceUuid, commercePriceListId,
-			externalReferenceCode, price, BigDecimal.ZERO, serviceContext);
+			externalReferenceCode, cpProductId, cpInstanceUuid,
+			commercePriceListId, price, BigDecimal.ZERO, serviceContext);
 	}
 
 	public static CommercePriceEntry addCommercePriceEntry(
-			long cpProductId, String cpInstanceUuid, long commercePriceListId,
-			String externalReferenceCode, BigDecimal price,
+			String externalReferenceCode, long cpProductId,
+			String cpInstanceUuid, long commercePriceListId, BigDecimal price,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
 			BigDecimal discountLevel4, boolean publish, boolean neverExpire)
@@ -81,8 +81,8 @@ public class CommercePriceEntryTestUtil {
 		}
 
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
-			cpProductId, cpInstanceUuid, commercePriceListId,
-			externalReferenceCode, price, discountDiscovery, discountLevel1,
+			externalReferenceCode, cpProductId, cpInstanceUuid,
+			commercePriceListId, price, discountDiscovery, discountLevel1,
 			discountLevel2, discountLevel3, discountLevel4,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),

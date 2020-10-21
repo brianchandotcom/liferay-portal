@@ -255,10 +255,10 @@ public class PriceListResourceImpl
 			for (PriceEntry priceEntry : priceEntries) {
 				CommercePriceEntry commercePriceEntry =
 					_commercePriceEntryService.upsertCommercePriceEntry(
+						priceEntry.getExternalReferenceCode(),
 						GetterUtil.getLong(priceEntry.getId()),
 						GetterUtil.getLong(priceEntry.getSkuId()), null,
 						commercePriceList.getCommercePriceListId(),
-						priceEntry.getExternalReferenceCode(),
 						priceEntry.getPrice(),
 						(BigDecimal)GetterUtil.get(
 							priceEntry.getPromoPrice(), BigDecimal.ZERO),

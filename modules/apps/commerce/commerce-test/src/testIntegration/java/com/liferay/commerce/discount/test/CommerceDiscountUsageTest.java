@@ -184,9 +184,9 @@ public class CommerceDiscountUsageTest {
 		BigDecimal priceEntryPrice = BigDecimal.valueOf(35);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePriceList.getCommercePriceListId(), StringPool.BLANK,
-			priceEntryPrice);
+			StringPool.BLANK, cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), priceEntryPrice);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_commerceCurrency, commerceChannel, _user, _group, _commerceAccount,
@@ -319,9 +319,9 @@ public class CommerceDiscountUsageTest {
 		BigDecimal priceEntryPrice = BigDecimal.valueOf(35);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePriceList.getCommercePriceListId(), StringPool.BLANK,
-			priceEntryPrice);
+			StringPool.BLANK, cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), priceEntryPrice);
 
 		String couponCode = StringUtil.randomString();
 
@@ -505,9 +505,9 @@ public class CommerceDiscountUsageTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), StringPool.BLANK,
-				priceEntryPrice);
+				StringPool.BLANK, cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), priceEntryPrice);
 
 		String couponCode = StringUtil.randomString();
 

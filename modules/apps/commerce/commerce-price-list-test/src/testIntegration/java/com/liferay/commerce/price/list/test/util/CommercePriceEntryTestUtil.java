@@ -66,13 +66,12 @@ public class CommercePriceEntryTestUtil {
 		double promoPrice = RandomTestUtil.randomDouble();
 
 		return addCommercePriceEntry(
-			cpInstance.getCPInstanceId(),
-			commercePriceList.getCommercePriceListId(), null, price,
-			promoPrice);
+			null, cpInstance.getCPInstanceId(),
+			commercePriceList.getCommercePriceListId(), price, promoPrice);
 	}
 
 	public static CommercePriceEntry addCommercePriceEntry(
-			long skuId, long commercePriceListId, String externalReferenceCode,
+			String externalReferenceCode, long skuId, long commercePriceListId,
 			Double price, Double promoPrice)
 		throws PortalException {
 
@@ -91,8 +90,8 @@ public class CommercePriceEntryTestUtil {
 	}
 
 	public static CommercePriceEntry addCommercePriceEntry(
-			long cpProductId, String cpInstanceUuid, long commercePriceListId,
-			String externalReferenceCode, BigDecimal price)
+			String externalReferenceCode, long cpProductId,
+			String cpInstanceUuid, long commercePriceListId, BigDecimal price)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
@@ -104,13 +103,13 @@ public class CommercePriceEntryTestUtil {
 				commercePriceList.getGroupId());
 
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
-			cpProductId, cpInstanceUuid, commercePriceListId,
-			externalReferenceCode, price, BigDecimal.ZERO, serviceContext);
+			externalReferenceCode, cpProductId, cpInstanceUuid,
+			commercePriceListId, price, BigDecimal.ZERO, serviceContext);
 	}
 
 	public static CommercePriceEntry upsertCommercePriceEntry(
-			long commercePriceEntryId, long skuId, long commercePriceListId,
-			String externalReferenceCode, String skuExternalReferenceCode,
+			String externalReferenceCode, long commercePriceEntryId, long skuId,
+			long commercePriceListId, String skuExternalReferenceCode,
 			Double price, Double promoPrice)
 		throws PortalException {
 

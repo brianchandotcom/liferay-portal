@@ -75,7 +75,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
@@ -106,7 +106,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
@@ -188,7 +188,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
@@ -329,9 +329,10 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.upsertCommercePriceEntry(
+				priceEntry.getExternalReferenceCode(),
 				GetterUtil.getLong(priceEntry.getId()), cProductId,
 				cpInstanceUuid, commercePriceList.getCommercePriceListId(),
-				priceEntry.getExternalReferenceCode(), priceEntry.getPrice(),
+				priceEntry.getPrice(),
 				(BigDecimal)GetterUtil.get(
 					priceEntry.getPromoPrice(), BigDecimal.ZERO),
 				priceEntry.getSkuExternalReferenceCode(), serviceContext);

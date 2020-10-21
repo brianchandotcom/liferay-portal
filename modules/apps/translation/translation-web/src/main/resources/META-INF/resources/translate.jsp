@@ -19,29 +19,29 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-JournalTranslateDisplayContext journalTranslateDisplayContext = (JournalTranslateDisplayContext)request.getAttribute(JournalTranslateDisplayContext.class.getName());
+TranslateDisplayContext translateDisplayContext = (TranslateDisplayContext)request.getAttribute(TranslateDisplayContext.class.getName());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
+renderResponse.setTitle(translateDisplayContext.getTitle());
 %>
 
-<aui:form action="<%= journalTranslateDisplayContext.getUpdateTranslationPortletURL() %>" cssClass="translate-article" name="translate_fm">
+<aui:form action="<%= translateDisplayContext.getUpdateTranslationPortletURL() %>" cssClass="translate-article" name="translate_fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="sourceLanguageId" type="hidden" value="<%= journalTranslateDisplayContext.getSourceLanguageId() %>" />
-	<aui:input name="targetLanguageId" type="hidden" value="<%= journalTranslateDisplayContext.getTargetLanguageId() %>" />
+	<aui:input name="sourceLanguageId" type="hidden" value="<%= translateDisplayContext.getSourceLanguageId() %>" />
+	<aui:input name="targetLanguageId" type="hidden" value="<%= translateDisplayContext.getTargetLanguageId() %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar">
 		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
-					<c:if test="<%= journalTranslateDisplayContext.hasTranslationPermission() %>">
+					<c:if test="<%= translateDisplayContext.hasTranslationPermission() %>">
 						<div class="tbar-section text-left">
 							<react:component
 								module="js/translate/TranslateLanguagesSelector"
-								props="<%= journalTranslateDisplayContext.getTranslateLanguagesSelectorData() %>"
+								props="<%= translateDisplayContext.getTranslateLanguagesSelectorData() %>"
 							/>
 						</div>
 					</c:if>
@@ -50,9 +50,9 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 					<div class="metadata-type-button-row tbar-section text-right">
 						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
-						<aui:button cssClass="btn-sm mr-3" disabled="<%= journalTranslateDisplayContext.isSaveButtonDisabled() %>" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= journalTranslateDisplayContext.getSaveButtonLabel() %>" />
+						<aui:button cssClass="btn-sm mr-3" disabled="<%= translateDisplayContext.isSaveButtonDisabled() %>" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= translateDisplayContext.getSaveButtonLabel() %>" />
 
-						<aui:button cssClass="btn-sm" disabled="<%= journalTranslateDisplayContext.isPublishButtonDisabled() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= journalTranslateDisplayContext.getPublishButtonLabel() %>" />
+						<aui:button cssClass="btn-sm" disabled="<%= translateDisplayContext.isPublishButtonDisabled() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= translateDisplayContext.getPublishButtonLabel() %>" />
 					</div>
 				</li>
 			</ul>
@@ -64,7 +64,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 	>
 		<div class="sheet translate-body-form">
 			<c:choose>
-				<c:when test="<%= !journalTranslateDisplayContext.hasTranslationPermission() %>">
+				<c:when test="<%= !translateDisplayContext.hasTranslationPermission() %>">
 					<clay:alert
 						message="you-do-not-have-permissions-to-translate-to-any-of-the-available-languages"
 					/>
@@ -76,7 +76,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 						>
 
 							<%
-							String sourceLanguageIdTitle = journalTranslateDisplayContext.getLanguageIdTitle(journalTranslateDisplayContext.getSourceLanguageId());
+							String sourceLanguageIdTitle = translateDisplayContext.getLanguageIdTitle(translateDisplayContext.getSourceLanguageId());
 							%>
 
 							<clay:icon
@@ -93,7 +93,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 						>
 
 							<%
-							String targetLanguageIdTitle = journalTranslateDisplayContext.getLanguageIdTitle(journalTranslateDisplayContext.getTargetLanguageId());
+							String targetLanguageIdTitle = translateDisplayContext.getLanguageIdTitle(translateDisplayContext.getTargetLanguageId());
 							%>
 
 							<clay:icon
@@ -107,14 +107,14 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 					</clay:row>
 
 					<%
-					for (InfoFieldSetEntry infoFieldSetEntry : journalTranslateDisplayContext.getInfoFieldSetEntries()) {
-						List<InfoField> infoFields = journalTranslateDisplayContext.getInfoFields(infoFieldSetEntry);
+					for (InfoFieldSetEntry infoFieldSetEntry : translateDisplayContext.getInfoFieldSetEntries()) {
+						List<InfoField> infoFields = translateDisplayContext.getInfoFields(infoFieldSetEntry);
 
 						if (ListUtil.isEmpty(infoFields)) {
 							continue;
 						}
 
-						String infoFieldSetLabel = journalTranslateDisplayContext.getInfoFieldSetLabel(infoFieldSetEntry, locale);
+						String infoFieldSetLabel = translateDisplayContext.getInfoFieldSetLabel(infoFieldSetEntry, locale);
 
 						if (Validator.isNotNull(infoFieldSetLabel)) {
 					%>
@@ -141,9 +141,9 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 						}
 
 						for (InfoField<TextInfoFieldType> infoField : infoFields) {
-							boolean html = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.HTML);
-							String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
-							boolean multiline = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
+							boolean html = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.HTML);
+							String label = translateDisplayContext.getInfoFieldLabel(infoField);
+							boolean multiline = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
 						%>
 
 							<clay:row>
@@ -152,8 +152,8 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 								>
 
 									<%
-									String sourceContent = journalTranslateDisplayContext.getSourceStringValue(infoField, journalTranslateDisplayContext.getSourceLocale());
-									String sourceContentDir = LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir");
+									String sourceContent = translateDisplayContext.getSourceStringValue(infoField, translateDisplayContext.getSourceLocale());
+									String sourceContentDir = LanguageUtil.get(translateDisplayContext.getSourceLocale(), "lang.dir");
 									%>
 
 									<c:choose>
@@ -178,7 +178,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 
 									<%
 									String id = "infoField--" + infoField.getName() + "--";
-									String targetContent = journalTranslateDisplayContext.getTargetStringValue(infoField, journalTranslateDisplayContext.getTargetLocale());
+									String targetContent = translateDisplayContext.getTargetStringValue(infoField, translateDisplayContext.getTargetLocale());
 									%>
 
 									<c:choose>
@@ -186,7 +186,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 											<liferay-editor:editor
 												configKey="translateEditor"
 												contents="<%= targetContent %>"
-												contentsLanguageId="<%= journalTranslateDisplayContext.getTargetLanguageId() %>"
+												contentsLanguageId="<%= translateDisplayContext.getTargetLanguageId() %>"
 												name="<%= id %>"
 												onChangeMethod="onInputChange"
 												placeholder="<%= label %>"
@@ -194,7 +194,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 											/>
 										</c:when>
 										<c:otherwise>
-											<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" onChange='<%= liferayPortletResponse.getNamespace() + "onInputChange();" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
+											<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" onChange='<%= liferayPortletResponse.getNamespace() + "onInputChange();" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
 										</c:otherwise>
 									</c:choose>
 								</clay:col>

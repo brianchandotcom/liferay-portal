@@ -36,7 +36,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
-page import="com.liferay.translation.web.internal.display.context.JournalTranslateDisplayContext" %><%@
+page import="com.liferay.translation.web.internal.display.context.TranslateDisplayContext" %><%@
 page import="com.liferay.translation.web.internal.display.context.ViewTranslationDisplayContext" %>
 
 <%@ page import="java.util.List" %>

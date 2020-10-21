@@ -56,9 +56,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alejandro Tardín
  */
-public class JournalTranslateDisplayContext {
+public class TranslateDisplayContext {
 
-	public JournalTranslateDisplayContext(
+	public TranslateDisplayContext(
 		List<String> availableSourceLanguageIds,
 		List<String> availableTargetLanguageIds, String className, long classPK,
 		InfoForm infoForm, LiferayPortletRequest liferayPortletRequest,

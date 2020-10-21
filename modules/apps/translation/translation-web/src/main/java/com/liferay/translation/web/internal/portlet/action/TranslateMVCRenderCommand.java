@@ -42,7 +42,7 @@ import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
-import com.liferay.translation.web.internal.display.context.JournalTranslateDisplayContext;
+import com.liferay.translation.web.internal.display.context.TranslateDisplayContext;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -128,8 +128,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					targetLanguageId);
 
 			renderRequest.setAttribute(
-				JournalTranslateDisplayContext.class.getName(),
-				new JournalTranslateDisplayContext(
+				TranslateDisplayContext.class.getName(),
+				new TranslateDisplayContext(
 					availableSourceLanguageIds, availableTargetLanguageIds,
 					className, classPK, infoForm,
 					_portal.getLiferayPortletRequest(renderRequest),

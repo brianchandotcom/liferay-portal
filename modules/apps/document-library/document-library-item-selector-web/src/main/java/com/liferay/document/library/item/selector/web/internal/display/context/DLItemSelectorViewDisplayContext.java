@@ -23,9 +23,11 @@ import com.liferay.document.library.item.selector.web.internal.DLItemSelectorVie
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
@@ -214,8 +216,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		}
 
 		return DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
-			_getStagingAwareGroupId(), _getFolderId(),
-			WorkflowConstants.STATUS_APPROVED, _getMimeTypes(), false, false,
+			_repository.getRepositoryId(), _getFolderId(),
+			WorkflowConstants.STATUS_APPROVED, _getMimeTypes(), true, false,
 			startAndEnd[0], startAndEnd[1], repositoryModelOrderByComparator);
 	}
 
@@ -413,8 +415,17 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		Repository repository = null;
 
 		if (_getFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			repository = RepositoryProviderUtil.getFolderRepository(
+			DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(
 				_getFolderId());
+
+			if ((dlFolder != null) && dlFolder.isMountPoint()) {
+				repository = RepositoryProviderUtil.getRepository(
+					dlFolder.getRepositoryId());
+			}
+			else {
+				repository = RepositoryProviderUtil.getFolderRepository(
+					_getFolderId());
+			}
 		}
 		else {
 			repository = RepositoryProviderUtil.getRepository(

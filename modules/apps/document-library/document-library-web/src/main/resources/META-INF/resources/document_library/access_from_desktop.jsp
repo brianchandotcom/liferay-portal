@@ -17,14 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String randomNamespace = null;
-
-if (Objects.equals(dlRequestHelper.getResourcePortletName(), DLPortletKeys.DOCUMENT_LIBRARY) || Objects.equals(dlRequestHelper.getResourcePortletName(), DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_folder_action") + StringPool.UNDERLINE;
-}
-else {
-	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_image_gallery_display_folder_action") + StringPool.UNDERLINE;
-}
+DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAccessFromDesktopDisplayContext(request);
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -43,12 +36,12 @@ else {
 %>
 
 <liferay-ui:icon
-	cssClass='<%= randomNamespace + "-webdav-action" %>'
+	cssClass='<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() + "-webdav-action" %>'
 	message="access-from-desktop"
 	url="javascript:;"
 />
 
-<div id="<%= randomNamespace %>webDav" style="display: none;">
+<div id="<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDav" style="display: none;">
 	<div class="portlet-document-library">
 
 		<%
@@ -66,14 +59,14 @@ else {
 
 		<br /><br />
 
-		<aui:input cssClass="webdav-url-resource" id='<%= randomNamespace + "webDavURL" %>' name="webDavURL" type="resource" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, folder, null) %>" />
+		<aui:input cssClass="webdav-url-resource" id='<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() + "webDavURL" %>' name="webDavURL" type="resource" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, folder, null) %>" />
 	</div>
 </div>
 
 <aui:script>
 	(function () {
 		var webdavContentContainer = document.getElementById(
-			'<%= randomNamespace %>webDav'
+			'<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDav'
 		);
 
 		var html = '';
@@ -85,7 +78,7 @@ else {
 		}
 
 		var webdavActionLink = document.querySelector(
-			'.<%= randomNamespace %>-webdav-action'
+			'.<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>-webdav-action'
 		);
 
 		if (webdavActionLink) {
@@ -97,7 +90,7 @@ else {
 						bodyHTML: html,
 						onOpen: function (event) {
 							var webdavURLInput = document.getElementById(
-								'<portlet:namespace /><%= randomNamespace %>webDavURL'
+								'<portlet:namespace /><%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDavURL'
 							);
 
 							if (webdavURLInput) {

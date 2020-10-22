@@ -21,6 +21,7 @@
 page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
 page import="com.liferay.document.library.kernel.model.DLVersionNumberIncrease" %><%@
 page import="com.liferay.document.library.web.internal.bulk.selection.BulkSelectionRunnerUtil" %><%@
+page import="com.liferay.document.library.web.internal.display.context.DLAccessFromDesktopDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDataEngineDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditFileShortcutDisplayContext" %><%@

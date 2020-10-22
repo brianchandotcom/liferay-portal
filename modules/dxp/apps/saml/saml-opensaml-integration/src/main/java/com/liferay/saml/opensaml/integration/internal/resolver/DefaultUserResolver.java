@@ -90,6 +90,8 @@ public class DefaultUserResolver implements UserResolver {
 
 		User user = null;
 
+		long companyId = CompanyThreadLocal.getCompanyId();
+
 		String subjectNameIdentifier = getSubjectNameIdentifier(
 			userResolverSAMLContext);
 
@@ -103,13 +105,12 @@ public class DefaultUserResolver implements UserResolver {
 
 		if (_samlProviderConfigurationHelper.isLDAPImportEnabled()) {
 			user = importLdapUser(
-				samlSpIdpConnection.getCompanyId(), subjectNameIdentifier,
-				subjectNameIdentifierType);
+				companyId, subjectNameIdentifier, subjectNameIdentifierType);
 		}
 
 		if (user == null) {
 			return importUser(
-				samlSpIdpConnection, subjectNameIdentifier,
+				companyId, samlSpIdpConnection, subjectNameIdentifier,
 				subjectNameIdentifierType, userResolverSAMLContext,
 				serviceContext);
 		}
@@ -154,7 +155,7 @@ public class DefaultUserResolver implements UserResolver {
 	}
 
 	protected User addUser(
-			SamlSpIdpConnection samlSpIdpConnection,
+			long companyId, SamlSpIdpConnection samlSpIdpConnection,
 			Map<String, List<Serializable>> attributesMap,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -165,10 +166,7 @@ public class DefaultUserResolver implements UserResolver {
 					MapUtil.toString(attributesMap));
 		}
 
-		long companyId = samlSpIdpConnection.getCompanyId();
-
 		Company company = _companyLocalService.getCompany(companyId);
-
 		String emailAddress = getValueAsString("emailAddress", attributesMap);
 
 		if (samlSpIdpConnection.isUnknownUsersAreStrangers()) {
@@ -390,7 +388,7 @@ public class DefaultUserResolver implements UserResolver {
 	}
 
 	protected User importUser(
-			SamlSpIdpConnection samlSpIdpConnection,
+			long companyId, SamlSpIdpConnection samlSpIdpConnection,
 			String subjectNameIdentifier, String subjectNameIdentifierType,
 			UserResolverSAMLContext userResolverSAMLContext,
 			ServiceContext serviceContext)
@@ -407,8 +405,7 @@ public class DefaultUserResolver implements UserResolver {
 			userResolverSAMLContext);
 
 		User user = getUser(
-			samlSpIdpConnection.getCompanyId(), subjectNameIdentifier,
-			subjectNameIdentifierType);
+			companyId, subjectNameIdentifier, subjectNameIdentifierType);
 
 		if (user != null) {
 			if (_log.isDebugEnabled()) {
@@ -418,7 +415,8 @@ public class DefaultUserResolver implements UserResolver {
 			user = updateUser(user, attributesMap, serviceContext);
 		}
 		else {
-			user = addUser(samlSpIdpConnection, attributesMap, serviceContext);
+			user = addUser(
+				companyId, samlSpIdpConnection, attributesMap, serviceContext);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Added user " + user.toString());

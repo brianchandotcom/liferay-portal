@@ -58,7 +58,7 @@ function AccountSticker({className, logoURL, name, size}) {
 	);
 }
 
-function updateRemoteCurrentAccount(id, url) {
+function updateRemoteCurrentAccount(id, url, refresh) {
 	const formData = new FormData();
 	formData.append('accountId', id);
 
@@ -70,7 +70,12 @@ function updateRemoteCurrentAccount(id, url) {
 		body: formData,
 		method: 'POST',
 	}).then(() => {
-		Liferay.fire(CURRENT_ACCOUNT_UPDATED, {id});
+		if (refresh) {
+			window.location.reload();
+		}
+		else {
+			Liferay.fire(CURRENT_ACCOUNT_UPDATED, {id});
+		}
 	});
 }
 
@@ -207,17 +212,23 @@ function AccountSelector(props) {
 													onClick={(_) => {
 														updateRemoteCurrentAccount(
 															item.id,
-															props.setCurrentAccountURL
+															props.setCurrentAccountURL,
+															props.refreshPageOnAccountSelected
 														);
-														updateCurrentAccount(
-															item
-														);
-														setCurrentView(
-															'orders'
-														);
-														updateCurrentOrder(
-															null
-														);
+
+														if (
+															!props.refreshPageOnAccountSelected
+														) {
+															updateCurrentAccount(
+																item
+															);
+															setCurrentView(
+																'orders'
+															);
+															updateCurrentOrder(
+																null
+															);
+														}
 													}}
 												>
 													<AccountSticker
@@ -338,6 +349,7 @@ AccountSelector.propTypes = {
 			label_i18n: PropTypes.string,
 		}),
 	}),
+	refreshPageOnAccountSelected: PropTypes.bool,
 	selectOrderURL: PropTypes.string.isRequired,
 	setCurrentAccountURL: PropTypes.string.isRequired,
 	spritemap: PropTypes.string.isRequired,
@@ -345,6 +357,7 @@ AccountSelector.propTypes = {
 
 AccountSelector.defaultProps = {
 	alignmentPosition: 3,
+	refreshPageOnAccountSelected: false,
 };
 
 export default AccountSelector;

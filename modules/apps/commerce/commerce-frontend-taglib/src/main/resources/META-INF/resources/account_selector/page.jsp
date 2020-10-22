@@ -23,12 +23,13 @@
 		'<%= accountSelectorId %>',
 		'<%= accountSelectorId %>',
 		{
-			spritemap: '<%= spritemap %>',
 			createNewOrderURL: '<%= createNewOrderURL %>',
-			selectOrderURL: '<%= selectOrderURL %>',
-			setCurrentAccountURL: '<%= setCurrentAccountURL %>',
 			currentAccount: <%= Validator.isNotNull(currentAccount) ? jsonSerializer.serializeDeep(currentAccount) : null %>,
 			currentOrder: <%= Validator.isNotNull(currentAccount) ? jsonSerializer.serializeDeep(currentOrder) : null %>,
+			refreshPageOnAccountSelected: true,
+			selectOrderURL: '<%= selectOrderURL %>',
+			setCurrentAccountURL: '<%= setCurrentAccountURL %>',
+			spritemap: '<%= spritemap %>',
 		}
 	);
 </aui:script>

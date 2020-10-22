@@ -44,7 +44,7 @@ page import="com.liferay.portal.util.RepositoryUtil" %>
 <%@ page import="java.util.Collections" %>
 
 <%
-DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
+DLRequestHelper dlRequestHelper = (DLRequestHelper)request.getAttribute(DLRequestHelper.class.getName());
 
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 %>

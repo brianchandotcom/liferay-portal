@@ -294,15 +294,19 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 				layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK());
 
-		if (assetDisplayPageEntry == null) {
-			return null;
-		}
+		if (assetDisplayPageEntry != null) {
+			if (assetDisplayPageEntry.getType() ==
+					AssetDisplayPageConstants.TYPE_NONE) {
 
-		if (assetDisplayPageEntry.getType() !=
-				AssetDisplayPageConstants.TYPE_DEFAULT) {
+				return null;
+			}
 
-			return layoutLocalService.fetchLayout(
-				assetDisplayPageEntry.getPlid());
+			if (assetDisplayPageEntry.getType() ==
+					AssetDisplayPageConstants.TYPE_SPECIFIC) {
+
+				return layoutLocalService.fetchLayout(
+					assetDisplayPageEntry.getPlid());
+			}
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

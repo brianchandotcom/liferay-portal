@@ -155,6 +155,8 @@ public class DDMFormFieldTemplateContextFactory {
 
 		setDDMFormFieldTemplateContextFieldName(
 			ddmFormFieldTemplateContext, ddmFormField.getName());
+		setDDMFormFieldTemplateContextFieldReference(
+			ddmFormFieldTemplateContext, ddmFormField.getFieldReference());
 		setDDMFormFieldTemplateContextLocalizedValue(
 			ddmFormFieldTemplateContext, "label", ddmFormField.getLabel());
 		setDDMFormFieldTemplateContextName(
@@ -458,6 +460,13 @@ public class DDMFormFieldTemplateContextFactory {
 		Map<String, Object> ddmFormFieldTemplateContext, String fieldName) {
 
 		ddmFormFieldTemplateContext.put("fieldName", fieldName);
+	}
+
+	protected void setDDMFormFieldTemplateContextFieldReference(
+		Map<String, Object> ddmFormFieldTemplateContext,
+		String fieldReference) {
+
+		ddmFormFieldTemplateContext.put("fieldReference", fieldReference);
 	}
 
 	protected void setDDMFormFieldTemplateContextInstanceId(

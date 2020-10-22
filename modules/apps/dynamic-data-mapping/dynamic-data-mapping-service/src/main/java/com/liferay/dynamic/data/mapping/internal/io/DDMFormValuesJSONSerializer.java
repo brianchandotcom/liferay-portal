@@ -208,6 +208,8 @@ public class DDMFormValuesJSONSerializer implements DDMFormValuesSerializer {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
+			"fieldReference", ddmFormFieldValue.getFieldReference()
+		).put(
 			"instanceId", ddmFormFieldValue.getInstanceId()
 		).put(
 			"name", ddmFormFieldValue.getName()

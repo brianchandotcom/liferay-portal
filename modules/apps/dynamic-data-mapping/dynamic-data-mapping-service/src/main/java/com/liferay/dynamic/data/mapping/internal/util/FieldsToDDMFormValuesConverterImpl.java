@@ -74,6 +74,13 @@ public class FieldsToDDMFormValuesConverterImpl
 				DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
 					fieldName);
 
+				DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
+
+				if (ddmFormField != null) {
+					ddmFormFieldValue.setFieldReference(
+						ddmFormField.getFieldReference());
+				}
+
 				setDDMFormFieldValueProperties(
 					ddmFormFieldValue, ddmFormFieldsMap, fields,
 					ddmFieldsCounter);
@@ -343,6 +350,14 @@ public class FieldsToDDMFormValuesConverterImpl
 			for (int i = 0; i < repetitions; i++) {
 				DDMFormFieldValue nestedDDMFormFieldValue =
 					createDDMFormFieldValue(nestedFieldName);
+
+				DDMFormField nestedDDMFormField = ddmFormFieldsMap.get(
+					nestedFieldName);
+
+				if (nestedDDMFormField != null) {
+					nestedDDMFormFieldValue.setFieldReference(
+						nestedDDMFormField.getFieldReference());
+				}
 
 				setDDMFormFieldValueProperties(
 					nestedDDMFormFieldValue, ddmFormFieldsMap, ddmFields,

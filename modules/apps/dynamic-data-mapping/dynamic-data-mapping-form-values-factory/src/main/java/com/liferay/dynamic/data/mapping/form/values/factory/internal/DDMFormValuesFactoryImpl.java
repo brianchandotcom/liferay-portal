@@ -192,6 +192,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
 
+		ddmFormFieldValue.setFieldReference(ddmFormField.getFieldReference());
+
 		if (ddmFormField.isTransient()) {
 			return ddmFormFieldValue;
 		}

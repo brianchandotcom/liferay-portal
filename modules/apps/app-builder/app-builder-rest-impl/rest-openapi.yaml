@@ -46,6 +46,10 @@ components:
                     type: integer
                 version:
                     type: string
+                workflowDefinitionName:
+                    type: string
+                workflowDefinitionVersion:
+                    type: integer
             type: object
         AppDeployment:
             properties:

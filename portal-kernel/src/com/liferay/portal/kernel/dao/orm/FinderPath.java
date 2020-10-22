@@ -128,6 +128,10 @@ public class FinderPath {
 		return StringUtil.toHexString(_getCacheKey(keys));
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public Serializable encodeCacheKey(Object[] arguments) {
 		String[] keys = new String[arguments.length * 2];
 
@@ -165,6 +169,10 @@ public class FinderPath {
 					_cacheName, StringPool.PERIOD, _cacheKeyPrefix),
 				encodedArguments
 			});
+	}
+
+	public String getCacheKeyPrefix() {
+		return _cacheKeyPrefix;
 	}
 
 	public String getCacheName() {

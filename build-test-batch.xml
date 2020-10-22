@@ -921,23 +921,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-suite-search-engine">
-		<attribute name="suite.name" />
-
-		<sequential>
-			<propertycopy from="search.engine[@{suite.name}]" name="suite.search.engine" silent="true" />
-
-			<if>
-				<equals arg1="${suite.search.engine}" arg2="solr" />
-				<then>
-					<property name="com.liferay.portal.search.solr7.test.unit.started" value="true" />
-
-					<ant antfile="build-test-solr.xml" target="set-up-solr" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-test-build">
 		<sequential>
 			<trycatch property="exception.message">
@@ -2911,21 +2894,10 @@ log.sanitizer.enabled=false</echo>
 						</else>
 					</if>
 
-					<if>
-						<isset property="env.CI_TEST_SUITE" />
-						<then>
-							<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
-						</then>
-					</if>
-
 					<antcall inheritAll="false" target="record-test-class-file-names">
 						<param name="test.class.groups.size" value="${test.batch.size}" />
 					</antcall>
 				</test-set-up>
-
-				<test-tear-down>
-					<stop-suite-search-engine />
-				</test-tear-down>
 			</run-batch-test>
 		</sequential>
 	</macrodef>
@@ -3381,17 +3353,6 @@ log.sanitizer.enabled=false</echo>
 							CATALINA_OPTS="${CATALINA_OPTS} ${print.final.flags}"
 						]]>
 					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-suite-search-engine">
-		<sequential>
-			<if>
-				<equals arg1="${suite.search.engine}" arg2="solr" />
-				<then>
-					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
 				</then>
 			</if>
 		</sequential>
@@ -5827,7 +5788,6 @@ log.sanitizer.enabled=false</echo>
 				<gradle-execute dir="modules" task="test">
 					<arg value="--continue" />
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
-					<arg if:set="com.liferay.portal.search.solr7.test.unit.started" value="-Dcom.liferay.portal.search.solr7.test.unit.started=${com.liferay.portal.search.solr7.test.unit.started}" />
 					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
 					<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
 					<arg value="-Dtest.class.group.index=${axis.variable}" />
@@ -5840,18 +5800,7 @@ log.sanitizer.enabled=false</echo>
 				<antcall inheritAll="false" target="record-test-class-file-names">
 					<param name="test.class.groups.size" value="${test.batch.size}" />
 				</antcall>
-
-				<if>
-					<isset property="env.CI_TEST_SUITE" />
-					<then>
-						<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
-					</then>
-				</if>
 			</test-set-up>
-
-			<test-tear-down>
-				<stop-suite-search-engine />
-			</test-tear-down>
 		</run-batch-test>
 	</target>
 

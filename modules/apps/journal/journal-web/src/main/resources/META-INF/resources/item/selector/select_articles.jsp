@@ -373,7 +373,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 	</liferay-ui:search-container>
 </clay:container-fluid>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script require="metal-dom/src/all/dom as dom" sandbox="<%= true %>">
 	var selectArticleHandler = dom.delegate(
 		document.querySelector('#<portlet:namespace />articlesContainer'),
 		'click',
@@ -381,24 +381,30 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 		function (event) {
 			<c:choose>
 				<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
-					dom.removeClasses(
-						document.querySelectorAll('.form-check-card.active'),
-						'active'
+					var activeFormCheckCards = document.querySelectorAll(
+						'.form-check-card.active'
 					);
-					dom.addClasses(
-						dom.closest(event.delegateTarget, '.form-check-card'),
-						'active'
-					);
+					var formCheckCard = event.delegateTarget.closest('.form-check-card');
+
+					if (activeFormCheckCards.length) {
+						activeFormCheckCards.forEach(function (card) {
+							card.classList.remove('active');
+						});
+					}
+
+					formCheckCard.classList.add('active');
 				</c:when>
 				<c:otherwise>
-					dom.removeClasses(
-						document.querySelectorAll('.articles.active'),
-						'active'
-					);
-					dom.addClasses(
-						dom.closest(event.delegateTarget, '.articles'),
-						'active'
-					);
+					var activeArticles = document.querySelectorAll('.articles.active');
+					var articles = event.delegateTarget.closest('.articles');
+
+					if (activeArticles.length) {
+						activeArticles.forEach(function (article) {
+							article.classList.remove('active');
+						});
+					}
+
+					articles.classList.add('active');
 				</c:otherwise>
 			</c:choose>
 

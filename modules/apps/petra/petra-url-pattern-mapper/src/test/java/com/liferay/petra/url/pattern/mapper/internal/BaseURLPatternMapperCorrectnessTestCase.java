@@ -39,11 +39,11 @@ public abstract class BaseURLPatternMapperCorrectnessTestCase
 		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
 			createValues());
 
-		for (Map.Entry<String, Integer[]> match :
+		for (Map.Entry<String, Integer[]> entry :
 				expectedURLPatternMatches.entrySet()) {
 
-			String urlPath = match.getKey();
-			Integer[] expectedURLPatternIndexes = match.getValue();
+			String urlPath = entry.getKey();
+			Integer[] expectedURLPatternIndexes = entry.getValue();
 
 			if (expectedURLPatternIndexes.length == 0) {
 				Assert.assertNull(urlPatternMapper.getValue(urlPath));
@@ -62,11 +62,11 @@ public abstract class BaseURLPatternMapperCorrectnessTestCase
 		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
 			createValues());
 
-		for (Map.Entry<String, Integer[]> match :
+		for (Map.Entry<String, Integer[]> entry :
 				expectedURLPatternMatches.entrySet()) {
 
-			String urlPath = match.getKey();
-			Integer[] expectedURLPatternIndexes = match.getValue();
+			String urlPath = entry.getKey();
+			Integer[] expectedURLPatternIndexes = entry.getValue();
 
 			Set<Integer> actualURLPatternIndexes = urlPatternMapper.getValues(
 				urlPath);

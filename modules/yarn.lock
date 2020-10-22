@@ -1159,10 +1159,10 @@
     "@clayui/icon" "^3.1.0"
     classnames "^2.2.6"
 
-"@clayui/card@3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.4.0.tgz#28db2850ac24ddbbdedae0b88feb0260205c52f0"
-  integrity sha512-qMk075lQs9vjfC/k91MFLOo+ZC3PLLnuwpJ968CDhuZU/pHxg9EkgfspnA0oj1t5Tf702Ohn/Wj5IYcrcfXPSg==
+"@clayui/card@3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.5.0.tgz#d9e528e05680da226ab4d51d2414a2ce5da63a30"
+  integrity sha512-GNnvoDQhwS2d+jN9DQC040RFq96kUpRGYrL/owH3sau1cERs7HLHjRo92oT7XiYoFFeacNnNTw9VIWnDC6vJvw==
   dependencies:
     "@clayui/drop-down" "^3.8.0"
     "@clayui/form" "^3.12.0"
@@ -1195,10 +1195,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.1"
 
-"@clayui/css@3.18.2":
-  version "3.18.2"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.18.2.tgz#d6717520c5e66ec3bd485ff2d4baa07dd50a104b"
-  integrity sha512-LjgKIkPWhBJtgcTPimlGDfhKDv7y3ytHgB41KHfNhLi3RikIh6tcdbM5w6jsPYqbyvRCz0EcFHlNy5NftI8BFw==
+"@clayui/css@3.19.0":
+  version "3.19.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.19.0.tgz#c9f809db1c04aea785a139d47beaf7eb23f5d531"
+  integrity sha512-OdtJytArdgu7yrR2lV20TvgOAMcsvIuj9cJ5pP/wxaaVQdKxVAKFF6Y3hcROvFPpG5OkzagHD1FdF1av+myATQ==
 
 "@clayui/data-provider@3.3.5":
   version "3.3.5"
@@ -10602,11 +10602,6 @@ interpret@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-2.0.0.tgz#b783ffac0b8371503e9ab39561df223286aa5433"
   integrity sha512-e0/LknJ8wpMMhTiWcjivB+ESwIuvHnBSlBbmP/pSb8CQJldoj1p2qv7xGZ/+BtbTziYRFSz8OsvdbiX45LtYQA==
-
-intersection-observer@0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.11.0.tgz#f4ea067070326f68393ee161cc0a2ca4c0040c6f"
-  integrity sha512-KZArj2QVnmdud9zTpKf279m2bbGfG+4/kn16UU0NL3pTVl52ZHiJ9IRNSsnn6jaHrL9EGLFM5eWjTx2fz/+zoQ==
 
 into-stream@^3.1.0:
   version "3.1.0"

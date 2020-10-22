@@ -38,6 +38,81 @@ definition {
 		}
 	}
 
+	test AssertPriceListHaveRequiredNameAndCurrency {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommercePriceLists#AssertPriceListHaveRequiredNameAndCurrency";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			panel = "Commerce",
+			portlet = "Catalogs");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCatalogsEntry(
+			catalogCurrency = "US Dollar",
+			catalogLanguage = "English (United States)",
+			catalogName = "Test Catalog");
+
+		Button.click(button = "Submit");
+
+		Refresh();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			panel = "Commerce",
+			portlet = "Price Lists");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent.assertVisible(
+			key_fieldFieldLabel = "Name",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
+
+		AssertElementPresent.assertVisible(
+			key_fieldFieldLabel = "Currency",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
+
+		Pause(locator1 = "3000");
+
+		Select(
+			key_fieldLabel = "Catalog",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Test Catalog");
+
+		Select(
+			key_fieldLabel = "Currency",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "USD");
+
+		Button.click(button = "Submit");
+
+		Alert.viewRequiredField();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Pause(locator1 = "3000");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "Test Price List");
+
+		Select(
+			key_fieldLabel = "Catalog",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Test Catalog");
+
+		Button.click(button = "Submit");
+
+		Alert.viewRequiredField();
+	}
+
 	test CreateNewPriceList {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#CreateNewPriceList";

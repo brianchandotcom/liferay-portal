@@ -473,14 +473,7 @@ public class ServletResponseUtil {
 		if (!ascii) {
 			String encodedFileName = URLCodec.encodeURL(fileName, true);
 
-			if (BrowserSnifferUtil.isIe(httpServletRequest)) {
-				contentDispositionFileName =
-					"filename=\"" + encodedFileName + "\"";
-			}
-			else {
-				contentDispositionFileName =
-					"filename*=UTF-8''" + encodedFileName;
-			}
+			contentDispositionFileName = "filename*=UTF-8''" + encodedFileName;
 		}
 
 		if (Validator.isNull(contentDispositionType)) {

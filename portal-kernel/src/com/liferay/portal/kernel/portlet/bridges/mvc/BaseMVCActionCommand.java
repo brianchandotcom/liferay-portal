@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
@@ -23,7 +21,6 @@ import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -32,7 +29,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -232,25 +228,6 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 
 		if (Validator.isNull(redirect)) {
 			return;
-		}
-
-		// LPS-1928
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(actionRequest);
-
-		if (BrowserSnifferUtil.isIe(httpServletRequest) &&
-			(BrowserSnifferUtil.getMajorVersion(httpServletRequest) == 6.0) &&
-			redirect.contains(StringPool.POUND)) {
-
-			String redirectToken = "&#";
-
-			if (!redirect.contains(StringPool.QUESTION)) {
-				redirectToken = StringPool.QUESTION + redirectToken;
-			}
-
-			redirect = StringUtil.replace(
-				redirect, CharPool.POUND, redirectToken);
 		}
 
 		redirect = PortalUtil.escapeRedirect(redirect);

@@ -21,12 +21,7 @@ export function getFrontendTokenValue(styleValue) {
 	const frontendToken = config.frontendTokens[styleValue];
 
 	if (frontendToken) {
-		if (Liferay.Browser.isIe()) {
-			return frontendToken.value;
-		}
-		else {
-			return `var(--${frontendToken.cssVariable})`;
-		}
+		return `var(--${frontendToken.cssVariable})`;
 	}
 
 	return styleValue;

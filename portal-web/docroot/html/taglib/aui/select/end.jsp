@@ -89,31 +89,3 @@
 		</label>
 	</c:if>
 </div>
-
-<script>
-	(function() {
-		var select = document.getElementById('<%= namespace + id %>');
-
-		if (select) {
-			<c:if test="<%= BrowserSnifferUtil.isEdge(request) || BrowserSnifferUtil.isIe(request) %>">
-				select.addEventListener(
-					'keydown',
-					function(event) {
-						if (event.which === 27) {
-							event.stopPropagation();
-						}
-					}
-				);
-			</c:if>
-
-			<c:if test="<%= BrowserSnifferUtil.isIe(request) && (BrowserSnifferUtil.getMajorVersion(request) == 11.0) %>">
-				select.addEventListener(
-					'mousedown',
-					function(event) {
-						event.currentTarget.focus();
-					}
-				);
-			</c:if>
-		}
-	})();
-</script>

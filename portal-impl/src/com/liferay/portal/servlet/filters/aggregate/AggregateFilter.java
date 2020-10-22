@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
@@ -402,7 +401,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA");
 
-		if (cacheDataFile.exists() && !_isLegacyIe(httpServletRequest)) {
+		if (cacheDataFile.exists()) {
 			long fileLastModifiedTime = -1;
 
 			try (Reader reader = new FileReader(cacheDataFile);
@@ -452,10 +451,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 				httpServletResponse.setContentType(ContentTypes.TEXT_CSS_UTF8);
 
-				if (!_isLegacyIe(httpServletRequest)) {
-					FileUtil.write(
-						cacheContentTypeFile, ContentTypes.TEXT_CSS_UTF8);
-				}
+				FileUtil.write(
+					cacheContentTypeFile, ContentTypes.TEXT_CSS_UTF8);
 			}
 			else if (resourcePath.endsWith(_JAVASCRIPT_EXTENSION)) {
 				if (_log.isInfoEnabled()) {
@@ -626,12 +623,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		String content = _readResource(
 			httpServletRequest, httpServletResponse, resourcePath);
 
-		if (_isLegacyIe(httpServletRequest)) {
-			return getCssContent(
-				httpServletRequest, httpServletResponse, cssServletContext,
-				resourcePath, content);
-		}
-
 		content = aggregateCss(
 			new ServletPaths(cssServletContext, resourcePathRoot), content);
 
@@ -723,16 +714,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 					httpServletResponse, (String)minifiedContent);
 			}
 		}
-	}
-
-	private boolean _isLegacyIe(HttpServletRequest httpServletRequest) {
-		if (BrowserSnifferUtil.isIe(httpServletRequest) &&
-			(BrowserSnifferUtil.getMajorVersion(httpServletRequest) < 10)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private String _readResource(

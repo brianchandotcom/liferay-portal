@@ -217,8 +217,4 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	Liferay.on('destroyPortlet', clearPortletHandlers);
 
 	Liferay.Forms.App.start();
-
-	if (Liferay.Browser.isIe()) {
-		document.querySelector('.portlet-forms').classList.add('portlet-forms-ie');
-	}
 </aui:script>

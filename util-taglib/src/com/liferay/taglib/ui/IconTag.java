@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.SpriteImage;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -599,14 +598,6 @@ public class IconTag extends IncludeTag {
 			if (spriteImage != null) {
 				spriteFileName = spriteImage.getSpriteFileName();
 
-				if (BrowserSnifferUtil.isIe(httpServletRequest) &&
-					(BrowserSnifferUtil.getMajorVersion(httpServletRequest) <
-						7)) {
-
-					spriteFileName = StringUtil.replace(
-						spriteFileName, ".png", ".gif");
-				}
-
 				String cdnBaseURL = themeDisplay.getCDNBaseURL();
 
 				spriteFileURL = cdnBaseURL.concat(spriteFileName);
@@ -629,16 +620,6 @@ public class IconTag extends IncludeTag {
 
 				if (spriteImage != null) {
 					spriteFileName = spriteImage.getSpriteFileName();
-
-					float majorVersion = BrowserSnifferUtil.getMajorVersion(
-						httpServletRequest);
-
-					if (BrowserSnifferUtil.isIe(httpServletRequest) &&
-						(majorVersion < 7)) {
-
-						spriteFileName = StringUtil.replace(
-							spriteFileName, ".png", ".gif");
-					}
 
 					String cdnBaseURL = themeDisplay.getCDNBaseURL();
 

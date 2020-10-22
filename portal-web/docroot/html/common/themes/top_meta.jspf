@@ -14,10 +14,6 @@
  */
 --%>
 
-<c:if test="<%= BrowserSnifferUtil.isIe(request) %>">
-	<meta content="<%= PropsValues.BROWSER_COMPATIBILITY_IE_VERSIONS %>" http-equiv="x-ua-compatible" />
-</c:if>
-
 <meta content="<%= ContentTypes.TEXT_HTML_UTF8 %>" http-equiv="content-type" />
 
 <%

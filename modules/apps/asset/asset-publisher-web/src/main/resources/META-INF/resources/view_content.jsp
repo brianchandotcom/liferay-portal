@@ -60,11 +60,9 @@ if (Validator.isNotNull(assetPublisherViewContentDisplayContext.getReturnToFullP
 
 <aui:script>
 	Liferay.once('allPortletsReady', function () {
-		if (!Liferay.Browser.isIe()) {
-			document
-				.getElementById('p_p_id_<%= portletDisplay.getId() %>_')
-				.scrollIntoView();
-		}
+		document
+			.getElementById('p_p_id_<%= portletDisplay.getId() %>_')
+			.scrollIntoView();
 	});
 </aui:script>
 

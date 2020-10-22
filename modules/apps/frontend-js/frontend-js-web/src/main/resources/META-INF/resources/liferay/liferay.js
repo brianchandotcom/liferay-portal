@@ -147,10 +147,6 @@ Liferay = window.Liferay || {};
 			ioConfig.cache = false;
 		}
 
-		if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
-			ioConfig.type = 'GET';
-		}
-
 		return ioConfig;
 	};
 

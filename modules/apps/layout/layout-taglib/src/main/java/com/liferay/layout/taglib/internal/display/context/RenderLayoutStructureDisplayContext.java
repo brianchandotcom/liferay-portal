@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -714,10 +713,6 @@ public class RenderLayoutStructureDisplayContext {
 			frontendTokensValuesJSONObject.getJSONObject(styleValue);
 
 		if (styleValueJSONObject == null) {
-			return styleValue;
-		}
-
-		if (BrowserSnifferUtil.isIe(_httpServletRequest)) {
 			return styleValue;
 		}
 

@@ -17,7 +17,6 @@ package com.liferay.frontend.js.svg4everybody.web.internal.servlet.taglib;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.Portal;
@@ -65,9 +64,7 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 			}
 		}
 
-		if (!cdnDynamicResourcesEnabled ||
-			_browserSniffer.isIe(httpServletRequest)) {
-
+		if (!cdnDynamicResourcesEnabled) {
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
@@ -110,9 +107,6 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
-
-	@Reference
-	private BrowserSniffer _browserSniffer;
 
 	private BundleContext _bundleContext;
 

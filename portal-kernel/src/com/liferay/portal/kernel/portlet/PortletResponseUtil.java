@@ -18,12 +18,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -293,16 +291,8 @@ public class PortletResponseUtil {
 			if (!ascii) {
 				String encodedFileName = URLCodec.encodeURL(fileName, true);
 
-				if (BrowserSnifferUtil.isIe(
-						PortalUtil.getHttpServletRequest(portletRequest))) {
-
-					contentDispositionFileName =
-						"filename=\"" + encodedFileName + "\"";
-				}
-				else {
-					contentDispositionFileName =
-						"filename*=UTF-8''" + encodedFileName;
-				}
+				contentDispositionFileName =
+					"filename*=UTF-8''" + encodedFileName;
 			}
 		}
 		catch (Exception exception) {

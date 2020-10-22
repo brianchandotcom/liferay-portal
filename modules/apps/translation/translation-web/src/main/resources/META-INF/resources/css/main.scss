@@ -1,8 +1,86 @@
 @import 'atlas-variables';
 
+$toolbarDesktopHeight: 4rem;
+$toolbarHeight: 6.875rem;
+$toolbarZIndex: 971;
+
+$productMenuTransitionDuration: 0.5s;
+$productMenuWidth: 320px;
+
 .translate-article {
 	.languages-selector .autofit-col {
 		margin-right: 1em;
+	}
+}
+
+.translate-article {
+	nav {
+		height: auto;
+		left: 0;
+		position: fixed;
+		transition: left ease $productMenuTransitionDuration,
+			width ease $productMenuTransitionDuration;
+		width: 100%;
+		z-index: $toolbarZIndex;
+
+		body.open & {
+			left: $productMenuWidth;
+			width: calc(100% - #{$productMenuWidth});
+
+			@media (max-width: 768px) {
+				left: 0;
+				width: 100%;
+			}
+		}
+
+		> .container-fluid {
+			padding: 0;
+
+			> .tbar-nav {
+				flex-wrap: wrap;
+
+				> .tbar-item {
+					padding: 0.5em 0.75em;
+				}
+
+				> .tbar-item:first-child {
+					border-top: solid thin #e7e7ed;
+					order: 1;
+					width: 100%;
+				}
+
+				> .tbar-item:last-child {
+					flex-grow: 1;
+
+					> .tbar-section {
+						display: flex;
+						justify-content: flex-end;
+					}
+				}
+			}
+		}
+
+		@include media-breakpoint-up(lg) {
+			> .container-fluid > .tbar-nav {
+				> .tbar-item:first-child {
+					border-top: none;
+					order: 0;
+					width: auto;
+				}
+
+				> .tbar-item:last-child {
+					flex-grow: 0;
+				}
+			}
+		}
+	}
+
+	.translate-body-form {
+		margin-top: $toolbarHeight;
+
+		@include media-breakpoint-up(lg) {
+			margin-top: $toolbarDesktopHeight;
+		}
 	}
 }
 

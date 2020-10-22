@@ -278,8 +278,7 @@ $productMenuWidth: 320px;
 		}
 	}
 
-	.import-translation,
-	.translate-article {
+	.import-translation {
 		nav {
 			height: auto;
 			left: 0;
@@ -341,8 +340,7 @@ $productMenuWidth: 320px;
 			}
 		}
 
-		.import-body-form,
-		.translate-body-form {
+		.import-body-form {
 			margin-top: $toolbarHeight;
 
 			@include media-breakpoint-up(lg) {

@@ -184,6 +184,8 @@
 	<bean class="com.liferay.portal.service.impl.PortletPreferencesServiceImpl" id="com.liferay.portal.kernel.service.PortletPreferencesService" />
 	<bean class="com.liferay.portal.service.persistence.impl.PortletPreferencesPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence" />
 	<bean class="com.liferay.portal.service.persistence.impl.PortletPreferencesFinderImpl" id="com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder" />
+	<bean class="com.liferay.portal.service.impl.PortletPreferenceValueLocalServiceImpl" id="com.liferay.portal.kernel.service.PortletPreferenceValueLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortletPreferenceValuePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PortletPreferenceValuePersistence" />
 	<bean class="com.liferay.portal.service.impl.RecentLayoutBranchLocalServiceImpl" id="com.liferay.portal.kernel.service.RecentLayoutBranchLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.RecentLayoutBranchPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RecentLayoutBranchPersistence" />
 	<bean class="com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl" id="com.liferay.portal.kernel.service.RecentLayoutRevisionLocalService" />

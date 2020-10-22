@@ -247,7 +247,7 @@ definition {
 		ProductMenuHelper.expandCategory(category = "Configuration");
 
 		AssertElementNotPresent(
-			key_portlet = "Settings",
+			key_portlet = "Site Settings",
 			locator1 = "ProductMenu#PORTLET");
 	}
 

@@ -171,7 +171,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Site AutoTag Disabled");
 
 		AutoTagging.disableAutoTagging(
-			disableAutoTaggingFor = "Settings",
+			disableAutoTaggingFor = "Site Settings",
 			site = "Site AutoTag Disabled");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-autotag-disabled");

@@ -73,8 +73,7 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
-				panel = "Site Administration",
-				portlet = "Settings");
+				portlet = "Site Settings");
 
 			Panel.expandPanel(panel = "Open Graph");
 
@@ -117,8 +116,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -176,8 +174,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -207,8 +204,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -248,8 +244,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -295,8 +290,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -330,8 +324,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		Panel.expandPanel(panel = "Open Graph");
 

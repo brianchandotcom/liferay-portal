@@ -36,10 +36,10 @@ definition {
 			Uncheck(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
 		}
 
-		else if ("${disableAutoTaggingFor}" == "Settings") {
+		else if ("${disableAutoTaggingFor}" == "Site Settings") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
-				portlet = "Settings",
+				portlet = "Site Settings",
 				site = "${site}");
 
 			Panel.expandPanel(panel = "Asset Auto Tagging");
@@ -92,10 +92,10 @@ definition {
 			}
 		}
 
-		else if ("${enableAutoTaggingFor}" == "Settings") {
+		else if ("${enableAutoTaggingFor}" == "Site Settings") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
-				portlet = "Settings",
+				portlet = "Site Settings",
 				site = "${site}");
 
 			Panel.expandPanel(panel = "Asset Auto Tagging");

@@ -168,4 +168,18 @@
 			z-index: 1;
 		}
 	}
+
+	.basic-search-no-collapse {
+		.basic-search-slider {
+			@include media-breakpoint-down($scaling-breakpoint-down) {
+				left: 0;
+			}
+
+			.basic-search-close {
+				@include media-breakpoint-down($scaling-breakpoint-down) {
+					display: none;
+				}
+			}
+		}
+	}
 }

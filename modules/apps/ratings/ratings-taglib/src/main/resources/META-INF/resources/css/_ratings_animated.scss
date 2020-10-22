@@ -7,17 +7,8 @@
 			transform: scale(1.3);
 		}
 
-		// LPS-114508
-
-		> .c-inner.c-inner.c-inner.c-inner {
-			&,
-			span {
-				font-size: 1rem;
-				line-height: 1;
-			}
-		}
-
 		.on {
+			display: flex;
 			opacity: 0;
 			position: absolute;
 			visibility: hidden;
@@ -28,6 +19,7 @@
 		}
 
 		.off {
+			display: flex;
 			opacity: 1;
 			visibility: visible;
 		}

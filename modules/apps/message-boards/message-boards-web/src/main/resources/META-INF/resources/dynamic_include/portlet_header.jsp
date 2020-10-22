@@ -35,6 +35,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 	<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
 
 	<liferay-ui:input-search
+		cssClass="basic-search-no-collapse"
 		id='<%= (PortalUtil.getLiferayPortletResponse(portletResponse)).getNamespace() + "keywords1" %>'
 		markupView="lexicon"
 		name='<%= (PortalUtil.getLiferayPortletResponse(portletResponse)).getNamespace() + "keywords" %>'

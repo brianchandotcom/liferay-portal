@@ -207,7 +207,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						>
 							<c:choose>
 								<c:when test="<%= category != null %>">
-									<h3><%= HtmlUtil.escape(category.getName()) %></h3>
+									<h3 class="component-title"><%= HtmlUtil.escape(category.getName()) %></h3>
 								</c:when>
 								<c:otherwise>
 
@@ -449,7 +449,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 								<clay:content-col
 									expand="<%= true %>"
 								>
-									<h3><liferay-ui:message key="recent-posts" /></h3>
+									<h3 class="component-title"><liferay-ui:message key="recent-posts" /></h3>
 								</clay:content-col>
 
 								<clay:content-col>
@@ -495,7 +495,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 								<clay:content-col
 									expand="<%= true %>"
 								>
-									<h3><liferay-ui:message key="my-posts" /></h3>
+									<h3 class="component-title"><liferay-ui:message key="my-posts" /></h3>
 								</clay:content-col>
 
 								<clay:content-col>

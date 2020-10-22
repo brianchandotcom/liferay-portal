@@ -27,32 +27,32 @@ function isDisabled(node) {
  * given selector or target element.
  * @param {!Element} element The DOM element the event should be listened on.
  * @param {string} eventName The name of the event to listen to.
- * @param {!Element|string} selectorOrTarget Either an element or css selector
- *     that should match the event for the listener to be triggered.
+ * @param {string} selector Css selector that should match the event for the
+ *     listener to be triggered.
  * @param {!function(!Object)} callback Function to be called when the event
  *     is triggered. It will receive the normalized event object.
- * @return {!EventHandle} Can be used to remove the listener.
+ * @return {function} Can be used to remove the listener.
  */
-function delegate(element, eventName, selectorOrTarget, callback) {
+function delegate(element, eventName, selector, callback) {
 	const eventHandler = (event) => {
 		if (eventName === 'click' && isDisabled(event.target)) {
 			return;
 		}
 
-		if (
-			event.target === selectorOrTarget ||
-			(typeof selectorOrTarget === 'string' &&
-				event.target.matches(selectorOrTarget))
-		) {
+		if (event.target.matches(selector)) {
 			callback(event);
 		}
 	};
 
 	element.addEventListener(eventName, eventHandler);
 
-	return () => {
+	const removeEvent = () => {
 		element.removeEventListener(eventName, eventHandler);
 	};
+
+	removeEvent.dispose = removeEvent;
+
+	return removeEvent;
 }
 
 export default delegate;

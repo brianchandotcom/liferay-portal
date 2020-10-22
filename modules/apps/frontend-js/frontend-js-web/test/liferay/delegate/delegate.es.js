@@ -12,21 +12,22 @@
  * details.
  */
 
-import delegate from '../../../src/main/resources/META-INF/resources/liferay/delegate/delegate.es';
 import {getByTestId} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 
-describe('delegate', function () {
+import delegate from '../../../src/main/resources/META-INF/resources/liferay/delegate/delegate.es';
+
+describe('delegate', () => {
 	afterEach(() => {
 		document.body.innerHTML = '';
 	});
 
-	it('should trigger delegate listener for matched elements', function () {
+	it('triggers delegate listener for matched elements', () => {
 		document.body.innerHTML =
 			'<div class="nomatch" data-testid="nomatch"></div>' +
 			'<div class="match" data-testid="match"></div>';
 
-		let listener = jest.fn();
+		const listener = jest.fn();
 
 		delegate(document, 'click', '.match', listener);
 
@@ -39,29 +40,12 @@ describe('delegate', function () {
 		expect(listener).toHaveBeenCalled();
 	});
 
-	it('should trigger delegate listener for element provided', function () {
-		document.body.innerHTML = `<div class="nomatch" data-testid="nomatch"></div>
-			<div class="match" data-testid="match"></div>`;
-
-		let listener = jest.fn();
-
-		delegate(document, 'click', document.querySelector('.match'), listener);
-
-		userEvent.click(getByTestId(document, 'nomatch'));
-
-		expect(listener).not.toHaveBeenCalled();
-
-		userEvent.click(getByTestId(document, 'match'));
-
-		expect(listener).toHaveBeenCalled();
-	});
-
-	it('should not trigger delegate event for parents of given element', function () {
+	it("doesn't trigger delegated event for parents of given element", () => {
 		document.body.innerHTML = `<div class="match">
 				<div data-testid="nomatch"></div>
 			</div>`;
 
-		let listener = jest.fn();
+		const listener = jest.fn();
 
 		delegate(document, 'click', '.match', listener);
 
@@ -70,10 +54,10 @@ describe('delegate', function () {
 		expect(listener).not.toHaveBeenCalled();
 	});
 
-	it('should stop triggering event if stopPropagation is called', function () {
+	it('stops triggering event if stopPropagation is called', () => {
 		document.body.innerHTML = `<div class="match" data-testid="match"></div>`;
 
-		let listener = jest.fn();
+		const listener = jest.fn();
 
 		delegate(document, 'click', '.match', listener);
 
@@ -92,14 +76,14 @@ describe('delegate', function () {
 		expect(listener).toHaveBeenCalledTimes(1);
 	});
 
-	it('should only trigger delegate event at initial target', function () {
+	it('only triggers delegate event at initial target', () => {
 		document.body.innerHTML = `<div>
 			<div class="match" data-testid="match">
 				<div class="match" data-testid="match2"></div>
 			</div>
 		</div>`;
 
-		let listener = jest.fn();
+		const listener = jest.fn();
 
 		delegate(document, 'click', '.match', listener);
 
@@ -112,14 +96,14 @@ describe('delegate', function () {
 		expect(listener).toHaveBeenCalledTimes(2);
 	});
 
-	it('should trigger listener twice when two ancestors are delegating', function () {
+	it('triggers listener twice when two ancestors are delegating', () => {
 		document.body.innerHTML = `<div>
 			<div>
 				<div class="match" data-testid="match"></div>
 			</div>
 		</div>`;
 
-		let listener = jest.fn();
+		const listener = jest.fn();
 
 		delegate(document, 'click', '.match', listener);
 		delegate(document.body, 'click', '.match', listener);
@@ -129,11 +113,11 @@ describe('delegate', function () {
 		expect(listener).toHaveBeenCalledTimes(2);
 	});
 
-	it('should remove listener through returned handle', function () {
+	it('removes listener through returned handle', () => {
 		document.body.innerHTML = `<div class="nomatch" data-testid="nomatch"></div>
 			<div class="match" data-testid="match"></div>`;
 
-		let listener = jest.fn();
+		const listener = jest.fn();
 
 		const removeDelegate = delegate(document, 'click', '.match', listener);
 
@@ -148,7 +132,26 @@ describe('delegate', function () {
 		expect(listener).toHaveBeenCalledTimes(1);
 	});
 
-	it('should not run click event listeners for disabled elements', function () {
+	it('removes listener through via `.dispose`', () => {
+		document.body.innerHTML = `<div class="nomatch" data-testid="nomatch"></div>
+			<div class="match" data-testid="match"></div>`;
+
+		const listener = jest.fn();
+
+		const eventHandler = delegate(document, 'click', '.match', listener);
+
+		userEvent.click(getByTestId(document, 'match'));
+
+		expect(listener).toHaveBeenCalledTimes(1);
+
+		eventHandler.dispose();
+
+		userEvent.click(getByTestId(document, 'match'));
+
+		expect(listener).toHaveBeenCalledTimes(1);
+	});
+
+	it("doesn't run click event listeners for disabled elements", () => {
 		document.body.innerHTML = `<div class="root">
 			<button disabled class="match" data-testid="match"></button>
 		</div>`;
@@ -162,7 +165,7 @@ describe('delegate', function () {
 		expect(listener).not.toHaveBeenCalled();
 	});
 
-	it('should not run click event listeners for elements with a disabled parent', function () {
+	it("doesn't run click event listeners for elements with a disabled parent", () => {
 		document.body.innerHTML = `<button disabled class="root">
 			<div class="match" data-testid="match"></div>
 		</button>`;

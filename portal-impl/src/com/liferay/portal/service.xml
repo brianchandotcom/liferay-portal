@@ -289,21 +289,41 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="Website" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="false" name="Country" remote-service="true">
+	<entity local-service="true" name="Country" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
 		<column name="countryId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
+		<column name="active" type="boolean" />
 		<column name="a2" type="String" />
 		<column name="a3" type="String" />
-		<column name="number" type="String" />
+		<column name="billingAllowed" type="boolean" />
+		<column name="groupFilterEnabled" type="boolean" />
 		<column name="idd" type="String" />
+		<column name="name" type="String" />
+		<column name="number" type="String" />
+		<column name="position" type="double" />
+		<column name="shippingAllowed" type="boolean" />
+		<column name="subjectToVAT" type="boolean" />
 		<column name="zipRequired" type="boolean" />
-		<column name="active" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Localized entity -->
+
+		<localized-entity>
+			<localized-column name="title" />
+		</localized-entity>
 
 		<!-- Order -->
 
@@ -313,8 +333,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="Name" return-type="Country" unique="true">
-			<finder-column name="name" />
+		<finder name="Active" return-type="Collection">
+			<finder-column name="active" />
 		</finder>
 		<finder name="A2" return-type="Country" unique="true">
 			<finder-column name="a2" />
@@ -322,8 +342,8 @@
 		<finder name="A3" return-type="Country" unique="true">
 			<finder-column name="a3" />
 		</finder>
-		<finder name="Active" return-type="Collection">
-			<finder-column name="active" />
+		<finder name="Name" return-type="Country" unique="true">
+			<finder-column name="name" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="EmailAddress" remote-service="true" uuid="true">

@@ -19,6 +19,7 @@ import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
+import com.liferay.dispatch.repository.exception.DispatchRepositoryException;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
@@ -37,6 +38,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
@@ -50,6 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Igor Beslic
  */
 @Component(
 	immediate = true,
@@ -60,28 +65,19 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	public static final String DISPATCH_TASK_EXECUTOR_TYPE_TALEND = "talend";
 
+	public TalendDispatchTaskExecutor() {
+	}
+
 	@Override
 	public void doExecute(
 			DispatchTrigger dispatchTrigger,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws IOException, PortalException {
 
-		FileEntry fileEntry = _dispatchFileRepository.fetchFileEntry(
+		Path executablePath = getExecutablePath(
 			dispatchTrigger.getDispatchTriggerId());
 
-		InputStream inputStream = fileEntry.getContentStream();
-
-		File tempFile = FileUtil.createTempFile(inputStream);
-
-		File tempFolder = FileUtil.createTempFolder();
-
-		FileUtil.unzip(tempFile, tempFolder);
-
-		String rootDirectoryName = tempFolder.getAbsolutePath();
-
-		String shFileName = _getSHFileName(rootDirectoryName);
-
-		_addExecutePermission(shFileName);
+		_addExecutePermission(executablePath.toString());
 
 		DispatchTalendCollectorOutputProcessor
 			dispatchTalendCollectorOutputProcessor =
@@ -90,7 +86,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		try {
 			Future<Map.Entry<byte[], byte[]>> future = ProcessUtil.execute(
 				dispatchTalendCollectorOutputProcessor,
-				_getArguments(dispatchTrigger, rootDirectoryName, shFileName));
+				_getArguments(dispatchTrigger, executablePath));
 
 			Map.Entry<byte[], byte[]> entry = future.get();
 
@@ -104,11 +100,9 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			throw new PortalException(exception);
 		}
 		finally {
-			FileUtil.deltree(rootDirectoryName);
+			Path executableParentPath = executablePath.getParent();
 
-			if (tempFile != null) {
-				FileUtil.delete(tempFile);
-			}
+			FileUtil.deltree(executableParentPath.toFile());
 		}
 	}
 
@@ -117,12 +111,54 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		return DISPATCH_TASK_EXECUTOR_TYPE_TALEND;
 	}
 
-	private void _addExecutePermission(String shFileName)
+	protected TalendDispatchTaskExecutor(
+		DispatchTriggerLocalService dispatchTriggerLocalService,
+		DispatchFileRepository dispatchFileRepository) {
+
+		_dispatchTriggerLocalService = dispatchTriggerLocalService;
+		_dispatchFileRepository = dispatchFileRepository;
+	}
+
+	protected Path getExecutablePath(long dispatchTriggerId)
+		throws IOException, PortalException {
+
+		FileEntry fileEntry = _dispatchFileRepository.fetchFileEntry(
+			dispatchTriggerId);
+
+		if (fileEntry == null) {
+			throw new DispatchRepositoryException(
+				"Unable to get file entry for dispatch trigger ID " +
+					dispatchTriggerId);
+		}
+
+		InputStream inputStream = fileEntry.getContentStream();
+
+		File tempFile = FileUtil.createTempFile(inputStream);
+
+		try {
+			File tempFolder = FileUtil.createTempFolder();
+
+			FileUtil.unzip(tempFile, tempFolder);
+
+			String rootDirectoryName = tempFolder.getAbsolutePath();
+
+			return Paths.get(
+				rootDirectoryName, _getExecutableName(rootDirectoryName));
+		}
+		finally {
+			if (tempFile != null) {
+				FileUtil.delete(tempFile);
+			}
+		}
+	}
+
+	private void _addExecutePermission(String executablePath)
 		throws PortalException {
 
 		try {
 			ProcessUtil.execute(
-				ConsumerOutputProcessor.INSTANCE, "chmod", "+x", shFileName);
+				ConsumerOutputProcessor.INSTANCE, "chmod", "+x",
+				executablePath);
 		}
 		catch (ProcessException processException) {
 			throw new PortalException(processException);
@@ -130,12 +166,15 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	}
 
 	private List<String> _getArguments(
-		DispatchTrigger dispatchTrigger, String rootDirectoryName,
-		String shFileName) {
+		DispatchTrigger dispatchTrigger, Path executableFilePath) {
 
 		List<String> arguments = new ArrayList<>();
 
-		arguments.add(shFileName);
+		arguments.add("java");
+
+		Path executableFileName = executableFilePath.getFileName();
+
+		arguments.add(executableFileName.toString());
 
 		arguments.add(
 			"--context_param companyId=" + dispatchTrigger.getCompanyId());
@@ -153,7 +192,11 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 					simpleDateFormat.format(lastRunStateDate));
 		}
 
-		arguments.add("--context_param jobWorkDirectory=" + rootDirectoryName);
+		Path executableParentPath = executableFilePath.getParent();
+
+		arguments.add(
+			"--context_param jobWorkDirectory=" +
+				executableParentPath.toString());
 
 		UnicodeProperties taskSettingsUnicodeProperties =
 			dispatchTrigger.getTaskSettingsUnicodeProperties();
@@ -174,12 +217,6 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 
 		return arguments;
-	}
-
-	private String _getSHFileName(String rootDirectoryName) {
-		String[] strings = FileUtil.find(rootDirectoryName, "**\\*.sh", null);
-
-		return strings[0];
 	}
 
 	@Reference

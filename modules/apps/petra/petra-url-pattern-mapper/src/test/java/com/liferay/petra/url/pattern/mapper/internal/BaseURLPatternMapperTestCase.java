@@ -30,14 +30,14 @@ public abstract class BaseURLPatternMapperTestCase {
 	protected Map<String, Integer> createValues() {
 		Map<String, Integer> values = new HashMap<>();
 
-		for (int i = 0; i < URL_PATTERNS.length; ++i) {
-			values.put(URL_PATTERNS[i], i);
+		for (int i = 0; i < _URL_PATTERNS.length; ++i) {
+			values.put(_URL_PATTERNS[i], i);
 		}
 
 		return values;
 	}
 
-	protected static final String[] URL_PATTERNS = {
+	private static final String[] _URL_PATTERNS = {
 
 		// Exact
 

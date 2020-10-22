@@ -71,7 +71,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) %>">
+	<c:if test="<%= Objects.equals(dlRequestHelper.getResourcePortletName(), DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) %>">
 		<liferay-export-import-changeset:publish-entity-menu-item
 			className="<%= DLFileEntryType.class.getName() %>"
 			groupId="<%= fileEntryType.getGroupId() %>"

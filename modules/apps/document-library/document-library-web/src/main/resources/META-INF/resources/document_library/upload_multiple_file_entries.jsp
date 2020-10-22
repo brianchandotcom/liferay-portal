@@ -30,7 +30,7 @@ if (repositoryId <= 0) {
 
 long folderId = ParamUtil.getLong(request, "folderId");
 
-String headerTitle = portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? LanguageUtil.get(request, "add-multiple-media") : LanguageUtil.get(request, "add-multiple-documents");
+String headerTitle = Objects.equals(dlRequestHelper.getResourcePortletName(), DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? LanguageUtil.get(request, "add-multiple-media") : LanguageUtil.get(request, "add-multiple-documents");
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 

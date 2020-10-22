@@ -19,7 +19,7 @@
 <%
 String randomNamespace = null;
 
-if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+if (Objects.equals(dlRequestHelper.getResourcePortletName(), DLPortletKeys.DOCUMENT_LIBRARY) || Objects.equals(dlRequestHelper.getResourcePortletName(), DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_folder_action") + StringPool.UNDERLINE;
 }
 else {

@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:app-builder:app-builder-api")
 	compileOnly project(":apps:app-builder:app-builder-rest-api")
 	compileOnly project(":apps:data-engine:data-engine-api")
+	compileOnly project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")

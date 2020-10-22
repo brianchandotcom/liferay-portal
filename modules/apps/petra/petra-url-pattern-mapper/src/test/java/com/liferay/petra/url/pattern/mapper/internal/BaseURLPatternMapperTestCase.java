@@ -39,7 +39,7 @@ public abstract class BaseURLPatternMapperTestCase {
 
 	protected static final String[] URL_PATTERNS = {
 
-		// Exact Patterns
+		// Exact
 
 		"/b/c",
 		"/c/portal/j_login",
@@ -55,7 +55,7 @@ public abstract class BaseURLPatternMapperTestCase {
 		"url/some/random/pattern/one/",
 		"url/some/random/pattern/one/*",
 
-		// Extension Patterns
+		// Extension
 
 		"*.bmp",
 		"*.jpg",
@@ -65,7 +65,7 @@ public abstract class BaseURLPatternMapperTestCase {
 		"*.mp4",
 		"*.tiff",
 
-		// Wildcard Patterns
+		// Wildcard
 
 		"/*",
 		"/*/*",
@@ -95,12 +95,6 @@ public abstract class BaseURLPatternMapperTestCase {
 		"/url/some/random/pattern/two/two/two/two/*/long/pattern"
 	};
 
-	/**
-	 * The map key is URL path for testing URL pattern mapper;
-	 * The map value is an array of {@link #URL_PATTERNS} indexes, which matches
-	 * to the given URL path. The first element of the array is the index of
-	 * best matching pattern.
-	 */
 	protected static final Map<String, Integer[]> expectedURLPatternMatches =
 		new HashMap<String, Integer[]>() {
 			{

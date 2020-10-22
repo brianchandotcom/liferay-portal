@@ -32,13 +32,21 @@ public class AssetDisplayPageUtil {
 				long groupId, long classNameId, long classPK, long classTypeId)
 		throws PortalException {
 
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			LayoutPageTemplateEntryServiceUtil.
+				fetchDefaultLayoutPageTemplateEntry(
+					groupId, classNameId, classTypeId);
+
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
 				groupId, classNameId, classPK);
 
-		if ((assetDisplayPageEntry == null) ||
-			(assetDisplayPageEntry.getType() ==
-				AssetDisplayPageConstants.TYPE_NONE)) {
+		if (assetDisplayPageEntry == null) {
+			return defaultLayoutPageTemplateEntry;
+		}
+
+		if (assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_NONE) {
 
 			return null;
 		}
@@ -51,9 +59,7 @@ public class AssetDisplayPageUtil {
 					assetDisplayPageEntry.getLayoutPageTemplateEntryId());
 		}
 
-		return LayoutPageTemplateEntryServiceUtil.
-			fetchDefaultLayoutPageTemplateEntry(
-				groupId, classNameId, classTypeId);
+		return defaultLayoutPageTemplateEntry;
 	}
 
 	public static boolean hasAssetDisplayPage(

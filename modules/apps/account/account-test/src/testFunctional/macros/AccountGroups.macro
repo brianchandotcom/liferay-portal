@@ -18,4 +18,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro viewAccountDefault {
+		AssertElementPresent(
+			key_tab = "Accounts",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No accounts were found.");
+	}
+
 }

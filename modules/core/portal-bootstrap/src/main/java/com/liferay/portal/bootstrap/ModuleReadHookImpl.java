@@ -67,8 +67,7 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 				if (jarLocation.startsWith(
 						PropsValues.MODULE_FRAMEWORK_BASE_DIR)) {
 
-					Files.copy(
-						Paths.get(_getSourceJarLocation(location)), path);
+					Files.copy(Paths.get(jarLocation), path);
 				}
 			}
 			else {

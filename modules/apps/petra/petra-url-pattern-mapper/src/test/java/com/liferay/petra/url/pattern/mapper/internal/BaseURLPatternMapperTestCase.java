@@ -37,64 +37,6 @@ public abstract class BaseURLPatternMapperTestCase {
 		return values;
 	}
 
-	private static final String[] _URL_PATTERNS = {
-
-		// Exact
-
-		"/b/c",
-		"/c/portal/j_login",
-		"/url/some/random/pattern/do/test.mp3/",
-		"/url/some/random/pattern/one",
-		"/url/some/random/pattern/one*",
-		"/url/some/random/pattern/one/",
-		"/url/some/random/pattern/one/*/",
-		"/url/some/random/pattern/one/*/do/test",
-		"no/leading/slash/*",
-		"url/some/random/pattern/do/test.mp3/",
-		"url/some/random/pattern/one",
-		"url/some/random/pattern/one/",
-		"url/some/random/pattern/one/*",
-
-		// Extension
-
-		"*.bmp",
-		"*.jpg",
-		"*.jsp",
-		"*.jspf",
-		"*.mp3",
-		"*.mp4",
-		"*.tiff",
-
-		// Wildcard
-
-		"/*",
-		"/*/*",
-		"/*//*",
-		"//*",
-		"/a/*/c/*",
-		"/do/test.mp3/*",
-		"/documents/*",
-		"/documents/main.jsp/*",
-		"/documents/main.jspf/*",
-		"/documents/user1/*",
-		"/documents/user1/folder1/*",
-		"/documents/user1/folder2/*",
-		"/documents/user2/*",
-		"/documents/user2/folder1/*",
-		"/documents/user2/folder2/*",
-		"/documents2/*",
-		"/url/*",
-		"/url/some/random/pattern/*",
-		"/url/some/random/pattern/do/test.mp3/*",
-		"/url/some/random/pattern/one/*",
-		"/url/some/random/pattern/one/one/*",
-		"/url/some/random/pattern/one/one/one/*",
-		"/url/some/random/pattern/two/*",
-		"/url/some/random/pattern/two/two/*",
-		"/url/some/random/pattern/two/two/two/*",
-		"/url/some/random/pattern/two/two/two/two/*/long/pattern"
-	};
-
 	protected static final Map<String, Integer[]> expectedURLPatternMatches =
 		new HashMap<String, Integer[]>() {
 			{
@@ -230,5 +172,63 @@ public abstract class BaseURLPatternMapperTestCase {
 				put("url/some/random/pattern/one/*", new Integer[] {12});
 			}
 		};
+
+	private static final String[] _URL_PATTERNS = {
+
+		// Exact
+
+		"/b/c",
+		"/c/portal/j_login",
+		"/url/some/random/pattern/do/test.mp3/",
+		"/url/some/random/pattern/one",
+		"/url/some/random/pattern/one*",
+		"/url/some/random/pattern/one/",
+		"/url/some/random/pattern/one/*/",
+		"/url/some/random/pattern/one/*/do/test",
+		"no/leading/slash/*",
+		"url/some/random/pattern/do/test.mp3/",
+		"url/some/random/pattern/one",
+		"url/some/random/pattern/one/",
+		"url/some/random/pattern/one/*",
+
+		// Extension
+
+		"*.bmp",
+		"*.jpg",
+		"*.jsp",
+		"*.jspf",
+		"*.mp3",
+		"*.mp4",
+		"*.tiff",
+
+		// Wildcard
+
+		"/*",
+		"/*/*",
+		"/*//*",
+		"//*",
+		"/a/*/c/*",
+		"/do/test.mp3/*",
+		"/documents/*",
+		"/documents/main.jsp/*",
+		"/documents/main.jspf/*",
+		"/documents/user1/*",
+		"/documents/user1/folder1/*",
+		"/documents/user1/folder2/*",
+		"/documents/user2/*",
+		"/documents/user2/folder1/*",
+		"/documents/user2/folder2/*",
+		"/documents2/*",
+		"/url/*",
+		"/url/some/random/pattern/*",
+		"/url/some/random/pattern/do/test.mp3/*",
+		"/url/some/random/pattern/one/*",
+		"/url/some/random/pattern/one/one/*",
+		"/url/some/random/pattern/one/one/one/*",
+		"/url/some/random/pattern/two/*",
+		"/url/some/random/pattern/two/two/*",
+		"/url/some/random/pattern/two/two/two/*",
+		"/url/some/random/pattern/two/two/two/two/*/long/pattern"
+	};
 
 }

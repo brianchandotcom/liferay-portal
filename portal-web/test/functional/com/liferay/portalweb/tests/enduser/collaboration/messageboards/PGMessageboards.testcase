@@ -334,14 +334,14 @@ definition {
 			configurationName = "Upload Servlet Request",
 			configurationScope = "System Scope");
 
-		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "10000");
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "102400");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.addInvalidAttachmentPG(
 			invalidSize = "true",
-			maxAttachmentFileSize = "10",
-			mbThreadAttachment = "Document_1.jpg",
+			maxAttachmentFileSize = "100",
+			mbThreadAttachment = "Document_1.ppt",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 	}

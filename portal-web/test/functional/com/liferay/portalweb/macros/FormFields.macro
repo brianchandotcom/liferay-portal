@@ -102,7 +102,9 @@ definition {
 			locator1 = "FormFields#GRID_OPTIONS_OPTION_VALUE_FIELD",
 			value1 = "${optionValue}");
 
-		AssertElementPresent(locator1 = "FormFields#GRID_OPTIONS_OPTION_NAME_FIELD");
+		AssertElementNotPresent(locator1 = "FormFields#GRID_OPTIONS_OPTION_NAME_FIELD");
+
+		AssertElementPresent(locator1 = "FormFields#GRID_OPTIONS_OPTION_REFERENCE_FIELD");
 	}
 
 	macro editHelpText {

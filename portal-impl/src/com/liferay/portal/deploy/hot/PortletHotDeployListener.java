@@ -261,7 +261,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 		}
 
-		processPortletProperties(servletContextName, classLoader);
+		_processPortletProperties(classLoader);
 
 		for (Portlet portlet : portlets) {
 			ResourceActionsUtil.check(portlet.getPortletId());
@@ -447,37 +447,15 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	protected void processPortletProperties(
 			String servletContextName, ClassLoader classLoader)
 		throws Exception {
 
-		Configuration portletPropertiesConfiguration = null;
-
-		try {
-			portletPropertiesConfiguration =
-				ConfigurationFactoryUtil.getConfiguration(
-					classLoader, "portlet");
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read portlet.properties");
-			}
-
-			return;
-		}
-
-		Properties portletProperties =
-			portletPropertiesConfiguration.getProperties();
-
-		if (portletProperties.isEmpty()) {
-			return;
-		}
-
-		ResourceActionsUtil.read(
-			servletContextName, classLoader,
-			StringUtil.split(
-				portletProperties.getProperty(
-					PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
+		_processPortletProperties(classLoader);
 	}
 
 	protected void unbindDataSource(String servletContextName) {
@@ -552,6 +530,38 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		if (resourceBundleLoaderServiceRegistration != null) {
 			resourceBundleLoaderServiceRegistration.unregister();
 		}
+	}
+
+	private void _processPortletProperties(ClassLoader classLoader)
+		throws Exception {
+
+		Configuration portletPropertiesConfiguration = null;
+
+		try {
+			portletPropertiesConfiguration =
+				ConfigurationFactoryUtil.getConfiguration(
+					classLoader, "portlet");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to read portlet.properties");
+			}
+
+			return;
+		}
+
+		Properties portletProperties =
+			portletPropertiesConfiguration.getProperties();
+
+		if (portletProperties.isEmpty()) {
+			return;
+		}
+
+		ResourceActionsUtil.read(
+			classLoader,
+			StringUtil.split(
+				portletProperties.getProperty(
+					PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
 	}
 
 	private static final String _JNDI_JDBC = "java_liferay:jdbc";

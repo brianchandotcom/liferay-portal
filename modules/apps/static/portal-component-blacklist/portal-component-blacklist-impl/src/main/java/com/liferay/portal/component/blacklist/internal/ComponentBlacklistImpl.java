@@ -16,6 +16,7 @@ package com.liferay.portal.component.blacklist.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.component.blacklist.ComponentBlacklist;
+import com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,7 +44,7 @@ import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.component.blacklist.internal.ComponentBlacklistConfiguration",
+	configurationPid = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = ComponentBlacklist.class
 )

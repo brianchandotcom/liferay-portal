@@ -48,7 +48,8 @@ public class OrphanPortletsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteOrphanPortlets");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();

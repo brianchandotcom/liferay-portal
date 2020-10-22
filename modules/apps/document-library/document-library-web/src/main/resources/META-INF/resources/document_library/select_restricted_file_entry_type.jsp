@@ -29,7 +29,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setLabel(LanguageUtil.get(request, "document-types"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "document-types"));
 					});
 			}
 		}

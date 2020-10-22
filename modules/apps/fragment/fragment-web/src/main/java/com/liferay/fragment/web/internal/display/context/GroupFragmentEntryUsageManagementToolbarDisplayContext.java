@@ -50,8 +50,9 @@ public class GroupFragmentEntryUsageManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return DropdownItemListBuilder.add(
 			() -> FragmentPermission.contains(
@@ -61,7 +62,8 @@ public class GroupFragmentEntryUsageManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "propagate");
 				dropdownItem.setIcon("propagation");
-				dropdownItem.setLabel(LanguageUtil.get(request, "propagate"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "propagate"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();

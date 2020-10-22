@@ -33,8 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AddressModel
-	extends AttachedModel, BaseModel<Address>, GroupedModel, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+	extends AttachedModel, BaseModel<Address>, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -117,22 +117,6 @@ public interface AddressModel
 	 * @param addressId the address ID of this address
 	 */
 	public void setAddressId(long addressId);
-
-	/**
-	 * Returns the group ID of this address.
-	 *
-	 * @return the group ID of this address
-	 */
-	@Override
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this address.
-	 *
-	 * @param groupId the group ID of this address
-	 */
-	@Override
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this address.

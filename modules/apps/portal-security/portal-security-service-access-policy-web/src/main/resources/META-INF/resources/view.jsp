@@ -43,7 +43,7 @@ sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 	creationMenu='<%=
 		new JSPCreationMenu(pageContext) {
 			{
-				addPrimaryDropdownItem(dropdownItem -> dropdownItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/edit_entry.jsp", "redirect", PortalUtil.getCurrentURL(request)));
+				addPrimaryDropdownItem(dropdownItem -> dropdownItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/edit_entry.jsp", "redirect", PortalUtil.getCurrentURL(httpServletRequest)));
 			}
 		}
 	%>'

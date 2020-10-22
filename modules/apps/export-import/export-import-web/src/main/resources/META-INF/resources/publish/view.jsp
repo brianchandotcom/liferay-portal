@@ -141,13 +141,13 @@ simplePublishURL.setParameter("targetGroupId", String.valueOf(liveGroupId));
 									navigationItem -> {
 										navigationItem.setActive(publishConfigurationButtons.equals("custom"));
 										navigationItem.setHref(customPublishURL.toString());
-										navigationItem.setLabel(LanguageUtil.get(request, "custom"));
+										navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "custom"));
 									});
 								add(
 									navigationItem -> {
 										navigationItem.setActive(publishConfigurationButtons.equals("saved"));
 										navigationItem.setHref(publishTemplatesURL.toString());
-										navigationItem.setLabel(LanguageUtil.get(request, "publish-templates"));
+										navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "publish-templates"));
 									});
 							}
 						}

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -177,9 +179,13 @@ public class OpenIdConnectServiceHandlerImpl
 		updateSessionTokens(
 			openIdConnectSessionImpl, tokens, System.currentTimeMillis());
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			httpServletRequest);
+
 		processUserInfo(
 			_portal.getCompanyId(httpServletRequest), openIdConnectSessionImpl,
-			oidcProviderMetadata);
+			oidcProviderMetadata, serviceContext.getPathMain(),
+			serviceContext.getPortalURL());
 
 		openIdConnectSessionImpl.setOpenIdConnectFlowState(
 			OpenIdConnectFlowState.AUTH_COMPLETE);
@@ -399,14 +405,15 @@ public class OpenIdConnectServiceHandlerImpl
 
 	protected void processUserInfo(
 			long companyId, OpenIdConnectSessionImpl openIdConnectSessionImpl,
-			OIDCProviderMetadata oidcProviderMetadata)
+			OIDCProviderMetadata oidcProviderMetadata, String mainPath,
+			String portalURL)
 		throws PortalException {
 
 		UserInfo userInfo = requestUserInfo(
 			openIdConnectSessionImpl.getAccessToken(), oidcProviderMetadata);
 
 		long userId = _openIdConnectUserInfoProcessor.processUserInfo(
-			userInfo, companyId);
+			userInfo, companyId, mainPath, portalURL);
 
 		openIdConnectSessionImpl.setLoginUserId(userId);
 

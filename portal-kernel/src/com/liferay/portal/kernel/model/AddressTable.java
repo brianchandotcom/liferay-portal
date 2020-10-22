@@ -42,8 +42,6 @@ public class AddressTable extends BaseTable<AddressTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Long> addressId = createColumn(
 		"addressId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
-	public final Column<AddressTable, Long> groupId = createColumn(
-		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Long> userId = createColumn(

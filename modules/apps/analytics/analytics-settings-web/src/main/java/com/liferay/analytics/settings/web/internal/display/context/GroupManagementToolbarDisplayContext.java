@@ -126,7 +126,7 @@ public class GroupManagementToolbarDisplayContext
 
 	@Override
 	protected String getFilterNavigationDropdownItemsLabel() {
-		return LanguageUtil.get(request, "sites");
+		return LanguageUtil.get(httpServletRequest, "sites");
 	}
 
 	@Override

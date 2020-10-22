@@ -16,8 +16,6 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_2;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -28,6 +26,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
+import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesSerializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
@@ -171,16 +170,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				structureId);
 	}
 
-	protected String serialize(DDMForm ddmForm) {
-		DDMFormSerializerSerializeRequest.Builder builder =
-			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
-
-		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			_ddmFormSerializer.serialize(builder.build());
-
-		return ddmFormSerializerSerializeResponse.getContent();
-	}
-
 	protected void transformDDMFormFieldValues(DDMFormValues ddmFormValues)
 		throws Exception {
 
@@ -313,7 +302,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 					updateDDMFormFields(ddmForm);
 
-					ps2.setString(1, serialize(ddmForm));
+					ps2.setString(
+						1,
+						DDMFormSerializeUtil.serialize(
+							ddmForm, _ddmFormSerializer));
 
 					ps2.setLong(2, ddmStructureId);
 
@@ -329,7 +321,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 							updateDDMFormFields(ddmForm);
 
-							ps4.setString(1, serialize(ddmForm));
+							ps4.setString(
+								1,
+								DDMFormSerializeUtil.serialize(
+									ddmForm, _ddmFormSerializer));
 
 							long structureVersionId = rs2.getLong(
 								"structureVersionId");

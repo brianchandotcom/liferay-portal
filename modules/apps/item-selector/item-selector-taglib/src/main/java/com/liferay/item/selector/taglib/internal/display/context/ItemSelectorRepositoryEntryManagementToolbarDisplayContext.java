@@ -137,7 +137,9 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	public List<LabelItem> getFilterLabelItems() {
 		String scope = ParamUtil.getString(_httpServletRequest, "scope");
 
-		if (Validator.isNull(scope) || !_isShowScopeFilter()) {
+		if (Validator.isNull(scope) || scope.equals("current") ||
+			!_isShowScopeFilter()) {
+
 			return null;
 		}
 

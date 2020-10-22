@@ -32,13 +32,13 @@ portletURL.setParameter("tabs1", tabs1);
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("devices"));
 						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "devices"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "devices"));
 					});
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("test"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "test");
-						navigationItem.setLabel(LanguageUtil.get(request, "test"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "test"));
 					});
 			}
 		}

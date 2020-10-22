@@ -12,34 +12,43 @@
  * details.
  */
 
-import React, {useLayoutEffect, useRef} from 'react';
+import React, {useLayoutEffect, useRef, useState} from 'react';
 
 import {usePage} from '../hooks/usePage.es';
 
 export const AutoFocus = ({children}) => {
 	const childRef = useRef();
 	const {activePage, containerElement} = usePage();
-
-	// This is a hack to know when FieldLazy is ready.
-
-	const lazyStatus = children?.props?.children?.type?._status;
+	const [increment, setIncrement] = useState(0);
 
 	useLayoutEffect(() => {
 		if (childRef.current && containerElement?.current) {
-			const firstInput = childRef.current.querySelector('input');
+			if (childRef.current.querySelector('.loading-animation')) {
 
-			if (
-				firstInput &&
-				!containerElement.current.contains(document.activeElement)
-			) {
-				firstInput.focus();
+				/**
+				 * This hack is to update the variable increment and cause one
+				 * more render until all loadings are removed from the screen
+				 * and so the field will be ready to focus
+				 */
 
-				if (firstInput.select) {
-					firstInput.select();
+				setTimeout(() => setIncrement((value) => value + 1), 5);
+			}
+			else {
+				const firstInput = childRef.current.querySelector('input');
+
+				if (
+					firstInput &&
+					!containerElement.current.contains(document.activeElement)
+				) {
+					firstInput.focus();
+
+					if (firstInput.select) {
+						firstInput.select();
+					}
 				}
 			}
 		}
-	}, [activePage, childRef, containerElement, lazyStatus]);
+	}, [activePage, childRef, containerElement, increment]);
 
 	return React.cloneElement(children, {
 		ref: (node) => {

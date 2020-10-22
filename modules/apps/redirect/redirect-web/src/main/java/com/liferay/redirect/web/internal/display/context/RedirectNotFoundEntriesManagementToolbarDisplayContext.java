@@ -70,7 +70,8 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "ignoreSelectedRedirectNotFoundEntries");
 				dropdownItem.setIcon("hidden");
-				dropdownItem.setLabel(LanguageUtil.get(request, "ignore"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "ignore"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
@@ -78,7 +79,8 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "unignoreSelectedRedirectNotFoundEntries");
 				dropdownItem.setIcon("view");
-				dropdownItem.setLabel(LanguageUtil.get(request, "unignore"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "unignore"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -114,8 +116,9 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 					ActionRequest.ACTION_NAME,
 					"/redirect/edit_redirect_not_found_entry");
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				editRedirectNotFoundEntriesURL.setParameter(
 					"redirect", themeDisplay.getURLCurrent());
@@ -149,7 +152,7 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 				dropdownGroupItem.setDropdownItems(
 					_getFilterDateDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(request, "filter-by-date"));
+					LanguageUtil.get(httpServletRequest, "filter-by-date"));
 			}
 		).addGroup(
 			() -> orderByDropdownItems != null,
@@ -180,8 +183,8 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "type"),
-					LanguageUtil.get(request, getNavigation()));
+					"%s: %s", LanguageUtil.get(httpServletRequest, "type"),
+					LanguageUtil.get(httpServletRequest, getNavigation()));
 
 				labelItem.setLabel(label);
 			}
@@ -197,7 +200,7 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "date"),
+					"%s: %s", LanguageUtil.get(httpServletRequest, "date"),
 					_getFilterDateLabel(_getFilterDate()));
 
 				labelItem.setLabel(label);
@@ -217,8 +220,9 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		int redirectNotFoundEntriesCount =
 			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntriesCount(
@@ -229,7 +233,7 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 
 	@Override
 	protected String getFilterNavigationDropdownItemsLabel() {
-		return LanguageUtil.get(request, "filter-by-type");
+		return LanguageUtil.get(httpServletRequest, "filter-by-type");
 	}
 
 	@Override
@@ -254,7 +258,7 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 	}
 
 	private int _getFilterDate() {
-		return ParamUtil.getInteger(request, "filterDate");
+		return ParamUtil.getInteger(httpServletRequest, "filterDate");
 	}
 
 	private List<DropdownItem> _getFilterDateDropdownItems() {
@@ -287,14 +291,14 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 
 	private String _getFilterDateLabel(int days) {
 		if (days == 0) {
-			return LanguageUtil.get(request, "all");
+			return LanguageUtil.get(httpServletRequest, "all");
 		}
 
 		if (days == 1) {
-			return LanguageUtil.format(request, "x-day", days);
+			return LanguageUtil.format(httpServletRequest, "x-day", days);
 		}
 
-		return LanguageUtil.format(request, "x-days", days);
+		return LanguageUtil.format(httpServletRequest, "x-days", days);
 	}
 
 	private final RedirectNotFoundEntryLocalService

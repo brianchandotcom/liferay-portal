@@ -93,7 +93,7 @@ request.setAttribute("edit_roles.jsp-portletURL", portletURL);
 					add(
 						navigationItem -> {
 							navigationItem.setActive(true);
-							navigationItem.setLabel(LanguageUtil.get(request, "roles"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "roles"));
 						});
 				}
 				else {
@@ -101,14 +101,14 @@ request.setAttribute("edit_roles.jsp-portletURL", portletURL);
 						navigationItem -> {
 							navigationItem.setActive(tabs1.equals("current"));
 							navigationItem.setHref(portletURL, "tabs1", "current");
-							navigationItem.setLabel(LanguageUtil.get(request, "current"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "current"));
 						});
 
 					add(
 						navigationItem -> {
 							navigationItem.setActive(tabs1.equals("available"));
 							navigationItem.setHref(portletURL, "tabs1", "available");
-							navigationItem.setLabel(LanguageUtil.get(request, "available"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "available"));
 						});
 				}
 			}

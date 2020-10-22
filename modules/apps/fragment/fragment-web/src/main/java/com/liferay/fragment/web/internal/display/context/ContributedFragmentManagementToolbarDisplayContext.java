@@ -57,8 +57,9 @@ public class ContributedFragmentManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return DropdownItemListBuilder.add(
 			() -> FragmentPermission.contains(
@@ -69,7 +70,8 @@ public class ContributedFragmentManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "copyToSelectedContributedFragmentEntries");
 				dropdownItem.setIcon("paste");
-				dropdownItem.setLabel(LanguageUtil.get(request, "make-a-copy"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "make-a-copy"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -86,8 +88,9 @@ public class ContributedFragmentManagementToolbarDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"copyContributedFragmentEntryURL",
 			() -> {
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				PortletURL copyContributedFragmentEntryURL =
 					liferayPortletResponse.createActionURL();

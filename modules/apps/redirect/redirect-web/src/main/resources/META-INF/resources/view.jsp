@@ -29,14 +29,14 @@ String navigation = ParamUtil.getString(request, "navigation", "redirects");
 					navigationItem -> {
 						navigationItem.setActive(!navigation.equals("404-urls"));
 						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "redirects"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "redirects"));
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(navigation.equals("404-urls"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "404-urls");
-						navigationItem.setLabel(LanguageUtil.format(request, "x-urls", HttpServletResponse.SC_NOT_FOUND, false));
+						navigationItem.setLabel(LanguageUtil.format(httpServletRequest, "x-urls", HttpServletResponse.SC_NOT_FOUND, false));
 					});
 			}
 		}

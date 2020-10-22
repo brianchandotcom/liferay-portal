@@ -28,15 +28,25 @@ public class JSPNavigationItemList extends NavigationItemList {
 
 	public JSPNavigationItemList(PageContext pageContext) {
 		currentURL = (String)pageContext.findAttribute("currentURL");
+		httpServletRequest = (HttpServletRequest)pageContext.getRequest();
 		renderResponse = (RenderResponse)pageContext.findAttribute(
 			"renderResponse");
-		request = (HttpServletRequest)pageContext.getRequest();
 		themeDisplay = (ThemeDisplay)pageContext.findAttribute("themeDisplay");
+
+		request = httpServletRequest;
 	}
 
 	protected String currentURL;
+	protected HttpServletRequest httpServletRequest;
 	protected RenderResponse renderResponse;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #httpServletRequest}
+	 */
+	@Deprecated
 	protected HttpServletRequest request;
+
 	protected ThemeDisplay themeDisplay;
 
 }

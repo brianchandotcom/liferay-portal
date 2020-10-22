@@ -25,12 +25,21 @@ import javax.servlet.jsp.PageContext;
 public class JSPCreationMenu extends CreationMenu {
 
 	public JSPCreationMenu(PageContext pageContext) {
+		httpServletRequest = (HttpServletRequest)pageContext.getRequest();
 		renderResponse = (RenderResponse)pageContext.findAttribute(
 			"renderResponse");
-		request = (HttpServletRequest)pageContext.getRequest();
+
+		request = httpServletRequest;
 	}
 
+	protected HttpServletRequest httpServletRequest;
 	protected RenderResponse renderResponse;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #httpServletRequest}
+	 */
+	@Deprecated
 	protected HttpServletRequest request;
 
 }

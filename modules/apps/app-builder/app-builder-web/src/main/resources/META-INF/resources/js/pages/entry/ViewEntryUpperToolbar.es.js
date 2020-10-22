@@ -43,7 +43,11 @@ function ViewEntryUpperToolbar({
 	const permissions = usePermissions();
 
 	const changeEntryIndex = (entryIndex) => {
-		history.push(`/entries/${entryIndex}?${window.location.search}`);
+		const {hash} = window.location;
+		const newHash = hash.substr(hash.indexOf('?') + 1);
+		const baseURL = `/entries/${entryIndex}`;
+
+		history.push(`${baseURL}?${newHash}`);
 	};
 
 	const onDelete = () => {

@@ -68,6 +68,13 @@ public class DepotAdminDetailsDisplayContext {
 		return _group;
 	}
 
+	public long getGroupId() {
+		DepotEntry depotEntry = (DepotEntry)_portletRequest.getAttribute(
+			DepotAdminWebKeys.DEPOT_ENTRY);
+
+		return depotEntry.getGroupId();
+	}
+
 	public boolean isEnabled(String portletId) throws PortalException {
 		return _depotApplicationController.isEnabled(portletId, _getGroupId());
 	}

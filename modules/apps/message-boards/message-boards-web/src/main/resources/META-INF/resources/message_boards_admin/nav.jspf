@@ -32,7 +32,7 @@ boolean hasBanUserPermission = MBResourcePermission.contains(permissionChecker, 
 					navigationItem -> {
 						navigationItem.setActive(navigation.equals("threads"));
 						navigationItem.setHref(messageBoardsHomeURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "content"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "content"));
 					});
 
 				PortletURL viewStatisticsURL = renderResponse.createRenderURL();
@@ -43,7 +43,7 @@ boolean hasBanUserPermission = MBResourcePermission.contains(permissionChecker, 
 					navigationItem -> {
 						navigationItem.setActive(navigation.equals("statistics"));
 						navigationItem.setHref(viewStatisticsURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "statistics"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "statistics"));
 					});
 
 				if (hasBanUserPermission) {
@@ -55,7 +55,7 @@ boolean hasBanUserPermission = MBResourcePermission.contains(permissionChecker, 
 						navigationItem -> {
 							navigationItem.setActive(navigation.equals("banned-users"));
 							navigationItem.setHref(bannedUsersURL);
-							navigationItem.setLabel(LanguageUtil.get(request, "banned-users"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "banned-users"));
 						});
 				}
 			}

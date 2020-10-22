@@ -1001,7 +1001,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		var siteID = "siteID";
 

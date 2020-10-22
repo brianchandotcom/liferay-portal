@@ -33,20 +33,24 @@ export const EditEntry = ({
 	redirect,
 	userLanguageId,
 }) => {
-	const {basePortletURL} = useContext(AppContext);
+	const {basePortletURL, portletId} = useContext(AppContext);
 	const {availableLanguageIds, defaultLanguageId} = useDataDefinition(
 		dataDefinitionId
 	);
 	const [submitting, setSubmitting] = useState(false);
+
+	const urlParams = new URLSearchParams(window.location.href);
+	const backURL =
+		urlParams.get(`_${portletId}_backURL`) || `${basePortletURL}/#/`;
 
 	const onCancel = useCallback(() => {
 		if (redirect) {
 			Liferay.Util.navigate(redirect);
 		}
 		else {
-			Liferay.Util.navigate(basePortletURL);
+			Liferay.Util.navigate(backURL);
 		}
-	}, [basePortletURL, redirect]);
+	}, [redirect, backURL]);
 
 	const onError = () => {
 		errorToast();
@@ -114,7 +118,7 @@ export const EditEntry = ({
 	return (
 		<>
 			<ControlMenuBase
-				backURL={redirect ? redirect : `${basePortletURL}/#/`}
+				backURL={redirect || backURL}
 				title={
 					dataRecordId !== '0'
 						? Liferay.Language.get('edit-entry')

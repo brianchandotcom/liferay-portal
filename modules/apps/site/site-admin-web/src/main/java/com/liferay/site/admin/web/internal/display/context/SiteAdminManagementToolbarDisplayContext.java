@@ -64,7 +64,8 @@ public class SiteAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSites");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -96,8 +97,9 @@ public class SiteAdminManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!PortalPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
@@ -125,7 +127,8 @@ public class SiteAdminManagementToolbarDisplayContext
 			return CreationMenuBuilder.addPrimaryDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref(addSiteURL.toString());
-					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, "add"));
 				}
 			).build();
 		}
@@ -162,8 +165,9 @@ public class SiteAdminManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (PortalPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
@@ -197,8 +201,9 @@ public class SiteAdminManagementToolbarDisplayContext
 			return false;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), group,

@@ -66,7 +66,7 @@ if (request.getAttribute(OAuth2ProviderWebKeys.ASSIGN_SCOPES_TREE_DISPLAY_CONTEX
 
 							navigationItem.setHref(portletURL.toString());
 
-							navigationItem.setLabel(LanguageUtil.get(request, "credentials"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "credentials"));
 						});
 
 					add(
@@ -82,7 +82,7 @@ if (request.getAttribute(OAuth2ProviderWebKeys.ASSIGN_SCOPES_TREE_DISPLAY_CONTEX
 
 							navigationItem.setHref(portletURL.toString());
 
-							navigationItem.setLabel(LanguageUtil.get(request, "scopes"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "scopes"));
 						});
 
 					if (oAuth2AdminPortletDisplayContext.hasViewGrantedAuthorizationsPermission()) {
@@ -99,7 +99,7 @@ if (request.getAttribute(OAuth2ProviderWebKeys.ASSIGN_SCOPES_TREE_DISPLAY_CONTEX
 
 								navigationItem.setHref(portletURL.toString());
 
-								navigationItem.setLabel(LanguageUtil.get(request, "authorizations"));
+								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "authorizations"));
 							});
 					}
 				}

@@ -59,8 +59,9 @@ public class JournalHistoryManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return new DropdownItemList() {
 			{
@@ -87,7 +88,8 @@ public class JournalHistoryManagementToolbarDisplayContext
 									deleteArticlesURL.toString());
 								dropdownItem.setIcon("times-circle");
 								dropdownItem.setLabel(
-									LanguageUtil.get(request, "delete"));
+									LanguageUtil.get(
+										httpServletRequest, "delete"));
 								dropdownItem.setQuickAction(true);
 							});
 					}
@@ -118,7 +120,8 @@ public class JournalHistoryManagementToolbarDisplayContext
 									expireArticlesURL.toString());
 								dropdownItem.setIcon("time");
 								dropdownItem.setLabel(
-									LanguageUtil.get(request, "expire"));
+									LanguageUtil.get(
+										httpServletRequest, "expire"));
 								dropdownItem.setQuickAction(true);
 							});
 					}
@@ -132,8 +135,9 @@ public class JournalHistoryManagementToolbarDisplayContext
 	public String getAvailableActions(JournalArticle article)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<String> availableActions = new ArrayList<>();
 

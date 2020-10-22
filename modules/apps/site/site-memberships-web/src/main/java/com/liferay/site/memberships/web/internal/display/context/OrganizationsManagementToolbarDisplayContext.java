@@ -57,8 +57,9 @@ public class OrganizationsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			if (!GroupPermissionUtil.contains(
@@ -77,7 +78,8 @@ public class OrganizationsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedOrganizations");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -112,7 +114,7 @@ public class OrganizationsManagementToolbarDisplayContext
 					dropdownItem.putData("action", "selectOrganizations");
 
 					ThemeDisplay themeDisplay =
-						(ThemeDisplay)request.getAttribute(
+						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
 					dropdownItem.putData(
@@ -124,7 +126,8 @@ public class OrganizationsManagementToolbarDisplayContext
 					dropdownItem.putData(
 						"selectOrganizationsURL",
 						selectOrganizationsURL.toString());
-					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, "add"));
 				}
 			).build();
 		}
@@ -157,8 +160,9 @@ public class OrganizationsManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			if (GroupPermissionUtil.contains(

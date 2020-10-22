@@ -65,7 +65,8 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "deleteSelectedSiteNavigationMenus");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -74,8 +75,9 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 	public String getAvailableActions(SiteNavigationMenu siteNavigationMenu)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (SiteNavigationMenuPermission.contains(
 				themeDisplay.getPermissionChecker(), siteNavigationMenu,
@@ -103,8 +105,9 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletURL addSiteNavigationMenuURL =
 			liferayPortletResponse.createActionURL();
@@ -123,7 +126,8 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"addSiteNavigationMenuURL",
 					addSiteNavigationMenuURL.toString());
-				dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add"));
 			}
 		).build();
 	}
@@ -151,8 +155,9 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 			return false;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (SiteNavigationPermission.contains(
 				themeDisplay.getPermissionChecker(),

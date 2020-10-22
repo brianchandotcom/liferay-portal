@@ -63,7 +63,7 @@ public class SearchContainerManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchContainerId() {
-		return searchContainer.getId(request, getNamespace());
+		return searchContainer.getId(httpServletRequest, getNamespace());
 	}
 
 	@Override

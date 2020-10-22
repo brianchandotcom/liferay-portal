@@ -30,17 +30,17 @@ public class AddressTable {
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"externalReferenceCode", Types.VARCHAR}, {"addressId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"street1", Types.VARCHAR}, {"street2", Types.VARCHAR},
-		{"street3", Types.VARCHAR}, {"city", Types.VARCHAR},
-		{"zip", Types.VARCHAR}, {"regionId", Types.BIGINT},
-		{"countryId", Types.BIGINT}, {"latitude", Types.DOUBLE},
-		{"longitude", Types.DOUBLE}, {"typeId", Types.BIGINT},
-		{"mailing", Types.BOOLEAN}, {"primary_", Types.BOOLEAN}
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"street1", Types.VARCHAR},
+		{"street2", Types.VARCHAR}, {"street3", Types.VARCHAR},
+		{"city", Types.VARCHAR}, {"zip", Types.VARCHAR},
+		{"regionId", Types.BIGINT}, {"countryId", Types.BIGINT},
+		{"latitude", Types.DOUBLE}, {"longitude", Types.DOUBLE},
+		{"typeId", Types.BIGINT}, {"mailing", Types.BOOLEAN},
+		{"primary_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -54,8 +54,6 @@ TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("addressId", Types.BIGINT);
-
-TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 
@@ -101,7 +99,7 @@ TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table Address (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,addressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(255) null,description STRING null,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,latitude DOUBLE,longitude DOUBLE,typeId LONG,mailing BOOLEAN,primary_ BOOLEAN)";
+"create table Address (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(255) null,description STRING null,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,latitude DOUBLE,longitude DOUBLE,typeId LONG,mailing BOOLEAN,primary_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Address";
 
@@ -110,8 +108,7 @@ TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 		"create index IX_9226DBB4 on Address (companyId, classNameId, classPK, primary_)",
 		"create index IX_CBAD282F on Address (companyId, externalReferenceCode[$COLUMN_LENGTH:75$])",
 		"create index IX_5BC8B0D4 on Address (userId)",
-		"create index IX_8FCB620E on Address (uuid_[$COLUMN_LENGTH:75$], companyId)",
-		"create unique index IX_15411410 on Address (uuid_[$COLUMN_LENGTH:75$], groupId)"
+		"create index IX_8FCB620E on Address (uuid_[$COLUMN_LENGTH:75$], companyId)"
 	};
 
 }

@@ -60,15 +60,17 @@ public class JournalFeedsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteFeeds");
 				dropdownItem.setIcon("trash");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
 	}
 
 	public String getAvailableActions(JournalFeed feed) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (JournalFeedPermission.contains(
 				themeDisplay.getPermissionChecker(), feed, ActionKeys.DELETE)) {
@@ -97,14 +99,16 @@ public class JournalFeedsManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(), "mvcPath",
 					"/edit_feed.jsp", "redirect", themeDisplay.getURLCurrent());
 
-				dropdownItem.setLabel(LanguageUtil.get(request, "add-feed"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add-feed"));
 			}
 		).build();
 	}
@@ -128,8 +132,9 @@ public class JournalFeedsManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (JournalPermission.contains(
 				themeDisplay.getPermissionChecker(),

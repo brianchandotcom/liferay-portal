@@ -59,8 +59,9 @@ public class BasicFragmentManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		boolean hasManageFragmentEntriesPermission =
 			FragmentPermission.contains(
@@ -73,7 +74,8 @@ public class BasicFragmentManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "exportFragmentCompositionsAndFragmentEntries");
 				dropdownItem.setIcon("import-export");
-				dropdownItem.setLabel(LanguageUtil.get(request, "export"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "export"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
@@ -82,7 +84,8 @@ public class BasicFragmentManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "moveFragmentCompositionsAndFragmentEntries");
 				dropdownItem.setIcon("move-folder");
-				dropdownItem.setLabel(LanguageUtil.get(request, "move"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "move"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
@@ -90,7 +93,8 @@ public class BasicFragmentManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "copySelectedFragmentEntries");
 				dropdownItem.setIcon("paste");
-				dropdownItem.setLabel(LanguageUtil.get(request, "make-a-copy"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "make-a-copy"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
@@ -99,7 +103,8 @@ public class BasicFragmentManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "deleteFragmentCompositionsAndFragmentEntries");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -107,8 +112,9 @@ public class BasicFragmentManagementToolbarDisplayContext
 
 	@Override
 	public Map<String, Object> getComponentContext() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return HashMapBuilder.<String, Object>put(
 			"copyFragmentEntryURL",
@@ -211,17 +217,19 @@ public class BasicFragmentManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"title",
 					LanguageUtil.format(
-						request, "add-x",
+						httpServletRequest, "add-x",
 						FragmentConstants.TYPE_COMPONENT_LABEL, true));
-				dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add"));
 			}
 		).build();
 	}
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (FragmentPermission.contains(
 				themeDisplay.getPermissionChecker(),

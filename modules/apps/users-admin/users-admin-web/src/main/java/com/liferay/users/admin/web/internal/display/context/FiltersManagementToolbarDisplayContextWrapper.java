@@ -82,7 +82,7 @@ public class FiltersManagementToolbarDisplayContextWrapper
 					for (String value : filterContributor.getValues()) {
 						entriesMap.put(
 							filterContributor.getValueLabel(
-								request.getLocale(), value),
+								httpServletRequest.getLocale(), value),
 							value);
 					}
 
@@ -90,9 +90,11 @@ public class FiltersManagementToolbarDisplayContextWrapper
 						getDropdownItems(
 							entriesMap, getPortletURL(),
 							filterContributor.getParameter(),
-							_getCurrentValue(request, filterContributor)));
+							_getCurrentValue(
+								httpServletRequest, filterContributor)));
 					dropdownGroupItem.setLabel(
-						filterContributor.getLabel(request.getLocale()));
+						filterContributor.getLabel(
+							httpServletRequest.getLocale()));
 				});
 		}
 
@@ -105,7 +107,8 @@ public class FiltersManagementToolbarDisplayContextWrapper
 			(LabelItemList)super.getFilterLabelItems();
 
 		for (FilterContributor filterContributor : _filterContributors) {
-			String currentValue = _getCurrentValue(request, filterContributor);
+			String currentValue = _getCurrentValue(
+				httpServletRequest, filterContributor);
 
 			if (ArrayUtil.contains(
 					filterContributor.getFilterLabelValues(), currentValue)) {
@@ -125,9 +128,9 @@ public class FiltersManagementToolbarDisplayContextWrapper
 						String label = String.format(
 							"%s: %s",
 							filterContributor.getShortLabel(
-								request.getLocale()),
+								httpServletRequest.getLocale()),
 							filterContributor.getValueLabel(
-								request.getLocale(), currentValue));
+								httpServletRequest.getLocale(), currentValue));
 
 						labelItem.setLabel(label);
 					});

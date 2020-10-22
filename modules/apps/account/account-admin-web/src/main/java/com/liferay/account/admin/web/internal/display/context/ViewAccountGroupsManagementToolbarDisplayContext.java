@@ -73,7 +73,8 @@ public class ViewAccountGroupsManagementToolbarDisplayContext
 					deleteAccountGroupsURL.toString());
 
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
@@ -99,7 +100,7 @@ public class ViewAccountGroupsManagementToolbarDisplayContext
 					"/account_groups_admin/edit_account_group", "backURL",
 					currentURLObj.toString());
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "add-account-group"));
+					LanguageUtil.get(httpServletRequest, "add-account-group"));
 			}
 		).build();
 	}

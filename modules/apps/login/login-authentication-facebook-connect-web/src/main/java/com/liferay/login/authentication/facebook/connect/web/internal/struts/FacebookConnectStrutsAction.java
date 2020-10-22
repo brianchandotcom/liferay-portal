@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -168,9 +169,13 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 			themeDisplay.getCompanyId(), redirect, code);
 
 		if (Validator.isNotNull(token)) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				httpServletRequest);
+
 			try {
 				User user = setFacebookCredentials(
-					session, themeDisplay.getCompanyId(), token);
+					session, themeDisplay.getCompanyId(), token,
+					serviceContext);
 
 				if ((user != null) &&
 					(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
@@ -210,7 +215,8 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 	}
 
 	protected User addUser(
-			HttpSession session, long companyId, JSONObject jsonObject)
+			HttpSession session, long companyId, JSONObject jsonObject,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		long creatorUserId = 0;
@@ -238,8 +244,6 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 		long[] roleIds = null;
 		long[] userGroupIds = null;
 		boolean sendEmail = true;
-
-		ServiceContext serviceContext = new ServiceContext();
 
 		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
@@ -306,7 +310,8 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 	}
 
 	protected User setFacebookCredentials(
-			HttpSession session, long companyId, String token)
+			HttpSession session, long companyId, String token,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		JSONObject jsonObject = _facebookConnect.getGraphResources(
@@ -379,12 +384,12 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 				return user;
 			}
 
-			user = updateUser(user, jsonObject);
+			user = updateUser(user, jsonObject, serviceContext);
 		}
 		else {
 			_checkAllowUserCreation(companyId, jsonObject);
 
-			user = addUser(session, companyId, jsonObject);
+			user = addUser(session, companyId, jsonObject, serviceContext);
 		}
 
 		return user;
@@ -395,7 +400,8 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 		_userLocalService = userLocalService;
 	}
 
-	protected User updateUser(User user, JSONObject jsonObject)
+	protected User updateUser(
+			User user, JSONObject jsonObject, ServiceContext serviceContext)
 		throws Exception {
 
 		long facebookId = jsonObject.getLong("id");
@@ -427,8 +433,6 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 		long[] roleIds = null;
 		List<UserGroupRole> userGroupRoles = null;
 		long[] userGroupIds = null;
-
-		ServiceContext serviceContext = new ServiceContext();
 
 		if (!StringUtil.equalsIgnoreCase(
 				emailAddress, user.getEmailAddress())) {

@@ -88,7 +88,8 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 					removeOrganizationsURL.toString());
 
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "remove"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "remove"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
@@ -149,7 +150,8 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 					selectAccountOrganizationsURL.toString());
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "assign-organizations"));
+					LanguageUtil.get(
+						httpServletRequest, "assign-organizations"));
 			}
 		).build();
 	}
@@ -205,8 +207,9 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 	}
 
 	private boolean _hasManageOrganizationsPermission() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			if (AccountEntryPermission.contains(

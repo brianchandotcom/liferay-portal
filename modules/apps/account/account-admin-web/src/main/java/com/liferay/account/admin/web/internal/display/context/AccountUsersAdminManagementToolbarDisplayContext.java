@@ -98,14 +98,15 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					"accountEntriesNavigation", _getAccountEntriesNavigation());
 				deactivateAccountUsersURL.setParameter(
 					"accountEntryIds",
-					ParamUtil.getString(request, "accountEntryIds"));
+					ParamUtil.getString(httpServletRequest, "accountEntryIds"));
 
 				dropdownItem.putData(
 					"deactivateAccountUsersURL",
 					deactivateAccountUsersURL.toString());
 
 				dropdownItem.setIcon("hidden");
-				dropdownItem.setLabel(LanguageUtil.get(request, "deactivate"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "deactivate"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
@@ -133,14 +134,15 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					"accountEntriesNavigation", _getAccountEntriesNavigation());
 				activateAccountUsersURL.setParameter(
 					"accountEntryIds",
-					ParamUtil.getString(request, "accountEntryIds"));
+					ParamUtil.getString(httpServletRequest, "accountEntryIds"));
 
 				dropdownItem.putData(
 					"activateAccountUsersURL",
 					activateAccountUsersURL.toString());
 
 				dropdownItem.setIcon("undo");
-				dropdownItem.setLabel(LanguageUtil.get(request, "activate"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "activate"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
@@ -168,13 +170,14 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					"accountEntriesNavigation", _getAccountEntriesNavigation());
 				deleteAccountUsersURL.setParameter(
 					"accountEntryIds",
-					ParamUtil.getString(request, "accountEntryIds"));
+					ParamUtil.getString(httpServletRequest, "accountEntryIds"));
 
 				dropdownItem.putData(
 					"deleteAccountUsersURL", deleteAccountUsersURL.toString());
 
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
@@ -187,8 +190,9 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 		List<String> availableActions = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!UserPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
@@ -256,9 +260,10 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 				dropdownItem.putData(
 					"dialogTitle",
-					LanguageUtil.get(request, "select-an-account"));
+					LanguageUtil.get(httpServletRequest, "select-an-account"));
 
-				dropdownItem.setLabel(LanguageUtil.get(request, "add-user"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add-user"));
 			}
 		).build();
 	}
@@ -300,7 +305,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						_getAccountEntriesNavigation(), "accounts")) {
 
 					long[] accountEntryIds = ParamUtil.getLongValues(
-						request, "accountEntryIds");
+						httpServletRequest, "accountEntryIds");
 
 					for (long accountEntryId : accountEntryIds) {
 						AccountEntry accountEntry =
@@ -333,7 +338,8 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 								labelItem.setLabel(
 									LanguageUtil.get(
-										request, accountEntry.getName()));
+										httpServletRequest,
+										accountEntry.getName()));
 							});
 					}
 				}
@@ -356,7 +362,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 							labelItem.setLabel(
 								LanguageUtil.get(
-									request, "no-assigned-account"));
+									httpServletRequest, "no-assigned-account"));
 						});
 				}
 
@@ -374,8 +380,10 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 							labelItem.setCloseable(true);
 
 							String label = String.format(
-								"%s: %s", LanguageUtil.get(request, "status"),
-								LanguageUtil.get(request, getNavigation()));
+								"%s: %s",
+								LanguageUtil.get(httpServletRequest, "status"),
+								LanguageUtil.get(
+									httpServletRequest, getNavigation()));
 
 							labelItem.setLabel(label);
 						});
@@ -386,7 +394,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getFilterNavigationDropdownItemsLabel() {
-		return LanguageUtil.get(request, "filter-by-status");
+		return LanguageUtil.get(httpServletRequest, "filter-by-status");
 	}
 
 	@Override
@@ -417,8 +425,9 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_USER);
@@ -457,7 +466,8 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 				dropdownItem.setActive(
 					Objects.equals(_getAccountEntriesNavigation(), "all"));
 
-				dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "all"));
 
 				dropdownItem.setHref(
 					PortletURLUtil.clone(currentURLObj, liferayPortletResponse),
@@ -487,10 +497,11 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 				dropdownItem.putData(
 					"dialogTitle",
-					LanguageUtil.get(request, "select-accounts"));
+					LanguageUtil.get(httpServletRequest, "select-accounts"));
 				dropdownItem.putData("redirectURL", currentURLObj.toString());
 
-				dropdownItem.setLabel(LanguageUtil.get(request, "accounts"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "accounts"));
 			}
 		).add(
 			dropdownItem -> {
@@ -499,7 +510,8 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						_getAccountEntriesNavigation(), "no-assigned-account"));
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "no-assigned-account"));
+					LanguageUtil.get(
+						httpServletRequest, "no-assigned-account"));
 
 				dropdownItem.setHref(
 					PortletURLUtil.clone(currentURLObj, liferayPortletResponse),
@@ -509,7 +521,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 	}
 
 	private String _getFilterByAccountEntriesDropdownItemsLabel() {
-		return LanguageUtil.get(request, "filter-by-accounts");
+		return LanguageUtil.get(httpServletRequest, "filter-by-accounts");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

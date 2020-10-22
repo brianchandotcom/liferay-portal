@@ -33,7 +33,7 @@ List<RedirectEntry> redirectEntries = (List<RedirectEntry>)GetterUtil.getObject(
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setLabel(LanguageUtil.get(request, "details"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "details"));
 					});
 			}
 		}

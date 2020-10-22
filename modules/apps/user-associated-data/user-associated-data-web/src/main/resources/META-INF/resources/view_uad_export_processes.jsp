@@ -38,7 +38,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setLabel(LanguageUtil.get(request, "export-processes"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "export-processes"));
 					});
 			}
 		}

@@ -66,8 +66,9 @@ public class UserGroupsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return new DropdownItemList() {
 			{
@@ -83,7 +84,8 @@ public class UserGroupsManagementToolbarDisplayContext
 									"action", "deleteSelectedUserGroups");
 								dropdownItem.setIcon("times-circle");
 								dropdownItem.setLabel(
-									LanguageUtil.get(request, "delete"));
+									LanguageUtil.get(
+										httpServletRequest, "delete"));
 								dropdownItem.setQuickAction(true);
 							});
 					}
@@ -119,7 +121,8 @@ public class UserGroupsManagementToolbarDisplayContext
 									_getSelectorURL("/site_roles.jsp"));
 								dropdownItem.setIcon("add-role");
 								dropdownItem.setLabel(
-									LanguageUtil.get(request, "assign-roles"));
+									LanguageUtil.get(
+										httpServletRequest, "assign-roles"));
 								dropdownItem.setQuickAction(true);
 							});
 
@@ -127,7 +130,7 @@ public class UserGroupsManagementToolbarDisplayContext
 
 						if (role != null) {
 							String label = LanguageUtil.format(
-								request, "remove-role-x",
+								httpServletRequest, "remove-role-x",
 								role.getTitle(themeDisplay.getLocale()), false);
 
 							add(
@@ -137,7 +140,7 @@ public class UserGroupsManagementToolbarDisplayContext
 									dropdownItem.putData(
 										"message",
 										LanguageUtil.format(
-											request,
+											httpServletRequest,
 											"are-you-sure-you-want-to-remove-" +
 												"x-role-to-selected-user-" +
 													"groups",
@@ -200,7 +203,7 @@ public class UserGroupsManagementToolbarDisplayContext
 					dropdownItem.putData("action", "selectUserGroups");
 
 					ThemeDisplay themeDisplay =
-						(ThemeDisplay)request.getAttribute(
+						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
 					dropdownItem.putData(
@@ -211,7 +214,8 @@ public class UserGroupsManagementToolbarDisplayContext
 
 					dropdownItem.putData(
 						"selectUserGroupsURL", selectUserGroupsURL.toString());
-					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, "add"));
 				}
 			).build();
 		}
@@ -227,8 +231,9 @@ public class UserGroupsManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Role role = _userGroupsDisplayContext.getRole();
 
@@ -263,8 +268,9 @@ public class UserGroupsManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			if (GroupPermissionUtil.contains(
@@ -293,7 +299,8 @@ public class UserGroupsManagementToolbarDisplayContext
 				dropdownItem.setActive(Objects.equals(getNavigation(), "all"));
 				dropdownItem.setHref(
 					getPortletURL(), "navigation", "all", "roleId", "0");
-				dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "all"));
 			}
 		).add(
 			dropdownItem -> {
@@ -310,8 +317,9 @@ public class UserGroupsManagementToolbarDisplayContext
 				viewRoleURL.setParameter("tabs1", "user-groups");
 				viewRoleURL.setParameter("navigation", "roles");
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				viewRoleURL.setParameter(
 					"redirect", themeDisplay.getURLCurrent());
@@ -322,7 +330,8 @@ public class UserGroupsManagementToolbarDisplayContext
 
 				dropdownItem.putData("viewRoleURL", viewRoleURL.toString());
 
-				dropdownItem.setLabel(LanguageUtil.get(request, "roles"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "roles"));
 			}
 		).build();
 	}
@@ -339,8 +348,9 @@ public class UserGroupsManagementToolbarDisplayContext
 		selectURL.setParameter(
 			"groupId", String.valueOf(_userGroupsDisplayContext.getGroupId()));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 

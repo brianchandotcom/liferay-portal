@@ -148,9 +148,10 @@ public class SelectCollectionManagementToolbarDisplayContext
 					AssetListPortletKeys.ASSET_LIST));
 			dropdownItem.putData(
 				"title",
-				LanguageUtil.format(request, "add-x-collection", label, true));
+				LanguageUtil.format(
+					httpServletRequest, "add-x-collection", label, true));
 			dropdownItem.setHref("#");
-			dropdownItem.setLabel(LanguageUtil.get(request, title));
+			dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, title));
 		};
 	}
 

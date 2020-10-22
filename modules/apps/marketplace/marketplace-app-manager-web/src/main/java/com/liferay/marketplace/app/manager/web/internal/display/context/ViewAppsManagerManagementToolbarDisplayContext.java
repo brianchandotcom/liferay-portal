@@ -70,18 +70,19 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(getCategoryDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(request, "categories"));
+					LanguageUtil.get(httpServletRequest, "categories"));
 			}
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(getStatusDropdownItems());
-				dropdownGroupItem.setLabel(LanguageUtil.get(request, "status"));
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "status"));
 			}
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(request, "order-by"));
+					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
 		).build();
 	}
@@ -103,8 +104,8 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "category"),
-					LanguageUtil.get(request, category));
+					"%s: %s", LanguageUtil.get(httpServletRequest, "category"),
+					LanguageUtil.get(httpServletRequest, category));
 
 				labelItem.setLabel(label);
 			}
@@ -120,8 +121,8 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "state"),
-					LanguageUtil.get(request, state));
+					"%s: %s", LanguageUtil.get(httpServletRequest, "state"),
+					LanguageUtil.get(httpServletRequest, state));
 
 				labelItem.setLabel(label);
 			}

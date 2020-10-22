@@ -45,7 +45,6 @@ public class AddResourceActionsPortalInstanceLifecycleListener
 
 		for (int i = 0; i < languageIds.length; i++) {
 			_resourceActions.read(
-				null,
 				SAXReaderUtil.read(
 					StringUtil.replace(
 						StringUtil.replace(

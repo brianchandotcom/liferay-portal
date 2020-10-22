@@ -54,8 +54,9 @@ public class LayoutPageTemplateCollectionsManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletURL searchActionURL = liferayPortletResponse.createRenderURL();
 

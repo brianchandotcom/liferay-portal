@@ -78,17 +78,17 @@ public class AddressModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"externalReferenceCode", Types.VARCHAR}, {"addressId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"street1", Types.VARCHAR}, {"street2", Types.VARCHAR},
-		{"street3", Types.VARCHAR}, {"city", Types.VARCHAR},
-		{"zip", Types.VARCHAR}, {"regionId", Types.BIGINT},
-		{"countryId", Types.BIGINT}, {"latitude", Types.DOUBLE},
-		{"longitude", Types.DOUBLE}, {"typeId", Types.BIGINT},
-		{"mailing", Types.BOOLEAN}, {"primary_", Types.BOOLEAN}
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"street1", Types.VARCHAR},
+		{"street2", Types.VARCHAR}, {"street3", Types.VARCHAR},
+		{"city", Types.VARCHAR}, {"zip", Types.VARCHAR},
+		{"regionId", Types.BIGINT}, {"countryId", Types.BIGINT},
+		{"latitude", Types.DOUBLE}, {"longitude", Types.DOUBLE},
+		{"typeId", Types.BIGINT}, {"mailing", Types.BOOLEAN},
+		{"primary_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,7 +99,6 @@ public class AddressModelImpl
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("addressId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
@@ -124,7 +123,7 @@ public class AddressModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Address (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,addressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(255) null,description STRING null,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,latitude DOUBLE,longitude DOUBLE,typeId LONG,mailing BOOLEAN,primary_ BOOLEAN)";
+		"create table Address (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(255) null,description STRING null,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,latitude DOUBLE,longitude DOUBLE,typeId LONG,mailing BOOLEAN,primary_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Address";
 
@@ -186,38 +185,32 @@ public class AddressModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long MAILING_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long MAILING_COLUMN_BITMASK = 32L;
+	public static final long PRIMARY_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long PRIMARY_COLUMN_BITMASK = 64L;
+	public static final long USERID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 128L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 256L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 512L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -238,7 +231,6 @@ public class AddressModelImpl
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setAddressId(soapModel.getAddressId());
-		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
@@ -426,9 +418,6 @@ public class AddressModelImpl
 		attributeGetterFunctions.put("addressId", Address::getAddressId);
 		attributeSetterBiConsumers.put(
 			"addressId", (BiConsumer<Address, Long>)Address::setAddressId);
-		attributeGetterFunctions.put("groupId", Address::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<Address, Long>)Address::setGroupId);
 		attributeGetterFunctions.put("companyId", Address::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId", (BiConsumer<Address, Long>)Address::setCompanyId);
@@ -587,30 +576,6 @@ public class AddressModelImpl
 		}
 
 		_addressId = addressId;
-	}
-
-	@JSON
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_groupId = groupId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalGroupId() {
-		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -1145,7 +1110,6 @@ public class AddressModelImpl
 		addressImpl.setUuid(getUuid());
 		addressImpl.setExternalReferenceCode(getExternalReferenceCode());
 		addressImpl.setAddressId(getAddressId());
-		addressImpl.setGroupId(getGroupId());
 		addressImpl.setCompanyId(getCompanyId());
 		addressImpl.setUserId(getUserId());
 		addressImpl.setUserName(getUserName());
@@ -1265,8 +1229,6 @@ public class AddressModelImpl
 		}
 
 		addressCacheModel.addressId = getAddressId();
-
-		addressCacheModel.groupId = getGroupId();
 
 		addressCacheModel.companyId = getCompanyId();
 
@@ -1449,7 +1411,6 @@ public class AddressModelImpl
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _addressId;
-	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
@@ -1507,7 +1468,6 @@ public class AddressModelImpl
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("addressId", _addressId);
-		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);
@@ -1561,49 +1521,47 @@ public class AddressModelImpl
 
 		columnBitmasks.put("addressId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("classNameId", 512L);
 
-		columnBitmasks.put("classNameId", 1024L);
+		columnBitmasks.put("classPK", 1024L);
 
-		columnBitmasks.put("classPK", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("description", 4096L);
 
-		columnBitmasks.put("description", 8192L);
+		columnBitmasks.put("street1", 8192L);
 
-		columnBitmasks.put("street1", 16384L);
+		columnBitmasks.put("street2", 16384L);
 
-		columnBitmasks.put("street2", 32768L);
+		columnBitmasks.put("street3", 32768L);
 
-		columnBitmasks.put("street3", 65536L);
+		columnBitmasks.put("city", 65536L);
 
-		columnBitmasks.put("city", 131072L);
+		columnBitmasks.put("zip", 131072L);
 
-		columnBitmasks.put("zip", 262144L);
+		columnBitmasks.put("regionId", 262144L);
 
-		columnBitmasks.put("regionId", 524288L);
+		columnBitmasks.put("countryId", 524288L);
 
-		columnBitmasks.put("countryId", 1048576L);
+		columnBitmasks.put("latitude", 1048576L);
 
-		columnBitmasks.put("latitude", 2097152L);
+		columnBitmasks.put("longitude", 2097152L);
 
-		columnBitmasks.put("longitude", 4194304L);
+		columnBitmasks.put("typeId", 4194304L);
 
-		columnBitmasks.put("typeId", 8388608L);
+		columnBitmasks.put("mailing", 8388608L);
 
-		columnBitmasks.put("mailing", 16777216L);
-
-		columnBitmasks.put("primary_", 33554432L);
+		columnBitmasks.put("primary_", 16777216L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

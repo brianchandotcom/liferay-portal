@@ -67,7 +67,8 @@ public class SiteBrowserManagementToolbarDisplayContext
 	@Override
 	public Boolean isShowSearch() {
 		return GetterUtil.getBoolean(
-			request.getAttribute("liferay-site:site-browser:showSearch"));
+			httpServletRequest.getAttribute(
+				"liferay-site:site-browser:showSearch"));
 	}
 
 	@Override

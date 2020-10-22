@@ -130,8 +130,6 @@ public class AddressPersistenceTest {
 
 		newAddress.setExternalReferenceCode(RandomTestUtil.randomString());
 
-		newAddress.setGroupId(RandomTestUtil.nextLong());
-
 		newAddress.setCompanyId(RandomTestUtil.nextLong());
 
 		newAddress.setUserId(RandomTestUtil.nextLong());
@@ -188,8 +186,6 @@ public class AddressPersistenceTest {
 		Assert.assertEquals(
 			existingAddress.getAddressId(), newAddress.getAddressId());
 		Assert.assertEquals(
-			existingAddress.getGroupId(), newAddress.getGroupId());
-		Assert.assertEquals(
 			existingAddress.getCompanyId(), newAddress.getCompanyId());
 		Assert.assertEquals(
 			existingAddress.getUserId(), newAddress.getUserId());
@@ -239,15 +235,6 @@ public class AddressPersistenceTest {
 		_persistence.countByUuid("null");
 
 		_persistence.countByUuid((String)null);
-	}
-
-	@Test
-	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
-
-		_persistence.countByUUID_G("null", 0L);
-
-		_persistence.countByUUID_G((String)null, 0L);
 	}
 
 	@Test
@@ -343,10 +330,10 @@ public class AddressPersistenceTest {
 	protected OrderByComparator<Address> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"Address", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "addressId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"name", true, "description", true, "street1", true, "street2", true,
+			"externalReferenceCode", true, "addressId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true, "name",
+			true, "description", true, "street1", true, "street2", true,
 			"street3", true, "city", true, "zip", true, "regionId", true,
 			"countryId", true, "latitude", true, "longitude", true, "typeId",
 			true, "mailing", true, "primary", true);
@@ -605,17 +592,6 @@ public class AddressPersistenceTest {
 
 	private void _assertOriginalValues(Address address) {
 		Assert.assertEquals(
-			address.getUuid(),
-			ReflectionTestUtil.invoke(
-				address, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "uuid_"));
-		Assert.assertEquals(
-			Long.valueOf(address.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				address, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-
-		Assert.assertEquals(
 			Long.valueOf(address.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				address, "getColumnOriginalValue",
@@ -637,8 +613,6 @@ public class AddressPersistenceTest {
 		address.setUuid(RandomTestUtil.randomString());
 
 		address.setExternalReferenceCode(RandomTestUtil.randomString());
-
-		address.setGroupId(RandomTestUtil.nextLong());
 
 		address.setCompanyId(RandomTestUtil.nextLong());
 

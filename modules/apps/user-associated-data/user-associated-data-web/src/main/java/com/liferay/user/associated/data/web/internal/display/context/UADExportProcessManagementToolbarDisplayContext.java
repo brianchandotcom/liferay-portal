@@ -71,16 +71,18 @@ public class UADExportProcessManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				User selectedUser = PortalUtil.getSelectedUser(request);
+				User selectedUser = PortalUtil.getSelectedUser(
+					httpServletRequest);
 
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
 					"mvcRenderCommandName", "/add_uad_export_processes",
-					"backURL", PortalUtil.getCurrentURL(request), "p_u_i_d",
-					String.valueOf(selectedUser.getUserId()));
+					"backURL", PortalUtil.getCurrentURL(httpServletRequest),
+					"p_u_i_d", String.valueOf(selectedUser.getUserId()));
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "add-export-processes"));
+					LanguageUtil.get(
+						httpServletRequest, "add-export-processes"));
 			}
 		).build();
 	}
@@ -101,8 +103,8 @@ public class UADExportProcessManagementToolbarDisplayContext
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "status"),
-					LanguageUtil.get(request, navigation));
+					"%s: %s", LanguageUtil.get(httpServletRequest, "status"),
+					LanguageUtil.get(httpServletRequest, navigation));
 
 				labelItem.setLabel(label);
 			}

@@ -73,7 +73,7 @@ public class ExportTemplatesToolbarDisplayContext
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				GroupDisplayContextHelper groupDisplayContextHelper =
-					new GroupDisplayContextHelper(request);
+					new GroupDisplayContextHelper(httpServletRequest);
 
 				dropdownItem.setHref(
 					getRenderURL(), "mvcRenderCommandName",
@@ -82,7 +82,8 @@ public class ExportTemplatesToolbarDisplayContext
 					"liveGroupId", groupDisplayContextHelper.getLiveGroupId(),
 					"privateLayout", Boolean.FALSE.toString());
 
-				dropdownItem.setLabel(LanguageUtil.get(request, "new"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "new"));
 			}
 		).build();
 	}

@@ -64,7 +64,8 @@ public class AssetListManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "deleteSelectedAssetListEntries");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -73,8 +74,9 @@ public class AssetListManagementToolbarDisplayContext
 	public String getAvailableActions(AssetListEntry assetListEntry)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (AssetListEntryPermission.contains(
 				themeDisplay.getPermissionChecker(), assetListEntry,
@@ -121,11 +123,11 @@ public class AssetListManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"title",
 					LanguageUtil.format(
-						request, "add-x-collection",
+						httpServletRequest, "add-x-collection",
 						AssetListEntryTypeConstants.TYPE_MANUAL_LABEL, true));
 				dropdownItem.setHref("#");
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "manual-collection"));
+					LanguageUtil.get(httpServletRequest, "manual-collection"));
 			}
 		).addPrimaryDropdownItem(
 			dropdownItem -> {
@@ -146,11 +148,11 @@ public class AssetListManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"title",
 					LanguageUtil.format(
-						request, "add-x-collection",
+						httpServletRequest, "add-x-collection",
 						AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL, true));
 				dropdownItem.setHref("#");
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "dynamic-collection"));
+					LanguageUtil.get(httpServletRequest, "dynamic-collection"));
 			}
 		).build();
 	}
@@ -174,8 +176,9 @@ public class AssetListManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (AssetListPermission.contains(
 				themeDisplay.getPermissionChecker(),

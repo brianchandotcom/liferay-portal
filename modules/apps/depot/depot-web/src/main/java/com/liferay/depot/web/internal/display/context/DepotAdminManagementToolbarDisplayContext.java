@@ -70,7 +70,8 @@ public class DepotAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedDepotEntries");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -115,7 +116,7 @@ public class DepotAdminManagementToolbarDisplayContext
 					dropdownItem.putData("action", "addDepotEntry");
 
 					ThemeDisplay themeDisplay =
-						(ThemeDisplay)request.getAttribute(
+						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
 					PortletURL addDepotEntryURL =
@@ -126,7 +127,8 @@ public class DepotAdminManagementToolbarDisplayContext
 					dropdownItem.putData(
 						"addDepotEntryURL", addDepotEntryURL.toString());
 
-					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, "add"));
 				}
 			).build();
 		}
@@ -161,8 +163,9 @@ public class DepotAdminManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return DepotPermission.contains(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
@@ -204,8 +207,9 @@ public class DepotAdminManagementToolbarDisplayContext
 	private boolean _hasDeleteDepotEntryPermission(DepotEntry depotEntry)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!DepotEntryPermission.contains(
 				themeDisplay.getPermissionChecker(),

@@ -132,6 +132,20 @@ describe('KeyValue', () => {
 		expect(container).toMatchSnapshot();
 	});
 
+	it('hides keyword input', () => {
+		const {container} = render(
+			<KeyValueWithProvider
+				name="keyValue"
+				readOnly={true}
+				spritemap={spritemap}
+			/>
+		);
+
+		const keyValueInput = container.querySelectorAll('.key-value-input');
+
+		expect(keyValueInput.length).toBe(0);
+	});
+
 	it('is not required', () => {
 		const {container} = render(
 			<KeyValueWithProvider
@@ -195,5 +209,20 @@ describe('KeyValue', () => {
 		});
 
 		expect(container).toMatchSnapshot();
+	});
+
+	it('shows keyword input', () => {
+		const {container} = render(
+			<KeyValueWithProvider
+				name="keyValue"
+				readOnly={true}
+				showKeyword={true}
+				spritemap={spritemap}
+			/>
+		);
+
+		const keyValueInput = container.querySelectorAll('.key-value-input');
+
+		expect(keyValueInput.length).toBe(1);
 	});
 });

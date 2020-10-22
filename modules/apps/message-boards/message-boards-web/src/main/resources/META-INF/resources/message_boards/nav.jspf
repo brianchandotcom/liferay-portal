@@ -27,7 +27,7 @@
 					navigationItem -> {
 						navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/edit_category") || mvcRenderCommandName.equals("/message_boards/edit_message") || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") || mvcRenderCommandName.equals("/message_boards/view_message"));
 						navigationItem.setHref(messageBoardsHomeURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "categories"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "categories"));
 					});
 
 				PortletURL viewRecentPostsURL = renderResponse.createRenderURL();
@@ -38,7 +38,7 @@
 					navigationItem -> {
 						navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/view_recent_posts"));
 						navigationItem.setHref(viewRecentPostsURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "recent-posts"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "recent-posts"));
 					});
 
 				if (themeDisplay.isSignedIn()) {
@@ -50,7 +50,7 @@
 						navigationItem -> {
 							navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/view_my_posts"));
 							navigationItem.setHref(viewMyPostsURL);
-							navigationItem.setLabel(LanguageUtil.get(request, "my-posts"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "my-posts"));
 						});
 
 					if (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) {
@@ -62,7 +62,7 @@
 							navigationItem -> {
 								navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/view_my_subscriptions"));
 								navigationItem.setHref(viewMySubscriptionsURL);
-								navigationItem.setLabel(LanguageUtil.get(request, "my-subscriptions"));
+								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "my-subscriptions"));
 							});
 					}
 				}
@@ -75,7 +75,7 @@
 					navigationItem -> {
 						navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/view_statistics"));
 						navigationItem.setHref(viewStatisticsURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "statistics"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "statistics"));
 					});
 			}
 		}

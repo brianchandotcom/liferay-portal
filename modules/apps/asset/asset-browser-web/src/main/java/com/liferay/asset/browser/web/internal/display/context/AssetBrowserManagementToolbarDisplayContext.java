@@ -105,14 +105,15 @@ public class AssetBrowserManagementToolbarDisplayContext
 				dropdownItem.setHref(addButtonURL);
 				dropdownItem.setLabel(
 					LanguageUtil.format(
-						request, "add-x", _getAddButtonLabel(), false));
+						httpServletRequest, "add-x", _getAddButtonLabel(),
+						false));
 			}
 		).build();
 	}
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		String scope = ParamUtil.getString(request, "scope");
+		String scope = ParamUtil.getString(httpServletRequest, "scope");
 
 		if (Validator.isNull(scope)) {
 			return null;
@@ -130,7 +131,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "scope"),
+					"%s: %s", LanguageUtil.get(httpServletRequest, "scope"),
 					_getScopeLabel(scope));
 
 				labelItem.setLabel(label);
@@ -149,7 +150,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 					dropdownItem.setHref(
 						getPortletURL(), "scope", "everywhere");
 					dropdownItem.setLabel(
-						LanguageUtil.get(request, "everywhere"));
+						LanguageUtil.get(httpServletRequest, "everywhere"));
 				}
 			).add(
 				dropdownItem -> {
@@ -169,7 +170,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 							getPortletURL(), "scope", "everywhere", "groupId",
 							null);
 						dropdownItem.setLabel(
-							LanguageUtil.get(request, "everywhere"));
+							LanguageUtil.get(httpServletRequest, "everywhere"));
 					});
 
 				for (long groupId : groupIds) {
@@ -226,7 +227,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 
 	@Override
 	protected String getFilterNavigationDropdownItemsLabel() {
-		return LanguageUtil.get(request, "sites-and-libraries");
+		return LanguageUtil.get(httpServletRequest, "sites-and-libraries");
 	}
 
 	@Override
@@ -306,23 +307,24 @@ public class AssetBrowserManagementToolbarDisplayContext
 		Group group = _themeDisplay.getScopeGroup();
 
 		if (group.isSite()) {
-			return LanguageUtil.get(request, "current-site");
+			return LanguageUtil.get(httpServletRequest, "current-site");
 		}
 
 		if (group.isOrganization()) {
-			return LanguageUtil.get(request, "current-organization");
+			return LanguageUtil.get(httpServletRequest, "current-organization");
 		}
 
 		if (group.isDepot()) {
-			return LanguageUtil.get(request, "current-asset-library");
+			return LanguageUtil.get(
+				httpServletRequest, "current-asset-library");
 		}
 
-		return LanguageUtil.get(request, "current-scope");
+		return LanguageUtil.get(httpServletRequest, "current-scope");
 	}
 
 	private String _getScopeLabel(String scope) {
 		if (scope.equals("everywhere")) {
-			return LanguageUtil.get(request, "everywhere");
+			return LanguageUtil.get(httpServletRequest, "everywhere");
 		}
 
 		return _getCurrentScopeLabel();
@@ -330,7 +332,8 @@ public class AssetBrowserManagementToolbarDisplayContext
 
 	private boolean _isEverywhereScopeFilter() {
 		if (Objects.equals(
-				ParamUtil.getString(request, "scope"), "everywhere")) {
+				ParamUtil.getString(httpServletRequest, "scope"),
+				"everywhere")) {
 
 			return true;
 		}

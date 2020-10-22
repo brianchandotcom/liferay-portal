@@ -67,15 +67,17 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "deleteSelectedLayoutPrototypes");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
 	}
 
 	public String getAvailableActions(LayoutPrototype layoutPrototype) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (LayoutPrototypePermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
@@ -108,7 +110,8 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(), "mvcPath",
 					"/edit_layout_prototype.jsp");
-				dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add"));
 			}
 		).build();
 	}
@@ -134,7 +137,8 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 
 				labelItem.setCloseable(true);
 
-				labelItem.setLabel(LanguageUtil.get(request, "active"));
+				labelItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "active"));
 			}
 		).add(
 			() -> (active != null) && !active,
@@ -148,7 +152,8 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 
 				labelItem.setCloseable(true);
 
-				labelItem.setLabel(LanguageUtil.get(request, "inactive"));
+				labelItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "inactive"));
 			}
 		).build();
 	}
@@ -160,8 +165,9 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (PortalPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),

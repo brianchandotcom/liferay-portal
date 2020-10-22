@@ -53,13 +53,13 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 					navigationItem -> {
 						navigationItem.setActive(navigation.equals("announcements"));
 						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "announcements"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "announcements"));
 					});
 				add(
 					navigationItem -> {
 						navigationItem.setActive(navigation.equals("alerts"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "alerts");
-						navigationItem.setLabel(LanguageUtil.get(request, "alerts"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "alerts"));
 					});
 			}
 		}

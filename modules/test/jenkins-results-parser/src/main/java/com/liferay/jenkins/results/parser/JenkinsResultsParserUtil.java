@@ -1402,8 +1402,8 @@ public class JenkinsResultsParserUtil {
 		return Float.parseFloat(matcher.group(1));
 	}
 
-	public static String getJenkinsMasterName(String jenkinSlaveName) {
-		jenkinSlaveName = jenkinSlaveName.replaceAll("([^\\.]+).*", "$1");
+	public static String getJenkinsMasterName(String jenkinsSlaveName) {
+		jenkinsSlaveName = jenkinsSlaveName.replaceAll("([^\\.]+).*", "$1");
 
 		Properties buildProperties = null;
 
@@ -1414,6 +1414,8 @@ public class JenkinsResultsParserUtil {
 			throw new RuntimeException(
 				"Unable to get build properties", ioException);
 		}
+
+		Map<String, List<String>> jenkinsNodeMap = new HashMap<>();
 
 		for (Object propertyName : buildProperties.keySet()) {
 			Matcher jenkinsSlavesPropertyNameMatcher =
@@ -1427,11 +1429,38 @@ public class JenkinsResultsParserUtil {
 				List<String> jenkinsSlaveNames = getSlaves(
 					buildProperties, jenkinsMasterName, null, false);
 
-				if (jenkinsSlaveNames.contains(jenkinSlaveName)) {
+				jenkinsNodeMap.put(jenkinsMasterName, jenkinsSlaveNames);
+
+				if (jenkinsSlaveNames.contains(jenkinsSlaveName)) {
 					return jenkinsMasterName;
 				}
 			}
 		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Unable to get Jenkins master name for slave ");
+		sb.append(jenkinsSlaveName);
+		sb.append(".\n");
+		sb.append("Jenkins Node Map:\n");
+
+		for (Map.Entry<String, List<String>> entry :
+				jenkinsNodeMap.entrySet()) {
+
+			sb.append(entry.getKey());
+			sb.append("\n    ");
+
+			for (String jenkinsNodeName : entry.getValue()) {
+				sb.append(" ");
+				sb.append(jenkinsNodeName);
+			}
+
+			sb.append("\n");
+		}
+
+		NotificationUtil.sendEmail(
+			sb.toString(), "jenkins", "Unable to get Jenkins master name",
+			"peter.yoo@liferay.com");
 
 		return null;
 	}

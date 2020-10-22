@@ -72,7 +72,8 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "addAccountEntryUser");
-				dropdownItem.setLabel(LanguageUtil.get(request, "new-user"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "new-user"));
 			}
 		).build();
 	}
@@ -107,7 +108,7 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 	}
 
 	public boolean isOpenModalOnRedirect() {
-		return ParamUtil.getBoolean(request, "openModalOnRedirect");
+		return ParamUtil.getBoolean(httpServletRequest, "openModalOnRedirect");
 	}
 
 	@Override

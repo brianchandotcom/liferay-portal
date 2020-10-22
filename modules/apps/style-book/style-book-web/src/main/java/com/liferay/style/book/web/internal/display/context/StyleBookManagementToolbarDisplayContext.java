@@ -60,8 +60,9 @@ public class StyleBookManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!StyleBookPermission.contains(
 				themeDisplay.getPermissionChecker(),
@@ -76,7 +77,8 @@ public class StyleBookManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "deleteSelectedStyleBookEntries");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
@@ -84,14 +86,16 @@ public class StyleBookManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "exportSelectedStyleBookEntries");
 				dropdownItem.setIcon("import-export");
-				dropdownItem.setLabel(LanguageUtil.get(request, "export"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "export"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "copySelectedStyleBookEntries");
 				dropdownItem.setIcon("paste");
-				dropdownItem.setLabel(LanguageUtil.get(request, "make-a-copy"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "make-a-copy"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -107,8 +111,9 @@ public class StyleBookManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getComponentContext() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return HashMapBuilder.<String, Object>put(
 			"copyStyleBookEntryURL",
@@ -160,8 +165,10 @@ public class StyleBookManagementToolbarDisplayContext
 					"addStyleBookEntryURL", addStyleBookEntryURL.toString());
 
 				dropdownItem.putData(
-					"title", LanguageUtil.get(request, "add-style-book"));
-				dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					"title",
+					LanguageUtil.get(httpServletRequest, "add-style-book"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add"));
 			}
 		).build();
 	}
@@ -180,8 +187,9 @@ public class StyleBookManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (StyleBookPermission.contains(
 				themeDisplay.getPermissionChecker(),

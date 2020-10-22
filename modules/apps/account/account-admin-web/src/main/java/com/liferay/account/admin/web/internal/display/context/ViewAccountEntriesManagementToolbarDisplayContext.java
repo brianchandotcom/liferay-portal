@@ -97,7 +97,8 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 					deactivateAccountEntriesURL.toString());
 
 				dropdownItem.setIcon("hidden");
-				dropdownItem.setLabel(LanguageUtil.get(request, "deactivate"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "deactivate"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
@@ -127,7 +128,8 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 					activateAccountEntriesURL.toString());
 
 				dropdownItem.setIcon("undo");
-				dropdownItem.setLabel(LanguageUtil.get(request, "activate"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "activate"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
@@ -151,7 +153,8 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 					deleteAccountEntriesURL.toString());
 
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
@@ -164,8 +167,9 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 		List<String> availableActions = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!AccountEntryPermission.contains(
 				themeDisplay.getPermissionChecker(),
@@ -210,7 +214,8 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 					liferayPortletResponse.createRenderURL(),
 					"mvcRenderCommandName", "/account_admin/edit_account_entry",
 					"backURL", currentURLObj.toString());
-				dropdownItem.setLabel(LanguageUtil.get(request, "add-account"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add-account"));
 			}
 		).build();
 	}
@@ -243,8 +248,8 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "status"),
-					LanguageUtil.get(request, getNavigation()));
+					"%s: %s", LanguageUtil.get(httpServletRequest, "status"),
+					LanguageUtil.get(httpServletRequest, getNavigation()));
 
 				labelItem.setLabel(label);
 			}
@@ -260,8 +265,8 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "type"),
-					LanguageUtil.get(request, getType()));
+					"%s: %s", LanguageUtil.get(httpServletRequest, "type"),
+					LanguageUtil.get(httpServletRequest, getType()));
 
 				labelItem.setLabel(label);
 			}
@@ -270,7 +275,7 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 	@Override
 	public String getFilterNavigationDropdownItemsLabel() {
-		return LanguageUtil.get(request, "filter-by-status");
+		return LanguageUtil.get(httpServletRequest, "filter-by-status");
 	}
 
 	@Override
@@ -301,8 +306,9 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return AccountPermission.contains(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
@@ -322,7 +328,7 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 						AccountConstants.ACCOUNT_ENTRY_TYPES)),
 				getPortletURL(), "type", getType()));
 		filterDropdownItemsGroup.setLabel(
-			LanguageUtil.get(request, "filter-by-type"));
+			LanguageUtil.get(httpServletRequest, "filter-by-type"));
 
 		filterDropdownItems.add(1, filterDropdownItemsGroup);
 	}

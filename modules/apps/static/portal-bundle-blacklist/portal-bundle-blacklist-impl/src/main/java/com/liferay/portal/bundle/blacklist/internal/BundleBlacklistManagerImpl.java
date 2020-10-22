@@ -16,6 +16,7 @@ package com.liferay.portal.bundle.blacklist.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bundle.blacklist.BundleBlacklistManager;
+import com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;

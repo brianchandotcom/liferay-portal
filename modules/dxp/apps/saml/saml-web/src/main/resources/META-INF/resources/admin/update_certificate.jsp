@@ -49,7 +49,7 @@ X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebK
 						navigationItem -> {
 							navigationItem.setActive(cmd.equals("replace"));
 							navigationItem.setHref(portletURL.toString());
-							navigationItem.setLabel(LanguageUtil.get(request, "create-certificate"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "create-certificate"));
 						});
 
 					portletURL.setParameter(Constants.CMD, "import");
@@ -58,7 +58,7 @@ X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebK
 						navigationItem -> {
 							navigationItem.setActive(cmd.equals("import"));
 							navigationItem.setHref(portletURL.toString());
-							navigationItem.setLabel(LanguageUtil.get(request, "import-certificate"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "import-certificate"));
 						});
 				}
 			}

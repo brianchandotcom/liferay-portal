@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GRID_OPTIONS_OPTION_REFERENCE_FIELD</td>
+	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//div[contains(@class, 'key-value-editor')] | //div[contains(@class,'form-group') and contains(.//label, '${key_gridField}')]//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'key-value-reference-input')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GRID_RADIO_OPTIONS</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@aria-label, '${key_optionNumber}')]</td>
 	<td></td>

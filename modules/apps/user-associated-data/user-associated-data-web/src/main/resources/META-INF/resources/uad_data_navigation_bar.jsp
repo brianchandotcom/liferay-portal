@@ -45,7 +45,7 @@ baseURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 
 						navigationItem.setActive(active);
 						navigationItem.setHref(reviewDataURL.toString());
-						navigationItem.setLabel(LanguageUtil.get(request, "review-data"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "review-data"));
 					});
 				add(
 					navigationItem -> {
@@ -64,7 +64,7 @@ baseURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 
 						navigationItem.setActive(active);
 						navigationItem.setHref(nonreviewableDataURL.toString());
-						navigationItem.setLabel(LanguageUtil.get(request, "auto-anonymize-data"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "auto-anonymize-data"));
 					});
 			}
 		}

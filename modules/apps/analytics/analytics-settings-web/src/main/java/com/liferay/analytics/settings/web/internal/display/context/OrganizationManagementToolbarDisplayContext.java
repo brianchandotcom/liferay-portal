@@ -126,7 +126,7 @@ public class OrganizationManagementToolbarDisplayContext
 
 	@Override
 	protected String getFilterNavigationDropdownItemsLabel() {
-		return LanguageUtil.get(request, "organizations");
+		return LanguageUtil.get(httpServletRequest, "organizations");
 	}
 
 	@Override

@@ -96,7 +96,8 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 					deleteFragmentCollectionResourcesURL.toString());
 
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -113,7 +114,8 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "addFragmentCollectionResource");
 				dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
-				dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add"));
 			}
 		).build();
 	}
@@ -155,7 +157,7 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 			new FileEntryItemSelectorReturnType());
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(request),
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			liferayPortletResponse.getNamespace() +
 				"uploadFragmentCollectionResource",
 			itemSelectorCriterion);

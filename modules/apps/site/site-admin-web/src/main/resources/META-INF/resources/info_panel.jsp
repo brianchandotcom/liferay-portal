@@ -42,7 +42,7 @@ List<NavigationItem> navigationItems =
 				navigationItem -> {
 					navigationItem.setActive(true);
 					navigationItem.setHref(currentURL);
-					navigationItem.setLabel(LanguageUtil.get(request, "details"));
+					navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "details"));
 				});
 		}
 	};

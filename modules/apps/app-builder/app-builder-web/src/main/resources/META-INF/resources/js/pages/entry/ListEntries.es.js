@@ -54,6 +54,7 @@ export default function ListEntries() {
 	}));
 
 	const portletParams = {
+		backURL: window.location.href,
 		languageId: userLanguageId,
 	};
 
@@ -61,43 +62,28 @@ export default function ListEntries() {
 		return <NoPermissionEntry />;
 	}
 
+	const AddButton = ({symbol}) => (
+		<Button
+			className="nav-btn nav-btn-monospaced"
+			onClick={() => navigateToEditPage(basePortletURL, portletParams)}
+			symbol={symbol}
+			tooltip={Liferay.Language.get('new-entry')}
+		/>
+	);
+
 	return (
 		<Loading isLoading={isLoading}>
 			<ListView
 				actions={actions}
 				addButton={() =>
 					showFormView &&
-					permissions.add && (
-						<Button
-							className="nav-btn nav-btn-monospaced"
-							onClick={() =>
-								navigateToEditPage(
-									basePortletURL,
-									portletParams
-								)
-							}
-							symbol="plus"
-							tooltip={Liferay.Language.get('new-entry')}
-						/>
-					)
+					permissions.add && <AddButton symbol="plus" />
 				}
 				columns={formColumns}
 				emptyState={{
 					button: () =>
 						showFormView &&
-						permissions.add && (
-							<Button
-								displayType="secondary"
-								onClick={() =>
-									navigateToEditPage(
-										basePortletURL,
-										portletParams
-									)
-								}
-							>
-								{Liferay.Language.get('new-entry')}
-							</Button>
-						),
+						permissions.add && <AddButton symbol="plus" />,
 					title: Liferay.Language.get('there-are-no-entries-yet'),
 				}}
 				endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`}

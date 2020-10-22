@@ -20,8 +20,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -31,6 +29,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutDeserializeUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -293,13 +292,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 		ddmForm.addDDMFormField(_fieldSetMap.get(structureId));
 
-		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			_ddmFormSerializer.serialize(
-				DDMFormSerializerSerializeRequest.Builder.newBuilder(
-					ddmForm
-				).build());
-
-		return ddmFormSerializerSerializeResponse.getContent();
+		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 	}
 
 	private void _upgradeDocumentLibraryField(JSONObject jsonObject) {

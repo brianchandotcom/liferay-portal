@@ -126,7 +126,7 @@ public class UserGroupManagementToolbarDisplayContext
 
 	@Override
 	protected String getFilterNavigationDropdownItemsLabel() {
-		return LanguageUtil.get(request, "user-groups");
+		return LanguageUtil.get(httpServletRequest, "user-groups");
 	}
 
 	@Override

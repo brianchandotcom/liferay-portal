@@ -35,7 +35,7 @@ portletURL.setParameter("tabs1", tabs1);
 						navigationItem -> {
 							navigationItem.setActive(tabs1.equals("reports"));
 							navigationItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/admin/view.jsp", "tabs1", "reports");
-							navigationItem.setLabel(LanguageUtil.get(request, "reports"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "reports"));
 						});
 
 					if (hasAddDefinitionPermission) {
@@ -43,7 +43,7 @@ portletURL.setParameter("tabs1", tabs1);
 							navigationItem -> {
 								navigationItem.setActive(tabs1.equals("definitions"));
 								navigationItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/admin/view.jsp", "tabs1", "definitions");
-								navigationItem.setLabel(LanguageUtil.get(request, "definitions"));
+								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "definitions"));
 							});
 					}
 
@@ -52,7 +52,7 @@ portletURL.setParameter("tabs1", tabs1);
 							navigationItem -> {
 								navigationItem.setActive(tabs1.equals("sources"));
 								navigationItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/admin/view.jsp", "tabs1", "sources");
-								navigationItem.setLabel(LanguageUtil.get(request, "sources"));
+								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "sources"));
 							});
 					}
 				}

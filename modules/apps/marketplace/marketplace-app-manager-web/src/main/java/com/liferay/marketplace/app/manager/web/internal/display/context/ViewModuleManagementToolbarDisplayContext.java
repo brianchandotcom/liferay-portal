@@ -56,11 +56,11 @@ public class ViewModuleManagementToolbarDisplayContext
 	}
 
 	public String getApp() {
-		return ParamUtil.getString(request, "app");
+		return ParamUtil.getString(httpServletRequest, "app");
 	}
 
 	public AppDisplay getAppDisplay() {
-		String app = ParamUtil.getString(request, "app");
+		String app = ParamUtil.getString(httpServletRequest, "app");
 
 		AppDisplay appDisplay = null;
 
@@ -73,21 +73,23 @@ public class ViewModuleManagementToolbarDisplayContext
 
 		if (appDisplay == null) {
 			appDisplay = AppDisplayFactoryUtil.getAppDisplay(
-				allBundles, app, request.getLocale());
+				allBundles, app, httpServletRequest.getLocale());
 		}
 
 		return appDisplay;
 	}
 
 	public Bundle getBundle() {
-		String symbolicName = ParamUtil.getString(request, "symbolicName");
-		String version = ParamUtil.getString(request, "version");
+		String symbolicName = ParamUtil.getString(
+			httpServletRequest, "symbolicName");
+		String version = ParamUtil.getString(httpServletRequest, "version");
 
 		return BundleManagerUtil.getBundle(symbolicName, version);
 	}
 
 	public String getPluginType() {
-		return ParamUtil.getString(request, "pluginType", "components");
+		return ParamUtil.getString(
+			httpServletRequest, "pluginType", "components");
 	}
 
 	@Override

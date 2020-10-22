@@ -170,10 +170,17 @@ export default function ViewEntry({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [entryIndex, query]);
 
+	const getBackURL = () => {
+		const urlParams = new URLSearchParams(window.location.hash);
+		const backURL = urlParams.get('backURL') || '../../';
+
+		return backURL;
+	};
+
 	return (
 		<div className="view-entry">
 			<ControlMenu
-				backURL="../../"
+				backURL={getBackURL()}
 				title={Liferay.Language.get('details-view')}
 			/>
 

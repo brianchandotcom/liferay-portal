@@ -25,7 +25,7 @@
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(currentURL.toString());
-						navigationItem.setLabel(LanguageUtil.get(request, "export-templates"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "export-templates"));
 					});
 			}
 		}

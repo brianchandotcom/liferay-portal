@@ -54,7 +54,8 @@ public class ViewAccountGroupAccountEntriesManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "removeAccountGroupAccountEntries");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "remove"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "remove"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
@@ -68,7 +69,7 @@ public class ViewAccountGroupAccountEntriesManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "selectAccountGroupAccountEntries");
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "assign-accounts"));
+					LanguageUtil.get(httpServletRequest, "assign-accounts"));
 			}
 		).build();
 	}

@@ -92,14 +92,14 @@ searchContainer.setResults(results);
 						navigationItem -> {
 							navigationItem.setActive(!mvcRenderCommandName.equals("/blogs/view_not_published_entries"));
 							navigationItem.setHref(portletURL);
-							navigationItem.setLabel(LanguageUtil.get(request, "published"));
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "published"));
 						});
 
 					add(
 						navigationItem -> {
 							navigationItem.setActive(mvcRenderCommandName.equals("/blogs/view_not_published_entries"));
 							navigationItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/blogs/view_not_published_entries");
-							navigationItem.setLabel(LanguageUtil.format(request, "not-published-x", notPublishedEntriesCount, false));
+							navigationItem.setLabel(LanguageUtil.format(httpServletRequest, "not-published-x", notPublishedEntriesCount, false));
 						});
 				}
 			}

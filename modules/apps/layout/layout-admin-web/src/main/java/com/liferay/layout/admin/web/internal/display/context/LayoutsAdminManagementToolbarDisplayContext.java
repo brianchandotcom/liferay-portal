@@ -94,7 +94,8 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 				dropdownItem.setIcon("change");
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "convert-to-content-page"));
+					LanguageUtil.get(
+						httpServletRequest, "convert-to-content-page"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
@@ -113,7 +114,8 @@ public class LayoutsAdminManagementToolbarDisplayContext
 					"deleteLayoutURL", deleteLayoutURL.toString());
 
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -300,20 +302,21 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 		if (layout != null) {
 			return LanguageUtil.format(
-				request, "add-child-collection-page-of-x",
+				httpServletRequest, "add-child-collection-page-of-x",
 				layout.getName(_themeDisplay.getLocale()));
 		}
 
 		if (_isSiteTemplate()) {
 			return LanguageUtil.get(
-				request, "add-site-template-collection-page");
+				httpServletRequest, "add-site-template-collection-page");
 		}
 
 		if (privateLayout) {
-			return LanguageUtil.get(request, "private-collection-page");
+			return LanguageUtil.get(
+				httpServletRequest, "private-collection-page");
 		}
 
-		return LanguageUtil.get(request, "public-collection-page");
+		return LanguageUtil.get(httpServletRequest, "public-collection-page");
 	}
 
 	private String _getLabel(boolean privateLayout) {
@@ -321,19 +324,20 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 		if (layout != null) {
 			return LanguageUtil.format(
-				request, "add-child-page-of-x",
+				httpServletRequest, "add-child-page-of-x",
 				layout.getName(_themeDisplay.getLocale()));
 		}
 
 		if (_isSiteTemplate()) {
-			return LanguageUtil.get(request, "add-site-template-page");
+			return LanguageUtil.get(
+				httpServletRequest, "add-site-template-page");
 		}
 
 		if (privateLayout) {
-			return LanguageUtil.get(request, "private-page");
+			return LanguageUtil.get(httpServletRequest, "private-page");
 		}
 
-		return LanguageUtil.get(request, "public-page");
+		return LanguageUtil.get(httpServletRequest, "public-page");
 	}
 
 	private boolean _isSiteTemplate() {

@@ -84,12 +84,15 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 					getRenderURL(), "mvcRenderCommandName",
 					"editPublishConfiguration", "groupId",
 					String.valueOf(_stagingGroupId), "layoutSetBranchId",
-					ParamUtil.getString(request, "layoutSetBranchId"),
+					ParamUtil.getString(
+						httpServletRequest, "layoutSetBranchId"),
 					"layoutSetBranchName",
-					ParamUtil.getString(request, "layoutSetBranchName"),
+					ParamUtil.getString(
+						httpServletRequest, "layoutSetBranchName"),
 					"privateLayout", Boolean.FALSE.toString());
 
-				dropdownItem.setLabel(LanguageUtil.get(request, "new"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "new"));
 			}
 		).build();
 	}

@@ -90,7 +90,8 @@ public class BlogEntriesManagementToolbarDisplayContext
 					label = "move-to-recycle-bin";
 				}
 
-				dropdownItem.setLabel(LanguageUtil.get(request, label));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, label));
 
 				dropdownItem.setQuickAction(true);
 			}
@@ -147,7 +148,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 					"mvcRenderCommandName", "/blogs/edit_entry", "redirect",
 					currentURLObj.toString());
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "add-blog-entry"));
+					LanguageUtil.get(httpServletRequest, "add-blog-entry"));
 			}
 		).build();
 	}
@@ -176,7 +177,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 				User user = _themeDisplay.getUser();
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "owner"),
+					"%s: %s", LanguageUtil.get(httpServletRequest, "owner"),
 					user.getFullName());
 
 				labelItem.setLabel(label);
@@ -191,7 +192,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 		searchURL.setParameter("mvcRenderCommandName", "/blogs/view");
 
 		String navigation = ParamUtil.getString(
-			request, "navigation", "entries");
+			httpServletRequest, "navigation", "entries");
 
 		searchURL.setParameter("navigation", navigation);
 
@@ -252,7 +253,8 @@ public class BlogEntriesManagementToolbarDisplayContext
 					Objects.equals(getOrderByCol(), "title"));
 				dropdownItem.setHref(
 					_getCurrentSortingURL(), "orderByCol", "title");
-				dropdownItem.setLabel(LanguageUtil.get(request, "title"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "title"));
 			}
 		).add(
 			dropdownItem -> {
@@ -261,7 +263,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					_getCurrentSortingURL(), "orderByCol", "display-date");
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "display-date"));
+					LanguageUtil.get(httpServletRequest, "display-date"));
 			}
 		).build();
 	}
@@ -273,7 +275,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 
 		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
-		String keywords = ParamUtil.getString(request, "keywords");
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			sortingURL.setParameter("keywords", keywords);

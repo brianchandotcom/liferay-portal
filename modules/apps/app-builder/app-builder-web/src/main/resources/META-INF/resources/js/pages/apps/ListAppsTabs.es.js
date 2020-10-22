@@ -12,8 +12,7 @@
  * details.
  */
 
-import React, {useContext} from 'react';
-import {Redirect} from 'react-router-dom';
+import React, {useContext, useEffect} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
@@ -22,13 +21,15 @@ import useLazy from '../../hooks/useLazy.es';
 
 export default (props) => {
 	const {appsTabs, appsTabsKeys} = useContext(AppContext);
-	const {tab} = props.match.params;
+	const {tab = appsTabsKeys[0]} = props.match.params;
 
-	if (!tab || !appsTabsKeys.includes(tab)) {
-		const initialTabKey = appsTabsKeys[0] || 'standard';
+	useEffect(() => {
+		if (props.history.location.pathname === '/') {
+			props.history.replace(`${tab}`);
+		}
 
-		return <Redirect to={`/${initialTabKey}`} />;
-	}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const {listEntryPoint, ...otherProps} = appsTabs[tab];
 	const navTabs = Object.values(appsTabs).map(({label, scope}) => ({

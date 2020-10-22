@@ -1137,21 +1137,21 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		final Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		if (DBPartitionUtil.removeDBPartition(companyId)) {
-			return company;
-		}
-
 		preunregisterCompany(company);
 
 		companyPersistence.remove(company);
 
+		companyInfoPersistence.remove(company.getCompanyInfo());
+
+		if (DBPartitionUtil.removeDBPartition(companyId)) {
+			_deletePortalInstance(company);
+
+			return company;
+		}
+
 		// Account
 
 		accountLocalService.deleteAccount(company.getAccountId());
-
-		// Company info
-
-		companyInfoPersistence.remove(company.getCompanyInfo());
 
 		// Expando
 
@@ -1254,16 +1254,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		portalPreferencesLocalService.deletePortalPreferences(
 			portalPreferences);
 
-		// Portlet
-
-		List<Portlet> portlets = portletPersistence.findByCompanyId(companyId);
-
-		for (Portlet portlet : portlets) {
-			portletLocalService.deletePortlet(portlet.getId());
-		}
-
-		portletLocalService.removeCompanyPortletsPool(companyId);
-
 		// User
 
 		ActionableDynamicQuery userActionableDynamicQuery =
@@ -1292,13 +1282,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		roleActionableDynamicQuery.performActions();
 
-		// Virtual host
-
-		VirtualHost companyVirtualHost =
-			virtualHostLocalService.fetchVirtualHost(companyId, 0);
-
-		virtualHostLocalService.deleteVirtualHost(companyVirtualHost);
-
 		// System event
 
 		DeleteSystemEventActionableDynamicQuery
@@ -1308,22 +1291,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		deleteSystemEventActionableDynamicQuery.performActions();
 
-		// Portal instance
-
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				PortalInstances.removeCompany(companyId);
-
-				unregisterCompany(company);
-
-				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
+		_deletePortalInstance(company);
 
 		return company;
 	}
@@ -1968,6 +1936,44 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			companyPersistence.clearCache(company);
 		}
+	}
+
+	private void _deletePortalInstance(Company company) throws PortalException {
+
+		// Portlet
+
+		List<Portlet> portlets = portletPersistence.findByCompanyId(
+			company.getCompanyId());
+
+		for (Portlet portlet : portlets) {
+			portletLocalService.deletePortlet(portlet.getId());
+		}
+
+		portletLocalService.removeCompanyPortletsPool(company.getCompanyId());
+
+		// Virtual host
+
+		VirtualHost companyVirtualHost =
+			virtualHostLocalService.fetchVirtualHost(company.getCompanyId(), 0);
+
+		virtualHostLocalService.deleteVirtualHost(companyVirtualHost);
+
+		// Portal instance
+
+		Callable<Void> callable = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				PortalInstances.removeCompany(company.getCompanyId());
+
+				unregisterCompany(company);
+
+				return null;
+			}
+
+		};
+
+		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
 	private static final String _DEFAULT_VIRTUAL_HOST = "localhost";

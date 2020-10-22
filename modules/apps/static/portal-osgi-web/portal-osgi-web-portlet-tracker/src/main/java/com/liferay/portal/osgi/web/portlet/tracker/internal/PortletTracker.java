@@ -1332,7 +1332,7 @@ public class PortletTracker
 
 		try {
 			ResourceActionsUtil.read(
-				null, classLoader,
+				classLoader,
 				StringUtil.split(
 					properties.getProperty(
 						PropsKeys.RESOURCE_ACTIONS_CONFIGS)));

@@ -56,11 +56,11 @@ public class ViewModulesManagementToolbarDisplayContext
 	}
 
 	public String getApp() {
-		return ParamUtil.getString(request, "app");
+		return ParamUtil.getString(httpServletRequest, "app");
 	}
 
 	public AppDisplay getAppDisplay() {
-		String app = ParamUtil.getString(request, "app");
+		String app = ParamUtil.getString(httpServletRequest, "app");
 
 		AppDisplay appDisplay = null;
 
@@ -73,7 +73,7 @@ public class ViewModulesManagementToolbarDisplayContext
 
 		if (appDisplay == null) {
 			appDisplay = AppDisplayFactoryUtil.getAppDisplay(
-				allBundles, app, request.getLocale());
+				allBundles, app, httpServletRequest.getLocale());
 		}
 
 		return appDisplay;
@@ -84,13 +84,14 @@ public class ViewModulesManagementToolbarDisplayContext
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(getStatusDropdownItems());
-				dropdownGroupItem.setLabel(LanguageUtil.get(request, "status"));
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "status"));
 			}
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(request, "order-by"));
+					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
 		).build();
 	}

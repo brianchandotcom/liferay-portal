@@ -58,7 +58,7 @@ public class RedirectManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -68,7 +68,8 @@ public class RedirectManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedRedirectEntries");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -140,7 +141,8 @@ public class RedirectManagementToolbarDisplayContext
 
 					dropdownItem.setHref(editRedirectEntryURL);
 
-					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, "add"));
 				}
 			).build();
 		}

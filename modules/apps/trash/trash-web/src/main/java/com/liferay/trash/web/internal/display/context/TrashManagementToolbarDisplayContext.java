@@ -69,14 +69,16 @@ public class TrashManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedEntries");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "restoreSelectedEntries");
 				dropdownItem.setIcon("restore");
-				dropdownItem.setLabel(LanguageUtil.get(request, "restore"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "restore"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -103,8 +105,9 @@ public class TrashManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getComponentContext() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletURL restoreEntriesURL = liferayPortletResponse.createActionURL(
 			TrashPortletKeys.TRASH);
@@ -131,8 +134,9 @@ public class TrashManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return LabelItemListBuilder.add(
 			() ->
@@ -179,8 +183,9 @@ public class TrashManagementToolbarDisplayContext
 
 	@Override
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return new DropdownItemList() {
 			{
@@ -190,7 +195,8 @@ public class TrashManagementToolbarDisplayContext
 							Objects.equals(getNavigation(), "all"));
 						dropdownItem.setHref(
 							getPortletURL(), "navigation", "all");
-						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+						dropdownItem.setLabel(
+							LanguageUtil.get(httpServletRequest, "all"));
 					});
 
 				for (TrashHandler trashHandler :

@@ -56,15 +56,17 @@ public class InheritedFragmentManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData(
 					"action", "exportFragmentCompositionsAndFragmentEntries");
 				dropdownItem.setIcon("import-export");
-				dropdownItem.setLabel(LanguageUtil.get(request, "export"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "export"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
@@ -75,7 +77,8 @@ public class InheritedFragmentManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "copyToSelectedFragmentEntries");
 				dropdownItem.setIcon("paste");
-				dropdownItem.setLabel(LanguageUtil.get(request, "copy-to"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "copy-to"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -86,8 +89,9 @@ public class InheritedFragmentManagementToolbarDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"copyFragmentEntryURL",
 			() -> {
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				PortletURL copyFragmentEntryURL =
 					liferayPortletResponse.createActionURL();

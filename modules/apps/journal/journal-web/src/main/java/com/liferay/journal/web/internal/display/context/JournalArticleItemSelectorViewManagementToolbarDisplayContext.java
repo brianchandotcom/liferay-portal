@@ -88,7 +88,8 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 							dropdownItem.setHref(
 								getPortletURL(), "scope", "everywhere");
 							dropdownItem.setLabel(
-								LanguageUtil.get(request, "everywhere"));
+								LanguageUtil.get(
+									httpServletRequest, "everywhere"));
 						}
 					).add(
 						dropdownItem -> {
@@ -99,7 +100,7 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 						}
 					).build());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(request, "filter-by-location"));
+					LanguageUtil.get(httpServletRequest, "filter-by-location"));
 			}
 		).build();
 
@@ -110,7 +111,7 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		String scope = ParamUtil.getString(request, "scope");
+		String scope = ParamUtil.getString(httpServletRequest, "scope");
 
 		if (Validator.isNull(scope)) {
 			return null;
@@ -128,7 +129,7 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 				labelItem.setCloseable(true);
 
 				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "scope"),
+					"%s: %s", LanguageUtil.get(httpServletRequest, "scope"),
 					_getScopeLabel(scope));
 
 				labelItem.setLabel(label);
@@ -224,23 +225,24 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 		Group group = _themeDisplay.getScopeGroup();
 
 		if (group.isSite()) {
-			return LanguageUtil.get(request, "current-site");
+			return LanguageUtil.get(httpServletRequest, "current-site");
 		}
 
 		if (group.isOrganization()) {
-			return LanguageUtil.get(request, "current-organization");
+			return LanguageUtil.get(httpServletRequest, "current-organization");
 		}
 
 		if (group.isDepot()) {
-			return LanguageUtil.get(request, "current-asset-library");
+			return LanguageUtil.get(
+				httpServletRequest, "current-asset-library");
 		}
 
-		return LanguageUtil.get(request, "current-scope");
+		return LanguageUtil.get(httpServletRequest, "current-scope");
 	}
 
 	private String _getScopeLabel(String scope) {
 		if (scope.equals("everywhere")) {
-			return LanguageUtil.get(request, "everywhere");
+			return LanguageUtil.get(httpServletRequest, "everywhere");
 		}
 
 		return _getCurrentScopeLabel();
@@ -248,7 +250,8 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 
 	private boolean _isEverywhereScopeFilter() {
 		if (Objects.equals(
-				ParamUtil.getString(request, "scope"), "everywhere")) {
+				ParamUtil.getString(httpServletRequest, "scope"),
+				"everywhere")) {
 
 			return true;
 		}

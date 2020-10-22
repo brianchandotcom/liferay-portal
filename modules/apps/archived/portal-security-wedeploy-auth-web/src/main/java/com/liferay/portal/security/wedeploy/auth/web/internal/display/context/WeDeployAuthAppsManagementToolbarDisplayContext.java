@@ -66,7 +66,7 @@ public class WeDeployAuthAppsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setHref(editWeDeployAuthAppURL);
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "add-wedeploy-app"));
+					LanguageUtil.get(httpServletRequest, "add-wedeploy-app"));
 			}
 		).build();
 	}

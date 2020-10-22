@@ -30,8 +30,8 @@ portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
 			{
 				addDropdownItem(
 					dropdownItem -> {
-						dropdownItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/portal_instances/edit_instance", "redirect", PortalUtil.getCurrentURL(request));
-						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+						dropdownItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/portal_instances/edit_instance", "redirect", PortalUtil.getCurrentURL(httpServletRequest));
+						dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, "add"));
 					});
 			}
 		}

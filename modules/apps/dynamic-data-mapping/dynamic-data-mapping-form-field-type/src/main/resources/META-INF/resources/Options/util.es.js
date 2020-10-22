@@ -81,13 +81,16 @@ export const dedupValue = (
 	fields,
 	value,
 	id,
-	generateOptionValueUsingOptionLabel
+	generateOptionValueUsingOptionLabel,
+	propertyName
 ) => {
 	if (generateOptionValueUsingOptionLabel) {
 		let counter = 0;
 
 		const recursive = (fields, currentValue) => {
-			const field = fields.find((field) => field.value === currentValue);
+			const field = fields.find(
+				(field) => field[propertyName] === currentValue
+			);
 
 			if (field && field.id !== id) {
 				counter += 1;
@@ -104,7 +107,9 @@ export const dedupValue = (
 	}
 	else {
 		const recursive = (fields, currentValue) => {
-			const field = fields.find((field) => field.value === currentValue);
+			const field = fields.find(
+				(field) => field[propertyName] === currentValue
+			);
 
 			if (field && field.id !== id) {
 				recursive(fields, getDefaultFieldName(true));
@@ -144,11 +149,12 @@ export const getDefaultOptionValue = (
 export const normalizeValue = (
 	fields,
 	currentField,
-	generateOptionValueUsingOptionLabel
+	generateOptionValueUsingOptionLabel,
+	propertyName
 ) => {
-	const {label, value: prevValue} = currentField;
-	let value = prevValue
-		? prevValue
+	const {label} = currentField;
+	let value = currentField[propertyName]
+		? currentField[propertyName]
 		: getDefaultOptionValue(generateOptionValueUsingOptionLabel, label);
 
 	if (!value) {
@@ -159,7 +165,8 @@ export const normalizeValue = (
 		fields,
 		value,
 		currentField.id,
-		generateOptionValueUsingOptionLabel
+		generateOptionValueUsingOptionLabel,
+		propertyName
 	);
 
 	return normalizeFieldName(value);
@@ -172,10 +179,17 @@ export const normalizeFields = (
 	return fields.map((field) => {
 		return {
 			...field,
+			reference: normalizeValue(
+				fields,
+				field,
+				generateOptionValueUsingOptionLabel,
+				'reference'
+			),
 			value: normalizeValue(
 				fields,
 				field,
-				generateOptionValueUsingOptionLabel
+				generateOptionValueUsingOptionLabel,
+				'value'
 			),
 		};
 	});

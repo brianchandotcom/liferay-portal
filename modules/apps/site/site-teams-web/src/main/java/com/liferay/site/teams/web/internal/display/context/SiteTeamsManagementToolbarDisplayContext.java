@@ -60,15 +60,17 @@ public class SiteTeamsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedTeams");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
 	}
 
 	public String getAvailableActions(Team team) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (TeamPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), team, ActionKeys.DELETE)) {
@@ -100,7 +102,8 @@ public class SiteTeamsManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(), "mvcPath",
 					"/edit_team.jsp");
-				dropdownItem.setLabel(LanguageUtil.get(request, "add-team"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add-team"));
 			}
 		).build();
 	}
@@ -124,8 +127,9 @@ public class SiteTeamsManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			if (GroupPermissionUtil.contains(

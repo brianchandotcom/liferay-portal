@@ -66,14 +66,16 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 					StringBundler.concat(
 						"javascript:", getNamespace(),
 						"doAnonymizeMultiple();"));
-				dropdownItem.setLabel(LanguageUtil.get(request, "anonymize"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "anonymize"));
 			}
 		).add(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					StringBundler.concat(
 						"javascript:", getNamespace(), "doDeleteMultiple();"));
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 			}
 		).build();
 	}
@@ -150,7 +152,8 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 		};
 
 		for (String parameterName : parameterNames) {
-			String value = ParamUtil.getString(request, parameterName);
+			String value = ParamUtil.getString(
+				httpServletRequest, parameterName);
 
 			if (Validator.isNotNull(value)) {
 				portletURL.setParameter(parameterName, (String)null);

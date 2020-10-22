@@ -29,7 +29,7 @@ if (group != null) {
 
 	portletDisplay.setURLBack(backURL.toString());
 
-	renderResponse.setTitle(HtmlUtil.escape(group.getDescriptiveName(locale)));
+	renderResponse.setTitle(group.getDescriptiveName(locale));
 }
 %>
 

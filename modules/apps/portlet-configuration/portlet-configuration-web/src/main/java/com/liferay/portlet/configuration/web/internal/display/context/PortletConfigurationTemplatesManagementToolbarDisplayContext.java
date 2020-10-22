@@ -50,7 +50,8 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteArchivedSettings");
 				dropdownItem.setIcon("trash");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();

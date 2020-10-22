@@ -68,7 +68,8 @@ public class AssetCategoriesManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedCategories");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -131,7 +132,8 @@ public class AssetCategoriesManagementToolbarDisplayContext
 					label = "add-subcategory";
 				}
 
-				dropdownItem.setLabel(LanguageUtil.get(request, label));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, label));
 			}
 		).build();
 	}
@@ -165,8 +167,9 @@ public class AssetCategoriesManagementToolbarDisplayContext
 
 				labelItem.setCloseable(true);
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				labelItem.setLabel(category.getTitle(themeDisplay.getLocale()));
 			}
@@ -179,7 +182,8 @@ public class AssetCategoriesManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setActive(_isNavigationAll());
 				dropdownItem.setHref(getPortletURL(), "navigation", "all");
-				dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "all"));
 			}
 		).add(
 			_assetCategoriesDisplayContext::isFlattenedNavigationAllowed,
@@ -190,7 +194,8 @@ public class AssetCategoriesManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"viewCategoriesURL", _getViewCategoriesURL());
 				dropdownItem.setActive(_isNavigationCategory());
-				dropdownItem.setLabel(LanguageUtil.get(request, "category"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "category"));
 			}
 		).build();
 	}
@@ -232,7 +237,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 
 	private String _getCategoriesSelectorURL() throws Exception {
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			request, AssetCategory.class.getName(),
+			httpServletRequest, AssetCategory.class.getName(),
 			PortletProvider.Action.BROWSE);
 
 		portletURL.setParameter(

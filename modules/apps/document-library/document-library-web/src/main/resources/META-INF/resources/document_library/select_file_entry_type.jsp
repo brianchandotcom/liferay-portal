@@ -35,7 +35,7 @@ portletURL.setParameter("eventName", eventName);
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setLabel(LanguageUtil.get(request, "document-types"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "document-types"));
 					});
 			}
 		}

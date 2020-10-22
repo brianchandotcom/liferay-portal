@@ -61,7 +61,8 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteUserGroups");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -89,7 +90,7 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 					dropdownItem.putData("action", "selectUserGroup");
 
 					ThemeDisplay themeDisplay =
-						(ThemeDisplay)request.getAttribute(
+						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
 					PortletURL selectUserGroupURL =
@@ -111,13 +112,14 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 						"selectUserGroupURL", selectUserGroupURL.toString());
 
 					String title = LanguageUtil.format(
-						request, "add-new-user-group-to-x",
+						httpServletRequest, "add-new-user-group-to-x",
 						_editSiteTeamAssignmentsUserGroupsDisplayContext.
 							getTeamName());
 
 					dropdownItem.putData("title", title);
 
-					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, "add"));
 				}
 			).build();
 		}

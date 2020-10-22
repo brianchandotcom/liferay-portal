@@ -120,7 +120,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(_getFilterDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(request, "filter-by") +
+					LanguageUtil.get(httpServletRequest, "filter-by") +
 						StringPool.TRIPLE_PERIOD);
 			}
 		).addGroup(
@@ -128,14 +128,14 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				dropdownGroupItem.setDropdownItems(
 					_getFilterAuthorDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(request, "filter-by-author"));
+					LanguageUtil.get(httpServletRequest, "filter-by-author"));
 			}
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					_getFilterStatusDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(request, "filter-by-status"));
+					LanguageUtil.get(httpServletRequest, "filter-by-status"));
 			}
 		).addGroup(
 			dropdownGroupItem -> {
@@ -178,7 +178,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
 						StringBundler.concat(
-							LanguageUtil.get(request, "category"),
+							LanguageUtil.get(httpServletRequest, "category"),
 							StringPool.COLON,
 							Optional.ofNullable(
 								_assetCategoryLocalService.fetchAssetCategory(
@@ -205,8 +205,10 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
-					LanguageUtil.get(request, "site-or-asset-library") + ": " +
-						_getScopeLabel(scopeId));
+					StringBundler.concat(
+						LanguageUtil.get(
+							httpServletRequest, "site-or-asset-library"),
+						": ", _getScopeLabel(scopeId)));
 			});
 
 		List<? extends ContentDashboardItemType> contentDashboardItemTypes =
@@ -252,7 +254,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
 						StringBundler.concat(
-							LanguageUtil.get(request, "subtype"), ": ",
+							LanguageUtil.get(httpServletRequest, "subtype"),
+							": ",
 							contentDashboardItemType.getFullLabel(_locale)));
 				});
 		}
@@ -285,10 +288,10 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
 						StringBundler.concat(
-							LanguageUtil.get(request, "author"),
+							LanguageUtil.get(httpServletRequest, "author"),
 							StringPool.COLON,
 							LanguageUtil.get(
-								request,
+								httpServletRequest,
 								Optional.ofNullable(
 									_userLocalService.fetchUser(authorId)
 								).map(
@@ -313,7 +316,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
-					LanguageUtil.get(request, "status") + ": " +
+					LanguageUtil.get(httpServletRequest, "status") + ": " +
 						_getStatusLabel(status));
 			});
 
@@ -343,8 +346,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
 						StringBundler.concat(
-							LanguageUtil.get(request, "tag"), StringPool.COLON,
-							assetTagId));
+							LanguageUtil.get(httpServletRequest, "tag"),
+							StringPool.COLON, assetTagId));
 				});
 		}
 
@@ -528,7 +531,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 				dropdownItem.setHref(portletURL);
 
-				dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "all"));
 
 				return dropdownItem;
 			},
@@ -545,7 +549,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					getPortletURL(), "authorIds",
 					_contentDashboardAdminDisplayContext.getUserId());
-				dropdownItem.setLabel(LanguageUtil.get(request, "me"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "me"));
 
 				return dropdownItem;
 			},
@@ -562,7 +567,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "selectAuthor");
 				dropdownItem.putData(
-					"dialogTitle", LanguageUtil.get(request, "select-author"));
+					"dialogTitle",
+					LanguageUtil.get(httpServletRequest, "select-author"));
 
 				PortletURL portletURL = getPortletURL();
 
@@ -576,7 +582,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						_contentDashboardAdminDisplayContext.
 							getAuthorItemSelectorURL()));
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "author") +
+					LanguageUtil.get(httpServletRequest, "author") +
 						StringPool.TRIPLE_PERIOD);
 
 				return dropdownItem;
@@ -596,7 +602,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				dropdownItem.putData("action", "selectAssetCategory");
 				dropdownItem.putData(
 					"dialogTitle",
-					LanguageUtil.get(request, "select-categories"));
+					LanguageUtil.get(httpServletRequest, "select-categories"));
 
 				PortletURL portletURL = getPortletURL();
 
@@ -608,7 +614,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					"selectAssetCategoryURL",
 					String.valueOf(_getAssetCategorySelectorURL()));
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "categories") +
+					LanguageUtil.get(httpServletRequest, "categories") +
 						StringPool.TRIPLE_PERIOD);
 
 				return dropdownItem;
@@ -624,7 +630,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				dropdownItem.putData("action", "selectScope");
 				dropdownItem.putData(
 					"dialogTitle",
-					LanguageUtil.get(request, "select-site-or-asset-library"));
+					LanguageUtil.get(
+						httpServletRequest, "select-site-or-asset-library"));
 
 				PortletURL portletURL = getPortletURL();
 
@@ -638,9 +645,10 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						_contentDashboardAdminDisplayContext.
 							getScopeIdItemSelectorURL()));
 
-				dropdownItem.setLabel(
-					LanguageUtil.get(request, "site-or-asset-library") +
-						StringPool.TRIPLE_PERIOD);
+				String label = LanguageUtil.get(
+					httpServletRequest, "site-or-asset-library");
+
+				dropdownItem.setLabel(label + StringPool.TRIPLE_PERIOD);
 
 				return dropdownItem;
 			},
@@ -658,7 +666,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "selectContentDashboardItemType");
 				dropdownItem.putData(
-					"dialogTitle", LanguageUtil.get(request, "select-subtype"));
+					"dialogTitle",
+					LanguageUtil.get(httpServletRequest, "select-subtype"));
 
 				PortletURL portletURL = getPortletURL();
 
@@ -674,7 +683,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 							getContentDashboardItemTypeItemSelectorURL()));
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "subtype") +
+					LanguageUtil.get(httpServletRequest, "subtype") +
 						StringPool.TRIPLE_PERIOD);
 
 				return dropdownItem;
@@ -684,7 +693,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "selectAssetTag");
 				dropdownItem.putData(
-					"dialogTitle", LanguageUtil.get(request, "select-tags"));
+					"dialogTitle",
+					LanguageUtil.get(httpServletRequest, "select-tags"));
 
 				PortletURL portletURL = getPortletURL();
 
@@ -699,7 +709,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						_contentDashboardAdminDisplayContext.
 							getAssetCategoryIds()));
 				dropdownItem.setLabel(
-					LanguageUtil.get(request, "tags") +
+					LanguageUtil.get(httpServletRequest, "tags") +
 						StringPool.TRIPLE_PERIOD);
 
 				return dropdownItem;
@@ -756,7 +766,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private String _getStatusLabel(int status) {
 		String label = WorkflowConstants.getStatusLabel(status);
 
-		return LanguageUtil.get(request, label);
+		return LanguageUtil.get(httpServletRequest, label);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

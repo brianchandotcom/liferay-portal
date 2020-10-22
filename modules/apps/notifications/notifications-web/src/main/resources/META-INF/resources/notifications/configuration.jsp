@@ -23,7 +23,7 @@
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setLabel(LanguageUtil.get(request, "notifications"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "notifications"));
 					});
 			}
 		}

@@ -69,14 +69,16 @@ public class AssetTagsManagementToolbarDisplayContext
 				dropdownItem.putData("action", "mergeTags");
 				dropdownItem.putData("mergeTagsURL", mergeTagsURL.toString());
 				dropdownItem.setIcon("merge");
-				dropdownItem.setLabel(LanguageUtil.get(request, "merge"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "merge"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteTags");
 				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -101,7 +103,8 @@ public class AssetTagsManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(), "mvcPath",
 					"/edit_tag.jsp");
-				dropdownItem.setLabel(LanguageUtil.get(request, "add-tag"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add-tag"));
 			}
 		).build();
 	}
@@ -125,8 +128,9 @@ public class AssetTagsManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (AssetTagsPermission.contains(
 				themeDisplay.getPermissionChecker(),

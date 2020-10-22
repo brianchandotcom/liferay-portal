@@ -665,7 +665,7 @@ definition {
 	macro getSiteId {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		AssertElementPresent(locator1 = "SitesEditSite#SITE_ID");
 
@@ -835,7 +835,7 @@ definition {
 	macro manageMembershipOptions {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		Pause(locator1 = "5000");
 

@@ -57,7 +57,7 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 	public String getCategory() {
 		if (Validator.isNull(_category)) {
 			_category = ParamUtil.getString(
-				request, "category", "all-categories");
+				httpServletRequest, "category", "all-categories");
 		}
 
 		return _category;
@@ -78,7 +78,7 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 				CharPool.DASH);
 
 			String translatedCategory = LanguageUtil.get(
-				request, kebabCaseCategory, category);
+				httpServletRequest, kebabCaseCategory, category);
 
 			categoriesMap.put(translatedCategory, category);
 		}
@@ -93,7 +93,7 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 
 	@Override
 	public String getOrderByCol() {
-		return ParamUtil.getString(request, "orderByCol", "title");
+		return ParamUtil.getString(httpServletRequest, "orderByCol", "title");
 	}
 
 	@Override
@@ -113,7 +113,8 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 
 	public String getState() {
 		if (Validator.isNull(_state)) {
-			_state = ParamUtil.getString(request, "state", "all-statuses");
+			_state = ParamUtil.getString(
+				httpServletRequest, "state", "all-statuses");
 		}
 
 		return _state;

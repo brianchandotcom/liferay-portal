@@ -37,21 +37,21 @@ boolean showEditPluginHREF = true;
 					navigationItem -> {
 						navigationItem.setActive(tabs2.equals("portlets"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "tabs2", "portlets");
-						navigationItem.setLabel(LanguageUtil.get(request, "portlets"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "portlets"));
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs2.equals("themes"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "tabs2", "themes");
-						navigationItem.setLabel(LanguageUtil.get(request, "themes"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "themes"));
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs2.equals("layout-templates"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "tabs2", "layout-templates");
-						navigationItem.setLabel(LanguageUtil.get(request, "layout-templates"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "layout-templates"));
 					});
 			}
 		}

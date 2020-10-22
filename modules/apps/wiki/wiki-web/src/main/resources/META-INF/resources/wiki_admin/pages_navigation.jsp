@@ -25,7 +25,7 @@
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/wiki/view_pages");
-						navigationItem.setLabel(LanguageUtil.get(request, "pages"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "pages"));
 					});
 			}
 		}

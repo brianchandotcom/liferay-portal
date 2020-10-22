@@ -137,7 +137,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 													dropdownItems='<%=
 														new JSPDropdownItemList(pageContext) {
 															{
-																ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+																ThemeDisplay themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 																Map<String, Object> data = HashMapBuilder.<String, Object>put(
 																	"analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId())
@@ -147,7 +147,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 																	dropdownItem -> {
 																		dropdownItem.setData(data);
 																		dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true));
-																		dropdownItem.setLabel(LanguageUtil.get(request, "this-version"));
+																		dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, "this-version"));
 																		dropdownItem.setSeparator(true);
 																	});
 
@@ -166,7 +166,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 																					}
 																				}
 																			});
-																		dropdownGroupItem.setLabel(LanguageUtil.get(request, "convert-to"));
+																		dropdownGroupItem.setLabel(LanguageUtil.get(httpServletRequest, "convert-to"));
 																	});
 															}
 														}

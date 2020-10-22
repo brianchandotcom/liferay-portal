@@ -15,6 +15,7 @@
 package com.liferay.app.builder.rest.resource.v1_0.test;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
+import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.rest.client.dto.v1_0.App;
 import com.liferay.app.builder.rest.client.dto.v1_0.AppDeployment;
 import com.liferay.app.builder.rest.client.pagination.Page;
@@ -24,6 +25,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.dynamic.data.lists.constants.DDLRecordSetConstants;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -34,7 +36,10 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureLayoutTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -42,6 +47,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.InputStream;
@@ -79,6 +86,10 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 			StringPool.BLANK);
 
 		_irrelevantDDMStructure = _addDDMStructure(irrelevantGroup);
+
+		_workflowDefinition =
+			_workflowDefinitionManager.getLatestWorkflowDefinition(
+				testCompany.getCompanyId(), "Single Approver");
 	}
 
 	@Override
@@ -185,6 +196,43 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 	@Override
 	@Test
+	public void testPutApp() throws Exception {
+		super.testPutApp();
+
+		App app = testPutApp_addApp();
+
+		Assert.assertNotNull(app.getWorkflowDefinitionName());
+		Assert.assertNotNull(app.getWorkflowDefinitionVersion());
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+				testCompany.getCompanyId(), 0,
+				ResourceActionsUtil.getCompositeModelName(
+					AppBuilderApp.class.getName(), DDLRecord.class.getName()),
+				app.getId(), 0);
+
+		Assert.assertNotNull(workflowDefinitionLink);
+
+		app.setWorkflowDefinitionName(() -> null);
+		app.setWorkflowDefinitionVersion(() -> null);
+
+		app = appResource.putApp(app.getId(), app);
+
+		Assert.assertNull(app.getWorkflowDefinitionName());
+		Assert.assertNull(app.getWorkflowDefinitionVersion());
+
+		workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+				testCompany.getCompanyId(), 0,
+				ResourceActionsUtil.getCompositeModelName(
+					AppBuilderApp.class.getName(), DDLRecord.class.getName()),
+				app.getId(), 0);
+
+		Assert.assertNull(workflowDefinitionLink);
+	}
+
+	@Override
+	@Test
 	public void testPutAppDeploy() throws Exception {
 		App postApp = testPutApp_addApp();
 
@@ -211,7 +259,8 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"dataDefinitionId", "dataDefinitionName", "dataLayoutId",
-			"dataListViewId", "userId"
+			"dataListViewId", "userId", "workflowDefinitionName",
+			"workflowDefinitionVersion"
 		};
 	}
 
@@ -251,6 +300,8 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 				scope = AppBuilderAppConstants.SCOPE_STANDARD;
 				siteId = _ddmStructure.getGroupId();
 				userId = testGroup.getCreatorUserId();
+				workflowDefinitionName = _workflowDefinition.getName();
+				workflowDefinitionVersion = _workflowDefinition.getVersion();
 			}
 		};
 	}
@@ -382,5 +433,13 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 	private DEDataListViewLocalService _deDataListViewLocalService;
 
 	private DDMStructure _irrelevantDDMStructure;
+	private WorkflowDefinition _workflowDefinition;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
+	@Inject
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

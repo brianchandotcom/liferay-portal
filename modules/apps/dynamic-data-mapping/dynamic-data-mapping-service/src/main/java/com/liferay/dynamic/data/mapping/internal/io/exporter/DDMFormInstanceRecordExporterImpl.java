@@ -123,7 +123,8 @@ public class DDMFormInstanceRecordExporterImpl
 				LocalizedValue localizedValue = field.getLabel();
 
 				ddmFormFieldsLabel.put(
-					field.getName(), localizedValue.getString(locale));
+					field.getFieldReference(),
+					localizedValue.getString(locale));
 			});
 
 		ddmFormFieldsLabel.put(_STATUS, LanguageUtil.get(locale, _STATUS));
@@ -140,7 +141,7 @@ public class DDMFormInstanceRecordExporterImpl
 		Locale locale) {
 
 		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValueMap.get(
-			ddmFormField.getName());
+			ddmFormField.getFieldReference());
 
 		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
@@ -177,7 +178,7 @@ public class DDMFormInstanceRecordExporterImpl
 				ddmFormInstanceRecord.getDDMFormValues();
 
 			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-				ddmFormValues.getDDMFormFieldValuesMap();
+				ddmFormValues.getDDMFormFieldValuesReferencesMap(true);
 
 			Map<String, String> ddmFormFieldsValue = new LinkedHashMap<>();
 
@@ -229,7 +230,7 @@ public class DDMFormInstanceRecordExporterImpl
 		Stream<DDMStructureVersion> stream = ddmStructureVersions.stream();
 
 		stream.map(
-			this::getNontransientDDMFormFieldsMap
+			this::getNontransientDDMFormFieldsReferencesMap
 		).forEach(
 			map -> map.forEach(
 				(key, ddmFormField) -> ddmFormFields.putIfAbsent(
@@ -239,12 +240,13 @@ public class DDMFormInstanceRecordExporterImpl
 		return ddmFormFields;
 	}
 
-	protected Map<String, DDMFormField> getNontransientDDMFormFieldsMap(
-		DDMStructureVersion ddmStructureVersion) {
+	protected Map<String, DDMFormField>
+		getNontransientDDMFormFieldsReferencesMap(
+			DDMStructureVersion ddmStructureVersion) {
 
 		DDMForm ddmForm = ddmStructureVersion.getDDMForm();
 
-		return ddmForm.getNontransientDDMFormFieldsMap(true);
+		return ddmForm.getNontransientDDMFormFieldsReferencesMap(true);
 	}
 
 	protected String getStatusMessage(int status, Locale locale) {

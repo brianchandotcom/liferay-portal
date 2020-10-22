@@ -67,6 +67,9 @@
 
 				cssClass = "selector-button";
 			}
+			else {
+				row.setSkip(true);
+			}
 			%>
 
 			<c:choose>

@@ -58,6 +58,7 @@
 	<import class="com.liferay.portal.kernel.model.Portlet" />
 	<import class="com.liferay.portal.kernel.model.PortletItem" />
 	<import class="com.liferay.portal.kernel.model.PortletPreferences" />
+	<import class="com.liferay.portal.kernel.model.PortletPreferenceValue" />
 	<import class="com.liferay.portal.kernel.model.RecentLayoutBranch" />
 	<import class="com.liferay.portal.kernel.model.RecentLayoutRevision" />
 	<import class="com.liferay.portal.kernel.model.RecentLayoutSetBranch" />
@@ -708,6 +709,20 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="plid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="portletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="preferences" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.portal.model.impl.PortletPreferenceValueImpl" table="PortletPreferenceValue">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="portletPreferenceValueId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="portletPreferencesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="index_" name="index" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="smallValue" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="largeValue" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="readOnly" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.model.impl.RecentLayoutBranchImpl" table="RecentLayoutBranch">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="recentLayoutBranchId" type="long">

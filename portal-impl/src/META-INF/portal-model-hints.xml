@@ -1201,6 +1201,18 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
+	<model name="com.liferay.portal.kernel.model.PortletPreferenceValue">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="portletPreferenceValueId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="portletPreferencesId" type="long" />
+		<field name="name" type="String" />
+		<field name="index" type="int" />
+		<field name="smallValue" type="String" />
+		<field name="largeValue" type="String" />
+		<field name="readOnly" type="boolean" />
+	</model>
 	<model name="com.liferay.portal.kernel.model.RecentLayoutBranch">
 		<field name="mvccVersion" type="long" />
 		<field name="recentLayoutBranchId" type="long" />

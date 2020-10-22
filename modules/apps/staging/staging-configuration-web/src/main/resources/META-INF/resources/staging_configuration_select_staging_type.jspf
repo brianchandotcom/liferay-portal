@@ -34,7 +34,7 @@
 			<div class="custom-distance">
 				<liferay-staging:radio
 					checked="<%= stagedLocally %>"
-					description="staging-type-local"
+					description='<%= LanguageUtil.format(request, "staging-type-local" + (GroupCapabilityUtil.isSupportsPages(liveGroup) ? "-pages" : StringPool.BLANK), StringUtil.toLowerCase(liveGroup.getScopeSimpleName(themeDisplay)), false) %>'
 					id="local"
 					label="local-live"
 					name="stagingType"
@@ -47,7 +47,7 @@
 			<div class="custom-distance">
 				<liferay-staging:radio
 					checked="<%= stagedRemotely %>"
-					description="staging-type-remote"
+					description='<%= LanguageUtil.format(request, "staging-type-remote", StringUtil.toLowerCase(liveGroup.getScopeSimpleName(themeDisplay)), false) %>'
 					id="remote"
 					label="remote-live"
 					name="stagingType"

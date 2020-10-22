@@ -18,7 +18,7 @@
 
 <div id="<portlet:namespace />remote">
 	<div class="alert alert-info">
-		<liferay-ui:message key="export-the-selected-data-to-the-site-of-a-remote-portal-or-to-another-site-in-the-same-portal" />
+		<liferay-ui:message arguments="<%= StringUtil.toLowerCase(liveGroup.getScopeSimpleName(themeDisplay)) %>" key="export-the-selected-data-to-the-x-of-a-remote-portal-or-to-another-x-in-the-same-portal" translateArguments="<%= false %>" />
 	</div>
 
 	<aui:fieldset>
@@ -28,7 +28,7 @@
 
 		<aui:input disabled="<%= disableInputs %>" label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "remotePathContext", liveGroupTypeSettings.getProperty("remotePathContext")) %>' />
 
-		<aui:input disabled="<%= disableInputs %>" label="remote-site-id" name="remoteGroupId" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "targetGroupId", liveGroupTypeSettings.getProperty("remoteGroupId")) %>' />
+		<aui:input disabled="<%= disableInputs %>" label='<%= LanguageUtil.format(request, "remote-x-id", liveGroup.getScopeSimpleName(themeDisplay), false) %>' name="remoteGroupId" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "targetGroupId", liveGroupTypeSettings.getProperty("remoteGroupId")) %>' />
 
 		<aui:input disabled="<%= disableInputs %>" name="remotePrivateLayout" type="hidden" value='<%= MapUtil.getBoolean(settingsMap, "remotePrivateLayout", privateLayout) %>' />
 	</aui:fieldset>

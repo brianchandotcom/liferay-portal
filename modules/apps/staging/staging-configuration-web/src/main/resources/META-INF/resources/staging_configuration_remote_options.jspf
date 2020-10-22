@@ -48,7 +48,7 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 
 		<aui:input label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
 
-		<aui:input label='<%= LanguageUtil.get(request, "remote-site-id") %>' name="remoteGroupId" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
+		<aui:input label='<%= LanguageUtil.format(request, "remote-x-id", liveGroup.getScopeSimpleName(themeDisplay), false) %>' name="remoteGroupId" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
 
 		<div class="form-group">
 			<liferay-staging:checkbox
@@ -63,13 +63,13 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 
 			<liferay-staging:checkbox
 				checked="<%= overrideRemoteSiteURL %>"
-				label="manually-define-remote-site-url"
+				label='<%= LanguageUtil.format(request, "manually-define-remote-x-url", liveGroup.getScopeSimpleName(themeDisplay), false) %>'
 				name="overrideRemoteSiteURL"
 			/>
 		</div>
 
 		<div class="<%= overrideRemoteSiteURL ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />remoteSiteURLContainer">
-			<aui:input helpMessage="remote-site-url-help-message" label="remote-site-url" name="remoteSiteURL" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteSiteURL") %>' />
+			<aui:input helpMessage='<%= LanguageUtil.format(request, "remote-x-url-help-message", StringUtil.toLowerCase(liveGroup.getScopeSimpleName(themeDisplay)), false) %>' label='<%= LanguageUtil.format(request, "remote-x-url", liveGroup.getScopeSimpleName(themeDisplay), false) %>' name="remoteSiteURL" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteSiteURL") %>' />
 		</div>
 	</div>
 </div>

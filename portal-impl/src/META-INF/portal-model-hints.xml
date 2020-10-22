@@ -1210,7 +1210,9 @@
 		<field name="name" type="String" />
 		<field name="index" type="int" />
 		<field name="smallValue" type="String" />
-		<field name="largeValue" type="String" />
+		<field name="largeValue" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="readOnly" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.RecentLayoutBranch">

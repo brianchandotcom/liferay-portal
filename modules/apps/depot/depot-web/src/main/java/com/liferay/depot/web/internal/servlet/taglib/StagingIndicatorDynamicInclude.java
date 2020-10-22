@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -201,9 +202,18 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		String liveGroupURL = _getLiveGroupURL(scopeGroup, httpServletRequest);
+		String liveGroupURL = null;
 
-		if (Validator.isNotNull(liveGroupURL)) {
+		try {
+			liveGroupURL = _getLiveGroupURL(scopeGroup, httpServletRequest);
+		}
+		catch (SystemException systemException) {
+			_log.error(systemException, systemException);
+		}
+
+		if (Validator.isNotNull(liveGroupURL) ||
+			scopeGroup.isStagedRemotely()) {
+
 			return HashMapBuilder.<String, Object>put(
 				"iconClass", "staging-indicator-icon-staging"
 			).put(
@@ -219,6 +229,8 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 							httpServletRequest, _getLiveKey(scopeGroup))
 					).put(
 						"symbolLeft", "radio-button"
+					).put(
+						"symbolRight", _getSymbolRight(liveGroupURL)
 					),
 					JSONUtil.put(
 						"href",
@@ -253,6 +265,14 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		).put(
 			"title", _language.get(httpServletRequest, "live")
 		).build();
+	}
+
+	private String _getSymbolRight(String liveGroupURL) {
+		if (Validator.isNull(liveGroupURL)) {
+			return "exclamation-full";
+		}
+
+		return null;
 	}
 
 	private void _includeStagingIndicator(

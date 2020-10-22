@@ -20,8 +20,35 @@ definition {
 		else {
 			Navigator.openURL();
 
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Accounts");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				Click.clickNoMouseOver(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS");
+
+				MenuItem.clickNoError(menuItem = "Delete");
+
+				AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+			}
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Account Groups");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				Click.clickNoMouseOver(locator1 = "CommerceEntry#ROW_VERTICAL_ELLIPSIS");
+
+				MenuItem.clickNoError(menuItem = "Delete");
+
+				AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+			}
+
 			CommerceNavigator.gotoPortlet(
 				category = "Pricing",
+				panel = "Commerce",
 				portlet = "Price Lists");
 
 			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {

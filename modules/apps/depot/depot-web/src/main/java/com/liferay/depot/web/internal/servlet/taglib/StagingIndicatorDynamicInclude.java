@@ -320,7 +320,7 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (scopeGroup.isStagingGroup()) {
+		if (scopeGroup.isStagingGroup() || scopeGroup.isStagedRemotely()) {
 			writer.write(_language.get(httpServletRequest, "staging"));
 		}
 		else {

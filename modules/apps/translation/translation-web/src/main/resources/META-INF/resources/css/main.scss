@@ -8,14 +8,16 @@ $productMenuTransitionDuration: 0.5s;
 $productMenuWidth: 320px;
 
 .translation {
-	.translation-edit {
+	$component: &;
+
+	&-edit {
 		.languages-selector .autofit-col {
 			margin-right: 1em;
 		}
 	}
 
-	.translation-edit,
-	.translation-import {
+	&-edit,
+	&-import {
 		nav {
 			height: auto;
 			left: 0;
@@ -77,8 +79,8 @@ $productMenuWidth: 320px;
 			}
 		}
 
-		.translation-edit-body-form,
-		.translation-import-body-form {
+		#{$component}-edit-body-form,
+		#{$component}-import-body-form {
 			margin-top: $toolbarHeight;
 
 			@include media-breakpoint-up(lg) {
@@ -87,11 +89,11 @@ $productMenuWidth: 320px;
 		}
 	}
 
-	.translation-edit-body-form {
+	&-edit-body-form {
 		background-color: #fff;
 		padding: 1.5rem;
 
-		.translation-editor-preview {
+		#{$component}-editor-preview {
 			border: 1px solid $gray-300;
 			border-radius: 4px;
 			box-sizing: border-box;

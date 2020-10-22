@@ -24,8 +24,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -37,6 +40,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -113,8 +117,14 @@ public class StyleBookScopedCSSVariablesProvider
 				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getSiteGroup();
+		Layout layout = themeDisplay.getLayout();
 
-		if (group.isControlPanel()) {
+		String mode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (group.isControlPanel() || layout.isTypeControlPanel() ||
+			Objects.equals(mode, Constants.PREVIEW)) {
+
 			return StringPool.BLANK;
 		}
 

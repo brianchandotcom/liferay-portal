@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -848,9 +849,15 @@ public class RenderLayoutStructureDisplayContext {
 
 		_frontendTokensJSONObject = JSONFactoryUtil.createJSONObject();
 
-		StyleBookEntry styleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+		StyleBookEntry styleBookEntry = null;
+
+		String mode = ParamUtil.getString(
+			_httpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (!Objects.equals(mode, Constants.PREVIEW)) {
+			styleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
 				_themeDisplay.getLayout());
+		}
 
 		JSONObject frontendTokenValuesJSONObject =
 			JSONFactoryUtil.createJSONObject();

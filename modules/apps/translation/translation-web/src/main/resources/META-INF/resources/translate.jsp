@@ -31,189 +31,191 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" />
 </liferay-util:html-top>
 
-<aui:form action="<%= translateDisplayContext.getUpdateTranslationPortletURL() %>" cssClass="translate-article" name="translate_fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="sourceLanguageId" type="hidden" value="<%= translateDisplayContext.getSourceLanguageId() %>" />
-	<aui:input name="targetLanguageId" type="hidden" value="<%= translateDisplayContext.getTargetLanguageId() %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
+<div class="translation">
+	<aui:form action="<%= translateDisplayContext.getUpdateTranslationPortletURL() %>" cssClass="translation-edit" name="translate_fm">
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="sourceLanguageId" type="hidden" value="<%= translateDisplayContext.getSourceLanguageId() %>" />
+		<aui:input name="targetLanguageId" type="hidden" value="<%= translateDisplayContext.getTargetLanguageId() %>" />
+		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 
-	<nav class="component-tbar subnav-tbar-light tbar">
-		<clay:container-fluid>
-			<ul class="tbar-nav">
-				<li class="tbar-item tbar-item-expand">
-					<c:if test="<%= translateDisplayContext.hasTranslationPermission() %>">
-						<div class="tbar-section text-left">
-							<react:component
-								module="js/translate/TranslateLanguagesSelector"
-								props="<%= translateDisplayContext.getTranslateLanguagesSelectorData() %>"
-							/>
+		<nav class="component-tbar subnav-tbar-light tbar">
+			<clay:container-fluid>
+				<ul class="tbar-nav">
+					<li class="tbar-item tbar-item-expand">
+						<c:if test="<%= translateDisplayContext.hasTranslationPermission() %>">
+							<div class="tbar-section text-left">
+								<react:component
+									module="js/translate/TranslateLanguagesSelector"
+									props="<%= translateDisplayContext.getTranslateLanguagesSelectorData() %>"
+								/>
+							</div>
+						</c:if>
+					</li>
+					<li class="tbar-item">
+						<div class="metadata-type-button-row tbar-section text-right">
+							<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
+
+							<aui:button cssClass="btn-sm mr-3" disabled="<%= translateDisplayContext.isSaveButtonDisabled() %>" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= translateDisplayContext.getSaveButtonLabel() %>" />
+
+							<aui:button cssClass="btn-sm" disabled="<%= translateDisplayContext.isPublishButtonDisabled() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= translateDisplayContext.getPublishButtonLabel() %>" />
 						</div>
-					</c:if>
-				</li>
-				<li class="tbar-item">
-					<div class="metadata-type-button-row tbar-section text-right">
-						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
+					</li>
+				</ul>
+			</clay:container-fluid>
+		</nav>
 
-						<aui:button cssClass="btn-sm mr-3" disabled="<%= translateDisplayContext.isSaveButtonDisabled() %>" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= translateDisplayContext.getSaveButtonLabel() %>" />
+		<clay:container-fluid
+			cssClass="container-view"
+		>
+			<div class="sheet translation-edit-body-form">
+				<c:choose>
+					<c:when test="<%= !translateDisplayContext.hasTranslationPermission() %>">
+						<clay:alert
+							message="you-do-not-have-permissions-to-translate-to-any-of-the-available-languages"
+						/>
+					</c:when>
+					<c:otherwise>
+						<clay:row>
+							<clay:col
+								md="6"
+							>
 
-						<aui:button cssClass="btn-sm" disabled="<%= translateDisplayContext.isPublishButtonDisabled() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= translateDisplayContext.getPublishButtonLabel() %>" />
-					</div>
-				</li>
-			</ul>
-		</clay:container-fluid>
-	</nav>
+								<%
+								String sourceLanguageIdTitle = translateDisplayContext.getLanguageIdTitle(translateDisplayContext.getSourceLanguageId());
+								%>
 
-	<clay:container-fluid
-		cssClass="container-view"
-	>
-		<div class="sheet translate-body-form">
-			<c:choose>
-				<c:when test="<%= !translateDisplayContext.hasTranslationPermission() %>">
-					<clay:alert
-						message="you-do-not-have-permissions-to-translate-to-any-of-the-available-languages"
-					/>
-				</c:when>
-				<c:otherwise>
-					<clay:row>
-						<clay:col
-							md="6"
-						>
+								<clay:icon
+									symbol="<%= StringUtil.toLowerCase(sourceLanguageIdTitle) %>"
+								/>
 
-							<%
-							String sourceLanguageIdTitle = translateDisplayContext.getLanguageIdTitle(translateDisplayContext.getSourceLanguageId());
-							%>
+								<span class="ml-1"> <%= sourceLanguageIdTitle %> </span>
 
-							<clay:icon
-								symbol="<%= StringUtil.toLowerCase(sourceLanguageIdTitle) %>"
-							/>
+								<div class="separator"><!-- --></div>
+							</clay:col>
 
-							<span class="ml-1"> <%= sourceLanguageIdTitle %> </span>
+							<clay:col
+								md="6"
+							>
 
-							<div class="separator"><!-- --></div>
-						</clay:col>
+								<%
+								String targetLanguageIdTitle = translateDisplayContext.getLanguageIdTitle(translateDisplayContext.getTargetLanguageId());
+								%>
 
-						<clay:col
-							md="6"
-						>
+								<clay:icon
+									symbol="<%= StringUtil.toLowerCase(targetLanguageIdTitle) %>"
+								/>
 
-							<%
-							String targetLanguageIdTitle = translateDisplayContext.getLanguageIdTitle(translateDisplayContext.getTargetLanguageId());
-							%>
+								<span class="ml-1"> <%= targetLanguageIdTitle %> </span>
 
-							<clay:icon
-								symbol="<%= StringUtil.toLowerCase(targetLanguageIdTitle) %>"
-							/>
-
-							<span class="ml-1"> <%= targetLanguageIdTitle %> </span>
-
-							<div class="separator"><!-- --></div>
-						</clay:col>
-					</clay:row>
-
-					<%
-					for (InfoFieldSetEntry infoFieldSetEntry : translateDisplayContext.getInfoFieldSetEntries()) {
-						List<InfoField> infoFields = translateDisplayContext.getInfoFields(infoFieldSetEntry);
-
-						if (ListUtil.isEmpty(infoFields)) {
-							continue;
-						}
-
-						String infoFieldSetLabel = translateDisplayContext.getInfoFieldSetLabel(infoFieldSetEntry, locale);
-
-						if (Validator.isNotNull(infoFieldSetLabel)) {
-					%>
-
-							<clay:row>
-								<clay:col
-									md="6"
-								>
-									<div class="fieldset-title">
-										<%= infoFieldSetLabel %>
-									</div>
-								</clay:col>
-
-								<clay:col
-									md="6"
-								>
-									<div class="fieldset-title">
-										<%= infoFieldSetLabel %>
-									</div>
-								</clay:col>
-							</clay:row>
+								<div class="separator"><!-- --></div>
+							</clay:col>
+						</clay:row>
 
 						<%
-						}
+						for (InfoFieldSetEntry infoFieldSetEntry : translateDisplayContext.getInfoFieldSetEntries()) {
+							List<InfoField> infoFields = translateDisplayContext.getInfoFields(infoFieldSetEntry);
 
-						for (InfoField<TextInfoFieldType> infoField : infoFields) {
-							boolean html = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.HTML);
-							String label = translateDisplayContext.getInfoFieldLabel(infoField);
-							boolean multiline = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
+							if (ListUtil.isEmpty(infoFields)) {
+								continue;
+							}
+
+							String infoFieldSetLabel = translateDisplayContext.getInfoFieldSetLabel(infoFieldSetEntry, locale);
+
+							if (Validator.isNotNull(infoFieldSetLabel)) {
 						%>
 
-							<clay:row>
-								<clay:col
-									md="6"
-								>
+								<clay:row>
+									<clay:col
+										md="6"
+									>
+										<div class="fieldset-title">
+											<%= infoFieldSetLabel %>
+										</div>
+									</clay:col>
 
-									<%
-									String sourceContent = translateDisplayContext.getSourceStringValue(infoField, translateDisplayContext.getSourceLocale());
-									String sourceContentDir = LanguageUtil.get(translateDisplayContext.getSourceLocale(), "lang.dir");
-									%>
+									<clay:col
+										md="6"
+									>
+										<div class="fieldset-title">
+											<%= infoFieldSetLabel %>
+										</div>
+									</clay:col>
+								</clay:row>
 
-									<c:choose>
-										<c:when test="<%= html %>">
-											<label class="control-label">
-												<%= label %>
-											</label>
+							<%
+							}
 
-											<div class="translate-editor-preview" dir="<%= sourceContentDir %>">
-												<%= sourceContent %>
-											</div>
-										</c:when>
-										<c:otherwise>
-											<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
-										</c:otherwise>
-									</c:choose>
-								</clay:col>
+							for (InfoField<TextInfoFieldType> infoField : infoFields) {
+								boolean html = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.HTML);
+								String label = translateDisplayContext.getInfoFieldLabel(infoField);
+								boolean multiline = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
+							%>
 
-								<clay:col
-									md="6"
-								>
+								<clay:row>
+									<clay:col
+										md="6"
+									>
 
-									<%
-									String id = "infoField--" + infoField.getName() + "--";
-									String targetContent = translateDisplayContext.getTargetStringValue(infoField, translateDisplayContext.getTargetLocale());
-									%>
+										<%
+										String sourceContent = translateDisplayContext.getSourceStringValue(infoField, translateDisplayContext.getSourceLocale());
+										String sourceContentDir = LanguageUtil.get(translateDisplayContext.getSourceLocale(), "lang.dir");
+										%>
 
-									<c:choose>
-										<c:when test="<%= html %>">
-											<liferay-editor:editor
-												configKey="translateEditor"
-												contents="<%= targetContent %>"
-												contentsLanguageId="<%= translateDisplayContext.getTargetLanguageId() %>"
-												name="<%= id %>"
-												onChangeMethod="onInputChange"
-												placeholder="<%= label %>"
-												toolbarSet="simple"
-											/>
-										</c:when>
-										<c:otherwise>
-											<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" onChange='<%= liferayPortletResponse.getNamespace() + "onInputChange();" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
-										</c:otherwise>
-									</c:choose>
-								</clay:col>
-							</clay:row>
+										<c:choose>
+											<c:when test="<%= html %>">
+												<label class="control-label">
+													<%= label %>
+												</label>
 
-					<%
+												<div class="translation-editor-preview" dir="<%= sourceContentDir %>">
+													<%= sourceContent %>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
+											</c:otherwise>
+										</c:choose>
+									</clay:col>
+
+									<clay:col
+										md="6"
+									>
+
+										<%
+										String id = "infoField--" + infoField.getName() + "--";
+										String targetContent = translateDisplayContext.getTargetStringValue(infoField, translateDisplayContext.getTargetLocale());
+										%>
+
+										<c:choose>
+											<c:when test="<%= html %>">
+												<liferay-editor:editor
+													configKey="translateEditor"
+													contents="<%= targetContent %>"
+													contentsLanguageId="<%= translateDisplayContext.getTargetLanguageId() %>"
+													name="<%= id %>"
+													onChangeMethod="onInputChange"
+													placeholder="<%= label %>"
+													toolbarSet="simple"
+												/>
+											</c:when>
+											<c:otherwise>
+												<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" onChange='<%= liferayPortletResponse.getNamespace() + "onInputChange();" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
+											</c:otherwise>
+										</c:choose>
+									</clay:col>
+								</clay:row>
+
+						<%
+							}
 						}
-					}
-					%>
+						%>
 
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</clay:container-fluid>
-</aui:form>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</clay:container-fluid>
+	</aui:form>
+</div>
 
 <script>
 	var saveDraftBtn = document.getElementById('<portlet:namespace />saveDraftBtn');

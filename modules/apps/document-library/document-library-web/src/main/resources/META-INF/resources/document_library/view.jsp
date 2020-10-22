@@ -239,7 +239,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					namespace: '<portlet:namespace />',
 					openViewMoreFileEntryTypesURL:
 						'<%= dlViewDisplayContext.getViewMoreFileEntryTypesURL() %>',
-					portletId: '<%= HtmlUtil.escapeJS(portletId) %>',
+					portletId:
+						'<%= HtmlUtil.escapeJS(dlRequestHelper.getResourcePortletId()) %>',
 					redirect: encodeURIComponent('<%= currentURL %>'),
 					selectFileEntryTypeURL:
 						'<%= dlViewDisplayContext.getSelectFileEntryTypeURL() %>',
@@ -255,7 +256,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				}),
 				{
 					destroyOnNavigate: true,
-					portletId: '<%= HtmlUtil.escapeJS(portletId) %>',
+					portletId:
+						'<%= HtmlUtil.escapeJS(dlRequestHelper.getResourcePortletId()) %>',
 				}
 			);
 

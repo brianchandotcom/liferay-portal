@@ -46,8 +46,6 @@ page import="com.liferay.portal.util.RepositoryUtil" %>
 <%
 DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
 
-String portletId = dlRequestHelper.getResourcePortletId();
-
 portletName = dlRequestHelper.getResourcePortletName();
 
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);

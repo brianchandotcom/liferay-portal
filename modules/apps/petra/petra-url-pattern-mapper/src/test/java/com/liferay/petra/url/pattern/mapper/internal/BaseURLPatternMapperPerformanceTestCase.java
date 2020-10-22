@@ -37,9 +37,9 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 		for (int i = 0; i < 100000; i++) {
 			for (String urlPath : expectedURLPatternMatches.keySet()) {
 				urlPatternMapper.consumeValues(
-					urlPath,
 					__ -> {
-					});
+					},
+					urlPath);
 			}
 		}
 
@@ -71,7 +71,7 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 
 		for (int i = 0; i < 100000; i++) {
 			for (String urlPath : expectedURLPatternMatches.keySet()) {
-				urlPatternMapper.consumeValues(urlPath, bitSet::set);
+				urlPatternMapper.consumeValues(bitSet::set, urlPath);
 
 				for (int j = bitSet.nextSetBit(0); j >= 0;
 					 j = bitSet.nextSetBit(j + 1)) {

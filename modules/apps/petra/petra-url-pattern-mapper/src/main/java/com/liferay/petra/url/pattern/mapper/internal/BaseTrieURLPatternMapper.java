@@ -25,12 +25,12 @@ public abstract class BaseTrieURLPatternMapper<T>
 	extends BaseURLPatternMapper<T> {
 
 	@Override
-	public void consumeValues(String urlPath, Consumer<T> consumer) {
+	public void consumeValues(Consumer<T> consumer, String urlPath) {
 		if (Objects.isNull(urlPath)) {
 			return;
 		}
 
-		consumeWildcardValues(urlPath, consumer);
+		consumeWildcardValues(consumer, urlPath);
 
 		T extensionValue = getExtensionValue(urlPath);
 
@@ -62,7 +62,7 @@ public abstract class BaseTrieURLPatternMapper<T>
 	}
 
 	protected abstract void consumeWildcardValues(
-		String urlPath, Consumer<T> consumer);
+		Consumer<T> consumer, String urlPath);
 
 	protected abstract T getExtensionValue(String urlPath);
 

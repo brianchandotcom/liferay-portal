@@ -37,7 +37,7 @@ public class DynamicSizeTrieURLPatternMapper<T>
 	}
 
 	@Override
-	protected void consumeWildcardValues(String urlPath, Consumer<T> consumer) {
+	protected void consumeWildcardValues(Consumer<T> consumer, String urlPath) {
 		boolean exact = false;
 		boolean wildcard = false;
 

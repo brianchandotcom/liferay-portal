@@ -55,7 +55,7 @@ public class StaticSizeTrieURLPatternMapper<T>
 	}
 
 	@Override
-	protected void consumeWildcardValues(String urlPath, Consumer<T> consumer) {
+	protected void consumeWildcardValues(Consumer<T> consumer, String urlPath) {
 		long valuesBitmask = _getWildcardValuesBitmask(urlPath);
 
 		while (valuesBitmask != 0) {

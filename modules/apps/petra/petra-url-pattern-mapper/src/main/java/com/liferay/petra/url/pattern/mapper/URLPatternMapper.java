@@ -23,14 +23,14 @@ import java.util.function.Consumer;
  */
 public interface URLPatternMapper<T> {
 
-	public void consumeValues(String urlPath, Consumer<T> consumer);
+	public void consumeValues(Consumer<T> consumer, String urlPath);
 
 	public T getValue(String urlPath);
 
 	public default Set<T> getValues(String urlPath) {
 		Set<T> values = new HashSet<>(Long.SIZE);
 
-		consumeValues(urlPath, values::add);
+		consumeValues(values::add, urlPath);
 
 		return values;
 	}

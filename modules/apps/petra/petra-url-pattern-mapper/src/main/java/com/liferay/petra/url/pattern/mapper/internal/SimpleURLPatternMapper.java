@@ -33,7 +33,7 @@ public class SimpleURLPatternMapper<T> extends BaseURLPatternMapper<T> {
 	}
 
 	@Override
-	public void consumeValues(String urlPath, Consumer<T> consumer) {
+	public void consumeValues(Consumer<T> consumer, String urlPath) {
 		if (Objects.isNull(urlPath)) {
 			return;
 		}

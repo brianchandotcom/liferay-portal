@@ -20,25 +20,17 @@ import React, {useState} from 'react';
 import ButtonInfo from '../../../../components/button-info/ButtonInfo.es';
 
 const Arrow = ({addStep, selected}) => {
-	const isIE = /Trident/.test(navigator.userAgent);
-
 	return (
 		<div className={classNames('arrow ', selected && 'selected')}>
 			<ClayIcon
-				className={classNames(
-					'arrow-point icon',
-					isIE && 'arrow-point-ie'
-				)}
+				className={classNames('arrow-point icon')}
 				symbol="live"
 			/>
 
 			{selected && (
 				<ClayTooltipProvider>
 					<div
-						className={classNames(
-							'arrow-plus-button',
-							isIE && 'arrow-plus-button-ie'
-						)}
+						className={classNames('arrow-plus-button')}
 						data-tooltip-align="left"
 						data-tooltip-delay="0"
 						onClick={addStep}
@@ -53,10 +45,7 @@ const Arrow = ({addStep, selected}) => {
 				<div className="arrow-tail" />
 
 				<ClayIcon
-					className={classNames(
-						'arrow-head icon',
-						isIE && 'arrow-head-ie'
-					)}
+					className={classNames('arrow-head icon')}
 					symbol="caret-bottom"
 				/>
 			</div>

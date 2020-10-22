@@ -447,7 +447,7 @@
 </tr>
 <tr>
 	<td>ADD_RELATION_FIELD_SELECT</td>
-	<td>//div[h4[contains(.,'${key_title}')]]//input[@type='text']/../../../..//button[contains(.,'Select')]</td>
+	<td>//div[h4[contains(.,'${key_title}')]]//td[p[text()='${key_entryName}']]/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

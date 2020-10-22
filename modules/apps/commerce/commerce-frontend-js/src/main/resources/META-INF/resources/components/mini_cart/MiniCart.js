@@ -55,7 +55,7 @@ function MiniCart({
 	const updateCartModel = ({orderId: cartId}) =>
 		AJAX.getCartByIdWithItems(cartId)
 			.then((model) => {
-				if (model.id !== cartId) {
+				if (orderId !== cartId) {
 					const {orderUUID} = model,
 						{checkoutURL, orderDetailURL} = actionURLs;
 

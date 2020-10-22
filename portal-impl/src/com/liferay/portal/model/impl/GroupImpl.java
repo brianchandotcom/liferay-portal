@@ -660,6 +660,23 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
+	public String getScopeSimpleName(ThemeDisplay themeDisplay) {
+		if (isDepot()) {
+			return themeDisplay.translate("asset-library");
+		}
+
+		if (getGroupId() == themeDisplay.getCompanyGroupId()) {
+			return themeDisplay.translate("global");
+		}
+
+		if (isLayout()) {
+			return themeDisplay.translate("page");
+		}
+
+		return themeDisplay.translate("site");
+	}
+
+	@Override
 	public Group getStagingGroup() {
 		if (isStagingGroup()) {
 			return null;

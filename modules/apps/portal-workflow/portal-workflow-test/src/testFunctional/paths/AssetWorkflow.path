@@ -52,7 +52,7 @@
 <!--TRANSLATIONS_PREVIEW-->
 <tr>
 	<td>TRANSLATIONS_PREVIEW_EDITOR</td>
-	<td>//div[contains(@class,'translate-editor-preview') and contains(.,'${key_fieldValue}')]</td>
+	<td>//div[contains(@class,'translation-editor-preview') and contains(.,'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
 <tr>

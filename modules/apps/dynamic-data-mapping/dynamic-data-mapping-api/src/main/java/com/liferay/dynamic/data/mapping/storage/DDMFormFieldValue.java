@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -81,7 +82,13 @@ public class DDMFormFieldValue implements Serializable {
 	}
 
 	public String getFieldReference() {
-		return _fieldReference;
+		if (Validator.isNotNull(_fieldReference)) {
+			return _fieldReference;
+		}
+
+		DDMFormField ddmFormField = getDDMFormField();
+
+		return ddmFormField.getFieldReference();
 	}
 
 	public String getInstanceId() {
